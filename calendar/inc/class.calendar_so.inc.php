@@ -931,12 +931,23 @@ ORDER BY cal_user_type, cal_usre_id
 					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
 				}
 
-				//pgoerzen: don't add an alarm if it is before the current date.
-				/*if ($event['recur_type'] && ($tmp_event = $this->read($eventID, time() + $alarm['offset'])))
+				if ($alarm['time'] < time())
 				{
-					$alarm['time'] = $tmp_event['cal_start'] - $alarm['offset'];
-				} */
-
+					//pgoerzen: don't add an alarm in the past
+					if ($event['recur_type'] == MCAL_RECUR_NONE) continue;
+					$start = (int)time() + $alarm['offset'];
+					$event['start'] = $event['cal_start'];
+					$event['end'] = $event['cal_end'];
+					$event['tzid'] = $event['cal_tzid'];
+					$rrule = calendar_rrule::event2rrule($event, false);
+					foreach ($rrule as $time)
+					{
+						if ($start < ($ts = egw_time::to($time,'server'))) break;
+						$ts = 0;
+					}
+					if (!$ts) continue;
+					$alarm['time'] = $ts - $alarm['offset'];
+				}
 				$this->save_alarm($cal_id,$alarm);
 			}
 		}

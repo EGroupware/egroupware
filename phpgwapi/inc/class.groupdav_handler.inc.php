@@ -135,9 +135,10 @@ abstract class groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user=null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	abstract function get(&$options,$id);
+	abstract function get(&$options,$id,$user=null);
 
 	/**
 	 * Handle get request for an applications entry

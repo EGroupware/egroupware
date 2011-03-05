@@ -220,7 +220,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event);
+					$content = $this->iCal($event,$filter['users']);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -382,15 +382,16 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user=null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function get(&$options,$id)
+	function get(&$options,$id,$user=null)
 	{
 		if (!is_array($event = $this->_common_get_put_delete('GET',$options,$id)))
 		{
 			return $event;
 		}
-		$options['data'] = $this->iCal($event);
+		$options['data'] = $this->iCal($event,$user);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($event));
@@ -403,12 +404,22 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 * Taking into account virtual an real exceptions for recuring events
 	 *
 	 * @param array $event
+	 * @param int $user=null account_id of calendar to display
 	 * @return string
 	 */
-	private function iCal(array $event)
+	private function iCal(array $event,$user=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
+
+		if (!$user) $user = $GLOBALS['egw_info']['user']['account_id'];
+
+		// only return alarms in own calendar, not other users calendars
+		if ($user != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			//error_log(__METHOD__.'('.array2string($event).", $user) clearing alarms");
+			$event['alarm'] = array();
+		}
 
 		$events = array($event);
 
@@ -547,8 +558,18 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			}
 			else
 			{
-				// let lightning think the event is added
-				$retval = '201 Created';
+				$retval = '204 No Content';
+
+				// lightning will pop up the alarm, as long as the Sequence (etag) does NOT change
+				// --> update the etag alone, if user has no edit rights
+				if ($this->agent == 'lightning' && !$this->check_access(EGW_ACL_EDIT, $oldEvent) &&
+					isset($oldEvent['participants'][$GLOBALS['egw_info']['user']['account_id']]))
+				{
+					// just update etag in database
+					$GLOBALS['egw']->db->update($this->bo->so->cal_table,'cal_etag=cal_etag+1',array(
+						'cal_id' => $eventId,
+					),__LINE__,__FILE__,'calendar');
+				}
 			}
 		}
 		else

@@ -276,7 +276,7 @@ class calendar_ical extends calendar_boupdate
 				}
 				continue;
 			}
-			
+
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
@@ -568,7 +568,7 @@ class calendar_ical extends calendar_boupdate
 									'CUTYPE'   => 'INDIVIDUAL',
 									//'RSVP'     => 'FALSE',
 									);
-								if (!empty($organizerCN)) $options['CN'] = $organizerCN;	
+								if (!empty($organizerCN)) $options['CN'] = $organizerCN;
 								if (!empty($organizerEMail)) $options['EMAIL'] = $organizerEMail;
 								if (!empty($event['owner'])) $options['X-EGROUPWARE-UID'] = $event['owner'];
 								$attributes['ATTENDEE'][] = $organizerURL;
@@ -631,7 +631,7 @@ class calendar_ical extends calendar_boupdate
 								$length = ($event['end'] - $event['start']) / 2;
 								$rrule['UNTIL']->modify($length . ' second');
 							}
-							
+
 							if (!$tzid || $version != '1.0')
 							{
 								if (!isset(self::$tz_cache['UTC']))
@@ -645,7 +645,7 @@ class calendar_ical extends calendar_boupdate
 						if ($version == '1.0')
 						{
 							if ($event['recur_enddate'] && $tzid)
-							{	
+							{
 								$rrule['UNTIL'] = self::getDateTime($rrule['UNTIL'],$tzid);
 							}
 							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
@@ -690,7 +690,7 @@ class calendar_ical extends calendar_boupdate
 								$event['recur_exception'] = $days;
 								if ($version != '1.0') $parameters['EXDATE']['VALUE'] = 'DATE';
 							}
-							if ($this->productManufacturer == 'groupdav' && 
+							if ($this->productManufacturer == 'groupdav' &&
 								($this->productName == 'iphone' || $this->productName == 'davkit'))
 							{
 								foreach ($event['recur_exception'] as $exdate)
@@ -917,14 +917,14 @@ class calendar_ical extends calendar_boupdate
 
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
-					
+
 					if ($this->productName == 'lightning')
 					{
 						// return only future alarms to lightning
 						if (($nextOccurence = $this->read($event['id'], $this->now_su + $alarmData['offset'], false, 'server')))
 						{
 							$alarmData['time'] = $nextOccurence['start'] - $alarmData['offset'];
-							$alarmData['offset'] = false;	
+							$alarmData['offset'] = false;
 						}
 						else
 						{
@@ -932,12 +932,12 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 
-					if (!empty($event['whole_day']) && $alarmData['offset'])		
+					if (!empty($event['whole_day']) && $alarmData['offset'])
 					{
 						$alarmData['time'] = $event['start'] - $alarmData['offset'];
 						$alarmData['offset'] = false;
-					} 
-					
+					}
+
 					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
 					if ($alarmData['offset'])
 					{
@@ -1118,7 +1118,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			calendar_groupdav::fix_series($events);
 		}
-		
+
 		if ($this->tzid)
 		{
 			$tzid = $this->tzid;
@@ -1127,9 +1127,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			$tzid = egw_time::$user_timezone->getName();
 		}
-		
+
 		date_default_timezone_set($tzid);
-		
+
 		foreach ($events as $event)
 		{
 			if (!is_array($event)) continue; // the iterator may return false
@@ -1149,7 +1149,7 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			$updated_id = false;
-			
+
 			if ($replace)
 			{
 				$event_info['type'] = $event['recur_type'] == MCAL_RECUR_NONE ?
@@ -1423,6 +1423,12 @@ class calendar_ical extends calendar_boupdate
 								$alarm['owner'] = $this->user;
 								$alarm['all'] = false;
 
+								// if no edit rights, allow participants to set alarms directly (like status)
+								if ($event_info['stored_event'] && !$event_info['acl_edit'])
+								{
+									$this->save_alarm($event_info['stored_event']['id'], $alarm);
+								}
+
 								if (is_array($event_info['stored_event'])
 										&& count($event_info['stored_event']['alarm']) > 0)
 								{
@@ -1458,7 +1464,7 @@ class calendar_ical extends calendar_boupdate
 					}
 				}
 			}
-			
+
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ . '('
@@ -1508,7 +1514,7 @@ class calendar_ical extends calendar_boupdate
 						if (is_array($days))
 						{
 							$recur_exceptions = array();
-							
+
 							foreach ($event['recur_exception'] as $recur_exception)
 							{
 								if (isset($days[$recur_exception]))
@@ -1581,7 +1587,7 @@ class calendar_ical extends calendar_boupdate
 									array_unique(array_merge($event_info['master_event']['recur_exception'],
 										array($event['recurrence'])));
 							}
-							
+
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
 							$event['owner'] = $event_info['master_event']['owner'];
@@ -2128,7 +2134,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
 		}
-		
+
 		if ($this->tzid)
 		{
 			$tzid = $this->tzid;
@@ -2137,9 +2143,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			$tzid = egw_time::$user_timezone->getName();
 		}
-		
+
 		date_default_timezone_set($tzid);
-		
+
 		$events = array();
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
@@ -2177,7 +2183,7 @@ class calendar_ical extends calendar_boupdate
 	function _ical2egw_callback(Horde_iCalendar $component, $tzid, $principalURL='')
 	{
 		//unset($component->_container); _debug_array($component);
-		
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
@@ -2238,7 +2244,7 @@ class calendar_ical extends calendar_boupdate
 			}
 			return false;
 		}
-		
+
 		/*
 		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
 		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))

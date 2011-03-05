@@ -529,7 +529,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (($handler = self::app_handler($app)))
 		{
-			return $handler->get($options,$id);
+			return $handler->get($options,$id,$user);
 		}
 		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
 		return '501 Not Implemented';
