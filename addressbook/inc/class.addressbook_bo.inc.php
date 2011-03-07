@@ -66,6 +66,7 @@ class addressbook_bo extends addressbook_so
 		'adr_one_region',
 		'adr_one_postalcode',
 		'adr_one_countryname',
+		'adr_one_countrycode',
 		'label',
 		'tel_work',
 		'tel_fax',
@@ -291,6 +292,17 @@ class addressbook_bo extends addressbook_so
 		if ($GLOBALS['egw_info']['server']['org_fileds_to_update'])
 		{
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
+
+			// Set country code if country name is selected
+			$supported_fields = $this->get_fields('supported',null,0);
+			if(in_array('adr_one_countrycode', $supported_fields) && in_array('adr_one_countryname',$this->org_fields))
+			{
+				$this->org_fields[] = 'adr_one_countrycode';
+			}
+			if(in_array('adr_two_countrycode', $supported_fields) && in_array('adr_two_countryname',$this->org_fields))
+			{
+				$this->org_fields[] = 'adr_two_countrycode';
+			}
 		}
 		$this->categories = new categories($this->user,'addressbook');
 

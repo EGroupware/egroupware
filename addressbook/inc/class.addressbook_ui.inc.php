@@ -95,6 +95,17 @@ class addressbook_ui extends addressbook_bo
 		}
 		if ($this->config['copy_fields'] && ($fields = unserialize($this->config['copy_fields'])))
 		{
+			// Set country code if country name is selected
+			$supported_fields = $this->get_fields('supported',null,0);
+			if(in_array('adr_one_countrycode', $supported_fields) && in_array('adr_one_countryname',$fields))
+			{
+				$fields[] = 'adr_one_countrycode';
+			}
+			if(in_array('adr_two_countrycode', $supported_fields) && in_array('adr_two_countryname',$fields))
+			{
+				$fields[] = 'adr_two_countrycode';
+			}
+
 			self::$copy_fields = $fields;
 		}
 	}
