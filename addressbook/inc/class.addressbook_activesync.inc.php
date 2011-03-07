@@ -267,7 +267,6 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			switch ($attr)
 			{
 				case 'note':
-					if (empty($contact[$attr])) break;
 					if ($bodypreference == false)
 					{
 						$message->body = $contact[$attr];
@@ -276,52 +275,14 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					}
 					else
 					{
-						$message->airsyncbasebody = new SyncAirSyncBaseBody();
 						debugLog("airsyncbasebody!");
-						$message->airsyncbasenativebodytype=1;
 						$message->airsyncbasebody = new SyncAirSyncBaseBody();
-						if (isset($bodypreference[2]))
-						{
-							//debugLog("HTML Body");
-							$message->airsyncbasebody->type = 2;
-							$html = '<html>'.
-									'<head>'.
-									'<meta name="Generator" content="Z-Push">'.
-									'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
-									'</head>'.
-									'<body>'.
-									str_replace(array("\n","\r","\r\n"),"<br />",$contact[$attr]).
-									'</body>'.
-									'</html>';
-									if (isset($bodypreference[2]["TruncationSize"]) && strlen($html) > $bodypreference[2]["TruncationSize"])
-									{
-										$html = utf8_truncate($html,$bodypreference[2]["TruncationSize"]);
-										$message->airsyncbasebody->truncated = 1;
-									}
-									$message->airsyncbasebody->data = $html;
-									$message->airsyncbasebody->estimateddatasize = strlen($html);
-						}
-						else
-						{
-							// debugLog("Plaintext Body");
-							$note = str_replace("\n","\r\n",str_replace("\r","",$contact[$attr]));
-							$message->airsyncbasebody->type = 1;
-							if(isset($bodypreference[1]["TruncationSize"]) && strlen($note) > $bodypreference[1]["TruncationSize"])
-							{
-								$note = utf8_truncate($note, $bodypreference[1]["TruncationSize"]);
-								$message->airsyncbasebody->truncated = 1;
-							}
-							$message->airsyncbasebody->estimateddatasize = strlen($note);
-							$message->airsyncbasebody->data = $note;
-						}
-						if ($message->airsyncbasebody->type != 3 && (!isset($message->airsyncbasebody->data) || strlen($message->airsyncbasebody->data) == 0))
-						{
-							$message->airsyncbasebody->data = " ";
-						}
+						$message->airsyncbasenativebodytype=1;
+						$this->backend->note2messagenote($contact[$attr], $bodypreference, &$message->airsyncbasebody);
 					}
 					break;
 
-				case 'jpegphoto':
+					case 'jpegphoto':
 					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
 					break;
 
@@ -454,45 +415,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				switch ($attr)
 				{
 					case 'note':
-						error_log ("Note !");
-
-						// Since in >=AS12.1 we have the airsyncbasebody object
-						// By doing this hack we can continue using our current functions...
-						if (isset($message->airsyncbasebody))
-						{
-							switch($message->airsyncbasebody->type)
-							{
-								case '3' :	$message->rtf = $message->airsyncbasebody->data;
-											error_log("Airsyncbase RTF Body");
-											break;
-								case '1' :	$message->body = $message->airsyncbasebody->data;
-											error_log("Airsyncbase Plain Body");
-											break;
-							}
-						}
-						if (isset($message->rtf))
-						{
-							// Nokia MfE 2.9.158 sends contact notes with RTF and Body element.
-							// The RTF is empty, the body contains the note therefore we need to unpack the rtf
-							// to see if it is realy empty and in case not, take the appointment body.
-							error_log("RTF Body");
-							$rtf_body = new rtf ();
-							$rtf_body->loadrtf(base64_decode($message->rtf));
-							$rtf_body->output("ascii");
-							$rtf_body->parse();
-							if (isset($message->body) && isset($rtf_body->out) && $rtf_body->out == "" && $message->body != "")
-							{
-								unset($message->rtf);
-							}
-
-							$rtf_body = new rtf ();
-							$rtf_body->loadrtf(base64_decode($message->rtf));
-							$rtf_body->output("ascii");
-							$rtf_body->parse();
-							//put rtf into body
-							if($rtf_body->out <> "") $message->body=$rtf_body->out;
-						}
-						$contact[$attr] = $message->body;
+						$contact[$attr] = $this->backend->messagenote2note($message->body, $message->rtf, $message->airsyncbasebody);
 						break;
 
 					case 'bday':	// zpush uses timestamp in servertime
