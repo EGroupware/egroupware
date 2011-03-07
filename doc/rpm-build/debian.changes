@@ -1,3 +1,23 @@
+egroupware-epl (10.1.20110307-1) hardy; urgency=low
+
+  * fixed not working delete of application-global categories via "admin >> global categories" in applications
+  * WiKi: Admin functionality to rebuild wiki internal link table to enable the rework of links on connected pages, when renaming a page
+  * updated phpfreechat to version 1.3 to fix php 5.3 depricated warnings
+  * correctly parsing of "time-range" REPORT filter, giving a SQL error before because it requires comparing as unix timestamp not strings
+  * Gallery: ignoring ERROR_OBSOLETE_DATA in editAccount hook, as it seems to indecated no error, but nothing changed
+  * removing memory limit from backup download, by switching off output buffering and zlib output compression
+  * fixed handling of + char in VFS filenames (using egw_vfs::decodePath() instead of urldecode())
+  * Timesheet from other app then calendar: fixed title to use clicked app (first link_app)
+  * ImportExport: fixed translation default value not working (eg. "1|>one||2|>two||other")
+  * CalDAV/Lightning: fixed under some conditions infinit poping up alarms and user not able to add alarms
+  * Calendar: fixed in some cases not updated alarms, if event got moved
+  * LDAP addressbook filter for all addressbooks by "(objectclass=inetorgperson)" to not get eg. computer accounts from Samba
+  * Calendar: no longer returning private events of other user while searching, as it can reveal private information
+  * preference for open application tabs of Stylite template set, allowing to set a default or even force them
+  * EventMgr: Search Returns only the first 200 entries and a message informing the user to narrow the search
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 07 Mar 2011 16:16:09 +0100
+
 egroupware-epl (10.1.20110214-1) hardy; urgency=low
 
   * calendar: PANAMA holidays provided by rafael chacon
