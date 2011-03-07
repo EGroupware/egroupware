@@ -346,6 +346,7 @@ abstract class groupdav_handler
 				'khtml'             => 'kde',		// KDE clients
 				'neon'              => 'neon',
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
+				'evolution'         => 'evolution',	// Evolution
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
@@ -356,7 +357,7 @@ abstract class groupdav_handler
 			}
 			if (!$agent)
 			{
-				error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
+				//error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
 			}
 			else
 			{
