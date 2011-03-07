@@ -274,7 +274,7 @@ class calendar_activesync implements activesync_plugin_write
 		if ($recur_date)	// virtual exception
 		{
 			// @todo check if virtual exception needs to be saved as real exception, or only stati need to be changed
-			debutLog(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
+			debugLog(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 			error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
 		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD,$event ? $event : 0,$account))
@@ -536,6 +536,19 @@ class calendar_activesync implements activesync_plugin_write
 	}
 
 	/**
+	 * This should change the 'read' flag of a message on disk. The $flags
+	 * parameter can only be '1' (read) or '0' (unread). After a call to
+	 * SetReadFlag(), GetMessageList() should return the message with the
+	 * new 'flags' but should not modify the 'mod' parameter. If you do
+	 * change 'mod', simply setting the message to 'read' on the PDA will trigger
+	 * a full resync of the item from the server
+	 */
+	function SetReadFlag($folderid, $id, $flags)
+	{
+		return false;
+	}
+
+	/**
 	 * Get specified item from specified folder.
 	 *
 	 * Timezone wise we supply zpush with timestamps in servertime (!), which it "converts" in streamer::formatDate($ts)
@@ -632,7 +645,7 @@ class calendar_activesync implements activesync_plugin_write
 			$message->attendees[] = $attendee;
 		}
 		$message->categories = array();
-		foreach($event['catgory'] ? explode(',',$event['category']) : array() as $cat_id)
+		foreach($event['category'] ? explode(',',$event['category']) : array() as $cat_id)
 		{
 			$message->categories[] = categories::id2name($cat_id);
 		}

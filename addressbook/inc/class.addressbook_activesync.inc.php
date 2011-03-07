@@ -336,11 +336,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					break;
 
 				case 'cat_id':
-					/*$message->$key = array();
+					$message->$key = array();
 					foreach($contact[$attr] ? explode(',',$contact[$attr]) : array() as $cat_id)
 					{
 						$message->categories[] = categories::id2name($cat_id);
-					}*/
+					}
 					break;
 
 				default:
@@ -503,6 +503,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						$contact[$attr] = base64_decode($message->$key);
 						break;
 
+					case 'cat_id':
+						if (is_array($message->$key))
+						{
+							$contact[$attr] = implode(',', array_filter($this->addressbook->find_or_add_categories($message->$key, $id),'strlen'));
+						}
+						break;
+
 					default:
 						$contact[$attr] = $message->$key;
 						break;
@@ -558,6 +565,19 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		$ret = $this->addressbook->delete($id);
 		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
 		return $ret;
+	}
+
+	/**
+	 * This should change the 'read' flag of a message on disk. The $flags
+	 * parameter can only be '1' (read) or '0' (unread). After a call to
+	 * SetReadFlag(), GetMessageList() should return the message with the
+	 * new 'flags' but should not modify the 'mod' parameter. If you do
+	 * change 'mod', simply setting the message to 'read' on the PDA will trigger
+	 * a full resync of the item from the server
+	 */
+	function SetReadFlag($folderid, $id, $flags)
+	{
+		return false;
 	}
 
 	/**
