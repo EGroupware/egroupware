@@ -43,8 +43,11 @@ function vfs_storage_mode_options($config)
 		'custom' => lang('Custom set via %1','filemanager/cli.php mount'),
 	) as $name => $label)
 	{
-		$options .= '<option value="'.$name.($name === $config['vfs_storage_mode'] ? '" selected="selected' : '').
-			'">'.htmlspecialchars($label)."</options>\n";
+		if ($name != 'custom' || $name === $config['vfs_storage_mode'])	// dont show custom, if not custom
+		{
+			$options .= '<option value="'.$name.($name === $config['vfs_storage_mode'] ? '" selected="selected' : '').
+				'">'.htmlspecialchars($label)."</options>\n";
+		}
 	}
 	//echo "<pre>".htmlspecialchars($options)."</pre>\n";
 	return $options;
@@ -233,7 +236,7 @@ function sql_passwdhashes($config)
 
 /**
  * Make auth-types from setup_cmd_config available
- * 
+ *
  * @param array $config
  * @return string
  */
@@ -252,7 +255,7 @@ function auth_type_groupdav($config)
 
 /**
  * Returns options string
- * 
+ *
  * @param array $options value => label pairs
  * @param string $selected value of selected optino
  * @return string
@@ -261,7 +264,7 @@ function _options_from(array $options,$selected)
 {
 	foreach($options as $value => $label)
 	{
-		$out .= '<option value="' . htmlspecialchars($value) . '"' . 
+		$out .= '<option value="' . htmlspecialchars($value) . '"' .
 			($selected == $value ? ' selected="selected"' : '') . '>' . $label . '</option>' . "\n";
 	}
 	return $out;
