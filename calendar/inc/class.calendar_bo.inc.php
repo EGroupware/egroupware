@@ -459,16 +459,13 @@ class calendar_bo
 			}
 			if (!$this->check_perms(EGW_ACL_READ,$event) || (!$event['public'] && $filter == 'hideprivate'))
 			{
-				if($params['query'])
+				if($filter == 'hideprivate')
 				{
 					unset($events[$id]);
 					$this->total--;
 					continue;
 				}
-				else
-				{
-					$this->clear_private_infos($events[$id],$users);
-				}
+				$this->clear_private_infos($events[$id],$users);
 			}
 		}
 
