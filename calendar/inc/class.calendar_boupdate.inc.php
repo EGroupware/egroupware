@@ -965,7 +965,17 @@ class calendar_boupdate extends calendar_bo
 		{
 			foreach($event['alarm'] as $id => $alarm)
 			{
-				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
+				// recalculate alarms to also cope with moved events (beside server time adjustment)
+				$event['alarm'][$id]['time'] = $event['start'] - $alarm['offset'];
+			}
+		}
+		// update all existing alarm times, in case alarm got moved and alarms are not include in $event
+		if ($old_event && is_array($old_event['alarm']))
+		{
+			foreach($old_event['alarm'] as $alarm)
+			{
+				$alarm['time'] = $event['start'] - $alarm['offset'];
+				$this->so->save_alarm($event['id'],$alarm, $this->now);
 			}
 		}
 		if (!isset($event['modified']) || $event['modified'] > $this->now)
