@@ -1354,7 +1354,7 @@ function replace_eTemplate_onsubmit()
 					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 					$content['alarm'][] = $alarm;
 
-					$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
+					$readonlys['delete_alarm['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 				}
 			}
 			else
