@@ -918,7 +918,8 @@ class calendar_ical extends calendar_boupdate
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
 
-					if ($this->productName == 'lightning')
+					// Lightning infinitly pops up alarms for recuring events, if the only use an offset
+					if ($this->productName == 'lightning' && $event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						// return only future alarms to lightning
 						if (($nextOccurence = $this->read($event['id'], $this->now_su + $alarmData['offset'], false, 'server')))
@@ -932,14 +933,18 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 
-					if (!empty($event['whole_day']) && $alarmData['offset'])
+					// for SyncML non-whole-day events always use absolute times
+					// (probably because some devices have no clue about timezones)
+					// GroupDAV uses offsets, as web UI assumes alarms are relative too
+					// (with absolute times GroupDAV clients do NOT move alarms, if events move!)
+					if ($this->productManufacturer != 'GroupDAV' &&
+						!empty($event['whole_day']) && $alarmData['offset'])
 					{
-						$alarmData['time'] = $event['start'] - $alarmData['offset'];
 						$alarmData['offset'] = false;
 					}
 
 					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
-					if ($alarmData['offset'])
+					if ($alarmData['offset'] !== false)
 					{
 						$valarm->setAttribute('TRIGGER', -$alarmData['offset'],
 								array('VALUE' => 'DURATION', 'RELATED' => 'START'));
