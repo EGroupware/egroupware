@@ -1,6 +1,4 @@
 body {
-	width: 100%;
-	height: 100%;
 	margin: 0;
 	padding: 0;
 }
@@ -10,9 +8,101 @@ body, td, th {
 	font-size: 11px;
 }
 
-.grid {
+table.egwGridView_grid {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.egwGridView_scrollarea {
 	width: 100%;
-	border-spacing: 0px;
+	overflow: auto;
+}
+
+.egwGridView_spacer {
+	display: block;
+	background-image: url(imgs/non_loaded_bg.png);
+	background-position: top left;
+}
+
+.egwGridView_outer {
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+	margin: 5px;
+}
+
+.egwGridView_outer td, .egwGridView_outer tr {
+	padding: 0;
+	margin: 0;
+}
+
+.egwGridView_grid td, .egwGridView_grid tr {
+	padding: 2px;
+	margin: 0;
+}
+
+.egwGridView_outer thead th {
+	background-color: #E0E0E0;
+	font-weight: normal;
+	padding: 5px;
+	text-align: left;
+	border-left: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-image: url(imgs/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+}
+
+
+/*----------------------------------------------------------------------------*/
+
+.grid_outer {
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+	margin: 0;
+}
+
+.grid_outer div.scrollarea {
+	overflow: auto;
+	width:100%;
+}
+
+.grid_outer td, .grid_outer tr {
+	padding: 0;
+	margin: 0;
+}
+
+.horizontal_spacer {
+	display: block;
+	background-image: url(imgs/non_loaded_bg.png);
+	background-position: top left;
+}
+
+.selectcols {
+	display: inline-block;
+	width: 10px;
+	height: 9px;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+	background-image: url(imgs/selectcols.png);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.grid {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+
+.grid th.optcol {
+	width: 6px;
+	padding: 0;
+	text-align: center;
 }
 
 .grid tr.hidden {
@@ -66,10 +156,22 @@ body, td, th {
 	font-weight: normal;
 	padding: 5px;
 	text-align: left;
+	border-left: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-image: url(imgs/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+}
+
+	margin: 0;
+	padding: 0;
+	border: none;
 }
 
 .grid td {
-	padding: 0 5px 0 5px;
+	padding: 0;
 	vertical-align: middle;
 }
 

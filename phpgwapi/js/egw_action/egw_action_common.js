@@ -104,9 +104,27 @@ function egwPreventSelect(e)
 
 		return false;
 	}
+
+	return true;
 }
 
 function egwResetPreventSelect(elem)
 {
 }
+
+
+function egwCallAbstract(_obj, _fn, _args)
+{
+	if (_fn)
+	{
+		return _fn.apply(_obj, _args);
+	}
+	else
+	{
+		throw "egw_action Exception: Abstract function call in JS code.";
+	}
+
+	return false;
+}
+
 
