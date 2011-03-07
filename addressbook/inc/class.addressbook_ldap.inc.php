@@ -616,9 +616,6 @@ class addressbook_ldap
 		// create the search filter
 		switch($addressbookType)
 		{
-			case ADDRESSBOOK_ALL:
-				$objectFilter = '(|(objectclass=inetorgperson)(objectclass=posixaccount))';
-				break;
 			case ADDRESSBOOK_ACCOUNTS:
 				$objectFilter = '(objectclass=posixaccount)';
 				break;
