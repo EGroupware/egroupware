@@ -1398,6 +1398,8 @@ class addressbook_ui extends addressbook_bo
 					{
 						$content['adr_one_countrycode'] =
 							$GLOBALS['egw_info']['user']['preferences']['common']['country'];
+						$content['adr_one_countryname'] =
+							$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
 					}
 					if ($this->prefs['fileas_default']) $content['fileas_type'] = $this->prefs['fileas_default'];
 				}
