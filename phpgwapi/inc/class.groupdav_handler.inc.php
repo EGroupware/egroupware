@@ -346,6 +346,7 @@ abstract class groupdav_handler
 				'khtml'             => 'kde',		// KDE clients
 				'neon'              => 'neon',
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
+				'evolution'         => 'evolution',	// Evolution
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
