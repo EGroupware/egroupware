@@ -76,7 +76,7 @@ class calendar_activesync implements activesync_plugin_write
 		foreach ($this->calendar->list_cals() as $label => $entry)
 		{
 			// uncomment next line to get only own calendar
-			//if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
+			if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
 			$folderlist[] = $f = array(
 				'id'	=>	$this->backend->createID('calendar',$entry['grantor']),
 				'mod'	=>	$GLOBALS['egw']->accounts->id2name($entry['grantor'],'account_fullname'),
@@ -303,6 +303,8 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			if (isset($message->$attr)) $event[$key] = $message->$attr;
 		}
+
+		$event['description'] = $this->backend->messagenote2note($message->body, $message->rtf, $message->airsyncbasebody);
 
 		$event['public'] = (int)($message->sensitivity < 1);	// 0=normal, 1=personal, 2=private, 3=confidential
 
@@ -603,6 +605,22 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			if (!empty($event[$key])) $message->$attr = $event[$key];
 		}
+
+		// appoint description
+		if ($bodypreference == false)
+		{
+			$message->body = $event['description'];
+			$message->bodysize = strlen($message->body);
+			$message->bodytruncated = 0;
+		}
+		else
+		{
+			debugLog("airsyncbasebody!");
+			$message->airsyncbasebody = new SyncAirSyncBaseBody();
+			$message->airsyncbasenativebodytype=1;
+			$this->backend->note2messagenote($event['description'], $bodypreference, &$message->airsyncbasebody);
+		}
+
 		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');
 		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 
