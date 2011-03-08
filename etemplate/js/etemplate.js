@@ -216,8 +216,19 @@ function set_style_by_class(t,c,p,v)
 		var node = elements.item(i);
 		for(var j = 0; j < node.attributes.length; j++) {
 			if(node.attributes.item(j).nodeName.toLowerCase() == 'class') {
-				if(node.attributes.item(j).nodeValue == c) {
-					eval('node.style.' + p + " = '" +v + "'");
+				if(node.attributes.item(j).nodeValue.indexOf(' ') == 0) {
+					// Single class
+					if(node.attributes.item(j).nodeValue == c) {
+						eval('node.style.' + p + " = '" +v + "'");
+					}
+				} else {
+					// Multiple classes
+					var classes = node.attributes.item(j).nodeValue.split(' ');
+					for(var k = 0; k < classes.length; k++) {
+						if(classes[k] == c) {
+							eval('node.style.' + p + " = '" +v + "'");
+						}
+					}
 				}
 			}
 		}
