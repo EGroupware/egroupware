@@ -634,3 +634,14 @@ function infolog_upgrade1_6()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.8';
 }
+
+function infolog_upgrade1_8()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_cc',array(
+		'type' => 'varchar',
+		'precision' => '255'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.001';
+}
+

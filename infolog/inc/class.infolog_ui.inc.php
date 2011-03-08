@@ -1649,6 +1649,7 @@ class infolog_ui
 		{
 			$readonlys[$tabs]['history'] = true;
 		}
+		egw_framework::validate_file('.','edit','infolog');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
