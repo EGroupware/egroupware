@@ -112,11 +112,18 @@ class importexport_definitions_bo {
 				importexport_helper_functions::account_id2name(
 					$export_data['definitions'][$definition->name]['allowed_users']
 				);
-			$export_data['definitions'][$definition->name]['owner'] =
-				importexport_helper_functions::account_id2name(
-					$export_data['definitions'][$definition->name]['owner']
-				);
+			if($export_date['definitions'][$definition->name]['owner']) {
+				$export_data['definitions'][$definition->name]['owner'] =
+					importexport_helper_functions::account_id2name(
+						$export_data['definitions'][$definition->name]['owner']
+					);
+			} else {
+				unset($export_data['definitions'][$definition->name]['owner']);
+			}
 			unset($export_data['definitions'][$definition->name]['definition_id']);
+			unset($export_data['definitions'][$definition->name]['description']);
+			unset($export_data['definitions'][$definition->name]['user_timezone_read']);
+			unset($export_data['definitions'][$definition->name]['plugin_options']['user_timezone_read']);
 			unset($definition);
 		}
 
