@@ -254,7 +254,7 @@ leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbruch ohne speichern
 length<br>rows	infolog	de	Länge<br />Zeilen
 limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
-limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Höhe der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
 link	infolog	de	Verknüpfung
 linked to %1	infolog	de	Verknüpft mit %1
 links	infolog	de	Verknüpfungen
@@ -452,7 +452,6 @@ use field from csv if possible	infolog	de	Verwendet die Felder vom CSV, wenn mö
 use search results	infolog	de	Verwendet die Sucherbegnisse
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
 used time	infolog	de	benötigte Zeit
-valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
