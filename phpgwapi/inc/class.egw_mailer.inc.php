@@ -148,5 +148,7 @@ class egw_mailer extends PHPMailer
 	public function AddBCC($address, $name = '')
 	{
 		$this->AddrAppend('Bcc', array(array($address,$name)));
+
+		return parent::AddBCC($address, $name);
 	}
 }
