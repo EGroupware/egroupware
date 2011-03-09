@@ -111,7 +111,7 @@ class calendar_boupdate extends calendar_bo
 	 * +      + +  C   +	which is clearly wrong for everything with a maximum quantity > 1
 	 * ++++++++ ++++++++
 	 */
-	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null)
+	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 
@@ -376,14 +376,18 @@ class calendar_boupdate extends calendar_bo
 			$this->log2file($event2save,$event,$old_event);
 		}
 		// send notifications
-		if ($new_event)
+		if(!$skip_notification)
 		{
-			$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+			if ($new_event)
+			{
+				$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+			}
+			else // update existing event
+			{
+				$this->check4update($event,$old_event);
+			}
 		}
-		else // update existing event
-		{
-			$this->check4update($event,$old_event);
-		}
+
 		// notify the link-class about the update, as other apps may be subscribt to it
 		egw_link::notify_update('calendar',$cal_id,$event);
 
@@ -1180,7 +1184,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $updateTS=true update the content history of the event
 	 * @return int number of changed recurrences
 	 */
-	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true)
+	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false)
 	{
 		$cal_id = is_array($event) ? $event['id'] : $event;
 		//echo "<p>calendar_boupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
@@ -1210,7 +1214,7 @@ class calendar_boupdate extends calendar_bo
 				'A' => MSG_ACCEPTED,
 				'D' => MSG_DELEGATED,
 			);
-			if (isset($status2msg[$status]))
+			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event

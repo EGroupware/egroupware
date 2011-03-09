@@ -199,7 +199,7 @@ class calendar_uiforms extends calendar_ui
 							$exception['recurrence'] != $content['recur_exception'][$key]) continue;
 					$exception['uid'] = common::generate_uid('calendar', $id);
 					$exception['reference'] = $exception['recurrence'] = 0;
-					$this->bo->update($exception, true);
+					$this->bo->update($exception, true, true,false,true,null,$content['no_notifications']);
 					break;
 				}
 				unset($content['recur_exception'][$key]);
@@ -393,7 +393,7 @@ class calendar_uiforms extends calendar_ui
 								{
 									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
-									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
+									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
 										// refreshing the calendar-view with the changed participant-status
 										if($event['recur_type'] != MCAL_RECUR_NONE)
@@ -551,7 +551,7 @@ class calendar_uiforms extends calendar_ui
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
-				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
+				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
 				if (!is_array($conflicts) && $conflicts)
 				{
 					// now we need to add the original start as recur-execption to the series
@@ -632,7 +632,7 @@ class calendar_uiforms extends calendar_ui
 											($last = $occurrence));
 									$last->setTime(0, 0, 0);
 									$old_event['recur_enddate'] = egw_time::to($last, 'ts');
-									if (!$this->bo->update($old_event,true))
+									if (!$this->bo->update($old_event,true,true,false,true,null,$content['no_notifications']))
 									{
 										$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 											lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -689,7 +689,7 @@ class calendar_uiforms extends calendar_ui
 					}
 				}
 				$edit_series_confirmed = false;
-				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
+				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
 				unset($event['ignore']);
 			}
 			if (is_array($conflicts))
@@ -758,7 +758,7 @@ class calendar_uiforms extends calendar_ui
 								$alarms[] = $alarm;
 							}
 							$event['alarm'] = $alarms;
-							$this->bo->update($exception, true, true, true);
+							$this->bo->update($exception, true, true, true,true,null,$content['no_notifications']);
 						}
 					}
 				}
@@ -835,7 +835,7 @@ class calendar_uiforms extends calendar_ui
 							if (!($exception = $this->bo->read($id))) continue;
 							$exception['uid'] = common::generate_uid('calendar', $id);
 							$exception['reference'] = $exception['recurrence'] = 0;
-							$this->bo->update($exception, true);
+							$this->bo->update($exception, true,true,false,true,null,$content['no_notifications']);
 							$exceptions_kept = true;
 						}
 					}
@@ -925,6 +925,7 @@ class calendar_uiforms extends calendar_ui
 			echo "<html><body onload=\"$js\"></body></html>\n";
 			common::egw_exit();
 		}
+		unset($event['no_notifications']);
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
 

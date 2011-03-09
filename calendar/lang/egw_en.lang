@@ -126,6 +126,7 @@ display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?
 do not include events of group members	calendar	en	Do not include events of group members
+do not notify of these changes	calendar	en	Do not notify of these changes
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about changes of appointments you modified?	calendar	en	Do you want to be notified about changes of appointments you modified?
