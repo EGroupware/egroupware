@@ -139,10 +139,9 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			if(!is_numeric($record['cat_id']) && strpos($record['cat_id'], ',') === False) {
-				$this->errors[$import_csv->get_current_position()] = lang('Bad category ID: %1.  Try cat(|[<field_index>]) in definition.', $record['cat_id']);
-				continue;
-			}
+			// Automatically handle text categories without explicit translation
+			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
