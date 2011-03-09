@@ -163,6 +163,9 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			// Automatically handle text categories without explicit translation
+			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+
 			// Set creator, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['creator_from_csv']) {
 				if(!is_numeric($record['ts_owner'])) {
