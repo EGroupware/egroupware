@@ -168,6 +168,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
 
+			// Automatically handle text categories without explicit translation
+			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
                         {
