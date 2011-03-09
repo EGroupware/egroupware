@@ -1,3 +1,9 @@
+egroupware-epl (10.1.20110309-1) hardy; urgency=low
+
+  * fixed in last version not working bcc mail addresses
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 09 Mar 2011 12:37:15 +0100
+
 egroupware-epl (10.1.20110307-1) hardy; urgency=low
 
   * fixed not working delete of application-global categories via "admin >> global categories" in applications
