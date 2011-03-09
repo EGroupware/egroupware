@@ -169,6 +169,9 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 				$record['owner'] = $_definition->plugin_options['owner'];
 			}
 
+			// Automatically handle text categories without explicit translation
+			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+
 			if ($record['participants'] && !is_array($record['participants'])) {
 				// Importing participants in human friendly format
 				preg_match_all('/(([^(]+?)( \(([0-9]+)\))? \((.+?)\) ([^,]+)),?/',$record['participants'],$participants);
