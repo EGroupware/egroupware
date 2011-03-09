@@ -8,7 +8,8 @@ body, td, th {
 	font-size: 11px;
 }
 
-table.egwGridView_grid {
+.egwGridView_grid {
+	table-layout: fixed;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
@@ -19,12 +20,12 @@ table.egwGridView_grid {
 }
 
 .egwGridView_spacer {
-	display: block;
 	background-image: url(imgs/non_loaded_bg.png);
 	background-position: top left;
 }
 
 .egwGridView_outer {
+	table-layout: fixed;
 	border-spacing: 0;
 	border-collapse: collapse;
 	padding: 0;
@@ -37,8 +38,13 @@ table.egwGridView_grid {
 }
 
 .egwGridView_grid td, .egwGridView_grid tr {
-	padding: 2px;
+	border-right: 1px solid silver;
+	padding: 4px 3px 4px 4px;
 	margin: 0;
+}
+
+.egwGridView_grid tr.odd {
+	background-color: #F1F1F1;
 }
 
 .egwGridView_outer thead th {
@@ -53,6 +59,11 @@ table.egwGridView_grid {
 	background-image: url(imgs/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
+}
+
+.egwGridView_outer thead th.optcol {
+	padding: 0;
+	text-align: center;
 }
 
 
@@ -163,11 +174,6 @@ table.egwGridView_grid {
 	background-image: url(imgs/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
-}
-
-	margin: 0;
-	padding: 0;
-	border: none;
 }
 
 .grid td {

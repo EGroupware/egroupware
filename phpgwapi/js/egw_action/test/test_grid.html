@@ -22,8 +22,7 @@
 
 	</head>
 	<body>
-		<div id="container">
-		</div>
+		<div id="container" style="height: 300px"></div>
 		<script>
 			var grid = null;
 			var actionManager = null;
@@ -136,7 +135,32 @@
 					},
 					{
 						"id": "mime",
-						"caption": "File-Type/MIME"
+						"caption": "File-Type/MIME with very long column header caption"
+					},
+					{
+						"id": "atime",
+						"caption": "atime",
+						"width": "40px"
+					},
+					{
+						"id": "ctime",
+						"caption": "ctime",
+						"width": "40px"
+					},
+					{
+						"id": "mtime",
+						"caption": "mtime",
+						"width": "40px"
+					},
+					{
+						"id": "owner",
+						"caption": "owner",
+						"width": "40px"
+					},
+					{
+						"id": "group",
+						"caption": "group",
+						"width": "40px"
 					}
 				]
 				);
@@ -157,13 +181,13 @@
 				grid.beginUpdate();
 				function recurse_add(item, obj, depth)
 				{
-					for (var i = 1; i <= 6; i++)
+					for (var i = 1; i <= 20; i++)
 					{
 						var id = "file" + i;
 						var it = item.addItem(id, "Test" + i, "imgs/mime16_directory.png", info);
 						var _obj = obj.addObject(id, it.getAOI());
 						_obj.updateActionLinks(listboxFolderLinks);
-						if (depth < 4)
+						if (depth < 0)
 							recurse_add(it, _obj, depth + 1);
 					}
 				}

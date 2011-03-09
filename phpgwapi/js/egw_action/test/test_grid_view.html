@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"> 
+	<head>
+		<title>Grid Test</title>
+
+		<!-- Basic action stuff -->
+		<script src="../egw_action.js"></script>
+		<script src="../egw_action_common.js"></script>
+
+		<!-- Grid stuff -->
+		<script src="../egw_grid_view.js"></script>
+		<script src="../egw_grid_columns.js"></script>
+		<script src="../egw_grid_data.js"></script>
+		<script src="../egw_grid.js"></script>
+
+		<script src="js/jquery.js"></script>
+		<link rel="stylesheet" href="grid.css"/>
+	</head>
+	<body>
+		<h1>Test for dynamically displaying and loading grid lines (0,1 Mio Entries)</h1>
+		<div id="container"></div>
+		<script>
+			var grid = null;
+			var actionManager = null;
+			var objectManager = null;
+
+			var columns = 
+				[
+					{
+						"caption": "Name",
+						"width": "33%",
+						"type": EGW_COL_TYPE_NAME_ICON_FIXED
+					},
+					{
+						"id": "size",
+						"caption": "Size"
+					},
+					{
+						"id": "rights",
+						"caption": "UNIX Filerights",
+						"default": "---------"
+					},
+					{
+						"id": "mime",
+						"caption": "File-Type/MIME"
+					},
+					{
+						"id": "atime",
+						"caption": "atime"
+					},
+					{
+						"id": "ctime",
+						"caption": "ctime"
+					},
+					{
+						"id": "mtime",
+						"caption": "mtime"
+					},
+					{
+						"id": "owner",
+						"caption": "owner"
+					},
+					{
+						"id": "group",
+						"caption": "group"
+					}
+				];
+
+			function fetchDataProc(_elems, _columns)
+			{
+				console.log("Fetch Data Proc: ", _elems, _columns);
+			}
+
+			$(document).ready(function() {
+				actionManager = new egwActionManager();
+				objectManager = new egwActionObjectManager("", actionManager);
+
+				grid = new egwGrid($("#container"), columns, objectManager, fetchDataProc,
+					window);
+				grid.dataRoot.loadData(
+					[
+						{
+							"entryType": EGW_DATA_TYPE_RANGE,
+							"prefix": "root_elem_",
+							"count": 100000
+						}
+					]
+				);
+				grid.resize(1500, 650);
+			});
+
+			function check_positions()
+			{
+				var g = grid.gridOuter.grid;
+				var delta = - g.scrollarea.offset().top;
+				for (var i = 0; i < g.children.length; i++)
+				{
+					var rtop = g.children[i].parentNode.offset().top + g.scrollarea.scrollTop() - g.scrollarea.offset().top;
+					var itop = g.children[i].position;
+
+					console.log(Math.round(itop - rtop));
+				}
+			}
+		</script>
+	</body>
+</html>

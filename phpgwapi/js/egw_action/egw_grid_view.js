@@ -9,15 +9,25 @@
  * @version $Id$
  */
 
+//TODO: Spacer itemHeight should automatically be set to the average item height in the
+//	grid to solve the "stutters" when scrolling up.
+//TODO (minor): Do auto cleanup - remove elements from the view again after they
+//	haven't been viewed for a certain time.
+
+/*
+uses
+	egw_action_common,
+	egw_action_data,
+	jquery;
+*/
+
 /**
- * View Classes for the egw grid component.
+ * Common functions used in most view classes
  */
 
-
 /**
- * Common functions used in all classes
+ * Returns an "area" object with the given top position and height
  */
-
 function egwArea(_top, _height)
 {
 	return {
@@ -26,11 +36,18 @@ function egwArea(_top, _height)
 	}
 }
 
+/**
+ * Returns whether two area objects intersect each other
+ */
 function egwAreaIntersect(_ar1, _ar2)
 {
 	return ! (_ar1.bottom < _ar2.top || _ar1.top > _ar2.bottom);
 }
 
+/**
+ * Returns whether two areas intersect (result = 0) or their relative position
+ * to each other (used to do a binary search inside a list of sorted area objects).
+ */
 function egwAreaIntersectDir(_ar1, _ar2)
 {
 	if (_ar1.bottom < _ar2.top)
@@ -47,14 +64,205 @@ function egwAreaIntersectDir(_ar1, _ar2)
 
 /** -- egwGridViewOuter Class -- **/
 
+var EGW_GRID_COLUMN_PADDING = 2;
+var EGW_GRID_SCROLLBAR_WIDTH = false;
+
 /**
- * TODO
+ * Base view class which is responsible for displaying a grid view element.
+ *
+ * @param object _parentNode is the DOM-Node into which the grid view will be inserted
+ * @param object _data is the data-provider object which contains/loads the grid rows
+ * 	and contains their data.
  */
-function egwGridViewOuter()
+function egwGridViewOuter(_parentNode, _dataRoot)
 {
+	this.parentNode = $(_parentNode);
+	this.dataRoot = _dataRoot;
+
+	// Build the base nodes
+	this.outer_table = null;
+	this.outer_thead = null;
+	this.outer_head_tr = null;
+	this.outer_tbody = null;
+	this.outer_tr = null;
+	this.optcol = null;
+	this.selectcols = null;
+
+	this.oldWidth = 0;
+	this.oldHeight = 0;
+	this.headerHeight = 0;
+	this.scrollbarWidth = 0;
+
+	this.headerColumns = [];
+
+	this.buildBase();
+	this.parentNode.append(this.outer_table);
+
+	// Read the scrollbar width
+	this.scrollbarWidth = Math.max(10, this.getScrollbarWidth());
+
+	// Start value for the average row height
+	this.avgRowHeight = 23.0;
+	this.avgRowCnt = 1;
+
+	// Insert the base grid container into the DOM-Tree
+	this.grid = new egwGridViewGrid(null, null, true, this); // (No parent grid, no height change callback, scrollable)
+	this.grid.insertIntoDOM(this.outer_tr, []);
 }
 
+/**
+ * Adds a new element to the average container height counter.
+ */
+egwGridViewOuter.prototype.addHeightToAvg = function(_value)
+{
+	this.avgRowCnt++;
 
+	var frac = 1.0 / this.avgRowCnt;
+	this.avgRowHeight = this.avgRowHeight * (1 - frac) + _value * frac;
+}
+
+/**
+ * Removes all containers from the base grid and replaces it with spacers again.
+ * As only partial data is displayed, this method is faster than updating every
+ * displayed data row. Please note that this may also reset/change the scrollbar
+ * position.
+ */
+egwGridViewOuter.prototype.empty = function()
+{
+	this.grid.empty(this.columns);
+
+	// Create a new spacer container and set the item list to the root level children
+	var spacer = this.grid.insertContainer(-1, egwGridViewSpacer, this.avgRowHeight);
+	this.dataRoot.getChildren(function(_children) {
+		spacer.setItemList(_children);
+	}, null);
+}
+
+/**
+ * Sets the column data which is retrieved by calling egwGridColumns.getColumnData.
+ * The columns will be updated.
+ */
+egwGridViewOuter.prototype.updateColumns = function(_columns)
+{
+	// Copy the columns data
+	this.columns = _columns;
+
+	// Rebuild the header
+	this.buildBaseHeader();
+
+	// Set the grid width
+	this.grid.outerNode.attr("colspan", _columns.length + 1);
+
+	// Empty the grid
+	this.empty();
+}
+
+egwGridViewOuter.prototype.buildBase = function()
+{
+	/*
+		Structure:
+		<table class="egwGridView_outer">
+			<thead>
+				<tr> [HEAD] </tr>
+			</thead>
+			<tbody>
+				<tr> [GRID CONTAINER] </tr>
+			</tbody>
+		</table>
+	*/
+
+	this.outer_table = $(document.createElement("table"));
+	this.outer_table.addClass("egwGridView_outer");
+	this.outer_thead = $(document.createElement("thead"));
+	this.outer_tbody = $(document.createElement("tbody"));
+	this.outer_tr = $(document.createElement("tr"));
+	this.outer_head_tr = $(document.createElement("tr"));
+
+	this.outer_table.append(this.outer_thead, this.outer_tbody);
+	this.outer_tbody.append(this.outer_tr);
+	this.outer_thead.append(this.outer_head_tr);
+}
+
+egwGridViewOuter.prototype.buildBaseHeader = function()
+{
+	// Build the "option-column", if this hasn't been done yet
+	if (!this.optcol)
+	{
+		// Build the "select columns" icon
+		this.selectcols = $(document.createElement("span"));
+		this.selectcols.addClass("selectcols");
+
+		// Build the option column
+		this.optcol = $(document.createElement("th"));
+		this.optcol.addClass("optcol");
+		this.optcol.append(this.selectcols);
+	}
+
+	// Create the head columns
+	this.outer_head_tr.empty();
+	this.headerColumns = [];
+
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		col = this.columns[i];
+
+		// Create the column element and insert it into the DOM-Tree
+		var column = $(document.createElement("th"));
+		column.html(col.caption);
+		this.outer_head_tr.append(column);
+
+		// Set the width of the column
+		var border = column.outerWidth() - column.width();
+		column.css("width", (col.width - border) + "px");
+		col.drawnWidth = column.outerWidth();
+
+		this.headerColumns.push(column);
+	}
+
+	// Append the option column and set its width of the last column
+	this.outer_head_tr.append(this.optcol);
+	
+	this.optcol.css("width", this.scrollbarWidth - this.optcol.outerWidth()
+		+ this.optcol.width() + 1); // The "1" is a "security pixel" which prevents a horizontal scrollbar form occuring on IE7
+
+	this.headerHeight = this.outer_thead.height();
+}
+
+egwGridViewOuter.prototype.getScrollbarWidth = function()
+{
+	if (EGW_GRID_SCROLLBAR_WIDTH === false)
+	{
+		// Create a temporary td and two div, which are inserted into the dom-tree
+		var td = $(document.createElement("td"));
+		var div_outer = $(document.createElement("div"));
+		var div_inner = $(document.createElement("div"));
+
+		// The outer div has a fixed size and "overflow" set to auto. When the second
+		// div is inserted, it will be forced to display a scrollbar.
+		div_outer.css("height", "100px");
+		div_outer.css("width", "100px");
+		div_outer.css("overflow", "auto");
+
+		div_inner.css("height", "1000px");
+
+		this.outer_tr.append(td);
+		td.append(div_outer);
+		div_outer.append(div_inner);
+
+		// Store the scrollbar width statically.
+		EGW_GRID_SCROLLBAR_WIDTH = div_outer.outerWidth() - div_inner.outerWidth();
+
+		// Remove the temporary elements again.
+		this.outer_tr.empty();
+	}
+
+	return EGW_GRID_SCROLLBAR_WIDTH;
+}
+
+egwGridViewOuter.prototype.setHeight = function(_h)
+{
+	this.grid.setScrollHeight(_h - this.headerHeight);
+}
 
 
 /** -- egwGridViewContainer Interface -- **/
@@ -76,11 +284,11 @@ function egwGridViewContainer(_grid, _heightChangeProc)
 	this.parentNode = null;
 	this.columns = [];
 	this.height = false;
+	this.assumedHeight = false;
 	this.index = 0;
 	this.viewArea = false;
 
 	this.doInsertIntoDOM = null;
-	this.doUpdateColumns = null;
 	this.doSetViewArea = null;
 }
 
@@ -164,16 +372,6 @@ egwGridViewContainer.prototype.insertIntoDOM = function(_parentNode, _columns)
 	return false;
 }
 
-egwGridViewContainer.prototype.updateColumns = function(_columns)
-{
-	this.columns = _columns;
-	if (_parentNode)
-	{
-		return egwCallAbstract(this, this.doUpdateColumns, arguments);
-	}
-	return false;
-}
-
 egwGridViewContainer.prototype.setViewArea = function(_area, _force)
 {
 	// Calculate the relative coordinates and pass those to the implementation
@@ -217,16 +415,20 @@ egwGridViewContainer.prototype.setPosition = function(_top)
 /**
  * Returns the height of the container in pixels and zero if the element is not
  * visible. The height is clamped to positive values.
+ *
+ * TODO: This function consumes 70-80% of the update time! Do something to improve
+ * 	this!
  */
 egwGridViewContainer.prototype.getHeight = function()
 {
 	if (this.visible && this.parentNode)
 	{
-		if (this.height === false)
+		if (this.height === false && this.assumedHeight === false)
 		{
 			this.height = this.parentNode.outerHeight();
 		}
-		return this.height;
+
+		return this.height !== false ? this.height : this.assumedHeight;
 	}
 	else
 	{
@@ -236,6 +438,7 @@ egwGridViewContainer.prototype.getHeight = function()
 
 egwGridViewContainer.prototype.invalidateHeightCache = function()
 {
+	this.assumedHeight = false;
 	this.height = false;
 }
 
@@ -286,11 +489,16 @@ egwGridViewContainer.prototype.getArea = function()
 
 /** -- egwGridViewGrid Class -- **/
 
+var EGW_GRID_VIEW_EXT = 25;
+var EGW_GRID_MAX_CYCLES = 10;
+var EGW_GRID_SCROLL_TIMEOUT = 100;
+var EGW_GRID_UPDATE_HEIGHTS_TIMEOUT = 50;
+
 /**
  * egwGridViewGrid is the container for egwGridViewContainer objects, but itself
  * implements the egwGridViewContainer interface.
  */
-function egwGridViewGrid(_grid, _heightChangeProc, _scrollable)
+function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 {
 	if (typeof _scrollable == "undefined")
 	{
@@ -307,6 +515,7 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable)
 	container.scrollHeight = 100;
 	container.scrollEvents = 0;
 	container.didUpdate = false;
+	container.updateIndex = 0;
 	container.setupContainer = egwGridViewGrid_setupContainer;
 	container.insertContainer = egwGridViewGrid_insertContainer;
 	container.removeContainer = egwGridViewGrid_removeContainer;
@@ -314,16 +523,33 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable)
 	container.heightChangeHandler = egwGridViewGrid_heightChangeHandler;
 	container.setScrollHeight = egwGridViewGrid_setScrollHeight;
 	container.scrollCallback = egwGridViewGrid_scrollCallback;
+	container.empty = egwGridViewGrid_empty;
+	container.getOuter = egwGridViewGrid_getOuter;
+	container.updateAssumedHeights = egwGridViewGrid_updateAssumedHeights;
 	container.children = [];
+	container.outer = _outer;
 
 	// Overwrite the abstract container interface functions
 	container.invalidateHeightCache = egwGridViewGrid_invalidateHeightCache;
 	container.getHeight = egwGridViewGrid_getHeight;
-	container.doUpdateColumns = egwGridViewGrid_doUpdateColumns;
 	container.doInsertIntoDOM = egwGridViewGrid_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewGrid_doSetviewArea;
 
 	return container;
+}
+
+function egwGridViewGrid_getOuter()
+{
+	if (this.outer)
+	{
+		return this.outer;
+	}
+	else if (this.grid)
+	{
+		return this.grid.getOuter();
+	}
+
+	return null;
 }
 
 function egwGridViewGrid_setupContainer()
@@ -352,10 +578,11 @@ function egwGridViewGrid_setupContainer()
 		this.scrollarea.addClass("egwGridView_scrollarea");
 		this.scrollarea.css("height", this.scrollHeight + "px");
 		this.scrollarea.scroll(this, function(e) {
+			e.data.scrollEvents++;
+			var cnt = e.data.scrollEvents;
 			window.setTimeout(function() {
-				e.data.scrollEvents++;
-				e.data.scrollCallback(e.data.scrollEvents);
-			}, 50);
+				e.data.scrollCallback(cnt);
+			}, EGW_GRID_SCROLL_TIMEOUT);
 		});
 	}
 
@@ -388,10 +615,6 @@ function egwGridViewGrid_setScrollHeight(_value)
 	}
 }
 
-var
-	EGW_GRID_VIEW_EXT = 50;
-	EGW_GRID_MAX_CYCLES = 10;
-
 function egwGridViewGrid_scrollCallback(_event)
 {
 	if ((typeof _event == "undefined" || _event == this.scrollEvents) && this.scrollarea)
@@ -399,23 +622,85 @@ function egwGridViewGrid_scrollCallback(_event)
 		var cnt = 0;
 		var area = egwArea(this.scrollarea.scrollTop() - EGW_GRID_VIEW_EXT,
 			this.scrollHeight + EGW_GRID_VIEW_EXT * 2);
-		do {
-			cnt++;
-			this.didUpdate = false;
-			this.setViewArea(area);
-		} while (this.didUpdate && cnt < EGW_GRID_MAX_CYCLES);
 
-//		console.log(cnt);
-
-		if (cnt == EGW_GRID_MAX_CYCLES)
-		{
-			if (this.console && this.console.info)
-			{
-				this.console.info("Too many update cycles. Aborting.")
-			}
-		}
+		// Set view area sets the "didUpdate" variable to false
+		this.setViewArea(area);
 
 		this.scrollEvents = 0;
+	}
+}
+
+function egwGridViewGrid_updateAssumedHeights(_maxCount)
+{
+	var traversed = 0;
+	var cnt = _maxCount;
+	var outer = this.getOuter();
+
+	try
+	{
+		this.inUpdate = true;
+
+		while (traversed < this.children.length && cnt > 0)
+		{
+			// Clamp the update index
+			if (this.updateIndex >= this.children.length)
+			{
+				this.updateIndex = 0;
+			}
+
+			// Get the child at the given position and check whether it used
+			// an assumed height
+			var child = this.children[this.updateIndex];
+			if (child.assumedHeight !== false)
+			{
+				// Get the difference (delta) between the assumed and the real
+				// height
+				var oldHeight = child.assumedHeight;
+				child.invalidateHeightCache();
+				var newHeight = child.getHeight();
+				outer.addHeightToAvg(newHeight);
+
+				// Offset the position of all following elements by the delta.
+				var delta = newHeight - oldHeight;
+				if (Math.abs(delta) > 0.001)
+				{
+					for (var j = this.updateIndex + 1; j < this.children.length; j++)
+					{
+						this.children[j].offsetPosition(delta);
+					}
+				}
+
+				// We've now worked on one element with assumed height, decrease
+				// the counter
+				cnt--;
+			}
+
+			// Increment the element index and the count of checked elements
+			this.updateIndex++;
+			traversed++;
+		}
+	}
+	finally
+	{
+		this.inUpdate = false;
+	}
+
+	var self = this;
+
+	if (cnt == 0)
+	{
+		// If the maximum-update-count has been exhausted, retrigger this function
+		window.setTimeout(function() {
+			self.updateAssumedHeights(_maxCount);
+		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+	}
+	else
+	{
+		// Otherwise, all elements have been checked - we'll now call "setViewArea"
+		// which may check whether new objects are now in the currently visible range
+		window.setTimeout(function() {
+			self.setViewArea(self.viewArea);
+		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
 	}
 }
 
@@ -461,7 +746,8 @@ function egwGridViewGrid_insertContainer(_after, _class, _params)
 
 	// Offset the position of all following elements by the height of the container
 	// and move the index of those elements
-	var height = container.getHeight();
+	var height = this.getOuter().avgRowHeight; //container.getHeight(); // This took a lot of time.
+	container.assumedHeight = height;
 	for (var i = idx + 1; i < this.children.length; i++)
 	{
 		this.children[i].offsetPosition(height);
@@ -493,6 +779,17 @@ function egwGridViewGrid_removeContainer(_container)
 	}
 
 	this.children.splice(idx, 1);
+}
+
+function egwGridViewGrid_empty(_newColumns)
+{
+	if (typeof _newColumns != "undefined")
+	{
+		this.columns = _newColumns;
+	}
+
+	this.innerNode.empty();
+	this.children = [];
 }
 
 function egwGridViewGrid_addContainer(_class)
@@ -540,8 +837,9 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 {
 	this.didUpdate = true;
 
-	// Get the height-change
-	var oldHeight = _elem.height === false ? 0 : _elem.height;
+	// Get the height-change	
+	var oldHeight = _elem.assumedHeight !== false ? _elem.assumedHeight :
+		(_elem.height === false ? 0 : _elem.height);
 	_elem.invalidateHeightCache(false);
 	var newHeight = _elem.getHeight();
 	var offs = newHeight - oldHeight;
@@ -557,29 +855,19 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 	this.callHeightChangeProc();
 }
 
-
 function egwGridViewGrid_doInsertIntoDOM()
 {
 	// Generate the DOM Nodes and append the outer node to the parent node
 	this.setupContainer();
 	this.parentNode.append(this.outerNode);
 
-	this.doUpdateColumns();
-}
-
-function egwGridViewGrid_doUpdateColumns(_columns)
-{
-	this.outerNode.attr("colspan", this.columns.length);
-
-	for (var i = 0; i < this.children.length; i++)
-	{
-		this.children[i].doUpdateColumns(_columns)
-	}
+	this.outerNode.attr("colspan", this.columns.length + (this.scrollable ? 1 : 0));
 }
 
 function egwGridViewGrid_doSetviewArea(_area)
 {
 	// Do a binary search for elements which are inside the given area
+	this.didUpdate = false;
 	var elem = null;
 	var elems = [];
 
@@ -651,6 +939,18 @@ function egwGridViewGrid_doSetviewArea(_area)
 	}
 
 	this.inUpdate = false;
+
+	// If an update has been done, check whether any height assumptions have been
+	// done. This procedure is executed with some delay, as this gives the browser
+	// the time to insert the newly generated objects into the DOM-Tree and allows
+	// us to read their height at a very fast rate.
+	if (this.didUpdate)
+	{
+		var self = this;
+		window.setTimeout(function() {
+			self.updateAssumedHeights(20);
+		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+	}
 }
 
 /** -- egwGridViewRow Class -- **/
@@ -663,40 +963,126 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	// source
 	container.item = _item;
 
+	// Set a few new functions/properties
+	container.isOdd = 0;
+	container.aoiSetup = egwGridViewRow_aoiSetup;
+	container.getAOI = egwGridViewRow_getAOI;
+	container.checkOdd = egwGridViewRow_checkOdd;
+
 	// Overwrite the inherited abstract functions
 	container.doInsertIntoDOM = egwGridViewRow_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewRow_doSetViewArea;
-	container.doUpdateColumns = egwGridViewRow_doUpdateColumns;
 
 	return container;
 }
 
-function egwGridViewRow_doInsertIntoDOM()
+/**
+ * Creates AOI instance of the item and overwrites all necessary functions.
+ */
+function egwGridViewRow_aoiSetup()
 {
-	this.doUpdateColumns();
+	this.aoi = new egwActionObjectInterface();
+
+	// The default state of an aoi is EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE -
+	// egwGridItems are not necessarily visible by default
+	this.aoi._state = EGW_AO_STATE_NORMAL;
+	this.aoi.row = this;
+	this.aoi.doSetState = egwGridViewRow_aoiSetState;
+	this.aoi.getDOMNode = egwGridViewRow_aoiGetDOMNode;
 }
 
-function egwGridViewRow_doUpdateColumns()
+function egwGridViewRow_aoiSetState(_state, _shiftState)
+{
+	if (this.row.parentNode)
+	{
+		this.row.parentNode.toggleClass("selected", egwBitIsSet(_state,
+			EGW_AO_STATE_SELECTED));
+		this.row.parentNode.toggleClass("focused", egwBitIsSet(_state,
+			EGW_AO_STATE_FOCUSED));
+	}
+}
+
+function egwGridViewRow_aoiGetDOMNode()
+{
+	return this.row.parentNode ? this.row.parentNode : null;
+}
+
+/**
+ * Returns the actionObjectInterface object of this grid item.
+ */
+function egwGridViewRow_getAOI()
+{
+	return this.aoi;
+}
+
+var
+	EGW_GRID_VIEW_ROW_BORDER = false;
+
+function egwGridViewRow_doInsertIntoDOM()
 {
 	this.parentNode.empty();
 
+	// Setup the aoi and inform the item about it
+	if (!this.aoi)
+	{
+		this.aoiSetup();
+		this.item.setGridViewObj(this);
+	}
+
+	// Check whether this element is odd
+	this.checkOdd();
+
+	// Read the column data
+	/*var ids = [];
 	for (var i = 0; i < this.columns.length; i++)
 	{
-		var td = $(document.createElement("td"));
-		td.text(this.item + ", col" + i);
+		ids.push(this.columns[i].id);
+	}
 
+	data = this.item.getData(ids);*/
+
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		var col = this.columns[i];
+		var td = $(document.createElement("td"));
+
+		//if (typeof data[this.columns[i].id] != "undefined")
+		{
+			td.html("col" + i);
+		}
 		this.parentNode.append(td);
+
+		// Set the column width
+		if (EGW_GRID_VIEW_ROW_BORDER === false)
+		{
+			EGW_GRID_VIEW_ROW_BORDER = td.outerWidth() - td.width();
+		}
+		td.css("width", col.drawnWidth - EGW_GRID_VIEW_ROW_BORDER);
+
 	}
 
 	this.checkViewArea();
 }
 
-function egwGridViewRow_doSetViewArea()
+function egwGridViewRow_checkOdd()
 {
-	//TODO: Load the data for the columns and load it.
+	if (this.item && this.parentNode)
+	{
+		// Update the "odd"-Class of the item
+		var odd = this.item.isOdd();
+
+		if (this.isOdd === 0 || this.isOdd != odd)
+		{
+			$(this.parentNode).toggleClass("odd", odd);
+			this.isOdd = odd;
+		}
+	}
 }
 
-
+function egwGridViewRow_doSetViewArea()
+{
+	this.checkOdd();
+}
 
 
 /** -- egwGridViewSpacer Class -- **/
@@ -719,7 +1105,6 @@ function egwGridViewSpacer(_grid, _heightChangeProc, _itemHeight)
 	// Overwrite the inherited functions
 	container.doInsertIntoDOM = egwGridViewSpacer_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewSpacer_doSetViewArea;
-	container.doUpdateColumns = egwGridViewSpacer_doUpdateColumns;
 
 	return container;
 }
@@ -735,19 +1120,27 @@ function egwGridViewSpacer_setItemList(_items)
 	}
 }
 
+/**
+ * Creates the spacer DOM-Node and inserts it into the DOM-Tree.
+ */
 function egwGridViewSpacer_doInsertIntoDOM()
 {
 	this.domNode = $(document.createElement("td"));
 	this.domNode.addClass("egwGridView_spacer");
 	this.domNode.css("height", (this.items.length * this.itemHeight) + "px");
+	this.domNode.attr("colspan", this.columns.length);
 
 	this.parentNode.append(this.domNode);
-
-	this.doUpdateColumns();
 }
 
+/**
+ * Checks which elements this spacer contains are inside the given area and
+ * creates those.
+ */
 function egwGridViewSpacer_doSetViewArea()
 {
+	var avgHeight = this.grid.getOuter().avgRowHeight;
+
 	// Get all items which are in the view area
 	var top = Math.max(0, Math.floor(this.viewArea.top / this.itemHeight));
 	var bot = Math.min(this.items.length, Math.ceil(this.viewArea.bottom / this.itemHeight));
@@ -763,30 +1156,26 @@ function egwGridViewSpacer_doSetViewArea()
 	// Insert the new rows in the parent grid in front of the spacer container
 	for (var i = it_mid.length - 1; i >= 0; i--)
 	{
-		this.grid.insertContainer(idx - 1, egwGridViewRow, it_mid[i]);
+		this.grid.insertContainer(idx - 1, it_mid[i].type, it_mid[i]);
 	}
 
 	// If top was greater than 0, insert a new spacer in front of the 
 	if (it_top.length > 0)
 	{
-		var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, this.itemHeight);
+		var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, avgHeight);
 		spacer.setItemList(it_top)
 	}
 
 	// If there are items left at the bottom of the spacer, set theese as items of this spacer
 	if (it_bot.length > 0)
 	{
+		this.itemHeight = avgHeight;
 		this.setItemList(it_bot);
 	}
 	else
 	{
 		this.grid.removeContainer(this);
 	}
-}
-
-function egwGridViewSpacer_doUpdateColumns()
-{
-	this.domNode.attr("colspan", this.columns.length);
 }
 
 

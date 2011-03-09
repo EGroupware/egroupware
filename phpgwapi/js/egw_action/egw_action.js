@@ -42,8 +42,8 @@ function egwAction(_id, _handler, _caption, _iconUrl, _onExecute, _allowOnMultip
 		throw "egwAction _id must be a non-empty string!";
 	if (typeof _handler == "undefined")
 		this.handler = null;
-	if (typeof _label == "undefined")
-		_label = "";
+	if (typeof _caption == "undefined")
+		_caption = "";
 	if (typeof _iconUrl == "undefined")
 		_iconUrl = "";
 	if (typeof _onExecute == "undefined")
@@ -394,15 +394,35 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 	this.selectedChildren = [];
 	this.focusedChild = null;
 
-	this.iface = _iface;
+	this.setAOI(_iface);
 	this.iface.setStateChangeCallback(this._ifaceCallback, this);
 	this.iface.setReconnectActionsCallback(this._reconnectCallback, this);
 }
 
 /**
+ * Sets the action object interface - if "NULL" is given, the iface is set
+ * to a dummy interface which is used to store the temporary data.
+ */
+egwActionObject.prototype.setAOI = function(_aoi)
+{
+	if (_aoi == null)
+	{
+		_aoi = new egwActionObjectDummyInterface();
+	}
+
+	// Copy the state from the old interface
+	if (this.iface)
+	{
+		_aoi.setState(this.iface.getState());
+	}
+
+	// Replace the interface object
+	this.iface = _aoi;
+}
+
+/**
  * Returns the object from the tree with the given ID
  */
-//TODO: Add "ById"-Suffix to all other of those functions.
 //TODO: Add search function to egw_action_commons.js
 egwActionObject.prototype.getObjectById = function(_id)
 {
@@ -927,7 +947,7 @@ egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
 	}
 	else
 	{
-		if (this.focusedChild = _child)
+		if (this.focusedChild == _child)
 		{
 			this.focusedChild = null;
 		}
@@ -1357,6 +1377,13 @@ egwActionObjectInterface.prototype.getState = function()
 {
 	return this._state;
 }
+
+
+
+
+/** -- egwActionObjectDummyInterface Class -- **/
+
+var egwActionObjectDummyInterface = egwActionObjectInterface;
 
 /** egwActionObjectManager Object **/
 
