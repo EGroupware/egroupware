@@ -1269,7 +1269,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_acl=false true for no ACL check, default do ACL check
 	 * @return boolean true on success, false on error (usually permission denied)
 	 */
-	function delete($cal_id,$recur_date=0,$ignore_acl=false)
+	function delete($cal_id,$recur_date=0,$ignore_acl=false,$skip_notification=false)
 	{
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
@@ -1278,7 +1278,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// Don't send notification if the event has already been deleted
-		if(!$event['deleted'])
+		if(!$event['deleted'] && !$skip_notification)
 		{
 			$this->send_update(MSG_DELETED,$event['participants'],$event);
 		}

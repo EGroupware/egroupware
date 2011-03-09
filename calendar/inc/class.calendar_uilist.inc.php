@@ -131,7 +131,7 @@ class calendar_uilist extends calendar_ui
 			else
 			{
 				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
-					$success,$failed,$action_msg,'calendar_list',$msg))
+					$success,$failed,$action_msg,'calendar_list',$msg, $content['no_notifications']))
 				{
 					$msg .= lang('%1 event(s) %2',$success,$action_msg);
 				}
@@ -478,7 +478,7 @@ class calendar_uilist extends calendar_ui
          * @param string/array $session_name 'calendar_list'
          * @return boolean true if all actions succeded, false otherwise
          */
-        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg,$skip_notification=false)
         {
 		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
@@ -550,7 +550,7 @@ class calendar_uilist extends calendar_ui
 					$action_msg = lang('deleted');
                                         if ($id && $this->bo->check_perms(EGW_ACL_DELETE,$id))
 					{
-						if($this->bo->delete($id, $recur_date)) 
+						if($this->bo->delete($id, $recur_date,false,$skip_notification)) 
 						{
 							$success++;
 						}
@@ -583,7 +583,8 @@ class calendar_uilist extends calendar_ui
 						{
 							//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
 							$new_status = calendar_so::combine_status($status, $quantity, $role);
-							if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date))
+							if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
+								false,true,$skip_notification))
 							{
 								$success++;
 								$msg = lang('Status changed');
