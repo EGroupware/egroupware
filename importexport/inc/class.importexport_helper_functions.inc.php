@@ -191,7 +191,7 @@ class importexport_helper_functions {
 	 * category isn't found, it will be automaticaly added.
 	 *
 	 * Patterns as well as the replacement can be regular expressions (the replacement is done
-	 * via ereg_replace).
+	 * via str_replace).
 	 *
 	 * @param array _record reference with record to do the conversion with
 	 * @param array _conversion array with conversion description
@@ -238,12 +238,12 @@ class importexport_helper_functions {
 			}
 			$c_functions = implode('|', $c_functions);
 			foreach ( $rvalues as $pattern => $replace ) {
-				if( ereg( (string)$pattern, $val) ) {
+				if( preg_match('/'. (string)$pattern.'/', $val) ) {
 
-					$val = ereg_replace( (string)$pattern, $replace, (string)$val );
+					$val = preg_replace( '/'.(string)$pattern.'/', $replace, (string)$val );
 
-					$reg = '\|\[([a-zA-Z_0-9]+)\]';
-					while( ereg( $reg, $val, $vars ) ) {
+					$reg = '/\|\[([a-zA-Z_0-9]+)\]/';
+					while( preg_match( $reg, $val, $vars ) ) {
 						// expand all _record fields
 						$val = str_replace(
 							$CPre . $vars[1] . $CPos,
