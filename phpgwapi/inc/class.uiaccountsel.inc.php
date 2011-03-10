@@ -433,7 +433,7 @@ function addOption(id,label,value,do_onchange)
 			$link_data['group_id'] = $group['account_id'];
 
 			$GLOBALS['egw']->template->set_var('onclick',"addOption('$element_id','".
-				common::grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+				addslashes(common::grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
 				(!$multiple ? '; window.close()' : ''));
 
 			if (!$app || in_array($group['account_id'],$app_groups))
@@ -445,6 +445,9 @@ function addOption(id,label,value,do_onchange)
 				if($use == 'both')	// allow selection of groups
 				{
 					$GLOBALS['egw']->template->fp('cal','group_cal',True);
+					$GLOBALS['egw']->template->set_var('js_addAllGroups',"addOption('$element_id','".
+						addslashes(common::grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
+						(!$multiple ? '; window.close();' : ';'));
 				}
 				else
 				{
@@ -501,10 +504,13 @@ function addOption(id,label,value,do_onchange)
 				'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 				'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
 				'onclick'	=> "addOption('$element_id','".
-					common::grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+					addslashes(common::grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ''),
 			));
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
+			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"addOption('$element_id','".
+					addslashes(common::grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
+					(!$multiple ? '; window.close()' : ';'));
 		}
 
 		$GLOBALS['egw']->template->set_var('accountsel_icon',html::image('phpgwapi','users-big'));
