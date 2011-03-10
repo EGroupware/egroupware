@@ -132,10 +132,8 @@ class notifications_ajax {
 		if(count($notify_folders) == 0) {
 			return true; //no folders configured for notifying - exit
 		}
-		// explicit require bofelamimail, 'til it get a autoloading conform name
-		require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.bofelamimail.inc.php');
 
-		$bofelamimail = new bofelamimail($GLOBALS['egw']->translation->charset());
+		$bofelamimail = felamimail_bo::getInstance();
 		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
 		$bufferFMailSession = $bofelamimail->sessionData;
 		if(!$bofelamimail->openConnection()) {
@@ -169,7 +167,7 @@ class notifications_ajax {
 		}
 		// restore the felamimail session data, as they are needed by the app itself
 		$bofelamimail->sessionData = $bufferFMailSession;
-		$bofelamimail->saveSessionData(); 
+		$bofelamimail->saveSessionData();
 		if(count($recent_messages) > 0) {
 			// create notify message
 			$notification_subject = lang("You've got new mail");
