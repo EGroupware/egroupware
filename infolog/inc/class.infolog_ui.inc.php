@@ -503,7 +503,7 @@ class infolog_ui
 				$GLOBALS['egw']->session->appsession('own_session','infolog',$own_referer);
 			}
 		}
-		
+
 		if (is_array($values) && isset($values['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
 			list($id) = @each($values['nm']['rows']['document']);
@@ -763,7 +763,7 @@ class infolog_ui
 		foreach($this->bo->enums['type'] as $type => $label)
 		{
 			$types['type_'.$type] = $label;
-		} 
+		}
 		if ($this->bo->group_owners)
 		{
 			// remove types owned by groups the user has no edit grant
@@ -792,7 +792,7 @@ class infolog_ui
 			}
 			$statis = array_unique($statis);
 		}
-		foreach($statis as $id => $label) 
+		foreach($statis as $id => $label)
 		{
 			$change_status['status_'.$id] = $label;
 		}
@@ -811,7 +811,7 @@ class infolog_ui
 	/**
 	 * Handles actions on multiple infologs
 	 *
-	 * @param action 
+	 * @param action
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all entries of the current selection (in the session)
 	 * @param int &$success number of succeded actions
@@ -848,7 +848,7 @@ class infolog_ui
 				}
 			}
 		}
-		
+
 		// Actions with options in the selectbox
 		list($action, $settings) = explode('_', $action, 2);
 
@@ -944,7 +944,7 @@ class infolog_ui
 					{
 						$success++;
 					}
-					else 
+					else
 					{
 						$failed++;
 					}
@@ -1821,9 +1821,7 @@ class infolog_ui
 			{
 				//echo __METHOD__.'<br>';
 				//_debug_array($_attachments);
-				$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-				//$bopreferences =& $bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
-				//$preferences  =& $bofelamimail->mailPreferences;
+				$bofelamimail = felamimail_bo::getInstance();
 				$bofelamimail->openConnection();
 				foreach ($_attachments as $attachment)
 				{
@@ -1831,7 +1829,7 @@ class infolog_ui
 					{
 						$bofelamimail->reopen($attachment['folder']);
 
-						$mailcontent = bofelamimail::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
+						$mailcontent = felamimail_bo::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
 						//_debug_array($mailcontent['attachments']);
 						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
 						{
@@ -1865,14 +1863,14 @@ class infolog_ui
 			$toaddr = array();
 			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
 			//_debug_array($attachments);
-			$_body = strip_tags(bofelamimail::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" ) 
+			$_body = strip_tags(felamimail_bo::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" )
 			$_body = htmlspecialchars_decode($_body,ENT_QUOTES);
-			$body = bofelamimail::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
+			$body = felamimail_bo::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
 				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
-				'DATE'=>bofelamimail::_strtotime($_date))).$_body;
+				'DATE'=>felamimail_bo::_strtotime($_date))).$_body;
 			$this->edit($this->bo->import_mail(
 				implode(',',$toaddr),$_subject,$body,$attachments,$_date
 			));
@@ -1880,12 +1878,11 @@ class infolog_ui
 		}
 		elseif ($uid && $mailbox)
 		{
-			$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			//$bopreferences =& $bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
+			$bofelamimail = felamimail_bo::getInstance();
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
-			$mailcontent = bofelamimail::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
+			$mailcontent = felamimail_bo::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
 
 			return $this->edit($this->bo->import_mail(
 				$mailcontent['mailaddress'],
