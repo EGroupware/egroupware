@@ -671,6 +671,11 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					$LF ='</w:r></w:p><w:r><w:t>';
 					break;
+				case 'application/xml';
+					$LF ='</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
+					break;
+				default:
+					$LF = "\n";
 			}
 
 		if (strpos($param[0],'$$NELF') === 0)
