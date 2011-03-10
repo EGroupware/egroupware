@@ -75,8 +75,9 @@ class historylog_widget
 				list($type,$options) = explode(':',$type,2);
 			}
 			// For all select-cats, show missing entries as IDs
-			if($type == 'select-cat') {
-				list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',(array)$options);
+			if($type == 'select-cat')
+			{
+				list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',$options);
 				$type6 = true;
 				$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
 			}
