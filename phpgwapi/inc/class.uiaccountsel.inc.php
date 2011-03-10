@@ -443,7 +443,7 @@ function addOption(id,label,value,do_onchange)
 			$link_data['group_id'] = $group['account_id'];
 
 			$GLOBALS['egw']->template->set_var('onclick',"addOption('$element_id','".
-				$GLOBALS['egw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+				addslashes($GLOBALS['egw']->common->grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
 				(!$multiple ? '; window.close()' : ''));
 
 			if (!$app || in_array($group['account_id'],$app_groups))
@@ -456,7 +456,7 @@ function addOption(id,label,value,do_onchange)
 				{
 					$GLOBALS['egw']->template->fp('cal','group_cal',True);
 					$GLOBALS['egw']->template->set_var('js_addAllGroups',"addOption('$element_id','".
-						$GLOBALS['egw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+						addslashes($GLOBALS['egw']->common->grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
 						(!$multiple ? '; window.close();' : ';'));
 					$GLOBALS['egw']->template->fp('selectAllGroups','group_selectAll',True);
 				}
@@ -520,12 +520,12 @@ function addOption(id,label,value,do_onchange)
 				'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 				'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
 				'onclick'	=> "addOption('$element_id','".
-					$GLOBALS['egw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+					addslashes($GLOBALS['egw']->common->grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ''),
 			));
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
 			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"addOption('$element_id','".
-					$GLOBALS['egw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+					addslashes($GLOBALS['egw']->common->grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ';'));
 			$GLOBALS['egw']->template->fp('selectAllAccounts','accounts_selectAll',True);
 		}
