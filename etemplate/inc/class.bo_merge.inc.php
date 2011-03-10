@@ -664,6 +664,9 @@ abstract class bo_merge
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 					$LF ='<text:line-break/>';
 					break;
+				case 'application/xmlExcel.Sheet':	// Excel 2003
+					$LF = '&#10;';
+					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					$LF ='</w:r></w:p><w:r><w:t>';
