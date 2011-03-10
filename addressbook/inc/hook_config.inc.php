@@ -109,11 +109,9 @@ function org_fileds_to_update($config)
 	}
 	
 	// Remove country codes as an option, it will be added by BO constructor
-	if(in_array('adr_one_countrycode', $supported_fields))
-	{
-		unset($fields['adr_one_countrycode']);
-		unset($fields['adr_two_countrycode']);
-	}
+	unset($fields['adr_one_countrycode']);
+	unset($fields['adr_two_countrycode']);
+
 	return html::checkbox_multiselect('newsettings[org_fileds_to_update]',
 		$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',4);
 }
