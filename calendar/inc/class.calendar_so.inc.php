@@ -345,8 +345,8 @@ class calendar_so
 
 			// Searching - restrict private to own or private grant
 			$private_grants = $GLOBALS['egw']->acl->get_ids_for_location($GLOBALS['egw_info']['user']['account_id'], EGW_ACL_PRIVATE, 'calendar');
-			$private_filter = '(cal_public OR cal_owner = ' . $GLOBALS['egw_info']['user']['account_id'];
-			if($private_grants) $private_filter .= ' OR !cal_public AND cal_owner IN (' . implode(',',$private_grants) . ')';
+			$private_filter = '(cal_public=1 OR cal_owner = ' . $GLOBALS['egw_info']['user']['account_id'];
+			if($private_grants) $private_filter .= ' OR cal_public=0 AND cal_owner IN (' . implode(',',$private_grants) . ')';
 			$private_filter .= ')';
 			$where[] = $private_filter;
 		}
