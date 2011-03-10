@@ -91,6 +91,7 @@ function egwGetShiftState(e)
 	var state = EGW_AO_SHIFT_STATE_NONE;
 	state = egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, e.ctrkKey || e.metaKey);
 	state = egwSetBit(state, EGW_AO_SHIFT_STATE_BLOCK, e.shiftKey);
+
 	return state;
 }
 

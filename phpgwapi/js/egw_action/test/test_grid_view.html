@@ -17,7 +17,8 @@
 		<link rel="stylesheet" href="grid.css"/>
 	</head>
 	<body>
-		<h1>Test for dynamically displaying and loading grid lines (0,1 Mio Entries)</h1>
+		<h1>Test for dynamically displaying and loading grid lines</h1>
+		<b>Simulates network trafic by using window.setTimeout(), 100ms network latency</b>
 		<div id="container"></div>
 		<script>
 			var grid = null;
@@ -27,8 +28,9 @@
 			var columns = 
 				[
 					{
+						"id": "name",
 						"caption": "Name",
-						"width": "33%",
+						"width": "20%",
 						"type": EGW_COL_TYPE_NAME_ICON_FIXED
 					},
 					{
@@ -37,8 +39,7 @@
 					},
 					{
 						"id": "rights",
-						"caption": "UNIX Filerights",
-						"default": "---------"
+						"caption": "UNIX Filerights"
 					},
 					{
 						"id": "mime",
@@ -46,29 +47,81 @@
 					},
 					{
 						"id": "atime",
-						"caption": "atime"
+						"caption": "atime",
+						"width": "15%"
 					},
 					{
 						"id": "ctime",
-						"caption": "ctime"
+						"caption": "ctime",
+						"width": "15%"
 					},
 					{
 						"id": "mtime",
-						"caption": "mtime"
+						"caption": "mtime",
+						"width": "15%"
 					},
 					{
 						"id": "owner",
-						"caption": "owner"
+						"caption": "owner",
+						"width": "10%"
 					},
 					{
 						"id": "group",
-						"caption": "group"
+						"caption": "group",
+						"width": "10%"
 					}
 				];
 
-			function fetchDataProc(_elems, _columns)
+			function fetchDataProc(_elems, _columns, _callback, _context)
 			{
-				console.log("Fetch Data Proc: ", _elems, _columns);
+				// Delay the result a bit to simulate real network traffic
+				window.setTimeout(function() {
+					var result = [];
+					for (var i = 0; i < _elems.length; i++)
+					{
+//						console.log(_elems[i]);
+						if (_elems[i].substr(0, "[CHILDREN]".length) == "[CHILDREN]")
+						{
+							var id = _elems[i].substr("[CHILDREN]".length);
+							var children = [
+								{
+									"entryType": EGW_DATA_TYPE_RANGE,
+									"prefix": id + "_child_",
+									"canHaveChildren": true,
+									"count": 20
+								}
+							];
+
+							result.push({
+								"id": id,
+								"children": children,
+								"opened": true
+							});
+						}
+						else
+						{
+							var data = {};
+
+							data["size"] = Math.floor(Math.random() * 1024) + "KiB";
+							data["rights"] = "rwxr-xr--";
+							data["mime"] = "image/png";
+							data["atime"] = (new Date).toUTCString();
+							data["mtime"] = (new Date).toUTCString();
+							data["ctime"] = (new Date).toUTCString();
+							data["owner"] = "as";
+							data["group"] = "stylitedevs";
+
+							result.push({
+								"id": _elems[i],
+								"data": data,
+								"caption": _elems[i],
+								"iconUrl": "imgs/folder.png"
+							});
+						}
+					}
+
+					_callback.call(_context, result);
+				}, 100);
 			}
 
 			$(document).ready(function() {
@@ -82,11 +135,12 @@
 						{
 							"entryType": EGW_DATA_TYPE_RANGE,
 							"prefix": "root_elem_",
-							"count": 100000
+							"canHaveChildren": true,
+							"count": 10000
 						}
 					]
 				);
-				grid.resize(1500, 650);
+				grid.resize(1500, 500);
 			});
 
 			function check_positions()

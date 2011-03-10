@@ -14,6 +14,26 @@ body, td, th {
 	border-collapse: collapse;
 }
 
+.egwGridView_outer td.queued {
+	background-image: url(imgs/ajax-loader.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 19px;
+}
+
+.egwGridView_grid tr.focused td {
+	background-image: url(imgs/focused_hatching.png);
+	background-repeat: repeat;
+}
+
+.egwGridView_grid tr.selected td {
+	background-color: #b7c3ff;
+}
+
+.egwGridView_grid tr.selected.odd td {
+	background-color: #9dadff;
+}
+
 .egwGridView_scrollarea {
 	width: 100%;
 	overflow: auto;
@@ -37,14 +57,69 @@ body, td, th {
 	margin: 0;
 }
 
-.egwGridView_grid td, .egwGridView_grid tr {
+.egwGridView_grid td {
 	border-right: 1px solid silver;
-	padding: 4px 3px 4px 4px;
+	padding: 2px 3px 2px 4px;
 	margin: 0;
+}
+
+.egwGridView_grid tr {
+	padding: 2px 3px 2px 4px;
+	margin: 0;
+}
+
+.egwGridView_grid tr.hidden {
+	display: none;
 }
 
 .egwGridView_grid tr.odd {
 	background-color: #F1F1F1;
+}
+
+.egwGridView_grid span.indentation {
+	display: inline-block;
+}
+
+.egwGridView_grid span {
+	vertical-align: middle;
+}
+
+.egwGridView_grid img.icon {
+	vertical-align: middle;
+	margin: 2px 5px 2px 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.egwGridView_grid span.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	width: 8px;
+	height: 8px;
+	background-repeat: no-repeat;
+	margin-right: 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.egwGridView_grid span.arrow.opened {
+	cursor: pointer;
+	background-image: url(imgs/arrows.png);
+	background-position: -8px 0;
+}
+
+.egwGridView_grid span.arrow.closed {
+	cursor: pointer;
+	background-image: url(imgs/arrows.png);
+	background-position: 0 0;
+}
+
+.egwGridView_grid span.arrow.loading {
+	cursor: pointer;
+	background-image: url(imgs/ajax-loader.gif);
+	background-position: 0 0;
 }
 
 .egwGridView_outer thead th {
@@ -66,32 +141,6 @@ body, td, th {
 	text-align: center;
 }
 
-
-/*----------------------------------------------------------------------------*/
-
-.grid_outer {
-	border-spacing: 0;
-	border-collapse: collapse;
-	padding: 0;
-	margin: 0;
-}
-
-.grid_outer div.scrollarea {
-	overflow: auto;
-	width:100%;
-}
-
-.grid_outer td, .grid_outer tr {
-	padding: 0;
-	margin: 0;
-}
-
-.horizontal_spacer {
-	display: block;
-	background-image: url(imgs/non_loaded_bg.png);
-	background-position: top left;
-}
-
 .selectcols {
 	display: inline-block;
 	width: 10px;
@@ -104,99 +153,9 @@ body, td, th {
 	background-repeat: no-repeat;
 }
 
-.grid {
-	border-spacing: 0;
-	border-collapse: collapse;
+.frame {
+	padding: 0 !important;
+	border-right: 0 none silver !important;
 }
 
 
-.grid th.optcol {
-	width: 6px;
-	padding: 0;
-	text-align: center;
-}
-
-.grid tr.hidden {
-	display: none;
-}
-
-.grid td, .grid th {
-	border: 1px solid white;
-}
-
-.grid tr.focused td {
-	border: 1px dotted black;
-}
-
-.grid tr.selected td {
-	background-image: url(imgs/select_overlay.png);
-	background-position: center;
-	background-repeat: repeat-x;
-}
-
-.grid span.arrow {
-	display: inline-block;
-	vertical-align: middle;
-	width: 8px;
-	height: 8px;
-	background-repeat: no-repeat;
-	margin-right: 2px;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	user-select: none;
-}
-
-.grid span.arrow.opened {
-	cursor: pointer;
-	background-image: url(imgs/arrows.png);
-	background-position: -8px 0;
-}
-
-.grid span.arrow.closed {
-	cursor: pointer;
-	background-image: url(imgs/arrows.png);
-	background-position: 0 0;
-}
-
-.grid tr.odd {
-	background-color: #F1F1F1;
-}
-
-.grid th {
-	background-color: #E0E0E0;
-	font-weight: normal;
-	padding: 5px;
-	text-align: left;
-	border-left: 1px solid silver;
-	border-top: 1px solid silver;
-	border-right: 1px solid gray;
-	border-bottom: 1px solid gray;
-	background-image: url(imgs/header_overlay.png);
-	background-position: center;
-	background-repeat: repeat-x;
-}
-
-.grid td {
-	padding: 0;
-	vertical-align: middle;
-}
-
-.grid th.front {
-	font-weight: bold;
-}
-
-.grid span.caption {
-	vertical-align: middle;
-}
-
-.grid span.indentation {
-	display: inline-block;
-}
-
-.grid img.icon {
-	vertical-align: middle;
-	margin: 2px 5px 2px 2px;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	user-select: none;
-}

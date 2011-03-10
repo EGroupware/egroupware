@@ -64,6 +64,7 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.canHaveChildren = false;
 	this.type = egwGridViewRow;
 	this.userData = null;
+	this.updatedGrid = null;
 
 	this.gridViewObj = null;
 }
@@ -132,7 +133,8 @@ egwGridDataElement.prototype.set_data = function(_value)
 
 			this.data[col_id] = {
 				"data": data,
-				"sortData": sortData
+				"sortData": sortData,
+				"queued": false
 			}
 		}
 	}
@@ -168,8 +170,13 @@ egwGridDataElement.prototype.set_data = function(_value)
  * 		"canHaveChildren": [true|false] // Specifies whether the row "open/close" button is displayed
  * }
  */
-egwGridDataElement.prototype.loadData = function(_data)
+egwGridDataElement.prototype.loadData = function(_data, _doCallUpdate)
 {
+	if (typeof _doCallUpdate == "undefined")
+	{
+		_doCallUpdate = false;
+	}
+
 	if (_data.constructor == Array)
 	{
 		var virgin = this.children.length == 0;
@@ -197,6 +204,7 @@ egwGridDataElement.prototype.loadData = function(_data)
 			{
 				var count = typeof entry.count == "number" && entry.count >= 0 ? entry.count : 1;
 				var prefix = typeof entry.prefix == "string" ? entry.prefix : "elem_";
+				var canHaveChildren = typeof entry.canHaveChildren == "boolean" ? entry.canHaveChildren : false;
 				var index = last_element ? last_element.index + 1 : 0;
 
 				for (var j = 0; j < count; j++)
@@ -204,6 +212,7 @@ egwGridDataElement.prototype.loadData = function(_data)
 					var id = prefix + (index + j);
 					element = this.insertElement(index + j, id);
 					element.type = type; // Type can only be set directly after creation
+					element.canHaveChildren = canHaveChildren;
 				}
 			}
 			else if (entryType == EGW_DATA_TYPE_ELEMENT)
@@ -240,7 +249,12 @@ egwGridDataElement.prototype.loadData = function(_data)
 			this.loadData(_data.children);
 		}
 
-		this.gridViewObj.callGridViewObjectUpdate();
+		if (_doCallUpdate)
+		{
+			this.callBeginUpdate();
+		}
+
+		this.callGridViewObjectUpdate();
 	}
 }
 
@@ -328,7 +342,7 @@ egwGridDataElement.prototype.getElementById = function(_id, _depth)
 	{
 		for (var i = 0; i < this.children.length; i++)
 		{
-			var elem = this.children.getElementById(_id, _depth - 1);
+			var elem = this.children[i].getElementById(_id, _depth - 1);
 
 			if (elem)
 			{
@@ -348,13 +362,13 @@ egwGridDataElement.prototype.getChildren = function(_callback, _context)
 {
 	if (this.children.length > 0)
 	{
-		_callback.call(_context, this.children);
+		_callback.call(_context, this.children, true);
 	}
 	else if (this.canHaveChildren)
 	{
 		// If the children havn't been loaded yet, request them via queue call.
-		this.readQueue.queue(this, EGW_DATA_QUEUE_CHILDREN, function() {
-			_callback.call(_context, this.children);
+		this.readQueue.queueCall(this, EGW_DATA_QUEUE_CHILDREN, function() {
+			_callback.call(_context, this.children, false);
 		}, this);
 	}
 }
@@ -386,16 +400,21 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 					res = true;
 				}
 			}
+
+			if (!_returnData && typeof (this.data[_columnId]) != "undefined" && this.data[_columnId].queued)
+			{
+				res = true;
+			}
 		}
 		else
 		{
 			// Check whether the column data of this column has been read,
 			// if yes, return it.
-			if (typeof this.data[_columnIds] != "undefined")
+			if (typeof this.data[_columnId] != "undefined")
 			{
-				if (_returnData)
+				if (_returnData && typeof this.data[_columnId].data != "undefined")
 				{
-					res = this.data[_columnIds].data;
+					res = this.data[_columnId].data;
 				}
 				else
 				{
@@ -456,7 +475,7 @@ egwGridDataElement.prototype.getData = function(_columnIds)
 	// in the readQueue
 	if (queryList.length > 0)
 	{
-		this.readQueue.queue(this, queryList);
+		this.readQueue.queueCall(this, queryList);
 	}
 
 	return result;
@@ -467,11 +486,16 @@ egwGridDataElement.prototype.getData = function(_columnIds)
  * Calls the row object update function - checks whether the row object implements
  * this interface and whether it is set.
  */
-egwGridDataElement.prototype.callGridViewObjectUpdate = function()
+egwGridDataElement.prototype.callGridViewObjectUpdate = function(_immediate)
 {
+	if (typeof _immediate == "undefined")
+	{
+		_immediate = false;
+	}
+
 	if (this.gridViewObj && typeof this.gridViewObj.doUpdateData == "function")
 	{
-		this.gridViewObj.doUpdateData();
+		this.gridViewObj.doUpdateData(_immediate);
 	}
 }
 
@@ -516,7 +540,63 @@ egwGridDataElement.prototype.setGridViewObj = function(_obj)
 	}
 }
 
+/**
+ * Returns the root element
+ */
+egwGridDataElement.prototype.getRootElement = function()
+{
+	if (!this.parent)
+	{
+		return this;
+	}
+	else
+	{
+		return this.parent.getRootElement();
+	}
+}
 
+/**
+ * Returns the depth of this element in the document tree
+ */
+egwGridDataElement.prototype.getDepth = function()
+{
+	return (this.parent) ? (this.parent.getDepth() + 1) : 0;
+}
+
+/**
+ * Calls the beginUpdate function of the grid associated to the grid view object
+ */
+egwGridDataElement.prototype.callBeginUpdate = function()
+{
+	if (this.gridViewObj)
+	{
+		var root = this.getRootElement();
+
+		if (root.updatedGrid != this.gridViewObj.grid)
+		{
+			if (root.updatedGrid)
+			{
+				root.updatedGrid.endUpdate();
+			}
+			root.updatedGrid = this.gridViewObj.grid;
+			root.updatedGrid.beginUpdate();
+		}
+	}
+}
+
+/**
+ * Calls the end update function of the currently active updated grid
+ */
+egwGridDataElement.prototype.callEndUpdate = function()
+{
+	var root = this.getRootElement();
+
+	if (root.updatedGrid)
+	{
+		root.updatedGrid.endUpdate();
+		root.updatedGrid = null;
+	}
+}
 
 
 /** - egwGridDataReadQueue -- **/
@@ -558,27 +638,56 @@ egwGridDataQueue.prototype.setDataRoot = function(_dataRoot)
  */
 egwGridDataQueue.prototype._queue = function(_obj)
 {
+	this.timeoutId++;
+
+	// Push the queue object onto the queue
 	this.queue.push(_obj);
 
 	if (this.queue.length > EGW_DATA_QUEUE_MAX_ELEM_COUNT)
 	{
-		this.flushQueue();
+		this.flushQueue(false);
 		return false;
+	}
+	else
+	{
+		// Specify that the element data is queued
+		for (var i = 0; i < this.queueColumns.length; i++)
+		{
+			if (typeof _obj.elem.data[this.queueColumns[i]] == "undefined")
+			{
+				_obj.elem.data[this.queueColumns[i]] = {
+					"queued": true
+				}
+			}
+		}
+
+		// Set the flush queue timeout
+		var tid = this.timeoutId;
+		var self = this;
+		window.setTimeout(function() {
+			if (self.timeoutId == tid)
+			{
+				self.flushQueue(true);
+			}
+		}, EGW_DATA_QUEUE_FLUSH_TIMEOUT);
 	}
 
 	return true;
 }
 
-egwGridDataQueue.prototype.inQueue = function(_elem)
+egwGridDataQueue.prototype._accumulateQueueColumns = function(_columns)
 {
-	for (var i = 0; i < this.queue.length; i++)
+	if (this.dataRoot.columns.columns.length > this.queueColumns.length)
 	{
-		if (this.queue[i].elem == _elem)
+		// Merge the specified columns into the queueColumns variable
+		for (var i = 0; i < _columns.length; i++)
 		{
-			return true;
+			if (this.queueColumns.indexOf(_columns[i]) == -1)
+			{
+				this.queueColumns.push(_columns[i]);
+			}
 		}
 	}
-	return false;
 }
 
 /**
@@ -594,7 +703,7 @@ egwGridDataQueue.prototype.inQueue = function(_elem)
  * @param object _context is the context in which the callback function will
  * 	be executed.
  */
-egwGridDataQueue.prototype.queue = function(_elem, _columns, _callback, _context)
+egwGridDataQueue.prototype.queueCall = function(_elem, _columns, _callback, _context)
 {
 	if (typeof _callback == "undefined")
 	{
@@ -610,7 +719,7 @@ egwGridDataQueue.prototype.queue = function(_elem, _columns, _callback, _context
 		if (!this._queue({
 				"elem": _elem,
 				"type": EGW_DATA_QUEUE_CHILDREN,
-				"proc": _callback,
+				"callback": _callback,
 				"context": _context
 			}))
 		{
@@ -619,73 +728,125 @@ egwGridDataQueue.prototype.queue = function(_elem, _columns, _callback, _context
 	}
 	else
 	{
-		// Merge the specified columns into the queueColumns variable
-		for (var i = 0; i < _columns.length; i++)
-		{
-			if (this.queueColumns.indexOf(_columns[i]) == -1)
-			{
-				this.queueColumns.push(_columns[i]);
-			}
-		}
+		// Accumulate the queue columns ids
+		this._accumulateQueueColumns(_columns);
 
 		// Queue the element and search in the elements around the given one for
 		// elements whose data isn't loaded yet.
-		var done = !this._queue({
+		this._queue({
 			"elem": _elem,
 			"type": EGW_DATA_QUEUE_ELEM,
-			"proc": _callback,
+			"callback": _callback,
 			"context": _context
 		});
+	}
+}
 
-		// Prefetch other elements around the given element
-		var parent = _elem.parent;
-		if (parent)
+egwGridDataQueue.prototype._getQueuePlanes = function()
+{
+	var planes = [];
+	var curPlane = null;
+
+	for (var i = 0; i < this.queue.length; i++)
+	{
+		var elem = this.queue[i].elem;
+
+		if (!curPlane || elem.parent != curPlane.parent)
 		{
-			// Initialize the start prefetch index and the max prefetch count
-			var prefetch = EGW_DATA_QUEUE_PREFETCH_COUNT;
-			var idx = Math.floor(Math.max(0, _elem.index - prefetch / 2));
-
-			while (!done && prefetch > 0 && idx < parent.children.length)
+			curPlane = null;
+			for (var j = 0; j < planes.length; j++)
 			{
-
-				// Don't prefetch the element itself
-				if (idx != _elem.idx)
+				if (planes[j].parent == elem.parent)
 				{
-					// Fetch the element with the current index from the children
-					// of the parent of the element.
-					var elem = parent.children[idx];
+					curPlane = planes[j];
+					break;
+				}
+			}
 
-					// Check whether this element has all data columns loaded and is
-					// not already in the queue
-					if (!this.inQueue(elem))
+			if (!curPlane)
+			{
+				curPlane = {
+					"parent": elem.parent,
+					"cnt": 0,
+					"min": 0,
+					"max": 0,
+					"idx": 0,
+					"done": false
+				};
+				planes.push(curPlane);
+			}
+		}
+
+		if (curPlane.cnt == 0 || elem.index < curPlane.min)
+		{
+			curPlane.min = elem.index;
+		}
+		if (curPlane.cnt == 0 || elem.index > curPlane.max)
+		{
+			curPlane.max = elem.index;
+		}
+
+		curPlane.cnt++;
+	}
+
+	return planes;
+}
+
+egwGridDataQueue.prototype.prefetch = function(_cnt)
+{
+	var cnt = _cnt;
+	var planes = this._getQueuePlanes();
+
+	// Set the start indices
+	for (var i = 0; i < planes.length; i++)
+	{
+		planes[i].idx = Math.max(0, Math.ceil(planes[i].min - _cnt / (2 * planes.length)));
+	}
+
+	// Add as many elements as specified to the prefetched elements
+	var done = 0;
+	var plane = 0;
+	while (cnt > 0 && done < planes.length)
+	{
+		if (!planes[plane].done)
+		{
+			var idx = planes[plane].idx;
+
+			if (idx == planes[plane].parent.children.length)
+			{
+				planes[plane].done = true;
+				done++;
+			}
+			else
+			{
+				var hasData = true;
+				var elem = planes[plane].parent.children[idx];
+				for (var j = 0; j < this.queueColumns.length; j++)
+				{
+					if (!elem.hasColumn(this.queueColumns[i], false))
 					{
-						var hasColumns = true;
-						for (var j = 0; j < this.queueColumns.length; j++)
-						{
-							var res = elem.hasColumn(this.queueColumns[i], false);
-							if (!res)
-							{
-								hasColumns = false;
-								break;
-							}
-						}
-
-						if (!hasColumns)
-						{
-							done = !this._queue({
-								"elem": elem,
-								"type": EGW_DATA_QUEUE_ELEM,
-								"proc": null,
-								"context": null
-							});
-							prefetch--;
-						}
+						hasData = false;
+						break;
 					}
 				}
 
-				idx++;
+				if (!hasData)
+				{
+					this._queue({
+						"elem": elem,
+						"type": EGW_DATA_QUEUE_ELEM,
+						"callback": null,
+						"context": null
+					});
+					cnt--;
+				}
+
+				planes[plane].idx++;
 			}
 		}
+
+		// Go to the next plane
+		plane = (plane + 1) % planes.length;
 	}
 }
 
@@ -693,14 +854,32 @@ egwGridDataQueue.prototype.queue = function(_elem, _columns, _callback, _context
  * Empties the queue and calls the fetch callback which cares about retrieving
  * the data from the server.
  */
-egwGridDataQueue.prototype.flushQueue = function()
+egwGridDataQueue.prototype.flushQueue = function(_doPrefetch)
 {
 	var ids = [];
+
+	if (_doPrefetch)
+	{
+		// Get the count of elements which will be dynamically added to the list, "prefetched"
+		var prefetch_cnt = Math.min(EGW_DATA_QUEUE_PREFETCH_COUNT,
+			Math.max(0, EGW_DATA_QUEUE_MAX_ELEM_COUNT - this.queue.length));
+
+		this.prefetch(prefetch_cnt);
+	}
 
 	// Generate a list of element ids
 	for (var i = 0; i < this.queue.length; i++)
 	{
-		ids.push(this.queue[i].elem.id);
+		var id = this.queue[i].elem.id;
+		if (id == this.queue[i].elem.id)
+		{
+			if (this.queue[i].type == EGW_DATA_QUEUE_CHILDREN)
+			{
+				id = "[CHILDREN]" + id;
+			}
+		}
+
+		ids.push(id);
 	}
 
 	// Call the fetch callback and save a snapshot of the current queue
@@ -711,53 +890,60 @@ egwGridDataQueue.prototype.flushQueue = function()
 
 	this.queue = [];
 	this.queueColumns = [];
+	this.timeoutId = 0;
 }
 
 egwGridDataQueue.prototype.dataCallback = function(_data, _queue)
 {
 	var rootData = [];
-
-	// Iterate over the given data and check whether the data coresponds to one
-	// of the queue elements - if yes, call their (probably) specified callback.
-	// All elements for which no queue element can be found are added to the
-	// "rootData" list, which is then loaded by the "dataRoot" data object.
-	for (var i = 0; i < _data.length; i++)
+	try
 	{
-		var hasTarget = false;
-
-		// Search for a queue element which belongs to the given data entry.
-		if (_queue.length > 0 && typeof _data[i].id != "undefined")
+		// Iterate over the given data and check whether the data coresponds to one
+		// of the queue elements - if yes, call their (probably) specified callback.
+		// All elements for which no queue element can be found are added to the
+		// "rootData" list, which is then loaded by the "dataRoot" data object.
+		var i = 0;
+		for (var i = 0; i < _data.length; i++)
 		{
-			var id = _data[i].id;
+			var hasTarget = false;
 
-			for (var j = 0; j < _queue.length; j++)
+			// Search for a queue element which belongs to the given data entry.
+			if (_queue.length > 0 && typeof _data[i].id != "undefined")
 			{
-				if (_queue[j].elem.id == id)
+				var id = _data[i].id;
+
+				for (var j = 0; j < _queue.length; j++)
 				{
-					// The element has been found, update its data
-					_queue[j].elem.loadData(_data[i]);
-
-					// Call the queue object callback (if specified)
-					if (_queue[j].callback)
+					if (_queue[j].elem.id == id)
 					{
-						_queue[j].callback.call(_queue[j].context);
+						_queue[j].elem.loadData(_data[i], true);
+
+						// Call the queue object callback (if specified)
+						if (_queue[j].callback)
+						{
+							_queue[j].callback.call(_queue[j].context);
+						}
+
+						// Delete this queue element
+						_queue.splice(j, 1);
+
+						hasTarget = true;
+						break;
 					}
-
-					// Delete this queue element
-					_queue.splice(i, 1);
-
-					hasTarget = true;
-					break;
 				}
+			}
+
+			if (!hasTarget)
+			{
+				rootData.push(_data[i]);
 			}
 		}
 
-		if (!hasTarget)
-		{
-			rootData.push(_queue[i]);
-		}
+		this.dataRoot.loadData(rootData, true);
 	}
-
-	this.dataRoot.loadData(rootData);
+	finally
+	{
+		this.dataRoot.callEndUpdate();
+	}
 }
 

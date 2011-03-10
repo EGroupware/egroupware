@@ -395,8 +395,6 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 	this.focusedChild = null;
 
 	this.setAOI(_iface);
-	this.iface.setStateChangeCallback(this._ifaceCallback, this);
-	this.iface.setReconnectActionsCallback(this._reconnectCallback, this);
 }
 
 /**
@@ -418,6 +416,8 @@ egwActionObject.prototype.setAOI = function(_aoi)
 
 	// Replace the interface object
 	this.iface = _aoi;
+	this.iface.setStateChangeCallback(this._ifaceCallback, this);
+	this.iface.setReconnectActionsCallback(this._reconnectCallback, this);
 }
 
 /**
@@ -764,7 +764,7 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _changedBit, _shi
 			// and set their select state.
 			if (egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
 			{
-				var focused = this.getRootObject().getFocusedObject();
+				var focused = this.getFocusedObject();
 				if (focused)
 				{
 					objs = this.traversePath(focused);
@@ -915,7 +915,7 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
  */
 egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 {
-	var id = this.selectedChildren.indexOf(_child);
+	var id = this.selectedChildren.indexOf(_child); // TODO Replace by binary search, insert children sorted by index!
  	var wasEmpty = this.selectedChildren.length == 0;
 
 	// Add or remove the given child from the selectedChildren list

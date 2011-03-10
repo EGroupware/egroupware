@@ -102,7 +102,7 @@ function egwGridViewOuter(_parentNode, _dataRoot)
 	this.scrollbarWidth = Math.max(10, this.getScrollbarWidth());
 
 	// Start value for the average row height
-	this.avgRowHeight = 23.0;
+	this.avgRowHeight = 19.0;
 	this.avgRowCnt = 1;
 
 	// Insert the base grid container into the DOM-Tree
@@ -119,6 +119,19 @@ egwGridViewOuter.prototype.addHeightToAvg = function(_value)
 
 	var frac = 1.0 / this.avgRowCnt;
 	this.avgRowHeight = this.avgRowHeight * (1 - frac) + _value * frac;
+}
+
+/**
+ * Removes the height from the average container height
+ */
+egwGridViewOuter.prototype.remHeightFromAvg = function(_value)
+{
+	if (this.avgRowCnt > 1)
+	{
+		var sum = this.avgRowHeight * this.avgRowCnt - _value;
+		this.avgRowCnt--;
+		this.avgRowCount = sum / this.avgRowCnt;
+	}
 }
 
 /**
@@ -287,6 +300,8 @@ function egwGridViewContainer(_grid, _heightChangeProc)
 	this.assumedHeight = false;
 	this.index = 0;
 	this.viewArea = false;
+	this.containerClass = "";
+	this.heightInAvg = false;
 
 	this.doInsertIntoDOM = null;
 	this.doSetViewArea = null;
@@ -323,7 +338,10 @@ egwGridViewContainer.prototype.setVisible = function(_visible, _force)
 
 		// While the element has been invisible, the viewarea might have changed,
 		// so check it now
-		this.checkViewArea();
+		if (this.visible)
+		{
+			this.checkViewArea();
+		}
 
 		// As the element is now (in)visible, its height has changed. Inform the
 		// parent about it.
@@ -514,8 +532,10 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.scrollable = _scrollable;
 	container.scrollHeight = 100;
 	container.scrollEvents = 0;
+	container.inUpdate = 0;
 	container.didUpdate = false;
 	container.updateIndex = 0;
+	container.triggerID = 0;
 	container.setupContainer = egwGridViewGrid_setupContainer;
 	container.insertContainer = egwGridViewGrid_insertContainer;
 	container.removeContainer = egwGridViewGrid_removeContainer;
@@ -526,8 +546,12 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.empty = egwGridViewGrid_empty;
 	container.getOuter = egwGridViewGrid_getOuter;
 	container.updateAssumedHeights = egwGridViewGrid_updateAssumedHeights;
+	container.beginUpdate = egwGridViewGrid_beginUpdate;
+	container.endUpdate = egwGridViewGrid_endUpdate;
+	container.triggerUpdateAssumedHeights = egwGridViewGrid_triggerUpdateAssumedHeights;
 	container.children = [];
 	container.outer = _outer;
+	container.containerClass = "grid";
 
 	// Overwrite the abstract container interface functions
 	container.invalidateHeightCache = egwGridViewGrid_invalidateHeightCache;
@@ -536,6 +560,67 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.doSetViewArea = egwGridViewGrid_doSetviewArea;
 
 	return container;
+}
+
+function egwGridViewGrid_beginUpdate()
+{
+	if (this.inUpdate == 0)
+	{
+		this.didUpdate = false;
+
+		if (this.grid)
+		{
+			this.grid.beginUpdate();
+		}
+	}
+	this.inUpdate++;
+}
+
+function egwGridViewGrid_triggerUpdateAssumedHeights()
+{
+	this.triggerID++;
+	var self = this;
+	var id = this.triggerID;
+	window.setTimeout(function() {
+		if (id = self.triggerID)
+		{
+			self.triggerID = 0;
+			self.updateAssumedHeights(20);
+		}
+	},
+		EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+}
+
+function egwGridViewGrid_endUpdate(_recPrev)
+{
+	if (typeof _recPrev == "undefined")
+	{
+		_recPrev = false;
+	}
+
+	if (this.inUpdate > 0)
+	{
+		this.inUpdate--;
+
+		if (this.inUpdate == 0 && this.grid)
+		{
+			this.grid.endUpdate();
+		}
+
+		if (this.inUpdate == 0 && this.didUpdate)
+		{
+			// If an update has been done, check whether any height assumptions have been
+			// done. This procedure is executed with some delay, as this gives the browser
+			// the time to insert the newly generated objects into the DOM-Tree and allows
+			// us to read their height at a very fast rate.
+			if (this.didUpdate && !_recPrev)
+			{
+				this.triggerUpdateAssumedHeights();
+			}
+		}
+	}
+
+	this.didUpdate = false;
 }
 
 function egwGridViewGrid_getOuter()
@@ -571,6 +656,7 @@ function egwGridViewGrid_setupContainer()
 	*/
 
 	this.outerNode = $(document.createElement("td"));
+	this.outerNode.addClass("frame");
 
 	if (this.scrollable)
 	{
@@ -623,7 +709,6 @@ function egwGridViewGrid_scrollCallback(_event)
 		var area = egwArea(this.scrollarea.scrollTop() - EGW_GRID_VIEW_EXT,
 			this.scrollHeight + EGW_GRID_VIEW_EXT * 2);
 
-		// Set view area sets the "didUpdate" variable to false
 		this.setViewArea(area);
 
 		this.scrollEvents = 0;
@@ -638,7 +723,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 
 	try
 	{
-		this.inUpdate = true;
+		this.beginUpdate();
 
 		while (traversed < this.children.length && cnt > 0)
 		{
@@ -658,7 +743,16 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 				var oldHeight = child.assumedHeight;
 				child.invalidateHeightCache();
 				var newHeight = child.getHeight();
-				outer.addHeightToAvg(newHeight);
+
+				if (child.containerClass == "row")
+				{
+					if (child.heightInAvg)
+					{
+						outer.remHeightFromAvg(oldHeight);
+					}
+					outer.addHeightToAvg(newHeight);
+					child.heightInAvg = true;
+				}
 
 				// Offset the position of all following elements by the delta.
 				var delta = newHeight - oldHeight;
@@ -682,7 +776,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 	}
 	finally
 	{
-		this.inUpdate = false;
+		this.endUpdate(true);
 	}
 
 	var self = this;
@@ -690,9 +784,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 	if (cnt == 0)
 	{
 		// If the maximum-update-count has been exhausted, retrigger this function
-		window.setTimeout(function() {
-			self.updateAssumedHeights(_maxCount);
-		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+		this.triggerUpdateAssumedHeights();
 	}
 	else
 	{
@@ -706,79 +798,100 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 
 function egwGridViewGrid_insertContainer(_after, _class, _params)
 {
-	this.didUpdate = true;
-
-	var container = new _class(this, this.heightChangeHandler, _params);
-
-	var idx = this.children.length;
-	if (typeof _after == "number")
+	this.beginUpdate();
+	try
 	{
-		idx = Math.max(-1, Math.min(this.children.length, _after)) + 1;
+		this.didUpdate = true;
+
+		var container = new _class(this, this.heightChangeHandler, _params);
+
+		var idx = this.children.length;
+		if (typeof _after == "number")
+		{
+			idx = Math.min(this.children.length, Math.max(-1, _after)) + 1;
+		}
+		else if (typeof _after == "object" && _after)
+		{
+			idx = _after.index + 1;
+		}
+
+		// Insert the element at the given position
+		this.children.splice(idx, 0, container);
+
+		// Create a table row for that element
+		var tr = $(document.createElement("tr"));
+
+		// Insert the table row after the container specified in the _after parameter
+		// and set the top position of the node
+		container.index = idx;
+
+		if (idx == 0)
+		{
+			this.innerNode.prepend(tr);
+			container.setPosition(0);
+		}
+		else
+		{
+			tr.insertAfter(this.children[idx - 1].parentNode);
+			container.setPosition(this.children[idx - 1].getArea().bottom);
+		}
+
+		// Insert the container into the table row
+		container.insertIntoDOM(tr, this.columns);
+
+		// Offset the position of all following elements by the height of the container
+		// and move the index of those elements
+		var height = this.getOuter().avgRowHeight;
+		container.assumedHeight = height;
+		for (var i = idx + 1; i < this.children.length; i++)
+		{
+			this.children[i].offsetPosition(height);
+			this.children[i].index++;
+		}
+
+		return container;
 	}
-	else if (typeof _after == "object" && _after)
+	finally
 	{
-		idx = _after.index + 1;
+		this.endUpdate();
 	}
 
-	// Insert the element at the given position
-	this.children.splice(idx, 0, container);
-
-	// Create a table row for that element
-	var tr = $(document.createElement("tr"));
-
-	// Insert the table row after the container specified in the _after parameter
-	// and set the top position of the node
-	container.index = idx;
-
-	if (idx == 0)
-	{
-		this.innerNode.prepend(tr);
-		container.setPosition(0);
-	}
-	else
-	{
-		tr.insertAfter(this.children[idx - 1].parentNode);
-		container.setPosition(this.children[idx - 1].getArea().bottom);
-	}
-
-	// Insert the container into the table row
-	container.insertIntoDOM(tr, this.columns);
-
-	// Offset the position of all following elements by the height of the container
-	// and move the index of those elements
-	var height = this.getOuter().avgRowHeight; //container.getHeight(); // This took a lot of time.
-	container.assumedHeight = height;
-	for (var i = idx + 1; i < this.children.length; i++)
-	{
-		this.children[i].offsetPosition(height);
-		this.children[i].index++;
-	}
-
-	return container;
+	this.callHeightChangeProc();
 }
 
 function egwGridViewGrid_removeContainer(_container)
 {
 	this.didUpdate = true;
 
-	var idx = _container.index;
-
-	// Offset the position of the folowing children back
-	var height = _container.getHeight();
-	for (var i = idx + 1; i < this.children.length; i++)
+	try
 	{
-		this.children[i].offsetPosition(-height);
-		this.children[i].index--;
+		this.beginUpdate();
+
+		var idx = _container.index;
+
+		// Offset the position of the folowing children back
+		var height = _container.getHeight();
+		for (var i = idx + 1; i < this.children.length; i++)
+		{
+			this.children[i].offsetPosition(-height);
+			this.children[i].index--;
+		}
+
+		// Delete the parent node of the container object
+		if (_container.parentNode)
+		{
+			_container.parentNode.remove();
+			_container.parentNode = null;
+		}
+
+		this.children.splice(idx, 1);
+	}
+	finally
+	{
+		this.endUpdate();
 	}
 
-	// Delete the parent node of the container object
-	if (_container.parentNode)
-	{
-		_container.parentNode.remove();
-		_container.parentNode = null;
-	}
-
-	this.children.splice(idx, 1);
+	this.callHeightChangeProc();
 }
 
 function egwGridViewGrid_empty(_newColumns)
@@ -807,6 +920,7 @@ function egwGridViewGrid_invalidateHeightCache(_children)
 	}
 
 	this.height = false;
+	this.assumedHeight = false;
 
 	if (_children)
 	{
@@ -837,17 +951,17 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 {
 	this.didUpdate = true;
 
-	// Get the height-change	
+	// The old height of the element is now only an assumed height - the next
+	// time the "updateAssumedHeights" functions is triggered, this will be
+	// updated.
 	var oldHeight = _elem.assumedHeight !== false ? _elem.assumedHeight :
-		(_elem.height === false ? 0 : _elem.height);
+		(_elem.height === false ? this.getOuter().avgRowHeight : _elem.height);
 	_elem.invalidateHeightCache(false);
-	var newHeight = _elem.getHeight();
-	var offs = newHeight - oldHeight;
+	_elem.assumedHeight = oldHeight;
 
-	// Set the offset of all elements succeding the given element correctly
-	for (var i = _elem.index + 1; i < this.children.length; i++)
+	if (_elem.containerClass == "grid" && !this.inUpdate)
 	{
-		this.children[i].offsetPosition(offs);
+		this.triggerUpdateAssumedHeights();
 	}
 
 	// As a result of the height of one of the children, the height of this element
@@ -864,8 +978,13 @@ function egwGridViewGrid_doInsertIntoDOM()
 	this.outerNode.attr("colspan", this.columns.length + (this.scrollable ? 1 : 0));
 }
 
-function egwGridViewGrid_doSetviewArea(_area)
+function egwGridViewGrid_doSetviewArea(_area, _recPrev)
 {
+	if (typeof _recPrev == "undefined")
+	{
+		_recPrev == false;
+	}
+
 	// Do a binary search for elements which are inside the given area
 	this.didUpdate = false;
 	var elem = null;
@@ -927,29 +1046,22 @@ function egwGridViewGrid_doSetviewArea(_area)
 		}
 	}
 
-	this.inUpdate = true;
-
-	// Call the setViewArea function of visible child elements
-	// Imporant: The setViewArea function has to work on a copy of children,
-	// as the container may start to remove themselves or add new elements using
-	// the insertAfter function.
-	for (var i = 0; i < elems.length; i++)
+	try
 	{
-		elems[i].setViewArea(_area, true);
+		this.beginUpdate();
+
+		// Call the setViewArea function of visible child elements
+		// Imporant: The setViewArea function has to work on a copy of children,
+		// as the container may start to remove themselves or add new elements using
+		// the insertAfter function.
+		for (var i = 0; i < elems.length; i++)
+		{
+			elems[i].setViewArea(_area, true);
+		}
 	}
-
-	this.inUpdate = false;
-
-	// If an update has been done, check whether any height assumptions have been
-	// done. This procedure is executed with some delay, as this gives the browser
-	// the time to insert the newly generated objects into the DOM-Tree and allows
-	// us to read their height at a very fast rate.
-	if (this.didUpdate)
+	finally
 	{
-		var self = this;
-		window.setTimeout(function() {
-			self.updateAssumedHeights(20);
-		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+		this.endUpdate(_recPrev);
 	}
 }
 
@@ -968,10 +1080,17 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	container.aoiSetup = egwGridViewRow_aoiSetup;
 	container.getAOI = egwGridViewRow_getAOI;
 	container.checkOdd = egwGridViewRow_checkOdd;
+	container._columnClick = egwGridViewRow__columnClick;
+	container.setOpen = egwGridViewRow_setOpen;
+	container.tdObjects = [];
+	container.containerClass = "row";
+	container.childGrid = null;
+	container.opened = false;
 
 	// Overwrite the inherited abstract functions
 	container.doInsertIntoDOM = egwGridViewRow_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewRow_doSetViewArea;
+	container.doUpdateData = egwGridViewRow_doUpdateData;
 
 	return container;
 }
@@ -1015,6 +1134,16 @@ function egwGridViewRow_getAOI()
 	return this.aoi;
 }
 
+function egwGridViewRow__columnClick(_shiftState, _column)
+{
+	var state = this.aoi.getState();
+	var isSelected = egwBitIsSet(state, EGW_AO_STATE_SELECTED);
+
+	this.aoi.updateState(EGW_AO_STATE_SELECTED, 
+		!egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI) || !isSelected,
+		_shiftState);
+}
+
 var
 	EGW_GRID_VIEW_ROW_BORDER = false;
 
@@ -1032,25 +1161,24 @@ function egwGridViewRow_doInsertIntoDOM()
 	// Check whether this element is odd
 	this.checkOdd();
 
-	// Read the column data
-	/*var ids = [];
-	for (var i = 0; i < this.columns.length; i++)
-	{
-		ids.push(this.columns[i].id);
-	}
-
-	data = this.item.getData(ids);*/
-
 	for (var i = 0; i < this.columns.length; i++)
 	{
 		var col = this.columns[i];
 		var td = $(document.createElement("td"));
 
-		//if (typeof data[this.columns[i].id] != "undefined")
-		{
-			td.html("col" + i);
-		}
 		this.parentNode.append(td);
+
+		// Assign the click event to the column
+		td.mousedown(egwPreventSelect);
+		td.click({"item": this, "col": col.id}, function(e) {
+			this.onselectstart = null;
+			e.data.item._columnClick(egwGetShiftState(e), e.data.col);
+		});
+
+		if (i == 0)
+		{
+			td.addClass("first");
+		}
 
 		// Set the column width
 		if (EGW_GRID_VIEW_ROW_BORDER === false)
@@ -1059,9 +1187,115 @@ function egwGridViewRow_doInsertIntoDOM()
 		}
 		td.css("width", col.drawnWidth - EGW_GRID_VIEW_ROW_BORDER);
 
+		// Store the column in the td object array
+		this.tdObjects.push({
+			"col": col,
+			"td": td
+		});
 	}
 
+	this.doUpdateData(true);
+
 	this.checkViewArea();
+}
+
+function egwGridViewRow_doUpdateData(_immediate)
+{
+	var ids = [];
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		ids.push(this.columns[i].id);
+	}
+
+	data = this.item.getData(ids);
+
+	for (var i = 0; i < this.tdObjects.length; i++)
+	{
+		var td = this.tdObjects[i].td;
+		var col = this.tdObjects[i].col;
+		if (typeof data[col.id] != "undefined")
+		{
+			td.empty();
+			if (col.type == EGW_COL_TYPE_NAME_ICON_FIXED)
+			{
+				// Insert the indentation spacer
+				var depth = this.item.getDepth() - 1;
+				if (depth > 0)
+				{
+						// Build the indentation object
+					var indentation = $(document.createElement("span"));
+					indentation.addClass("indentation");
+					indentation.css("width", (depth * 12) + "px");
+					td.append(indentation);
+				}
+
+				// Insert the open/close arrow
+				if (this.item.canHaveChildren)
+				{
+					var arrow = $(document.createElement("span"));
+					arrow.addClass("arrow");
+					arrow.addClass(this.item.opened ? "opened" : "closed");
+					arrow.click(this, function(e) {
+						$this = $(this);
+
+						if (!e.data.opened)
+						{
+							$this.addClass("opened");
+							$this.removeClass("closed");
+						}
+						else
+						{
+							$this.addClass("closed");
+							$this.removeClass("opened");
+						}
+
+						e.data.setOpen(!e.data.opened);
+					});
+					td.append(arrow);
+				}
+
+				// Insert the icon
+				if (data[col.id].iconUrl)
+				{
+					// Build the icon element
+					var icon = $(document.createElement("img"));
+					icon.attr("src", data[col.id].iconUrl);
+					icon.load(this, function(e) {
+						e.data.callHeightChangeProc();
+					});
+					icon.addClass("icon");
+					td.append(icon);
+				}
+
+				// Build the caption
+				if (data[col.id].caption)
+				{
+					var caption = $(document.createElement("span"));
+					caption.html(data[col.id].caption);
+					td.append(caption);
+				}
+			}
+			else
+			{
+				td.html(data[col.id]);
+			}
+			td.toggleClass("queued", false);
+		}
+		else
+		{
+			td.toggleClass("queued", true);
+		}
+	}
+
+	// Set the open state
+	this.setOpen(this.item.opened);
+
+	// If the call is not from inside the doInsertIntoDOM function, we have to
+	// inform the parent about a possible height change
+	if (!_immediate)
+	{
+		this.callHeightChangeProc();
+	}
 }
 
 function egwGridViewRow_checkOdd()
@@ -1082,6 +1316,44 @@ function egwGridViewRow_checkOdd()
 function egwGridViewRow_doSetViewArea()
 {
 	this.checkOdd();
+}
+
+function egwGridViewRow_setOpen(_open)
+{
+	if (_open != this.opened)
+	{
+		if (_open)
+		{
+			if (!this.childGrid)
+			{
+				// Get the arrow and put it to "loading" state
+				var arrow = $(".arrow", this.parentNode);
+				arrow.removeClass("closed");
+				arrow.addClass("loading");
+
+				// Create the "child grid"
+				this.childGrid = this.grid.insertContainer(this.index, egwGridViewGrid,
+					false);
+				this.childGrid.setVisible(false);
+				var spacer = this.childGrid.insertContainer(-1, egwGridViewSpacer,
+					this.grid.getOuter().avgRowHeight);
+				this.item.getChildren(function(_children) {
+					arrow.removeClass("loading");
+					arrow.removeClass("closed");
+					arrow.addClass("opened");
+					spacer.setItemList(_children);
+				});
+			}
+		}
+
+		if (this.childGrid)
+		{
+			this.childGrid.setVisible(_open);
+		}
+
+		this.opened = _open;
+		this.item.opend = _open;
+	}
 }
 
 
@@ -1139,42 +1411,46 @@ function egwGridViewSpacer_doInsertIntoDOM()
  */
 function egwGridViewSpacer_doSetViewArea()
 {
-	var avgHeight = this.grid.getOuter().avgRowHeight;
-
-	// Get all items which are in the view area
-	var top = Math.max(0, Math.floor(this.viewArea.top / this.itemHeight));
-	var bot = Math.min(this.items.length, Math.ceil(this.viewArea.bottom / this.itemHeight));
-
-	// Split the item list into three parts
-	var it_top = this.items.slice(0, top);
-	var it_mid = this.items.slice(top, bot);
-	var it_bot = this.items.slice(bot, this.items.length);
-
-	this.items = [];
-	var idx = this.index;
-
-	// Insert the new rows in the parent grid in front of the spacer container
-	for (var i = it_mid.length - 1; i >= 0; i--)
+	if (this.items.length > 0)
 	{
-		this.grid.insertContainer(idx - 1, it_mid[i].type, it_mid[i]);
-	}
+		var avgHeight = this.grid.getOuter().avgRowHeight;
 
-	// If top was greater than 0, insert a new spacer in front of the 
-	if (it_top.length > 0)
-	{
-		var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, avgHeight);
-		spacer.setItemList(it_top)
-	}
+		// Get all items which are in the view area
+		var top = Math.max(0, Math.floor(this.viewArea.top / this.itemHeight));
+		var bot = Math.min(this.items.length, Math.ceil(this.viewArea.bottom / this.itemHeight));
 
-	// If there are items left at the bottom of the spacer, set theese as items of this spacer
-	if (it_bot.length > 0)
-	{
-		this.itemHeight = avgHeight;
-		this.setItemList(it_bot);
-	}
-	else
-	{
-		this.grid.removeContainer(this);
+		// Split the item list into three parts
+		var it_top = this.items.slice(0, top);
+		var it_mid = this.items.slice(top, bot);
+		var it_bot = this.items.slice(bot, this.items.length);
+
+		this.items = [];
+		var idx = this.index;
+
+		// Insert the new rows in the parent grid in front of the spacer container
+		for (var i = it_mid.length - 1; i >= 0; i--)
+		{
+			this.grid.insertContainer(idx - 1, it_mid[i].type, it_mid[i]);
+		}
+
+		// If top was greater than 0, insert a new spacer in front of the newly
+		// created elements.
+		if (it_top.length > 0)
+		{
+			var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, avgHeight);
+			spacer.setItemList(it_top)
+		}
+
+		// If there are items left at the bottom of the spacer, set theese as items of this spacer
+		if (it_bot.length > 0)
+		{
+			this.itemHeight = avgHeight;
+			this.setItemList(it_bot);
+		}
+		else
+		{
+			this.grid.removeContainer(this);
+		}
 	}
 }
 
