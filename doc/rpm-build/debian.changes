@@ -1,3 +1,9 @@
+egroupware-epl (10.1.20110310-1) hardy; urgency=low
+
+  * Calendar: fixed PostgreSQL error on search: Argument of OR must be of type boolean, not of type smallint
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 10 Mar 2011 19:13:01 +0100
+
 egroupware-epl (10.1.20110309-1) hardy; urgency=low
 
   * fixed in last version not working bcc mail addresses
