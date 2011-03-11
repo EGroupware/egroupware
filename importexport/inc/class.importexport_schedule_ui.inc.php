@@ -243,12 +243,13 @@
 				stream_wrapper_register(vfs_stream_wrapper::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
 			}
 
-			if ($data['type'] == 'import' && !is_readable($data['target']))
+			if ($data['type'] == 'import' && ($scheme == egw_vfs::SCHEME && !egw_vfs::is_readable($data['target']) ||
+			    $scheme != egw_vfs::SCHEME && !is_readable($data['target'])))
 			{
-				return $data['target']. ' is not readable';
+				return lang('%1 is not readable',$data['target']);
 			} 
 			elseif ($data['type'] == 'export' && !self::is__writable($data['target'])) {
-				return $data['target']. ' is not writable';
+				return lang('%1 is not writable',$data['target']);
 			}
 
 			return true;
