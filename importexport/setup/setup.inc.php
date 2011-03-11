@@ -9,9 +9,6 @@
  * @version $Id$
  */
 
-// RB: never install by default, only via setup
-$setup_info['importexport']['only_db'] = array('never');
-
 $setup_info['importexport']['name']      = 'importexport';
 $setup_info['importexport']['version']   = '1.9.001';
 $setup_info['importexport']['app_order'] = 2;
