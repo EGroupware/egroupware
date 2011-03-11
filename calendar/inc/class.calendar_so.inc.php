@@ -1736,7 +1736,7 @@ ORDER BY cal_user_type, cal_usre_id
 			foreach($this->db->select($this->user_table,'cal_id',array(		// MySQL does NOT allow to run this as delete!
 				'cal_user_type' => 'u',
 				'cal_user_id' => $old_user,
-				"cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".(int)$new_user." AND cal_user_type='u')",
+				"cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".$this->db->quote($new_user)." AND cal_user_type='u')",
 			),__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				$ids[] = $row['cal_id'];
