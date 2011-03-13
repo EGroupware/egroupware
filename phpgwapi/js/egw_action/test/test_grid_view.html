@@ -30,7 +30,7 @@
 					{
 						"id": "name",
 						"caption": "Name",
-						"width": "20%",
+						"width": "75%",
 						"type": EGW_COL_TYPE_NAME_ICON_FIXED
 					},
 					{
@@ -39,36 +39,43 @@
 					},
 					{
 						"id": "rights",
-						"caption": "UNIX Filerights"
+						"caption": "UNIX Filerights",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "mime",
-						"caption": "File-Type/MIME"
+						"caption": "File-Type/MIME",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "atime",
 						"caption": "atime",
-						"width": "15%"
+						"width": "15%",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "ctime",
 						"caption": "ctime",
-						"width": "15%"
+						"width": "15%",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "mtime",
 						"caption": "mtime",
-						"width": "15%"
+						"width": "15%",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "owner",
 						"caption": "owner",
-						"width": "10%"
+						"width": "10%",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "group",
 						"caption": "group",
-						"width": "10%"
+						"width": "10%",
+						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					}
 				];
 
@@ -136,23 +143,46 @@
 							"entryType": EGW_DATA_TYPE_RANGE,
 							"prefix": "root_elem_",
 							"canHaveChildren": true,
-							"count": 10000
+							"count": 1000
 						}
 					]
 				);
 				grid.resize(1500, 500);
 			});
 
-			function check_positions()
+			function check_positions(_grid, _delta)
 			{
-				var g = grid.gridOuter.grid;
-				var delta = - g.scrollarea.offset().top;
+				var outer = grid.gridOuter.grid;
+
+				if (typeof _grid == "undefined")
+				{
+					_grid = outer;
+				}
+
+				if (typeof _delta == "undefined")
+				{
+					_delta = 0;
+				}
+
+
+				var g = _grid;
+				var delta = outer.scrollarea.scrollTop() - outer.scrollarea.offset().top;
 				for (var i = 0; i < g.children.length; i++)
 				{
-					var rtop = g.children[i].parentNode.offset().top + g.scrollarea.scrollTop() - g.scrollarea.offset().top;
-					var itop = g.children[i].position;
+					var rtop = g.children[i].parentNode.offset().top + delta;
+					var itop = g.children[i].position + _delta;
 
-					console.log(Math.round(itop - rtop));
+					var rheight = g.children[i].parentNode.outerHeight();
+					var iheight = g.children[i].getHeight();
+
+					console.log(Math.round(itop - rtop), Math.round(iheight - rheight), g.children[i].visible);
+
+					if (g.children[i].containerClass == "grid" && g.children[i].visible)
+					{
+						console.log("-->");
+						check_positions(g.children[i], itop);
+						console.log("<--");
+					}
 				}
 			}
 		</script>

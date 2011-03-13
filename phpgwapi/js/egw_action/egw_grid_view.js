@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-//TODO: Spacer itemHeight should automatically be set to the average item height in the
-//	grid to solve the "stutters" when scrolling up.
 //TODO (minor): Do auto cleanup - remove elements from the view again after they
 //	haven't been viewed for a certain time.
 
@@ -336,11 +334,10 @@ egwGridViewContainer.prototype.setVisible = function(_visible, _force)
 	{
 		$(this.parentNode).toggleClass("hidden", !_visible);
 
-		// While the element has been invisible, the viewarea might have changed,
-		// so check it now
-		if (this.visible)
+		if (_visible)
 		{
-			this.checkViewArea();
+			this.assumedHeight = 0;
+			this.height = false;
 		}
 
 		// As the element is now (in)visible, its height has changed. Inform the
@@ -399,6 +396,11 @@ egwGridViewContainer.prototype.setViewArea = function(_area, _force)
 	};
 
 	this.viewArea = relArea;
+
+	if (this.containerClass == "grid" && this.grid != null)
+	{
+//		console.log(this, _area, this.viewArea);
+	}
 
 	this.checkViewArea(_force);
 }
@@ -549,9 +551,12 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.beginUpdate = egwGridViewGrid_beginUpdate;
 	container.endUpdate = egwGridViewGrid_endUpdate;
 	container.triggerUpdateAssumedHeights = egwGridViewGrid_triggerUpdateAssumedHeights;
+	container.addIconHeightToAvg = egwGridViewGrid_addIconHeightToAvg;
 	container.children = [];
 	container.outer = _outer;
 	container.containerClass = "grid";
+	container.avgIconHeight = 16;
+	container.avgIconCnt = 1;
 
 	// Overwrite the abstract container interface functions
 	container.invalidateHeightCache = egwGridViewGrid_invalidateHeightCache;
@@ -582,13 +587,14 @@ function egwGridViewGrid_triggerUpdateAssumedHeights()
 	var self = this;
 	var id = this.triggerID;
 	window.setTimeout(function() {
-		if (id = self.triggerID)
-		{
-			self.triggerID = 0;
-			self.updateAssumedHeights(20);
-		}
-	},
-		EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
+			if (id == self.triggerID)
+			{
+				self.triggerID = 0;
+				self.updateAssumedHeights(20);
+			}
+		},
+		EGW_GRID_UPDATE_HEIGHTS_TIMEOUT
+	);
 }
 
 function egwGridViewGrid_endUpdate(_recPrev)
@@ -617,10 +623,10 @@ function egwGridViewGrid_endUpdate(_recPrev)
 			{
 				this.triggerUpdateAssumedHeights();
 			}
+
+			this.didUpdate = false;
 		}
 	}
-
-	this.didUpdate = false;
 }
 
 function egwGridViewGrid_getOuter()
@@ -756,6 +762,12 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 
 				// Offset the position of all following elements by the delta.
 				var delta = newHeight - oldHeight;
+
+				if (this.grid != null)
+				{
+//					console.log(child, delta, newHeight, oldHeight);
+				}
+
 				if (Math.abs(delta) > 0.001)
 				{
 					for (var j = this.updateIndex + 1; j < this.children.length; j++)
@@ -779,8 +791,6 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 		this.endUpdate(true);
 	}
 
-	var self = this;
-
 	if (cnt == 0)
 	{
 		// If the maximum-update-count has been exhausted, retrigger this function
@@ -790,6 +800,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 	{
 		// Otherwise, all elements have been checked - we'll now call "setViewArea"
 		// which may check whether new objects are now in the currently visible range
+		var self = this;
 		window.setTimeout(function() {
 			self.setViewArea(self.viewArea);
 		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
@@ -919,8 +930,8 @@ function egwGridViewGrid_invalidateHeightCache(_children)
 		_children = true;
 	}
 
-	this.height = false;
-	this.assumedHeight = false;
+	// Call the inherited function
+	egwGridViewContainer.prototype.invalidateHeightCache.call(this);
 
 	if (_children)
 	{
@@ -951,6 +962,11 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 {
 	this.didUpdate = true;
 
+	if (this.grid != null)
+	{
+//		console.log("HCH for", _elem);
+	}
+
 	// The old height of the element is now only an assumed height - the next
 	// time the "updateAssumedHeights" functions is triggered, this will be
 	// updated.
@@ -959,7 +975,7 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 	_elem.invalidateHeightCache(false);
 	_elem.assumedHeight = oldHeight;
 
-	if (_elem.containerClass == "grid" && !this.inUpdate)
+	if ((_elem.containerClass == "grid" || _elem.containerClass == "spacer") && !this.inUpdate)
 	{
 		this.triggerUpdateAssumedHeights();
 	}
@@ -1063,6 +1079,14 @@ function egwGridViewGrid_doSetviewArea(_area, _recPrev)
 	{
 		this.endUpdate(_recPrev);
 	}
+}
+
+function egwGridViewGrid_addIconHeightToAvg(_value)
+{
+	this.avgIconCnt++;
+
+	var frac = 1.0 / this.avgIconCnt;
+	this.avgIconHeight = this.avgIconHeight * (1 - frac) + _value * frac;
 }
 
 /** -- egwGridViewRow Class -- **/
@@ -1259,9 +1283,19 @@ function egwGridViewRow_doUpdateData(_immediate)
 				{
 					// Build the icon element
 					var icon = $(document.createElement("img"));
+
+					// Default the image height to the average height - this attribute
+					// is removed from the row as soon as the icon is loaded
+					icon.attr("height", Math.round(this.grid.avgIconHeight));
 					icon.attr("src", data[col.id].iconUrl);
-					icon.load(this, function(e) {
-						e.data.callHeightChangeProc();
+
+					icon.load({"item": this, "col": td}, function(e) {
+						var icon = $(this);
+						icon.removeAttr("height");
+						window.setTimeout(function() {
+							e.data.item.grid.addIconHeightToAvg(icon.height());
+						}, 100);
+						e.data.item.callHeightChangeProc();
 					});
 					icon.addClass("icon");
 					td.append(icon);
@@ -1322,6 +1356,8 @@ function egwGridViewRow_setOpen(_open)
 {
 	if (_open != this.opened)
 	{
+		var inserted = false;
+
 		if (_open)
 		{
 			if (!this.childGrid)
@@ -1332,8 +1368,10 @@ function egwGridViewRow_setOpen(_open)
 				arrow.addClass("loading");
 
 				// Create the "child grid"
-				this.childGrid = this.grid.insertContainer(this.index, egwGridViewGrid,
+				var childGrid = null;
+				this.childGrid = childGrid = this.grid.insertContainer(this.index, egwGridViewGrid,
 					false);
+				inserted = true;
 				this.childGrid.setVisible(false);
 				var spacer = this.childGrid.insertContainer(-1, egwGridViewSpacer,
 					this.grid.getOuter().avgRowHeight);
@@ -1342,11 +1380,12 @@ function egwGridViewRow_setOpen(_open)
 					arrow.removeClass("closed");
 					arrow.addClass("opened");
 					spacer.setItemList(_children);
+					childGrid.setVisible(true);
 				});
 			}
 		}
 
-		if (this.childGrid)
+		if (this.childGrid && !inserted)
 		{
 			this.childGrid.setVisible(_open);
 		}
@@ -1354,6 +1393,7 @@ function egwGridViewRow_setOpen(_open)
 		this.opened = _open;
 		this.item.opend = _open;
 	}
+
 }
 
 
@@ -1373,6 +1413,7 @@ function egwGridViewSpacer(_grid, _heightChangeProc, _itemHeight)
 	container.domNode = null;
 	container.items = [];
 	container.setItemList = egwGridViewSpacer_setItemList;
+	container.containerClass = "spacer";
 
 	// Overwrite the inherited functions
 	container.doInsertIntoDOM = egwGridViewSpacer_doInsertIntoDOM;
@@ -1437,13 +1478,17 @@ function egwGridViewSpacer_doSetViewArea()
 		// created elements.
 		if (it_top.length > 0)
 		{
-			var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, avgHeight);
-			spacer.setItemList(it_top)
+			// this.itemHeight has to be passed to the new top spacer - otherwise the
+			// scroll position might change and we'll go into a nasty setViewArea
+			// loop.
+			var spacer = this.grid.insertContainer(idx - 1, egwGridViewSpacer, this.itemHeight);
+			spacer.setItemList(it_top);
 		}
 
 		// If there are items left at the bottom of the spacer, set theese as items of this spacer
 		if (it_bot.length > 0)
 		{
+			// The height of this (the bottom) spacer can be set to the average height
 			this.itemHeight = avgHeight;
 			this.setItemList(it_bot);
 		}

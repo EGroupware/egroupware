@@ -499,19 +499,16 @@ egwGridDataElement.prototype.callGridViewObjectUpdate = function(_immediate)
 	}
 }
 
-/**
- * Returns the absolute index of this element
- */
-egwGridDataElement.prototype.getTotalIndex = function()
+egwGridDataElement.prototype.getDeepestOpened = function()
 {
-	var idx = this.index;
-
-	if (this.parent && this.parent.opened)
+	if (this.opened && this.children.length > 0)
 	{
-		idx += this.parent.getTotalIndex();
+		return this.children[this.children.length - 1].getDeepestOpened();
 	}
-
-	return idx;
+	else
+	{
+		return this;
+	}
 }
 
 /**
@@ -519,7 +516,7 @@ egwGridDataElement.prototype.getTotalIndex = function()
  */
 egwGridDataElement.prototype.isOdd = function()
 {
-	return (this.getTotalIndex() % 2) == 0;
+	return (this.index % 2) == 0; // Improve - old exact version needed way too much performance
 }
 
 /**
