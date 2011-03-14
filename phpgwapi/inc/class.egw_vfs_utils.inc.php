@@ -44,7 +44,7 @@ class egw_vfs_utils
 		else if ($file && $mime_main == 'image' && in_array($mime_sub, array('png','jpeg','jpg','gif','bmp')) &&
 		         (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
 		         (string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
-		         (!is_array($value) && ($stat = egw_vfs::stat($file)) ? $stat['size'] : $value['size']) < 4000000)
+		         (!is_array($value) && ($stat = egw_vfs::stat($file)) ? $stat['size'] : $value['size']) < 1500000)
 		{
 			if (substr($file, 0, 6) == '/apps/')
 			{

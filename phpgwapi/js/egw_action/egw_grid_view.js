@@ -397,11 +397,6 @@ egwGridViewContainer.prototype.setViewArea = function(_area, _force)
 
 	this.viewArea = relArea;
 
-	if (this.containerClass == "grid" && this.grid != null)
-	{
-//		console.log(this, _area, this.viewArea);
-	}
-
 	this.checkViewArea(_force);
 }
 
@@ -435,9 +430,6 @@ egwGridViewContainer.prototype.setPosition = function(_top)
 /**
  * Returns the height of the container in pixels and zero if the element is not
  * visible. The height is clamped to positive values.
- *
- * TODO: This function consumes 70-80% of the update time! Do something to improve
- * 	this!
  */
 egwGridViewContainer.prototype.getHeight = function()
 {
@@ -559,7 +551,6 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.avgIconCnt = 1;
 
 	// Overwrite the abstract container interface functions
-	container.invalidateHeightCache = egwGridViewGrid_invalidateHeightCache;
 	container.getHeight = egwGridViewGrid_getHeight;
 	container.doInsertIntoDOM = egwGridViewGrid_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewGrid_doSetviewArea;
@@ -763,11 +754,6 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 				// Offset the position of all following elements by the delta.
 				var delta = newHeight - oldHeight;
 
-				if (this.grid != null)
-				{
-//					console.log(child, delta, newHeight, oldHeight);
-				}
-
 				if (Math.abs(delta) > 0.001)
 				{
 					for (var j = this.updateIndex + 1; j < this.children.length; j++)
@@ -923,25 +909,6 @@ function egwGridViewGrid_addContainer(_class)
 	return container;
 }
 
-function egwGridViewGrid_invalidateHeightCache(_children)
-{
-	if (typeof _children == "undefined")
-	{
-		_children = true;
-	}
-
-	// Call the inherited function
-	egwGridViewContainer.prototype.invalidateHeightCache.call(this);
-
-	if (_children)
-	{
-		for (var i = 0; i < this.children.length; i++)
-		{
-			this.children[i].invalidateHeightCache();
-		}
-	}
-}
-
 function egwGridViewGrid_getHeight()
 {
 	if (this.visible && this.parentNode)
@@ -962,16 +929,11 @@ function egwGridViewGrid_heightChangeHandler(_elem)
 {
 	this.didUpdate = true;
 
-	if (this.grid != null)
-	{
-//		console.log("HCH for", _elem);
-	}
-
 	// The old height of the element is now only an assumed height - the next
 	// time the "updateAssumedHeights" functions is triggered, this will be
 	// updated.
 	var oldHeight = _elem.assumedHeight !== false ? _elem.assumedHeight :
-		(_elem.height === false ? this.getOuter().avgRowHeight : _elem.height);
+		(_elem.height === false ? 0 : _elem.height);
 	_elem.invalidateHeightCache(false);
 	_elem.assumedHeight = oldHeight;
 
@@ -1326,7 +1288,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 
 	// If the call is not from inside the doInsertIntoDOM function, we have to
 	// inform the parent about a possible height change
-	if (!_immediate)
+	if (!_immediate && (this.height || this.assumedHeight))
 	{
 		this.callHeightChangeProc();
 	}
