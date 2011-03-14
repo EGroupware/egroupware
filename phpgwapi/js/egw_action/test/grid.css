@@ -122,6 +122,14 @@ body, td, th {
 	background-position: 0 0;
 }
 
+.egwGridView_grid span.iconContainer {
+	display: inline-block;
+	max-width: 32px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
 .egwGridView_outer thead th {
 	background-color: #E0E0E0;
 	font-weight: normal;

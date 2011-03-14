@@ -59,6 +59,7 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.data = {};
 	this.caption = false;
 	this.iconUrl = false;
+	this.iconSize = false;
 	this.opened = _parent == null;
 	this.index = 0;
 	this.canHaveChildren = false;
@@ -82,6 +83,11 @@ egwGridDataElement.prototype.set_caption = function(_value)
 egwGridDataElement.prototype.set_iconUrl = function(_value)
 {
 	this.iconUrl = _value;
+}
+
+egwGridDataElement.prototype.set_iconSize = function(_value)
+{
+	this.iconSize = _value;
 }
 
 egwGridDataElement.prototype.set_opened = function(_value)

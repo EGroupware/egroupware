@@ -39,7 +39,7 @@ class egw_vfs_utils
 
 		if ($mime_main == 'egw')
 		{
-			$image = $mime_sub.'/navbar';	// egw-applications for link-widget
+			$image = $GLOBALS['egw']->common->image($mime_sub, 'navbar');
 		}
 		else if ($file && $mime_main == 'image' && in_array($mime_sub, array('png','jpeg','jpg','gif','bmp')) &&
 		         (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&

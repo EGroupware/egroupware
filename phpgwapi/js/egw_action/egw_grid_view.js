@@ -16,6 +16,7 @@
 uses
 	egw_action_common,
 	egw_action_data,
+	egw_stylesheet,
 	jquery;
 */
 
@@ -505,6 +506,7 @@ var EGW_GRID_VIEW_EXT = 25;
 var EGW_GRID_MAX_CYCLES = 10;
 var EGW_GRID_SCROLL_TIMEOUT = 100;
 var EGW_GRID_UPDATE_HEIGHTS_TIMEOUT = 50;
+var EGW_GRID_VIEW_GRID_CNT = 0;
 
 /**
  * egwGridViewGrid is the container for egwGridViewContainer objects, but itself
@@ -516,6 +518,8 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	{
 		_scrollable = false;
 	}
+
+	EGW_GRID_VIEW_GRID_CNT++;
 
 	var container = new egwGridViewContainer(_grid, _heightChangeProc);
 
@@ -544,11 +548,15 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.endUpdate = egwGridViewGrid_endUpdate;
 	container.triggerUpdateAssumedHeights = egwGridViewGrid_triggerUpdateAssumedHeights;
 	container.addIconHeightToAvg = egwGridViewGrid_addIconHeightToAvg;
+	container.setIconWidth = egwGridViewGrid_setIconWidth;
 	container.children = [];
 	container.outer = _outer;
 	container.containerClass = "grid";
 	container.avgIconHeight = 16;
 	container.avgIconCnt = 1;
+	container.uniqueId = "grid_" + EGW_GRID_VIEW_GRID_CNT;
+	container.maxIconWidth = 16;
+	container.styleSheet = new egwDynStyleSheet();
 
 	// Overwrite the abstract container interface functions
 	container.getHeight = egwGridViewGrid_getHeight;
@@ -556,6 +564,17 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.doSetViewArea = egwGridViewGrid_doSetviewArea;
 
 	return container;
+}
+
+function egwGridViewGrid_setIconWidth(_value)
+{
+	if (_value > this.maxIconWidth)
+	{
+		this.maxIconWidth = _value;
+
+		this.styleSheet.updateRule(".iconContainer." + this.uniqueId, 
+			"min-width: " + (this.maxIconWidth + 8) + "px;");
+	}
 }
 
 function egwGridViewGrid_beginUpdate()
@@ -1216,10 +1235,10 @@ function egwGridViewRow_doUpdateData(_immediate)
 				}
 
 				// Insert the open/close arrow
+				var arrow = $(document.createElement("span"));
+				arrow.addClass("arrow");
 				if (this.item.canHaveChildren)
 				{
-					var arrow = $(document.createElement("span"));
-					arrow.addClass("arrow");
 					arrow.addClass(this.item.opened ? "opened" : "closed");
 					arrow.click(this, function(e) {
 						$this = $(this);
@@ -1237,30 +1256,38 @@ function egwGridViewRow_doUpdateData(_immediate)
 
 						e.data.setOpen(!e.data.opened);
 					});
-					td.append(arrow);
 				}
+				td.append(arrow);
 
 				// Insert the icon
 				if (data[col.id].iconUrl)
 				{
 					// Build the icon element
+					var iconContainer = $(document.createElement("span"));
+					iconContainer.addClass("iconContainer " + this.grid.uniqueId);
 					var icon = $(document.createElement("img"));
 
 					// Default the image height to the average height - this attribute
 					// is removed from the row as soon as the icon is loaded
-					icon.attr("height", Math.round(this.grid.avgIconHeight));
+					var height = this.item.iconSize ? this.item.iconSize : this.grid.avgIconHeight;
+					icon.attr("height", Math.round(height));
 					icon.attr("src", data[col.id].iconUrl);
 
 					icon.load({"item": this, "col": td}, function(e) {
 						var icon = $(this);
-						icon.removeAttr("height");
+						if (!e.data.item.item.iconSize)
+						{
+							icon.removeAttr("height");
+						}
 						window.setTimeout(function() {
+							e.data.item.grid.setIconWidth(icon.width());
 							e.data.item.grid.addIconHeightToAvg(icon.height());
 						}, 100);
 						e.data.item.callHeightChangeProc();
 					});
 					icon.addClass("icon");
-					td.append(icon);
+					iconContainer.append(icon);
+					td.append(iconContainer);
 				}
 
 				// Build the caption
