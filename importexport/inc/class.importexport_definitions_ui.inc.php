@@ -82,7 +82,7 @@ class importexport_definitions_ui
 
 		if($GLOBALS['egw_info']['user']['apps']['admin']) {
 			// Any public definition
-			$filter[] = '!owner OR owner IS NULL OR allowed_users IS NOT NULL';
+			$filter[] = '(!owner OR owner IS NULL OR allowed_users IS NOT NULL OR owner = ' . $GLOBALS['egw_info']['user']['account_id'] . ')';
 		} else {
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
