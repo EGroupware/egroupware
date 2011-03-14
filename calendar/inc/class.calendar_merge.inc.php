@@ -152,6 +152,11 @@ class calendar_merge extends bo_merge
 			if (substr($name,-4) == 'date') $name = substr($name,0,-4);
 			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_'.$name . '$$'] = is_array($data['data']) ? implode(', ',$data['data']) : $data['data'];
 		}
+		if(!$replacements['$$'.($prefix ? $prefix . '/' : '') . 'calendar_recur_type$$'])
+		{
+			// Need to set it to '' if not set or previous record may be used
+			$replacements['$$'.($prefix ? $prefix . '/' : '') . 'calendar_recur_type$$'] = '';
+		}
 		foreach(array('start','end') as $what)
 		{
 			foreach(array(
@@ -173,7 +178,6 @@ class calendar_merge extends bo_merge
 		{
 			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
 		}
-
 		return $replacements;
 	}
 
