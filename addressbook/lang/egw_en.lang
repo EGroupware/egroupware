@@ -124,6 +124,7 @@ copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 country	common	en	Country
+country code	addressbook	en	Country code
 create new links	addressbook	en	Create new links
 created	addressbook	en	Created
 credit	addressbook	en	Credit

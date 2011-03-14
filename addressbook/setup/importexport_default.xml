@@ -41,7 +41,7 @@
           <entry type="string" name="adr_one_region">State (Business)</entry>
           <entry type="string" name="adr_one_postalcode">ZIP Code (Business)</entry>
           <entry type="string" name="adr_one_countryname">Country (Business)</entry>
-          <entry type="string" name="adr_one_countrycode">Country (Business)</entry>
+          <entry type="string" name="adr_one_countrycode">country code (Business)</entry>
           <entry type="string" name="label">Label</entry>
           <entry type="string" name="adr_two_street">Street (Private)</entry>
           <entry type="string" name="adr_two_street2">Address Line 2 (Private)</entry>
@@ -49,7 +49,7 @@
           <entry type="string" name="adr_two_region">State (Private)</entry>
           <entry type="string" name="adr_two_postalcode">ZIP Code (Private)</entry>
           <entry type="string" name="adr_two_countryname">Country (Private)</entry>
-          <entry type="string" name="adr_two_countrycode">Country (Private)</entry>
+          <entry type="string" name="adr_two_countrycode">country code (Private)</entry>
           <entry type="string" name="tel_work">Work Phone</entry>
           <entry type="string" name="tel_cell">Mobile Phone</entry>
           <entry type="string" name="tel_fax">Fax (Business)</entry>
@@ -84,6 +84,7 @@
         <entry type="string" name="convert">1</entry>
         <entry type="string" name="explode_multiselects"/>
       </entry>
+      <entry type="string" name="modified">2011-03-14 13:31:29</entry>
     </entry>
     <entry type="array" name="import-addressbook">
       <entry type="string" name="name">import-addressbook</entry>
@@ -245,6 +246,7 @@
         <entry type="string" name="contact_owner">-1</entry>
         <entry type="string" name="change_owner">0</entry>
       </entry>
+      <entry type="string" name="modified">2011-02-03 11:02:34</entry>
     </entry>
   </entry>
 </entry>
