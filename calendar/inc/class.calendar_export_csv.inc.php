@@ -128,11 +128,13 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl() {
+		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
 		return array(
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(
 				'start'		=> time(),
-				'end'		=> time()
+				'end'		=> time(),
+				'owner'		=> $states['owner']
 			)
 		);
 	}
