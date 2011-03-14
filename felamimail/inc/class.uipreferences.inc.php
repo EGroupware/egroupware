@@ -76,7 +76,7 @@
 					$GLOBALS['egw']->js->validate_file('tabs','tabs');
 					$GLOBALS['egw']->js->validate_file('jscode','editAccountData','felamimail');
 					$GLOBALS['egw']->js->set_onload('javascript:initEditAccountData();');
-					$GLOBALS['egw']->js->set_onload('javascript:initTabs();');
+					if ($_GET['menuaction'] == 'felamimail.uipreferences.editAccountData') $GLOBALS['egw']->js->set_onload('javascript:initTabs();');
 					break;
 
 				case 'felamimail.uipreferences.listSignatures':
