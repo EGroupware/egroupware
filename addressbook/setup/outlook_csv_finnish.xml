@@ -6,8 +6,8 @@
     <entry type="integer" name="entries">1</entry>
   </entry>
   <entry type="array" name="definitions">
-    <entry type="array" name="outlook_csv_finish">
-      <entry type="string" name="name">outlook_csv_finish</entry>
+    <entry type="array" name="outlook_csv_finnish">
+      <entry type="string" name="name">outlook_csv_finnish</entry>
       <entry type="string" name="application">addressbook</entry>
       <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
       <entry type="string" name="type">export</entry>
@@ -53,8 +53,7 @@
           <entry type="string" name="Notes">Muistilaput</entry>
         </entry>
       </entry>
-      <entry type="string" name="owner">admin</entry>
-      <entry type="NULL" name="description"/>
+      <entry type="string" name="modified">2011-03-14 14:11:40</entry>
     </entry>
   </entry>
 </entry>
