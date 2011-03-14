@@ -175,6 +175,14 @@ class importexport_definitions_bo {
 				$definition->set_record( $definition_data );
 				$definition->save( $definition_id );
 			}
+
+			// Set as default definition for the app, if there is no site default yet
+			if($definition->type == 'export' && $definition->name == 'export-'.$definition->application &&
+				!$GLOBALS['egw']->preferences->default[$definition->application]['nextmatch-export-definition'])
+			{
+				$GLOBALS['egw']->preferences->add($definition->application, 'nextmatch-export-definition', $definition->name, 'default');
+				$GLOBALS['egw']->preferences->save_repository(true, 'default');
+			}
 		}
 	}
 
