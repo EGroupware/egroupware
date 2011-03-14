@@ -919,6 +919,7 @@ function egwGridViewGrid_empty(_newColumns)
 
 	this.innerNode.empty();
 	this.children = [];
+	this.maxIconWidth = 16;
 }
 
 function egwGridViewGrid_addContainer(_class)
@@ -1128,7 +1129,7 @@ function egwGridViewRow_aoiSetState(_state, _shiftState)
 
 function egwGridViewRow_aoiGetDOMNode()
 {
-	return this.row.parentNode ? this.row.parentNode : null;
+	return this.row.parentNode ? this.row.parentNode.context : null;
 }
 
 /**
@@ -1155,6 +1156,7 @@ var
 function egwGridViewRow_doInsertIntoDOM()
 {
 	this.parentNode.empty();
+	this.parentNode.addClass("row");
 
 	// Setup the aoi and inform the item about it
 	if (!this.aoi)
@@ -1180,9 +1182,14 @@ function egwGridViewRow_doInsertIntoDOM()
 			e.data.item._columnClick(egwGetShiftState(e), e.data.col);
 		});
 
+		// Mark the first and last column
 		if (i == 0)
 		{
 			td.addClass("first");
+		}
+		if (i == this.columns.length - 1)
+		{
+			td.addClass("last");
 		}
 
 		// Set the column width
@@ -1255,6 +1262,8 @@ function egwGridViewRow_doUpdateData(_immediate)
 						}
 
 						e.data.setOpen(!e.data.opened);
+
+						return false; // Don't bubble this event
 					});
 				}
 				td.append(arrow);
@@ -1294,6 +1303,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 				if (data[col.id].caption)
 				{
 					var caption = $(document.createElement("span"));
+					caption.addClass("caption");
 					caption.html(data[col.id].caption);
 					td.append(caption);
 				}
@@ -1323,7 +1333,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 
 function egwGridViewRow_checkOdd()
 {
-	if (this.item && this.parentNode)
+/*	if (this.item && this.parentNode)
 	{
 		// Update the "odd"-Class of the item
 		var odd = this.item.isOdd();
@@ -1333,7 +1343,7 @@ function egwGridViewRow_checkOdd()
 			$(this.parentNode).toggleClass("odd", odd);
 			this.isOdd = odd;
 		}
-	}
+	}*/
 }
 
 function egwGridViewRow_doSetViewArea()

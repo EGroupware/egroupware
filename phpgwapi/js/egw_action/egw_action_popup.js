@@ -64,6 +64,13 @@ function egwPopupActionImplementation()
 
 		if (node)
 		{
+			node.ondblclick = function(e) {
+				_callback.call(_context, "default", ai);
+
+				e.preventDefault();
+				return false;
+			}
+
 			node.oncontextmenu = function(e) {
 				//Obtain the event object
 				if (!e)
@@ -105,23 +112,45 @@ function egwPopupActionImplementation()
 	 */
 	ai.doExecuteImplementation = function(_context, _selected, _links)
 	{
-		//Check whether the 
-		if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
-		    typeof _context.id != "undefined")
+		if (_context != "default")
 		{
-			// Calculate context menu position from the given DOM-Node
-			var node = _context;
+			//Check whether the context has the posx and posy parameters
+			if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
+			    typeof _context.id != "undefined")
+			{
+				// Calculate context menu position from the given DOM-Node
+				var node = _context;
 
-			x = node.offsetLeft;
-			y = node.offsetTop;
+				x = node.offsetLeft;
+				y = node.offsetTop;
 
-			_context = {"posx": x, "posy": y}
+				_context = {"posx": x, "posy": y}
+			}
+
+			var menu = ai._buildMenu(_links, _selected);
+			menu.showAt(_context.posx, _context.posy);
+
+			return true;
+		}
+		else
+		{
+			var defaultAction = null;
+			for (k in _links)
+			{
+				if (_links[k].actionObj["default"] && _links[k].enabled)
+				{
+					defaultAction = _links[k].actionObj;
+					break;
+				}
+			}
+
+			if (defaultAction)
+			{
+				defaultAction.execute(_selected);
+			}
 		}
 
-		var menu = ai._buildMenu(_links, _selected);
-		menu.showAt(_context.posx, _context.posy);
-
-		return true;
+		return false;
 	}
 
 	/**
@@ -187,6 +216,7 @@ function egwPopupActionImplementation()
 				{
 					var item = menu.addItem(link.actionObj.id, link.actionObj.caption,
 						link.actionObj.iconUrl);
+					item["default"] = link.actionObj["default"];
 					item.data = link.actionObj;
 					if (link.enabled)
 					{

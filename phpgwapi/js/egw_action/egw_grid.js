@@ -11,6 +11,7 @@
 
 /*
 uses
+	egw_action,
 	egw_action_common,
 	egw_action_view,
 	egw_action_data,
@@ -42,6 +43,11 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _context
 	this.gridOuter.updateColumns(this.columns.getColumnData());
 }
 
+egwGrid.prototype.setActionLinkGroup = function(_group, _links)
+{
+	this.dataRoot.actionLinkGroups[_group] = _links;
+}
+
 egwGrid.prototype.resize = function(_w, _h)
 {
 	if (_w != this.width)
@@ -70,5 +76,19 @@ egwGrid.prototype.columnsUpdate = function(_column)
 	{
 		this.gridOuter.updateColumns(this.columns.getColumnData());
 	}
+}
+
+/**
+ * Emptys the grid
+ */
+egwGrid.prototype.empty = function()
+{
+	this.dataRoot.empty();
+	this.gridOuter.grid.empty();
+}
+
+egwGrid.prototype.reload = function()
+{
+	this.gridOuter.empty();
 }
 

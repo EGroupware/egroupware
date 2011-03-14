@@ -386,6 +386,7 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 	this.actionLinks = [];
 	this.manager = _manager;
 	this.flags = _flags;
+	this.data = null;
 
 	this.registeredImpls = [];
 
@@ -1012,7 +1013,7 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 		}
 	}
 
-	if (this.getVisible())
+	if (this.getVisible() && this.iface != null)
 	{
 		this.registerActions();
 	}
@@ -1024,7 +1025,7 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 egwActionObject.prototype._reconnectCallback = function()
 {
 	this.registeredImpls = [];
-	this.registerActions;
+	this.registerActions();
 }
 
 /**

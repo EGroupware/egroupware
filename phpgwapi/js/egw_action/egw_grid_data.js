@@ -66,6 +66,8 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.type = egwGridViewRow;
 	this.userData = null;
 	this.updatedGrid = null;
+	this.actionLinkGroups = {};
+	this.group = false;
 
 	this.gridViewObj = null;
 }
@@ -98,6 +100,17 @@ egwGridDataElement.prototype.set_opened = function(_value)
 egwGridDataElement.prototype.set_canHaveChildren = function(_value)
 {
 	this.canHaveChildren = _value && (this.children.length == 0);
+}
+
+egwGridDataElement.prototype.set_group = function(_value)
+{
+	this.group = _value;
+
+	var root = this.getRootElement();
+	if (typeof root.actionLinkGroups[_value] != "undefined")
+	{
+		this.actionObject.updateActionLinks(root.actionLinkGroups[_value]);
+	}
 }
 
 /**
@@ -290,6 +303,7 @@ egwGridDataElement.prototype.insertElement = function(_index, _id)
 
 	// Create the action object
 	var object = this.actionObject.insertObject(_index, _id, null, 0);
+	object.data = element;
 
 	// Link the two together
 	element.actionObject = object;
@@ -535,7 +549,9 @@ egwGridDataElement.prototype.setGridViewObj = function(_obj)
 
 	if (_obj && typeof _obj.getAOI == "function")
 	{
-		this.actionObject.setAOI(_obj.getAOI());
+		var aoi = _obj.getAOI();
+		this.actionObject.setAOI(aoi);
+		aoi.reconnectActions();
 	}
 	else
 	{
@@ -601,6 +617,14 @@ egwGridDataElement.prototype.callEndUpdate = function()
 	}
 }
 
+/**
+ * Deletes all child elements
+ */
+egwGridDataElement.prototype.empty = function()
+{
+	this.children = [];
+	this.readQueue.empty();
+}
 
 /** - egwGridDataReadQueue -- **/
 
@@ -815,7 +839,7 @@ egwGridDataQueue.prototype.prefetch = function(_cnt)
 		{
 			var idx = planes[plane].idx;
 
-			if (idx == planes[plane].parent.children.length)
+			if (!planes.parent || idx == planes[plane].parent.children.length)
 			{
 				planes[plane].done = true;
 				done++;
@@ -851,6 +875,11 @@ egwGridDataQueue.prototype.prefetch = function(_cnt)
 		// Go to the next plane
 		plane = (plane + 1) % planes.length;
 	}
+}
+
+egwGridDataQueue.prototype.empty = function()
+{
+	this.queue = [];
 }
 
 /**
@@ -896,6 +925,12 @@ egwGridDataQueue.prototype.flushQueue = function(_doPrefetch)
 	this.timeoutId = 0;
 }
 
+/**
+ * Internal function which is called when the data is received from the fetchCallback.
+ *
+ * @param _data contains the data which has been retrieved by the fetchCallback
+ * @param _queue is the list of elements which had been requested.
+ */
 egwGridDataQueue.prototype.dataCallback = function(_data, _queue)
 {
 	var rootData = [];

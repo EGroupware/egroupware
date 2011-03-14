@@ -7,14 +7,24 @@
 		<script src="../egw_action.js"></script>
 		<script src="../egw_action_common.js"></script>
 
+		<!-- Popup stuff -->
+		<script src="../egw_action_popup.js"></script>
+		<script src="../egw_menu.js"></script>
+		<script src="../egw_menu_dhtmlx.js"></script>
+		<script src="js/dhtmlxcommon.js"></script>
+		<script src="js/dhtmlxmenu.js"></script>
+		<script src="js/dhtmlxmenu_ext.js"></script>
+
 		<!-- Grid stuff -->
 		<script src="../egw_grid_view.js"></script>
 		<script src="../egw_grid_columns.js"></script>
 		<script src="../egw_grid_data.js"></script>
 		<script src="../egw_grid.js"></script>
+		<script src="../egw_stylesheet.js"></script>
 
 		<script src="js/jquery.js"></script>
 		<link rel="stylesheet" href="grid.css"/>
+		<link rel="stylesheet" href="skins/dhtmlxmenu_egw.css"/>
 	</head>
 	<body>
 		<h1>Test for dynamically displaying and loading grid lines</h1>
@@ -79,6 +89,86 @@
 					}
 				];
 
+			var actions =
+				[
+					{
+						"id": "folder_open",
+						"iconUrl": "imgs/folder.png",
+						"caption": "Open folder",
+						"onExecute": alertClicked,
+						"allowOnMultiple": false,
+						"type": "popup",
+						"default": true
+					},
+					{
+						"id": "file_view",
+						"iconUrl": "imgs/view.png",
+						"caption": "View",
+						"onExecute": alertClicked,
+						"allowOnMultiple": false,
+						"type": "popup",
+					},
+					{
+						"id": "file_preview",
+						"iconUrl": "imgs/preview.png",
+						"caption": "Preview",
+						"onExecute": alertClicked,
+						"allowOnMultiple": false,
+						"type": "popup",
+						"default": true
+					},
+					{
+						"id": "file_delete",
+						"iconUrl": "imgs/delete.png",
+						"caption": "Delete",
+						"onExecute": alertClicked,
+						"type": "popup",
+						"group": 2
+					},
+					{
+						"id": "file_edit",
+						"iconUrl": "imgs/edit.png",
+						"caption": "Edit file",
+						"onExecute": alertClicked,
+						"allowOnMultiple": false,
+						"type": "popup"
+					},
+					{
+						"id": "file_compress",
+						"iconUrl": "imgs/compress.png",
+						"caption": "Create ZIP archive",
+						"onExecute": alertClicked,
+						"type": "popup",
+						"group": 1,
+						"order": 1
+					},
+					{
+						"id": "file_email",
+						"iconUrl": "imgs/email.png",
+						"caption": "E-Mail",
+						"onExecute": alertClicked,
+						"allowOnMultiple": false,
+						"type": "popup",
+						"group": 1,
+						"order": 0
+					},
+					{
+						"id": "file_compress_email",
+						"caption": "Create ZIP and E-Mail",
+						"onExecute": alertClicked,
+						"type": "popup",
+						"group": 1,
+						"order": 2
+					}
+				];
+
+			var listboxFolderLinks = [
+				{"actionId": "folder_open", "enabled": true},
+				{"actionId": "file_compress_email", "enabled": true},
+				{"actionId": "file_compress", "enabled": true},
+				{"actionId": "file_delete", "enabled": true}
+			];
+
 			function fetchDataProc(_elems, _columns, _callback, _context)
 			{
 				// Delay the result a bit to simulate real network traffic
@@ -122,7 +212,8 @@
 								"id": _elems[i],
 								"data": data,
 								"caption": _elems[i],
-								"iconUrl": "imgs/folder.png"
+								"iconUrl": "imgs/folder.png",
+								"group": "folder"
 							});
 						}
 					}
@@ -133,10 +224,13 @@
 
 			$(document).ready(function() {
 				actionManager = new egwActionManager();
+				actionManager.updateActions(actions);
+
 				objectManager = new egwActionObjectManager("", actionManager);
 
 				grid = new egwGrid($("#container"), columns, objectManager, fetchDataProc,
 					window);
+				grid.setActionLinkGroup("folder", listboxFolderLinks);
 				grid.dataRoot.loadData(
 					[
 						{
@@ -184,6 +278,16 @@
 						console.log("<--");
 					}
 				}
+			}
+
+			function alertClicked(_action, _senders)
+			{
+				var ids = "";
+				for (var i = 0; i < _senders.length; i++)
+					ids += _senders[i].id + ((i < _senders.length - 1) ? ", " : "");
+
+				alert("Action '" + _action.caption + "' executed on elements '"
+					+ ids + "'");
 			}
 		</script>
 	</body>

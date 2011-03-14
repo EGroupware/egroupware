@@ -30,9 +30,9 @@ body, td, th {
 	background-color: #b7c3ff;
 }
 
-.egwGridView_grid tr.selected.odd td {
+/*.egwGridView_grid tr.selected.odd td {
 	background-color: #9dadff;
-}
+}*/
 
 .egwGridView_scrollarea {
 	width: 100%;
@@ -61,6 +61,15 @@ body, td, th {
 	border-right: 1px solid silver;
 	padding: 2px 3px 2px 4px;
 	margin: 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.egwGridView_grid td.last {
+	border-right-width: 0;
+}
+
+.egwGridView_grid tr.row:hover {
+	background-color: #f0f0ff;
 }
 
 .egwGridView_grid tr {
@@ -72,9 +81,9 @@ body, td, th {
 	display: none;
 }
 
-.egwGridView_grid tr.odd {
+/*.egwGridView_grid tr.odd {
 	background-color: #F1F1F1;
-}
+}*/
 
 .egwGridView_grid span.indentation {
 	display: inline-block;
@@ -127,6 +136,10 @@ body, td, th {
 	padding: 0;
 	margin: 0;
 	text-align: center;
+}
+
+.egwGridView_grid span.caption {
+	cursor: default;
 }
 
 .egwGridView_outer thead th {
