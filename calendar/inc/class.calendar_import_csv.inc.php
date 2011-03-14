@@ -300,7 +300,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	 * @return string name
 	 */
 	public static function get_name() {
-		return lang('CSV import');
+		return lang('Calendar CSV import');
 	}
 
 	/**
