@@ -124,7 +124,6 @@ body, td, th {
 
 .egwGridView_grid span.iconContainer {
 	display: inline-block;
-	max-width: 32px;
 	padding: 0;
 	margin: 0;
 	text-align: center;
