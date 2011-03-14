@@ -41,7 +41,7 @@ function ajax_exception_handler(Exception $e)
 	}
 	$response = new egw_json_response();
 	$message .= ($message ? "\n\n" : '').$e->getMessage();
-	
+
 	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
 	if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 	{
@@ -71,7 +71,7 @@ if (isset($_GET['menuaction']))
 	{
 		@list($appName, $className, $functionName, $handler) = explode('.',$_GET['menuaction']);
 	}
-	//error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
+	//error_log("json.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(

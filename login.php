@@ -346,7 +346,7 @@ else
 			}
 
 			// Check for save passwd
-			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && 
+			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') &&
 				($unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd)))
 			{
 				$GLOBALS['egw']->log->write(array('text'=>'D-message, User '. $login. ' authenticated with an unsave password','file' => __FILE__,'line'=>__LINE__));
