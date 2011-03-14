@@ -172,14 +172,15 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$contacts = $this->bocontacts->search(
-								//array( $condition['string'] => $record[$condition['string']],),
-								'', 
-								$_definition->plugin_options['update_cats'] == 'add' ? false : true,
-								'', '', '', false, 'AND', false,
-								array( $condition['string'] => $record[$condition['string']],)
-							);
-
+							if($record[$condition['string']]) {
+								$contacts = $this->bocontacts->search(
+									//array( $condition['string'] => $record[$condition['string']],),
+									'', 
+									$_definition->plugin_options['update_cats'] == 'add' ? false : true,
+									'', '', '', false, 'AND', false,
+									array( $condition['string'] => $record[$condition['string']])
+								);
+							}
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
