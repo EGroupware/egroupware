@@ -97,6 +97,11 @@ class importexport_helper_functions {
 	public static function account_name2id( $_account_lids ) {
 		$account_lids = is_array( $_account_lids ) ? $_account_lids : explode( ',', $_account_lids );
 		foreach ( $account_lids as $account_lid ) {
+			// Handle any IDs that slip in
+			if(is_numeric($account_lid) && $GLOBALS['egw']->accounts->id2name($account_lid)) {
+				$account_ids[] = (int)$account_lid;
+				continue;
+			}
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
 			}
