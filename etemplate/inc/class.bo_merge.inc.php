@@ -557,6 +557,12 @@ abstract class bo_merge
 			}
 			// Look for numbers, set their value if needed
 			$format = $replacement = '';
+			if($this->numeric_fields) {
+				$names = array();
+				foreach($this->numeric_fields as $fieldname) {
+					$names[] = preg_quote($fieldname,'/');
+				}
+			}
 			switch($mimetype.$mso_application_progid)
 			{
 				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
