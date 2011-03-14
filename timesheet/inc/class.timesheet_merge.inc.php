@@ -28,6 +28,15 @@ class timesheet_merge extends bo_merge
 	);
 
 	/**
+	 * Fields that are numeric, for special numeric handling
+	 */
+	protected $numeric_fields = array(
+		'$$ts_duration$$',
+		'$$ts_quantity$$',
+		'$$ts_unitprice$$'
+	);
+
+	/**
 	 * Business object to pull records from
 	 */
 	protected $bo = null;
