@@ -171,6 +171,12 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $_contact) {
+			if(is_array($_contact) && array_key_exists('photo', $_contact)) {
+				unset($_contact['photo']);
+			}
+			if(is_array($_contact) && count($_contact) == 1 && $_contact['id']) {
+				$_contact = $_contact['id'];
+			}
 			if(is_array($_contact) && $_contact['id']) {
 				$contact = new addressbook_egw_record();
 				$contact->set_record($_contact);
