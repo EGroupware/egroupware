@@ -141,17 +141,6 @@
 						$options['plugin'][$key] = $title;
 					}
 				}
-			} else {
-				$plugins = importexport_helper_functions::get_plugins('all', $data['type'] ? $data['type'] : 'all');
-				if(is_array($plugins)) {
-					foreach($plugins as $appname => $_types) {
-						foreach($_types as $type => $plugins) {
-							foreach($plugins as $key => $title) {
-								$options['plugin'][$key] = $title;
-							}
-						}
-					}
-				}
 			}
 				
 			$options['definition'] = array();
@@ -161,10 +150,10 @@
 			}
 
 			// If the query isn't started with something, bodefinitions won't load the definitions
-			$query = array('definition_id');
-			if($data['type']) $query['type'] = $data['type'];
-			if($data['application']) $query['application'] = $data['application'];
-			if($data['plugin']) $query['plugin'] = $data['plugin'];
+			$query = array();
+			$query['type'] = $data['type'];
+			$query['application'] = $data['application'];
+			$query['plugin'] = $data['plugin'];
 			$definitions = new importexport_definitions_bo($query);
 			foreach ((array)$definitions->get_definitions() as $identifier) {
 				try {
@@ -215,6 +204,7 @@
 					$response->addScript("selectbox_add_option('exec[plugin]','$title', '$value',false);");
 				}
 			}
+			$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
 			return $response->getXML();
 		}
 
