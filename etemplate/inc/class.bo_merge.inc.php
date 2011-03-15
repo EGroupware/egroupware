@@ -851,6 +851,7 @@ abstract class bo_merge
 		switch($_mimetype)
 		{
 			case 'application/xml':	// Excel 2003
+			case 'application/vnd.oasis.opendocument.spreadsheet': // OO.o spreadsheet
 				return number_format(str_replace(' ','',$number),$num_decimal_places,'.','');
 		}
 		return etemplate::number_format($number,$num_decimal_places);
