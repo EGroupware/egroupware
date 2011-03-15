@@ -53,7 +53,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
-			$selection = ExecMethod('addressbook.addressbook_bo.search',array());
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
+				$col_filter['account_id'] = null;
+			}
+			$selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);
 			//$uicontacts->get_rows($query,$selection,$readonlys,true);
 		} else {
 			$selection = explode(',',$options['selection']);
