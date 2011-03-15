@@ -175,6 +175,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+					$contacts = array();
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
@@ -187,7 +188,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 									array( $condition['string'] => $record[$condition['string']])
 								);
 							}
-							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
+							if ( is_array( $contacts ) && count( array_keys( $contacts ) ) >= 1 ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$contacts as $contact ) {
