@@ -87,7 +87,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 						}
 						break;
 					case self::EACH_CAT:
-						$cats = $cat_obj->return_array('all', 0, false);
+						$cats = $cat_obj->return_array('all', 0, false,'','ASC','',true);
 						foreach($cats as $settings) {
 							$name = $settings['name'];
 							$path = $settings;
@@ -272,6 +272,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 						$record_value = $record->$field_name;
 						$record_value[] = $settings['label'];
 						$record->$field_name = $record_value;
+					} else {
+						$record->$field_name = $value;
 					}
 				}
 				if($explode_settings['explode'] == self::MAIN_CATS && count(array_intersect($record->$field, array_keys($settings['subs'])))) {
