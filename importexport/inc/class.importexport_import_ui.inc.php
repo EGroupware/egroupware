@@ -57,14 +57,17 @@
 					$count = $plugin->import($file, $definition_obj);
 
 					$this->message = lang('%1 records processed', $count);
-					foreach($plugin->get_results() as $action => $count) {
-						$this->message .= "\n" . lang($action) . ": $count";
+					$total_processed = 0;
+					foreach($plugin->get_results() as $action => $a_count) {
+						$this->message .= "\n" . lang($action) . ": $a_count";
+						$total_processed += $a_count;
 					}
 					if(count($plugin->get_errors())) {
-						$this->message .= "\n".lang('Unable to import:');
+						$this->message .= "\n".lang('Problems during import:');
 						foreach($plugin->get_errors() as $record => $message) {
 							$this->message .= "\n$record: $message";
 						}
+						if($count != $total_processed) $this->message .= "\n".lang('Some records may not have been imported');
 					}
 				} catch (Exception $e) {
 					$this->message = $e->getMessage();

@@ -55,6 +55,7 @@ please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
 preview	importexport	en	Preview
 previous	importexport	en	previous
+problems during import:	importexport	en	Problems during import:
 save as definition	importexport	en	Save as definition
 schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import / export
@@ -63,6 +64,7 @@ select definition	importexport	en	Select definition
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
 some nice text	importexport	en	some nice text
+some records may not have been imported	importexport	en	Some records may not have been imported
 stop	importexport	en	Stop
 target	importexport	en	Target
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	en	Target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv
@@ -70,7 +72,6 @@ target field	importexport	en	Target Field
 test only	importexport	en	Test only
 translation	importexport	en	Translation
 true	importexport	en	True
-unable to import:	importexport	en	Unable to import:
 unable to schedule	importexport	en	Unable to schedule
 update categories	importexport	en	Update categories
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions
