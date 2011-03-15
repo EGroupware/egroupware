@@ -150,18 +150,21 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			// Automatically handle text owner without explicit translation
-			$record['owner'] = importexport_helper_functions::account_name2id($record['owner']);
-
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
-				if(!is_numeric($record['owner'])) {
-					$this->errors[$import_csv->get_current_position()] = lang(
-						'Invalid addressbook ID: %1.  Might be a bad field translation.  Used %2 instead.', 
-						$record['owner'], 
-						$_definition->plugin_options['contact_owner']
-					);
-					$record['owner'] = $_definition->plugin_options['contact_owner'];
+				if($record['owner'] && !is_numeric($record['owner'])) {
+					// Automatically handle text owner without explicit translation
+					$new_owner = importexport_helper_functions::account_name2id($record['owner']);
+					if($new_owner == '') {
+						$this->errors[$import_csv->get_current_position()] = lang(
+							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.',
+							$record['owner'],
+							common::grab_owner_name($_definition->plugin_options['contact_owner'])
+						);
+						$record['owner'] = $_definition->plugin_options['contact_owner'];
+					} else {
+						$record['owner'] = $new_owner;
+					}
 				}
 			} else {
 				$record['owner'] = $_definition->plugin_options['contact_owner'];
