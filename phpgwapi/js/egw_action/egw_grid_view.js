@@ -1225,9 +1225,9 @@ function egwGridViewRow_doUpdateData(_immediate)
 	{
 		var td = this.tdObjects[i].td;
 		var col = this.tdObjects[i].col;
+		td.empty();
 		if (typeof data[col.id] != "undefined")
 		{
-			td.empty();
 			if (col.type == EGW_COL_TYPE_NAME_ICON_FIXED)
 			{
 				// Insert the indentation spacer
@@ -1265,6 +1265,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 
 						return false; // Don't bubble this event
 					});
+					arrow.dblclick(function() {return false;});
 				}
 				td.append(arrow);
 
@@ -1497,5 +1498,114 @@ function egwGridViewSpacer_doSetViewArea()
 		}
 	}
 }
+
+
+
+
+/** -- egwGridViewFullRow Class -- **/
+
+/**
+ * The egwGridViewFullRow Class has only one td which contains a single caption
+ */
+
+function egwGridViewFullRow(_grid, _heightChangeProc, _item)
+{
+	var container = new egwGridViewContainer(_grid, _heightChangeProc);
+
+	// Copy the item parameter, which is used when fetching data from the data
+	// source
+	container.item = _item;
+
+	// Set a few new functions/properties - use the row aoi functions
+	container.aoiSetup = egwGridViewRow_aoiSetup;
+	container.getAOI = egwGridViewRow_getAOI;
+	container.containerClass = "row";
+	container._columnClick = egwGridViewRow__columnClick;
+	container.td = null;
+
+	// Overwrite the inherited abstract functions
+	container.doInsertIntoDOM = egwGridViewFullRow_doInsertIntoDOM;
+	container.doSetViewArea = egwGridViewFullRow_doSetViewArea;
+	container.doUpdateData = egwGridViewFullRow_doUpdateData;
+
+	return container;
+}
+
+function egwGridViewFullRow_doInsertIntoDOM()
+{
+	this.parentNode.empty();
+	this.parentNode.addClass("row");
+	this.parentNode.addClass("fullRow");
+
+	// Setup the aoi and inform the item about it
+	if (!this.aoi)
+	{
+		this.aoiSetup();
+		this.item.setGridViewObj(this);
+	}
+
+	var td = this.td = $(document.createElement("td"));
+	td.attr("colspan", this.columns.length);
+	td.addClass("first");
+	td.addClass("last");
+
+	this.parentNode.append(td);
+
+	// Set the column width
+	if (EGW_GRID_VIEW_ROW_BORDER === false)
+	{
+		EGW_GRID_VIEW_ROW_BORDER = td.outerWidth() - td.width();
+	}
+
+	var width = 0;
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		width += this.columns[i].drawnWidth;// - EGW_GRID_VIEW_ROW_BORDER;
+	}
+
+	td.css("width", width - EGW_GRID_VIEW_ROW_BORDER);
+
+	this.doUpdateData(true);
+
+	this.checkViewArea();
+}
+
+function egwGridViewFullRow_doUpdateData(_immediate)
+{
+	this.td.empty();
+
+	if (this.item.caption)
+	{
+		// Insert the indentation spacer
+		var depth = this.item.getDepth();
+		if (depth > 0)
+		{
+				// Build the indentation object
+			var indentation = $(document.createElement("span"));
+			indentation.addClass("indentation");
+			indentation.css("width", (depth * 12) + "px");
+			this.td.append(indentation);
+		}
+
+		// Insert the caption
+		var caption = $(document.createElement("span"));
+		caption.addClass("caption");
+		caption.html(this.item.caption);
+		this.td.append(caption);
+	}
+
+	// If the call is not from inside the doInsertIntoDOM function, we have to
+	// inform the parent about a possible height change
+	if (!_immediate && (this.height || this.assumedHeight))
+	{
+		this.callHeightChangeProc();
+	}
+}
+
+function egwGridViewFullRow_doSetViewArea()
+{
+	//
+}
+
 
 

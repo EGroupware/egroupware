@@ -278,6 +278,20 @@ egwGridDataElement.prototype.loadData = function(_data, _doCallUpdate)
 }
 
 /**
+ * Resets all relevant data (the column data, icon and icon size) of the element
+ * and triggers a gridViewObj update.
+ */
+egwGridDataElement.prototype.clearData = function()
+{
+	this.data = {};
+	this.caption = false;
+	this.iconUrl = false;
+	this.iconSize = false;
+
+	this.callGridViewObjectUpdate();
+}
+
+/**
  * Inserts a new element as child at the given position
  *
  * @param integer _index is the index at which the element will be inserted. If 

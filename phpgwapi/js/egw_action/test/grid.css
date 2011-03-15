@@ -68,6 +68,10 @@ body, td, th {
 	border-right-width: 0;
 }
 
+.egwGridView_grid tr.fullRow {
+	font-style: italic;
+}
+
 .egwGridView_grid tr.row:hover {
 	background-color: #f0f0ff;
 }
@@ -176,6 +180,7 @@ body, td, th {
 .frame {
 	padding: 0 !important;
 	border-right: 0 none silver !important;
+	border-bottom: 0 none silver !important;
 }
 
 
