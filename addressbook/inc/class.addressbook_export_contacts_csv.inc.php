@@ -67,7 +67,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			foreach($options['explode_multiselects'] as $field => $explode) {
 				switch($explode['explode']) {
 					case self::MAIN_CATS:
-						$cats = $cat_obj->return_array('mains', 0, false);
+						$cats = $cat_obj->return_array('mains', 0, false,'','ASC','',true);
 						foreach($cats as $settings) {
 							$additional_fields[$field][$settings['id']] = array(
 								'count' => 0,
