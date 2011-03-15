@@ -288,7 +288,7 @@ abstract class bo_merge
 		}
 
 		$config = config::read('phpgwapi');
-		if($config['export_limit']) {
+		if($config['export_limit'] && !$GLOBALS['egw_info']['user']['apps']['admin']) {
 			$ids = array_slice($ids, 0, (int)$config['export_limit']);
 		}
 		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
