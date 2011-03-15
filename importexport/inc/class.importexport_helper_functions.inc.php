@@ -104,6 +104,15 @@ class importexport_helper_functions {
 			}
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
+				continue;
+			}
+			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid, 'account_fullname' )) {
+				$account_ids[] = $account_id;
+				continue;
+			}
+			// Handle groups listed as Group, <name>
+			if ( $account_lid[0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lid))) {
+				$account_ids[] = $account_id;
 			}
 		}
 		return is_array( $_account_lids ) ? $account_ids : implode( ',', (array)$account_ids );
