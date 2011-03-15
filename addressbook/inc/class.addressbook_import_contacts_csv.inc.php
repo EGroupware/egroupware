@@ -150,6 +150,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			// Automatically handle text owner without explicit translation
+			$record['owner'] = importexport_helper_functions::account_name2id($record['owner']);
+
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
 				if(!is_numeric($record['owner'])) {
