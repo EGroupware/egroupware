@@ -96,11 +96,23 @@ class importexport_helper_functions {
 	 */
 	public static function account_name2id( $_account_lids ) {
 		$account_lids = is_array( $_account_lids ) ? $_account_lids : explode( ',', $_account_lids );
-		foreach ( $account_lids as $account_lid ) {
+		$skip = false;
+		foreach ( $account_lids as $key => $account_lid ) {
+			if($skip) {
+				$skip = false;
+				continue;
+			}
 			// Handle any IDs that slip in
 			if(is_numeric($account_lid) && $GLOBALS['egw']->accounts->id2name($account_lid)) {
 				$account_ids[] = (int)$account_lid;
 				continue;
+			}
+			// Handle users listed as Lastname, Firstname instead of login ID
+			// Do this first, in case their first name matches a username
+			if ( $account_lids[$key+1][0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lids[$key+1]).' ' .$account_lid, 'account_fullname')) {
+				$account_ids[] = $account_id;
+				$skip = true; // Skip the next one, it's the first name
+				continue ;
 			}
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
@@ -110,6 +122,7 @@ class importexport_helper_functions {
 				$account_ids[] = $account_id;
 				continue;
 			}
+			
 			// Handle groups listed as Group, <name>
 			if ( $account_lid[0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lid))) {
 				$account_ids[] = $account_id;
