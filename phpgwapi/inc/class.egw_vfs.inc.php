@@ -1550,6 +1550,24 @@ class egw_vfs extends vfs_stream_wrapper
 
 		return $image;
 	}
+
+	/**
+	 * Get the configured start directory for the current user
+	 *
+	 * @return string
+	 */
+	static function get_home_dir()
+	{
+		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+
+		// check if user specified a valid startpath in his prefs --> use it
+		if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
+			$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
+		{
+			$start = $path;
+		}
+		return $start;
+	}
 }
 
 egw_vfs::init_static();
