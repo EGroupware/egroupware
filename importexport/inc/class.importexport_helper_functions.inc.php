@@ -161,6 +161,7 @@ class importexport_helper_functions {
 
 		$cat_names = is_array( $_cat_names ) ? $_cat_names : explode( ',', $_cat_names );
 		foreach ( $cat_names as $cat_name ) {
+			$cat_name = trim($cat_name);
 			if ( $cat_name == '' ) continue;
 			// Handle any IDs that slip in
 			if ( is_numeric($cat_name) && categories::id2name((int)$cat_name)) {
