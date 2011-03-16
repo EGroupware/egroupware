@@ -282,6 +282,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				if($explode_settings['explode'] == self::MAIN_CATS && count(array_intersect($record->$field, array_keys($settings['subs'])))) {
 					// 3 part assign due to magic get method
 					$record_value = $record->$field_name;
+					if(!is_array($record_value)) $record_value = array($record_value);
 					foreach(array_intersect($record->$field, array_keys($settings['subs'])) as $sub_id) {
 						$record_value[] = $options['convert'] ? $settings['subs'][$sub_id] : $sub_id;
 					}
