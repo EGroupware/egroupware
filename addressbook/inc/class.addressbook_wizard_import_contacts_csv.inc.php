@@ -27,6 +27,26 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 		// Field mapping
 		$bocontacts = new addressbook_bo();
 		$this->mapping_fields = $bocontacts->contact_fields;
+
+		$categories = new categories('','addressbook');
+		$cat_list = array();
+		foreach((array)$categories->return_sorted_array(0,False,'','','',true,0,true) as $cat)
+		{
+			$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+
+			if (categories::is_global($cat))
+			{
+				$s .= ' &#9830;';
+			}
+			$cat_list['cat-'.$cat['id']] = empty($cat['description']) ? $s : array(
+				'label' => $s,
+				'title' => $cat['description'],
+			);
+		}
+		if(count($cat_list) > 0) {
+			$this->mapping_fields[lang('Categories')] = $cat_list;
+		}
+
 		foreach($bocontacts->customfields as $name => $data) {
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
@@ -48,6 +68,9 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
+		if($content['field_mapping'][0] == lang('Categories')) {
+			unset($content['field_mapping'][0]);
+		}
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
 		$content['msg'] .= "\n*" . lang('Contact ID cannot be changed by import');
 		

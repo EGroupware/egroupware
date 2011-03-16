@@ -172,6 +172,25 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 			// Automatically handle text categories without explicit translation
 			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+			
+			// Also handle categories in their own field
+			$more_categories = array();
+			foreach($_definition->plugin_options['field_mapping'] as $number => $field_name) {
+				if(substr($field_name,0,3) != 'cat' || !$record[$field_name]) continue;
+				list($cat, $cat_id) = explode('-', $field_name);
+				if(is_numeric($record[$field_name]) && $record[$field_name] != 1) {
+					// Column has a single category ID
+					$more_categories[] = $record[$field_name];
+				} elseif($record[$field_name] == '1' || 
+					(!is_numeric($record[$field_name]) && strtolower($record[$field_name]) == strtolower(lang('Yes')))) {
+					// Each category got its own column.  '1' is the database value, lang('yes') is the human value
+					$more_categories[] = $cat_id;
+				} else {
+					// Text categories
+					$more_categories = array_merge($more_categories, importexport_helper_functions::cat_name2id(is_array($record[$field_name]) ? $record[$field_name] : explode(',',$record[$field_name])));
+				}
+			}
+			if(count($more_categories) > 0) $record['cat_id'] = array_merge(is_array($record['cat_id']) ? $record['cat_id'] : explode(',',$record['cat_id']), $more_categories);
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
