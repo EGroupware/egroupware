@@ -177,7 +177,9 @@ body, td, th {
 	background-repeat: no-repeat;
 }
 
-.frame {
+.egwGridView_grid td.frame,
+.egwGridView_outer td.frame,
+.egwGridView_grid td.egwGridView_spacer {
 	padding: 0 !important;
 	border-right: 0 none silver !important;
 	border-bottom: 0 none silver !important;

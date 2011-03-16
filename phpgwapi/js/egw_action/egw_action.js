@@ -987,6 +987,13 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 	for (var i = 0; i < _actionLinks.length; i++)
 	{
 		var elem = _actionLinks[i];
+
+		// Allow single strings for simple action links.
+		if (typeof elem == "string")
+		{
+			elem = {"actionId": elem};
+		}
+
 		if (typeof elem.actionId != "undefined" && elem.actionId)
 		{
 			//Get the action link object, if it doesn't exist yet, create it

@@ -158,11 +158,12 @@ egwGridColumn.prototype.set_visibility = function(_value)
 		{
 			if (_value != this.visibility)
 			{
+				this.visibility = _value;
+
 				if (this.visibilityChangeCallback)
 				{
 					this.visibilityChangeCallback.call(this.context, this);
 				}
-				this.visibility = _value;
 			}
 		}
 	}
@@ -425,19 +426,30 @@ egwGridColumns.prototype.getColumnVisibilitySet = function()
 			"visible": this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE
 		};
 	}
+
+	return result;
 }
 
 egwGridColumns.prototype.setColumnVisibilitySet = function(_set)
 {
+	this._beginUpdate();
+
 	for (k in _set)
 	{
 		var col = this.getColumnById(k);
 		if (col)
 		{
-			col.set_visibility(col.visible ? EGW_COL_VISIBILITY_VISIBLE :
+			col.set_visibility(_set[k].visible ? EGW_COL_VISIBILITY_VISIBLE :
 				EGW_COL_VISIBILITY_INVISIBLE);
 		}
 	}
+
+	if (this.visibilityChanged)
+	{
+		this._calculateWidths();
+	}
+
+	this._endUpdate();
 }
 
 egwGridColumns.prototype.getColumnData = function()

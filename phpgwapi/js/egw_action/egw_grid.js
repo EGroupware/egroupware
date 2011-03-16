@@ -39,13 +39,39 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _context
 	// Create the outer view component and pass the dataRoot element so that
 	// the grid outer element will be capable of fetching the root data and
 	// can create a spacer for that.
-	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot);
+	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot, this.selectcolsClick, this);
 	this.gridOuter.updateColumns(this.columns.getColumnData());
 }
 
 egwGrid.prototype.setActionLinkGroup = function(_group, _links)
 {
 	this.dataRoot.actionLinkGroups[_group] = _links;
+}
+
+/**
+ * Updates the action link groups.
+ *
+ * @param object _groups is an object used as associative array, which will be
+ * 	merged into the existing actionLinkGroups
+ * @param boolean _replace specifies whether existing action link groups will
+ * 	be deleted. Defaults to false.
+ */
+egwGrid.prototype.setActionLinkGroups = function(_groups, _replace)
+{
+	if (typeof _replace == "undefined")
+	{
+		_replace = false;
+	}
+
+	if (_replace)
+	{
+		this.dataRoot.actionLinkGroups = {};
+	}
+
+	for (var k in _groups)
+	{
+		this.dataRoot.actionLinkGroups[k] = _groups[k];
+	}
 }
 
 egwGrid.prototype.resize = function(_w, _h)
@@ -76,6 +102,42 @@ egwGrid.prototype.columnsUpdate = function(_column)
 	{
 		this.gridOuter.updateColumns(this.columns.getColumnData());
 	}
+}
+
+/**
+ * Handle the selectcols callback
+ */
+egwGrid.prototype.selectcolsClick = function(_at)
+{
+	var column_data = this.columns.getColumnVisibilitySet();
+
+	// Create a menu which contains these elements and show it
+	var menu_data = [];
+	for (var k in column_data)
+	{
+		var col = column_data[k];
+
+		menu_data.push(
+			{
+				"id": k,
+				"caption": col.caption,
+				"enabled": col.enabled,
+				"checkbox": true,
+				"checked": col.visible
+			}
+		);
+	}
+
+	var menu = new egwMenu();
+	menu.loadStructure(menu_data);
+
+	var self = this;
+	menu.setGlobalOnClick(function(_elem) {
+		column_data[_elem.id].visible = _elem.checked;
+		self.columns.setColumnVisibilitySet(column_data);
+	});
+
+	menu.showAt(_at.offset().left, _at.offset().top);
 }
 
 /**

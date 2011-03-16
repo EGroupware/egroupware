@@ -39,6 +39,8 @@ function egwDynStyleSheet()
 		this.selectorCount = 0;
 
 		EGW_DYNAMIC_STYLESHEET = this;
+
+		return this;
 	}
 	else
 	{

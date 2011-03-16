@@ -61,8 +61,6 @@ div.dhtmlxMenu_egw_TopLevel_Item_Disabled,
 div.dhtmlxMenu_egw_TopLevel_Item_Selected {
 	position: relative;
 	float: left;
-	font-family: Arial, Helvetica, Sans-Serif;
-	font-size: 11px;
 	font-weight: normal;
 	cursor: default;
 	white-space: nowrap;
@@ -187,8 +185,6 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub
 	padding-right: 4px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_item_text {
-	font-family: Arial, Helvetica, Sans-Serif;
-	font-size: 11px;
 	font-weight: normal;
 	color: #000000;
 	white-space: nowrap;
@@ -202,8 +198,6 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub
 	padding-right: 8px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk div.sub_item_hk {
-	font-family: Arial, Helvetica, Sans-Serif;
-	font-size: 11px;
 	color: #a4bed4;
 	text-align: right;
 }
@@ -303,8 +297,6 @@ div.dhtmlxMenu_egw_SubLevelArea_ArrowDown_Disabled div.dhtmlxMenu_SubLevelArea_A
 	vertical-align: middle;
 	left: none;
 	right: 8px;
-	font-family: Arial, Helvetica, Sans-Serif;
-	font-size: 11px;
 	color: #000000;
 	cursor: default;
 }
@@ -316,8 +308,6 @@ div.dhtmlxMenu_egw_SubLevelArea_ArrowDown_Disabled div.dhtmlxMenu_SubLevelArea_A
 	vertical-align: middle;
 	right: none;
 	left: 8px;
-	font-family: Arial, Helvetica, Sans-Serif;
-	font-size: 11px;
 	color: #000000;
 	cursor: default;
 }

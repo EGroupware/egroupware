@@ -65,9 +65,18 @@ function egwPopupActionImplementation()
 		if (node)
 		{
 			node.ondblclick = function(e) {
+				if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
+				{
+					document.selection.empty();
+				}
+				else if( typeof window.getSelection != "undefined")
+				{
+					var sel = window.getSelection();
+					sel.removeAllRanges();
+				}
+
 				_callback.call(_context, "default", ai);
 
-				e.preventDefault();
 				return false;
 			}
 

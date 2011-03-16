@@ -73,7 +73,7 @@ var EGW_GRID_SCROLLBAR_WIDTH = false;
  * @param object _data is the data-provider object which contains/loads the grid rows
  * 	and contains their data.
  */
-function egwGridViewOuter(_parentNode, _dataRoot)
+function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _context)
 {
 	this.parentNode = $(_parentNode);
 	this.dataRoot = _dataRoot;
@@ -93,6 +93,8 @@ function egwGridViewOuter(_parentNode, _dataRoot)
 	this.scrollbarWidth = 0;
 
 	this.headerColumns = [];
+	this.selectColsCallback = _selectColsCallback;
+	this.context = _context;
 
 	this.buildBase();
 	this.parentNode.append(this.outer_table);
@@ -216,7 +218,7 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 
 	for (var i = 0; i < this.columns.length; i++)
 	{
-		col = this.columns[i];
+		var col = this.columns[i];
 
 		// Create the column element and insert it into the DOM-Tree
 		var column = $(document.createElement("th"));
@@ -236,6 +238,13 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 	
 	this.optcol.css("width", this.scrollbarWidth - this.optcol.outerWidth()
 		+ this.optcol.width() + 1); // The "1" is a "security pixel" which prevents a horizontal scrollbar form occuring on IE7
+
+	var self = this;
+	this.selectcols.click(function() {
+		self.selectColsCallback.call(self.context, self.selectcols);
+
+		return false;
+	});
 
 	this.headerHeight = this.outer_thead.height();
 }
@@ -814,12 +823,14 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 
 function egwGridViewGrid_insertContainer(_after, _class, _params)
 {
-	this.beginUpdate();
+	var container = null;
+
 	try
 	{
+		this.beginUpdate();
 		this.didUpdate = true;
 
-		var container = new _class(this, this.heightChangeHandler, _params);
+		container = new _class(this, this.heightChangeHandler, _params);
 
 		var idx = this.children.length;
 		if (typeof _after == "number")
@@ -864,15 +875,13 @@ function egwGridViewGrid_insertContainer(_after, _class, _params)
 			this.children[i].offsetPosition(height);
 			this.children[i].index++;
 		}
-
-		return container;
 	}
 	finally
 	{
 		this.endUpdate();
 	}
 
-	this.callHeightChangeProc();
+	return container;
 }
 
 function egwGridViewGrid_removeContainer(_container)
@@ -1219,7 +1228,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 		ids.push(this.columns[i].id);
 	}
 
-	data = this.item.getData(ids);
+	var data = this.item.getData(ids);
 
 	for (var i = 0; i < this.tdObjects.length; i++)
 	{
@@ -1237,7 +1246,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 						// Build the indentation object
 					var indentation = $(document.createElement("span"));
 					indentation.addClass("indentation");
-					indentation.css("width", (depth * 12) + "px");
+					indentation.css("width", (depth * 20) + "px");
 					td.append(indentation);
 				}
 
@@ -1272,23 +1281,26 @@ function egwGridViewRow_doUpdateData(_immediate)
 				// Insert the icon
 				if (data[col.id].iconUrl)
 				{
-					// Build the icon element
+					// Build the icon container
 					var iconContainer = $(document.createElement("span"));
 					iconContainer.addClass("iconContainer " + this.grid.uniqueId);
-					var icon = $(document.createElement("img"));
 
-					// Default the image height to the average height - this attribute
+					// Default the iconContainer height to the average height - this attribute
 					// is removed from the row as soon as the icon is loaded
-					var height = this.item.iconSize ? this.item.iconSize : this.grid.avgIconHeight;
-					icon.attr("height", Math.round(height));
+					iconContainer.css("min-height", this.grid.avgIconHeight + "px");
+
+					// Build the icon
+					var icon = $(document.createElement("img"));
+					if (this.item.iconSize)
+					{
+						icon.css("height", this.item.iconSize + "px");
+						icon.css("width", this.item.iconSize + "px"); //has to be done because of IE :-(
+					}
 					icon.attr("src", data[col.id].iconUrl);
 
-					icon.load({"item": this, "col": td}, function(e) {
+					icon.load({"item": this, "col": td, "cntr": iconContainer}, function(e) {
+						e.data.cntr.css("min-height", "");
 						var icon = $(this);
-						if (!e.data.item.item.iconSize)
-						{
-							icon.removeAttr("height");
-						}
 						window.setTimeout(function() {
 							e.data.item.grid.setIconWidth(icon.width());
 							e.data.item.grid.addIconHeightToAvg(icon.height());
@@ -1583,7 +1595,7 @@ function egwGridViewFullRow_doUpdateData(_immediate)
 				// Build the indentation object
 			var indentation = $(document.createElement("span"));
 			indentation.addClass("indentation");
-			indentation.css("width", (depth * 12) + "px");
+			indentation.css("width", (depth * 20) + "px");
 			this.td.append(indentation);
 		}
 

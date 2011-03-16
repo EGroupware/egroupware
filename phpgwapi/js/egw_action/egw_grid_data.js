@@ -488,7 +488,7 @@ egwGridDataElement.prototype.getData = function(_columnIds)
 
 	for (var i = 0; i < _columnIds.length; i++)
 	{
-		res = this.hasColumn(_columnIds[i], true);
+		var res = this.hasColumn(_columnIds[i], true);
 
 		// Either add the result to the result list (if the column data was available)
 		// or add it to the query list.
@@ -853,7 +853,7 @@ egwGridDataQueue.prototype.prefetch = function(_cnt)
 		{
 			var idx = planes[plane].idx;
 
-			if (!planes.parent || idx == planes[plane].parent.children.length)
+			if (!planes[plane].parent || idx == planes[plane].parent.children.length)
 			{
 				planes[plane].done = true;
 				done++;
@@ -864,7 +864,7 @@ egwGridDataQueue.prototype.prefetch = function(_cnt)
 				var elem = planes[plane].parent.children[idx];
 				for (var j = 0; j < this.queueColumns.length; j++)
 				{
-					if (!elem.hasColumn(this.queueColumns[i], false))
+					if (!elem.hasColumn(this.queueColumns[j], false))
 					{
 						hasData = false;
 						break;
