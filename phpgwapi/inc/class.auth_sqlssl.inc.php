@@ -15,23 +15,8 @@
  * 
  * @todo rewrite using auth_sql backend class
  */
-class auth_sqlssl implements auth_backend
+class auth_sqlssl extends auth_sql
 {
-	/**
-	 * @var egw_db
-	 */
-	var $db;
-	var $table = 'egw_accounts';
-	var $previous_login = -1;
-
-	/**
-	 * Constructor
-	 */
-	function __construct()
-	{
-		$this->db = $GLOBALS['egw']->db;
-	}
-
 	/**
 	 * password authentication
 	 *
@@ -68,34 +53,5 @@ class auth_sqlssl implements auth_backend
 			return auth::compare_password($passwd,$this->db->f('account_pwd'),$this->type,strtolower($username));
 		}
 		return True;
-	}
-
-	/**
-	 * changes password
-	 *
-	 * @param string $old_passwd must be cleartext or empty to not to be checked
-	 * @param string $new_passwd must be cleartext
-	 * @param int $account_id=0 account id of user whose passwd should be changed
-	 * @return boolean true if password successful changed, false otherwise
-	 */
-	function change_password($old_passwd, $new_passwd, $account_id = 0)
-	{
-		if(!$account_id)
-		{
-			$account_id = $GLOBALS['egw_info']['user']['account_id'];
-		}
-
-		$encrypted_passwd = auth::encrypt_sql($new_passwd);
-
-		$GLOBALS['egw']->db->update($this->table,array(
-			'account_pwd' => $encrypted_passwd,
-			'account_lastpwd_change' => time(),
-		),array(
-			'account_id' => $account_id,
-		),__LINE__,__FILE__);
-
-		$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
-
-		return $encrypted_passwd;
 	}
 }

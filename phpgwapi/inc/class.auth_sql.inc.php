@@ -110,6 +110,83 @@ class auth_sql implements auth_backend
 	}
 
 	/**
+	 * fetch the last pwd change for the user
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false or account_lastpwd_change
+	 */
+	function getLastPwdChange($username)
+	{
+		/* normal web form login */
+		$where = array(
+			'account_lid'    => $username,
+			'account_type'   => 'u',
+			'account_status' => 'A'
+		);
+		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
+		{
+			$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			unset($where['account_lid']);
+		}
+		if (!($row = $this->db->select($this->table,'account_lid,account_lastpwd_change',$where,__LINE__,__FILE__)->fetch()) ||
+			$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
+		{
+			return false;
+		}
+		// if this point is reached, we found a user with that name and return the account_lastpwd_change
+		$rv = $row['account_lastpwd_change'];
+
+		return $rv;
+	}
+
+	/**
+	 * changes account_lastpwd_change in sql datababse
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
+	 */
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	{
+		$admin = True;
+		// Don't allow password changes for other accounts when using XML-RPC
+		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		{
+			$admin = False;
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		} 
+		else
+		{
+			$username = $GLOBALS['egw']->accounts->id2name($account_id);
+		}
+
+		if (($pw = $this->db->select($this->table,'account_pwd',array(
+			'account_id'     => $account_id,
+			'account_type'   => 'u',
+			'account_status' => 'A',
+		),__LINE__,__FILE__)->fetchColumn()) === false)
+		{
+			return false;	// account not found
+		}
+		// Check the passwd to make sure this is legal
+		if(!$admin && !auth::compare_password($passwd,$pw,$this->type,strtolower($username)))
+		{
+			return false;
+		}
+		$this->db->update($this->table,array(
+			'account_lastpwd_change' => (is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange),
+		),array(
+			'account_id' => $account_id,
+		),__LINE__,__FILE__);
+
+		if(!$this->db->affected_rows()) return false;
+
+		return true;
+	}
+
+	/**
 	 * changes password in sql datababse
 	 *
 	 * @param string $old_passwd must be cleartext
@@ -125,6 +202,11 @@ class auth_sql implements auth_backend
 		{
 			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		} 
+		else
+		{
+			$username = $GLOBALS['egw']->accounts->id2name($account_id);
 		}
 
 		if (($pw = $this->db->select($this->table,'account_pwd',array(

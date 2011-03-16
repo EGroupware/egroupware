@@ -93,11 +93,19 @@ class auth
 		) return true;
 		if ($GLOBALS['egw_info']['user']['account_lastpasswd_change'] && !$GLOBALS['egw_info']['user'][$alpwchange])
 		{
-			// use old style names, as the cuurent one seems not to be set.
+			// use old style names, as the current one seems not to be set.
 			$alpwchange = 'account_lastpasswd_change';
 		}
 		// initalize statics - better readability of conditions
-		if (is_null($alpwchange_val)) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
+		if (is_null($alpwchange_val))
+		{
+			$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
+			$backend = new $backend_class;
+			// this may change behavior, as it should detect forced PasswordChanges from your Authentication System too.
+			// on the other side, if your auth system does not require an forcedPasswordChange, you will not be asked.
+			if (method_exists($backend,'getLastPwdChange')) $alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
+			if (is_null($alpwchange_val) || $alpwchange_val === false) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
+		}
 		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days']) 
 		{
 			$passwordAgeBorder = (egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400));
@@ -153,6 +161,32 @@ class auth
 			egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
 		}
 		return true;
+	}
+
+	/**
+	 * fetch the last pwd change for the user
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false or shadowlastchange*24*3600 
+	 */
+	function getLastPwdChange($username)
+	{
+		if (method_exists($this->backend,'getLastPwdChange')) return $this->backend->getLastPwdChange($username);
+		return false;
+	}
+
+	/**
+	 * changes account_lastpwd_change in ldap datababse
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
+	 */
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	{
+		if (method_exists($this->backend,'setLastPwdChange')) return $this->backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		return false;
 	}
 
 	/**
