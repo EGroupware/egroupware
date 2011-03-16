@@ -167,9 +167,10 @@ class importexport_helper_functions {
 	 * If a cat isn't found, it will be created.
 	 *
 	 * @param mixed $_cat_names comma seperated list or array.
+	 * @param int $parent Optional parent ID to use for new categories
 	 * @return mixed comma seperated list or array with cat_ids
 	 */
-	public static function cat_name2id( $_cat_names ) {
+	public static function cat_name2id( $_cat_names, $parent = 0 ) {
 		$cats = new categories();	// uses current user and app (egw_info[flags][currentapp])
 
 		$cat_names = is_array( $_cat_names ) ? $_cat_names : explode( ',', $_cat_names );
@@ -184,6 +185,7 @@ class importexport_helper_functions {
 			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 ) {
 				$cat_id = $cats->add( array(
 					'name' => $cat_name,
+					'parent' => $parent,
 					'access' => 'public',
 					'descr' => $cat_name. ' ('. lang('Automatically created by importexport'). ')'
 				));
