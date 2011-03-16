@@ -187,7 +187,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					$more_categories[] = $cat_id;
 				} else {
 					// Text categories
-					$more_categories = array_merge($more_categories, importexport_helper_functions::cat_name2id(is_array($record[$field_name]) ? $record[$field_name] : explode(',',$record[$field_name])));
+					$more_categories = array_merge($more_categories, importexport_helper_functions::cat_name2id(is_array($record[$field_name]) ? $record[$field_name] : explode(',',$record[$field_name]), $cat_id));
 				}
 			}
 			if(count($more_categories) > 0) $record['cat_id'] = array_merge(is_array($record['cat_id']) ? $record['cat_id'] : explode(',',$record['cat_id']), $more_categories);
