@@ -33,4 +33,15 @@ while (false !== ($appdir = $egwdir->read())) {
 			if ( $extension != 'xml' ) continue;
 			importexport_definitions_bo::import( $file );
 		}
+
+		// Set as default definition for the app, if there is no site default yet
+		if(!$GLOBALS['egw']->preferences->default[$appdir]['nextmatch-export-definition']) {
+			$bo = new importexport_definitions_bo(array('name' => "export-$appdir"));
+			$definitions = $bo->get_definitions();
+			if($definitions[0]) {
+				$definition = $definition[0];
+				$GLOBALS['egw']->preferences->add($appdir, 'nextmatch-export-definition', "export-$appdir", 'default');
+				$GLOBALS['egw']->preferences->save_repository(true, 'default');
+			}
+		}
 }
