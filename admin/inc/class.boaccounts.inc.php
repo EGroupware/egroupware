@@ -442,6 +442,7 @@
 		function save_user($_userData)
 		{
 			//error_log(__METHOD__.array2string($_userData));
+			//error_log(__METHOD__.array2string($old_passwd));
 			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$account->update_data($_userData);
 			$account->save_repository();
@@ -465,6 +466,8 @@
 					// so we need to reset that to 0 as Admin required the change of password upon next login
 					unset($_userData['account_passwd']);
 					$this->save_user($_userData);
+					// maybe we should call that with NULL for 2nd Parameter as we are doing an admin action.
+					if (method_exists($auth,'setLastPwdChange')) $auth->setLastPwdChange($_userData['account_id'], $_userData['account_passwd'], $_userData['account_lastpwd_change']);
 				}
 			}
 

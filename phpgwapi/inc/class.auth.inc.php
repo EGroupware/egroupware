@@ -93,11 +93,19 @@ class auth
 		) return true;
 		if ($GLOBALS['egw_info']['user']['account_lastpasswd_change'] && !$GLOBALS['egw_info']['user'][$alpwchange])
 		{
-			// use old style names, as the cuurent one seems not to be set.
+			// use old style names, as the current one seems not to be set.
 			$alpwchange = 'account_lastpasswd_change';
 		}
 		// initalize statics - better readability of conditions
-		if (is_null($alpwchange_val)) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
+		if (is_null($alpwchange_val))
+		{
+			$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
+			$backend = new $backend_class;
+			// this may change behavior, as it should detect forced PasswordChanges from your Authentication System too.
+			// on the other side, if your auth system does not require an forcedPasswordChange, you will not be asked.
+			if (method_exists($backend,'getLastPwdChange')) $alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
+			if (is_null($alpwchange_val) || $alpwchange_val === false) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
+		}
 		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days']) 
 		{
 			$passwordAgeBorder = (egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400));

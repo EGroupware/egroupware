@@ -118,6 +118,107 @@ class auth_ldap implements auth_backend
 	}
 
 	/**
+	 * fetch the last pwd change for the user
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false or shadowlastchange*24*3600 
+	 */
+	function getLastPwdChange($username)
+	{
+		// allow non-ascii in username & password
+		$username = translation::convert($username,translation::charset(),'utf-8');
+
+		if(!$ldap = common::ldapConnect())
+		{
+			$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
+			$GLOBALS['egw']->log->commit();
+			return False;
+		}
+
+		/* Login with the LDAP Admin. User to find the User DN.  */
+		if(!@ldap_bind($ldap, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']))
+		{
+			if ($this->debug) error_log(__METHOD__."('$username') can NOT bind with ldap_root_dn to search!");
+			return false;
+		}
+		/* find the dn for this uid, the uid is not always in the dn */
+		$attributes	= array('uid','dn','shadowexpire','shadowlastchange');
+
+		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
+		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
+
+		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
+		{
+			$filter = "(&$filter(objectclass=posixaccount))";
+		}
+		$sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
+		$allValues = ldap_get_entries($ldap, $sri);
+
+		if ($allValues['count'] > 0)
+		{
+			if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
+				$allValues[0]['uid'][0] != $username)
+			{
+				if ($this->debug) error_log(__METHOD__."('$username') wrong case in username!");
+				return false;
+			}
+			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+				isset($allValues[0]['shadowexpire']) && $allValues[0]['shadowexpire'][0]*24*3600 < time())
+			{
+				if ($this->debug) error_log(__METHOD__."('$username',\$password) account is expired!");
+				return false;	// account is expired
+			}
+			return $allValues[0]['shadowlastchange'][0]*24*3600;
+		}
+		if ($this->debug) error_log(__METHOD__."('$username') dn not found or password wrong!");
+		// dn not found or password wrong
+		return false;
+	}
+
+	/**
+	 * changes account_lastpwd_change in ldap datababse
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
+	 */
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	{
+		if (!$account_id)
+		{
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		else
+		{
+			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
+				translation::charset(),'utf-8');
+		}
+		//echo "<p>auth_ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
+
+		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
+		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
+
+		$ds = common::ldapConnect();
+		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
+		$allValues = ldap_get_entries($ds, $sri);
+
+		$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+
+		$dn = $allValues[0]['dn'];
+
+		if($passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
+		{
+			$ds = common::ldapConnect('',$dn,$passwd);
+		}
+		if (!@ldap_modify($ds, $dn, $entry))
+		{
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * changes password in LDAP
 	 *
 	 * If $old_passwd is given, the password change is done binded as user and NOT with the
