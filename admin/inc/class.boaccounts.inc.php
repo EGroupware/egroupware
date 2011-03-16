@@ -451,7 +451,7 @@
 
 			if($_userData['account_passwd'])
 			{
-				$auth = CreateObject('phpgwapi.auth');
+				$auth =& CreateObject('phpgwapi.auth');
 				$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
 				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
@@ -470,9 +470,8 @@
 			}
 			if ($_userData['account_lastpwd_change']==0)
 			{
-				if (!isset($auth)) $auth = CreateObject('phpgwapi.auth');
+				if (!isset($auth)) $auth =& CreateObject('phpgwapi.auth');
 				// we call that with NULL for 2nd Parameter as we are doing an admin action.
-error_log(__METHOD__.array2string($_userData));
 				$auth->setLastPwdChange($_userData['account_id'],NULL, $_userData['account_lastpwd_change']);
 			}
 
