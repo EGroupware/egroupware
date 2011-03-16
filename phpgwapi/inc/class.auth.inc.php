@@ -164,6 +164,32 @@ class auth
 	}
 
 	/**
+	 * fetch the last pwd change for the user
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false or shadowlastchange*24*3600 
+	 */
+	function getLastPwdChange($username)
+	{
+		if (method_exists($this->backend,'getLastPwdChange')) return $this->backend->getLastPwdChange($username);
+		return false;
+	}
+
+	/**
+	 * changes account_lastpwd_change in ldap datababse
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
+	 */
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	{
+		if (method_exists($this->backend,'setLastPwdChange')) return $this->backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		return false;
+	}
+
+	/**
 	 * password authentication against password stored in sql datababse
 	 *
 	 * @param string $username username of account to authenticate

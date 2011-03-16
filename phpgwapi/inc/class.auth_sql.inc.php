@@ -175,9 +175,8 @@ class auth_sql implements auth_backend
 		{
 			return false;
 		}
-
 		$this->db->update($this->table,array(
-			'account_lastpwd_change' => ($lastpwdchange==NULL || $lastpwdchange<0 ? time():$lastpwdchange),
+			'account_lastpwd_change' => (is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange),
 		),array(
 			'account_id' => $account_id,
 		),__LINE__,__FILE__);

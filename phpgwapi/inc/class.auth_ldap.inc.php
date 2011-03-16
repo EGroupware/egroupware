@@ -203,7 +203,7 @@ class auth_ldap implements auth_backend
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
 
-		$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		$entry['shadowlastchange'] = (is_null($lastpwdchange) || $lastpwdchange<0 ? round((time()-date('Z')) / (24*3600)):$lastpwdchange);
 
 		$dn = $allValues[0]['dn'];
 
