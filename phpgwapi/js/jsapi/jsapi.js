@@ -86,6 +86,57 @@ egw_seperateJavaScript = function(_html)
 	_html.html = html;
 }
 
+/**
+ * Inserts the script tags inside the given html into the dom tree
+ */
+function egw_insertJS(_html)
+{
+	// Insert each script element seperately
+	if (_html)
+	{
+
+		var in_pos = -1;
+		var out_pos = -1;
+
+		do {
+
+			// Search in and out position
+			var in_pos = _html.search(/<script/im);
+			var out_pos = _html.search(/<\/script>/im);
+
+			// Copy the text inside the script tags...
+			if (in_pos > -1 && out_pos > -1)
+			{
+				if (out_pos > in_pos)
+				{
+					var scriptStart = _html.indexOf("\>", in_pos);
+					if (scriptStart > in_pos)
+					{
+						var script = _html.substring(scriptStart + 1,
+							out_pos);
+						try
+						{
+							// And insert them as real script tags
+							var tag = document.createElement("script");
+							tag.setAttribute("type", "text/javascript");
+							tag.text = script;
+							document.getElementsByTagName("head")[0].appendChild(tag);
+						}
+						catch (e)
+						{
+							if (typeof console != "undefined" && typeof console.log != "undefined")
+							{
+								console.log('Error while inserting JS code:', _e);
+							}
+						}
+					}
+				}
+				_html = _html.substr(out_pos + 9);
+			}
+
+		} while (in_pos > -1 && out_pos > -1)
+	}
+}
 
 /**
  * Returns the top window which contains the current egw_instance, even for popup windows
