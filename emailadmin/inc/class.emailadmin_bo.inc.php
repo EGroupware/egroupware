@@ -327,6 +327,7 @@ class emailadmin_bo extends so_sql
 		if (!($result = parent::save()))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $this->data['ea_profile_id'], $old === false ? 'add' : 'modify', time());
+			//error_log(__METHOD__.__LINE__.array2string($content));
 			$this->tracking->track($content,(is_array($old)?$old:array()),null,false,null,true);
 		}
 		return $result;

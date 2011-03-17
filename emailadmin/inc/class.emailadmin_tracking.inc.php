@@ -94,7 +94,7 @@ class emailadmin_tracking extends bo_tracking
 		'ea_smtp_type'	=> 'SMTP type',
 		'ea_smtp_port'	=> 'SMTP port',
 		'ea_smtp_auth'	=> 'SMTP authentification',
-		'ea_editforwardingaddress'	=> '',
+		'ea_editforwardingaddress'	=> 'edit forwarding address',
 		'ea_smtp_ldap_server'	=> 'SMTP Ldap Server', 
 		'ea_smtp_ldap_basedn'	=> '',
 		'ea_smtp_ldap_admindn'	=> '',
@@ -132,6 +132,16 @@ class emailadmin_tracking extends bo_tracking
 	);
 
 	/**
+	 * Fields that contain passwords
+	 */
+	static $passwordFields = array(
+		'ea_smtp_auth_password',
+		'ea_imap_auth_password',
+		'ea_smtp_ldap_adminpw',
+		'ea_imap_admin_pw',
+		);
+
+	/**
 	 * Should the user (passed to the track method or current user if not passed) be used as sender or get_config('sender')
 	 *
 	 * @var boolean
@@ -156,6 +166,65 @@ class emailadmin_tracking extends bo_tracking
 		parent::__construct();	// calling the constructor of the extended class
 
 		$this->emailadmin_bo =& $emailadmin_bo;
+	}
+
+	/**
+	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
+	 *
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param int $user=null user who made the changes, default to current user
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param boolean $skip_notification=false do NOT send any notification
+	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
+	 */
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
+	{
+		foreach (self::$passwordFields as $k => $v)
+		{
+			if (is_array($data))
+			{
+				foreach($data as $key => &$dd)
+				{
+					if ($key == $v && !empty($dd))
+					{
+						$dd = $this->maskstring($dd);
+					} 
+				}
+			}
+			if (is_array($old))
+			{
+				foreach($old as $ko => &$do)
+				{
+					//error_log(__METHOD__.__LINE__.$ko);
+					if ($ko == $v && !empty($do))
+					{
+						$do = $this->maskstring($do);
+					}
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.array2string($data));
+		//error_log(__METHOD__.__LINE__.array2string($old));
+
+		return parent::track($data,$old,$user,$deleted,$changed_fields,$skip_notifications);
+	}
+
+	private function maskstring($data)
+	{
+		$length =strlen($data);
+		$first = substr($data,0,1);
+		$last = substr($data,-1);
+		if ($length<3)
+		{
+			$data = str_repeat('*',$length);
+		}
+		else
+		{
+			$data = $first.str_repeat('*',($length-2>0?$length-2:1)).$last;
+		}
+		return $data;
 	}
 
 	/**
