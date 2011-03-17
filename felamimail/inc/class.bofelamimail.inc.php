@@ -2661,6 +2661,8 @@
 		// return the qouta of the users INBOX
 		function getQuotaRoot()
 		{
+			if (!$this->icServer->_connected) $this->openConnection();
+
 			if(!$this->icServer->hasCapability('QUOTA')) {
 				return false;
 			}
