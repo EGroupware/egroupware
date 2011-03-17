@@ -139,6 +139,7 @@ class importexport_wizard_basic_import_csv
 								$content['field_mapping'][$index] = $content['plugin_options']['field_mapping'][$index];
 							}
 							foreach($this->mapping_fields as $key => $field_name) {
+								if(is_array($field_name)) continue;
 								if(strcasecmp($field, $field_name) == 0 || strcasecmp($field,$key) == 0) {
 									$content['field_mapping'][$index] = $key;
 									continue;
