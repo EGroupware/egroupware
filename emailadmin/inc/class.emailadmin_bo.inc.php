@@ -616,6 +616,10 @@ class emailadmin_bo extends so_sql
 			$icServer->adminUsername = $data['imapAdminUsername'];
 			$icServer->adminPassword = $data['imapAdminPW'];
 			$icServer->enableSieve	= ($data['imapEnableSieve'] == 'yes');
+			if (!empty($data['imapSieveServer']))
+			{
+				$icServer->sieveHost = $data['imapSieveServer'];
+			}
 			$icServer->sievePort	= $data['imapSievePort'];
 			if ($imapAuthType == 'admin') {
 				if (!empty($data['imapAuthUsername'])) $icServer->username = $icServer->loginName = $data['imapAuthUsername'];

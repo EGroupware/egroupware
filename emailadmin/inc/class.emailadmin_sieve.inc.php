@@ -69,7 +69,15 @@ class emailadmin_sieve extends Net_Sieve
 	{
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($euser));
 		if(is_a($_icServer,'defaultimap') && $_icServer->enableSieve) {
-			$sieveHost		= $_icServer->host;
+			if (!empty($_icServer->sieveHost))
+			{
+				$sieveHost = $_icServer->sieveHost;
+			}
+			else
+			{
+				$sieveHost = $_icServer->host;
+			}
+			//error_log(__METHOD__.__LINE__.'->'.$sieveHost);
 			$sievePort		= $_icServer->sievePort;
 			$useTLS			= $_icServer->encryption > 0;
 			if ($euser) {
