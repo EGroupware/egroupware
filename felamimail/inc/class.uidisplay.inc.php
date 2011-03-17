@@ -478,16 +478,10 @@
 			// --> use it to send the mail as data uri
 			if (!isset($_GET['printable']))
 			{
-/*
-				$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
+				$mailData = $this->get_load_email_data($this->uid, $partID);
 
-				$frameHtml = base64_encode(
-					$this->get_email_header().
-					$this->showBody($this->getdisplayableBody($bodyParts), false));
-				$iframe_url = egw::link('/phpgwapi/js/egw_instant_load.html').'" onload="if (this.contentWindow && typeof this.contentWindow.egw_instant_load != \'undefined\') this.contentWindow.egw_instant_load(\''.$frameHtml.'\', true);';
-
-				$this->t->set_var('url_displayBody', $iframe_url);
-*/
+				$this->t->set_var('url_displayBody', $mailData['src']."\" onload=\"".$mailData['onload']);
+				$this->t->set_var('mail_dataScript', $mailData['script']);
 			}
 
 			// attachments
@@ -987,6 +981,48 @@
 	</head>
 	<body>
 ';
+		}
+
+		function get_load_email_data($uid, $partID)
+		{
+			$bodyParts	= $this->bofelamimail->getMessageBody($uid, '', $partID);
+
+			// Compose the content of the frame
+			$frameHtml =
+				$this->get_email_header().
+				$this->showBody($this->getdisplayableBody($bodyParts), false);
+
+			// Calculate the hash of that E-Mail for function identification
+			$hash = md5($frameHtml);
+
+			// The JS function name consists of a prefix and the hash suffix
+			$funcname = "load_email_$hash";
+
+			// Compose the script code
+			$script =
+"<script>
+	var email_content_$hash = ".json_encode($frameHtml).";
+	function $funcname(_tar)
+	{
+		if (_tar && typeof _tar.contentWindow != \"undefined\" &&
+		    typeof _tar.contentWindow.egw_instant_load != \"undefined\")
+		{
+			_tar.setAttribute(\"scrolling\", \"no\"); // Workaround for FF 3.5
+			_tar.contentWindow.egw_instant_load(email_content_$hash);
+			_tar.setAttribute(\"scrolling\", \"auto\");
+		}
+	}
+</script>";
+
+			// Compose the code for the onload event
+			$onload = "if (typeof $funcname != 'undefined'){ $funcname(this); this.onload = function() {return false;}}";
+
+			// Return all the stuff
+			return array(
+				"script" => $script,
+				"onload" => $onload,
+				"src" => egw::link("/phpgwapi/js/egw_instant_load.html")
+			);
 		}
 
 		static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {

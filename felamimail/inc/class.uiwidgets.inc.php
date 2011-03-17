@@ -610,7 +610,7 @@ class uiwidgets
 					} else $sent_not = "";
 					if ( $sent_not != "" && strpos( array2string($flags),'Seen')===false) 
 					{
-						$jscall= " onload='javascript:sendNotifyMS(".$headerData['uid'].")'";
+						$jscall= "sendNotifyMS(".$headerData['uid']."); ";
 					}
 				}
 				//if (strpos( array2string($flags),'Seen')===false) $this->bofelamimail->flagMessages('read', $headerData['uid']);
@@ -722,19 +722,19 @@ class uiwidgets
 					);
 
 				$iframe_url = $GLOBALS['egw']->link('/index.php',$linkData);
+				$script = "";
 				// if browser supports data uri: ie<8 does NOT and ie>=8 does NOT support html as content :-(
 				// --> use it to send the mail as data uri
 				if (!isset($_GET['printable']))
 				{
-/*
-					$bodyParts	= $this->bofelamimail->getMessageBody($headerData['uid'],'',$partID);
 					$uidisplay = CreateObject('felamimail.uidisplay');
+					$uidisplay->uid = $headerData['uid'];
+					$uidisplay->mailbox = $_folderName;
+					$mailData = $uidisplay->get_load_email_data($headerData['uid'], $partID);
 
-					$frameHtml = base64_encode(
-						$uidisplay->get_email_header().
-						$uidisplay->showBody($uidisplay->getdisplayableBody($bodyParts), false));
-					$iframe_url = egw::link('/phpgwapi/js/egw_instant_load.html').'" onload="if (this.contentWindow && typeof this.contentWindow.egw_instant_load != \'undefined\') this.contentWindow.egw_instant_load(\''.$frameHtml.'\', true);';
-*/
+					$iframe_url = $mailData['src'];
+					$jscall .= $mailData['onload'];
+					$script = $mailData['script'];
 				}
 
 				//_debug_array($GLOBALS['egw']->link('/index.php',$linkData));
@@ -757,7 +757,8 @@ class uiwidgets
 								</TR>
 								<TR>
 									<TD nowrap id=\"tdmessageIFRAME\" valign=\"top\" colspan=\"3\" height=\"".$IFrameHeight."\">
-										<iframe ".(!empty($jscall) ? $jscall:"")." id=\"messageIFRAME\" frameborder=\"1\" height=\"".$IFrameHeight."\" scrolling=\"auto\" src=\"".$iframe_url."\">
+										$script
+										<iframe ".(!empty($jscall) ? "onload=\"$jscall\"" :"")." id=\"messageIFRAME\" frameborder=\"1\" height=\"".$IFrameHeight."\" scrolling=\"auto\" src=\"".$iframe_url."\">
 										</iframe>
 									</TD>
 								</TR>

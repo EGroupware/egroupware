@@ -260,6 +260,12 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							if (obj)
 							{
 								obj[res.data.key] = res.data.value;
+
+								if (res.data.key == "innerHTML")
+								{
+									egw_insertJS(res.data.value);
+								}
+
 								hasResponse = true;
 							}
 						} else

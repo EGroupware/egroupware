@@ -14,6 +14,7 @@ self.focus();
 	{header}
 </div>
 <div class="bodyDIV" id="bodyDIV" style="border: 0px solid green; margin:0px; padding:0px; left:0px;">
+	{mail_dataScript}
 	<iframe id="messageIFRAME" frameborder="no" scrolling="auto" src="{url_displayBody}">
 	</iframe>
 </div>
@@ -37,6 +38,7 @@ self.focus();
 	{header}
 </div>
 <div class="bodyDIV bodyDIVAttachment" id="bodyDIV" style="border: 0px solid green; margin:0px; padding:0px; left:0px;">
+	{mail_dataScript}
 	<iframe frameborder="no" scrolling="auto" style="width:100%; height:100%;" src="{url_displayBody}">
 	</iframe>
 </div>
