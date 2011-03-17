@@ -668,7 +668,7 @@ class felamimail_hooks
 					'divFolderTree',
 					FALSE
 				);
-				$bofelamimail->closeConnection();
+				//$bofelamimail->closeConnection();
 		        $file[] =  array(
 	        	    'text' => "<div id=\"divFolderTree\" class=\"dtree\" style=\"overflow:auto; max-width:400px; width:100%; max-height:450px; margin-bottom: 0px;padding-left: 0px; padding-right: 0px; padding-top:0px; z-index:100; \">
 					$folderTree
