@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!--
+Open this file from inside egroupware in a popup/iframe and call the egw_instant_load
+function in its "onload" event.
+-->
+	<head>
+		<title>EGroupware [Loading Data]</title>
+		<meta http-equiv="Cache-control" content="public" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+	</head>
+	<body style="background-color: #F0F0F0">
+		<script type="text/javascript">
+			/*
+			 * base64.js - Base64 encoding and decoding functions
+			 *
+			 * See: http://developer.mozilla.org/en/docs/DOM:window.btoa
+			 *      http://developer.mozilla.org/en/docs/DOM:window.atob
+			 *
+			 * Copyright (c) 2007, David Lindquist <david.lindquist@gmail.com>
+			 * Released under the MIT license
+			 */
+
+			if (typeof atob == 'undefined') {
+				function atob(str) {
+					var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+					var invalid = {
+						strlen: (str.length % 4 != 0),
+						chars:  new RegExp('[^' + chars + ']').test(str),
+						equals: (/=/.test(str) && (/=[^=]/.test(str) || /={3}/.test(str)))
+					};
+					if (invalid.strlen || invalid.chars || invalid.equals)
+						throw new Error('Invalid base64 data');
+					var decoded = [];
+					var c = 0;
+					while (c < str.length) {
+						var i0 = chars.indexOf(str.charAt(c++));
+						var i1 = chars.indexOf(str.charAt(c++));
+						var i2 = chars.indexOf(str.charAt(c++));
+						var i3 = chars.indexOf(str.charAt(c++));
+						var buf = (i0 << 18) + (i1 << 12) + ((i2 & 63) << 6) + (i3 & 63);
+						var b0 = (buf & (255 << 16)) >> 16;
+						var b1 = (i2 == 64) ? -1 : (buf & (255 << 8)) >> 8;
+						var b2 = (i3 == 64) ? -1 : (buf & 255);
+						decoded[decoded.length] = String.fromCharCode(b0);
+						if (b1 >= 0) decoded[decoded.length] = String.fromCharCode(b1);
+						if (b2 >= 0) decoded[decoded.length] = String.fromCharCode(b2);
+					}
+					return decoded.join('');
+				}
+			}
+
+			window.egw_instant_load = function(_data, _base64Encoded)
+			{
+				if (typeof _base64Encoded == "undefined")
+				{
+					_base64Encoded = false;
+				}
+
+				if (_base64Encoded)
+				{
+					_data = atob(_data);
+				}
+
+				// Empty the document tree
+				while (document.childNodes.length > 0)
+				{
+					document.removeChild(document.childNodes[0]);
+				}
+
+				// Write the given content
+				document.write(_data);
+
+				// Close the document
+				document.close();
+			}
+		</script>
+	</body>
+</html>
+

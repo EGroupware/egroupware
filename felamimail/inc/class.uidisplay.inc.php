@@ -337,7 +337,6 @@
 				$this->t->set_var('sentNotify','');
 				$this->t->set_var('lang_sendnotify','');
 			}
-			$this->bofelamimail->closeConnection();
 
 			$this->t->set_block('displayMsg','message_main');
 			$this->t->set_block('displayMsg','message_main_attachment');
@@ -474,6 +473,20 @@
 					'mailbox'	=>  base64_encode($this->mailbox)
 				);
 			$this->t->set_var('url_displayBody', $GLOBALS['egw']->link('/index.php',$linkData));
+
+			// if browser supports data uri: ie<8 does NOT and ie>=8 does NOT support html as content :-(
+			// --> use it to send the mail as data uri
+			if (!isset($_GET['printable']))
+			{
+				$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
+
+				$frameHtml = base64_encode(
+					$this->get_email_header().
+					$this->showBody($this->getdisplayableBody($bodyParts), false));
+				$iframe_url = egw::link('/phpgwapi/js/egw_instant_load.html').'" onload="if (this.contentWindow && typeof this.contentWindow.egw_instant_load != \'undefined\') this.contentWindow.egw_instant_load(\''.$frameHtml.'\', true);';
+
+				$this->t->set_var('url_displayBody', $iframe_url);
+			}
 
 			// attachments
 			if(is_array($attachments) && count($attachments) > 0) {
@@ -953,7 +966,25 @@
 				$GLOBALS['egw_info']['flags']['nofooter'] = true;
 			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
+		}
+
+		static function get_email_header()
+		{
+			return '
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<style>
+			body, td, textarea {
+				font-family: Verdana, Arial, Helvetica,sans-serif;
+				font-size: 11px;
+			}
+		</style>
+	</head>
+	<body>
+';
 		}
 
 		static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {

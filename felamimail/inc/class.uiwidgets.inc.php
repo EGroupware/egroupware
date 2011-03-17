@@ -18,26 +18,33 @@
 class uiwidgets
 {
 		var $charset;
+		/**
+		 * Reference to felamimail_bo
+		 *
+		 * @var felamimail_bo
+		 */
 		var $bofelamimail;
 		/**
-		* the contructor
-		*
-		*/
+		 * Instance of template class for felamimail
+		 *
+		 * @var Template
+		 */
+		var $template;
+
+		/**
+		 * Constructor
+		 */
 		function uiwidgets()
 		{
-			$template = CreateObject('phpgwapi.Template',common::get_tpl_dir('felamimail'));
-			$this->template = $template;
+			$this->template = new Template(common::get_tpl_dir('felamimail'));
 			$this->template->set_file(array("body" => 'uiwidgets.tpl'));
 			$this->charset = $GLOBALS['egw']->translation->charset();
 			$this->bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			if (!is_object($GLOBALS['egw']->html)) {
-				$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
-			}
 		}
 
 		function encodeFolderName($_folderName)
 		{
-			return $GLOBALS['egw']->translation->convert($_folderName, 'UTF7-IMAP', $this->charset);
+			return translation::convert($_folderName, 'UTF7-IMAP', $this->charset);
 		}
 
 		/**
@@ -170,7 +177,7 @@ class uiwidgets
 				}
 
 				if($_useDisplayCharset == true) {
-					$folderName	= $GLOBALS['egw']->translation->convert($obj->folderName, 'UTF7-IMAP', $this->charset);
+					$folderName	= translation::convert($obj->folderName, 'UTF7-IMAP', $this->charset);
 					$folderName	= @htmlspecialchars($folderName, ENT_QUOTES, $this->charset,false);
 				} else {
 					$folderName	= @htmlspecialchars($obj->folderName, ENT_QUOTES, $this->charset,false);
@@ -713,6 +720,21 @@ class uiwidgets
 						'uid'		=> $headerData['uid'],
 						'mailbox'	=>  base64_encode($_folderName)
 					);
+
+				$iframe_url = $GLOBALS['egw']->link('/index.php',$linkData);
+				// if browser supports data uri: ie<8 does NOT and ie>=8 does NOT support html as content :-(
+				// --> use it to send the mail as data uri
+				if (!isset($_GET['printable']))
+				{
+					$bodyParts	= $this->bofelamimail->getMessageBody($headerData['uid'],'',$partID);
+					$uidisplay = CreateObject('felamimail.uidisplay');
+
+					$frameHtml = base64_encode(
+						$uidisplay->get_email_header().
+						$uidisplay->showBody($uidisplay->getdisplayableBody($bodyParts), false));
+					$iframe_url = egw::link('/phpgwapi/js/egw_instant_load.html').'" onload="if (this.contentWindow && typeof this.contentWindow.egw_instant_load != \'undefined\') this.contentWindow.egw_instant_load(\''.$frameHtml.'\', true);';
+				}
+
 				//_debug_array($GLOBALS['egw']->link('/index.php',$linkData));
 				$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"table-layout:fixed;width:100%;\">
 								<TR class=\"th\" style=\"width:100%;\">
@@ -733,7 +755,7 @@ class uiwidgets
 								</TR>
 								<TR>
 									<TD nowrap id=\"tdmessageIFRAME\" valign=\"top\" colspan=\"3\" height=\"".$IFrameHeight."\">
-										<iframe ".(!empty($jscall) ? $jscall:"")." id=\"messageIFRAME\" frameborder=\"1\" height=\"".$IFrameHeight."\" scrolling=\"auto\" src=\"".$GLOBALS['egw']->link('/index.php',$linkData)."\">
+										<iframe ".(!empty($jscall) ? $jscall:"")." id=\"messageIFRAME\" frameborder=\"1\" height=\"".$IFrameHeight."\" scrolling=\"auto\" src=\"".$iframe_url."\">
 										</iframe>
 									</TD>
 								</TR>
