@@ -288,7 +288,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					}
 					$record->$field_name = $record_value;
 				}
-				if(is_array($record->$field_name)) $record->$field_name = implode(', ', $record->$field_name);
+				if(is_array($record->$field_name)) $record->$field_name = implode(($options['convert'] ? ', ' : ','), $record->$field_name);
 			}
 		}
 	}
