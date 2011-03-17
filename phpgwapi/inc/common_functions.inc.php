@@ -731,6 +731,13 @@ function get_var($variable,$method='any',$default_value='')
  */
 function &CreateObject($class)
 {
+	$useSingleton = $class == 'felamimail.bofelamimail';
+	static $classReferences = array();
+	if ($useSingleton && isset($classReferences[$class]))
+	{
+		return $classReferences[$class];
+	}
+
 	list($appname,$classname) = explode('.',$class);
 
 	if (!class_exists($classname))
@@ -794,6 +801,10 @@ function &CreateObject($class)
 	if (!is_object($obj))
 	{
 		echo "<p>CreateObject('$class'): Cant instanciate class!!!<br />\n".function_backtrace(1)."</p>\n";
+	}
+	if ($useSingleton)
+	{
+		$classReferences[$class] = $obj;
 	}
 	return $obj;
 }

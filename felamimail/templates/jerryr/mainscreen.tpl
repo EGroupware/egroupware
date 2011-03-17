@@ -280,8 +280,8 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		</td>
 		<td class="mainscreenRow" style="overflow:hidden; white-space:nowrap;"><nobr>
 			<a class="{row_css_class}" name="subject_url" href="#" 
-				onclick="fm_readMessage('{url_read_message}', '{preview_message_windowName}', this); return false;" 
-				ondblclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); return false;" 
+				onclick="fm_handleMessageClick(false, '{url_read_message}', '{preview_message_windowName}', this); return false;" 
+				ondblclick="fm_handleMessageClick(true, '{url_read_message}', '{read_message_windowName}', this); return false;" 
 				title="{full_subject}">{header_subject}</a>
 		</td>
 		<td class="mainscreenRow" width="95px" align="center">
@@ -316,8 +316,8 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		</td>
 		<td class="mainscreenRow" style="overflow:hidden; white-space:nowrap;"><nobr>
 			<a class="{row_css_class}" name="subject_url" href="#" 
-				onclick="fm_readMessage('{url_read_message}', '{preview_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;" 
-				ondblclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;"
+				onclick="fm_handleMessageClick(false, '{url_read_message}', '{preview_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;" 
+				ondblclick="fm_handleMessageClick(true, '{url_read_message}', '{read_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;"
 				title="{full_subject}">{header_subject}</a>
 		</td>
 		<td class="mainscreenRow" width="95px" align="center">

@@ -472,12 +472,40 @@ function refreshFolderStatus(_nodeID,mode) {
 		if (mode == "forced") {mode2use = mode;}
 	}
 	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
-	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', activeFolders);
+	queueRefreshFolderList(activeFolders);
+//	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', activeFolders);
 //	if (fm_previewMessageID>0)
 //	{
 //		//setStatusMessage('<span style="font-weight: bold;">'+ egw_appWindow('felamimail').lang_updating_view +'</span>');
 //		//xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
 //	}
+}
+
+
+var felamimail_queuedFolders = [];
+var felamimail_queuedFoldersIndex = 0;
+
+/**
+ * Queues a refreshFolderList request for 1ms. Actually this will just execute the
+ * code after the calling script has finished.
+ */
+function queueRefreshFolderList(_folders)
+{
+	felamimail_queuedFolders.push(_folders);
+	felamimail_queuedFoldersIndex++;
+
+	// Copy idx onto the anonymous function scope
+	var idx = felamimail_queuedFoldersIndex;
+	window.setTimeout(function() {
+		if (idx == felamimail_queuedFoldersIndex)
+		{
+			var folders = felamimail_queuedFolders.join(",");
+			felamimail_queuedFoldersIndex = 0;
+			felamimail_queuedFolders = [];
+
+			egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', folders);
+		}
+	}, 1);
 }
 
 function refreshView() {
@@ -562,6 +590,44 @@ function fm_startTimerMessageListUpdate(_refreshTimeOut) {
 	}
 }
 
+var felamimail_messageUrls = {};
+var felamimail_dblclick_speed = 300;
+
+/**
+ * Handles message clicks and distinguishes between double clicks and single clicks
+ */
+function fm_handleMessageClick(_double, _url, _windowName, _node)
+{
+	if (_double)
+	{
+		// Unset the given message url - the timeout which was triggered in the
+		// click handler will now no longer call the fm_readMessage function
+		delete (felamimail_messageUrls[_url]);
+
+		fm_readMessage(_url, _windowName, _node);
+	}
+	else
+	{
+		// Check whether the given url is already queued. Only continue if this
+		// is not the case
+		if (typeof felamimail_messageUrls[_url] == "undefined")
+		{
+			// Queue the url
+			felamimail_messageUrls[_url] = true;
+
+			// Wait "felamimail_dblclick_speed" milliseconds. Only if the doubleclick
+			// event doesn't occur in this time, trigger the single click function
+			window.setTimeout(function () {
+				if (typeof felamimail_messageUrls[_url] == "boolean")
+				{
+					fm_readMessage(_url, _windowName, _node);
+					delete (felamimail_messageUrls[_url]);
+				}
+			}, felamimail_dblclick_speed);
+		}
+	}
+}
+
 function fm_readMessage(_url, _windowName, _node) {
 	var windowArray = _windowName.split('_');
 	var tableElement =_node.parentNode.parentNode.parentNode.parentNode;
@@ -576,9 +642,13 @@ function fm_readMessage(_url, _windowName, _node) {
 		egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">'+ egw_appWindow('felamimail').lang_updating_view +'</span>');
 		fm_previewMessageID = windowArray[1];
 		fm_previewMessageFolderType = windowArray[2];
+		// refreshMessagePreview now also refreshes the folder state
 		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",windowArray[1],windowArray[2]);
 	} else {
 		egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
+
+		// Refresh the folder state (count of unread emails)
+		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 	}
 	trElement = _node.parentNode.parentNode.parentNode;
 	trElement.style.fontWeight='normal';
@@ -587,7 +657,6 @@ function fm_readMessage(_url, _windowName, _node) {
 	aElements = trElement.getElementsByTagName("a");
 	aElements[0].style.fontWeight='normal';
 	aElements[1].style.fontWeight='normal';
-	egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 }
 
 function fm_readAttachments(_url, _windowName, _node) {

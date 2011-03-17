@@ -809,6 +809,10 @@ class ajaxfelamimail
 			$response->addScript("fm_previewMessageID=".$headerData['uid'].";");
 			$response->addAssign('spanMessagePreview', 'innerHTML', $this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox']));
 			$response->addScript('if (typeof handleResize != "undefined") handleResize();');
+
+			// Also refresh the folder status
+			$this->refreshFolder($response);
+
 			return $response->getXML();
 		}
 
@@ -817,12 +821,19 @@ class ajaxfelamimail
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
 
-		function refreshFolder()
+		function refreshFolder($injectIntoResponse = false)
 		{
 			if ($this->_debug) error_log("ajaxfelamimail::refreshFolder");
 			$GLOBALS['egw']->session->commit_session();
 
-			$response = new xajaxResponse();
+			if (!$injectIntoResponse)
+			{
+				$response = new xajaxResponse();
+			}
+			else
+			{
+				$response = $injectIntoResponse;
+			}
 
 			if ($this->_connectionStatus === true) {
 				$folderName = $this->sessionData['mailbox'];
@@ -836,7 +847,10 @@ class ajaxfelamimail
 				}
 			}
 
-			return $response->getXML();
+			if (!$injectIntoResponse)
+			{
+				return $response->getXML();
+			}
 		}
 
 		function refreshFolderList($activeFolderList ='')
