@@ -14,9 +14,11 @@ php_flag short_open_tag on
 php_flag track_vars on
 php_flag display_errors off
 # E_ALL & ~E_NOTICE & ~E_STRICT = 8191 - 8 - 2048 = 6135
-php_value error_reporting 6135
+php_value error_reporting 'E_ALL & ~E_NOTICE'
+#php_value error_reporting 6135
 php_value max_execution_time 90
-php_value memory_limit 256M
+#php_value memory_limit 256M
+php_value memory_limit 64M
 php_value session.gc_maxlifetime 14400
 php_value upload_max_filesize 64M
 php_value post_max_size 65M
