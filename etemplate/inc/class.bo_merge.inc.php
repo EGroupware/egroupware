@@ -676,7 +676,7 @@ abstract class bo_merge
 		if (isset($archive))
 		{
 			$zip = new ZipArchive;
-			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true) 
+			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true)
 			{
 				error_log(__METHOD__.__LINE__." !ZipArchive::open('$archive',ZIPARCHIVE::CHECKCONS) failed. Trying open without validating");
 				if ($zip->open($archive) !== true) throw new Exception("!ZipArchive::open('$archive',|ZIPARCHIVE::CHECKCONS)");
@@ -710,5 +710,28 @@ abstract class bo_merge
 			echo $merged;
 		}
 		common::egw_exit();
+	}
+
+	/**
+	 * Format a number according to user prefs with decimal and thousands separator
+	 *
+	 * Reimplemented from etemplate to NOT use user prefs for Excel 2003, which gives an xml error
+	 *
+	 * @param int|float|string $number
+	 * @param int $num_decimal_places=2
+	 * @param string $_mimetype=''
+	 * @return string
+	 */
+	static public function number_format($number,$num_decimal_places=2,$_mimetype='')
+	{
+		if ((string)$number === '') return '';
+		//error_log(__METHOD__.$_mimetype);
+		switch($_mimetype)
+		{
+			case 'application/xml':	// Excel 2003
+			case 'application/vnd.oasis.opendocument.spreadsheet': // OO.o spreadsheet
+				return number_format(str_replace(' ','',$number),$num_decimal_places,'.','');
+		}
+		return etemplate::number_format($number,$num_decimal_places);
 	}
 }
