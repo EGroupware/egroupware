@@ -223,6 +223,14 @@ class egw_db
 	 */
 	const CAPABILITY_REQUIRE_TRUNCATE_VARCHAR = 'require_truncate_varchar';
 	/**
+	 * How to cast a column to varchar: CAST(%s AS varchar)
+	 *
+	 * MySQL requires to use CAST(%s AS char)!
+	 *
+	 * Use as: $sql = sprintf($GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CAST_AS_VACHAR],$expression);
+	 */
+	const CAPABILITY_CAST_AS_VACHAR = 'cast_as_varchar';
+	/**
 	 * default capabilities will be changed by method set_capabilities($ado_driver,$db_version)
 	 *
 	 * should be used with the CAPABILITY_* constants as key
@@ -240,6 +248,7 @@ class egw_db
 		self::CAPABILITY_CLIENT_ENCODING  => false,
 		self::CAPABILITY_CASE_INSENSITIV_LIKE => 'LIKE',
 		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => false,
+		self::CAPABILITY_CAST_AS_VACHAR   => 'CAST(%s AS varchar)',
 	);
 
 	var $prepared_sql = array();	// sql is the index
@@ -498,6 +507,7 @@ class egw_db
 				$this->capabilities[self::CAPABILITY_UNION] = (float) $db_version >= 4.0;
 				$this->capabilities[self::CAPABILITY_NAME_CASE] = 'preserv';
 				$this->capabilities[self::CAPABILITY_CLIENT_ENCODING] = (float) $db_version >= 4.1;
+				$this->capabilities[self::CAPABILITY_CAST_AS_VACHAR] = 'CAST(%s AS char)';
 				break;
 
 			case 'postgres':
