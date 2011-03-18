@@ -11,8 +11,10 @@
 
 /**
  * Auth from PAM
- * 
- * Requires php_pam extension!
+ *
+ * Requires PHP PAM extension: pecl install pam
+ *
+ * To read full name from password file PHP's posix extension is needed (sometimes in package php_process)
  */
 class auth_pam implements auth_backend
 {
@@ -26,8 +28,28 @@ class auth_pam implements auth_backend
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, &$error)) 
+		if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, $error))
 		{
+			// for new accounts read full name from password file and pass it to EGroupware
+			if (!$GLOBALS['egw']->accounts->name2id($username) &&
+				function_exists('posix_getpwnam') && ($data = posix_getpwnam($username)))
+			{
+				list($fullname) = explode(',',$data['gecos']);
+				$parts = explode(' ',$fullname);
+				if (count($parts) > 1)
+				{
+					$lastname = array_pop($parts);
+					$firstname = implode(' ',$parts);
+					$email = common::email_address($firstname, $lastname, $username);
+
+					$GLOBALS['auto_create_acct'] = array(
+						'firstname' => $firstname,
+						'lastname' => $lastname,
+						'email' => $email,
+						'account_id' => $data['uid'],
+					);
+				}
+			}
 			return True;
 		}
 		return False;
