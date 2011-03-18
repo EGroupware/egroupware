@@ -476,10 +476,10 @@
 			$this->t->set_var('url_displayBody', $GLOBALS['egw']->link('/index.php',$linkData));
 
 			// attachments
-			if(is_array($attachments) && count($attachments) > 0) {
-				$this->t->set_var('attachment_count',count($attachments));
+			if(is_array($attachments) && count($attachments) > 0 && count($attachments) > 4) {
+				$this->t->set_var('attachment_div_height',' bottom:'.(count($attachments)>4?(count($attachments)*20<=240?count($attachments)*20:240):80).'px');
 			} else {
-				$this->t->set_var('attachment_count','0');
+				$this->t->set_var('attachment_div_height','0');
 			}
 
 			if (is_array($attachments) && count($attachments) > 0) {
@@ -750,12 +750,6 @@
             $this->t->set_var("subject_data",$subject);
 
 			// attachments
-			if(is_array($attachments) && count($attachments) > 0) {
-				$this->t->set_var('attachment_count',count($attachments));
-			} else {
-				$this->t->set_var('attachment_count','0');
-			}
-
 			if (is_array($attachments) && count($attachments) > 0) {
 				$this->t->set_var('row_color',$this->rowColor[0]);
 				$this->t->set_var('name',lang('name'));
@@ -1490,11 +1484,6 @@
 			$this->t->set_var('body', $this->getdisplayableBody($bodyParts));
 
 			// attachments
-			if(is_array($attachments))
-				$this->t->set_var('attachment_count',count($attachments));
-			else
-				$this->t->set_var('attachment_count','0');
-
 			if (is_array($attachments) && count($attachments) > 0) {
 				$this->t->set_var('row_color',$this->rowColor[0]);
 				$this->t->set_var('name',lang('name'));
