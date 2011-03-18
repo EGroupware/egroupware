@@ -341,7 +341,7 @@ abstract class bo_merge
 				$contentrepeat = $contentstart;
 				$contentstart = '';
 			}
- 
+
 		}
 		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
 		{
@@ -384,7 +384,7 @@ abstract class bo_merge
 			{
 				$err = lang('Entry not found!');
 				return false;
-			}		
+			}
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
@@ -557,24 +557,24 @@ abstract class bo_merge
 			}
 			// Look for numbers, set their value if needed
 			$format = $replacement = '';
-			if($this->numeric_fields) {
+			if($this->numeric_fields)
+			{
 				$names = array();
 				foreach($this->numeric_fields as $fieldname) {
 					$names[] = preg_quote($fieldname,'/');
 				}
+				switch($mimetype.$mso_application_progid)
+				{
+					case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+						$format = '/<table:table-cell([^>]+?)office:value-type="([^"]+)"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\4>.?<\/table:table-cell>/s';
+						$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$3>$5</table:table-cell>';
+						break;
+				}
+				if($format && $names)
+				{
+					$content = preg_replace($format, $replacement, $content);
+				}
 			}
-			switch($mimetype.$mso_application_progid)
-			{
-				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-					$format = '/<table:table-cell([^>]+?)office:value-type="([^"]+)"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\4>.?<\/table:table-cell>/s';
-					$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$3>$5</table:table-cell>';
-					break;
-			}
-			if($format && $names)
-			{
-				$content = preg_replace($format, $replacement, $content);
-			}
-
 			// replace CRLF with linebreak tag of given type
 			switch($mimetype.$mso_application_progid)
 			{
@@ -609,7 +609,7 @@ abstract class bo_merge
 
 	/**
 	 * Process special flags, such as IF or NELF
-	 * 
+	 *
 	 * @param content Text to be examined and changed
 	 * @param replacements array of markers => replacement
 	 *
@@ -767,7 +767,7 @@ abstract class bo_merge
 		if (isset($archive))
 		{
 			$zip = new ZipArchive;
-			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true) 
+			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true)
 			{
 				error_log(__METHOD__.__LINE__." !ZipArchive::open('$archive',ZIPARCHIVE::CHECKCONS) failed. Trying open without validating");
 				if ($zip->open($archive) !== true) throw new Exception("!ZipArchive::open('$archive',|ZIPARCHIVE::CHECKCONS)");
