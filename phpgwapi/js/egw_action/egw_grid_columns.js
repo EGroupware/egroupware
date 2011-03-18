@@ -458,22 +458,19 @@ egwGridColumns.prototype.getColumnData = function()
 
 	for (var i = 0; i < this.columns.length; i++)
 	{
-		if (this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE)
-		{
-			result.push(
-				{
-					"id": this.columns[i].id,
-					"caption": this.columns[i].caption,
-					"sortable": this.columns[i].sortable != EGW_COL_SORTABLE_NONE,
-					"sortmode": this.columns[i].sortmode,
-					"default": this.columns[i]["default"],
-					"width": this.columnWidths[i],
-					"drawnWidth": this.columnWidths[i],
-					"type": this.columns[i].type,
-					"element": this.columns[i]
-				}
-			);
-		}
+		result.push(
+			{
+				"id": this.columns[i].id,
+				"caption": this.columns[i].caption,
+				"sortable": this.columns[i].sortable != EGW_COL_SORTABLE_NONE,
+				"sortmode": this.columns[i].sortmode,
+				"default": this.columns[i]["default"],
+				"width": this.columnWidths[i],
+				"type": this.columns[i].type,
+				"visible": this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE,
+				"element": this.columns[i]
+			}
+		);
 	}
 
 	return result;

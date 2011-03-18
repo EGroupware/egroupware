@@ -14,7 +14,7 @@ body, td, th {
 	border-collapse: collapse;
 }
 
-.egwGridView_outer td.queued {
+.egwGridView_outer div.innerContainer.queued {
 	background-image: url(imgs/ajax-loader.gif);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -59,13 +59,17 @@ body, td, th {
 
 .egwGridView_grid td {
 	border-right: 1px solid silver;
+	border-bottom: 1px solid #e0e0e0;
 	padding: 2px 3px 2px 4px;
 	margin: 0;
-	border-bottom: 1px solid #e0e0e0;
 }
 
-.egwGridView_grid td.last {
-	border-right-width: 0;
+.egwGridView_outer th div.innerContainer,
+.egwGridView_grid td div.innerContainer {
+	margin: 0;
+	padding: 0;
+	display: block;
+	overflow: hidden;
 }
 
 .egwGridView_grid tr.fullRow {
@@ -159,6 +163,19 @@ body, td, th {
 	background-position: center;
 	background-repeat: repeat-x;
 }
+
+.egwGridView_outer thead th:hover {
+	background-color: #F0F0F0;
+}
+
+.egwGridView_outer thead th:active {
+	background-color: #D0D0D0;
+	border-left: 1px solid gray;
+	border-top: 1px solid gray;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
+}
+
 
 .egwGridView_outer thead th.optcol {
 	padding: 0;
