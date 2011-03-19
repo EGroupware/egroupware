@@ -14,6 +14,10 @@
 	class uisettings
 	{
 		var $public_functions = array('index' => True);
+		/**
+		 * Instance of Template class
+		 * @var Template
+		 */
 		var $t;
 		var $list_shown = False;
 		var $show_help;
@@ -104,14 +108,15 @@
 			$forced  = get_var('forced',Array('POST'));
 			$default = get_var('default',Array('POST'));
 
-			$this->t =& CreateObject('phpgwapi.Template',common::get_tpl_dir('preferences'));
+			$this->t = new Template(common::get_tpl_dir('preferences'));
 			$this->t->set_file(array(
 				'preferences' => 'preferences.tpl'
 			));
 			$this->t->set_block('preferences','list','lists');
 			$this->t->set_block('preferences','row','rowhandle');
 			$this->t->set_block('preferences','help_row','help_rowhandle');
-			$this->t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => ''));
+			$this->t->set_block('preferences','section_row','section_rowhandle');
+			$this->t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => '', 'section_rowhandle'));
 
 			$this->prefix = get_var('prefix',array('GET'),$this->bo->session_data['appname'] == $_GET['appname'] ? $this->bo->session_data['prefix'] : '');
 
@@ -221,7 +226,7 @@
 						$this->create_section($valarray['title']);
 						break;
 					case 'subsection':
-						$this->create_subsection($valarray['title']);
+						$this->create_section($valarray['title'],'prefSubSection');
 						break;
 					case 'input':
 						$this->create_input_box(
@@ -465,7 +470,7 @@
 			}
 			if(isset($this->bo->prefs[$name]))
 			{
-				$this->bo->prefs[$name] = (int)(!!$this->bo->prefs[$name]);	// to care for '' and 'True'
+				$this->bo->prefs[$name] = (string)(int)(!!$this->bo->prefs[$name]);	// to care for '' and 'True'
 			}
 
 			return $this->create_select_box($label,$name,array(
@@ -488,24 +493,14 @@
 			return $s;
 		}
 
-		/* for creating different sections with a title */
-		function create_section($title='')
+		/**
+		 * Create different sections with a title
+		 */
+		function create_section($title='',$span_class='prefSection')
 		{
-			$this->t->set_var('row_value','');
-			$this->t->set_var('row_name','<span class="prefSection">'.lang($title).'</span>');
-			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($this->t);
+			$this->t->set_var('title','<span class="'.$span_class.'">'.lang($title).'</span>');
 
-			$this->t->fp('rows',$this->process_help($help) ? 'help_row' : 'row',True);
-		}
-
-		/* for creating different sections with a title */
-		function create_subsection($title='')
-		{
-			$this->t->set_var('row_value','');
-			$this->t->set_var('row_name','<span class="prefSubSection">'.lang($title).'</span>');
-			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($this->t);
-
-			$this->t->fp('rows',$this->process_help($help) ? 'help_row' : 'row',True);
+			$this->t->fp('rows','section_row',True);
 		}
 
 		function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false)
@@ -546,7 +541,7 @@
 				$select = html::input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
 				$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',5);
 			}
-			if($GLOBALS['type'] == 'user' && $GLOBALS['egw']->preferences->default[$_appname][$name])
+			if($GLOBALS['type'] == 'user' && (string)$GLOBALS['egw']->preferences->default[$_appname][$name] !== '')
 			{
 				// flatten values first (some selectbox values are given multi-dimensional)
 				foreach($values as $id => $val)
