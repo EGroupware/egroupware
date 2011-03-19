@@ -73,15 +73,22 @@ class calendar_activesync implements activesync_plugin_write
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
+		$cals = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'];
+		$cals = $cals ? explode(',',$cals) : array('P');	// implicit default of 'P'
+
 		foreach ($this->calendar->list_cals() as $label => $entry)
 		{
-			// uncomment next line to get only own calendar
-			//if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
-			$folderlist[] = $f = array(
-				'id'	=>	$this->backend->createID('calendar',$entry['grantor']),
-				'mod'	=>	$GLOBALS['egw']->accounts->id2name($entry['grantor'],'account_fullname'),
-				'parent'=>	'0',
-			);
+			$account_id = $entry['grantor'];
+			if (in_array('A',$cals) || in_array($account_id,$cals) ||
+				$account_id == $GLOBALS['egw_info']['user']['account_id'] && in_array('P',$cals) ||
+				$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$cals))
+			{
+				$folderlist[] = $f = array(
+					'id'	=>	$this->backend->createID('calendar',$account_id),
+					'mod'	=>	$GLOBALS['egw']->accounts->id2name($account_id,'account_fullname'),
+					'parent'=>	'0',
+				);
+			}
 		};
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		debugLog(__METHOD__."() returning ".array2string($folderlist));
@@ -1081,7 +1088,36 @@ END:VTIMEZONE
 	 */
 	function settings($hook_data)
 	{
-		return array();
+		$cals = array(
+			'P'	=> lang('Personal'),
+			'G'	=> lang('Primary Group'),
+			'A'	=> lang('All'),
+		);
+		if (!$hook_data['setup'])
+		{
+			if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+			foreach ($this->calendar->list_cals() as $label => $entry)
+			{
+				$account_id = $entry['grantor'];
+				if ($account_id != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					$cals[$account_id] = $label;
+				}
+			}
+		}
+
+		$settings['calendar-cals'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Calendars to sync',
+			'name'   => 'calendar-cals',
+			'values' => $cals,
+			'xmlrpc' => True,
+			'admin'  => False,
+			'default' => 'P',
+		);
+
+		return $settings;
 	}
 }
 
