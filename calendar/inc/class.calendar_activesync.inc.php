@@ -76,7 +76,7 @@ class calendar_activesync implements activesync_plugin_write
 		foreach ($this->calendar->list_cals() as $label => $entry)
 		{
 			// uncomment next line to get only own calendar
-			if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
+			//if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
 			$folderlist[] = $f = array(
 				'id'	=>	$this->backend->createID('calendar',$entry['grantor']),
 				'mod'	=>	$GLOBALS['egw']->accounts->id2name($entry['grantor'],'account_fullname'),
@@ -1071,6 +1071,17 @@ END:VTIMEZONE
 				$tz["dstbias"]);
 
 		return $packed;
+	}
+
+	/**
+	 * Populates $settings for the preferences
+	 *
+	 * @param array|string $hook_data
+	 * @return array
+	 */
+	function settings($hook_data)
+	{
+		return array();
 	}
 }
 
