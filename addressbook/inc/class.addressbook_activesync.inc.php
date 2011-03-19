@@ -106,26 +106,54 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	/**
 	 * Get addressbooks (no extra private one and do some caching)
 	 *
+	 * Takes addessbook-abs and addressbook-all-in-one preference into account.
+	 *
 	 * @param int $account=null account_id of addressbook or null to get array of all addressbooks
+	 * @param boolean $return_all_in_one=true if false and all-in-one pref is set, return all selected abs
+	 * 	if true only the all-in-one ab is returned (with id of personal ab)
 	 * @return string|array addressbook name of array with int account_id => label pairs
 	 */
-	private function get_addressbooks($account=null)
+	private function get_addressbooks($account=null,$return_all_in_one=true)
 	{
 		static $abs;
 
-		if (!isset($abs))
+		if (!isset($abs) || !$resolve_all_in_one)
 		{
-			translation::add_app('addressbook');	// we need the addressbook translations
-
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
+			if ($return_all_in_one && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
-				unset($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook']);
-				if (isset($this->addressbook)) $this->addressbook->private_addressbook = false;
+				$abs = array(
+					$GLOBALS['egw_info']['user']['account_id'] => lang('All'),
+				);
 			}
-			if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+			else
+			{
+				translation::add_app('addressbook');	// we need the addressbook translations
 
-			$abs = $this->addressbook->get_addressbooks(EGW_ACL_READ);
+				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
+				{
+					unset($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook']);
+					if (isset($this->addressbook)) $this->addressbook->private_addressbook = false;
+				}
+				if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+				// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
+				$pref_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
+				if (empty($pref_abs)) $pref_abs = 'P';	// implicit default
+				$pref_abs = explode(',',$pref_abs);
+
+				foreach ($this->addressbook->get_addressbooks() as $account_id => $label)
+				{
+					if ($account_id && in_array($account,$pref_abs) || in_array('A',$pref_abs) ||
+						$account_id == 0 && in_array('U',$pref_abs) ||
+						$account_id == $GLOBALS['egw_info']['user']['account_id'] && in_array('P',$pref_abs) ||
+						$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$pref_abs))
+					{
+						$abs[$account_id] = $label;
+					}
+				}
+			}
 		}
+		//error_log(__METHOD__."($account) returning ".array2string(is_null($account) ? $abs : $abs[$account]));
 		return is_null($account) ? $abs : $abs[$account];
 	}
 
@@ -137,7 +165,6 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	public function GetFolderList()
 	{
 		// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
-
 		foreach ($this->get_addressbooks() as $account => $label)
 		{
 			$folderlist[] = array(
@@ -145,7 +172,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				'mod'	=>	$label,
 				'parent'=>	'0',
 			);
-		};
+		}
 		debugLog(__METHOD__."() returning ".array2string($folderlist));
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
@@ -174,6 +201,14 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_CONTACT;
 		}
+/*
+		// not existing folder requested --> return false
+		if (is_null($folderObj->displayname))
+		{
+			$folderObj = false;
+			debugLog(__METHOD__."($id) returning ".array2string($folderObj));
+		}
+*/
 		//error_log(__METHOD__."('$id') returning ".array2string($folderObj));
 		return $folderObj;
 	}
@@ -200,6 +235,14 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			'mod'	=> $this->get_addressbooks($owner),
 			'parent' => '0',
 		);
+/*
+		// not existing folder requested --> return false
+		if (is_null($stat['mod']))
+		{
+			$stat = false;
+			debugLog(__METHOD__."('$id') ".function_backtrace());
+		}
+*/
 		//error_log(__METHOD__."('$id') returning ".array2string($stat));
 		debugLog(__METHOD__."('$id') returning ".array2string($stat));
 		return $stat;
@@ -226,6 +269,12 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 
 		$this->backend->splitID($id,$type,$user);
 		$filter = array('owner' => $user);
+
+		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+			$user == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$filter['owner'] = array_keys($this->get_addressbooks(null,false));	// false = return all selected abs
+		}
 
 		$messagelist = array();
 		if (($contacts =& $this->addressbook->search($criteria,'contact_id,contact_etag',$order_by='',$extra_cols='',$wildcard='',
@@ -405,7 +454,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			debugLog(__METHOD__." Folder wrong or contact not existing");
 			return false;
 		}
-		if ($account == 0) return false;			//no changing of accounts
+		if ($account == 0)	// as a precausion, we currently do NOT allow to change accounts
+		{
+			debugLog(__METHOD__." Changing of accounts denied!");
+			return false;			//no changing of accounts
+		}
 		$contact = array();
 		if ((empty($id) && ($this->addressbook->grants[$account] & EGW_ACL_EDIT)) || ( $contact = $this->addressbook->read($id) && $this->addressbook->check_perms(EGW_ACL_EDIT, $id)))
 		{
@@ -438,11 +491,16 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						break;
 				}
 			}
-
-			$contact['owner'] = $account;
+			// for all-in-one addressbook, account is meaningless and wrong!
+			// addressbook_bo::save() keeps the owner or sets an appropriate one if none given
+			if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+			{
+				$contact['owner'] = $account;
+			}
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
 			$newid = $this->addressbook->save($contact);
+error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
@@ -461,10 +519,17 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * to have a new parent. This means that it will disappear from GetMessageList() will not return the item
 	 * at all on the source folder, and the destination folder will show the new message
 	 *
+	 * @ToDo: If this gets implemented, we have to take into account the 'addressbook-all-in-one' pref!
 	 */
 	public function MoveMessage($folderid, $id, $newfolderid)
 	{
-		error_log(__METHOD__);
+		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+		{
+			debugLog(__METHOD__."('$folderid', $id, $newfolderid) NOT allowed for an all-in-one addressbook --> returning false");
+			return false;
+		}
+		debugLog(__METHOD__."('$folderid', $id, $newfolderid) NOT implemented --> returning false");
+		return false;
 	}
 
 
@@ -568,5 +633,65 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			}
 		}
 		return $items;
+	}
+
+	/**
+	 * Populates $settings for the preferences
+	 *
+	 * @param array|string $hook_data
+	 * @return array
+	 */
+	function settings($hook_data)
+	{
+		if ($hook_data['setup'])
+		{
+			$addressbooks = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$addressbook_bo = new addressbook_bo();
+			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
+			unset($addressbooks[$user]);	// Use P for personal addressbook
+			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+		}
+		$addressbooks = array(
+			'P'	=> lang('Personal'),
+			'G'	=> lang('Primary Group'),
+			'U' => lang('Accounts'),
+			'A'	=> lang('All'),
+		) + $addressbooks;
+
+		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
+		if (!isset($addressbooks[0]))
+		{
+			unset($addressbooks['U']);
+		}
+		else
+		{
+			unset($addressbooks[0]);
+		}
+
+		$settings['addressbook-abs'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Addressbooks to sync',
+			'name'   => 'addressbook-abs',
+			'help'   => 'Global address search always searches in all addressbooks, so you dont need to sync all addressbooks to be able to access them, if you are online.',
+			'values' => $addressbooks,
+			'xmlrpc' => True,
+			'admin'  => False,
+			'default' => 'P',
+		);
+
+		$settings['addressbook-all-in-user'] = array(
+			'type'   => 'check',
+			'label'  => 'Sync all addressbooks as one',
+			'name'   => 'addressbook-all-in-one',
+			'help'   => 'Not all clients support multiple addressbooks, so you can choose to sync all above selected addressbooks as one.',
+			'xmlrpc' => true,
+			'admin'  => false,
+			'default' => '0',
+		);
+		return $settings;
 	}
 }
