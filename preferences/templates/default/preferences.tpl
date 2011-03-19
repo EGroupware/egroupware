@@ -9,9 +9,6 @@
  </tr>
 
 <!-- BEGIN list -->
- <tr class="th">
-  <td colspan="2"><b>{list_header}</b></td>
- </tr>
 {rows}
 <!-- END list -->
 
@@ -44,3 +41,9 @@
   <td colspan="2">{help_value}</td>
  </tr>
 <!-- END help_row -->
+
+<!-- BEGIN section_row -->
+ <tr class="th">
+  <td colspan="2"><b>{title}</b></td>
+ </tr>
+<!-- END section_row -->
