@@ -357,7 +357,6 @@ class egw_db
 			switch($this->Type)	// convert to ADO db-type-names
 			{
 				case 'pgsql':
-$this->query_log = '/tmp/pgsql-query.log';
 					$type = 'postgres'; // name in ADOdb
 					// create our own pgsql connection-string, to allow unix domain soccets if !$Host
 					$Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
