@@ -27,7 +27,7 @@ class addressbook_sql extends so_sql_cf
 	/**
 	 * join to show only active account (and not already expired ones)
 	 */
-	const ACOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
+	const ACCOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
 	/**
 	 * filter to show only active account (and not already expired ones)
 	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
@@ -328,7 +328,14 @@ class addressbook_sql extends so_sql_cf
 			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
 			unset($filter['list']);
 		}
-		if ($join)
+		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
+		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
+		{
+			$join .= self::ACCOUNT_ACTIVE_JOIN;
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+		}
+		if ($join || $criteria && is_string($criteria))	// search also adds a join for custom fields!
 		{
 			switch(gettype($only_keys))
 			{
@@ -367,13 +374,6 @@ class addressbook_sql extends so_sql_cf
 				}
 				//_debug_array($order_by);
 			}
-		}
-		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
-		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
-			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
-		{
-			$join .= self::ACOUNT_ACTIVE_JOIN;
-			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
