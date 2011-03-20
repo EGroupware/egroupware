@@ -1096,7 +1096,7 @@ class so_sql
 				$numeric_columns[] = $col;
 				continue;
 			}
-			$columns[] = sprintf($this->db->capabilities[egw_db::CAPABILITY_CAST_AS_VACHAR],"COALESCE($col,'')");
+			$columns[] = sprintf($this->db->capabilities[egw_db::CAPABILITY_CAST_AS_VARCHAR],"COALESCE($col,'')");
 		}
 		if($columns)
 		{
