@@ -1081,16 +1081,22 @@ class so_sql
 		{
 			return array();
 		}
-
 		// Concat all fields to be searched together, so the conditions operate across the whole record
 		foreach($search_cols as $col)
 		{
-			if($this->table_def['fd'][$col] && in_array($this->table_def['fd'][$col]['type'], $numeric_types))
+			$col_name = $col;
+			$table = $this->table_name;
+			if (strpos($col,'.') !== false)
+			{
+				list($table,$col_name) = explode('.',$col);
+			}
+			$table_def = $table == $this->table_name ? $this->table_def : $this->db->get_table_definitions(true,$table);
+			if ($table_def['fd'][$col_name] && in_array($table_def['fd'][$col_name]['type'], $numeric_types))
 			{
 				$numeric_columns[] = $col;
 				continue;
 			}
-			$columns[] = "CAST(COALESCE($col,'') AS char)";
+			$columns[] = sprintf($this->db->capabilities[egw_db::CAPABILITY_CAST_AS_VACHAR],"COALESCE($col,'')");
 		}
 		if($columns)
 		{
@@ -1166,7 +1172,7 @@ class so_sql
 					if($wildcard == '')
 					{
 						// Token has a wildcard from user, use LIKE
-						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) " . 
+						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) " .
 							$this->db->capabilities['case_insensitive_like'] . ' ' .
 							$GLOBALS['egw']->db->quote(str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token)) . ')';
 					}
