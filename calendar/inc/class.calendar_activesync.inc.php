@@ -75,6 +75,7 @@ class calendar_activesync implements activesync_plugin_write
 
 		$cals = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'];
 		$cals = $cals ? explode(',',$cals) : array('P');	// implicit default of 'P'
+		$folderlist = array();
 
 		foreach ($this->calendar->list_cals() as $label => $entry)
 		{
@@ -625,7 +626,7 @@ class calendar_activesync implements activesync_plugin_write
 			debugLog("airsyncbasebody!");
 			$message->airsyncbasebody = new SyncAirSyncBaseBody();
 			$message->airsyncbasenativebodytype=1;
-			$this->backend->note2messagenote($event['description'], $bodypreference, &$message->airsyncbasebody);
+			$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
 		}
 
 		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');

@@ -165,6 +165,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	public function GetFolderList()
 	{
 		// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
+		$folderlist = array();
 		foreach ($this->get_addressbooks() as $account => $label)
 		{
 			$folderlist[] = array(
@@ -327,7 +328,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						debugLog("airsyncbasebody!");
 						$message->airsyncbasebody = new SyncAirSyncBaseBody();
 						$message->airsyncbasenativebodytype=1;
-						$this->backend->note2messagenote($contact[$attr], $bodypreference, &$message->airsyncbasebody);
+						$this->backend->note2messagenote($contact[$attr], $bodypreference, $message->airsyncbasebody);
 					}
 					break;
 
