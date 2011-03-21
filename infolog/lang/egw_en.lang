@@ -191,6 +191,7 @@ example {{nelfnv role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	exists
+export definitition to use for nextmatch export	infolog	en	Export definitition to use for nextmatch export
 exports infolog entries into a csv file.	infolog	en	Exports Infolog entries into a CSV File.
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty !!!
@@ -216,6 +217,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
 if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	en	If you specify a directory (full vfs path) here, infolog displays an action for each document. That action allows to download the specified document with the infolog data inserted.
 if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	en	If you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
+if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
 import	infolog	en	Import
 import next set	infolog	en	import next set
 importance	infolog	en	Importance
@@ -267,6 +269,7 @@ low	infolog	en	low
 manage mapping	infolog	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the input field (optional)]
 modifier	infolog	en	Modifier
+modifierer	infolog	en	Modifierer
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of current user, all other contact fields are valid too	infolog	en	Name of current user, all other contact fields are valid too
 name of new type to create	infolog	en	name of new type to create

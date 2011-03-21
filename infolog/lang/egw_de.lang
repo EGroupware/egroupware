@@ -191,6 +191,7 @@ example {{nelfnv role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
+export definitition to use for nextmatch export	infolog	de	Export Profil der Listenansicht (Disketten Symbol)
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
@@ -216,6 +217,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
 if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
 if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
+if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
 import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
@@ -267,6 +269,7 @@ low	infolog	de	niedrig
 manage mapping	infolog	de	Verwaltung der Zuordnung
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 modifier	infolog	de	Geändert von
+modifierer	infolog	de	Geändert von
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of current user, all other contact fields are valid too	infolog	de	Name des aktiven Benutzers, all anderen Kontakt Felder sind weiterhin gültig
 name of new type to create	infolog	de	Name des neu anzulegenden Typs
