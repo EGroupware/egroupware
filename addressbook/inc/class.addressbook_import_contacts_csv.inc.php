@@ -176,7 +176,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// Also handle categories in their own field
 			$more_categories = array();
 			foreach($_definition->plugin_options['field_mapping'] as $number => $field_name) {
-				if(substr($field_name,0,3) != 'cat' || !$record[$field_name]) continue;
+				if(substr($field_name,0,3) != 'cat' || !$record[$field_name] || $field_name == 'cat_id') continue;
 				list($cat, $cat_id) = explode('-', $field_name);
 				if(is_numeric($record[$field_name]) && $record[$field_name] != 1) {
 					// Column has a single category ID
