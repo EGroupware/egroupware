@@ -31,7 +31,7 @@ class asyncservice
 	var $debug = 0;
 	/**
 	 * Line in crontab set by constructor with absolute path
-	 * 
+	 *
 	 * @var string
 	 */
 	var $cronline = '/phpgwapi/cron/asyncservices.php default';
@@ -414,8 +414,7 @@ class asyncservice
 
 						if ($lang != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 						{
-							unset($GLOBALS['lang']);
-							translation::add_app('common');
+							translation::init();
 						}
 					}
 					else
@@ -430,8 +429,15 @@ class asyncservice
 				{
 					$job['data'] += array_diff_key($job,array('data' => false));
 				}
-				ExecMethod($job['method'],$job['data']);
-
+				try
+				{
+					ExecMethod($job['method'],$job['data']);
+				}
+				catch(Exception $e)
+				{
+					// log the exception to error_log, but continue running other async jobs
+					_egw_log_exception($e);
+				}
 				// re-read job, in case it had been updated or even deleted in the method
 				$updated = $this->read($id);
 				if ($updated && isset($updated[$id]))
