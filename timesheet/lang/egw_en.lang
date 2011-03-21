@@ -10,21 +10,28 @@ all status	timesheet	en	All status
 and its members	timesheet	en	and its members
 applies the changes	timesheet	en	applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!!!
+at the moment the following document-types are supported:	timesheet	en	At the moment the following document-types are supported:
 both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project-names
 by	timesheet	en	by
+change category	timesheet	en	Change category
+changed category to %1	timesheet	en	changed category to %1
 changed status	timesheet	en	changed status
 check all	timesheet	en	Check all
+choose 'creator' of imported data	timesheet	en	Choose 'creator' of imported data
 comment by %1 at %2:	timesheet	en	Comment by %1 at %2:
 create new links	timesheet	en	Create new links
 creates a new field	timesheet	en	creates a new field
 creating new entry	timesheet	en	creating new entry
 custom fields	timesheet	en	Custom fields
+default document to insert entries	timesheet	en	Default document to insert entries
 delete this entry	timesheet	en	Delete this entry
 delete this status	timesheet	en	Delete this status
 delete timesheet	timesheet	en	Delete Timesheet
 deleted	timesheet	en	deleted
 deletes this field	timesheet	en	deletes this field
 determines the order the fields are displayed	timesheet	en	determines the order the fields are displayed
+directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
+document '%1' does not exist or is not readable for you!	timesheet	en	Document '%1' does not exist or is not readable for you!
 each value is a line like <id>[=<label>]	timesheet	en	each value is a line like <id>[=<label>]
 edit status	timesheet	en	Edit status
 edit this entry	timesheet	en	Edit this entry
@@ -34,16 +41,33 @@ entry deleted	timesheet	en	Entry deleted
 entry saved	timesheet	en	Entry saved
 error deleting the entry!!!	timesheet	en	Error deleting the entry!!!
 error saving the entry!!!	timesheet	en	Error saving the entry!!!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 existing links	timesheet	en	Existing links
+exists	timesheet	en	exists
 export	timesheet	en	Export
+export definitition to use for nextmatch export	timesheet	en	Export definitition to use for nextmatch export
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
+exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from your Timesheet into a CSV File.
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 field must not be empty !!!	timesheet	en	Field must not be empty !!!
+for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
+general fields:	timesheet	en	General fields:
 global categories	timesheet	en	Global Categories
 history	timesheet	en	History
 id	timesheet	en	ID
+if you specify a directory (full vfs path) here, egroupware displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full vfs path) here, eGroupWare displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	timesheet	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
+if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
+imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the timesheet from a CSV File.
+insert	timesheet	en	insert
+insert in document	timesheet	en	Insert in document
+invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
 last week	timesheet	en	Last week
@@ -52,8 +76,11 @@ leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	leaves without saveing
 length<br>rows	timesheet	en	Length<br>Rows
 links	timesheet	en	Links
+manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	max length of the input [, length of the inputfield (optional)]
+modified	timesheet	en	Modified
 modify the status of the timesheet	timesheet	en	Modify the Status of the Timesheet
+name of current user, all other contact fields are valid too	timesheet	en	Name of current user, all other contact fields are valid too
 new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
 new timesheet submitted by %1 at %2	timesheet	en	New timesheet submitted by %1 at %2
 no details	timesheet	en	no details
@@ -67,9 +94,12 @@ or endtime	timesheet	en	or Endtime
 order	timesheet	en	Order
 parent	timesheet	en	Parent
 permission denied!!!	timesheet	en	Permission denied!!!
+permissions error - %1 could not %2	timesheet	en	Permissions error - %1 could not %2
 price	timesheet	en	Price
+project fields	timesheet	en	Project fields
 projectmanager integration	admin	en	ProjectManager integration
 quantity	timesheet	en	Quantity
+replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 save & new	timesheet	en	Save & New
 saves the changes made	timesheet	en	Saves the changes made
 saves the changes made and leaves	timesheet	en	saves the changes made and leaves
@@ -90,6 +120,7 @@ status deleted.	timesheet	en	Status deleted.
 status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
 sum %1:	timesheet	en	Sum %1:
+tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
 the text displayed to the user	timesheet	en	the text displayed to the user
 this month	timesheet	en	This month
@@ -98,6 +129,9 @@ this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
 timesheet	common	en	TimeSheet
 timesheet csv export	timesheet	en	Timesheet CSV export
+timesheet csv import	timesheet	en	Timesheet CSV import
+timesheet fields:	timesheet	en	Timesheet fields:
+timesheet id	timesheet	en	Timesheet ID
 timesheet modified by %1 at %2	timesheet	en	Timesheet modified by %1 at %2
 timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
 timesheet status-%1 '%2' added.	timesheet	en	Timesheet Status-%1 '%2' added.
@@ -105,6 +139,7 @@ timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
 timesheet-%1 deleted.	timesheet	en	Timesheet-%1 deleted.
 tracker	timesheet	en	Tracker
 unitprice	timesheet	en	Unitprice
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for selectbox
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
