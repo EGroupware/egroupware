@@ -1290,6 +1290,7 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	container.getAOI = egwGridViewRow_getAOI;
 	container._columnClick = egwGridViewRow__columnClick;
 	container.setOpen = egwGridViewRow_setOpen;
+	container.reloadChildren = egwGridViewRow_reloadChildren;
 	container.tdObjects = [];
 	container.containerClass = "row";
 	container.childGrid = null;
@@ -1426,9 +1427,10 @@ function egwGridViewRow_doUpdateData(_immediate)
 			vis_idx++;
 
 			var cont = this.tdObjects[i].cont;
-			cont.empty();
 			if (typeof data[col.id] != "undefined")
 			{
+				cont.empty();
+
 				if (col.type == EGW_COL_TYPE_NAME_ICON_FIXED)
 				{
 					// Insert the indentation spacer
@@ -1521,6 +1523,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 			}
 			else
 			{
+				cont.empty();
 				cont.toggleClass("queued", true);
 			}
 		}
@@ -1546,9 +1549,14 @@ function egwGridViewRow_doSetViewArea()
 	}
 }
 
-function egwGridViewRow_setOpen(_open)
+function egwGridViewRow_setOpen(_open, _force)
 {
-	if (_open != this.opened)
+	if (typeof _force == "undefined")
+	{
+		_force = false;
+	}
+
+	if (_open != this.opened || _force)
 	{
 		var inserted = false;
 
@@ -1581,13 +1589,37 @@ function egwGridViewRow_setOpen(_open)
 
 		if (this.childGrid && !inserted)
 		{
+			if (!_open)
+			{
+				// Deselect all childrens
+				for (var i = 0; i < this.item.children.length; i++)
+				{
+					this.item.children[i].actionObject.setAllSelected(false);
+				}
+			}
+
 			this.childGrid.setVisible(_open);
 		}
 
 		this.opened = _open;
 		this.item.opend = _open;
 	}
+}
 
+function egwGridViewRow_reloadChildren()
+{
+	// Remove the child grid container
+	if (this.childGrid)
+	{
+		this.grid.removeContainer(this.childGrid);
+		this.childGrid = null;
+
+		// Remove all the data from the data object
+		this.item.empty();
+
+		// Recreate the child grid
+		this.setOpen(this.opened, true);
+	}
 }
 
 

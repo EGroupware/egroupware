@@ -637,7 +637,47 @@ egwGridDataElement.prototype.callEndUpdate = function()
 egwGridDataElement.prototype.empty = function()
 {
 	this.children = [];
-	this.readQueue.empty();
+//	this.readQueue.empty();
+}
+
+/**
+ * Returns all parents in a list
+ */
+egwGridDataElement.prototype.getParentList = function(_lst)
+{
+	if (typeof _lst == "undefined")
+	{
+		_lst = [];
+	}
+
+	_lst.push(this);
+
+	if (this.parent)
+	{
+		this.parent.getParentList(_lst);
+	}
+
+	return _lst;
+}
+
+
+function egwGridData_getOutermostParent(_elements)
+{
+	var minElem = null;
+	var minCnt = 0;
+
+	for (var i = 0; i < _elements.length; i++)
+	{
+		var parents = _elements[i].getParentList();
+
+		if (i == 0 || parents.length < minCnt)
+		{
+			minCnt = parents.length;
+			minElem = _elements[i];
+		}
+	}
+
+	return minElem ? (minElem.parent ? minElem.parent : minElem) : null;
 }
 
 /** - egwGridDataReadQueue -- **/
@@ -692,12 +732,15 @@ egwGridDataQueue.prototype._queue = function(_obj)
 	else
 	{
 		// Specify that the element data is queued
-		for (var i = 0; i < this.queueColumns.length; i++)
+		if (_obj.type != EGW_DATA_QUEUE_CHILDREN)
 		{
-			if (typeof _obj.elem.data[this.queueColumns[i]] == "undefined")
+			for (var i = 0; i < this.queueColumns.length; i++)
 			{
-				_obj.elem.data[this.queueColumns[i]] = {
-					"queued": true
+				if (typeof _obj.elem.data[this.queueColumns[i]] == "undefined")
+				{
+					_obj.elem.data[this.queueColumns[i]] = {
+						"queued": true
+					}
 				}
 			}
 		}
@@ -757,15 +800,13 @@ egwGridDataQueue.prototype.queueCall = function(_elem, _columns, _callback, _con
 
 	if (_columns === EGW_DATA_QUEUE_CHILDREN)
 	{
-		if (!this._queue({
+		this._queue({
 				"elem": _elem,
 				"type": EGW_DATA_QUEUE_CHILDREN,
 				"callback": _callback,
 				"context": _context
-			}))
-		{
-			this.flushQueue();
-		}
+			});
+		console.log("Added ", _elem.id, " to queue: ", this.queue);
 	}
 	else
 	{
@@ -902,6 +943,8 @@ egwGridDataQueue.prototype.empty = function()
  */
 egwGridDataQueue.prototype.flushQueue = function(_doPrefetch)
 {
+	console.log("Flush queue");
+
 	var ids = [];
 
 	if (_doPrefetch)

@@ -55,6 +55,7 @@ function egwAction(_id, _handler, _caption, _iconUrl, _onExecute, _allowOnMultip
 	this.caption = _caption;
 	this.iconUrl = _iconUrl;
 	this.allowOnMultiple = _allowOnMultiple;
+	this.enabled = true;
 	this.type = "default"; //All derived classes have to override this!
 
 	this.execJSFnct = null;
@@ -137,6 +138,11 @@ egwAction.prototype.set_iconUrl = function(_value)
 	this.iconUrl = _value;
 }
 
+egwAction.prototype.set_enabled = function(_value)
+{
+	this.enabled = _value;
+}
+
 egwAction.prototype.set_allowOnMultiple = function(_value)
 {
 	this.allowOnMultiple = _value;
@@ -195,7 +201,7 @@ egwActionManager.prototype.updateActions = function(_actions)
 		{
 			//Check whether the action already exists, and if no, add it to the
 			//actions list
-			var action = this.getAction(elem.id);
+			var action = this.getActionById(elem.id);
 			if (!action)
 			{
 				if (typeof elem.type == "undefined")
@@ -219,7 +225,10 @@ egwActionManager.prototype.updateActions = function(_actions)
 	}
 }
 
-egwActionManager.prototype.getAction = function(_id)
+/**
+ * Returns the action inside the action manager which has the given id.
+ */
+egwActionManager.prototype.getActionById = function(_id)
 {
 	for (var i = 0; i < this.actions.length; i++)
 	{
@@ -328,7 +337,7 @@ egwActionLink.prototype.set_visible = function(_value)
 egwActionLink.prototype.set_actionId = function(_value)
 {
 	this.actionId = _value;
-	this.actionObj = this.manager.getAction(_value);
+	this.actionObj = this.manager.getActionById(_value);
 
 	if (!this.actionObj)
 		throw "Given action object does not exist!"
@@ -1170,8 +1179,8 @@ egwActionObject.prototype.getSelectedLinks = function(_actionType)
 
 					// Accumulate the action link properties
 					var llink = actionLinks[olink.actionId];
-					llink.enabled = llink.enabled && olink.enabled &&
-						olink.visible;
+					llink.enabled = olink.actionObj.enabled && llink.enabled &&
+						olink.enabled && olink.visible;
 					llink.visible = llink.visible || olink.visible;
 					llink.cnt++;
 				}

@@ -1556,7 +1556,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @return string
 	 */
-	static function get_home_dir()
+	static public function get_home_dir()
 	{
 		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 
@@ -1567,6 +1567,93 @@ class egw_vfs extends vfs_stream_wrapper
 			$start = $path;
 		}
 		return $start;
+	}
+
+	/**
+	 * Copies the files given in $src to $dst.
+	 *
+	 * @param array $src contains the source file
+	 * @param string $dst is the destination directory
+	 */
+	static public function copy_files(array $src, $dst, &$errs, array &$copied)
+	{
+		if (self::is_dir($dst))
+		{
+			foreach ($src as $file)
+			{
+				// Check whether the file has already been copied - prevents from
+				// recursion
+				if (!in_array($file, $copied))
+				{
+					// Calculate the target filename
+					$target = egw_vfs::concat($dst, egw_vfs::basename($file));
+
+					if (self::is_dir($file))
+					{
+						if ($file !== $target)
+						{
+							// Create the target directory
+							egw_vfs::mkdir($target,null,STREAM_MKDIR_RECURSIVE);
+
+							$files = egw_vfs::find($file, array(
+								"hidden" => true
+							));
+
+							$copied[] = $file;
+							$copied[] = $target; // < newly created folder must not be copied again!
+							if (egw_vfs::copy_files(egw_vfs::find($file), $target,
+								$errs, $copied))
+							{
+								continue;
+							}
+						}
+
+						$errs++;
+					}
+					else
+					{
+						// Copy a single file - check whether the file should be
+						// copied onto itself.
+						// TODO: Check whether target file already exists and give
+						// return those files so that a dialog might be displayed
+						// on the client side which lets the user decide.
+						if ($target !== $file && egw_vfs::copy($file, $target))
+						{
+							$copied[] = $file;
+						}
+						else
+						{
+							$errs++;
+						}
+					}
+				}
+			}
+		}
+
+		return $errs == 0;
+	}
+
+	/**
+	 * Moves the files given in src to dst
+	 */
+	static public function move_files(array $src, $dst, &$errs, array &$moved)
+	{
+		if (egw_vfs::is_dir($dst))
+		{
+			foreach($src as $file)
+			{
+				$target = egw_vfs::concat($dst, egw_vfs::basename($file));
+
+				if ($file != $target && egw_vfs::rename($file, $target))
+				{
+					$moved[] = $file;
+				}
+				else
+				{
+					++$errs;
+				}
+			}
+		}
 	}
 }
 
