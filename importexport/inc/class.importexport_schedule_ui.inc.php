@@ -199,6 +199,7 @@
 			}
 			$options = self::get_select_options(array('type' => $type, 'appname'=>$appname));
 			$response->addScript("clear_options('exec[plugin]');");
+			$response->addScript("selectbox_add_option('exec[plugin]','".lang('Select...')."', '',false);");
 			if(is_array($options['plugin'])) {
 				foreach ($options['plugin'] as $value => $title) {
 					$response->addScript("selectbox_add_option('exec[plugin]','$title', '$value',false);");
@@ -215,11 +216,13 @@
 			$options = self::get_select_options(array('appname'=>$appname, 'plugin'=>$plugin));
 			$response = new xajaxResponse();
 			$response->addScript("clear_options('exec[definition]');");
+			$response->addScript("selectbox_add_option('exec[definition]','".lang('Select...')."', '',false);");
 			if(is_array($options['definition'])) {
 				foreach ($options['definition'] as $value => $title) {
 					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
 				}
 			}
+			$response->addScript("document.getElementById('exec[definition]').value = ''");
 			return $response->getXML();
 		}
 
