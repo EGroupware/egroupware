@@ -192,16 +192,20 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 					}
 				}
 			}
+			// Calendar doesn't actually support conditional importing
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+					$records = array();
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$records = $this->bo->search(
-								
-							);
+							if($record[$condition['string']]) {
+								$records = $this->bo->search(
+								// Calendar doesn't support searching the way we need
+								);
+							}
 
-							if ( is_array( $records ) && count( array_keys( $records ) >= 1 ) ) {
+							if ( is_array( $records ) && count( array_keys( $records )) >= 1) {
 								// apply action to all records matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$records as $record ) {
