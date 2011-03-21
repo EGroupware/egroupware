@@ -569,6 +569,11 @@ abstract class bo_merge
 						$format = '/<table:table-cell([^>]+?)office:value-type="([^"]+)"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\4>.?<\/table:table-cell>/s';
 						$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$3>$5</table:table-cell>';
 						break;
+					case 'application/xmlExcel.Sheet':	// Excel 2003
+						$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
+						$replacement = '<Data ss:Type="Number">$1</Data>';
+
+						break;
 				}
 				if($format && $names)
 				{
