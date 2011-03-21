@@ -36,7 +36,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
 			'enum_recuring' => false,
 			'daywise'       => false,
-			'owner'         => $options['owner'],
+			'users'         => $options['selection']['owner'],
 			'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 		);
 		$config = config::read('phpgwapi');
