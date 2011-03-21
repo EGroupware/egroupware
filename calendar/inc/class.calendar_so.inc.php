@@ -1638,7 +1638,8 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		$alarm['cal_id'] = $cal_id;		// we need the back-reference
 
-		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm))
+		// allways store job with the alarm owner as job-owner to get eg. the correct from address
+		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm,$alarm['owner']))
 		{
 			return False;
 		}
