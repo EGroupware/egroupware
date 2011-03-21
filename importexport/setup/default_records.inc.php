@@ -25,23 +25,12 @@ while (false !== ($appdir = $egwdir->read())) {
 	$defdir = EGW_INCLUDE_ROOT. "/$appdir/setup/";
 	if ( !is_dir( $defdir ) ) continue;
 
-		// step through each file in defdir of app
-		$d = dir($defdir);
-		while (false !== ($entry = $d->read())) {
-			$file = $defdir. '/'. $entry;
-			list( $filename, $extension) = explode('.',$entry);
-			if ( $extension != 'xml' ) continue;
-			importexport_definitions_bo::import( $file );
-		}
-
-		// Set as default definition for the app, if there is no site default yet
-		if(!$GLOBALS['egw']->preferences->default[$appdir]['nextmatch-export-definition']) {
-			$bo = new importexport_definitions_bo(array('name' => "export-$appdir"));
-			$definitions = $bo->get_definitions();
-			if($definitions[0]) {
-				$definition = $definition[0];
-				$GLOBALS['egw']->preferences->add($appdir, 'nextmatch-export-definition', "export-$appdir", 'default');
-				$GLOBALS['egw']->preferences->save_repository(true, 'default');
-			}
-		}
+	// step through each file in defdir of app
+	$d = dir($defdir);
+	while (false !== ($entry = $d->read())) {
+		$file = $defdir. '/'. $entry;
+		list( $filename, $extension) = explode('.',$entry);
+		if ( $extension != 'xml' ) continue;
+		importexport_definitions_bo::import( $file );
+	}
 }
