@@ -120,6 +120,7 @@ can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect 
 can not create %1 database %2 on %3 for user %4!	setup	en	Can not create %1 database %2 on %3 for user %4!
 can not create dn %1!	setup	en	Can not create DN %1!
 can not instancate accounts object for %1	setup	en	Can NOT instancate accounts object for %1
+can only be change via setup!	setup	en	Can only be change via Setup!
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 or %2 the file.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	cas server host name:<br />example: sso-cas.univ-rennes1.fr
@@ -138,6 +139,7 @@ checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is lo
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
 checking for jpgraph in %1	setup	en	Checking for JPGraph in %1
+checking for tnef application	setup	en	Checking for tnef application
 checking function %1 exists	setup	en	Checking function %1 exists
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	en	Checking if php.ini setting session.save_path='%1' is writable by the webserver
 checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
@@ -676,6 +678,7 @@ you didn't enter a header admin password	setup	en	You didn't enter a header admi
 you didn't enter a header admin username	setup	en	You didn't enter a header admin username
 you do not have any languages installed. please install one now <br />	setup	en	You do not have any languages installed. Please install one now <br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	en	You dont have JPGraph version %1 or higher installed! It is needed from ProjectManager for Ganttcharts.
+you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	en	You dont have tnef or ytnef installed! It is needed to decode winmail.dat attachments in felamimail.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!<br /> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
