@@ -31,6 +31,7 @@ class calendar_export_ical extends calendar_export_csv {
 			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
 			'enum_recuring' => false,
 			'daywise'       => false,
+			'users'         => $options['selection']['owner'],
 			'date_format'   => 'server',
 		));
 		$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
