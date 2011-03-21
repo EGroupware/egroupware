@@ -57,21 +57,6 @@ function importexport_upgrade1_8()
 
 function importexport_upgrade1_9_001()
 {
-	$egwdir = dir(EGW_INCLUDE_ROOT);
-	while (false !== ($appdir = $egwdir->read())) {
-		$defdir = EGW_INCLUDE_ROOT. "/$appdir/setup/";
-		if ( !is_dir( $defdir ) ) continue;
-
-		// Set as default definition for the app, if there is no site default yet
-		if(!$GLOBALS['egw']->preferences->default[$appdir]['nextmatch-export-definition']) {
-			$bo = new importexport_definitions_bo(array('name' => "export-$appdir*"));
-			$definitions = $bo->get_definitions();
-			if($definitions[0]) {
-				$definition = $bo->read($definitions[0]);
-				$GLOBALS['egw']->preferences->add($appdir, 'nextmatch-export-definition', $definition['name'], 'default');
-			}
-		}
-	}
-	$GLOBALS['egw']->preferences->save_repository(true, 'default');
+	// Not needed - did it wrong
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.002';
 }
