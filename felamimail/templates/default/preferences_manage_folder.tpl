@@ -52,7 +52,7 @@
 						<span id="folderName">{folderName}</span>
 					</td>
 					<td align="center">
-						<div id="divDeleteButton" style="visibility:hidden;"><button type='button' id="mailboxDeleteButton" onclick='xajax_doXMLHTTP("felamimail.ajaxfelamimail.deleteFolder",tree.getSelectedItemId())'>{lang_delete}</button></div>
+						<div id="divDeleteButton" style="visibility:hidden;"><button type='button' id="mailboxDeleteButton" onclick='if (confirm("{lang_confirm_delete_folder}")) xajax_doXMLHTTP("felamimail.ajaxfelamimail.deleteFolder",tree.getSelectedItemId())'>{lang_delete}</button></div>
 					</td>
 				</tr>
 				<tr>
@@ -123,7 +123,7 @@
 </style>
 <TABLE border=1 style="border: 1px solid black; border-collapse: collapse;">
 <CAPTION>
-<B class="TableTitle">Mailbox Access Rights </b> 
+<B class="TableTitle">Mailbox Access Rights </b>
 </caption>
 <TR>
 <TH ROWSPAN="1" COLSPAN="1">
@@ -236,7 +236,7 @@
 <p>
 <TABLE border=1 style="border: 1px solid black; border-collapse: collapse;">
 <CAPTION>
-<B class="TableTitle">Abbreviations for Common Access Rights </b> 
+<B class="TableTitle">Abbreviations for Common Access Rights </b>
 </caption>
 <TR>
 <TH ROWSPAN="1" COLSPAN="1">
@@ -440,10 +440,10 @@
 					<input type="checkbox" name="acl[]" value="a" id="acl_a">
 				</td>
 			</tr>
-			
+
 			<tr>
 				<td colspan="4">
-					<button onClick="javascript:window.close();"> 
+					<button onClick="javascript:window.close();">
 						{lang_cancel}
 					</button>
 				</td>

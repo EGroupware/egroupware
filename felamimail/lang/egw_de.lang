@@ -100,6 +100,7 @@ delete folder	felamimail	de	Ordner löschen
 delete script	felamimail	de	Skript löschen
 delete selected	felamimail	de	ausgewählte Nachrichten löschen
 delete selected messages	felamimail	de	ausgewählte Nachrichten löschen
+delete this folder irreversible?	felamimail	de	Ordner unwiderruflich löschen?
 deleted	felamimail	de	gelöscht
 deleted folder successfully!	felamimail	de	Ordner erfolgreich gelöscht
 deleting messages	felamimail	de	lösche Nachrichten

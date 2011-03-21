@@ -789,6 +789,7 @@ require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc
 			$this->t->set_var('lang_draft_folder', lang('draft folder'));
 			$this->t->set_var('lang_template_folder', lang('template folder'));
 			$this->t->set_var('lang_folder_to_appear_on_main_screen', lang('if shown, which folders should appear on main screen'));
+			$this->t->set_var('lang_confirm_delete_folder', lang('Delete this folder irreversible? '));
 			$this->t->set_var("th_bg",$GLOBALS['egw_info']["theme"]["th_bg"]);
 			$this->t->set_var("bg01",$GLOBALS['egw_info']["theme"]["bg01"]);
 			$this->t->set_var("bg02",$GLOBALS['egw_info']["theme"]["bg02"]);
