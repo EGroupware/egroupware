@@ -123,7 +123,9 @@ class importexport_definitions_bo {
 			unset($export_data['definitions'][$definition->name]['definition_id']);
 			unset($export_data['definitions'][$definition->name]['description']);
 			unset($export_data['definitions'][$definition->name]['user_timezone_read']);
-			unset($export_data['definitions'][$definition->name]['plugin_options']['user_timezone_read']);
+			if(is_array($export_data['definitions'][$definition->name]['plugin_options'])) {
+				unset($export_data['definitions'][$definition->name]['plugin_options']['user_timezone_read']);
+			}
 			unset($definition);
 		}
 
