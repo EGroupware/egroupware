@@ -57,6 +57,7 @@ function egwGridColumn(_context, _visiblityChangeCallback, _sortmodeChangeCallba
 	this.id = "";
 	this.fixedWidth = false;
 	this.relativeWidth = false;
+	this.maxWidth = false;
 	this.caption = "";
 	this.type = EGW_COL_TYPE_DEFAULT;
 	this.visibility = EGW_COL_VISIBILITY_VISIBLE;
@@ -104,6 +105,14 @@ egwGridColumn.prototype.set_width = function(_value)
 				this.fixedWidth = parseInt(w);
 			}
 		}
+	}
+}
+
+egwGridColumn.prototype.set_maxWidth = function(_value)
+{
+	if (!isNaN(_value) && _value > 0)
+	{
+		this.maxWidth = _value;
 	}
 }
 
@@ -314,6 +323,13 @@ egwGridColumns.prototype._sortCallback = function(_elem)
 
 egwGridColumns.prototype._calculateWidths = function()
 {
+	// Reset some values which are used during the calculation
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		this.columns[i].larger = false;
+		this.columns[i].newWidth = false;
+	}
+
 	// Remove the spacing between the columns from the total width
 	var tw = this.totalWidth - (this.columns.length - 1) * this.columnSpace;
 
@@ -342,6 +358,84 @@ egwGridColumns.prototype._calculateWidths = function()
 		}
 	}
 
+	// Check whether the width of columns with relative width is larger than their
+	// maxWidth
+	var done = true;
+	do
+	{
+		done = true;
+
+		var noWidth = remRelWidth / noWidthCount;
+
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			var col = this.columns[i];
+
+			if (col.visibility != EGW_COL_VISIBILITY_INVISIBLE)
+			{
+				if (col.maxWidth && !col.larger)
+				{
+					if (col.relativeWidth)
+					{
+						var w = col.relativeWidth * tw;
+						col.larger = w > col.maxWidth;
+						if (col.larger)
+						{
+							// Recalculate the remaining relative width:
+							// col.maxWidth / w is the relative amount of space p which
+							// is remaining for the element. E.g. an element with
+							// w = 150px and maxWidth = 100px => p = 2/3
+							// The space which got removed is 1 - p => 1/3
+							// ==> we have to add 1/3 * oldRelWidth to the remRelWidth
+							// variable.
+							remRelWidth += col.relativeWidth * (1 - col.maxWidth / w);
+							done = false;
+							break;
+						}
+					}
+					else
+					{
+						col.larger = noWidth * tw > col.maxWidth;
+						if (col.larger)
+						{
+							remRelWidth -= col.maxWidth / tw;
+							noWidthCount--;
+							done = false;
+							break;
+						}
+					}
+				}
+			}
+		}
+	// As some columns take their max width, new space might come available, which
+	// requires other columns to take their maximum width.
+	} while (!done);
+
+
+	// Check whether the columns where a relative width is specified have more
+	// space than the remaining columns - if yes, make the relative ones larger
+	for (var i = 0; i < this.columns.length; i++)
+	{
+		var col = this.columns[i];
+
+		if (col.visibility != EGW_COL_VISIBILITY_INVISIBLE)
+		{
+			if (col.relativeWidth && !col.larger)
+			{
+				if (col.relativeWidth < noWidth)
+				{
+					noWidthCount++;
+					remRelWidth += col.relativeWidth;
+					col.newWidth = true;
+				}
+				else
+				{
+					col.newWidth = false;
+				}
+			}
+		}
+	}
+
 	// Now calculate the absolute width of the columns in pixels
 	this.columnWidths = [];
 	for (var i = 0; i < this.columns.length; i++)
@@ -350,11 +444,15 @@ egwGridColumns.prototype._calculateWidths = function()
 		var col = this.columns[i];
 		if (col.visibility != EGW_COL_VISIBILITY_INVISIBLE)
 		{
-			if (col.fixedWidth)
+			if (col.larger)
+			{
+				w = col.maxWidth;
+			}
+			else if (col.fixedWidth)
 			{
 				w = col.fixedWidth;
 			}
-			else if (col.relativeWidth)
+			else if (col.relativeWidth && !col.newWidth)
 			{
 				w = Math.round(tw * col.relativeWidth);
 			}

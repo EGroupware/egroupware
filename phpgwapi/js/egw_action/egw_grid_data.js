@@ -806,7 +806,6 @@ egwGridDataQueue.prototype.queueCall = function(_elem, _columns, _callback, _con
 				"callback": _callback,
 				"context": _context
 			});
-		console.log("Added ", _elem.id, " to queue: ", this.queue);
 	}
 	else
 	{
@@ -943,8 +942,6 @@ egwGridDataQueue.prototype.empty = function()
  */
 egwGridDataQueue.prototype.flushQueue = function(_doPrefetch)
 {
-	console.log("Flush queue");
-
 	var ids = [];
 
 	if (_doPrefetch)
