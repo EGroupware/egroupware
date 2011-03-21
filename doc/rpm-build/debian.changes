@@ -1,3 +1,29 @@
+egroupware-epl (10.1.20110321-1) hardy; urgency=low
+
+  * Calendar: fixed PostgreSQL error on transfering records of a delted user to an other one
+  * fixed not working scheduled import from vfs
+  * SiteMgr: allow to import permissions from a previous exported dump (requires identical user and group names to exist)
+  * wiki: fixed not working xml export using url http://example.org/egroupware/wiki/index.php?page=Pattern&action=xml&lang=en
+  * EMail: speed improvments backported from Trunk
+  * emailadmin: allow to specify (configure) a different sieveHost than your imapServer
+  * EMail: speed improvment by loading mails with a single request
+  * EventMgr: fixed fatal error eventmgr_merge::number_format() is not defined
+  * Addressbook: fixed PostgeSQL error when searching or showing accounts
+  * fixed not working async service test-job
+  * exceptions in async jobs no longer stop other jobs, but log the exception to Apache error_log
+  * Calendar: store async job of alarm with alarm owner as owner to get eg. the correct from address
+  * ProjectManager: fixed changing datasource (eg. InfoLog) title sometimes NOT changing element title
+  * infolog: when breaking overlong words into fitting pieces, do not break lines that are tested positive to contain links. (reported as Helpdesk issue #1324 in Stylite tracker)
+  * ProjectManager: fixed storing a project with unchanged completion=0%, wrongly sets it to "none"
+  * ProjectManager: fixed not show status bar in project, if no times set for elements
+  * ProjectManager: fixed ganttchart generated twice (instead reading it from temp. dir)
+  * ProjectManager: fixed not working switch from real to planned times of projects in ganttchart
+  * ProjectManager: use calculated start time to calculate end-times, eg. InfoLog DS returned only planned end-times before
+  * eMail: ask confirmation before deleting a folder in manage folders
+  * InfoLog/VFS: show sub-entries in VFS, even if user preference "list no subs/childs" is set
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 21 Mar 2011 20:45:19 +0100
+
 egroupware-epl (10.1.20110310-1) hardy; urgency=low
 
   * Calendar: fixed PostgreSQL error on search: Argument of OR must be of type boolean, not of type smallint
