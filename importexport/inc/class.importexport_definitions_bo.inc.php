@@ -158,6 +158,9 @@ class importexport_definitions_bo {
 			translation::charset()
 		);
 
+		// Avoid warning if no definitions found
+		if(!is_array($definitions)) return;
+
 		// save definition(s) into internal table
 		foreach ( $definitions as $name => $definition_data )
 		{
