@@ -59,19 +59,19 @@ class send extends egw_mailer
 						list($username,$senderadress) = explode(';', $ogServer->username,2);
 						if (!isset($this->Sender) || empty($this->Sender)) // if there is no Sender info, try to determine one
 						{
-							if (isset($senderadress) && !empty($senderadress)) // thats the senderinfo, that may be part of the 
-							{												   // SMTP Auth. this one has precedence over other settings 
+							if (isset($senderadress) && !empty($senderadress)) // thats the senderinfo, that may be part of the
+							{												   // SMTP Auth. this one has precedence over other settings
 								$this->Sender = $senderadress;
 							}
 							else // there is no senderinfo with smtp auth, fetch the identities mailaddress, as it should be connected to
 							{    // the active profiles smtp settings
 								$activeMailProfile = $preferences->getIdentity(0); // fetch active identity
-								if (isset($activeMailProfile->emailAddress) && !empty($activeMailProfile->emailAddress)) 
-								{ 
+								if (isset($activeMailProfile->emailAddress) && !empty($activeMailProfile->emailAddress))
+								{
 									$this->Sender = $activeMailProfile->emailAddress;
 								}
 							}
-						} 
+						}
 						$this->Username = $username;
 						$this->Password = $ogServer->password;
 					}
@@ -158,7 +158,7 @@ class send extends egw_mailer
 				}
 				else
 				{
-					$addresses = (is_string($$adr) ? explode(',',trim($$adr)) : explode(',',trim($$adr[0])));
+					$addresses = is_string($$adr) ? explode(',',trim($$adr)) : explode(',',trim(array_shift($$adr)));
 					$names = array();
 				}
 				$method = 'Add'.($adr == 'to' ? 'Address' : $adr);
