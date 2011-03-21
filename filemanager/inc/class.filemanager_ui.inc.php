@@ -1125,15 +1125,57 @@ class filemanager_ui
 	public static function ajax_action($action,$path)
 	{
 		$response = egw_json_response::get();
+
 		$arr = array(
 			'msg' => '',
 			'errs' => 0,
 			'dirs' => 0,
 			'files' => 0,
 		);
+
 		$selected = func_get_args();
 		$action = array_shift($selected);
-		$arr['msg'] = self::action($action,$selected,null,$arr['errs'],$arr['dirs'],$arr['files']);
+		switch ($action)
+		{
+			case "copy_files":
+				$dst = array_pop($selected);
+				$src = $selected;
+				$copied = array();
+
+				if (egw_vfs::copy_files($src, $dst, $arr['errs'], $copied))
+				{
+					$arr['msg'] = sprintf(lang("%d files successfully copied."), count($copied));
+				}
+				else
+				{
+					$arr['msg'] = sprintf(lang("%d erros while copying, %d files successfully copied."),
+						$arr['errs'], count($copied));
+				}
+
+				break;
+
+			case "move_files":
+				$dst = array_pop($selected);
+				$src = $selected;
+				$moved = array();
+
+				if (egw_vfs::move_files($src, $dst, $arr['errs'], $moved))
+				{
+					$arr['msg'] = sprintf(lang("%d files successfully moved."), count($moved));
+				}
+				else
+				{
+					$arr['msg'] = sprintf(lang("%d erros while moving, %d files successfully moved."),
+						$arr['errs'], count($moved));
+				}
+
+				break;
+
+			default:
+				$arr['msg'] = self::action($action,$selected,null,$arr['errs'],$arr['dirs'],$arr['files']);
+				break;
+		}
+
 		$response->data($arr);
 		error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
 	}
