@@ -99,6 +99,7 @@ delete folder	felamimail	en	Delete Folder
 delete script	felamimail	en	delete script
 delete selected	felamimail	en	Delete selected
 delete selected messages	felamimail	en	delete selected messages
+delete this folder irreversible?	felamimail	en	Delete this folder irreversible?
 deleted	felamimail	en	deleted
 deleted folder successfully!	felamimail	en	Deleted folder successfully!
 deleting messages	felamimail	en	deleting messages
