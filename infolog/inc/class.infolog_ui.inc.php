@@ -1352,9 +1352,13 @@ class infolog_ui
 					// set blank behind all , and . if words are too long, apply wordwrap afterwards to make sure we get
 					if (strlen($word)>75)
 					{
-						if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
-						if (!(strpos($word,'.')===false) && strpos($word,'. ')===false) $word = str_replace('.','. ',$word);
-						$word = wordwrap($word, 75, ' ', true);
+						$buff = html::activate_links($word);
+						if (strlen($buff) == strlen($word)) // no links -> try to break overlong words
+						{
+							if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
+							if (!(strpos($word,'.')===false) && strpos($word,'. ')===false) $word = str_replace('.','. ',$word);
+							$word = wordwrap($word, 75, ' ', true);
+						}
 					}
 					$ckarray[] =$word;
 				}
