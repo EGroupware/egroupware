@@ -219,12 +219,15 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+					$results = array();
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$results = $this->bo->search(array($condition['string'] => $record[$condition['string']]));
+							if($record[$condition['string']]) {
+								$results = $this->bo->search(array($condition['string'] => $record[$condition['string']]));
+							}
 
-							if ( is_array( $results ) && count( array_keys( $results ) >= 1 ) ) {
+							if ( is_array( $results ) && count( array_keys( $results )) >= 1 ) {
 								// apply action to all records matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$results as $result ) {
