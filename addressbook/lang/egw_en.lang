@@ -185,11 +185,6 @@ enter the path to the exported file here	addressbook	en	Enter the path to the ex
 error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
 error saving the contact !!!	addressbook	en	Error saving the contact !!!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms. You can also use a field name instead a fix value. Example: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
-example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	en	Example $$LETTERPREFIX$$ - Gives a letter prefix without double spaces, if the title is emty for  example
-example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	en	Example $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Example: Mr Dr. James Miller
-example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	en	Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role
-example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	en	Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
@@ -200,6 +195,7 @@ export	addressbook	en	export
 export as csv	addressbook	en	Export as CSV
 export as vcard	addressbook	en	Export as VCard
 export contacts	addressbook	en	Export Contacts
+export definitition to use for nextmatch export	addressbook	en	Export definitition to use for nextmatch export
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
 export selection	addressbook	en	Export selection
@@ -250,6 +246,7 @@ icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	if accounts are already in LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory (full vfs path) here, address book displays an action for each document. That action allows to download the specified document with the contact data inserted.
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a document (full vfs path) here, address book displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.
+if you specify an export definition, it will be used when you export	addressbook	en	If you specify an export definition, it will be used when you export
 ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts

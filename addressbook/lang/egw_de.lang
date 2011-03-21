@@ -124,6 +124,7 @@ copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. 
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	de	Kopieren Sie Ihre Änderungen in die Zwischenablage, %1laden Sie den Eintrag neu%2 und fügen diese wieder ein.
 country	common	de	Land
+country code	addressbook	de	Länderkennung
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
@@ -194,6 +195,7 @@ export	addressbook	de	Export
 export as csv	addressbook	de	Exportieren als CSV
 export as vcard	addressbook	de	Exportieren als VCard
 export contacts	addressbook	de	Kontakte exportieren
+export definitition to use for nextmatch export	addressbook	de	Export Profil der Listenansicht  (Disketten Symbol)
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
@@ -244,6 +246,7 @@ icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify an export definition, it will be used when you export	addressbook	de	Wählen Sie eine Export Definition für den Export
 ignore first line	addressbook	de	Erste Zeile ignorieren
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
@@ -264,7 +267,6 @@ insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 international	addressbook	de	International
 internet	addressbook	de	Internet
-invalid addressbook id: %1.  might be a bad field translation.  used %2 instead.	addressbook	de	Ungültige Adressbuch ID: %1. Eine Mögliche Ursache könnte eine falsche Feld Trennung  oder Feld Übersetzung sein. %2 in anstelle verwendet.
 label	addressbook	de	Adressetikett
 last date	addressbook	de	Letzter Termin
 last modified	addressbook	de	Letzte Änderung
@@ -413,6 +415,7 @@ translation	addressbook	de	Übersetzung
 two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	de	Umwandelung von "%1" zu Benutzer ID nicht möglich. Einstellung des Plug-ins (%2) wird für diesen Benutzer verwendet.
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
