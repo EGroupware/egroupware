@@ -1,8 +1,11 @@
+%1 is not readable	importexport	en	%1 is not readable
+%1 is not writable	importexport	en	%1 is not writable
 %1 records processed	importexport	en	%1 records processed
 %s just me	importexport	en	%s Just me
 (* for all)	importexport	en	(* for all)
 (0-23)	importexport	en	(0-23)
 (0-6, 0=sun)	importexport	en	(0-6, 0=Sun)
+*contact id cannot be changed by import	importexport	en	*Contact ID cannot be changed by import
 admin disabled exporting	importexport	en	Admin disabled exporting
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by importexport
@@ -79,3 +82,4 @@ users allowed to share their own definitions	importexport	en	Users allowed to sh
 which useres are allowed for this definition	importexport	en	Which useres are allowed for this definition
 which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
 you need to select an app and format first!	importexport	en	You need to select an app and format first!
+1	importexport	en	1
