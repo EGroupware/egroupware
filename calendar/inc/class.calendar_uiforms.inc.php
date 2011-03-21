@@ -1491,6 +1491,8 @@ function replace_eTemplate_onsubmit()
 				$readonlys['button[delete]'] = true;
 			}
 		}
+		// Allow users to prevent notifications?
+		$etpl->set_cell_attribute('no_notifications', 'disabled', !$config['calendar_allow_no_notification']);
 
 		// Setup history tab
 		$this->setup_history($content, $sel_options);

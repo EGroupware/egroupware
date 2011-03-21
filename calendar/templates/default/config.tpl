@@ -60,6 +60,15 @@
     <td>{lang_While_selecting_up_to_X_users_day-_and_weekview_is_not_consolidated_(5_is_used_when_not_set)}:</td>
     <td><input name="newsettings[calview_no_consolidate]" value="{value_calview_no_consolidate}" size="10"></td>
    </tr>
+   <tr class="row_on">
+    <td>{lang_Allow_users_to_prevent_change_notifications_('Do_not_notify')}:</td>
+    <td>
+     <select name="newsettings[calendar_allow_no_notification]">
+      <option value=""{selected_calendar_allow_no_notification_False}>{lang_No}</option>
+      <option value="True"{selected_calendar_allow_no_notification_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>
    </tr>

@@ -37,6 +37,7 @@ all exceptions are converted into single events.	calendar	en	All exceptions are 
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
+allow users to prevent change notifications ('Do not notify')	calendar	en	Allow users to prevent change notifications ('Do not notify')
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
