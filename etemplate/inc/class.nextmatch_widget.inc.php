@@ -245,6 +245,20 @@ class nextmatch_widget
 				$extension_data['old_value'] = $value;
 				return $extra_label;
 		}
+
+		// Load some JS files needed for the egw_action framework
+		egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
+		egw_framework::validate_file('egw_action','egw_action');
+		egw_framework::validate_file('egw_action','egw_action_common');
+		egw_framework::validate_file('egw_action','egw_action_popup');
+		egw_framework::validate_file('egw_action','egw_menu');
+		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
+		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
+
 		// does NOT work with php5.2.6+
 		if (version_compare(PHP_VERSION,'5.2.6','>='))
 		{

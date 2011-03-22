@@ -945,6 +945,72 @@ class etemplate extends boetemplate
 			$div_style=' style="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow;\"";
 			$html = html::div($html,$div_style);
 		}
+
+/*		if ($options[3] == 'action')
+		{
+			// JS action objects generated for this widget are prefixed with the
+			// prefix given here
+			$prefix = "egw_";
+
+			$html .= '
+<script type="text/javascript">
+	//Temporary function called on onExecute
+	function alertClicked(_action, _senders)
+	{
+		var ids = "";
+		for (var i = 0; i < _senders.length; i++)
+			ids += _senders[i].id + ((i < _senders.length - 1) ? ", " : "");
+
+		alert("Action \'" + _action.caption + "\' executed on elements \'"
+			+ ids + "\'");
+	}
+
+
+	$(document).ready(function() {
+		// Initialize the action manager and add some actions to it
+		'.$prefix.'actionManager = new egwActionManager();
+		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
+
+		// Add some dummy actions to the actionManager
+		'.$prefix.'actionManager.updateActions(
+			[
+				{
+					"id": "folder_open",
+					"iconUrl": "imgs/folder.png",
+					"caption": "Open folder",
+					"onExecute": "javaScript:alertClicked",
+					"allowOnMultiple": false,
+					"type": "popup",
+					"default": true
+				},
+				{
+					"id": "file_view",
+					"iconUrl": "imgs/view.png",
+					"caption": "View",
+					"onExecute": "javaScript:alertClicked",
+					"allowOnMultiple": false,
+					"type": "popup",
+					"default": true
+				}
+			]
+		);
+
+		var actionLinks = ["folder_open", "file_view"];
+
+		// Create a new action object for each table row
+		// TODO: only apply function to outer level
+		$("table.action>tbody >tr").each(function(index, elem) {
+
+			console.log(elem);
+			// Create a new action object
+			var obj = '.$prefix.'objectManager.addObject(elem.id, new nextmatchRowAOI(elem));
+
+			obj.updateActionLinks(actionLinks);
+		});
+	});
+</script>';
+		}*/
+
 		return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
 	}
 
