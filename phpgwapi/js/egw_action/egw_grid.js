@@ -18,10 +18,13 @@ uses
 	egw_action_columns
 */
 
-function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _context)
+function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnChangeCallback, _context)
 {
 	this.parentNode = _parentNode;
 	this.objectManager = _objectManager;
+
+	this.columnChangeCallback = _columnChangeCallback;
+	this.context = _context;
 
 	this.width = 0;
 	this.height = 0;
@@ -134,6 +137,22 @@ egwGrid.prototype.selectcolsClick = function(_at)
 	var self = this;
 	menu.setGlobalOnClick(function(_elem) {
 		column_data[_elem.id].visible = _elem.checked;
+
+		if (self.columnChangeCallback)
+		{
+			// Create the user data column visibility set
+			var set = {};
+			for (k in column_data)
+			{
+				set[k] = {
+					"visible": column_data[k].visible
+				};
+			}
+
+			// Call the column change callback with the user data
+			self.columnChangeCallback.call(self.context, set);
+		}
+
 		self.columns.setColumnVisibilitySet(column_data);
 	});
 
