@@ -1115,6 +1115,7 @@ class so_sql
 			}
 			elseif ($token == strtoupper(lang('OR')) || $token == 'OR')
 			{
+				$token = strtok($break);
 				continue;
 			}
 			elseif ($token == strtoupper(lang('NOT')) || $token == 'NOT')
@@ -1159,7 +1160,7 @@ class so_sql
 					$op = 'OR';
 					break;
 			}
-			$token_filter = " $columns LIKE " .
+			$token_filter = " $columns " . $this->db->capabilities['case_insensitive_like'] . ' ' .
 				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
 
 			// Compare numeric token as equality for numeric columns
