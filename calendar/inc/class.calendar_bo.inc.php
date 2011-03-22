@@ -474,7 +474,7 @@ class calendar_bo
 			}
 			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
 			{
-				if($filter == 'hideprivate')
+				if($filter == 'showonlypublic')
 				{
 					unset($events[$id]);
 					$this->total--;
