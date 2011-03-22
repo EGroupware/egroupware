@@ -657,19 +657,25 @@
 		function showBody(&$body, $print=true)
 		{
 			$BeginBody = '<style type="text/css">
-				body,html {
-			        height:100%;
-			        width:100%;
-			        padding:0px;
-			        margin:0px;
-			}
-			.td_display {
-			        font-family: Verdana, Arial, Helvetica, sans-serif;
-			        font-size: 110%;
-			        background-color: #FFFFFF;
-			}
-			</style>
-			<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;"><table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
+body,html {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+}
+.td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 110%;
+    background-color: #FFFFFF;
+}
+pre {
+	white-space: pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	width: 99%; 
+}
+</style>
+<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;"><table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
             $EndBody = '</td></tr></table>';
 			$EndBody .= "</body></html>";
