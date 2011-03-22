@@ -284,8 +284,6 @@ class egw_grid_columns
 		// Read the userdata from the user preferences
 		$data = $this->get_userdata();
 
-		error_log(__METHOD__.print_r($data, true));
-
 		// Merge the userdata into the column data
 		foreach ($data as $col_id => $col_data)
 		{
