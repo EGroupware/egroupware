@@ -55,6 +55,9 @@
 
 		// the permanent id of the message
 		var $uid;
+		// part of the message
+		var $partID;
+
 		var $bofelamimail;
 		var $bopreferences;
 
@@ -253,7 +256,7 @@
 
 		function display()
 		{
-			$partID		= $_GET['part'];
+			$partID = $this->partID	= $_GET['part'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 
 			//$transformdate	=& CreateObject('felamimail.transformdate');
@@ -1420,7 +1423,7 @@ pre {
 		function printMessage($messageId = NULL, $callfromcompose = NULL)
 		{
 			if (!empty($messageId) && empty($this->uid)) $this->uid = $messageId;
-			$partID		= $_GET['part'];
+			$partID = $this->partID	= $_GET['part'];
 			if (!empty($_GET['folder'])) $this->mailbox  = base64_decode($_GET['folder']);
 
 			//$transformdate	=& CreateObject('felamimail.transformdate');
