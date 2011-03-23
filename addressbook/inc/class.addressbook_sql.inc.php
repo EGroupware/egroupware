@@ -248,7 +248,8 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",".print_r($only_keys,true).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
+		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')");
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
@@ -345,20 +346,6 @@ class addressbook_sql extends so_sql_cf
 				case 'string':
 					$only_keys = explode(',',$only_keys);
 					// fall through
-				case 'array':
-					foreach($only_keys as $key => $val)
-					{
-						switch($val)
-						{
-							case 'id': case 'contact_id':
-								$only_keys[$key] = $this->table_name.'.contact_id';
-								break;
-							case 'owner': case 'contact_owner':
-								$only_keys[$key] = $this->table_name.'.contact_owner';
-								break;
-						}
-					}
-					break;
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
