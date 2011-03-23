@@ -355,6 +355,7 @@ class setup_cmd_config extends setup_cmd
 			'ads'  => 'Active Directory',
 			'http' => 'HTTP',
 			'fallback' => 'Fallback LDAP --> SQL',
+			'fallbackmail2sql' => 'Fallback Mail --> SQL',
 			'sqlssl' => 'SQL / SSL',
 		);
 		static $scan_done;
