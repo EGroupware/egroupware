@@ -1080,7 +1080,14 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 	}
 
 	// Copy the selected children list
-	this.selectedChildren = _selected ? this.children : [];
+	this.selectedChildren = [];
+	if (_selected)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			this.selectedChildren.push(this.children[i]);
+		}
+	}
 }
 
 

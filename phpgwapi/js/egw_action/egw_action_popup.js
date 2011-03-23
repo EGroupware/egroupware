@@ -309,6 +309,8 @@ function egwPopupActionImplementation()
 			_links[k].actionObj.appendToTree(tree);
 		}
 
+		// We need the dummy object container in order to pass the array by 
+		// reference
 		var groups = {
 			"groups": []
 		};
@@ -321,12 +323,8 @@ function egwPopupActionImplementation()
 
 		var menu = new egwMenu();
 
-		// We needed the dummy object container in order to pass the array as 
-		// reference - this is not needed anymore
-		groups = groups.groups;
-
 		// Build the menu layers
-		this._buildMenuLayer(menu, groups, _selected, true);
+		this._buildMenuLayer(menu, groups.groups, _selected, true);
 
 		return menu;
 	}
