@@ -135,6 +135,7 @@ class setup_html
 		{
 			$btn_logout = '<a href="index.php?FormLogout=' . $logoutfrom . '" class="link">' . lang('Logout').'</a>';
 			$check_install = '<a class="textsidebox" href="check_install.php">'.lang('Check installation').'</a>';
+			$register_hooks = '<a class="textsidebox" href="applications.php?hooks=1">'.lang('Find and Register all Application Hooks').'</a>';
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));
@@ -161,6 +162,7 @@ class setup_html
 			'indexbutton'   => $index_btn,
 			'indeximg'      => $index_img,
 			'check_install' => $check_install,
+			'register_hooks'=> $register_hooks,
 			'main_menu'     => lang('Setup Main Menu'),
 			'user_login'    => lang('Back to user login')
 		));

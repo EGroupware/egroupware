@@ -50,6 +50,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	en	all applications
 all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
 all exit codes of the command line interface	setup	en	all exit codes of the command line interface
+all hooks registered	setup	en	All hooks registered
 all languages (incl. not listed ones)	setup	en	all languages (incl. not listed ones)
 all users	setup	en	All Users
 allow authentication via cookie	setup	en	Allow authentication via cookie

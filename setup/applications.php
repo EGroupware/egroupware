@@ -230,6 +230,14 @@ else
 	$GLOBALS['egw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 }
 
+if(@get_var('hooks', Array('GET')))
+{
+	// Find & register all application hooks
+	foreach($setup_info as $appname => $info) {
+		$GLOBALS['egw_setup']->register_hooks($appname);
+	}
+	echo lang('All hooks registered') . '<br />';
+}
 $detail = get_var('detail',Array('GET'));
 $resolve = get_var('resolve',Array('GET'));
 if(@$detail)
