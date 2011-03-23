@@ -175,7 +175,6 @@
 							"onExecute": alertClicked,
 							"allowOnMultiple": false,
 							"type": "popup",
-							"default": true
 						},
 						{
 							"id": "file_delete",
@@ -219,6 +218,40 @@
 							"type": "popup",
 							"group": 1,
 							"order": 2
+						},
+						{
+							"id": "send_to",
+							"caption": "Send to",
+							"type": "popup",
+							"group": 10,
+							"children":
+							[
+								{
+									"id": "send_to_1",
+									"caption": "Folder 1",
+									"onExecute": alertClicked,
+									"type": "popup"
+								},
+								{
+									"id": "send_to_2",
+									"caption": "Folder 2",
+									"onExecute": alertClicked,
+									"type": "popup"
+								},
+								{
+									"id": "send_to_3",
+									"caption": "Folder 3",
+									"onExecute": alertClicked,
+									"type": "popup"
+								},
+								{
+									"id": "send_to_add",
+									"caption": "Add target",
+									"onExecute": alertClicked,
+									"type": "popup",
+									"group": -1
+								}
+							]
 						}
 					]
 				);
@@ -231,14 +264,16 @@
 					{"actionId": "file_email", "enabled": true},
 					{"actionId": "file_compress_email", "enabled": true},
 					{"actionId": "file_compress", "enabled": true},
-					{"actionId": "file_delete", "enabled": true}
+					{"actionId": "file_delete", "enabled": true},
+					{"actionId": "send_to", "enabled": true}
 				];
 
 				var listboxFolderLinks = [
 					{"actionId": "folder_open", "enabled": true},
 					{"actionId": "file_compress_email", "enabled": true},
 					{"actionId": "file_compress", "enabled": true},
-					{"actionId": "file_delete", "enabled": true}
+					{"actionId": "file_delete", "enabled": true},
+					"send_to"
 				];
 
 				$('#lb1 tr:odd').addClass('odd');

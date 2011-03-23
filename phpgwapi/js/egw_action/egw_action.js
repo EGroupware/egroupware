@@ -35,13 +35,11 @@ _egwActionClasses["default"] = {
 	"implementation": null
 };
 
-function egwAction(_id, _handler, _caption, _iconUrl, _onExecute, _allowOnMultiple)
+function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
 {
 	//Default and check the values
-	if (typeof _id != "string" || !_id)
+	if (_parent && (typeof _id != "string" || !_id))
 		throw "egwAction _id must be a non-empty string!";
-	if (typeof _handler == "undefined")
-		this.handler = null;
 	if (typeof _caption == "undefined")
 		_caption = "";
 	if (typeof _iconUrl == "undefined")
@@ -56,11 +54,136 @@ function egwAction(_id, _handler, _caption, _iconUrl, _onExecute, _allowOnMultip
 	this.iconUrl = _iconUrl;
 	this.allowOnMultiple = _allowOnMultiple;
 	this.enabled = true;
+
 	this.type = "default"; //All derived classes have to override this!
+	this.canHaveChildren = false; //Has to be overwritten by inherited action classes
+	this.parent = _parent;
+	this.children = [];
 
 	this.execJSFnct = null;
 	this.execHandler = false;
 	this.set_onExecute(_onExecute);
+}
+
+/**
+ * Searches for a specific action with the given id
+ */
+egwAction.prototype.getActionById = function(_id)
+{
+	// If the current action object has the given id, return this object
+	if (this.id == _id)
+	{
+		return this;
+	}
+
+	// If this element is capable of having children, search those for the given
+	// action id
+	if (this.canHaveChildren)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			var elem = this.children[i].getActionById(_id);
+			if (elem)
+			{
+				return elem;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Adds a new action to the child elements.
+ */
+egwAction.prototype.addAction = function(_type, _id, _caption, _iconUrl,
+	_onExecute, _allowOnMultiple)
+{
+	//Get the constructor for the given action type
+	if (!_type)
+	{
+		_type = "default";
+	}
+
+	// Only allow adding new actions, if this action class allows it.
+	if (this.canHaveChildren)
+	{
+		var constructor = _egwActionClasses[_type].actionConstructor;
+
+		if (typeof constructor == "function")
+		{
+			var action = new constructor(this, _id, _caption, _iconUrl, _onExecute,
+				_allowOnMultiple);
+			this.children.push(action);
+
+			return action;
+		}
+		else
+		{
+			throw "Given action type not registered.";
+		}
+	}
+	else
+	{
+		throw "This action does not allow child elements!"
+	}
+}
+
+/**
+ * Updates the children of this element
+ */
+egwAction.prototype.updateActions = function(_actions)
+{
+	if (this.canHaveChildren)
+	{
+		for (var i = 0 ; i < _actions.length; i++)
+		{
+			//Check whether the given action is already part of this action manager instance
+			var elem = _actions[i];
+			if (typeof elem == "object" && typeof elem.id == "string" && elem.id)
+			{
+				//Check whether the action already exists, and if no, add it to the
+				//actions list
+				var action = this.getActionById(elem.id);
+				if (!action)
+				{
+					if (typeof elem.type == "undefined")
+						elem.type = "default";
+
+					var constructor = null;
+
+					// Check whether the given type is inside the "canHaveChildren"
+					// array
+					if (this.canHaveChildren !== true && this.canHaveChildren.indexOf(elem.type) == -1)
+					{
+						throw "This child type '" + elem.type + "' is not allowed!"
+					}
+
+					if (typeof _egwActionClasses[elem.type] != "undefined")
+						constructor = _egwActionClasses[elem.type].actionConstructor;
+
+					if (typeof constructor == "function" && constructor)
+						action = new constructor(this, elem.id);
+					else
+						throw "Given action type \"" + elem.type + "\" not registered.";
+
+					this.children.push(action);
+				}
+
+				action.updateAction(elem);
+
+				// Add sub-actions to the action
+				if (elem.children)
+				{
+					action.updateActions(elem.children);
+				}
+			}
+		}
+	}
+	else
+	{
+		throw "This action element cannot have children!";
+	}
 }
 
 /**
@@ -77,7 +200,7 @@ egwAction.prototype.execute = function(_senders)
 	}
 	else if (this.execHandler)
 	{
-		this.handler.execute(this, _senders);
+		//this.handler.execute(this, _senders); TODO
 	}
 }
 
@@ -154,89 +277,132 @@ egwAction.prototype.updateAction = function(_data)
 }
 
 
+function _egwActionTreeContains(_tree, _elem)
+{
+	for (var i = 0; i < _tree.length; i++)
+	{
+		if (_tree[i].action == _elem)
+		{
+			return _tree[i];
+		}
+
+		if (typeof _tree[i].children != "undefined")
+		{
+			var elem = _egwActionTreeContains(_tree[i].children, _elem);
+			if (elem)
+			{
+				return elem;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
+ * The appendToGraph function generates an action tree which automatically contains
+ * all parent elements. If the appendToGraph function is called for a 
+ *
+ * @param array _tree contains the tree structure - pass an object containing
+ * 	the empty array "root" to this function {"root": []}. The result will be stored in
+ * 	this array.
+ * @param boolean _addChildren is used internally to prevent parent elements from
+ * 	adding their children automatically to the tree.
+ */
+egwAction.prototype.appendToTree = function(_tree, _addChildren)
+{
+	if (typeof _addChildren == "undefined")
+	{
+		_addChildren = true;
+	}
+
+	if (typeof _addParent == "undefined")
+	{
+		_addParent = true;
+	}
+
+	// Preset some variables
+	var root = _tree.root;
+	var parent_cntr = null;
+	var cntr = {
+		"action": this,
+		"children": []
+	};
+
+
+	if (this.parent)
+	{
+		// Check whether the parent container has already been added to the tree
+		parent_cntr = _egwActionTreeContains(root, this.parent);
+
+		if (!parent_cntr)
+		{
+			parent_cntr = this.parent.appendToTree(_tree, false);
+		}
+
+		// Check whether this element has already been added to the parent container
+		var added = false;
+		for (var i = 0; i < parent_cntr.children.length; i++)
+		{
+			if (parent_cntr.children[i].action == this)
+			{
+				cntr = parent_cntr.children[i];
+				added = true;
+				break;
+			}
+		}
+
+		if (!added)
+		{
+			parent_cntr.children.push(cntr);
+		}
+	}
+	else
+	{
+		var added = false;
+		for (var i = 0; i < root.length; i++)
+		{
+			if (root[i].action == this)
+			{
+				cntr = root[i];
+				added = true;
+				break;
+			}
+		}
+
+		if (!added)
+		{
+			// Add this element to the root if it has no parent
+			root.push(cntr);
+		}
+	}
+
+	if (_addChildren)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			this.children[i].appendToTree(_tree, true);
+		}
+	}
+
+	return cntr;
+}
+
 
 /** egwActionManager Object **/
 
 /**
- * egwActionManager manages a list of actions, provides functions to add new
- * actions or to update them via JSON.
+ * egwActionManager manages a list of actions - it overwrites the egwAction class
+ * and allows child actions to be added to it.
  */
-function egwActionManager(_handler)
+function egwActionManager()
 {
-	//Preset the handler parameter to null
-	if (typeof _handler == "undefined")
-		_handler = null;
+	var action = new egwAction(null, false);
 
-	this.handler = _handler;
-	this.actions = [];
-}
+	action.type = "actionManager";
+	action.canHaveChildren = true;
 
-egwActionManager.prototype.addAction = function(_type, _id, _caption, _iconUrl,
-	_onExecute, _allowOnMultiple)
-{
-	//Get the constructor for the given action type
-	if (!_type)
-		_type = "default";
-	var constructor = _egwActionClasses[_type].actionConstructor;
-
-	if (typeof constructor == "function")
-	{
-		var action = new constructor(_id, this.handler, _caption, _iconUrl, _onExecute,
-			_allowOnMultiple);
-		this.actions.push[action];
-
-		return action;
-	}
-	else
-		throw "Given action type not registered.";
-}
-
-egwActionManager.prototype.updateActions = function(_actions)
-{
-	for (var i = 0 ; i < _actions.length; i++)
-	{
-		//Check whether the given action is already part of this action manager instance
-		var elem = _actions[i];
-		if (typeof elem == "object" && typeof elem.id == "string" && elem.id)
-		{
-			//Check whether the action already exists, and if no, add it to the
-			//actions list
-			var action = this.getActionById(elem.id);
-			if (!action)
-			{
-				if (typeof elem.type == "undefined")
-					elem.type = "default";
-
-				var constructor = null;
-
-				if (typeof _egwActionClasses[elem.type] != "undefined")
-					constructor = _egwActionClasses[elem.type].actionConstructor;
-
-				if (typeof constructor == "function" && constructor)
-					action = new constructor(elem.id, this.handler);
-				else
-					throw "Given action type \"" + elem.type + "\" not registered.";
-
-				this.actions.push(action);
-			}
-
-			action.updateAction(elem);
-		}
-	}
-}
-
-/**
- * Returns the action inside the action manager which has the given id.
- */
-egwActionManager.prototype.getActionById = function(_id)
-{
-	for (var i = 0; i < this.actions.length; i++)
-	{
-		if (this.actions[i].id == _id)
-			return this.actions[i];
-	}
-
-	return null;
+	return action;
 }
 
 

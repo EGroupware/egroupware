@@ -21,6 +21,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
 	action.type = "popup";
+	action.canHaveChildren = ["popup"];
 	action["default"] = false;
 	action.order = 0;
 	action.group = 0;
@@ -163,33 +164,52 @@ function egwPopupActionImplementation()
 	}
 
 	/**
-	 * Builds the context menu from the given action links
+	 * Groups and sorts the given action tree layer
 	 */
-	ai._buildMenu = function(_links, _selected)
+	ai._groupLayers = function(_layer, _links, _parentGroup)
 	{
-		var menu = new egwMenu();
-
-		//Sort the links in ordered groups
+		// Seperate the multiple groups out of the layer
 		var link_groups = {};
-		for (k in _links)
+
+		for (var i = 0; i < _layer.children.length; i++)
 		{
+			var actionObj = _layer.children[i].action;
+
 			// Check whether the link group of the current element already exists,
 			// if not, create the group
-			var grp = _links[k].actionObj.group;
+			var grp = actionObj.group;
 			if (typeof link_groups[grp] == "undefined")
 			{
 				link_groups[grp] = [];
 			}
 
+			// Search the link data for this action object if none is found,
+			// visible and enabled = true is assumed
+			var visible = true;
+			var enabled = true;
+
+			if (typeof _links[actionObj.id] != "undefined")
+			{
+				visible = _links[actionObj.id].visible;
+				enabled = _links[actionObj.id].enabled;
+			}
+
 			// Insert the element in order
 			var inserted = false;
-			for (var i = 0; i < link_groups[grp].length; i++)
+			var groupObj = {
+				"actionObj": actionObj,
+				"visible": visible,
+				"enabled": enabled,
+				"groups": []
+			};
+
+			for (var j = 0; j < link_groups[grp].length; j++)
 			{
-				var elem = link_groups[grp][i];
-				if (elem.actionObj.order > _links[k].actionObj.order)
+				var elem = link_groups[grp][j].actionObj;
+				if (elem.order > actionObj.order)
 				{
 					inserted = true;
-					link_groups[grp].splice(i, 0, _links[k]);
+					link_groups[grp].splice(j, 0, groupObj);
 					break;
 				}
 			}
@@ -197,37 +217,65 @@ function egwPopupActionImplementation()
 			// If the object hasn't been inserted, add it to the end of the list
 			if (!inserted)
 			{
-				link_groups[grp].push(_links[k]);
+				link_groups[grp].push(groupObj);
+			}
+
+			// If this child itself has children, group those elements too
+			if (_layer.children[i].children.length > 0)
+			{
+				this._groupLayers(_layer.children[i], _links, groupObj);
 			}
 		}
 
-		// Insert the link groups sorted into an array
+		// Transform the link_groups object into an sorted array
 		var groups = [];
+
 		for (k in link_groups)
+		{
 			groups.push({"grp": k, "links": link_groups[k]});
+		}
+
 		groups.sort(function(a, b) {
-			return (a.grp > b.grp) ? 1 : ((a.grp < b.grp) ? -1 : 0);
+			var ia = parseInt(a.grp);
+			var ib = parseInt(b.grp);
+			return (ia > ib) ? 1 : ((ia < ib) ? -1 : 0);
 		});
 
-		for (var i = 0; i < groups.length; i++)
+		// Append the groups to the groups2 array
+		var groups2 = [];
+		for (k in groups)
+		{
+			groups2.push(groups[k].links);
+		}
+
+		_parentGroup.groups = groups2;
+	}
+
+	/**
+	 * Build the menu layers
+	 */
+	ai._buildMenuLayer = function(_menu, _groups, _selected, _enabled)
+	{
+		for (var i = 0; i < _groups.length; i++)
 		{
 			// Add an seperator after each group
 			if (i != 0)
 			{
-				menu.addItem("", "-");
+				_menu.addItem("", "-");
 			}
 
 			// Go through the elements of each group
-			for (var j = 0; j < groups[i].links.length; j++)
+			for (var j = 0; j < _groups[i].length; j++)
 			{
-				var link = groups[i].links[j];
+				var link = _groups[i][j];
+
 				if (link.visible)
 				{
-					var item = menu.addItem(link.actionObj.id, link.actionObj.caption,
+					var item = _menu.addItem(link.actionObj.id, link.actionObj.caption,
 						link.actionObj.iconUrl);
 					item["default"] = link.actionObj["default"];
 					item.data = link.actionObj;
-					if (link.enabled)
+					if (link.enabled && _enabled)
 					{
 						item.set_onClick(function(elem) {
 							elem.data.execute(_selected);
@@ -237,9 +285,48 @@ function egwPopupActionImplementation()
 					{
 						item.set_enabled(false);
 					}
+
+					// Append the parent groups
+					if (link.groups)
+					{
+						this._buildMenuLayer(item, link.groups, _selected, link.enabled);
+					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Builds the context menu from the given action links
+	 */
+	ai._buildMenu = function(_links, _selected)
+	{
+		// Build a tree containing all actions
+		var tree = {"root": []};
+
+		for (k in _links)
+		{
+			_links[k].actionObj.appendToTree(tree);
+		}
+
+		var groups = {
+			"groups": []
+		};
+
+		if (tree.root.length > 0)
+		{
+			// Sort every action object layer by the given sort position and grouping
+			this._groupLayers(tree.root[0], _links, groups);
+		}
+
+		var menu = new egwMenu();
+
+		// We needed the dummy object container in order to pass the array as 
+		// reference - this is not needed anymore
+		groups = groups.groups;
+
+		// Build the menu layers
+		this._buildMenuLayer(menu, groups, _selected, true);
 
 		return menu;
 	}
