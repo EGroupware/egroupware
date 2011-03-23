@@ -81,35 +81,6 @@ $phpgw_baseline = array(
 		'ix' => array(),
 		'uc' => array()
 	),
-	'egw_sessions' => array(
-		'fd' => array(
-			'session_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'session_lid' => array('type' => 'varchar','precision' => '128'),
-			'session_ip' => array('type' => 'varchar','precision' => '40'),
-			'session_logintime' => array('type' => 'int','precision' => '8'),
-			'session_dla' => array('type' => 'int','precision' => '8'),
-			'session_action' => array('type' => 'varchar','precision' => '255'),
-			'session_flags' => array('type' => 'char','precision' => '2')
-		),
-		'pk' => array('session_id'),
-		'fk' => array(),
-		'ix' => array(array('session_flags','session_dla')),
-		'uc' => array()
-	),
-	'egw_app_sessions' => array(
-		'fd' => array(
-			'sessionid' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'loginid' => array('type' => 'int','precision' => '4','nullable' => False),
-			'app' => array('type' => 'varchar','precision' => '25','nullable' => False),
-			'location' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'content' => array('type' => 'longtext'),
-			'session_dla' => array('type' => 'int','precision' => '8')
-		),
-		'pk' => array('sessionid','loginid','app','location'),
-		'fk' => array(),
-		'ix' => array(),
-		'uc' => array()
-	),
 	'egw_access_log' => array(
 		'fd' => array(
 			'sessionid' => array('type' => 'char','precision' => '128','nullable' => False),
@@ -121,7 +92,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array(),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array('li'),
 		'uc' => array()
 	),
 	'egw_hooks' => array(
@@ -237,31 +208,6 @@ $phpgw_baseline = array(
 		'pk' => array('server_id'),
 		'fk' => array(),
 		'ix' => array(),
-		'uc' => array()
-	),
-	'egw_vfs' => array(
-		'fd' => array(
-			'vfs_file_id' => array('type' => 'auto','nullable' => False),
-			'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'vfs_createdby_id' => array('type' => 'int','precision' => '4'),
-			'vfs_modifiedby_id' => array('type' => 'int','precision' => '4'),
-			'vfs_created' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
-			'vfs_modified' => array('type' => 'timestamp'),
-			'vfs_size' => array('type' => 'int','precision' => '4'),
-			'vfs_mime_type' => array('type' => 'varchar','precision' => '64'),
-			'vfs_deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
-			'vfs_comment' => array('type' => 'varchar','precision' => '255'),
-			'vfs_app' => array('type' => 'varchar','precision' => '25'),
-			'vfs_directory' => array('type' => 'varchar','precision' => '233'),
-			'vfs_name' => array('type' => 'varchar','precision' => '100','nullable' => False),
-			'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
-			'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
-			'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
-			'vfs_content' => array('type' => 'blob')
-		),
-		'pk' => array('vfs_file_id'),
-		'fk' => array(),
-		'ix' => array(array('vfs_directory','vfs_name')),
 		'uc' => array()
 	),
 	'egw_history_log' => array(

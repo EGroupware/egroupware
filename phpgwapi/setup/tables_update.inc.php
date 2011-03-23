@@ -31,7 +31,7 @@ function phpgwapi_upgrade1_8_001()
 
 /**
  * Add index to improve import of contacts using a custom field as primary key
- * 
+ *
  * @return string
  */
 function phpgwapi_upgrade1_9_001()
@@ -95,8 +95,8 @@ function phpgwapi_upgrade1_9_004()
 {
 	// Get all installed translations for names
 	$country = new country();
-	$country_query = 'SELECT DISTINCT message_id, content 
-		FROM ' . translation::LANG_TABLE . ' 
+	$country_query = 'SELECT DISTINCT message_id, content
+		FROM ' . translation::LANG_TABLE . '
 		WHERE message_id IN ("' . implode('","', array_values($country->countries())) . '")
 		ORDER BY message_id';
 	$result = $GLOBALS['egw_setup']->oProc->query($country_query, __LINE__, __FILE__);
@@ -113,7 +113,7 @@ function phpgwapi_upgrade1_9_004()
 		$country_list[$id][] = $row['content'];
 	}
 
-	// Build conversion 
+	// Build conversion
 	$case = 'CASE UPPER(adr_%1$s_countryname)';
 	foreach($country_list as $key => $names) {
 		foreach($names as $name) {
@@ -133,5 +133,24 @@ function phpgwapi_upgrade1_9_004()
 	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_addressbook SET adr_one_countryname = NULL WHERE adr_one_countrycode IS NOT NULL',__LINE__,__FILE__);
 	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_addressbook SET adr_two_countryname = NULL WHERE adr_two_countrycode IS NOT NULL',__LINE__,__FILE__);
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.005';
+}
+
+
+/**
+ * Add index to li (login time) column to speed up maintenance (periodic delete of old rows)
+ *
+ * Delete some obsolete / since a long time not used tables:
+ * - egw_vfs (replaced by egw_sqlfs in 1.6)
+ * - egw_(app_)sessions (not used since 1.4)
+ */
+function phpgwapi_upgrade1_9_005()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log','li');
+
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_app_sessions');
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_sessions');
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_vfs');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.006';
 }
 
