@@ -28,7 +28,7 @@ class auth_pam implements auth_backend
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, $error))
+		if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd))
 		{
 			// for new accounts read full name from password file and pass it to EGroupware
 			if (!$GLOBALS['egw']->accounts->name2id($username) &&
