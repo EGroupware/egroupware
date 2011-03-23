@@ -110,7 +110,7 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
 
 		// fetch the resource bo
-		$this->bo = CreateObject('resources.bo_resources');
+		$this->bo = new resources_bo();
 
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];

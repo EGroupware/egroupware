@@ -16,17 +16,14 @@
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package resources
  */
-class so_resources extends so_sql
+class resources_so extends so_sql_cf
 {
-	function so_resources()
+	function __construct()
 	{
-		parent::__construct('resources','egw_resources');
-
-		$this->customfields = config::get_customfields('resources');
-		$this->soextra = new so_sql('resources','egw_resources_extra');
+		parent::__construct('resources','egw_resources', 'egw_resources_extra', '',
+			'extra_name', 'extra_value', 'extra_id' );
 
 		$this->columns_to_search = array('name','short_description','inventory_number','long_description','location');
-
 	}
 
 	/**
@@ -52,16 +49,6 @@ class so_resources extends so_sql
 		// read main data
 		$resource = parent::read($res_id);
 
-		// read customfields
-		$keys = array(
-			'extra_id' => $res_id,
-			'extra_owner' => -1,
-		);
-		$customfields = $this->soextra->search($keys,false);
-		foreach ((array)$customfields as $field)
-		{
-			$resource['#'.$field['extra_name']] = $field['extra_value'];
-		}
 		return $resource;
 	}
 
@@ -77,20 +64,6 @@ class so_resources extends so_sql
 		if(parent::save() != 0) return false;
 		$res_id = $this->data['res_id'];
 
-		// save customfields
-		foreach ($this->customfields as $field => $options)
-		{
-			$value = $resource['#'.$field];
-			$data = array(
-				'extra_id' => $res_id,
-				'extra_name' => $field,
-				'extra_owner' => -1,
-				'extra_value' => $value,
-			);
-			$this->soextra->data = $data;
-			$error_nr = $this->soextra->save();
-			if($error_nr) return false;
-		}
 		return $res_id;
 	}
 

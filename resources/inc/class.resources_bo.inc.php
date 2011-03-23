@@ -16,7 +16,7 @@
  *
  * @package resources
  */
-class bo_resources
+class resources_bo
 {
 	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
@@ -38,9 +38,9 @@ class bo_resources
 	 */
 	var $cats;
 
-	function bo_resources()
+	function __construct()
 	{
-		$this->so =& CreateObject('resources.so_resources');
+		$this->so = new resources_so();
 		$this->acl =& CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
 
@@ -69,7 +69,6 @@ class bo_resources
 			}
 		}
 		if ($this->debug) _debug_array($query);
-		$criteria = $query['search'];
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
@@ -91,7 +90,9 @@ class bo_resources
 			$filter['cat_id'] = array_keys($readcats);
 		}
 		// if there is no catfilter -> this means you have no rights, so set the cat filter to null
-		if (!isset($filter['cat_id']) || empty($filter['cat_id'])) $filter['cat_id'] = NUll;
+		if (!isset($filter['cat_id']) || empty($filter['cat_id'])) {
+			$filter['cat_id'] = NUll;
+		}
 
 		if ($query['show_bookable'])
 		{
@@ -100,7 +101,8 @@ class bo_resources
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 
-		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','%',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
+		$query['col_filter'] = $filter;
+		$this->so->get_rows($query, $rows, $readonlys);
 		$nr = $this->so->total;
 
 		// we are called to serve bookable resources (e.g. calendar-dialog)
@@ -318,7 +320,7 @@ class bo_resources
 	 */
 	function get_calendar_info($res_id)
 	{
-		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true).")</p>\n";
+		//echo "<p>resources_bo::get_calendar_info(".print_r($res_id,true).")</p>\n";
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');

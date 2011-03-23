@@ -58,7 +58,7 @@ class resources_select_widget
 		{
 			// no acl check here cause names are allways viewable
 			list($res_id,$quantity) = explode(':',$value);
-			$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
+			$data = ExecMethod('resources.resources_bo.get_calendar_info',$res_id);
 			$cell['type'] = 'label';
 			$value = $data[0]['name']. ($data[0]['useable'] > 1 ? ' ['. ($quantity > 1 ? $quantity : 1). '/'. $data[0]['useable']. ']' : '');
 			return true;
@@ -80,7 +80,7 @@ class resources_select_widget
 			foreach((array)$value as $id)
 			{
 				list($res_id,$quantity) = explode(':',$id);
-				$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
+				$data = ExecMethod('resources.resources_bo.get_calendar_info',$res_id);
 				$sel_options[$data[0]['res_id'].($quantity > 1 ? (':'.$quantity) : '')] = 
 					$data[0]['name'].' ['.($quantity > 1 ? $quantity : 1).'/'.$data[0]['useable'].']';
 			}

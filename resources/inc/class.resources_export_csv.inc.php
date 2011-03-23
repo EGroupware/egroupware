@@ -24,7 +24,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
-		$bo = CreateObject('resources.bo_resources');
+		$bo = new resources_bo();
 		$selection = array();
 		if ($options['selection'] == 'selected') {
 			// ui selection with checkbox 'selected'

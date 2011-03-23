@@ -10,5 +10,5 @@
  * @version $Id$
  */
 
-header('Location: ../index.php?menuaction=resources.ui_resources.index'.
+header('Location: ../index.php?menuaction=resources.resources_ui.index'.
 	(isset($_GET['sessionid']) ? '&sessionid='.$_GET['sessionid'].'&kp3='.$_GET['kp3'] : ''));

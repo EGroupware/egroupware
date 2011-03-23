@@ -28,12 +28,12 @@ class resources_hooks
 		{
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
 			$file = array(
-				'Resources list' => egw::link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
+				'Resources list' => egw::link('/index.php',array('menuaction' => 'resources.resources_ui.index' )),
 			);
 			if($this->acl->get_cats(EGW_ACL_ADD))
 			{
 				$file['Add resource'] = "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
-						'menuaction' => 'resources.ui_resources.edit',
+						'menuaction' => 'resources.resources_ui.edit',
 					),false)."','_blank',800,600,'yes')";
 			}
 			display_sidebox($appname,$title,$file);
@@ -82,17 +82,17 @@ class resources_hooks
 	function search_link($args)
 	{
 		return array(
-			'query'      => 'resources.bo_resources.link_query',
-			'title'      => 'resources.bo_resources.link_title',
-			'titles'     => 'resources.bo_resources.link_titles',
+			'query'      => 'resources.resources_bo.link_query',
+			'title'      => 'resources.resources_bo.link_title',
+			'titles'     => 'resources.resources_bo.link_titles',
 			'view'       => array(
-				'menuaction' => 'resources.ui_resources.show'
+				'menuaction' => 'resources.resources_ui.show'
 			),
 			'view_id'    => 'res_id',
 			'view_popup' => '850x600',
-			'view_list'  => 'resources.ui_resources.index',
+			'view_list'  => 'resources.resources_ui.index',
 			'add'        => array(
-				'menuaction' => 'resources.ui_resources.edit',
+				'menuaction' => 'resources.resources_ui.edit',
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
@@ -105,15 +105,15 @@ class resources_hooks
 	{
 		return array(
 			'widget' => 'resources_select',// widget to use for the selection of resources
-			'info' => 'resources.bo_resources.get_calendar_info',// info method, returns array with id, type & name for a given id
+			'info' => 'resources.resources_bo.get_calendar_info',// info method, returns array with id, type & name for a given id
 			'max_quantity' => 'useable',// if set, key for max. quantity in array returned by info method
-			'new_status' => 'resources.bo_resources.get_calendar_new_status',// method returning the status for new items, else 'U' is used
+			'new_status' => 'resources.resources_bo.get_calendar_new_status',// method returning the status for new items, else 'U' is used
 			'type' => 'r',// one char type-identifiy for this resources
 			'icon' => 'calicon',//icon
 			'participants_header' => lang('resources'), // header of participants from this type
 			'cal_sidebox' => array(
 				'menu_title' => lang('Select resources'),
-				'file' => 'resources.ui_resources.get_calendar_sidebox'
+				'file' => 'resources.resources_ui.get_calendar_sidebox'
 			)
 		);
 	}
@@ -162,7 +162,7 @@ class resources_hooks
 
 		// Get any resources affected
 		$query = array('filter' => $args['cat_id']);
-		$bo = CreateObject('resources.bo_resources');
+		$bo = new resources_bo();
 		$bo->get_rows($query, $resources, $readonly);
 		foreach($resources as $resource)
 		{

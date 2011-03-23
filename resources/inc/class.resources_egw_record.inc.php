@@ -30,7 +30,7 @@ class resources_egw_record implements importexport_iface_egw_record
 	public function __construct( $_identifier='' ) {
 		$this->identifier = $_identifier;
 		if($this->identifier) {
-			$this->record = ExecMethod('resources.bo_resources.read', $this->identifier);
+			$this->record = ExecMethod('resources.resources_bo.read', $this->identifier);
 		}
 	}
 

@@ -15,7 +15,7 @@
  *
  * @package resources
  */
-class ui_resources
+class resources_ui
 {
 	var $public_functions = array(
 		'index'		=> True,
@@ -33,18 +33,9 @@ class ui_resources
 	{
 // 		print_r($GLOBALS['egw_info']); die();
 		$this->tmpl	= new etemplate('resources.show');
-		$this->bo	=& CreateObject('resources.bo_resources');
+		$this->bo	= new resources_bo();
 // 		$this->calui	= CreateObject('resources.ui_calviews');
 
-	}
-	/**
-	 * PHP4 constructor
-	 *
-	 * @deprecated use __construct();
-	 */
-	function ui_resources()
-	{
-		self::__construct();
 	}
 
 	/**
@@ -66,6 +57,7 @@ class ui_resources
 			if (isset($content['back']))
 			{
 				unset($sessiondata['view_accs_of']);
+				unset($sessiondata['no_filter']);
 				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				return $this->index();
 			}
@@ -101,7 +93,7 @@ class ui_resources
 		$content['msg'] = $msg;
 
 		$content['nm']['header_left']	= 'resources.resource_select.header';
-		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
+		$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= lang('Category');
 		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
@@ -162,7 +154,7 @@ class ui_resources
 		{
 			$master = $this->bo->so->read(array('res_id' => $content['nm']['view_accs_of']));
 			$content['view_accs_of'] = $content['nm']['view_accs_of'];
-			$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
+			$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 			$content['nm']['no_filter'] 	= true;
 			$content['nm']['no_filter2'] 	= true;
 			$no_button['back'] = false;
@@ -174,7 +166,7 @@ class ui_resources
 		$preserv = $content;
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
-		return $this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
+		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
 	}
 
 	/**
@@ -210,7 +202,7 @@ class ui_resources
 					return $this->edit($content);
 				}
 				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'resources.ui_resources.index'))."';";
+					array('menuaction' => 'resources.resources_ui.index'))."';";
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
@@ -256,7 +248,7 @@ class ui_resources
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
-		return $this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$no_button,$preserv,2);
 
 	}
 
@@ -278,7 +270,7 @@ class ui_resources
 					return $this->show($content);
 				}
 				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'resources.ui_resources.index'))."';";
+					array('menuaction' => 'resources.resources_ui.index'))."';";
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
@@ -333,7 +325,7 @@ class ui_resources
 			);
 		$preserv = $content;
 		$this->tmpl->read('resources.showdetails');
-		return $this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.resources_ui.show',$content,$sel_options,$no_button,$preserv,2);
 
 	}
 
@@ -454,7 +446,7 @@ class ui_resources
 				$content['nm'] = array(
 					'header_left'   => 'resources.resource_select.header',
 					'show_bookable' => true,
-					'get_rows' 	    => 'resources.bo_resources.get_rows',
+					'get_rows' 	    => 'resources.resources_bo.get_rows',
 					'filter_label'	=> 'Category',
 					'filter_help'	=> lang('Select a category'),
 					'options-filter'=> array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ),
@@ -472,7 +464,7 @@ class ui_resources
 		$sel_options = array();
 		$no_button = array();
 		$this->tmpl->read('resources.resource_select');
-		return $this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.resources_ui.select',$content,$sel_options,$no_button,$preserv,2);
 	}
 
 	/**

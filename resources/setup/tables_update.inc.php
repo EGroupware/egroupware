@@ -318,3 +318,7 @@ function resources_upgrade1_6()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.8';
 }
+function resources_upgrade1_8()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.001';
+}
