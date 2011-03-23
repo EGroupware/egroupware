@@ -256,13 +256,11 @@ function egwPopupActionImplementation()
 	 */
 	ai._buildMenuLayer = function(_menu, _groups, _selected, _enabled)
 	{
+		var firstGroup = true;
+
 		for (var i = 0; i < _groups.length; i++)
 		{
-			// Add an seperator after each group
-			if (i != 0)
-			{
-				_menu.addItem("", "-");
-			}
+			var firstElem = true;
 
 			// Go through the elements of each group
 			for (var j = 0; j < _groups[i].length; j++)
@@ -271,6 +269,14 @@ function egwPopupActionImplementation()
 
 				if (link.visible)
 				{
+
+					// Add an seperator after each group
+					if (!firstGroup && firstElem)
+					{
+						_menu.addItem("", "-");
+					}
+					firstElem = false;
+
 					var item = _menu.addItem(link.actionObj.id, link.actionObj.caption,
 						link.actionObj.iconUrl);
 					item["default"] = link.actionObj["default"];
@@ -293,6 +299,8 @@ function egwPopupActionImplementation()
 					}
 				}
 			}
+
+			firstGroup = firstGroup && firstElem;
 		}
 	}
 

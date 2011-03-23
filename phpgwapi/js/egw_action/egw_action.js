@@ -54,6 +54,8 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	this.iconUrl = _iconUrl;
 	this.allowOnMultiple = _allowOnMultiple;
 	this.enabled = true;
+	this.hideOnDisabled = false;
+	this.data = null; // Data which can be freely assigned to the action
 
 	this.type = "default"; //All derived classes have to override this!
 	this.canHaveChildren = false; //Has to be overwritten by inherited action classes
@@ -271,11 +273,20 @@ egwAction.prototype.set_allowOnMultiple = function(_value)
 	this.allowOnMultiple = _value;
 }
 
+egwAction.prototype.set_hideOnDisabled = function(_value)
+{
+	this.hideOnDisabled = _value;
+}
+
+egwAction.prototype.set_data = function(_value)
+{
+	this.data = _value;
+}
+
 egwAction.prototype.updateAction = function(_data)
 {
 	egwActionStoreJSON(_data, this, true);
 }
-
 
 function _egwActionTreeContains(_tree, _elem)
 {
@@ -1354,7 +1365,7 @@ egwActionObject.prototype.getSelectedLinks = function(_actionType)
 					var llink = actionLinks[olink.actionId];
 					llink.enabled = olink.actionObj.enabled && llink.enabled &&
 						olink.enabled && olink.visible;
-					llink.visible = llink.visible || olink.visible;
+					llink.visible = (llink.visible || olink.visible);
 					llink.cnt++;
 				}
 			}
@@ -1368,6 +1379,8 @@ egwActionObject.prototype.getSelectedLinks = function(_actionType)
 			(actionLinks[k].cnt >= testedSelected.length) &&
 			(actionLinks[k].actionObj.allowOnMultiple || 
 			 actionLinks[k].cnt == 1);
+		actionLinks[k].visible = actionLinks[k].visible &&
+			(actionLinks[k].enabled || !actionLinks[k].actionObj.hideOnDisabled);
 	}
 
 	// Return an object which contains the accumulated actionLinks and all selected
