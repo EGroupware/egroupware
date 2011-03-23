@@ -54,8 +54,13 @@ function nextmatchRowAOI(_node)
 		});
 
 		$(aoi.checkBox).change(function() {
-				aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
-			});
+			aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
+		});
+
+		// Don't execute the default action when double clicking on an entry
+		$(aoi.checkBox).dblclick(function() {
+			return false;
+		});
 
 		aoi.doSetState = function(_state) {
 			var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);

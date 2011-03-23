@@ -1171,6 +1171,36 @@ class filemanager_ui
 
 				break;
 
+			case "createdir":
+				$curdir = $selected[0];
+				$newdir = $selected[1];
+
+				$dst = egw_vfs::concat($curdir, $newdir);
+				if (egw_vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+				{
+					$arr['msg'] = lang("Directory successfully created.");
+				}
+				else
+				{
+					$arr['msg'] = lang("Error while creating directory.");
+				}
+				break;
+
+			case "symlink":
+				$curdir = $selected[0];
+				$target = $selected[1];
+
+				$link = egw_vfs::concat($curdir, egw_vfs::basename($target));
+				$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($target, $target);
+				if (!egw_vfs::stat($abs_target))
+				{
+					$arr['msg'] = lang('Link target %1 not found!', egw_vfs::decodePath($abs_target));
+					break;
+				}
+				$arr['msg'] = egw_vfs::symlink($target,$link) ?
+					lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
+				break;
+
 			default:
 				$arr['msg'] = self::action($action,$selected,null,$arr['errs'],$arr['dirs'],$arr['files']);
 				break;
