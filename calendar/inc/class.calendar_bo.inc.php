@@ -473,12 +473,6 @@ class calendar_bo
 			}
 			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
 			{
-				if($filter == 'hideprivate')
-				{
-					unset($events[$id]);
-					$this->total--;
-					continue;
-				}
 				$this->clear_private_infos($events[$id],$users);
 			}
 		}
