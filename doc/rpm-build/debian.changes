@@ -1,3 +1,10 @@
+egroupware-epl (10.1.20110323-1) hardy; urgency=low
+
+  * Calendar: fixed not working "hideprivate" filter (shows own private events as private, not NOT showing them)
+  * GroupDAV/CardDAV: fixed empty addressbooks issue (url in PROPFIND contained empty id --> "/.vcf" instead "/123.vcf")
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 23 Mar 2011 10:45:16 +0100
+
 egroupware-epl (10.1.20110322-1) hardy; urgency=low
 
   * eMail: wrap pre tagged text within the window boundarys for better readability of text mails with overlong lines; this was part of the felamimail app.css which is not loaded anymore for the display of the body
