@@ -92,6 +92,12 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		//'nickname'	=>	'',
 		//'airsyncbasebody'	=>	'',
 	);
+	/**
+	 * ID of private addressbook
+	 *
+	 * @var int
+	 */
+	const PRIVATE_AB = 0x7fffffff;
 
 	/**
 	 * Constructor
@@ -129,23 +135,21 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			{
 				translation::add_app('addressbook');	// we need the addressbook translations
 
-				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
-				{
-					unset($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook']);
-					if (isset($this->addressbook)) $this->addressbook->private_addressbook = false;
-				}
 				if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
 				// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
 				$pref_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
-				if (empty($pref_abs)) $pref_abs = 'P';	// implicit default
-				$pref_abs = explode(',',$pref_abs);
+				$pref_abs = (string)$pref_abs !== '' ? explode(',',$pref_abs) : array();
 
 				foreach ($this->addressbook->get_addressbooks() as $account_id => $label)
 				{
-					if ($account_id && in_array($account,$pref_abs) || in_array('A',$pref_abs) ||
+					if ((string)$account_id == $GLOBALS['egw_info']['user']['account_id'].'p')
+					{
+						$account_id = self::PRIVATE_AB;
+					}
+					if ($account_id && in_array($account_id,$pref_abs) || in_array('A',$pref_abs) ||
 						$account_id == 0 && in_array('U',$pref_abs) ||
-						$account_id == $GLOBALS['egw_info']['user']['account_id'] && in_array('P',$pref_abs) ||
+						$account_id == $GLOBALS['egw_info']['user']['account_id'] ||	// allways sync pers. AB
 						$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$pref_abs))
 					{
 						$abs[$account_id] = $label;
@@ -260,6 +264,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
 	 * will work OK apart from that.
 	 *
+	 * @todo if AB supports an extra private addressbook and AS prefs want an all-in-one AB, the private AB is always included, even if not selected in the prefs
 	 * @param string $id folder id
 	 * @param int $cutoffdate=null
 	 * @return array
@@ -271,10 +276,23 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		$this->backend->splitID($id,$type,$user);
 		$filter = array('owner' => $user);
 
+		// handle all-in-one addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
 			$user == $GLOBALS['egw_info']['user']['account_id'])
 		{
 			$filter['owner'] = array_keys($this->get_addressbooks(null,false));	// false = return all selected abs
+			// translate AS private AB ID to EGroupware one
+			if (($key == array_search(self::PRIVATE_AB, $filter['owner'])) !== false)
+			{
+				$filter['owner'][$key] = $GLOBALS['egw_info']['user']['account_id'].'p';
+			}
+		}
+		// handle private/personal addressbooks
+		elseif ($this->addressbook->private_addressbook &&
+			($user == self::PRIVATE_AB || $user == $GLOBALS['egw_info']['user']['account_id']))
+		{
+			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			$filter['private'] = (int)($user == self::PRIVATE_AB);
 		}
 
 		$messagelist = array();
@@ -286,7 +304,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				$messagelist[] = $this->StatMessage($id, $contact);
 			}
 		}
-		//error_log(__METHOD__."('$id') returning ".count($messagelist).' entries');
+		//error_log(__METHOD__."('$id', $cutoffdate) filter=".array2string($filter)." returning ".count($messagelist).' entries');
 		return $messagelist;
 	}
 
@@ -644,24 +662,30 @@ error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") re
 	 */
 	function settings($hook_data)
 	{
-		if ($hook_data['setup'])
-		{
-			$addressbooks = array();
-		}
-		else
+		$addressbooks = array();
+
+		if (!isset($hook_data['setup']))
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 			$addressbook_bo = new addressbook_bo();
 			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// Use P for personal addressbook
-			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+			unset($addressbooks[$user]);	// personal addressbook is allways synced
+			unset($addressbooks[$user.'p']);// private addressbook uses ID self::PRIVATE_AB
 		}
-		$addressbooks = array(
-			'P'	=> lang('Personal'),
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
+		{
+			$addressbooks[self::PRIVATE_AB] = lang('Private');
+		}
+		$addressbooks += array(
 			'G'	=> lang('Primary Group'),
 			'U' => lang('Accounts'),
 			'A'	=> lang('All'),
-		) + $addressbooks;
+		);
+		// allow to force "none", to not show the prefs to the users
+		if ($GLOBALS['type'] == 'forced')
+		{
+			$addressbooks['N'] = lang('None');
+		}
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
 		if (!isset($addressbooks[0]))
@@ -681,14 +705,13 @@ error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") re
 			'values' => $addressbooks,
 			'xmlrpc' => True,
 			'admin'  => False,
-			'default' => 'P',
 		);
 
 		$settings['addressbook-all-in-user'] = array(
 			'type'   => 'check',
 			'label'  => 'Sync all addressbooks as one',
 			'name'   => 'addressbook-all-in-one',
-			'help'   => 'Not all clients support multiple addressbooks, so you can choose to sync all above selected addressbooks as one.',
+			'help'   => 'Not all devices support multiple addressbooks, so you can choose to sync all above selected addressbooks as one.',
 			'xmlrpc' => true,
 			'admin'  => false,
 			'default' => '0',
