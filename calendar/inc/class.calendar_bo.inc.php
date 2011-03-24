@@ -1893,7 +1893,7 @@ class calendar_bo
 		}
 		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
-		if ($client_shared_uid_exceptions && !empty($entry['uid']) &&
+		if ($client_share_uid_excpetions && !empty($entry['uid']) &&
 			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
 		{
 			$events =& $this->search(array(
@@ -1911,7 +1911,7 @@ class calendar_bo
 				}
 			}
 		}
-		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
+		//error_log(__METHOD__ . "($entry[id],$client_share_uid_excpetions) entry=".array2string($entry)." --> etag=$etag");
 		return $etag;
 	}
 
