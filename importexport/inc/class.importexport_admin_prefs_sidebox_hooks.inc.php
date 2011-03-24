@@ -129,7 +129,7 @@ class importexport_admin_prefs_sidebox_hooks
 		{
 			$file['Define imports|exports']	= egw::link('/index.php',array(
 				'menuaction' => 'importexport.importexport_definitions_ui.index',
-			));
+			), 'importexport');
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
