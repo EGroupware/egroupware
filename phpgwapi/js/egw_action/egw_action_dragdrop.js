@@ -107,7 +107,9 @@ function egwDragActionImplementation()
 					"start": function(e) {
 						return ai.helper != null;
 					},
-					"containment": $("body"),
+					// Solves problem with scroll position changing in the grid	
+					// component
+					"refreshPositions": true,
 					"scroll": false
 				}
 			);

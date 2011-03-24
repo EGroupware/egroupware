@@ -30,6 +30,10 @@ body, td, th {
 	background-color: #b7c3ff;
 }
 
+.egwGridView_grid tr.draggedOver td {
+	background-color: #ffd09c !important;
+}
+
 /*.egwGridView_grid tr.selected.odd td {
 	background-color: #9dadff;
 }*/

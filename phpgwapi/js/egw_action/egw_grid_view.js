@@ -1316,6 +1316,7 @@ function egwGridViewRow_aoiSetup()
 	this.aoi._state = EGW_AO_STATE_NORMAL;
 	this.aoi.row = this;
 	this.aoi.doSetState = egwGridViewRow_aoiSetState;
+	this.aoi.doTriggerEvent = egwGridViewRow_aoiTriggerEvent;
 	this.aoi.getDOMNode = egwGridViewRow_aoiGetDOMNode;
 }
 
@@ -1333,6 +1334,19 @@ function egwGridViewRow_aoiSetState(_state, _shiftState)
 function egwGridViewRow_aoiGetDOMNode()
 {
 	return this.row.parentNode ? this.row.parentNode.context : null;
+}
+
+function egwGridViewRow_aoiTriggerEvent(_event, _data)
+{
+	if (_event == EGW_AI_DRAG_OVER)
+	{
+		this.row.parentNode.addClass("draggedOver");
+	}
+
+	if (_event == EGW_AI_DRAG_OUT)
+	{
+		this.row.parentNode.removeClass("draggedOver");
+	}
 }
 
 /**
@@ -1823,6 +1837,5 @@ function egwGridViewFullRow_doSetViewArea()
 {
 	//
 }
-
 
 
