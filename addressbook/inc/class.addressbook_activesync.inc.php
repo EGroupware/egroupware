@@ -699,7 +699,7 @@ error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") re
 
 		$settings['addressbook-abs'] = array(
 			'type'   => 'multiselect',
-			'label'  => 'Addressbooks to sync',
+			'label'  => 'Additional addressbooks to sync',
 			'name'   => 'addressbook-abs',
 			'help'   => 'Global address search always searches in all addressbooks, so you dont need to sync all addressbooks to be able to access them, if you are online.',
 			'values' => $addressbooks,
