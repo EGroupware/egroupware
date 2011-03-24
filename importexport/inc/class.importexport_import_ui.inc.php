@@ -83,6 +83,8 @@
 			$data['message'] = $this->message;
 			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
+			if($_GET['appname']) $readonlys['appname'] = true;
+
 			$template = new etemplate('importexport.import_dialog');
 			$template->exec('importexport.importexport_import_ui.import_dialog', $data, $sel_options, $readonlys, $preserve, 2);
 		}
