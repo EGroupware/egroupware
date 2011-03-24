@@ -489,10 +489,10 @@ class nextmatch_widget
 		}
 
 		// Check for preferred import/export definition
-		if(!$value['no_csv_export'] && ($value['csv_fields'] && !is_array($value['csv_fields']) || !array_key_exists('csv_fields', $value))) {
-			$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
-			list($app) = explode('.',$name);
-			$definition = $value['csv_fields'] === true ? $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'] : $value['csv_fields'];
+		$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
+		list($app) = explode('.',$name);
+		$definition = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'];
+		if(!$value['no_csv_export'] && $definition) {
 			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $definition) {
 				$nextmatch->set_cell_attribute('export', 'onclick', 
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
