@@ -120,7 +120,7 @@ class calendar_activesync implements activesync_plugin_write
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_APPOINTMENT;
 		}
 		//error_log(__METHOD__."('$id') folderObj=".array2string($folderObj));
-		debugLog(__METHOD__."('$id') folderObj=".array2string($folderObj));
+		//debugLog(__METHOD__."('$id') folderObj=".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -148,7 +148,7 @@ class calendar_activesync implements activesync_plugin_write
 			'parent' => '0',
 		);
 		//error_log(__METHOD__."('$id') folderObj=".array2string($stat));
-		debugLog(__METHOD__."('$id') folderObj=".array2string($stat));
+		//debugLog(__METHOD__."('$id') folderObj=".array2string($stat));
 		return $stat;
 	}
 
@@ -185,6 +185,7 @@ class calendar_activesync implements activesync_plugin_write
 			'filter' => 'default',	// not rejected
 			// @todo return only etag relevant information (seems not to work ...)
 			//'cols'		=> array('egw_cal.cal_id', 'cal_start',	'recur_type', 'cal_modified', 'cal_uid', 'cal_etag'),
+			'query' => array('cal_recurrence' => 0),	// do NOT return recurrence exceptions
 		);
 
 		$messagelist = array();
@@ -293,6 +294,71 @@ class calendar_activesync implements activesync_plugin_write
 			error_log(__METHOD__."('$folderid',$id,".array2string($message).") no rights to add/edit event!");
 			return false;
 		}
+		if (!$id) $event['owner'] = $account;	// we do NOT allow to change the owner of existing events
+
+		$event = $this->message2event($message, $account, $event);
+
+		if (!($id = $this->calendar->update($event,true)))	// true = ignore conflicts
+		{
+			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
+			return false;
+		}
+		// store non-delete exceptions
+		if ($message->exceptions)
+		{
+			foreach($message->exceptions as $exception)
+			{
+				if (!$exception->deleted)
+				{
+					$ex_event = $event;
+					unset($ex_event['id']);
+					unset($ex_event['etag']);
+					foreach($ex_event as $name => $value) if (substr($name,0,6) == 'recur_') unset($ex_event[$name]);
+					$ex_event['recur_type'] = calendar_rrule::NONE;
+
+					if ($event['id'] && ($ex_events = $this->calendar->search(array(
+						'user' => $user,
+						'enum_recuring' => false,
+						'daywise' => false,
+						'filter' => 'owner',  // return all possible entries
+						'query' => array(
+							'cal_uid' => $event['uid'],
+							'cal_recurrence' => $exception->exceptionstarttime,	// in servertime
+						),
+					))))
+					{
+						$ex_event = array_shift($ex_events);
+						$participants = $ex_event['participants'];
+					}
+					else
+					{
+						$participants = $event['participants'];
+					}
+					$ex_event = $this->message2event($exception, $account, $ex_event);
+					$ex_event['participants'] = $participants;	// not contained in $exception
+					$ex_event['reference'] = $event['id'];
+					$ex_event['recurrence'] = egw_time::server2user($exception->exceptionstarttime);
+					$ex_ok = $this->calendar->save($ex_event);
+					debugLog(__METHOD__."('$folderid',$id,...) saving exception=".array2string($ex_event).' returned '.array2string($ex_ok));
+					error_log(__METHOD__."('$folderid',$id,...) exception=".array2string($exception).") saving exception=".array2string($ex_event).' returned '.array2string($ex_ok));
+				}
+			}
+		}
+		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
+		error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
+		return $this->StatMessage($folderid, $id);
+	}
+
+	/**
+	 * Parse AS message into EGw event array
+	 *
+	 * @param SyncAppointment $message
+	 * @param int $account
+	 * @param array $event=array()
+	 * @return array
+	 */
+	private function message2event(SyncAppointment $message, $account, $event=array())
+	{
 		// timestamps (created & modified are updated automatically)
 		foreach(array(
 			'start' => 'starttime',
@@ -301,8 +367,6 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			$event[$key] = egw_time::server2user($message->$attr);
 		}
-		if (!$id) $event['owner'] = $account;	// we do NOT allow to change the owner of existing events
-
 		// copying strings
 		foreach(array(
 			'title' => 'subject',
@@ -447,8 +511,9 @@ class calendar_activesync implements activesync_plugin_write
 			{
 				foreach($message->exceptions as $exception)
 				{
-					$event['recur_exceptions'][] = egw_time::server2user($exception->starttime);	// exceptions seems to be full SyncAppointments, with only starttime required
+					$event['recur_exception'][] = egw_time::server2user($exception->exceptionstarttime);
 				}
+				$event['recur_exception'] = array_unique($event['recur_exception']);
 			}
 			if ($message->recurrence->occurrences > 0)
 			{
@@ -461,17 +526,36 @@ class calendar_activesync implements activesync_plugin_write
 				$event['recur_enddate'] = $rtime->format('ts');
 			}
 		}
-
-		// @todo: body or description
-
-		if (!($id = $this->calendar->update($event,true)))	// true = ignore conflicts
+		// only import alarms in own calendar
+		if ($message->reminder && $account == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
-			return false;
+			foreach((array)$event['alarm'] as $alarm)
+			{
+				if (($alarm['all'] || $alarm['owner'] == $account) && $alarm['offset'] == 60*$message->reminder)
+				{
+					$alarm = true;	// alarm already exists --> do nothing
+					break;
+				}
+			}
+			if ($alarm !== true)	// new alarm
+			{
+				// delete all earlier alarms of that user
+				// user get's per AS only the earliest alarm, as AS only supports one alarm
+				// --> if a later alarm is returned, user probably modifed an existing alarm
+				foreach((array)$event['alarm'] as $key => $alarm)
+				{
+					if ($alarm['owner'] == $account && $alarm['offset'] > 60*$message->reminder)
+					{
+						unset($event['alarm'][$key]);
+					}
+				}
+				$event['alarm'][] = $alarm = array(
+					'owner' => $account,
+					'offset' => 60*$message->reminder,
+				);
+			}
 		}
-		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
-		error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
-		return $this->StatMessage($folderid, $id);
+		return $event;
 	}
 
 	/**
@@ -567,24 +651,35 @@ class calendar_activesync implements activesync_plugin_write
 	 * Timezones are only used to get correct recurring events!
 	 *
 	 * @param string $folderid
-	 * @param string $id
+	 * @param string|array $id cal_id or event array (used internally)
 	 * @param int $truncsize
-	 * @param int $bodypreference
-	 * @param bool $mimesupport
+	 * @param int|bool $bodypreference=false
+	 * @param int $mimesupport=0
 	 * @return SyncAppointment|boolean false on error
 	 */
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		debugLog (__METHOD__."('$folderid', ".array2string($id).", truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
-		list($id,$recur_date) = explode(':',$id);
-		if ($type != 'calendar' || !($event = $this->calendar->read($id,$recur_date,false,'server',$account)))
+		if (is_array($id))
 		{
-			error_log(__METHOD__."('$folderid', $id, ...) read($id,null,false,'server',$account) returned false");
-			return false;
+			$event = $id;
+			$id = $event['id'];
 		}
+		else
+		{
+			list($id,$recur_date) = explode(':',$id);
+			if ($type != 'calendar' || !($event = $this->calendar->read($id,$recur_date,false,'server',$account)))
+			{
+				error_log(__METHOD__."('$folderid', $id, ...) read($id,null,false,'server',$account) returned false");
+				return false;
+			}
+		}
+		debugLog(__METHOD__."($folderid,$id,...) start=$event[start]=".date('Y-m-d H:i:s',$event['start']).", recurrence=$event[recurrence]=".date('Y-m-d H:i:s',$event['recurrence']));
+		foreach($event['recur_exception'] as $ex) debugLog("exception=$ex=".date('Y-m-d H:i:s',$ex));
+
 		$message = new SyncAppointment();
 
 		// set timezone
@@ -706,41 +801,69 @@ class calendar_activesync implements activesync_plugin_write
 
 			if ($rrule->exceptions)
 			{
+				// search real / non-virtual exceptions
+				$ex_events =& $this->calendar->search(array(
+					'query' => array('cal_uid' => $event['uid']),
+					'filter' => 'owner',  // return all possible entries
+					'daywise' => false,
+					'date_format' => 'server',
+				));
 				$message->exceptions = array();
-				foreach($rrule->exceptions_objs as $exception_time)
+				foreach($ex_events as $ex_event)
+				{
+					if ($ex_event['id'] == $event['id']) continue;	// ignore series master
+					$exception = $this->GetMessage($folderid, $ex_event, $truncsize, $bodypreference, $mimesupport);
+					$exception->exceptionstarttime = $exception_time = $ex_event['recurrence'];
+					foreach(array('attendees','recurrence','uid','timezone','organizername','organizeremail') as $not_supported)
+					{
+						$exception->$not_supported = null;	// not allowed in exceptions :-(
+					}
+					$exception->deleted = 0;
+					if (($key = array_search($exception_time,$event['recur_exception'])) !== false)
+					{
+						unset($event['recur_exception'][$key]);
+					}
+					debugLog(__METHOD__."() added exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+					$message->exceptions[] = $exception;
+				}
+				// add rest of exceptions as deleted
+				foreach($event['recur_exception'] as $exception_time)
 				{
 					$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
-					$exception->starttime = $exception_time->format('server');
+					$exception->deleted = 1;
+					$exception->exceptionstarttime = $exception_time;
+					debugLog(__METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
 					$message->exceptions[] = $exception;
 				}
 			}
+			/* disabled virtual exceptions for now, as AS does NOT support changed participants or status
 			// add virtual exceptions here too (get_recurrence_exceptions should be able to return real-exceptions too!)
 			foreach($this->calendar->so->get_recurrence_exceptions($event,
-				egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $virtual_exception_time)
+				egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $exception_time)
 			{
-				$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
-				$exception->starttime = $virtual_exception_time;
+				// exceptions seems to be full SyncAppointments, with only exceptionstarttime required
+				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $truncsize, $bodypreference, $mimesupport);
+				$exception->deleted = 0;
+				$exception->exceptionstarttime = $exception_time;
+				debugLog(__METHOD__."() added virtual exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
 				$message->exceptions[] = $exception;
+			}*/
+			//debugLog(__METHOD__."($id) message->exceptions=".array2string($message->exceptions));
+		}
+		// only return alarms if in own calendar
+		if ($account == $GLOBALS['egw_info']['user']['account_id'] && $event['alarm'])
+		{
+			foreach($event['alarm'] as $alarm)
+			{
+				if ($alarm['all'] || $alarm['owner'] == $account)
+				{
+					$message->reminder = $alarm['offset']/60;	// is in minutes, not seconds as in EGw
+					break;	// AS supports only one alarm! (we use the next/earliest one)
+				}
 			}
-
 		}
 		//$message->busystatus;
-		//$message->reminder;
 		//$message->meetingstatus;
-		//$message->deleted;
-/*
-		if (isset($protocolversion) && $protocolversion < 12.0) {
-			$message->body;
-			$message->bodytruncated;
-			$message->rtf;
-		}
-
-		if(isset($protocolversion) && $protocolversion >= 12.0) {
-
-		 	$message->airsyncbasebody;	// SYNC SyncAirSyncBaseBody
-		}
-*/
-		// @todo: body or description
 
 		return $message;
 	}
@@ -761,7 +884,7 @@ class calendar_activesync implements activesync_plugin_write
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		if (!($etag = $this->calendar->get_etag($id,false)))	// false: do NOT include exceptions into master etag
+		if (!($etag = $this->calendar->get_etag($id)))
 		{
 			$stat = false;
 			// error_log why access is denied (should never happen for everything returned by calendar_bo::search)
