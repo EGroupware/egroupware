@@ -82,7 +82,7 @@ class calendar_activesync implements activesync_plugin_write
 			$account_id = $entry['grantor'];
 			$label = $entry['name'];
 			if (in_array('A',$cals) || in_array($account_id,$cals) ||
-				$account_id == $GLOBALS['egw_info']['user']['account_id'] && in_array('P',$cals) ||
+				$account_id == $GLOBALS['egw_info']['user']['account_id'] ||	// always incl. own calendar!
 				$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$cals))
 			{
 				$folderlist[] = $f = array(
@@ -1090,11 +1090,7 @@ END:VTIMEZONE
 	 */
 	function settings($hook_data)
 	{
-		$cals = array(
-			'P'	=> lang('Personal'),
-			'G'	=> lang('Primary Group'),
-			'A'	=> lang('All'),
-		);
+		$cals = array();
 		if (!$hook_data['setup'])
 		{
 			if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
@@ -1108,15 +1104,21 @@ END:VTIMEZONE
 				}
 			}
 		}
-
+		$cals['G'] = lang('Primary group');
+		$cals['A'] = lang('All');
+		// allow to force "none", to not show the prefs to the users
+		if ($GLOBALS['type'] == 'forced')
+		{
+			$cals['N'] = lang('None');
+		}
 		$settings['calendar-cals'] = array(
 			'type'   => 'multiselect',
-			'label'  => 'Calendars to sync',
+			'label'  => 'Additional calendars to sync',
+			'help'   => 'Not all devices support additonal calendars. Your personal calendar is always synchronised.',
 			'name'   => 'calendar-cals',
 			'values' => $cals,
 			'xmlrpc' => True,
 			'admin'  => False,
-			'default' => 'P',
 		);
 
 		return $settings;
