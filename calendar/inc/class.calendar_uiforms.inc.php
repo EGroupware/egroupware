@@ -199,7 +199,7 @@ class calendar_uiforms extends calendar_ui
 							$exception['recurrence'] != $content['recur_exception'][$key]) continue;
 					$exception['uid'] = common::generate_uid('calendar', $id);
 					$exception['reference'] = $exception['recurrence'] = 0;
-					$this->bo->update($exception, true, true,false,true,null,$content['no_notifications']);
+					$this->bo->update($exception, true, true,false,true,$message,$content['no_notifications']);
 					break;
 				}
 				unset($content['recur_exception'][$key]);
