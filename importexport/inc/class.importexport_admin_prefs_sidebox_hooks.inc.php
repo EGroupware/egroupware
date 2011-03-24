@@ -122,6 +122,15 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'export'
 			);
 		}
+		$config = config::read('importexport');
+		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
+			count(importexport_helper_functions::get_plugins($appname)) > 0
+		)
+		{
+			$file['Define imports|exports']	= egw::link('/index.php',array(
+				'menuaction' => 'importexport.importexport_definitions_ui.index',
+			));
+		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
 }
