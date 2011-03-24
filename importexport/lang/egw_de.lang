@@ -72,7 +72,7 @@ stop	importexport	de	Stopp
 target	importexport	de	Ziel
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	de	Beispiel für Importpfade: vfs://default/home/user/export.csv oder http://server.net/prices.csv
 target field	importexport	de	Zielfeld (EGroupware)
-test only	importexport	de	Nur Test, keine übernahme ins Adressbuch
+test only	importexport	de	Nur Test
 translation	importexport	de	Umwandlung
 true	importexport	de	Wahr
 unable to schedule	importexport	de	Zeitplan nicht möglich
