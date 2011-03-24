@@ -1391,11 +1391,11 @@ class calendar_bo
 		if ($end_m == 24*60-1) ++$duration;
 		$duration = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
-		$timespan = $t = $GLOBALS['egw']->common->formattime(sprintf('%02d',$start_m/60),sprintf('%02d',$start_m%60));
+		$timespan = $t = common::formattime(sprintf('%02d',$start_m/60),sprintf('%02d',$start_m%60));
 
 		if ($both)	// end-time too
 		{
-			$timespan .= ' - '.$GLOBALS['egw']->common->formattime(sprintf('%02d',$end_m/60),sprintf('%02d',$end_m%60));
+			$timespan .= ' - '.common::formattime(sprintf('%02d',$end_m/60),sprintf('%02d',$end_m%60));
 			// dont double am/pm if they are the same in both times
 			if ($this->common_prefs['timeformat'] == 12 && substr($timespan,-2) == substr($t,-2))
 			{
@@ -1545,8 +1545,11 @@ class calendar_bo
 	 */
 	function _list_cals_add($id,&$users,&$groups)
 	{
-		$name = $GLOBALS['egw']->common->grab_owner_name($id);
-		$egw_name = $GLOBALS['egw']->accounts->id2name($id);
+		$name = common::grab_owner_name($id);
+		if (!($egw_name = $GLOBALS['egw']->accounts->id2name($id)))
+		{
+			return;	// do not return no longer existing accounts which eg. still mentioned in acl
+		}
 		if (($type = $GLOBALS['egw']->accounts->get_type($id)) == 'g')
 		{
 			$arr = &$groups;
@@ -1555,7 +1558,7 @@ class calendar_bo
 		{
 			$arr = &$users;
 		}
-		$arr[$name] = Array(
+		$arr[] = array(
 			'grantor' => $id,
 			'value'   => ($type == 'g' ? 'g_' : '') . $id,
 			'name'    => $name,
@@ -1566,7 +1569,7 @@ class calendar_bo
 	/**
 	 * generate list of user- / group-calendars for the selectbox in the header
 	 *
-	 * @return array alphabeticaly sorted array with groups first and then users: $name => array('grantor'=>$id,'value'=>['g_'.]$id,'name'=>$name)
+	 * @return array alphabeticaly sorted array with users first and then groups: array('grantor'=>$id,'value'=>['g_'.]$id,'name'=>$name)
 	 */
 	function list_cals()
 	{
@@ -1575,7 +1578,7 @@ class calendar_bo
 		{
 			$this->_list_cals_add($id,$users,$groups);
 		}
-		if ($memberships = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']))
+		if (($memberships = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id'])))
 		{
 			foreach($memberships as $group_info)
 			{
@@ -1590,17 +1593,22 @@ class calendar_bo
 				}
 			}
 		}
-		foreach ($groups as $name => $group)
-		{
-			foreach ($users as $user)
-			{
-				if ($user['sname'] == $group['sname']) unset($groups[$name]);
-			}
-		}
-		uksort($users,'strnatcasecmp');
-		uksort($groups,'strnatcasecmp');
+		usort($users,array($this,'name_cmp'));
+		usort($groups,array($this,'name_cmp'));
 
-		return $users + $groups;	// users first and then groups, both alphabeticaly
+		return array_merge($users, $groups);	// users first and then groups, both alphabeticaly
+	}
+
+	/**
+	 * Compare function for sort by value of key 'name'
+	 *
+	 * @param array $a
+	 * @param array $b
+	 * @return int
+	 */
+	function name_cmp(array $a, array $b)
+	{
+		return strnatcasecmp($a['name'], $b['name']);
 	}
 
 	/**

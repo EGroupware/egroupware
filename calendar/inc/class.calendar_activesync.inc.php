@@ -77,9 +77,10 @@ class calendar_activesync implements activesync_plugin_write
 		$cals = $cals ? explode(',',$cals) : array('P');	// implicit default of 'P'
 		$folderlist = array();
 
-		foreach ($this->calendar->list_cals() as $label => $entry)
+		foreach ($this->calendar->list_cals() as $entry)
 		{
 			$account_id = $entry['grantor'];
+			$label = $entry['name'];
 			if (in_array('A',$cals) || in_array($account_id,$cals) ||
 				$account_id == $GLOBALS['egw_info']['user']['account_id'] && in_array('P',$cals) ||
 				$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$cals))
@@ -1098,12 +1099,12 @@ END:VTIMEZONE
 		{
 			if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-			foreach ($this->calendar->list_cals() as $label => $entry)
+			foreach ($this->calendar->list_cals() as $entry)
 			{
 				$account_id = $entry['grantor'];
 				if ($account_id != $GLOBALS['egw_info']['user']['account_id'])
 				{
-					$cals[$account_id] = $label;
+					$cals[$account_id] = $entry['name'];
 				}
 			}
 		}
