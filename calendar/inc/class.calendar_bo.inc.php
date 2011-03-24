@@ -1558,7 +1558,7 @@ class calendar_bo
 		{
 			$arr = &$users;
 		}
-		$arr[] = array(
+		$arr[$id] = array(
 			'grantor' => $id,
 			'value'   => ($type == 'g' ? 'g_' : '') . $id,
 			'name'    => $name,
