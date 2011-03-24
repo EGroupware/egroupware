@@ -120,8 +120,13 @@ function egwPopupActionImplementation()
 	/**
 	 * Builds the context menu and shows it at the given position/DOM-Node.
 	 */
-	ai.doExecuteImplementation = function(_context, _selected, _links)
+	ai.doExecuteImplementation = function(_context, _selected, _links, _target)
 	{
+		if (typeof _target == "undefined")
+		{
+			_target = null;
+		}
+
 		if (_context != "default")
 		{
 			//Check whether the context has the posx and posy parameters
@@ -137,7 +142,7 @@ function egwPopupActionImplementation()
 				_context = {"posx": x, "posy": y}
 			}
 
-			var menu = ai._buildMenu(_links, _selected);
+			var menu = ai._buildMenu(_links, _selected, _target);
 			menu.showAt(_context.posx, _context.posy);
 
 			return true;
@@ -254,7 +259,7 @@ function egwPopupActionImplementation()
 	/**
 	 * Build the menu layers
 	 */
-	ai._buildMenuLayer = function(_menu, _groups, _selected, _enabled)
+	ai._buildMenuLayer = function(_menu, _groups, _selected, _enabled, _target)
 	{
 		var firstGroup = true;
 
@@ -269,7 +274,6 @@ function egwPopupActionImplementation()
 
 				if (link.visible)
 				{
-
 					// Add an seperator after each group
 					if (!firstGroup && firstElem)
 					{
@@ -284,7 +288,7 @@ function egwPopupActionImplementation()
 					if (link.enabled && _enabled)
 					{
 						item.set_onClick(function(elem) {
-							elem.data.execute(_selected);
+							elem.data.execute(_selected, _target);
 						});
 					}
 					else
@@ -295,7 +299,7 @@ function egwPopupActionImplementation()
 					// Append the parent groups
 					if (link.groups)
 					{
-						this._buildMenuLayer(item, link.groups, _selected, link.enabled);
+						this._buildMenuLayer(item, link.groups, _selected, link.enabled, _target);
 					}
 				}
 			}
@@ -307,7 +311,7 @@ function egwPopupActionImplementation()
 	/**
 	 * Builds the context menu from the given action links
 	 */
-	ai._buildMenu = function(_links, _selected)
+	ai._buildMenu = function(_links, _selected, _target)
 	{
 		// Build a tree containing all actions
 		var tree = {"root": []};
@@ -332,7 +336,7 @@ function egwPopupActionImplementation()
 		var menu = new egwMenu();
 
 		// Build the menu layers
-		this._buildMenuLayer(menu, groups.groups, _selected, true);
+		this._buildMenuLayer(menu, groups.groups, _selected, true, _target);
 
 		return menu;
 	}

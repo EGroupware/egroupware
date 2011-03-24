@@ -148,6 +148,9 @@ body, td, th {
 
 .egwGridView_grid span.caption {
 	cursor: default;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
 }
 
 .egwGridView_outer thead th {

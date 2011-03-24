@@ -184,6 +184,7 @@ egwAction.prototype.updateActions = function(_actions)
 	}
 	else
 	{
+		console.log(this);
 		throw "This action element cannot have children!";
 	}
 }
@@ -191,19 +192,26 @@ egwAction.prototype.updateActions = function(_actions)
 /**
  * Executes this action by using the method specified in the onExecute setter.
  *
- * @param array_senders array with references to the objects which caused the action
- * //TODO: With DragDrop we don't only have senders but also one(!) target.
+ * @param array _senders array with references to the objects which caused the action
+ * @param object _target is an optional parameter which may represent e.g. an drag drop target
  */
-egwAction.prototype.execute = function(_senders)
+egwAction.prototype.execute = function(_senders, _target)
 {
+	if (typeof _target == "undefined")
+	{
+		_target == null;
+	}
+
 	if (this.execJSFnct && typeof this.execJSFnct == "function")
 	{
-		this.execJSFnct(this, _senders);
+		return this.execJSFnct(this, _senders, _target);
 	}
 	else if (this.execHandler)
 	{
 		//this.handler.execute(this, _senders); TODO
 	}
+
+	return false;
 }
 
 /**
@@ -1269,6 +1277,9 @@ egwActionObject.prototype.triggerCallback = function()
 	return true;
 }
 
+var EGW_AO_EXEC_SELECTED = 0;
+var EGW_AO_EXEC_THIS = 1;
+
 /**
  * Executes the action implementation which is associated to the given action type.
  *
@@ -1277,16 +1288,33 @@ egwActionObject.prototype.triggerCallback = function()
  * 	menu should open are transmitted.
  * @param string _implType is the action type for which the implementation should be
  * 	executed.
+ * @param int _execType specifies in which context the execution should take place.
+ * 	defaults to EGW_AO_EXEC_SELECTED
  */
-egwActionObject.prototype.executeActionImplementation = function(_implContext, _implType)
+egwActionObject.prototype.executeActionImplementation = function(_implContext, _implType, _execType)
 {
+	if (typeof _execType == "undefined")
+	{
+		_execType = EGW_AO_EXEC_SELECTED;
+	}
+
 	if (typeof _implType == "string")
+	{
 		_implType = _egwActionClasses[_implType].implementation();
+	}
 
 	if (typeof _implType == "object" && _implType)
 	{
-		this.forceSelection();
-		var selectedActions = this.getSelectedLinks(_implType.type);
+		if (_execType == EGW_AO_EXEC_SELECTED)
+		{
+			this.forceSelection();
+			var selectedActions = this.getSelectedLinks(_implType.type);
+		}
+		else if (_execType = EGW_AO_EXEC_THIS)
+		{
+			selectedActions = this._getLinks([this], _implType.type);
+		}
+
 		if (selectedActions.selected.length > 0 && egwObjectLength(selectedActions.links) > 0)
 		{
 			return _implType.executeImplementation(_implContext,
@@ -1335,11 +1363,19 @@ egwActionObject.prototype.getSelectedLinks = function(_actionType)
 	// Get all objects in this container which are currently selected
 	var selected = this.getContainerRoot().getSelectedObjects();
 
+	return this._getLinks(selected, _actionType);
+}
+
+/**
+ *
+ */
+egwActionObject.prototype._getLinks = function(_objs, _actionType)
+{
 	var actionLinks = {};
 	var testedSelected = [];
-	for (var i = 0; i < selected.length; i++)
+	for (var i = 0; i < _objs.length; i++)
 	{
-		var obj = selected[i];
+		var obj = _objs[i];
 		if (obj.triggerCallback())
 		{
 			testedSelected.push(obj);
@@ -1479,6 +1515,11 @@ function egwActionObjectInterface()
 	// or not.
 	this.doSetState = function(_state, _outerCall) {};
 
+	// The doTiggerEvent function may be overritten by the aoi if it wants to
+	// support certain action implementation specific events like EGW_AI_DRAG_OVER
+	// or EGW_AI_DRAG_OUT
+	this.doTriggerEvent = function(_event, _data) {return false;}
+
 	this._state = EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE;
 
 	this.stateChangeCallback = null;
@@ -1579,6 +1620,22 @@ egwActionObjectInterface.prototype.setState = function(_state)
 egwActionObjectInterface.prototype.getState = function()
 {
 	return this._state;
+}
+
+/**
+ * The trigger event function can be called by the action implementation in order
+ * to tell the AOI to performe some action.
+ * In the drag/drop handler this function is e.g. used for telling the droppable
+ * element that there was a drag over/out event.
+ */
+egwActionObjectInterface.prototype.triggerEvent = function(_event, _data)
+{
+	if (typeof _data == "undefined")
+	{
+		_data = null;
+	}
+
+	return this.doTriggerEvent(_event, _data);
 }
 
 

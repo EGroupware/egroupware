@@ -9,6 +9,7 @@
 		<!-- JQuery is just used in this example. The egw_action scripts do not
 		     need JQuery! -->
 		<script src="js/jquery.js"></script>
+		<script src="js/jquery-ui.js"></script>
 
 		<!-- Popup stuff -->
 		<link rel="stylesheet" type="text/css" href="skins/dhtmlxmenu_egw.css">
@@ -16,6 +17,7 @@
 		<script src="js/dhtmlxmenu.js"></script>
 		<script src="js/dhtmlxmenu_ext.js"></script>
 		<script src="../egw_action_popup.js"></script>
+		<script src="../egw_action_dragdrop.js"></script>
 		<script src="../egw_menu.js"></script>
 		<script src="../egw_menu_dhtmlx.js"></script>
 
@@ -55,6 +57,21 @@
 			.listbox .focused {
 				border: 1px dotted black;
 				padding: 1px;
+			}
+
+			.listbox tr.draggedOver {
+				color: red !important;
+			}
+
+			.egw_action_ddHelper {
+				padding: 5px 5px 5px 26px;
+				background-image: url(imgs/page.png);
+				background-position: 5px 5px;
+				background-repeat: no-repeat;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				text-shadow: white 0px 0px 5px;
 			}
 		</style>
 	</head>
@@ -120,6 +137,17 @@
 					aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
 				});
 
+				aoi.doTriggerEvent = function(_event) {
+					if (_event == EGW_AI_DRAG_OVER)
+					{
+						$(this.node).addClass("draggedOver");
+					}
+					if (_event == EGW_AI_DRAG_OUT)
+					{
+						$(this.node).removeClass("draggedOver");
+					}
+				}
+
 				aoi.doSetState = function(_state) {
 					var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
 					this.checkBox.checked = selected;
@@ -132,14 +160,25 @@
 				return aoi;
 			}
 
-			function alertClicked(_action, _senders)
+			function alertClicked(_action, _senders, _target)
 			{
 				var ids = "";
 				for (var i = 0; i < _senders.length; i++)
 					ids += _senders[i].id + ((i < _senders.length - 1) ? ", " : "");
 
 				alert("Action '" + _action.caption + "' executed on elements '"
-					+ ids + "'");
+					+ ids + "', target '" + (_target ? _target.id : "null") + "'");
+			}
+
+			function returnDDHelper(_action, _senders)
+			{
+				var text = [];
+				for (var i = 0; i < _senders.length; i++)
+				{
+					text.push(_senders[i].id);
+				}
+
+				return $("<div class=\"ddhelper\">" + _senders.length + " (" + text.join(", ") + ") Elements selected </div>")
 			}
 
 			function init()
@@ -174,7 +213,7 @@
 							"caption": "Preview",
 							"onExecute": alertClicked,
 							"allowOnMultiple": false,
-							"type": "popup",
+							"type": "popup"
 						},
 						{
 							"id": "file_delete",
@@ -252,6 +291,48 @@
 									"group": -1
 								}
 							]
+						},
+
+						{
+							"id": "file_drag",
+							"type": "drag",
+							"dragType": "file"
+						},
+						{
+							"id": "folder_drop",
+							"type": "drop",
+							"caption": "Move files here",
+							"iconUrl": "imgs/move.png",
+							"acceptedTypes": "file",
+							"onExecute": alertClicked,
+							"children":
+							[
+								{
+									"id": "sub1",
+									"type": "popup",
+									"caption": "Use insecure but super fast move algorithm"
+								},
+								{
+									"id": "sub2",
+									"type": "popup",
+									"caption": "Use standard move algorithm",
+									"default": true
+								},
+								{
+									"id": "sub3",
+									"type": "popup",
+									"caption": "Only simulate moving"
+								}
+							],
+							"default": true
+						},
+						{
+							"id": "folder_drop2",
+							"type": "drop",
+							"caption": "Copy files here",
+							"iconUrl": "imgs/copy.png",
+							"onExecute": alertClicked,
+							"acceptedTypes": "file"
 						}
 					]
 				);
@@ -265,7 +346,8 @@
 					{"actionId": "file_compress_email", "enabled": true},
 					{"actionId": "file_compress", "enabled": true},
 					{"actionId": "file_delete", "enabled": true},
-					{"actionId": "send_to", "enabled": true}
+					{"actionId": "send_to", "enabled": true},
+					"file_drag"
 				];
 
 				var listboxFolderLinks = [
@@ -273,7 +355,8 @@
 					{"actionId": "file_compress_email", "enabled": true},
 					{"actionId": "file_compress", "enabled": true},
 					{"actionId": "file_delete", "enabled": true},
-					"send_to"
+					"send_to",
+					"folder_drop", "folder_drop2"
 				];
 
 				$('#lb1 tr:odd').addClass('odd');
