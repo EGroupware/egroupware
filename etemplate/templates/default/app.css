@@ -155,20 +155,4 @@
 	padding-right: 15px;
 }
 
-/* CSS styles for egw_action */
-
-table.action tr.row_off.selected {
-	background-color: #2b5d9b;
-	color: white;
-}
-
-table.action tr.row_on.selected {
-	background-color: #234b7d !important;
-}
-
-table.action .focused {
-	border: 1px dotted black;
-	padding: 1px;
-}
-
 
