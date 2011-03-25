@@ -1396,9 +1396,9 @@ function egwGridViewRow_doInsertIntoDOM()
 		this.parentNode.append(td);
 
 		// Assign the click event to the column
-		td.mousedown(egwPreventSelect);
+//		td.mousedown(egwPreventSelect);
 		td.click({"item": this, "col": col.id}, function(e) {
-			this.onselectstart = null;
+//			this.onselectstart = null;
 			e.data.item._columnClick(egwGetShiftState(e), e.data.col);
 		});
 
@@ -1407,7 +1407,8 @@ function egwGridViewRow_doInsertIntoDOM()
 		// Store the column in the td object array
 		this.tdObjects.push({
 			"td": td,
-			"cont": cont
+			"cont": cont,
+			"ts": 0
 		});
 	}
 
@@ -1443,6 +1444,16 @@ function egwGridViewRow_doUpdateData(_immediate)
 			var cont = this.tdObjects[i].cont;
 			if (typeof data[col.id] != "undefined")
 			{
+				// If the timestamp of the tdObject and the data is still the
+				// same we don't have to update
+				if (this.tdObjects[i].ts == data[col.id].time)
+				{
+					continue;
+				}
+
+				// Update the timestamp
+				this.tdObjects[i].ts = data[col.id].time;
+
 				cont.empty();
 
 				if (col.type == EGW_COL_TYPE_NAME_ICON_FIXED)
@@ -1531,7 +1542,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 				}
 				else
 				{
-					cont.html(data[col.id]);
+					cont.html(data[col.id].data);
 				}
 				cont.toggleClass("queued", false);
 			}

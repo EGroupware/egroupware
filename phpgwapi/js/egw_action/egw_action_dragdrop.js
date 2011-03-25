@@ -83,6 +83,11 @@ function egwDragActionImplementation()
 
 		if (node)
 		{
+			// Prevent selection
+			node.onselectstart = function () {
+				return false;
+			};
+
 			$(node).draggable(
 				{
 					"distance": 20,
@@ -101,16 +106,27 @@ function egwDragActionImplementation()
 						$(node).data("ddTypes", ai.ddTypes);
 						$(node).data("selected", ai.selected);
 
+						if (ai.helper)
+						{
+							// Append the helper object to the body element - this
+							// fixes a bug in IE: If the element isn't inserted into
+							// the DOM-tree jquery appends it to the parent node.
+							// In case this is a table it doesn't work correctly
+							$("body").append(ai.helper);
+							return ai.helper;
+						}
+
 						// Return an empty div if the helper dom node is not set
-						return ai.helper ? ai.helper: $(document.createElement("div"));
+						return $(document.createElement("div"));
 					},
 					"start": function(e) {
 						return ai.helper != null;
 					},
-					// Solves problem with scroll position changing in the grid	
+					// Solves problem with scroll position changing in the grid
 					// component
 					"refreshPositions": true,
-					"scroll": false
+					"scroll": false,
+					"containment": "document"
 				}
 			);
 
@@ -326,8 +342,10 @@ function egwDropActionImplementation()
 							// set of properties.
 							var popup = getPopupImplementation();
 							var pos = popup._getPageXY(event);
-							popup.doExecuteImplementation(pos, selected, links,
-								_context);
+							window.setTimeout(function() {
+								popup.doExecuteImplementation(pos, selected, links,
+									_context);
+							}, 0); // Timeout is needed to have it working in IE
 						}
 
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT);

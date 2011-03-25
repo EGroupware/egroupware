@@ -68,9 +68,12 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.updatedGrid = null;
 	this.actionLinkGroups = {};
 	this.group = false;
+	this.capColTime = 0;
 
 	this.gridViewObj = null;
 }
+
+var EGW_GRID_DATA_UPDATE_TIME = 0;
 
 egwGridDataElement.prototype.free = function()
 {
@@ -79,17 +82,29 @@ egwGridDataElement.prototype.free = function()
 
 egwGridDataElement.prototype.set_caption = function(_value)
 {
-	this.caption = _value;
+	if (_value != this.caption)
+	{
+		this.capColTime = EGW_GRID_DATA_UPDATE_TIME;
+		this.caption = _value;
+	}
 }
 
 egwGridDataElement.prototype.set_iconUrl = function(_value)
 {
-	this.iconUrl = _value;
+	if (_value != this.iconUrl)
+	{
+		this.capColTime = EGW_GRID_DATA_UPDATE_TIME;
+		this.iconUrl = _value;
+	}
 }
 
 egwGridDataElement.prototype.set_iconSize = function(_value)
 {
-	this.iconSize = _value;
+	if (_value != this.iconSize)
+	{
+		this.capColTime = EGW_GRID_DATA_UPDATE_TIME;
+		this.iconSize = _value;
+	}
 }
 
 egwGridDataElement.prototype.set_opened = function(_value)
@@ -99,7 +114,14 @@ egwGridDataElement.prototype.set_opened = function(_value)
 
 egwGridDataElement.prototype.set_canHaveChildren = function(_value)
 {
-	this.canHaveChildren = _value && (this.children.length == 0);
+	// Calculate the canHaveChildren value which would really be set
+	var rv = _value && (this.children.length == 0);
+
+	if (rv != this.canHaveChildren)
+	{
+		this.canHaveChildren = _value;
+		this.capColTime = EGW_GRID_DATA_UPDATE_TIME;
+	}
 }
 
 egwGridDataElement.prototype.set_group = function(_value)
@@ -150,10 +172,27 @@ egwGridDataElement.prototype.set_data = function(_value)
 				data = val;
 			}
 
+			// Set the data column timestamp - this is used inside the grid_view
+			// row unit in order to only update data which has really changed
+			var ts = 0;
+			var newData = true;
+
+			if (typeof this.data[col_id] != "undefined" && this.data[col_id].data == data)
+			{
+				ts = this.data[col_id].ts;
+				newData = false;
+			}
+
+			if (newData)
+			{
+				ts = EGW_GRID_DATA_UPDATE_TIME;
+			}
+
 			this.data[col_id] = {
 				"data": data,
 				"sortData": sortData,
-				"queued": false
+				"queued": false,
+				"time": ts
 			}
 		}
 	}
@@ -191,6 +230,9 @@ egwGridDataElement.prototype.set_data = function(_value)
  */
 egwGridDataElement.prototype.loadData = function(_data, _doCallUpdate)
 {
+	// Store the current timestamp
+	EGW_GRID_DATA_UPDATE_TIME = (new Date).getTime();
+
 	if (typeof _doCallUpdate == "undefined")
 	{
 		_doCallUpdate = false;
@@ -287,6 +329,7 @@ egwGridDataElement.prototype.clearData = function()
 	this.caption = false;
 	this.iconUrl = false;
 	this.iconSize = false;
+	this.capColTime = 0;
 
 	this.callGridViewObjectUpdate();
 }
@@ -426,7 +469,8 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 				{
 					res = {
 						"caption": this.caption,
-						"iconUrl": this.iconUrl
+						"iconUrl": this.iconUrl,
+						"time": this.capColTime
 					}
 				}
 				else
@@ -448,7 +492,7 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 			{
 				if (_returnData && typeof this.data[_columnId].data != "undefined")
 				{
-					res = this.data[_columnId].data;
+					res = this.data[_columnId];
 				}
 				else
 				{

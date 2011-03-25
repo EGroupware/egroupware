@@ -248,9 +248,9 @@ function egwPopupActionImplementation()
 
 		// Append the groups to the groups2 array
 		var groups2 = [];
-		for (k in groups)
+		for (var i = 0; i < groups.length; i++)
 		{
-			groups2.push(groups[k].links);
+			groups2.push(groups[i].links);
 		}
 
 		_parentGroup.groups = groups2;
