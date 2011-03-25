@@ -381,6 +381,12 @@ class calendar_activesync implements activesync_plugin_write
 
 		$event['public'] = (int)($message->sensitivity < 1);	// 0=normal, 1=personal, 2=private, 3=confidential
 
+		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
+		if (isset($message->busystatus))
+		{
+			$event['non_blocking'] = $message->busystatus ? 0 : 1;
+		}
+
 		if (($event['whole_day'] = $message->alldayevent))
 		{
 			$event['end']--;	// otherwise our whole-day event code in save makes it one more day!
@@ -700,6 +706,10 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			if (!empty($event[$key])) $message->$attr = $event[$key];
 		}
+		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
+		{
+			++$message->endtime;	// EGw all-day-events are 1 sec shorter!
+		}
 		// copying strings
 		foreach(array(
 			'title' => 'subject',
@@ -729,7 +739,9 @@ class calendar_activesync implements activesync_plugin_write
 		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 
 		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
-		$message->alldayevent = (int)calendar_bo::isWholeDay($event);
+
+		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
+		$message->busystatus = $event['non_blocking'] ? 0 : 2;
 
 		$message->attendees = array();
 		foreach($event['participants'] as $uid => $status)
@@ -862,7 +874,6 @@ class calendar_activesync implements activesync_plugin_write
 				}
 			}
 		}
-		//$message->busystatus;
 		//$message->meetingstatus;
 
 		return $message;
