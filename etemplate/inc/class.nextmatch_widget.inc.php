@@ -246,19 +246,6 @@ class nextmatch_widget
 				return $extra_label;
 		}
 
-		// Load some JS files needed for the egw_action framework
-		egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
-
-		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
-		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
-		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
-		egw_framework::validate_file('egw_action','egw_action');
-		egw_framework::validate_file('egw_action','egw_action_common');
-		egw_framework::validate_file('egw_action','egw_action_popup');
-		egw_framework::validate_file('egw_action','egw_menu');
-		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
-		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
-
 		// does NOT work with php5.2.6+
 		if (version_compare(PHP_VERSION,'5.2.6','>='))
 		{
@@ -494,12 +481,12 @@ class nextmatch_widget
 		$definition = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'];
 		if(!$value['no_csv_export'] && $definition) {
 			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $definition) {
-				$nextmatch->set_cell_attribute('export', 'onclick', 
+				$nextmatch->set_cell_attribute('export', 'onclick',
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 						'appname' => $app,
 						'definition' => $definition
-					)) . 
+					)) .
 					"', '_blank', 850, 440, 'yes'); return false;"
 				);
 			}

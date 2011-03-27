@@ -19,7 +19,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.list_result" template="" lang="" group="0" version="1.0.0.002">
+	<template id="etemplate.editor.list_result" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -32,7 +32,7 @@
 					<template id="etemplate.editor.keys"/>
 				</row>
 				<row>
-					<grid>
+					<grid class="egwGridView_grid">
 						<columns>
 							<column/>
 							<column/>
@@ -67,8 +67,7 @@
 			</rows>
 		</grid>
 		<styles>
-			.redItalic { color:red; font-style:italic;}
-			td.lr_padding { padding-left: 5px; padding-right: 5px; }
+			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 		</styles>
 	</template>
 </overlay>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.5.001">
+	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" spacing="0" padding="3">
 			<columns>
 				<column width="1%"/>
@@ -18,11 +18,11 @@
 				<column disabled="@no_csv_export"/>
 			</columns>
 			<rows>
-				<row class="th">
+				<row class="th" part="header">
 					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
 					<menulist>
-						<menupopup type="select-cat" options="-1,,,$cont[cat_app]" label="Category" id="cat_id" onchange="1" statustext="select a Category" align="center"/>
+						<menupopup type="select-cat" options="-1,,,$cont[cat_app],$cont[cat_parent]" label="Category" id="cat_id" onchange="1" statustext="select a Category" align="center"/>
 					</menulist>
 					<menulist>
 						<menupopup label="@filter_label" align="center" id="filter" onchange="@filter_onchange" statustext="@filter_help"/>
@@ -54,7 +54,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.3.001">
+	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="35%"/>
@@ -79,7 +79,9 @@
 					</hbox>
 				</row>
 				<row>
-					<template content="rows" span="all" align="center" id="@template"/>
+					<template content="rows" span="all" class="egwGridView_grid" align="center" id="@template"/>
+					<description/>
+					<description/>
 				</row>
 				<row class="noPrint" disabled="!@bottom_too">
 					<template content="bottom" span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>

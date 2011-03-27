@@ -700,10 +700,11 @@ Preferences tabs
 }
 
 .egwGridView_grid tr.th > td, /*legacy*/
-.egwGridView_outer thead th {
+.egwGridView_outer thead th,
+.nextmatch_header {
 	background-color: #E0E0E0;
 	font-weight: normal;
-	padding: 5px;
+	padding: 2px;
 	text-align: left;
 	border-left: 1px solid silver;
 	border-top: 1px solid silver;
@@ -712,6 +713,13 @@ Preferences tabs
 	background-image: url(../../default/images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
+}
+
+.nextmatch_header tr {
+	background: none;
+}
+.nextmatch_header {
+	padding: 0px;
 }
 
 .egwGridView_grid tr.th > td:hover, /*legacy*/
@@ -744,6 +752,11 @@ Preferences tabs
 	background-image: url(../../default/images/egw_action/selectcols.png);
 	background-position: center;
 	background-repeat: no-repeat;
+}
+
+.nextmatch_header .selectcols {
+	background: none;
+	height: auto;
 }
 
 .egwGridView_grid td.frame,

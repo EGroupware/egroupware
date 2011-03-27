@@ -946,8 +946,21 @@ class etemplate extends boetemplate
 			$html = html::div($html,$div_style);
 		}
 
-/*		if ($options[3] == 'action')
+		if ($options[3] == 'egwGridView_grid')
 		{
+			// Load some JS files needed for the egw_action framework
+			egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+
+			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
+			egw_framework::validate_file('egw_action','egw_action');
+			egw_framework::validate_file('egw_action','egw_action_common');
+			egw_framework::validate_file('egw_action','egw_action_popup');
+			egw_framework::validate_file('egw_action','egw_menu');
+			egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
+			egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
+
 			// JS action objects generated for this widget are prefixed with the
 			// prefix given here
 			$prefix = "egw_";
@@ -995,11 +1008,11 @@ class etemplate extends boetemplate
 			]
 		);
 
-		var actionLinks = ["folder_open", "file_view"];
+		var actionLinks = [];//"folder_open", "file_view"];
 
 		// Create a new action object for each table row
 		// TODO: only apply function to outer level
-		$("table.action>tbody >tr").each(function(index, elem) {
+		$("table.egwGridView_grid>tbody>tr").each(function(index, elem) {
 
 			console.log(elem);
 			// Create a new action object
@@ -1009,7 +1022,7 @@ class etemplate extends boetemplate
 		});
 	});
 </script>';
-		}*/
+		}
 
 		return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
 	}
