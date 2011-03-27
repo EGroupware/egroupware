@@ -479,7 +479,7 @@ class calendar_activesync implements activesync_plugin_write
 
 		if (isset($message->categories))
 		{
-			$event['categories'] = $this->calendar->find_or_add_categories($message->categories, $id);
+			$event['category'] = implode(',', array_filter($this->calendar->find_or_add_categories($message->categories, $id),'strlen'));
 		}
 
 		// check if event is recurring and import recur information (incl. timezone)
