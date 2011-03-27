@@ -178,7 +178,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				'parent'=>	'0',
 			);
 		}
-		debugLog(__METHOD__."() returning ".array2string($folderlist));
+		//debugLog(__METHOD__."() returning ".array2string($folderlist));
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
@@ -583,6 +583,21 @@ error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") re
 	 * a full resync of the item from the server
 	 */
 	function SetReadFlag($folderid, $id, $flags)
+	{
+		return false;
+	}
+
+	/**
+     	 * modify olflags (outlook style) flag of a message
+     	 *
+     	 * @param $folderid
+     	 * @param $id
+     	 * @param $flags
+     	 *
+     	 *
+     	 * @DESC The $flags parameter must contains the poommailflag Object
+     	 */
+	function ChangeMessageFlag($folderid, $id, $flags)
 	{
 		return false;
 	}

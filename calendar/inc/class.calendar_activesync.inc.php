@@ -345,7 +345,7 @@ class calendar_activesync implements activesync_plugin_write
 			}
 		}
 		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
-		error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
+		//error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
 		return $this->StatMessage($folderid, $id);
 	}
 
@@ -645,6 +645,21 @@ class calendar_activesync implements activesync_plugin_write
 	 * a full resync of the item from the server
 	 */
 	function SetReadFlag($folderid, $id, $flags)
+	{
+		return false;
+	}
+
+	/**
+     	 * modify olflags (outlook style) flag of a message
+     	 *
+     	 * @param $folderid
+     	 * @param $id
+     	 * @param $flags
+     	 *
+     	 *
+     	 * @DESC The $flags parameter must contains the poommailflag Object
+     	 */
+	function ChangeMessageFlag($folderid, $id, $flags)
 	{
 		return false;
 	}
