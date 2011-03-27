@@ -35,7 +35,7 @@
   </tr>
  </table>
 
- <table border="0" width="45%" align="center">
+ <table border="0" width="45%" align="center" class="egwGridView_grid">
   <tr class="th">
    <td>{sort_name}</td>
    <td>{header_edit}</td>
@@ -54,7 +54,7 @@
     </form>
    </td>
    <td align="right">
-   <!-- 
+   <!--
     <form method="POST" action="{search_action}">
      {input_search}
     </form>

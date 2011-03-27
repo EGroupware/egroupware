@@ -51,7 +51,7 @@
 </table>
 </div>
  <div align="center">
-  <table border="0" width="80%">
+  <table border="0" width="80%" class="egwGridView_grid">
    <tr class="th">
     <td width="20%">{lang_loginid}</td>
     <td width="20%">{lang_lastname}</td>

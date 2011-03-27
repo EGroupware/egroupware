@@ -8,7 +8,7 @@
  </tr>
 </td>
 
-<table border="0" width="95%" align="center">
+<table border="0" width="95%" align="center" class="egwGridView_grid">
  <tr class="th">
   <td>{sort_loginid}</td>
   <td>{sort_ip}</td>
