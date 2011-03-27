@@ -24,4 +24,14 @@ foreach(array(
 }
 
 // import timezone data from sqlite database
-calendar_timezones::import_sqlite();
+try
+{
+	calendar_timezones::import_sqlite();
+}
+// catch broken sqlite extension exception and output message, as user can't do anything about it
+// all other exceptions are fatal, to get user to fix them!
+catch (egw_exception_wrong_userinput $e)	// all other exceptions are fatal
+{
+	_egw_log_exception($e);
+	echo '<p>'.$e->getMessage()."</p>\n";
+}

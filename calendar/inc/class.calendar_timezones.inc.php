@@ -144,9 +144,9 @@ class calendar_timezones
 	}
 
 	/**
-	 * Init static variables for session
+	 * Init static variables for session and check for updated timezone information
 	 *
-	 * As we use the returned reference, we do NOT need to care about storing the information in the session
+	 * As we use returned references from the session, we do NOT need to care about storing the information explicitly
 	 */
 	public static function init_static()
 	{
@@ -162,18 +162,35 @@ class calendar_timezones
 			));
 			self::$tz2id = array('UTC' => -1);
 		}
+
+		// check for updated timezones once per session
+		if (!egw_cache::getSession(__CLASS__, 'tzs_checked'))
+		{
+			try
+			{
+				$msg = self::import_sqlite($updated);
+				if ($updated) error_log($msg);	// log that timezones have been updated
+			}
+			catch (Exception $e)
+			{
+				_egw_log_exception($e);	// log the exception to error_log, but do not stall program execution
+			}
+			egw_cache::setSession(__CLASS__, 'tzs_checked', true);
+		}
 	}
 
 	/**
 	 * Import timezones from sqlite file
 	 *
+	 * @param boolean $updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
 	 * @param boolean $check_version=true true: check version and only act, if it's different
 	 * @return string message about update
 	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
 	 * @throws egw_exception_assertion_failed if no PDO sqlite support
+	 * @throws egw_exception_wrong_userinput for broken sqlite extension
 	 */
-	public static function import_sqlite($file='calendar/setup/timezones.sqlite',$check_version=true)
+	public static function import_sqlite(&$updated=null,$file='calendar/setup/timezones.sqlite',$check_version=true)
 	{
 		$path = EGW_SERVER_ROOT.'/'.$file;
 
@@ -190,9 +207,10 @@ class calendar_timezones
 		// not much we can do, but give an good error message, with a download link to the MySQL dump
 		if (!($rs = $pdo->query('SELECT version FROM tz_schema_version')))
 		{
-			return lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path).'<br />'.
+			throw new egw_exception_wrong_userinput(
+				lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path).'<br />'.
 				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
-					'<a href="http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2">','</a>');
+					'<a href="http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2">','</a>'));
 		}
 		if ($rs->fetchColumn() != 1)
 		{
@@ -203,6 +221,7 @@ class calendar_timezones
 		//echo "<p>tz_version($path)=$tz_version, tz_db_version=$tz_db_version</p>\n";
 		if ($tz_version === $tz_db_version)
 		{
+			$updated = false;
 			return lang('Nothing to update, version is already %1.',$tz_db_version);	// we already have the right
 		}
 		$tz2id = array();
@@ -235,6 +254,7 @@ class calendar_timezones
 		),__LINE__,__FILE__,'phpgwapi');
 
 		//_debug_array($tz2id);
+		$updated = true;
 		return lang('Timezones updated to version %1 (%2 records updated).',$tz_version,count($tz2id));
 	}
 
