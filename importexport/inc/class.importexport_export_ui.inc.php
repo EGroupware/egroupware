@@ -171,7 +171,7 @@ class importexport_export_ui {
 			} else {
 				$options = $plugin_object->get_selectors_etpl();
 				if(is_array($options)) {
-					$content['selection'] = (array)$options['content'];
+					$content['selection'] = $options['content'];
 					$sel_options += (array)$options['sel_options'];
 					$readonlys['selection'] = (array)$options['readonlys'];
 					$preserv['selection'] = (array)$options['preserv'];
