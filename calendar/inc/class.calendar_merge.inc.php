@@ -219,18 +219,26 @@ class calendar_merge extends bo_merge
 		));
 		$days = array();
 		$replacements = array();
+		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
 		foreach($events as $day => $list) 
 		{
 			foreach($list as $key => $event)
 			{
 				$start = egw_time::to($event['start'], 'array');
 				$end = egw_time::to($event['end'], 'array');
+				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
 					$dow = date('l',$event['start']);
 				} else {
 					$dow = date('l', strtotime($day));
+					// Fancy date+time formatting for multi-day events
+					$start_time = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
+					$end_time = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
+					$replacements['$$calendar_starttime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' .$start_time;
+					$replacements['$$calendar_endtime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' . $end_time;
 				}
-				$days[date('Ymd',$_date)][$dow][] = $this->calendar_replacements($event);
+				
+				$days[date('Ymd',$_date)][$dow][] = $replacements;
 			}
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false) {
 				$date_marker = array(
@@ -302,7 +310,19 @@ class calendar_merge extends bo_merge
 		{
 			foreach($list as $key => $event)
 			{
-				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
+				$start = egw_time::to($event['start'], 'array');
+				$end = egw_time::to($event['end'], 'array');
+				$replacements = $this->calendar_replacements($event);
+				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
+					$dow = date('l',$event['start']);
+				} else {
+					// Fancy date+time formatting for multi-day events
+					$start_time = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
+					$end_time = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
+					$replacements['$$calendar_starttime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' .$start_time;
+					$replacements['$$calendar_endtime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' . $end_time;
+				}
+				$days[date('Ymd',$_date)][$plugin][] = $replacements;
 			}
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false) {
 				$date_marker = array(
