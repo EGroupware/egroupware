@@ -233,8 +233,9 @@ else
 if(@get_var('hooks', Array('GET')))
 {
 	// Find & register all application hooks
-	foreach($setup_info as $appname => $info) {
-		$GLOBALS['egw_setup']->register_hooks($appname);
+	foreach($setup_info as $appname => $info)
+	{
+		if ($info['currentver']) $GLOBALS['egw_setup']->register_hooks($appname);
 	}
 	echo lang('All hooks registered') . '<br />';
 }
