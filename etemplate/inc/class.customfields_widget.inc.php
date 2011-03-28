@@ -45,6 +45,7 @@ class customfields_widget
 	 */
 	var $cf_types = array(
 		'text'     => 'Text',
+		'float'    => 'Float',
 		'label'    => 'Label',
 		'select'   => 'Selectbox',
 		'ajax_select' => 'Search',
@@ -311,6 +312,13 @@ class customfields_widget
 							if ($showthis == '#a#l#l#' || $showthis == $key) etemplate::add_child($input,$radio);
 							unset($radio);
 						}
+						break;
+					case 'float':
+						$known_options = array('min'=>null, 'max'=>null,'size' => $field['len'], 'precision' => null);
+						$options = array_merge($known_options, $field['values']);
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+							'size' => implode(',',$options)
+						));
 						break;
 					case 'text' :
 					case 'textarea' :
