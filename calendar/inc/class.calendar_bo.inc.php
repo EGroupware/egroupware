@@ -1017,6 +1017,8 @@ class calendar_bo
 	{
 		static $res_info_cache = array();
 
+		if (!is_scalar($uid)) throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($uid).') parameter must be scalar');
+
 		if (!isset($res_info_cache[$uid]))
 		{
 			if (is_numeric($uid))
