@@ -666,6 +666,20 @@ abstract class bo_merge
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
 		switch($this->mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/xml':
+			case 'text/xml':
+			case 'text/html':
+				$is_xml = true;
+				$charset = 'utf-8';	// xml files --> always use utf-8
+				break;
+		}
+
+		switch($this->mimetype)
 			{
 				case 'application/rtf':
 				case 'text/rtf':
@@ -688,7 +702,9 @@ abstract class bo_merge
 				default:
 					$LF = "\n";
 			}
-
+		if($is_xml) {
+			$this->replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$LF),$this->replacements);
+		}
 		if (strpos($param[0],'$$NELF') === 0)
 		{	//sets a Pagebreak and value, only if the field has a value
 			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF.$this->replacements['$$'.$param[1].'$$'];
