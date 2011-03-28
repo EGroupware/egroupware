@@ -253,7 +253,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 *
 	 */
 	public function get_selectors_etpl() {
-		return 'addressbook.export_csv_selectors';
+		return array(
+			'name'		=> 'addressbook.export_csv_selectors',
+			'content'	=> 'use_all',
+		);
 	}
 
 	/**
