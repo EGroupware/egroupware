@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  *
- * @version 4.1.1
+ * @version 4.3.0
  *
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -125,6 +125,7 @@ require 'HTMLPurifier/AttrTransform/Lang.php';
 require 'HTMLPurifier/AttrTransform/Length.php';
 require 'HTMLPurifier/AttrTransform/Name.php';
 require 'HTMLPurifier/AttrTransform/NameSync.php';
+require 'HTMLPurifier/AttrTransform/Nofollow.php';
 require 'HTMLPurifier/AttrTransform/SafeEmbed.php';
 require 'HTMLPurifier/AttrTransform/SafeObject.php';
 require 'HTMLPurifier/AttrTransform/SafeParam.php';
@@ -151,6 +152,7 @@ require 'HTMLPurifier/HTMLModule/Image.php';
 require 'HTMLPurifier/HTMLModule/Legacy.php';
 require 'HTMLPurifier/HTMLModule/List.php';
 require 'HTMLPurifier/HTMLModule/Name.php';
+require 'HTMLPurifier/HTMLModule/Nofollow.php';
 require 'HTMLPurifier/HTMLModule/NonXMLCommonAttributes.php';
 require 'HTMLPurifier/HTMLModule/Object.php';
 require 'HTMLPurifier/HTMLModule/Presentation.php';
@@ -196,10 +198,12 @@ require 'HTMLPurifier/Token/Start.php';
 require 'HTMLPurifier/Token/Text.php';
 require 'HTMLPurifier/URIFilter/DisableExternal.php';
 require 'HTMLPurifier/URIFilter/DisableExternalResources.php';
+require 'HTMLPurifier/URIFilter/DisableResources.php';
 require 'HTMLPurifier/URIFilter/HostBlacklist.php';
 require 'HTMLPurifier/URIFilter/MakeAbsolute.php';
 require 'HTMLPurifier/URIFilter/Munge.php';
 require 'HTMLPurifier/URIScheme/data.php';
+require 'HTMLPurifier/URIScheme/file.php';
 require 'HTMLPurifier/URIScheme/ftp.php';
 require 'HTMLPurifier/URIScheme/http.php';
 require 'HTMLPurifier/URIScheme/https.php';
