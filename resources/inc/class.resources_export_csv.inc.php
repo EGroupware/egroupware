@@ -123,7 +123,8 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl() {
 		return array(
-			'name'	=> 'resources.export_csv_selectors'
+			'name'	=> 'resources.export_csv_selectors',
+			'content'	=> 'selected'
 		);
 	}
 }
