@@ -237,15 +237,25 @@
      </select>
     </td>
    </tr>
+    
+    <tr class="row_off">
+    <td>{lang_Authentication_type_for_application}: <b>ActiveSync</b></td>
+    <td>
+     <select name="newsettings[auth_type_activesync]">
+      <option value="">{lang_Standard,_as_defined_above}</option>
+{hook_auth_type_activesync}
+     </select>
+    </td>
+   </tr>
 
-  <tr class="row_off">
+  <tr class="row_on">
     <td>{lang_HTTP_auth_types_(comma-separated)_to_use_without_login-page, eg. "NTLM"}:</td>
     <td>
       <input name="newsettings[http_auth_types]" value="{value_http_auth_types}" size="20" />
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
@@ -256,14 +266,14 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_sql_encryption_type}:</td>
     <td>
      <select name="newsettings[sql_encryption_type]">{hook_sql_passwdhashes}</select>
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
      <td>{lang_Activate_safe_password_check}:</td>
      <td>
       <select name="newsettings[check_save_passwd]">
@@ -273,7 +283,7 @@
      </td>
     </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_authentication_via_cookie}:</td>
     <td>
       <select name="newsettings[allow_cookie_auth]">
@@ -283,7 +293,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Auto_login_anonymous_user}:</td>
     <td>
       <select name="newsettings[auto_anon_login]">
@@ -293,7 +303,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_password_migration}:</td>
     <td>
       <select name="newsettings[pwd_migration_allowed]">
@@ -303,27 +313,27 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Allowed_migration_types_(comma-separated)}:</td>
     <td>
       <input name="newsettings[pwd_migration_types]" value="{value_pwd_migration_types}" size="20" />
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Minimum_account_id_(e.g._500_or_100,_etc.)}:</td>
     <td><input name="newsettings[account_min_id]" value="{value_account_min_id}" /></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Maximum_account_id_(e.g._65535_or_1000000)}:</td>
     <td><input name="newsettings[account_max_id]" value="{value_account_max_id}" /></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_User_account_prefix}:</td>
     <td><input name="newsettings[account_prefix]" value="{value_account_prefix}" /></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Usernames_are_casesensitive}:</td>
     <td>
       <select name="newsettings[case_sensitive_username]">
@@ -333,7 +343,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Auto_create_account_records_for_authenticated_users}:</td>
     <td>
       <select name="newsettings[auto_create_acct]">
@@ -344,7 +354,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Auto-created_user_accounts_expire}:</td>
     <td>
      <select name="newsettings[auto_create_expire]">
@@ -356,12 +366,12 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Add_auto-created_users_to_this_group_('Default'_will_be_attempted_if_this_is_empty.)}:</td>
     <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}" /></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_If_no_ACL_records_for_user_or_any_group_the_user_is_a_member_of}:</td>
     <td>
      <select name="newsettings[acl_default]">
@@ -371,7 +381,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
