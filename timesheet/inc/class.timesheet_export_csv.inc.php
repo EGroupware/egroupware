@@ -22,6 +22,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		'date-time' => array('ts_start', 'ts_modified'),
 		'select-cat' => array('cat_id'),
 		'links' => array('pl_id'),
+		'select' => array('ts_status'),
 	);
 
 	/**
@@ -49,12 +50,16 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
+		$lookups = array(
+			'ts_status'	=>	$uitimesheet->status_labels+array(lang('No status'))
+		);
+
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $identifier) {
 			$record = new timesheet_egw_record($identifier);
 			if($options['convert']) {
-				importexport_export_csv::convert($record, self::$types, 'timesheet');
+				importexport_export_csv::convert($record, self::$types, 'timesheet', $lookups);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
