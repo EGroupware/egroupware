@@ -192,7 +192,9 @@ class importexport_export_ui {
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
 			($prefs = unserialize($prefs)))
 		{
+			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
+			$content['selection'] = $prefs['selection'] ? $prefs['selection'] : $selection;
 		}
 		unset ($plugin_object);
 		(array)$apps = importexport_helper_functions::get_apps('export');
