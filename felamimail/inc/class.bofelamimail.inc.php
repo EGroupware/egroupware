@@ -2584,18 +2584,29 @@
 
 		function folderExists($_folder, $forceCheck=false)
 		{
-			#echo __METHOD__." called; check for $_folder<br>";
+			static $folderInfo;
+			if (empty($_folder))
+			{
+				error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
+				return false;
+			}
+			// reduce traffic within on request
+			//error_log(__METHOD__.__LINE__.' Called with Folder:'.$_folder.function_backtrace());
+			if (isset($folderInfo[$_folder])) return $folderInfo[$_folder];
+
 			// does the folder exist???
-			//error_log("bofelamimail::folderExists->Connected?".$this->icServer->_connected.", ".$_folder.", ".$forceCheck);
+			//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".$forceCheck);
 			if ((!($this->icServer->_connected == 1)) && $forceCheck) {
-				#error_log("bofelamimail::folderExists->NotConnected and forceCheck");
+				//error_log(__METHOD__."->NotConnected and forceCheck");
 				//return false;
 				//try to connect
 				if (!$this->icServer->_connected) $this->openConnection();
 			}
-			if(is_a($this->icServer,'defaultimap')) $folderInfo = $this->icServer->getMailboxes('', $_folder, true);
-			#error_log(print_r($folderInfo,true));
-			if(is_a($folderInfo, 'PEAR_Error') || !is_array($folderInfo[0])) {
+			if(is_a($this->icServer,'defaultimap')) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
+			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$_folder]);
+
+			if(is_a($folderInfo[$_folder], 'PEAR_Error') || $folderInfo[$_folder] !== true)
+			{
 				return false;
 			} else {
 				return true;
