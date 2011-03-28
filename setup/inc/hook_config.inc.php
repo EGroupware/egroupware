@@ -263,6 +263,10 @@ function auth_type_groupdav($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_groupdav']);
 }
+function auth_type_activesync($config)
+{
+	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_activesync']);
+}
 
 /**
  * Returns options string
