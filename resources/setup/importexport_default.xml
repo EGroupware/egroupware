@@ -16,7 +16,7 @@
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="array" name="mapping">
-          <entry type="string" name="res_id">ID</entry>
+          <entry type="string" name="res_id">Resource ID</entry>
           <entry type="string" name="name">Name</entry>
           <entry type="string" name="short_description">Short description</entry>
           <entry type="string" name="cat_id">Category</entry>
@@ -35,7 +35,7 @@
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-03-02 10:17:41</entry>
+      <entry type="string" name="modified">2011-03-28 10:59:50</entry>
     </entry>
     <entry type="array" name="import-resources">
       <entry type="string" name="name">import-resources</entry>
@@ -51,20 +51,19 @@
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="string" name="update_cats">add</entry>
         <entry type="array" name="csv_fields">
-          <entry type="string" name="0">name</entry>
-          <entry type="string" name="1">short_description</entry>
-          <entry type="string" name="2">cat_id</entry>
-          <entry type="string" name="3">quantity</entry>
-          <entry type="string" name="4">useable</entry>
-          <entry type="string" name="5">location</entry>
-          <entry type="string" name="6">bookable</entry>
-          <entry type="string" name="7">buyable</entry>
-          <entry type="string" name="8">prize</entry>
-          <entry type="string" name="9">long_description</entry>
-          <entry type="string" name="10">inventory_number</entry>
-          <entry type="string" name="11">no_csv_1</entry>
-          <entry type="string" name="12">no_csv_2</entry>
-          <entry type="string" name="13">no_csv_3</entry>
+          <entry type="string" name="0">Resource ID</entry>
+          <entry type="string" name="1">Name</entry>
+          <entry type="string" name="2">Short description</entry>
+          <entry type="string" name="3">Category</entry>
+          <entry type="string" name="4">Quantity</entry>
+          <entry type="string" name="5">useable</entry>
+          <entry type="string" name="6">Location</entry>
+          <entry type="string" name="7">Bookable</entry>
+          <entry type="string" name="8">Buyable</entry>
+          <entry type="string" name="9">Prize</entry>
+          <entry type="string" name="10">Long description</entry>
+          <entry type="string" name="11">Inventory number</entry>
+          <entry type="string" name="12">Test CF</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">res_id</entry>
@@ -96,7 +95,7 @@
           </entry>
         </entry>
       </entry>
-      <entry type="string" name="modified">2011-03-02 10:16:33</entry>
+      <entry type="string" name="modified">2011-03-28 11:02:19</entry>
     </entry>
   </entry>
 </entry>
