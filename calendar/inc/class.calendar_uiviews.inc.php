@@ -905,9 +905,13 @@ class calendar_uiviews extends calendar_ui
 			$cols = array();
 
 			//Add the holiday events
-			$dayEvents[$this->date] = array_merge(
-				$dayEvents[$this->date],
-				$this->_get_holiday_events($this->date, $this->display_holiday_event_types));
+			$holidays = $this->_get_holiday_events($this->date, $this->display_holiday_event_types);
+			foreach($dayEvents as &$events)
+			{
+				$events = array_merge($events,$holidays);
+			}
+			unset($events);
+			unset($holidays);
 
 			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
 
@@ -1839,7 +1843,7 @@ function open_edit(series)
 		}
 
 		$prefix_icon = isset($event['prepend_icon']) ? $event['prepend_icon'] : '';
-		
+
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
 		// ATM we do not support whole day events or recurring events for dragdrop
