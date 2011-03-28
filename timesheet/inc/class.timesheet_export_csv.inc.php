@@ -117,6 +117,9 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl() {
-		return 'timesheet.export_csv_selectors';
+		return array(
+			'name'	=> 'timesheet.export_csv_selectors',
+			'content' => 'selected'
+		);
 	}
 }
