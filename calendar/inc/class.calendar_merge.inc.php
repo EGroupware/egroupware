@@ -162,7 +162,7 @@ class calendar_merge extends bo_merge
 			foreach(array(
 				'date' => $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
 				'day'  => 'l',
-				'time' => $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i',
+				'time' => (date('Ymd',$event['start']) != date('Ymd',$event['end']) ? $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' ' : '') . ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'),
 			) as $name => $format)
 			{
 				$value = date($format,$event[$what]);
