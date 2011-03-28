@@ -39,12 +39,14 @@ class resources_hooks
 			display_sidebox($appname,$title,$file);
 		}
 
-/*		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
+		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin'
+			&& $GLOBALS['egw_info']['user']['apps']['importexport'])	// Only one preference right now, need this to prevent errors
 		{
 			$file = array(
 				'Preferences'     => egw::link('/preferences/preferences.php','appname='.$appname),
-				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+			// Categories control access, not regular ACL system
+			//	'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+			//	'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -55,7 +57,7 @@ class resources_hooks
 				display_sidebox($appname,lang('Preferences'),$file);
 			}
 		}
-*/
+
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
@@ -169,5 +171,55 @@ class resources_hooks
 			$resource['cat_id'] = $new_cat_id;
 			$bo->save($resource);
 		}
+	}
+
+	/**
+	 * populates $settings for the preferences
+	 *
+	 * @param array|string $hook_data
+	 * @return array
+	 */
+	static function settings($hook_data)
+	{
+		$settings = array();
+
+		if ($GLOBALS['egw_info']['user']['apps']['importexport'])
+		{
+			$definitions = new importexport_definitions_bo(array(
+				'type' => 'export',
+				'application' => 'resources'
+			));
+			$options = array();
+			$default_def = 'export-resources';
+			foreach ((array)$definitions->get_definitions() as $identifier)
+			{
+				try
+				{
+					$definition = new importexport_definition($identifier);
+				}
+				catch (Exception $e)
+				{
+					// permission error
+					continue;
+				}
+				if ($title = $definition->get_title())
+				{
+					$options[$title] = $title;
+				}
+				unset($definition);
+			}
+			$settings['nextmatch-export-definition'] = array(
+				'type'   => 'select',
+				'values' => $options,
+				'label'  => 'Export definitition to use for nextmatch export',
+				'name'   => 'nextmatch-export-definition',
+				'help'   => lang('If you specify an export definition, it will be used when you export'),
+				'run_lang' => false,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> isset($options[$default_def]) ? $default_def : false,
+			);
+		}
+		return $settings;
 	}
 }
