@@ -479,13 +479,13 @@ class nextmatch_widget
 		$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 		list($app) = explode('.',$name);
 		$definition = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'];
-		if(!$value['no_csv_export'] && $definition) {
-			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $definition) {
+		if(!$value['no_csv_export'] && ($definition || !is_array($value['csv_fields']))) {
+			if($GLOBALS['egw_info']['user']['apps']['importexport'] && ($definition || $value['csv_fields'])) {
 				$nextmatch->set_cell_attribute('export', 'onclick',
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 						'appname' => $app,
-						'definition' => $definition
+						'definition' => $definition ? $definition : $value['csv_fields']
 					)) .
 					"', '_blank', 850, 440, 'yes'); return false;"
 				);
