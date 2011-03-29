@@ -25,7 +25,7 @@ class timesheet_export_openoffice implements importexport_iface_export_plugin {
 	 */
 	public function export( $_stream, importexport_definition $_definition) {
 
-		$options = $_definition->options;
+		$options = $_definition->plugin_options;
 
 		$botimesheet = new timesheet_bo();
 
@@ -33,11 +33,11 @@ class timesheet_export_openoffice implements importexport_iface_export_plugin {
 
 		$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
 
-		$bo_pm = CreateObject('projectmanager.boprojectmanager');
+		$bo_pm = CreateObject('projectmanager.projectmanager_bo');
 	    $childs = $bo_pm->children( $query['col_filter']['pm_id'] );
 	    $childs[] = $query['col_filter']['pm_id'];
 	    $pmChilds = implode(",",$childs);
-	    $botimesheet->db->select(    'egw_links','link_id, link_id1','',
+	    $GLOBALS['egw']->db->select(    'egw_links','link_id, link_id1','',
 	                   __LINE__,__FILE__,False,
 	                   '',False,0,
 	                   'JOIN egw_pm_projects ON (pm_id = link_id2)
@@ -189,7 +189,7 @@ class timesheet_export_openoffice implements importexport_iface_export_plugin {
 	 * @return string html
 	 */
 	public function get_options_etpl() {
-		return 'timesheet.export_openoffice_options';
+		return false;
 	}
 
 	/**
@@ -197,7 +197,7 @@ class timesheet_export_openoffice implements importexport_iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl() {
-		return '<b>Selectors:</b>';
+		return array('preserv' => true);
 	}
 }
 

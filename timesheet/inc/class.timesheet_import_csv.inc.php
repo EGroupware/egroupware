@@ -146,7 +146,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 		// For converting human-friendly lookups
 		$categories = new categories('timesheet');
 		$lookups = array(
-			'ts_status'	=> $bo->status_labels,
+			'ts_status'	=> $this->bo->status_labels,
 			'cat_id'	=> $categories->return_sorted_array(0,False,'','','',true)
 		);
 
@@ -163,42 +163,92 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			// Date / time
+			$record['ts_start'] = strtotime($record['ts_start']);
+
 			// Automatically handle text categories without explicit translation
-			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+			foreach(array('ts_status','cat_id') as $field) {
+				if(!is_numeric($record[$field])) {
+					$translate_key = 'translate'.(substr($field,0,2) == 'ts' ? substr($field,2) : '_cat_id');
+					if($key = array_search($record[$field], $lookups[$field])) {
+						$record[$field] = $key;
+					} elseif(array_key_exists($translate_key, $_definition->plugin_options)) {
+						$t_field = $_definition->plugin_options[$translate_key];
+						switch ($t_field) {
+							case '':
+							case '0':
+								// Skip that field
+								unset($record[$field]);
+								break;
+							case '~skip~':
+								continue 2;
+							default:
+								if(strpos($t_field, 'add') === 0) {
+									// Check for a parent
+									list($name, $parent_name) = explode('~',$t_field);
+									if($parent_name) {
+										$parent = importexport_helper_functions::cat_name2id($parent_name);
+									}
+
+									if($field == 'cat_id') {
+										$record[$field] = importexport_helper_functions::cat_name2id($record[$field], $parent);
+									} elseif ($field == 'ts_status') {
+										end($this->bo->status_labels);
+										$id = key($this->bo->status_labels)+1;
+										$this->bo->status_labels[$id] = $record[$field];
+										$this->bo->status_labels_config[$id] = array(
+											'name'   => $record[$field],
+											'parent' => $parent,
+											'admin'  => false
+										);
+										config::save_value('status_labels',$this->bo->status_labels_config,TIMESHEET_APP);
+										$lookups[$field][$id] = $name;
+										$record[$field] = $id;
+									}
+								} elseif($key = array_search($t_field, $lookups[$field])) {
+									$record[$field] = $key;
+								} else {
+									$record[$field] = $t_field;
+								}
+								break;
+						}
+					}
+				}
+			}
 
 			// Set creator, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['creator_from_csv']) {
-				if(!is_numeric($record['ts_owner'])) {
+			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner'] && !is_numeric($record['ts_owner'])) {
+				// Automatically handle text owner without explicit translation
+				$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
+				if($new_owner == '') {
 					$this->errors[$import_csv->get_current_position()] = lang(
-						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.', 
-						$record['ts_owner'], 
-						$_definition->plugin_options['creator']
+						'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
+						$record['ts_owner'],
+						common::grab_owner_name($_definition->plugin_options['creator']),
+						lang($this->bo->field2label['ts_owner'])
 					);
 					$record['ts_owner'] = $_definition->plugin_options['creator'];
+				} else {
+					$record['ts_owner'] = $new_owner;
 				}
 			} elseif ($_definition->plugin_options['creator']) {
 				$record['ts_owner'] = $_definition->plugin_options['creator'];
 			}
 
 			// Check account IDs
-			foreach(array('ts_owner','ts_modifier') as $field) {
+			foreach(array('ts_modifier') as $field) {
 				if($record[$field] && !is_numeric($record[$field])) {
 					// Try an automatic conversion
-					$contact_id = self::addr_id($record[$field]);
-					if($contact_id) {
-						$contact = $addressbook->read($contact_id);
-						$account_id = $contact['account_id'];
-					} else {
-						$accounts = $GLOBALS['egw']->accounts->search(array('type' => 'both','query'=>$record[$field]));
-						if($accounts) $account_id = key($accounts);
-					}
-					if($account_id && common::grab_owner_name($account_id) == $record[$field]) {
+					$account_id = importexport_helper_functions::account_name2id($record[$field]);
+					if($account_id && strtoupper(common::grab_owner_name($account_id)) == strtoupper($record[$field])) {
 						$record[$field] = $account_id;
 					} else {
 						$this->errors[$import_csv->get_current_position()] = lang(
-							'Invalid field: %1 = %2, it needs to be a number.', $field, $record[$field]
+							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
+							$record[$field],
+							common::grab_owner_name($_definition->plugin_options['creator']),
+							$this->bo->field2label[$field] ? lang($this->bo->field2label[$field]) : $field
 						);
-						continue 2;
 					}
 				}
 			}
@@ -301,7 +351,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
 							$GLOBALS['egw']->accounts->id2name($_data['owner']),
 							lang($_action)
-						) . $result;
+						) . ' ' . $result;
 					} else {
 						$this->results[$_action]++;
 						$result = $this->bo->data['ts_id'];
