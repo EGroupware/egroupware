@@ -232,10 +232,8 @@ class calendar_merge extends bo_merge
 				} else {
 					$dow = date('l', strtotime($day));
 					// Fancy date+time formatting for multi-day events
-					$start_time = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
-					$end_time = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
-					$replacements['$$calendar_starttime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' .$start_time;
-					$replacements['$$calendar_endtime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' . $end_time;
+					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
+					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
 				}
 				
 				$days[date('Ymd',$_date)][$dow][] = $replacements;
@@ -306,6 +304,7 @@ class calendar_merge extends bo_merge
 
 		$replacements = array();
 		$days = array();
+		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
 		foreach($events as $day => $list) 
 		{
 			foreach($list as $key => $event)
@@ -317,10 +316,8 @@ class calendar_merge extends bo_merge
 					$dow = date('l',$event['start']);
 				} else {
 					// Fancy date+time formatting for multi-day events
-					$start_time = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
-					$end_time = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
-					$replacements['$$calendar_starttime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' .$start_time;
-					$replacements['$$calendar_endtime$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)) . ' ' . $end_time;
+					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
+					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
 				}
 				$days[date('Ymd',$_date)][$plugin][] = $replacements;
 			}
