@@ -522,6 +522,9 @@ abstract class bo_merge
 		}
 		if ($is_xml)	// zip'ed xml document (eg. OO)
 		{
+			// Numeric fields
+			$names = array();
+
 			// clean replacements from array values and html or html-entities, which mess up xml
 			foreach($replacements as $name => &$value)
 			{
@@ -557,9 +560,8 @@ abstract class bo_merge
 			}
 			// Look for numbers, set their value if needed
 			$format = $replacement = '';
-			if($this->numeric_fields)
+			if($this->numeric_fields || count($names))
 			{
-				$names = array();
 				foreach($this->numeric_fields as $fieldname) {
 					$names[] = preg_quote($fieldname,'/');
 				}
