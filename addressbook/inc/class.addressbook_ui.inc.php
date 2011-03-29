@@ -254,7 +254,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			if (!$re_submit)
 			{
-				$content['nm']['to'] = 'to';
+				$content['nm']['to'] = 'to'; // use 'bcc' if you want bcc as preselected standard mailaddress scope
 				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
 				$content['nm']['search'] = '@';
 			}
@@ -851,6 +851,8 @@ class addressbook_ui extends addressbook_bo
 
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
+			//_debug_array(array('Search'=>$query['search'],
+			//'AdvancedSearch'=>$query['advanced_search']));
 			if (is_array($query['search'])) unset($query['search']);
 			unset($query['advanced_search']);
 		}
@@ -1001,7 +1003,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
-				$query['col_filter'][] = ($query['order'] == 'adr_one_postalcode' ? 'org_name' : $query['order']).' '.
+				$query['col_filter'][] = ($query['order'] == 'adr_one_postalcode' ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
 					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 			}
 			$wildcard = '%';
