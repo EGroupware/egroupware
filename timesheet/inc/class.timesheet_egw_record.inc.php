@@ -33,7 +33,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
 		$this->botimesheet = new timesheet_bo();
-		$this->timesheetentry = $this->botimesheet->read($this->identifier);
+		$this->set_record($this->botimesheet->read($this->identifier));
 	}
 
 	/**
@@ -88,6 +88,14 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 */
 	public function set_record(array $_record){
 		$this->timesheetentry = $_record;
+		// Check for linked project ID
+		if($this->timesheetentry['ts_project']) {
+			$links = egw_link::get_links('timesheet', $_record['ts_id'], 'projectmanager');
+			foreach($links as $link_id => $app_id) {
+				$this->timesheetentry['pm_id'] = $app_id;
+				break;
+			}
+		}
 	}
 
 	/**

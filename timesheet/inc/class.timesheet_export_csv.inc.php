@@ -53,6 +53,9 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		$lookups = array(
 			'ts_status'	=>	$uitimesheet->status_labels+array(lang('No status'))
 		);
+		foreach($lookups['ts_status'] as &$status) {
+			$status = html_entity_decode($status); // Remove &nbsp;
+		}
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
@@ -60,6 +63,8 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 			$record = new timesheet_egw_record($identifier);
 			if($options['convert']) {
 				importexport_export_csv::convert($record, self::$types, 'timesheet', $lookups);
+				// Special handling because it's added, not a custom field
+				if($record->pm_id) $record->pm_id = egw_link::title('projectmanager', $record->pm_id);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
