@@ -118,13 +118,12 @@ else
 	}
 
 	// Group perms for the default group
-	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','filemanager','preferences','home','manual','groupdav','notifications','syncml'),'run',$defaultgroupid);
+	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','filemanager','preferences','manual','groupdav','notifications','syncml'),'run',$defaultgroupid);
 
 	$apps = array();
-	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__);
-	while ($GLOBALS['egw_setup']->db->next_record())
+	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__) as $row)
 	{
-		$apps[] = $GLOBALS['egw_setup']->db->f('app_name');
+		$apps[] = $row['app_name'];
 	}
 	// if not otherwise selected, give admin only access to the rest of the default apps,
 	// not yet set for the default group or development only apps like (etemplate, jinn, tt's)

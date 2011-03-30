@@ -872,7 +872,7 @@
 					'account_email'         => $email,
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
-				if ($userData['mustchangepassword']) 
+				if ($userData['mustchangepassword'])
 				{
 					$userData['account_lastpwd_change']=0;
 				}
@@ -884,7 +884,7 @@
 
 					//echo '<br>#'.$account_id.'#<br>';
 					$prevVal =  $GLOBALS['egw']->accounts->id2name($account_id,'account_lastpwd_change');
-					//echo '<br>#'.$prevVal.'#<br>'; // previous Value was forced password change by admin 
+					//echo '<br>#'.$prevVal.'#<br>'; // previous Value was forced password change by admin
 					if (isset($prevVal) && $prevVal==0) $userData['account_lastpwd_change']=egw_time::to('now','ts');
 				}
 				if($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
@@ -1216,7 +1216,7 @@
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			foreach($availableApps as $app => $data)
 			{
-				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || $app == 'home')
 				{
 					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
@@ -1543,7 +1543,7 @@
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			foreach($availableApps as $app => $data)
 			{
-				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || $app == 'home')
 				{
 					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
