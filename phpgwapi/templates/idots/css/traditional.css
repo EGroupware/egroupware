@@ -727,6 +727,8 @@ Preferences tabs
 }
 
 .lettersearch, .lettersearch_active {
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 	border-radius: 10px;
 	width: 25px;
 	border: 1px solid #D3DCE3;
