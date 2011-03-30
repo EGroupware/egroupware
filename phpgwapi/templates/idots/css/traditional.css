@@ -701,7 +701,7 @@ Preferences tabs
 
 .egwGridView_grid tr.th > td, /*legacy*/
 .egwGridView_outer thead th,
-.nextmatch_header {
+.nextmatch_header, .lettersearch {
 	background-color: #E0E0E0;
 	font-weight: normal;
 	padding: 2px;
@@ -713,6 +713,15 @@ Preferences tabs
 	background-image: url(../../default/images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
+}
+
+td.lettersearch, td.lettersearch_active {
+	border-radius: 10px;
+}
+
+td.lettersearch {
+	border-color: #E0E0E0;	
+	background-image: url(../images/gradient22.png);
 }
 
 .nextmatch_header tr {
