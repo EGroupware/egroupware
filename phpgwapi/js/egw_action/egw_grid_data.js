@@ -517,6 +517,21 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 				res = true;
 			}
 		}
+		else if (col.type == EGW_COL_TYPE_CHECKBOX)
+		{
+			if (!_returnData)
+			{
+				res = true; // Tell the loader that the checkbox data is always available
+			}
+			else
+			{
+				var dataSet = (typeof this.data[_columnId] != "undefined");
+				res = {
+					"data": dataSet ? this.data[_columnId].data : 0,
+					"time": dataSet ? this.data[_columnId].time : this.capColTime
+				}
+			}
+		}
 		else
 		{
 			// Check whether the column data of this column has been read,

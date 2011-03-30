@@ -163,6 +163,7 @@ class egw_json_object
  */
 define("EGW_COL_TYPE_DEFAULT", 0);
 define("EGW_COL_TYPE_NAME_ICON_FIXED", 1);
+define("EGW_COL_TYPE_CHECKBOX", 2);
 
 define("EGW_COL_VISIBILITY_ALWAYS", 0);
 define("EGW_COL_VISIBILITY_VISIBLE", 1);
@@ -211,7 +212,8 @@ class egw_grid_column extends egw_json_object
 
 	public function set_visible($val)
 	{
-		if ($this->visibility != EGW_COL_VISIBILITY_ALWAYS && $this->visibility != EGW_COL_VISIBILITY_ALWAYS_NOSELECT)
+		if ($this->visibility != EGW_COL_VISIBILITY_ALWAYS &&
+		    $this->visibility != EGW_COL_VISIBILITY_ALWAYS_NOSELECT)
 		{
 			$this->visibility = $val ? EGW_COL_VISIBILITY_VISIBLE : EGW_COL_VISIBILITY_INVISIBLE;
 		}

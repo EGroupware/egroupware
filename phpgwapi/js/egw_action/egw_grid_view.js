@@ -76,7 +76,7 @@ var EGW_UNIQUE_COUNTER = 0;
  * @param object _data is the data-provider object which contains/loads the grid rows
  * 	and contains their data.
  */
-function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _context)
+function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAllCallback, _context)
 {
 	this.parentNode = $(_parentNode);
 	this.dataRoot = _dataRoot;
@@ -99,10 +99,13 @@ function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _context)
 
 	this.visibleColumnCount = 0;
 
+	this.checkbox = null;
+
 	this.uniqueId = 'grid_outer_' + EGW_UNIQUE_COUNTER;
 
 	this.headerColumns = [];
 	this.selectColsCallback = _selectColsCallback;
+	this.toggleAllCallback = _toggleAllCallback;
 	this.context = _context;
 
 	this.buildBase();
@@ -307,7 +310,25 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 			var cont = $(document.createElement("div"));
 			cont.addClass("innerContainer");
 			cont.addClass(col.divClass);
-			cont.html(col.caption);
+
+			if (col.type == EGW_COL_TYPE_CHECKBOX)
+			{
+				this.checkbox = $(document.createElement("input"));
+				this.checkbox.attr("type", "checkbox");
+				this.checkbox.change(this, function(e) {
+					// Call the toggle all callback
+					if (e.data.toggleAllCallback)
+					{
+						e.data.toggleAllCallback.call(e.data.context, $(this).is(":checked"));
+					}
+				});
+
+				cont.append(this.checkbox);
+			}
+			else
+			{
+				cont.html(col.caption);
+			}
 
 			column.append(cont);
 			this.outer_head_tr.append(column);
@@ -1289,6 +1310,7 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	container.aoiSetup = egwGridViewRow_aoiSetup;
 	container.getAOI = egwGridViewRow_getAOI;
 	container._columnClick = egwGridViewRow__columnClick;
+	container._checkboxClick = egwGridViewRow__checkboxClick;
 	container.setOpen = egwGridViewRow_setOpen;
 	container.reloadChildren = egwGridViewRow_reloadChildren;
 	container.tdObjects = [];
@@ -1296,6 +1318,7 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	container.childGrid = null;
 	container.opened = false;
 	container.rowClass = "";
+	container.checkbox = null;
 
 	// Overwrite the inherited abstract functions
 	container.doInsertIntoDOM = egwGridViewRow_doInsertIntoDOM;
@@ -1325,10 +1348,16 @@ function egwGridViewRow_aoiSetState(_state, _shiftState)
 {
 	if (this.row.parentNode)
 	{
-		this.row.parentNode.toggleClass("selected", egwBitIsSet(_state,
-			EGW_AO_STATE_SELECTED));
+		var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
+		this.row.parentNode.toggleClass("selected", selected);
 		this.row.parentNode.toggleClass("focused", egwBitIsSet(_state,
 			EGW_AO_STATE_FOCUSED));
+
+		// Set the checkbox checked-state with the selected state
+		if (this.row.checkbox)
+		{
+			this.row.checkbox.attr("checked", selected);
+		}
 	}
 }
 
@@ -1368,6 +1397,14 @@ function egwGridViewRow__columnClick(_shiftState, _column)
 		_shiftState);
 }
 
+function egwGridViewRow__checkboxClick()
+{
+	this.aoi.updateState(EGW_AO_STATE_SELECTED, this.checkbox.is(":checked"),
+		EGW_AO_SHIFT_STATE_MULTI);
+
+	return false;
+}
+
 var
 	EGW_GRID_VIEW_ROW_BORDER = false;
 
@@ -1398,10 +1435,29 @@ function egwGridViewRow_doInsertIntoDOM()
 
 		// Assign the click event to the column
 //		td.mousedown(egwPreventSelect);
-		td.click({"item": this, "col": col.id}, function(e) {
-//			this.onselectstart = null;
-			e.data.item._columnClick(egwGetShiftState(e), e.data.col);
-		});
+		if (col.type == EGW_COL_TYPE_CHECKBOX)
+		{
+			this.checkbox = $(document.createElement("input"));
+			this.checkbox.attr("type", "checkbox");
+			this.checkbox.attr("checked", egwBitIsSet(this.aoi.getState(),
+				EGW_AO_STATE_SELECTED));
+			this.checkbox.change(this, function(e) {
+				e.data._checkboxClick();
+				return false;
+			});
+
+			cont.append(this.checkbox);
+		}
+		else
+		{
+			td.click({"item": this, "col": col.id}, function(e) {
+//				this.onselectstart = null;
+				if (!e.data.item.checkbox || this != e.data.item.checkbox.context)
+				{
+					e.data.item._columnClick(egwGetShiftState(e), e.data.col);
+				}
+			});
+		}
 
 		td.append(cont);
 
@@ -1468,10 +1524,9 @@ function egwGridViewRow_doUpdateData(_immediate)
 				// Update the timestamp
 				this.tdObjects[i].ts = data[col.id].time;
 
-				cont.empty();
-
 				if (col.type == EGW_COL_TYPE_NAME_ICON_FIXED)
 				{
+					cont.empty();
 					// Insert the indentation spacer
 					var depth = this.item.getDepth() - 1;
 					if (depth > 0)
@@ -1567,8 +1622,16 @@ function egwGridViewRow_doUpdateData(_immediate)
 						cont.append(caption);
 					}
 				}
+				else if (col.type == EGW_COL_TYPE_CHECKBOX)
+				{
+					this.checkbox.attr("checked",
+						(data[col.id].data == 0) ?
+							egwBitIsSet(this.aoi.getState(), EGW_AO_STATE_SELECTED) :
+							data[col.id].data);
+				}
 				else
 				{
+					cont.empty();
 					cont.html(data[col.id].data);
 				}
 				cont.toggleClass("queued", false);

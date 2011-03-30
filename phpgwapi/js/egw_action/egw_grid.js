@@ -38,11 +38,19 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 	// Create the root data element
 	this.dataRoot = new egwGridDataElement("", null, this.columns, this.readQueue, 
 		_objectManager);
+	var self = this;
+	this.dataRoot.actionObject.setSelectedCallback = function() {
+		if (self.gridOuter.checkbox)
+		{
+			self.gridOuter.checkbox.attr("checked", this.getAllSelected())
+		}
+	};
 
 	// Create the outer view component and pass the dataRoot element so that
 	// the grid outer element will be capable of fetching the root data and
 	// can create a spacer for that.
-	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot, this.selectcolsClick, this);
+	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot,
+		this.selectcolsClick, this.toggleAllClick, this);
 	this.gridOuter.updateColumns(this.columns.getColumnData());
 }
 
@@ -157,6 +165,14 @@ egwGrid.prototype.selectcolsClick = function(_at)
 	});
 
 	menu.showAt(_at.offset().left, _at.offset().top);
+}
+
+/**
+ * Handles the toggle all click
+ */
+egwGrid.prototype.toggleAllClick = function(_checked)
+{
+	this.dataRoot.actionObject.toggleAllSelected(_checked);
 }
 
 /**

@@ -581,6 +581,7 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 	this.manager = _manager;
 	this.flags = _flags;
 	this.data = null;
+	this.setSelectedCallback = null;
 
 	this.registeredImpls = [];
 
@@ -1118,7 +1119,7 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 {
 	var id = this.selectedChildren.indexOf(_child); // TODO Replace by binary search, insert children sorted by index!
- 	var wasEmpty = this.selectedChildren.length == 0;
+	var wasEmpty = this.selectedChildren.length == 0;
 
 	// Add or remove the given child from the selectedChildren list
 	if (_selected && id == -1)
@@ -1135,6 +1136,11 @@ egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 	if (wasEmpty != this.selectedChildren.length == 0 && this.parent)
 	{
 		this.parent.updateSelectedChildren(this, wasEmpty);
+	}
+
+	if (this.setSelectedCallback)
+	{
+		this.setSelectedCallback.call(this); //TODO: Not called, when non-selected elements are made visible (treeview)
 	}
 }
 

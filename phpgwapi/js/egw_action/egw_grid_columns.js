@@ -22,6 +22,7 @@ uses
 
 var EGW_COL_TYPE_DEFAULT = 0;
 var EGW_COL_TYPE_NAME_ICON_FIXED = 1;
+var EGW_COL_TYPE_CHECKBOX = 2;
 
 var EGW_COL_VISIBILITY_ALWAYS = 0;
 var EGW_COL_VISIBILITY_VISIBLE = 1;
@@ -140,9 +141,14 @@ egwGridColumn.prototype.set_id = function(_value)
 egwGridColumn.prototype.set_type = function(_value)
 {
 	if (typeof _value == "number" && (_value == EGW_COL_TYPE_DEFAULT ||
-	    _value == EGW_COL_TYPE_NAME_ICON_FIXED))
+	    _value == EGW_COL_TYPE_NAME_ICON_FIXED || _value == EGW_COL_TYPE_CHECKBOX))
 	{
 		this.type = _value;
+
+		if (this.type == EGW_COL_TYPE_CHECKBOX)
+		{
+			this.set_width("30px");
+		}
 	}
 }
 
