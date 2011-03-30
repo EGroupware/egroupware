@@ -250,7 +250,7 @@
 				$p->set_var(array(
 					'letter' => $letter,
 					'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
-					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'letter_box_active' : 'letter_box',
+					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'lettersearch_active' : 'lettersearch',
 				));
 				$p->fp('letter_search_cells','letter_search',True);
 			}
@@ -259,7 +259,7 @@
 			$p->set_var(array(
 				'letter' => lang('all'),
 				'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
-				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'letter_box_active' : 'letter_box',
+				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'lettersearch_active' : 'lettersearch',
 			));
 			$p->fp('letter_search_cells','letter_search',True);
 
@@ -404,7 +404,7 @@
 				$p->set_var(array(
 					'letter' => $letter,
 					'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
-					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'letter_box_active' : 'letter_box',
+					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'lettersearch_active' : 'lettersearch',
 				));
 				$p->fp('letter_search_cells','letter_search',True);
 			}
@@ -413,7 +413,7 @@
 			$p->set_var(array(
 				'letter' => lang('all'),
 				'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
-				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'letter_box_active' : 'letter_box',
+				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'lettersearch_active' : 'lettersearch',
 			));
 			$p->fp('letter_search_cells','letter_search',True);
 

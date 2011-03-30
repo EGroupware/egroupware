@@ -1,23 +1,4 @@
 <!-- $Id$ -->
-<style type="text/css">
-	.letter_box,.letter_box_active {
-		background-color: #D3DCE3;
-		width: 25px;
-		border: 1px solid #D3DCE3;
-		text-align: center;
-		cursor: pointer;
-		cusror: hand;
-	}
-	.letter_box_active {
-		font-weight: bold;
-		background-color: #E8F0F0;
-	}
-	.letter_box_active,.letter_box:hover {
-		border: 1px solid black;
-		background-color: #E8F0F0;
-	}
-</style>
-
 <div align="center">
 <table border="0" width="80%">
 	<tr>
