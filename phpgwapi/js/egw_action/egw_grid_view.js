@@ -615,21 +615,51 @@ egwGridViewContainer.prototype.setPosition = function(_top)
 /**
  * Returns the height of the container in pixels and zero if the element is not
  * visible. The height is clamped to positive values.
+ * The browser switch is placed at this position as the getHeight function is one
+ * of the mostly called functions in the whole grid code and should stay
+ * quite fast.
  */
-egwGridViewContainer.prototype.getHeight = function()
+if ($.browser.mozilla)
 {
-	if (this.visible && this.parentNode)
+	egwGridViewContainer.prototype.getHeight = function()
 	{
-		if (this.height === false && this.assumedHeight === false)
+		if (this.visible && this.parentNode)
 		{
-			this.height = this.parentNode.outerHeight();
-		}
+			if (this.height === false && this.assumedHeight === false)
+			{
+				// Firefox sometimes provides fractional pixel values - we are
+				// forced to use those - we can obtain the fractional pixel height
+				// by using the window.getComputedStyle function
+				var styleHeightStr =
+					getComputedStyle(this.parentNode.context, null).getPropertyValue("height");
+				this.height = parseFloat(styleHeightStr.substr(0, styleHeightStr.length - 2));
+			}
 
-		return this.height !== false ? this.height : this.assumedHeight;
+			return this.height !== false ? this.height : this.assumedHeight;
+		}
+		else
+		{
+			return 0;
+		}
 	}
-	else
+}
+else
+{
+	egwGridViewContainer.prototype.getHeight = function()
 	{
-		return 0;
+		if (this.visible && this.parentNode)
+		{
+			if (this.height === false && this.assumedHeight === false)
+			{
+				this.height = this.parentNode.context.offsetHeight;
+			}
+
+			return this.height !== false ? this.height : this.assumedHeight;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }
 
