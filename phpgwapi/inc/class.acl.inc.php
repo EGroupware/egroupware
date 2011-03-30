@@ -658,6 +658,8 @@ class acl
 			}
 			$apps[$app] |= (int) $row['acl_rights'];
 		}
+		$apps['home'] = 1;	// give everyone implicit rights for the home app
+
 		return $apps;
 	}
 
