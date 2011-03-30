@@ -352,7 +352,7 @@ class egw extends egw_minimal
 	{
 		$this->currentapp = $GLOBALS['egw_info']['flags']['currentapp'];	// some apps change it later
 
-		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'about')
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'home')	// give everyone implicit home rights
 		{
 			// This will need to use ACL in the future
 			if (!$GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']] ||
