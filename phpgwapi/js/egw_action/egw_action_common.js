@@ -128,6 +128,18 @@ function egwCallAbstract(_obj, _fn, _args)
 	return false;
 }
 
+function egwArraysEqual(_ar1, _ar2)
+{
+	var result = _ar1.length == _ar2.length;
+
+	for (var i = 0; i < _ar1.length; i++)
+	{
+		result = result && (_ar1[i] == _ar2[i])
+	}
+
+	return result;
+}
+
 /**
 sprintf() for JavaScript 0.6
 

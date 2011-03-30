@@ -26,6 +26,7 @@ var EGW_COL_TYPE_NAME_ICON_FIXED = 1;
 var EGW_COL_VISIBILITY_ALWAYS = 0;
 var EGW_COL_VISIBILITY_VISIBLE = 1;
 var EGW_COL_VISIBILITY_INVISIBLE = 2;
+var EGW_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
 
 var EGW_COL_SORTABLE_NONE = 0;
 var EGW_COL_SORTABLE_ALPHABETIC = 1;
@@ -141,11 +142,6 @@ egwGridColumn.prototype.set_type = function(_value)
 	if (typeof _value == "number" && (_value == EGW_COL_TYPE_DEFAULT ||
 	    _value == EGW_COL_TYPE_NAME_ICON_FIXED))
 	{
-		if (_value == EGW_COL_TYPE_NAME_ICON_FIXED)
-		{
-			this.visibility = EGW_COL_VISIBILITY_ALWAYS;
-		}
-
 		this.type = _value;
 	}
 }
@@ -157,22 +153,16 @@ egwGridColumn.prototype.set_type = function(_value)
 egwGridColumn.prototype.set_visibility = function(_value)
 {
 	if (typeof _value == "number" && (_value == EGW_COL_VISIBILITY_ALWAYS ||
-	    _value == EGW_COL_VISIBILITY_INVISIBLE || _value == EGW_COL_VISIBILITY_VISIBLE))
+	    _value == EGW_COL_VISIBILITY_INVISIBLE || _value == EGW_COL_VISIBILITY_VISIBLE ||
+	    _value == EGW_COL_VISIBILITY_ALWAYS_NOSELECT))
 	{
-		if (this.type == EGW_COL_TYPE_NAME_ICON_FIXED)
+		if (_value != this.visibility)
 		{
-			this.visibility = EGW_COL_VISIBILITY_ALWAYS;
-		}
-		else
-		{
-			if (_value != this.visibility)
-			{
-				this.visibility = _value;
+			this.visibility = _value;
 
-				if (this.visibilityChangeCallback)
-				{
-					this.visibilityChangeCallback.call(this.context, this);
-				}
+			if (this.visibilityChangeCallback)
+			{
+				this.visibilityChangeCallback.call(this.context, this);
 			}
 		}
 	}
@@ -518,11 +508,15 @@ egwGridColumns.prototype.getColumnVisibilitySet = function()
 
 	for (var i = 0; i < this.columns.length; i++)
 	{
-		result[this.columns[i].id] = {
-			"caption": this.columns[i].caption,
-			"enabled": this.columns[i].visibility != EGW_COL_VISIBILITY_ALWAYS,
-			"visible": this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE
-		};
+		if (this.columns[i].visibility != EGW_COL_VISIBILITY_ALWAYS_NOSELECT)
+		{
+			result[this.columns[i].id] = {
+				"caption": this.columns[i].caption,
+				"enabled": (this.columns[i].visibility != EGW_COL_VISIBILITY_ALWAYS) &&
+					(this.columns[i].type == EGW_COL_TYPE_DEFAULT),
+				"visible": this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE
+			};
+		}
 	}
 
 	return result;

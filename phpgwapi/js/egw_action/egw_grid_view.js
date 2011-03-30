@@ -1295,6 +1295,7 @@ function egwGridViewRow(_grid, _heightChangeProc, _item)
 	container.containerClass = "row";
 	container.childGrid = null;
 	container.opened = false;
+	container.rowClass = "";
 
 	// Overwrite the inherited abstract functions
 	container.doInsertIntoDOM = egwGridViewRow_doInsertIntoDOM;
@@ -1433,6 +1434,19 @@ function egwGridViewRow_doUpdateData(_immediate)
 	var data = this.item.getData(ids);
 	var vis_idx = 0;
 
+	// Set the row class
+	if (this.rowClass != this.item.rowClass)
+	{
+		if (this.rowClass != "")
+		{
+			this.parentNode.removeClass(this.rowClass);
+		}
+
+		this.parentNode.addClass(this.item.rowClass);
+		this.rowClass = this.item.rowClass;
+	}
+
+	// Set the column data
 	for (var i = 0; i < this.tdObjects.length; i++)
 	{
 		var col = this.columns[i];
@@ -1509,6 +1523,9 @@ function egwGridViewRow_doUpdateData(_immediate)
 						iconContainer.css("min-height", this.grid.avgIconHeight + "px");
 
 						// Build the icon
+						var overlayCntr = $(document.createElement("span"));
+						overlayCntr.addClass("iconOverlayContainer");
+
 						var icon = $(document.createElement("img"));
 						if (this.item.iconSize)
 						{
@@ -1526,8 +1543,18 @@ function egwGridViewRow_doUpdateData(_immediate)
 							}, 100);
 							e.data.item.callHeightChangeProc();
 						});
+						overlayCntr.append(icon);
+
+						for (var i = 0; i < this.item.iconOverlay.length; i++)
+						{
+							var overlay = $(document.createElement("img"));
+							overlay.addClass("overlay");
+							overlay.attr("src", this.item.iconOverlay[i]);
+							overlayCntr.append(overlay);
+						}
+
 						icon.addClass("icon");
-						iconContainer.append(icon);
+						iconContainer.append(overlayCntr);
 						cont.append(iconContainer);
 					}
 

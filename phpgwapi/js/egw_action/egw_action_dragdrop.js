@@ -32,6 +32,11 @@ _egwActionClasses["drop"] = {
 	"implementation": getDropImplementation
 }
 
+function _getTopBody()
+{
+	return $("body", window.top);
+}
+
 
 /**
  * The egwDragAction class overwrites the egwAction class and adds the new
@@ -112,7 +117,7 @@ function egwDragActionImplementation()
 							// fixes a bug in IE: If the element isn't inserted into
 							// the DOM-tree jquery appends it to the parent node.
 							// In case this is a table it doesn't work correctly
-							$("body").append(ai.helper);
+							_getTopBody().append(ai.helper);
 							return ai.helper;
 						}
 

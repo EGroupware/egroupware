@@ -595,7 +595,7 @@ Preferences tabs
 	border-spacing: 0;
 	border-collapse: collapse;
 	padding: 0;
-	margin: 5px;
+/*	margin: 5px;*/
 }
 
 .egwGridView_outer td, .egwGridView_outer tr {
@@ -645,12 +645,25 @@ Preferences tabs
 	vertical-align: middle;
 }
 
-.egwGridView_grid img.icon {
-	vertical-align: middle;
+.egwGridView_grid span.iconOverlayContainer {
 	margin: 2px 5px 2px 2px;
+	position: relative;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
+	overflow: visible;
+}
+
+.egwGridView_grid span.iconOverlayContainer img.overlay {
+	position: absolute;
+	right: -2px;
+	bottom: -2px;
+	vertical-align: bottom;
+}
+
+.egwGridView_grid img.icon {
+	vertical-align: middle;
+	margin: 0;
 }
 
 .egwGridView_grid span.arrow {

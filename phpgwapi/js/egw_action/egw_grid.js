@@ -173,3 +173,12 @@ egwGrid.prototype.reload = function()
 	this.gridOuter.empty();
 }
 
+/**
+ * Returns the height of the data inserted into the grid
+ */
+egwGrid.prototype.getDataHeight = function()
+{
+	return this.gridOuter.grid.getHeight();
+}
+
+

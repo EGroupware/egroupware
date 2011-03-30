@@ -60,6 +60,7 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.caption = false;
 	this.iconUrl = false;
 	this.iconSize = false;
+	this.iconOverlay = [];
 	this.opened = _parent == null;
 	this.index = 0;
 	this.canHaveChildren = false;
@@ -69,6 +70,7 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	this.actionLinkGroups = {};
 	this.group = false;
 	this.capColTime = 0;
+	this.rowClass = "";
 
 	this.gridViewObj = null;
 }
@@ -78,6 +80,14 @@ var EGW_GRID_DATA_UPDATE_TIME = 0;
 egwGridDataElement.prototype.free = function()
 {
 	//TODO
+}
+
+egwGridDataElement.prototype.set_rowClass = function(_value)
+{
+	if (_value != this.rowClass)
+	{
+		this.rowClass = _value;
+	}
 }
 
 egwGridDataElement.prototype.set_caption = function(_value)
@@ -97,6 +107,16 @@ egwGridDataElement.prototype.set_iconUrl = function(_value)
 		this.iconUrl = _value;
 	}
 }
+
+egwGridDataElement.prototype.set_iconOverlay = function(_value)
+{
+	if (!egwArraysEqual(_value, this.iconOverlay))
+	{
+		this.capColTime = EGW_GRID_DATA_UPDATE_TIME;
+		this.iconOverlay = _value;
+	}
+}
+
 
 egwGridDataElement.prototype.set_iconSize = function(_value)
 {
@@ -207,8 +227,9 @@ egwGridDataElement.prototype.set_data = function(_value)
  * [
  * 	{
  * 		["entryType": (EGW_DATA_TYPE_ELEMENT | EGW_DATA_TYPE_RANGE)] // Defaults to EGW_DATA_TYPE_ELEMENT
- *		"type": "[Typeclass]" // Typeclass of the view-container: specifies the chars after the egwGridView-prefix. Defaults to "Row" which becomes "egwGridViewRow"
+ *		"type": "[Typeclass]" // Typeclass of the view-container: specifies the chars after the egwGridView-prefix. Defaults to "Row" which becomes "egwGridViewRow",
  * 		IF EGW_DATA_TYPE_ELEMENT:
+ *			"id": [ Name of the element ]
  * 			"children": [ Objects which will be added to the children of the element ]
  *			ELEMENT DATA // See below
 		IF EGW_DATA_TYPE_RANGE:
@@ -217,7 +238,10 @@ egwGridDataElement.prototype.set_data = function(_value)
  * 	}
  * ]
  *
- * 2. If an object with element dara is passed, the properties of the element will
+ * 2. If a string or number is passed, inside an array, it is encapsulated into
+ * an empty entry with that id
+ *
+ * 3. If an object with element dara is passed, the properties of the element will
  * be updated to the given values.
  *
  * {
@@ -246,6 +270,15 @@ egwGridDataElement.prototype.loadData = function(_data, _doCallUpdate)
 		for (var i = 0; i < _data.length; i++)
 		{
 			var entry = _data[i];
+
+			// Single string entries are automatically converted to an entry
+			// with that id
+			if (typeof entry == String || typeof entry == Number)
+			{
+				entry = {
+					"id": (entry + '') // The "+ ''" converts the entry to a string
+				}
+			}
 
 			if (entry.constructor != Object)
 			{
