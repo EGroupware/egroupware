@@ -1434,7 +1434,7 @@ function egwGridViewRow_doInsertIntoDOM()
 		this.parentNode.append(td);
 
 		// Assign the click event to the column
-//		td.mousedown(egwPreventSelect);
+		td.mousedown(egwPreventSelect);
 		if (col.type == EGW_COL_TYPE_CHECKBOX)
 		{
 			this.checkbox = $(document.createElement("input"));
@@ -1451,7 +1451,7 @@ function egwGridViewRow_doInsertIntoDOM()
 		else
 		{
 			td.click({"item": this, "col": col.id}, function(e) {
-//				this.onselectstart = null;
+				this.onselectstart = null;
 				if (!e.data.item.checkbox || this != e.data.item.checkbox.context)
 				{
 					e.data.item._columnClick(egwGetShiftState(e), e.data.col);
@@ -1625,7 +1625,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 				else if (col.type == EGW_COL_TYPE_CHECKBOX)
 				{
 					this.checkbox.attr("checked",
-						(data[col.id].data == 0) ?
+						(data[col.id].data === 0) ?
 							egwBitIsSet(this.aoi.getState(), EGW_AO_STATE_SELECTED) :
 							data[col.id].data);
 				}
