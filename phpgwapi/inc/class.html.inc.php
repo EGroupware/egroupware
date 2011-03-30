@@ -583,7 +583,7 @@ class html
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
-			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
+			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';" id="'.htmlspecialchars($_name).'"');
 		}
 
 		//include the ckeditor js file
@@ -601,8 +601,7 @@ class html
 		$pxheight = (strpos('px', $_height) === false) ?
 			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
 
-		return '
-<textarea name="'.$_name.'">'.htmlspecialchars($_content).'</textarea>
+		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"').'
 <script type="text/javascript">
 	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/";
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
