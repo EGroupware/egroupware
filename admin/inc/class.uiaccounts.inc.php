@@ -1200,7 +1200,7 @@
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			foreach($availableApps as $app => $data)
 			{
-				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || $app == 'home')
 				{
 					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
@@ -1520,7 +1520,7 @@
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			foreach($availableApps as $app => $data)
 			{
-				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || $app == 'home')
 				{
 					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
