@@ -852,9 +852,10 @@ class addressbook_ui extends addressbook_bo
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
 			//_debug_array(array('Search'=>$query['search'],
-			//'AdvancedSearch'=>$query['advanced_search']));
-			if (is_array($query['search'])) unset($query['search']);
-			unset($query['advanced_search']);
+			//	'AdvancedSearch'=>$query['advanced_search']));
+			//if (is_array($query['search'])) unset($query['search']);
+			//unset($query['advanced_search']);
+			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
 		}
 		elseif(!$query['search'] && $old_state['advanced_search'])	// eg. paging in an advanced search
 		{
@@ -945,8 +946,23 @@ class addressbook_ui extends addressbook_bo
 				$query['sort'] = 'ASC';
 				$query['order'] = 'org_name';
 			}
-			$rows = parent::organisations($query);
+			if ($query['advanced_search'])
+			{
+				$query['op'] = $query['advanced_search']['operator'];
+				unset($query['advanced_search']['operator']);
+				$query['wildcard'] = $query['advanced_search']['meth_select'];
+				unset($query['advanced_search']['meth_select']);
+				$original_search = $query['search'];
+				$query['search'] = $query['advanced_search'];
+			}
 
+			$rows = parent::organisations($query);
+			if ($query['advanced_search'])
+			{
+				$query['search'] = $original_search;
+				unset($query['wildcard']);
+				unset($query['op']);
+			}
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
 		}
 		else	// contacts view
@@ -1211,7 +1227,7 @@ class addressbook_ui extends addressbook_bo
 			$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
 		}
-		if ($query['search'])
+		if ($query['search'] && !$query['advanced_search']) // do not add that, if we have advanced search active
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
 		}
