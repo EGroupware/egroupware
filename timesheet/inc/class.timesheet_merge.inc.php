@@ -102,10 +102,13 @@ class timesheet_merge extends bo_merge
 		// Convert to human friendly values
 		$types = timesheet_export_csv::$types;
 		$_selects = array('status' => $this->bo->status_labels);
+		foreach($_selects['status'] as &$status)
+		{
+			$status = str_replace('&nbsp;', '', $status);
+		}
 		foreach($_selects as $name => $value)
 		{
 			$selects['ts_'.$name] = $value;
-			$types['select'][] = 'ts_'.$name;
 		}
 		importexport_export_csv::convert($record, $types, 'timesheet', $selects);
 
