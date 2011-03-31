@@ -63,8 +63,6 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 			$record = new timesheet_egw_record($identifier);
 			if($options['convert']) {
 				importexport_export_csv::convert($record, self::$types, 'timesheet', $lookups);
-				// Special handling because it's added, not a custom field
-				if($record->pm_id) $record->pm_id = egw_link::title('projectmanager', $record->pm_id);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
