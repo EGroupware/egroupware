@@ -555,14 +555,17 @@ abstract class bo_merge
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
 				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237]/u',' ',$value);
-
-				if(is_numeric($value)) 	$names[] = preg_quote($name,'/');
+				if(is_numeric($value) && $name != '$$user/account_id$$') // account_id causes problems with the preg_replace below
+				{
+					$names[] = preg_quote($name,'/');
+				}
 			}
+
 			// Look for numbers, set their value if needed
 			$format = $replacement = '';
 			if($this->numeric_fields || count($names))
 			{
-				foreach($this->numeric_fields as $fieldname) {
+				foreach((array)$this->numeric_fields as $fieldname) {
 					$names[] = preg_quote($fieldname,'/');
 				}
 				switch($mimetype.$mso_application_progid)
@@ -677,7 +680,6 @@ abstract class bo_merge
 			case 'text/xml':
 			case 'text/html':
 				$is_xml = true;
-				$charset = 'utf-8';	// xml files --> always use utf-8
 				break;
 		}
 
