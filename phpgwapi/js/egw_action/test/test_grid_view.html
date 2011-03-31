@@ -45,23 +45,25 @@
 					{
 						"id": "name",
 						"caption": "Name",
-						"width": "75%",
 						"type": EGW_COL_TYPE_NAME_ICON_FIXED,
 						"sortable": EGW_COL_SORTABLE_EXTERNAL,
 						"sortmode": EGW_COL_SORTMODE_ASC
 					},
 					{
 						"id": "size",
+						"maxWidth": 100,
 						"caption": "Size"
 					},
 					{
 						"id": "rights",
 						"caption": "UNIX Filerights",
+						"maxWidth": 150,
 						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
 						"id": "mime",
 						"caption": "File-Type/MIME",
+						"maxWidth": 150,
 						"visibility": EGW_COL_VISIBILITY_INVISIBLE
 					},
 					{
@@ -214,7 +216,6 @@
 							data["ctime"] = (new Date).toUTCString();
 							data["owner"] = "as";
 							data["group"] = "stylitedevs";
-							data["check"] = true;
 
 							result.push({
 								"id": _elems[i],
@@ -237,7 +238,7 @@
 				objectManager = new egwActionObjectManager("", actionManager);
 
 				grid = new egwGrid($("#container"), columns, objectManager, fetchDataProc,
-					window);
+					null, window);
 				grid.setActionLinkGroup("folder", listboxFolderLinks);
 				grid.dataRoot.loadData(
 					[

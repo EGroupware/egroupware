@@ -329,7 +329,7 @@ egwGridColumns.prototype._calculateWidths = function()
 	}
 
 	// Remove the spacing between the columns from the total width
-	var tw = this.totalWidth - (this.columns.length - 1) * this.columnSpace;
+	var tw = this.totalWidth - (Math.max(this.getVisibleCount() - 1, 0)) * this.columnSpace;
 
 	// Calculate how many space is - relatively - not occupied with columns with
 	// relative or fixed width

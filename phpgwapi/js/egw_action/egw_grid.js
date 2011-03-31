@@ -36,6 +36,7 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 	this.readQueue = new egwGridDataQueue(_fetchCallback, _context);
 
 	this.selectedChangeCallback = null;
+	this.sortColsCallback = null;
 
 	// Create the root data element
 	this.dataRoot = new egwGridDataElement("", null, this.columns, this.readQueue, 
@@ -61,7 +62,7 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 	// the grid outer element will be capable of fetching the root data and
 	// can create a spacer for that.
 	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot,
-		this.selectcolsClick, this.toggleAllClick, this);
+		this.selectcolsClick, this.toggleAllClick, this.sortColsClick, this);
 	this.gridOuter.updateColumns(this.columns.getColumnData());
 }
 
@@ -169,7 +170,10 @@ egwGrid.prototype.selectcolsClick = function(_at)
 			}
 
 			// Call the column change callback with the user data
-			self.columnChangeCallback.call(self.context, set);
+			if (self.columnChangeCallback)
+			{
+				self.columnChangeCallback.call(self.context, set);
+			}
 		}
 
 		self.columns.setColumnVisibilitySet(column_data);
@@ -184,6 +188,21 @@ egwGrid.prototype.selectcolsClick = function(_at)
 egwGrid.prototype.toggleAllClick = function(_checked)
 {
 	this.dataRoot.actionObject.toggleAllSelected(_checked);
+}
+
+/**
+ * Handles clicking on a sortable column header
+ */
+egwGrid.prototype.sortColsClick = function(_columnIdx)
+{
+	var col = this.columns.columns[_columnIdx];
+	if (col.sortable == EGW_COL_SORTABLE_EXTERNAL)
+	{
+		if (this.sortColsCallback)
+		{
+			this.sortColsCallback.call(this.context, this.columns.columns[_columnIdx].id);
+		}
+	}
 }
 
 /**

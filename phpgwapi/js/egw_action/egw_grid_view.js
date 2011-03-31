@@ -76,7 +76,8 @@ var EGW_UNIQUE_COUNTER = 0;
  * @param object _data is the data-provider object which contains/loads the grid rows
  * 	and contains their data.
  */
-function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAllCallback, _context)
+function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAllCallback,
+	_sortColsCallback, _context)
 {
 	this.parentNode = $(_parentNode);
 	this.dataRoot = _dataRoot;
@@ -105,6 +106,7 @@ function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAl
 
 	this.headerColumns = [];
 	this.selectColsCallback = _selectColsCallback;
+	this.sortColsCallback = _sortColsCallback;
 	this.toggleAllCallback = _toggleAllCallback;
 	this.context = _context;
 
@@ -364,6 +366,15 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 				cont.append(sortArrow);
 
 				this.updateColSortmode(i, sortArrow);
+
+				column.click({"self": this, "idx": i}, function(e) {
+					var idx = e.data.idx;
+					var self = e.data.self;
+					if (self.sortColsCallback)
+					{
+						self.sortColsCallback.call(self.context, idx);
+					}
+				});
 			}
 
 			column.append(cont);
@@ -384,9 +395,8 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 	
 		this.optcol.css("width", this.scrollbarWidth - this.optcol.outerWidth()
 			+ this.optcol.width() + 1);
- 		var self = this;
-		this.optcol.click(function() {
-			self.selectColsCallback.call(self.context, self.selectcols);
+		this.optcol.click(this, function(e) {
+			e.data.selectColsCallback.call(e.data.context, e.data.selectcols);
 
 			return false;
 		});
