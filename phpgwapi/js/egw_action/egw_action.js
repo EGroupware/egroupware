@@ -1108,6 +1108,9 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 			this.selectedChildren.push(this.children[i]);
 		}
 	}
+
+	// Call the setSelectedCallback
+	egwQueueCallback(this.setSelectedCallback, [], this, "setSelectedCallback");
 }
 
 
@@ -1138,10 +1141,8 @@ egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 		this.parent.updateSelectedChildren(this, wasEmpty);
 	}
 
-	if (this.setSelectedCallback)
-	{
-		this.setSelectedCallback.call(this); //TODO: Not called, when non-selected elements are made visible (treeview)
-	}
+	// Call the setSelectedCallback
+	egwQueueCallback(this.setSelectedCallback, [], this, "setSelectedCallback");
 }
 
 /**

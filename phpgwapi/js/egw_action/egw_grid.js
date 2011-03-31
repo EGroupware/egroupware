@@ -52,7 +52,7 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 
 			if (self.selectedChangeCallback)
 			{
-				self.selectedChangeCallback.call(self.context, allSelected)
+				self.selectedChangeCallback.call(self.context, allSelected);
 			}
 		}
 	};

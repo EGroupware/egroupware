@@ -140,6 +140,31 @@ function egwArraysEqual(_ar1, _ar2)
 	return result;
 }
 
+var _egwQueuedCallbacks = {};
+function egwQueueCallback(_proc, _args, _context, _id)
+{
+	if (_proc)
+	{
+		var cur_id = 0;
+		if (typeof _egwQueuedCallbacks[_id] == "undefined")
+		{
+			cur_id = _egwQueuedCallbacks[_id] = 1;
+		}
+		else
+		{
+			cur_id = ++_egwQueuedCallbacks[_id];
+		}
+
+		window.setTimeout(function() {
+			if (_egwQueuedCallbacks[_id] == cur_id)
+			{
+				_proc.apply(_context, _args);
+				delete _egwQueuedCallbacks[_id];
+			}
+		}, 0);
+	}
+}
+
 /**
 sprintf() for JavaScript 0.6
 

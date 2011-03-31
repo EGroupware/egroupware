@@ -1688,10 +1688,11 @@ function egwGridViewRow_doUpdateData(_immediate)
 				}
 				else if (col.type == EGW_COL_TYPE_CHECKBOX)
 				{
-					this.checkbox.attr("checked",
-						(data[col.id].data === 0) ?
-							egwBitIsSet(this.aoi.getState(), EGW_AO_STATE_SELECTED) :
-							data[col.id].data);
+					var checked = (data[col.id].data === 0) ?
+						egwBitIsSet(this.aoi.getState(), EGW_AO_STATE_SELECTED) :
+						data[col.id].data;
+					this.checkbox.attr("checked", checked);
+					this.item.actionObject.setSelected(checked);
 				}
 				else
 				{

@@ -39,6 +39,10 @@
 			var columns = 
 				[
 					{
+						"id": "check",
+						"type": EGW_COL_TYPE_CHECKBOX
+					},
+					{
 						"id": "name",
 						"caption": "Name",
 						"width": "75%",
@@ -210,6 +214,7 @@
 							data["ctime"] = (new Date).toUTCString();
 							data["owner"] = "as";
 							data["group"] = "stylitedevs";
+							data["check"] = true;
 
 							result.push({
 								"id": _elems[i],
