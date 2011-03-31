@@ -35,14 +35,25 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 	// Create the read queue
 	this.readQueue = new egwGridDataQueue(_fetchCallback, _context);
 
+	this.selectedChangeCallback = null;
+
 	// Create the root data element
 	this.dataRoot = new egwGridDataElement("", null, this.columns, this.readQueue, 
 		_objectManager);
 	var self = this;
 	this.dataRoot.actionObject.setSelectedCallback = function() {
-		if (self.gridOuter.checkbox)
+		if (self.gridOuter.checkbox || self.selectedChangeCallback)
 		{
-			self.gridOuter.checkbox.attr("checked", this.getAllSelected())
+			var allSelected = this.getAllSelected();
+			if (self.gridOuter.checkbox)
+			{
+				self.gridOuter.checkbox.attr("checked", allSelected)
+			}
+
+			if (self.selectedChangeCallback)
+			{
+				self.selectedChangeCallback.call(self.context, allSelected)
+			}
 		}
 	};
 

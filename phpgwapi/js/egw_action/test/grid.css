@@ -209,4 +209,21 @@ body, td, th {
 	border-bottom: 0 none silver !important;
 }
 
+.egwGridView_outer span.sort {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 2px;
+	vertical-align: middle;
+}
+
+.egwGridView_outer span.sort.asc {
+	background-image: url(imgs/up.png);
+}
+
+.egwGridView_outer span.sort.desc {
+	background-image: url(imgs/down.png);
+}
 

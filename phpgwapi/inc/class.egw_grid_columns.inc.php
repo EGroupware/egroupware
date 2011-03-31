@@ -174,6 +174,7 @@ define("EGW_COL_SORTABLE_NONE", 0);
 define("EGW_COL_SORTABLE_ALPHABETIC", 1);
 define("EGW_COL_SORTABLE_NUMERICAL", 2);
 define("EGW_COL_SORTABLE_NATURAL", 3);
+define("EGW_COL_SORTABLE_EXTERNAL", 4);
 
 define("EGW_COL_SORTMODE_NONE", 0);
 define("EGW_COL_SORTMODE_ASC", 1);
@@ -198,7 +199,7 @@ class egw_grid_column extends egw_json_object
 			"sortable" => array("types" => "int", "default" => EGW_COL_SORTABLE_NONE),
 			"sortmode" => array("types" => "int", "default" => EGW_COL_SORTMODE_NONE),
 			"default" => array("types" => "string,int", "default" => EGW_COL_DEFAULT_FETCH),
-			"type" => array("types" => "int", "default" => EGW_COL_TYPE_DEFAULT),
+			"type" => array("types" => "int", "default" => EGW_COL_TYPE_DEFAULT)
 		));
 
 		// Set the column id

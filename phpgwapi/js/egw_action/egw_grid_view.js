@@ -291,6 +291,31 @@ egwGridViewOuter.prototype.buildBase = function()
 	this.outer_thead.append(this.outer_head_tr);
 }
 
+egwGridViewOuter.prototype.updateColSortmode = function(_colIdx, _sortArrow)
+{
+	if (typeof _sortArrow == "undefined")
+	{
+		_sortArrow = $("span.sort", this.headerColumns[_colIdx]);
+	}
+
+	var col = this.columns[_colIdx];
+	if (_sortArrow)
+	{
+		_sortArrow.removeClass("asc");
+		_sortArrow.removeClass("desc");
+
+		switch (col.sortmode)
+		{
+			case EGW_COL_SORTMODE_ASC:
+				_sortArrow.addClass("asc");
+				break;
+			case EGW_COL_SORTMODE_DESC:
+				_sortArrow.addClass("desc");
+				break;
+		}
+	}
+}
+
 egwGridViewOuter.prototype.buildBaseHeader = function()
 {
 	// Build the "option-column", if this hasn't been done yet
@@ -306,6 +331,7 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 			// Create the column element and insert it into the DOM-Tree
 			var column = $(document.createElement("th"));
 			column.addClass(col.tdClass);
+			this.headerColumns.push(column);
 
 			var cont = $(document.createElement("div"));
 			cont.addClass("innerContainer");
@@ -325,15 +351,23 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 
 				cont.append(this.checkbox);
 			}
-			else
+
+			var caption = $(document.createElement("span"));
+			caption.html(col.caption);
+
+			cont.append(caption);
+
+			if (col.type != EGW_COL_TYPE_CHECKBOX && col.sortable != EGW_COL_SORTABLE_NONE)
 			{
-				cont.html(col.caption);
+				var sortArrow = $(document.createElement("span"));
+				sortArrow.addClass("sort");
+				cont.append(sortArrow);
+
+				this.updateColSortmode(i, sortArrow);
 			}
 
 			column.append(cont);
 			this.outer_head_tr.append(column);
-
-			this.headerColumns.push(column);
 		}
 
 		// Build the "select columns" icon

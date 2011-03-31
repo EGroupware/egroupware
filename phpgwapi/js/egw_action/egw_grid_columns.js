@@ -33,6 +33,8 @@ var EGW_COL_SORTABLE_NONE = 0;
 var EGW_COL_SORTABLE_ALPHABETIC = 1;
 var EGW_COL_SORTABLE_NUMERICAL = 2;
 var EGW_COL_SORTABLE_NATURAL = 3;
+var EGW_COL_SORTABLE_EXTERNAL = 4;
+
 
 var EGW_COL_SORTMODE_NONE = 0;
 var EGW_COL_SORTMODE_ASC = 1;
@@ -204,7 +206,7 @@ egwGridColumn.prototype.set_sortable = function(_value)
 {
 	if (typeof _value == "number" && (_value == EGW_COL_SORTABLE_ALPHABETIC ||
 	    _value == EGW_COL_SORTABLE_NONE || _value == EGW_COL_SORTABLE_NATURAL ||
-	    _value == EGW_COL_SORTABLE_NUMERICAL))
+	    _value == EGW_COL_SORTABLE_NUMERICAL || _value == EGW_COL_SORTABLE_EXTERNAL))
 	{
 		if (_value == EGW_COL_SORTABLE_NONE)
 		{
