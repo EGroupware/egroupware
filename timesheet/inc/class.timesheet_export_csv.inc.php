@@ -54,7 +54,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 			'ts_status'	=>	$uitimesheet->status_labels+array(lang('No status'))
 		);
 		foreach($lookups['ts_status'] as &$status) {
-			$status = trim(html_entity_decode($status)); // Remove &nbsp;
+			$status = str_replace('&nbsp;','',$status); // Remove &nbsp;
 		}
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
