@@ -752,7 +752,232 @@ egwGridDataElement.prototype.getParentList = function(_lst)
 	return _lst;
 }
 
+/**
+ * Requires a certain column to have all data localy - if this isn't the case,
+ * the data is fetched from the server.
+ *
+ * @param string _colId specifies the column which should be loaded
+ * @param function _callback is the function which should be called once all data
+ * 	has been fetched.
+ * @param object _context is the context in which the callback should be executed
+ * @param object _loadIds is used internally to accumulate the object ids which
+ * 	should be loaded.
+ */
+egwGridDataElement.prototype.requireColumn = function(_colId, _callback, _context,
+	_loadElems)
+{
+	var outerCall = false;
+	if (typeof _loadElems == "undefined")
+	{
+		_loadElems = {
+			"elems": []
+		}
+		outerCall = true;
+	}
 
+	if (!outerCall && !this.hasColumn(_colId, false))
+	{
+		_loadElems.elems.push(this);
+	}
+
+	for (var i = 0; i < this.children.length; i++)
+	{
+		this.children[i].requireColumn(_colId, null, null, _loadElems);
+	}
+
+	if (outerCall)
+	{
+		if (_loadElems.elems.length > 0)
+		{
+			this.readQueue.queueCall(_loadElems.elems, [_colId], function() {
+				_callback.call(_context);
+			}, null);
+		}
+		else
+		{
+			// If all elements had been loaded, postpone calling the callback function
+			window.setTimeout(function() {
+				_callback.call(_context);
+			}, 0);
+		}
+	}
+}
+
+
+/**
+ * Sorts the data element by the given column, the given sort direction and the
+ * given sort mode - if the tree doesn't have all the column data loaded which is
+ * needed for sorting, it first queries it from the server.
+ *
+ * @param string _colId is the id of the column
+ * @param int _dir is one of EGW_COL_SORTMODE_*
+ * @param int _mode is one of EGW_COL_SORTABLE_*
+ * @param function _callback is a callback function which is called once the
+ * 	sorting is done
+ * @param 
+ * @param boolean _outerCall is used internally, do not specify it
+ */
+egwGridDataElement.prototype.sortChildren = function(_colId, _dir, _mode, _callback,
+	_context, _outerCall)
+{
+	if (typeof _outerCall == "undefined")
+	{
+		_outerCall = true;
+	}
+
+	// If this is the outer call of the function, we first have to make sure
+	// that all data for the given column id is available
+	if (_outerCall)
+	{
+		this.requireColumn(_colId, function() {
+			// Call the actual sort part of this function by explicitly passing "false"
+			// to the _outerCall parameter
+			this.sortChildren(_colId, _dir, _mode, _callback, _context, false);
+
+			_callback.call(_context);
+		}, this);
+	}
+	else
+	{
+		// Select the sort function
+		var sortFunc = null;
+		switch (_mode) {
+			case EGW_COL_SORTABLE_ALPHABETIC:
+				sortFunc = egwGridData_sortAlphabetic;
+				break;
+
+			case EGW_COL_SORTABLE_NATURAL:
+				sortFunc = egwGridData_sortNatural;
+				break;
+
+			case EGW_COL_SORTABLE_NUMERICAL:
+				sortFunc = egwGridData_sortNumerical;
+				break;
+		}
+
+		var col = this.columns.getColumnById(_colId);
+
+		// Determine the mode multiplier which is used to sort the list in the
+		// given direction.
+		var dirMul = (_dir == EGW_COL_SORTMODE_ASC) ? 1 : -1;
+		this.children.sort(function (a, b) {
+			// Fetch the sortData or the regular data from the a and b element
+			// and pass it to the sort function
+			var aData = "";
+			var bData = "";
+
+			switch (col.type)
+			{
+				case EGW_COL_TYPE_DEFAULT:
+					aData = a.data[_colId].sortData === null ? a.data[_colId].data :
+						a.data[_colId].sortData;
+					bData = b.data[_colId].sortData === null ? b.data[_colId].data :
+						b.data[_colId].sortData;
+					break;
+
+				case EGW_COL_TYPE_NAME_ICON_FIXED:
+					aData = a.caption;
+					bData = b.caption;
+					break;
+
+				case EGW_COL_TYPE_CHECKBOX:
+					aData = a.actionObject.getSelected() ? 1 : 0;
+					bData = b.actionObject.getSelected() ? 1 : 0;
+					break;
+			}
+
+			return sortFunc(aData, bData) * dirMul;
+		});
+
+		// Sort all children
+		for (var i = 0; i < this.children.length; i++)
+		{
+			this.children[i].sortChildren(_colId, _dir, _mode, null, null, false);
+		}
+
+		// Sorting is done - call the callback function
+		if (_callback)
+		{
+			_callback.call(_context);
+		}
+	}
+}
+
+function egwGridData_sortAlphabetic(a, b)
+{
+	return (a > b) ? 1 : -1;
+}
+
+function egwGridData_sortNumerical(a, b)
+{
+	aa = parseFloat(a);
+	bb = parseFloat(b);
+
+	return (aa > bb) ? 1 : -1;
+}
+
+/**
+ * See http://my.opera.com/GreyWyvern/blog/show.dml/1671288
+ */
+function egwGridData_sortNatural(a, b)
+{
+	function chunkify(t)
+	{
+		var tz = [], x = 0, y = -1, n = 0, i, j;
+
+		while (i = (j = t.charAt(x++)).charCodeAt(0))
+		{
+			var m = (i == 46 || (i >=48 && i <= 57));
+			if (m !== n)
+			{
+				tz[++y] = "";
+				n = m;
+			}
+			tz[y] += j;
+		}
+
+		return tz;
+	}
+
+	var aa = chunkify(a);
+	var bb = chunkify(b);
+
+	for (x = 0; aa[x] && bb[x]; x++)
+	{
+		if (aa[x] !== bb[x])
+		{
+			var c = Number(aa[x]), d = Number(bb[x]);
+			if (c == aa[x] && d == bb[x])
+			{
+				return c - d;
+			}
+			else
+			{
+				return (aa[x] > bb[x]) ? 1 : -1;
+			}
+		}
+	}
+	return aa.length - bb.length;
+}
+
+
+/**
+ * Returns the outermost parent of a set of elements - assume the following tree
+ * where the elements marked with "x" are passed as array to this function:
+ *
+ * ROOT
+ *  |- CHILD 1
+ *     |- SUB_CHILD 1
+ *     |- SUB_CHILD 2 (x)
+ *  |- CHILD 2
+ *     |- SUB_CHILD 1
+ *         |- SUB_SUB_CHILD 1 (x)
+ * The function should now return the "ROOT" elements as this is the outermost
+ * parent the elements have in common.
+ *
+ * TODO: If I think about this, the function actually doesn't work like I'd like
+ * 	it to behave...
+ */
 function egwGridData_getOutermostParent(_elements)
 {
 	var minElem = null;
@@ -771,6 +996,7 @@ function egwGridData_getOutermostParent(_elements)
 
 	return minElem ? (minElem.parent ? minElem.parent : minElem) : null;
 }
+
 
 /** - egwGridDataReadQueue -- **/
 
@@ -809,14 +1035,14 @@ egwGridDataQueue.prototype.setDataRoot = function(_dataRoot)
  * than the one specified in EGW_DATA_QUEUE_MAX_ELEM_COUNT. If this is the case,
  * the queue is flushed and false is returned, otherwise true.
  */
-egwGridDataQueue.prototype._queue = function(_obj)
+egwGridDataQueue.prototype._queue = function(_obj, _last)
 {
 	this.timeoutId++;
 
 	// Push the queue object onto the queue
 	this.queue.push(_obj);
 
-	if (this.queue.length > EGW_DATA_QUEUE_MAX_ELEM_COUNT)
+	if (_last && this.queue.length > EGW_DATA_QUEUE_MAX_ELEM_COUNT)
 	{
 		this.flushQueue(false);
 		return false;
@@ -838,14 +1064,17 @@ egwGridDataQueue.prototype._queue = function(_obj)
 		}
 
 		// Set the flush queue timeout
-		var tid = this.timeoutId;
-		var self = this;
-		window.setTimeout(function() {
-			if (self.timeoutId == tid)
-			{
-				self.flushQueue(true);
-			}
-		}, EGW_DATA_QUEUE_FLUSH_TIMEOUT);
+		if (_last)
+		{
+			var tid = this.timeoutId;
+			var self = this;
+			window.setTimeout(function() {
+				if (self.timeoutId == tid)
+				{
+					self.flushQueue(true);
+				}
+			}, EGW_DATA_QUEUE_FLUSH_TIMEOUT);
+		}
 	}
 
 	return true;
@@ -869,7 +1098,8 @@ egwGridDataQueue.prototype._accumulateQueueColumns = function(_columns)
 /**
  * Queues the given element in the fetch-data queue.
  *
- * @param object _elem is the element whose data will be fetched
+ * @param object/array _elems is a single element or an array of elements -
+ * 	their data will be fetched
  * @param array _columns is an array of column ids which should be fetched. Those
  * 	columns will be accumulated over the queue calls. _columns may also take
  * 	the value EGW_DATA_QUEUE_CHILDREN in which case a request for the children
@@ -879,7 +1109,7 @@ egwGridDataQueue.prototype._accumulateQueueColumns = function(_columns)
  * @param object _context is the context in which the callback function will
  * 	be executed.
  */
-egwGridDataQueue.prototype.queueCall = function(_elem, _columns, _callback, _context)
+egwGridDataQueue.prototype.queueCall = function(_elems, _columns, _callback, _context)
 {
 	if (typeof _callback == "undefined")
 	{
@@ -890,28 +1120,37 @@ egwGridDataQueue.prototype.queueCall = function(_elem, _columns, _callback, _con
 		_context = null;
 	}
 
-	if (_columns === EGW_DATA_QUEUE_CHILDREN)
+	if (!(_elems instanceof Array))
 	{
-		this._queue({
-				"elem": _elem,
-				"type": EGW_DATA_QUEUE_CHILDREN,
-				"callback": _callback,
-				"context": _context
-			});
+		_elems = [_elems];
 	}
-	else
-	{
-		// Accumulate the queue columns ids
-		this._accumulateQueueColumns(_columns);
 
-		// Queue the element and search in the elements around the given one for
-		// elements whose data isn't loaded yet.
-		this._queue({
-			"elem": _elem,
-			"type": EGW_DATA_QUEUE_ELEM,
-			"callback": _callback,
-			"context": _context
-		});
+	for (var i = 0; i < _elems.length; i++)
+	{
+		var last = i == _elems.length - 1;
+		if (_columns === EGW_DATA_QUEUE_CHILDREN)
+		{
+			this._queue({
+					"elem": _elems[i],
+					"type": EGW_DATA_QUEUE_CHILDREN,
+					"callback": last ? _callback : null,
+					"context": _context
+				}, last);
+		}
+		else
+		{
+			// Accumulate the queue columns ids
+			this._accumulateQueueColumns(_columns);
+
+			// Queue the element and search in the elements around the given one for
+			// elements whose data isn't loaded yet.
+			this._queue({
+				"elem": _elems[i],
+				"type": EGW_DATA_QUEUE_ELEM,
+				"callback": last ? _callback : null,
+				"context": _context
+			}, last);
+		}
 	}
 }
 

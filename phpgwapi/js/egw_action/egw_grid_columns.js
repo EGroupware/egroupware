@@ -192,7 +192,7 @@ egwGridColumn.prototype.set_sortmode = function(_value)
 		{
 			if (_value != this.sortmode)
 			{
-				if (this.sortmode)
+				if (this.sortmodeChangeCallback)
 				{
 					this.sortmodeChangeCallback.call(this.context, this);
 				}

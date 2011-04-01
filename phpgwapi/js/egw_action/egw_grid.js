@@ -203,9 +203,60 @@ egwGrid.prototype.sortColsClick = function(_columnIdx)
 	{
 		if (this.sortColsCallback)
 		{
-			this.sortColsCallback.call(this.context, this.columns.columns[_columnIdx].id);
+			this.sortColsCallback.call(this.context, col.id);
 		}
 	}
+	else
+	{
+		var dir = EGW_COL_SORTMODE_ASC;
+
+		if (col.sortmode == EGW_COL_SORTMODE_ASC)
+		{
+			dir = EGW_COL_SORTMODE_DESC
+		}
+
+		this.sortData(col.id, dir);
+	}
+}
+
+egwGrid.prototype.sortData = function(_columnId, _dir)
+{
+	var col = this.columns.getColumnById(_columnId);
+
+	if (col && col.sortable != EGW_COL_SORTABLE_NONE && col.sortable != EGW_COL_SORTABLE_EXTERNAL)
+	{
+		this.dataRoot.sortChildren(col.id, _dir, col.sortable, function() {
+			// Set the new sort direction
+			col.set_sortmode(_dir);
+
+			this.displaySortMode();
+
+			// Rebuild the inner grid
+			this.reload();
+		}, this);
+	}
+}
+
+egwGrid.prototype.displaySortMode = function()
+{
+	// Update the column data of the grid
+	this.gridOuter.updateColumns(this.columns.getColumnData());
+
+	// Update the column header
+	for (var i = 0; i < this.columns.columns.length; i++)
+	{
+		this.gridOuter.updateColSortmode(i);
+	}
+}
+
+egwGrid.prototype.resetSort = function()
+{
+	for (var i = 0; i < this.columns.columns.length; i++)
+	{
+		fileGrid.columns.columns[i].set_sortmode(EGW_COL_SORTMODE_NONE);
+	}
+
+	this.displaySortMode();
 }
 
 /**
