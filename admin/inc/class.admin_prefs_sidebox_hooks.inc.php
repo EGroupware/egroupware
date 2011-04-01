@@ -57,6 +57,11 @@ class admin_prefs_sidebox_hooks
 				$file['User Accounts']              = egw::link('/index.php','menuaction=admin.uiaccounts.list_users');
 			}
 
+			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			{
+				$file['Reset passwords']              = egw::link('/index.php','menuaction=admin.admin_passwordreset.index');
+			}
+
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
 				$file['User Groups']                = egw::link('/index.php','menuaction=admin.uiaccounts.list_groups');
