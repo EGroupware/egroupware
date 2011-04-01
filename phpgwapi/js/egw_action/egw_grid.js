@@ -139,11 +139,14 @@ egwGrid.prototype.selectcolsClick = function(_at)
 	for (var k in column_data)
 	{
 		var col = column_data[k];
-
+		// strip html from caption
+		var strippedCaption = col.caption.replace(/&(lt|gt);/g, function (strMatch, p1) {
+			return (p1 == "lt")? "<" : ">";});
+		strippedCaption = strippedCaption.replace(/<\/?[^>]+(>|$)/g,"");
 		menu_data.push(
 			{
 				"id": k,
-				"caption": col.caption,
+				"caption": strippedCaption,
 				"enabled": col.enabled,
 				"checkbox": true,
 				"checked": col.visible
