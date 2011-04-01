@@ -652,13 +652,29 @@ Preferences tabs
 	-khtml-user-select: none;
 	user-select: none;
 	overflow: visible;
+	display: inline-block;
 }
 
-.egwGridView_grid span.iconOverlayContainer img.overlay {
+.egwGridView_grid span.overlayContainer {
 	position: absolute;
 	right: -2px;
 	bottom: -2px;
 	vertical-align: bottom;
+	text-align: right;
+}
+
+.egwGridView_grid span.iconContainer {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.egwGridView_grid span.overlayContainer img.overlay {
+	position: relative;
+	top: 1px;
+	margin: 0;
+	padding: 0;
 }
 
 .egwGridView_grid img.icon {
@@ -694,13 +710,6 @@ Preferences tabs
 	cursor: pointer;
 	background-image: url(../../default/images/egw_action/ajax-loader.gif);
 	background-position: 0 0;
-}
-
-.egwGridView_grid span.iconContainer {
-	display: inline-block;
-	padding: 0;
-	margin: 0;
-	text-align: center;
 }
 
 .egwGridView_grid span.caption {

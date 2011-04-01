@@ -1674,12 +1674,18 @@ function egwGridViewRow_doUpdateData(_immediate)
 						});
 						overlayCntr.append(icon);
 
-						for (var i = 0; i < this.item.iconOverlay.length; i++)
+						if (this.item.iconOverlay.length > 0)
 						{
-							var overlay = $(document.createElement("img"));
-							overlay.addClass("overlay");
-							overlay.attr("src", this.item.iconOverlay[i]);
-							overlayCntr.append(overlay);
+							var overlayCntr2 = $(document.createElement("span"));
+							overlayCntr2.addClass("overlayContainer");
+							for (var i = 0; i < this.item.iconOverlay.length; i++)
+							{
+								var overlay = $(document.createElement("img"));
+								overlay.addClass("overlay");
+								overlay.attr("src", this.item.iconOverlay[i]);
+								overlayCntr2.append(overlay);
+							}
+							overlayCntr.append(overlayCntr2);
 						}
 
 						icon.addClass("icon");
