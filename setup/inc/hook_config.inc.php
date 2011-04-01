@@ -145,7 +145,7 @@ function encryptmode($config)
 	return $out;
 }
 
-function passwdhashes($config)
+function passwdhashes($config,$return_hashes=false)
 {
 	$hashes = array(
 		'des' => 'des',
@@ -169,6 +169,8 @@ function passwdhashes($config)
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
 
+	if ($return_hashes) return $hashes;
+
 	foreach($hashes as $key => $value)
 	{
 		if($config['ldap_encryption_type'] == $value)
@@ -186,7 +188,7 @@ function passwdhashes($config)
 	return $out;
 }
 
-function sql_passwdhashes($config)
+function sql_passwdhashes($config,$return_hashes=false)
 {
 	$hashes = array(
 		'md5' => 'md5'
@@ -216,6 +218,8 @@ function sql_passwdhashes($config)
 		'ssha' => 'ssha',
 		'plain' => 'plain',
 	);
+
+	if ($return_hashes) return $hashes;
 
 	foreach($hashes as $key => $value)
 	{
