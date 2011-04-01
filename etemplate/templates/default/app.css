@@ -114,8 +114,10 @@
  * mark a file (icon) as link
  */
 .vfsIsLink img {
-	border-bottom: 4px solid darkgray;
-	border-right: 4px solid darkgray;
+	padding-right: 8px;
+	background-image: url(images/link.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
 }
 /**
  * nicer would be, but it's not working ...
@@ -127,8 +129,10 @@
  * mark a link (icon) as broken link
  */
 .vfsIsBrokenLink img {
-	border-bottom: 4px solid red;
-	border-right: 4px solid red;
+	padding-right: 8px;
+	background-image: url(images/link_broken.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
 }
 
 /**
