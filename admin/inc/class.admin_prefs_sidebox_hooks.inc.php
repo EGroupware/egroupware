@@ -59,7 +59,7 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
-				$file['Reset passwords']              = egw::link('/index.php','menuaction=admin.admin_passwordreset.index');
+				$file['Bulk password reset']        = egw::link('/index.php','menuaction=admin.admin_passwordreset.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
