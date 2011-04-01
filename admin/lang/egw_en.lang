@@ -13,6 +13,8 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 -  type	admin	en	-  type
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
+account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
+account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
 account %1 %2	admin	en	Account %1 %2
 account '%1' deleted.	admin	en	Account '%1' deleted.
 account active	admin	en	Account active
@@ -55,6 +57,7 @@ advanced options	admin	en	advanced options
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login, an account should be blocked (default 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login, an IP should be blocked (default 3) ?
 aliases	admin	en	Aliases
+all applications	admin	en	All applications
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
@@ -93,10 +96,12 @@ attribute mailalternateaddress explained	admin	en	This handles the attribute <b>
 attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
 authentication / accounts	admin	en	Authentication / Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users
+available placeholders	admin	en	Available placeholders
 back to the list	admin	en	back to the list
 bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 bottom	admin	en	bottom
+bulk password reset	admin	en	Bulk password reset
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizont in days (default 1000)
 can change password	admin	en	Can change password
@@ -112,6 +117,7 @@ change acl rights	admin	en	change ACL Rights
 change config settings	admin	en	Change config settings
 change main screen message	admin	en	Change main screen message
 change password for %1	admin	en	change password for %1
+change password hash to	admin	en	Change password hash to
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
@@ -133,6 +139,7 @@ creates / updates user accounts from csv file	admin	en	Creates / updates user ac
 creates / updates user groups from csv file	admin	en	Creates / updates user groups from CSV file
 creates a new field	admin	en	creates a new field
 crontab only (recomended)	admin	en	crontab only (recomended)
+current hash	admin	en	Current hash
 custom fields	admin	en	Custom fields
 cyrus imap server	admin	en	Cyrus IMAP Server
 data	admin	en	Data
@@ -188,6 +195,8 @@ do you also want to delete all global subcategories ?	admin	en	Do you also want 
 do you want to delete all global subcategories ?	admin	en	Do you want to delete all global subcategories ?
 do you want to move all global subcategories one level down ?	admin	en	Do you want to move all global subcategories one level down ?
 document root (default)	admin	en	Document root (default)
+down	admin	en	down
+download csv	admin	en	Download CSV
 each value is a line like <id>[=<label>]	admin	en	each value is a line like <id>[=<label>]
 each value is a line like id[=label]	admin	en	each value is a line like id[=label]
 edit account	admin	en	Edit account
@@ -258,6 +267,7 @@ error: %1 not found or other error !!!	admin	en	Error: %1 not found or other err
 exists	admin	en	exists
 expires	admin	en	Expires
 explanation of ldapman	admin	en	This module has been tested so far for POSTFIX,LDAP,Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this systrem can be found in README.ldapman in the doc folder of ADMIN.
+failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
 fallback (after each pageview)	admin	en	fallback (after each pageview)
 false	admin	en	false
 field '%1' already exists !!!	admin	en	Field '%1' already exists !!!
@@ -272,6 +282,7 @@ force users to change their password regularily?(empty for no,number for after t
 forward also to	admin	en	forward also to
 forward emails to	admin	en	forward emails to
 forward only	admin	en	forward only
+full name	admin	en	full name
 global categories	common	en	Global Categories
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
@@ -334,6 +345,7 @@ ldap rootdn	admin	en	LDAP rootdn
 leave empty for no quota	admin	en	leave empty for no quota
 leave the category untouched and return back to the list	admin	en	leave the category untouched and return back to the list
 leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list
+leave unchanged	admin	en	Leave unchanged
 leave without saveing the entry	admin	en	leave without saveing the entry
 leaves without saveing	admin	en	leaves without saveing
 length<br>rows	admin	en	Length<br>Rows
@@ -374,6 +386,7 @@ name must not be empty !!!	admin	en	Name must not be empty !!!
 name of the egroupware instance, eg. default	admin	en	Name of the eGroupWare instance, eg. default
 new group name	admin	en	New group name
 new name	admin	en	new name
+new password	admin	en	new password
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 next run	admin	en	Next run
 no algorithms available	admin	en	no algorithms available
@@ -387,10 +400,16 @@ no permission to add users	admin	en	no permission to add users
 no permission to create groups	admin	en	no permission to create groups
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, associations, ...
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
+notification mail	admin	en	Notification mail
+notify user by email	admin	en	Notify user by email
+notifying account "%1" %2 failed!	admin	en	Notifying account "%1" %2 failed!
+number applications serially	admin	en	Number applications serially
 number of active users	admin	en	number of active users
 number of row for a multiline inputfield or line of a multi-select-box	admin	en	number of row for a multiline inputfield or line of a multi-select-box
 number of sessions / egroupware logins in the last 30 days	admin	en	Number of sessions / EGroupware logins in the last 30 days
 number of users	admin	en	Number of users
+number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	en	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
+nummeric account id	admin	en	nummeric account ID
 official egroupware usage statistic	admin	en	Official EGroupware usage statistic
 one day	admin	en	one day
 one hour	admin	en	one hour
@@ -404,6 +423,7 @@ own install id:	admin	en	Own install ID:
 passthrough	admin	en	passthrough
 password for smtp-authentication	admin	en	Password for SMTP-authentication
 password updated	admin	en	Password updated
+passwords and/or attributes of %1 accounts changed	admin	en	Passwords and/or attributes of %1 accounts changed
 path information	admin	en	Path information
 peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
@@ -456,6 +476,7 @@ select accounts for which the custom field should be visible	admin	en	Select acc
 select group managers	admin	en	Select Group Managers
 select permissions this group will have	admin	en	Select permissions this group will have
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY
+select users	admin	en	Select users
 select users for inclusion	admin	en	Select users for inclusion
 select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information
 select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts
@@ -468,6 +489,7 @@ server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
 sessions last 30 days	admin	en	Sessions last 30 days
+set a random password	admin	en	Set a random password
 set preference values.	admin	en	Set preference values.
 should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace (including function arguments)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Should the login page include a language selectbox (useful for demo-sites) ?
@@ -489,6 +511,7 @@ standard	admin	en	standard
 standard imap server	admin	en	standard IMAP server
 standard pop3 server	admin	en	standard POP3 server
 standard smtp-server	admin	en	standard SMTP-Server
+start	admin	en	Start
 start testjob!	admin	en	Start TestJob!
 submit changes	admin	en	Submit Changes
 submit displayed information?	admin	en	Submit displayed information?
@@ -545,6 +568,7 @@ unknown account: %1 !!!	admin	en	Unknown account: %1 !!!
 unknown command %1!	admin	en	Unknown command %1!
 unknown option %1	admin	en	Unknown option %1
 unwilling to save category with current settings. check for inconsistency:	admin	en	Unwilling to save category with current settings. Check for inconsistency:
+up	admin	en	up
 updated	admin	en	updated
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the eGroupWare installation, eg. http://domain.com/egroupware
 usage	admin	en	Usage
@@ -578,6 +602,7 @@ would you like to show each application's upgrade status ?	admin	en	Would you li
 wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !!!
 wrong admin-account or -password !!!	admin	en	Wrong admin-account or -password !!!
 xml-rpc	admin	en	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can only change the hash, if you set a random password or currently use plaintext passwords!
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
 you have no email address for your user set !!!	admin	en	You have no email address for your user set !!!
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!!!
@@ -592,6 +617,8 @@ you must enter an application title.	admin	en	You must enter an application titl
 you must select a file type	admin	en	You must select a file type
 you must select at least one group member.	admin	en	You must select at least one group member.
 you need to enter install id and password!	admin	en	You need to enter Install ID AND Password!
+you need to select as least one action!	admin	en	You need to select as least one action!
+you need to select some users first!	admin	en	You need to select some users first!
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
 your last submission was less then %1 days ago!	admin	en	Your last submission was less then %1 days ago!
 your session could not be verified.	admin	en	Your session could not be verified.

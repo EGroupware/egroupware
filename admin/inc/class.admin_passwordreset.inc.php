@@ -42,9 +42,10 @@ class admin_passwordreset
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
 		$this->replacements = array(
-			'account_lid' => lang('Login-ID'),
-			'account_firstname' => lang('firstname'),
-			'account_lastname' => lang('lastname'),
+			'account_lid' => lang('LoginID'),
+			'account_firstname' => lang('first name'),
+			'account_lastname' => lang('last name'),
+			'account_fullname' => lang('full name'),
 			'account_email' => lang('email'),
 			'account_password' => lang('new password'),
 			'account_id' => lang('nummeric account ID'),
@@ -84,12 +85,10 @@ class admin_passwordreset
 			{
 				$msg = lang('You need to select some users first!');
 			}
-			elseif (!$content['random_pw'] && !$content['hash'] && !$content['notify'])
+			elseif (!$content['random_pw'] && !$content['hash'] && !$content['notify'] &&
+				(string)$content['changepassword'] === '' && (string)$content['mustchangepassword'] === '')
 			{
-				$msg = lang('You need to check "%1", "%2" or select any from "%3"!',
-					lang('Set a random password'),
-					lang('Notify user by email'),
-					lang('Change password hash to'));
+				$msg = lang('You need to select as least one action!');
 			}
 			elseif(!$content['random_pw'] && $content['hash'] && $content['hash'] != $current_hash && $current_hash != 'plain')
 			{
@@ -103,19 +102,19 @@ class admin_passwordreset
 					$msg = lang('Changed password hash for %1 to %2.',strtoupper($account_repository),$content['hash'])."\n";
 					$GLOBALS['egw_info']['server'][$account_repository.'_encryption_type'] = $content['hash'];
 				}
+				$change_pw = $content['random_pw'] || $content['hash'] && $content['hash'] != $current_hash;
 				$changed = array();
 				foreach($content['users'] as $account_id)
 				{
 					if (($account = $GLOBALS['egw']->accounts->read($account_id)))
 					{
 						//_debug_array($account); //break;
-
 						if ($content['random_pw'])
 						{
 							$password = auth::randomstring(8);
 							$old_password = null;
 						}
-						elseif (!preg_match('/^{plain}/i',$account['account_pwd']) &&
+						elseif ($change_pw && !preg_match('/^{plain}/i',$account['account_pwd']) &&
 							($current_hash != 'plain' || $current_hash == 'plain' && $account['account_pwd'][0] == '{'))
 						{
 							$msg .= lang('Account "%1" has NO plaintext password!',$account['account_lid'])."\n";
@@ -125,10 +124,29 @@ class admin_passwordreset
 						{
 							$old_password = $password = preg_replace('/^{plain}/i','',$account['account_pwd']);
 						}
-						if (!$GLOBALS['egw']->auth->change_password($old_password,$password,$account_id))
+						// change password, if requested
+						if ($change_pw && !$GLOBALS['egw']->auth->change_password($old_password,$password,$account_id))
 						{
 							$msg .= lang('Failed to change password for account "%1"!',$account['account_lid'])."\n";
 							continue;
+						}
+						// force password change on next login
+						if ((string)$content['mustchangepassword'] !== '' && !(!$content['mustchangepassword'] && $change_pw))
+						{
+							$GLOBALS['egw']->auth->setLastPwdChange($account_id, $password,
+								$content['mustchangepassword'] ? 0 : time());
+						}
+						// allow or forbid to change password, if requested
+						if ((string)$content['changepassword'] !== '')
+						{
+							if(!$content['changepassword'])
+							{
+								$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$account_id,1);
+							}
+							else
+							{
+								$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$account_id);
+							}
 						}
 						$account['account_password'] = $password;
 						$changed[] = $account;
@@ -168,16 +186,17 @@ class admin_passwordreset
 				}
 				if ($changed)
 				{
-					$msg .= lang('Passwords of %1 accounts changed',count($changed));
+					$msg .= lang('Passwords and/or attributes of %1 accounts changed',count($changed));
 				}
 			}
 		}
 		$content['msg'] = $msg;
 		$content['account_repository'] = $account_repository;
-		$content['current_hash'] = $current_hash;
+		$content['current_hash'] = $content['hash'] ? $content['hash'] : $current_hash;
 		$sel_options['hash'] = $account_repository == 'sql' ?
 			sql_passwdhashes($GLOBALS['egw_info']['server'],true) :
 			passwdhashes($GLOBALS['egw_info']['server'],true);
+
 		$content['replacements'] = array();
 		foreach($this->replacements as $name => $label)
 		{
@@ -188,7 +207,7 @@ class admin_passwordreset
 		}
 		$readonlys['download_csv'] = !$changed;
 
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Reset passwords');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Bulk password reset');
 
 		$tmpl = new etemplate('admin.passwordreset');
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
