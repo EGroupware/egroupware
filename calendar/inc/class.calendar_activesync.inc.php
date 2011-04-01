@@ -525,7 +525,7 @@ class calendar_activesync implements activesync_plugin_write
 			{
 				// calculate enddate from occurences count, as we only support enddate
 				$count = $message->recurrence->occurrences;
-				foreach(calendar_rrule::event2rrule($event, true) as $time)	// true = timestamps are user time here, because of save!
+				foreach(calendar_rrule::event2rrule($event, true) as $rtime)	// true = timestamps are user time here, because of save!
 				{
 					if (--$count <= 0) break;
 				}
