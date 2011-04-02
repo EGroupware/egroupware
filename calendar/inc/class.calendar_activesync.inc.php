@@ -675,10 +675,11 @@ class calendar_activesync implements activesync_plugin_write
 	 * @param string|array $id cal_id or event array (used internally)
 	 * @param int $truncsize
 	 * @param int|bool $bodypreference=false
+	 * @param $optionbodypreference=false
 	 * @param int $mimesupport=0
 	 * @return SyncAppointment|boolean false on error
 	 */
-	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
+	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 

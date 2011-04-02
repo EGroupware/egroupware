@@ -318,7 +318,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * @param bool $mimesupport
 	 * @return $messageobject|boolean false on error
 	 */
-	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
+	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
