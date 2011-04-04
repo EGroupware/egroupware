@@ -169,7 +169,7 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 				$content['change_creator'] = $content['plugin_options']['change_creator'];
 			}
 
-			if(!in_array('ts_creator', $content['field_mapping'])) {
+			if(!in_array('ts_owner', $content['field_mapping'])) {
 				$content['no_owner_map'] = true;
 			}
 
