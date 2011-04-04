@@ -316,7 +316,9 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 
 			foreach((array)$fields['select-cat'] as $name) {
 				if($record[$name]) {
-					$record[$name] = importexport_helper_functions::cat_name2id($record[$field]);
+					$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
+					// Don't clear it if it wasn't found
+					if($cat_id) $record[$name] = $cat_id;
 				}
 			}
 		}
