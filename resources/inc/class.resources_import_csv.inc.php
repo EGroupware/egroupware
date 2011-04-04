@@ -133,14 +133,17 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 		// Failures
 		$this->errors = array();
 
+		$types = importexport_export_csv::$types;
+		$types['select-bool'] = array('bookable');
+
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			// Automatically handle text categories without explicit translation
-			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+			// Automatically handle human friendly values
+			importexport_import_csv::convert($record, $types, 'resources', $lookups);
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
