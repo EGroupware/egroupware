@@ -196,7 +196,7 @@ class resources_bo
 	{
 		if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 		{
-			return lang('You are not permitted to edit this reource!');
+			return lang('You are not permitted to edit this resource!');
 		}
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
@@ -280,7 +280,7 @@ class resources_bo
 	{
 		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),EGW_ACL_DELETE))
 		{
-			return lang('You are not permitted to delete this reource!');
+			return lang('You are not permitted to delete this resource!');
 		}
 
 		if ($this->so->delete(array('res_id'=>$res_id)))
