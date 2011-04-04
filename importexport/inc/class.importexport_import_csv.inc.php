@@ -52,7 +52,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @var int holds total number of records
 	 */
 	protected $num_of_records = 0;
-	
+
+	/**
+	 * Cache for automatic conversion from human friendly
+	 */	
+	protected static $cf_parse_cache = array();
+
 	/**
 	 * @var stream
 	 */
@@ -236,13 +241,87 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 *
 	 * @return bool
 	 */
-	protected function do_conversions( ) {
+	protected function do_conversions() {
 		if ( $record = importexport_helper_functions::conversion( $this->record, $this->conversion, $this->conversion_class )) {
 			$this->record = $record;
 			return;
 		}
 		throw new Exception('Error: Could not applay conversions to record');
 	} // end of member function do_conversions
-	
+
+	/**
+	 * Automatic conversions from human values
+	 *
+	 * @param $fields Array of field type -> field name mappings
+	 * @param $appname Appname for custom field parsing
+	 * @param $selects Array of select values to be automatically parsed
+	 *
+	 */
+	public static function convert(Array &$record, Array $fields = array(), $appname = null, $selects = array()) {
+		// Automatic conversions
+		if($appname) {
+			if(!self::$cf_parse_cache[$appname]) {
+				$c_fields = importexport_export_csv::convert_parse_custom_fields($appname, $selects, $links, $methods);
+				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
+			}
+			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
+			// Not quite a recursive merge, since only one level
+			foreach($fields as $type => &$list) {
+				if($c_fields[$type]) {
+					$list = array_merge($c_fields[$type], $list);;
+					unset($c_fields[$type]);
+				}
+			}
+			$fields += $c_fields;
+			$selects += $c_selects;
+		}
+		if($fields) {
+			foreach((array)$fields['select'] as $name) {
+				if($record[$name] != null && is_array($selects) && $selects[$name]) {
+					$key = array_search($record[$name], $selects[$name]);
+					if($key !== false) $record[$name] = $key;
+				}
+			}
+			foreach((array)$fields['links'] as $name) {
+				if($record[$name]) {
+					// TODO
+				}
+			}
+			foreach((array)$fields['select-account'] as $name) {
+				// Compare against null to deal with empty arrays
+				if ($record[$name]) {
+					// Automatically handle text owner without explicit translation
+					$new_owner = importexport_helper_functions::account_name2id($record[$name]);
+					if($new_owner != '') {
+						$record[$name] = $new_owner;
+					}
+				}
+			}
+			foreach((array)$fields['select-bool'] as $name) {
+				if($record[$name] != null) {
+					$record[$name] = ($record[$name] == lang('Yes') ? 1 : 0);
+				}
+			}
+			foreach((array)$fields['date-time'] as $name) {
+				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name]); 
+			}
+			foreach((array)$fields['date'] as $name) {
+				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name]); 
+			}
+
+			// Some custom methods for conversion
+			foreach((array)$methods as $name => $method) {
+				if($record[$name]) $record[$name] = ExecMethod($method, $record[$name]);
+			}
+
+			foreach((array)$fields['select-cat'] as $name) {
+				if($record[$name]) {
+					$record[$name] = importexport_helper_functions::cat_name2id($record[$field]);
+				}
+			}
+		}
+
+		return;
+	}
 } // end of import_csv
 ?>
