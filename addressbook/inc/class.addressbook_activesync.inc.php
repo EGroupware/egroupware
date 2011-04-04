@@ -329,6 +329,9 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			error_log(__METHOD__."('$folderid',$id,...) Folder wrong (type=$type, account=$account) or contact not existing (read($id)=".array2string($contact).")! returning false");
 			return false;
 		}
+		$emailname = isset($contact['n_given']) ? $contact['n_given'].' ' : '';
+		$emailname .= isset($contact['n_middle']) ? $contact['n_middle'].' ' : '';
+		$emailname .= isset($contact['n_family']) ? $contact['n_family']: '';
 		$message = new SyncContact();
 		foreach(self::$mapping as $key => $attr)
 		{
@@ -371,7 +374,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						$message->categories[] = categories::id2name($cat_id);
 					}
 					break;
-
+				case 'email':
+				case 'email_home':
+					if (!empty($contact[$attr])) 
+					{
+						$message->$key = ('"'.$emailname.'"'." <$contact[$attr]>");
+					}
+					break;
 				default:
 					if (!empty($contact[$attr])) $message->$key = $contact[$attr];
 			}
@@ -504,7 +513,26 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 							$contact[$attr] = implode(',', array_filter($this->addressbook->find_or_add_categories($message->$key, $id),'strlen'));
 						}
 						break;
-
+					case 'email':
+					case 'email_home':
+						if (function_exists ('imap_rfc822_parse_adrlist')) 
+						{
+							$email_array = array_shift(imap_rfc822_parse_adrlist($message->$key,""));
+							if (!empty($email_array->mailbox) && $email_array->mailbox != 'INVALID_ADDRESS' && !empty($email_array->host))
+							{
+								$contact[$attr] = $email_array->mailbox.'@'.$email_array->host;
+							}
+							else
+							{
+								$contact[$attr] = $message->$key;
+							}
+						}
+						else
+						{
+							debugLog(__METHOD__. " Warning : php-imap not available");
+							$contact[$attr] = $message->$key;
+						}
+						break;
 					default:
 						$contact[$attr] = $message->$key;
 						break;
@@ -519,7 +547,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
 			$newid = $this->addressbook->save($contact);
-error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") returning ".array2string($newid));
+			// error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
