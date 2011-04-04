@@ -100,7 +100,7 @@ class timesheet_merge extends bo_merge
 		}
 
 		// Convert to human friendly values
-		$types = timesheet_export_csv::$types;
+		$types = timesheet_egw_record::$types;
 		$_selects = array('status' => $this->bo->status_labels);
 		foreach($_selects['status'] as &$status)
 		{
