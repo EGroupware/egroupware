@@ -219,19 +219,21 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			}
 
 			// Set creator, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner'] && !is_numeric($record['ts_owner'])) {
-				// Automatically handle text owner without explicit translation
-				$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
-				if($new_owner == '') {
-					$this->errors[$import_csv->get_current_position()] = lang(
-						'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
-						$record['ts_owner'],
-						common::grab_owner_name($_definition->plugin_options['creator']),
-						lang($this->bo->field2label['ts_owner'])
-					);
-					$record['ts_owner'] = $_definition->plugin_options['creator'];
-				} else {
-					$record['ts_owner'] = $new_owner;
+			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner']) {
+				if(!is_numeric($record['ts_owner'])) {
+					// Automatically handle text owner without explicit translation
+					$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
+					if($new_owner == '') {
+						$this->errors[$import_csv->get_current_position()] = lang(
+							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
+							$record['ts_owner'],
+							common::grab_owner_name($_definition->plugin_options['creator']),
+							lang($this->bo->field2label['ts_owner'])
+						);
+						$record['ts_owner'] = $_definition->plugin_options['creator'];
+					} else {
+						$record['ts_owner'] = $new_owner;
+					}
 				}
 			} elseif ($_definition->plugin_options['creator']) {
 				$record['ts_owner'] = $_definition->plugin_options['creator'];
