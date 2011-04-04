@@ -205,7 +205,11 @@
 					$response->addScript("selectbox_add_option('exec[plugin]','$title', '$value',false);");
 				}
 			}
-			$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
+			if(count($options['plugin']) == 1) {
+				$response->assign('exec[plugin]','value',$value);
+			} else {
+				$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
+			}
 			return $response->getXML();
 		}
 
@@ -222,7 +226,11 @@
 					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
 				}
 			}
-			$response->addScript("document.getElementById('exec[definition]').value = ''");
+			if(count($options['definition']) == 1) {
+				$response->assign('exec[definition]','value',$value);
+			} else {
+				$response->addScript("document.getElementById('exec[definition]').value = ''");
+			}
 			return $response->getXML();
 		}
 
