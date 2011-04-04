@@ -163,6 +163,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups);
+
 			// Date / time
 			$record['ts_start'] = strtotime($record['ts_start']);
 

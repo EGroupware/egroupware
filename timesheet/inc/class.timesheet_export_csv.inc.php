@@ -16,15 +16,6 @@
  */
 class timesheet_export_csv implements importexport_iface_export_plugin {
 
-	// Used in conversions
-	static $types = array(
-		'select-account' => array('ts_owner','ts_modifier'),
-		'date-time' => array('ts_start', 'ts_modified'),
-		'select-cat' => array('cat_id'),
-		'links' => array('pl_id'),
-		'select' => array('ts_status'),
-	);
-
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -62,7 +53,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		foreach ($selection as $identifier) {
 			$record = new timesheet_egw_record($identifier);
 			if($options['convert']) {
-				importexport_export_csv::convert($record, self::$types, 'timesheet', $lookups);
+				importexport_export_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
