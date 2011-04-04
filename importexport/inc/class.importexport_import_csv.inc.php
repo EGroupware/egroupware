@@ -314,6 +314,11 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				if($record[$name]) $record[$name] = ExecMethod($method, $record[$name]);
 			}
 
+			// cat_name2id will use currentapp to create new categories
+			$current_app = $GLOBALS['egw_info']['flags']['currentapp'];
+			if($appname) {
+				$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
+			}
 			foreach((array)$fields['select-cat'] as $name) {
 				if($record[$name]) {
 					$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
@@ -321,6 +326,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if($cat_id) $record[$name] = $cat_id;
 				}
 			}
+			$GLOBALS['egw_info']['flags']['currentapp'] = $current_app;
 		}
 
 		return;
