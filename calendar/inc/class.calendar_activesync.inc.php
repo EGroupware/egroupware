@@ -952,7 +952,8 @@ class calendar_activesync implements activesync_plugin_write
 
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 		$ctag = $this->calendar->get_ctag($owner);
-
+		// workaround for syncstate = 0 when calendar is empty causes synctate to not return 0 but array resulting in foldersync loop
+		if ($ctag == 0) $ctag = 1; 
 		$changes = array();	// no change
 		$syncstate_was = $syncstate;
 
