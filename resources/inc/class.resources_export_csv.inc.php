@@ -64,6 +64,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 			}
 			$resource = new resources_egw_record();
 			$resource->set_record($record);
+			$resource->long_description = strip_tags($resource->long_description);
 			if($options['convert']) {
 				importexport_export_csv::convert($resource, $types, 'resources');
 			} else {
