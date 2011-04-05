@@ -137,8 +137,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 		}
 
 		// set Owner
-		$_definition->plugin_options['creator'] = isset( $_definition->plugin_options['creator'] ) ?
-			$_definition->plugin_options['creator'] : $this->user;
+		$_definition->plugin_options['record_owner'] = isset( $_definition->plugin_options['record_owner'] ) ?
+			$_definition->plugin_options['record_owner'] : $this->user;
 
 		// Used to try to automatically match names to account IDs
 		$addressbook = new addressbook_so();
@@ -227,16 +227,16 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record['ts_owner'],
-							common::grab_owner_name($_definition->plugin_options['creator']),
+							common::grab_owner_name($_definition->plugin_options['record_owner']),
 							lang($this->bo->field2label['ts_owner'])
 						);
-						$record['ts_owner'] = $_definition->plugin_options['creator'];
+						$record['ts_owner'] = $_definition->plugin_options['record_owner'];
 					} else {
 						$record['ts_owner'] = $new_owner;
 					}
 				}
-			} elseif ($_definition->plugin_options['creator']) {
-				$record['ts_owner'] = $_definition->plugin_options['creator'];
+			} elseif ($_definition->plugin_options['record_owner']) {
+				$record['ts_owner'] = $_definition->plugin_options['record_owner'];
 			}
 
 			// Check account IDs
@@ -250,7 +250,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record[$field],
-							common::grab_owner_name($_definition->plugin_options['creator']),
+							common::grab_owner_name($_definition->plugin_options['record_owner']),
 							$this->bo->field2label[$field] ? lang($this->bo->field2label[$field]) : $field
 						);
 					}
@@ -331,7 +331,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				// Only update if there are changes
 				$old = $this->bo->read($_data['ts_id']);
 
-				if(!$this->definition->plugin_options['change_creator']) {
+				if(!$this->definition->plugin_options['change_owner']) {
 					// Don't change creator of an existing ticket
 					unset($_data['ts_owner']);
 				}

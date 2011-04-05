@@ -159,21 +159,21 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 		{
 			$content['msg'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
-			if(!array_key_exists($content['creator']) && $content['plugin_options']) {
-				$content['creator'] = $content['plugin_options']['creator'];
+			$preserv = $content;
+			if(!array_key_exists($content['record_owner']) && $content['plugin_options']) {
+				$content['record_owner'] = $content['plugin_options']['record_owner'];
 			}
-			if(!array_key_exists($content['creator_from_csv']) && $content['plugin_options']) {
-				$content['creator_from_csv'] = $content['plugin_options']['creator_from_csv'];
+			if(!array_key_exists($content['owner_from_csv']) && $content['plugin_options']) {
+				$content['owner_from_csv'] = $content['plugin_options']['owner_from_csv'];
 			}
-			if(!array_key_exists($content['change_creator']) && $content['plugin_options']) {
-				$content['change_creator'] = $content['plugin_options']['change_creator'];
+			if(!array_key_exists($content['change_owner']) && $content['plugin_options']) {
+				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
 			if(!in_array('ts_owner', $content['field_mapping'])) {
 				$content['no_owner_map'] = true;
 			}
 
-			$preserv = $content;
 			unset ($preserv['button']);
 			return 'infolog.importexport_wizard_chooseowner';
 		}
