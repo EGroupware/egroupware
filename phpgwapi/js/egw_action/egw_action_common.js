@@ -166,6 +166,136 @@ function egwQueueCallback(_proc, _args, _context, _id)
 }
 
 /**
+ * The eventQueue object is used to have control over certain events such as
+ * ajax responses or timeouts. Sometimes it may happen, that a function attached
+ * to such an event should no longer be called - with egwEventQueue one has
+ * a simple possibility to control that.
+ */
+
+/**
+ * Constructor for the egwEventQueue class. Initializes the queue object and the
+ * internal data structures such as the internal key.
+ */
+function egwEventQueue()
+{
+	var events = {};
+	var key_id = 0;
+}
+
+/**
+ * Flushes all queued events - all events which had been queued in this queue objects
+ * can no longer be ran by calling egwEventQueue.run
+ */
+egwEventQueue.prototype.flush = function()
+{
+	this.events = {};
+}
+
+/**
+ * Queues the given function. A key is returned which can be passed to the "run"
+ * function which will then run the passed function.
+ *
+ * @param function _proc is the funciton which should be called
+ * @param object _context is the context in which the function should be called
+ * @param array _args is an optional array of parameters which should be passed
+ * 	to the function. Defaults to an emtpy array.
+ * @param string _id is an optional id which can be used to identify the event (may
+ * 	also be a key returned by this funciton). If the queue function is called multiple
+ * 	times for a given _id, the so called "call counter" of the event will be incremented.
+ * 	Each time "run" is called for a given event, the "call counter" will be decremented.
+ * 	Only if it reaches 0, the function connected to the event will be executed.
+ *
+ * @returns string the key which has to be passed to the "run" function.
+ */
+egwEventQueue.prototype.queue = function(_proc, _context, _args, _id)
+{
+	// Default _args to an empty array
+	if (typeof _args != "array")
+	{
+		_args = [];
+	}
+
+	// Increment the queue key which is used to store the event objectes with
+	// a unique key
+	this.key_id++;
+
+	var key = "";
+
+	// _id must be a string and evaluate to true - if this is not 
+	// generate an unique key.
+	if (typeof _id != "string" || !_id)
+	{
+		key = "ev_" + this.key_id;
+	}
+	else
+	{
+		key = _id;
+	}
+
+	// Check whether an queued event with the given id already exists
+	var cnt = 1;
+	if (typeof this.events[key] != "undefined")
+	{
+		// The specified event already existed - increment the call counter.
+		cnt = this.events[key].cnt + 1;
+	}
+
+	// Generate the event object
+	this.events[key] = {
+		"proc": _proc,
+		"context": _context,
+		"args": _args,
+		"cnt": cnt
+	}
+
+	// Return the key which has to be passed to the "run" function in order to
+	// run the specified function
+	return key;
+}
+
+/**
+ * Runs the event specified by the given key. The key is the string which had been
+ * returned by the queue function.
+ */
+egwEventQueue.prototype.run = function(_key)
+{
+	// Check whether the given key exists
+	if (typeof this.events[_key] != "undefined")
+	{
+		// Fetch the event object
+		var eventObj = this.events[_key];
+
+		// Decrement the call counter
+		eventObj.cnt--;
+
+		// Only run the event if the call counter has reached zero
+		if (eventObj.cnt == 0)
+		{
+			// Run the event
+			eventObj.proc.apply(eventObj.context, eventObj.args);
+
+			// Delete the given key from the event set
+			delete this.events[_key];
+		}
+	}
+}
+
+/**
+ * Does the same as "queue" but runs the event after the given timeout.
+ */
+egwEventQueue.prototype.queueTimeout = function(_proc, _context, _args, _id, _timeout)
+{
+	// Create the queue entry
+	var key = this.queue(_proc, _context, _args, _id);
+
+	// Run the event in the setTimeout event.
+	var self = this;
+	window.setTimeout(function() {
+		self.run(key);
+	}, _timeout)
+}
+
+/**
 sprintf() for JavaScript 0.6
 
 Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>

@@ -826,3 +826,15 @@ td.lettersearch {
 	background-image: url(../images/down.png);
 }
 
+.egwGridView_grid input[type=checkbox],
+.egwGridView_outer input[type=checkbox] {
+	border-width: 0;
+}
+
+.egwGridView_outer input[type=checkbox] {
+	margin-left: 2px;
+}
+
+.egwGridView_grid input[type=checkbox] {
+	margin: 0;
+}

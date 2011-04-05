@@ -65,7 +65,7 @@ function egwGridColumn(_context, _visiblityChangeCallback, _sortmodeChangeCallba
 	this.caption = "";
 	this.type = EGW_COL_TYPE_DEFAULT;
 	this.visibility = EGW_COL_VISIBILITY_VISIBLE;
-	this.sortable = EGW_COL_SORTABLE_ALPHABETIC;
+	this.sortable = EGW_COL_SORTABLE_NONE;
 	this.sortmode = EGW_COL_SORTMODE_NONE;
 	this["default"] = EGW_COL_DEFAULT_FETCH;
 
@@ -149,7 +149,7 @@ egwGridColumn.prototype.set_type = function(_value)
 
 		if (this.type == EGW_COL_TYPE_CHECKBOX)
 		{
-			this.set_width("30px");
+			this.set_width("23px");
 		}
 	}
 }
@@ -329,7 +329,7 @@ egwGridColumns.prototype._calculateWidths = function()
 	}
 
 	// Remove the spacing between the columns from the total width
-	var tw = this.totalWidth - (Math.max(this.getVisibleCount() - 1, 0)) * this.columnSpace;
+	var tw = this.totalWidth;// - (Math.max(this.getVisibleCount() - 1, 0)) * this.columnSpace;
 
 	// Calculate how many space is - relatively - not occupied with columns with
 	// relative or fixed width
@@ -477,6 +477,8 @@ egwGridColumns.prototype.setTotalWidth = function(_value)
 
 	this.totalWidth = _value;
 	this._calculateWidths();
+
+	console.log(this.columnWidths);
 }
 
 egwGridColumns.prototype.getColumnIndexById = function(_id)
@@ -562,7 +564,7 @@ egwGridColumns.prototype.getColumnData = function()
 			{
 				"id": this.columns[i].id,
 				"caption": this.columns[i].caption,
-				"sortable": this.columns[i].sortable != EGW_COL_SORTABLE_NONE,
+				"sortable": this.columns[i].sortable,
 				"sortmode": this.columns[i].sortmode,
 				"default": this.columns[i]["default"],
 				"width": this.columnWidths[i],

@@ -9,9 +9,6 @@
  * @version $Id$
  */
 
-//TODO (minor): Do auto cleanup - remove elements from the view again after they
-//	haven't been viewed for a certain time.
-
 /*
 uses
 	egw_action_common,
@@ -619,14 +616,22 @@ egwGridViewContainer.prototype.insertIntoDOM = function(_parentNode, _columns)
 egwGridViewContainer.prototype.setViewArea = function(_area, _force)
 {
 	// Calculate the relative coordinates and pass those to the implementation
-	var relArea = {
-		"top": _area.top - this.position,
-		"bottom": _area.bottom - this.position
-	};
+	if (_area && _area.top && _area.bottom) // When the underlying grid is emptied very often, _area sometimes gets false - Probably has to be further investigated.
+	{
+		var relArea = {
+			"top": _area.top - this.position,
+			"bottom": _area.bottom - this.position
+		};
 
-	this.viewArea = relArea;
+		this.viewArea = relArea;
 
-	this.checkViewArea(_force);
+		if (isNaN(this.viewArea.top))
+		{
+			throw("View Area got NaN");
+		}
+
+		this.checkViewArea(_force);
+	}
 }
 
 egwGridViewContainer.prototype.getViewArea = function()

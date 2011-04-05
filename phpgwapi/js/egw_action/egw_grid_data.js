@@ -729,7 +729,10 @@ egwGridDataElement.prototype.callEndUpdate = function()
 egwGridDataElement.prototype.empty = function()
 {
 	this.children = [];
-//	this.readQueue.empty();
+
+	// Prevent all event handlers which are associated to elements in the read
+	// queue from being called - those elements might no longer exist
+	this.readQueue.flushEventQueue();
 }
 
 /**
@@ -785,6 +788,7 @@ egwGridDataElement.prototype.requireColumn = function(_colId, _callback, _contex
 		this.children[i].requireColumn(_colId, null, null, _loadElems);
 	}
 
+	// TODO: In which cases has this to be aborted?
 	if (outerCall)
 	{
 		if (_loadElems.elems.length > 0)
@@ -1023,6 +1027,16 @@ function egwGridDataQueue(_fetchCallback, _context)
 	this.queue = [];
 	this.queueColumns = [];
 	this.timeoutId = 0;
+
+	this.eventQueue = new egwEventQueue();
+}
+
+/**
+ * Prevents handling the response function - e.g. if the data elements got emptied.
+ */
+egwGridDataQueue.prototype.flushEventQueue = function()
+{
+	this.eventQueue.flush();
 }
 
 egwGridDataQueue.prototype.setDataRoot = function(_dataRoot)
@@ -1068,12 +1082,8 @@ egwGridDataQueue.prototype._queue = function(_obj, _last)
 		{
 			var tid = this.timeoutId;
 			var self = this;
-			window.setTimeout(function() {
-				if (self.timeoutId == tid)
-				{
-					self.flushQueue(true);
-				}
-			}, EGW_DATA_QUEUE_FLUSH_TIMEOUT);
+			this.eventQueue.queueTimeout(this.flushQueue, this, [true],
+				EGW_DATA_QUEUE_FLUSH_TIMEOUT, "dataQueueTimeout");
 		}
 	}
 

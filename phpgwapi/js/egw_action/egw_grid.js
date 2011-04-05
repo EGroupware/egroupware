@@ -101,7 +101,7 @@ egwGrid.prototype.resize = function(_w, _h)
 {
 	if (_w != this.width)
 	{
-		this.columns.setTotalWidth(_w - this.gridOuter.scrollbarWidth);
+		this.columns.setTotalWidth(_w - this.gridOuter.scrollbarWidth - 2);
 		this.gridOuter.updateColumns(this.columns.getColumnData());
 		this.height = -1;
 	}
