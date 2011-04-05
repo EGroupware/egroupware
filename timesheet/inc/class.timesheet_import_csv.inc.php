@@ -165,9 +165,6 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 
 			importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups);
 
-			// Date / time
-			$record['ts_start'] = strtotime($record['ts_start']);
-
 			// Automatically handle text categories without explicit translation
 			foreach(array('ts_status','cat_id') as $field) {
 				if(!is_numeric($record[$field])) {
