@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -18,6 +18,12 @@
  */
 class groupdav_principals extends groupdav_handler
 {
+	/**
+	 * Reference to the accounts class
+	 *
+	 * @var accounts
+	 */
+	var $accounts;
 
 	/**
 	 * Constructor
@@ -30,6 +36,8 @@ class groupdav_principals extends groupdav_handler
 	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
 		parent::__construct($app,$debug,$base_uri,$principalURL);
+
+		$this->accounts = $GLOBALS['egw']->accounts;
 	}
 
 	/**

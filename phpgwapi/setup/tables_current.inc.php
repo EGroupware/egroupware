@@ -336,11 +336,12 @@ $phpgw_baseline = array(
 			'contact_etag' => array('type' => 'int','precision' => '4','default' => '0'),
 			'contact_uid' => array('type' => 'varchar','precision' => '255'),
 			'adr_one_countrycode' => array('type' => 'varchar','precision' => '2'),
-			'adr_two_countrycode' => array('type' => 'varchar','precision' => '2')
+			'adr_two_countrycode' => array('type' => 'varchar','precision' => '2'),
+			'carddav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CardDAV URL, if specified by client')
 		),
 		'pk' => array('contact_id'),
 		'fk' => array(),
-		'ix' => array('contact_owner','cat_id','n_fileas','contact_uid',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+		'ix' => array('contact_owner','cat_id','n_fileas','contact_uid','caldav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
 		'uc' => array('account_id')
 	),
 	'egw_addressbook_extra' => array(

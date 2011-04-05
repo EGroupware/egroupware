@@ -108,7 +108,7 @@ class addressbook_sql extends so_sql_cf
 		if (isset($param['advanced_search']) && !empty($param['advanced_search'])) $advanced_search = true;
 		$wildcard ='%';
 		if ($advanced_search || (isset($param['wildcard']) && !empty($param['wildcard']))) $wildcard = ($param['wildcard']?$param['wildcard']:'');
-		
+
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if ((int)$filter['cat_id'])
 		{
@@ -632,11 +632,21 @@ class addressbook_sql extends so_sql_cf
 			}
 		}
 
+		$update = array();
 		// enforce a minium uid strength
-		if (!$err && (!isset($this->data['uid'])
-				|| strlen($this->data['uid']) < $minimum_uid_length)) {
-			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
+		if (!isset($this->data['uid']) || strlen($this->data['uid']) < $minimum_uid_length)
+		{
+			$update['uid'] = common::generate_uid('addressbook',$this->data['id']);
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
+		}
+		// set carddav_name, if not given by caller
+		if (empty($this->data['carddav_name']) && version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
+		{
+			$update['carddav_name'] = $this->data['id'].'.vcf';
+		}
+		if (!$err && $update)
+		{
+			parent::update($update);
 		}
 		return $err;
 	}

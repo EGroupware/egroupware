@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -79,6 +79,13 @@ abstract class groupdav_handler
 	var $agent;
 
 	/**
+	 * Extension to append to url/path
+	 *
+	 * @var string
+	 */
+	static $path_extension = '.ics';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -105,7 +112,6 @@ abstract class groupdav_handler
 		$this->agent = self::get_agent();
 
 		$this->egw_charset = translation::charset();
-		$this->accounts = $GLOBALS['egw']->accounts;
 	}
 
 	/**
@@ -230,12 +236,14 @@ abstract class groupdav_handler
 	 *
 	 * @param string $method GET, PUT, DELETE
 	 * @param array &$options
-	 * @param int $id
+	 * @param int|string &$id on return self::$path_extension got removed
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,$id,&$return_no_access=false)
+	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false)
 	{
+		if (self::$path_extension) $id = basename($id,self::$path_extension);
+
 		if ($this->app != 'principals' && !$GLOBALS['egw_info']['user']['apps'][$this->app])
 		{
 			if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden: no app rights for '$this->app'");
@@ -535,6 +543,7 @@ class groupdav_propfind_iterator implements Iterator
 
 		$this->start = 0;
 		$this->files = $this->common_files;
+		if (!$this->files) $this->next();	// otherwise valid will return false and nothing get returned
 		reset($this->files);
 	}
 

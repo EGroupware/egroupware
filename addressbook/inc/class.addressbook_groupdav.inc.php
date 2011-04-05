@@ -7,7 +7,7 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -77,9 +77,11 @@ class addressbook_groupdav extends groupdav_handler
 	var $charset = 'utf-8';
 
 	/**
-	 * What attribute is used to construct the path, default id, can be uid too
+	 * Which attribute to use to contruct name part of url/path
+	 *
+	 * @var string
 	 */
-	const PATH_ATTRIBUTE = 'id';
+	static $path_attr = 'id';
 
 	/**
 	 * Constructor
@@ -94,6 +96,18 @@ class addressbook_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->bo = new addressbook_bo();
+
+		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
+		if ($this->bo->account_repository != 'ldap' &&
+			version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
+		{
+			self::$path_attr = 'carddav_name';
+			groupdav_handler::$path_extension = '';
+		}
+		else
+		{
+			groupdav_handler::$path_extension = '.vcf';
+		}
 	}
 
 	/**
@@ -104,7 +118,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	static function get_path($contact)
 	{
-		return $contact[self::PATH_ATTRIBUTE].'.vcf';
+		return $contact[self::$path_attr].groupdav_handler::$path_extension;
 	}
 
 	/**
@@ -169,7 +183,9 @@ class addressbook_groupdav extends groupdav_handler
 		unset($filter['address_data']);
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
-		if (($contacts =& $this->bo->search(array(),array('id','uid','etag','modified'),'egw_addressbook.contact_id','','',False,'AND',$start,$filter)))
+		$cols = array('id','uid','etag','modified');
+		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
+		if (($contacts =& $this->bo->search(array(),$cols,'egw_addressbook.contact_id','','',False,'AND',$start,$filter)))
 		{
 			foreach($contacts as &$contact)
 			{
@@ -258,15 +274,18 @@ class addressbook_groupdav extends groupdav_handler
 				if ($option['name'] == 'href')
 				{
 					$parts = explode('/',$option['data']);
-					if (($id = array_pop($parts))) $ids[] = basename($id,'.vcf');
+					if (($id = array_pop($parts)))
+					{
+						$ids[] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
+					}
 				}
 			}
-			if ($ids) $filters[self::PATH_ATTRIBUTE] = $ids;
+			if ($ids) $filters[self::$path_attr] = $ids;
 			if ($this->debug) error_log(__METHOD__."($path,,,$user) addressbook-multiget: ids=".implode(',',$ids));
 		}
 		elseif ($id)
 		{
-			$filters[self::PATH_ATTRIBUTE] = basename($id,'.vcf');
+			$filters[self::$path_attr] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
 		}
 		return true;
 	}
@@ -337,37 +356,19 @@ class addressbook_groupdav extends groupdav_handler
 			}
 		}
 
-		if (is_array($oldContact))
+		$contact = $handler->vcardtoegw($vCard, $charset);
+
+		if (is_array($oldContact) || ($oldContact = $this->bo->read(array('contact_uid' => $contact['uid']))))
 		{
 			$contactId = $oldContact['id'];
 			$retval = true;
 		}
 		else
 		{
-			// new entry?
-			if (($foundContacts = $handler->search($vCard, null, false, $charset)))
-			{
-				if (($contactId = array_shift($foundContacts)) &&
-					($oldContact = $this->bo->read($contactId)))
-				{
-					$retval = '301 Moved Permanently';
-				}
-				else
-				{
-					// to be safe
-					$contactId = -1;
-					$retval = '201 Created';
-				}
-			}
-			else
-			{
-				// new entry
-				$contactId = -1;
-				$retval = '201 Created';
-			}
+			// new entry
+			$contactId = -1;
+			$retval = '201 Created';
 		}
-
-		$contact = $handler->vcardtoegw($vCard, $charset);
 
 		if (is_array($contact['cat_id']))
 		{
@@ -384,6 +385,11 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['uid'] = $oldContact['uid'];
 			$contact['owner'] = $oldContact['owner'];
 			$contact['private'] = $oldContact['private'];
+			$contact['carddav_name'] = $oldContact['carddav_name'];
+		}
+		else
+		{
+			$contact['carddav_name'] = $id;
 		}
 		// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/ !)
 		if ($prefix)
@@ -415,14 +421,15 @@ class addressbook_groupdav extends groupdav_handler
 		}
 
 		header('ETag: '.$this->get_etag($contact));
-		if ($retval !== true)
+
+		// send GroupDAV Location header only if we dont use carddav_name as path-attribute
+		if ($retval !== true && self::$path_attr == 'id')
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
 			header($h='Location: '.$this->base_uri.$path.self::get_path($contact));
 			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): $retval");
-			return $retval;
 		}
-		return true;
+		return $retval;
 	}
 
 	/**
@@ -547,18 +554,18 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return '412 Precondition Failed';
 		}
-		//return $ok;
+		return true;
 	}
 
 	/**
 	 * Read a contact
 	 *
-	 * @param string/id $id
+	 * @param string|id $id
 	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		return $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array(self::PATH_ATTRIBUTE => $id));
+		return $this->bo->read(array(self::$path_attr => $id));
 	}
 
 	/**

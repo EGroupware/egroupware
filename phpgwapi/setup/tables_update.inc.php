@@ -154,3 +154,22 @@ function phpgwapi_upgrade1_9_005()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.006';
 }
 
+/**
+ * Add column to store CalDAV name given by client
+ */
+function phpgwapi_upgrade1_9_006()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','carddav_name',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'comment' => 'name part of CardDAV URL, if specified by client'
+	));
+	$GLOBALS['egw_setup']->db->query($sql='UPDATE egw_addressbook SET carddav_name='.
+		$GLOBALS['egw_setup']->db->concat(
+			$GLOBALS['egw_setup']->db->to_varchar('contact_id'),"'.vcf'"),__LINE__,__FILE__);
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook','carddav_name');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.007';
+}
+

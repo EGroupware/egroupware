@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -121,7 +121,6 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @var accounts
 	 */
 	var $accounts;
-
 
 	function __construct()
 	{
@@ -966,10 +965,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
-		if (($id = array_pop($parts)))
-		{
-			list($id) = explode('.',$id);		// remove evtl. .ics extension
-		}
+		$id = array_pop($parts);
 
 		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals'));
 		if ($this->debug)
