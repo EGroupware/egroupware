@@ -122,7 +122,12 @@ class calendar_groupdav extends groupdav_handler
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
+			'no_total' => true,	// we need no total number of rows (saves extra query)
 		);
+		if ($this->client_shared_uid_exceptions)	// do NOT return (non-virtual) exceptions
+		{
+			$filter['query'] = array('cal_reference' => 0);
+		}
 
 		if ($path == '/calendar/')
 		{
@@ -140,8 +145,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 		if ($this->debug > 1)
 		{
-			error_log(__METHOD__."($path,,,$user,$id) filter=".
-				array2string($filter));
+			error_log(__METHOD__."($path,,,$user,$id) filter=".array2string($filter));
 		}
 
 		// check if we have to return the full calendar data or just the etag's
@@ -157,12 +161,12 @@ class calendar_groupdav extends groupdav_handler
 				}
 			}
 		}
-/* disabling not working iterator
 		// return iterator, calling ourself to return result in chunks
 		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+
 		return true;
 	}
-*/
+
 	/**
 	 * Callback for profind interator
 	 *
@@ -171,15 +175,13 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-/* disabling not working iterator
 	function propfind_callback($path,array $filter,$start=false)
 	{
-*/
 		if ($this->debug) $starttime = microtime(true);
 
 		$calendar_data = $filter['calendar_data'];
 		unset($filter['calendar_data']);
-/* disabling not working iterator
+
 		$files = array();
 
 		if (is_array($start))
@@ -187,8 +189,6 @@ class calendar_groupdav extends groupdav_handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
-error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($filter));
-*/
 		$events =& $this->bo->search($filter);
 		if ($events)
 		{
@@ -197,6 +197,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			{
 				if ($this->client_shared_uid_exceptions && $event['reference'])
 				{
+					throw new egw_exception_assertion_failed(__METHOD__."() event=".array2string($event));
 					// this exception will be handled with the series master
 					unset($events[$k]);
 					continue;
@@ -228,10 +229,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
-/* disabling not working iterator
 				$files[] = array(
-*/
-				$files['files'][] = array(
 	            	'path'  => $path.$this->get_path($event),
 	            	'props' => $props,
 				);
@@ -242,10 +240,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
 				' to return '.count($files['files']).' items');
 		}
-/* disabling not working iterator
 		return $files;
-*/
-		return true;
 	}
 
 	/**
