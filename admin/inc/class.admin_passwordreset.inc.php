@@ -29,7 +29,15 @@ class admin_passwordreset
 	/**
 	 * @var array
 	 */
-	var $replacements = array();
+	var $replacements = array(
+		'lid' => 'LoginID',
+		'firstname' => 'first name',
+		'lastname' => 'last name',
+		'fullname' => 'full name',
+		'email' => 'email',
+		'password' => 'new password',
+		'id' => 'nummeric account ID',
+	);
 
 	/**
 	 * Constructor
@@ -41,15 +49,6 @@ class admin_passwordreset
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
-		$this->replacements = array(
-			'account_lid' => lang('LoginID'),
-			'account_firstname' => lang('first name'),
-			'account_lastname' => lang('last name'),
-			'account_fullname' => lang('full name'),
-			'account_email' => lang('email'),
-			'account_password' => lang('new password'),
-			'account_id' => lang('nummeric account ID'),
-		);
 	}
 
 	/**
@@ -163,7 +162,7 @@ class admin_passwordreset
 							$replacements = array();
 							foreach($this->replacements as $name => $label)
 							{
-								$replacements['$$'.$name.'$$'] = $account[$name];
+								$replacements['$$'.$name.'$$'] = $account['account_'.$name];
 							}
 							$send->Subject = strtr($content['subject'],$replacements);
 							$send->Body = strtr($content['body'],$replacements);
