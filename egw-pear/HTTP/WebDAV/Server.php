@@ -640,7 +640,7 @@ class HTTP_WebDAV_Server
                 return;
             }
         }
-        
+
         // now we generate the reply header ...
 		if ($retval === true)
 		{
@@ -1100,11 +1100,13 @@ class HTTP_WebDAV_Server
                 if (!isset($options['mimetype'])) {
                     $options['mimetype'] = "application/octet-stream";
                 }
-		// switching off zlib.output_compression for zip archives, as the double compression makes problems eg. with lighttpd
-		if ($options['mimetype'] == 'application/zip')
-		{
-			ini_set('zlib.output_compression',0);
-		}
+                // switching off zlib.output_compression for everything but text files,
+                // as the double compression of zip files makes problems eg. with lighttpd
+                // and anyway little sense with with other content like pictures
+                if (substr($options['mimetype'],0,5) != 'text/')
+                {
+                    ini_set('zlib.output_compression',0);
+                }
                 header("Content-type: $options[mimetype]");
 
                 if (isset($options['mtime'])) {
@@ -1327,7 +1329,7 @@ class HTTP_WebDAV_Server
     }
 
     // }}}
-    
+
     // {{{ http_POST()
 
     /**
@@ -1341,9 +1343,9 @@ class HTTP_WebDAV_Server
         $status          = '405 Method not allowed';
         $options         = Array();
         $options['path'] = $this->path;
-        
+
         error_log('WebDAV POST: ' . $this->path);
-        
+
         if (isset($this->_SERVER['CONTENT_LENGTH']))
         {
 	        $options['content_length'] = $this->_SERVER['CONTENT_LENGTH'];
@@ -1353,7 +1355,7 @@ class HTTP_WebDAV_Server
 	        // MacOS gives us that hint
 	        $options['content_length'] = $this->_SERVER['X-Expected-Entity-Length'];
 		}
-        
+
         // get the Content-type
         if (isset($this->_SERVER["CONTENT_TYPE"])) {
 	        // for now we do not support any sort of multipart requests
@@ -1367,7 +1369,7 @@ class HTTP_WebDAV_Server
 	        // default content type if none given
 	        $options['content_type'] = 'application/octet-stream';
         }
-        
+
         /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
          ignore any Content-* (e.g. Content-Range) headers that it
          does not understand or implement and MUST return a 501
@@ -1381,23 +1383,23 @@ class HTTP_WebDAV_Server
 			        $this->http_status('501 not implemented');
 			        echo "The service does not support '$val' content encoding";
 			        return;
-			        
+
 		        case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
 			        // we assume it is not critical if this one is ignored
 			        // in the actual POST implementation ...
 			        $options['content_language'] = $val;
 			        break;
-			        
+
 		        case 'HTTP_CONTENT_LENGTH':
 			        // defined on IIS and has the same value as CONTENT_LENGTH
 			        break;
-			        
+
 		        case 'HTTP_CONTENT_LOCATION': // RFC 2616 14.14
 			        /* The meaning of the Content-Location header in PUT
 			         or POST requests is undefined; servers are free
 			         to ignore it in those cases. */
 			        break;
-			        
+
 		        case 'HTTP_CONTENT_RANGE':    // RFC 2616 14.16
 			        // single byte range requests are supported
 			        // the header format is also specified in RFC 2616 14.16
@@ -1407,28 +1409,28 @@ class HTTP_WebDAV_Server
 				        echo 'The service does only support single byte ranges';
 				        return;
 			        }
-			        
+
 			        $range = array('start'=>$matches[1], 'end'=>$matches[2]);
 			        if (is_numeric($matches[3])) {
 				        $range['total_length'] = $matches[3];
 			        }
 			        $option['ranges'][] = $range;
-			        
+
 			        // TODO make sure the implementation supports partial POST
 			        // this has to be done in advance to avoid data being overwritten
 			        // on implementations that do not support this ...
 			        break;
-			        
+
 		        case 'HTTP_CONTENT_TYPE':
 			        // defined on IIS and has the same value as CONTENT_TYPE
 			        break;
-			        
+
 		        case 'HTTP_CONTENT_MD5':      // RFC 2616 14.15
 			        // TODO: maybe we can just pretend here?
 			        $this->http_status('501 not implemented');
 			        echo 'The service does not support content MD5 checksum verification';
 			        return;
-			        
+
 		        default:
 			        // any other unknown Content-* headers
 			        $this->http_status('501 not implemented');
@@ -1436,21 +1438,21 @@ class HTTP_WebDAV_Server
 		        return;
 	        }
         }
-        
+
         $options['stream'] = fopen('php://input', 'r');
-        
+
         if (method_exists($this, 'POST')) {
 	        $status = $this->POST($options);
-	        
+
 	        if ($status === false) {
 		        $status = '400 Something went wrong';
 	        } else if ($status === true) {
 	        	$status = '200 OK';
 	        } else if (is_resource($status) && get_resource_type($status) == 'stream') {
 		        $stream = $status;
-		        
+
 		        $status = empty($options['new']) ? '200 OK' : '201 Created';
-		        
+
 		        if (!empty($options['ranges'])) {
 			        // TODO multipart support is missing (see also above)
 			        if (0 == fseek($stream, $range[0]['start'], SEEK_SET)) {
