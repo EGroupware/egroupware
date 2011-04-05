@@ -219,7 +219,7 @@ class addressbook_ldap
 		}
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
 
-		$this->charset = $GLOBALS['egw']->translation->charset();
+		$this->charset = translation::charset();
 	}
 
 	/**
@@ -405,7 +405,7 @@ class addressbook_ldap
 				{
 					// dont convert the (binary) jpegPhoto!
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
-						$GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
+						translation::convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
 				}
 				elseif($isUpdate && isset($data[$egwFieldName]))
 				{
@@ -635,7 +635,7 @@ class addressbook_ldap
 				{
 					if(($ldapSearchKey = $mapping[$egwSearchKey]))
 					{
-						$searchString = $GLOBALS['egw']->translation->convert($searchValue,$this->charset,'utf-8');
+						$searchString = translation::convert($searchValue,$this->charset,'utf-8');
 						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.ldap::quote($searchString).$wildcard.')';
 						break;
 					}
@@ -744,7 +744,7 @@ class addressbook_ldap
 						if (count($cats) > 1) $filters .= '(|';
 						foreach($cats as $cat)
 						{
-							$catName = $GLOBALS['egw']->translation->convert(
+							$catName = translation::convert(
 								$GLOBALS['egw']->categories->id2name($cat),$this->charset,'utf-8');
 							$filters .= '(category='.ldap::quote($catName).')';
 						}
@@ -761,7 +761,7 @@ class addressbook_ldap
 							{
 								// todo: value = "!''"
 								$filters .= '('.$mapping[$key].'='.($value === "!''" ? '*' :
-									ldap::quote($GLOBALS['egw']->translation->convert($value,$this->charset,'utf-8'))).')';
+									ldap::quote(translation::convert($value,$this->charset,'utf-8'))).')';
 								break;
 							}
 						}
@@ -769,12 +769,14 @@ class addressbook_ldap
 					// filter for letter-search
 					elseif (preg_match("/^([^ ]+) I?LIKE '(.*)%'$/",$value,$matches))
 					{
+						list(,$name,$value) = $matches;
+						if (strpos($name,'.') !== false) list(,$name) = explode('.',$name);
 						foreach($this->schema2egw as $mapping)
 						{
-							if (isset($mapping[$matches[1]]))
+							if (isset($mapping[$name]))
 							{
-								$filters .= '('.$mapping[$matches[1]].'='.ldap::quote(
-									$GLOBALS['egw']->translation->convert($matches[2],$this->charset,'utf-8')).'*)';
+								$filters .= '('.$mapping[$name].'='.ldap::quote(
+									translation::convert($value,$this->charset,'utf-8')).'*)';
 								break;
 							}
 						}
@@ -842,7 +844,7 @@ class addressbook_ldap
 				{
 					if(!empty($entry[$ldapFieldName][0]) && !isset($contact[$egwFieldName]))
 					{
-						$contact[$egwFieldName] = $GLOBALS['egw']->translation->convert($entry[$ldapFieldName][0],'utf-8');
+						$contact[$egwFieldName] = translation::convert($entry[$ldapFieldName][0],'utf-8');
 					}
 				}
 				$objectclass2egw = '_'.$objectclass.'2egw';
@@ -995,7 +997,7 @@ class addressbook_ldap
 			$ldapContact['category'] = array();
 			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat)
 			{
-				$ldapContact['category'][] = $GLOBALS['egw']->translation->convert(
+				$ldapContact['category'][] = translation::convert(
 					ExecMethod('phpgwapi.categories.id2name',$cat),$this->charset,'utf-8');
 			}
 		}
@@ -1006,7 +1008,7 @@ class addressbook_ldap
 		{
 			if($value != '$, $$$')
 			{
-				$ldapContact[$attr] = $GLOBALS['egw']->translation->convert($value,$this->charset,'utf-8');
+				$ldapContact[$attr] = translation::convert($value,$this->charset,'utf-8');
 			}
 			elseif($isUpdate)
 			{
