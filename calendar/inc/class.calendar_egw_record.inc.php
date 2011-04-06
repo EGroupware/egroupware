@@ -22,6 +22,14 @@ class calendar_egw_record implements importexport_iface_egw_record
 	private $record = array();
 	private static $bo;
 
+	public static $types = array(
+		'select-cat'    => array('category'),
+		'select-account'=> array('owner','creator', 'modifier'),
+		'date-time'     => array('modified', 'created','start','end','recur_date'),
+		'select-bool'	=> array('public', 'non_blocking'),
+		'select'	=> array('priority'),
+	);
+
 	/**
 	 * constructor
 	 * reads record from backend if identifier is given.

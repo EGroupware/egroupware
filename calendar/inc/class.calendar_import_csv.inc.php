@@ -149,11 +149,23 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 		$status_map = array_flip($this->bo->verbose_status);
 		$role_map = array_flip($this->bo->roles);
 
+		$lookups = array(
+			'priority'	=> Array(
+				0 => '',
+				1 => lang('Low'),
+				2 => lang('Normal'),
+				3 => lang('High')
+			),
+		);
+
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
+
+			// Automatic conversions
+			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups);
 
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
@@ -168,9 +180,6 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 			} else {
 				$record['owner'] = $_definition->plugin_options['owner'];
 			}
-
-			// Automatically handle text categories without explicit translation
-			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
 
 			if ($record['participants'] && !is_array($record['participants'])) {
 				// Importing participants in human friendly format

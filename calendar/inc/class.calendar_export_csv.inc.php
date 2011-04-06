@@ -48,12 +48,18 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
-		$convert_fields = importexport_export_csv::$types;
-		$convert_fields['select-account'][] = 'owner';
-		$convert_fields['date-time'][] = 'start';
-		$convert_fields['date-time'][] = 'end';
+		$convert_fields = calendar_egw_record::$types;
 
 		$recurrence = $this->bo->recur_types;
+
+		$lookups = array(
+			'priority'	=> Array(
+				0 => '',
+				1 => lang('Low'),
+				2 => lang('Normal'),
+				3 => lang('High')
+			),
+		);
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
@@ -72,7 +78,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 			// Standard stuff
 			if($options['convert']) {
-				importexport_export_csv::convert($record, $convert_fields, 'calendar');
+				importexport_export_csv::convert($record, $convert_fields, 'calendar', $lookups);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
