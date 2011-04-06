@@ -79,7 +79,7 @@ class addressbook_merge extends bo_merge
 		{
 			$events = array();
 		}
-		if ($last_event_too=true)
+		if ($last_event_too==true)
 		{
 			$last = $calendar->search(array(
 				'end' => $calendar->now_su,
@@ -88,7 +88,7 @@ class addressbook_merge extends bo_merge
 				'num_rows' => 1,
 				'order' => 'cal_start DESC',
 			));
-			if ($last) $events['-1'] = array_shift($last);	// returned events are indexed by cal_id!
+			$events['-1'] = $last ? array_shift($last) : array();	// returned events are indexed by cal_id!
 		}
 		$replacements = array();
 		foreach($events as $n => $event)
@@ -106,7 +106,7 @@ class addressbook_merge extends bo_merge
 					'time' => $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i',
 				) as $name => $format)
 				{
-					$value = date($format,$event[$what]);
+					$value = $event[$what] ? date($format,$event[$what]) : '';
 					if ($format == 'l') $value = lang($value);
 					$replacements['$$calendar/'.$n.'/'.$what.$name.'$$'] = $value;
 				}
@@ -115,6 +115,14 @@ class addressbook_merge extends bo_merge
 			$replacements['$$calendar/'.$n.'/duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
 			++$n;
+		}
+		
+		// Need to set some keys if there is no previous event
+		if($last_event_too && count($events['-1']) == 0) {
+			$replacements['$$calendar/-1/start$$'] = '';
+			$replacements['$$calendar/-1/end$$'] = '';
+			$replacements['$$calendar/-1/owner$$'] = '';
+			$replacements['$$calendar/-1/updated$$'] = '';
 		}
 		return $replacements;
 	}
