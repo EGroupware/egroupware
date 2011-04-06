@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: calendar handler
+ * EGroupware: CalDAV / GroupDAV access: calendar handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -57,9 +57,11 @@ class calendar_groupdav extends groupdav_handler
 	var $client_shared_uid_exceptions = true;
 
 	/**
-	 * Are we using id or uid for the path/url
+	 * Are we using id, uid or caldav_name for the path/url
+	 *
+	 * Get's set in constructor to 'caldav_name' and groupdav_handler::$path_extension = ''!
 	 */
-	const PATH_ATTRIBUTE = 'id';
+	static $path_attr = 'id';
 
 	/**
 	 * Constructor
@@ -75,6 +77,13 @@ class calendar_groupdav extends groupdav_handler
 
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_iCalendar;
+
+		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
+		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		{
+			self::$path_attr = 'caldav_name';
+			groupdav_handler::$path_extension = '';
+		}
 	}
 
 	/**
@@ -85,16 +94,18 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function get_path($event)
 	{
-		if (is_numeric($event) && self::PATH_ATTRIBUTE == 'id')
+		if (is_numeric($event) && self::$path_attr == 'id')
 		{
 			$name = $event;
 		}
 		else
 		{
 			if (!is_array($event)) $event = $this->bo->read($event);
-			$name = $event[self::PATH_ATTRIBUTE];
+			$name = $event[self::$path_attr];
 		}
-		return $name.'.ics';
+		$name .= groupdav_handler::$path_extension;
+		//error_log(__METHOD__.'('.array2string($event).") path_attr='".self::$path_attr."', path_extension='".groupdav_handler::$path_extension."' returning ".array2string($name));
+		return $name;
 	}
 
 	/**
@@ -332,15 +343,8 @@ class calendar_groupdav extends groupdav_handler
 
 			if ($id)
 			{
-				if (is_numeric($id))
-				{
-					$ids[] = (int)$id;
-				}
-				else
-				{
-					$cal_filters['query']['cal_uid'] = basename($id,'.ics');
-				}
-
+				$cal_filters['query'][self::$path_attr] = groupdav_handler::$path_extension ?
+					basename($id,groupdav_handler::$path_extension) : $id;
 			}
 			else	// fetch all given url's
 			{
@@ -349,22 +353,13 @@ class calendar_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (!($id = basename(array_pop($parts),'.ics'))) continue;
-
-						if (is_numeric($id))
+						if (($id = array_pop($parts)))
 						{
-							$ids[] = $id;
-						}
-						else	// eg. lightning uses multiget after a PUT on the PUT url, which is the uid
-						{
-							$cal_filters['query']['cal_uid'][] = $id;
+							$cal_filters['query'][self::$path_attr][] = groupdav_handler::$path_extension ?
+								basename($id,groupdav_handler::$path_extension) : $id;
 						}
 					}
 				}
-			}
-			if ($ids)
-			{
-				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
 
 			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids).', cal_filters='.array2string($cal_filters));
@@ -573,32 +568,13 @@ class calendar_groupdav extends groupdav_handler
 		}
 		else
 		{
-			// new entry?
-			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
-			{
-				if (($eventId = array_shift($foundEvents)) &&
-					(list($eventId) = explode(':', $eventId)) &&
-					($oldEvent = $this->bo->read($eventId)))
-				{
-					$retval = '301 Moved Permanently';
-				}
-				else
-				{
-					// to be safe
-					$eventId = -1;
-					$retval = '201 Created';
-				}
-			}
-			else
-			{
-				// new entry
-				$eventId = -1;
-				$retval = '201 Created';
-			}
+			// new entry
+			$eventId = -1;
+			$retval = '201 Created';
 		}
 
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset)))
+			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset, $id)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned false");
 			if ($eventId && $cal_id === false)
@@ -614,14 +590,15 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		header('ETag: '.$this->get_etag($cal_id));
-		if ($retval !== true)
+
+		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
+		if ($retval !== true && self::$path_attr != 'caldav_name')
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
 			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id: $retval");
 			header('Location: '.$this->base_uri.$path.$this->get_path($cal_id));
-			return $retval;
 		}
-		return true;
+		return $retval;
 	}
 
 	/**
@@ -773,18 +750,22 @@ class calendar_groupdav extends groupdav_handler
 			}
 			return $event;
 		}
-		return $this->bo->delete($id);
+		return $this->bo->delete($event['id']);
 	}
 
 	/**
 	 * Read an entry
 	 *
-	 * @param string/id $id
-	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
+	 * @param string|id $id
+	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		$event = $this->bo->read($id, null, true, 'server');
+		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
+
+		$event = $this->bo->read(array($column => $id), null, true, 'server');
+		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
+
 		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));

@@ -1,12 +1,12 @@
 <?php
 /**
- * eGroupWare - Calendar's buisness-object - access + update
+ * EGroupware - Calendar's buisness-object - access + update
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-10 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */

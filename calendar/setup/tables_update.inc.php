@@ -2094,7 +2094,7 @@ function calendar_upgrade1_7_011()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
 }
-	
+
 function calendar_upgrade1_8()
 {
 	calendar_upgrade1_7_010();
@@ -2104,7 +2104,7 @@ function calendar_upgrade1_8()
 
 /**
  * Convert bool column cal_deleted with egw_api_content_history table to a unix timestamp
- * 
+ *
  * @return string
  */
 function calendar_upgrade1_9_001()
@@ -2150,5 +2150,25 @@ function calendar_upgrade1_9_001()
 	));
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.002';
+}
+
+
+/**
+ * Add column to store CalDAV name given by client
+ */
+function calendar_upgrade1_9_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','caldav_name',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+	$GLOBALS['egw_setup']->db->query($sql='UPDATE egw_cal SET caldav_name='.
+		$GLOBALS['egw_setup']->db->concat(
+			$GLOBALS['egw_setup']->db->to_varchar('cal_id'),"'.ics'"),__LINE__,__FILE__);
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','caldav_name');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.003';
 }
 

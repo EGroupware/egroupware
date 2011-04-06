@@ -31,11 +31,12 @@ $phpgw_baseline = array(
 			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
 			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
 			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
-			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted')
+			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted'),
+			'caldav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CalDAV URL, if specified by client')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
-		'ix' => array('cal_uid','cal_owner','cal_deleted'),
+		'ix' => array('cal_uid','cal_owner','cal_deleted','caldav_name'),
 		'uc' => array()
 	),
 	'egw_cal_holidays' => array(

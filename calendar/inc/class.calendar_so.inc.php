@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar's storage-object
+ * EGroupware - Calendar's storage-object
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -121,7 +121,7 @@ class calendar_so
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
 	 * @param int $recur_date=0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
-	 * @return array|boolean array with id => data pairs or false if entry not found
+	 * @return array|boolean array with cal_id => event array pairs or false if entry not found
 	 */
 	function read($ids,$recur_date=0)
 	{
@@ -142,22 +142,27 @@ class calendar_so
 		$group_by_cols .= ','.$this->repeats_table.'.'.implode(','.$this->repeats_table.'.',array_keys($table_def['fd']));
 
 		$where = array();
-		if (is_array($ids))
-		{
-			array_walk($ids,create_function('&$val,$key','$val = (int) $val;'));
-
-			$where[] = $this->cal_table.'.cal_id IN ('.implode(',',$ids).')';
-		}
-		elseif (is_numeric($ids))
-		{
-			$where[] = $this->cal_table.'.cal_id = '.(int) $ids;
-		}
-		else
+		if (is_scalar($ids) && !is_numeric($ids))	// a single uid
 		{
 			// We want only the parents to match
 			$where['cal_uid'] = $ids;
 			$where['cal_reference'] = 0;
 			$where['cal_recurrence'] = 0;
+		}
+		elseif(is_array($ids) && isset($ids[count($ids)-1]) || is_scalar($ids))	// one or more cal_id's
+		{
+			$where['cal_id'] = $ids;
+		}
+		else	// array with column => value pairs
+		{
+			$where = $ids;
+		}
+		if (isset($where['cal_id']))	// prevent non-unique column-name cal_id
+		{
+			$where[] = $this->db->expression($this->cal_table, $this->cal_table.'.',array(
+				'cal_id' => $where['cal_id'],
+			));
+			unset($where['cal_id']);
 		}
 		if ((int) $recur_date)
 		{
@@ -920,7 +925,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
-			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm' && $col != 'tz_id')
+			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm' && $col != 'tz_id' && $col != 'caldav_name')
 			{
 				$event['cal_'.$col] = $val;
 				unset($event[$col]);
@@ -975,12 +980,20 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$etag = 0;
 		}
+		$update = array();
+		// event without uid or not strong enough uid
 		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length)
 		{
-			// event (without uid), not strong enough uid
-			$event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
-			$this->db->update($this->cal_table, array('cal_uid' => $event['cal_uid']),
-				array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
+			$update['cal_uid'] = $event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
+		}
+		// set caldav_name, if not given by caller
+		if (empty($event['caldav_name']) && version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		{
+			$update['caldav_name'] = $event['caldav_name'] = $cal_id.'.ics';
+		}
+		if ($update)
+		{
+			$this->db->update($this->cal_table, $update, array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
 
 		if ($event['recur_type'] == MCAL_RECUR_NONE)

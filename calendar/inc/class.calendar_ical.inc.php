@@ -1,6 +1,6 @@
 <?php
 /**
- * iCal import and export via Horde iCalendar classes
+ * EGroupware - Calendar iCal import and export via Horde iCalendar classes
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@egroupware.org>
@@ -1078,10 +1078,12 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $user=null account_id of owner, default null
 	 * @param string $charset  The encoding charset for $text. Defaults to
 	 *                         utf-8 for new format, iso-8859-1 for old format.
+	 * @param string $caldav_name=null name from CalDAV client or null (to use default)
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag|permission denied
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null)
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null, $caldav_name=null)
 	{
+		//error_log(__METHOD__."(, $cal_id, $etag, $merge, $recur_date, $principalURL, $user, $charset, $caldav_name)");
 		$this->events_imported = 0;
 		$replace = $delete_exceptions= false;
 
@@ -1336,10 +1338,12 @@ class calendar_ical extends calendar_boupdate
 					// avoid that iCal changes the organizer, which is not allowed
 					$event['owner'] = $event_info['stored_event']['owner'];
 				}
+				$event['caldav_name'] = $event_info['stored_event']['caldav_name'];
 			}
 			else // common adjustments for new events
 			{
 				unset($event['id']);
+				if ($caldav_name) $event['caldav_name'] = $caldav_name;
 				// set non blocking all day depending on the user setting
 				if (!empty($event['whole_day']) && $this->nonBlockingAllday)
 				{
