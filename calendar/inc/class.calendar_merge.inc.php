@@ -147,6 +147,7 @@ class calendar_merge extends bo_merge
 		} else {
 			$event = $id;
 		}
+		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_id'. '$$'] = $event['id'];
 		foreach($this->bo->event2array($event) as $name => $data)
 		{
 			if (substr($name,-4) == 'date') $name = substr($name,0,-4);
@@ -435,6 +436,7 @@ class calendar_merge extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
 
 		foreach(array(
+			'calendar_id' => lang('Calendar ID'),
 			'calendar_title' => lang('Title'),
 			'calendar_description' => lang('Description'),
 			'calendar_participants' => lang('Participants'),
