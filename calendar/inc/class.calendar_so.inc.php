@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-10 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -285,7 +285,7 @@ class calendar_so
 			}
 		}
 		//echo "<p>".__METHOD__.'('.array2string($ids).','.array($return_maximum).') = '.array2string($etags)."</p>\n";
-		error_log(__METHOD__.'('.array2string($ids).','.array2string($return_maximum).') = '.array2string($etags));
+		//error_log(__METHOD__.'('.array2string($ids).','.array2string($return_maximum).') = '.array2string($etags));
 		return $etags;
 	}
 
