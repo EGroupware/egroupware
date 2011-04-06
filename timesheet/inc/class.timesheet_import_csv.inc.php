@@ -260,13 +260,6 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				}
 			}
 
-			// Lookups - from human friendly to integer
-			foreach(array_keys($lookups) as $field) {
-				if(!is_numeric($record[$field]) && $key = array_search($record[$field], $lookups[$field])) {
-					$record[$field] = $key;
-				}
-			}
-
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
 			{
@@ -332,7 +325,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				return true;
 			case 'update' :
 				// Only update if there are changes
-				$old = $this->bo->read($_data['ts_id']);
+				$old_record = new timesheet_egw_record($_data['ts_id']);
+				$old = $old_record->get_record_array();
 
 				if(!$this->definition->plugin_options['change_owner']) {
 					// Don't change creator of an existing ticket
@@ -345,6 +339,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp']) {
 					break;
 				}
+
+				// Clear old link, if different
+				if ($_data['ts_id'] && array_key_exists('pm_id', $_data) && $_data['pm_id'] != $old['pm_id']) {
+					egw_link::unlink2(0,TIMESHEET_APP,$_data['ts_id'],0,'projectmanager',$old['pm_id']);
+				}
 				
 				// Fall through
 			case 'insert' :
@@ -354,6 +353,13 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 					break;
 				} else {
 					$result = $this->bo->save( $_data);
+					$_data['ts_id'] = $this->bo->data['ts_id'];
+
+					// Set projectmanager link
+					if ($_data['pm_id']) {
+						egw_link::link(TIMESHEET_APP,$_data['ts_id'],'projectmanager',$_data['pm_id']);
+					}
+
 					if($result) {
 						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
 							$GLOBALS['egw']->accounts->id2name($_data['owner']),
