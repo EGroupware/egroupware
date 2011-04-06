@@ -258,18 +258,72 @@ class calendar_so
 	 * This includes ALL recurences of an event series
 	 *
 	 * @param int|array $ids one or multiple cal_id's
+	 * @param booelan $return_maximum=false if true return only the maximum, even for multiple ids
 	 * @return int|array (array of) modification timestamp(s)
 	 */
-	function max_user_modified($ids)
+	function max_user_modified($ids, $return_maximum=false)
 	{
-		foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',array(
-			'cal_id' => $ids,
-		),__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
+		if (!is_array($ids) || count($ids) == 1) $return_maximum = true;
+
+		if ($return_maximum)
 		{
-			$etags[$row['cal_id']] = $this->db->from_timestamp($row['user_etag']);
+			if (($etags = $this->db->select($this->user_table,'MAX(cal_user_modified)',array(
+					'cal_id' => $ids,
+				),__LINE__,__FILE__,false,'','calendar')->fetchColumn()))
+			{
+				$etags = $this->db->from_timestamp($etags);
+			}
 		}
-		//echo "<p>".__METHOD__.'('.array2string($ids).') = '.array2string($etags)."</p>\n";
-		return is_array($ids) ? $etags : $etags[$ids];
+		else
+		{
+			$etags = array();
+			foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',array(
+				'cal_id' => $ids,
+			),__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
+			{
+				$etags[$row['cal_id']] = $this->db->from_timestamp($row['user_etag']);
+			}
+		}
+		//echo "<p>".__METHOD__.'('.array2string($ids).','.array($return_maximum).') = '.array2string($etags)."</p>\n";
+		error_log(__METHOD__.'('.array2string($ids).','.array2string($return_maximum).') = '.array2string($etags));
+		return $etags;
+	}
+
+	/**
+	 * Get maximum modification time of events for given participants and optional owned by them
+	 *
+	 * This includes ALL recurences of an event series
+	 *
+	 * @param int|array $users one or mulitple calendar users
+	 * @param booelan $owner_too=false if true return also events owned by given users
+	 * @return int maximum modification timestamp
+	 */
+	function get_ctag($users, $owner_too=false)
+	{
+		$where = array(
+			'cal_user_type' => 'u',
+			'cal_user_id' => $users,
+		);
+		if ($owner_too)
+		{
+			// owner can only by users, no groups
+			foreach($users as $key => $user)
+			{
+				if ($user < 0) unset($users[$key]);
+			}
+			$where = $this->db->expression($this->user_table, '(', $where, ' OR ').
+				$this->db->expression($this->cal_table, array(
+					'cal_owner' => $users,
+				),')');
+		}
+		if (($data = $this->db->select($this->user_table,array(
+			'MAX(cal_user_modified) AS max_user_modified',
+			'MAX(cal_modified) AS max_modified',
+		),$where,__LINE__,__FILE__,false,'','calendar',0,'JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id')->fetch()))
+		{
+			$data = max($this->db->from_timestamp($data['max_user_modified']),$data['max_modified']);
+		}
+		return $data;
 	}
 
 	/**

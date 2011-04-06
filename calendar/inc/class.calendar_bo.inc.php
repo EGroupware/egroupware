@@ -301,62 +301,22 @@ class calendar_bo
 	}
 
 	/**
-	 * Searches / lists calendar entries, including repeating ones
+	 * Resolve users to add memberships for users and members for groups
 	 *
-	 * @param array $params array with the following keys
-	 *	start date startdate of the search/list, defaults to today
-	 *	end   date enddate of the search/list, defaults to start + one day
-	 *	users  int|array integer user-id or array of user-id's to use, defaults to the current user
-	 *  cat_id int|array category-id or array of cat-id's (incl. all sub-categories), default 0 = all
-	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
-	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
-	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
-	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
-	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
-	 *		the events (default), not honored in a search ==> always returns an array of events!
-	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
-	 *  offset boolean|int false (default) to return all entries or integer offset to return only a limited result
-	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
-	 *		otherwise the original recuring event (with the first start- + enddate) is returned
-	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
-	 *  order column-names plus optional DESC|ASC separted by comma
-	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
-	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 *  cols string|array columns to select, if set an iterator will be returned
-	 *  append string to append to the query, eg. GROUP BY
-	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
-	 * @param string $sql_filter=null sql to be and'ed into query (fully quoted), default none
-	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
-	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
+	 * @param int|array $_users
+	 * @param boolean $no_enum_groups=true
+	 * @param boolean $ignore_acl=false
+	 * @return array of user-ids
 	 */
-	function &search($params,$sql_filter=null)
+	private function resolve_users($_users, $no_enum_groups=true, $ignore_acl=false)
 	{
-		$params_in = $params;
-
-		$params['sql_filter'] = $sql_filter;	// dont allow to set it via UI or xmlrpc
-
-		// check if any resource wants to hook into
-		foreach($this->resources as $app => $data)
+		if (!is_array($_users))
 		{
-			if (isset($data['search_filter']))
-			{
-				$params = ExecMethod($data['search_filter'],$params);
-			}
-		}
-
-		if (!isset($params['users']) || !$params['users'] ||
-			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
-		{
-			// for a search use all account you have read grants from
-			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
-		}
-		if (!is_array($params['users']))
-		{
-			$params['users'] = $params['users'] ? array($params['users']) : array();
+			$_users = $_users ? array($_users) : array();
 		}
 		// only query calendars of users, we have READ-grants from
 		$users = array();
-		foreach($params['users'] as $user)
+		foreach($_users as $user)
 		{
 			$user = trim($user);
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
@@ -407,6 +367,62 @@ class calendar_bo
 				}
 			}
 		}
+		return $users;
+	}
+
+	/**
+	 * Searches / lists calendar entries, including repeating ones
+	 *
+	 * @param array $params array with the following keys
+	 *	start date startdate of the search/list, defaults to today
+	 *	end   date enddate of the search/list, defaults to start + one day
+	 *	users  int|array integer user-id or array of user-id's to use, defaults to the current user
+	 *  cat_id int|array category-id or array of cat-id's (incl. all sub-categories), default 0 = all
+	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
+	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
+	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
+	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
+	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
+	 *		the events (default), not honored in a search ==> always returns an array of events!
+	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
+	 *  offset boolean|int false (default) to return all entries or integer offset to return only a limited result
+	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
+	 *		otherwise the original recuring event (with the first start- + enddate) is returned
+	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
+	 *  order column-names plus optional DESC|ASC separted by comma
+	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
+	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
+	 *  cols string|array columns to select, if set an iterator will be returned
+	 *  append string to append to the query, eg. GROUP BY
+	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
+	 * @param string $sql_filter=null sql to be and'ed into query (fully quoted), default none
+	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
+	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
+	 */
+	function &search($params,$sql_filter=null)
+	{
+		$params_in = $params;
+
+		$params['sql_filter'] = $sql_filter;	// dont allow to set it via UI or xmlrpc
+
+		// check if any resource wants to hook into
+		foreach($this->resources as $app => $data)
+		{
+			if (isset($data['search_filter']))
+			{
+				$params = ExecMethod($data['search_filter'],$params);
+			}
+		}
+
+		if (!isset($params['users']) || !$params['users'] ||
+			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
+		{
+			// for a search use all account you have read grants from
+			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
+		}
+		// resolve users to add memberships for users and members for groups
+		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl']);
+
 		// replace (by so not understood filter 'no-enum-groups' with 'default' filter
 		if ($params['filter'] == 'no-enum-groups')
 		{
@@ -1880,6 +1896,7 @@ class calendar_bo
 				'daywise' => false,
 				'enum_recuring' => false,
 				'date_format' => 'server',
+				'no_total' => true,
 			));
 			foreach($events as $k => &$recurrence)
 			{
@@ -1903,29 +1920,13 @@ class calendar_bo
 	 */
 	public function get_ctag($user,$filter='owner')
 	{
-		$params = array(
-			'users' => $user,
-			'start' => $this->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => $this->now + 365*24*3600,	// default one year into the future +365
-			'enum_recuring' => false,
-			'daywise' => false,
-			'date_format' => 'server',
-			'cols' => array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
-			'filter' => $filter,
-		);
+		if ($this->debug > 1) $startime = microtime(true);
 
-		$ctag = 0;
-		if (($events =& $this->search($params)))
-		{
-			foreach ($events as $event)
-			{
-				$modified = max($this->so->max_user_modified($event['cal_id']), $event['cal_modified']);
-				if ($ctag < $modified) $ctag = $modified;
-			}
-		}
+		// resolve users to add memberships for users and members for groups
+		$users = $this->resolve_users($user);
+		$ctag = $this->so->get_ctag($users, $filter == 'owner');
 
-		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') params=".array2string($params)." --> $ctag = ".date('Y-m-d H:i:s',$ctag));
-
+		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
 	}
 }
