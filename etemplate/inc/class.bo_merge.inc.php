@@ -483,6 +483,7 @@ abstract class bo_merge
 			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
 			return false;
 		}
+
 		return $content;
 	}
 
@@ -571,8 +572,8 @@ abstract class bo_merge
 				switch($mimetype.$mso_application_progid)
 				{
 					case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-						$format = '/<table:table-cell([^>]+?)office:value-type="([^"]+)"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\4>.?<\/table:table-cell>/s';
-						$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$3>$5</table:table-cell>';
+						$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+						$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2>$4</table:table-cell>';
 						break;
 					case 'application/xmlExcel.Sheet':	// Excel 2003
 						$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
@@ -582,7 +583,21 @@ abstract class bo_merge
 				}
 				if($format && $names)
 				{
-					$content = preg_replace($format, $replacement, $content);
+					// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
+					$increase = 0;
+					while($increase < 10) {
+						$result = preg_replace($format, $replacement, $content, -1, $count);
+						if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
+							ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 100000 );  // Get current limit and increase
+							$increase++;  // Do not overkill the server
+						} else {  // No fail
+							$content = $result;  // On failure $sNewText would be NULL
+							break;  // Exit loop
+						}
+					}
+					if($increase == 10) {
+						throw new egw_exception('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit'));
+					}
 				}
 			}
 			// replace CRLF with linebreak tag of given type
