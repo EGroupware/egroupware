@@ -303,10 +303,10 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name]); 
+				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name],'ts'); 
 			}
 			foreach((array)$fields['date'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name]); 
+				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name],'ts'); 
 			}
 
 			// Some custom methods for conversion
