@@ -190,7 +190,7 @@ class importexport_export_ui {
 			");
 		}
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)))
+			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
 		{
 			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
