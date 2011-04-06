@@ -87,6 +87,8 @@ class importexport_admin_prefs_sidebox_hooks
 	 * Called from framework so Import / Export can add links into other apps' sidebox.
 	 */
 	public static function other_apps() {
+		if(!$GLOBALS['egw_info']['user']['apps']['importexport']) return array();
+
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		$cache = egw_cache::getCache(egw_cache::SESSION, 'importexport', 'sidebox_links');
 
