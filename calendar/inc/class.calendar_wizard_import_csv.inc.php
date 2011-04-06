@@ -28,7 +28,7 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 
 		// Field mapping
 		$tracking = new calendar_tracking();
-		$this->mapping_fields = $tracking->field2label;
+		$this->mapping_fields = array('id' => 'Calendar ID') + $tracking->field2label;
 
 		// Actions
 		$this->actions = array(
