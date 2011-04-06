@@ -150,6 +150,12 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			'cat_id'	=> $categories->return_sorted_array(0,False,'','','',true)
 		);
 
+		// Status need leading spaces removed
+		foreach($lookups['ts_status'] as $id => &$label) {
+			$label = str_replace('&nbsp;', '',trim($label));
+			if($label == '') unset($lookups['ts_status'][$id]);
+		}
+
 		// Start counting successes
 		$count = 0;
 		$this->results = array();
