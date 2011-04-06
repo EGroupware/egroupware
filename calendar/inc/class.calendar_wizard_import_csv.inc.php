@@ -23,8 +23,6 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 		$this->steps += array(
 			'wizard_step50' => lang('Manage mapping'),
 		);
-		// No conditions yet
-		unset($this->steps['wizard_step55']);
 
 		// Field mapping
 		$tracking = new calendar_tracking();
@@ -39,6 +37,7 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 
 		// Conditions
 		$this->conditions = array(
+			'exists'	=>	lang('exists'),
 		);
 	}
 

@@ -201,6 +201,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 					}
 				}
 			}
+
 			// Calendar doesn't actually support conditional importing
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
@@ -208,20 +209,19 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							if($record[$condition['string']]) {
-								$records = $this->bo->search(
-								// Calendar doesn't support searching the way we need
-								);
+							if($record[$condition['string']] && $condition['string'] == 'id') {
+								$event = $this->bo->read($record[$condition['string']]);
+								$records = array($event);
 							}
 
-							if ( is_array( $records ) && count( array_keys( $records )) >= 1) {
+							if ( is_array( $records ) && count( $records ) >= 1) {
 								// apply action to all records matching this exists condition
 								$action = $condition['true'];
-								foreach ( (array)$records as $record ) {
-									$record['id'] = $record['id'];
+								foreach ( (array)$records as $event ) {
+									$record['id'] = $event['id'];
 									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
-										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
-										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $record['cat_id'] ) ) );
+										if ( !is_array( $record['category'] ) ) $record['category'] = explode( ',', $record['category'] );
+										$record['category'] = implode( ',', array_unique( array_merge( $record['category'], $event['category'] ) ) );
 									}
 									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
@@ -274,7 +274,6 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 				if(count($changed) == 0) {
 					return true;
 				}
-				
 				// Fall through
 			case 'insert' :
 				if($_action == 'insert') {
