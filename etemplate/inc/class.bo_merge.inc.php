@@ -588,15 +588,15 @@ abstract class bo_merge
 					while($increase < 10) {
 						$result = preg_replace($format, $replacement, $content, -1, $count);
 						if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
-							ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 100000 );  // Get current limit and increase
+							ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
 							$increase++;  // Do not overkill the server
 						} else {  // No fail
-							$content = $result;  // On failure $sNewText would be NULL
+							$content = $result;  // On failure $result would be NULL
 							break;  // Exit loop
 						}
 					}
 					if($increase == 10) {
-						throw new egw_exception('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit'));
+						error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
 					}
 				}
 			}
