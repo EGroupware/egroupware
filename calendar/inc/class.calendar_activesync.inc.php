@@ -825,7 +825,13 @@ class calendar_activesync implements activesync_plugin_write
 					$recurrence->monthofyear = (int)$rrule->time->format('m');	// 1..12
 					break;
 			}
-			if ($rrule->enddate) $recurrence->until = $rrule->enddate->format('server');
+			if ($rrule->enddate)	// enddate is only a date, but AS needs a time incl. correct starttime!
+			{
+				$enddate = clone $rrule->time;
+				$enddate->setDate($rrule->enddate->format('Y'), $rrule->enddate->format('m'),
+					$rrule->enddate->format('d'));
+				$recurrence->until = $enddate->format('server');
+			}
 
 			if ($rrule->exceptions)
 			{
@@ -953,7 +959,7 @@ class calendar_activesync implements activesync_plugin_write
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 		$ctag = $this->calendar->get_ctag($owner);
 		// workaround for syncstate = 0 when calendar is empty causes synctate to not return 0 but array resulting in foldersync loop
-		if ($ctag == 0) $ctag = 1; 
+		if ($ctag == 0) $ctag = 1;
 		$changes = array();	// no change
 		$syncstate_was = $syncstate;
 
