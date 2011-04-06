@@ -511,7 +511,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function put(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		
+
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
@@ -546,7 +546,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 							$charset = strtoupper(substr($value,1,-1));
 					}
 				}
-			} 
+			}
 		}
 
 		if (is_array($oldEvent))
@@ -636,7 +636,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function post(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		
+
 		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
 		{
 			$handler = $this->_get_handler();
@@ -658,14 +658,14 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 								$charset = strtoupper(substr($value,1,-1));
 						}
 					}
-				} 
+				}
 			}
-			
+
 			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
 				$eventId = array_shift($foundEvents);
 				list($eventId) = explode(':', $eventId);
-				
+
 				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
 					false, 0, $this->principalURL, $user, $charset)))
 				{
@@ -802,38 +802,10 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
-		$filter = array(
-			'users' => $user,
-			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
-			'enum_recuring' => false,
-			'daywise' => false,
-			'date_format' => 'server',
-			'cols'		=> array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
-		);
-		
-		if ($path == '/calendar/')
-		{
-			$filter['filter'] = 'owner';
-		}
-		else
-		{
-			$filter['filter'] = 'default'; // not rejected
-		}
-		
-		$ctag = 0;
-		
-		if (($events =& $this->bo->search($filter)))
-		{
-			foreach ($events as $event)
-			{
-				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
-				if ($ctag < $modified) $ctag = $modified;
-			}
-		}
+		$ctag = $this->bo->get_ctag($user,$path == '/calendar/' ? 'owner' : 'default'); // default = not rejected
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
-		
+
 		return 'EGw-'.$ctag.'-wGE';
 	}
 
@@ -845,42 +817,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function get_etag($entry)
 	{
-		if (!is_array($entry))
-		{
-			if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
-			$entry = $this->read($entry, null, true, 'server');
-		}
-		$etag = $entry['id'].':'.$entry['etag'];
+		$etag = $this->bo->get_etag($entry,$this->client_shared_uid_exceptions);
 
-		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
-		if (isset($entry['max_user_modified']))
-		{
-			$modified = max($entry['max_user_modified'], $entry['modified']);			
-		}
-		else
-		{
-			$modified = max($this->bo->so->max_user_modified($entry['id']), $entry['modified']);
-		}
-		$etag .= ':' . $modified;
-		// include exception etags into our own etag, if exceptions are included
-		if ($this->client_shared_uid_exceptions && !empty($entry['uid']) &&
-			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
-		{
-			$events =& $this->bo->search(array(
-				'query' => array('cal_uid' => $entry['uid']),
-				'filter' => 'owner',  // return all possible entries
-				'daywise' => false,
-				'enum_recuring' => false,
-				'date_format' => 'server',
-			));
-			foreach($events as $k => &$recurrence)
-			{
-				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
-				{
-					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
-				}
-			}
-		}
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return 'EGw-'.$etag.'-wGE';
 	}
