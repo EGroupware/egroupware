@@ -129,11 +129,22 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl() {
 		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+		
+		$start= new egw_time($states['date']);
+		if($states['view'] == 'week') {
+			$days = isset($_GET['days']) ? $_GET['days'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['days_in_weekview'];
+			if ($days != 5) $days = 7;
+			$end = "+$days days";
+		} else {
+			$end = '+1 ' . $states['view'];
+		}
+
 		return array(
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(
-				'start'		=> time(),
-				'end'		=> time(),
+				'plugin_override' => true, // Plugin overrides preferences
+				'start'		=> $start->format('ts'),
+				'end'		=> strtotime($end, $start->format('ts'))-1,
 				'owner'		=> $states['owner']
 			)
 		);
