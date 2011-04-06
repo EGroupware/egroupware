@@ -298,8 +298,8 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['select-bool'] as $name) {
-				if($record[$name] != null) {
-					$record[$name] = ($record[$name] == lang('Yes') ? 1 : 0);
+				if($record[$name] != null && $record[$name] != '') {
+					$record[$name] = ($record[$name] == lang('Yes') || $record[$name] == '1' ? 1 : 0);
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
