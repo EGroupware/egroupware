@@ -48,4 +48,16 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 		
 		return $result;
 	}
+
+	// Conditions
+	function wizard_step55(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		$result = parent::wizard_step55($content, $sel_options, $readonlys, $preserv);
+
+		// Search can only deal with ID
+		$sel_options['string'] = array(
+			'id'	=>	'Calendar ID'
+		);
+		return $result;
+	}
 }
