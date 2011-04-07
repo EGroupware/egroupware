@@ -92,7 +92,6 @@ function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAl
 
 	this.oldWidth = 0;
 	this.oldHeight = 0;
-	this.headerHeight = 0;
 	this.scrollbarWidth = 0;
 
 	this.visibleColumnCount = 0;
@@ -107,9 +106,9 @@ function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAl
 	this.toggleAllCallback = _toggleAllCallback;
 	this.context = _context;
 
-	this.buildBase();
-	this.parentNode.append(this.outer_table);
 	this.styleSheet = new egwDynStyleSheet();
+
+	this.buildBase();
 
 	// Now that the base grid has been build, we can perform a few tests, to
 	// determine some browser/CSS dependant width values
@@ -288,6 +287,8 @@ egwGridViewOuter.prototype.buildBase = function()
 	this.outer_table.append(this.outer_thead, this.outer_tbody);
 	this.outer_tbody.append(this.outer_tr);
 	this.outer_thead.append(this.outer_head_tr);
+
+	this.parentNode.append(this.outer_table);
 }
 
 egwGridViewOuter.prototype.updateColSortmode = function(_colIdx, _sortArrow)
@@ -397,8 +398,6 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 
 			return false;
 		});
-
-		this.headerHeight = this.outer_thead.height();
 	}
 }
 
@@ -422,7 +421,13 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 
 		div_inner.css("height", "1000px");
 
-		this.outer_tr.append(td);
+		// Clone the outer table and insert it into the top window (which should)
+		// always be visible.
+		var clone = this.outer_table.clone();
+		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		top_body.append(clone);
+
+		$("tbody tr", clone).append(td);
 		td.append(div_outer);
 		div_outer.append(div_inner);
 
@@ -430,7 +435,7 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 		EGW_GRID_SCROLLBAR_WIDTH = div_outer.outerWidth() - div_inner.outerWidth();
 
 		// Remove the temporary elements again.
-		this.outer_tr.empty();
+		clone.remove();
 	}
 
 	return EGW_GRID_SCROLLBAR_WIDTH;
@@ -450,14 +455,20 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 		var th = $(document.createElement("th"));
 		th.append(cont);
 
+		// Clone the outer table and insert it into the top window (which should)
+		// always be visible.
+		var clone = this.outer_table.clone();
+		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		top_body.append(clone);
+
 		// Insert the th into the document tree
-		this.outer_head_tr.append(th);
+		$("thead tr", clone).append(th);
 
 		// Calculate the total border width
 		EGW_GRID_HEADER_BORDER_WIDTH = th.outerWidth(true) - cont.width();
 
-		// Empty the outer head again
-		this.outer_head_tr.empty();
+		// Remove the clone again
+		clone.remove();
 	}
 
 	return EGW_GRID_HEADER_BORDER_WIDTH;
@@ -470,9 +481,6 @@ egwGridViewOuter.prototype.getColumnBorderWidth = function()
 {
 	if (EGW_GRID_COLUMN_BORDER_WIDTH === false)
 	{
-		// Temporarily assign the egwGridView_grid class to this table
-		this.outer_table.addClass("egwGridView_grid");
-
 		// Create a temporary td which is appended to the outer tbody row
 		var cont = $(document.createElement("div"));
 		cont.addClass("innerContainer");
@@ -481,15 +489,18 @@ egwGridViewOuter.prototype.getColumnBorderWidth = function()
 		td.append(cont);
 
 		// Insert the th into the document tree
-		this.outer_tr.append(td);
+		var clone = this.outer_table.clone();
+		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		top_body.append(clone);
+
+		clone.addClass("egwGridView_grid");
+		$("tbody tr", clone).append(td);
 
 		// Calculate the total border width
 		EGW_GRID_COLUMN_BORDER_WIDTH = td.outerWidth(true) - cont.width();
 
-		// Empty the outer head again
-		this.outer_tr.empty();
-
-		this.outer_table.removeClass("egwGridView_grid");
+		// Remove the clone again
+		clone.remove();
 	}
 
 	return EGW_GRID_COLUMN_BORDER_WIDTH;
@@ -497,7 +508,7 @@ egwGridViewOuter.prototype.getColumnBorderWidth = function()
 
 egwGridViewOuter.prototype.setHeight = function(_h)
 {
-	this.grid.setScrollHeight(_h - this.headerHeight);
+	this.grid.setScrollHeight(_h - this.outer_thead.outerHeight());
 }
 
 
@@ -616,7 +627,7 @@ egwGridViewContainer.prototype.insertIntoDOM = function(_parentNode, _columns)
 egwGridViewContainer.prototype.setViewArea = function(_area, _force)
 {
 	// Calculate the relative coordinates and pass those to the implementation
-	if (_area && _area.top && _area.bottom) // When the underlying grid is emptied very often, _area sometimes gets false - Probably has to be further investigated.
+	if (_area)
 	{
 		var relArea = {
 			"top": _area.top - this.position,
@@ -679,17 +690,23 @@ if ($.browser.mozilla)
 				// Firefox sometimes provides fractional pixel values - we are
 				// forced to use those - we can obtain the fractional pixel height
 				// by using the window.getComputedStyle function
-				var styleHeightStr =
-					getComputedStyle(this.parentNode.context, null).getPropertyValue("height");
-				this.height = parseFloat(styleHeightStr.substr(0, styleHeightStr.length - 2));
+				var compStyle = getComputedStyle(this.parentNode.context, null);
+				if (compStyle)
+				{
+					var styleHeightStr = compStyle.getPropertyValue("height");
+					this.height = parseFloat(styleHeightStr.substr(0, styleHeightStr.length - 2));
+
+					if (isNaN(this.height))
+					{
+						this.height = 0;
+					}
+				}
 			}
 
 			return this.height !== false ? this.height : this.assumedHeight;
 		}
-		else
-		{
-			return 0;
-		}
+
+		return 0;
 	}
 }
 else
@@ -705,10 +722,8 @@ else
 
 			return this.height !== false ? this.height : this.assumedHeight;
 		}
-		else
-		{
-			return 0;
-		}
+
+		return 0;
 	}
 }
 
@@ -1104,7 +1119,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 		// If the maximum-update-count has been exhausted, retrigger this function
 		this.triggerUpdateAssumedHeights();
 	}
-	else
+	else if (this.viewArea)
 	{
 		// Otherwise, all elements have been checked - we'll now call "setViewArea"
 		// which may check whether new objects are now in the currently visible range

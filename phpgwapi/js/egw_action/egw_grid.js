@@ -99,14 +99,14 @@ egwGrid.prototype.setActionLinkGroups = function(_groups, _replace)
 
 egwGrid.prototype.resize = function(_w, _h)
 {
-	if (_w != this.width)
+//	if (_w != this.width)
 	{
 		this.columns.setTotalWidth(_w - this.gridOuter.scrollbarWidth - 2);
 		this.gridOuter.updateColumns(this.columns.getColumnData());
 		this.height = -1;
 	}
 
-	if (_h != this.height)
+//	if (_h != this.height)
 	{
 		this.gridOuter.setHeight(_h);
 	}
@@ -265,6 +265,7 @@ egwGrid.prototype.resetSort = function()
 egwGrid.prototype.empty = function()
 {
 	this.dataRoot.empty();
+
 	this.gridOuter.grid.empty();
 }
 

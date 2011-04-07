@@ -178,8 +178,8 @@ function egwQueueCallback(_proc, _args, _context, _id)
  */
 function egwEventQueue()
 {
-	var events = {};
-	var key_id = 0;
+	this.events = {};
+	this.key_id = 0;
 }
 
 /**
