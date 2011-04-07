@@ -1660,10 +1660,10 @@ class addressbook_bo extends addressbook_so
 				// info_from and info_link_id (main link)
 				$newlinkID = egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
 				//_debug_array(array('newLinkID'=>$newlinkID));
-				if ($newlinkID) 
+				if ($newlinkID)
 				{
 					// update egw_infolog set info_link_id=$newlinkID where info_id=$data['id'] and info_link_id=$data['link_id']
-					if ($data['app']=='infolog') 
+					if ($data['app']=='infolog')
 					{
 						$this->db->update('egw_infolog',array(
 								'info_link_id' => $newlinkID
@@ -2181,7 +2181,7 @@ class addressbook_bo extends addressbook_so
 	 * We have to include deleted entries, as otherwise the ctag will not change if an entry gets deleted!
 	 * (Only works if tracking of deleted entries / history is switched on!)
 	 *
-	 * @param int $owner=null 0=accounts, null=all addressbooks or integer account_id of user or group
+	 * @param int|array $owner=null 0=accounts, null=all addressbooks or integer account_id of user or group
 	 * @return string
 	 */
 	public function get_ctag($owner=null)

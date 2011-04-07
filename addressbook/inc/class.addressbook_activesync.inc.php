@@ -376,7 +376,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					break;
 				case 'email':
 				case 'email_home':
-					if (!empty($contact[$attr])) 
+					if (!empty($contact[$attr]))
 					{
 						$message->$key = ('"'.$emailname.'"'." <$contact[$attr]>");
 					}
@@ -515,7 +515,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						break;
 					case 'email':
 					case 'email_home':
-						if (function_exists ('imap_rfc822_parse_adrlist')) 
+						if (function_exists ('imap_rfc822_parse_adrlist'))
 						{
 							$email_array = array_shift(imap_rfc822_parse_adrlist($message->$key,""));
 							if (!empty($email_array->mailbox) && $email_array->mailbox != 'INVALID_ADDRESS' && !empty($email_array->host))
@@ -646,6 +646,29 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		if ($type != 'addressbook') return false;
 
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+		// handle all-in-one addressbook
+		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+			$owner == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			if (strpos($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'],'A') !== false)
+			{
+				$owner = null;	// all AB's
+			}
+			else
+			{
+				$owner = array_keys($this->get_addressbooks(null,false));	// false = return all selected abs
+				// translate AS private AB ID to current user
+				if (($key == array_search(self::PRIVATE_AB, $owner)) !== false)
+				{
+					unset($owner[$key]);
+					if (!in_array($GLOBALS['egw_info']['user']['account_id'],$owner))
+					{
+						$owner[] = $GLOBALS['egw_info']['user']['account_id'];
+					}
+				}
+			}
+		}
 		$ctag = $this->addressbook->get_ctag($owner);
 
 		$changes = array();	// no change
