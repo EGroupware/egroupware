@@ -79,7 +79,7 @@ class infolog_merge extends bo_merge
 		$info = array();
 
 		// Convert to human friendly values
-		$types = infolog_export_csv::$types;
+		$types = infolog_egw_record::$types;
 		$_selects = $this->bo->enums + array('status' => $this->bo->status[$record->info_type]);
 		foreach($_selects as $name => $value)
 		{

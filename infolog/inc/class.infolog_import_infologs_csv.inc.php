@@ -138,8 +138,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		}
 
 		// set Owner
-		$_definition->plugin_options['record_owner'] = isset( $_definition->plugin_options['record_owner'] ) ?
+		$_definition->plugin_options['record_owner'] = $_definition->plugin_options['record_owner'] ?
 			$_definition->plugin_options['record_owner'] : $this->user;
+		$_definition->plugin_options['record_owner'] = $this->user;
+
+		$_lookups = array(
+			'info_type'	=>	$this->boinfolog->enums['types'],
+			'info_status'	=>	$this->boinfolog->status['task']
+		);
 
 		// Start counting successes
 		$count = 0;
@@ -154,6 +160,13 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			$lookups = $_lookups;
+			if($record['info_type'] && $this->boinfolog->status[$record['info_type']]) {
+				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
+			}
+
+			importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups);
+
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
 				if(!is_numeric($record['info_owner'])) {
@@ -167,9 +180,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			} else {
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
-
-			// Automatically handle text categories without explicit translation
-			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
 
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
@@ -189,13 +199,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 						// exists
 						case 'exists' :
 							if($record[$condition['string']]) {
-								$results = $this->boinfolog->search(
-									//array( $condition['string'] => $record[$condition['string']],),
-									'', 
-									$_definition->plugin_options['update_cats'] == 'add' ? false : true,
-									'', '', '', false, 'AND', false,
-									array( $condition['string'] => $record[$condition['string']],)
-								);
+								$query['col_filter'] = array( $condition['string'] => $record[$condition['string']],);
+								$results = $this->boinfolog->search($query);
 							}
 
 							if ( is_array( $results ) && count( array_keys( $results )) >= 1) {
@@ -246,7 +251,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				return true;
 			case 'update' :
 				// Only update if there are changes
-				$old = $this->boinfolog->read($_data['id']);
+				$old = $this->boinfolog->read($_data['info_id']);
 
 				if(!$this->definition->plugin_options['change_owner']) {
 					// Don't change addressbook of an existing contact

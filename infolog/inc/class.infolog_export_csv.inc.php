@@ -16,14 +16,6 @@
  */
 class infolog_export_csv implements importexport_iface_export_plugin {
 
-	// Used in conversions
-	static $types = array(
-                'select-account' => array('info_owner','info_responsible','modifier'),
-                'date-time' => array('info_datecompleted', 'info_datemodified','created','last_event','next_event'),
-		'date' => array('info_startdate', 'info_enddate'),
-                'select-cat' => array('info_cat', 'cat_id'),
-		'links' => array('info_link_id'),
-        );
 
 	/**
 	 * Exports records as defined in $_definition
@@ -66,7 +58,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			}
 			// Some conversion
 			if($options['convert']) {
-				importexport_export_csv::convert($record, self::$types, 'infolog');
+				importexport_export_csv::convert($record, infolog_egw_record::$types, 'infolog');
 				$this->convert($record);
 			} else {
 				// Implode arrays, so they don't say 'Array'
