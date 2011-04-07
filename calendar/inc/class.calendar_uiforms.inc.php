@@ -1,11 +1,11 @@
 <?php
 /**
- * eGroupWare - Calendar's forms of the UserInterface
+ * EGroupware - Calendar's forms of the UserInterface
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-10 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -479,6 +479,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['edit_single']);	// in case it has been set
 			unset($event['modified']);
 			unset($event['modifier']);
+			unset($event['caldav_name']);
 			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 
 			// Clear participant stati

@@ -1,11 +1,11 @@
 <?php
 /**
- * Addressbook - user interface
+ * EGroupware - Addressbook - user interface
  *
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -222,7 +222,7 @@ class addressbook_ui extends addressbook_bo
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 			);
 			$csv_export = new addressbook_csv($this);
-			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ? 
+			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ?
 				$GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] :
 				$csv_export->csv_fields(null,true);
 
@@ -1475,7 +1475,7 @@ class addressbook_ui extends addressbook_bo
 				// create a new contact with the content of the old
 				foreach($content as $key => $value)
 				{
-					if(!in_array($key, self::$copy_fields) || in_array($key, array('etag')))
+					if(!in_array($key, self::$copy_fields) || in_array($key, array('etag','carddav_name','uid')))
 					{
 						unset($content[$key]);
 					}
