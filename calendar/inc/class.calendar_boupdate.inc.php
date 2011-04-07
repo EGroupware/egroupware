@@ -93,7 +93,7 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array &$event event-array, on return some values might be changed due to set defaults
 	 * @param boolean $ignore_conflicts=false just ignore conflicts or do a conflict check and return the conflicting events
-	 * @param boolean $touch_modified=true touch modificatin time and set modifing user, default true=yes
+	 * @param boolean $touch_modified=true NOT USED ANYMORE (was only used in old csv-import), modified&modifier is always updated!
 	 * @param boolean $ignore_acl=false should we ignore the acl
 	 * @param boolean $updateTS=true update the content history of the event
 	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
@@ -154,8 +154,6 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($new_event)
 		{
-			$event['created'] = $this->now_su;
-			$event['creator'] = $this->user;
 			$old_event = array();
 		}
 		else
@@ -349,12 +347,6 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 
-		// save the event to the database
-		if ($touch_modified)
-		{
-			$event['modified'] = $this->now_su;	// we are still in user-time
-			$event['modifier'] = $this->user;
-		}
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
@@ -866,7 +858,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function save($event,$ignore_acl=false,$updateTS=true)
 	{
-		//error_log(__METHOD__.'('.array2string($event).",$etag)");
+		//error_log(__METHOD__.'('.array2string($event).", $ignore_acl, $updateTS)");
 
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
@@ -973,11 +965,11 @@ class calendar_boupdate extends calendar_bo
 				$this->so->save_alarm($event['id'],$alarm, $this->now);
 			}
 		}
-		if (!isset($event['modified']) || $event['modified'] > $this->now)
-		{
-			$event['modified'] = $this->now;
-			$event['modifier'] = $this->user;
-		}
+
+		// always update modification time (ctag depends on it!)
+		$event['modified'] = $this->now;
+		$event['modifier'] = $this->user;
+
 		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
 		{
 			$event['created'] = $this->now;
@@ -1280,7 +1272,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif ($config['calendar_delete_history'])
 			{
-				$event['modified'] = $event['deleted'] = $this->now;
+				$event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				if (isset($event['alarm']) && is_array($event['alarm']))
@@ -1296,7 +1288,7 @@ class calendar_boupdate extends calendar_bo
 			// delete all links to the event
 			egw_link::unlink(0,'calendar',$cal_id);
 		}
-		else
+		else	// delete an exception
 		{
 			$event['recur_exception'][] = $recur_date = $this->date2ts($event['start']);
 			unset($event['start']);
