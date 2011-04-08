@@ -1123,10 +1123,6 @@ class calendar_uiforms extends calendar_ui
 					}
 				}
 			}
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				//$js .= $this->delete_series();
-			}
 			// set new start and end if given by $_GET
 			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
 			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
@@ -1215,6 +1211,7 @@ function replace_eTemplate_onsubmit()
 			'tabs'   => $preserv['tabs'],
 			'view' => $view,
 			'msg' => $msg,
+			'query_delete_exceptions' => (int)($event['recur_type'] && $event['recur_exception']),
 		));
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
@@ -1422,7 +1419,6 @@ function replace_eTemplate_onsubmit()
 			{
 				$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
-				// $onclick = 'delete_series('.$event['id'].');';
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 
 				// some fundamental values of an existing series should not be changed by the user
@@ -2122,7 +2118,8 @@ function replace_eTemplate_onsubmit()
 	/**
 	* Set up the required fields to get the history tab
 	*/
-	public function setup_history(&$content, &$sel_options) {
+	public function setup_history(&$content, &$sel_options)
+	{
 		$status = 'history_status';
 
 		$content['history'] = array(
@@ -2179,39 +2176,5 @@ function replace_eTemplate_onsubmit()
 				}
 			}
 		}
-	}
-
-	/**
-	 * Return HTML and Javascript to query user how to handle the exceptions while deleting the series
-	 *
-	 * Layout is defined in eTemplate 'calendar.delete_series'
-	 *
-	 * @param string $link=null url without cal_id and date GET parameters, default calendar.calendar_uiforms.edit
-	 * @param string $target='_blank' target
-	 * @return string
-	 */
-	function delete_series($link=null, $target='_blank')
-	{
-		if (is_null($link)) $link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit'));
-
-		return '
-var calendar_edit_id;
-function delete_series(id)
-{
-	calendar_edit_id = id;
-
-	document.getElementById("delete_series").style.display = "inline";
-
-	return false;
-}
-function delete_exceptions(delete)
-{
-	document.getElementById("delete_series").style.display = "none";
-
-	var extra = "&cal_id="+calendar_edit_id+"&action=delete";
-	if (delete) extra += "&exceptions=1";
-
-	'.$this->popup($link."'+extra+'").';
-}';
 	}
 }

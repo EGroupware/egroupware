@@ -305,7 +305,7 @@
 			</vbox>
 		</vbox>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.7.003">
+	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -322,7 +322,10 @@
 				</row>
 				<row class="th" height="28">
 					<description value="Title"/>
-					<textbox size="80" maxlength="255" span="all" needed="1" id="title"/>
+					<hbox options="0,0" span="all" needed="1">
+						<textbox size="75" maxlength="255" needed="1" id="title"/>
+						<description value="#%s" id="id" options="b"/>
+					</hbox>
 				</row>
 				<row>
 					<tabbox span="all" id="tabs">
@@ -366,8 +369,9 @@
 						<menulist>
 							<menupopup onchange="this.form.submit(); this.value='';" id="action" options="Actions..." statustext="Execute a further action for this entry"/>
 						</menulist>
+						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 					</hbox>
-					<button label="Delete" onclick="if ($cont[recur_type]) { getElementById('delete_series').style.display='block'; return false; } else return confirm('Delete this event');" align="right" id="button[delete]" statustext="Delete this event"/>
+					<button label="Delete" onclick="if ($cont[query_delete_exceptions]) { getElementById('delete_series').style.display='block'; return false; } else return confirm('Delete this event');" align="right" id="button[delete]" statustext="Delete this event"/>
 				</row>
 				<row disabled="!@recur_type">
 					<template span="all" id="calendar.delete_series"/>
