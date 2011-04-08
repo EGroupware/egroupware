@@ -751,9 +751,10 @@ abstract class bo_merge
 	 *
 	 * @param string $document vfs-path of document
 	 * @param array $ids array with contact id(s)
+	 * @param string $name='' name to use for downloaded document
 	 * @return string with error-message on error, otherwise it does NOT return
 	 */
-	public function download($document,$ids)
+	public function download($document,$ids,$name='')
 	{
 		$content_url = egw_vfs::PREFIX.$document;
 		switch (($mimetype = egw_vfs::mime_content_type($document)))
@@ -804,6 +805,18 @@ abstract class bo_merge
 		{
 			return $err;
 		}
+		if(!empty($name))
+		{
+			if(empty($ext))
+			{
+				$ext = '.'.pathinfo($document,PATHINFO_EXTENSION);
+			}
+			$name .= $ext;
+		}
+		else
+		{
+			$name = basename($document);
+		}
 		if (isset($archive))
 		{
 			$zip = new ZipArchive;
@@ -821,7 +834,7 @@ abstract class bo_merge
 			{
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
-			html::content_header(basename($document),$mimetype,filesize($archive));
+			html::content_header($name,$mimetype,filesize($archive));
 			readfile($archive,'r');
 		}
 		else
@@ -837,7 +850,7 @@ abstract class bo_merge
 					$mimetype = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
 				}
 			}
-			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
+			ExecMethod2('phpgwapi.browser.content_header',$name,$mimetype);
 			echo $merged;
 		}
 		common::egw_exit();

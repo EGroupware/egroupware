@@ -1068,3 +1068,12 @@ td.lettersearch {
 .egwGridView_grid input[type=checkbox] {
 	margin: 0;
 }
+
+.egwLinkMoreOptions {
+	display: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: 2px solid black;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+}
