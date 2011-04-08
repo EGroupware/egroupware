@@ -845,6 +845,8 @@ class calendar_bo
 	 */
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts',$clear_private_infos_users=null)
 	{
+		if (!$ids) return false;
+
 		if ($date) $date = $this->date2ts($date);
 
 		$return = null;
