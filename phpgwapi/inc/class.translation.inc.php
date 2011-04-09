@@ -623,7 +623,7 @@ class translation
 	 */
 	static function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 	{
-		error_log(__METHOD__.'('.array2string($langs).", $upgrademethod, $only_app)");
+		//error_log(__METHOD__.'('.array2string($langs).", $upgrademethod, $only_app)");
 		if (is_null(self::$db)) self::init(false);
 
 		@set_time_limit(0);	// we might need some time
