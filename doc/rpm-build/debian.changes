@@ -1,3 +1,45 @@
+egroupware (1.8.001.20110409) hardy; urgency=low
+
+  * updated phpfreechat to version 1.3 to fix php 5.3 depricated warnings
+  * correctly parsing of "time-range" REPORT filter, giving a SQL error before because it requires comparing as unix timestamp not strings
+  * Gallery: ignoring ERROR_OBSOLETE_DATA in editAccount hook, as it seems to indecated no error, but nothing changed
+  * removing memory limit from backup download, by switching off output buffering and zlib output compression
+  * fixed handling of + char in VFS filenames (using egw_vfs::decodePath() instead of urldecode())
+  * ImportExport: fixed translation default value not working (eg. "1|>one||2|>two||other")
+  * CalDAV/Lightning: fixed under some conditions infinit poping up alarms and user not able to add alarms
+  * Calendar: fixed in some cases not updated alarms, if event got moved
+  * LDAP addressbook filter for all addressbooks by "(objectclass=inetorgperson)" to not get eg. computer accounts from Samba
+  * Calendar: no longer returning private events of other user while searching, as it can reveal private information
+  * Wiki: fixed and documented wiki makros: PageSize, LinkTable, PageLinks, PageRefs, OrphanedPages, WantedPages and Transclude
+  * Calendar: fixed SQL error on search: Argument of OR must be of type boolean, not of type smallint
+  * Calendar: fixed PostgreSQL error on transfering records of a delted user to an other one
+  * fixed not working scheduled import from vfs
+  * SiteMgr: allow to import permissions from a previous exported dump (requires identical user and group names to exist)
+  * wiki: fixed not working xml export using url http://example.org/egroupware/wiki/index.php?page=Pattern&action=xml&lang=en
+  * updated .htaccess to memory_limit=256M
+  * fixed not working async service test-job
+  * exceptions in async jobs no longer stop other jobs, but log the exception to Apache error_log
+  * Calendar: store async job of alarm with alarm owner as owner to get eg. the correct from address
+  * ProjectManager: fixed storing a project with unchanged completion=0%, wrongly sets it to "none"
+  * ProjectManager: fixed not show status bar in project, if no times set for elements
+  * ProjectManager: fixed ganttchart generated twice (instead reading it from temp. dir)
+  * ProjectManager: fixed not working switch from real to planned times of projects in ganttchart
+  * ProjectManager: use calculated start time to calculate end-times, eg. InfoLog DS returned only planned end-times before
+  * eMail: ask confirmation before deleting a folder in manage folders
+  * Calendar: fixed not working "hideprivate" filter (shows own private events as private, not NOT showing them)
+  * updated timezone database to version 1.2011b from current Lightning snapshot
+  * API: upgrade to purifier Version 4.3.0
+  * give everyone implicit rights for home app, as taking them away makes to many support problems
+  * WebDAV download: switching zlib.output_compression off for everything but text files
+  * CalDAV: improved performance of ctag generation
+  * Calendar/CalDAV: ctag got not updated when eg. a recurrence got deleted, causing CalDAV calendar to not automatic update
+  * Setup: fixed not working deinstall of languages
+  * Calendar/API: fixed not working dateformat d-M-Y with French language (Juin=Jun, Juillet=Jui)
+  * check quantity of resource to book against maximum, as conflict check only fails if other events are involved
+  * Calendar: fixed status of all recurrences get set to "unknown", if status of a single recurrence get changed (#2916)
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 09 Apr 2011 20:10:00 +0200
+
 egroupware (1.8.001.20110216) hardy; urgency=low
 
   * fixed not working delete of application-global categories via "admin >> global categories" in applications
