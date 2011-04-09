@@ -23,7 +23,7 @@ $GLOBALS['egw_info'] = array(
 );
 try {
 	include('../../header.inc.php');
-} 
+}
 catch (egw_exception_no_permission_app $e) {
 	// ignore exception, if home is not allowed, eg. for sitemgr
 }
@@ -256,10 +256,12 @@ Calendar._SDN = new Array
 static $substr;
 if(is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
 $chars_shortcut = (int) lang('3 number of chars for day-shortcut');		// < 0 to take the chars from the end
+$markuntranslated = translation::$markuntranslated;
+translation::$markuntranslated = true;		// otherwise we can not detect NOT translated phrases!
 foreach($day2int as $name => $n)
 {
 	$short = lang($m = substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
-	if ($short == $m || $substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	if ($substr($short,-1) == '*')			// else create one by truncating the full translation to x chars
 	{
 		$short = $chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : $substr(lang($name),$chars_shortcut);
 	}
@@ -270,6 +272,7 @@ Calendar._SDN_len = <?php echo abs((int) lang('3 number of chars for day-shortcu
 
 Calendar._MN = new Array
 (<?php // full month names
+translation::$markuntranslated = $markuntranslated;
 $monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
 foreach($monthnames as $n => $name)
 {
@@ -279,16 +282,18 @@ foreach($monthnames as $n => $name)
 
 Calendar._SMN = new Array
 (<?php // short month names
+translation::$markuntranslated = true;		// otherwise we can not detect NOT translated phrases!
 $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 foreach($monthnames as $n => $name)
 {
 	$short = lang($m = substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
-	if ($short == $m || $substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	if ($substr($short,-1) == '*')			// else create one by truncating the full translation to x chars
 	{
         $short = $chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : $substr(lang($name),$chars_shortcut);
 	}
 	echo "\n \"".$short.'"'.($n < 11 ? ',' : '');
 }
+translation::$markuntranslated = $markuntranslated;
 ?>);
 Calendar._SMN_len = <?php echo abs((int) lang('3 number of chars for month-shortcut')); ?>;
 
