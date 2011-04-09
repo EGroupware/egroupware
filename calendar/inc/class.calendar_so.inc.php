@@ -1186,7 +1186,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if ((int) $change_since)
 		{
-			$where[0] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
+			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
 		}
 
 		if ($change_since !== false)
@@ -1198,13 +1198,18 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 
 			// update existing entries
-			$existing_entries = $this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar');
+			$existing_entries = $this->db->select($this->user_table,'*',$where,__LINE__,__FILE__,false,'ORDER BY cal_recur_date DESC','calendar');
 
 			// create a full list of participants which already exist in the db
+			// with status, quantity and role of the earliest recurence
 			$old_participants = array();
 			foreach($existing_entries as $row)
 			{
-				$old_participants[self::combine_user($row['cal_user_type'],$row['cal_user_id'])] = true;
+				$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+				if ($row['cal_recur_date'] || !isset($old_participants[$uid]))
+				{
+					$old_participants[$uid] = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
+				}
 			}
 
 			// tag participants which should be deleted
@@ -1322,7 +1327,8 @@ ORDER BY cal_user_type, cal_usre_id
 
 		// check if the user has any status database entries and create the default set if needed
 		// a status update before having the necessary entries happens on e.g. group invitations
-		$this->participants($cal_id,array(self::combine_user($user_type,$user_id) => 'U'),0,true);
+// commented out, as it causes problems when called with a single / not all participants (not sure why it is necessary anyway)
+//		$this->participants($cal_id,array(self::combine_user($user_type,$user_id) => 'U'),0,true);
 
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
 		{
