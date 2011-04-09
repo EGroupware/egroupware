@@ -520,14 +520,19 @@ class calendar_so
 
 		if ($remove_rejected_by_user)
 		{
-			$rejected_by_user_join = "JOIN $this->user_table rejected_by_user".
+			$rejected_by_user_join = "LEFT JOIN $this->user_table rejected_by_user".
 				" ON $this->cal_table.cal_id=rejected_by_user.cal_id".
 				" AND rejected_by_user.cal_user_type='u'".
 				" AND rejected_by_user.cal_user_id=".$this->db->quote($remove_rejected_by_user).
-				" AND rejected_by_user.cal_status!='R'";
-			$where[] = "(recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)";
+				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)";
+			$or_required = array(
+				'rejected_by_user.cal_status IS NULL',
+				"rejected_by_user.cal_status!='R'",
+			);
+			if ($filter == 'owner') $or_required[] = 'cal_owner='.(int)$remove_rejected_by_user;
+			$where[] = '('.implode(' OR ',$or_required).')';
 		}
-//$starttime = microtime(true);
+		//$starttime = microtime(true);
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
@@ -536,7 +541,7 @@ class calendar_so
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
-				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
+				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id $rejected_by_user_join",
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
@@ -623,7 +628,7 @@ class calendar_so
 				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
-//error_log(__METHOD__."() useUnionQuery=$useUnionQuery --> query took ".(microtime(true)-$starttime));
+		//error_log(__METHOD__."() useUnionQuery=$useUnionQuery --> query took ".(microtime(true)-$starttime));
 		if (isset($params['cols']))
 		{
 			return $rs;	// if colums are specified we return the recordset / iterator

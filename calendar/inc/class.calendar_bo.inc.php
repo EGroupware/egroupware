@@ -448,7 +448,10 @@ class calendar_bo
 		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
-		$remove_rejected_by_user = !in_array($filter,array('all','rejected','owner')) && count($params['users']) == 1 ? $params['users'][0] : null;
+		$users_in = (array)$params_in['users'];
+		$remove_rejected_by_user = !in_array($filter,array('all','rejected')) &&
+			count($users_in) == 1 && $users_in[0] > 0 ? $users_in[0] : null;
+		//error_log(__METHOD__.'('.array2string($params_in).", $sql_filter) params[users]=".array2string($params['users']).' --> remove_rejected_by_user='.array2string($remove_rejected_by_user));
 
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
