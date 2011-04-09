@@ -623,10 +623,10 @@ class translation
 	 */
 	static function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 	{
+		error_log(__METHOD__.'('.array2string($langs).", $upgrademethod, $only_app)");
 		if (is_null(self::$db)) self::init(false);
 
 		@set_time_limit(0);	// we might need some time
-		//echo "<p>translation_sql::install_langs(".print_r($langs,true).",'$upgrademthod','$only_app')</p>\n";
 		if (!isset($GLOBALS['egw_info']['server']) && $upgrademethod != 'dumpold')
 		{
 			if (($ctimes = self::$db->select(config::TABLE,'config_value',array(
@@ -641,18 +641,18 @@ class translation
 		{
 			return;	// nothing to do
 		}
+		if ($upgrademethod == 'dumpold')
+		{
+			// dont delete the custom main- & loginscreen messages every time
+			self::$db->delete(self::LANG_TABLE,"app_name!='mainscreen' AND app_name!='loginscreen'",__LINE__,__FILE__);
+			//echo '<br>Test: dumpold';
+			$GLOBALS['egw_info']['server']['lang_ctimes'] = array();
+		}
 		foreach($langs as $lang)
 		{
 			// run the update of each lang in a transaction
 			self::$db->transaction_begin();
 
-			if ($upgrademethod == 'dumpold')
-			{
-				// dont delete the custom main- & loginscreen messages every time
-				self::$db->delete(self::LANG_TABLE,array("app_name!='mainscreen'","app_name!='loginscreen'",'lang' => $lang),__LINE__,__FILE__);
-				//echo '<br>Test: dumpold';
-				$GLOBALS['egw_info']['server']['lang_ctimes'][$lang] = array();
-			}
 			$addlang = False;
 			if ($upgrademethod == 'addonlynew')
 			{
@@ -670,11 +670,14 @@ class translation
 				//echo '<br>Test: loop above file()';
 				if (!is_object($GLOBALS['egw_setup']))
 				{
-					$GLOBALS['egw_setup'] =& CreateObject('setup.setup');
+					$GLOBALS['egw_setup'] = CreateObject('setup.setup');
 					$GLOBALS['egw_setup']->db = clone(self::$db);
 				}
-				$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
-				$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+				if (!isset($setup_info) && !$only_app)
+				{
+					$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+					$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+				}
 				$raw = array();
 				$apps = $only_app ? array($only_app) : array_keys($setup_info);
 				foreach($apps as $app)
@@ -1171,14 +1174,14 @@ class translation
 		$_html = preg_replace($Rules, $Replace, $_html);
 
 		//   removing carriage return linefeeds, preserve those enclosed in <pre> </pre> tags
-		if ($stripcrl === true ) 
+		if ($stripcrl === true )
 		{
 			if (stripos($_html,'<pre>')!==false)
 			{
 				$contentArr = html::splithtmlByPRE($_html);
 				foreach ($contentArr as $k =>&$elem)
 				{
-					if (stripos($elem,'<pre>')===false) 
+					if (stripos($elem,'<pre>')===false)
 					{
 						$elem = preg_replace('@(\r\n)@i',' ',$elem);
 					}
