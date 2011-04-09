@@ -60,6 +60,8 @@ class jscalendar
 	/**
 	 * return javascript needed for jscalendar
 	 *
+	 * Only needed if jscalendar runs outside of egw_framework, eg. in sitemgr
+	 *
 	 * @return string
 	 */
 	function get_javascript()
@@ -107,13 +109,16 @@ class jscalendar
 				static $chars_shortcut;
 				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 
+				$markuntranslated = translation::$markuntranslated;
+				translation::$markuntranslated = true;		// otherwise we can not detect NOT translated phrases!
 				$short = lang($m = adodb_date('M',$ts));	// check if we have a translation of the short-cut
-				if ($short == $m || $substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
+				if ($substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
 					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) :
 						$substr(lang(adodb_date('F',$ts)),$chars_shortcut);
 				}
 				$date = str_replace(adodb_date('M',$ts),$short,$date);
+				translation::$markuntranslated = $markuntranslated;
 			}
 		}
 		if ($helpmsg !== '')
@@ -199,7 +204,7 @@ function todayClicked(calendar) {
 			split[1] = "'.egw_time::to('now','Ymd').'";
 			hasdate = true;
 		}
-		
+
 		if (split[1])
 			newsearch += split[0] + "=" + split[1];
 		else
@@ -265,6 +270,8 @@ function monthClicked(calendar,monthstart) {
 		{
 			return False;
 		}
+		$markuntranslated = translation::$markuntranslated;
+		translation::$markuntranslated = true;	// otherwise we can not detect NOT translated phrases!
 		$fields = preg_split('/[.\\/-]/',$datestr);
 		foreach(preg_split('/[.\\/-]/',$this->dateformat) as $n => $field)
 		{
@@ -302,6 +309,8 @@ function monthClicked(calendar,monthstart) {
 			}
 			$date[$field] = (int)$fields[$n];
 		}
+		translation::$markuntranslated = $markuntranslated;
+
 		$ret = array(
 			$year  => $date['Y'],
 			$month => $date['m'],
