@@ -163,6 +163,7 @@ class calendar_uiforms extends calendar_ui
 	 * Process the edited event and evtl. call edit to redisplay it
 	 *
 	 * @param array $content posted eTemplate content
+	 * @ToDo add conflict check / available quantity of resources when adding participants
 	 */
 	function process_edit($content)
 	{
@@ -317,8 +318,21 @@ class calendar_uiforms extends calendar_ui
 								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 								if ($status)
 								{
-									$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-										calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+									$res_info = $this->bo->resource_info($uid);
+									// todo check real availability = maximum - already booked quantity
+									if (isset($res_info['useable']) && $content['participants']['quantity'] > $res_info['useable'])
+									{
+										$msg .= lang('Maximum available quantity of %1 exceeded!',$res_info['useable']);
+										foreach(array('quantity','resource','role') as $n)
+										{
+											$event['participants'][$n] = $content['participants'][$n];
+										}
+									}
+									else
+									{
+										$event['participants'][$uid] = $event['participant_types'][$type][$id] =
+											calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+									}
 								}
 								elseif(!$msg_permission_denied_added)
 								{
@@ -977,6 +991,11 @@ function replace_eTemplate_onsubmit()
 
 		$row = 2;
 		$readonlys = $content['participants'] = $preserv['participants'] = array();
+		// preserve some ui elements, if set eg. under error-conditions
+		foreach(array('quantity','resource','role') as $n)
+		{
+			if (isset($event['participants'][$n])) $content['participants'][$n] = $event['participants'][$n];
+		}
 		foreach($event['participant_types'] as $type => $participants)
 		{
 			$name = 'accounts';
