@@ -1,6 +1,6 @@
 <?php
 /*
- V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim#natsoft.com.my). All rights reserved.
+ V5.11 5 May 2010   (c) 2000-2010 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
@@ -28,19 +28,20 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 		if (ADODB_ASSOC_CASE !== 2) {
 			$this->rsPrefix .= 'assoc_';
 		}
+		$this->_bindInputArray = PHP_VERSION >= 5.1;
 	}
 
 
 	// the following should be compat with postgresql 7.2,
 	// which makes obsolete the LIMIT limit,offset syntax
-	 function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0)
+	 function SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0)
 	 {
-		 $offsetStr = ($offset >= 0) ? ' OFFSET '.(int)$offset : '';
-		 $limitStr  = ($nrows >= 0)  ? ' LIMIT '.(int)$nrows : '';
+		 $offsetStr = ($offset >= 0) ? " OFFSET ".((integer)$offset) : '';
+		 $limitStr  = ($nrows >= 0)  ? " LIMIT ".((integer)$nrows) : '';
 		 if ($secs2cache)
-		  	$rs =& $this->CacheExecute($secs2cache,$sql.$limitStr.$offsetStr,$inputarr);
+		  	$rs = $this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr);
 		 else
-		  	$rs =& $this->Execute($sql.$limitStr.$offsetStr,$inputarr);
+		  	$rs = $this->Execute($sql."$limitStr$offsetStr",$inputarr);
 
 		return $rs;
 	 }
@@ -55,41 +56,123 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 	}
  	*/
 
+	/*
+		I discovered that the MetaForeignKeys method no longer worked for Postgres 8.3.
+		I went ahead and modified it to work for both 8.2 and 8.3.
+		Please feel free to include this change in your next release of adodb.
+		 William Kolodny [William.Kolodny#gt-t.net]
+	*/
+	function MetaForeignKeys($table, $owner=false, $upper=false)
+	{
+	  $sql="
+	  SELECT fum.ftblname AS lookup_table, split_part(fum.rf, ')'::text, 1) AS lookup_field,
+	     fum.ltable AS dep_table, split_part(fum.lf, ')'::text, 1) AS dep_field
+	  FROM (
+	  SELECT fee.ltable, fee.ftblname, fee.consrc, split_part(fee.consrc,'('::text, 2) AS lf,
+	    split_part(fee.consrc, '('::text, 3) AS rf
+	  FROM (
+	      SELECT foo.relname AS ltable, foo.ftblname,
+	          pg_get_constraintdef(foo.oid) AS consrc
+	      FROM (
+	          SELECT c.oid, c.conname AS name, t.relname, ft.relname AS ftblname
+	          FROM pg_constraint c
+	          JOIN pg_class t ON (t.oid = c.conrelid)
+	          JOIN pg_class ft ON (ft.oid = c.confrelid)
+	          JOIN pg_namespace nft ON (nft.oid = ft.relnamespace)
+	          LEFT JOIN pg_description ds ON (ds.objoid = c.oid)
+	          JOIN pg_namespace n ON (n.oid = t.relnamespace)
+	          WHERE c.contype = 'f'::\"char\"
+	          ORDER BY t.relname, n.nspname, c.conname, c.oid
+	          ) foo
+	      ) fee) fum
+	  WHERE fum.ltable='".strtolower($table)."'
+	  ORDER BY fum.ftblname, fum.ltable, split_part(fum.lf, ')'::text, 1)
+	  ";
+	  $rs = $this->Execute($sql);
+
+	  if (!$rs || $rs->EOF) return false;
+
+	  $a = array();
+	  while (!$rs->EOF) {
+	    if ($upper) {
+	      $a[strtoupper($rs->Fields('lookup_table'))][] = strtoupper(str_replace('"','',$rs->Fields('dep_field').'='.$rs->Fields('lookup_field')));
+	    } else {
+	      $a[$rs->Fields('lookup_table')][] = str_replace('"','',$rs->Fields('dep_field').'='.$rs->Fields('lookup_field'));
+	    }
+		$rs->MoveNext();
+	  }
+
+	  return $a;
+
+	}
+
 	// from  Edward Jaramilla, improved version - works on pg 7.4
-function MetaForeignKeys($table, $owner=false, $upper=false)
-{
-	$sql = 'SELECT t.tgargs as args
-	FROM
-	pg_trigger t,pg_class c,pg_proc p
-	WHERE
-	t.tgenabled AND
-	t.tgrelid = c.oid AND
-	t.tgfoid = p.oid AND
-	p.proname = \'RI_FKey_check_ins\' AND
-	c.relname = \''.strtolower($table).'\'
-	ORDER BY
-		t.tgrelid';
+	function _old_MetaForeignKeys($table, $owner=false, $upper=false)
+	{
+		$sql = 'SELECT t.tgargs as args
+		FROM
+		pg_trigger t,pg_class c,pg_proc p
+		WHERE
+		t.tgenabled AND
+		t.tgrelid = c.oid AND
+		t.tgfoid = p.oid AND
+		p.proname = \'RI_FKey_check_ins\' AND
+		c.relname = \''.strtolower($table).'\'
+		ORDER BY
+			t.tgrelid';
 
-	$rs = $this->Execute($sql);
+		$rs = $this->Execute($sql);
 
-	if ($rs && !$rs->EOF) {
-		$arr =& $rs->GetArray();
+		if (!$rs || $rs->EOF) return false;
+
+		$arr = $rs->GetArray();
 		$a = array();
-		foreach($arr as $v)
-		{
+		foreach($arr as $v) {
 			$data = explode(chr(0), $v['args']);
-			if ($upper) {
-				$a[strtoupper($data[2])][] = strtoupper($data[4].'='.$data[5]);
-			} else {
-			$a[$data[2]][] = $data[4].'='.$data[5];
+			$size = count($data)-1; //-1 because the last node is empty
+			for($i = 4; $i < $size; $i++) {
+				if ($upper)
+					$a[strtoupper($data[2])][] = strtoupper($data[$i].'='.$data[++$i]);
+				else
+					$a[$data[2]][] = $data[$i].'='.$data[++$i];
 			}
 		}
 		return $a;
 	}
-	return false;
-}
 
+	function _query($sql,$inputarr=false)
+	{
+		if (! $this->_bindInputArray) {
+			// We don't have native support for parameterized queries, so let's emulate it at the parent
+			return ADODB_postgres64::_query($sql, $inputarr);
+		}
+		$this->_errorMsg = false;
+		// -- added Cristiano da Cunha Duarte
+		if ($inputarr) {
+			$sqlarr = explode('?',trim($sql));
+			$sql = '';
+			$i = 1;
+			$last = sizeof($sqlarr)-1;
+			foreach($sqlarr as $v) {
+				if ($last < $i) $sql .= $v;
+				else $sql .= $v.' $'.$i;
+				$i++;
+			}
 
+			$rez = pg_query_params($this->_connectionID,$sql, $inputarr);
+		} else {
+			$rez = pg_query($this->_connectionID,$sql);
+		}
+		// check if no data returned, then no need to create real recordset
+		if ($rez && pg_numfields($rez) <= 0) {
+			if (is_resource($this->_resultid) && get_resource_type($this->_resultid) === 'pgsql result') {
+				pg_freeresult($this->_resultid);
+			}
+			$this->_resultid = $rez;
+			return true;
+		}
+		return $rez;
+	}
 
  	 // this is a set of functions for managing client encoding - very important if the encodings
 	// of your database and your output target (i.e. HTML) don't match
@@ -119,20 +202,6 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
 				return true;
 			} else return false;
 		} else return true;
-	}
-
-	// use pg_escape_string if available
-	function qstr($s,$magic_quotes=false)
-	{
-		if (!$magic_quotes && function_exists('pg_escape_string')) {
-			return "'".pg_escape_string($s)."'";
-		}
-		return parent::qstr($s,$magic_quotes);
-	}
-
-	function _insertid($table,$column)
-	{
-		return parent::_insertid($table,$column,false);	// dont try oid
 	}
 }
 
