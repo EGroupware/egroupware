@@ -467,11 +467,11 @@ class asyncservice
 	 * 	!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
 	 * @param array|string $cols='*' string or array of column-names / select-expressions
 	 * @param int|bool $offset=False offset for a limited query or False (default)
-	 * @param string $append string to append to the end of the query, eg. ORDER BY ...
+	 * @param string $append='ORDER BY async_next' string to append to the end of the query
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @return array/boolean db-rows / jobs as array or False if no matches
 	 */
-	function read($id=0,$cols='*',$offset=False,$append='',$num_rows=0)
+	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
 	{
 		if (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
 		{
