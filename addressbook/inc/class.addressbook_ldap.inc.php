@@ -767,7 +767,7 @@ class addressbook_ldap
 						}
 					}
 					// filter for letter-search
-					elseif (preg_match("/^([^ ]+) I?LIKE '(.*)%'$/",$value,$matches))
+					elseif (preg_match("/^([^ ]+) ".preg_quote($GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE])." '(.*)%'$/",$value,$matches))
 					{
 						list(,$name,$value) = $matches;
 						if (strpos($name,'.') !== false) list(,$name) = explode('.',$name);
