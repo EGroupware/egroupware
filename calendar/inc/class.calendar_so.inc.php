@@ -511,7 +511,7 @@ class calendar_so
 		if (!$params['enum_recuring'])
 		{
 			$where[] = "$this->user_table.cal_recur_date=0";
-			$group_by = 'GROUP BY '.str_replace('cal_start,','',$cols);
+			$group_by = 'GROUP BY '.str_replace('cal_start,','',implode(', ',(array)$cols));
 			$cols = str_replace('cal_start','MIN(cal_start) AS cal_start',$cols);
 		}
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
