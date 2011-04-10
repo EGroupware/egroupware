@@ -122,7 +122,7 @@ class egw_json_request
 			$ajaxClass = CreateObject($appName.'.'.$className);
 		}
 
-		// for Ajax: no need to load the "standard" javascript files, 
+		// for Ajax: no need to load the "standard" javascript files,
 		// they are already loaded, in fact jquery has a problem if loaded twice
 		egw_framework::js_files(array());
 
@@ -185,6 +185,11 @@ class egw_json_response
 	private function sendHeader()
 	{
 		//Send the character encoding header
+		if (headers_sent($file,$line))
+		{
+			//error_log(__METHOD__."() header already send in $file on line $line!");
+		}
+		else
 		header('content-type: application/json; charset='.translation::charset());
 	}
 

@@ -274,6 +274,7 @@ class egw_db
 				$this->$var = $db_data[$key];
 			}
 		}
+//if ($GLOBALS['egw_info']['server']['default_domain'] == 'ralfsmacbook.local') $this->query_log = '/tmp/query.log';
 	}
 
 	/**
@@ -846,7 +847,7 @@ class egw_db
 		if ($id === False)	// function not supported
 		{
 			echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type' OR no insert operation before</p>\n";
-			function_backtrace();
+			echo '<p>'.function_backtrace()."</p>\n";
 			return -1;
 		}
 		return $id;

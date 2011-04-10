@@ -121,7 +121,7 @@ class auth_ldap implements auth_backend
 	 * fetch the last pwd change for the user
 	 *
 	 * @param string $username username of account to authenticate
-	 * @return mixed false or shadowlastchange*24*3600 
+	 * @return mixed false or shadowlastchange*24*3600
 	 */
 	function getLastPwdChange($username)
 	{
