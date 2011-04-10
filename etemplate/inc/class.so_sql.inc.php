@@ -1070,7 +1070,7 @@ class so_sql
 		* Special handling for numeric columns.  They are only considered if the pattern is numeric.
 		* If the pattern is numeric, an equality search is used instead.
 		*/
-		$numeric_types = array('auto', 'int', 'float', 'double');
+		$numeric_types = array('auto', 'int', 'float', 'double', 'decimal');
 		$numeric_columns = array();
 
 		if(!$search_cols)
