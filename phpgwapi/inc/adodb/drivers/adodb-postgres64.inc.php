@@ -152,7 +152,7 @@ WHERE relkind in ('r','v') AND (c.relname='%s' or c.relname = lower('%s'))
 Using a OID as a unique identifier is not generally wise.
 Unless you are very careful, you might end up with a tuple having
 a different OID if a database must be reloaded. */
-	function _insertid($table,$column,$try_oid=false)
+	function _insertid($table,$column,$try_oid=true)
 	{
 		if ($try_oid)
 		{
@@ -257,20 +257,20 @@ select viewname,'V' from pg_views where viewname like $mask";
 	function qstr($s,$magic_quotes=false)
 	{
 		if (is_bool($s)) return $s ? 'true' : 'false';
-
+		 
 		if (!$magic_quotes) {
 			if (ADODB_PHPVER >= 0x5200) {
 				return  "'".pg_escape_string($this->_connectionID,$s)."'";
-			}
+			} 
 			if (ADODB_PHPVER >= 0x4200) {
 				return  "'".pg_escape_string($s)."'";
 			}
 			if ($this->replaceQuote[0] == '\\'){
 				$s = adodb_str_replace(array('\\',"\0"),array('\\\\',"\\\\000"),$s);
 			}
-			return  "'".str_replace("'",$this->replaceQuote,$s)."'";
+			return  "'".str_replace("'",$this->replaceQuote,$s)."'"; 
 		}
-
+		
 		// undo magic quotes for "
 		$s = str_replace('\\"','"',$s);
 		return "'$s'";

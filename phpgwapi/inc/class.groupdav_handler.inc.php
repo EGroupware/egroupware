@@ -23,7 +23,7 @@ abstract class groupdav_handler
 	 *
 	 * @var integer
 	 */
-	var $debug = 1;
+	var $debug = 0;
 
 	/**
 	 * eGW's charset

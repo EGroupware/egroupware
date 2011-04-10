@@ -1280,7 +1280,7 @@ class PHPMailer {
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
 		// Create the extended body for an attached text/calendar
-        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE;
+        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE; 
         $body .= $this->EncodeString($this->attachment[0][0], $this->attachment[0][3]);
         $body .= $this->LE.$this->LE;
         $body .= $this->EndBoundary($this->boundary[2]);
@@ -1537,16 +1537,16 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function &EncodeFile($path, $encoding = 'base64')
+  private function &EncodeFile($path, $encoding = 'base64') 
   {
-	if (function_exists('get_magic_quotes'))
+	if (function_exists('get_magic_quotes')) 
 	{
-		function get_magic_quotes()
+		function get_magic_quotes() 
 		{
 			return false;
 		}
 	}
-	if (PHP_VERSION < 6)
+	if (PHP_VERSION < 6) 
 	{
 		if (function_exists('get_magic_quotes_runtime') && ($magic_quotes = get_magic_quotes_runtime())) set_magic_quotes_runtime(0);
 	}
@@ -1556,13 +1556,13 @@ class PHPMailer {
 			throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
 		}
 		$file_buffer  = $this->EncodeString($file_buffer, $encoding);
-		if (PHP_VERSION < 6)
+		if (PHP_VERSION < 6) 
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
-		}
+		}		
 		return $file_buffer;
 	} catch (Exception $e) {
-		if (PHP_VERSION < 6)
+		if (PHP_VERSION < 6) 
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
 		}
