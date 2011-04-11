@@ -102,7 +102,7 @@ class importexport_admin_prefs_sidebox_hooks
 		$file = array();
 		if($cache[$appname]['import']) 
 		{
-			$file['Import'] = array('link' => "javascript:egw_openWindowCentered2('".
+			$file['Import CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_import_ui.import_dialog',
 					'appname'=>$appname
@@ -114,7 +114,7 @@ class importexport_admin_prefs_sidebox_hooks
 		}
 		if($cache[$appname]['export']) 
 		{
-			$file['Export'] = array('link' => "javascript:egw_openWindowCentered2('".
+			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 					'appname'=>$appname
