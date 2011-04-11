@@ -432,17 +432,25 @@ class addressbook_sql extends so_sql
 					break;
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
+			if ($this->db->Type != 'mysql' && preg_match_all("/([a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)/u",$order_by,$all_matches,PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
-				$extra_cols[] = $matches[1];
-				$extra_cols[] = $matches[1]."<>''";
-				//_debug_array($matches[1]);
-				if (!empty($order_by) && $matches[1] != 'extra_order.contact_value' && stripos($matches[1],'.')===false) // postgres requires explizit order by
+				foreach($all_matches as $matches)
 				{
-					$order_by = str_replace($matches[1],'egw_addressbook.'.$matches[1],$order_by);
+					$table = '';
+					if (strpos($matches[1],'.') === false)
+					{
+						$table = ($matches[1] == $this->extra_value ? $this->extra_table : $this->table_name).'.';
+					}
+					$extra_cols[] = $table.$matches[1];
+					$extra_cols[] = $table.$matches[0];
+					//_debug_array($matches);
+					if (!empty($order_by) && $table) // postgres requires explizit order by
+					{
+						$order_by = str_replace($matches[0],$table.$matches[0],$order_by);
+					}
 				}
-				//_debug_array($order_by);
+				//_debug_array($order_by); _debug_array($extra_cols);
 			}
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
