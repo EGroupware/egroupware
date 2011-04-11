@@ -2,6 +2,9 @@
 /**
  * eGroupWare
  *
+ * This plugin is blacklisted in importexport_helper_functions.  You should use iCal,
+ * but if you need to import CSV, you can remove the blacklist.
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage importexport

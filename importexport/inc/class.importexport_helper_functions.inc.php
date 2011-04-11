@@ -29,6 +29,9 @@ class importexport_helper_functions {
 		'news_admin' => array(
 			'class.news_admin_import.inc.php',
 		),
+		'calendar' => array(
+			'class.calendar_import_csv.inc.php'
+		),
 	);
 
 	/**
@@ -459,6 +462,9 @@ class importexport_helper_functions {
 		);
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
+
+		// Testing: Comment out cache call above, use this
+		//$definitions = self::_has_definitions($appnames, $types);
 
 		foreach($definitions as $appname => $_types) {
 			if(!in_array($appname, $appnames)) unset($definitions[$appname]);
