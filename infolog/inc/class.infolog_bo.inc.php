@@ -312,7 +312,7 @@ class infolog_bo
 		// handle delete for the various history modes
 		if ($this->history)
 		{
-			if (!is_array($info) && !($info = $this->so->read($info_id))) return false;
+			if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
 
 			if ($info['info_status'] == 'deleted' &&
 				($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
