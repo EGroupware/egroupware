@@ -748,7 +748,13 @@ class calendar_boupdate extends calendar_bo
 					case 'ical':
 						if ($method == 'REQUEST')
 						{
-							$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
+							if (is_null($ics))
+							{
+								$calendar_ical = new calendar_ical();
+								$calendar_ical->setSupportedFields('groupdav');	// full iCal fields+event TZ
+								$ics = $calendar_ical->exportVCal($event['id'],'2.0',$method);
+								unset($calendar_ical);
+							}
 							$attachment = array(	'string' => $ics,
 													'filename' => 'cal.ics',
 													'encoding' => '8bit',
