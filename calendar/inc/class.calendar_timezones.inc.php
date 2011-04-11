@@ -232,6 +232,11 @@ class calendar_timezones
 				$data['alias'] = $tz2id[$data['alias']];
 				if (!$data['alias']) continue;	// there's no such tzid
 			}
+			// check if already in database
+			$tz2id[$data['tzid']] = $GLOBALS['egw']->db->select('egw_cal_timezones','tz_id',array(
+					'tz_tzid' => $data['tzid'],
+				),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
+
 			$GLOBALS['egw']->db->insert('egw_cal_timezones',array(
 				'tz_alias' => $data['alias'],
 				'tz_latitude' => $data['latitude'],
@@ -241,12 +246,8 @@ class calendar_timezones
 				'tz_tzid' => $data['tzid'],
 			),__LINE__,__FILE__,'calendar');
 
-			if (!($tz2id[$data['tzid']] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id')))
-			{
-				$tz2id[$data['tzid']] = $GLOBALS['egw']->db->select('egw_cal_timezones','tz_id',array(
-					'tz_tzid' => $data['tzid'],
-				),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
-			}
+			// only query last insert id, if not already in database (gives warning for PostgreSQL)
+			if (!$tz2id[$data['tzid']]) $tz2id[$data['tzid']] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id');
 		}
 		$GLOBALS['egw']->db->insert('egw_config',array('config_value' => $tz_version),array(
 			'config_name' => 'tz_version',
