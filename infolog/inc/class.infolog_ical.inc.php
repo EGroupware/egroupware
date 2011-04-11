@@ -320,8 +320,9 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vevent->setAttribute('DTSTAMP',time());
-		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
-		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
+		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$taskData['info_id'],'add'));
+		$vevent->setAttribute('LAST-MODIFIED', $taskData['info_datemodified'] ? $taskData['info_datemodified'] :
+			$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$taskData['info_id'],'modify'));
 		$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
