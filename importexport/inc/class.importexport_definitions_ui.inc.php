@@ -82,7 +82,7 @@ class importexport_definitions_ui
 
 		if($GLOBALS['egw_info']['user']['apps']['admin']) {
 			// Any public definition
-			$filter[] = '(!owner OR owner IS NULL OR allowed_users IS NOT NULL OR owner = ' . $GLOBALS['egw_info']['user']['account_id'] . ')';
+			$filter[] = '(owner=0 OR owner IS NULL OR allowed_users IS NOT NULL OR owner = ' . $GLOBALS['egw_info']['user']['account_id'] . ')';
 		} else {
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -180,7 +180,7 @@ class importexport_definitions_ui
 			if($content['plugin'] && $content['application'])
 			{
 				$wizard_name = $content['application'] . '_wizard_' . str_replace($content['application'] . '_', '', $content['plugin']);
- 
+
 				// we need to deal with the wizard object if exists
 				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php'))
 				{
@@ -197,7 +197,7 @@ class importexport_definitions_ui
 				$this->plugin = is_object($GLOBALS['egw']->$wizard_plugin) ? $GLOBALS['egw']->$wizard_plugin : new $wizard_plugin;
 
 				// Global object needs to be the same, or references to plugin don't work
-				if(!is_object($GLOBALS['egw']->importexport_definitions_ui) || $GLOBALS['egw']->importexport_definitions_ui !== $this) 
+				if(!is_object($GLOBALS['egw']->importexport_definitions_ui) || $GLOBALS['egw']->importexport_definitions_ui !== $this)
 					$GLOBALS['egw']->importexport_definitions_ui =& $this;
 			}
 			// deal with buttons even if we are not on ajax
@@ -269,10 +269,10 @@ class importexport_definitions_ui
 				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
 			}
 			$this->response->addAssign('contentbox', 'innerHTML', $html);
-			if (($onload = $GLOBALS['egw']->js->set_onload(''))) 
-			{ 	 
-				$this->response->addScript($onload); 	 
-			}			
+			if (($onload = $GLOBALS['egw']->js->set_onload('')))
+			{
+				$this->response->addScript($onload);
+			}
 			$this->response->addAssign('picturebox', 'style.display', 'none');
 			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');
 				popup_resize();
@@ -461,8 +461,8 @@ class importexport_definitions_ui
 		// return from step90
 		if ($content['step'] == 'wizard_step90')
 		{
-			$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ? 
-				($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) : 
+			$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ?
+				($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
 				null;
 			$content['allowed_users'] = $content['just_me'] ? '' : implode(',',$content['allowed_users']);
 			unset($content['just_me']);
@@ -555,7 +555,7 @@ class importexport_definitions_ui
 			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'share_definition',false);
 			if($content['share_definition'])
 			{
-				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $content['share_definition'], 
+				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $content['share_definition'],
 					EGW_ACL_READ
 				);
 			}

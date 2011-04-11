@@ -78,7 +78,7 @@
 				foreach($schedule as $key => &$value) {
 					if($value == '') $value = '*';
 				}
-				$result = ExecMethod2('phpgwapi.asyncservice.set_timer', 
+				$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 					$schedule,
 					$id,
 					'importexport.importexport_schedule_ui.exec',
@@ -142,7 +142,7 @@
 					}
 				}
 			}
-				
+
 			$options['definition'] = array();
 
 			if($data['file'] && !is_array($data['file'])) {
@@ -183,7 +183,7 @@
 
 			$definitions = new importexport_definitions_bo($query);
 			$definition_list = ((array)$definitions->get_definitions());
-			
+
 			$id = 'importexport.'.$definition_list[0].'.'.$data['target'];
 			return $id;
 		}
@@ -237,7 +237,7 @@
 		/**
 		* Check that the target is valid for the type (readable or writable)
 		* and that they're not trying to write directly to the filesystem
-		* 
+		*
 		* $data should contain target & type
 		*/
 		public static function check_target(Array $data) {
@@ -253,7 +253,7 @@
 			    $scheme != egw_vfs::SCHEME && !is_readable($data['target'])))
 			{
 				return lang('%1 is not readable',$data['target']);
-			} 
+			}
 			elseif ($data['type'] == 'export' && !self::is__writable($data['target'])) {
 				return lang('%1 is not writable',$data['target']);
 			}
@@ -345,7 +345,7 @@
 			$async = $async[$id];
 			if(is_array($async)) {
 				ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
-				$result = ExecMethod2('phpgwapi.asyncservice.set_timer', 
+				$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 					$async['times'],
 					$id,
 					'importexport.importexport_schedule_ui.exec',
