@@ -143,7 +143,7 @@ class addressbook_sql extends so_sql_cf
 		}
 		if ($param['searchletter'])
 		{
-			$filter[] = 'org_name LIKE '.$this->db->quote($param['searchletter'].'%');
+			$filter[] = 'org_name '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
 		}
 		else
 		{
