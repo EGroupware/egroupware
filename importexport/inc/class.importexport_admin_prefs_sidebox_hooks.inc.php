@@ -109,7 +109,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),false)."','_blank',500,220,'yes')",
 				'icon' => 'import',
 				'app' => 'importexport',
-				'text' => 'import'
+				'text' => 'Import CSV'
 			);
 		}
 		if($cache[$appname]['export']) 
@@ -121,9 +121,20 @@ class importexport_admin_prefs_sidebox_hooks
 				),false)."','_blank',850,440,'yes')",
 				'icon' => 'export',
 				'app' => 'importexport',
-				'text' => 'export'
+				'text' => 'Export CSV'
 			);
 		}
+		/*
+		if($GLOBALS['egw_info']['user']['apps']['filemanager']) {
+			$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
+					'menuaction' => 'filemanager.filemanager_ui.index',
+				),false)."','_blank',850,440,'yes')",
+				//'icon' => 'filemanager/navbar',
+				'app' => 'filemanager',
+				'text' => 'Export Spreadsheet'
+			);
+		}
+		*/
 		$config = config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
