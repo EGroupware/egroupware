@@ -6,13 +6,13 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '1.9.001';
+$setup_info['infolog']['version']   = '1.9.002';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 $setup_info['infolog']['enable']    = 1;
@@ -36,7 +36,7 @@ $setup_info['infolog']['description'] =
 	<p>Other documents / files can be linked to InfoLog entries and are store in the VFS
 	(eGroupWare\'s virtual file system).</p>';
 $setup_info['infolog']['note'] =
-	'<p>There is a <b>CSV import filter</b> (in the admin-section) to import existing data.
+	'<p>There is a <b>CSV import</b> (in the admin-section) to import existing data.
 	It allows to interactivly assign fields, customize the values with regular
 	expressions and direct calls to php-functions (e.g. to link the phone calls
 	(again) to the addressbook entrys).</p>
@@ -70,4 +70,3 @@ $setup_info['infolog']['depends'][] = array(
 	'appname' => 'etemplate',
 	'versions' => Array('1.7','1.8','1.9')
 );
-

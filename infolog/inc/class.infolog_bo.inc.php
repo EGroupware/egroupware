@@ -1,12 +1,12 @@
 <?php
 /**
- * InfoLog - Business object
+ * EGroupware - InfoLog - Business object
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -54,7 +54,7 @@ class infolog_bo
 	 *
 	 * @var array
 	 */
-	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted');
+	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted','info_created');
 	/**
 	 * fields the responsible user can change
 	 *
@@ -521,7 +521,7 @@ class infolog_bo
 	/**
 	 * Read an infolog entry specified by $info_id
 	 *
-	 * @param int|array $info_id integer id or array with key 'info_id' of the entry to read
+	 * @param int|array $info_id integer id or array with id's or array with column=>value pairs of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
@@ -531,9 +531,17 @@ class infolog_bo
 	 */
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
-		if (is_array($info_id))
+		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
+		if (is_scalar($info_id) || isset($info_id[0]))
 		{
-			$info_id = isset($info_id['info_id']) ? $info_id['info_id'] : $info_id[0];
+			if (is_scalar($info_id) && !is_numeric($info_id))
+			{
+				$info_id = array('info_uid' => $info_id);
+			}
+			else
+			{
+				$info_id = array('info_id' => $info_id);
+			}
 		}
 
 		if (($data = $this->so->read($info_id)) === False)
@@ -587,11 +595,11 @@ class infolog_bo
 		{
 			$info_id = (int)(isset($info_id[0]) ? $info_id[0] : (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id['info_id']));
 		}
-		if ($this->so->read($info_id) === False)
+		if (($info = $this->so->read(array('info_id' => $info_id), true, 'server')) === False)
 		{
 			return False;
 		}
-		if (!$this->check_access($info_id,EGW_ACL_DELETE))
+		if (!$this->check_access($info,EGW_ACL_DELETE))
 		{
 			return False;
 		}
@@ -613,8 +621,6 @@ class infolog_bo
 				}
 			}
 		}
-		if (!($info = $this->read($info_id, true, 'server'))) return false;			// should not happen
-
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
 		$deleted['info_datemodified'] = time();
@@ -834,8 +840,15 @@ class infolog_bo
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
-			$values['info_modifier'] = $this->so->user;
-			$to_write['info_modifier'] = $this->so->user;
+			$values['info_modifier'] = $to_write['info_modifier'] = $this->so->user;
+		}
+
+		// set created and creator for new entries
+		if (!$values['info_id'])
+		{
+			$values['info_created'] = $this->user_time_now;
+			$to_write['info_created'] = $this->now;
+			$values['info_creator'] = $to_write['info_creator'] = $this->so->user;
 		}
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
@@ -847,7 +860,7 @@ class infolog_bo
 		}
 		if (($info_id = $this->so->write($to_write,$check_modified)))
 		{
-			if (!isset($values['info_type']) || $status_only)
+			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{
 				$values = $this->read($info_id, true, 'server');
 			}
@@ -902,7 +915,7 @@ class infolog_bo
 				$values = array_merge($values,$missing_fields);
 			}
 			// Add keys missing in the $to_write array
-			if ($missing_fields = array_diff_key($values,$to_write))
+			if (($missing_fields = array_diff_key($values,$to_write)))
 			{
 				$to_write = array_merge($to_write,$missing_fields);
 			}
@@ -940,7 +953,7 @@ class infolog_bo
 	 */
 	function &search(&$query)
 	{
-		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
+		//error_log(__METHOD__.'('.array2string($query).')');
 		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
 			if (isset($query['col_filter']))

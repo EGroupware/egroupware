@@ -1,11 +1,11 @@
 <?php
 /**
- * InfoLog - Storage object
+ * EGroupare - InfoLog - Storage object
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -111,9 +111,9 @@ class infolog_so
 		elseif ((int) $info != $this->data['info_id'])      	// already loaded?
 		{
 			// dont change our own internal data,
-			// dont use new as it changes $phpgw->db
-			$private_info = $this;
+			$backup_data = $this->data;
 			$info = $private_info->read($info);
+			$this->data = $backup_data;
 		}
 		else
 		{
@@ -355,11 +355,12 @@ class infolog_so
 	 *
 	 * some cacheing is done to prevent multiple reads of the same entry
 	 *
-	 * @param int|string $info_id id or uid of entry
+	 * @param array $where where clause for entry to read
 	 * @return array|boolean the entry as array or False on error (eg. entry not found)
 	 */
-	function read($info_id)		// did _not_ ensure ACL
+	function read(array $where)		// did _not_ ensure ACL
 	{
+		//error_log(__METHOD__.'('.array2string($where).')');
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -369,18 +370,16 @@ class infolog_so
 			$minimum_uid_length = 8;
 		}
 
-		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
-		if (!$info_id || !$this->db->select($this->info_table,'*',
-			$this->db->expression($this->info_table,array('info_id'=>$info_id),' OR ',array('info_uid'=>$info_id)),__LINE__,__FILE__) ||
-			 !(($this->data = $this->db->row(true))))
+		if (!$where || !($this->data = $this->db->select($this->info_table,'*',$where,__LINE__,__FILE__)->fetch()))
 		{
 			$this->init( );
+			//error_log(__METHOD__.'('.array2string($where).') returning FALSE');
 			return False;
 		}
-		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
 		// entry without uid --> create one based on our info_id and save it
-
-			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
+		{
+			$this->data['info_uid'] = common::generate_uid('infolog', $this->data['info_id']);
 			$this->db->update($this->info_table,
 				array('info_uid' => $this->data['info_uid']),
 				array('info_id' => $this->data['info_id']), __LINE__,__FILE__);
@@ -389,11 +388,11 @@ class infolog_so
 		{
 			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 		}
-		$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__);
-		while ($this->db->next_record())
+		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__) as $row)
 		{
-			$this->data['#'.$this->db->f(0)] = $this->db->f(1);
+			$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
 		}
+		//error_log(__METHOD__.'('.array2string($where).') returning '.array2string($this->data));
 		return $this->data;
 	}
 
@@ -577,15 +576,22 @@ class infolog_so
 
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
-
 		}
 
-		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
-			// entry without uid --> create one based on our info_id and save it
-
-			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
-			$this->db->update($this->info_table,
-				array('info_uid' => $this->data['info_uid']),
+		$update = array();
+		// entry without (reasonable) uid --> create one based on our info_id and save it
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
+		{
+			$update['info_uid'] = $this->data['info_uid'] = common::generate_uid('infolog', $info_id);
+		}
+		// entry without caldav_name --> generate one based on info_id plus '.ics' extension
+		if (empty($this->data['caldav_name']))
+		{
+			$update['caldav_name'] = $this->data['caldav_name'] = $info_id.'.ics';
+		}
+		if ($update)
+		{
+			$this->db->update($this->info_table,$update,
 				array('info_id' => $info_id), __LINE__,__FILE__);
 		}
 
@@ -675,7 +681,7 @@ class infolog_so
 	 */
 	function search(&$query)
 	{
-		//echo "<p>soinfolog.search(".print_r($query,True).")</p>\n";
+		//error_log(__METHOD__.'('.array2string($query).')');
 		$action2app = array(
 			'addr'        => 'addressbook',
 			'proj'        => 'projects',
@@ -737,7 +743,7 @@ class infolog_so
 					$filtermethod .= ' AND '.$data;
 					continue;
 				}
-				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
+				if ($col[0] != '#' && substr($col,0,5) != 'info_' && isset($table_def['fd']['info_'.$col])) $col = 'info_'.$col;
 				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
 					switch ($col)

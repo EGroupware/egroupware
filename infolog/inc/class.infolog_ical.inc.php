@@ -1,10 +1,11 @@
 <?php
 /**
- * InfoLog - iCalendar Parser
+ * EGroupware - InfoLog - iCalendar Parser
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@egroupware.org>
  * @author Joerg Lehrke <jlehrke@noc.de>
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @package infolog
  * @subpackage syncml
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -15,7 +16,6 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * InfoLog: Create and parse iCal's
- *
  */
 class infolog_ical extends infolog_bo
 {
@@ -157,8 +157,8 @@ class infolog_ical extends infolog_bo
 			$taskData['info_cat'] = $cats[0];
 		}
 
-		$taskData = $GLOBALS['egw']->translation->convert($taskData,
-			$GLOBALS['egw']->translation->charset(), $charset);
+		$taskData = translation::convert($taskData,
+			translation::charset(), $charset);
 
 		if ($this->log)
 		{
@@ -320,8 +320,10 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vevent->setAttribute('DTSTAMP',time());
-		$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'add'));
-		$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$_taskID,'modify'));
+		$vevent->setAttribute('CREATED', $taskData['info_created'] ? $taskData['info_created'] :
+			$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$taskData['info_id'],'add'));
+		$vevent->setAttribute('LAST-MODIFIED', $taskData['info_datemodified'] ? $taskData['info_datemodified'] :
+			$GLOBALS['egw']->contenthistory->getTSforAction('infolog_task',$taskData['info_id'],'modify'));
 		$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 		$vevent->setAttribute('STATUS',$this->status2vtodo($taskData['info_status']));
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
@@ -423,12 +425,12 @@ class infolog_ical extends infolog_bo
 	 * @param int $_taskID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
 	 * @param int $user=null delegate new task to this account_id, default null
-	 * @param string $charset  The encoding charset for $text. Defaults to
+	 * @param string $charset=null The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
-     *
+     * @param string $caldav_name=null CalDAV URL name-part for new entries
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null, $caldav_name=null)
 	{
 
 		if ($this->tzid)
@@ -468,6 +470,10 @@ class infolog_ical extends infolog_bo
 				array2string($taskData)."\n",3,$this->logfile);
 		}
 
+		if ($caldav_name)
+		{
+			$taskData['caldav_name'] = $caldav_name;
+		}
 		return $this->write($taskData, true, true, false);
 	}
 
@@ -701,8 +707,8 @@ class infolog_ical extends infolog_bo
 	{
 		if(!($note = $this->read($_noteID, true, 'server'))) return false;
 
-		$note = $GLOBALS['egw']->translation->convert($note,
-			$GLOBALS['egw']->translation->charset(), $charset);
+		$note = translation::convert($note,
+			translation::charset(), $charset);
 
 		switch	($_type)
 		{
@@ -714,8 +720,8 @@ class infolog_ical extends infolog_bo
 				if (!empty($note['info_cat']))
 				{
 					$cats = $this->get_categories(array($note['info_cat']));
-					$note['info_cat'] = $GLOBALS['egw']->translation->convert($cats[0],
-						$GLOBALS['egw']->translation->charset(), $charset);
+					$note['info_cat'] = translation::convert($cats[0],
+						translation::charset(), $charset);
 				}
 				$vnote = new Horde_iCalendar_vnote();
 				$vNote->setAttribute('VERSION', '1.1');
@@ -860,7 +866,7 @@ class infolog_ical extends infolog_bo
 			case 'text/plain':
 				$note = array();
 				$note['info_type'] = 'note';
-				$txt = $GLOBALS['egw']->translation->convert($_data, $charset);
+				$txt = translation::convert($_data, $charset);
 				$txt = str_replace("\r\n", "\n", $txt);
 
 				if (preg_match('/([^\n]+)\n\n(.*)/m', $txt, $match))

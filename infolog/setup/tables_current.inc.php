@@ -1,12 +1,12 @@
 <?php
 /**
- * InfoLog - Setup
+ * EGroupware - InfoLog - Setup
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -43,11 +43,15 @@ $phpgw_baseline = array(
 			'info_location' => array('type' => 'varchar','precision' => '255'),
 			'info_custom_from' => array('type' => 'int','precision' => '1'),
 			'info_uid' => array('type' => 'varchar','precision' => '255'),
-			'info_cc' => array('type' => 'varchar','precision' => '255')
+			'info_cc' => array('type' => 'varchar','precision' => '255'),
+			'caldav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CalDAV URL, if specified by client'),
+			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
+			'info_created' => array('type' => 'int','precision' => '8'),
+			'info_creator' => array('type' => 'int','precision' => '4'),
 		),
 		'pk' => array('info_id'),
 		'fk' => array(),
-		'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
+		'ix' => array('caldav_name',array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
 		'uc' => array()
 	),
 	'egw_infolog_extra' => array(
