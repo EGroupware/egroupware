@@ -88,6 +88,9 @@ class addressbook_sql extends so_sql
 	 * @var string $param[searchletter] letter the org_name need to start with
 	 * @var array $param[col_filter] filter
 	 * @var string $param[search] or'ed search pattern
+	 * @var array $param[advanced_search] indicator that advanced search is active
+	 * @var string $param[op] (operator like AND or OR; will be passed when advanced search is active)
+	 * @var string $param[wildcard] (wildcard like % or empty or not set (for no wildcard); will be passed when advanced search is active)
 	 * @var int $param[start]
 	 * @var int $param[num_rows]
 	 * @var string $param[sort] ASC or DESC
@@ -96,7 +99,13 @@ class addressbook_sql extends so_sql
 	function organisations($param)
 	{
 		$filter = is_array($param['col_filter']) ? $param['col_filter'] : array();
-
+		$op = 'OR';
+		if (isset($param['op']) && !empty($param['op'])) $op = $param['op'];
+		$advanced_search = false;
+		if (isset($param['advanced_search']) && !empty($param['advanced_search'])) $advanced_search = true;
+		$wildcard ='%';
+		if ($advanced_search || (isset($param['wildcard']) && !empty($param['wildcard']))) $wildcard = ($param['wildcard']?$param['wildcard']:'');
+		
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if ((int)$filter['cat_id'])
 		{
@@ -161,7 +170,7 @@ class addressbook_sql extends so_sql
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),'%',false,'OR','UNION',$filter);
+			),$wildcard,false,$op/*'OR'*/,'UNION',$filter);
 			// org by location
 			$append = "GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort";
 			parent::search($param['search'],array('org_name'),$append,array(
@@ -170,10 +179,10 @@ class addressbook_sql extends so_sql
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),'%',false,'OR','UNION',$filter);
+			),$wildcard,false,$op/*'OR'*/,'UNION',$filter);
 			$append = "ORDER BY org_name $sort,is_main DESC,$by $sort";
 		}
-		$rows = parent::search($param['search'],array('org_name'),$append,$extra,'%',false,'OR',
+		$rows = parent::search($param['search'],array('org_name'),$append,$extra,$wildcard,false,$op/*'OR'*/,
 			array($param['start'],$param['num_rows']),$filter);
 
 		if (!$rows) return false;
@@ -194,7 +203,7 @@ class addressbook_sql extends so_sql
 		if (count($filter['org_name']))
 		{
 			foreach((array) parent::search($criteria,array('org_name','org_unit','adr_one_locality'),'GROUP BY org_name,org_unit,adr_one_locality',
-				'','%',false,'AND',false,$filter) as $row)
+				'',$wildcard,false,$op/*'AND'*/,false,$filter) as $row)
 			{
 				$org_key = $row['org_name'].($by ? '|||'.$row[$by] : '');
 				if ($orgs[$org_key]['org_unit_count'] == 1)
