@@ -49,6 +49,7 @@ addressbook-fieldname	addressbook	fi	Osoitekirja - kentän nimi
 addvcard	addressbook	fi	Lisää vCard
 advanced search	addressbook	fi	Tarkennettu haku
 all contacts	addressbook	fi	Kaikki yhteystiedot
+all in one field	addressbook	fi	Kaikki yhdessä kentässä
 allow users to maintain their own account-data	admin	fi	Salli käyttäjien muokata omia yhteystietojaan
 alt. csv import	addressbook	fi	Alt. CSV tuonti
 always	addressbook	fi	Aina
@@ -88,6 +89,7 @@ charset for the vcard export	addressbook	fi	vCard -viennissä käytettävä merk
 charset of file	addressbook	fi	Tiedoston merkistö
 check all	addressbook	fi	Valitse kaikki
 choose an icon for this contact type	admin	fi	Valitse kuvake tälle yhteystietotyypille
+choose export options	addressbook	fi	Valitse Vienti asetukset
 choose owner of imported data	addressbook	fi	Valitse omistaja tuoduille tiedoille
 choose seperator and charset	addressbook	fi	Valitse erotin ja merkistö
 chosse an etemplate for this contact type	admin	fi	Valitse eMallipohja tälle yhteystietotyypille
@@ -162,6 +164,7 @@ download	addressbook	fi	Lataa
 download export file (uncheck to debug output in browser)	addressbook	fi	Lataa vientitiedosto (Poista debug valinta selaimesta)
 download this contact as vcard file	addressbook	fi	Lataa tämä kontakti vCard-tiedostona
 duration	addressbook	fi	Kesto
+each category in its own field	addressbook	fi	Jokainen kategoria omassa kentissään
 edit custom field	addressbook	fi	Muokkaa lisäkenttiä
 edit custom fields	admin	fi	Muokkaa lisäkenttiä
 edit extra account-data in the addressbook	admin	fi	Muokkaa extra-käyttäjätilitietoja osoitekirjassa
@@ -192,6 +195,7 @@ export file name	addressbook	fi	Vie tiedostoon
 export from addressbook	addressbook	fi	Vie osoitekirjasta
 export selection	addressbook	fi	Vie valinnat
 exported	addressbook	fi	Viety
+exports contacts from your addressbook into a csv file.	addressbook	fi	Vie kontakteja Osoitekirjasta CSV tiedostoon.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Vie osoitekirjan yhteystiedot CSV tiedostoon. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 extra	addressbook	fi	Lisätiedot
 extra private	addressbook	fi	Yksityiset tiedot
@@ -257,6 +261,7 @@ insert in document	addressbook	fi	Syötä asiakirja
 insufficent rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!
 international	addressbook	fi	Kansainvälinen
 internet	addressbook	fi	Internet
+invalid addressbook id: %1.  might be a bad field translation.  used %2 instead.	addressbook	fi	Virheellinen Osoitekirjan ID: %1.
 label	addressbook	fi	Nimikenttä
 last date	addressbook	fi	Viimeisin tapaaminen
 last modified	addressbook	fi	Viimeksi muokattu
@@ -277,6 +282,7 @@ load sample file	addressbook	fi	Lataa esimerkki tiedosto
 load vcard	addressbook	fi	Lataa VCard
 location	addressbook	fi	Sijainti
 locations	addressbook	fi	Sijainnit
+main categories in their own field	addressbook	fi	Pääkategoriat omassa kentissään
 manage mapping	addressbook	fi	Hallitse mappingiä
 mark records as private	addressbook	fi	Merkitse tietueet yksityisiksi
 merge into first or account, deletes all other!	addressbook	fi	Sulauta ensimmäiseen tietueesseen, poistaa muut tietueet!
@@ -304,7 +310,7 @@ no fallback	addressbook	fi	Ei fallbackiä
 no vcard	addressbook	fi	Ei VCard
 number	addressbook	fi	Numero
 number of records to read (%1)	addressbook	fi	Luettavien tietueiden määrä (%1)
-options for type	admin	fi	Muodon vaihtoehdot
+options for type	admin	fi	Tyypin vaihtoehdot
 organisation	addressbook	fi	Organisaatio
 organisations	addressbook	fi	Organisaatiot
 organisations by departments	addressbook	fi	Organisaatiot osastoittain
@@ -338,6 +344,7 @@ read a single entry by passing the id and fieldlist.	addressbook	fi	Lue yksittä
 read only	addressbook	fi	Vain luku
 record access	addressbook	fi	Tietueen käyttöoikeus
 record owner	addressbook	fi	Tietueen omistaja
+recovered	addressbook	fi	Palautetut
 region	addressbook	fi	Alue
 remove selected contacts from distribution list	addressbook	fi	Poista valitut yhteystiedot jakelulistalta
 removed from distribution list	addressbook	fi	Poistettu jakelulistalta
@@ -436,6 +443,7 @@ yes, for the next two weeks	addressbook	fi	Kyllä, seuraavan 2 viikon ajalta
 yes, for the next week	addressbook	fi	Kyllä, seuraavan viikon ajalta
 yes, for today and tomorrow	addressbook	fi	Kyllä, tämän päivän ja huomisen ajalta
 yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäjät voivat (lopullisesti) poistaa tapahtumia
+yes, users can purge their deleted items	admin	fi	Kyllä, käyttäjät voivat (lopullisesti) poistaa tapahtumia
 you are not permitted to delete contact %1	addressbook	fi	Sinulla ei ole oikeutta poistaa kontaktia %1
 you are not permittet to delete this contact	addressbook	fi	Sinulla ei ole oikeutta poistaa tätä kontaktia
 you are not permittet to edit this contact	addressbook	fi	Sinulla ei ole oikeutta muokata tätä kontaktia

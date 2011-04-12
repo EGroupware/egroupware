@@ -248,7 +248,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			if (!$re_submit)
 			{
-				$content['nm']['to'] = 'to';
+				$content['nm']['to'] = 'to'; // use 'bcc' if you want bcc as preselected standard mailaddress scope
 				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
 				$content['nm']['search'] = '@';
 			}
@@ -839,8 +839,11 @@ class addressbook_ui extends addressbook_bo
 
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
-			if (is_array($query['search'])) unset($query['search']);
-			unset($query['advanced_search']);
+			//_debug_array(array('Search'=>$query['search'],
+			//	'AdvancedSearch'=>$query['advanced_search']));
+			//if (is_array($query['search'])) unset($query['search']);
+			//unset($query['advanced_search']);
+			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
 		}
 		elseif(!$query['search'] && $old_state['advanced_search'])	// eg. paging in an advanced search
 		{
@@ -931,8 +934,23 @@ class addressbook_ui extends addressbook_bo
 				$query['sort'] = 'ASC';
 				$query['order'] = 'org_name';
 			}
-			$rows = parent::organisations($query);
+			if ($query['advanced_search'])
+			{
+				$query['op'] = $query['advanced_search']['operator'];
+				unset($query['advanced_search']['operator']);
+				$query['wildcard'] = $query['advanced_search']['meth_select'];
+				unset($query['advanced_search']['meth_select']);
+				$original_search = $query['search'];
+				$query['search'] = $query['advanced_search'];
+			}
 
+			$rows = parent::organisations($query);
+			if ($query['advanced_search'])
+			{
+				$query['search'] = $original_search;
+				unset($query['wildcard']);
+				unset($query['op']);
+			}
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
 		}
 		else	// contacts view
@@ -990,7 +1008,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
-				$query['col_filter'][] = ($query['order'] == 'adr_one_postalcode' ? 'org_name' : $query['order']).' '.
+				$query['col_filter'][] = ($query['order'] == 'adr_one_postalcode' ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
 					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 			}
 			$wildcard = '%';
@@ -1199,7 +1217,7 @@ class addressbook_ui extends addressbook_bo
 			$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
 		}
-		if ($query['search'])
+		if ($query['search'] && !$query['advanced_search']) // do not add that, if we have advanced search active
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
 		}
