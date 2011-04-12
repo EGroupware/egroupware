@@ -112,7 +112,7 @@ class infolog_so
 		{
 			// dont change our own internal data,
 			$backup_data = $this->data;
-			$info = $private_info->read($info);
+			$info = $this->read($info);
 			$this->data = $backup_data;
 		}
 		else
