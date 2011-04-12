@@ -24,7 +24,7 @@ class admin_egw_user_record implements importexport_iface_egw_record
 	// Used in conversions
 	static $types = array(
 		'date-time' => array('account_lastlogin', 'account_lastpwd_change', 'account_expires'),
-		'select-account' => array('account_primary_group'),
+		'select-account' => array('account_primary_group', 'account_groups'),
 		'select' => array('account_status'),
 	);
 
@@ -93,6 +93,7 @@ class admin_egw_user_record implements importexport_iface_egw_record
 	 */
 	public function set_record(array $_record){
 		$this->user = $_record;
+		$this->account_groups = $GLOBALS['egw']->accounts->memberships($this->identifier, true);
 	}
 
 	/**

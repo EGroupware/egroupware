@@ -18,18 +18,17 @@ class admin_wizard_export_users_csv extends importexport_wizard_basic_export_csv
 		// Field mapping
                 $this->export_fields = array(
 			'account_id'		=> lang('Account ID'),
-                        'account_lid'           => lang('LoginID'),
-                        'account_firstname'     => lang('First Name'),
-                        'account_lastname'      => lang('Last Name'),
-                        'account_email'         => lang('email'),
-                        'account_passwd'        => lang('Password'),
-                        'account_active'        => lang('Account active'),
-                        'account_primary_group' => lang('primary Group'),
-                        'account_groups'        => lang('Groups'),
-                        'account_expires'       => lang('Expires'),
-                        'anonymous'             => lang('Anonymous User (not shown in list sessions)'),
-                        'changepassword'        => lang('Can change password'),
-                        'mustchangepassword'    => lang('Must change password upon next login'),
+                        'account_lid'		=> lang('LoginID'),
+                        'account_firstname'	=> lang('First Name'),
+                        'account_lastname'	=> lang('Last Name'),
+                        'account_email'		=> lang('email'),
+                        'account_pwd'		=> lang('Password'),
+                        'account_status'	=> lang('Status'),
+                        'account_primary_group'	=> lang('Primary Group'),
+                        'account_groups'	=> lang('Groups'),
+                        'account_expires'	=> lang('Expires'),
+                        'account_lastlogin'	=> lang('Last login'),
+                        'account_lastpwd_change'=> lang('Last password change'),
                 );
 
 		// Custom fields - not really used in admin...

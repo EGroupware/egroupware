@@ -31,7 +31,7 @@ class admin_wizard_import_users_csv extends importexport_wizard_basic_import_csv
 			'account_lastname'	=> lang('Last Name'),
 			'account_email'		=> lang('email'),
 			'account_passwd'	=> lang('Password'),
-			'account_active'	=> lang('Account active'),
+			'account_status'	=> lang('Status'),
 			'account_primary_group'	=> lang('primary Group'),
 			'account_groups'	=> lang('Groups'),
 			'account_expires'	=> lang('Expires'),

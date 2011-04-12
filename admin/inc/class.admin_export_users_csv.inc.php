@@ -39,14 +39,16 @@ class admin_export_users_csv implements importexport_iface_export_plugin {
 		$export_object->set_mapping($options['mapping']);
 
 		$lookups = array(
-			'account_status'	=> array('A' => lang('Enabled'), '' => lang('Disabled'), 'D' => lang('Disabled')),
+			'account_status'	=> array('A' => lang('Active'), '' => lang('Disabled'), 'D' => lang('Disabled')),
 		);
 
 		// $_record is an array, that's what search() returns
 		foreach ($selection as $_record) {
 			$record = new admin_egw_user_record($_record);
 			if($options['convert']) {
+				$never_expires = ($record->account_expires == -1);
 				importexport_export_csv::convert($record, admin_egw_user_record::$types, 'admin', $lookups);
+				if($never_expires) $record->account_expires = 'never';  // Has to be 'never' for admin_cmd_edit_user to parse it
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {

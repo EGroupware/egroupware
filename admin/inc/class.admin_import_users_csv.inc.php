@@ -120,10 +120,17 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 		// Failures
 		$this->errors = array();
 
+		$lookups = array(
+			'account_status'        => array('A' => lang('Active'), '' => lang('Disabled'), 'D' => lang('Disabled')),
+		);
+
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
+
+			if(strtolower($record['account_expires']) == 'never') $record['account_expires'] = -1;
+			importexport_import_csv::convert($record, admin_egw_user_record::$types, 'admin', $lookups);
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
