@@ -111,9 +111,9 @@ class infolog_so
 		elseif ((int) $info != $this->data['info_id'])      	// already loaded?
 		{
 			// dont change our own internal data,
-			// dont use new as it changes $phpgw->db
-			$private_info = $this;
-			$info = $private_info->read($info);
+			$backup_data = $this->data;
+			$info = $this->read($info);
+			$this->data = $backup_data;
 		}
 		else
 		{
