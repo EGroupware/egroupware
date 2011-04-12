@@ -187,6 +187,8 @@
 
 			if($prefix != '')
 			{
+				// AFAIK this is NOT used anymore, was used in old email app
+				throw egw_exception_assertion_failed(__METHOD__."(,,$notifies, $type, prefix='$prefix') prefix!=''!");
 				$prefix_arr = explode('/',$prefix);
 				foreach($prefix_arr as $pre)
 				{
@@ -217,10 +219,14 @@
 					{
 						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
 					}
+					// need to call preferences::add, to also set affective prefs!
+					$GLOBALS['egw']->preferences->add($appname, $var, $prefs[$var], $type);
 				}
 				else
 				{
 					unset($prefs[$var]);
+					// need to call preferences::delete, to also set affective prefs!
+					$GLOBALS['egw']->preferences->delete($appname, $var, $type);
 				}
 			}
 			//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$_appname]); echo "</pre>\n";
