@@ -25,6 +25,7 @@ class admin_wizard_import_users_csv extends importexport_wizard_basic_import_csv
 
 		// Field mapping
 		$this->mapping_fields = array(
+			'account_id'		=> lang('Account ID'),
 			'account_lid'		=> lang('LoginID'),
 			'account_firstname'	=> lang('First Name'),
 			'account_lastname'	=> lang('Last Name'),
