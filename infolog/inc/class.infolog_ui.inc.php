@@ -34,7 +34,7 @@ class infolog_ui
 	/**
 	 * instance of the bo-class
 	 *
-	 * @var boinfolog
+	 * @var infolog_bo
 	 */
 	var $bo;
 	/**
@@ -1210,7 +1210,7 @@ class infolog_ui
 						$old_link_id = (int)$content['info_link_id'];
 						list($app,$id) = explode(':',$content['info_contact'], 2);
 						$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
-							if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
+						if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
 					}
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{

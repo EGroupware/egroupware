@@ -671,8 +671,9 @@ class infolog_bo
 	*
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false)
+	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false)
 	{
+		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&
 			!$this->check_access(0,EGW_ACL_ADD,$values['info_owner']))
@@ -921,9 +922,12 @@ class infolog_bo
 			}
 			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
 				null,$skip_notification);
-		}
-		if ($info_from_set) $values['info_from'] = '';
 
+			if ($info_from_set) $values['info_from'] = '';
+
+			// merge changes (keeping extra values from the UI)
+			$values_in = array_merge($values_in,$values);
+		}
 		return $info_id;
 	}
 
