@@ -135,6 +135,7 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 
 		$types = importexport_export_csv::$types;
 		$types['select-bool'] = array('bookable');
+		$lookups = array();
 
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
