@@ -29,10 +29,7 @@
 				}
 				else
 				{
-					#$html .= '<form method="post" action="'
-					#	 . $GLOBALS['egw']->link('/index.php')
-					#	 . '">' . "\n";
-					$bo =& CreateObject('admin.bolog',True);
+					//$bo =& CreateObject('admin.bolog',True);
 					if(!isset($start))
 					{
 						$start = 0;
@@ -44,7 +41,7 @@
 						$stop = count($rows);
 					}
 					$nextmatchs =& CreateObject('phpgwapi.nextmatchs');
-					$total_records = $bo->get_no_errors();
+					$total_records = count($rows);//$bo->get_no_errors();
 					$left = $nextmatchs->left('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
 					$right = $nextmatchs->right('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
 					$hits = $nextmatchs->show_hits($total_records,$start);
