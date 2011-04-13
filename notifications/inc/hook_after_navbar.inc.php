@@ -22,7 +22,9 @@ if ($notification_config['popup_enable'] && $GLOBALS['egw_info']['user']['apps']
 	echo '<script type="text/javascript">egwpopup_init("'.$popup_poll_interval.'");</script>';
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
-			<div id="egwpopup_header">'.lang('Notification').'</div>
+			<div id="egwpopup_header">'.lang('Notification'). '<span style="float:right;">'.
+				html::submit_button('egwpopup_close_button', 'X', 'egwpopup_button_close();',true,'', 'close.button') . 
+			'</span></div>
 			<div id="egwpopup_message"></div>
 			<div id="egwpopup_footer">
 				<input id="egwpopup_ok_button" type="submit" value="'. lang('ok'). '" onClick="egwpopup_button_ok();">

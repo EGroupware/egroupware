@@ -15,7 +15,7 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '1.8';
+$setup_info[NOTIFICATION_APP]['version']   = '1.9.001';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;
@@ -34,6 +34,7 @@ $setup_info[NOTIFICATION_APP]['hooks'][] = 'after_navbar';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'preferences';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'settings';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'admin';
+$setup_info[NOTIFICATION_APP]['hooks']['deleteaccount'] = 'notifications.notifications.deleteaccount';
 //$setup_info[NOTIFICATION_APP]['hooks']['settings'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.settings';
 //$setup_info[NOTIFICATION_APP]['hooks']['admin'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';
 //$setup_info[NOTIFICATION_APP]['hooks']['sidebox_menu'] = NOTIFICATION_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';
@@ -48,4 +49,5 @@ $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'etemplate',
 	 'versions' => Array('1.7','1.8','1.9')
 );
+
 

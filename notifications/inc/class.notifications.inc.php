@@ -614,4 +614,19 @@ final class notifications {
 
 		return false;
 	}
+
+	/**
+	 * Actions to take when an account is deleted
+	 * 
+	 * @param settings array with keys account_id and new_owner (new_owner is optional)
+	 */
+	public function deleteaccount($settings) {
+		foreach($this->backends as $backend) {
+			$notification_backend = self::_appname.'_'.$backend;
+			$backend_obj = new $notification_backend();
+			if(method_exists($backend_obj, 'deleteaccount')) {
+				$backend_obj->deleteaccount($settings);
+			}
+		}
+	}
 }

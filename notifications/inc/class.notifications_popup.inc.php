@@ -104,21 +104,18 @@ class notifications_popup implements notifications_iface {
 	 * @param array $_attachments
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
-		$sessions = egw_session::session_list(0, 'asc', 'session_dla', true);
-		$user_sessions = array();
-		foreach ($sessions as $session) {
-			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
-				$user_sessions[] = $session['session_id'];
-			}
+		// Check access log to see if user is still logged in
+		if ( !egw_session::notifications_active($this->recipient->account_id) )
+		{
+			throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
 		}
-		if ( empty($user_sessions) ) throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
 
 		$message = 	$this->render_infos($_subject)
 					.html::hr()
 					.$_messages['html']
 					.$this->render_links($_links);
 
-		$this->save( $message, $user_sessions );
+		$this->save( $message );
 	}
 
 	/**
@@ -127,14 +124,11 @@ class notifications_popup implements notifications_iface {
 	 * @param string $_message
 	 * @param array $_user_sessions
 	 */
-	private function save( $_message, array $_user_sessions ) {
-		foreach ($_user_sessions as $user_session) {
-			$result = $this->db->insert( self::_notification_table, array(
-				'account_id'	=> $this->recipient->account_id,
-				'session_id'	=> $user_session,
-				'message'		=> $_message
-				), false,__LINE__,__FILE__,self::_appname);
-		}
+	private function save( $_message ) {
+		$result = $this->db->insert( self::_notification_table, array(
+			'account_id'	=> $this->recipient->account_id,
+			'message'		=> $_message
+			), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}
 
@@ -206,5 +200,24 @@ class notifications_popup implements notifications_iface {
 		$infos[] = lang('Message from').': '.$sender;
 		if(!empty($_subject)) { $infos[] = html::bold($_subject); }
 		return implode($newline,$infos);
+	}
+
+	/**
+	 * Actions to take when deleting an account
+	 *
+	 * @param settings array with keys account_id and new_owner (new_owner is optional)
+	 */
+	public function deleteaccount($settings) {
+		if($settings['new_owner']) {
+			$this->db->update( self::_notification_table, array(
+				'account_id'	=> $settings['new_owner']
+			), array(
+				'account_id'	=> $settings['account_id']
+			),__LINE__,__FILE__,self::_appname);
+		} else {
+			$this->db->delete( self::_notification_table, array(
+				'account_id'	=> $settings['account_id']
+			),__LINE__,__FILE__,self::_appname);
+		}
 	}
 }

@@ -9,16 +9,15 @@
  * @version $Id$
  */
 
-	$phpgw_baseline = array(
-		'egw_notificationpopup' => array(
-			'fd' => array(
-				'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
-				'session_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'message' => array('type' => 'longtext')
-			),
-			'pk' => array(),
-			'fk' => array(),
-			'ix' => array('account_id','session_id'),
-			'uc' => array()
-		)
-	);
+$phpgw_baseline = array(
+	'egw_notificationpopup' => array(
+		'fd' => array(
+			'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
+			'message' => array('type' => 'longtext')
+		),
+		'pk' => array(),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array()
+	)
+);

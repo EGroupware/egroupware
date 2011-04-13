@@ -119,6 +119,18 @@ class notifications_ajax {
 	}
 
 	/**
+	 * Let the user confirm that they have seen the message.  
+	 * After they've seen it, remove it from the database
+	 */
+	public function confirm_message($message) {
+error_log( html_entity_decode($message));
+		$myval=$this->db->delete(self::_notification_table,array(
+			'account_id' => $this->recipient->account_id,
+			'message' => html_entity_decode($message)
+		),__LINE__,__FILE__,self::_appname);
+	}
+
+	/**
 	 * checks users mailbox and sends a notification if new mails have arrived
 	 *
 	 * @return boolean true or false
@@ -211,22 +223,16 @@ class notifications_ajax {
 	 * @return boolean true or false
 	 */
 	private function get_egwpopup() {
-		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
 		$message = '';
 		$rs = $this->db->select(self::_notification_table,
 			'*', array(
 				'account_id' => $this->recipient->account_id,
-				'session_id' => $session_id,
 			),
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
 				$this->response->addScriptCall('append_notification_message',$notification['message']);
 			}
-			$myval=$this->db->delete(self::_notification_table,array(
-				'account_id' => $this->recipient->account_id,
-				'session_id' => $session_id,
-			),__LINE__,__FILE__,self::_appname);
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
 				case 'low':

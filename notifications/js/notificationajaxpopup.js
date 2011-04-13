@@ -64,6 +64,7 @@ function egwpopup_button_ok() {
 	egwpopup = document.getElementById("egwpopup");
 	egwpopup_message = document.getElementById("egwpopup_message");
 	egwpopup_message.scrollTop = 0;
+	xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", notifymessages[0]);
 	notifymessages.shift();
 	if(notifymessages.length > 0) {
 		egwpopup_display();
@@ -74,6 +75,21 @@ function egwpopup_button_ok() {
 	}
 }
 
+// Close and mark all as read
+function egwpopup_button_close() {
+	for(var i = 0; i < notifymessages.length; i++) {
+		xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", notifymessages[i]);
+	}
+	var egwpopup = document.getElementById("egwpopup");
+	var egwpopup_message = document.getElementById("egwpopup_message");
+	egwpopup.style.display = "none";
+	egwpopup_message.innerHTML = "";
+	notificationbell_switch("inactive");
+}
+
 function append_notification_message(_message) {
-	notifymessages.push(_message);
+	// Check to prevent duplicates
+	if(notifymessages.indexOf(_message) == -1) {
+		notifymessages.push(_message);
+	}
 }

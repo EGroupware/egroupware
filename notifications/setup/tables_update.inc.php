@@ -38,3 +38,30 @@ function notifications_upgrade1_6()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.8';
 }
+
+function notifications_upgrade1_8()
+{
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_notificationpopup',array(
+		'fd' => array(
+			'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
+			'message' => array('type' => 'longtext')
+		),
+		'pk' => array(),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array()
+	),'session_id');
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_notificationpopup',array(
+		'fd' => array(
+			'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
+			'message' => array('type' => 'longtext')
+		),
+		'pk' => array(),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.001';
+}
+
