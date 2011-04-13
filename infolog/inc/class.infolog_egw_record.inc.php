@@ -41,7 +41,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 		$this->identifier = $_identifier;
 		$this->bo = new infolog_bo();
 		if($_identifier) {
-			$this->record = $this->bo->read($this->identifier);
+			$this->set_record($this->bo->read($this->identifier));
 		}
 	}
 
@@ -96,6 +96,13 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 */
 	public function set_record(array $_record){
 		$this->record = $_record;
+		// Check for linked project ID
+		$links = egw_link::get_links('infolog', $_record['info_id'], 'projectmanager');
+		foreach($links as $link_id => $app_id) {
+			$this->record['pm_id'] = $app_id;
+			break;
+		}
+
 	}
 
 	/**

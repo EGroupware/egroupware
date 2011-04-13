@@ -17,7 +17,7 @@ class infolog_wizard_export_csv extends importexport_wizard_basic_export_csv
 
 		// Field mapping
 		$bo = new infolog_tracking();
-		$this->export_fields = array('info_id' => 'Infolog ID') + $bo->field2label;
+		$this->export_fields = array('info_id' => 'Infolog ID', 'pm_id' => 'Project ID') + $bo->field2label;
 
 		// Custom fields
 		unset($this->export_fields['custom']); // Heading, not a real field
