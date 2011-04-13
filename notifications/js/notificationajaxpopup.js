@@ -80,6 +80,7 @@ function egwpopup_button_close() {
 	for(var i = 0; i < notifymessages.length; i++) {
 		xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", notifymessages[i]);
 	}
+	notifymessages = new Array();
 	var egwpopup = document.getElementById("egwpopup");
 	var egwpopup_message = document.getElementById("egwpopup_message");
 	egwpopup.style.display = "none";
