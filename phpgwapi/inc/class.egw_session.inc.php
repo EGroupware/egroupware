@@ -1614,7 +1614,7 @@ class egw_session
 				'lo' => null,
 				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
 				'account_id' => $account_id,
-				'notifications_heartbeat > '.self::heartbeat_limit(),
+				'notification_heartbeat > '.self::heartbeat_limit(),
 		), __LINE__, __FILE__)->fetchColumn();
 	}
 
