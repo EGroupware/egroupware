@@ -173,3 +173,33 @@ function phpgwapi_upgrade1_9_006()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.007';
 }
 
+/**
+ * Add columns for session list (dla, action), make sessionid primary key and TS 64bit
+ */
+function phpgwapi_upgrade1_9_007()
+{
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_access_log',array(
+		'fd' => array(
+			'sessionid' => array('type' => 'auto','nullable' => False,'comment' => 'primary key'),
+			'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False,'comment' => 'username used to login'),
+			'ip' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ip of user'),
+			'li' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'TS if login'),
+			'lo' => array('type' => 'int','precision' => '8','comment' => 'TD of logout'),
+			'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'numerical account id'),
+			'session_dla' => array('type' => 'int','precision' => '8','comment' => 'TS of last user action'),
+			'session_action' => array('type' => 'varchar','precision' => '64','comment' => 'menuaction or path of last user action'),
+			'session_php' => array('type' => 'char','precision' => '64','nullable' => False,'comment' => 'php session-id or error-message'),
+			'notification_heartbeat' => array('type' => 'int','precision' => '8','comment' => 'TS of last notification request')
+		),
+		'pk' => array('sessionid'),
+		'fk' => array(),
+		'ix' => array('li','lo','session_dla','notification_heartbeat'),
+		'uc' => array()
+	),array(
+		'session_php' => 'sessionid',
+		'sessionid' => 'NULL',	// to NOT copy old sessionid, but create a new sequence
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.008';
+}
+

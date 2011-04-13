@@ -83,16 +83,20 @@ $phpgw_baseline = array(
 	),
 	'egw_access_log' => array(
 		'fd' => array(
-			'sessionid' => array('type' => 'char','precision' => '128','nullable' => False),
-			'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False),
-			'ip' => array('type' => 'varchar','precision' => '40','nullable' => False),
-			'li' => array('type' => 'int','precision' => '4','nullable' => False),
-			'lo' => array('type' => 'int','precision' => '4','default' => '0'),
-			'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
+			'sessionid' => array('type' => 'auto','nullable' => False,'comment' => 'primary key'),
+			'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False,'comment' => 'username used to login'),
+			'ip' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ip of user'),
+			'li' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'TS if login'),
+			'lo' => array('type' => 'int','precision' => '8','comment' => 'TD of logout'),
+			'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'numerical account id'),
+			'session_dla' => array('type' => 'int','precision' => '8','comment' => 'TS of last user action'),
+			'session_action' => array('type' => 'varchar','precision' => '64','comment' => 'menuaction or path of last user action'),
+			'session_php' => array('type' => 'varchar','precision' => '64','nullable' => False,'comment' => 'php session-id or error-message'),
+			'notification_heartbeat' => array('type' => 'int','precision' => '8','comment' => 'TS of last notification request')
 		),
-		'pk' => array(),
+		'pk' => array('sessionid'),
 		'fk' => array(),
-		'ix' => array('li'),
+		'ix' => array('li','lo','session_dla','notification_heartbeat'),
 		'uc' => array()
 	),
 	'egw_hooks' => array(

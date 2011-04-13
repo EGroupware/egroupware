@@ -7,6 +7,7 @@
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
 %1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
+%1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 user %2	admin	de	%1 Benutzer %2
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
@@ -28,8 +29,8 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 account-id's have to be integers!	admin	de	Konten-ID`s müssen vom Typ Integer (Zahl) sein!
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
-action	admin	de	Aktion
-actions	admin	de	Aktionen
+action	admin	de	Befehl
+actions	admin	de	Befehle
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
@@ -160,6 +161,7 @@ delete peer server	admin	de	Server von Serververbund löschen
 delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
 delete the group	admin	de	Gruppe löschen
+delete the selected entries	admin	de	Die ausgewählten Einträge löschen
 delete this category	admin	de	Kategorie löschen
 delete this group	admin	de	Gruppe löschen
 delete this log entry	admin	de	Diesen Protokolleintrag löschen
@@ -330,6 +332,7 @@ kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
 last %1 logins	admin	de	Letze %1 Logins
 last %1 logins for %2	admin	de	Letze %1 Logins für %2
+last action	admin	de	Letzte Aktion
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
 last submission:	admin	de	Letzte Absendung:

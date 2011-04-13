@@ -1,17 +1,17 @@
 <?php
 /**
- * eGgroupWare admin - accesslog
+ * EGgroupware admin - access- and session-log
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 /**
- * Show eGroupware access log
+ * Show EGroupware access- and session-log
  */
 class admin_accesslog
 {
@@ -22,6 +22,7 @@ class admin_accesslog
 	 */
 	public $public_functions = array(
 		'index' => true,
+		'sessions' => true,
 	);
 
 	/**
@@ -46,10 +47,6 @@ class admin_accesslog
 	 */
 	function __construct()
 	{
-		if ($GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
-		{
-			$GLOBALS['egw']->redirect_link('/index.php');
-		}
 		$this->so = new so_sql(self::APP,self::TABLE,null,'',true);
 	}
 
@@ -63,34 +60,81 @@ class admin_accesslog
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		$heartbeat_limit = egw_session::heartbeat_limit();
+
+		if ($query['session_list'])	// filter active sessions
+		{
+			$query['col_filter']['lo'] = null;	// not logged out
+			$query['col_filter'][0] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
+			$query['col_filter'][1] = "(notification_heartbeat IS NULL OR notification_heartbeat > $heartbeat_limit)";
+		}
 		$total = $this->so->get_rows($query,$rows,$readonlys);
+
+		$no_kill = !$GLOBALS['egw']->acl->check('current_sessions_access',8,'admin') && !$query['session_list'];
 
 		foreach($rows as &$row)
 		{
 			$row['sessionstatus'] = lang('success');
-			if (stripos($row['sessionid'],'blocked') !== False || stripos($row['sessionid'],'bad login') !== False)
+			if ($row['notification_heartbeat'] > $heartbeat_limit)
 			{
-				$row['sessionstatus'] = $row['sessionid'];
+				$row['sessionstatus'] = lang('active');
+			}
+			if (stripos($row['session_php'],'blocked') !== false ||
+				stripos($row['session_php'],'bad login') !== false ||
+				strpos($row['sessioin_php'],' ') !== false)
+			{
+				$row['sessionstatus'] = $row['session_php'];
 			}
 			if ($row['lo']) {
 				$row['total'] = ($row['lo'] - $row['li']) / 60;
 				$row['sessionstatus'] = lang('logged out');
 			}
+			// eg. for bad login or password
+			if (!$row['account_id']) $row['alt_loginid'] = $row['loginid'];
+
+			$readonlys['kill['.$row['sessionid'].']'] = $no_kill;
+			$readonlys['delete['.$row['sessionid'].']'] = $query['session_list'];
+
+			// do not allow to kill or select own session
+			if ($GLOBALS['egw']->session->sessionid_access_log == $row['sessionid'] && $query['session_list'])
+			{
+				$readonlys['kill['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
+			}
+			// do not allow to delete access log off active sessions
+			if (!$row['lo'] && $row['session_dla'] > time()-$GLOBALS['egw_info']['server']['sessions_timeout'] && !$query['session_list'])
+			{
+				$readonlys['delete['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
+			}
+			unset($row['session_php']);	// for security reasons, do NOT give real PHP sessionid to UI
 		}
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View Access Log').
+		if ($query['session_list'])
+		{
+			$rows['no_total'] = $rows['no_lo'] = true;
+		}
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.
+			($query['session_list'] ? lang('View sessions') : lang('View Access Log')).
 			($query['col_filter']['account_id'] ? ': '.common::grab_owner_name($query['col_filter']['account_id']) : '');
 
 		return $total;
 	}
 
 	/**
-	 * Display the accesslog
+	 * Display the access log or session list
 	 *
-	 * @param array $content
+	 * @param array $content=null
+	 * @param string $msg=''
+	 * @param boolean $sessions_list=false
 	 */
-	function index(array $content=null)
+	function index(array $content=null, $msg='', $sessions_list=false)
 	{
 		//_debug_array($content);
+		if (is_array($content)) $sessions_list = $content['nm']['session_list'];
+
+		// check if user has access to requested functionality
+		if ($GLOBALS['egw']->acl->check($sessions_list ? 'current_sessions_access' : 'access_log_access',1,'admin'))
+		{
+			$GLOBALS['egw']->redirect_link('/index.php');
+		}
 
 		if(!isset($content))
 		{
@@ -114,32 +158,71 @@ class admin_accesslog
 			{
 				$content['nm']['col_filter']['account_id'] = (int)$_GET['account_id'];
 			}
+			if ($sessions_list)
+			{
+				$content['nm']['order'] = 'session_dla';
+				$content['nm']['options-selectcols'] = array(
+					'lo' => false,
+					'total' => false,
+				);
+			}
+			$content['nm']['session_list'] = $sessions_list;
 		}
-		elseif(isset($content['nm']['rows']['delete']))
+		elseif(isset($content['nm']['rows']['delete']) || isset($content['delete']))
 		{
-			list($sessionid) = each($content['nm']['rows']['delete']);
-			unset($content['nm']['rows']['delete']);
+			if (isset($content['nm']['rows']['delete']))
+			{
+				list($sessionid) = each($content['nm']['rows']['delete']);
+				unset($content['nm']['rows']['delete']);
+			}
+			else
+			{
+				unset($content['delete']);
+				$sessionid = $content['nm']['rows']['selected'];
+			}
 			if ($sessionid && $this->so->delete(array('sessionid' => $sessionid)))
 			{
-				$content['msg'] = lang('%1 log entries deleted.',1);
+				$msg = lang('%1 log entries deleted.',1);
 			}
 			else
 			{
-				$content['msg'] = lang('Error deleting log entry!');
+				$msg = lang('Error deleting log entry!');
 			}
 		}
-		elseif(isset($content['delete']))
+		elseif(isset($content['nm']['rows']['kill']) || isset($content['kill']))
 		{
-			unset($content['delete']);
-			if (($deleted = $this->so->delete(array('sessionid' => $content['nm']['rows']['selected']))))
+			if (isset($content['nm']['rows']['kill']))
 			{
-				$content['msg'] = lang('%1 log entries deleted.',$deleted);
+				list($sessionid) = each($content['nm']['rows']['kill']);
+				$sessionid = array($sessionid);
+				unset($content['nm']['rows']['kill']);
 			}
 			else
 			{
-				$content['msg'] = lang('Error deleting log entry!');
+				unset($content['kill']);
+				$sessionid = $content['nm']['rows']['selected'];
+			}
+			if (($key = array_search($GLOBALS['egw']->session->sessionid_access_log, $sessionid)))
+			{
+				unset($sessionid[$key]);	// dont allow to kill own sessions
+			}
+			if ($GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
+			{
+				$msg = lang('Permission denied!');
+			}
+			else
+			{
+				foreach((array)$sessionid as $id)
+				{
+					$GLOBALS['egw']->session->destroy($id);
+				}
+				$msg = lang('%1 sessions killed',count($sessionid));
 			}
 		}
+		$readonlys['kill'] = !$sessions_list;
+		$readonlys['delete'] = $sessions_list;
+
+		$content['msg'] = $msg;
 		$content['percent'] = 100.0 * $GLOBALS['egw']->db->query(
 			'SELECT ((SELECT COUNT(*) FROM '.self::TABLE.' WHERE lo != 0) / COUNT(*)) FROM '.self::TABLE,
 			__LINE__,__FILE__)->fetchColumn();
@@ -148,5 +231,16 @@ class admin_accesslog
 		$tmpl->exec('admin.admin_accesslog.index',$content,$sel_options,$readonlys,array(
 			'nm' => $content['nm'],
 		));
+	}
+
+	/**
+	 * Display session list
+	 *
+	 * @param array $content=null
+	 * @param string $msg=''
+	 */
+	function sessions(array $content=null, $msg='')
+	{
+		return $this->index(null,$msg,true);
 	}
 }

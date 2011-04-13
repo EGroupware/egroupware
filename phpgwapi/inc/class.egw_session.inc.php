@@ -133,6 +133,13 @@ class egw_session
 	var $kp3;
 
 	/**
+	 * Primary key of egw_access_log row for updates
+	 *
+	 * @var int
+	 */
+	var $sessionid_access_log;
+
+	/**
 	* name of XML-RPC/SOAP method called
 	*
 	* @var string
@@ -579,7 +586,7 @@ class egw_session
 		$this->register_session($this->login,$user_ip,$now,$this->session_flags);
 		if ($this->session_flags != 'A')		// dont log anonymous sessions
 		{
-			$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
+			$this->sessionid_access_log = $this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
 		}
 		self::appsession('account_previous_login','phpgwapi',$GLOBALS['egw']->auth->previous_login);
 		$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
@@ -640,10 +647,11 @@ class egw_session
 	/**
     * Write or update (for logout) the access_log
 	*
-	* @param string $sessionid id of session or 0 for unsuccessful logins
+	* @param string|int $sessionid PHP sessionid or 0 for unsuccessful logins
 	* @param string $login account_lid (evtl. with domain) or '' for settion the logout-time
 	* @param string $user_ip ip to log
 	* @param int $account_id numerical account_id
+	* @return int $sessionid primary key of egw_access_log for login, null otherwise
 	*/
 	private function log_access($sessionid,$login='',$user_ip='',$account_id='')
 	{
@@ -652,17 +660,24 @@ class egw_session
 		if ($login)
 		{
 			$GLOBALS['egw']->db->insert(self::ACCESS_LOG_TABLE,array(
-				'sessionid' => $sessionid,
+				'session_php' => $sessionid,
 				'loginid'   => $login,
 				'ip'        => $user_ip,
 				'li'        => $now,
-				'lo'        => 0,
 				'account_id'=> $account_id,
 			),false,__LINE__,__FILE__);
+
+			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');
 		}
 		else
 		{
-			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array('lo' => $now),array('sessionid' => $sessionid),__LINE__,__FILE__);
+			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
+				'lo' => $now
+			),is_numeric($sessionid) ? array(
+				'sessionid' => $sessionid,
+			) : array(
+				'session_php' => $sessionid,
+			),__LINE__,__FILE__);
 		}
 		if ($GLOBALS['egw_info']['server']['max_access_log_age'])
 		{
@@ -670,6 +685,8 @@ class egw_session
 
 			$GLOBALS['egw']->db->delete(self::ACCESS_LOG_TABLE,"li < $max_age",__LINE__,__FILE__);
 		}
+		//error_log(__METHOD__."('$sessionid', '$login', '$user_ip', $account_id) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -861,6 +878,10 @@ class egw_session
 		{
 			$this->update_dla();
 		}
+		elseif ($GLOBALS['egw_info']['flags']['currentapp'] == 'notifications')
+		{
+			$this->update_notification_heartbeat();
+		}
 		$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 		if (!$this->account_id)
 		{
@@ -959,6 +980,15 @@ class egw_session
 			//echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
 			return false;
 		}
+
+		// query accesslog-id, if not set in session (session is made persistent after login!)
+		if (!$this->sessionid_access_log)
+		{
+			$this->sessionid_access_log = $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE,'sessionid',array(
+				'session_php' => $this->sessionid,
+			),__LINE__,__FILE__)->fetchColumn();
+			//error_log(__METHOD__."() sessionid=$this->sessionid --> sessionid_access_log=$this->sessionid_access_log");
+		}
 		if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS");
 
 		return true;
@@ -971,15 +1001,22 @@ class egw_session
 	 * @param string $kp3
 	 * @return boolean true on success, false on error
 	 */
-	function destroy($sessionid, $kp3)
+	function destroy($sessionid, $kp3='')
 	{
 		if (!$sessionid && $kp3)
 		{
 			return false;
 		}
-		$this->log_access($this->sessionid);	// log logout-time
+		$this->log_access($sessionid);	// log logout-time
 
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($sessionid,$kp3) parent::destroy()=$ret");
+
+		if (is_numeric($sessionid))	// do we have a access-log-id --> get PHP session id
+		{
+			$sessionid = $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE,'session_php',array(
+					'sessionid' => $sessionid,
+				),__LINE__,__FILE__)->fetchColumn();
+		}
 
 		$GLOBALS['egw']->hooks->process(array(
 			'location'  => 'session_destroyed',
@@ -1006,12 +1043,12 @@ class egw_session
 		}
 		else
 		{
-			$sessions = self::session_list(0,'','',true);
+			$this->commit_session();	// close our own session
 
-			if (isset($sessions[$sessionid]) && session_module_name() == 'files')
+			session_id($sessionid);
+			if (session_start())
 			{
-				//echo '<p>'.__METHOD__."($session_id): unlink('".$sessions[$sessionid]['php_session_file']."')</p>\n";
-				@unlink($sessions[$sessionid]['php_session_file']);
+				session_destroy();
 			}
 		}
 		return true;
@@ -1318,29 +1355,63 @@ class egw_session
 	}
 
 	/**
-	 * Update session_action and session_dla (session last used time),
+	 * Update session_action and session_dla (session last used time)
 	 */
 	private function update_dla()
 	{
-		if (isset($_GET['menuaction']))
+		// This way XML-RPC users aren't always listed as xmlrpc.php
+		if ($this->xmlrpc_method_called)
+		{
+			$action = $this->xmlrpc_method_called;
+		}
+		elseif (isset($_GET['menuaction']))
 		{
 			$action = $_GET['menuaction'];
 		}
 		else
 		{
 			$action = $_SERVER['PHP_SELF'];
+			// remove EGroupware path, if not installed in webroot
+			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
+			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
+			if ($egw_path)
+			{
+				list(,$action) = explode($egw_path,$action,2);
+			}
 		}
 
-		// This way XML-RPC users aren't always listed as
-		// xmlrpc.php
-		if ($this->xmlrpc_method_called)
+		// update dla in access-log table, if we have an access-log row (non-anonymous session)
+		if ($this->sessionid_access_log)
 		{
-			$action = $this->xmlrpc_method_called;
+			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
+				'session_dla' => time(),
+				'session_action' => $action,
+				'lo' => null,	// just in case it was (automatic) timed out before
+			),array(
+				'sessionid' => $this->sessionid_access_log,
+			),__LINE__,__FILE__);
 		}
 
 		$_SESSION[self::EGW_SESSION_VAR]['session_dla'] = time();
 		$_SESSION[self::EGW_SESSION_VAR]['session_action'] = $action;
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() _SESSION['.self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+	}
+
+	/**
+	 * Update notification_heartbeat time of session
+	 */
+	private function update_notification_heartbeat()
+	{
+		// update dla in access-log table, if we have an access-log row (non-anonymous session)
+		if ($this->sessionid_access_log)
+		{
+			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
+				'notification_heartbeat' => time(),
+			),array(
+				'sessionid' => $this->sessionid_access_log,
+				'lo IS NULL',
+			),__LINE__,__FILE__);
+		}
 	}
 
 	/**
@@ -1471,32 +1542,80 @@ class egw_session
 	 * Get a session list (of the current instance)
 	 *
 	 * @param int $start
-	 * @param string $sort='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
-	 * @param string $order='DESC' ASC or DESC
+	 * @param string $sort='DESC' ASC or DESC
+	 * @param string $order='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
 	 * @param boolean $all_no_sort=False skip sorting and limiting to maxmatchs if set to true
-	 * @return array with sessions (values for keys as in $sort) or array() if not supported by session-handler
+	 * @return array with sessions (values for keys as in $sort)
 	 */
 	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort=False)
 	{
-		if (method_exists(self::$session_handler,'session_list'))
+		$sessions = array();
+		if (!preg_match('/^[a-z0-9_ ,]+$/i',$order_by=$order.' '.$sort))
 		{
-			return call_user_func(array(self::$session_handler,'session_list'),$start,$sort,$order,$all_no_sort);
+			$order_by = 'session_dla DESC';
 		}
-		return array();
+		foreach($GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, '*', array(
+				'lo' => null,
+				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+				'(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')',
+			), __LINE__, __FILE__, $all_no_sort ? false : $start, 'ORDER BY '.$order_by) as $row)
+		{
+			$sessions[$row['sessionid']] = $row;
+		}
+		return $sessions;
 	}
 
 	/**
 	 * Query number of sessions (not more then once every N secs)
 	 *
-	 * @return int|boolean integer number of sessions or false if not supported by session-handler
+	 * @return int number of active sessions
 	 */
 	public static function session_count()
 	{
-		if (method_exists(self::$session_handler,'session_count'))
+		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', array(
+				'lo' => null,
+				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+				'(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')',
+			), __LINE__, __FILE__)->fetchColumn();
+	}
+
+	/**
+	 * Get limit / latest time of heartbeat for session to be active
+	 *
+	 * @return int TS in server-time
+	 */
+	public static function heartbeat_limit()
+	{
+		static $limit;
+
+		if (is_null($limit))
 		{
-			return call_user_func(array(self::$session_handler,'session_count'));
+			$config = config::read('notifications');
+			if (!($popup_poll_interval  = $config['popup_poll_interval']))
+			{
+				$popup_poll_interval = 60;
+			}
+			$limit = (int)(time() - $popup_poll_interval-10);	// 10s grace periode
 		}
-		return false;
+		return $limit;
+	}
+
+	/**
+	 * Check if given user can be reached via notifications
+	 *
+	 * Checks if notifications callback checked in not more then heartbeat_limit() seconds ago
+	 *
+	 * @param int $account_id
+	 * @param int number of active sessions of given user with notifications running
+	 */
+	public static function notifications_active($account_id)
+	{
+		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', array(
+				'lo' => null,
+				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+				'account_id' => $account_id,
+				'notifications_heartbeat > '.self::heartbeat_limit(),
+		), __LINE__, __FILE__)->fetchColumn();
 	}
 
 	/*

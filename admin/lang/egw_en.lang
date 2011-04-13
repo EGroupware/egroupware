@@ -7,6 +7,7 @@
 %1 log entries deleted.	admin	en	%1 log entries deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
 %1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3
+%1 sessions killed	admin	en	%1 sessions killed
 %1 user %2	admin	en	%1 user %2
 (default no, leave it off if you dont use it)	admin	en	(default No, leave it off if you dont use it)
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
@@ -160,6 +161,7 @@ delete peer server	admin	en	Delete peer server
 delete selected entries	admin	en	Delete selected entries
 delete the category	admin	en	delete the category
 delete the group	admin	en	delete the group
+delete the selected entries	admin	en	Delete the selected entries
 delete this category	admin	en	delete this category
 delete this group	admin	en	delete this group
 delete this log entry	admin	en	Delete this log entry
@@ -330,6 +332,7 @@ kill	admin	en	Kill
 kill session	admin	en	Kill session
 last %1 logins	admin	en	Last %1 logins
 last %1 logins for %2	admin	en	Last %1 logins for %2
+last action	admin	en	Last action
 last login	admin	en	last login
 last login from	admin	en	last login from
 last submission:	admin	en	Last submission:
