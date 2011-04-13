@@ -83,6 +83,12 @@ if (isset($_GET['menuaction']))
 			'no_dla_update' => $appName == 'notifications',	// otherwise session never time out
 		)
 	);
+	//if ($_GET['menuaction'] !='notifications.notifications_ajax.get_notifications') error_log(__METHOD__.__LINE__.' Appname:'.$appName.' Action:'.print_r($_GET['menuaction'],true));
+	if 	($_GET['menuaction']=='felamimail.ajaxfelamimail.refreshMessageList' ||
+			$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList') 
+	{
+		$GLOBALS['egw_info']['flags']['no_dla_update']=true;
+	}
 	include('./header.inc.php');
 
 
