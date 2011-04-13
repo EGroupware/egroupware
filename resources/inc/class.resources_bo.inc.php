@@ -673,7 +673,7 @@ class resources_bo
 	 */
 	function remove_picture($res_id)
 	{
-		if (($arr = egw_link::delete_attached('resources',$res_id,self::PICTURE_NAME)))
+		if (($arr = egw_link::delete_attached('resources',$res_id,self::PICTURE_NAME)) && is_array($arr))
 		{
 			return array_shift($arr);	// $arr = array($path => (bool)$ok);
 		}
