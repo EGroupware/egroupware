@@ -527,7 +527,7 @@ class ajaxfelamimail
 			$response->addAssign("divMessageList", "innerHTML", $headerTable);
 
 			if($quota = $this->bofelamimail->getQuotaRoot()) {
-				if (isset($quota['usage']) && is_int($quota['usage']))
+				if (isset($quota['usage']) && $quota['limit'] != 'NOT SET')
 				{ 
 					$quotaDisplay = $this->uiwidgets->quotaDisplay($quota['usage'], $quota['limit']);
 					$response->addAssign('quotaDisplay', 'innerHTML', $quotaDisplay);
