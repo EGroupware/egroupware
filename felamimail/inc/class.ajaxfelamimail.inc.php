@@ -263,9 +263,10 @@ class ajaxfelamimail
 					$_content = implode('',$contentArr);
 				}
 				$_content = $bocompose->_getCleanHTML($_content);
-				$_content = $bocompose->convertHTMLToText($_content);
+				//$_content = $bocompose->convertHTMLToText($_content);
+				$_content = translation::convertHTMLToText($_content,'ISO-8859-1',$stripcrl=false,$stripalltags=true);
 			}
-
+			if($this->_debug); error_log(__METHOD__.__LINE__.$_content);
 			$this->saveSessionData();
 			
 			$response = new xajaxResponse();
