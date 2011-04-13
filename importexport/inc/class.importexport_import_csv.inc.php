@@ -257,7 +257,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @param $selects Array of select values to be automatically parsed
 	 *
 	 */
-	public static function convert(Array &$record, Array $fields = array(), $appname = null, $selects = array()) {
+	public static function convert(Array &$record, Array $fields = array(), $appname = null, Array $selects = array()) {
 		// Automatic conversions
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
