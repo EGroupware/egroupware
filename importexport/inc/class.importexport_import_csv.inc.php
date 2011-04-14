@@ -303,10 +303,22 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name],'ts'); 
+				if ($record[$name] && !is_numeric($record[$name])) {
+					$record[$name] = egw_time::user2server($record[$name],'ts'); 
+					if(in_array($name, self::$cf_parse_cache[$appname][0]['date-time'])) {
+						// Custom fields stored in a particular format (from customfields_widget)
+						$record[$name] = date('Y-m-d H:i:s', $record[$name]);
+					}
+				}
 			}
 			foreach((array)$fields['date'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) $record[$name] = egw_time::user2server($record[$name],'ts'); 
+				if ($record[$name] && !is_numeric($record[$name])) {
+					$record[$name] = egw_time::user2server($record[$name],'ts'); 
+					if(in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
+						// Custom fields stored in a particular format (from customfields_widget)
+						$record[$name] = date('Y-m-d', $record[$name]);
+					}
+				}
 			}
 
 			// Some custom methods for conversion
