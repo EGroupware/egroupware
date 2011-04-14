@@ -122,7 +122,7 @@ class infolog_merge extends bo_merge
 
 		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
-		$fields = array('info_id' => lang('Infolog ID')) + $tracking->field2label;
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label;
 		foreach($fields as $name => $label)
 		{
 			if (in_array($name,array('custom'))) continue;	// dont show them
