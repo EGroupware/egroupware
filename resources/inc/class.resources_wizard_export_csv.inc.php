@@ -24,6 +24,7 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 			'quantity'	=> lang('Quantity'),
 			'useable'	=> lang('Useable'),
 			'location'	=> lang('Location'),
+			'storage_info'	=> lang('Storage'),
 			'bookable'	=> lang('Bookable'),
 			'buyable'	=> lang('Buyable'),
 			'prize'		=> lang('Prize'),

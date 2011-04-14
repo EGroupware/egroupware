@@ -27,18 +27,19 @@ class resources_wizard_import_csv extends importexport_wizard_basic_import_csv
 		// Field mapping
 		$export = new resources_wizard_export_csv();
 		$this->mapping_fields = array(
-                        'res_id'        => lang('Resource ID'),
-                        'name'          => lang('name'),
-                        'short_description'     => lang('short description'),
-                        'cat_id'        => lang('Category'),
-                        'quantity'      => lang('Quantity'),
-                        'useable'       => lang('Useable'),
-                        'location'      => lang('Location'),
-                        'bookable'      => lang('Bookable'),
-                        'buyable'       => lang('Buyable'),
-                        'prize'         => lang('Prize'),
-                        'long_description'      => lang('Long description'),
-                        'inventory_number'      => lang('inventory number'),
+			'res_id'	=> lang('Resource ID'),
+			'name'		=> lang('name'),
+			'short_description'     => lang('short description'),
+			'cat_id'	=> lang('Category'),
+			'quantity'	=> lang('Quantity'),
+			'useable'	=> lang('Useable'),
+			'location'	=> lang('Location'),
+			'storage_info'	=> lang('Storage'),
+			'bookable'	=> lang('Bookable'),
+			'buyable'	=> lang('Buyable'),
+			'prize'		=> lang('Prize'),
+			'long_description'      => lang('Long description'),
+			'inventory_number'      => lang('inventory number'),
                 );
 
 		$custom = config::get_customfields('resources', true);
