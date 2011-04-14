@@ -52,7 +52,7 @@ class notifications_ajax {
 	/**
 	 * reference to global db object
 	 *
-	 * @var db
+	 * @var egw_db
 	 */
 	private $db;
 
@@ -75,7 +75,7 @@ class notifications_ajax {
 	/**
 	 * the xml response object
 	 *
-	 * @var response
+	 * @var xajaxResponse
 	 */
 	private $response;
 
@@ -87,8 +87,7 @@ class notifications_ajax {
 		$this->response = new xajaxResponse();
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read();
 
-		$config = new config(self::_appname);
-		$this->config = (object)$config->read_repository();
+		$this->config = (object)config::read(self::_appname);
 
 		$prefs = new preferences($this->recipient->account_id);
 		$preferences = $prefs->read();
@@ -113,17 +112,25 @@ class notifications_ajax {
 	 */
 	public function get_notifications() {
 		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
+
+		// update currentusers
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
+			$GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
+		{
+			$this->response->assign('currentusers', 'innerText', $GLOBALS['egw']->session->session_count());
+		}
+
 		$this->get_egwpopup();
 
 		return $this->response->getXML();
 	}
 
 	/**
-	 * Let the user confirm that they have seen the message.  
+	 * Let the user confirm that they have seen the message.
 	 * After they've seen it, remove it from the database
 	 */
 	public function confirm_message($message) {
-error_log( html_entity_decode($message));
+//error_log( html_entity_decode($message));
 		$myval=$this->db->delete(self::_notification_table,array(
 			'account_id' => $this->recipient->account_id,
 			'message' => html_entity_decode($message)

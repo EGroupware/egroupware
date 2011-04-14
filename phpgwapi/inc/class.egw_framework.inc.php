@@ -440,7 +440,7 @@ abstract class egw_framework
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
 		  $current_users = '<a href="' . egw::link('/index.php','menuaction=admin.admin_accesslog.sessions') . '">' .
-		  	lang('Current users') . ': ' . $GLOBALS['egw']->session->session_count() . '</a>';
+		  	lang('Current users') . ': <span id="currentusers">' . $GLOBALS['egw']->session->session_count() . '</span></a>';
 		  return $current_users;
 	   }
 	}
