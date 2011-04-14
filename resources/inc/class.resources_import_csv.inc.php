@@ -112,6 +112,9 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 		// fetch the resource bo
 		$this->bo = new resources_bo();
 
+		// For adding ACLs
+		$this->acl_bo = CreateObject('resources.bo_acl',True);
+
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
 
@@ -136,7 +139,8 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 		$types = importexport_export_csv::$types;
 		$types['select-bool'] = array('bookable');
 		$lookups = array();
-
+		$start_time = time();
+		
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 
@@ -146,6 +150,22 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 			// Automatically handle human friendly values
 			importexport_import_csv::convert($record, $types, 'resources', $lookups);
 
+			// Check for a new category, it needs permissions set
+			$category = $GLOBALS['egw']->categories->read($record['cat_id']);
+
+			if($category['last_mod'] >= $start_time) {
+				// New category.  Give read & write permissions to the current user's default group
+				$this->acl_bo->set_rights($record['cat_id'], 
+					array($GLOBALS['egw_info']['user']['account_primary_group']),
+					array($GLOBALS['egw_info']['user']['account_primary_group']),
+					array(),
+					array(),
+					array()
+				);
+				// Refresh ACL
+				//$GLOBALS['egw']->acl->read_repository();
+			}
+			
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					$results = array();

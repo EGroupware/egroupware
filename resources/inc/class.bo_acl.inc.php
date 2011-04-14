@@ -240,6 +240,9 @@ class bo_acl
 
 	function set_rights($cat_id,$read,$write,$calread,$calbook,$admin)
 	{
+		// Clear cache
+		unset(self::$permissions[$cat_id]);
+
 		$readcat = $read ? $read : array();
 		$writecat = $write ? $write : array();
 		$calreadcat = $calread ? $calread : array();
