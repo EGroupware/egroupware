@@ -477,8 +477,6 @@ egwGridColumns.prototype.setTotalWidth = function(_value)
 
 	this.totalWidth = _value;
 	this._calculateWidths();
-
-	console.log(this.columnWidths);
 }
 
 egwGridColumns.prototype.getColumnIndexById = function(_id)

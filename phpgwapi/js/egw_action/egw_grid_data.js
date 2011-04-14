@@ -233,7 +233,8 @@ egwGridDataElement.prototype.set_data = function(_value)
  * 			"children": [ Objects which will be added to the children of the element ]
  *			ELEMENT DATA // See below
 		IF EGW_DATA_TYPE_RANGE:
-			"count": [Count of Elements],
+			"count": [Count of Elements], | "ids": [ Array with element ids ],
+			"group": [ Action Link Group to which the generated objects should be added ]
 			"prefix": "[String prefix which will be added to each element including their index in the list]"
  * 	}
  * ]
@@ -296,17 +297,35 @@ egwGridDataElement.prototype.loadData = function(_data, _doCallUpdate)
 			// Inserts a range of given dummy elements into the data tree
 			if (entryType == EGW_DATA_TYPE_RANGE)
 			{
-				var count = typeof entry.count == "number" && entry.count >= 0 ? entry.count : 1;
 				var prefix = typeof entry.prefix == "string" ? entry.prefix : "elem_";
 				var canHaveChildren = typeof entry.canHaveChildren == "boolean" ? entry.canHaveChildren : false;
 				var index = last_element ? last_element.index + 1 : 0;
+				var group = typeof entry.group == "string" ? entry.group : false;
+				var ids = [];
 
-				for (var j = 0; j < count; j++)
+				if (typeof entry.ids != "undefined")
 				{
-					var id = prefix + (index + j);
-					element = this.insertElement(index + j, id);
+					ids = entry.ids;
+				}
+				else if (typeof entry.count != "undefined")
+				{
+					var count = typeof entry.count == "number" && entry.count >= 0 ? entry.count : 1;
+
+					for (var j = 0; j < count; j++)
+					{
+						ids.push(prefix + (index + j));
+					}
+				}
+
+				for (var j = 0; j < ids.length; j++)
+				{
+					element = this.insertElement(index + j, ids[j]);
 					element.type = type; // Type can only be set directly after creation
 					element.canHaveChildren = canHaveChildren;
+					if (group !== false)
+					{
+						element.set_group(group);
+					}
 				}
 			}
 			else if (entryType == EGW_DATA_TYPE_ELEMENT)
@@ -503,7 +522,8 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 					res = {
 						"caption": this.caption,
 						"iconUrl": this.iconUrl,
-						"time": this.capColTime
+						"time": this.capColTime,
+						"queued": false
 					}
 				}
 				else
@@ -528,7 +548,8 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 				var dataSet = (typeof this.data[_columnId] != "undefined");
 				res = {
 					"data": dataSet ? this.data[_columnId].data : 0,
-					"time": dataSet ? this.data[_columnId].time : this.capColTime
+					"time": dataSet ? this.data[_columnId].time : this.capColTime,
+					"queued": false
 				}
 			}
 		}
@@ -538,13 +559,16 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 			// if yes, return it.
 			if (typeof this.data[_columnId] != "undefined")
 			{
-				if (_returnData && typeof this.data[_columnId].data != "undefined")
+				if (_returnData)
 				{
-					res = this.data[_columnId];
+					if (typeof this.data[_columnId].data != "undefined")
+					{
+						res = this.data[_columnId];
+					}
 				}
 				else
 				{
-					res = true;
+					res = this.data[_columnId].queued;
 				}
 			}
 			// Probably there is a default value specified for this column...
@@ -588,7 +612,14 @@ egwGridDataElement.prototype.getData = function(_columnIds)
 		{
 			if (res !== false)
 			{
-				result[_columnIds[i]] = res;
+				if (typeof res.queued != "undefined" && res.queued != false)
+				{
+					result[_columnIds[i]] = false;
+				}
+				else
+				{
+					result[_columnIds[i]] = res;
+				}
 			}
 			else
 			{
@@ -1309,15 +1340,19 @@ egwGridDataQueue.prototype.flushQueue = function(_doPrefetch)
 		ids.push(id);
 	}
 
-	// Call the fetch callback and save a snapshot of the current queue
-	var queue = this.queue;
-	this.fetchCallback.call(this.context, ids, this.queueColumns, function(_data) {
-		this.dataCallback(_data, queue);
-	}, this);
+	// Check whether there actually are elements queued...
+	if (ids.length > 0)
+	{
+		// Call the fetch callback and save a snapshot of the current queue
+		var queue = this.queue;
+		this.fetchCallback.call(this.context, ids, this.queueColumns, function(_data) {
+			this.dataCallback(_data, queue);
+		}, this);
 
-	this.queue = [];
-	this.queueColumns = [];
-	this.timeoutId = 0;
+		this.queue = [];
+		this.queueColumns = [];
+		this.timeoutId = 0;
+	}
 }
 
 /**

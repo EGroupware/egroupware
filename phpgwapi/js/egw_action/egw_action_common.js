@@ -210,7 +210,7 @@ egwEventQueue.prototype.flush = function()
 egwEventQueue.prototype.queue = function(_proc, _context, _args, _id)
 {
 	// Default _args to an empty array
-	if (typeof _args != "array")
+	if (typeof _args == "undefined" || !(_args instanceof Array))
 	{
 		_args = [];
 	}
