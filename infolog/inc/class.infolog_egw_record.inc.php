@@ -100,6 +100,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 		$links = egw_link::get_links('infolog', $_record['info_id'], 'projectmanager');
 		foreach($links as $link_id => $app_id) {
 			$this->record['pm_id'] = $app_id;
+			$this->record['project'] = egw_link::title('projectmanager', $app_id);
 			break;
 		}
 
