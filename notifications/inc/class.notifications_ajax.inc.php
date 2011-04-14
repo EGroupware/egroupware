@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -128,13 +128,17 @@ class notifications_ajax {
 	/**
 	 * Let the user confirm that they have seen the message.
 	 * After they've seen it, remove it from the database
+	 *
+	 * @param int|array $notify_id one or more notify_id's
 	 */
-	public function confirm_message($message) {
-//error_log( html_entity_decode($message));
-		$myval=$this->db->delete(self::_notification_table,array(
-			'account_id' => $this->recipient->account_id,
-			'message' => html_entity_decode($message)
-		),__LINE__,__FILE__,self::_appname);
+	public function confirm_message($notify_id)
+	{
+		if ($notify_id)
+		{
+			$this->db->delete(self::_notification_table,array(
+				'notify_id' => $notify_id,
+			),__LINE__,__FILE__,self::_appname);
+		}
 	}
 
 	/**
@@ -231,14 +235,13 @@ class notifications_ajax {
 	 */
 	private function get_egwpopup() {
 		$message = '';
-		$rs = $this->db->select(self::_notification_table,
-			'*', array(
+		$rs = $this->db->select(self::_notification_table, '*', array(
 				'account_id' => $this->recipient->account_id,
 			),
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
-				$this->response->addScriptCall('append_notification_message',$notification['message']);
+				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message']);
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {

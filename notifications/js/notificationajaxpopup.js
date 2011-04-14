@@ -8,7 +8,7 @@
  * @version $Id$
  */
 
-var notifymessages = new Array();
+var notifymessages = {};
 
 function egwpopup_init(_i) {
 	window.setTimeout("egwpopup_refresh(" + _i + ");", 1000);
@@ -39,9 +39,12 @@ function egwpopup_display() {
 	egwpopup.style.left = (Browserwidth/2 - 250) + "px";
 	egwpopup.style.top = (Browserheight/4) + "px";
 	egwpopup_message.style.maxHeight = (Browserheight/2) + "px";
-	egwpopup_message.innerHTML = notifymessages[0];
-	if(notifymessages.length-1 > 0 ) {
-		egwpopup_ok_button.value = "OK (" + (notifymessages.length-1) + ")";
+	for(var show in notifymessages) break;
+	egwpopup_message.innerHTML = notifymessages[show];
+	var num = 0;
+	for(var id in notifymessages) ++num;
+	if(num-1 > 0 ) {
+		egwpopup_ok_button.value = "OK (" + (num-1) + ")";
 	} else {
 		egwpopup_ok_button.value = "OK";
 	}
@@ -64,23 +67,30 @@ function egwpopup_button_ok() {
 	egwpopup = document.getElementById("egwpopup");
 	egwpopup_message = document.getElementById("egwpopup_message");
 	egwpopup_message.scrollTop = 0;
-	xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", notifymessages[0]);
-	notifymessages.shift();
-	if(notifymessages.length > 0) {
-		egwpopup_display();
-	} else {
+
+	for(var confirmed in notifymessages) break;
+	xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", confirmed);
+	delete notifymessages[confirmed];
+	
+	for(var id in notifymessages) break;
+	if (id == undefined) {
 		egwpopup.style.display = "none";
 		egwpopup_message.innerHTML = "";
 		notificationbell_switch("inactive");
+	} else {	
+		egwpopup_display();
 	}
 }
 
 // Close and mark all as read
 function egwpopup_button_close() {
-	for(var i = 0; i < notifymessages.length; i++) {
-		xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", notifymessages[i]);
+	var ids = new Array();
+	for(var id in notifymessages) {
+		ids.push(id);
 	}
-	notifymessages = new Array();
+	xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", ids);
+
+	notifymessages = {};
 	var egwpopup = document.getElementById("egwpopup");
 	var egwpopup_message = document.getElementById("egwpopup_message");
 	egwpopup.style.display = "none";
@@ -88,9 +98,6 @@ function egwpopup_button_close() {
 	notificationbell_switch("inactive");
 }
 
-function append_notification_message(_message) {
-	// Check to prevent duplicates
-	if(notifymessages.indexOf(_message) == -1) {
-		notifymessages.push(_message);
-	}
+function append_notification_message(_id, _message) {
+	notifymessages[_id] = _message;
 }

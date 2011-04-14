@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -12,12 +12,14 @@
 $phpgw_baseline = array(
 	'egw_notificationpopup' => array(
 		'fd' => array(
-			'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
-			'message' => array('type' => 'longtext')
+			'notify_id' => array('type' => 'auto','nullable' => False,'comment' => 'primary key'),
+			'account_id' => array('type' => 'int','precision' => '20','nullable' => False,'comment' => 'user to notify'),
+			'notify_message' => array('type' => 'text','comment' => 'notification message'),
+			'notify_created' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'creation time of notification')
 		),
-		'pk' => array(),
+		'pk' => array('notify_id'),
 		'fk' => array(),
-		'ix' => array('account_id'),
+		'ix' => array('account_id','notify_created'),
 		'uc' => array()
 	)
 );

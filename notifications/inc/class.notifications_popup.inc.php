@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -18,17 +18,6 @@
  * In the second stage a request from the client reads
  * out the table to look if there is a notificaton for this
  * client. The second stage is done in class.notifications_ajax.inc.php
- *
- * Todo:
- * - save the messages by uid instead of sessionid into the notification table, this
- * has several advantages (users poll the messages via ajax from multiple logins, and
- * do not have to read one message twice, poll after re-login with different sessionid)
- * - delete message from the table only if the user has really seen it
- * - if the above things are done we should get rid of rendering the links here,
- * instead it should be done by the ajax class, so sessionids in links could be possible then
- *
- * (multidisplay is supported)
- *
  */
 class notifications_popup implements notifications_iface {
 
@@ -86,13 +75,14 @@ class notifications_popup implements notifications_iface {
 	 * @param object $_preferences
 	 */
 	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null) {
+		//error_log(__METHOD__."(".array2string($_sender).', '.array2string($_recipient).', '.array2string($config).',...)');
 		if(!is_object($_sender)) { throw new Exception("no sender given."); }
 		if(!is_object($_recipient)) { throw new Exception("no recipient given."); }
 		$this->sender = $_sender;
 		$this->recipient = $_recipient;
 		$this->config = $_config;
 		$this->preferences = $_preferences;
-		$this->db = &$GLOBALS['egw']->db;
+		$this->db = $GLOBALS['egw']->db;
 	}
 
 	/**
@@ -126,8 +116,8 @@ class notifications_popup implements notifications_iface {
 	 */
 	private function save( $_message ) {
 		$result = $this->db->insert( self::_notification_table, array(
-			'account_id'	=> $this->recipient->account_id,
-			'message'		=> $_message
+			'account_id'     => $this->recipient->account_id,
+			'notify_message' => $_message
 			), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}
@@ -148,7 +138,7 @@ class notifications_popup implements notifications_iface {
 			if(!$link->popup) { $link->view['no_popup'] = 1; }
 
 			$url = html::link('/index.php', $link->view);
-			// do not expose sensitive data 	 
+			// do not expose sensitive data
 			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
 			// extract application-icon from menuaction
 			if($link->view['menuaction']) {
@@ -208,16 +198,8 @@ class notifications_popup implements notifications_iface {
 	 * @param settings array with keys account_id and new_owner (new_owner is optional)
 	 */
 	public function deleteaccount($settings) {
-		if($settings['new_owner']) {
-			$this->db->update( self::_notification_table, array(
-				'account_id'	=> $settings['new_owner']
-			), array(
-				'account_id'	=> $settings['account_id']
-			),__LINE__,__FILE__,self::_appname);
-		} else {
-			$this->db->delete( self::_notification_table, array(
-				'account_id'	=> $settings['account_id']
-			),__LINE__,__FILE__,self::_appname);
-		}
+		$this->db->delete( self::_notification_table, array(
+			'account_id'	=> $settings['account_id']
+		),__LINE__,__FILE__,self::_appname);
 	}
 }
