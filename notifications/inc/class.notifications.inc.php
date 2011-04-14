@@ -622,10 +622,9 @@ final class notifications {
 	 */
 	public function deleteaccount($settings) {
 		foreach($this->backends as $backend) {
-			$notification_backend = self::_appname.'_'.$backend;
-			$backend_obj = new $notification_backend();
-			if(method_exists($backend_obj, 'deleteaccount')) {
-				$backend_obj->deleteaccount($settings);
+			$backend_hook = array(self::_appname.'_'.$backend,'deleteaccount');
+			if (is_callable($backend_hook)) {
+				call_user_func($backend_hook,$settings);
 			}
 		}
 	}

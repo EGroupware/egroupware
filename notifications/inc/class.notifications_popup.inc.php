@@ -197,8 +197,8 @@ class notifications_popup implements notifications_iface {
 	 *
 	 * @param settings array with keys account_id and new_owner (new_owner is optional)
 	 */
-	public function deleteaccount($settings) {
-		$this->db->delete( self::_notification_table, array(
+	public static function deleteaccount($settings) {
+		$GLOBALS['egw']->db->delete( self::_notification_table, array(
 			'account_id'	=> $settings['account_id']
 		),__LINE__,__FILE__,self::_appname);
 	}
