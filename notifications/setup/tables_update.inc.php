@@ -51,17 +51,14 @@ function notifications_upgrade1_8()
 		'ix' => array('account_id'),
 		'uc' => array()
 	),'session_id');
-	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_notificationpopup',array(
-		'fd' => array(
-			'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
-			'message' => array('type' => 'longtext')
-		),
-		'pk' => array(),
-		'fk' => array(),
-		'ix' => array('account_id'),
-		'uc' => array()
-	));
 
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.001';
 }
 
+function notifications_upgrade1_9_001()
+{
+	// empty notificationpopup table, as it can contain thousands of old entries, not delivered before
+	$GLOBALS['egw_setup']->db->query('DELETE FROM egw_notificationpopup');
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.002';
+}
