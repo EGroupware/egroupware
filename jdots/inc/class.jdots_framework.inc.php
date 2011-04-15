@@ -670,7 +670,20 @@ class jdots_framework extends egw_framework
 			$tabs[] = $data['appName'];
 			if ($data['active']) $active = $data['appName'];
 		}
-		$tabs = implode(',',$tabs);
+		// send app a notification, that it's tab got closed
+		// used eg. in phpFreeChat to leave the chat
+		if (($old_tabs =& egw_cache::getSession(__CLASS__, 'open_tabs')))
+		{
+			foreach(array_diff(explode(',',$old_tabs),$tabs) as $app)
+			{
+				error_log("Tab '$app' closed, old_tabs=$old_tabs");
+				$GLOBALS['egw']->hooks->single(array(
+					'location' => 'tab_closed',
+					'app' => $app,
+				), $app);
+			}
+		}
+		$tabs = $old_tabs = implode(',',$tabs);
 
 		if ($tabs != $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'] ||
 			$active != $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'])
@@ -856,7 +869,11 @@ class jdots_framework extends egw_framework
 			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
 			if (!$active_tab) $active_tab = $default_app;
 		}
-		$open_tabs = $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'];
+		// if we have the open tabs in the session, use it instead the maybe forced common prefs open_tabs
+		if (!($open_tabs = egw_cache::getSession(__CLASS__, 'open_tabs')))
+		{
+			$open_tabs = $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'];
+		}
 		$open_tabs = $open_tabs ? explode(',',$open_tabs) : array();
 		if ($active_tab && !in_array($active_tab,$open_tabs))
 		{
