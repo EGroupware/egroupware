@@ -357,7 +357,7 @@ class addressbook_sql extends so_sql_cf
 					// fall through
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match_all("/([a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)/u",$order_by,$all_matches,PREG_SET_ORDER))
+			if ($this->db->Type != 'mysql' && preg_match_all("/([a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",$order_by,$all_matches,PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				foreach($all_matches as $matches)
@@ -367,8 +367,7 @@ class addressbook_sql extends so_sql_cf
 					{
 						$table = ($matches[1] == $this->extra_value ? $this->extra_table : $this->table_name).'.';
 					}
-					$extra_cols[] = $table.$matches[1];
-					$extra_cols[] = $table.$matches[0];
+					$extra_cols[] = $table.$matches[1].' '.$matches[2];
 					//_debug_array($matches);
 					if (!empty($order_by) && $table) // postgres requires explizit order by
 					{
