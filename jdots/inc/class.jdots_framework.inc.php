@@ -676,7 +676,7 @@ class jdots_framework extends egw_framework
 		{
 			foreach(array_diff(explode(',',$old_tabs),$tabs) as $app)
 			{
-				error_log("Tab '$app' closed, old_tabs=$old_tabs");
+				//error_log("Tab '$app' closed, old_tabs=$old_tabs");
 				$GLOBALS['egw']->hooks->single(array(
 					'location' => 'tab_closed',
 					'app' => $app,
