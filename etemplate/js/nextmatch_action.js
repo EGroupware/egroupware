@@ -24,8 +24,8 @@ function nextmatchRowAOI(_node)
 
 	aoi.checkBox = ($(":checkbox", aoi.node))[0];
 
-	// Rows without a checkbox are unselectable
-	if (typeof aoi.checkBox != "undefined")
+	// Rows without a checkbox OR an id set are unselectable
+	if (typeof aoi.checkBox != "undefined" || _node.id)
 	{
 		aoi.doGetDOMNode = function() {
 			return aoi.node;
@@ -80,3 +80,66 @@ function nextmatchRowAOI(_node)
 	return aoi;
 }
 
+/**
+ * Default action for nextmatch rows, runs action specified _action.nm_action: set nextmatch_widget::egw_actions()
+ * 
+ * @param _action action object with attributes caption, id, nm_action, ...
+ * @param _senders array of rows selected
+ */
+function nm_action(_action, _senders)
+{
+	if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
+	if (typeof _action.data.nm_action == 'undefined') _action.data.nm_action = 'submit';
+	
+	var ids = "";
+	for (var i = 0; i < _senders.length; i++)
+	{
+		ids += (_senders[i].id.indexOf(',') >= 0 ? '"'+_senders[i].id.replace(/"/g,'""')+'"' : _senders[i].id) + 
+			((i < _senders.length - 1) ? "," : "");
+	}
+	console.log(_action);
+	console.log(_senders);
+
+	// let user confirm the action first
+	if (typeof _action.data.confirm != 'undefined')
+	{
+		if (!confirm(_action.data.confirm)) return;
+	}
+	
+	var url = '#';
+	if (typeof _action.data.url != 'undefined')
+	{
+		url = _action.data.url;
+		if (url.substr(-1) == '=') url += ids;
+	}
+	var target;
+	if (typeof _action.data.target != 'undefined') target = _action.data.target;
+	
+	switch(_action.data.nm_action)
+	{
+		case 'alert':
+			alert(_action.caption + " (\'" + _action.id + "\') executed on rows: " + ids);
+			break;
+			
+		case 'location':
+			window.location.href = url;
+			break;
+			
+		case 'popup':
+			egw_openWindowCentered2(url,target,_action.data.width,_action.data.height);
+			break;
+			
+		case 'submit':
+			document.getElementById('exec[nm][action]').value = _action.id;
+			document.getElementById('exec[nm][selected]').value = ids;
+			if (typeof _action.data.button != 'undefined')
+			{
+				submitit(eTemplate,'exec[nm][rows]['+_action.data.button+']['+ids+']');
+			}
+			else
+			{
+				eTemplate.submit();
+			}
+			break;
+	}
+}

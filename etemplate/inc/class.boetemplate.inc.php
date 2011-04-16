@@ -48,6 +48,7 @@ class boetemplate extends soetemplate
 		'deck'	=> 'Deck',			// a container of elements where only one is visible, size = # of elem.
 		'passwd' => 'Password',		// a text of type password
 		'colorpicker' => 'Colorpicker',	// input for a color (eg. #123456)
+		'hidden'=> 'Hidden input',	// a hidden input eg. to submit javascript computed values back
 	);
 
 	/**
@@ -479,10 +480,10 @@ class boetemplate extends soetemplate
 		return (self::$extensions[$type] || $this->loadExtension($type,$ui)) &&
 						($function == '' || self::$extensions[$type]->public_functions[$function]);
 	}
-	
+
 	/**
 	 * Check if we have a widget of type $type
-	 * 
+	 *
 	 * @param string $type
 	 * @return boolean true widget exists, false unknow widget type
 	 */
@@ -759,6 +760,7 @@ class boetemplate extends soetemplate
 	 * - csv_split('"1,2,3",2,3') === array('1,2,3','2','3')
 	 * - csv_split('1,2,3',2) === array('1','2,3')
 	 * - csv_split('"1,2,3",2,3',2) === array('1,2,3','2,3')
+	 * - csv_split('"a""b,c",d') === array('a"b,c','d')	// to escape enclosures double them!
 	 *
 	 * @param string $str
 	 * @param int $num=null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
@@ -783,7 +785,7 @@ class boetemplate extends soetemplate
 					$part .= $delimiter.$parts[++$n];
 					unset($parts[$n]);
 				}
-				$part = substr($part,1,-1);
+				$part = substr(str_replace($enclosure.$enclosure,$enclosure,$part),1,-1);
 			}
 		}
 		$parts = array_values($parts);	// renumber the parts (in case we had to concat them)
@@ -949,7 +951,7 @@ class boetemplate extends soetemplate
 		// check if new import necessary, currently on every request
 		$msg = self::test_import($name);
 		//if ($msg) echo "<p>".__METHOD__."($name,$template,$lang,$group,$version) self::test_import($name) returning $msg</p>\n";
-		
+
 		if (is_array($name))
 		{
 			$version = $name['version'];

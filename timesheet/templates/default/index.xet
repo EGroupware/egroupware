@@ -15,7 +15,7 @@
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
 		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 	</template>
-	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.7.003">
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="15%"/>
@@ -70,7 +70,7 @@
 					<nextmatch-filterheader id="ts_status" onchange="1" options="All status"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox class="noPrint">
-						<description value="Actions" class="noPrint" align="right"/>
+						<nextmatch-header label="Actions" class="noPrint" align="right" id="legacy_actions"/>
 						<button label="Check all" image="check" id="check_all" needed="1" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;"/>
 					</hbox>
 				</row>
@@ -98,6 +98,7 @@
 					<hbox class="noPrint" align="right">
 						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
 						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+						<button id="document[$row_cont[ts_id]]" image="etemplate/merge" label="Insert in document" class="image16"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
 						<checkbox options="$row_cont[ts_id]" id="checked[]" statustext="Select multiple timeshhets for a further action"/>
 					</hbox>
@@ -105,7 +106,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="1.7.003">
+	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -126,19 +127,13 @@
 				<row>
 					<nextmatch id="nm" options="timesheet.index.rows" span="all"/>
 				</row>
-				<row class="noPrint">
+				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
 						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown timesheets!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown timesheets!!!"/>
-						<menulist>
-							<menupopup onchange="do_action(this);" options="Select action" id="action" statustext="Select action"/>
-						</menulist>
+						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some timesheets first')); return false;;"/>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
-				</row>
-				<row disabled="1">
-					<button label="Export" onclick="timesheet_export(); return false;" id="export"/>
-					<description/>
 				</row>
 			</rows>
 		</grid>

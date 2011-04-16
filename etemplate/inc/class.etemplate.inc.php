@@ -776,6 +776,8 @@ class etemplate extends boetemplate
 		{
 			$opts = array();
 		}
+		$row_id = $content['_row_id'];
+
 		$max_cols = $grid['cols'];
 		for ($r = 0; $row = 1+$r /*list($row,$cols) = each($data)*/; ++$r)
 		{
@@ -823,6 +825,11 @@ class etemplate extends boetemplate
 			$cl = isset(self::$class_conf[$cl]) ? self::$class_conf[$cl] : $cl;
 			$rows[".$row"] .= html::formatOptions($cl,'class');
 			$rows[".$row"] .= html::formatOptions($class,',valign');
+			// set row-id, if requested
+			if ($row_id && isset($content[$r][$row_id]))
+			{
+				$rows[".$row"] .= ' id="'.htmlspecialchars($content[$r][$row_id]).'"';
+			}
 			reset ($cols);
 			$row_data = array();
 			for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
@@ -967,54 +974,22 @@ class etemplate extends boetemplate
 
 			$html .= '
 <script type="text/javascript">
-	//Temporary function called on onExecute
-	function alertClicked(_action, _senders)
-	{
-		var ids = "";
-		for (var i = 0; i < _senders.length; i++)
-			ids += _senders[i].id + ((i < _senders.length - 1) ? ", " : "");
-
-		alert("Action \'" + _action.caption + "\' executed on elements \'"
-			+ ids + "\'");
-	}
-
-
 	$(document).ready(function() {
 		// Initialize the action manager and add some actions to it
 		'.$prefix.'actionManager = new egwActionManager();
 		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
 
 		// Add some dummy actions to the actionManager
-		'.$prefix.'actionManager.updateActions(
-			[
-				{
-					"id": "folder_open",
-					"iconUrl": "imgs/folder.png",
-					"caption": "Open folder",
-					"onExecute": "javaScript:alertClicked",
-					"allowOnMultiple": false,
-					"type": "popup",
-					"default": true
-				},
-				{
-					"id": "file_view",
-					"iconUrl": "imgs/view.png",
-					"caption": "View",
-					"onExecute": "javaScript:alertClicked",
-					"allowOnMultiple": false,
-					"type": "popup",
-					"default": true
-				}
-			]
-		);
+		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
+			json_encode(nextmatch_widget::egw_actions($content['_actions'], $this->name))).');
 
-		var actionLinks = [];//"folder_open", "file_view"];
+		var actionLinks = ['.($content['_actions'] ? '"'.implode('","', isset($content['_actions_enabled']) ?
+			$content['_actions_enabled'] : array_keys($content['_actions'])).'"' : '').'];
 
 		// Create a new action object for each table row
 		// TODO: only apply function to outer level
-		$("table.egwGridView_grid>tbody>tr").each(function(index, elem) {
-
-			console.log(elem);
+		$("table.egwGridView_grid>tbody>tr").each(function(index, elem)
+		{
 			// Create a new action object
 			var obj = '.$prefix.'objectManager.addObject(elem.id, new nextmatchRowAOI(elem));
 
@@ -1300,7 +1275,8 @@ class etemplate extends boetemplate
 				}
 				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 				// fall-through
-			case 'passwd' :
+			case 'hidden':
+			case 'passwd':
 			case 'text':		// size: [length][,maxLength[,preg]]
 				$cell_opts = explode(',',$cell_options,3);
 				if ($readonly && (int)$cell_opts[0] >= 0)
@@ -1310,7 +1286,7 @@ class etemplate extends boetemplate
 				else
 				{
 					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
-					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : '',
+					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : ''),
 						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH'));
 
 					if (!$readonly)
@@ -2246,6 +2222,7 @@ class etemplate extends boetemplate
 				case 'float':
 				case 'passwd':
 				case 'text':
+				case 'hidden':
 				case 'textarea':
 				case 'colorpicker':
 					if ((string)$value === '' && $attr['needed'] && !$attr['blur'])

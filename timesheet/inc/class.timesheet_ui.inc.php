@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -45,10 +45,6 @@ class timesheet_ui extends timesheet_bo
 
 		$this->pm_integration = $this->config_data['pm_integration'];
 		$this->ts_viewtype = $this->config_data['ts_viewtype'];
-
-		// our javascript
-		// to be moved in a seperate file if rewrite is over
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
 	}
 
 	function view()
@@ -620,9 +616,9 @@ class timesheet_ui extends timesheet_bo
 		$total = parent::get_rows($query,$rows,$readonlys);
 
 		$ids = array();
-		foreach($rows as $row)
+		foreach($rows as &$row)
 		{
-			$ids[] = $row['ts_id'];
+			if ($row['ts_id'] > 0) $ids[] = $row['ts_id'];
 		}
 		if ($id_only)
 		{
@@ -691,6 +687,7 @@ class timesheet_ui extends timesheet_bo
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
 				$row['class'] = 'th';
 				$row['titleClass'] = 'titleSum';
+				unset($row['ts_id']);	// otherwise row would be selectable action-wise
 				continue;
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
@@ -779,27 +776,33 @@ class timesheet_ui extends timesheet_bo
 			$content['action'] = 'document';
 			$content['nm']['rows']['checked'] = array($id);
 		}
-		if ($content['action'] != '')
+		// support old actions
+		if ($content['action'])
 		{
-			if (!count($content['nm']['rows']['checked']) && !$content['use_all'])
+			$content['nm']['action'] = $content['action'];
+			$content['nm']['selected'] = $content['nm']['rows']['checked'];
+			$content['nm']['select_all'] = $content['nm']['select_all'] || $content['use_all'];
+		}
+		if ($content['nm']['action'])
+		{
+			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
-
 				$msg = lang('You need to select some timesheets first');
 			}
 			else
 			{
 				// Action has a parameter - cat_id, percent, etc
-				$multi_action = $content['action'];
+				$multi_action = $content['nm']['action'];
 				if (in_array($multi_action, array('cat')))
 				{
 					if(is_array($content[$multi_action]))
 					{
 						$content[$multi_action] = implode(',',$content[$multi_action]);
 					}
-					$content['action'] .= '_' . $content[$multi_action];
+					$content['nm']['action'] .= '_' . $content[$multi_action];
 				}
-				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
-				$success,$failed,$action_msg,'index',$msg))
+				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
+					$success,$failed,$action_msg,'index',$msg))
 				{
 					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
 				}
@@ -811,7 +814,7 @@ class timesheet_ui extends timesheet_bo
 		}
 
 		$content = array(
-			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
+//			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
 			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
@@ -833,6 +836,9 @@ class timesheet_ui extends timesheet_bo
 				'header_right'   => 'timesheet.index.add',
 				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
+				'row_id'         => 'ts_id',
+				'actions'        => $this->get_actions(),
+				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 			);
 		}
 		if($_GET['search'])
@@ -850,31 +856,79 @@ class timesheet_ui extends timesheet_bo
 		);
 		$content['nm']['no_status'] = count($sel_options['ts_status']) <= 1;	// 1 because of 'No status'
 
-		$status =array();
-		$sel_options['action'] ['delete']= lang('Delete Timesheet');
-		$sel_options['action']['cat'] = lang('Change category');
-		foreach ($this->status_labels as $status_id => $label_status)
-		{
-			$status['to_status_'.$status_id] = $label_status;
-		}
-		$sel_options['action'][lang('Modify the Status of the Timesheet')] = $status;
-		unset($status);
-
-		// Merge print
-		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'])
-                {
-                        $sel_options['action'][lang('Insert in document').':'] = timesheet_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir']);
-                }
-
 		if ($this->pm_integration != 'full')
 		{
 			$projects =& $this->query_list('ts_project');
 			if (!is_array($projects)) $projects = array();
 			$sel_options['ts_project'] = $projects + array(lang('No project'));
 		}
+
+		// to be moved in a seperate file if rewrite is over
+		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
+
 		// dont show [Export] button if app is not availible to the user or we are on php4
 		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys,$preserv);
+	}
+
+	/**
+	 * Get actions / context menu for index
+	 *
+	 * @return array see nextmatch_widget::egw_actions()
+	 */
+	private function get_actions()
+	{
+		$actions = array(
+			'view' => array(
+				'caption' => 'View',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=timesheet.timesheet_ui.view&ts_id=',
+				'popup' => egw_link::get_registry('timesheet', 'view_popup'),
+				'group' => $group=1,
+			),
+			'edit' => array(
+				'caption' => 'Edit',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=',
+				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'group' => $group,
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit',
+				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'group' => $group,
+			),
+			'cat' => nextmatch_widget::category_action(
+				'timesheet',++$group,'Change category','cat_'
+			),
+			'status' => array(
+				'icon' => 'apply',
+				'caption' => 'Modify status',
+				'group' => ++$group,
+				'children' => $this->status_labels,
+				'prefix' => 'to_status_',
+				'enabled' => (boolean)$this->status_labels,
+				'hideOnDisabled' => true,
+			),
+			'document' => array(
+				'caption' => lang('Insert in %1',egw_vfs::basename($GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'])),
+				'enabled' => (boolean)$GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'],
+				'hideOnDisabled' => true,
+				'group' => ++$group,
+			),
+			'documents' => timesheet_merge::document_action(
+				$GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'], $group
+			),
+			'delete' => array(
+				'caption' => 'Delete',
+				'confirm' => 'Delete this entry',
+				'group' => ++$group,
+			),
+		);
+
+		return $actions;
 	}
 
 	/**
@@ -967,7 +1021,7 @@ class timesheet_ui extends timesheet_bo
 			case 'document':
 				$msg = $this->download_document($checked,$settings);
 				$failed = count($checked);
-                                return false;
+				return false;
 		}
 
 		return !$failed;
@@ -1069,34 +1123,7 @@ class timesheet_ui extends timesheet_bo
 				"Export",400,400);
 			return false;
 		}
-
-		/**
-		 * Javascript handling for multiple entry actions
-		 */
-		function do_action(selbox)
-		{
-			if(selbox.value == "") return;
-			var prefix = selbox.id.substring(0,selbox.id.indexOf("["));
-			var popup = document.getElementById(prefix + "[" + selbox.value + "_popup]");
-			if(popup) {
-				popup.style.display = "block";
-				return;
-			}
-			selbox.form.submit();
-			selbox.value = "";
-		}
-
-		/**
-		 * Hide popup and clear values
-		 */
-		function hide_popup(element, div_id) {
-			var prefix = element.id.substring(0,element.id.indexOf("["));
-			var popup = document.getElementById(prefix+"["+div_id+"]");
-			if(popup) {
-				popup.style.display = "none";
-			}
-		}
-		</script>';
+</script>';
 	}
 
 	/**
@@ -1120,7 +1147,6 @@ class timesheet_ui extends timesheet_bo
 		{
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
-		require_once(EGW_INCLUDE_ROOT.'/timesheet/inc/class.timesheet_merge.inc.php');
 		$document_merge = new timesheet_merge();
 
 		return $document_merge->download($document,$ids);

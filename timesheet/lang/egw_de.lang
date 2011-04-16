@@ -26,7 +26,6 @@ custom fields	timesheet	de	Benutzerdefinierte Felder
 default document to insert entries	timesheet	de	Standarddokument zum Einfügen von Stundenzetteln
 delete this entry	timesheet	de	Diesen Eintrag löschen
 delete this status	timesheet	de	Diesen Status löschen
-delete timesheet	timesheet	de	Stundenzettel löschen
 deleted	timesheet	de	gelöscht
 deletes this field	timesheet	de	Dies Feld löschen
 determines the order the fields are displayed	timesheet	de	verändert die Reihenfolge der angezeigten Felder
@@ -65,6 +64,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	timesheet	de	Wählen Sie eine Export Definition für den Export
 imports entries into the timesheet from a csv file.	timesheet	de	Importiert Einträge für den Stundenzettel aus einer CSV Datei.
 insert	timesheet	de	einfügen
+insert in %1	timesheet	de	In %1 einfügen
 insert in document	timesheet	de	In ein Dokument einfügen
 invalid field: %1 = %2, it needs to be a number.	timesheet	de	Ungültiges Feld: %1 =%2, es muss eine Zahl sein
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	de	Ungültiger Benutze ID: %1 könnte eine falsche Feldzuordnung haben. %2 wird stattdessen verwendet.
@@ -79,7 +79,7 @@ links	timesheet	de	Verknüpfungen
 manage mapping	timesheet	de	Verwaltung der Feldzuordnung
 max length of the input [, length of the inputfield (optional)]	timesheet	de	maximale Länge der Eingabe[,Länge des Eingabefeldes (optional)]
 modified	timesheet	de	Geändert
-modify the status of the timesheet	timesheet	de	Status des Stundenzettels verändern
+modify status	timesheet	de	Status ändern
 name of current user, all other contact fields are valid too	timesheet	de	Name des aktuellen Benutzers, all anderen Kontaktfelder sind weiterhin gültig.
 new ticket submitted by %1 at %2	timesheet	de	Neues Ticket erstellt von %1 am %2
 new timesheet submitted by %1 at %2	timesheet	de	Neuer Stundenzettel von %1 am %2

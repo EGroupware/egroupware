@@ -501,7 +501,183 @@ class nextmatch_widget
 		}
 		$value['bottom'] = $value;	// copy the values for the bottom-bar
 
+		// pass actions and row_id to etemplate::show_grid()
+		$value['rows']['_actions'] =& $value['actions'];
+		$value['rows']['_row_id']  =& $value['row_id'];
+		$value['action'] = $value['selected'] = $value['select_all'] = null;	// nothing yet
+
 		return False;	// NO extra Label
+	}
+
+	/**
+	 * Return egw_actions
+	 *
+	 * The following attributes are understood for actions on eTemplate/PHP side:
+	 * - string 'id' id of the action (set as key not attribute!)
+	 * - string 'caption' name/label or action, get's automatic translated
+	 * - boolean 'no_lang' do NOT translate caption, default false
+	 * - string 'icon' icon, eg. 'edit' or 'infolog/task', if no app given app of template or API is used
+	 * - string 'iconUrl' full url of icon, better use 'icon'
+	 * - boolean 'allowOnMultiple' should action be shown if multiple lines are marked, default true!
+	 * - boolean 'enabled' is action available, default true!
+	 * - boolena 'hideOnDisabled' hide disabled actions, default false
+	 * - string 'type' type of action, default 'popup' for contenxt menus
+	 * - boolean 'default' is that action the default action, default false
+	 * - array  'children' array with actions of submenu
+	 * - int    'group' to group items, default all actions are in one group
+	 * - string 'onExecute' javascript to run, default 'javascript:nm_action' which runs action specified in nm_action attribute:
+	 * - string 'nm_action'
+	 *   + 'alert'  debug action, shows alert with action caption, id and id's of selected rows
+	 *   + 'submit' default action, sets nm[action], nm[selected]
+	 *   + 'location' redirects / set location.href to 'url' attribute
+	 *   + 'popup'  opens popup with url given in 'url' attribute
+	 * - string 'url' url for location or popup
+	 * - string 'target' target for location or popup
+	 * - string 'width' for popup
+	 * - string 'height' for popup
+	 *
+	 * That's what we should return looks JSON encoded like
+	 * [
+	 * 		{
+	 *			"id": "folder_open",
+	 *			"iconUrl": "imgs/folder.png",
+	 *			"caption": "Open folder",
+	 *			"onExecute": "javaScript:nm_action",
+	 *			"allowOnMultiple": false,
+	 *			"type": "popup",
+	 *			"default": true
+	 *		},
+	 * ]
+	 *
+	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
+	 * @param string $template_name='' name of the template, used as default for app name of images
+	 * @param string $prefix='' prefix for ids
+	 * @return array
+	 */
+	public static function egw_actions(array $actions=null, $template_name='', $prefix='')
+	{
+		// default icons for some common actions
+		static $default_icons = array(
+			'view' => 'view',
+			'edit' => 'edit',
+			'add'  => 'new',
+			'delete' => 'delete',
+			'cat'  => 'attach',		// add as category icon to api
+			'document' => 'etemplate/merge',
+		);
+
+		//echo "actions="; _debug_array($actions);
+		$egw_actions = array();
+		foreach((array)$actions as $id => $action)
+		{
+			// in case it's only selectbox  id => label pairs
+			if (!is_array($action)) $action = array('caption' => $action);
+			$action['id'] = $prefix.$id;
+
+			// set some defaults
+			if (!isset($action['type'])) $action['type'] = 'popup';
+			if (!isset($action['onExecute']))
+			{
+				$action['onExecute'] = 'javaScript:nm_action';	// defined in etemplate/js/nextmatch_action.js
+			}
+
+			// set default icon, if no other is specified
+			if (!isset($action['icon']) && isset($default_icons[$id]))
+			{
+				$action['icon'] = $default_icons[$id];
+			}
+			// use common eTemplate image semantics
+			if (!isset($action['iconUrl']) && !empty($action['icon']))
+			{
+				list($app,$img) = explode('/',$action['icon'],2);
+				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
+				{
+					$img = $action['icon'];
+					list($app) = explode('.', $template_name);
+				}
+				$action['iconUrl'] = common::find_image($app, $img);
+				unset($action['icon']);	// no need to submit it
+			}
+			// translate labels
+			if (!$action['no_lang']) $action['caption'] = lang($action['caption']);
+			unset($action['no_lang']);
+
+			if (isset($action['confirm']))
+			{
+				$action['confirm'] = lang($action['confirm']).(substr($action['confirm'],-1) != '?' ? '?' : '');
+			}
+
+			// link or popup action
+			if ($action['url'])
+			{
+				$action['url'] = egw::link('/index.php',$action['url']);
+				if ($action['popup'])
+				{
+					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);
+					unset($action['popup']);
+					$action['data']['nm_action'] = 'popup';
+				}
+				else
+				{
+					$action['data']['nm_action'] = 'location';
+				}
+			}
+
+			// add sub-menues
+			if ($action['children'])
+			{
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix']);
+				unset($action['prefix']);
+			}
+
+			static $egw_action_supported = array(	// attributes supported by egw_action
+				'id','caption','iconUrl','type','default','onExecute','group',
+				'enabled','allowOnMultiple','hideOnDisabled','data','children',
+			);
+			// add all not egw_action supported attributes to data
+			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
+			if (!$action['data']) unset($action['data']);
+			// only add egw_action attributes
+			$egw_actions[] = array_intersect_key($action, array_flip($egw_action_supported));
+		}
+		//echo "egw_actions="; _debug_array($egw_actions);
+		return $egw_actions;
+	}
+
+	/**
+	 * Action with submenu to set category
+	 *
+	 * Maybe category hierarchy should be returned as such, currently we return them in one menu idented by level
+	 *
+	 * @param string $app
+	 * @param int $group=0 see self::egw_actions
+	 * @param string $caption='Change category'
+	 * @param string $prefix='cat_' prefix category id to get action id
+	 * @return array like self::egw_actions
+	 */
+	public static function category_action($app, $group=0, $caption='Change category', $prefix='cat_')
+	{
+		$cat_actions = array();
+		$cat = new categories(null,$app);
+		foreach((array)$cat->return_sorted_array($start=0,$limit=false,$query='',$sort='ASC',$order='cat_name',$globals=true, $parent_id=0,$unserialize_data=true) as $cat)
+		{
+			$name = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+			if (categories::is_global($cat)) $name .= ' &#9830;';
+
+			$cat_actions[$cat['id']] = array(
+				'caption' => $name,
+				'no_lang' => true,
+			);
+		}
+		if (!$actions['cat']['children']) $actions['cat']['enabled'] = false;
+
+		return array(
+			'caption' => $caption,
+			'children' => $cat_actions,
+			'enabled' => (boolean)$cat_actions,
+			'group' => $group,
+			'prefix' => $prefix,
+		);
 	}
 
 	/**
@@ -973,6 +1149,11 @@ class nextmatch_widget
 		{
 			self::csv_export($extension_data);
 		}
+
+		// allows return selected as array
+		$value['selected'] = $value['selected'] === '' ? array() : boetemplate::csv_split($value['selected']);
+		$value['select_all'] = (boolean)$value['select_all'];
+
 		return True;
 	}
 

@@ -26,7 +26,6 @@ custom fields	timesheet	en	Custom fields
 default document to insert entries	timesheet	en	Default document to insert entries
 delete this entry	timesheet	en	Delete this entry
 delete this status	timesheet	en	Delete this status
-delete timesheet	timesheet	en	Delete Timesheet
 deleted	timesheet	en	deleted
 deletes this field	timesheet	en	deletes this field
 determines the order the fields are displayed	timesheet	en	determines the order the fields are displayed
@@ -65,6 +64,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the timesheet from a CSV File.
 insert	timesheet	en	insert
+insert in %1	timesheet	en	Insert in %1
 insert in document	timesheet	en	Insert in document
 invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.
@@ -79,7 +79,7 @@ links	timesheet	en	Links
 manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	max length of the input [, length of the inputfield (optional)]
 modified	timesheet	en	Modified
-modify the status of the timesheet	timesheet	en	Modify the Status of the Timesheet
+modify status	timesheet	en	Modify status
 name of current user, all other contact fields are valid too	timesheet	en	Name of current user, all other contact fields are valid too
 new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
 new timesheet submitted by %1 at %2	timesheet	en	New timesheet submitted by %1 at %2

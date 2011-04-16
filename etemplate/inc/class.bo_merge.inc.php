@@ -863,7 +863,8 @@ abstract class bo_merge
 	 *
 	 * @return List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dir) {
+	public static function get_documents($dir)
+	{
 		if (!$dir) return array();
 
 		$list = array();
@@ -872,7 +873,7 @@ abstract class bo_merge
 			foreach($files as $file)
 			{
 				// return only the mime-types we support
-				if (!self::is_implemented($file['mime'],substr($file['name'],-4))) continue;
+				if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
 
 				$list['document_'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
 			}
@@ -881,9 +882,32 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Get insert-in-document action
+	 *
+	 * @param string $dir
+	 * @param int $group see nextmatch_widget::egw_actions
+	 * @param string $caption='Insert in document'
+	 * @return array see nextmatch_widget::egw_actions
+	 */
+	public static function document_action($dir, $group=0, $caption='Insert in document')
+	{
+		$documents = self::get_documents($dir);
+
+		return array(
+			'icon' => 'etemplate/merge',
+			'caption' => $caption,
+			'children' => $documents,
+			'enabled' => (boolean)$documents,
+			'hideOnDisabled' => true,
+			'group' => $group,
+		);
+	}
+
+	/**
 	 * Get a list of supported extentions
 	 */
-	public static function get_file_extensions() {
+	public static function get_file_extensions()
+	{
 		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml');
 	}
 
