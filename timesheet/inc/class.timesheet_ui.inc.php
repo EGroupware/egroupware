@@ -773,8 +773,8 @@ class timesheet_ui extends timesheet_bo
 		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
 			list($id) = @each($content['nm']['rows']['document']);
-			$content['action'] = 'document';
-			$content['nm']['rows']['checked'] = array($id);
+			$content['nm']['action'] = 'document';
+			$content['nm']['selected'] = array($id);
 		}
 		// support old actions
 		if ($content['action'])
@@ -791,16 +791,6 @@ class timesheet_ui extends timesheet_bo
 			}
 			else
 			{
-				// Action has a parameter - cat_id, percent, etc
-				$multi_action = $content['nm']['action'];
-				if (in_array($multi_action, array('cat')))
-				{
-					if(is_array($content[$multi_action]))
-					{
-						$content[$multi_action] = implode(',',$content[$multi_action]);
-					}
-					$content['nm']['action'] .= '_' . $content[$multi_action];
-				}
 				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 					$success,$failed,$action_msg,'index',$msg))
 				{
@@ -883,14 +873,14 @@ class timesheet_ui extends timesheet_bo
 				'caption' => 'View',
 				'default' => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=timesheet.timesheet_ui.view&ts_id=',
+				'url' => 'menuaction=timesheet.timesheet_ui.view&ts_id=$id',
 				'popup' => egw_link::get_registry('timesheet', 'view_popup'),
 				'group' => $group=1,
 			),
 			'edit' => array(
 				'caption' => 'Edit',
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
 			),

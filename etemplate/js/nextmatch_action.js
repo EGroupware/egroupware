@@ -1,11 +1,12 @@
 /**
- * eGroupWare eTemplate nextmatch row action object interface
+ * EGroupware eTemplate nextmatch row action object interface
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
@@ -14,8 +15,10 @@
  * row.
  */
 
-// An action object interface for each nextmatch widget row - "inherits" from 
-// egwActionObjectInterface
+/**
+ * An action object interface for each nextmatch widget row - "inherits" from 
+ * egwActionObjectInterface
+ */
 function nextmatchRowAOI(_node)
 {
 	var aoi = new egwActionObjectInterface();
@@ -81,7 +84,7 @@ function nextmatchRowAOI(_node)
 }
 
 /**
- * Default action for nextmatch rows, runs action specified _action.nm_action: set nextmatch_widget::egw_actions()
+ * Default action for nextmatch rows, runs action specified _action.data.nm_action: see nextmatch_widget::egw_actions()
  * 
  * @param _action action object with attributes caption, id, nm_action, ...
  * @param _senders array of rows selected
@@ -109,8 +112,7 @@ function nm_action(_action, _senders)
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
 	{
-		url = _action.data.url;
-		if (url.substr(-1) == '=') url += ids;
+		url = _action.data.url.replace(/(\$|%24)id/,ids);
 	}
 	var target;
 	if (typeof _action.data.target != 'undefined') target = _action.data.target;
