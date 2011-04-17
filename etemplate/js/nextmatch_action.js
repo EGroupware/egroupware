@@ -114,8 +114,12 @@ function nm_action(_action, _senders)
 	{
 		url = _action.data.url.replace(/(\$|%24)id/,ids);
 	}
-	var target;
-	if (typeof _action.data.target != 'undefined') target = _action.data.target;
+
+	var target = null;
+	if (typeof _action.data.target != 'undefined')
+	{
+		target = _action.data.target;
+	}
 	
 	switch(_action.data.nm_action)
 	{
@@ -132,15 +136,17 @@ function nm_action(_action, _senders)
 			break;
 			
 		case 'submit':
+			var form = document.getElementsByName("eTemplate")[0];
+
 			document.getElementById('exec[nm][action]').value = _action.id;
 			document.getElementById('exec[nm][selected]').value = ids;
 			if (typeof _action.data.button != 'undefined')
 			{
-				submitit(eTemplate,'exec[nm][rows]['+_action.data.button+']['+ids+']');
+				submitit(form.context, 'exec[nm][rows]['+_action.data.button+']['+ids+']');
 			}
 			else
 			{
-				eTemplate.submit();
+				form.submit();
 			}
 			break;
 	}
