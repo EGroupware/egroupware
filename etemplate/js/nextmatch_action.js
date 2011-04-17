@@ -169,7 +169,7 @@ function nm_action(_action, _senders)
  */
 function nm_select_all(_action, _senders)
 {
-	document.getElementById('exec[nm][select_all]').value = _action.checked ? _action.hint : false;
+	document.getElementById('exec[nm][select_all]').value = _action.checked ? _action.hint : null;
 }
 
 /**
