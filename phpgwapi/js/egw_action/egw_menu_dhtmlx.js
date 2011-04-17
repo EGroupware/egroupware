@@ -23,9 +23,40 @@ function egwMenuImpl(_structure)
 		if (id)
 		{
 			var elem = self.dhtmlxmenu.getUserData(id, 'egw_menu');
+
 			if (elem && elem.onClick)
 			{
-				elem.onClick(elem);
+				if (elem.checkbox)
+				{
+					self.dhtmlxmenu.setContextMenuHideAllMode(false);
+				}
+
+				var res = elem.onClick(elem);
+
+				if (elem.checkbox)
+				{
+					var checked = null;
+					if (res == "checkbox:disable")
+					{
+						checked = false;
+					}
+					if (res == "checkbox:enable")
+					{
+						checked = true;
+					}
+
+					if (checked != null)
+					{
+						if (elem.groupIndex != 0)
+						{
+							self.dhtmlxmenu.setRadioChecked(id, checked);
+						}
+						else
+						{
+							self.dhtmlxmenu.setCheckboxState(id, checked);
+						}
+					}
+				}
 			}
 		}
 	});

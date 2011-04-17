@@ -349,7 +349,9 @@
 							"checkbox": true,
 							"checked": false,
 							"caption": "Test2",
-							"onExecute": alertClicked
+							"onExecute": function() {
+								return "checkbox:disable";
+							}
 						}
 					]
 				);

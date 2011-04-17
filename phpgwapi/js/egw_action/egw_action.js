@@ -222,9 +222,7 @@ egwAction.prototype.execute = function(_senders, _target)
 		_target == null;
 	}
 
-	this.onExecute.exec(this, _senders, _target);
-
-	return false;
+	return this.onExecute.exec(this, _senders, _target);
 }
 
 /**

@@ -324,7 +324,7 @@ function egwPopupActionImplementation()
 						item.set_onClick(function(elem) {
 							// Copy the "checked" state
 							elem.data.checked = elem.checked;
-							elem.data.execute(_selected, _target);
+							return elem.data.execute(_selected, _target);
 						});
 					}
 					else
