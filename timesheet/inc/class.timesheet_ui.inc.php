@@ -776,15 +776,9 @@ class timesheet_ui extends timesheet_bo
 			$content['nm']['action'] = 'document';
 			$content['nm']['selected'] = array($id);
 		}
-		// support old actions
-		if ($content['action'])
-		{
-			$content['nm']['action'] = $content['action'];
-			$content['nm']['selected'] = $content['nm']['rows']['checked'];
-			$content['nm']['select_all'] = $content['nm']['select_all'] || $content['use_all'];
-		}
 		if ($content['nm']['action'])
 		{
+			if ($content['use_all']) $content['nm']['select_all'] = $content['use_all'];	// legacy support
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some timesheets first');
