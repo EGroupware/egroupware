@@ -31,11 +31,11 @@ function egwMenuImpl(_structure)
 					self.dhtmlxmenu.setContextMenuHideAllMode(false);
 				}
 
-				elem.onClick(elem);
+				var res = elem.onClick(elem);
 
-				if (elem.checkbox)
+				if (elem.checkbox && (res === false || res === true))
 				{
-					var checked = elem.checked;
+					var checked = res;
 					if (elem.groupIndex != 0)
 					{
 						self.dhtmlxmenu.setRadioChecked(id, checked);
