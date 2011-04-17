@@ -55,8 +55,9 @@
 		</grid>
 	</template>
 	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.9.001">
-		<description id="action"/>
+		<hidden id="action"/>
 		<hidden id="selected"/>
+		<hidden id="select_all"/>
 		<grid width="100%">
 			<columns>
 				<column width="35%"/>
