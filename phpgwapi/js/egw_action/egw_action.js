@@ -102,7 +102,7 @@ egwAction.prototype.addAction = function(_type, _id, _caption, _iconUrl,
 	//Get the constructor for the given action type
 	if (!_type)
 	{
-		_type = "default";
+		_type = "popup";
 	}
 
 	// Only allow adding new actions, if this action class allows it.
@@ -148,7 +148,7 @@ egwAction.prototype.updateActions = function(_actions)
 				if (!action)
 				{
 					if (typeof elem.type == "undefined")
-						elem.type = "default";
+						elem.type = "popup";
 
 					var constructor = null;
 
