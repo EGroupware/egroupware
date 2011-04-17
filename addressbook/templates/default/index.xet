@@ -13,7 +13,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.003">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -48,19 +48,19 @@
 								<nextmatch-sortheader span="all" label="own sorting" id="n_fileas"/>
 							</row>
 							<row disabled="!@order=n_given">
-								<nextmatch-sortheader id="n_given" label="Firstname"/>
+								<nextmatch-sortheader label="Firstname" id="n_given"/>
 								<nextmatch-sortheader label="Name" id="n_family"/>
 							</row>
 							<row disabled="!@order=n_family">
 								<nextmatch-sortheader label="Name" id="n_family"/>
-								<nextmatch-sortheader id="n_given" label="Firstname"/>
+								<nextmatch-sortheader label="Firstname" id="n_given"/>
 							</row>
 							<row>
-								<nextmatch-sortheader id="org_name" label="Organisation" span="all"/>
+								<nextmatch-sortheader label="Organisation" span="all" id="org_name"/>
 							</row>
 							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-								<nextmatch-sortheader id="n_family" label="Name"/>
-								<nextmatch-sortheader id="n_given" label="Firstname" class="leftPad5"/>
+								<nextmatch-sortheader label="Name" id="n_family"/>
+								<nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
 							</row>
 							<row disabled="@order=n_fileas">
 								<nextmatch-sortheader span="all" label="own sorting" id="n_fileas"/>
@@ -70,23 +70,23 @@
 					<nextmatch-header label="role" id="role"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<nextmatch-header label="Photo" id="photo"/>
-					<nextmatch-header id="bday" label="Birthday"/>
+					<nextmatch-header label="Birthday" id="bday"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Business address" id="business"/>
 						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
-						<nextmatch-sortheader id="adr_one_postalcode" label="zip code"/>
+						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</vbox>
 					<nextmatch-header label="Home address" id="home"/>
 					<vbox options="0,0">
-						<nextmatch-header id="tel_work" label="Business phone"/>
+						<nextmatch-header label="Business phone" id="tel_work"/>
 						<nextmatch-header label="Mobile phone" id="tel_cell"/>
-						<nextmatch-header id="tel_home" label="Home phone"/>
+						<nextmatch-header label="Home phone" id="tel_home"/>
 						<description value="Fax"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-header id="url" label="Url"/>
+						<nextmatch-header label="Url" id="url"/>
 						<nextmatch-header label="Business email" id="email"/>
-						<nextmatch-header id="email_home" label="Home email"/>
+						<nextmatch-header label="Home email" id="email_home"/>
 					</vbox>
 					<nextmatch-customfields id="customfields"/>
 					<nextmatch-header label="Note" id="note"/>
@@ -98,114 +98,116 @@
 						<nextmatch-header label="Next date" id="calendar"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-sortheader id="contact_created" label="Created"/>
-						<nextmatch-sortheader id="contact_modified" label="Last modified"/>
+						<nextmatch-sortheader label="Created" id="contact_created"/>
+						<nextmatch-sortheader label="Last modified" id="contact_modified"/>
 					</vbox>
 					<hbox align="center" class="noPrint">
-						<description value="Actions" align="center"/>
-						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
+						<nextmatch-header align="center" label="Actions" id="legacy_actions"/>
+						<button label="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right" id="check_all" image="check" statustext="Check all"/>
 					</hbox>
 				</row>
 				<row class="$row_cont[cat_id]" valign="top">
-					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
-					<vbox options="0,0" id="${row}[id]">
-						<description id="${row}[line1]" no_lang="1"/>
-						<description id="${row}[line2]" no_lang="1"/>
-						<description id="${row}[org_unit]" no_lang="1"/>
-						<description id="${row}[title]" no_lang="1"/>
-						<description id="${row}[first_org]" no_lang="1"/>
+					<image label="$row_cont[type_label]" align="center" no_lang="1" src="${row}[type]"/>
+					<vbox id="${row}[id]" options="0,0">
+						<description no_lang="1" id="${row}[line1]"/>
+						<description no_lang="1" id="${row}[line2]"/>
+						<description no_lang="1" id="${row}[org_unit]"/>
+						<description no_lang="1" id="${row}[title]"/>
+						<description no_lang="1" id="${row}[first_org]"/>
 					</vbox>
 					<description id="${row}[role]"/>
 					<menulist>
-						<menupopup type="select-cat" options="1" id="${row}[cat_id]" readonly="true"/>
+						<menupopup type="select-cat" readonly="true" id="${row}[cat_id]" options="1"/>
 					</menulist>
 					<image src="${row}[photo]" class="iphoto"/>
-					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
+					<date readonly="true" id="${row}[bday]" options="Y-m-d"/>
 					<vbox options="0,0">
-						<description id="${row}[adr_one_countryname]" no_lang="1"/>
+						<description no_lang="1" id="${row}[adr_one_countryname]"/>
 						<menulist>
-							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
+							<menupopup type="select-country" readonly="true" id="${row}[adr_one_countrycode]"/>
 						</menulist>
-						<hbox options="0,0" orient="0">
+						<hbox orient="0" options="0,0">
 							<description no_lang="1" id="${row}[adr_one_locality]"/>
-							<description class="leftPad5" no_lang="1" id="${row}[adr_one_region]"/>
-							<description id="${row}[adr_one_postalcode]" class="leftPad5" value=" " no_lang="1"/>
+							<description no_lang="1" id="${row}[adr_one_region]" class="leftPad5"/>
+							<description no_lang="1" id="${row}[adr_one_postalcode]" value=" " class="leftPad5"/>
 						</hbox>
 						<description no_lang="1" id="${row}[adr_one_street]"/>
-						<description id="${row}[adr_one_street2]" no_lang="1"/>
+						<description no_lang="1" id="${row}[adr_one_street2]"/>
 					</vbox>
 					<vbox options="0,0">
-						<description id="${row}[adr_two_countryname]" no_lang="1"/>
+						<description no_lang="1" id="${row}[adr_two_countryname]"/>
 						<menulist>
-							<menupopup type="select-country" id="${row}[adr_two_countrycode]" readonly="true"/>
+							<menupopup type="select-country" readonly="true" id="${row}[adr_two_countrycode]"/>
 						</menulist>
 						<hbox options="0,0">
 							<description no_lang="1" id="${row}[adr_two_locality]"/>
 							<description no_lang="1" id="${row}[adr_two_region]" class="leftPad5"/>
-							<description id="${row}[adr_two_postalcode]" class="leftPad5" value=" " no_lang="1"/>
+							<description no_lang="1" id="${row}[adr_two_postalcode]" value=" " class="leftPad5"/>
 						</hbox>
 						<description no_lang="1" id="${row}[adr_two_street]"/>
-						<description id="${row}[adr_two_street2]" no_lang="1"/>
+						<description no_lang="1" id="${row}[adr_two_street2]"/>
 					</vbox>
 					<vbox options="0,0">
-						<url-phone id="${row}[tel_work]" class="telNumbers" readonly="true"/>
-						<url-phone id="${row}[tel_cell]" class="telNumbers" readonly="true"/>
-						<url-phone id="${row}[tel_home]" class="telNumbers" readonly="true"/>
-						<url-phone id="${row}[tel_fax]" readonly="true"/>
-						<description id="${row}[tel_prefered]" no_lang="1" options=",$row_cont[tel_prefered_link],,,calling,$cont[call_popup]"/>
+						<url-phone readonly="true" id="${row}[tel_work]" class="telNumbers"/>
+						<url-phone readonly="true" id="${row}[tel_cell]" class="telNumbers"/>
+						<url-phone readonly="true" id="${row}[tel_home]" class="telNumbers"/>
+						<url-phone readonly="true" id="${row}[tel_fax]"/>
+						<description no_lang="1" id="${row}[tel_prefered]" options=",$row_cont[tel_prefered_link],,,calling,$cont[call_popup]"/>
 					</vbox>
 					<vbox options="0,0">
-						<url class="fixedHeight" id="${row}[url]" readonly="true"/>
-						<url-email class="fixedHeight" id="${row}[email]" readonly="true"/>
-						<url-email class="fixedHeight" id="${row}[email_home]" readonly="true"/>
+						<url readonly="true" id="${row}[url]" class="fixedHeight"/>
+						<url-email readonly="true" id="${row}[email]" class="fixedHeight"/>
+						<url-email readonly="true" id="${row}[email_home]" class="fixedHeight"/>
 					</vbox>
 					<customfields-list rows="1" cols="1" id="$row" class="customfields"/>
-					<textbox multiline="true" no_lang="1" id="${row}[note]" readonly="true"/>
+					<textbox multiline="true" no_lang="1" readonly="true" id="${row}[note]"/>
 					<description id="${row}[distrib_lists]"/>
 					<menulist>
-						<menupopup id="${row}[owner]" readonly="true"/>
+						<menupopup readonly="true" id="${row}[owner]"/>
 					</menulist>
-					<description class="contactid" id="${row}[id]"/>
+					<description id="${row}[id]" class="contactid"/>
 					<vbox options="0,0">
 						<link id="${row}[last_link]"/>
 						<link id="${row}[next_link]"/>
 					</vbox>
 					<vbox options="0,0">
-						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
+						<date-time readonly="true" id="${row}[created]" class="noWrap"/>
 						<menulist>
-							<menupopup type="select-account" id="${row}[creator]" readonly="true"/>
+							<menupopup type="select-account" readonly="true" id="${row}[creator]"/>
 						</menulist>
-						<date-time id="${row}[modified]" readonly="true" class="noBreak"/>
+						<date-time readonly="true" id="${row}[modified]" class="noBreak"/>
 						<menulist>
-							<menupopup type="select-account" id="${row}[modifier]" readonly="true"/>
+							<menupopup type="select-account" readonly="true" id="${row}[modifier]"/>
 						</menulist>
 					</vbox>
-					<vbox options="0,0" class="noPrint">
-						<hbox options="0">
-							<image options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
-							<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=870,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
-							<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>
-							<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
+					<vbox class="noPrint" options="0,0">
+						<hbox>
+							<image label="View" options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" src="view"/>
+							<button label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=870,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]" image="edit"/>
+							<button label="Delete" onclick="return confirm('Delete this contact');" id="delete[$row_cont[id]]" image="delete" statustext="Delete this contact"/>
+							<checkbox align="right" id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action"/>
 						</hbox>
-						<hbox options="0">
-							<button id="document[$row_cont[id]]" image="etemplate/merge" label="Insert in document" class="image16"/>
-							<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16" label="Filemanager"/>
-							<button image="calendar/navbar" label="Add appointment" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=c$row_cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" id="calendar" class="image16"/>
+						<hbox>
+							<button label="Insert in document" id="document[$row_cont[id]]" image="etemplate/merge" class="image16"/>
+							<image label="Filemanager" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" src="filemanager/navbar" class="image16"/>
+							<button label="Add appointment" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=c$row_cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" id="calendar" image="calendar/navbar" class="image16"/>
 						</hbox>
 					</vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.index" template="" lang="" group="0" version="1.7.001">
+	<template id="addressbook.index" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<description span="all" class="redItalic" align="center" no_lang="1" id="msg"/>
+					<description/>
 					<description/>
 				</row>
 				<row disabled="1">
@@ -213,16 +215,14 @@
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
-					<nextmatch options="addressbook.index.rows" id="nm" span="all"/>
+					<nextmatch span="all" id="nm" options="addressbook.index.rows"/>
 				</row>
-				<row class="noPrint">
-					<button id="add" label="Add" statustext="Add a new contact" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-					<hbox align="right">
-						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
-						<menulist>
-							<menupopup onchange="do_action(this);" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
-						</menulist>
-						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
+				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
+					<button label="Add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="add" statustext="Add a new contact"/>
+					<hbox align="right" span="all">
+						<checkbox label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" id="use_all" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
+						<button no_lang="1" id="action" statustext="Select an action or addressbook to move to" label="Select an action or addressbook to move to..." onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some contacts first')); return false;;"/>
+						<button label="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
 					</hbox>
 				</row>
 			</rows>

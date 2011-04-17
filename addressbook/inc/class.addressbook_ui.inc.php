@@ -127,24 +127,25 @@ class addressbook_ui extends addressbook_bo
 			if (isset($content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
 			{
 				list($id) = @each($content['nm']['rows']['delete']);
-				$content['action'] = 'delete';
-				$content['nm']['rows']['checked'] = array($id);
+				$content['nm']['action'] = 'delete';
+				$content['nm']['selected'] = array($id);
 			}
 			if (isset($content['nm']['rows']['document']))	// handle insert in default document button like an action
 			{
 				list($id) = @each($content['nm']['rows']['document']);
-				$content['action'] = 'document';
-				$content['nm']['rows']['checked'] = array($id);
+				$content['nm']['action'] = 'document';
+				$content['nm']['selected'] = array($id);
 			}
-			if ($content['action'] !== '')
+			if ($content['nm']['action'] !== '')
 			{
-				if (!count($content['nm']['rows']['checked']) && !$content['use_all'] && $content['action'] != 'delete_list')
+				if ($content['use_all']) $content['nm']['select_all'] = $content['use_all'];	// legacy support
+				if (!count($content['nm']['selected']) && !$content['nm']['select_all'] && $content['nm']['action'] != 'delete_list')
 				{
 					$msg = lang('You need to select some contacts first');
 				}
 				else
 				{
-					if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
+					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
@@ -217,9 +218,11 @@ class addressbook_ui extends addressbook_bo
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
 				'do_email'       => $do_email,
-				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner',
+				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,legacy_actions',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
+				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
+				'row_id'         => 'id',
 			);
 			$csv_export = new addressbook_csv($this);
 			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ?
@@ -276,73 +279,11 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		$sel_options['action'] = array();
-		if ($do_email)
-		{
-			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-			$sel_options['action'] = array(
-				'email' => lang('Add %1',lang('business email')),
-				'email_home' => lang('Add %1',lang('home email')),
-			);
-		}
-		$sel_options['action'] += array(
-			'delete' => lang('Delete'),
-		);
-		if($content['nm']['col_filter']['tid'] == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
-		{
-			// User not allowed to purge
-			unset($sel_options['action']['delete']);
-		}
+		//$sel_options['action'] = $this->get_legacy_actions($do_email, $content['nm']['col_filter']['tid']);
+		$content['nm']['actions'] = $this->get_actions($do_email, $content['nm']['col_filter']['tid']);
 
-		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
-		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
-		{
-			if($content['nm']['col_filter']['tid'] == 'D')
-			{
-				$sel_options['action']['undelete'] = lang('Un-delete');
-			}
-			$sel_options['action'] += array(
-				'csv'    => lang('Export as CSV'),
-				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
-			);
-		}
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
-		$sel_options['action'] += array(
-			'merge'  => lang('Merge into first or account, deletes all other!'),
-			'cat_add' => lang('Add or delete Categories'), // add a categirie to multible addresses
-			'infolog_add' => lang('Add a new Infolog'),
-		);
-		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
-		{
-			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
-		}
-		if (($move2addressbooks=$this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
-		{
-			foreach ($move2addressbooks as $m2a_id => $m2alabel)
-			{
-				$m2a['move_to_'.$m2a_id] = $m2alabel;
-			}
-			$sel_options['action'][lang('Move to addressbook:')] = $m2a;
-		}
-		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
-		{
-			$lists = array();
-			foreach ($add_lists as $list_id => $label)
-			{
-				$lists['to_list_'.$list_id] = $label;
-			}
-			$sel_options['action'][lang('Add to distribution list:')] = $lists;
-			unset($lists);
-			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
-			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
-		}
-
-		if ($this->prefs['document_dir'])
-		{
-			$sel_options['action'][lang('Insert in document').':'] = $this->get_document_actions();
-		}
-		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 
 		// dont show tid-selection if we have only one content_type
 		// be a bit more sophisticated asbout it
@@ -389,6 +330,289 @@ class addressbook_ui extends addressbook_bo
 		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
 		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
 			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
+	}
+
+	/**
+	 * Get actions / context menu items
+	 *
+	 * @param boolean $do_email
+	 */
+	private function get_actions($do_email=false, $tid_filter=null)
+	{
+		$actions = array(
+			'view' => array(
+				'caption' => 'View',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id',
+				'popup' => egw_link::get_registry('addressbook', 'view_popup'),
+				'group' => $group=1,
+			),
+			'edit' => array(
+				'caption' => 'Edit',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=',
+				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				'group' => $group,
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'url' => 'menuaction=addressbook.addressbook_ui.edit',
+				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				'group' => $group,
+			),
+		);
+		if ($do_email)
+		{
+			$actions += array(
+				'email' => array(
+					'caption' => lang('Add %1',lang('business email')),
+					'no_lang' => true,
+					'group' => ++$group,
+				),
+				'email_home' => array(
+					'caption' => lang('Add %1',lang('home email')),
+					'no_lang' => true,
+					'group' => $group,
+				),
+			);
+		}
+
+		++$group;	// other AB related stuff group: lists, AB's, categories
+		// categories submenu
+		$actions['cat'] = array(
+			'caption' => 'Categories',
+			'group' => $group,
+			'children' => array(
+				'cat_add' => nextmatch_widget::category_action(
+					'addressbook',$group,'Add category', 'cat_add_'
+				)+array('icon' => 'foldertree_nolines_plus'),
+				'cat_del' => nextmatch_widget::category_action(
+					'addressbook',$group,'Delete category', 'cat_del_'
+				)+array('icon' => 'foldertree_nolines_minus'),
+				'cat_edit' => array(
+					'caption' => 'Edit categories',
+					'url' => 'menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True',
+					'icon' => 'edit',
+					'group' => $group,
+				),
+			),
+		);
+		if (!$GLOBALS['egw_info']['user']['apps']['preferences']) unset($actions['cats']['children']['cat_edit']);
+		// Submenu for all distributionlist stuff
+		$actions['lists'] = array(
+			'caption' => 'Distribution lists',
+			'children' => array(
+				'list_add' => array(
+					'caption' => 'Add a new list',
+					'icon' => 'new',
+					'onExecute' => 'javascript:add_new_list',
+				),
+			),
+			'group' => $group,
+		);
+		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
+		{
+			$actions['lists']['children'] += array(
+				'to_list' => array(
+					'caption' => 'Add to distribution list',
+					'children' => $add_lists,
+					'prefix' => 'to_list_',
+					'icon' => 'foldertree_nolines_plus',
+				),
+				'remove_from_list' => array(
+					'caption' => 'Remove from distribution list',
+					'confirm' => 'Remove selected contacts from distribution list',
+					'icon' => 'foldertree_nolines_minus',
+				),
+				'delete_list' => array(
+					'caption' => 'Delete selected distribution list!',
+					'confirm' => 'Delete selected distribution list!',
+					'icon' => 'delete',
+				),
+			);
+		}
+		// move to AB
+		if (($move2addressbooks = $this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
+		{
+			$actions['move_to'] = array(
+				'caption' => 'Move to addressbook',
+				'children' => $move2addressbooks,
+				'prefix' => 'move_to_',
+				'group' => $group,
+			);
+		}
+		$actions['merge'] = array(
+			'caption' => 'Merge contacts',
+			'confirm' => 'Merge into first or account, deletes all other!',
+			'hint' => 'Merge into first or account, deletes all other!',
+			'group' => $group,
+		);
+
+		++$group;	// integration with other apps: infolog, calendar, filemanager
+		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			$actions['infolog_app'] = array(
+				'caption' => 'InfoLog',
+				'icon' => 'infolog/navbar',
+				'group' => $group,
+				'children' => array(
+					'infolog' => array(
+						'caption' => lang('View linked InfoLog entries'),
+						'icon' => 'infolog/navbar',
+					),
+					'infolog_add' => array(
+						'caption' => 'Add a new Infolog',
+						'icon' => 'new',
+					),
+				)
+			);
+		}
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$actions['calendar'] = array(
+				'icon' => 'calendar/navbar',
+				'caption' => 'Add appointment',
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
+				'popup' => egw_link::get_registry('calendar', 'add_popup'),
+				'group' => $group,
+			);
+		}
+		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$actions['filemanager'] = array(
+				'icon' => 'filemanager/navbar',
+				'caption' => 'Filemanager',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'group' => $group,
+			);
+		}
+
+		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
+		{
+			$actions['export'] = array(
+				'caption' => 'Export',
+				'icon' => 'filesave',
+				'group' => ++$group,
+				'children' => array(
+					'csv'    => 'Export as CSV',
+					'vcard'  => 'Export as VCard',
+				),
+			);
+		}
+
+		if ($this->prefs['document_dir'])
+		{
+			$actions += array(
+				'document' => array(
+					'caption' => lang('Insert in %1',egw_vfs::basename($GLOBALS['egw_info']['user']['preferences']['addressbook']['default_document'])),
+					'enabled' => (boolean)$GLOBALS['egw_info']['user']['preferences']['addressbook']['default_document'],
+					'hideOnDisabled' => true,
+					'group' => ++$group,
+				),
+				'documents' => timesheet_merge::document_action(
+					$GLOBALS['egw_info']['user']['preferences']['addressbook']['document_dir'], $group
+				),
+			);
+		}
+
+		++$group;
+		if (!($tid_filter == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge'))
+		{
+			$actions['delete'] = array(
+				'caption' => 'Delete',
+				'confirm' => 'Delete this contact',
+				'group' => $group,
+			);
+		}
+		if($tid_filter == 'D')
+		{
+			$actions['undelete'] = array(
+				'caption' => 'Un-delete',
+				'group' => $group,
+			);
+		}
+
+		//_debug_array($actions);
+		return $actions;
+	}
+
+	/**
+	 * Get actions / context menu items
+	 *
+	 * @param boolean $do_email
+	 */
+	private function get_legacy_actions($do_email=false, $tid_filter=null)
+	{
+		$actions = array();
+		if ($do_email)
+		{
+			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+			$actions = array(
+				'email' => lang('Add %1',lang('business email')),
+				'email_home' => lang('Add %1',lang('home email')),
+			);
+		}
+		$actions += array(
+			'delete' => lang('Delete'),
+		);
+		if($tid_filter == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
+		{
+			// User not allowed to purge
+			unset($actions['delete']);
+		}
+
+		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
+		{
+			if($tid_filter == 'D')
+			{
+				$actions['undelete'] = lang('Un-delete');
+			}
+			$actions += array(
+				'csv'    => lang('Export as CSV'),
+				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
+			);
+		}
+		$actions += array(
+			'merge'  => lang('Merge into first or account, deletes all other!'),
+			'cat_add' => lang('Add or delete Categories'), // add a categirie to multible addresses
+			'infolog_add' => lang('Add a new Infolog'),
+		);
+		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			$actions['infolog'] = lang('View linked InfoLog entries');
+		}
+		if (($move2addressbooks=$this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
+		{
+			foreach ($move2addressbooks as $m2a_id => $m2alabel)
+			{
+				$m2a['move_to_'.$m2a_id] = $m2alabel;
+			}
+			$actions[lang('Move to addressbook:')] = $m2a;
+		}
+		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
+		{
+			$lists = array();
+			foreach ($add_lists as $list_id => $label)
+			{
+				$lists['to_list_'.$list_id] = $label;
+			}
+			$actions[lang('Add to distribution list:')] = $lists;
+			unset($lists);
+			$actions['remove_from_list'] = lang('Remove selected contacts from distribution list');
+			$actions['delete_list'] = lang('Delete selected distribution list!');
+		}
+
+		if ($this->prefs['document_dir'])
+		{
+			$actions[lang('Insert in document').':'] = $this->get_document_actions();
+		}
+		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($actions['export']);
+
+		//_debug_array($actions);
+		return $actions;
 	}
 
 	/**
@@ -1083,10 +1307,8 @@ class addressbook_ui extends addressbook_bo
 
 		$readonlys = array();
 		$photos = $homeaddress = $roles = $notes = false;
-		foreach($rows as $n => $val)
+		foreach($rows as $n => &$row)
 		{
-			$row =& $rows[$n];
-
 			$given = $row['n_given'] ? $row['n_given'] : ($row['n_prefix'] ? $row['n_prefix'] : '');
 
 			switch($order)
@@ -2059,8 +2281,9 @@ class addressbook_ui extends addressbook_bo
 			return false;
 		}
 
-		function add_new_list(owner)
+		function add_new_list()
 		{
+			var owner=document.getElementById("exec[nm][filter]").value;
 			var name = window.prompt("'.lang('Name for the distribution list').'");
 			if (name)
 			{
