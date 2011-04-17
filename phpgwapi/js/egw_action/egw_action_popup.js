@@ -323,8 +323,17 @@ function egwPopupActionImplementation()
 					{
 						item.set_onClick(function(elem) {
 							// Copy the "checked" state
-							elem.data.checked = elem.checked;
-							return elem.data.execute(_selected, _target);
+							if (typeof elem.data.checked != "undefined")
+							{
+								elem.data.checked = elem.checked;
+							}
+
+							elem.data.execute(_selected, _target);
+
+							if (typeof elem.data.checkbox != "undefined" && elem.data.checkbox)
+							{
+								return elem.data.checked;
+							}
 						});
 					}
 					else
