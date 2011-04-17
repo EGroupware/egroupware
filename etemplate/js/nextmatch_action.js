@@ -100,13 +100,18 @@ function nm_action(_action, _senders)
 		ids += (_senders[i].id.indexOf(',') >= 0 ? '"'+_senders[i].id.replace(/"/g,'""')+'"' : _senders[i].id) + 
 			((i < _senders.length - 1) ? "," : "");
 	}
-	console.log(_action);
-	console.log(_senders);
+	//console.log(_action); console.log(_senders);
 
-	// let user confirm the action first
-	if (typeof _action.data.confirm != 'undefined')
+	var select_all = document.getElementById('exec[nm][select_all]');
+
+	// let user confirm the action first (if not select_all set and nm_action == 'submit'  --> confirmed later)
+	if (!(select_all && select_all.value && _action.data.nm_action == 'submit') &&
+		typeof _action.data.confirm != 'undefined')
 	{
-		if (!confirm(_action.data.confirm)) return;
+		var confirm_msg = _senders.length > 1 && typeof _action.data.confirm_multiple != 'undefined' ?
+			_action.data.confirm_multiple : _action.data.confirm;
+
+		if (!confirm(confirm_msg)) return;
 	}
 	
 	var url = '#';
@@ -136,8 +141,12 @@ function nm_action(_action, _senders)
 			break;
 			
 		case 'submit':
+			// let user confirm select-all
+			if (select_all && select_all.value)
+			{
+				if (!confirm(select_all.value)) return;
+			}
 			var form = document.getElementsByName("eTemplate")[0];
-
 			document.getElementById('exec[nm][action]').value = _action.id;
 			document.getElementById('exec[nm][selected]').value = ids;
 			if (typeof _action.data.button != 'undefined')
@@ -150,4 +159,15 @@ function nm_action(_action, _senders)
 			}
 			break;
 	}
+}
+
+/**
+ * Callback for select_all checkbox, use hint to confirm all nm_action='submit' before submitting in nm_action()
+ * 
+ * @param _action
+ * @param _senders
+ */
+function nm_select_all(_action, _senders)
+{
+	document.getElementById('exec[nm][select_all]').value = _action.checked ? _action.hint : false;
 }

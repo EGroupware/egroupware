@@ -778,10 +778,9 @@ class timesheet_ui extends timesheet_bo
 		}
 		if ($content['nm']['action'])
 		{
-			if ($content['use_all']) $content['nm']['select_all'] = $content['use_all'];	// legacy support
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
-				$msg = lang('You need to select some timesheets first');
+				$msg = lang('You need to select some entries first!');
 			}
 			else
 			{
@@ -798,7 +797,7 @@ class timesheet_ui extends timesheet_bo
 		}
 
 		$content = array(
-//			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
+			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
 			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
@@ -821,10 +820,12 @@ class timesheet_ui extends timesheet_bo
 				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
-				'actions'        => $this->get_actions(),
+				//'actions'        => $this->get_actions(),
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 			);
 		}
+		$content['nm']['actions'] = $this->get_actions();
+
 		if($_GET['search'])
 		{
 			$content['nm']['search'] = $_GET['search'];
@@ -858,6 +859,8 @@ class timesheet_ui extends timesheet_bo
 	/**
 	 * Get actions / context menu for index
 	 *
+	 * Changes here, require to log out, as $content['nm'] get stored in session!
+	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
 	private function get_actions()
@@ -884,13 +887,20 @@ class timesheet_ui extends timesheet_bo
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
 			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'onExecute' => 'javaScript:nm_select_all',	// uses hint to confirm all nm_action='submit'
+				'hint' => 'Apply the action on the whole query, NOT only the shown timesheets!!!',
+				'group' => ++$group,
+			),
 			'cat' => nextmatch_widget::category_action(
 				'timesheet',++$group,'Change category','cat_'
 			),
 			'status' => array(
 				'icon' => 'apply',
 				'caption' => 'Modify status',
-				'group' => ++$group,
+				'group' => $group,
 				'children' => $this->status_labels,
 				'prefix' => 'to_status_',
 				'enabled' => (boolean)$this->status_labels,
@@ -908,6 +918,7 @@ class timesheet_ui extends timesheet_bo
 			'delete' => array(
 				'caption' => 'Delete',
 				'confirm' => 'Delete this entry',
+				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
 			),
 		);

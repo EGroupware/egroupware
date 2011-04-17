@@ -4,9 +4,7 @@
 2 month ago	timesheet	de	Vor 2 Monaten
 2 years ago	timesheet	de	Vor 2 Jahren
 3 years ago	timesheet	de	Vor 3 Jahren
-actions	timesheet	de	Aktionen
 all projects	timesheet	de	Alle Projekte
-all status	timesheet	de	Alle Status
 and its members	timesheet	de	und die Mitglieder
 applies the changes	timesheet	de	Änderungen durchführen
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur die angezeigten Stundenzettel!!
@@ -24,10 +22,9 @@ creates a new field	timesheet	de	neues Feld anlegen
 creating new entry	timesheet	de	neuen Eintrag anlegen
 custom fields	timesheet	de	Benutzerdefinierte Felder
 default document to insert entries	timesheet	de	Standarddokument zum Einfügen von Stundenzetteln
-delete this entry	timesheet	de	Diesen Eintrag löschen
 delete this status	timesheet	de	Diesen Status löschen
 deleted	timesheet	de	gelöscht
-deletes this field	timesheet	de	Dies Feld löschen
+deletes this field	timesheet	de	Dieses Feld löschen
 determines the order the fields are displayed	timesheet	de	verändert die Reihenfolge der angezeigten Felder
 directory with documents to insert entries	timesheet	de	Verzeichnis mit Dokumenten zum Einfügen.
 document '%1' does not exist or is not readable for you!	timesheet	de	Datei '%1' steht nicht zur Verfügung oder ist nicht für Sie zum lesen freigegeben!
@@ -107,7 +104,6 @@ saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fü
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	einen status auswählen
-select action	timesheet	de	Bitte eine Aktion auswählen
 select infolog	timesheet	de	Infolog auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
 select the predefined status, whan creating a new timesheet	preferences	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
@@ -116,6 +112,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengen
 start	timesheet	de	Start
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
+status	timesheet	de	Status
 status deleted.	timesheet	de	Status gelöscht
 status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert
@@ -137,13 +134,10 @@ timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Open Off
 timesheet status-%1 '%2' added.	timesheet	de	Stundenzettel Status %1 '%2' hinzugefügt.
 timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht
-tracker	timesheet	de	Verfolgungssystem
 unitprice	timesheet	de	Preis pro Einheit
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	de	Verwenden Sie diesen Platzhalter für den den Seriendruck. Fügen Sie den Inhalt, der wiederholt werden soll, zwischen zwei Platzhaltern ein.
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
-whole query	timesheet	de	gesamte Abfrage
 yesterday	timesheet	de	Gestern
-you need to select some timesheets first	timesheet	de	Sie müssen zuerst Datensätze auswählen
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	de	Ihre Datenbank ist NICHT aktuell (%1 statt %2), bitte rufen sie %3setup%4 auf um die Datenbank zu aktualisieren.

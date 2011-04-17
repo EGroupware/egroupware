@@ -67,7 +67,7 @@
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
-					<nextmatch-filterheader id="ts_status" onchange="1" options="All status"/>
+					<nextmatch-filterheader id="ts_status" onchange="1" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox class="noPrint">
 						<nextmatch-header label="Actions" class="noPrint" align="right" id="legacy_actions"/>
@@ -130,8 +130,7 @@
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
-						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown timesheets!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown timesheets!!!"/>
-						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some timesheets first')); return false;;"/>
+						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
 				</row>

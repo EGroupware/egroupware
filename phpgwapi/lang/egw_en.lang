@@ -33,6 +33,7 @@ account is expired	common	en	Account is expired
 accounts	common	en	Accounts
 acl	common	en	ACL
 action	common	en	Action
+actions	common	en	Actions
 active	common	en	Active
 add	common	en	Add
 add %1 category for	common	en	Add %1 category for
@@ -195,6 +196,8 @@ default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
 delete	common	en	Delete
 delete row	common	en	Delete row
+delete these entries	common	en	Delete these entries
+delete this entry	common	en	Delete this entry
 denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
@@ -599,6 +602,7 @@ search or select accounts	common	en	search or select accounts
 second	common	en	second
 section	common	en	Section
 select	common	en	Select
+select action	common	en	Select action
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select Category
 select date	common	en	Select date
@@ -780,6 +784,7 @@ you have successfully logged out	common	en	You have successfully logged out
 you need to %1set your timezone preference%2.	common	en	You need to %1set your timezone preference%2.
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an eGroupWare administrator to access this functionality!
+you need to select some entries first!	common	en	You need to select some entries first!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You've tried to open the eGroupWare application: %1, but you have no permission to access this application.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent

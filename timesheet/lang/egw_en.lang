@@ -4,9 +4,7 @@
 2 month ago	timesheet	en	2 month ago
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
-actions	timesheet	en	Actions
 all projects	timesheet	en	All projects
-all status	timesheet	en	All status
 and its members	timesheet	en	and its members
 applies the changes	timesheet	en	applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!!!
@@ -24,7 +22,6 @@ creates a new field	timesheet	en	creates a new field
 creating new entry	timesheet	en	creating new entry
 custom fields	timesheet	en	Custom fields
 default document to insert entries	timesheet	en	Default document to insert entries
-delete this entry	timesheet	en	Delete this entry
 delete this status	timesheet	en	Delete this status
 deleted	timesheet	en	deleted
 deletes this field	timesheet	en	deletes this field
@@ -107,7 +104,6 @@ saves this entry and add a new one	timesheet	en	Saves this entry and add a new o
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	select a status of the timesheet
-select action	timesheet	en	Select action
 select infolog	timesheet	en	select Infolog
 select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
 select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, whan creating a new timesheet
@@ -116,6 +112,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity s
 start	timesheet	en	Start
 starttime	timesheet	en	Starttime
 starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
+status	timesheet	en	Status
 status deleted.	timesheet	en	Status deleted.
 status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
@@ -137,13 +134,10 @@ timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
 timesheet status-%1 '%2' added.	timesheet	en	Timesheet Status-%1 '%2' added.
 timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
 timesheet-%1 deleted.	timesheet	en	Timesheet-%1 deleted.
-tracker	timesheet	en	Tracker
 unitprice	timesheet	en	Unitprice
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for selectbox
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
-whole query	timesheet	en	whole query
 yesterday	timesheet	en	Yesterday
-you need to select some timesheets first	timesheet	en	You need to select some timesheets first
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	en	Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update your database.

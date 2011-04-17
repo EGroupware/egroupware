@@ -33,6 +33,7 @@ account is expired	common	de	Benutzerkennung ist abgelaufen
 accounts	common	de	Benutzerkonten
 acl	common	de	ACL
 action	common	de	Aktion
+actions	common	de	Befehle
 active	common	de	Aktiv
 add	common	de	Hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
@@ -195,6 +196,8 @@ default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 delete	common	de	Löschen
 delete row	common	de	Zeile löschen
+delete these entries	common	de	Diese Einträge löschen
+delete this entry	common	de	Diesen Eintrag löschen
 denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
@@ -598,6 +601,7 @@ search or select accounts	common	de	Suchen und auswählen von Benutzern
 second	common	de	Sekunden
 section	common	de	Sektion
 select	common	de	Auswählen
+select action	common	de	Befehl auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
@@ -779,6 +783,7 @@ you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitzone in den Einstellungen setzen%2
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
+you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet

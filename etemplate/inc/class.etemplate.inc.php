@@ -979,9 +979,9 @@ class etemplate extends boetemplate
 		'.$prefix.'actionManager = new egwActionManager();
 		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
 
-		// Add some dummy actions to the actionManager
 		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
 			json_encode(nextmatch_widget::egw_actions($content['_actions'], $this->name))).');
+		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
 
 		var actionLinks = ['.($content['_actions'] ? '"'.implode('","', isset($content['_actions_enabled']) ?
 			$content['_actions_enabled'] : array_keys($content['_actions'])).'"' : '').'];

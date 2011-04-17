@@ -528,13 +528,15 @@ class nextmatch_widget
 	 * - string 'onExecute' javascript to run, default 'javascript:nm_action' which runs action specified in nm_action attribute:
 	 * - string 'nm_action'
 	 *   + 'alert'  debug action, shows alert with action caption, id and id's of selected rows
-	 *   + 'submit' default action, sets nm[action], nm[selected]
+	 *   + 'submit' default action, sets nm[action], nm[selected] and nm[select_all]
 	 *   + 'location' redirects / set location.href to 'url' attribute
 	 *   + 'popup'  opens popup with url given in 'url' attribute
 	 * - string 'url' url for location or popup
 	 * - string 'target' target for location or popup
 	 * - string 'width' for popup
 	 * - string 'height' for popup
+	 * - string 'confirm' confirmation message
+	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
 	 *
 	 * That's what we should return looks JSON encoded like
 	 * [
@@ -574,13 +576,6 @@ class nextmatch_widget
 			if (!is_array($action)) $action = array('caption' => $action);
 			$action['id'] = $prefix.$id;
 
-			// set some defaults
-			if (!isset($action['type'])) $action['type'] = 'popup';
-			if (!isset($action['onExecute']))
-			{
-				$action['onExecute'] = 'javaScript:nm_action';	// defined in etemplate/js/nextmatch_action.js
-			}
-
 			// set default icon, if no other is specified
 			if (!isset($action['icon']) && isset($default_icons[$id]))
 			{
@@ -599,12 +594,19 @@ class nextmatch_widget
 				unset($action['icon']);	// no need to submit it
 			}
 			// translate labels
-			if (!$action['no_lang']) $action['caption'] = lang($action['caption']);
+			if (!$action['no_lang'])
+			{
+				$action['caption'] = lang($action['caption']);
+				if ($action['hint']) $action['hint'] = lang($action['hint']);
+			}
 			unset($action['no_lang']);
 
-			if (isset($action['confirm']))
+			foreach(array('confirm','confirm_multiple') as $confirm)
 			{
-				$action['confirm'] = lang($action['confirm']).(substr($action['confirm'],-1) != '?' ? '?' : '');
+				if (isset($action[$confirm]))
+				{
+					$action[$confirm] = lang($action[$confirm]).(substr($action[$confirm],-1) != '?' ? '?' : '');
+				}
 			}
 
 			// link or popup action
@@ -633,6 +635,7 @@ class nextmatch_widget
 			static $egw_action_supported = array(	// attributes supported by egw_action
 				'id','caption','iconUrl','type','default','onExecute','group',
 				'enabled','allowOnMultiple','hideOnDisabled','data','children',
+				'hint','checkbox','checked','radioGroup',
 			);
 			// add all not egw_action supported attributes to data
 			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
