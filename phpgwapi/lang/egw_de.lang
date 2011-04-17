@@ -195,6 +195,7 @@ default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 delete	common	de	Löschen
+delete category	common	de	Kategorie entfernen
 delete row	common	de	Zeile löschen
 delete these entries	common	de	Diese Einträge löschen
 delete this entry	common	de	Diesen Eintrag löschen
@@ -342,6 +343,8 @@ indonesia	common	de	INDONESIEN
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
 insert column after	common	de	Spalte danach einfügen
 insert column before	common	de	Spalte davor einfügen
+insert in %1	common	de	In %1 einfügen
+insert in dokument	common	de	In Dokument einfügen
 insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
 international	common	de	International

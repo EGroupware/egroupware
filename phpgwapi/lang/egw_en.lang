@@ -195,6 +195,7 @@ default category	common	en	Default Category
 default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
 delete	common	en	Delete
+delete category	common	en	Delete category
 delete row	common	en	Delete row
 delete these entries	common	en	Delete these entries
 delete this entry	common	en	Delete this entry
@@ -342,6 +343,8 @@ indonesia	common	en	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
 insert column after	common	en	Insert column after
 insert column before	common	en	Insert column before
+insert in %1	common	en	Insert in %1
+insert in dokument	common	en	Insert in dokument
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 international	common	en	International

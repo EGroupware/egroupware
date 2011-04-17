@@ -279,7 +279,6 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		//$sel_options['action'] = $this->get_legacy_actions($do_email, $content['nm']['col_filter']['tid']);
 		$content['nm']['actions'] = $this->get_actions($do_email, $content['nm']['col_filter']['tid']);
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
@@ -335,7 +334,10 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * Get actions / context menu items
 	 *
-	 * @param boolean $do_email
+	 * @param boolean $do_email=false
+	 * @param string $tid_filter=null
+	 * @todo org-view uses slightly different actions
+	 * @return array see nextmatch_widget::get_actions()
 	 */
 	private function get_actions($do_email=false, $tid_filter=null)
 	{
@@ -354,6 +356,8 @@ class addressbook_ui extends addressbook_bo
 				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=',
 				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
 				'group' => $group,
+				'enabled' => 'javaScript:nm_not_disableClass',
+				'disableClass' => 'rowNoEdit',
 			),
 			'add' => array(
 				'caption' => 'Add',
@@ -361,7 +365,15 @@ class addressbook_ui extends addressbook_bo
 				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
 				'group' => $group,
 			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'onExecute' => 'javaScript:nm_select_all',	// uses hint to confirm all nm_action='submit'
+				'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
+				'group' => ++$group,
+			),
 		);
+
 		if ($do_email)
 		{
 			$actions += array(
@@ -446,6 +458,7 @@ class addressbook_ui extends addressbook_bo
 			'caption' => 'Merge contacts',
 			'confirm' => 'Merge into first or account, deletes all other!',
 			'hint' => 'Merge into first or account, deletes all other!',
+			'allowOnMultiple' => 'only',
 			'group' => $group,
 		);
 
@@ -523,7 +536,10 @@ class addressbook_ui extends addressbook_bo
 			$actions['delete'] = array(
 				'caption' => 'Delete',
 				'confirm' => 'Delete this contact',
+				'confirm_multiple' => 'Delete these entries',
 				'group' => $group,
+				'enabled' => 'javaScript:nm_not_disableClass',
+				'disableClass' => 'rowNoDelete',
 			);
 		}
 		if($tid_filter == 'D')
@@ -533,83 +549,6 @@ class addressbook_ui extends addressbook_bo
 				'group' => $group,
 			);
 		}
-
-		//_debug_array($actions);
-		return $actions;
-	}
-
-	/**
-	 * Get actions / context menu items
-	 *
-	 * @param boolean $do_email
-	 */
-	private function get_legacy_actions($do_email=false, $tid_filter=null)
-	{
-		$actions = array();
-		if ($do_email)
-		{
-			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-			$actions = array(
-				'email' => lang('Add %1',lang('business email')),
-				'email_home' => lang('Add %1',lang('home email')),
-			);
-		}
-		$actions += array(
-			'delete' => lang('Delete'),
-		);
-		if($tid_filter == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
-		{
-			// User not allowed to purge
-			unset($actions['delete']);
-		}
-
-		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
-		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
-		{
-			if($tid_filter == 'D')
-			{
-				$actions['undelete'] = lang('Un-delete');
-			}
-			$actions += array(
-				'csv'    => lang('Export as CSV'),
-				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
-			);
-		}
-		$actions += array(
-			'merge'  => lang('Merge into first or account, deletes all other!'),
-			'cat_add' => lang('Add or delete Categories'), // add a categirie to multible addresses
-			'infolog_add' => lang('Add a new Infolog'),
-		);
-		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
-		{
-			$actions['infolog'] = lang('View linked InfoLog entries');
-		}
-		if (($move2addressbooks=$this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
-		{
-			foreach ($move2addressbooks as $m2a_id => $m2alabel)
-			{
-				$m2a['move_to_'.$m2a_id] = $m2alabel;
-			}
-			$actions[lang('Move to addressbook:')] = $m2a;
-		}
-		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
-		{
-			$lists = array();
-			foreach ($add_lists as $list_id => $label)
-			{
-				$lists['to_list_'.$list_id] = $label;
-			}
-			$actions[lang('Add to distribution list:')] = $lists;
-			unset($lists);
-			$actions['remove_from_list'] = lang('Remove selected contacts from distribution list');
-			$actions['delete_list'] = lang('Delete selected distribution list!');
-		}
-
-		if ($this->prefs['document_dir'])
-		{
-			$actions[lang('Insert in document').':'] = $this->get_document_actions();
-		}
-		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($actions['export']);
 
 		//_debug_array($actions);
 		return $actions;
@@ -1336,8 +1275,13 @@ class addressbook_ui extends addressbook_bo
 				$row['type'] = 'home';
 				$row['type_label'] = lang('Organisation');
 
-				$readonlys["delete[$row[id]]"] = $query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE);
+				if ($query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE))
+				{
+					$readonlys["delete[$row[id]]"] = true;
+					$row['class'] .= 'rowNoDelete';
+				}
 				$readonlys["infolog[$row[id]]"] = !$GLOBALS['egw_info']['user']['apps']['infolog'];
+				$row['class'] .= 'rowNoEdit';	// no edit in OrgView
 			}
 			else
 			{
@@ -1353,8 +1297,16 @@ class addressbook_ui extends addressbook_bo
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
 				}
-				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE);
-				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
+				if (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
+				{
+					$readonlys["delete[$row[id]]"] = true;
+					$row['class'] .= 'rowNoDelete';
+				}
+				if (!$this->check_perms(EGW_ACL_EDIT,$row))
+				{
+					$readonlys["edit[$row[id]]"] = true;
+					$row['class'] .= 'rowNoEdit';
+				}
 
 				if ($row['photo']) $photos = true;
 				if ($row['role']) $roles = true;

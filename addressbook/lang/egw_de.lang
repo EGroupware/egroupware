@@ -27,6 +27,7 @@ add business email of whole distribution list?	addressbook	de	E-Mail geschäftl.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
 add or delete categories	addressbook	de	Kategorien hinzufügen oder löschen
+add to distribution list	addressbook	de	Zu Verteilerliste hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
 added	addressbook	de	hinzugefügt
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
@@ -263,7 +264,6 @@ in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburt
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
 insert	addressbook	de	einfügen
-insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 international	addressbook	de	International
 internet	addressbook	de	Internet
@@ -290,6 +290,7 @@ locations	addressbook	de	Standorte
 main categories in their own field	addressbook	de	Haupkategorien in einem eigenen Feld
 manage mapping	addressbook	de	Zuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
+merge contacts	addressbook	de	Kontakte vereinigen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
 merged	addressbook	de	vereinigt
 message after submitting the form	addressbook	de	Nachricht nach dem Versenden des Formulars
@@ -301,7 +302,7 @@ mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
 more ...	addressbook	de	Mehr ...
-move to addressbook:	addressbook	de	Verschiebe ins Adressbuch:
+move to addressbook	addressbook	de	In Adressbuch verschieben
 moved	addressbook	de	verschoben
 multiple vcard	addressbook	de	Mehrere VCards
 name for the distribution list	addressbook	de	Name für die Verteilerliste
@@ -351,6 +352,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 recovered	addressbook	de	Wiederhergestellt
 region	addressbook	de	Region
+remove from distribution list	addressbook	de	Von Verteilerliste löschen
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
 repetition	addressbook	de	Wiederholung

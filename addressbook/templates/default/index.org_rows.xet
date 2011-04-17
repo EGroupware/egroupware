@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.5.001">
+	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -19,7 +19,7 @@
 					<nextmatch-header label="Department" id="org_unit"/>
 					<nextmatch-header label="Business address" id="business"/>
 					<hbox align="center" class="noPrint">
-						<description value="Actions" align="center"/>
+						<nextmatch-header label="Actions" align="center" id="legacy_actions"/>
 						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
 					</hbox>
 				</row>

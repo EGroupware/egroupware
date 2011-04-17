@@ -61,8 +61,6 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	timesheet	de	Wählen Sie eine Export Definition für den Export
 imports entries into the timesheet from a csv file.	timesheet	de	Importiert Einträge für den Stundenzettel aus einer CSV Datei.
 insert	timesheet	de	einfügen
-insert in %1	timesheet	de	In %1 einfügen
-insert in document	timesheet	de	In ein Dokument einfügen
 invalid field: %1 = %2, it needs to be a number.	timesheet	de	Ungültiges Feld: %1 =%2, es muss eine Zahl sein
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	de	Ungültiger Benutze ID: %1 könnte eine falsche Feldzuordnung haben. %2 wird stattdessen verwendet.
 last modified	timesheet	de	Zuletzt geändert

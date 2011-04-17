@@ -27,6 +27,7 @@ add business email of whole distribution list?	addressbook	en	Add business email
 add custom field	addressbook	en	Add Custom Field
 add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
 add or delete categories	addressbook	en	Add or delete Categories
+add to distribution list	addressbook	en	Add to distribution list
 add to distribution list:	addressbook	en	Add to distribution list:
 added	addressbook	en	added
 added by synchronisation	addressbook	en	added by synchronisation
@@ -263,7 +264,6 @@ in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthda
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
 insert	addressbook	en	insert
-insert in document	addressbook	en	Insert in document
 insufficent rights to delete this list!	addressbook	en	Insufficent rights to delete this list!
 international	addressbook	en	International
 internet	addressbook	en	Internet
@@ -290,6 +290,7 @@ locations	addressbook	en	locations
 main categories in their own field	addressbook	en	Main categories in their own field
 manage mapping	addressbook	en	Manage mapping
 mark records as private	addressbook	en	Mark records as private
+merge contacts	addressbook	en	Merge contacts
 merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
 merged	addressbook	en	merged
 message after submitting the form	addressbook	en	Message after submitting the form
@@ -301,7 +302,7 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 more ...	addressbook	en	More ...
-move to addressbook:	addressbook	en	Move to addressbook:
+move to addressbook	addressbook	en	Move to addressbook
 moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple VCard
 name for the distribution list	addressbook	en	Name for the distribution list
@@ -351,6 +352,7 @@ record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 recovered	addressbook	en	recovered
 region	addressbook	en	Region
+remove from distribution list	addressbook	en	Remove from distribution list
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list
 removed from distribution list	addressbook	en	Removed from distribution list
 repetition	addressbook	en	Repetition

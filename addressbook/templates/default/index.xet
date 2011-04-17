@@ -106,7 +106,7 @@
 						<button label="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right" id="check_all" image="check" statustext="Check all"/>
 					</hbox>
 				</row>
-				<row class="$row_cont[cat_id]" valign="top">
+				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
 					<image label="$row_cont[type_label]" align="center" no_lang="1" src="${row}[type]"/>
 					<vbox id="${row}[id]" options="0,0">
 						<description no_lang="1" id="${row}[line1]"/>
@@ -220,8 +220,7 @@
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button label="Add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="add" statustext="Add a new contact"/>
 					<hbox align="right" span="all">
-						<checkbox label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" id="use_all" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
-						<button no_lang="1" id="action" statustext="Select an action or addressbook to move to" label="Select an action or addressbook to move to..." onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some contacts first')); return false;;"/>
+						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
 						<button label="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
 					</hbox>
 				</row>

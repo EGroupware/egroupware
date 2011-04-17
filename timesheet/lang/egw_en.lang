@@ -61,8 +61,6 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the timesheet from a CSV File.
 insert	timesheet	en	insert
-insert in %1	timesheet	en	Insert in %1
-insert in document	timesheet	en	Insert in document
 invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.
 last modified	timesheet	en	Last modified
