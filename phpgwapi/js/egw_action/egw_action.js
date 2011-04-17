@@ -1395,7 +1395,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 
 					// Accumulate the action link properties
 					var llink = actionLinks[olink.actionId];
-					llink.enabled = llink.enabled && olink.actionObj.enabled.exec(this) &&
+					llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, _objs[i]) &&
 						olink.enabled && olink.visible;
 					llink.visible = (llink.visible || olink.visible);
 					llink.cnt++;
