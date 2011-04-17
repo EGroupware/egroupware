@@ -518,10 +518,10 @@ class nextmatch_widget
 	 * - boolean 'no_lang' do NOT translate caption, default false
 	 * - string 'icon' icon, eg. 'edit' or 'infolog/task', if no app given app of template or API is used
 	 * - string 'iconUrl' full url of icon, better use 'icon'
-	 * - boolean 'allowOnMultiple' should action be shown if multiple lines are marked, default true!
-	 * - boolean 'enabled' is action available, default true!
+	 * - boolean|string 'allowOnMultiple' should action be shown if multiple lines are marked, or string 'only', default true!
+	 * - boolean|string 'enabled' is action available, or string with javascript function to call, default true!
 	 * - boolena 'hideOnDisabled' hide disabled actions, default false
-	 * - string 'type' type of action, default 'popup' for contenxt menus
+	 * - string 'type' type of action, default 'popup' for contenxt menus, 'drag' or 'drop'
 	 * - boolean 'default' is that action the default action, default false
 	 * - array  'children' array with actions of submenu
 	 * - int    'group' to group items, default all actions are in one group

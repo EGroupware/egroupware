@@ -863,7 +863,7 @@ abstract class bo_merge
 	 *
 	 * @return List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dir)
+	public static function get_documents($dir, $prefix='document_')
 	{
 		if (!$dir) return array();
 
@@ -875,7 +875,7 @@ abstract class bo_merge
 				// return only the mime-types we support
 				if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
 
-				$list['document_'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
+				$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 			}
 		}
 		return $list;
@@ -889,9 +889,9 @@ abstract class bo_merge
 	 * @param string $caption='Insert in document'
 	 * @return array see nextmatch_widget::egw_actions
 	 */
-	public static function document_action($dir, $group=0, $caption='Insert in document')
+	public static function document_action($dir, $group=0, $caption='Insert in document', $prefix='document_')
 	{
-		$documents = self::get_documents($dir);
+		$documents = self::get_documents($dir, $prefix);
 
 		return array(
 			'icon' => 'etemplate/merge',
