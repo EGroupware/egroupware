@@ -171,3 +171,16 @@ function nm_select_all(_action, _senders)
 {
 	document.getElementById('exec[nm][select_all]').value = _action.checked ? _action.hint : false;
 }
+
+/**
+ * Callback to check if none of _senders rows has disableClass set
+ * 
+ * @param _action egwAction object, we use _action.data.disableClass to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if none has disableClass, false otherwise
+ */
+function nm_not_disableClass(_action, _senders, _target)
+{
+	return !$(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+}

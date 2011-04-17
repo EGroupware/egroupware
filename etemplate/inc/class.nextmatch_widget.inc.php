@@ -520,12 +520,15 @@ class nextmatch_widget
 	 * - string 'iconUrl' full url of icon, better use 'icon'
 	 * - boolean|string 'allowOnMultiple' should action be shown if multiple lines are marked, or string 'only', default true!
 	 * - boolean|string 'enabled' is action available, or string with javascript function to call, default true!
+	 * - string 'disableClass' class name to use with enabled='javaScript:nm_not_disableClass'
+	 *   (add that css class in get_rows(), if row lacks rights for an action)
 	 * - boolena 'hideOnDisabled' hide disabled actions, default false
 	 * - string 'type' type of action, default 'popup' for contenxt menus, 'drag' or 'drop'
 	 * - boolean 'default' is that action the default action, default false
 	 * - array  'children' array with actions of submenu
 	 * - int    'group' to group items, default all actions are in one group
-	 * - string 'onExecute' javascript to run, default 'javascript:nm_action' which runs action specified in nm_action attribute:
+	 * - string 'onExecute' javascript to run, default 'javaScript:nm_action',
+	 *   which runs action specified in nm_action attribute:
 	 * - string 'nm_action'
 	 *   + 'alert'  debug action, shows alert with action caption, id and id's of selected rows
 	 *   + 'submit' default action, sets nm[action], nm[selected] and nm[select_all]
