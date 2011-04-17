@@ -31,30 +31,18 @@ function egwMenuImpl(_structure)
 					self.dhtmlxmenu.setContextMenuHideAllMode(false);
 				}
 
-				var res = elem.onClick(elem);
+				elem.onClick(elem);
 
 				if (elem.checkbox)
 				{
-					var checked = null;
-					if (res == "checkbox:disable")
+					var checked = elem.checked;
+					if (elem.groupIndex != 0)
 					{
-						checked = false;
+						self.dhtmlxmenu.setRadioChecked(id, checked);
 					}
-					if (res == "checkbox:enable")
+					else
 					{
-						checked = true;
-					}
-
-					if (checked != null)
-					{
-						if (elem.groupIndex != 0)
-						{
-							self.dhtmlxmenu.setRadioChecked(id, checked);
-						}
-						else
-						{
-							self.dhtmlxmenu.setCheckboxState(id, checked);
-						}
+						self.dhtmlxmenu.setCheckboxState(id, checked);
 					}
 				}
 			}
