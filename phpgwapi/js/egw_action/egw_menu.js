@@ -406,3 +406,8 @@ egwMenuItem.prototype.set_data = function(_value)
 	this.data = _value;
 }
 
+egwMenuItem.prototype.set_hint = function(_value)
+{
+	this.hint = _value;
+}
+

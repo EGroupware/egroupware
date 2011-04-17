@@ -116,6 +116,12 @@ egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idC
 		//Set the actual egw menu as user data element
 		this.dhtmlxmenu.setUserData(id, 'egw_menu', elem);
 
+		// Set the tooltip if one has been set
+		if (elem.hint)
+		{
+			this.dhtmlxmenu.setTooltip(id, elem.hint);
+		}
+
 		var last_id = id;
 	}
 
@@ -136,7 +142,11 @@ egwMenuImpl.prototype.showAt = function(_x, _y, _onHide)
 			}
 		});
 	}
-	this.dhtmlxmenu.showContextMenu(_x, _y);
+
+	var self = this;
+	window.setTimeout(function() {
+		self.dhtmlxmenu.showContextMenu(_x, _y);
+	}, 0);
 }
 
 egwMenuImpl.prototype.hide = function()

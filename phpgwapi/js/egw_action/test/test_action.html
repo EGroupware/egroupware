@@ -256,7 +256,9 @@
 							"onExecute": alertClicked,
 							"type": "popup",
 							"group": 1,
-							"order": 2
+							"order": 2,
+							"allowOnMultiple": "only",
+							"hint": "Compresses multiple files and mails them"
 						},
 						{
 							"id": "send_to",
@@ -333,6 +335,21 @@
 							"iconUrl": "imgs/copy.png",
 							"onExecute": alertClicked,
 							"acceptedTypes": "file"
+						},
+						{
+							"id": "chk1",
+							"type": "popup",
+							"checkbox": true,
+							"checked": true,
+							"caption": "Test1"
+						},
+						{
+							"id": "chk2",
+							"type": "popup",
+							"checkbox": true,
+							"checked": false,
+							"caption": "Test2",
+							"onExecute": alertClicked
 						}
 					]
 				);
@@ -347,7 +364,9 @@
 					{"actionId": "file_compress", "enabled": true},
 					{"actionId": "file_delete", "enabled": true},
 					{"actionId": "send_to", "enabled": true},
-					"file_drag"
+					"file_drag",
+					"chk1",
+					"chk2"
 				];
 
 				var listboxFolderLinks = [

@@ -25,6 +25,10 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	action["default"] = false;
 	action.order = 0;
 	action.group = 0;
+	action.hint = false;
+	action.checkbox = false;
+	action.radioGroup = 0;
+	action.checked = false;
 
 	action.set_default = function(_value) {
 		action["default"] = _value;
@@ -36,6 +40,25 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 
 	action.set_group = function(_value) {
 		action.group = _value;
+	}
+
+	action.set_hint = function(_value) {
+		action.hint = _value;
+	}
+
+	// If true, the action will be rendered as checkbox
+	action.set_checkbox = function(_value) {
+		action.checkbox = _value;
+	}
+
+	action.set_checked = function(_value) {
+		action.checked = _value;
+	}
+
+	// If radioGroup is >0 and the element is a checkbox, radioGroup specifies
+	// the group of radio buttons this one belongs to
+	action.set_radioGroup = function(_value) {
+		action.radioGroup = _value;
 	}
 
 	return action;
@@ -136,8 +159,8 @@ function egwPopupActionImplementation()
 				// Calculate context menu position from the given DOM-Node
 				var node = _context;
 
-				x = node.offsetLeft;
-				y = node.offsetTop;
+				x = $(node).offset().left;
+				y = $(node).offset().top;
 
 				_context = {"posx": x, "posy": y}
 			}
@@ -284,10 +307,23 @@ function egwPopupActionImplementation()
 					var item = _menu.addItem(link.actionObj.id, link.actionObj.caption,
 						link.actionObj.iconUrl);
 					item["default"] = link.actionObj["default"];
-					item.data = link.actionObj;
+
+					// As this code is also used when a drag-drop popup menu is built,
+					// we have to perform this check
+					if (link.actionObj.type == "popup")
+					{
+						item.set_hint(link.actionObj.hint);
+						item.set_checkbox(link.actionObj.checkbox);
+						item.set_checked(link.actionObj.checked);
+						item.set_groupIndex(link.actionObj.radioGroup);
+					}
+
+					item.set_data(link.actionObj);
 					if (link.enabled && _enabled)
 					{
 						item.set_onClick(function(elem) {
+							// Copy the "checked" state
+							elem.data.checked = elem.checked;
 							elem.data.execute(_selected, _target);
 						});
 					}

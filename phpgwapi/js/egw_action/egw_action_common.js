@@ -295,6 +295,87 @@ egwEventQueue.prototype.queueTimeout = function(_proc, _context, _args, _id, _ti
 	}, _timeout)
 }
 
+
+/**
+ * Class which is used to be able to handle references to JavaScript functions
+ * from strings.
+ *
+ * @param object _context is the context in which the function will be executed.
+ * @param mixed _default is the default value which should be returned when no
+ * 	function (string) has been set. If it is a function this function will be
+ * 	called.
+ * @param array _acceptedTypes is an array of types which contains the "typeof"
+ * 	strings of accepted non-functions in setValue
+ */
+function egwFnct(_context, _default, _acceptedTypes)
+{
+	if (typeof _context == "undefined")
+	{
+		_context = null;
+	}
+
+	if (typeof _default == "undefined")
+	{
+		_default = false;
+	}
+
+	if (typeof _acceptedTypes == "undefined")
+	{
+		_acceptedTypes = ["boolean"];
+	}
+
+	this.context = _context;
+	this.acceptedTypes = _acceptedTypes;
+	this.fnct = null;
+	this.value = null;
+	this.setValue(_default);
+}
+
+egwFnct.prototype.hasHandler = function()
+{
+	return this.fnct !== null;
+}
+
+/**
+ * Sets the function/return value for the exec function
+ */
+egwFnct.prototype.setValue = function(_value)
+{
+	this.value = null;
+	this.fnct = null;
+
+	if (typeof _value == "function")
+	{
+		this.fnct = _value;
+	}
+	else if (typeof _value == "string" &&
+	         _value.substr(0,11) == "javaScript:" && 
+	         typeof window[_value.substr(11)] == "function")
+	{
+		this.fnct = window[_value.substr(11)];
+	}
+	else if (this.acceptedTypes.indexOf(typeof _value) >= 0)
+	{
+		this.value = _value;
+	}
+}
+
+/**
+ * Executes the function
+ */
+egwFnct.prototype.exec = function()
+{
+	if (this.fnct)
+	{
+		return this.fnct.apply(this.context, arguments);
+	}
+	else
+	{
+		return this.value;
+	}
+}
+
+
 /**
 sprintf() for JavaScript 0.6
 

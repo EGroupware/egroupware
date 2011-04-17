@@ -53,7 +53,7 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	this.caption = _caption;
 	this.iconUrl = _iconUrl;
 	this.allowOnMultiple = _allowOnMultiple;
-	this.enabled = true;
+	this.enabled = new egwFnct(this, true);
 	this.hideOnDisabled = false;
 	this.data = null; // Data which can be freely assigned to the action
 
@@ -62,9 +62,7 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	this.parent = _parent;
 	this.children = [];
 
-	this.execJSFnct = null;
-	this.execHandler = false;
-	this.set_onExecute(_onExecute);
+	this.onExecute = new egwFnct(this, null, []);
 }
 
 /**
@@ -190,6 +188,28 @@ egwAction.prototype.updateActions = function(_actions)
 }
 
 /**
+ * Applys the same onExecute handler to all actions which don't have an execute
+ * handler set.
+ */
+egwAction.prototype.setDefaultExecute = function(_value)
+{
+	// Check whether the onExecute handler of this action should be set
+	if (this.type != "actionManager" && !this.onExecute.hasHandler())
+	{
+		this.onExecute.setValue(_value);
+	}
+
+	// Apply the value to all children
+	if (this.canHaveChildren)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			this.children[i].setDefaultExecute(_value);
+		}
+	}
+}
+
+/**
  * Executes this action by using the method specified in the onExecute setter.
  *
  * @param array _senders array with references to the objects which caused the action
@@ -202,14 +222,7 @@ egwAction.prototype.execute = function(_senders, _target)
 		_target == null;
 	}
 
-	if (this.execJSFnct && typeof this.execJSFnct == "function")
-	{
-		return this.execJSFnct(this, _senders, _target);
-	}
-	else if (this.execHandler)
-	{
-		//this.handler.execute(this, _senders); TODO
-	}
+	this.onExecute.exec(this, _senders, _target);
 
 	return false;
 }
@@ -230,35 +243,7 @@ egwAction.prototype.execute = function(_senders, _target)
  */ 
 egwAction.prototype.set_onExecute = function(_value)
 {
-	//Reset the onExecute handlers
-	this.execJSFnct = null;
-	this.execHandler = false;
-
-	if (typeof _value == "string")
-	{
-		// Check whether the given string contains a javaScript function which
-		// should be called upon executing the action
-		if (_value.substr(0, 11) == "javaScript:")
-		{
-			//Check whether the given function exists
-			var fnct = _value.substr(11);
-			if (typeof window[fnct] == "function")
-			{
-				this.execJSFnct = window[fnct];
-			}
-		}
-	}
-	else if (typeof _value == "boolean")
-	{
-		// There is no direct reference to the PHP code which should be executed,
-		// as the PHP code has knowledge about this.
-		this.execHandler = _value;
-	}
-	else if (typeof _value == "function")
-	{
-		//The JS function has been passed directly
-		this.execJSFnct = _value;
-	}
+	this.onExecute.setValue(_value);
 }
 
 egwAction.prototype.set_caption = function(_value)
@@ -273,9 +258,12 @@ egwAction.prototype.set_iconUrl = function(_value)
 
 egwAction.prototype.set_enabled = function(_value)
 {
-	this.enabled = _value;
+	this.enabled.setValue(_value);
 }
 
+/**
+ * The allowOnMultiple property may be true, false or "only"
+ */
 egwAction.prototype.set_allowOnMultiple = function(_value)
 {
 	this.allowOnMultiple = _value;
@@ -1314,7 +1302,10 @@ egwActionObject.prototype.executeActionImplementation = function(_implContext, _
 	{
 		if (_execType == EGW_AO_EXEC_SELECTED)
 		{
-			this.forceSelection();
+			if (!(egwBitIsSet(EGW_AO_FLAG_IS_CONTAINER, this.flags)))
+			{
+				this.forceSelection();
+			}
 			var selectedActions = this.getSelectedLinks(_implType.type);
 		}
 		else if (_execType = EGW_AO_EXEC_THIS)
@@ -1406,7 +1397,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 
 					// Accumulate the action link properties
 					var llink = actionLinks[olink.actionId];
-					llink.enabled = olink.actionObj.enabled && llink.enabled &&
+					llink.enabled = llink.enabled && olink.actionObj.enabled.exec(this) &&
 						olink.enabled && olink.visible;
 					llink.visible = (llink.visible || olink.visible);
 					llink.cnt++;
@@ -1420,8 +1411,11 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 	{
 		actionLinks[k].enabled = actionLinks[k].enabled &&
 			(actionLinks[k].cnt >= testedSelected.length) &&
-			(actionLinks[k].actionObj.allowOnMultiple || 
-			 actionLinks[k].cnt == 1);
+			(
+				(actionLinks[k].actionObj.allowOnMultiple === true) || 
+				(actionLinks[k].actionObj.allowOnMultiple == "only" && actionLinks[k].cnt > 1) ||
+				(actionLinks[k].actionObj.allowOnMultiple == false && actionLinks[k].cnt == 1)
+			);
 		actionLinks[k].visible = actionLinks[k].visible &&
 			(actionLinks[k].enabled || !actionLinks[k].actionObj.hideOnDisabled);
 	}
