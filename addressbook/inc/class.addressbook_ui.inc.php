@@ -731,7 +731,7 @@ class addressbook_ui extends addressbook_bo
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
 		}
-		if (substr($action,0,9) == 'document-')
+		if (substr($action,0,9) == 'document_')
 		{
 			$document = substr($action,9);
 			$action = 'document';
