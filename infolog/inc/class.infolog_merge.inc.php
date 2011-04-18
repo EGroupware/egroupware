@@ -91,6 +91,17 @@ class infolog_merge extends bo_merge
 		{
 			$array['info_contact'] = $array['info_link']['title'];
 		}
+
+		// Make sure line breaks get preserved (Needed for emails in particular)
+		switch($this->mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':         // open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': // ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$record->info_des = nl2br($record->info_des);
+		}
+
 		// Set any missing custom fields, or the marker will stay
 		$array = $record->get_record_array();
 		foreach($this->bo->customfields as $name => $field)
