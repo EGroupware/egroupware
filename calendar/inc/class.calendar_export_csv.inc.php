@@ -65,6 +65,9 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		// support other selectors atm.
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
+			// Get rid of yearly recurring events that don't belong
+			if($event['start'] > $query['end'] || $event['end'] < $query['start']) continue;
+
 			// Add in participants
 			if($options['mapping']['participants']) {
 				$event['participants'] = implode(", ",$this->bo->participants($event,true));
