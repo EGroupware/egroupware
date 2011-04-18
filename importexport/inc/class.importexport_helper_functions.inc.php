@@ -105,6 +105,8 @@ class importexport_helper_functions {
 				$skip = false;
 				continue;
 			}
+			$account_lid = trim($account_lid);
+
 			// Handle any IDs that slip in
 			if(is_numeric($account_lid) && $GLOBALS['egw']->accounts->id2name($account_lid)) {
 				$account_ids[] = (int)$account_lid;
