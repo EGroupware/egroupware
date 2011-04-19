@@ -791,7 +791,7 @@ class timesheet_ui extends timesheet_bo
 				{
 					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
 				}
-				elseif(is_null($msg))
+				elseif(empty($msg))
 				{
 					$msg .= lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
@@ -868,6 +868,15 @@ class timesheet_ui extends timesheet_bo
 	private function get_actions()
 	{
 		$actions = array(
+			'open' => array(	// does edit if allowed, otherwise view
+				'caption' => 'Open',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
+				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'group' => $group=1,
+			),
+/*
 			'view' => array(
 				'caption' => 'View',
 				'default' => true,
@@ -885,6 +894,7 @@ class timesheet_ui extends timesheet_bo
 				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoEdit',
 			),
+*/
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=timesheet.timesheet_ui.edit',
@@ -908,7 +918,6 @@ class timesheet_ui extends timesheet_bo
 				'children' => $this->status_labels,
 				'prefix' => 'to_status_',
 				'enabled' => (boolean)$this->status_labels,
-				'hideOnDisabled' => true,
 			),
 			'document' => array(
 				'caption' => lang('Insert in %1',egw_vfs::basename($GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'])),
@@ -928,7 +937,16 @@ class timesheet_ui extends timesheet_bo
 				'disableClass' => 'rowNoDelete',
 			),
 		);
-
+		// enable additonal edit check for following actions, if they are generally available
+		foreach(array('cat','status') as $action)
+		{
+			if ($actions[$action]['enabled'])
+			{
+				$actions[$action]['enabled'] = 'javaScript:nm_not_disableClass';
+				$actions[$action]['disableClass'] = 'rowNoEdit';
+			}
+		}
+		//_debug_array($actions);
 		return $actions;
 	}
 
@@ -946,7 +964,6 @@ class timesheet_ui extends timesheet_bo
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
-		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		if ($use_all)
 		{
@@ -960,6 +977,7 @@ class timesheet_ui extends timesheet_bo
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
 		}
+		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')");
 
 		if (substr($action,0,9) == 'to_status')
 		{

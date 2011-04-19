@@ -497,6 +497,7 @@ on mouse over	common	de	On Maus Over
 only private	common	de	nur private
 only yours	common	de	nur eigene
 oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
+open	common	de	Öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Popup Fenster öffnen
 open sidebox	common	de	Seitenmenü öffnen
@@ -764,6 +765,7 @@ what style would you like the image to have?	common	de	Welchen Stil soll das Bil
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
+whole query	common	de	Gesamte Abfrage
 width	common	de	Breite
 wk	jscalendar	de	KW
 work email	common	de	geschäftliche E-Mail

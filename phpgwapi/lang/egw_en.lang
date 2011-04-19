@@ -498,6 +498,7 @@ on mouse over	common	en	On Mouse Over
 only private	common	en	only private
 only yours	common	en	only yours
 oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintainance.
+open	common	en	Open
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open sidebox	common	en	Open sidebox
@@ -765,6 +766,7 @@ what style would you like the image to have?	common	en	What style would you like
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the egroupware links like preferences, about and logout be displayed.
 which groups	common	en	Which groups
+whole query	common	en	Whole query
 width	common	en	Width
 wk	jscalendar	en	wk
 work email	common	en	work email

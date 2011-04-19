@@ -565,6 +565,7 @@ class nextmatch_widget
 		static $default_icons = array(
 			'view' => 'view',
 			'edit' => 'edit',
+			'open' => 'edit',	// does edit if possible, otherwise view
 			'add'  => 'new',
 			'delete' => 'delete',
 			'cat'  => 'attach',		// add as category icon to api
