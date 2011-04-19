@@ -1,3 +1,33 @@
+egroupware-epl (10.1.20110419-1) hardy; urgency=low
+
+  * API/Authentication: add fallback to sql for mail authentication.
+  * updated timezone database to version 1.2011b from current Lightning snapshot
+  * API: upgrade to HTMLpurifier Version 4.3.0
+  * give everyone implicit rights for home app, as taking them away makes to many support problems
+  * method to reset passwords of multiple users to a random password and notify them about that, also allows to change from plaintext passwords to a different hash
+  * WebDAV download: switching zlib.output_compression off for everything but text files
+  * CalDAV: improved performance of ctag generation
+  * Calendar/CalDAV: ctag got not updated when eg. a recurrence got deleted, causing CalDAV calendar to not automatic update
+  * Setup: fixed not working deinstall of languages
+  * Calendar/API: fixed not working dateformat d-M-Y with French language (Juin=Jun, Juillet=Jui)
+  * Addressbook: lettersearch was not working for addressbooks in LDAP if PostgreSQL database was used (bug #2851)
+  * Calendar: fixed not working "use event TZ" pref for iCal exports and allways use event TZ for calendar notifications (NOT use file export pref.)
+  * SyncML/Calendar/PostgreSQL: fixed SQL error when searching participants (SELECT DISTINCT requires ORDER-BY-expressions to be in SELECT-list)
+  * Wiki/PostgreSQL: fixed SQL error when viewing history (#2927), PostgreSQL needs mixed case names quoted
+  * PostgreSQL: when importing/updating timezones, only query last insert id, if not already in database (gives warning for PostgreSQL)
+  * Addressbook/PostgreSQL: lettersearch in organisation-view allways returned empty
+  * Preferences: fixed not working setting of preferences without a logout
+  * addressbook: enable advanced search for addressbook org view
+  * eMail: fix for stylite Tracker Bug#1471 (adding more than 4 lines of addresses to a mail in compose-dialog shrinks the address-area to a height of 0 with IE9)
+  * eMail: make sure the quotaDisplay is refreshed on Message List refresh
+  * Admin: fix for reported error regarding wrong count of lines in Admin -> view error log
+  * eMail: fix a problem regarding the doubleencoding of text while toggling compose from html->text
+  * phpfreechat: add timeout parameter (and increase the default timeout) to workaround problems with differing server times
+  * Addressbook/PostgreSQL: fixed SQL error when checking "use whole query"
+  * SiteMgr: fixed detection of downloaded content, using Content-Type header now and adding style="white-space: pre-wrap; text-aling: left;" to pre-tag for textfiles
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 19 Apr 2011 20:58:50 +0200
+
 egroupware-epl (10.1.20110323-1) hardy; urgency=low
 
   * Calendar: fixed not working "hideprivate" filter (shows own private events as private, not NOT showing them)
