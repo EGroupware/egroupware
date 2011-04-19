@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author RalfBecker-At-outdoor-training.de
- * @copyright 2006 by RalfBecker-At-outdoor-training.de
+ * @copyright 2006-11 by RalfBecker-At-outdoor-training.de
  * @license GPL - GNU General Public License
  * @version $Id$
  */
@@ -19,6 +19,7 @@
  *  - 'app' string app-name, defaults to $GLOBALS['egw_info']['flags']['currentapp']
  *  - 'status-widgets' array with status-values as key and widget names or array with select-options as value,
  *       all not set stati are displayed via a label-widget - just as text
+ *       widget types for custom fields do NOT need to be added, they are automatically detected!
  * You can set $sel_options['status'] to translate the status-values to meaningful labels.
  * If status is already used for a field, you can also set options to an other name, eg. 'labels' or 'fields'
  *
@@ -53,10 +54,10 @@ class historylog_widget
 	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @param array &$readonlys names of widgets as key, to be made readonly
 	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
-	 * @param object &$tmpl reference to the template we belong too
+	 * @param etemplate $tmpl reference to the template we belong too
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
+	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
 	{
 		static $status_widgets;
 
@@ -120,6 +121,7 @@ class historylog_widget
 		}
 		$app = is_array($value) ? $value['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
 		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
+
 		$id = is_array($value) ? $value['id'] : $value;
 		$filter = is_array($value) ? $value['filter'] : array();
 
@@ -152,6 +154,30 @@ class historylog_widget
 				$row[$status] = $row['status'];
 			}
 		}
+		// adding custom fields automatically to status-widgets, no need for each app to do that
+		foreach(config::get_customfields($app,true) as $cf_name => $cf_data)
+		{
+			// add cf label, if not set by app
+			if (!isset($tmpl->sel_options[$status]['#'.$cf_name]))
+			{
+				$tmpl->sel_options[$status]['#'.$cf_name] = lang($cf_data['label']);
+			}
+			if (isset($status_widgets['#'.$cf_name])) continue;	// app set a status widget --> use that
+
+			if(!is_array($cf_data['values']))
+			{
+				$status_widgets['#'.$cf_name] = $cf_data['type'];
+			}
+			elseif($cf_data['values']['@'])
+			{
+				$status_widgets['#'.$cf_name] = customfields_widget::_get_options_from_file($cf_data['values']['@']);
+			}
+			elseif(count($cf_data['values']))
+			{
+				$status_widgets['#'.$cf_name] = $cf_data['values'];
+			}
+		}
+
 		if ($value)	// autorepeated data-row only if there is data
 		{
 			$tpl->new_cell(2,'date-time','','${row}[user_ts]',array('readonly' => true));

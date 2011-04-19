@@ -173,11 +173,18 @@ abstract class bo_tracking
 	/**
 	 * Constructor
 	 *
+	 * @param string $cf_app=null if set, custom field names get added to $field2history
 	 * @return bo_tracking
 	 */
-	function __construct()
+	function __construct($cf_app = null)
 	{
-
+		if ($cf_app)
+		{
+			foreach(config::get_customfields($cf_app, true) as $cf_name => $cf_data)
+			{
+				$this->field2history['#'.$cf_name] = '#'.$cf_name;
+			}
+		}
 	}
 
 	function bo_tracking()
