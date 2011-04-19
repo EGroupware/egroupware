@@ -21,7 +21,7 @@
  *   $group the stored prefs of users primary groupd, only used for manipulating and storeing the user prefs
  * 	 $default the default preferences, always used when the user has no own preference set
  * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
- * 
+ *
  * To update the prefs of a certain group, not just the primary group of the user, you have to
  * create a new instance of preferences class, with the given id of the group. This takes into
  * account the offset of DEFAULT_ID, we are using currently for groups (as -1, and -2) are already
@@ -482,7 +482,7 @@ class preferences
 				}
 				break;
 
-			case user:
+			case 'user':
 			default:
 				$this->user[$app_name][$var] = $value;
 				if (!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '')
@@ -520,7 +520,7 @@ class preferences
 		}
 		$pref = &$this->$type;
 
-		if (($all = (is_string($var) && $var == '')))
+		if (($all = empty($var))) // to check if $var is regarded as empty (false, 0, '', null, array() should do the trick
 		{
 			unset($pref[$app_name]);
 			unset($this->data[$app_name]);
@@ -534,24 +534,24 @@ class preferences
 		//
 		foreach ($set_via[$type] as $set_from)
 		{
+			$arr = &$this->$set_from;
 			if ($all)
 			{
-				if (isset($this->$set_from[$app_name]))
+				if (isset($arr[$app_name]))
 				{
-					$this->data[$app_name] = $this->$set_from[$app_name];
+					$this->data[$app_name] = $arr[$app_name];
 					break;
 				}
 			}
 			else
 			{
-				$arr = $this->$set_from;
 				if($var && @isset($arr[$app_name][$var]) && $arr[$app_name][$var] !== '')
 				{
-					$this->data[$app_name][$var] = $this->$set_from[$app_name][$var];
+					$this->data[$app_name][$var] = $arr[$app_name][$var];
 					break;
 				}
-				unset($arr);
 			}
+			unset($arr);
 		}
 		reset ($this->data);
 		return $this->data;
