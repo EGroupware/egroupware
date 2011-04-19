@@ -143,12 +143,6 @@ class timesheet_bo extends so_sql_cf
 		'customfields'   => 'Custom fields',
 	);
 	/**
-	 * setting field-name from DB to history status
-	 *
-	 * @var array
-	 */
-	var $field2history = array();
-	/**
 	 * Name of the timesheet table storing custom fields
 	 */
 	const EXTRA_TABLE = 'egw_timesheet_extra';
@@ -214,10 +208,6 @@ class timesheet_bo extends so_sql_cf
 			$GLOBALS['timesheet_bo'] =& $this;
 		}
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
-		//set fields for tracking
-		$this->field2history = array_keys($this->db_cols);
-		$this->field2history = array_diff(array_combine($this->field2history,$this->field2history),array('ts_modified'));
-		$this->field2history += array('customfields'   => '#c');  //add custom fields for history
 	}
 
 	/**
@@ -496,43 +486,32 @@ class timesheet_bo extends so_sql_cf
 		}
 
 		// check if we have a real modification
-			// read the old record
-			$new =& $this->data;
-			unset($this->data);
-			$this->read($new['ts_id']);
-			$old =& $this->data;
-			$this->data =& $new;
-			$changed[] = array();
-			if (isset($old)) foreach($old as $name => $value)
-			{
-				if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
-			}
-			if (!$changed)
-			{
-				return false;
-			}
+		// read the old record
+		$new =& $this->data;
+		unset($this->data);
+		$this->read($new['ts_id']);
+		$old =& $this->data;
+		$this->data =& $new;
+		$changed[] = array();
+		if (isset($old)) foreach($old as $name => $value)
+		{
+			if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
+		}
+		if (!$changed)
+		{
+			return false;
+		}
 
-			if (!is_object($this->tracking))
-			{
-				$this->tracking = new timesheet_tracking($this);
+		if (!is_object($this->tracking))
+		{
+			$this->tracking = new timesheet_tracking($this);
 
-				$this->tracking->html_content_allow = true;
-			}
-			if ($this->customfields)
-			{
-				$data_custom = $old_custom = array();
-				foreach($this->customfields as $name => $custom)
-				{
-					if (isset($this->data['#'.$name]) && (string)$this->data['#'.$name]!=='') $data_custom[] = $custom['label'].': '.$this->data['#'.$name];
-					if (isset($old['#'.$name]) && (string)$old['#'.$name]!=='') $old_custom[] = $custom['label'].': '.$old['#'.$name];
-				}
-				$this->data['customfields'] = implode("\n",$data_custom);
-				$old['customfields'] = implode("\n",$old_custom);
-			}
-			if (!$this->tracking->track($this->data,$old,$this->user))
-			{
-				return implode(', ',$this->tracking->errors);
-			}
+			$this->tracking->html_content_allow = true;
+		}
+		if ($this->tracking->track($this->data,$old,$this->user) === false)
+		{
+			return implode(', ',$this->tracking->errors);
+		}
 		if (!($err = parent::save()))
 		{
 			// notify the link-class about the update, as other apps may be subscribt to it

@@ -65,14 +65,17 @@ class timesheet_tracking extends bo_tracking
 	 * @param timesheet_bo $botimesheet
 	 * @return timesheet_tracking
 	 */
-	function __construct($bo)
+	function __construct(timesheet_bo $bo)
 	{
-		parent::__construct();	// calling the constructor of the extended class
-
 		$this->bo = $bo;
 
-		$this->field2history = $this->bo->field2history;
+		//set fields for tracking
+		$this->field2history = array_keys($this->bo->db_cols);
+		$this->field2history = array_diff(array_combine($this->field2history,$this->field2history),array('ts_modified'));
+		$this->field2history += array('customfields'   => '#c');	// to display old customfield data in history
 
+		// custom fields are now handled by parent::__construct('tracker')
+		parent::__construct('timesheet');
 	}
 
 	/**

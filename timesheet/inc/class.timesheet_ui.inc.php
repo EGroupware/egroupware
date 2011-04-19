@@ -84,6 +84,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
+
 			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $this->data['ts_status'])
 			{
 				if ($this->status_labels_config[$this->data['ts_status']]['admin'])
@@ -352,10 +353,8 @@ class timesheet_ui extends timesheet_bo
 					'cat_id' => 'select-cat',
 				),
 		);
-		foreach($this->field2history as $field => $status)
-		{
-			$sel_options['status'][$status] = $this->field2label[$field];
-		}
+		$sel_options['status'] = $this->field2label;
+
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
@@ -379,6 +378,11 @@ class timesheet_ui extends timesheet_bo
 		if (count($edit_grants) == 1)
 		{
 			$readonlys['ts_owner'] = true;
+		}
+		// in view mode, we need to add the owner, if it does not exist, otherwise it's displayed empty
+		if ($view && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
+		{
+			$edit_grants[$content['ts_owner']] = common::grab_owner_name($content['ts_owner']);
 		}
 		$sel_options['ts_owner']  = $edit_grants;
 		$sel_options['ts_status']  = $this->status_labels;
