@@ -44,14 +44,14 @@ class timesheet_hooks
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.view',
 			),
 			'view_id' => 'ts_id',
-			'view_popup'  => '600x400',
+			'view_popup'  => '600x425',
 			'view_list' => 'timesheet.timesheet_ui.index',
 			'add' => array(
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '600x400',
+			'add_popup'  => '600x425',
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
 		);
 	}

@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" height="150">
+		<grid width="100%" height="165">
 			<columns>
 				<column width="95"/>
 				<column width="120"/>
@@ -12,13 +12,13 @@
 			<rows>
 				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" id="ts_title" blur="@ts_title_blur" span="all" class="fullWidth"/>
+					<textbox size="65" maxlength="80" blur="@ts_title_blur" span="all" class="fullWidth" id="ts_title"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
 					<description value="comment"/>
-					<textbox multiline="true" rows="5" cols="50" id="ts_description" span="all" class="fullWidth"/>
+					<textbox multiline="true" span="all" class="fullWidth" id="ts_description" rows="5" cols="50"/>
 					<description/>
 					<description/>
 				</row>
@@ -30,7 +30,7 @@
 				</row>
 				<row class="row">
 					<description options=",,,ts_start" value="Date"/>
-					<date id="ts_start" needed="1" options=",8"/>
+					<date needed="1" id="ts_start" options=",8"/>
 					<description value="Starttime"/>
 					<date-timeonly id="start_time" options="H:i"/>
 				</row>
@@ -42,33 +42,31 @@
 				</row>
 				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_quantity" value="Quantity"/>
-					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3" span="all"/>
+					<textbox type="float" blur="@ts_quantity_blur" precision="3" span="all" id="ts_quantity" statustext="empty if identical to duration"/>
 				</row>
 				<row class="row" disabled="@no_ts_status">
 					<description value="Status"/>
-					<menulist>
-						<menupopup id="ts_status" statustext="select a status of the timesheet" options="please select"/>
+					<menulist span="all">
+						<menupopup id="ts_status" options="please select" statustext="select a status of the timesheet"/>
 					</menulist>
-					<description/>
-					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="150">
+		<grid width="100%" height="165">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row class="row" valign="top">
-					<textbox multiline="true" rows="8" cols="70" id="ts_description" class="fullWidth"/>
+					<textbox multiline="true" id="ts_description" rows="11" cols="70" class="fullWidth"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
-		<grid width="100%" height="150" overflow="auto">
+		<grid width="100%" height="165" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -90,7 +88,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="150" overflow="auto">
+		<grid width="100%" height="165" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -102,7 +100,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="150" overflow="auto">
+		<grid width="100%" height="165" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -121,13 +119,13 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<description span="all" class="redItalic" no_lang="1" align="center" id="msg"/>
 					<description/>
 				</row>
 				<row class="th" height="28">
 					<description options=",,,ts_owner" value="User"/>
 					<menulist span="all">
-						<menupopup id="ts_owner" no_lang="1"/>
+						<menupopup no_lang="1" id="ts_owner"/>
 					</menulist>
 				</row>
 				<row class="row">
@@ -138,10 +136,10 @@
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=none">
-								<projectmanager-select options="None" id="pm_id" span="all" class="fullWidth" statustext="Select a project" onchange="1"/>
+								<projectmanager-select span="all" class="fullWidth" onchange="1" id="pm_id" options="None" statustext="Select a project"/>
 							</row>
 							<row disabled="@pm_integration=full">
-								<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80" class="fullWidth"/>
+								<textbox blur="@ts_project_blur" size="65" maxlength="80" id="ts_project" class="fullWidth"/>
 							</row>
 						</rows>
 					</grid>
@@ -155,14 +153,14 @@
 						</columns>
 						<rows>
 							<row>
-								<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
-								<textbox type="float" id="ts_unitprice" span="all"/>
+								<projectmanager-pricelist onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" id="pl_id" options="None"/>
+								<textbox type="float" span="all" id="ts_unitprice"/>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox span="all" id="timesheet.edit.general|timesheet.edit.notes|timesheet.edit.links|timesheet.edit.customfields|timesheet.edit.history">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>
@@ -182,23 +180,23 @@
 				<row disabled="!@ts_modified">
 					<description value="Last modified"/>
 					<hbox>
-						<date-time id="ts_modified" readonly="true"/>
+						<date-time readonly="true" id="ts_modified"/>
 						<menulist>
-							<menupopup type="select-account" id="ts_modifier" label="by" readonly="true"/>
+							<menupopup type="select-account" label="by" readonly="true" id="ts_modifier"/>
 						</menulist>
 					</hbox>
 				</row>
 				<row>
-					<hbox options="0" span="2" orient="0">
+					<hbox span="2">
 						<hbox>
 							<button label="Edit" id="button[edit]" statustext="Edit this entry"/>
-							<button id="button[save_new]" label="Save &amp; New" statustext="Saves this entry and add a new one"/>
-							<button id="button[save]" label="Save" statustext="Saves the changes made"/>
-							<button id="button[apply]" label="Apply" statustext="Applies the changes made"/>
-							<button id="button[cancel]" label="Cancel" statustext="closes the window without saving the changes" onclick="window.close();"/>
+							<button label="Save &amp; New" id="button[save_new]" statustext="Saves this entry and add a new one"/>
+							<button label="Save" id="button[save]" statustext="Saves the changes made"/>
+							<button label="Apply" id="button[apply]" statustext="Applies the changes made"/>
+							<button label="Cancel" onclick="window.close();" id="button[cancel]" statustext="closes the window without saving the changes"/>
 							<html id="js"/>
 						</hbox>
-						<button label="Delete" align="right" id="button[delete]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
+						<button label="Delete" align="right" onclick="return confirm('Delete this entry');" id="button[delete]" statustext="Delete this entry"/>
 					</hbox>
 				</row>
 			</rows>
