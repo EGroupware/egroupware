@@ -40,6 +40,11 @@ class importexport_definitions_bo {
 		}
 	}
 
+	public function get_rows(&$query, &$rows, &$readonlys)
+	{
+		return $this->so_sql->get_rows($query, $rows, $readonlys);
+	}
+
 	/**
 	 * gets array of definition ids
 	 *

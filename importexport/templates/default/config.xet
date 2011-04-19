@@ -16,6 +16,10 @@
 					<description value="Users allowed to share their own definitions"/>
 					<listbox type="select-account" rows="5" options="both" id="share_definition"/>
 				</row>
+				<row valign="top">
+					<description value="Export Spreadsheet link display folders"/>
+					<listbox rows="3" id="export_spreadsheet_folder"/>
+				</row>
 				<row>
 					<hbox span="all">
 						<button span="all" label="Save" id="save"/>

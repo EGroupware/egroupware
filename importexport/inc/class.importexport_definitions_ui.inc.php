@@ -92,16 +92,16 @@ class importexport_definitions_ui
 			}
 		}
 
-		$bodefinitions = new importexport_definitions_bo($filter, true);
+		$bodefinitions = new importexport_definitions_bo(false, true);
 		if (is_array($content))
 		{
-			if (isset($content['delete']))
+			if (isset($content['rows']['delete']))
 			{
 				$bodefinitions->delete(array_keys($content['delete'],'pressed'));
 			}
-			elseif(($button = array_search('pressed',$content)) !== false)
+			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
-				$selected = array_keys($content['selected'],1);
+				$selected = array_keys($content['nm']['rows']['selected'],1);
 				if(count($selected) < 1 || !is_array($selected)) exit();
 				switch ($button)
 				{
@@ -125,25 +125,43 @@ class importexport_definitions_ui
 			}
 
 		}
-		$etpl = new etemplate(self::_appname.'.definition_index');
 
-		// we need an offset because of autocontinued rows in etemplate ...
-		$definitions = array('row0');
-
-		foreach ($bodefinitions->get_definitions() as $identifier) {
-			try {
-				$definition = new importexport_definition($identifier);
-			} catch (Exception $e) {
-				// permission error
-				continue;
-			}
-			$array = $definition->get_record_array();
-			$array['menuaction'] = $array['type'] == 'import' ? 'importexport.importexport_import_ui.import_dialog':'importexport.importexport_export_ui.export_dialog';
-			$definitions[] = $array;
-			unset($definition);
+		if(!is_array($content['nm'])) {
+			$content['nm'] = array(
+				'get_rows'	=> 'importexport.importexport_definitions_ui.get_rows',
+				'no_cat'	=> true,
+				'no_filter'	=> true,
+				'no_filter2'	=> true,
+				'header_right'	=> 'importexport.definition_index.add',
+				'csv_fields'	=> false,	// Disable CSV export, uses own export
+			);
 		}
-		$content = $definitions;
-		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, array(), $readonlys, $preserv );
+		if(egw_session::appsession('index', 'importexport')) {
+			$content['nm'] = array_merge($content['nm'], egw_session::appsession('index', 'importexport'));
+		}
+		$sel_options = array(
+			'type'	=> array(
+				'import'	=> lang('import'),
+				'export'	=> lang('export'),
+			),
+			'allowed_users' => array(null => lang('Private'))
+		);
+		foreach ($this->plugins as $appname => $options)
+		{
+			if($GLOBALS['egw_info']['user']['apps'][$appname] || $GLOBALS['egw_info']['user']['apps']['admin']) {
+				$sel_options['application'][$appname] = lang($appname);
+			}
+		}
+
+		$etpl = new etemplate(self::_appname.'.definition_index');
+		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, $sel_options, $readonlys, $preserv );
+	}
+
+	public function get_rows(&$query, &$rows, &$readonlys) {
+		$rows = array();
+		egw_session::appsession('index','importexport',$query);
+		$bodefinitions = new importexport_definitions_bo($query['col_filter'], true);
+		return $bodefinitions->get_rows($query, $rows, $readonlys);
 	}
 
 	function edit()
@@ -572,6 +590,21 @@ class importexport_definitions_ui
 
 		$data = config::read(self::_appname);
 		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
+
+		// Folder stuff should really be part of etemplate (merge base is in there) 
+		// but the sidebox link works best if they're together
+		if(!array_key_exists('export_spreadsheet_folder', $data)) $data['export_spreadsheet_folder'] = 'user,stylite';
+		$sel_options = array(
+			'export_spreadsheet_folder' => array(
+				'user'	=>	lang('User template folder'),
+			)
+		);
+		if($GLOBALS['egw_info']['apps']['stylite']) {
+			$sel_options['export_spreadsheet_folder'] += array(
+				'stylite'	=> lang('Stylite template folder'),
+			);
+		}
+		
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration') . ' - ' . lang(self::_appname);
 		$etpl = new etemplate(self::_appname.'.config');
