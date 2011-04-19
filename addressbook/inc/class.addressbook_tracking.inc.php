@@ -48,13 +48,6 @@ class addressbook_tracking extends bo_tracking
 	);
 
 	/**
-        * Translate field name to label
-        */
-        public $field2label = array(
-		// Custom fields added in constructor
-	);
-
-	/**
 	 * Should the user (passed to the track method or current user if not passed) be used as sender or get_config('sender')
 	 *
 	 * @var boolean
@@ -64,37 +57,34 @@ class addressbook_tracking extends bo_tracking
 	 * Instance of the bocontacts class calling us
 	 *
 	 * @access private
-	 * @var bocontacts
+	 * @var addressbook_bo
 	 */
 	var $contacts;
 
 	/**
 	 * Constructor
 	 *
-	 * @param bocontacts &$bocontacts
+	 * @param addressbook_bo $bocontacts
 	 * @return tracker_tracking
 	 */
-	function __construct(&$bocontacts)
+	function __construct(addressbook_bo $bocontacts)
 	{
-		parent::__construct();	// calling the constructor of the extended class
-
-		$this->contacts =& $bocontacts;
+		$this->contacts = $bocontacts;
 
 		if (is_object($bocontacts->somain) && is_array($bocontacts->somain->db_cols))
 		{
 			$this->field2history = array_combine($bocontacts->somain->db_cols, $bocontacts->somain->db_cols);
+
+			// no need to store these
 			unset($this->field2history['modified']);
 			unset($this->field2history['modifier']);
 			unset($this->field2history['etag']);
+
+			// we currently can only track text
 			unset($this->field2history['jpegphoto']);
 		}
-		$custom = config::get_customfields('addressbook', true);
-		if(is_array($custom)) {
-			foreach($custom as $name => $settings) {
-				$this->field2history['#'.$name] = '#'.$name;
-				$this->field2label['#'.$name] = $settings['label'];
-			}
-		}
+		// custom fields are now handled by parent::__construct('addressbook')
+		parent::__construct('addressbook');
 	}
 
 	/**
@@ -148,15 +138,17 @@ class addressbook_tracking extends bo_tracking
 	 */
 	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
 	{
-                if (is_null($changed_fields))
-                {
-                        $changed_fields = self::changed_fields($data,$old);
-                }
-                if (!$changed_fields) return 0;
+		if (is_null($changed_fields))
+		{
+			$changed_fields = self::changed_fields($data,$old);
+		}
+		if (!$changed_fields) return 0;
+
 		foreach(array('adr_one_countryname' => 'adr_one_countrycode', 'adr_two_countryname' => 'adr_two_countrycode') as $name => $code)
 		{
 			// Only codes involved, but old text name is automatically added when loaded
-			if($old[$code] && $data[$code]) {
+			if($old[$code] && $data[$code])
+			{
 				unset($changed_fields[array_search($name, $changed_fields)]);
 				continue;
 			}
@@ -164,7 +156,8 @@ class addressbook_tracking extends bo_tracking
 			// Code and a text name
 			if(in_array($name, $changed_fields) && in_array($code, $changed_fields))
 			{
-				if($data[$code]) {
+				if($data[$code])
+				{
 					$data[$name] = $GLOBALS['egw']->country->get_full_name($data[$code], true);
 				}
 				unset($changed_fields[array_search($code, $changed_fields)]);

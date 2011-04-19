@@ -51,7 +51,7 @@
   border-bottom: #9c9c9c 1px solid; 
 }
 fieldset.phoneGroup {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 110%;
   height: 140px;
   border: solid black 2px;
@@ -61,7 +61,7 @@ fieldset.phoneGroup {
   height: 122px;
 }
 fieldset.emailGroup {
-  margin-top: 4px;
+  margin-top: 10px;
   font-size: 110%;
   height: 112px;
   border: solid black 2px;

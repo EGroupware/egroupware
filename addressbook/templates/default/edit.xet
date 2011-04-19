@@ -53,7 +53,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.5.002">
+	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.002">
 		<grid height="286">
 			<columns>
 				<column/>
@@ -72,6 +72,7 @@
 							<column/>
 							<column/>
 							<column/>
+							<column/>
 						</columns>
 						<rows>
 							<row>
@@ -82,15 +83,18 @@
 								<description/>
 								<template id="addressbook.edit.name"/>
 								<description/>
+								<description/>
 							</row>
 							<row>
 								<description options=",,,title" value="Title"/>
 								<textbox size="36" maxlength="64" id="title" span="2"/>
+								<description/>
 							</row>
 							<row>
 								<description options=",,,role" value="Role"/>
 								<textbox size="20" maxlength="64" id="role"/>
 								<textbox size="5" label="Room" id="room"/>
+								<description/>
 							</row>
 						</rows>
 					</grid>
@@ -128,8 +132,9 @@
 					<description value="country" options=",,,adr_one_countryname"/>
 					<hbox options="0,0">
 						<menulist class="countrySelect">
-							<menupopup type="select-country" options="Select one,1" id="adr_one_countryname"/>
+							<menupopup type="select-country" options="Select one,0,1" id="adr_one_countrycode" onchange="show_custom_country(this);"/>
 						</menulist>
+						<textbox id="adr_one_countryname" class="custom_country"/>
 						<textbox class="leftPad5" size="19" maxlength="64" id="adr_one_region" statustext="State"/>
 					</hbox>
 				</row>
@@ -145,9 +150,12 @@
 				<row disabled="!@addr_format=city_state_postcode">
 					<description/>
 					<description value="country" options=",,,adr_one_countryname"/>
-					<menulist>
-						<menupopup type="select-country" options="Select one,1" id="adr_one_countryname"/>
-					</menulist>
+					<hbox options="0,0">
+						<menulist class="countrySelect">
+							<menupopup type="select-country" options="Select one,0,1" id="adr_one_countrycode" onchange="show_custom_country(this);"/>
+						</menulist>
+						<textbox id="adr_one_countryname" class="custom_country"/>
+					</hbox>
 				</row>
 				<row valign="bottom" height="25">
 					<image src="private.png"/>
@@ -159,8 +167,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="258" overflow="auto">
+	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -177,8 +185,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.003">
-		<grid height="258">
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286">
 			<columns>
 				<column/>
 				<column/>
@@ -208,8 +216,9 @@
 					<description value="country" options=",,,adr_two_countryname"/>
 					<hbox options="0,0">
 						<menulist class="countrySelect">
-							<menupopup type="select-country" options="Select one,1" id="adr_two_countryname"/>
+							<menupopup type="select-country" options="Select one,0,1" id="adr_two_countrycode" onchange="show_custom_country(this);"/>
 						</menulist>
+						<textbox id="adr_two_countryname" class="custom_country"/>
 						<textbox class="leftPad5" size="19" maxlength="64" id="adr_two_region" statustext="State"/>
 					</hbox>
 				</row>
@@ -225,9 +234,12 @@
 				<row disabled="!@addr_format2=city_state_postcode">
 					<description/>
 					<description value="Country"/>
-					<menulist>
-						<menupopup type="select-country" options="Select one,1" id="adr_two_countryname"/>
-					</menulist>
+					<hbox options="0,0">
+						<menulist class="countrySelect">
+							<menupopup type="select-country" options="Select one,0,1" id="adr_two_countrycode" onchange="show_custom_country(this);"/>
+						</menulist>
+						<textbox id="adr_two_countryname" class="custom_country"/>
+					</hbox>
 				</row>
 				<row height="30">
 					<image src="gear"/>
@@ -247,8 +259,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="258" overflow="auto">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -305,8 +317,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.3.001">
-		<grid width="100%" height="258" overflow="auto">
+	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -326,8 +338,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="258" overflow="auto">
+	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -350,8 +362,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.5.002">
-		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
+	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -365,8 +377,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.5.002">
-		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
+	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -376,6 +388,18 @@
 				</row>
 				<row height="100%">
 					<customfields options="$cont[tid],1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<historylog id="history"/>
 				</row>
 			</rows>
 		</grid>
@@ -508,6 +532,7 @@
 							<tab label="Distribution lists" statustext="Distribution lists, ..."/>
 							<tab label="Extra" statustext="Custom fields"/>
 							<tab label="Extra private" statustext="Private custom fields"/>
+							<tab label="History" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
@@ -518,6 +543,7 @@
 							<template id="addressbook.edit.distribution_list"/>
 							<template id="addressbook.edit.custom"/>
 							<template id="addressbook.edit.custom_private"/>
+							<template id="addressbook.edit.history"/>
 						</tabpanels>
 					</tabbox>
 					<vbox>
