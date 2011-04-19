@@ -164,9 +164,9 @@ class historylog_widget
 			}
 			if (isset($status_widgets['#'.$cf_name])) continue;	// app set a status widget --> use that
 
-			if(!is_array($cf_data['values']))
+			if(!is_array($cf_data['values']) || !$cf_data['values'])
 			{
-				$status_widgets['#'.$cf_name] = $cf_data['type'];
+				$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
 			}
 			elseif($cf_data['values']['@'])
 			{
