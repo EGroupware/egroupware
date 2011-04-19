@@ -1491,5 +1491,31 @@ class html
 			}
 		}
 	}
+
+	/**
+	 * split html by PRE tag, return array with all content pre-sections isolated in array elements
+	 * @author Leithoff, Klaus
+	 * @param string html
+	 * @return mixed array of parts or unaffected html
+	 */
+	static function splithtmlByPRE($html)
+	{
+		if (($pos = stripos($html,'<pre>')) === false)
+		{
+			return $html;
+		}
+		$html2ret[] = substr($html,0,$pos);
+		while ($pos!==false)
+		{
+			$endofpre = stripos($html,'</pre>',$pos);
+			$length = $endofpre-$pos+6;
+			$html2ret[] = substr($html,$pos,$length);
+			$pos =  stripos($html,'<pre>', $endofpre+6);
+			$html2ret[] = ($pos ? substr($html,$endofpre+6,$pos-($endofpre+6)): substr($html,$endofpre+6));
+			//$pos=false;
+		}
+		return $html2ret;
+	}
+
 }
 html::_init_static();
