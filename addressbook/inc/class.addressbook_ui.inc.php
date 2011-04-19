@@ -1663,14 +1663,15 @@ class addressbook_ui extends addressbook_bo
 				));
 			}
 		}
-		foreach(array_keys($this->contact_fields) as $key)
+
+		// make everything not explicit mentioned readonly
+		$readonlys['__ALL__'] = true;
+		$readonlys['photo'] = $readonlys['button[cancel]'] = $readonlys['button[copy]'] =
+			$readonlys['button[ok]'] = $readonlys['button[more]'] = false;
+
+		foreach(array('tel_home','tel_work','tel_cell','tel_fax') as $key)
 		{
-			$readonlys[$key] = true;
-			if (in_array($key,array('tel_home','tel_work','tel_cell','tel_fax')))
-			{
-				$readonlys[$key.'2'] = true;
-				$content[$key.'2'] = $content[$key];
-			}
+			$content[$key.'2'] = $content[$key];
 		}
 
 		// respect category permissions
@@ -1684,13 +1685,9 @@ class addressbook_ui extends addressbook_bo
 			'to_app' => 'addressbook',
 			'to_id'  => $content['id'],
 		);
-		$readonlys['link_to'] = $readonlys['customfields'] = $readonlys['fileas_type'] = true;
-		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
 		$content['disable_change_org'] = true;
-		// ToDo: fix vCard export
-		$readonlys['button[vcard]'] = true;
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);

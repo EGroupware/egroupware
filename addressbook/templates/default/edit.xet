@@ -48,13 +48,13 @@
 				</row>
 				<row>
 					<description/>
-					<button label="Ok" onclick="set_style_by_class('table','editname','display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;"/>
+					<button label="Ok" onclick="set_style_by_class('table','editname','display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;" id="button[ok]"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.5.002">
-		<grid height="286">
+	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.5.004">
+		<grid width="100%" height="286">
 			<columns>
 				<column/>
 				<column/>
@@ -72,6 +72,7 @@
 							<column/>
 							<column/>
 							<column/>
+							<column/>
 						</columns>
 						<rows>
 							<row>
@@ -82,15 +83,18 @@
 								<description/>
 								<template id="addressbook.edit.name"/>
 								<description/>
+								<description/>
 							</row>
 							<row>
 								<description options=",,,title" value="Title"/>
 								<textbox size="36" maxlength="64" id="title" span="2"/>
+								<description/>
 							</row>
 							<row>
 								<description options=",,,role" value="Role"/>
 								<textbox size="20" maxlength="64" id="role"/>
 								<textbox size="5" label="Room" id="room"/>
+								<description/>
 							</row>
 						</rows>
 					</grid>
@@ -160,7 +164,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="258" overflow="auto">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -178,7 +182,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.003">
-		<grid height="258">
+		<grid width="100%" height="286">
 			<columns>
 				<column/>
 				<column/>
@@ -248,7 +252,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="258" overflow="auto">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -306,7 +310,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.3.001">
-		<grid width="100%" height="258" overflow="auto">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -327,7 +331,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="258" overflow="auto">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -351,7 +355,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.5.002">
-		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
+		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -366,7 +370,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.5.002">
-		<grid width="100%" height="258" class="row_on" spacing="0" padding="0" overflow="auto">
+		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -376,6 +380,18 @@
 				</row>
 				<row height="100%">
 					<customfields options="$cont[tid],1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="286" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<historylog id="history"/>
 				</row>
 			</rows>
 		</grid>
@@ -462,7 +478,7 @@
 					<radio options="tel_other,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
-					<button label="Ok" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center"/>
+					<button label="Ok" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center" id="button[ok]"/>
 				</row>
 			</rows>
 		</grid>
@@ -508,6 +524,7 @@
 							<tab label="Distribution lists" statustext="Distribution lists, ..."/>
 							<tab label="Extra" statustext="Custom fields"/>
 							<tab label="Extra private" statustext="Private custom fields"/>
+							<tab label="History" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
@@ -518,6 +535,7 @@
 							<template id="addressbook.edit.distribution_list"/>
 							<template id="addressbook.edit.custom"/>
 							<template id="addressbook.edit.custom_private"/>
+							<template id="addressbook.edit.history"/>
 						</tabpanels>
 					</tabbox>
 					<vbox>
@@ -559,7 +577,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button label="More ..." onclick="set_style_by_class('table','editphones','display','inline'); if (window.showphones) showphones(this.form); return false;" accesskey="m"/>
+										<button label="More ..." onclick="set_style_by_class('table','editphones','display','inline'); if (window.showphones) showphones(this.form); return false;" accesskey="m" id="button[more]"/>
 										<description/>
 									</row>
 								</rows>
