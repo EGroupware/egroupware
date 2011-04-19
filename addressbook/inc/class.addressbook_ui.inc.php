@@ -353,7 +353,7 @@ class addressbook_ui extends addressbook_bo
 			'edit' => array(
 				'caption' => 'Edit',
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=',
+				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
 				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
 				'group' => $group,
 				'enabled' => 'javaScript:nm_not_disableClass',
@@ -1542,14 +1542,6 @@ class addressbook_ui extends addressbook_bo
 					{
 						echo "<html><body><script>var referer = opener.location;opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
-/*
-						$link = egw::link('/index.php',array(
-							'menuaction' => 'addressbook.addressbook_ui.view',
-							'contact_id' => $content['id'],
-						));
-						echo "<html><body><script>opener.location.href = '$link&msg=".
-							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
-*/
 						common::egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
