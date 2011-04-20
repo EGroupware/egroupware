@@ -2163,18 +2163,6 @@ function replace_eTemplate_onsubmit()
 		foreach($tracking->field2label as $field => $label) {
 			$sel_options[$status][$field] = lang($label);
 		}
-		// Get custom field options
-		$custom = config::get_customfields('calendar', true);
-		if(is_array($custom)) {
-			foreach($custom as $name => $settings) {
-				if(!is_array($settings['values'])) {
-					$content['history']['status-widgets']['#'.$name] = $settings['type'];
-				} elseif($settings['values']['@']) {
-					$content['history']['status-widgets']['#'.$name] = customfields_widget::_get_options_from_file($settings['values']['@']);
-				} else {
-					$content['history']['status-widgets']['#'.$name] = $settings['values'];
-				}
-			}
-		}
+		// custom fields are now "understood" directly by historylog widget
 	}
 }

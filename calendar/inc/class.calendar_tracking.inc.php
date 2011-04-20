@@ -61,10 +61,10 @@ class calendar_tracking extends bo_tracking
 
 		'start'		=>	'start',
 		'end'		=>	'end',
-		
+
 		'participants'	=>	array('user_id', 'status', 'role', 'recur'),
 		'participants-c'	=>	array('user_id', 'status', 'quantity', 'role', 'recur'),
-		
+
 		// Custom fields added in constructor
 	);
 
@@ -89,7 +89,7 @@ class calendar_tracking extends bo_tracking
 
 		'start'		=>	'start',
 		'end'		=>	'end',
-		
+
 		'participants'	=>	'Participants: User, Status, Role',
 		'participants-c'=>	'Participants: User, Status, Quantity, Role'
 
@@ -110,15 +110,7 @@ class calendar_tracking extends bo_tracking
 	 */
 	public function __construct()
 	{
-		parent::__construct();	// calling the constructor of the extended class
-
-		$custom = config::get_customfields('calendar', true);
-		if(is_array($custom)) {
-			foreach($custom as $name => $settings) {
-				$this->field2history['#'.$name] = '#'.$name;
-				$this->field2label['#'.$name] = $settings['label'];
-			}
-		}
+		parent::__construct('calendar');	// adds custom fields
 	}
 
 	/**
@@ -127,7 +119,7 @@ class calendar_tracking extends bo_tracking
 	*/
 	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
         {
-		// Don't try to track dates on recurring events.  
+		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
 		if($data['recur_type']) {
 			unset($data['start']); unset($data['end']);
@@ -137,7 +129,7 @@ class calendar_tracking extends bo_tracking
 		/**
 		* Do some magic with the participants and recurrance.
 		* If this is one of a recurring event, append the recur_date to the participant field so we can
-		* filter by it later.  
+		* filter by it later.
 		*/
 		$recur_prefix = $data['recur_date'] ? $data['recur_date'] : '';
 		if(is_array($data['participants'])) {
