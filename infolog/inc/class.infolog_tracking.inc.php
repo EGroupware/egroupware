@@ -122,7 +122,7 @@ class infolog_tracking extends bo_tracking
 	 */
 	function __construct(&$infolog_bo)
 	{
-		parent::__construct();	// calling the constructor of the extended class
+		parent::__construct('infolog');	// add custom fields from infolog
 
 		$this->infolog =& $infolog_bo;
 	}
@@ -299,29 +299,6 @@ class infolog_tracking extends bo_tracking
 			$changes = false;
 		}
 		return $changes;
-	}
-
-	/**
-	 * Save changes to the history log
-	 *
-	 * Reimplemented to store all customfields in a single field, as the history-log has only 2-char field-ids
-	 *
-	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param int number of log-entries made
-	 */
-	function save_history($data,$old)
-	{
-		$data_custom = $old_custom = array();
-		foreach($this->infolog->customfields as $name => $custom)
-		{
-			if (isset($data['#'.$name]) && (string)$data['#'.$name]!=='') $data_custom[] = $custom['label'].': '.$data['#'.$name];
-			if (isset($old['#'.$name]) && (string)$old['#'.$name]!=='') $old_custom[] = $custom['label'].': '.$old['#'.$name];
-		}
-		$data['custom'] = implode("\n",$data_custom);
-		$old['custom'] = implode("\n",$old_custom);
-
-		return parent::save_history($data,$old);
 	}
 
 	/**

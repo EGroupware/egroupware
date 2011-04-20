@@ -1639,7 +1639,6 @@ class infolog_ui
 				),
 			);
 			$history_stati = array();
-			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 			$tracking = new infolog_tracking($this);
 			foreach($tracking->field2history as $field => $history)
 			{
