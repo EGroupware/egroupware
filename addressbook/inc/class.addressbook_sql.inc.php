@@ -368,7 +368,7 @@ class addressbook_sql extends so_sql_cf
 					if (strpos($column,'.') === false)
 					{
 						$table = $column == $this->extra_value ? $this->extra_table : $this->table_name;
-						if (in_array($column, $this->db_cols))
+						if (isset($this->db_cols[$column]))
 						{
 							$table .= '.';
 						}
