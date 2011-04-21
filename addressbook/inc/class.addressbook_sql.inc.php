@@ -447,15 +447,25 @@ class addressbook_sql extends so_sql
 				foreach($all_matches as $matches)
 				{
 					$table = '';
-					if (strpos($matches[1],'.') === false)
+					$column = $matches[1];
+					if (($key = array_search($column, $this->db_cols)) !== false) $column = $key;
+					if (strpos($column,'.') === false)
 					{
-						$table = ($matches[1] == $this->extra_value ? $this->extra_table : $this->table_name).'.';
+						$table = $column == $this->extra_value ? $this->extra_table : $this->table_name;
+						if (in_array($column, $this->db_cols))
+						{
+							$table .= '.';
+						}
+						else
+						{
+							$table = '';
+						}
 					}
-					$extra_cols[] = $table.$matches[1].' '.$matches[2];
+					$extra_cols[] = $table.$column.' '.$matches[2];
 					//_debug_array($matches);
 					if (!empty($order_by) && $table) // postgres requires explizit order by
 					{
-						$order_by = str_replace($matches[0],$table.$matches[0],$order_by);
+						$order_by = str_replace($matches[0],$table.$column.' '.$matches[2].' '.$matches[3].$matches[4],$order_by);
 					}
 				}
 				//_debug_array($order_by); _debug_array($extra_cols);
