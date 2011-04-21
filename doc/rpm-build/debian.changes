@@ -1,3 +1,23 @@
+egroupware (1.8.001.20110421) hardy; urgency=low
+
+  * Addressbook: lettersearch was not working for addressbooks in LDAP if PostgreSQL database was used (bug #2851)
+  * Calendar: fixed not working "use event TZ" pref for iCal exports and allways use event TZ for calendar notifications (NOT use file export pref.)
+  * SyncML/Calendar/PostgreSQL: fixed SQL error when searching participants (SELECT DISTINCT requires ORDER-BY-expressions to be in SELECT-list)
+  * Wiki/PostgreSQL: fixed SQL error when viewing history (#2927), PostgreSQL needs mixed case names quoted
+  * PostgreSQL: when importing/updating timezones, only query last insert id, if not already in database (gives warning for PostgreSQL)
+  * Addressbook/PostgreSQL: lettersearch in organisation-view allways returned empty
+  * Preferences: fixed not working setting of preferences without a logout
+  * addressbook: enable advanced search for addressbook org view
+  * eMail: fix for styliteTracker Bug#1471 (adding more than 4 lines of addresses to a mail in compose-dialog shrinks the address-area to a height of 0 with IE9)
+  * eMail: make sure the quotaDisplay is refreshed on Message List refresh
+  * Admin: fix for reported error regarding wrong count of lines in Admin -> view error log (note, not all errors are logged there, only some. Its only used for some error logging, most of error logging is done/directed to the webservers error log)
+  * Addressbook/PostgreSQL: fixed SQL error when checking "use whole query"
+  * SiteMgr: fixed detection of downloaded content, using Content-Type header now and adding style="white-space: pre-wrap; text-aling: left;" to pre-tag for textfiles
+  * Preference: fixed PHP Fatal error:  Cannot use string offset as an array on line 550, by importing preference class from trunk
+  * PostgreSQL/Addressbook: fixed SQL error when listing account, groups or querying birthdays
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 21 Apr 2011 16:45:58 +0200
+
 egroupware (1.8.001.20110409) hardy; urgency=low
 
   * updated phpfreechat to version 1.3 to fix php 5.3 depricated warnings
