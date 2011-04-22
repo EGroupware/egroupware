@@ -1,4 +1,4 @@
-charset	iso-8859-1
+charset	utf-8
 
 regular (year=0):
 CA	New Years	1	1	0	0	0
@@ -39,3 +39,27 @@ CA	Easter Monday	12	4	2004	0	0
 CA	Good Friday	25	3	2005	0	0
 CA	Easter	27	3	2005	0	0
 CA	Easter Monday	28	3	2005	0	0
+
+2011:
+CA	Good Friday	22	4	2011	0	0
+CA	Easter Monday	25	4	2011	0	0
+
+2012:
+CA	Good Friday	6	4	2012	0	0
+CA	Easter Monday	9	4	2012	0	0
+
+2013:
+CA	Good Friday	29	3	2013	0	0
+CA	Easter Monday	1	4	2013	0	0
+
+2014:
+CA	Good Friday	18	4	2014	0	0
+CA	Easter Monday	21	4	2014	0	0
+
+2015:
+CA	Good Friday	3	4	2015	0	0
+CA	Easter Monday	6	4	2015	0	0
+
+2016:
+CA	Good Friday	25	3	2016	0	0
+CA	Easter Monday	28	3	2016	0	0
