@@ -383,6 +383,10 @@ function dhtmlXMenuObject(baseId, skin) {
 			}
 			if (y+h > my && this.menuY2 != null) {
 				y = srcY + srcH - h + 2;
+				if (y < 2) {
+					// Don't let the menu overflow at the top
+					y = 2;
+				}
 				// open from top level
 				if (this.itemPull[id] != null && !this.context) {
 					if (this.itemPull[id]["parent"] == this.idPrefix+this.topId) y = y - this.base.offsetHeight;
@@ -829,6 +833,7 @@ dhtmlXMenuObject.prototype._countVisiblePolygonItems = function(id) {
 	var count = 0;
 	// console.log(this.idPull)
 	for (var a in this.itemPull) {
+
 		//console.log(a)
 		var par = this.itemPull[a]["parent"];
 		var tp = this.itemPull[a]["type"];
