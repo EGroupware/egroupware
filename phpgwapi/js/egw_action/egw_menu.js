@@ -55,7 +55,7 @@ function _egwGenMenuStructure(_elements, _parent)
 		//Go through each key of the current object
 		var obj = _elements[i];
 		var item = new egwMenuItem(_parent, null);
-		for (key in obj)
+		for (var key in obj)
 		{
 			if (key == "children" && obj[key].constructor === Array)
 			{

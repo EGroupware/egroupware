@@ -173,7 +173,7 @@ function egwPopupActionImplementation()
 		else
 		{
 			var defaultAction = null;
-			for (k in _links)
+			for (var k in _links)
 			{
 				if (_links[k].actionObj["default"] && _links[k].enabled)
 				{
@@ -258,7 +258,7 @@ function egwPopupActionImplementation()
 		// Transform the link_groups object into an sorted array
 		var groups = [];
 
-		for (k in link_groups)
+		for (var k in link_groups)
 		{
 			groups.push({"grp": k, "links": link_groups[k]});
 		}
@@ -361,7 +361,7 @@ function egwPopupActionImplementation()
 		// Build a tree containing all actions
 		var tree = {"root": []};
 
-		for (k in _links)
+		for (var k in _links)
 		{
 			_links[k].actionObj.appendToTree(tree);
 		}

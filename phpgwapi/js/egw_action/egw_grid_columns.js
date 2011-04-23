@@ -534,7 +534,7 @@ egwGridColumns.prototype.setColumnVisibilitySet = function(_set)
 {
 	this._beginUpdate();
 
-	for (k in _set)
+	for (var k in _set)
 	{
 		var col = this.getColumnById(k);
 		if (col)

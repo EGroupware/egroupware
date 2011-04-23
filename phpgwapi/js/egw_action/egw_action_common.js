@@ -20,7 +20,7 @@
  */
 function egwActionStoreJSON(_data, _obj, _setterOnly)
 {
-	for (key in _data)
+	for (var key in _data)
 	{
 		if (key.charAt(0) != '_')
 		{
@@ -64,7 +64,7 @@ function egwBitIsSet(_set, _bit)
 function egwObjectLength(_obj)
 {
 	var len = 0;
-	for (k in _obj) len++;
+	for (var k in _obj) len++;
 	return len;
 }
 

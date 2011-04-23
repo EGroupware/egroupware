@@ -165,7 +165,7 @@ egwGrid.prototype.selectcolsClick = function(_at)
 		{
 			// Create the user data column visibility set
 			var set = {};
-			for (k in column_data)
+			for (var k in column_data)
 			{
 				set[k] = {
 					"visible": column_data[k].visible

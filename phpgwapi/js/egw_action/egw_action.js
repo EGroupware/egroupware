@@ -1236,7 +1236,7 @@ egwActionObject.prototype.registerActions = function()
 {
 	var groups = this.getActionImplementationGroups();
 
-	for (group in groups)
+	for (var group in groups)
 	{
 		// Get the action implementation for each group
 		if (typeof _egwActionClasses[group] != "undefined" &&
@@ -1405,7 +1405,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 	}
 
 	// Check whether all objects supported the action
-	for (k in actionLinks)
+	for (var k in actionLinks)
 	{
 		actionLinks[k].enabled = actionLinks[k].enabled &&
 			(actionLinks[k].cnt >= testedSelected.length) &&

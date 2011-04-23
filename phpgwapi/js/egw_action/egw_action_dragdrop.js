@@ -153,7 +153,7 @@ function egwDragActionImplementation()
 		this.selected = _selected;
 
 		// Call the onExecute event of the first actionObject
-		for (k in _links)
+		for (var k in _links)
 		{
 			if (_links[k].visible)
 			{
@@ -297,7 +297,7 @@ function egwDropActionImplementation()
 
 						// Disable all links which only accept types which are not
 						// inside ddTypes
-						for (k in links)
+						for (var k in links)
 						{
 							var accepted = links[k].actionObj.acceptedTypes;
 
@@ -317,7 +317,7 @@ function egwDropActionImplementation()
 						// Check whether there is only one link
 						var cnt = 0;
 						var lnk = null;
-						for (k in links)
+						for (var k in links)
 						{
 							if (links[k].enabled && links[k].visible)
 							{
@@ -373,7 +373,7 @@ function egwDropActionImplementation()
 	{
 		// Accumulate the accepted types
 		var accepted = [];
-		for (k in _links)
+		for (var k in _links)
 		{
 			for (var i = 0; i < _links[k].actionObj.acceptedTypes.length; i++)
 			{
