@@ -273,7 +273,7 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 	positionLeft = (windowWidth/2)-(_width/2)+egw_getWindowLeft();
 	positionTop  = (windowHeight/2)-(_height/2)+egw_getWindowTop();
 
-	if (is_ie) _windowName = _windowName.replace(/[^a-zA-Z0-9_]+/,'');	// IE fails, if name contains eg. a dash (-)
+	if (is_ie) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');	// IE fails, if name contains eg. a dash (-)
 
 	windowID = window.open(_url, _windowName, "width=" + _width + ",height=" + _height +
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
