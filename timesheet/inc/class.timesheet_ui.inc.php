@@ -923,14 +923,10 @@ class timesheet_ui extends timesheet_bo
 				'prefix' => 'to_status_',
 				'enabled' => (boolean)$this->status_labels,
 			),
-			'document' => array(
-				'caption' => lang('Insert in %1',egw_vfs::basename($GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'])),
-				'enabled' => (boolean)$GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'],
-				'hideOnDisabled' => true,
-				'group' => ++$group,
-			),
 			'documents' => timesheet_merge::document_action(
-				$GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'], $group
+				$GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'],
+				$group, 'Insert in document', 'document_',
+				$GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document']
 			),
 			'delete' => array(
 				'caption' => 'Delete',

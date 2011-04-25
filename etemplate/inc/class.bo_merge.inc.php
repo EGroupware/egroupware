@@ -882,23 +882,82 @@ abstract class bo_merge
 	}
 
 	/**
-	 * Get insert-in-document action
+	 * From this number of documents, show them in submenus by mime type
+	 */
+	const SHOW_DOCS_BY_MIME_LIMIT = 10;
+
+	/**
+	 * Get insert-in-document action with optional default document on top
+	 *
+	 * If more then SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
 	 *
 	 * @param string $dir
 	 * @param int $group see nextmatch_widget::egw_actions
 	 * @param string $caption='Insert in document'
+	 * @param string $prefix='document_'
+	 * @param string $default_doc='' full path to default document to show on top with action == 'document'!
 	 * @return array see nextmatch_widget::egw_actions
 	 */
-	public static function document_action($dir, $group=0, $caption='Insert in document', $prefix='document_')
+	public static function document_action($dir, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='')
 	{
-		$documents = self::get_documents($dir, $prefix);
+		$documents = array();
+
+		if ($default_doc && ($file = egw_vfs::stat($default_doc)))	// put default document on top
+		{
+			$documents['document'] = array(
+				'icon' => egw_vfs::mime_icon($file['mime']),
+				'caption' => egw_vfs::decodePath(egw_vfs::basename($default_doc)),
+				'group' => 1,
+			);
+		}
+
+		if ($dir && ($files = egw_vfs::find($dir,array(
+			'need_mime' => true,
+			'order' => 'fs_name',
+			'sort' => 'ASC',
+		),true)))
+		{
+			foreach($files as $key => $file)
+			{
+				// use only the mime-types we support
+				if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name']))) ||
+					$file['path'] === $default_doc)	// default doc already added
+				{
+					unset($files[$key]);
+				}
+			}
+			foreach($files as $file)
+			{
+				if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
+				{
+					if (!isset($documents[$file['mime']]))
+					{
+						$documents[$file['mime']] = array(
+							'icon' => egw_vfs::mime_icon($file['mime']),
+							'caption' => mime_magic::mime2label($file['mime']),
+							'group' => 2,
+							'children' => array(),
+						);
+					}
+					$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
+				}
+				else
+				{
+					$documents[$prefix.$file['name']] = array(
+						'icon' => egw_vfs::mime_icon($file['mime']),
+						'caption' => egw_vfs::decodePath($file['name']),
+						'group' => 2,
+					);
+				}
+			}
+		}
 
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,
 			'children' => $documents,
 			'enabled' => (boolean)$documents,
-			'hideOnDisabled' => true,
+			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined
 			'group' => $group,
 		);
 	}

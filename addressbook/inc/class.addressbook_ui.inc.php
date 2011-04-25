@@ -138,10 +138,13 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($content['nm']['action'] !== '')
 			{
-				if ($content['use_all']) $content['nm']['select_all'] = $content['use_all'];	// legacy support
 				if (!count($content['nm']['selected']) && !$content['nm']['select_all'] && $content['nm']['action'] != 'delete_list')
 				{
 					$msg = lang('You need to select some contacts first');
+				}
+				elseif ($content['nm']['action'] == 'view')	// org-view via context menu
+				{
+					$content['nm']['org_view'] = array_shift($content['nm']['selected']);
 				}
 				else
 				{
@@ -279,13 +282,12 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		$content['nm']['actions'] = $this->get_actions($do_email, $content['nm']['col_filter']['tid']);
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
 
 		// dont show tid-selection if we have only one content_type
-		// be a bit more sophisticated asbout it
+		// be a bit more sophisticated about it
 		$content['nm']['header_right'] = 'addressbook.index.right_add';
 		$availabletypes = array_keys($this->content_types);
 		if ($content['nm']['col_filter']['tid'] && !in_array($content['nm']['col_filter']['tid'],$availabletypes))
@@ -305,6 +307,9 @@ class addressbook_ui extends addressbook_bo
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
 		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
+
+		$content['nm']['actions'] = $this->get_actions($do_email, $content['nm']['col_filter']['tid'], $content['nm']['org_view']);
+
 		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
 		{
 			$org_name = array();
@@ -336,42 +341,76 @@ class addressbook_ui extends addressbook_bo
 	 *
 	 * @param boolean $do_email=false
 	 * @param string $tid_filter=null
-	 * @todo org-view uses slightly different actions
+	 * @param string $org_view=null
 	 * @return array see nextmatch_widget::get_actions()
 	 */
-	private function get_actions($do_email=false, $tid_filter=null)
+	private function get_actions($do_email=false, $tid_filter=null, $org_view=null)
 	{
-		$actions = array(
-			'view' => array(
-				'caption' => 'View',
-				'default' => true,
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id',
-				'popup' => egw_link::get_registry('addressbook', 'view_popup'),
-				'group' => $group=1,
-			),
-			'edit' => array(
-				'caption' => 'Edit',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
-				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
-				'group' => $group,
-				'enabled' => 'javaScript:nm_not_disableClass',
-				'disableClass' => 'rowNoEdit',
-			),
-			'add' => array(
-				'caption' => 'Add',
-				'url' => 'menuaction=addressbook.addressbook_ui.edit',
-				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
-				'group' => $group,
-			),
-			'select_all' => array(
-				'caption' => 'Whole query',
-				'checkbox' => true,
-				'onExecute' => 'javaScript:nm_select_all',	// uses hint to confirm all nm_action='submit'
-				'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
-				'group' => ++$group,
-			),
+		// we have no org view (view of one org has context menu like regular "add contacts" view, as it shows contacts
+		if (!isset($this->org_views[(string) $org_view]))
+		{
+			$actions = array(
+				'view' => array(
+					'caption' => 'View',
+					'default' => true,
+					'allowOnMultiple' => false,
+					'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id',
+					'popup' => egw_link::get_registry('addressbook', 'view_popup'),
+					'group' => $group=1,
+				),
+				'edit' => array(
+					'caption' => 'Edit',
+					'allowOnMultiple' => false,
+					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
+					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+					'group' => $group,
+					'enabled' => 'javaScript:nm_not_disableClass',
+					'disableClass' => 'rowNoEdit',
+				),
+				'add' => array(
+					'caption' => 'Add',
+					'group' => $group,
+					'children' => array(
+						'new' => array(
+							'caption' => 'New',
+							'url' => 'menuaction=addressbook.addressbook_ui.edit',
+							'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+						),
+						'copy' => array(
+							'caption' => 'Copy',
+							'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
+							'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+							'allowOnMultiple' => false,
+						),
+					),
+				),
+			);
+		}
+		else	// org view
+		{
+			$actions = array(
+				'view' => array(
+					'caption' => 'View',
+					'default' => true,
+					'allowOnMultiple' => false,
+					'group' => $group=1,
+				),
+				'add' => array(
+					'caption' => 'Add',
+					'group' => $group,
+					'allowOnMultiple' => false,
+					'url' => 'menuaction=addressbook.addressbook_ui.edit&org=$id',
+					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				),
+			);
+		}
+
+		$actions['select_all'] = array(
+			'caption' => 'Whole query',
+			'checkbox' => true,
+			'onExecute' => 'javaScript:nm_select_all',	// uses hint to confirm all nm_action='submit'
+			'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
+			'group' => ++$group,
 		);
 
 		if ($do_email)
@@ -447,6 +486,14 @@ class addressbook_ui extends addressbook_bo
 		// move to AB
 		if (($move2addressbooks = $this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
 		{
+			foreach($move2addressbooks as $owner => $label)
+			{
+				$this->type_icon((int)$owner, substr($owner,-1) == 'p', 'n', $icon, $type_label);
+				$move2addressbooks[$owner] = array(
+					'icon' => $icon,
+					'caption' => $label,
+				);
+			}
 			$actions['move_to'] = array(
 				'caption' => 'Move to addressbook',
 				'children' => $move2addressbooks,
@@ -515,20 +562,10 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 
-		if ($this->prefs['document_dir'])
-		{
-			$actions += array(
-				'document' => array(
-					'caption' => lang('Insert in %1',egw_vfs::basename($GLOBALS['egw_info']['user']['preferences']['addressbook']['default_document'])),
-					'enabled' => (boolean)$GLOBALS['egw_info']['user']['preferences']['addressbook']['default_document'],
-					'hideOnDisabled' => true,
-					'group' => ++$group,
-				),
-				'documents' => timesheet_merge::document_action(
-					$GLOBALS['egw_info']['user']['preferences']['addressbook']['document_dir'], $group
-				),
-			);
-		}
+		$actions['documents'] = addressbook_merge::document_action(
+			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
+			$this->prefs['default_document']
+		);
 
 		++$group;
 		if (!($tid_filter == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge'))
@@ -550,7 +587,7 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 
-		//_debug_array($actions);
+		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 		return $actions;
 	}
 
@@ -800,12 +837,9 @@ class addressbook_ui extends addressbook_bo
 				return false;
 
 			case 'infolog_add':
-				if ($use_all)	// !$use_all is handled purely in javascript
-				{
-					egw_framework::set_onload(
-						"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
-				}
-				$msg = lang('New window opened to edit Infolog for your selection ');
+				egw_framework::set_onload(
+					"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
+				$msg = lang('New window opened to edit Infolog for your selection');
 				return false;
 
 			case 'cat_add':
@@ -2381,33 +2415,6 @@ class addressbook_ui extends addressbook_bo
 		$document_merge = new addressbook_merge();
 
 		return $document_merge->download($document,$ids);
-	}
-
-	/**
-	 * Returning document actions / files from the document_dir
-	 *
-	 * @return array
-	 */
-	function get_document_actions()
-	{
-		if (!$this->prefs['document_dir']) return array();
-
-		if (!is_array($actions = egw_session::appsession('document_actions','addressbook')))
-		{
-			$actions = array();
-			if (($files = egw_vfs::find($this->prefs['document_dir'],array('need_mime'=>true),true)))
-			{
-				foreach($files as $file)
-				{
-					// return only the mime-types we support
-					if (!addressbook_merge::is_implemented($file['mime'],substr($file['name'],-4))) continue;
-
-					$actions['document-'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
-				}
-			}
-			egw_session::appsession('document_actions','addressbook',$actions);
-		}
-		return $actions;
 	}
 
 	/**
