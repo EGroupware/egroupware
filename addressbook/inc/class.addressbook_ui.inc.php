@@ -437,10 +437,18 @@ class addressbook_ui extends addressbook_bo
 			'children' => array(
 				'cat_add' => nextmatch_widget::category_action(
 					'addressbook',$group,'Add category', 'cat_add_'
-				)+array('icon' => 'foldertree_nolines_plus'),
+				)+array(
+					'icon' => 'foldertree_nolines_plus',
+					'enabled' => 'javaScript:nm_not_disableClass',
+					'disableClass' => 'rowNoEdit',
+				),
 				'cat_del' => nextmatch_widget::category_action(
 					'addressbook',$group,'Delete category', 'cat_del_'
-				)+array('icon' => 'foldertree_nolines_minus'),
+				)+array(
+					'icon' => 'foldertree_nolines_minus',
+					'enabled' => 'javaScript:nm_not_disableClass',
+					'disableClass' => 'rowNoEdit',
+				),
 				'cat_edit' => array(
 					'caption' => 'Edit categories',
 					'url' => 'menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True',
@@ -457,7 +465,7 @@ class addressbook_ui extends addressbook_bo
 				'list_add' => array(
 					'caption' => 'Add a new list',
 					'icon' => 'new',
-					'onExecute' => 'javascript:add_new_list',
+					'onExecute' => 'javaScript:add_new_list',
 				),
 			),
 			'group' => $group,
@@ -470,16 +478,24 @@ class addressbook_ui extends addressbook_bo
 					'children' => $add_lists,
 					'prefix' => 'to_list_',
 					'icon' => 'foldertree_nolines_plus',
+					'enabled' => 'javaScript:nm_not_disableClass',
+					'disableClass' => 'rowNoEdit',
 				),
 				'remove_from_list' => array(
 					'caption' => 'Remove from distribution list',
 					'confirm' => 'Remove selected contacts from distribution list',
 					'icon' => 'foldertree_nolines_minus',
+					'enabled' => 'javaScript:nm_compare_field',
+					'fieldId' => 'exec[nm][filter2]',
+					'fieldValue' => '!',	// enable if list != ''
 				),
 				'delete_list' => array(
 					'caption' => 'Delete selected distribution list!',
 					'confirm' => 'Delete selected distribution list!',
 					'icon' => 'delete',
+					'enabled' => 'javaScript:nm_compare_field',
+					'fieldId' => 'exec[nm][filter2]',
+					'fieldValue' => '!',	// enable if list != ''
 				),
 			);
 		}
@@ -499,6 +515,8 @@ class addressbook_ui extends addressbook_bo
 				'children' => $move2addressbooks,
 				'prefix' => 'move_to_',
 				'group' => $group,
+				'enabled' => 'javaScript:nm_not_disableClass',
+				'disableClass' => 'rowNoDelete',
 			);
 		}
 		$actions['merge'] = array(
@@ -584,6 +602,8 @@ class addressbook_ui extends addressbook_bo
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
 				'group' => $group,
+				'enabled' => 'javaScript:nm_not_disableClass',
+				'disableClass' => 'rowNoEdit',
 			);
 		}
 
@@ -763,15 +783,20 @@ class addressbook_ui extends addressbook_bo
 		{
 			$action = (int)substr($action,8).(substr($action,-1) == 'p' ? 'p' : '');
 		}
-		if (substr($action,0,7) == 'to_list')
+		elseif (substr($action,0,8) == 'to_list_')
 		{
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
 		}
-		if (substr($action,0,9) == 'document_')
+		elseif (substr($action,0,9) == 'document_')
 		{
 			$document = substr($action,9);
 			$action = 'document';
+		}
+		elseif(substr($action,0,4) == 'cat_')	// cat_add_123 or cat_del_456
+		{
+			$cat_id = (int)substr($action, 8);
+			$action = substr($action,0,7);
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
 		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] &&
@@ -841,61 +866,35 @@ class addressbook_ui extends addressbook_bo
 					"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
 				$msg = lang('New window opened to edit Infolog for your selection');
 				return false;
-
-			case 'cat_add':
-				foreach($checked as $id)
-				{
-					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_EDIT,$contact)))
-					{
-						$action_msg = lang('categorie');
-						$cat_ids = explode(",",$contact['cat_id']);   //existing categiries
-						if (!is_array($cat_ids_new) && $cat_ids_new) $cat_ids_new = explode(",",$cat_ids_new);
-						//categarie add
-						if ((!($cat_ids_new = egw_session::appsession('cat_add','addressbook')) && !($cat_ids_new = egw_session::appsession('cat_delete','addressbook'))))
-						{
-							$action_msg = lang('no categories selected');
-						}
-						if (egw_session::appsession('cat_add','addressbook'))
-						{
-							if (is_array($cat_ids_new) && ($ids_to_add = array_diff($cat_ids_new,$cat_ids)))
-							{
-								$cat_ids = array_merge($cat_ids,$ids_to_add);
-								$contact['cat_id'] = implode(",",$cat_ids);
-								$Ok = $this->save($contact);
-								$success++;
-								$action_msg = lang('categorie added');
-							}
-							else
-							{
-								$failed++;
-							}
-						}
-						//categories delete
-						if (egw_session::appsession('cat_delete','addressbook'))
-						{
-							if (is_array($cat_ids_new) && ($ids_to_delete = array_diff($cat_ids,$cat_ids_new)) or ($cat_ids = $cat_ids_new))
-							{
-								$contact['cat_id'] = implode(",",$ids_to_delete);
-								$action_msg = lang('categorie delete');
-								$Ok = $this->save($contact);
-								$success++;
-							}
-							else
-							{
-								$failed++;
-							}
-						}
-					}
-				}
-				$checked = array();	// to not start the single actions
-				egw_session::appsession('cat_add','addressbook','');      //delete stored categories to add
-				egw_session::appsession('cat_delete','addressbook','');    //delete stored categories to delete
-				break;
 		}
 		foreach($checked as $id)
 		{
 			switch($action)
 			{
+				case 'cat_add':
+				case 'cat_del':
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_EDIT,$contact)))
+					{
+						$action_msg = $action == 'cat_add' ? lang('categorie added') : lang('categorie delete');
+						$cat_ids = $contact['cat_id'] ? explode(',', $contact['cat_id']) : array();   //existing categories
+						if ($action == 'cat_add')
+						{
+							$cat_ids[] = $cat_id;
+							$cat_ids = array_unique($cat_ids);
+						}
+						elseif ((($key = array_search($cat_id,$cat_ids))) !== false)
+						{
+							unset($cat_ids[$key]);
+						}
+						$cat_ids = $cat_ids ? implode(',',$cat_ids) : null;
+						if ($cat_ids !== $contact['cat_id'])
+						{
+							$contact['cat_id'] = $cat_ids;
+							$Ok = $this->save($contact);
+						}
+					}
+					break;
+
 				case 'delete':
 					$action_msg = lang('deleted');
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
@@ -919,6 +918,7 @@ class addressbook_ui extends addressbook_bo
 						}
 					}
 					break;
+
 				case 'undelete':
 					$action_msg = lang('recovered');
 					if ($contact = $this->read($id))
@@ -2411,42 +2411,9 @@ class addressbook_ui extends addressbook_bo
 		{
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
-		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_merge.inc.php');
 		$document_merge = new addressbook_merge();
 
 		return $document_merge->download($document,$ids);
-	}
-
-	/**
-	* add a new categorie to any addressbock entry
-	*
-	* @author Stefan Becker <StefanBecker-AT-outdoor-training.de>
-	* @param array $content=null
-	*/
-	function cat_add($content=null)
-	{
-		if (is_array($content))
-		{
-			if ($content['cat_id'])   //add category
-			{
-				if ($content['cat_add'])
-				{
-					egw_session::appsession('cat_add','addressbook',$content['cat_id']);
-					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
-				}
-				if ($content['cat_delete'])   //delete categorie
-				{
-					egw_session::appsession('cat_delete','addressbook',$content['cat_id']);
-					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
-				}
-			}
-			echo "<html><head><script>$js window.close();</script></head><html>\n";
-			common::egw_exit();
-		}
-		$content['cat_tab'] = $this->config['cat_tab'];
-
-		$this->tmpl->read('addressbook.index.cat_add');
-		return $this->tmpl->exec('addressbook.addressbook_ui.cat_add',$content,$sel_options,$readonlys,$content, 2);
 	}
 
 	/**

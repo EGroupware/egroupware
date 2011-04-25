@@ -184,3 +184,27 @@ function nm_not_disableClass(_action, _senders, _target)
 {
 	return !$(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
 }
+
+/**
+ * Callback to check if a certain field (_action.data.fieldId) is (not) equal to given value (_action.data.fieldValue)
+ * 
+ * If field is not found, we return false too!
+ * 
+ * @param _action egwAction object, we use _action.data.fieldId to check agains _action.data.fieldValue
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if field found and has specified value, false otherwise
+ */
+function nm_compare_field(_action, _senders, _target)
+{
+	var field = document.getElementById(_action.data.fieldId);
+
+	if (!field) return false;
+
+	var value = $(field).val();
+	
+	if (_action.data.fieldValue.substr(0,1) == '!')
+		return value != _action.data.fieldValue.substr(1);
+	
+	return value == _action.data.fieldValue;
+}
