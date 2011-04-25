@@ -103,14 +103,14 @@ function nm_action(_action, _senders)
 	//console.log(_action); console.log(_senders);
 
 	var select_all = document.getElementById('exec[nm][select_all]');
+	var confirm_msg = (_senders.length > 1 || select_all && select_all.value) && 
+		typeof _action.data.confirm_multiple != 'undefined' ?
+			_action.data.confirm_multiple : _action.data.confirm;
 
 	// let user confirm the action first (if not select_all set and nm_action == 'submit'  --> confirmed later)
 	if (!(select_all && select_all.value && _action.data.nm_action == 'submit') &&
 		typeof _action.data.confirm != 'undefined')
 	{
-		var confirm_msg = _senders.length > 1 && typeof _action.data.confirm_multiple != 'undefined' ?
-			_action.data.confirm_multiple : _action.data.confirm;
-
 		if (!confirm(confirm_msg)) return;
 	}
 	
@@ -144,7 +144,7 @@ function nm_action(_action, _senders)
 			// let user confirm select-all
 			if (select_all && select_all.value)
 			{
-				if (!confirm(select_all.value)) return;
+				if (!confirm(confirm_msg+"\n\n"+select_all.value)) return;
 			}
 			var form = document.getElementsByName("eTemplate")[0];
 			document.getElementById('exec[nm][action]').value = _action.id;
