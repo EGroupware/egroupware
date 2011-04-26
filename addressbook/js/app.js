@@ -90,7 +90,7 @@ function getElement(form,pattern)
 {
 	for (i = 0; i < form.length; i++){
 		if(form.elements[i].name){
-			var found = form.elements[i].name.search("\\\\["+pattern+"\\\\]");
+			var found = form.elements[i].name.search("\\["+pattern+"\\]");
 			if (found != -1){
 				return form.elements[i];
 			}
@@ -134,7 +134,7 @@ function add_whole_list(list)
 
 function setOptions(options_str)
 {
-	var options = options_str.split("\\\\b");
+	var options = options_str.split("\\b");
 	var selbox = document.getElementById("exec[fileas_type]");
 	var i;
 	for (i=0; i < options.length; i++)
