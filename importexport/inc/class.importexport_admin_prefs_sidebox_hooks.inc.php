@@ -16,6 +16,11 @@ if (!defined('IMPORTEXPORT_APP'))
 
 class importexport_admin_prefs_sidebox_hooks
 {
+
+	public $public_functions = array(
+		'spreadsheet_list' => true
+	);
+
 	static function all_hooks($args)
 	{
 		$appname = IMPORTEXPORT_APP;
@@ -124,17 +129,16 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'Export CSV'
 			);
 		}
-		/*
-		if($GLOBALS['egw_info']['user']['apps']['filemanager']) {
-			$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
-					'menuaction' => 'filemanager.filemanager_ui.index',
-				),false)."','_blank',850,440,'yes')",
-				//'icon' => 'filemanager/navbar',
-				'app' => 'filemanager',
-				'text' => 'Export Spreadsheet'
-			);
-		}
-		*/
+		
+		$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
+				'menuaction' => 'importexport.importexport_admin_prefs_sidebox_hooks.spreadsheet_list',
+				'app' => $appname
+			)),
+			//'icon' => 'filemanager/navbar',
+			'app' => 'importexport',
+			'text' => 'Export Spreadsheet'
+		);
+	
 		$config = config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
@@ -145,5 +149,52 @@ class importexport_admin_prefs_sidebox_hooks
 			), 'importexport');
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
+	}
+
+	public function spreadsheet_list() {
+		$config = config::read('importexport');
+		$config_dirs = $config['export_spreadsheet_folder'] ? explode(',',$config['export_spreadsheet_folder']) : array('user','stylite');
+		$appname = $_GET['app'];
+		$stylite_dir = '/stylite/templates/merge';
+		$dir_list = array();
+		$file_list = array();
+		$mimes = array(
+			'application/vnd.oasis.opendocument.spreadsheet',
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		);
+
+		if(in_array('user', $config_dirs)) {
+			$dir_list[] = $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'];
+		}
+		if(in_array('stylite', $config_dirs) && is_dir($stylite_dir)) {
+			$dir_list[] = $stylite_dir;
+		}
+		
+		foreach($dir_list as $dir) {
+			if ($dir && ($files = egw_vfs::find($dir,array(
+				'need_mime' => true,
+				'order' => 'fs_name',
+				'sort' => 'ASC',
+			),true)))
+			{
+				foreach($files as $file) {
+					if($dir != $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir']) {
+						// Stylite files have a naming convention that must be adhered to
+						list($export, $application, $name) = explode('-', $file['name'], 3);
+					}
+					if(($dir == $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'] || ($export == 'export' && $application == $appname)) && in_array($file['mime'], $mimes)) {
+						$file_list[] = array(
+							'name'	=>	$name ? $name : $file['name'],
+							'path'	=>	$file['path'],
+							'mime'	=>	$file['mime']
+						);
+					}
+				}
+			}
+		}
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Export (merge) spreadsheets');
+		$tmpl = new etemplate('importexport.spreadsheet_list');
+		$tmpl->exec('importexport.importexport_admin_hooks.spreadsheet_list', array('files' => $file_list));
 	}
 }
