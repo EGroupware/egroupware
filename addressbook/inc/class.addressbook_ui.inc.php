@@ -542,6 +542,9 @@ class addressbook_ui extends addressbook_bo
 					'infolog_add' => array(
 						'caption' => 'Add a new Infolog',
 						'icon' => 'new',
+						'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=$id',
+						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'onExecute' => 'javaScript:add_task',	// call server for org-view only
 					),
 				)
 			);
@@ -554,6 +557,7 @@ class addressbook_ui extends addressbook_bo
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
 				'popup' => egw_link::get_registry('calendar', 'add_popup'),
 				'group' => $group,
+				'onExecute' => 'javaScript:add_cal',	// call server for org-view only
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
@@ -862,9 +866,25 @@ class addressbook_ui extends addressbook_bo
 				return false;
 
 			case 'infolog_add':
+				list($width,$height) = explode('x',egw_link::get_registry('infolog', 'add_popup'));
 				egw_framework::set_onload(
-					"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
-				$msg = lang('New window opened to edit Infolog for your selection');
+					"egw_openWindowCentered2('".egw::link('/index.php',array(
+						'menuaction' => 'infolog.infolog_ui.edit',
+						'type' => 'task',
+						'action' => 'addressbook',
+						'action_id' => implode(',',$checked),
+					))."','_blank',$width,$height);");
+				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
+				return false;
+
+			case 'calendar':	// add appointment for org-views, other views are handled directly in javascript
+				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
+				egw_framework::set_onload(
+					"egw_openWindowCentered2('".egw::link('/index.php',array(
+						'menuaction' => 'calendar.calendar_uiforms.edit',
+						'participants' => 'c'.implode(',c',$checked),
+					))."','_blank',$width,$height);");
+				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 		}
 		foreach($checked as $id)
@@ -983,6 +1003,7 @@ class addressbook_ui extends addressbook_bo
 						$Ok = $this->add2list($id,$to_list) !== false;
 					}
 					break;
+
 				default:	// move to an other addressbook
 					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
 					{
@@ -2154,98 +2175,15 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Add javascript functions
+	 * Dynamic javascript functions
+	 *
+	 * All static stuff should go to addressbook/js/app.js
 	 *
 	 * @return string
 	 */
 	function js()
 	{
 		return '<script LANGUAGE="JavaScript">
-
-		function showphones(form)
-		{
-			if (form) {
-				copyvalues(form,"tel_home","tel_home2");
-				copyvalues(form,"tel_work","tel_work2");
-				copyvalues(form,"tel_cell","tel_cell2");
-				copyvalues(form,"tel_fax","tel_fax2");
-			}
-		}
-
-		function hidephones(form)
-		{
-			if (form) {
-				copyvalues(form,"tel_home2","tel_home");
-				copyvalues(form,"tel_work2","tel_work");
-				copyvalues(form,"tel_cell2","tel_cell");
-				copyvalues(form,"tel_fax2","tel_fax");
-			}
-		}
-
-		function copyvalues(form,src,dst){
-			var srcelement = getElement(form,src);  //ById("exec["+src+"]");
-			var dstelement = getElement(form,dst);  //ById("exec["+dst+"]");
-			if (srcelement && dstelement) {
-				dstelement.value = srcelement.value;
-			}
-		}
-
-		function getElement(form,pattern){
-			for (i = 0; i < form.length; i++){
-				if(form.elements[i].name){
-					var found = form.elements[i].name.search("\\\\["+pattern+"\\\\]");
-					if (found != -1){
-						return form.elements[i];
-					}
-				}
-			}
-		}
-
-		function setName(input)
-		{
-			var prefix = document.getElementById("exec[n_prefix]").value;
-			var given  = document.getElementById("exec[n_given]").value;
-			var middle = document.getElementById("exec[n_middle]").value;
-			var family = document.getElementById("exec[n_family]").value;
-			var suffix = document.getElementById("exec[n_suffix]").value;
-			var org    = document.getElementById("exec[org_name]").value;
-
-			var name = document.getElementById("exec[n_fn]");
-
-			name.value = "";
-			if (prefix) name.value += prefix+" ";
-			if (given) name.value += given+" ";
-			if (middle) name.value += middle+" ";
-			if (family) name.value += family+" ";
-			if (suffix) name.value += suffix;
-
-			xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
-		}
-
-		function add_whole_list(list)
-		{
-			if (document.getElementById("exec[nm][email_type][email_home]").checked == true)
-			{
-				email_type = "email_home";
-			}
-			else
-			{
-				email_type = "email";
-			}
-			xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_add_whole_list",list,email_type);
-		}
-
-		function setOptions(options_str)
-		{
-			var options = options_str.split("\\\\b");
-			var selbox = document.getElementById("exec[fileas_type]");
-			var i;
-			for (i=0; i < options.length; i++)
-			{
-				selbox.options[i].text = options[i];
-			}
-		}
-
 		function adb_get_selection(form)
 		{
 			var use_all = document.getElementById("exec[use_all]");
@@ -2294,28 +2232,7 @@ class addressbook_ui extends addressbook_bo
 			}
 
 		}
-
-		function show_custom_country(selectbox)
-		{
-			custom_field_name = selectbox.name.replace("countrycode", "countryname");
-			custom_field = document.getElementById(custom_field_name);
-			if(custom_field && selectbox.value == "-custom-") {
-				custom_field.style.display = "inline";
-			}
-			else if (custom_field)
-			{
-				if(selectbox.value == "" || selectbox.value == null)
-				{
-					selectbox.value = "-custom-";
-					custom_field.style.display = "inline";
-				}
-				else
-				{
-					custom_field.style.display = "none";
-				}
-			}
-		}
-</script>';
+		</script>';
 	}
 
 	/**
