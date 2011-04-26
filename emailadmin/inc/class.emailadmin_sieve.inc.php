@@ -142,7 +142,7 @@ class emailadmin_sieve extends Net_Sieve
 		if($script->retrieveRules($this)) {
 			$script->vacation = $_vacation;
 			$script->updateScript($this);
-			
+			/*	
 			// setting up an async job to enable/disable the vacation message
 			$async = new asyncservice();
 			$user = $GLOBALS['egw_info']['user']['account_id'];
@@ -153,6 +153,7 @@ class emailadmin_sieve extends Net_Sieve
 				$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
 				$async->set_timer($time,$async_id,'felamimail.bosieve.async_vacation',$_vacation+array('scriptName'=>$_scriptName),$user);
 			}
+			*/
 			return true;
 		}
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__."($_scriptName,".print_r($_vacation,true).') could not retrieve rules!');

@@ -635,4 +635,26 @@ class defaultimap extends Net_IMAP
 		}
 		return $this->sieve->setVacationUser($_euser, $_scriptName, $_vacation);
 	}
+
+	/**
+	 * set the asyncjob for a timed vacation
+	 *
+	 * @param array $_vacation the vacation to set/unset
+	 * @return  void
+	 */
+	function setAsyncJob ($_vacation, $_scriptName=null)
+	{
+		// setting up an async job to enable/disable the vacation message
+		$async = new asyncservice();
+		$user = (isset($_vacation['account_id'])&&!empty($_vacation['account_id'])?$_vacation['account_id']:$GLOBALS['egw_info']['user']['account_id']);
+		$async_id = (isset($_vacation['id'])&&!empty($_vacation['id'])?$_vacation['id']:"felamimail-vacation-$user");
+		$async->delete($async_id); // ="felamimail-vacation-$user");
+		$_scriptName = (!empty($_scriptName)?$_scriptName:(isset($_vacation['scriptName'])&&!empty($_vacation['scriptName'])?$_vacation['scriptName']:'felamimail'));
+		$end_date = $_vacation['end_date'] + 24*3600;   // end-date is inclusive, so we have to add 24h
+		if ($_vacation['status'] == 'by_date' && time() < $end_date)
+		{
+			$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
+			$async->set_timer($time,$async_id,'felamimail.bosieve.async_vacation',$_vacation+array('scriptName'=>$_scriptName),$user);
+		}
+ 	}
 }

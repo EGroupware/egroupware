@@ -33,6 +33,9 @@ class bosieve
 		$mailPreferences  = $bopreferences->getPreferences();
 		$icServer = $mailPreferences->getIncomingServer(0);
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'->LoginName:'.$icServer->loginName);
-		$icServer->setVacationUser($icServer->loginName,$_vacation['scriptName'],$_vacation);
+		//error_log(__METHOD__.__LINE__.array2string($_vacation));
+		$ret = $icServer->setVacationUser($icServer->loginName,$_vacation['scriptName'],$_vacation);
+		if ($ret) $icServer->setAsyncJob($_vacation);
 	}
+
 }

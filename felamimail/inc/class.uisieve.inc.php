@@ -605,6 +605,11 @@
 							print "vacation update failed<br>";
 							#print $script->errstr."<br>";
 						}
+						else
+						{
+							//error_log(__METHOD__.__LINE__.array2string($newVacation));
+							$this->bosieve->setAsyncJob($newVacation);
+						}
 					}
 					else
 					{
