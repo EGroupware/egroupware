@@ -111,6 +111,8 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			importexport_import_csv::convert($record, admin_egw_group_record::$types, 'admin');
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
@@ -163,7 +165,11 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 				return true;
 			case 'update' :
 			case 'create' :
-				$command = new admin_cmd_edit_group($data['account_lid'], $_data);
+				if(count($_data['account_members']) < 1) {
+					$this->errors[$record_num] = lang('You must select at least one group member.');
+					return false;
+				}
+				$command = new admin_cmd_edit_group($_action == 'create' ? false : $_data['account_lid'], $_data);
 				if($this->dry_run) {
 					$this->results[$_action]++;
 					return true;
