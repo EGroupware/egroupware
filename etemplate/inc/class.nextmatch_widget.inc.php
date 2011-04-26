@@ -56,6 +56,10 @@
  *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
  * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
  *		or name of import/export definition
+ *  'row_id'         =>     // I key into row content to set it's value as tr id, eg. 'id'
+ *  'actions'        =>     // I array with actions, see nextmatch_widget::egw_actions
+ *  'action_links'   =>     // I array with enabled actions or ones which should be checked if they are enabled
+ *                               optional, default id of all first level actions plus the ones with enabled='javaScript:...'
  * );
  */
 class nextmatch_widget
@@ -503,6 +507,7 @@ class nextmatch_widget
 
 		// pass actions and row_id to etemplate::show_grid()
 		$value['rows']['_actions'] =& $value['actions'];
+		$value['rows']['_action_links'] =& $value['action_links'];
 		$value['rows']['_row_id']  =& $value['row_id'];
 		$value['action'] = $value['selected'] = $value['select_all'] = null;	// nothing yet
 
@@ -557,9 +562,10 @@ class nextmatch_widget
 	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name='' name of the template, used as default for app name of images
 	 * @param string $prefix='' prefix for ids
+	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
 	 * @return array
 	 */
-	public static function egw_actions(array $actions=null, $template_name='', $prefix='')
+	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array())
 	{
 		// default icons for some common actions
 		static $default_icons = array(
@@ -572,6 +578,8 @@ class nextmatch_widget
 			'document' => 'etemplate/merge',
 		);
 
+		$first_level = !$action_links;	// add all first level actions
+
 		//echo "actions="; _debug_array($actions);
 		$egw_actions = array();
 		foreach((array)$actions as $id => $action)
@@ -579,6 +587,12 @@ class nextmatch_widget
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
 			$action['id'] = $prefix.$id;
+
+			// add all first level actions plus ones with enabled = 'javaScript:...' to action_links
+			if ($first_level || substr($action['enabled'],0,11) == 'javaScript:')
+			{
+				$action_links[] = $action['id'];
+			}
 
 			// set default icon, if no other is specified
 			if (!isset($action['icon']) && isset($default_icons[$id]))
@@ -632,7 +646,7 @@ class nextmatch_widget
 			// add sub-menues
 			if ($action['children'])
 			{
-				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix']);
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links);
 				unset($action['prefix']);
 			}
 

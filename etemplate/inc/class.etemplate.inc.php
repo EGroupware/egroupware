@@ -972,6 +972,8 @@ class etemplate extends boetemplate
 			// prefix given here
 			$prefix = "egw_";
 
+			$action_links = array();
+
 			$html .= '
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -980,11 +982,11 @@ class etemplate extends boetemplate
 		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
 
 		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
-			json_encode(nextmatch_widget::egw_actions($content['_actions'], $this->name))).');
+			json_encode(nextmatch_widget::egw_actions($content['_actions'], $this->name, '', $action_links))).');
 		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
 
-		var actionLinks = ['.($content['_actions'] ? '"'.implode('","', isset($content['_actions_enabled']) ?
-			$content['_actions_enabled'] : array_keys($content['_actions'])).'"' : '').'];
+		var actionLinks = ['.($content['_actions'] ? '"'.implode('","', isset($content['_action_links']) ?
+			$content['_action_links'] : $action_links).'"' : '').'];
 
 		// Create a new action object for each table row
 		// TODO: only apply function to outer level
