@@ -56,10 +56,13 @@
  *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
  * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
  *		or name of import/export definition
- *  'row_id'         =>     // I key into row content to set it's value as tr id, eg. 'id'
- *  'actions'        =>     // I array with actions, see nextmatch_widget::egw_actions
- *  'action_links'   =>     // I array with enabled actions or ones which should be checked if they are enabled
- *                               optional, default id of all first level actions plus the ones with enabled='javaScript:...'
+ *  'row_id'         =>     // I  key into row content to set it's value as tr id, eg. 'id'
+ *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
+ *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
+ *                                optional, default id of all first level actions plus the ones with enabled='javaScript:...'
+ *  'selected'       =>     //  O array with selected id's
+ *  'checkboxes'     =>     //  0 array with checkbox id as key and boolean checked value
+ *  'select_all'     =>     //  0 boolean value of select_all checkbox, reference to above value for key 'select_all'
  * );
  */
 class nextmatch_widget
@@ -1173,7 +1176,14 @@ class nextmatch_widget
 
 		// allows return selected as array
 		$value['selected'] = $value['selected'] === '' ? array() : boetemplate::csv_split($value['selected']);
-		$value['select_all'] = (boolean)$value['select_all'];
+		$checkboxes = $value['checkboxes'];
+		$value['checkboxes'] = array();
+		foreach(explode(';',$checkboxes) as $data)
+		{
+			list($name,$checked) = explode(':',$data);
+			if ($name) $value['checkboxes'][$name] = (boolean)$checked;
+		}
+		$value['select_all'] =& $value['checkboxes']['select_all'];
 
 		return True;
 	}

@@ -94,6 +94,37 @@ egwAction.prototype.getActionById = function(_id)
 }
 
 /**
+ * Searches for actions having an attribute with a certain value
+ * 
+ * Example: actionManager.getActionsByAttr("checkbox", true) returns all checkbox actions
+ * 
+ * @param string _attr attribute name
+ * @param mixed _val attribute value
+ * @return array
+ */
+egwAction.prototype.getActionsByAttr = function(_attr, _val)
+{
+	var _actions = [];
+	
+	// If the current action object has the given attr AND value, return it
+	if (typeof this[_attr] != "undefined" && this[_attr] === _val)
+	{
+		_actions.push(this);
+	}
+
+	// If this element is capable of having children, search those too
+	if (this.canHaveChildren)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			_actions = _actions.concat(this.children[i].getActionsByAttr(_attr, _val));
+		}
+	}
+
+	return _actions;
+}
+
+/**
  * Adds a new action to the child elements.
  */
 egwAction.prototype.addAction = function(_type, _id, _caption, _iconUrl,

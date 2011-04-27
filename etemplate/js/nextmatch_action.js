@@ -91,6 +91,9 @@ function nextmatchRowAOI(_node)
  */
 function nm_action(_action, _senders)
 {
+	// ignore checkboxes, unless they have an explicit defined nm_action
+	if (_action.checkbox && (!_action.data || typeof _action.data.nm_action == 'undefined')) return;
+
 	if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
 	if (typeof _action.data.nm_action == 'undefined') _action.data.nm_action = 'submit';
 	
@@ -102,13 +105,13 @@ function nm_action(_action, _senders)
 	}
 	//console.log(_action); console.log(_senders);
 
-	var select_all = document.getElementById('exec[nm][select_all]');
-	var confirm_msg = (_senders.length > 1 || select_all && select_all.value) && 
+	var select_all = egw_actionManager.getActionById("select_all");
+	var confirm_msg = (_senders.length > 1 || select_all && select_all.checked) && 
 		typeof _action.data.confirm_multiple != 'undefined' ?
 			_action.data.confirm_multiple : _action.data.confirm;
 
 	// let user confirm the action first (if not select_all set and nm_action == 'submit'  --> confirmed later)
-	if (!(select_all && select_all.value && _action.data.nm_action == 'submit') &&
+	if (!(select_all && select_all.checked && _action.data.nm_action == 'submit') &&
 		typeof _action.data.confirm != 'undefined')
 	{
 		if (!confirm(confirm_msg)) return;
@@ -142,10 +145,16 @@ function nm_action(_action, _senders)
 			
 		case 'submit':
 			// let user confirm select-all
-			if (select_all && select_all.value)
+			if (select_all && select_all.checked)
 			{
-				if (!confirm(confirm_msg+"\n\n"+select_all.value)) return;
+				if (!confirm(confirm_msg+"\n\n"+select_all.hint)) return;
 			}
+			var checkboxes = egw_actionManager.getActionsByAttr("checkbox", true);
+			var checkboxes_elem = document.getElementById('exec[nm][checkboxes]');
+			if (checkboxes && checkboxes_elem)
+				for (var i in checkboxes)
+					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
+
 			var form = document.getElementsByName("eTemplate")[0];
 			document.getElementById('exec[nm][action]').value = _action.id;
 			document.getElementById('exec[nm][selected]').value = ids;
@@ -159,17 +168,6 @@ function nm_action(_action, _senders)
 			}
 			break;
 	}
-}
-
-/**
- * Callback for select_all checkbox, use hint to confirm all nm_action='submit' before submitting in nm_action()
- * 
- * @param _action
- * @param _senders
- */
-function nm_select_all(_action, _senders)
-{
-	document.getElementById('exec[nm][select_all]').value = _action.checked ? _action.hint : null;
 }
 
 /**

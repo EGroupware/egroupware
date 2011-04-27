@@ -408,7 +408,6 @@ class addressbook_ui extends addressbook_bo
 		$actions['select_all'] = array(
 			'caption' => 'Whole query',
 			'checkbox' => true,
-			'onExecute' => 'javaScript:nm_select_all',	// uses hint to confirm all nm_action='submit'
 			'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
 			'group' => ++$group,
 		);
