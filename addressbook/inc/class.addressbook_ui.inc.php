@@ -565,6 +565,7 @@ class addressbook_ui extends addressbook_bo
 				'icon' => 'filemanager/navbar',
 				'caption' => 'Filemanager',
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'allowOnMultiple' => false,
 				'group' => $group,
 			);
 		}
