@@ -746,16 +746,16 @@ class infolog_ui
 		}
 
 		$sel_options = array(
-		'info_type'     => $this->bo->enums['type'],
-		'pm_id'      => array(lang('No project')),
-		'multi_action'	=> array(
-			'close'		=> lang('Close'),
-			'delete'	=> lang('Delete'),
-			'cat'		=> lang('Change category'),
-			'link'		=> lang('Add or delete links'),
-			'completion'	=> lang('Change completion'),
-			'responsible'	=> lang('Change responsible'),
-		)
+			'info_type'     => $this->bo->enums['type'],
+			'pm_id'      => array(lang('No project')),
+			'multi_action'	=> array(
+				'close'		=> lang('Close'),
+				'delete'	=> lang('Delete'),
+				'cat'		=> lang('Change category'),
+				'link'		=> lang('Add or delete links'),
+				'completion'	=> lang('Change completion'),
+				'responsible'	=> lang('Change responsible'),
+			)
 		);
 
 		// Add in multi-infolog actions
@@ -800,9 +800,9 @@ class infolog_ui
 
 		// Merge print
 		if ($this->prefs['document_dir'])
-                {
-                        $sel_options['multi_action'][lang('Insert in document').':'] = $this->get_document_actions();
-                }
+		{
+			$sel_options['multi_action'][lang('Insert in document').':'] = $this->get_document_actions();
+		}
 		egw_framework::validate_file('.','index','infolog');
 
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
