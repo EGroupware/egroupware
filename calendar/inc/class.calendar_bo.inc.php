@@ -1156,6 +1156,13 @@ class calendar_bo
 			$access = $this->user == $owner || $grants & $needed
 				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grants & EGW_ACL_PRIVATE);
 		}
+		// do NOT allow users to purge deleted events, if we dont have 'user_purge' enabled
+		if ($access && $needed == EGW_ACL_DELETE && $event['deleted'] &&
+			!$GLOBALS['egw_info']['user']['apps']['admin'] &&
+			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'user_purge')
+		{
+			$access = false;
+		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
 			$this->debug_message('bocal::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
