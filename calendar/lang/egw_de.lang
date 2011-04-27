@@ -39,7 +39,7 @@ all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 always	calendar	de	Immer
-apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die ganze Abfrage anwenden, NICHT nur auf die angezeigten Termine
+apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
@@ -81,7 +81,7 @@ category acl	common	de	Kategorie Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
-change your participant status	calendar	de	Teilnehmerstatus ändern
+change your status	calendar	de	Eigenen Status ändern
 charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
 choose a category	calendar	de	Wählen Sie eine Kategorie
@@ -137,7 +137,8 @@ display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	de	Zeigt diese Ansicht auf der Startseite (Seite die Sie bekommen wenn Sie EGroupware starten oder das Home Icon anklicken)?
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
-do not notify of these changes	calendar	de	Keine Benachrichtigung senden
+do not notify	calendar	de	Nicht benachrichtigen
+do not notify of these changes	calendar	de	Nicht über diese Änderungen benachrichtigen
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie heute beendet und für die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about changes of appointments you modified?	calendar	de	Wollen Sie auch über eigene Änderungen Benachrichtigt werden?
@@ -527,10 +528,8 @@ weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	de	Wenn ausgewählt werden Geburts- und/oder Feiertage als Ereignisse in Ihrem Kalender angezeigt. Bitte beachten Sie, dass diese Option nur die Erscheinung innerhalb von EGroupware verändert, nicht aber die Informationen, die via iCal oder über andere Kalender-Schnittstellen gesendet werden.
 which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
-while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Für diese Ansicht steht Ihnen nur eine begrenzte Anzahl von Benutzer zur Verfügung. 
-Der Standard sind 5 Benutzer. Sie können in der Konfiguration diese Einstellung anpassen.
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Für diese Ansicht steht Ihnen nur eine begrenzte Anzahl von Benutzer zur Verfügung.
 whole day	calendar	de	ganztägig
-whole query	calendar	de	Ganze Abfrage
 with credentials included	calendar	de	Mit Zugangsdaten im URL
 wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um

@@ -37,7 +37,7 @@ all exceptions are converted into single events.	calendar	en	All exceptions are 
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
-allow users to prevent change notifications ('Do not notify')	calendar	en	Allow users to prevent change notifications ('Do not notify')
+allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications ('Do not notify')
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
@@ -82,7 +82,7 @@ category acl	common	en	Category ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
 chair	calendar	en	Chair
 change history	calendar	en	Change history
-change your participant status	calendar	en	Change your participant status
+change your status	calendar	en	Change your status
 charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
@@ -138,6 +138,7 @@ display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?
 do not include events of group members	calendar	en	Do not include events of group members
+do not notify	calendar	en	Do not notify
 do not notify of these changes	calendar	en	Do not notify of these changes
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
@@ -530,7 +531,6 @@ when selected, birthdays and/or holidays will be displayed as events in your cal
 which view to show on home page	calendar	en	Which view to show on home page
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	While selecting up to X users day- and weekview is not consolidated (5 is used when not set)
 whole day	calendar	en	Whole day
-whole query	calendar	en	whole query
 with credentials included	calendar	en	With credentials included
 wk	calendar	en	Wk
 work day ends on	calendar	en	Work day ends on

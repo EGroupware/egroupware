@@ -1477,19 +1477,14 @@ function replace_eTemplate_onsubmit()
 		}
 
 		// Allow admins to restore deleted events
-		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'] && $event['deleted'] )
+		if($GLOBALS['egw_info']['server']['calendar_delete_history'] && $event['deleted'] )
 		{
 			$content['deleted'] = $preserv['deleted'] = null;
 			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
 			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
-			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $config['calendar_delete_history'] != 'user_purge')
-			{
-				$readonlys['button[delete]'] = true;
-			}
 		}
 		// Allow users to prevent notifications?
-		$etpl->set_cell_attribute('no_notifications', 'disabled', !$config['calendar_allow_no_notification']);
+		$etpl->set_cell_attribute('no_notifications', 'disabled', !$GLOBALS['egw_info']['server']['calendar_allow_no_notification']);
 
 		// Setup history tab
 		$this->setup_history($content, $sel_options);

@@ -1,11 +1,11 @@
 <?php
 /**
- * eGroupWare - Calendar's Listview and Search
+ * EGroupware - Calendar's Listview and Search
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -41,7 +41,7 @@ class calendar_uilist extends calendar_ui
 	var $date_filters = array(
 		'after'  => 'After current date',
 		'before' => 'Before current date',
-		'all'    => 'All events',
+		'all'	=> 'All events',
 		'custom' => 'Selected range',
 	);
 
@@ -75,12 +75,12 @@ class calendar_uilist extends calendar_ui
 	{
 		// set the defaults for the home-page
 		$this->__construct(array(
-			'date'       => $this->bo->date2string($this->bo->now_su),
-			'cat_id'     => 0,
-			'filter'     => 'all',
-			'owner'      => $this->user,
+			'date'	   => $this->bo->date2string($this->bo->now_su),
+			'cat_id'	 => 0,
+			'filter'	 => 'all',
+			'owner'	  => $this->user,
 			'multiple'   => 0,
-			'view'       => $this->bo->cal_prefs['mainscreen_showevents'],
+			'view'	   => $this->bo->cal_prefs['mainscreen_showevents'],
 		));
 		egw_session::appsession('calendar_list','calendar','');	// in case there's already something set
 
@@ -97,50 +97,43 @@ class calendar_uilist extends calendar_ui
 
 		$etpl = new etemplate('calendar.list');
 
-		if (is_array($content) && $content['nm']['rows']['delete'])
+		if (is_array($content))
 		{
-			// handle a single delete like delete with the checkboxes
-			list($id) = @each($content['nm']['rows']['delete']);
-			$content['action'] = 'delete';
-			$content['nm']['rows']['checked'] = array($id);
-		}
-		if (is_array($content) && $content['nm']['rows']['timesheet'])
-		{
-			// handle a single timesheet like timesheet with the checkboxes
-			list($id) = @each($content['nm']['rows']['timesheet']);
-			$content['action'] = 'timesheet-add';
-			$content['nm']['rows']['checked'] = array($id);
-		}
-		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
-		{
-			list($id) = @each($content['nm']['rows']['document']);
-			$content['action'] = 'document';
-			$content['nm']['rows']['checked'] = array($id);
-		}
-	
-		// Handle actions
-		if ($content['action'] != '')
-		{
-			// Allow merge using the date range filter
-			if(strpos($content['action'],'document') !== false && !count($content['nm']['rows']['checked']) && !$content['use_all']) {
-				$content['nm']['rows']['checked'][] = $this->get_merge_range($content['nm']);
-			}
-			if (!count($content['nm']['rows']['checked']) && !$content['use_all']) {
-				$msg = lang('You need to select some events first');
-			}
-			else
+			// handle a single button like actions
+			foreach(array('delete','timesheet','document') as $button)
 			{
-				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
-					$success,$failed,$action_msg,'calendar_list',$msg, $content['no_notifications']))
+				if ($content['nm']['rows'][$button])
 				{
-					$msg .= lang('%1 event(s) %2',$success,$action_msg);
-				}
-				elseif(is_null($msg))
-				{
-					$msg .= lang('%1 event(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					list($id) = each($content['nm']['rows'][$button]);
+					$content['nm']['action'] = $button;
+					$content['nm']['selected'] = array($id);
 				}
 			}
-			$content['nm']['rows']['checked'] = array();
+			// Handle actions
+			if ($content['nm']['action'])
+			{
+				// Allow merge using the date range filter
+				if(strpos($content['nm']['action'],'document') !== false &&
+					!count($content['nm']['selected']) && !$content['nm']['select_all']) {
+					$content['nm']['selected'][] = $this->get_merge_range($content['nm']);
+				}
+				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+				{
+					$msg = lang('You need to select some events first');
+				}
+				else
+				{
+					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
+						$success,$failed,$action_msg,'calendar_list',$msg, $content['no_notifications']))
+					{
+						$msg .= lang('%1 event(s) %2',$success,$action_msg);
+					}
+					elseif(is_null($msg))
+					{
+						$msg .= lang('%1 event(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					}
+				}
+			}
 		}
 		$content = array(
 			'nm'  => egw_session::appsession('calendar_list','calendar'),
@@ -149,17 +142,18 @@ class calendar_uilist extends calendar_ui
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
-				'get_rows'       =>	'calendar.calendar_uilist.get_rows',
-	 			'filter_no_lang' => True,	// I  set no_lang for filter (=dont translate the options)
-				'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
-				'no_cat'         => True,	// I  disable the cat-selectbox
-//				'bottom_too'     => True,// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
-				'filter'         => 'after',
-				'order'          =>	'cal_start',// IO name of the column to sort after (optional for the sortheaders)
-				'sort'           =>	'ASC',// IO direction of the sort: 'ASC' or 'DESC'
-				'default_cols'   => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
+				'get_rows'        =>	'calendar.calendar_uilist.get_rows',
+	 			'filter_no_lang'  => True,	// I  set no_lang for filter (=dont translate the options)
+				'no_filter2'      => True,	// I  disable the 2. filter (params are the same as for filter)
+				'no_cat'          => True,	// I  disable the cat-selectbox
+				'filter'          => 'after',
+				'order'           => 'cal_start',// IO name of the column to sort after (optional for the sortheaders)
+				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
+				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
 				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
-				'header_left'    => 'calendar.list.dates',
+				'header_left'     => 'calendar.list.dates',
+				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
+				'actions'         => $this->get_actions(),
 			);
 		}
 		if ($_GET['search']) {
@@ -169,48 +163,15 @@ class calendar_uilist extends calendar_ui
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
 		}
-		$sel_options = array(
-			'action'     => array(
-				'delete' => array('label' => 'Delete', 'title' => 'Delete this event'),
-                                'ical' => array('label' => 'Export (iCal)', 'title' => 'Download this event as iCal'),
-                        ),
-			'filter'	=> &$this->date_filters
-		);
+		$sel_options['filter'] = &$this->date_filters;
 
-		// More actions
-		if($GLOBALS['egw_info']['apps']['timesheet']) {
-			$sel_options['action']['timesheet-add'] = array('label' => 'Create timesheet', 'title' => 'Create a timesheet entry from this event');
-		}
-		// Add in deleted for admins
-		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'])
-		{
-			$sel_options['action']['undelete'] = array('label' => 'Un-Delete', 'title' => 'Recover this event');
-			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $config['calendar_delete_history'] != 'user_purge')
-			{
-				unset($sel_options['action']['delete']);
-				$content['nm']['no_delete'] = true;
-			}
-		}
-		foreach($this->bo->verbose_status as $key => $value)
-		{
-			if($key == 'G') continue;
-			$sel_options['action'][lang('Change your participant status')]['status-'.$key] = $value;
-		}
-		// Merge print
-		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-                {
-                        $sel_options['action'][lang('Insert in document').':'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
-                }
 		// add scrollbar to long describtion, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
 			$content['css'] .= '<style type="text/css">@media screen { .listDescription {  max-height: '.
-				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).       // dono why em is not real lines
+				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	   // dono why em is not real lines
 				'em; overflow: auto; }}</style>';
 		}
-		unset($sel_options['action'][lang('Change your participant status')]['G']);
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
 
 		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,'',$home ? -1 : 0);
 
@@ -302,7 +263,7 @@ class calendar_uilist extends calendar_ui
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
 			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
-			'cfs'     => $params['csv_export'] ? array() : $cfs,
+			'cfs'	 => $params['csv_export'] ? array() : $cfs,
 		);
 		switch($params['filter'])
 		{
@@ -367,12 +328,27 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = explode(',',$this->owner);
 		}
-		$rows = array();
+		$rows = $js_integration_data = array();
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
-			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
+			if (($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event)))
+			{
+				$event['class'] .= 'rowNoEdit ';
+			}
+			// show only edit or view icon, not both
+			$readonlys['view['.$event['id'].']'] = !$readonlys['edit['.$event['id'].']'];
+
 			// Delete disabled for other applications
-			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']) || $params['no_delete'];
+			if (($readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id'])))
+			{
+				$event['class'] .= 'rowNoDelete ';
+			}
+
+			// mark deleted events
+			if ($event['deleted'])
+			{
+				$event['class'] .= 'rowDeleted ';
+			}
 			// Filemanager disabled for other applications
 			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
 
@@ -388,7 +364,7 @@ class calendar_uilist extends calendar_ui
 			}
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
-			
+
 			// respect category permissions
 			if(!empty($event['category']))
 			{
@@ -409,6 +385,15 @@ class calendar_uilist extends calendar_ui
 					$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
 				}
 			}
+			else
+			{
+				$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
+			}
+			if ($is_private)
+			{
+				$readonlys['filemanager['.$event['id'].']'] = $readonlys['view['.$event['id'].']'] = true;	// no view icon
+				$event['class'] .= 'rowNoView ';
+			}
 
 			$event['app'] = 'calendar';
 			$event['app_id'] = $event['id'];
@@ -417,12 +402,24 @@ class calendar_uilist extends calendar_ui
 			if($app && $app_id)
 			{
 				$popup = calendar_uiviews::integration_get_popup($app,$app_id);
-				
+
 				// Need to strip off 'onclick'
 				$event['edit_link'] = preg_replace('/ ?onclick="(.+)"/i', '$1', $popup);
 
 				$event['app'] = $app;
 				$event['app_id'] = $app_id;
+
+				// populate js_integration_data, if not already set
+				if (!isset($js_integration_data[$app]))
+				{
+					$js_integration_data[$app] = calendar_bo::integration_get_data($app,'edit_link');
+					if (!is_array($js_integration_data[$app]) || !isset($js_integration_data[$app]['edit']))
+					{
+						$js_integration_data[$app]['edit'] = egw_link::get_registry($app, 'edit');
+						$js_integration_data[$app]['edit_id'] = egw_link::get_registry($app, 'edit_id');
+						$js_integration_data[$app]['edit_popup'] = egw_link::get_registry($app, 'edit_popup');
+					}
+				}
 			}
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -432,13 +429,21 @@ class calendar_uilist extends calendar_ui
 			else
 			{
 				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-                                $event['edit_link'] = $this->popup($view_link).'; return false;';
+				$event['edit_link'] = $this->popup($view_link).'; return false;';
 			}
+
+			// set id for grid
+			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.$event['recur_date'] : '');
 
 			$rows[] = $event;
 			unset($app);
 			unset($app_id);
 		}
+		// set js_calendar_integration object, for app.js cal_open() function
+		$GLOBALS['egw_info']['flags']['java_script'] = '<script type="text/javascript">
+	var js_integration_data='.json_encode($js_integration_data).';
+</script>';
+
 		$wv=0;
 		$dv=0;
 		$params['options-selectcols']['week'] = lang('Week');
@@ -448,11 +453,11 @@ class calendar_uilist extends calendar_ui
 			$rows['format'] = '32';	// prefix date with week-number
 			$wv=1;
 		}
-        if (!(strpos($this->cal_prefs['nextmatch-calendar.list.rows'],'weekday')===FALSE))
-        {
-            $rows['format'] = '16';
+		if (!(strpos($this->cal_prefs['nextmatch-calendar.list.rows'],'weekday')===FALSE))
+		{
+			$rows['format'] = '16';
 			$dv=1;
-        }
+		}
 		if ($wv && $dv)
 		{
 			$rows['format'] = '64';
@@ -467,47 +472,56 @@ class calendar_uilist extends calendar_ui
 	}
 
 	/**
-         * apply an action to multiple events
-         *
-         * @param string/int $action 'delete', 'ical', 'print', 'email'
-         * @param array $checked event id's to use if !$use_all
-         * @param boolean $use_all if true use all events of the current selection (in the session)
-         * @param int &$success number of succeded actions
-         * @param int &$failed number of failed actions (not enought permissions)
-         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 events 'deleted'
-         * @param string/array $session_name 'calendar_list'
-         * @return boolean true if all actions succeded, false otherwise
-         */
-        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg,$skip_notification=false)
-        {
+	 * apply an action to multiple events
+	 *
+	 * @param string/int $action 'delete', 'ical', 'print', 'email'
+	 * @param array $checked event id's to use if !$use_all
+	 * @param boolean $use_all if true use all events of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 events 'deleted'
+	 * @param string/array $session_name 'calendar_list'
+	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg,$skip_notification=false)
+	{
 		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 
 		// Split out combined values
-		if(strpos($action, 'status') !== false) {
+		if(strpos($action, 'status') !== false)
+		{
 			list($action, $status) = explode('-', $action);
-		} elseif (strpos($action, '_') !== false) {
+		}
+		elseif (strpos($action, '_') !== false)
+		{
 			list($action, $settings) = explode('_', $action,2);
 		}
 
-                if ($use_all) 
+		if ($use_all)
 		{
-                        // get the whole selection
-                        $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
-			@set_time_limit(0);                     // switch off the execution time limit, as for big selections it's too small
-			$query['num_rows'] = -1;        // all
-			$this->get_rows($query,$checked,$readonlys,($action != 'ical'));       // true = only return the id's
-                } else {
+			// get the whole selection
+			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			@set_time_limit(0);					 // switch off the execution time limit, as for big selections it's too small
+			$query['num_rows'] = -1;		// all
+			$this->get_rows($query,$checked,$readonlys,($action != 'ical'));	   // true = only return the id's
+		}
+		else
+		{
 			// Pull the date for recurring events
 			$split = array();
-			foreach($checked as $key) {
-				if(!is_array($key) && strpos($key,':') !== false) {
+			foreach($checked as $key)
+			{
+				if(!is_array($key) && strpos($key,':') !== false)
+				{
 					list($id, $recur_date) = explode(':', $key);
 					$split[] = array(
-						'id'	=>	$id,
-						'recur_date'	=>	$recur_date
+						'id' => $id,
+						'recur_date' => $recur_date
 					);
-				} else {
+				}
+				else
+				{
 					$split[] = $key;
 				}
 			}
@@ -515,45 +529,45 @@ class calendar_uilist extends calendar_ui
 		}
 
 		// Actions where one action is done to the group
-		switch($action) 
+		switch($action)
 		{
 			case 'ical':
 				$boical = new calendar_ical();
 				$ical =& $boical->exportVCal($checked,'2.0','PUBLISH',false);
-                                html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
-                                echo $ical;
-                                common::egw_exit();
+				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				echo $ical;
+				common::egw_exit();
 				break;
 			case 'document':
 				$msg = $this->download_document($checked,$settings);
 				$failed = count($checked);
-                                return false;
+				return false;
 		}
 
 		// Actions where the action is applied to each entry
-		if(strpos($action, 'timesheet') !== false) {
+		if(strpos($action, 'timesheet') !== false)
+		{
 			$timesheet_bo = new timesheet_bo();
 		}
-		foreach($checked as $event) 
+		foreach($checked as $event)
 		{
 			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 			{
 				$app = $matches[1];
 				$app_id = $matches[2];
-			} else {
+			}
+			else
+			{
 				$id = $event['id'];
 				$recur_date = $event['recur_date'];
 			}
-			switch($action) 
+			switch($action)
 			{
 				case 'delete':
 					$action_msg = lang('deleted');
-                                        if ($id && $this->bo->check_perms(EGW_ACL_DELETE,$id))
+					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
 					{
-						if($this->bo->delete($id, $recur_date,false,$skip_notification)) 
-						{
-							$success++;
-						}
+						$success++;
 					}
 					else
 					{
@@ -562,7 +576,7 @@ class calendar_uilist extends calendar_ui
 					break;
 				case 'undelete':
 					$action_msg = lang('recovered');
-                                        if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
+					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
 						is_array($event) && $event['deleted'])
 					{
 						$event['deleted'] = false;
@@ -575,7 +589,7 @@ class calendar_uilist extends calendar_ui
 					$failure++;
 					break;
 				case 'status':
-					if($id && $event = $this->bo->read($id, $recur_date)) 
+					if($id && ($event = $this->bo->read($id, $recur_date)))
 					{
 						$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
 						calendar_so::split_status($old_status, $quantity, $role);
@@ -590,7 +604,9 @@ class calendar_uilist extends calendar_ui
 								$msg = lang('Status changed');
 							}
 						}
-					} else {
+					}
+					else
+					{
 						$failure++;
 					}
 					break;
@@ -607,7 +623,7 @@ class calendar_uilist extends calendar_ui
 						$result = $this->bo->search($query);
 						$event = $result[$app.$app_id];
 					}
-					if(!$event) 
+					if(!$event)
 					{
 						$failure++;
 						continue;
@@ -626,20 +642,21 @@ class calendar_uilist extends calendar_ui
 					// Add global categories
 					$categories = explode(',',$event['category']);
 					$global_categories = array();
-					foreach($categories as $cat_id) 
+					foreach($categories as $cat_id)
 					{
 						if($GLOBALS['egw']->categories->is_global($cat_id))
 						{
 							$global_categories[] = $cat_id;
 						}
 					}
-					if(count($global_categories)) 
+					if(count($global_categories))
 					{
 						$timesheet['cat_id'] = implode(',', $global_categories);
 					}
 					$timesheet_bo->data = array();
 					$err = $timesheet_bo->save($timesheet);
-					if(!$err) {
+					if(!$err)
+					{
 						$success++;
 
 						// Can't link to just one of a recurring series of events
@@ -648,7 +665,7 @@ class calendar_uilist extends calendar_ui
 							$link_id = $app ? $app_id : $id;
 							egw_link::link($app ? $app : 'calendar', $link_id, 'timesheet', $timesheet_bo->data['ts_id']);
 						}
-					} 
+					}
 					else
 					{
 						$failure++;
@@ -663,27 +680,6 @@ class calendar_uilist extends calendar_ui
 		return ($failure == 0);
 	}
 
-	public function get_javascript() 
-	{
-		return '<script LANGUAGE="JavaScript">
-		function do_action(selbox)
-		{
-			if (selbox.value != "")
-			{
-				if (selbox.value == "delete") 
-				{
-					if (confirm("' . lang('Delete') . '")) selbox.form.submit();
-				}
-				else
-				{
-					selbox.form.submit();
-				}
-			}
-				selbox.value = "";
-		}
-		</script>';
-	}
-
 	/**
 	 * Get date ranges to select for merging instead of individual events
 	 *
@@ -691,17 +687,20 @@ class calendar_uilist extends calendar_ui
 	 *
 	 * @return array of ranges
 	 */
-	protected function get_merge_range($nm) 
+	protected function get_merge_range($nm)
 	{
 		$checked = array();
-		if($nm['filter'] == 'fixed') 
+		if($nm['filter'] == 'fixed')
 		{
 			$checked['start'] = $nm['startdate'];
 			$last = $this->bo->date2array($nm['enddate']);
 			$last['hour'] = '23'; $last['minute'] = $last['sec'] = '59';
 			$checked['end'] = $this->bo->date2ts($last);
-		} else {
-			switch($nm['filter']) {
+		}
+		else
+		{
+			switch($nm['filter'])
+			{
 				case 'after':
 					$checked['start'] = $nm['startdate'] ? $nm['startdate'] : strtotime('today');
 					break;
@@ -738,8 +737,119 @@ class calendar_uilist extends calendar_ui
 		{
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
-		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_merge.inc.php');
 		$document_merge = new calendar_merge();
+
 		return $document_merge->download($document,$ids);
+	}
+
+	/**
+	 * Get actions / context menu items
+	 *
+	 * @return array see nextmatch_widget::get_actions()
+	 */
+	private function get_actions()
+	{
+		$actions = array(
+			'open' => array(
+				'caption' => 'Open',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id',
+				'popup' => egw_link::get_registry('calendar', 'view_popup'),
+				'group' => $group=1,
+				'onExecute' => 'javaScript:cal_open',
+				'disableClass' => 'rowNoView',
+			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'hint' => 'Apply the action on the whole query, NOT only the shown events',
+				'group' => ++$group,
+			),
+			'no_notifications' => array(
+				'caption' => 'Do not notify',
+				'checkbox' => true,
+				'hint' => 'Do not notify of these changes',
+				'group' => $group,
+			),
+		);
+		$status = $this->bo->verbose_status;
+		unset($status['G']);
+		$actions['status'] = array(
+			'caption' => 'Change your status',
+			'icon' => 'check',
+			'prefix' => 'status-',
+			'children' => $status,
+			'group' => ++$group,
+		);
+		++$group;	// integration with other apps: infolog, calendar, filemanager
+		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$actions['filemanager'] = array(
+				'icon' => 'filemanager/navbar',
+				'caption' => 'Filemanager',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/$app/$id',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'onExecute' => 'javaScript:cal_fix_app_id',
+				'disableClass' => 'rowNoView',
+			);
+		}
+		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
+		{
+			$actions['timesheet'] = array(	// interactive add for a single event
+				'icon' => 'timesheet/navbar',
+				'caption' => 'Timesheet',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=$app&link_id[]=$id',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'hideOnDisabled' => true,	// show only one timesheet action in context menu
+				'onExecute' => 'javaScript:cal_fix_app_id',
+				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+			);
+			$actions['timesheet-add'] = array(	// automatic add for multiple events
+				'icon' => 'timesheet/navbar',
+				'caption' => 'Timesheet',
+				'group' => $group,
+				'allowOnMultiple' => 'only',
+				'hideOnDisabled' => true,	// show only one timesheet action in context menu
+			);
+		}
+		$actions['ical'] = array(
+			'icon' => 'filesave',
+			'caption' => 'Export (iCal)',
+			'group' => ++$group,
+			'hint' => 'Download this event as iCal',
+			'disableClass' => 'rowNoView',
+		);
+
+		$actions['documents'] = addressbook_merge::document_action(
+			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',
+			$this->bo->cal_prefs['default_document']
+		);
+
+		++$group;
+		$actions['delete'] = array(
+			'caption' => 'Delete',
+			'confirm' => 'Delete this event',
+			'confirm_multiple' => 'Delete these entries',
+			'group' => $group,
+			'disableClass' => 'rowNoDelete',
+		);
+		// Add in deleted for admins
+		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
+		{
+			$actions['undelete'] = array(
+				'caption' => 'Un-delete',
+				'hint' => 'Recover this event',
+				'group' => $group,
+				'enabled' => 'javaScript:nm_enableClass',
+				'enableClass' => 'rowDeleted',
+				'hideOnDisabled' => true,
+			);
+		}
+
+		//_debug_array($actions);
+		return $actions;
 	}
 }

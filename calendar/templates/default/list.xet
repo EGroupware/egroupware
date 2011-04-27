@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.004">
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -31,7 +31,6 @@
 					<nextmatch-sortheader label="Title" id="cal_title"/>
 					<nextmatch-sortheader label="Description" id="cal_description"/>
 					<nextmatch-sortheader label="Recurrence" id="recure"/>
-					<nextmatch-header label="Project" id="pm_id"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Owner" readonly="true" id="cal_owner"/>
@@ -40,28 +39,38 @@
 					<nextmatch-sortheader label="Owner" readonly="true" id="cal_owner"/>
 					<nextmatch-sortheader label="Location" id="cal_location"/>
 					<nextmatch-accountfilter label="Participants" id="participant" options="All"/>
+					<vbox>
+						<nextmatch-sortheader label="Created" id="cal_created"/>
+						<nextmatch-header id="cal_creator" options="Creator" label="Creator"/>
+						<description value="Last changed"/>
+					</vbox>
 					<nextmatch-customfields label="Custom fields" readonly="true" id="cfs"/>
 					<hbox label="Actions" class="noPrint">
-						<description value="Actions" statustext="Check all" class="noPrint"/>
+						<nextmatch-header label="Actions" statustext="Check all" class="noPrint" id="legacy_actions"/>
 						<button label="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right" id="check_all" image="check" statustext="Check all"/>
 					</hbox>
 				</row>
-				<row class="$row_cont[category]" valign="top">
+				<row class="$row_cont[category] $row_cont[class]" valign="top">
 					<vbox id="start">
 						<date-time readonly="true" id="${row}[start]" options=",$cont[format]" class="noWrap"/>
 						<date-time readonly="true" id="${row}[end]" options=",$cont[format]" class="noWrap"/>
 					</vbox>
 					<vbox class="listVbox">
-						<description readonly="true" no_lang="1" id="${row}[title]" options="b"/>
+						<hbox readonly="true" no_lang="1">
+							<description readonly="true" no_lang="1" id="${row}[title]" options="b"/>
+							<description value="#%s" id="${row}[id]" options="b" align="right"/>
+						</hbox>
 						<box no_lang="1" class="listDescription">
 							<description no_lang="1" id="${row}[description]"/>
 						</box>
 						<description no_lang="1" id="${row}[recure]"/>
 					</vbox>
-					<description id="${row}[title]"/>
+					<hbox>
+						<description id="${row}[title]"/>
+						<description value="#%s" id="${row}[id]" options="b" align="right"/>
+					</hbox>
 					<description no_lang="1" id="${row}[description]"/>
 					<description id="${row}[recure]"/>
-					<link-string id="${row}[id]" options="calendar,projectmanager"/>
 					<menulist>
 						<menupopup type="select-cat" readonly="true" id="${row}[category]"/>
 					</menulist>
@@ -76,44 +85,53 @@
 					</menulist>
 					<description no_lang="1" id="${row}[location]"/>
 					<html readonly="true" no_lang="1" id="${row}[parts]"/>
+					<vbox>
+						<date-time id="${row}[created]" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[creator]" readonly="true"/>
+						</menulist>
+						<date-time id="${row}[modified]" readonly="true"/>
+					</vbox>
 					<customfields-list id="$row"/>
 					<vbox options="0,0" class="noPrint">
 						<hbox class="noPrint">
 							<button label="View" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;" id="view[$row_cont[id]]" image="view" statustext="View this event"/>
-							<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=$row_cont[app]&amp;cat_id=$row_cont[category]&amp;link_id[]=$row_cont[app_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 							<button label="Edit" onclick="$row_cont[edit_link]" id="edit[$row_cont[id]]" image="edit" statustext="Edit this event"/>
 							<button label="Delete" onclick="return confirm('Delete this event');" id="delete[$row_cont[id]]" image="delete" statustext="Delete this event"/>
 							<checkbox align="right" id="checked[]" options="$row_cont[id]:$row_cont[recur_date]" statustext="Select multiple contacts for a further action"/>
 						</hbox>
 						<hbox options="0,0">
+							<button image="etemplate/merge" label="merge" id="document[$row_cont[id]:$row_cont[recur_date]]"/>
 							<button label="Filemanager" image="filemanager/navbar" id="filemanager[$row_cont[id]]" class="image16" onclick="window.location.href=egw::link('/index.php','menuaction=filemanager.filemanager_ui.index&amp;path=/apps/calendar/$row_cont[id]'); return false;"/>
+							<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=$row_cont[app]&amp;cat_id=$row_cont[category]&amp;link_id[]=$row_cont[app_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 						</hbox>
 					</vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.list" template="" lang="" group="0" version="1.7.003">
+	<template id="calendar.list" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column/>
+				<column width="30%"/>
 			</columns>
 			<rows>
 				<row disabled="!@css">
+					<description/>
 					<html span="all" id="css"/>
 				</row>
 				<row disabled="!@msg">
+					<description align="center" no_lang="1" id="msg" span="all" class="redItalic"/>
 					<description align="center" no_lang="1" id="msg" class="redItalic"/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="calendar.list.rows"/>
+					<nextmatch id="nm" options="calendar.list.rows" span="all"/>
 				</row>
-				<row class="noPrint">
+				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
+					<description/>
 					<hbox align="right">
-						<checkbox label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown events')) this.checked=false;" id="use_all" statustext="Apply the action on the whole query, NOT only the shown events"/>
-						<menulist>
-							<menupopup onchange="do_action(this);" no_lang="1" id="action" options="Select an action..." statustext="Select an action"/>
-						</menulist>
+						<buttononly label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;" id="legacy_actions" statustext="Select action"/>
 						<button label="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
 					</hbox>
 				</row>
