@@ -364,7 +364,6 @@ class addressbook_ui extends addressbook_bo
 					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
 					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
 					'group' => $group,
-					'enabled' => 'javaScript:nm_not_disableClass',
 					'disableClass' => 'rowNoEdit',
 				),
 				'add' => array(
@@ -438,14 +437,12 @@ class addressbook_ui extends addressbook_bo
 					'addressbook',$group,'Add category', 'cat_add_'
 				)+array(
 					'icon' => 'foldertree_nolines_plus',
-					'enabled' => 'javaScript:nm_not_disableClass',
 					'disableClass' => 'rowNoEdit',
 				),
 				'cat_del' => nextmatch_widget::category_action(
 					'addressbook',$group,'Delete category', 'cat_del_'
 				)+array(
 					'icon' => 'foldertree_nolines_minus',
-					'enabled' => 'javaScript:nm_not_disableClass',
 					'disableClass' => 'rowNoEdit',
 				),
 				'cat_edit' => array(
@@ -477,7 +474,6 @@ class addressbook_ui extends addressbook_bo
 					'children' => $add_lists,
 					'prefix' => 'to_list_',
 					'icon' => 'foldertree_nolines_plus',
-					'enabled' => 'javaScript:nm_not_disableClass',
 					'disableClass' => 'rowNoEdit',
 				),
 				'remove_from_list' => array(
@@ -514,7 +510,6 @@ class addressbook_ui extends addressbook_bo
 				'children' => $move2addressbooks,
 				'prefix' => 'move_to_',
 				'group' => $group,
-				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoDelete',
 			);
 		}
@@ -597,7 +592,6 @@ class addressbook_ui extends addressbook_bo
 				'confirm' => 'Delete this contact',
 				'confirm_multiple' => 'Delete these entries',
 				'group' => $group,
-				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoDelete',
 			);
 		}
@@ -606,7 +600,6 @@ class addressbook_ui extends addressbook_bo
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
 				'group' => $group,
-				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoEdit',
 			);
 		}

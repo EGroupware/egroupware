@@ -895,7 +895,6 @@ class timesheet_ui extends timesheet_bo
 				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
-				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoEdit',
 			),
 */
@@ -932,7 +931,6 @@ class timesheet_ui extends timesheet_bo
 				'confirm' => 'Delete this entry',
 				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
-				'enabled' => 'javaScript:nm_not_disableClass',
 				'disableClass' => 'rowNoDelete',
 			),
 		);
@@ -941,7 +939,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			if ($actions[$action]['enabled'])
 			{
-				$actions[$action]['enabled'] = 'javaScript:nm_not_disableClass';
+				$actions[$action]['enabled'] = 'javaScript:nm_not_disableClass';	// required!
 				$actions[$action]['disableClass'] = 'rowNoEdit';
 			}
 		}
