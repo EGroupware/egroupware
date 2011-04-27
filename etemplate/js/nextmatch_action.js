@@ -184,6 +184,19 @@ function nm_not_disableClass(_action, _senders, _target)
 }
 
 /**
+ * Callback to check if all of _senders rows have enableClass set
+ * 
+ * @param _action egwAction object, we use _action.data.enableClass to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if none has disableClass, false otherwise
+ */
+function nm_enableClass(_action, _senders, _target)
+{
+	return $(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+}
+
+/**
  * Callback to check if a certain field (_action.data.fieldId) is (not) equal to given value (_action.data.fieldValue)
  * 
  * If field is not found, we return false too!

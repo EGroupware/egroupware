@@ -486,8 +486,10 @@ class nextmatch_widget
 		$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 		list($app) = explode('.',$name);
 		$definition = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'];
-		if(!$value['no_csv_export'] && ($definition || !is_array($value['csv_fields']))) {
-			if($GLOBALS['egw_info']['user']['apps']['importexport'] && ($definition || $value['csv_fields'])) {
+		if(!$value['no_csv_export'] && ($definition || !is_array($value['csv_fields'])))
+		{
+			if($GLOBALS['egw_info']['user']['apps']['importexport'] && ($definition || $value['csv_fields']) && is_object($nextmatch))
+			{
 				$nextmatch->set_cell_attribute('export', 'onclick',
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
@@ -512,7 +514,6 @@ class nextmatch_widget
 		$value['rows']['_actions'] =& $value['actions'];
 		$value['rows']['_action_links'] =& $value['action_links'];
 		$value['rows']['_row_id']  =& $value['row_id'];
-		$value['action'] = $value['selected'] = $value['select_all'] = null;	// nothing yet
 
 		return False;	// NO extra Label
 	}
@@ -590,6 +591,18 @@ class nextmatch_widget
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
 			$action['id'] = $prefix.$id;
+
+			// set some default onExecute
+			foreach(array(
+				'enableClass'  => 'javaScript:nm_enableClass',
+				'disableClass' => 'javaScript:nm_not_disableClass',
+			) as $attr => $check)
+			{
+				if (isset($action[$attr]) && !isset($action['enabled']))
+				{
+					$action['enabled'] = $check;
+				}
+			}
 
 			// add all first level actions plus ones with enabled = 'javaScript:...' to action_links
 			if ($first_level || substr($action['enabled'],0,11) == 'javaScript:')
