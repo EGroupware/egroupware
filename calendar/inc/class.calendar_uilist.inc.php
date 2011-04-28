@@ -124,7 +124,7 @@ class calendar_uilist extends calendar_ui
 				else
 				{
 					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-						$success,$failed,$action_msg,'calendar_list',$msg, $content['no_notifications']))
+						$success,$failed,$action_msg,'calendar_list',$msg, $content['nm']['checkboxes']['no_notifications']))
 					{
 						$msg .= lang('%1 event(s) %2',$success,$action_msg);
 					}
