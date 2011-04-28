@@ -252,7 +252,7 @@ class calendar_bo
 		if (!$ids) return null;
 
 		$data = array();
-		foreach(!is_array($ids) ? array($ids) : $ids as $id)
+		foreach((array)$ids as $id)
 		{
 			$email = $id;
 			$name = '';
@@ -268,7 +268,7 @@ class calendar_bo
 				'name' => $name,
 			);
 		}
-		//echo "<p>email_info(".print_r($ids,true).")="; _debug_array($data);
+		//error_log(__METHOD__.'('.array2string($ids).')='.array2string($data).' '.function_backtrace());
 		return $data;
 	}
 

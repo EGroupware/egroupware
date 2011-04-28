@@ -776,8 +776,8 @@ class calendar_activesync implements activesync_plugin_write
 			}
 			else
 			{
-				list($info) = $this->calendar->resources[$uid[0]]['info'] ?
-					ExecMethod($this->resources[$uid[0]]['info'],substr($uid,1)) : array(false);
+				list($info) = $i = $this->calendar->resources[$uid[0]]['info'] ?
+					ExecMethod($this->calendar->resources[$uid[0]]['info'],substr($uid,1)) : array(false);
 
 				if (!$info) continue;
 
