@@ -1326,10 +1326,10 @@ class addressbook_ui extends addressbook_bo
 				if ($query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE))
 				{
 					$readonlys["delete[$row[id]]"] = true;
-					$row['class'] .= 'rowNoDelete';
+					$row['class'] .= 'rowNoDelete ';
 				}
 				$readonlys["infolog[$row[id]]"] = !$GLOBALS['egw_info']['user']['apps']['infolog'];
-				$row['class'] .= 'rowNoEdit';	// no edit in OrgView
+				$row['class'] .= 'rowNoEdit ';	// no edit in OrgView
 			}
 			else
 			{
@@ -1348,12 +1348,12 @@ class addressbook_ui extends addressbook_bo
 				if (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
 				{
 					$readonlys["delete[$row[id]]"] = true;
-					$row['class'] .= 'rowNoDelete';
+					$row['class'] .= 'rowNoDelete ';
 				}
 				if (!$this->check_perms(EGW_ACL_EDIT,$row))
 				{
 					$readonlys["edit[$row[id]]"] = true;
-					$row['class'] .= 'rowNoEdit';
+					$row['class'] .= 'rowNoEdit ';
 				}
 
 				if ($row['photo']) $photos = true;
