@@ -697,12 +697,12 @@ class timesheet_ui extends timesheet_bo
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{
 				$readonlys["edit[$row[ts_id]]"] = true;
-				$row['class'] .= ' rowNoEdit';
+				$row['class'] .= ' rowNoEdit ';
 			}
 			if (!$this->check_acl(EGW_ACL_DELETE,$row))
 			{
 				$readonlys["delete[$row[ts_id]]"] = true;
-				$row['class'] .= ' rowNoDelete';
+				$row['class'] .= ' rowNoDelete ';
 			}
 			if ($query['col_filter']['ts_project'] || !$query['filter2'])
 			{
