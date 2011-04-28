@@ -2166,7 +2166,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL)))
 			{
-					$events[] = $event;
+				$events[] = $event;
 			}
 		}
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -2668,8 +2668,18 @@ class calendar_ical extends calendar_boupdate
 						$vcardData['category'] = array();
 					}
 					break;
-				case 'ATTENDEE':
 				case 'ORGANIZER':
+					$event['organizer'] = $attributes['value'];	// no egw field, but needed in AS
+					if (strtoupper(substr($event['organizer'],0,7)) == 'MAILTO:')
+					{
+						$event['organizer'] = substr($event['organizer'],7);
+					}
+					if (!empty($attributes['params']['CN']))
+					{
+						$event['organizer'] = $attributes['params']['CN'].' <'.$event['organizer'].'>';
+					}
+					// fall throught
+				case 'ATTENDEE':
 					if (isset($attributes['params']['PARTSTAT']))
 				    {
 				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
