@@ -521,7 +521,7 @@ class nextmatch_widget
 	/**
 	 * Default maximum lenght for context submenus, longer menus are put as a "More" submenu
 	 */
-	const DEFAULT_MAX_MENU_LENGTH = 12;
+	const DEFAULT_MAX_MENU_LENGTH = 14;
 
 	/**
 	 * Return egw_actions
