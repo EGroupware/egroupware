@@ -519,6 +519,11 @@ class nextmatch_widget
 	}
 
 	/**
+	 * Default maximum lenght for context submenus, longer menus are put as a "More" submenu
+	 */
+	const DEFAULT_MAX_MENU_LENGTH = 12;
+
+	/**
 	 * Return egw_actions
 	 *
 	 * The following attributes are understood for actions on eTemplate/PHP side:
@@ -567,10 +572,13 @@ class nextmatch_widget
 	 * @param string $template_name='' name of the template, used as default for app name of images
 	 * @param string $prefix='' prefix for ids
 	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
+	 * @param int $max_length=self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
 	 * @return array
 	 */
-	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array())
+	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
+		$max_length=self::DEFAULT_MAX_MENU_LENGTH)
 	{
+		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
 		// default icons for some common actions
 		static $default_icons = array(
 			'view' => 'view',
@@ -586,10 +594,25 @@ class nextmatch_widget
 
 		//echo "actions="; _debug_array($actions);
 		$egw_actions = array();
+		$n = 1;
 		foreach((array)$actions as $id => $action)
 		{
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
+
+			if (!$first_level && $n == $max_length && count($actions) > $max_length)
+			{
+				$id = 'more_'.count($actions);	// we need a new unique id
+				$action = array(
+					'caption' => 'More',
+					'prefix' => $prefix,
+					// display rest of actions incl. current one as children
+					'children' => array_slice($actions, $max_length-1, count($actions)-$max_length+1, true),
+				);
+				//echo "*** Inserting id=$prefix$id"; _debug_array($action);
+				// we break at end of foreach loop, as rest of actions is already dealt with
+				// by putting them as children
+			}
 			$action['id'] = $prefix.$id;
 
 			// set some default onExecute
@@ -662,7 +685,7 @@ class nextmatch_widget
 			// add sub-menues
 			if ($action['children'])
 			{
-				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links);
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length);
 				unset($action['prefix']);
 			}
 
@@ -676,6 +699,8 @@ class nextmatch_widget
 			if (!$action['data']) unset($action['data']);
 			// only add egw_action attributes
 			$egw_actions[] = array_intersect_key($action, array_flip($egw_action_supported));
+
+			if (!$first_level && $n++ == $max_length) break;
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
 		return $egw_actions;
