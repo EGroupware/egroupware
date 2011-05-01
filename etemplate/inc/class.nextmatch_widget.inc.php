@@ -707,32 +707,49 @@ class nextmatch_widget
 	}
 
 	/**
-	 * Action with submenu to set category
+	 * Action with submenu for categories
 	 *
-	 * Maybe category hierarchy should be returned as such, currently we return them in one menu idented by level
+	 * Automatic switch to hierarchical display, if more then $max_cats_flat=14 cats found.
 	 *
 	 * @param string $app
 	 * @param int $group=0 see self::egw_actions
 	 * @param string $caption='Change category'
 	 * @param string $prefix='cat_' prefix category id to get action id
+	 * @param boolean $globals=true application global categories too
+	 * @param int $parent_id=0 only returns cats of a certain parent
+	 * @param int $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
 	 * @return array like self::egw_actions
 	 */
-	public static function category_action($app, $group=0, $caption='Change category', $prefix='cat_')
+	public static function category_action($app, $group=0, $caption='Change category',
+		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
 	{
-		$cat_actions = array();
 		$cat = new categories(null,$app);
-		foreach((array)$cat->return_sorted_array($start=0,$limit=false,$query='',$sort='ASC',$order='cat_name',$globals=true, $parent_id=0,$unserialize_data=true) as $cat)
+		$cats = $cat->return_sorted_array($start=0, $limit=false, $query='', $sort='ASC', $order='cat_name', $globals, $parent_id, $unserialize_data=true);
+
+		// if more then max_length cats, switch automatically to hierarchical display
+		if (count($cats) > $max_cats_flat)
 		{
-			$name = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
-			if (categories::is_global($cat)) $name .= ' &#9830;';
-
-			$cat_actions[$cat['id']] = array(
-				'caption' => $name,
-				'no_lang' => true,
-			);
+			$cat_actions = self::category_hierarchy($cats, $parent_id);
 		}
-		if (!$actions['cat']['children']) $actions['cat']['enabled'] = false;
+		else	// flat, indented categories
+		{
+			$cat_actions = array();
+			foreach((array)$cats as $cat)
+			{
+				$name = str_repeat('&nbsp;',2*$cat['level']) . stripslashes($cat['name']);
+				if (categories::is_global($cat)) $name .= ' &#9830;';
 
+				$cat_actions[$cat['id']] = array(
+					'caption' => $name,
+					'no_lang' => true,
+				);
+				// add category icon
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				{
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+				}
+			}
+		}
 		return array(
 			'caption' => $caption,
 			'children' => $cat_actions,
@@ -740,6 +757,51 @@ class nextmatch_widget
 			'group' => $group,
 			'prefix' => $prefix,
 		);
+	}
+
+	/**
+	 * Return one level of the category hierarchy
+	 *
+	 * @param array $cats=null all cats if already read
+	 * @param string $prefix='cat_' prefix category id to get action id
+	 * @param int $parent_id=0 only returns cats of a certain parent
+	 * @return array
+	 */
+	private static function category_hierarchy(array $cats, $prefix, $parent_id=0)
+	{
+		$cat_actions = array();
+		foreach($cats as $key => $cat)
+		{
+			// current hierarchy level
+			if ($cat['parent'] == $parent_id)
+			{
+				$name = stripslashes($cat['name']);
+				if (categories::is_global($cat)) $name .= ' &#9830;';
+
+				$cat_actions[$cat['id']] = array(
+					'caption' => $name,
+					'no_lang' => true,
+				);
+				// add category icon
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				{
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+				}
+				unset($cats[$key]);
+			}
+			// direct children
+			elseif(isset($cat_actions[$cat['parent']]))
+			{
+				$cat_actions['sub_'.$cat['parent']] = $cat_actions[$cat['parent']];
+				// have to add category itself to children, to be able to select it!
+				$cat_actions[$cat['parent']]['group'] = -1;	// own group on top
+				$cat_actions['sub_'.$cat['parent']]['children'] = array(
+					$cat['parent'] => $cat_actions[$cat['parent']],
+				)+self::category_hierarchy($cats, $prefix, $cat['parent']);
+				unset($cat_actions[$cat['parent']]);
+			}
+		}
+		return $cat_actions;
 	}
 
 	/**
