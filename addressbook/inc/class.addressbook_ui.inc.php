@@ -1999,6 +1999,9 @@ class addressbook_ui extends addressbook_bo
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 		// Load JS for infolog actions
 		egw_framework::validate_file('.','index','infolog');
+		// Load egw_action stuff for infolog, required before etemplate::exec() because it loads stuff into HTML header
+		nextmatch_widget::init_egw_actions();
+
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
 		$GLOBALS['egw']->hooks->process(array(

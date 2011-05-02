@@ -953,52 +953,10 @@ class etemplate extends boetemplate
 			$html = html::div($html,$div_style);
 		}
 
+		// initialise egw_actions for nextmatch widget, if egwGridView_grid CSS class set
 		if ($options[3] == 'egwGridView_grid')
 		{
-			// Load some JS files needed for the egw_action framework
-			egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
-
-			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
-			egw_framework::validate_file('egw_action','egw_action');
-			egw_framework::validate_file('egw_action','egw_action_common');
-			egw_framework::validate_file('egw_action','egw_action_popup');
-			egw_framework::validate_file('egw_action','egw_menu');
-			egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
-			egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
-
-			// JS action objects generated for this widget are prefixed with the
-			// prefix given here
-			$prefix = "egw_";
-
-			$action_links = array();
-
-			$html .= '
-<script type="text/javascript">
-	$(document).ready(function() {
-		// Initialize the action manager and add some actions to it
-		'.$prefix.'actionManager = new egwActionManager();
-		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
-
-		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
-			json_encode(nextmatch_widget::egw_actions($content['_actions'], $this->name, '', $action_links))).');
-		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
-
-		var actionLinks = ['.($content['_actions'] ? '"'.implode('","', isset($content['_action_links']) ?
-			$content['_action_links'] : $action_links).'"' : '').'];
-
-		// Create a new action object for each table row
-		// TODO: only apply function to outer level
-		$("table.egwGridView_grid>tbody>tr").each(function(index, elem)
-		{
-			// Create a new action object
-			var obj = '.$prefix.'objectManager.addObject(elem.id, new nextmatchRowAOI(elem));
-
-			obj.updateActionLinks(actionLinks);
-		});
-	});
-</script>';
+			$html .= nextmatch_widget::init_egw_actions($content['_actions'], $content['action_links'], $this->name);
 		}
 
 		return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";

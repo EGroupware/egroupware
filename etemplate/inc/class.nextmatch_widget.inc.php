@@ -60,9 +60,10 @@
  *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
  *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
  *                                optional, default id of all first level actions plus the ones with enabled='javaScript:...'
+ *  'action'         =>     //  O string selected action
  *  'selected'       =>     //  O array with selected id's
- *  'checkboxes'     =>     //  0 array with checkbox id as key and boolean checked value
- *  'select_all'     =>     //  0 boolean value of select_all checkbox, reference to above value for key 'select_all'
+ *  'checkboxes'     =>     //  O array with checkbox id as key and boolean checked value
+ *  'select_all'     =>     //  O boolean value of select_all checkbox, reference to above value for key 'select_all'
  * );
  */
 class nextmatch_widget
@@ -802,6 +803,62 @@ class nextmatch_widget
 			}
 		}
 		return $cat_actions;
+	}
+
+	/**
+	 * Return HTML to initialise actions, if called without arguments only CSS and JS get loaded
+	 *
+	 * Gets called from etemplate::show_grid() and addressbook_ui::view (without arguments).
+	 *
+	 * @param array $actions=null
+	 * @param array $action_links=null
+	 * @param string $template_name='' name of the template, used as default for app name of images
+	 * @param string $prefix='egw_' JS action objects generated for this widget are prefixed with given prefix
+	 */
+	public static function init_egw_actions(array $actions=null, $action_links=null, $template_name='', $prefix='egw_')
+	{
+		// Load some JS files needed for the egw_action framework
+		egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
+		egw_framework::validate_file('egw_action','egw_action');
+		egw_framework::validate_file('egw_action','egw_action_common');
+		egw_framework::validate_file('egw_action','egw_action_popup');
+		egw_framework::validate_file('egw_action','egw_menu');
+		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
+		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
+
+		if ($actions)
+		{
+			if (!is_array($action_links)) $action_links = array();
+
+			return '
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Initialize the action manager and add some actions to it
+		'.$prefix.'actionManager = new egwActionManager();
+		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
+
+		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
+			json_encode(self::egw_actions($actions, $template_name, '', $action_links))).');
+		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
+
+		var actionLinks = ["'.implode('","', $action_links).'"];
+
+		// Create a new action object for each table row
+		// TODO: only apply function to outer level
+		$("table.egwGridView_grid>tbody>tr").each(function(index, elem)
+		{
+			// Create a new action object
+			var obj = '.$prefix.'objectManager.addObject(elem.id, new nextmatchRowAOI(elem));
+
+			obj.updateActionLinks(actionLinks);
+		});
+	});
+</script>';
+		}
 	}
 
 	/**
