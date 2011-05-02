@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware - InfoLog CSV import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package importexport
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id: $
+ * @version $Id$
  */
 
 
@@ -171,8 +171,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if($_definition->plugin_options['owner_from_csv']) {
 				if(!is_numeric($record['info_owner'])) {
 					$this->errors[$import_csv->get_current_position()] = lang(
-						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.', 
-						$record['info_owner'], 
+						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
+						$record['info_owner'],
 						$_definition->plugin_options['record_owner']
 					);
 					$record['info_owner'] = $_definition->plugin_options['record_owner'];
@@ -264,7 +264,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp']) {
 					break;
 				}
-				
+
 				// Fall through
 			case 'insert' :
 				if ( $this->dry_run ) {
@@ -433,7 +433,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		}
 		return False;
 	}
-	
+
 	public static function project_id($num_or_title)
 	{
 		static $boprojects;
