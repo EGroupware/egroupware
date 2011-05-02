@@ -220,7 +220,7 @@ only for details	infolog	ru	Только для подробностей
 only if i get assigned or removed	infolog	ru	Только если Я  присоединен или отсоединен
 only the attachments	infolog	ru	только вложения
 only the links	infolog	ru	только ссылки
-open	infolog	ru	открытые
+open(status)	infolog	ru	открытые
 optional note to the link	infolog	ru	необязательная заметка к Ссылке
 order	infolog	ru	Порядок
 overdue	infolog	ru	просроченные

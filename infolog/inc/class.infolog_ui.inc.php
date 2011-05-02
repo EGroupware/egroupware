@@ -91,7 +91,7 @@ class infolog_ui
 	 */
 	function __construct()
 	{
-		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') $GLOBALS['egw']->translation->add_app('infolog');
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') translation::add_app('infolog');
 		$this->bo = new infolog_bo();
 
 		$this->tmpl = new etemplate();
@@ -161,8 +161,11 @@ class infolog_ui
 		$info['info_percent'] = (int) $info['info_percent'].'%';
 		$editrights = $this->bo->check_access($info,EGW_ACL_EDIT);
 		$isresposible = $this->bo->is_responsible($info);
-		$readonlys["edit[$id]"] = !($editrights || // edit rights or more then standard responsible rights
-			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
+		if (($readonlys["edit[$id]"] = !($editrights || // edit rights or more then standard responsible rights
+			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')))))
+		{
+			$info['class'] .= 'rowNoEdit ';
+		}
 		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
 			!($editrights || $isresposible));
 		$readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
@@ -172,11 +175,21 @@ class infolog_ui
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
 			!$editrights && !$isresposible &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
-		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
-		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
+		if (($readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE)))
+		{
+			$info['class'] .= 'rowNoDelete ';
+		}
+		if (($readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD)))
+		{
+			$info['class'] .= 'rowNoSubs ';
+		}
+		if ($info['info_id_parent']) $info['class'] .= 'rowHasParent ';
+		if ($info['info_anz_subs'] > 0) $info['class'] .= 'rowHasSubs ';
+
 		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 		$readonlys['view[0]'] = True;	// no parent
 		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+		$readonlys["document[$id]"] = !$this->prefs['default_document'];
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
@@ -234,56 +247,6 @@ class infolog_ui
 	}
 
 	/**
-	 * Saves state of the infolog list in the session
-	 *
-	 * @param array $values
-	 */
-	function save_sessiondata($values)
-	{
-		$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
-		//echo "<p>$for: ".__METHOD__.'('.print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
-
-		$arrayToStore = array(
-			'search' => $values['search'],
-			'start'  => $values['start'],
-			'num_rows' => $values['num_rows'],
-			'filter' => $values['filter'],
-			'filter2' => $values['filter2'],
-			'cat_id' => $values['cat_id'],
-			'order'  => $values['order'],
-			'sort'   => $values['sort'],
-			'action' => $values['action'],
-			'action_id' => $values['action_id'],
-			'action_title' => $values['action_title'],
-			'col_filter' => $values['col_filter'],
-			'session_for' => $for
-		);
-		if ($values['filter']=='bydate')
-		{
-			$arrayToStore['startdate'] = $values['startdate'];
-			$arrayToStore['enddate'] = $values['enddate'];
-		}
-		$GLOBALS['egw']->session->appsession($for.'session_data','infolog',$arrayToStore);
-	}
-
-	/**
-	 * reads list-state from the session
-	 *
-	 * @return array
-	 */
-	function read_sessiondata()
-	{
-		$values = $GLOBALS['egw']->session->appsession(@$this->called_by.'session_data','infolog');
-		if (!@$values['session_for'] && $this->called_by)
-		{
-			$values['session_for'] = $this->called_by;
-			$this->save_sessiondata($values);
-		}
-		//echo "<p>called_by='$this->called_by': ".__METHOD__."() = ".print_r($values,True)."</p>\n";
-		return $values;
-	}
-
-	/**
 	 * Callback for nextmatch widget
 	 *
 	 * @param array &$query
@@ -293,6 +256,11 @@ class infolog_ui
 	 */
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
+		if (!$query['csv_export'])
+		{
+			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
+			$query['actions'] = $this->get_actions($query);
+		}
 		$orginal_colfilter = $query['col_filter'];
 		if ($query['filter'] == 'bydate')
 		{
@@ -300,8 +268,6 @@ class infolog_ui
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
 			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
-			//unset($query['startdate']);
-			//unset($query['enddate']);
 		}
 		else
 		{
@@ -309,17 +275,11 @@ class infolog_ui
 			unset($query['startdate']);
 			unset($query['enddate']);
 		}
-//_debug_array($query);
-//_debug_array($query['col_filter']);
 
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		if (!$query['csv_export'])
-		{
-			$this->save_sessiondata($query);
-		}
-		else
+		if ($query['csv_export'])
 		{
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
@@ -412,9 +372,15 @@ class infolog_ui
 				}
 			}
 			$rows[] = $info;
-			$readonlys["document[{$info['info_id']}]"] = !$this->prefs['default_document'];
 		}
 		unset($links);
+
+		if ($query['action'] == 'sp' && ($main = $this->bo->read($query['action_id'])))
+		{
+			$main = $this->get_info($main, $readonlys);
+			$main['class'] .= 'th ';
+			array_unshift($rows, $main);
+		}
 
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
@@ -459,7 +425,7 @@ class infolog_ui
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
-			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : egw_link::title($query['action'],$query['action_id'])))
+			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
@@ -507,23 +473,23 @@ class infolog_ui
 		if (is_array($values) && isset($values['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
 			list($id) = @each($values['nm']['rows']['document']);
-			$values['multi_action'] = 'document';
-			$values['nm']['rows']['checked'] = array($id);
+			$values['nm']['action'] = 'document';
+			$values['nm']['selected'] = array($id);
 		}
-		if (is_array($values) && isset($values['multi_action']) && $values['multi_action'] !== '')
+		if (is_array($values) && !empty($values['nm']['action']))
 		{
-			if (!count($values['nm']['rows']['checked']) && !$values['use_all'])
+			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first');
 			}
 			else
 			{
 				// Some processing to add values in for links and cats
-				$multi_action = $values['multi_action'];
+				$multi_action = $values['nm']['action'];
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
 				if(in_array($multi_action, array('link', 'responsible')))
 				{
-					$values['multi_action'] .= '_' . key($values[$multi_action . '_action']);
+					$values['nm']['action'] .= '_' . key($values[$multi_action . '_action']);
 				}
 				// Action has a parameter - cat_id, percent, etc
 				if (in_array($multi_action, array('link', 'cat', 'completion', 'responsible')))
@@ -532,10 +498,10 @@ class infolog_ui
 					{
 						$values[$multi_action] = implode(',',$values[$multi_action]);
 					}
-					$values['multi_action'] .= '_' . $values[$multi_action];
+					$values['nm']['action'] .= '_' . $values[$multi_action];
 				}
-				if ($this->action($values['multi_action'],$values['nm']['rows']['checked'],$values['use_all'],
-					$success,$failed,$action_msg,false,$msg, $values['no_notifications']))
+				if ($this->action($values['nm']['action'], $values['nm']['selected'], $values['nm']['select_all'],
+					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
 				}
@@ -543,42 +509,29 @@ class infolog_ui
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
-				unset($values['multi_action']);
-				unset($values['use_all']);
+				unset($values['nm']['action']);
+				unset($values['nm']['select_all']);
 			}
 			$values['msg'] = $msg;
 		}
-		if(isset($values['nm']['rows'])) unset($values['nm']['rows']['checked']); // Can cause problems lower, no longer needed
 		if (!$action)
 		{
 			$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
 			$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
 			$action_title = $values['action_title'] ? $values['action_title'] : get_var('action_title',array('POST','GET'));
-
-			if ($values === 'reset_action_view')	// only read action from session, if not called by index.php
-			{
-				$session = $this->read_sessiondata();
-				$session['action'] = $action = '';
-				$session['action_id'] = $action_id = 0;
-				$session['action_title'] = $action_title = '';
-				$this->save_sessiondata($session);
-				unset($session);
-			}
-			elseif (!$action)
-			{
-				$session = $this->read_sessiondata();
-				$action = $session['action'];
-				$action_id = $session['action_id'];
-				$action_title = $session['action_title'];
-				// no action -> try to restore the previous colfilter
-				$colfilter = $session['col_filter'];
-				unset($session);
-			}
 		}
 		//echo "<p>".__METHOD__."(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
 		{
-			$values = array('nm' => $this->read_sessiondata());
+			$nm = egw_cache::getSession('infolog', $this->called_by.'session_data');
+			if ($values === 'reset_action_view')
+			{
+				$nm['action'] = $action = '';
+				$nm['action_id'] = $action_id = 0;
+				$nm['action_title'] = $action_title = '';
+			}
+			$values = array('nm' => $nm);
+
 			if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']) && !$this->called_by)
 			{
 				$values['nm']['filter'] = $_GET['filter'] && $_GET['filter'] != 'default' ? $_GET['filter'] :
@@ -588,19 +541,25 @@ class infolog_ui
 			{
 				$values['nm']['order'] = 'info_datemodified';
 				$values['nm']['sort'] = 'DESC';
+				$values['nm']['row_id'] = 'info_id';
 			}
+
+			if (!$values['nm']['session_for'] && $this->called_by) $values['nm']['session_for'] = $this->called_by;
+
 			$values['msg'] = $_GET['msg'];
 			$values['action'] = $action;
 			$values['action_id'] = $action_id;
+			$values['action_title'] = $action_title;
 		}
-		if($_GET['search']) {
-			$values['nm']['search'] = $_GET['search'];
-		}
+		if($_GET['search']) $values['nm']['search'] = $_GET['search'];
+
 		if ($values['nm']['add'])
 		{
 			$values['add'] = $values['nm']['add'];
 			unset($values['nm']['add']);
 		}
+		unset($values['nm']['rows']['checked']);	// not longer used, but hides button actions
+
 		if ($values['add'] || $values['cancel'] || isset($values['nm']['rows']) || isset($values['main']))
 		{
 			if ($values['add'])
@@ -610,10 +569,9 @@ class infolog_ui
 			}
 			elseif ($values['cancel'] && $own_referer)
 			{
-				$session = $this->read_sessiondata();
-				unset($session['action']);
-				unset($session['action_id']);
-				$this->save_sessiondata($session);
+				unset($values['nm']['action']);
+				unset($values['nm']['action_id']);
+				egw_cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
 				$this->tmpl->location($own_referer);
 			}
 			else
@@ -621,11 +579,9 @@ class infolog_ui
 				list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 				list($do_id) = @each($do_id);
 				//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($called_as);
+// todo: move this to actions(), interactive delete only if subs
 				switch($do)
 				{
-					case 'edit':
-					case 'edit_status':
-						return $this->edit($do_id,$action,$action_id,'',$called_as);
 					case 'delete':
 						if (!($values['msg'] = $this->delete($do_id,$called_as,$called_as ? '' : 'index'))) return;
 						// did we deleted the entries, whos subentries we are showing?
@@ -647,8 +603,6 @@ class infolog_ui
 					case 'close_all':
 						$this->close($do_id,$called_as,$closesingle);
 						break;
-					case 'sp':
-						return $this->edit(0,'sp',$do_id,'',$called_as);
 					case 'view':
 						$value = array();
 						$action = 'sp';
@@ -671,7 +625,6 @@ class infolog_ui
 					$action_id = 0;
 					break;
 				}
-				$values['main'][1] = $this->get_info($action_id,$readonlys['main']);
 				break;
 		}
 		$readonlys['cancel'] = $action != 'sp';
@@ -724,10 +677,11 @@ class infolog_ui
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
-		$persist['nm'] = array(
-			'sort' => $values['nm']['sort'],
-			'order' => $values['nm']['order'],
-		);
+
+		// store whole $values[nm] in etemplate request
+		unset($values['nm']['rows']);
+		$persist['nm'] = $values['nm'];
+
 		if (!$called_as)
 		{
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
@@ -748,22 +702,25 @@ class infolog_ui
 		$sel_options = array(
 			'info_type'     => $this->bo->enums['type'],
 			'pm_id'      => array(lang('No project')),
-			'multi_action'	=> array(
-				'close'		=> lang('Close'),
-				'delete'	=> lang('Delete'),
-				'cat'		=> lang('Change category'),
-				'link'		=> lang('Add or delete links'),
-				'completion'	=> lang('Change completion'),
-				'responsible'	=> lang('Change responsible'),
-			)
 		);
 
-		// Add in multi-infolog actions
+		egw_framework::validate_file('.','index','infolog');
+
+		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
+	}
+
+	/**
+	 * Get actions / context menu items
+	 *
+	 * @param array $query
+	 * @return array see nextmatch_widget::get_actions()
+	 */
+	private function get_actions(array $query)
+	{
+		for($i = 0; $i <= 100; $i += 10) $percent[$i] = $i.'%';
+
 		// Types
-		foreach($this->bo->enums['type'] as $type => $label)
-		{
-			$types['type_'.$type] = $label;
-		}
+		$types = $this->bo->enums['type'];
 		if ($this->bo->group_owners)
 		{
 			// remove types owned by groups the user has no edit grant
@@ -771,41 +728,204 @@ class infolog_ui
 			{
 				if (!($this->bo->grants[$group] & EGW_ACL_EDIT))
 				{
-					unset($types['type_'.$type]);
+					unset($types[$type]);
 				}
 			}
 		}
-		$sel_options['multi_action'][lang('Change type:')] = $types;
+		$types_add = array();
+		foreach($types as $type => &$data)
+		{
+			$data = array(
+				'caption' => $data,
+				'icon' => $type,
+			);
+			$types_add[$type] = $data + array(
+				'url' => 'menuaction=infolog.infolog_ui.edit&type='.$type,
+				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+			);
+		}
 
 		// if filtered by type, show only the stati of the filtered type
-		if ($values['nm']['col_filter']['info_type'] && isset($this->bo->status[$values['nm']['col_filter']['info_type']]))
+		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
 		{
-			$statis = $this->bo->status[$values['nm']['col_filter']['info_type']];
+			$statis = $this->bo->status[$query['col_filter']['info_type']];
 		}
 		else	// show all stati
 		{
 			$statis = array();
-			foreach($this->bo->status as $typ => $stati)
+			foreach($this->bo->status as $type => $stati)
 			{
-				if($typ == 'defaults') continue;
+				if ($type == 'defaults') continue;
 				$statis += $stati;
 			}
 			$statis = array_unique($statis);
 		}
-		foreach($statis as $id => $label)
+		foreach($statis as $type => &$data)
 		{
-			$change_status['status_'.$id] = $label;
+			$data = array(
+				'caption' => $data,
+				'icon' => $type,
+			);
 		}
-		$sel_options['multi_action'][lang('Change status:')] = $change_status;
 
-		// Merge print
-		if ($this->prefs['document_dir'])
+		$actions = array(
+			'open' => array(
+				'caption' => 'Open',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=infolog.infolog_ui.edit&info_id=$id',
+				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+				'group' => $group=1,
+			),
+			'sp' => array(
+				'caption' => 'View subs',
+				'icon' => 'view',
+				'group' => $group,
+				'hint' => 'View all subs of this entry',
+				'enableClass' => 'rowHasSubs',
+			),
+			'parent' => array(
+				'caption' => 'View parent',
+				'icon' => 'parent',
+				'group' => $group,
+				'hideOnDisabled' => true,
+				'hint' => 'View the parent of this entry and all his subs',
+				'enableClass' => 'rowHasParent'
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'group' => $group,
+				'children' => array(
+					'new' => array(
+						'caption' => 'New',
+						'children' => $types_add,
+						'icon' => 'task',
+					),
+					'sub' => array(
+						'caption' => 'Sub-entry',
+						'url' => 'menuaction=infolog.infolog_ui.edit&action=sp&action_id=$id',
+						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'allowOnMultiple' => false,
+						'hint' => 'Add a new sub-task, -note, -call to this entry',
+						'icon' => 'new',
+						'disableClass' => 'rowNoSubs',
+					),
+					'copy' => array(
+						'caption' => 'Copy',
+						'url' => 'menuaction=infolog.infolog_ui.edit&action=copy&info_id=$id',
+						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'allowOnMultiple' => false,
+						'icon' => 'copy',
+					),
+				),
+			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
+				'group' => ++$group,
+			),
+			'no_notifications' => array(
+				'caption' => 'Do not notify',
+				'checkbox' => true,
+				'hint' => 'Do not notify of these changes',
+				'group' => $group,
+			),
+			// modifying content of one or multiple infolog(s)
+			'change' => array(
+				'caption' => 'Change',
+				'group' => ++$group,
+				'icon' => 'edit',
+				'disableClass' => 'rowNoEdit',
+				'children' => array(
+					'type' => array(
+						'caption' => 'Type',
+						'prefix' => 'type_',
+						'children' => $types,
+						'group' => $group,
+						'icon' => 'task',
+					),
+					'status' => array(
+						'caption' => 'Status',
+						'prefix' => 'status_',
+						'children' => $statis,
+						'group' => $group,
+						'icon' => 'ongoing',
+					),
+					'completion' => array(
+						'caption' => 'Completed',
+						'prefix' => 'completion_',
+						'children' => $percent,
+						'group' => $group,
+						'icon' => 'completed',
+					),
+					'cat' =>  nextmatch_widget::category_action(
+						'infolog',$group,'Change category','cat_'
+					),
+					'responsible' => array(
+						'caption' => 'Delegation',
+						'group' => $group,
+						'icon' => 'users',
+						'onExecute' => 'javaScript:open_popup',
+					),
+					'link' => array(
+						'caption' => 'Links',
+						'group' => $group,
+						'onExecute' => 'javaScript:open_popup',
+					),
+				),
+			),
+			'close' => array(
+				'caption' => 'Close',
+				'icon' => 'done',
+				'group' => $group,
+			),
+			'close_all' => array(
+				'caption' => 'Close all',
+				'icon' => 'done_all',
+				'group' => $group,
+				'hint' => 'Sets the status of this entry and its subs to done',
+				'allowOnMultiple' => false,
+			),
+		);
+		++$group;	// integration with other apps
+		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
-			$sel_options['multi_action'][lang('Insert in document').':'] = $this->get_document_actions();
+			$actions['filemanager'] = array(
+				'icon' => 'filemanager/navbar',
+				'caption' => 'Filemanager',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'allowOnMultiple' => false,
+				'group' => $group,
+			);
 		}
-		egw_framework::validate_file('.','index','infolog');
+		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
+		{
+			$actions['timesheet'] = array(	// interactive add for a single event
+				'icon' => 'timesheet/navbar',
+				'caption' => 'Timesheet',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=infolog&link_id[]=$id',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+			);
+		}
 
-		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
+		$actions['documents'] = infolog_merge::document_action(
+			$this->prefs['document_dir'], ++$group, 'Insert in document', 'document_',
+			$this->prefs['default_document']
+		);
+
+		$actions['delete'] = array(
+			'caption' => 'Delete',
+			'confirm' => 'Delete this entry',
+			'confirm_multiple' => 'Delete these entries',
+			'group' => ++$group,
+			'disableClass' => 'rowNoDelete',
+		);
+
+		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
+		return $actions;
 	}
 
 	/**
@@ -817,34 +937,27 @@ class infolog_ui
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
-	 * @param string/array $session_name 'index', or array with session-data depending
+	 * @param array $query get_rows parameter
+	 * @param string &$msg on return user feedback
+	 * @param boolean $skip_notifications=false true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $skip_notifications = false)
+	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
+		array $query, &$msg, $skip_notifications = false)
 	{
 		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		if ($use_all)
 		{
-			// get the whole selection
-			if($session_name) {
-				$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'infolog');
-			} else {
-				$query = $this->read_sessiondata();
-			}
-
-			if ($use_all)
+			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
+			$query['num_rows'] = -1;        // all
+			$this->get_rows($query,$result,$readonlys);
+			$checked = array();
+			foreach($result as $key => $info)
 			{
-				@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
-				$query['num_rows'] = -1;        // all
-				$this->get_rows($query,$result,$readonlys);
-				$checked = array();
-				foreach($result as $key => $info)
+				if(is_numeric($key))
 				{
-					if(is_numeric($key))
-					{
-						$checked[] = $info['info_id'];
-					}
+					$checked[] = $info['info_id'];
 				}
 			}
 		}
@@ -861,17 +974,19 @@ class infolog_ui
 				if(!$link_id)
 				{
 					$action_msg = 'linked';
-					$msg = lang('You need to select an entry for linking.  ');
+					$msg = lang('You need to select an entry for linking.');
 					break;
 				}
 				$title = egw_link::title($app, $link_id);
 				foreach($checked as $id)
 				{
-					if(!$this->bo->check_access($id, EGW_ACL_EDIT)) {
+					if(!$this->bo->check_access($id, EGW_ACL_EDIT))
+					{
 						$failed++;
 						continue;
 					}
-					if($add_remove == 'add') {
+					if($add_remove == 'add')
+					{
 						$action_msg = lang('linked to %1', $title);
 						if(egw_link::link('infolog', $id, $app, $link_id))
 						{
@@ -881,33 +996,41 @@ class infolog_ui
 						{
 							$failed++;
 						}
-					} else {
+					}
+					else
+					{
 						$action_msg = lang('unlinked from %1', $title);
 						$count = egw_link::unlink(0, 'infolog', $id, '', $app, $link_id);
 						$success += $count;
 					}
 				}
-				return ($failed == 0);
+				return $failed == 0;
+
 			case 'document':
 				$msg = $this->download_document($checked,$settings);
 				$failed = count($checked);
-                                return false;
+				return false;
+
+			case 'view':
+// todo: implement or better move code from index to here
+				return false;
 		}
 
 		// Actions that need to loop
 		foreach($checked as $id)
-                {
+		{
 			if(!$entry = $this->bo->read($id))
 			{
 				continue;
 			}
-                        switch($action)
-                        {
+			switch($action)
+			{
 				case 'close':
 					$action_msg = lang('closed');
 					$this->close($id, '', false, $skip_notifications);
 					$success++;
 					break;
+
 				case 'delete':
 					$action_msg = lang('deleted');
 					$result = $this->delete($id, '', 'multi-action', $skip_notifications);
@@ -920,6 +1043,7 @@ class infolog_ui
 						$failed++;
 					}
 					break;
+
 				case 'type':
 					$action_msg = lang('changed type');
 					// Dont allow to change the type, if user has no delete rights from the group-owner
@@ -937,7 +1061,8 @@ class infolog_ui
 					$action_msg = lang('changed completion to %1%', $settings);
 					$entry['info_percent'] = $settings;
 					// Done entries will get changed right back if we don't change the status too
-					if($entry['info_status'] == 'done') {
+					if($entry['info_status'] == 'done')
+					{
 						$entry['info_status'] = 'ongoing';
 					}
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
@@ -963,11 +1088,14 @@ class infolog_ui
 						{
 							$success++;
 						}
-					} else {
+					}
+					else
+					{
 						$msg .= lang('Invalid status for entry type %1. ', lang($this->bo->enums['type'][$entry['info_type']]));
 						$failed++;
 					}
 					break;
+
 				case 'cat':
 					$cat_name = categories::id2name($settings);
 					$action_msg = lang('changed category to %1', $cat_name);
@@ -981,6 +1109,7 @@ class infolog_ui
 						$failed++;
 					}
 					break;
+
 				case 'responsible':
 					list($add_remove, $users) = explode('_', $settings, 2);
 					$action_msg = lang('changed responsible') . ' - ' . ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
@@ -1003,7 +1132,7 @@ class infolog_ui
 					break;
 			}
 		}
-		return ($failed == 0);
+		return $failed == 0;
 	}
 
 	/**
@@ -1154,36 +1283,8 @@ class infolog_ui
 			if ($button)
 			{
 				//Copy Infolog
-				if (($button == 'copy'))
-				{
-					unset($content['info_id']);
-					unset ($info_id);
-					unset($content['info_datemodified']);
-					unset($content['info_modifier']);
+				if ($button == 'copy') $action = 'copy';
 
-					// Get links to be copied
-					$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
-					// Special mangling for files so the files get copied
-					foreach($content['link_to']['to_id'] as $link_id => &$link)
-					{
-						if ($link['app'] == egw_link::VFS_APPNAME)
-						{
-							$link['id'] = $link + array(
-								'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
-								'name' => $link['id'],
-							);
-						}
-					}
-					if($content['info_link_id'])
-					{
-						$info_link_id = $content['info_link_id'];
-						unset($content['info_link_id']);
-					}
-
-					$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
-					$content['msg'] = lang('Infolog copied - the copy can now be edited');
-					$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
-				}
 				if ($button == 'print')
 				{
 					$content['js'] = $this->custom_print($content,!$content['info_id'])."\n".$js;	// first open the new window and then update the view
@@ -1443,7 +1544,7 @@ class infolog_ui
 				'to_id' => $info_id,
 				'to_app' => 'infolog',
 			);
-				switch ($action)
+			switch ($action)
 			{
 				case 'sp':
 					$links = egw_link::get_links('infolog',$parent['info_id'],'!'.egw_link::VFS_APPNAME);
@@ -1522,6 +1623,36 @@ class infolog_ui
 			{
 				$content['info_type'] = 'note';
 			}
+		}
+		if ($action == 'copy')	// get's called via actions selectbox or url (action=copy&info_id=123)
+		{
+			unset($content['info_id']);
+			unset ($info_id);
+			unset($content['info_datemodified']);
+			unset($content['info_modifier']);
+
+			// Get links to be copied
+			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
+			// Special mangling for files so the files get copied
+			foreach($content['link_to']['to_id'] as $link_id => &$link)
+			{
+				if ($link['app'] == egw_link::VFS_APPNAME)
+				{
+					$link['id'] = $link + array(
+						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+						'name' => $link['id'],
+					);
+				}
+			}
+			if($content['info_link_id'])
+			{
+				$info_link_id = $content['info_link_id'];
+				unset($content['info_link_id']);
+			}
+
+			$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+			$content['msg'] = lang('Infolog copied - the copy can now be edited');
+			$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
 		}
 		// group owners
 		$types = $this->bo->enums['type'];
@@ -1966,7 +2097,7 @@ class infolog_ui
 		}
 		$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
 
-		$GLOBALS['egw']->translation->add_app('infolog');
+		translation::add_app('infolog');
 
 		etemplate::$hooked = true;
 		$this->index(0,$app,$args[$view_id],array(

@@ -172,7 +172,7 @@ ongoing	infolog	zh	正在进行
 only the attachments	infolog	zh	仅显示关联文件
 only the links	infolog	zh	仅显示关联条目
 only up to this number of entries are displayed on the main screen.	infolog	zh	首页中最多可显示多少事项?
-open	infolog	zh	待决事项
+open(status)	infolog	zh	待决事项
 optional note about the link	infolog	zh	该关联的说明
 optional note to the link	infolog	zh	该关联的说明
 order	infolog	zh	顺序

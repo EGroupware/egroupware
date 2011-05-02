@@ -146,7 +146,7 @@ ongoing	infolog	iw	מתמשך
 only the attachments	infolog	iw	רק את המצורפים
 only the links	infolog	iw	רק את הקישורים
 only up to this number of entries are displayed on the main screen.	infolog	iw	רק עד כמות רשומות זו תוצג במסך הראשי
-open	infolog	iw	פתח
+open(status)	infolog	iw	פתח
 optional note to the link	infolog	iw	הערה אופציונלית לקישור
 order	infolog	iw	סדר
 overdue	infolog	iw	עבר זמנו

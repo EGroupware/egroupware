@@ -183,7 +183,7 @@ ongoing	infolog	sv	Pågående
 only for details	infolog	sv	Endast detaljer
 only the attachments	infolog	sv	Endast bilagor
 only the links	infolog	sv	Endast länkar
-open	infolog	sv	Öppen
+open(status)	infolog	sv	Öppen
 optional note to the link	infolog	sv	Frivillig anteckning till länken
 order	infolog	sv	Sortering
 overdue	infolog	sv	Förfallen

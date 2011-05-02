@@ -238,7 +238,7 @@ only for details	infolog	cs	Jen pro detaily
 only if i get assigned or removed	infolog	cs	Jen pokud budu přidělen nebo odebrán
 only the attachments	infolog	cs	jen přílohy
 only the links	infolog	cs	jen odkazy
-open	infolog	cs	otevřít
+open(status)	infolog	cs	otevřít
 open and upcoming	infolog	cs	otevřené a nadcházející
 optional note to the link	infolog	cs	volitelná poznámka k odkazu
 order	infolog	cs	Pořadí

@@ -233,7 +233,7 @@ only for details	infolog	fi	Vain lisätiedot
 only if i get assigned or removed	infolog	fi	Vain jos minulle delegoidaan tai minut poistetaan vastuusta
 only the attachments	infolog	fi	Vain liitteet
 only the links	infolog	fi	Vain linkit
-open	infolog	fi	Avoimet
+open(status)	infolog	fi	Avoimet
 open and upcoming	infolog	fi	Avoimet ja tulevat
 optional note to the link	infolog	fi	Vapaaehtoinen muistiinpano linkkiin
 order	infolog	fi	Järjestä

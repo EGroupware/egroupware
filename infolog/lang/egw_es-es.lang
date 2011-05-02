@@ -234,7 +234,7 @@ only for details	infolog	es-es	Sólo para los detalles
 only if i get assigned or removed	infolog	es-es	Sólo si se me asigna o se me borra
 only the attachments	infolog	es-es	sólo los adjuntos
 only the links	infolog	es-es	sólo los enlaces
-open	infolog	es-es	abrir
+open(status)	infolog	es-es	abrir
 optional note to the link	infolog	es-es	nota opcional para el enlace
 order	infolog	es-es	Ordenar
 organization	infolog	es-es	Organización

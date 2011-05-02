@@ -128,7 +128,7 @@ class infolog_bo
 		'own-open-overdue'         => 'own overdue',
 		'own-upcoming'             => 'own upcoming',
 		'own-open-upcoming'		   => 'own open and upcoming',
-		'open-today'               => 'open',
+		'open-today'               => 'open(status)',
 		'open-overdue'             => 'overdue',
 		'upcoming'                 => 'upcoming',
 		'open-upcoming'			   => 'open and upcoming',

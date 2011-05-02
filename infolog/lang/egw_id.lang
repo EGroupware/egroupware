@@ -172,7 +172,7 @@ offer	infolog	id	penawaran
 one day after	infolog	id	sehari setelah
 one day in advance	infolog	id	sehari dimuka
 ongoing	infolog	id	berlangsung
-open	infolog	id	buka
+open(status)	infolog	id	buka
 order	infolog	id	Urutan
 organization	infolog	id	Organisasi
 overdue	infolog	id	lewat waktu

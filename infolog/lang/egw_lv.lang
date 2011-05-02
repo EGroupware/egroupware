@@ -152,7 +152,7 @@ ongoing	infolog	lv	notiekošs
 only the attachments	infolog	lv	tikai pielikumi
 only the links	infolog	lv	tikai saites
 only up to this number of entries are displayed on the main screen.	infolog	lv	Galvenajā logā tiek parādīti ieraksti tikai līdz norādītajam skaitlim
-open	infolog	lv	atvērt
+open(status)	infolog	lv	atvērt
 optional note to the link	infolog	lv	izvēles piezīme saitei
 order	infolog	lv	Kārtība
 own open	infolog	lv	pats atveras

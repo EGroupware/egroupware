@@ -183,7 +183,7 @@ ongoing	infolog	it	in corso
 only for details	infolog	it	Solo per dettagli
 only the attachments	infolog	it	solo gli allegati
 only the links	infolog	it	solo i collegamenti
-open	infolog	it	aperte
+open(status)	infolog	it	aperte
 optional note to the link	infolog	it	note opzionali per il Link
 order	infolog	it	Ordine
 overdue	infolog	it	scaduto

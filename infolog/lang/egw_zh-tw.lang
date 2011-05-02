@@ -215,7 +215,7 @@ only for details	infolog	zh-tw	只顯示細節
 only if i get assigned or removed	infolog	zh-tw	只在我被指派或移除時
 only the attachments	infolog	zh-tw	只有附加檔案
 only the links	infolog	zh-tw	只有連結
-open	infolog	zh-tw	開啟
+open(status)	infolog	zh-tw	開啟
 optional note to the link	infolog	zh-tw	連結的附加說明
 order	infolog	zh-tw	順序
 overdue	infolog	zh-tw	過期的

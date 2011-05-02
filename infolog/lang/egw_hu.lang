@@ -234,7 +234,7 @@ only for details	infolog	hu	Csak a részletekhez
 only if i get assigned or removed	infolog	hu	Csak ha hozzám rendelték vagy törölték
 only the attachments	infolog	hu	csupán a mellékletek
 only the links	infolog	hu	csupán a hivatkozások
-open	infolog	hu	nyitott
+open(status)	infolog	hu	nyitott
 optional note to the link	infolog	hu	tetszőleges megjegyzés a hivatkozáshoz
 order	infolog	hu	Rendezés
 organization	infolog	hu	Szervezet

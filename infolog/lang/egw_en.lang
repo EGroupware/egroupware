@@ -67,18 +67,15 @@ cancel	infolog	en	Cancel
 cancelled	infolog	en	cancelled
 categories	infolog	en	Categories
 category	infolog	en	Category
+change	infolog	en	Change
 change category	infolog	en	Change category
 change completed	infolog	en	Change completed
 change completion	infolog	en	Change completion
 change history	infolog	en	Change history
 change owner when updating	infolog	en	Change owner when updating
-change responsible	infolog	en	Change responsible
-change status:	infolog	en	Change status:
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
-change type:	infolog	en	Change type:
 changed category to %1	infolog	en	changed category to %1
 changed completion to %1%	infolog	en	changed completion to %1%
-changed responsible	infolog	en	changed responsible
 changed status to %1	infolog	en	changed status to %1
 changed type	infolog	en	changed type
 charset of file	infolog	en	Charset of file
@@ -302,8 +299,8 @@ only for details	infolog	en	Only for details
 only if i get assigned or removed	infolog	en	Only if I get assigned or removed
 only the attachments	infolog	en	only the attachments
 only the links	infolog	en	only the links
-open	infolog	en	open
 open and upcoming	infolog	en	open and upcoming
+open(status)	infolog	en	open
 optional note to the link	infolog	en	optional note to the Link
 order	infolog	en	Order
 organization	infolog	en	Organization
@@ -421,6 +418,7 @@ status ...	infolog	en	Status ...
 sub	infolog	en	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	en	Sub-entries become subs of the parent or main entries, if there's no parent
 sub-entries will not be closed	infolog	en	Sub-entries will not be closed
+sub-entry	infolog	en	Sub-entry
 subject	infolog	en	Subject
 sum	infolog	en	Sum
 tag to mark positions for address labels	infolog	en	Tag to mark positions for address labels
@@ -468,7 +466,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
 which types should the calendar show	infolog	en	Which types should the calendar show
-whole query	infolog	en	whole query
 will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - close	infolog	en	Yes - Close

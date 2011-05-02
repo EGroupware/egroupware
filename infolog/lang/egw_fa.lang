@@ -200,7 +200,7 @@ ongoing	infolog	fa	درحال انجام
 only for details	infolog	fa	فقط برای جزئیات
 only the attachments	infolog	fa	فقط پیوستها
 only the links	infolog	fa	فقط پیوندها
-open	infolog	fa	کارهای باز
+open(status)	infolog	fa	کارهای باز
 optional note to the link	infolog	fa	یادداشت دلخواه برای پیوند
 order	infolog	fa	ترتیب
 overdue	infolog	fa	کارهای سررسیده

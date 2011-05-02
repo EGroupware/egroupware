@@ -224,7 +224,7 @@ only for details	infolog	nl	Alleen voor details
 only if i get assigned or removed	infolog	nl	Alleen indien ik wordt toegewezen of verwijderd
 only the attachments	infolog	nl	alleen de bijlagen
 only the links	infolog	nl	alleen de links
-open	infolog	nl	open
+open(status)	infolog	nl	open
 optional note to the link	infolog	nl	optionele notitie bij de link
 order	infolog	nl	Order
 overdue	infolog	nl	te laat

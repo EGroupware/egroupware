@@ -67,18 +67,15 @@ cancel	infolog	de	Abbruch
 cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
+change	infolog	de	Ändern
 change category	infolog	de	Kategorie ändern
 change completed	infolog	de	Änderungen duchgeführt
 change completion	infolog	de	Bearbeitungsstatus ändern
 change history	infolog	de	Änderungsverlauf
 change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
-change responsible	infolog	de	Zuständigkeit ändern
-change status:	infolog	de	Status ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
-change type:	infolog	de	Infolog Typ ändern
 changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Bearbeitungsstatus geändert zu %1
-changed responsible	infolog	de	Zuständigkeit ändern
 changed status to %1	infolog	de	Typ geändert zu %1
 changed type	infolog	de	Typ ändern
 charset of file	infolog	de	Zeichensatz der Datei
@@ -302,8 +299,8 @@ only for details	infolog	de	Nur bei Details
 only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
-open	infolog	de	offen
 open and upcoming	infolog	de	zukünftige und offene
+open(status)	infolog	de	offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüpfung
 order	infolog	de	Reihenfolge
 organization	infolog	de	Organisation
@@ -420,6 +417,7 @@ status ...	infolog	de	Status ...
 sub	infolog	de	Unter-<br />einträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
 sub-entries will not be closed	infolog	de	Untereinträge werden nicht geschlossen
+sub-entry	infolog	de	Untereintrag
 subject	infolog	de	Titel
 sum	infolog	de	Summe
 tag to mark positions for address labels	infolog	de	Platzhalter, um die Position der Adresslabels festzulegen
@@ -458,7 +456,7 @@ used time	infolog	de	benötigte Zeit
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
-view parent	infolog	de	übergeordneter Eintrag anzeigen
+view parent	infolog	de	Elterneintrag anzeigen
 view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
@@ -466,7 +464,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
-whole query	infolog	de	gesamte Abfrage
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - close	infolog	de	Ja schließen

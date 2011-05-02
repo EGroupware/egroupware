@@ -155,7 +155,7 @@ ongoing	tr	sürüyor
 only the attachments	tr	sadece ekler
 only the links	tr	sadece baðlantýlar
 only up to this number of entries are displayed on the main screen.	tr	Ana penecerede gösterilecek en fazla giriþ sayýsý.
-open	tr	aç
+open(status)	tr	aç
 optional note to the link	tr	Baðlantý için isteðe baðlý not
 order	tr	Sýra
 overdue	tr	gecikme

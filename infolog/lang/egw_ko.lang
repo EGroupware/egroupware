@@ -121,7 +121,7 @@ note	infolog	ko	노트
 number of records to read (%1)	infolog	ko	%1 개의 레코드를 읽었습니다.
 offer	infolog	ko	제안
 ongoing	infolog	ko	진행중
-open	infolog	ko	개설
+open(status)	infolog	ko	개설
 overdue	infolog	ko	만기초과
 own	infolog	ko	소유
 own open	infolog	ko	소유 개설

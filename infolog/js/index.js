@@ -18,6 +18,11 @@ function do_infolog_action(selbox) {
 	selbox.value = "";
 }
 
+function open_popup(_action, _senders)
+{
+	alert('Show popup: '+_action.id);
+}
+
 /**
  * Hide popup and clear values
  */

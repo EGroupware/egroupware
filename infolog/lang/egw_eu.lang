@@ -142,7 +142,7 @@ offer	infolog	eu	Eskaini
 ongoing	infolog	eu	momentukoak
 only the attachments	infolog	eu	eranskinak soilik
 only the links	infolog	eu	loturak soilik
-open	infolog	eu	ireki
+open(status)	infolog	eu	ireki
 optional note to the link	infolog	eu	aukerako oharra loturarentzat
 order	infolog	eu	Ordenatu
 overdue	infolog	eu	garaitua

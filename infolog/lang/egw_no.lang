@@ -178,7 +178,7 @@ ongoing	infolog	no	pågående
 only the attachments	infolog	no	kun vedlegg
 only the links	infolog	no	kun lenker
 only up to this number of entries are displayed on the main screen.	infolog	no	Maks antall innslag som vises på hovedskjerm.
-open	infolog	no	åpen
+open(status)	infolog	no	åpen
 optional note to the link	infolog	no	valgfri notat om Lenken
 order	infolog	no	Ordre
 overdue	infolog	no	forfalt

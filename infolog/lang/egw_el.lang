@@ -205,7 +205,7 @@ only for details	infolog	el	Μόνο για λεπτομέρειες
 only if i get assigned or removed	infolog	el	Μόνο εάν μου ανατεθεί ή αφαιρεθεί
 only the attachments	infolog	el	μόνο οι επισυνάψεις
 only the links	infolog	el	μόνο οι σύνδεσμοι
-open	infolog	el	ανοικτά
+open(status)	infolog	el	ανοικτά
 optional note to the link	infolog	el	προαιρετική σημείωση στο σύνδεσμο
 order	infolog	el	Παραγγελία
 overdue	infolog	el	καθυστερημένα

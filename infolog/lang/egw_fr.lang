@@ -185,7 +185,7 @@ ongoing	infolog	fr	Entrant
 only for details	infolog	fr	Seulement pour les détails
 only the attachments	infolog	fr	Seulement les attachements
 only the links	infolog	fr	Seulement les liens
-open	infolog	fr	Ouvrir
+open(status)	infolog	fr	Ouvrir
 optional note to the link	infolog	fr	note optionnelle vers le lien
 order	infolog	fr	Tri
 overdue	infolog	fr	Tardif

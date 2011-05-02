@@ -156,7 +156,7 @@ ongoing	infolog	uk	в роботі
 only the attachments	infolog	uk	тільки додатки
 only the links	infolog	uk	тільки посилання
 only up to this number of entries are displayed on the main screen.	infolog	uk	На основному екрані показується не більше вказаної кількості записів
-open	infolog	uk	відкрито
+open(status)	infolog	uk	відкрито
 optional note to the link	infolog	uk	необов'язкова примітка до Посилання
 order	infolog	uk	
 overdue	infolog	uk	прострочено

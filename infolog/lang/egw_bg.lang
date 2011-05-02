@@ -218,7 +218,7 @@ only for details	infolog	bg	Само за детайлите
 only if i get assigned or removed	infolog	bg	Само ако бъда включен или изключен
 only the attachments	infolog	bg	само приложенията
 only the links	infolog	bg	само връзките
-open	infolog	bg	отвори
+open(status)	infolog	bg	отвори
 optional note to the link	infolog	bg	бележка към връзката
 order	infolog	bg	Ред
 overdue	infolog	bg	просрочен

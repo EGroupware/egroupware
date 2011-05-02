@@ -192,7 +192,7 @@ ongoing	infolog	ca	en curs
 only for details	infolog	ca	Només per detalls
 only the attachments	infolog	ca	només adjunts
 only the links	infolog	ca	només enllaços
-open	infolog	ca	obert
+open(status)	infolog	ca	obert
 optional note to the link	infolog	ca	nota opcional per a l'enllaç
 order	infolog	ca	Ordre
 overdue	infolog	ca	vençut

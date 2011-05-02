@@ -126,7 +126,7 @@ offer	infolog	et	pakkumine
 one day after	infolog	et	üks päev pärast
 one day in advance	infolog	et	üks päev enne
 ongoing	infolog	et	käimasolev
-open	infolog	et	avatud
+open(status)	infolog	et	avatud
 own	infolog	et	endaoma
 own open	infolog	et	endaoma avatud
 percent completed	infolog	et	Protsent valmis

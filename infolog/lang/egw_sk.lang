@@ -238,7 +238,7 @@ only for details	infolog	sk	Len pre podrobnosti
 only if i get assigned or removed	infolog	sk	Iba ak mi je to priradené alebo odobraté
 only the attachments	infolog	sk	Iba prílohy
 only the links	infolog	sk	Iba odkazy
-open	infolog	sk	Otvorené
+open(status)	infolog	sk	Otvorené
 open and upcoming	infolog	sk	Otvorené a blížiace sa
 optional note to the link	infolog	sk	Voliteľná poznámka k odkazu
 order	infolog	sk	Triedenie

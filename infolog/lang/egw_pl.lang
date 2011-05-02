@@ -185,7 +185,7 @@ ongoing	infolog	pl	W toku
 only for details	infolog	pl	Tylko dla szczegółów
 only the attachments	infolog	pl	tylko załączniki
 only the links	infolog	pl	tylko linki
-open	infolog	pl	otwarte
+open(status)	infolog	pl	otwarte
 optional note to the link	infolog	pl	opcjonalna notatka do linku
 order	infolog	pl	Kolejność
 overdue	infolog	pl	zaległe

@@ -166,7 +166,7 @@ ongoing	infolog	da	i gang
 only the attachments	infolog	da	kun vedhæftninger
 only the links	infolog	da	kun linkene
 only up to this number of entries are displayed on the main screen.	infolog	da	Kun op til dette antal opgaver er vist på startsiden
-open	infolog	da	åben
+open(status)	infolog	da	åben
 optional note to the link	infolog	da	Valgfri notat til Link
 order	infolog	da	Rækkefølge
 overdue	infolog	da	forfalden

@@ -220,7 +220,7 @@ only for details	infolog	pt-br	Somente para detalhes
 only if i get assigned or removed	infolog	pt-br	Somente se eu for designado ou removido
 only the attachments	infolog	pt-br	apenas arquivos anexos
 only the links	infolog	pt-br	apenas links
-open	infolog	pt-br	abrir
+open(status)	infolog	pt-br	abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
 order	infolog	pt-br	Ordem
 overdue	infolog	pt-br	atrasado

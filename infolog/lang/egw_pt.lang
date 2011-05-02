@@ -180,7 +180,7 @@ ongoing	infolog	pt	Em processamento
 only for details	infolog	pt	Apenas para detalhes
 only the attachments	infolog	pt	Apenas os anexos
 only the links	infolog	pt	Apenas as ligações
-open	infolog	pt	Abrir
+open(status)	infolog	pt	Abrir
 optional note to the link	infolog	pt	nota opcional da ligação
 order	infolog	pt	Ordenar
 overdue	infolog	pt	Em atraso

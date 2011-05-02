@@ -215,7 +215,7 @@ only for details	infolog	sl	Samo za podrobnosti
 only if i get assigned or removed	infolog	sl	Samo če sem dodeljen ali odstranjen
 only the attachments	infolog	sl	Samo priloge
 only the links	infolog	sl	Samo povezave
-open	infolog	sl	Odprt
+open(status)	infolog	sl	Odprt
 optional note to the link	infolog	sl	Neobvezna opomba za povezavo
 order	infolog	sl	Vrstni red
 overdue	infolog	sl	Zapadel

@@ -160,7 +160,7 @@ ongoing	infolog	hr	traje (trajući)
 only the attachments	infolog	hr	Samo privitke
 only the links	infolog	hr	only the links
 only up to this number of entries are displayed on the main screen.	infolog	hr	Only up to this number of entries are displayed on the main screen.
-open	infolog	hr	otvori
+open(status)	infolog	hr	otvori
 optional note to the link	infolog	hr	optional note to the Link
 order	infolog	hr	Naredi
 overdue	infolog	hr	prošao rok
