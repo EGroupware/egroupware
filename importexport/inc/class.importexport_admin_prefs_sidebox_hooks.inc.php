@@ -129,15 +129,16 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'Export CSV'
 			);
 		}
-		
-		$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
-				'menuaction' => 'importexport.importexport_admin_prefs_sidebox_hooks.spreadsheet_list',
-				'app' => $appname
-			)),
-			//'icon' => 'filemanager/navbar',
-			'app' => 'importexport',
-			'text' => 'Export Spreadsheet'
-		);
+		if(self::get_spreadsheet_list($appname)) {
+			$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
+					'menuaction' => 'importexport.importexport_admin_prefs_sidebox_hooks.spreadsheet_list',
+					'app' => $appname
+				)),
+				//'icon' => 'filemanager/navbar',
+				'app' => 'importexport',
+				'text' => 'Export Spreadsheet'
+			);
+		}
 	
 		$config = config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
@@ -151,10 +152,10 @@ class importexport_admin_prefs_sidebox_hooks
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
 
-	public function spreadsheet_list() {
+	protected static function get_spreadsheet_list($app) {
 		$config = config::read('importexport');
 		$config_dirs = $config['export_spreadsheet_folder'] ? explode(',',$config['export_spreadsheet_folder']) : array('user','stylite');
-		$appname = $_GET['app'];
+		$appname = $_GET['app'] ? $_GET['app'] : $app;
 		$stylite_dir = '/stylite/templates/merge';
 		$dir_list = array();
 		$file_list = array();
@@ -192,7 +193,11 @@ class importexport_admin_prefs_sidebox_hooks
 				}
 			}
 		}
+		return $file_list;
+	}
 
+	public function spreadsheet_list() {
+		$file_list = self::get_spreadsheet_list();
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Export (merge) spreadsheets');
 		$tmpl = new etemplate('importexport.spreadsheet_list');
 		$tmpl->exec('importexport.importexport_admin_hooks.spreadsheet_list', array('files' => $file_list));
