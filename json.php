@@ -85,7 +85,7 @@ if (isset($_GET['menuaction']))
 	);
 	//if ($_GET['menuaction'] !='notifications.notifications_ajax.get_notifications') error_log(__METHOD__.__LINE__.' Appname:'.$appName.' Action:'.print_r($_GET['menuaction'],true));
 	if 	($_GET['menuaction']=='felamimail.ajaxfelamimail.refreshMessageList' ||
-			$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList') 
+			$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList')
 	{
 		$GLOBALS['egw_info']['flags']['no_dla_update']=true;
 	}
@@ -101,6 +101,7 @@ if (isset($_GET['menuaction']))
 		throw new egw_exception_assertion_failed("JSON Data contains script tags. Aborting...");
 	}
 	$json->parseRequest($_GET['menuaction'], (array)$_POST['json_data']);
+	egw_json_response::get();
 	common::egw_exit();
 }
 
