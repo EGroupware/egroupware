@@ -494,17 +494,19 @@ class infolog_ui
 			}
 		}
 
-		if (is_array($values) && isset($values['nm']['rows']['document']))  // handle insert in default document button like an action
+		// Handle legacy buttons like actions
+		if(is_array($values))
 		{
-			list($id) = @each($values['nm']['rows']['document']);
-			$values['nm']['action'] = 'document';
-			$values['nm']['selected'] = array($id);
-		}
-		elseif (is_array($values) && isset($values['nm']['rows']['view']))	// Handle view parent / sub buttons like an action
-		{
-			list($id) = @each($values['nm']['rows']['view']);
-			$values['nm']['action'] = 'view';
-			$values['nm']['selected'] = array($id);
+			foreach(array('document', 'view', 'delete') as $button)
+			{
+				if(isset($values['nm']['rows'][$button]))
+				{
+					list($id) = @each($values['nm']['rows'][$button]);
+					$values['nm']['action'] = $button;
+					$values['nm']['selected'] = array($id);
+					break; // Only one can come per submit
+				}
+			}
 		}
 		if (is_array($values) && !empty($values['nm']['action']))
 		{
@@ -608,22 +610,6 @@ class infolog_ui
 // todo: move this to actions(), interactive delete only if subs
 				switch($do)
 				{
-					case 'delete':
-						if (!($values['msg'] = $this->delete($do_id,$called_as,$called_as ? '' : 'index'))) return;
-						// did we deleted the entries, whos subentries we are showing?
-						if ($action == 'sp' && $action_id == $do_id)
-						{
-							// redirect to our referer or reset the subentry view
-							if (!$called_as && $own_referer)
-							{
-								$this->tmpl->location($own_referer);	// eg. redirect back to calendar
-							}
-							else
-							{
-								unset($action_id); unset($action);
-							}
-						}
-						break;
 					case 'close':
 						$closesingle=true;
 					case 'close_all':
@@ -950,6 +936,7 @@ class infolog_ui
 			'confirm_multiple' => 'Are you sure you want to delete these entries ?',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
+			'onExecute' => 'javaScript:confirm_delete',
 		);
 
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
@@ -1073,9 +1060,9 @@ class infolog_ui
 					break;
 
 				case 'delete':
-					$action_msg = lang('deleted');
-					$result = $this->delete($id, '', 'multi-action', $skip_notifications);
-					if($result != '')
+					$action_msg = $settings == 'sub' ? lang(' (and children) deleted') : lang('deleted');
+					//$result = $this->bo->delete($id, $settings=='sub', false, $skip_notifications);
+					if($result == true)
 					{
 						$success++;
 					}
