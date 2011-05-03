@@ -66,6 +66,7 @@ antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
 application	common	en	Application
 apply	common	en	Apply
+apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries ?
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
@@ -214,6 +215,8 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
+do not notify	common	en	Do not notify
+do not notify of these changes	common	en	Do not notify of these changes
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 doctype:	common	en	DOCTYPE:
 document properties	common	en	Document properties

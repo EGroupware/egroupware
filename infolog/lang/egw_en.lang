@@ -53,7 +53,6 @@ apply the action on the whole query, not only the shown entries!!!	infolog	en	Ap
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	archive
 are you shure you want to close this entry ?	infolog	en	Are you shure you want to close this entry ?
-are you shure you want to delete this entry ?	infolog	en	Are you sure you want to delete this entry ?
 at the moment the following document-types are supported:	infolog	en	At the moment the following document-types are supported:
 attach a file	infolog	en	Attach a file
 attach file	infolog	en	Attach file
@@ -136,8 +135,6 @@ delegation	infolog	en	Delegation
 delete	infolog	en	Delete
 delete one record by passing its id.	infolog	en	Delete one record by passing its id.
 delete selected entries?	infolog	en	Delete selected entries?
-delete the entry	infolog	en	Delete the entry
-delete this entry	infolog	en	delete this entry
 delete this entry and all listed sub-entries	infolog	en	Delete this entry and all listed sub-entries
 deleted	infolog	en	deleted
 deletes the selected typ	infolog	en	deletes the selected type
@@ -345,7 +342,6 @@ receive notifications about own items	infolog	en	Receive notifications about own
 receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
 receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
 receive notifications as html-mails	infolog	en	Receive notifications as html-mails
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
@@ -454,7 +450,6 @@ use field from csv if possible	infolog	en	Use field from CSV if possible
 use search results	infolog	en	Use search results
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used time	infolog	en	used time
-valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
 values for selectbox	infolog	en	Values for selectbox
 view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	view other Subs

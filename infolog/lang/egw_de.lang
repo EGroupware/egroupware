@@ -53,7 +53,6 @@ apply the action on the whole query, not only the shown entries!!!	infolog	de	We
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
-are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
 at the moment the following document-types are supported:	infolog	de	Zur Zeit werden die folgenden Dokument Typen unterstützt:
 attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
@@ -136,8 +135,6 @@ delegation	infolog	de	Delegation
 delete	infolog	de	Löschen
 delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.
 delete selected entries?	infolog	de	Sollen die ausgewählen Datensätze gelöscht werden?
-delete the entry	infolog	de	Eintrag löschen
-delete this entry	infolog	de	diesen Eintrag löschen
 delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
 deleted	infolog	de	gelöscht
 deletes the selected typ	infolog	de	löscht den ausgewählten Typ

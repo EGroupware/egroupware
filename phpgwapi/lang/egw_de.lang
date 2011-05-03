@@ -66,6 +66,7 @@ antarctica	common	de	ANTARKTIS
 antigua and barbuda	common	de	ANTIGUA UND BARBUDA
 application	common	de	Anwendung
 apply	common	de	Übernehmen
+apply the action on the whole query, not only the shown entries	common	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Einträge
 april	common	de	April
 are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen möchten?
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen möchten?
@@ -214,6 +215,8 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 djibouti	common	de	DSCHIBUTI
+do not notify	common	de	Nicht benachrichtigen
+do not notify of these changes	common	de	Nicht über diese Änderungen benachrichtigen
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
 document properties	common	de	Dokument Eigentschaften

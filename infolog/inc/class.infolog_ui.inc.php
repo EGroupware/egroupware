@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -258,6 +258,7 @@ class infolog_ui
 	{
 		if (!$query['csv_export'])
 		{
+			unset($query['no_actions']);
 			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			$query['actions'] = $this->get_actions($query);
 		}
@@ -373,7 +374,7 @@ class infolog_ui
 			}
 			if ($query['action'] == 'sp')
 			{
-				if ($query['action_id'] && 
+				if ($query['action_id'] &&
 					(is_array($query['action_id']) && in_array($info['info_id_parent'], $query['action_id'])) ||
 					((!is_array($query['action_id']) && $query['action_id'] === $info['info_id_parent']))
 				)
@@ -943,8 +944,8 @@ class infolog_ui
 
 		$actions['delete'] = array(
 			'caption' => 'Delete',
-			'confirm' => 'Delete this entry',
-			'confirm_multiple' => 'Delete these entries',
+			'confirm' => 'Are you sure you want to delete this entry ?',
+			'confirm_multiple' => 'Are you sure you want to delete these entries ?',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
 		);
@@ -1049,7 +1050,7 @@ class infolog_ui
 				}
 				$checked = array_unique($parents);
 				// Fall through
-				
+
 			case 'view':
 // todo: implement or better move code from index to here
 				return $this->index(array(),'sp',$checked,0);
