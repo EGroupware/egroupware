@@ -2,15 +2,15 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.index.header_left" template="" lang="" group="0" version="1.0.1.001">
-		<description value="InfoLog" class="headertext bold"/>
+		<description class="headertext bold" value="InfoLog"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.7.001">
 		<hbox>
-			<description value="Add:" class="headertext"/>
-			<button label="ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" id="add[task]" image="task" statustext="Add a new ToDo"/>
-			<button label="Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" id="add[phone]" image="phone" statustext="Add a new Phonecall"/>
-			<button label="Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" id="add[note]" image="note" statustext="Add a new Note"/>
+			<description class="headertext" value="Add:"/>
+			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.002">
@@ -206,8 +206,8 @@
 							<description value="Select users or groups"/>
 							<listbox type="select-account" class="action_popup-content" id="responsible" rows="5" options="both"/>
 							<hbox>
-								<button label="Add" id="responsible_action[add]"/>
-								<button id="responsible_action[delete]" label="Delete"/>
+								<button label="Add" id="responsible_action[add]" onclick="submit_popup(this); return false;"/>
+								<button id="responsible_action[delete]" label="Delete" onclick="submit_popup(this); return false;"/>
 								<buttononly label="Cancel" onclick="hide_popup(this,'responsible_popup');"/>
 							</hbox>
 						</vbox>
@@ -217,8 +217,8 @@
 							<description class="promptheader" value="Add / Remove link"/>
 							<link-entry id="link" class="action_popup-content"/>
 							<hbox>
-								<button label="Add" id="link_action[add]"/>
-								<button id="link_action[delete]" label="Delete"/>
+								<button label="Add" id="link_action[add]" onclick="submit_popup(this); return false;"/>
+								<button id="link_action[delete]" label="Delete" onclick="submit_popup(this); return false;"/>
 								<buttononly label="Cancel" onclick="hide_popup(this,'link_popup');"/>
 							</hbox>
 						</vbox>

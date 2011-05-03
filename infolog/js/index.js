@@ -1,53 +1,53 @@
 /**
- * Javascript used on the infolog index page
+ * EGroupware infolog javascript code used on index page
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package infolog
+ * @link http://www.egroupware.org
+ * @version $Id$
  */
 
+var infolog_popup_action, infolog_popup_senders;
 
 /**
- * Javascript handling for multiple entry actions
+ * Open popup for a certain action requiring further input
+ * 
+ * @param _action
+ * @param _senders
  */
-function do_infolog_action(selbox) {
-	if(selbox.value == "") return;
-	var prefix = selbox.id.substring(0,selbox.id.indexOf('['));
-	var popup = document.getElementById(prefix + '[' + selbox.value + '_popup]');
-	if(popup) {
-		popup.style.display = 'block';
-		return;
-	}
-	selbox.form.submit();
-	selbox.value = "";
-}
-
 function open_popup(_action, _senders)
 {
 	var prefix = 'exec';
 	var popup = document.getElementById(prefix + '[' + _action.id + '_popup]');
-	if(popup) {
+
+	if (popup) {
+		infolog_popup_action = _action;
+		infolog_popup_senders = _senders;
 		popup.style.display = 'block';
-		return;
 	}
 }
 
 /**
- * Hide popup and clear values
+ * Submit a popup action
  */
-function hide_popup(element, div_id, submit) {
+function submit_popup(button)
+{
+	button.form.submit_button.value = button.name;	// set name of button (sub-action)
+
+	// call regular nm_action to transmitt action and senders correct
+	nm_action(infolog_popup_action, infolog_popup_senders);
+}
+
+/**
+ * Hide popup
+ */
+function hide_popup(element, div_id) 
+{
 	var prefix = element.id.substring(0,element.id.indexOf('['));
 	var popup = document.getElementById(prefix+'['+div_id+']');
-
-	// Get action command
-	var action = div_id.substring(0,div_id.length-6);
-	var action_input = document.getElementById('exec[nm][action]');
 
 	// Hide popup
 	if(popup) {
 		popup.style.display = 'none';
-	}
-
-	// Submit form
-	if(submit && action && action_input) {
-		// Set action so it comes back
-		action_input.value = action;
-		element.form.submit();
 	}
 }

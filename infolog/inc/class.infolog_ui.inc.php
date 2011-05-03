@@ -166,12 +166,19 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoEdit ';
 		}
-		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
-			!($editrights || $isresposible));
-		$readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
-			!($editrights || $isresposible)); // this one is supressed, when you are not allowed to edit, or not responsible, or the entry is closed
-			// and has no children. If you want that this one is shown if there are children regardless of the status of the current or its childs,
-			// then modify ($done) to ($done && !$info['info_anz_subs'])
+		if (($readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
+			!($editrights || $isresposible))))
+		{
+			$info['class'] .= 'rowNoClose ';
+		}
+		// this one is supressed, when you are not allowed to edit, or not responsible, or the entry is closed
+		// and has no children. If you want that this one is shown if there are children regardless of the status of the current or its childs,
+		// then modify ($done) to ($done && !$info['info_anz_subs'])
+		if (($readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
+			!($editrights || $isresposible))))
+		{
+			$info['class'] .= 'rowNoCloseAll ';
+		}
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
 			!$editrights && !$isresposible &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
@@ -261,6 +268,7 @@ class infolog_ui
 			unset($query['no_actions']);
 			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			$query['actions'] = $this->get_actions($query);
+			$query['row_id'] = 'info_id';
 		}
 		$orginal_colfilter = $query['col_filter'];
 		if ($query['filter'] == 'bydate')
@@ -512,19 +520,12 @@ class infolog_ui
 				if(in_array($multi_action, array('link', 'responsible')))
 				{
 					$values['nm']['action'] .= '_' . key($values[$multi_action . '_action']);
-				}
-				// Action has a parameter - cat_id, percent, etc
-				if (in_array($multi_action, array('link', 'cat', 'completion', 'responsible')))
-				{
+
 					if(is_array($values[$multi_action]))
 					{
 						$values[$multi_action] = implode(',',$values[$multi_action]);
 					}
 					$values['nm']['action'] .= '_' . $values[$multi_action];
-				}
-				// Action changes views (sub / parent)
-				if (in_array($multi_action, array('sp'))) {
-					$values['nm']['action'] = 'view';
 				}
 				if ($this->action($values['nm']['action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
@@ -567,7 +568,6 @@ class infolog_ui
 			{
 				$values['nm']['order'] = 'info_datemodified';
 				$values['nm']['sort'] = 'DESC';
-				$values['nm']['row_id'] = 'info_id';
 			}
 
 			if (!$values['nm']['session_for'] && $this->called_by) $values['nm']['session_for'] = $this->called_by;
@@ -803,7 +803,7 @@ class infolog_ui
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,
 			),
-			'sp' => array(
+			'view' => array(
 				'caption' => 'View subs',
 				'icon' => 'view',
 				'group' => $group,
@@ -905,6 +905,7 @@ class infolog_ui
 				'caption' => 'Close',
 				'icon' => 'done',
 				'group' => $group,
+				'disableClass' => 'rowNoClose',
 			),
 			'close_all' => array(
 				'caption' => 'Close all',
@@ -912,6 +913,7 @@ class infolog_ui
 				'group' => $group,
 				'hint' => 'Sets the status of this entry and its subs to done',
 				'allowOnMultiple' => false,
+				'disableClass' => 'rowNoCloseAll',
 			),
 		);
 		++$group;	// integration with other apps
@@ -971,7 +973,7 @@ class infolog_ui
 	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
 		array $query, &$msg, $skip_notifications = false)
 	{
-		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		//echo '<p>'.__METHOD__."('$action',".array2string($checked).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		if ($use_all)
 		{
@@ -1052,7 +1054,6 @@ class infolog_ui
 				// Fall through
 
 			case 'view':
-// todo: implement or better move code from index to here
 				return $this->index(array(),'sp',$checked,0);
 		}
 
@@ -1116,7 +1117,8 @@ class infolog_ui
 					break;
 
 				case 'status':
-					if(in_array($settings, $this->bo->status[$entry['info_type']])) {
+					if(in_array($settings, $this->bo->status[$entry['info_type']]))
+					{
 						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
 						if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
 						{
@@ -1152,11 +1154,11 @@ class infolog_ui
 
 				case 'responsible':
 					list($add_remove, $users) = explode('_', $settings, 2);
-					$action_msg = lang('changed responsible') . ' - ' . ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
-					$users = explode(',', $users);
+					$action_msg = $add_remove == 'add' ? lang('added') : lang('removed') . ' ';
 					$names = array();
-					foreach($users as $account_id) {
-						$names[] = common::display_fullname($GLOBALS['egw']->accounts->id2name($account_id));
+					foreach(explode(',', $users) as $account_id)
+					{
+						$names[] = common::grab_owner_name($account_id);
 					}
 					$action_msg .= implode(', ', $names);
 					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
