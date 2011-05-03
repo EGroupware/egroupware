@@ -454,7 +454,7 @@ class calendar_so
 			switch($filter)
 			{
 				case 'showonlypublic':
-					$where[] = "cal_public=1"; 
+					$where[] = "cal_public=1";
 					$where[] = "cal_status != 'R'"; break;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
@@ -495,7 +495,7 @@ class calendar_so
 				'app'   => 'calendar',
 				'append'=> $append,
 			);
-			// we check if there are parts to use for the construction of our UNION query, 
+			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
 			if (!empty($owner_or)||!empty($user_or))
 			{
@@ -504,7 +504,7 @@ class calendar_so
 					// if the query is to be filtered by owner OR user we need 4 selects for the union
 					//_debug_array($owner_or);
 					$selects = array();
-					foreach(array_keys($user_or) as $key) 
+					foreach(array_keys($user_or) as $key)
 					{
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
@@ -546,15 +546,15 @@ class calendar_so
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				$countSelects = count($selects);
-				foreach(array_keys($selects) as $key) 
+				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";  
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 				$i = 0;
-				foreach(array_keys($selects) as $key) 
+				foreach(array_keys($selects) as $key)
 				{
 					if ($i >= $countSelects) continue;
 					$i++;
@@ -1758,7 +1758,7 @@ ORDER BY cal_user_type, cal_usre_id
 		$egw_rrule->current = clone $egw_rrule->time;
 		if ($expand_all)
 		{
-			unset($event['recur_excpetion']);
+			unset($event['recur_exception']);
 			$remote_rrule = calendar_rrule::event2rrule($event, false, $tz_id);
 			$remote_rrule->current = clone $remote_rrule->time;
 		}
