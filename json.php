@@ -100,6 +100,7 @@ if (isset($_GET['menuaction']))
 		throw new egw_exception_assertion_failed("JSON Data contains script tags. Aborting...");
 	}
 	$json->parseRequest($_GET['menuaction'], (array)$_POST['json_data']);
+	egw_json_response::get();
 	common::egw_exit();
 }
 
