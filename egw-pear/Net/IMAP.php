@@ -2196,7 +2196,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      * @access  public
      * @since   1.1
      */
-    function sort($sort_list, $charset='US-ASCII', $search_list = '', $uidSort = false)
+    function sort($sort_list, $charset='US-ASCII', $search_list = 'ALL', $uidSort = false)
     {
         $sort_command = sprintf("(%s) %s %s", $sort_list, strtoupper($charset), $search_list);
 
