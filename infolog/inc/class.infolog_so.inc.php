@@ -833,7 +833,7 @@ class infolog_so
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
-		$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
+		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
 		if (!$GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] &&
 			 $action != 'sp' || isset($query['subs']) && $query['subs'])

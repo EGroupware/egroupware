@@ -371,16 +371,31 @@ class infolog_ui
 					unset($info['info_des']);
 				}
 			}
+			if ($query['action'] == 'sp')
+			{
+				if ($query['action_id'] && 
+					(is_array($query['action_id']) && in_array($info['info_id_parent'], $query['action_id'])) ||
+					((!is_array($query['action_id']) && $query['action_id'] === $info['info_id_parent']))
+				)
+				{
+					if( $main = $this->bo->read($info['info_id_parent']))
+					{
+						$main = $this->get_info($main, $readonlys);
+						$main['class'] .= 'th ';
+						array_splice($rows, $id, 0, array($main));
+						$parent_index = array_search($info['info_id_parent'], $query['action_id']);
+						if($parent_index !== false)
+						{
+							unset($query['action_id'][$parent_index]);
+							unset($parent_index);
+						}
+					}
+				}
+			}
+
 			$rows[] = $info;
 		}
 		unset($links);
-
-		if ($query['action'] == 'sp' && ($main = $this->bo->read($query['action_id'])))
-		{
-			$main = $this->get_info($main, $readonlys);
-			$main['class'] .= 'th ';
-			array_unshift($rows, $main);
-		}
 
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
@@ -476,6 +491,12 @@ class infolog_ui
 			$values['nm']['action'] = 'document';
 			$values['nm']['selected'] = array($id);
 		}
+		elseif (is_array($values) && isset($values['nm']['rows']['view']))	// Handle view parent / sub buttons like an action
+		{
+			list($id) = @each($values['nm']['rows']['view']);
+			$values['nm']['action'] = 'view';
+			$values['nm']['selected'] = array($id);
+		}
 		if (is_array($values) && !empty($values['nm']['action']))
 		{
 			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
@@ -499,6 +520,10 @@ class infolog_ui
 						$values[$multi_action] = implode(',',$values[$multi_action]);
 					}
 					$values['nm']['action'] .= '_' . $values[$multi_action];
+				}
+				// Action changes views (sub / parent)
+				if (in_array($multi_action, array('sp'))) {
+					$values['nm']['action'] = 'view';
 				}
 				if ($this->action($values['nm']['action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
@@ -619,7 +644,7 @@ class infolog_ui
 		switch ($action)
 		{
 			case 'sp':
-				if (!$this->bo->read($action_id))
+				if ((is_array($action_id) && !$this->bo->read(current($action_id))) || !$this->bo->read($action_id))
 				{
 					$action = '';
 					$action_id = 0;
@@ -894,7 +919,7 @@ class infolog_ui
 			$actions['filemanager'] = array(
 				'icon' => 'filemanager/navbar',
 				'caption' => 'Filemanager',
-				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/infolog/$id',
 				'allowOnMultiple' => false,
 				'group' => $group,
 			);
@@ -1011,9 +1036,23 @@ class infolog_ui
 				$failed = count($checked);
 				return false;
 
+			case 'parent':
+				$parent_query = array('col_filter' => array('info_id' => $checked));
+				$result = $this->bo->search($parent_query);
+				$parents = array();
+				foreach($result as $key => $info)
+				{
+					if(is_numeric($key))
+					{
+						$parents[] = $info['info_id_parent'];
+					}
+				}
+				$checked = array_unique($parents);
+				// Fall through
+				
 			case 'view':
 // todo: implement or better move code from index to here
-				return false;
+				return $this->index(array(),'sp',$checked,0);
 		}
 
 		// Actions that need to loop
