@@ -708,7 +708,8 @@ class calendar_bo
 		$events = array();
 		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
 
-		$days = $this->so->get_recurrence_exceptions($event);	// content of array is in server-time!
+		$limit = min($this->config['horizont'], $event['end']);
+		$days = $this->so->get_recurrence_exceptions($event, null, $start, $limit);	// content of array is in server-time!
 		//error_log('set_recurrences: days=' . array2string($days) );
 		foreach($events as $event)
 		{
