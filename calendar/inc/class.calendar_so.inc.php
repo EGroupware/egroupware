@@ -1985,7 +1985,7 @@ ORDER BY cal_user_type, cal_usre_id
 		$egw_rrule->current = clone $egw_rrule->time;
 		if ($expand_all)
 		{
-			unset($event['recur_excpetion']);
+			unset($event['recur_exception']);
 			$remote_rrule = calendar_rrule::event2rrule($event, false, $tz_id);
 			$remote_rrule->current = clone $remote_rrule->time;
 		}
