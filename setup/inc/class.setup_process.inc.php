@@ -20,6 +20,7 @@
  *	R	upgrade in pRogress
  *	C	upgrade Completed successfully
  *	D	Dependency failure
+ * 	P	Post-install dependency failure
  *	F	upgrade Failed
  *	V	Version mismatch at end of upgrade (Not used, proposed only)
  *	M	Missing files at start of upgrade (Not used, proposed only)
