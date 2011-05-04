@@ -259,7 +259,7 @@ class setup_process
 		}
 		// always enable spellchecker, ckeditor now uses spell-as-you-type via a public webservice
 		$current_config['enabled_spellcheck'] = 'True';
-		
+
 		// always enable history logging for calendar, addressbook and infolog
 		$current_config['history'] = 'history';	// addressbook: only admin
 		$current_config['calendar_delete_history'] = 'history';	// only admins
@@ -270,7 +270,7 @@ class setup_process
 			'config_app' => 'infolog',
 			'config_name' => 'history',
 		),__FILE__,__LINE__);
-		
+
 
 		// RalfBecker: php.net recommend this for security reasons, it should be our default too
 		$current_config['usecookies'] = 'True';
@@ -293,6 +293,9 @@ class setup_process
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
 		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report
+
+		// use ssha (salted sha1) password hashes by default
+		$current_config['sql_encryption_type'] = $current_config['ldap_encryption_type'] = 'ssha';
 
 		if ($preset_config)
 		{
