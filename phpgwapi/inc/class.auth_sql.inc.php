@@ -63,34 +63,30 @@ class auth_sql implements auth_backend
 		}
 		if($passwd_type == 'text')
 		{
-			if (!($row = $this->db->select($this->table,'account_lid,account_pwd,account_lastlogin',$where,__LINE__,__FILE__)->fetch()) ||
+			if (!($row = $this->db->select($this->table,'account_lid,account_pwd,account_lastlogin,account_id',$where,__LINE__,__FILE__)->fetch()) ||
 				empty($row['account_pwd']) ||
 				$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
 			{
 				return false;
 			}
-			if(!auth::compare_password($passwd,$row['account_pwd'],$this->type,strtolower($username)))
+			if(!($match = auth::compare_password($passwd,$row['account_pwd'],$this->type,strtolower($username))) ||
+				preg_match('/^{(.+)}/',$row['account_pwd'],$matches) &&	// explicit specified hash, eg. from ldap
+					in_array(strtolower($matches[1]),explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 			{
-				$match = false;
 				// do we have to migrate an old password ?
 				if($GLOBALS['egw_info']['server']['pwd_migration_allowed'] && !empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
 				{
 					foreach(explode(',', $GLOBALS['egw_info']['server']['pwd_migration_types']) as $type)
 					{
-						if(auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username)))
+						if(($match = auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username))))
 						{
-							$account_id = $GLOBALS['egw_info']['user']['account_id'];
-							$encrypted_passwd = $this->encrypt_sql($passwd);
-							$this->_update_passwd($encrypted_passwd,$passwd,$account_id);
-							$match = true;
+							$encrypted_passwd = auth::encrypt_sql($passwd);
+							$this->_update_passwd($encrypted_passwd,$passwd,$row['account_id'],false,true);
 							break;
 						}
 					}
 				}
-				if (!$match)
-				{
-					return false;
-				}
+				if (!$match) return false;
 			}
 		}
 		/* Auth via crypted password. NOTE: mail needs cleartext password to authenticate against mailserver! */
@@ -156,7 +152,7 @@ class auth_sql implements auth_backend
 			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			$username = $GLOBALS['egw_info']['user']['account_lid'];
-		} 
+		}
 		else
 		{
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
@@ -203,7 +199,7 @@ class auth_sql implements auth_backend
 			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			$username = $GLOBALS['egw_info']['user']['account_lid'];
-		} 
+		}
 		else
 		{
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
@@ -230,19 +226,19 @@ class auth_sql implements auth_backend
 	/**
 	 * changes password in sql datababse
 	 *
-	 * @internal
 	 * @param string $encrypted_passwd
 	 * @param string $new_passwd cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @param boolean $admin=false called by admin, if not update password in the session
+	 * @param boolean $update_lastpw_change=true
 	 * @return boolean true if password successful changed, false otherwise
 	 */
-	function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=false)
+	private function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=false,$update_lastpw_change=true)
 	{
-		$this->db->update($this->table,array(
-			'account_pwd' => $encrypted_passwd,
-			'account_lastpwd_change' => time(),
-		),array(
+		$update = array('account_pwd' => $encrypted_passwd);
+		if ($update_lastpw_change) $write['account_lastpwd_change'] = time();
+
+		$this->db->update($this->table,$update,array(
 			'account_id' => $account_id,
 		),__LINE__,__FILE__);
 
