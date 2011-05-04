@@ -151,7 +151,7 @@ function passwdhashes($config)
 		'ssha' => 'ssha'.' ('.lang('default').')',
 		'smd5' => 'smd5',
 		'sha'  => 'sha',
-		'des' => 'des',
+		'des' => 'des',	// historically crypt is called des in ldap
 	);
 	/* Check for available crypt methods based on what is defined by php */
 	if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
@@ -166,17 +166,13 @@ function passwdhashes($config)
 	{
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
-	if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
-	{
-		$hashes['crypt'] = 'crypt';
-	}
 
 	$hashes += array(
 		'md5' => 'md5',
 		'plain' => 'plain',
 	);
 
-	return _options_from($hashes, $config['ldap_encryption_type'] ? $config['ldap_encryption_type'] : 'crypt');
+	return _options_from($hashes, $config['ldap_encryption_type'] ? $config['ldap_encryption_type'] : 'des');
 }
 
 function sql_passwdhashes($config)
