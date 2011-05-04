@@ -257,6 +257,7 @@ class setup_process
 		{
 			unset($current_config['aspell_path']);
 		}
+
 		// RalfBecker: php.net recommend this for security reasons, it should be our default too
 		$current_config['usecookies'] = 'True';
 
@@ -278,6 +279,9 @@ class setup_process
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
 		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report
+
+		// use ssha (salted sha1) password hashes by default
+		$current_config['sql_encryption_type'] = $current_config['ldap_encryption_type'] = 'ssha';
 
 		if ($preset_config)
 		{
