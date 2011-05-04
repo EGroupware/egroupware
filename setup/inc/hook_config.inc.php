@@ -166,13 +166,17 @@ function passwdhashes($config,$return_hashes=false)
 	{
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
+	if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
+	{
+		$hashes['crypt'] = 'crypt';
+	}
 
 	$hashes += array(
 		'md5' => 'md5',
 		'plain' => 'plain',
 	);
 
-	return $return_hashes ? $hashes : _options_from($hashes, $config['ldap_encryption_type']);
+	return $return_hashes ? $hashes : _options_from($hashes, $config['ldap_encryption_type'] ? $config['ldap_encryption_type'] : 'crypt');
 }
 
 function sql_passwdhashes($config,$return_hashes=false)
@@ -206,7 +210,7 @@ function sql_passwdhashes($config,$return_hashes=false)
 		'plain' => 'plain',
 	);
 
-	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type']);
+	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type'] ? $config['sql_encryption_type'] : 'md5');
 }
 
 /**
