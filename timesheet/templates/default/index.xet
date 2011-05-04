@@ -131,7 +131,7 @@
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
 						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
+						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="egw_objectManager.toggleAllSelected(); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
 				</row>
 			</rows>
