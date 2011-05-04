@@ -197,7 +197,7 @@
 					</hbox>
 					<hbox align="right">
 						<buttononly label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;" id="legacy_actions" statustext="Select action"/>
-						<button label="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
+						<button label="Check all" onclick="egw_objectManager.toggleAllSelected(); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
 					</hbox>
 				</row>
 				<row>
