@@ -319,12 +319,14 @@ class auth
 	 * uses the encryption type set in setup and calls the appropriate encryption functions
 	 *
 	 * @param $password password to encrypt
+	 * @param $type=null default to $GLOBALS['egw_info']['server']['ldap_encryption_type']
+	 * @return string
 	 */
-	static function encrypt_ldap($password)
+	static function encrypt_ldap($password, $type=null)
 	{
-		$type = strtolower($GLOBALS['egw_info']['server']['ldap_encryption_type']);
+		if (is_null($type)) $type = $GLOBALS['egw_info']['server']['ldap_encryption_type'];
 		$salt = '';
-		switch($type)
+		switch(strtolower($type))
 		{
 			default:	// eg. setup >> config never saved
 			case 'des':
@@ -366,7 +368,7 @@ class auth
 				$e_password = '{md5}' . base64_encode(pack("H*",md5($password)));
 				break;
 			case 'smd5':
-				$salt = self::randomstring(8);
+				$salt = self::randomstring(16);
 				$hash = md5($password . $salt,true);
 				$e_password = '{SMD5}' . base64_encode($hash . $salt);
 				break;
@@ -374,7 +376,7 @@ class auth
 				$e_password = '{SHA}' . base64_encode(sha1($password,true));
 				break;
 			case 'ssha':
-				$salt = self::randomstring(8);
+				$salt = self::randomstring(16);
 				$hash = sha1($password . $salt,true);
 				$e_password = '{SSHA}' . base64_encode($hash . $salt);
 				break;
@@ -384,35 +386,6 @@ class auth
 				break;
 		}
 		return $e_password;
-	}
-
-	/**
-	 * Create an ldap hash from an sql hash
-	 *
-	 * @param string $hash
-	 */
-	static function hash_sql2ldap($hash)
-	{
-		switch(strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']))
-		{
-			case '':	// not set sql_encryption_type
-			case 'md5':
-				$hash = '{md5}' . base64_encode(pack("H*",$hash));
-				break;
-			case 'crypt':
-				$hash = '{crypt}' . $hash;
-				break;
-			case 'plain':
-				$saved_h = $hash;
-				if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$hash,$matches))
-				{
-					$hash= $matches[2];
-				} else {
-					$hash = $saved_h;
-				}
-				break;
-		}
-		return $hash;
 	}
 
 	/**
@@ -466,13 +439,13 @@ class auth
 				self::$error = 'no ext crypt';
 				break;
 			case 'smd5':
-				$salt = self::randomstring(8);
+				$salt = self::randomstring(16);
 				$hash = md5($password . $salt,true);
 				return '{SMD5}' . base64_encode($hash . $salt);
 			case 'sha':
 				return '{SHA}' . base64_encode(sha1($password,true));
 			case 'ssha':
-				$salt = self::randomstring(8);
+				$salt = self::randomstring(16);
 				$hash = sha1($password . $salt,true);
 				return '{SSHA}' . base64_encode($hash . $salt);
 			case 'md5':

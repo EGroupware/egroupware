@@ -30,31 +30,6 @@ $setup_tpl->set_file(array(
 	'T_alert_msg' => 'msg_alert_msg.tpl'
 ));
 
-function hash_sql2ldap($hash)
-{
-	$type = $GLOBALS['egw_info']['server']['sql_encryption_type'];
-
-	if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
-	{
-		$type = $matches[1];
-		$hash = $matches[2];
-	}
-	switch(strtolower($type))
-	{
-		case '':	// not set sql_encryption_type
-		case 'md5':
-			$hash = '{md5}' . base64_encode(pack("H*",$hash));
-			break;
-		case 'crypt':
-			$hash = '{crypt}' . $hash;
-			break;
-
-		case 'plain':
-			break;
-	}
-	return $hash;
-}
-
 // determine from where we migrate to what
 if (!is_object($GLOBALS['egw_setup']->db))
 {
@@ -94,7 +69,7 @@ $cmd = new setup_cmd_ldap(array(
 if (!$_POST['migrate'])
 {
 	$accounts = $cmd->accounts($from == 'ldap');
-	
+
 	// now outputting the account selection
 	$setup_tpl->set_block('migration','header','header');
 	$setup_tpl->set_block('migration','user_list','user_list');

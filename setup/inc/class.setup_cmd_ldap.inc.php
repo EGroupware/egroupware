@@ -12,9 +12,9 @@
 
 /**
  * setup command: test or create the ldap connection and hierarchy
- * 
+ *
  * All commands can be run via setup-cli eg:
- * 
+ *
  * setup/setup-cli.php --setup_cmd_ldap stylite.de,config-user,config-pw sub_command=set_mailbox \
  * 	ldap_base=dc=local ldap_admin=cn=admin,dc=local ldap_admin_pw=secret ldap_host=localhost test=1
  */
@@ -46,7 +46,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $ldap_context=null ou for accounts, default "ou=accounts,$base"
 	 * @param string $ldap_search_filter=null search-filter for accounts, default "(uid=%user)"
 	 * @param string $ldap_group_context=null ou for groups, default "ou=groups,$base"
-	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root'
+	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root', see exec method
 	 * @param string $ldap_encryption_type='des'
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
@@ -122,10 +122,10 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return $msg;
 	}
-	
+
 	/**
 	 * Migrate to other account storage
-	 * 
+	 *
 	 * @param boolean $to_ldap true: sql --> ldap, false: ldap --> sql
 	 * @return string with success message
 	 * @throws Exception on error
@@ -144,10 +144,10 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		// read accounts from old store
 		$accounts = $this->accounts(!$to_ldap);
-		
+
 		// instanciate accounts obj for new store
 		$accounts_obj = $this->accounts_obj($to_ldap);
-		
+
 		$accounts_created = $groups_created = $errors = 0;
 		$target = $to_ldap ? 'LDAP' : 'SQL';
 		foreach($accounts as $account_id => $account)
@@ -181,7 +181,7 @@ class setup_cmd_ldap extends setup_cmd
 					$account['account_passwd'] = self::hash_ldap2sql($account['account_pwd']);
 				}
 				unset($account['person_id']);
-	
+
 				if (!$accounts_obj->save($account))
 				{
 					$msg[] = lang('Creation of %1 in %2 failed !!!',$what,$target);
@@ -191,7 +191,7 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_obj->set_memberships($account['memberships'],$account_id);
 				$msg[] = lang('%1 created in %2.',$what,$target);
 				$accounts_created++;
-				
+
 				// should we run any or some addAccount hooks
 				if ($this->add_account_hook)
 				{
@@ -204,7 +204,7 @@ class setup_cmd_ldap extends setup_cmd
 						}
 						//error_log(__METHOD__."() setup up egw_info[server]: ldap_host='{$GLOBALS['egw_info']['server']['ldap_host']}', ldap_root_dn='{$GLOBALS['egw_info']['server']['ldap_root_dn']}', ldap_root_pw='{$GLOBALS['egw_info']['server']['ldap_root_pw']}', ldap_context='{$GLOBALS['egw_info']['server']['ldap_context']}', mail_suffix='{$GLOBALS['egw_info']['server']['mail_suffix']}', mail_logig_type='{$GLOBALS['egw_info']['server']['mail_login-type']}'");
 					}
-					try 
+					try
 					{
 						$account['location'] = 'addAccount';
 						// running all addAccount hooks (currently NOT working, as not all work in setup)
@@ -217,7 +217,7 @@ class setup_cmd_ldap extends setup_cmd
 							call_user_func($this->add_account_hook,$account);
 						}
 					}
-					catch(Exception $e) 
+					catch(Exception $e)
 					{
 						$msg[] = $e->getMessage();
 						$errors++;
@@ -259,41 +259,39 @@ class setup_cmd_ldap extends setup_cmd
 		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
 			($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
 	}
-	
+
 	/**
 	 * Convert SQL hash to LDAP hash
-	 * 
+	 *
 	 * @param string $hash
 	 * @return string
 	 */
 	public static function hash_sql2ldap($hash)
 	{
-		$type = $GLOBALS['egw_info']['server']['sql_encryption_type'];
-	
+		if (!($type = $GLOBALS['egw_info']['server']['sql_encryption_type'])) $type = 'md5';
+
 		if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
 		{
-			$type = $matches[1];
-			$hash = $matches[2];
+			list(,$type,$hash) = $matches;
 		}
 		switch(strtolower($type))
 		{
-			case '':	// not set sql_encryption_type
-			case 'md5':
-				$hash = '{md5}' . base64_encode(pack("H*",$hash));
-				break;
-			case 'crypt':
-				$hash = '{crypt}' . $hash;
-				break;
-	
 			case 'plain':
+				// ldap stores plaintext passwords without {plain} prefix
 				break;
+
+			case 'md5':
+				$hash = base64_encode(pack("H*",$hash));
+				// fall through
+			default:
+				$hash = '{'.strtoupper($type).'}'.$hash;
 		}
 		return $hash;
 	}
 
 	/**
 	 * Convert LDAP hash to SQL hash
-	 * 
+	 *
 	 * @param string $hash
 	 * @return string
 	 */
@@ -308,7 +306,7 @@ class setup_cmd_ldap extends setup_cmd
 
 	/**
 	 * Read all accounts from sql or ldap
-	 * 
+	 *
 	 * @param boolean $from_ldap=true true: ldap, false: sql
 	 * @return array
 	 */
@@ -316,7 +314,7 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		$accounts_obj = $this->accounts_obj($from_ldap);
 		//error_log(__METHOD__."(from_ldap=".array2string($from_ldap).') get_class(accounts_obj->backend)='.get_class($accounts_obj->backend));
-		
+
 		$accounts = $accounts_obj->search(array('type' => 'both'));
 
 		foreach($accounts as $account_id => &$account)
@@ -327,7 +325,7 @@ class setup_cmd_ldap extends setup_cmd
 				$account_id = $account['account_id'];
 			}
 			$account = $accounts_obj->read($account_id);
-	
+
 			if ($account['account_type'] == 'g')
 			{
 				$account['members'] = $accounts_obj->members($account_id,true);
@@ -341,17 +339,17 @@ class setup_cmd_ldap extends setup_cmd
 
 		return $accounts;
 	}
-	
+
 	/**
 	 * Instancate accounts object from either sql of ldap
-	 * 
+	 *
 	 * @param boolean $ldap true: ldap, false: sql
 	 * @return accounts
 	 */
 	private function accounts_obj($ldap)
 	{
 		static $enviroment_setup;
-		if (!$enviroment_setup) 
+		if (!$enviroment_setup)
 		{
 			parent::_setup_enviroment($this->domain);
 			$enviroment_setup = true;
@@ -405,7 +403,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
 	}
-	
+
 	/**
 	 * Count active (not expired) users
 	 *
@@ -415,7 +413,7 @@ class setup_cmd_ldap extends setup_cmd
 	private function users()
 	{
 		$this->connect();
-	
+
 		$sr = ldap_list($this->test_ldap->ds,$this->ldap_context,'ObjectClass=posixAccount',array('dn','shadowExpire'));
 		if (!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
@@ -430,7 +428,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return $num;
 	}
-		
+
 	/**
 	 * Check and if does not yet exist create the new database and user
 	 *
@@ -445,7 +443,7 @@ class setup_cmd_ldap extends setup_cmd
 			$this->ldap_base => array(),
 			$this->ldap_context => array(),
 			$this->ldap_group_context => array(),
-			$this->ldap_root_dn => array('userPassword' => '{crypt}'.crypt($this->ldap_root_pw)),
+			$this->ldap_root_dn => array('userPassword' => auth::encrypt_ldap($this->ldap_root_pw,'ssha')),
 		) as $dn => $extra)
 		{
 			if (!$this->_create_node($dn,$extra,$check_only) && $dn == $this->ldap_root_dn)
@@ -467,7 +465,7 @@ class setup_cmd_ldap extends setup_cmd
 	private function delete_base()
 	{
 		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
-		
+
 		// if base not set, use context minus one hierarchy, eg. ou=accounts,(o=domain,dc=local)
 		if (empty($this->ldap_base) && $this->ldap_context)
 		{
@@ -486,10 +484,10 @@ class setup_cmd_ldap extends setup_cmd
 		return lang('LDAP dn="%1" with %2 entries deleted.',
 			$this->ldap_base,$this->rdelete($this->ldap_base));
 	}
-	
+
 	/**
 	 * Recursive delete a dn
-	 * 
+	 *
 	 * @param string $dn
 	 * @return int integer number of deleted entries
 	 * @throws egw_exception if dn not listable or delete fails
@@ -518,7 +516,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Set mailbox attribute in $this->ldap_base according to given format
 	 *
 	 * Uses $this->ldap_host, $this->ldap_admin and $this->ldap_admin_pw to connect.
-	 * 
+	 *
 	 * @param string $this->object_class='qmailUser'
 	 * @param string $this->mbox_attr='mailmessagestore' lowercase!!!
 	 * @param string $this->mail_login_type='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
@@ -528,7 +526,7 @@ class setup_cmd_ldap extends setup_cmd
 	private function set_mailbox()
 	{
 		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
-		
+
 		// if base not set, use context minus one hierarchy, eg. ou=accounts,(o=domain,dc=local)
 		if (empty($this->ldap_base) && $this->ldap_context)
 		{
@@ -574,7 +572,7 @@ class setup_cmd_ldap extends setup_cmd
 		return $this->test ? lang('%1 entries would have been modified.',$modified) :
 			lang('%1 entries modified.',$modified);
 	}
-	
+
 	/**
 	 * array with objectclasses for the objects we can create
 	 *
@@ -584,6 +582,7 @@ class setup_cmd_ldap extends setup_cmd
 		'o' => 'organization',
 		'ou' => 'organizationalUnit',
 		'cn' => array('organizationalRole','simpleSecurityObject'),
+		'uid' => array('uidObject','organizationalRole','simpleSecurityObject'),
 		'dc' => array('organization','dcObject'),
 	);
 
@@ -597,7 +596,7 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	private function _create_node($dn,$extra=array())
 	{
-		//echo "<p>_create_node($dn,".print_r($extra,true).")</p>\n";
+		//echo "<p>_create_node($dn,".array2string($extra).")</p>\n";
 		// check if the node already exists and return if it does
 		if (@ldap_read($this->test_ldap->ds,$dn,'objectClass=*'))
 		{
@@ -618,6 +617,7 @@ class setup_cmd_ldap extends setup_cmd
 				lang('Supported node types:').implode(', ',array_keys(self::$requiredObjectclasses)));
 		}
 		if ($name == 'dc') $extra['o'] = $value;	// required by organisation
+		if ($name == 'uid') $extra['cn'] = $value;	// required by organizationalRole
 
 		if (!@ldap_add($this->test_ldap->ds,$dn,$attr = array(
 			$name => $value,
