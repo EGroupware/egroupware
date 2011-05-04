@@ -57,9 +57,9 @@ class auth
 
 	/**
 	 * check_password_age
-	 * check if users are supposed to change their password every x sdays, then check if password is of old age 
+	 * check if users are supposed to change their password every x sdays, then check if password is of old age
 	 * or the devil-admin reset the users password and forced the user to change his password on next login.
-	 * 
+	 *
 	 * @param string $app to know where you are/ or where you want to go
 	 * @param string $class to know where you are/ or where you want to go
 	 * @param string $method to know where you are/ or where you want to go
@@ -87,7 +87,7 @@ class auth
 		//echo egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
 
 		// if neither timestamp isset return true, nothing to do (exept this means the password is too old)
-		if (!isset($GLOBALS['egw_info']['user']['account_lastpasswd_change']) && 
+		if (!isset($GLOBALS['egw_info']['user']['account_lastpasswd_change']) &&
 			!isset($GLOBALS['egw_info']['user'][$alpwchange]) &&
 			empty($GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
 		) return true;
@@ -106,7 +106,7 @@ class auth
 			if (method_exists($backend,'getLastPwdChange')) $alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
 			if (is_null($alpwchange_val) || $alpwchange_val === false) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
 		}
-		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days']) 
+		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
 		{
 			$passwordAgeBorder = (egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400));
 		}
@@ -125,17 +125,17 @@ class auth
 			   (
 				($passwordAgeBorder > $alpwchange_val) ||
 				(
-				 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] && 
-				 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq 
+				 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] &&
+				 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq
 				)
 			   )
 			  ) || $alpwchange_val==0
-			 ) 
+			 )
 			)
 		{
 			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences')) return true; // user has no rights to change password
 			if ($UserKnowsAboutPwdChange === true && !($passwordAgeBorder > $alpwchange_val || $alpwchange_val==0)) return true; // user has already been informed about the upcomming password expiration
-			if ($alpwchange_val == 0) 
+			if ($alpwchange_val == 0)
 			{
 				$message = lang('an admin required that you must change your password upon login.');
 			}
@@ -167,7 +167,7 @@ class auth
 	 * fetch the last pwd change for the user
 	 *
 	 * @param string $username username of account to authenticate
-	 * @return mixed false or shadowlastchange*24*3600 
+	 * @return mixed false or shadowlastchange*24*3600
 	 */
 	function getLastPwdChange($username)
 	{
@@ -566,8 +566,8 @@ class auth
 		$hash = base64_decode(substr($db_val,6));
 
 		/* SMD5 hashes are 16 bytes long */
-		$orig_hash = substr($hash, 0, 16);
-		$salt = substr($hash, 16);
+		$orig_hash = cut_bytes($hash, 0, 16);	// binary string need to use cut_bytes, not mb_substr(,,'utf-8')!
+		$salt = cut_bytes($hash, 16);
 
 		$new_hash = md5($form_val . $salt,true);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
@@ -605,10 +605,11 @@ class auth
 		$hash = base64_decode(substr($db_val, 6));
 
 		// SHA-1 hashes are 160 bits long
-		$orig_hash = substr($hash, 0, 20);
-		$salt = substr($hash, 20);
+		$orig_hash = cut_bytes($hash, 0, 20);	// binary string need to use cut_bytes, not mb_substr(,,'utf-8')!
+		$salt = cut_bytes($hash, 20);
 		$new_hash = sha1($form_val . $salt,true);
 
+		//error_log(__METHOD__."('$form_val', '$db_val') hash='$hash', orig_hash='$orig_hash', salt='$salt', new_hash='$new_hash' returning ".array2string(strcmp($orig_hash,$new_hash) == 0));
 		return strcmp($orig_hash,$new_hash) == 0;
 	}
 

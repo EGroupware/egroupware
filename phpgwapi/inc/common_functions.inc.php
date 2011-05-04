@@ -50,6 +50,27 @@ function bytes($str)
 }
 
 /**
+ * mbstring.func_overload safe substr
+ *
+ * @param string $data
+ * @param int $offset
+ * @param int $len
+ * @return string
+ */
+function cut_bytes(&$data,$offset,$len=null)
+{
+	static $func_overload;
+
+	if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
+
+	if (is_null($len))
+	{
+		return $func_overload ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
+	}
+	return $func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+}
+
+/**
  * Format array or other types as (one-line) string, eg. for error_log statements
  *
  * @param mixed $var variable to dump
