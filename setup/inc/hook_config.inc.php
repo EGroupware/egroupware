@@ -172,23 +172,7 @@ function passwdhashes($config,$return_hashes=false)
 		'plain' => 'plain',
 	);
 
-	if ($return_hashes) return $hashes;
-
-	foreach($hashes as $key => $value)
-	{
-		if($config['ldap_encryption_type'] == $value)
-		{
-			$selected = ' selected="selected"';
-		}
-		else
-		{
-			$selected = '';
-		}
-		$descr = strtoupper($value);
-
-		$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-	}
-	return $out;
+	return $return_hashes ? $hashes : _options_from($hashes, $config['ldap_encryption_type']);
 }
 
 function sql_passwdhashes($config,$return_hashes=false)
@@ -222,23 +206,7 @@ function sql_passwdhashes($config,$return_hashes=false)
 		'plain' => 'plain',
 	);
 
-	if ($return_hashes) return $hashes;
-
-	foreach($hashes as $key => $value)
-	{
-		if($config['sql_encryption_type'] == $value)
-		{
-			$selected = ' selected="selected"';
-		}
-		else
-		{
-			$selected = '';
-		}
-		$descr = strtoupper($value);
-
-		$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-	}
-	return $out;
+	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type']);
 }
 
 /**
