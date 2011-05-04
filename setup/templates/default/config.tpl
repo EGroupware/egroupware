@@ -68,9 +68,9 @@
     <td>{lang_Image_type_selection_order}:</td>
     <td>
      <select name="newsettings[image_type]">
-      <option value="">GIF->JPG->PNG</option>
-      <option value="1"{selected_image_type_1}>PNG->JPG->GIF</option>
-      <option value="2"{selected_image_type_2}>PNG->JPG</option>
+      <option value="">GIF-&gt;JPG-&gt;PNG</option>
+      <option value="1"{selected_image_type_1}>PNG-&gt;JPG-&gt;GIF</option>
+      <option value="2"{selected_image_type_2}>PNG-&gt;JPG</option>
      </select>
     </td>
    </tr>
@@ -237,7 +237,7 @@
      </select>
     </td>
    </tr>
-    
+
     <tr class="row_off">
     <td>{lang_Authentication_type_for_application}: <b>ActiveSync</b></td>
     <td>

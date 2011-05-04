@@ -483,7 +483,7 @@ skip the installation tests (not recommended)	setup	sv	Hoppa över installations
 smtp server hostname or ip address	setup	sv	SMTP server värdnamn eller IP adress
 smtp server port	setup	sv	SMTP server port
 some or all of its tables are missing	setup	sv	Några eller samtliga av dess tabeller saknas
-sql encryption type	setup	sv	SQL kryptering för lösenord (standard: MD5)
+sql encryption type	setup	sv	SQL kryptering för lösenord (standard: SSHA)
 standard (login-name identical to egroupware user-name)	setup	sv	Standard (inloggningsnamn identiskt med eGroupWare användarnamn)
 standard mailserver settings (used for mail authentication too)	setup	sv	Standard e-postserver inställningar (används även för e-post autenticering
 start the postmaster	setup	sv	Starta postmaster

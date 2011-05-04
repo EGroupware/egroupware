@@ -394,7 +394,7 @@ setup/config admin login	setup	no	Sätt upp/Konfigurera Admin login
 show 'powered by' logo on	setup	no	Vis "Powered by"-logo
 size	setup	no	Str.
 some or all of its tables are missing	setup	no	Några eller samtliga av dess tabeller saknas
-sql encryption type	setup	no	SQL krypteringstyp för Lösenord (default: MD5)
+sql encryption type	setup	no	SQL krypteringstyp för Lösenord (default: SSHA)
 start the postmaster	setup	no	Starta postmaster
 status	setup	no	Status
 step %1 - admin account	setup	no	Steg %1 - Adminkontot
