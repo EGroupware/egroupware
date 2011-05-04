@@ -26,7 +26,7 @@
 access denied: wrong username or password for manage-header !!!	setup	en	Access denied: wrong username or password for manage-header !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	en	Access denied: wrong username or password to configure the domain '%1(%2)' !!!
 account repository need to be set to the one you migrate to!	setup	en	Account repository need to be set to the one you migrate to!
-account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	en	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	en	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{ssha(default) | smd5 | md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
 activate safe password check	setup	en	Activate safe password check
@@ -537,7 +537,7 @@ smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
 smtp server port	setup	en	SMTP server port
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sources deleted/missing	setup	en	Sources deleted/missing
-sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
+sql encryption type	setup	en	SQL encryption type for passwords (default SSHA)
 ssl validation:	setup	en	SSL validation:
 standard (login-name identical to egroupware user-name)	setup	en	standard (login-name identical to eGroupWare user-name)
 standard mailserver settings (used for mail authentication too)	setup	en	Standard mailserver settings (used for Mail authentication too)

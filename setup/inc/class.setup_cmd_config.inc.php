@@ -61,7 +61,7 @@ class setup_cmd_config extends setup_cmd
 
 		// fixing authtypes in self::$options
 		self::auth_types(true);
-		
+
 		$values = array();
 		if ($this->arguments)	// we have command line arguments
 		{
@@ -167,7 +167,7 @@ class setup_cmd_config extends setup_cmd
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap'),'default'=>'sql'),
 			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam'),'default'=>'sql'),
-			array('name' => 'sql_encryption','allowed' => array('md5','blowfish_crypt','md5_crypt','crypt'),'default'=>'md5'),
+			array('name' => 'sql_encryption','allowed' => array('ssha','smd5','md5','blowfish_crypt','md5_crypt','crypt'),'default'=>'ssha'),
 			'check_save_password','allow_cookie_auth'),
 		'--ldap-host' => 'ldap_host',
 		'--ldap-root-dn' => 'ldap_root_dn',
@@ -337,10 +337,10 @@ class setup_cmd_config extends setup_cmd
 		}
 		return $options;
 	}
-	
+
 	/**
 	 * Read auth-types (existing auth backends) from filesystem and fix our $options array
-	 * 
+	 *
 	 * @return array
 	 */
 	static function auth_types()

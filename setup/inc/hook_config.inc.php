@@ -148,12 +148,10 @@ function encryptmode($config)
 function passwdhashes($config)
 {
 	$hashes = array(
-		'des' => 'des',
-		'md5' => 'md5',
+		'ssha' => 'ssha'.' ('.lang('default').')',
 		'smd5' => 'smd5',
 		'sha'  => 'sha',
-		'ssha' => 'ssha',
-		'plain' => 'plain',
+		'des' => 'des',
 	);
 	/* Check for available crypt methods based on what is defined by php */
 	if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
@@ -168,6 +166,11 @@ function passwdhashes($config)
 	{
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
+
+	$hashes += array(
+		'md5' => 'md5',
+		'plain' => 'plain',
+	);
 
 	foreach($hashes as $key => $value)
 	{
@@ -189,7 +192,9 @@ function passwdhashes($config)
 function sql_passwdhashes($config)
 {
 	$hashes = array(
-		'md5' => 'md5'
+		'ssha' => 'ssha'.' ('.lang('default').')',
+		'smd5' => 'smd5',
+		'sha'  => 'sha',
 	);
 
 	/* Check for available crypt methods based on what is defined by php */
@@ -211,9 +216,7 @@ function sql_passwdhashes($config)
 	}
 
 	$hashes += array(
-		'smd5' => 'smd5',
-		'sha'  => 'sha',
-		'ssha' => 'ssha',
+		'md5' => 'md5',
 		'plain' => 'plain',
 	);
 
