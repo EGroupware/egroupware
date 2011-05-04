@@ -509,7 +509,7 @@ smtp server hostname or ip address	setup	sl	Ime ali naslov IP strežnika SMTP
 smtp server port	setup	sl	Vrata strežnika SMTP
 some or all of its tables are missing	setup	sl	Manjka nekaj ali vse njene tabele
 sources deleted/missing	setup	sl	Izvor je izbrisan/manjka.
-sql encryption type	setup	sl	Enkripcija za SQL geslo (privzeta je MD5)
+sql encryption type	setup	sl	Enkripcija za SQL geslo (privzeta je SSHA)
 ssl validation:	setup	sl	Preverjanje SSL:
 standard (login-name identical to egroupware user-name)	setup	sl	Standardno (uporabniško ime enako uuporabniškemu imenu eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	sl	Standardne nastavitve poštnega strežnika (uporabljeno je tudi za  avtentikacijo pošte)
