@@ -258,10 +258,11 @@ class auth
 	 *
 	 * encryption type set in setup and calls the appropriate encryption functions
 	 *
-	 * @param $cleartext cleartext password
-	 * @param $encrypted encrypted password, can have a {hash} prefix, which overrides $type
-	 * @param $type type of encryption
-	 * @param $username used as optional key of encryption for md5_hmac
+	 * @param string $cleartext cleartext password
+	 * @param string $encrypted encrypted password, can have a {hash} prefix, which overrides $type
+	 * @param string $type type of encryption
+	 * @param string $username used as optional key of encryption for md5_hmac
+	 * @return boolean
 	 */
 	static function compare_password($cleartext,$encrypted,$type,$username='')
 	{
@@ -286,14 +287,11 @@ class auth
 				// ToDo: the others ...
 			}
 		}
+
 		switch($type)
 		{
 			case 'plain':
-				if(strcmp($cleartext,$encrypted) == 0)
-				{
-					return True;
-				}
-				return False;
+				return strcmp($cleartext,$encrypted) == 0;
 			case 'smd5':
 				return self::smd5_compare($cleartext,$encrypted);
 			case 'sha':
