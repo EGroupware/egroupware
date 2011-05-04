@@ -84,32 +84,57 @@ class auth_ldap implements auth_backend
 
 			// try to bind as the user with user suplied password
 			// only if a non-empty password given, in case anonymous search is enabled
-			if (!empty($passwd) && @ldap_bind($ldap, $userDN, $passwd))
+			if (!empty($passwd) && ($ret = @ldap_bind($ldap, $userDN, $passwd)))
 			{
 				if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 				{
-					if ($GLOBALS['egw_info']['server']['auto_create_acct'])
+					if (!($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')))
 					{
-						// create a global array with all availible info about that account
-						$GLOBALS['auto_create_acct'] = array();
-						foreach(array(
-							'givenname' => 'firstname',
-							'sn'        => 'lastname',
-							'uidnumber' => 'account_id',
-							'mail'      => 'email',
-						) as $ldap_name => $acct_name)
+						// account does NOT exist, check if we should create it
+						if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 						{
-							$GLOBALS['auto_create_acct'][$acct_name] =
-								translation::convert($allValues[0][$ldap_name][0],'utf-8');
+							// create a global array with all availible info about that account
+							$GLOBALS['auto_create_acct'] = array();
+							foreach(array(
+								'givenname' => 'firstname',
+								'sn'        => 'lastname',
+								'uidnumber' => 'account_id',
+								'mail'      => 'email',
+							) as $ldap_name => $acct_name)
+							{
+								$GLOBALS['auto_create_acct'][$acct_name] =
+									translation::convert($allValues[0][$ldap_name][0],'utf-8');
+							}
+							$ret = true;
 						}
-						return True;
+						else
+						{
+							$ret = false;
+							if ($this->debug) error_log(__METHOD__."('$username',\$password) bind as user failed!");
+						}
 					}
-					$ret = ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&
-						$GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
-					if ($this->debug && !$ret) error_log(__METHOD__."('$username',\$password) account NOT active!");
-					return $ret;
+					// account exists, check if it is acctive
+					else
+					{
+						$ret = $GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
+
+						if ($this->debug && !$ret) error_log(__METHOD__."('$username',\$password) account NOT active!");
+					}
 				}
-				return True;
+				// account-repository is ldap --> check if passwd hash migration is enabled
+				elseif ($GLOBALS['egw_info']['server']['pwd_migration_allowed'] &&
+					!empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
+				{
+					// try to query password from ldap server (might fail because of ACL) and check if we need to migrate the hash
+					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
+						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
+						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? $matches[1] : 'plain') &&
+						in_array(strtolower($type),explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
+					{
+						$this->change_password($passwd, $passwd, $allValues[0]['uidnumber'][0], false);
+					}
+				}
+				return $ret;
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."('$username','$password') dn not found or password wrong!");
@@ -126,9 +151,10 @@ class auth_ldap implements auth_backend
 	 * @param string $old_passwd must be cleartext or empty to not to be checked
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param boolean $update_lastchange=true
 	 * @return boolean true if password successful changed, false otherwise
 	 */
-	function change_password($old_passwd, $new_passwd, $account_id=0)
+	function change_password($old_passwd, $new_passwd, $account_id=0, $update_lastchange=true)
 	{
 		if (!$account_id)
 		{
@@ -139,7 +165,7 @@ class auth_ldap implements auth_backend
 			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
 				translation::charset(),'utf-8');
 		}
-		//echo "<p>auth_ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
+		if ($this->debug) error_log(__METHOD__."('$old_passwd','$new_passwd',$account_id, $update_lastchange) username='$username'");
 
 		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
@@ -149,7 +175,7 @@ class auth_ldap implements auth_backend
 		$allValues = ldap_get_entries($ds, $sri);
 
 		$entry['userpassword'] = auth::encrypt_password($new_passwd);
-		$entry['shadowLastChange'] = round((time()-date('Z')) / (24*3600));
+		if ($update_lastchange) $entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
 
 		$dn = $allValues[0]['dn'];
 
