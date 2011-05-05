@@ -729,7 +729,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
 		}
-		else
+		elseif ($document[0] != '/')
 		{
 			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'].'/'.$document;
 		}
