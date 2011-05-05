@@ -166,6 +166,10 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoEdit ';
 		}
+		if ($info['status'] == 'deleted' && !$this->bo->check_access($info, EGW_ACL_UNDELETE))
+		{
+			$info['class'] .= 'rowNoUndelete ';
+		}
 		if (($readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
 			!($editrights || $isresposible))))
 		{
@@ -365,6 +369,11 @@ class infolog_ui
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$readonlys = $rows = array();
+		$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
+		if (count($parents) == 1 && is_array($query['action_id']))
+		{
+			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
+		}
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -380,28 +389,15 @@ class infolog_ui
 					unset($info['info_des']);
 				}
 			}
-			if ($query['action'] == 'sp')
+			// for subs view ('sp') add parent(s) in front of subs once(!)
+			if ($parents && ($parent_index = array_search($info['info_id_parent'], $parents)) !== false &&
+				($main = $this->bo->read($info['info_id_parent'])))
 			{
-				if ($query['action_id'] &&
-					(is_array($query['action_id']) && in_array($info['info_id_parent'], $query['action_id'])) ||
-					((!is_array($query['action_id']) && $query['action_id'] === $info['info_id_parent']))
-				)
-				{
-					if( $main = $this->bo->read($info['info_id_parent']))
-					{
-						$main = $this->get_info($main, $readonlys);
-						$main['class'] .= 'th ';
-						array_splice($rows, $id, 0, array($main));
-						$parent_index = array_search($info['info_id_parent'], $query['action_id']);
-						if($parent_index !== false)
-						{
-							unset($query['action_id'][$parent_index]);
-							unset($parent_index);
-						}
-					}
-				}
+				$main = $this->get_info($main, $readonlys);
+				$main['class'] .= 'th ';
+				array_splice($rows, $id, 0, array($main));
+				unset($parents[$parent_index]);
 			}
-
 			$rows[] = $info;
 		}
 		unset($links);
@@ -449,7 +445,8 @@ class infolog_ui
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
-			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
+			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
+				$query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
@@ -607,7 +604,6 @@ class infolog_ui
 				list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 				list($do_id) = @each($do_id);
 				//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($called_as);
-// todo: move this to actions(), interactive delete only if subs
 				switch($do)
 				{
 					case 'close':
@@ -936,6 +932,14 @@ class infolog_ui
 			'disableClass' => 'rowNoDelete',
 			'onExecute' => 'javaScript:confirm_delete',
 		);
+		if ($query['col_filter']['info_status'] == 'deleted')
+		{
+			$actions['undelete'] = array(
+				'caption' => 'Un-Delete',
+				'group' => $group,
+				'disableClass' => 'rowNoUndelete',
+			);
+		}
 
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 		return $actions;
@@ -1101,6 +1105,11 @@ class infolog_ui
 					}
 					break;
 
+				case 'undelete':	// set it to valid status != 'deleted' for that type
+					$settings = isset($this->bo->status[$entry['info_type']]['done']) ?
+						$this->bo->status[$entry['info_type']]['done'] :
+						$this->bo->status['defaults'][$entry['info_type']];
+					// fall-through
 				case 'status':
 					if(in_array($settings, $this->bo->status[$entry['info_type']]))
 					{
