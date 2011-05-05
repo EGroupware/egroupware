@@ -129,14 +129,17 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'Export CSV'
 			);
 		}
-		if(self::get_spreadsheet_list($appname)) {
-			$file['Export Spreadsheet'] = array('link' => egw::link('/index.php',array(
-					'menuaction' => 'importexport.importexport_admin_prefs_sidebox_hooks.spreadsheet_list',
-					'app' => $appname
-				)),
-				//'icon' => 'filemanager/navbar',
-				'app' => 'importexport',
-				'text' => 'Export Spreadsheet'
+		if($list = self::get_spreadsheet_list($appname)) {
+			$file_list = array();
+			foreach($list as $_file) {
+				$file_list[$_file['path']] = egw_vfs::decodePath($_file['name']);
+			}
+			$prefix = 'document_';
+			$options = 'style="max-width:175px;" onchange="var action = new egwAction(null,\''.$prefix.'\'+this.value);console.log(action); nm_action(action, egw_objectManager.selectedChildren); this.value = \'\'"';
+			$file[] = array(
+				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
+				'noLang'	=> true,
+				'link'	=> false,
 			);
 		}
 	
@@ -152,6 +155,9 @@ class importexport_admin_prefs_sidebox_hooks
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
 
+	/**
+	 * Get a list of spreadsheets, in the user's preference folder, and / or a system provided template folder
+	 */
 	protected static function get_spreadsheet_list($app) {
 		$config = config::read('importexport');
 		$config_dirs = $config['export_spreadsheet_folder'] ? explode(',',$config['export_spreadsheet_folder']) : array('user','stylite');
@@ -196,10 +202,4 @@ class importexport_admin_prefs_sidebox_hooks
 		return $file_list;
 	}
 
-	public function spreadsheet_list() {
-		$file_list = self::get_spreadsheet_list();
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Export (merge) spreadsheets');
-		$tmpl = new etemplate('importexport.spreadsheet_list');
-		$tmpl->exec('importexport.importexport_admin_hooks.spreadsheet_list', array('files' => $file_list));
-	}
 }
