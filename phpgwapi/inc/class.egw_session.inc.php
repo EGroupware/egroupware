@@ -982,7 +982,7 @@ class egw_session
 		}
 
 		// query accesslog-id, if not set in session (session is made persistent after login!)
-		if (!$this->sessionid_access_log)
+		if (!$this->sessionid_access_log && $this->session_flags != 'A')
 		{
 			$this->sessionid_access_log = $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE,'sessionid',array(
 				'session_php' => $this->sessionid,
