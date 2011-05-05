@@ -1183,10 +1183,15 @@ class translation
 				{
 					if (stripos($elem,'<pre>')===false)
 					{
-						$elem = preg_replace('@(\r\n)@i',' ',$elem);
+						//$elem = str_replace('@(\r\n)@i',' ',$elem);
+						$elem = str_replace(array("\r\n","\n"),' ',$elem);
 					}
 				}
 				$_html = implode('',$contentArr);
+			}
+			else
+			{
+				$_html = str_replace(array("\r\n","\n"),' ',$_html);
 			}
 		}
 		$tags = array (
@@ -1233,6 +1238,8 @@ class translation
 			$_html = preg_replace('~<[^>^@]+>~s','',$_html);
 			//$_html = strip_tags($_html, '<a>');
 		}
+		// reducing double \r\n to single ones
+		//$_html = str_replace("\r\n\r\n", "\r\n", $_html); // ToDo: this needsv to be more sophosticated 
 		// reducing spaces
 		$_html = preg_replace('~ +~s',' ',$_html);
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
@@ -1240,7 +1247,9 @@ class translation
 		#$_html = preg_replace('~\s+$~m','',$_html);
 		// restoring ampersands
 		$_html = str_replace('#amper#sand#','&',$_html);
+		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' -> '.$_html);
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
+		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' After html_entity_decode: -> '.$_html);
 		//self::replaceEmailAdresses($_html);
 		#error_log($text);
 		$pos = strpos($_html, 'blockquote');
