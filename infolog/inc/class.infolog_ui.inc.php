@@ -932,8 +932,6 @@ class infolog_ui
 
 		$actions['delete'] = array(
 			'caption' => 'Delete',
-			'confirm' => 'Are you sure you want to delete this entry ?',
-			'confirm_multiple' => 'Are you sure you want to delete these entries ?',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
 			'onExecute' => 'javaScript:confirm_delete',
@@ -1061,7 +1059,7 @@ class infolog_ui
 
 				case 'delete':
 					$action_msg = $settings == 'sub' ? lang(' (and children) deleted') : lang('deleted');
-					//$result = $this->bo->delete($id, $settings=='sub', false, $skip_notifications);
+					$result = $this->bo->delete($id, $settings=='sub', false, $skip_notifications);
 					if($result == true)
 					{
 						$success++;
