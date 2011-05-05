@@ -1155,7 +1155,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			$document = $GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'];
 		}
-		else
+		elseif ($document[0] != '/')
 		{
 			$document = $GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'].'/'.$document;
 		}
