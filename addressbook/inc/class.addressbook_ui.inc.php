@@ -2316,7 +2316,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$document = $this->prefs['default_document'];
 		}
-		else
+		elseif ($document[0] != '/')
 		{
 			$document = $this->prefs['document_dir'].'/'.$document;
 		}
