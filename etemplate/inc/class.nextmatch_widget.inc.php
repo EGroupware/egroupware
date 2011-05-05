@@ -517,7 +517,7 @@ class nextmatch_widget
 		$value['rows']['_row_id']  =& $value['row_id'];
 
 		// values are NOT yet used on client side, but give warnings if array are not converted to strings
-		$values['action'] = $value['checkboxes'] = $value['selected'] = '';
+		$value['action'] = $value['checkboxes'] = $value['selected'] = '';
 /*
 		$selected = $checkboxes = array();
 		foreach((array)$values['selected'] as $id)
