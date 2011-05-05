@@ -653,7 +653,10 @@ class infolog_so
 			if ((int)$info_id <= 0) return 0;
 		}
 		$counts = array();
-		foreach($this->db->select($this->info_table,'info_id_parent,COUNT(*) AS info_anz_subs',array('info_id_parent' => $info_id),__LINE__,__FILE__,
+		foreach($this->db->select($this->info_table,'info_id_parent,COUNT(*) AS info_anz_subs',array(
+			'info_id_parent' => $info_id,
+			"info_status != 'deleted'",	// dont count deleted subs as subs, as they are not shown by default
+		),__LINE__,__FILE__,
 			false,'GROUP BY info_id_parent','infolog') as $row)
 		{
 			$counts[$row['info_id_parent']] = (int)$row['info_anz_subs'];
@@ -690,7 +693,9 @@ class infolog_so
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
 		if ($action != '')
 		{
-			$links = solink::get_links($action=='sp'?'infolog':$action,explode(',',$query['action_id']),'infolog');
+			$links = solink::get_links($action=='sp'?'infolog':$action,
+				is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog');
+
 			if (count($links))
 			{
 				$links = call_user_func_array('array_merge',$links);	// flatten the array
