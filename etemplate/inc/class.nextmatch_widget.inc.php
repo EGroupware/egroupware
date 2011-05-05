@@ -516,6 +516,21 @@ class nextmatch_widget
 		$value['rows']['_action_links'] =& $value['action_links'];
 		$value['rows']['_row_id']  =& $value['row_id'];
 
+		// values are NOT yet used on client side, but give warnings if array are not converted to strings
+		$values['action'] = $value['checkboxes'] = $value['selected'] = '';
+/*
+		$selected = $checkboxes = array();
+		foreach((array)$values['selected'] as $id)
+		{
+			$selected[] = strpos($id,',') === false ? $id : '"'.str_replace('"','""',$id).'"';
+		}
+		$value['selected'] = implode(',',$selected);
+		foreach((array)$value['checkboxes'] as $name => $checked)
+		{
+			$checkboxes[] = $name.':'.(int)$checked;
+		}
+		$value['checkboxes'] = implode(',',$checkboxes);
+*/
 		return False;	// NO extra Label
 	}
 
