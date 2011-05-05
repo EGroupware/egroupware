@@ -1,12 +1,12 @@
 <?php
 /**
- * eGroupWare - eTemplates - XUL/XML Import & Export
+ * EGroupware - eTemplates - XUL/XML Import & Export
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-11 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -154,12 +154,15 @@ class xul_io
 	 */
 	function &add_widget(&$parent,$cell,&$embeded_too)
 	{
+		// sort attributes, to stop xet files from changing because of changed attribute order
+		ksort($cell, SORT_STRING);
+
 		$type = $cell['type'];
 		if (is_array($type))
 		{
 			list(,$type) = each($type);
 		}
-		if (!$type) $cell['type'] = $type = 'hugo';
+		if (!$type) $cell['type'] = $type = 'unknown';
 		if (substr($type,0,6) == 'select')
 		{
 			$type = $cell['size'] > 1 ? 'select-multi' : 'select';
