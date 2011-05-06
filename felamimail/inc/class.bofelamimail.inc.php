@@ -885,20 +885,20 @@
 				// actual allowed tags and attributes
 				$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'mailto' => true, 'cid'=>true));
 				$config->set('AutoFormat.RemoveEmpty', true);
-				$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
-							'font[size|color],'.
-							'ul[type],ol[type|start],li,'.
+				$config->set('HTML.Allowed', 'br,p[class|align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+							'font[class|size|color],'.
+							'ul[class|type],ol[class|type|start],li,'.
 							'h1,h2,h3,'.
 							'span[class|style],'.
 							'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
 							'tbody,thead,tfoot,colgroup,'.
-							'col[width|span],'.
+							'col[class|width|span],'.
 							'blockquote[class|cite|dir],'.
 							'tr[class|style|align|bgcolor|align|valign],'.
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'a[href|target|name|title],'.
-							'img[src|alt|title]');
+							'a[class|href|target|name|title],'.
+							'img[class|src|alt|title]');
 				$DisableExternalResources = true;
 				if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs']) $DisableExternalResources = false;
 				$config->set('URI.DisableExternalResources',$DisableExternalResources);
@@ -958,6 +958,7 @@
 				#);
 				$kses->AddHTML(
 					'p', array(
+						"class"     => array('maxlen' => 20),
 						'align'	=> array('minlen' =>   1, 'maxlen' =>  10)
 					)
 				);
@@ -975,6 +976,7 @@
 				$kses->AddHTML("center");
 				$kses->AddHTML(
 					"font",array(
+						"class"     => array('maxlen' => 20),
 						"color"	=> array('maxlen' => 20),
 						"size"=>array('maxlen'=>2)
 					)
@@ -987,13 +989,14 @@
 				);
 				$kses->AddHTML(
 					"div",array(
-				#		'class' => array(),
+						"class"     => array('maxlen' => 20),
 						'align' => array('maxlen' => 10)
 					)
 				);
 				$kses->AddHTML("ul");
 				$kses->AddHTML(
 					"ol",array(
+						"class"     => array('maxlen' => 20),
 						"type"	=> array('maxlen' => 20)
 					)
 				);
@@ -1013,6 +1016,7 @@
 				$kses->AddHTML("select");
 				$kses->AddHTML(
 					"option",array(
+						"class"     => array('maxlen' => 20),
 						"value" => array('maxlen' => 45),
 						"selected" => array()
 					)
@@ -1020,6 +1024,7 @@
 
 				$kses->AddHTML(
 					"a", array(
+						"class"     => array('maxlen' => 20),
 						"href" 		=> array('maxlen' => 348, 'minlen' => 10),
 						"name" 		=> array('minlen' => 2),
 						'target'	=> array('maxlen' => 10)
@@ -1028,6 +1033,7 @@
 
 				$kses->AddHTML(
 					"pre", array(
+						"class"     => array('maxlen' => 20),
 						"wrap" => array('maxlen' => 10)
 					)
 				);
@@ -1108,6 +1114,7 @@
 				);
 				$kses->AddHTML(
 					'img',array(
+						"class"     => array('maxlen' => 20),
 						"src"		=> array("minlen" =>   4, 'maxlen' =>  384, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 						"align"		=> array("minlen" =>   1),
 						"border"	=> array('maxlen' => 30),
