@@ -273,6 +273,7 @@ class infolog_ui
 			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
+			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
 		}
 		$orginal_colfilter = $query['col_filter'];
 		if ($query['filter'] == 'bydate')
@@ -499,13 +500,13 @@ class infolog_ui
 				if(isset($values['nm']['rows'][$button]))
 				{
 					list($id) = @each($values['nm']['rows'][$button]);
-					$values['nm']['action'] = $button;
+					$values['nm']['multi_action'] = $button;
 					$values['nm']['selected'] = array($id);
 					break; // Only one can come per submit
 				}
 			}
 		}
-		if (is_array($values) && !empty($values['nm']['action']))
+		if (is_array($values) && !empty($values['nm']['multi_action']))
 		{
 			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
@@ -514,19 +515,19 @@ class infolog_ui
 			else
 			{
 				// Some processing to add values in for links and cats
-				$multi_action = $values['nm']['action'];
+				$multi_action = $values['nm']['multi_action'];
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
 				if(in_array($multi_action, array('link', 'responsible')))
 				{
-					$values['nm']['action'] .= '_' . key($values[$multi_action . '_action']);
+					$values['nm']['multi_action'] .= '_' . key($values[$multi_action . '_action']);
 
 					if(is_array($values[$multi_action]))
 					{
 						$values[$multi_action] = implode(',',$values[$multi_action]);
 					}
-					$values['nm']['action'] .= '_' . $values[$multi_action];
+					$values['nm']['multi_action'] .= '_' . $values[$multi_action];
 				}
-				if ($this->action($values['nm']['action'], $values['nm']['selected'], $values['nm']['select_all'],
+				if ($this->action($values['nm']['multi_action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
@@ -535,7 +536,7 @@ class infolog_ui
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
-				unset($values['nm']['action']);
+				unset($values['nm']['multi_action']);
 				unset($values['nm']['select_all']);
 			}
 			$values['msg'] = $msg;
@@ -594,7 +595,7 @@ class infolog_ui
 			}
 			elseif ($values['cancel'] && $own_referer)
 			{
-				unset($values['nm']['action']);
+				unset($values['nm']['multi_action']);
 				unset($values['nm']['action_id']);
 				egw_cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
 				$this->tmpl->location($own_referer);
