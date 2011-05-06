@@ -19,43 +19,43 @@
 			</columns>
 			<rows>
 				<row class="th" part="header">
-					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
-					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
+					<button statustext="go to the first entry" label="First" id="first" image="first.gif" ro_image="first-grey.gif"/>
+					<button statustext="go to the previous page of entries" label="Left" id="left" image="left.gif" ro_image="left-grey.gif"/>
 					<menulist>
-						<menupopup type="select-cat" options="-1,,,$cont[cat_app],$cont[cat_parent]" label="Category" id="cat_id" onchange="1" statustext="select a Category" align="center"/>
+						<menupopup type="select-cat" align="center" statustext="select a Category" label="Category" id="cat_id" onchange="1" options="-1,,,$cont[cat_app],$cont[cat_parent]"/>
 					</menulist>
 					<menulist>
-						<menupopup label="@filter_label" align="center" id="filter" onchange="@filter_onchange" statustext="@filter_help"/>
+						<menupopup align="center" statustext="@filter_help" label="@filter_label" id="filter" onchange="@filter_onchange"/>
 					</menulist>
 					<menulist>
-						<menupopup label="@filter2_label" align="center" id="filter2" onchange="@filter2_onchange" statustext="@filter2_help"/>
+						<menupopup align="center" statustext="@filter2_help" label="@filter2_label" id="filter2" onchange="@filter2_onchange"/>
 					</menulist>
-					<textbox align="right" id="search" onchange="1" statustext="a pattern to be searched for" size="12"/>
-					<button label="Search" id="start_search" statustext="to start the search"/>
+					<textbox align="right" statustext="a pattern to be searched for" id="search" onchange="1" size="12"/>
+					<button statustext="to start the search" label="Search" id="start_search"/>
 					<menulist class="nm_num_rows">
-						<menupopup id="num_rows" no_lang="1" onchange="1" statustext="How many entries should the list show"/>
+						<menupopup statustext="How many entries should the list show" id="num_rows" no_lang="1" onchange="1"/>
 					</menulist>
-					<button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
-					<button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
+					<button statustext="go to the next page of entries" label="Right" id="right" image="right.gif" ro_image="right-grey.gif"/>
+					<button statustext="go to the last entry" label="Last" id="last" image="last.gif" ro_image="last-grey.gif"/>
 					<box class="selectcols">
-						<button image="selectcols" label="Select columns" statustext="Select the columns to display in the list" onclick="document.getElementById(form::name('colselection')).style.display=document.getElementById(form::name('colselection')).style.display=='block' ? 'none' : 'block'; return false;"/>
-						<groupbox class="colselection" id="colselection">
+						<button statustext="Select the columns to display in the list" label="Select columns" onclick="document.getElementById(form::name('colselection')).style.display=document.getElementById(form::name('colselection')).style.display=='block' ? 'none' : 'block'; return false;" image="selectcols"/>
+						<groupbox id="colselection" class="colselection">
 							<caption label="Select columns"/>
-							<listbox rows="012" id="selectcols" statustext="Select the columns to display in the list" no_lang="1"/>
+							<listbox statustext="Select the columns to display in the list" id="selectcols" no_lang="1" rows="012"/>
 							<hbox>
 								<button label="Save" id="savecols"/>
-								<button id="cancel" label="Cancel" onclick="document.getElementById(form::name('colselection')).style.display='none'; return false;"/>
-								<checkbox id="default_prefs" label="as default" statustext="Save selected columns as default preference for all users."/>
+								<button label="Cancel" id="cancel" onclick="document.getElementById(form::name('colselection')).style.display='none'; return false;"/>
+								<checkbox statustext="Save selected columns as default preference for all users." label="as default" id="default_prefs"/>
 							</hbox>
 						</groupbox>
 					</box>
-					<button id="export" image="filesave" label="CSV Export"/>
+					<button label="CSV Export" id="export" image="filesave"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.9.001">
-		<hidden id="action"/>
+		<hidden id="nm_action"/>
 		<hidden id="selected"/>
 		<hidden id="checkboxes"/>
 		<grid width="100%">
@@ -68,26 +68,26 @@
 				<row class="noPrint">
 					<template id="@header_left"/>
 					<hbox align="center" class="nextmatch-range">
-						<description value="showing" no_lang="1" id="range"/>
-						<description value="of" no_lang="1" id="total"/>
+						<description value="showing" id="range" no_lang="1"/>
+						<description value="of" id="total" no_lang="1"/>
 					</hbox>
 					<template align="right" id="@header_right"/>
 				</row>
 				<row class="noPrint">
-					<template span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
+					<template align="center" id="etemplate.nextmatch_widget.nm_row" span="all"/>
 				</row>
 				<row class="noPrint" disabled="!@lettersearch">
-					<hbox span="all" id="lettersearch">
-						<description value="All" align="right" id="all" needed="1" class="lettersearch_active"/>
+					<hbox id="lettersearch" span="all">
+						<description align="right" value="All" id="all" needed="1" class="lettersearch_active"/>
 					</hbox>
 				</row>
 				<row>
-					<template content="rows" span="all" class="egwGridView_grid" align="center" id="@template"/>
+					<template align="center" id="@template" content="rows" span="all" class="egwGridView_grid"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="noPrint" disabled="!@bottom_too">
-					<template content="bottom" span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
+					<template align="center" id="etemplate.nextmatch_widget.nm_row" content="bottom" span="all"/>
 				</row>
 			</rows>
 		</grid>

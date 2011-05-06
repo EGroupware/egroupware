@@ -25,6 +25,7 @@
  * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
  * 	'no_cat'         => True// I  disable the cat-selectbox
  *  'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
+ *  'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null
  * 	'template'       =>		// I  template to use for the rows, if not set via options
  * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
  * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
@@ -60,6 +61,7 @@
  *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
  *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
  *                                optional, default id of all first level actions plus the ones with enabled='javaScript:...'
+ *  'action_var'     => 'action'	// I name of var to return choosen action, default 'action'
  *  'action'         =>     //  O string selected action
  *  'selected'       =>     //  O array with selected id's
  *  'checkboxes'     =>     //  O array with checkbox id as key and boolean checked value
@@ -372,6 +374,12 @@ class nextmatch_widget
 			// keep the editor away from the generated tmpls
 			$nextmatch->no_onclick = true;
 
+			// category is a selectbox, not a category select widget
+			if ($value['cat_is_select'] && ($cat_widget =& $nextmatch->get_widget_by_name('cat_id')))
+			{
+				$cat_widget['type'] = 'select';
+				if ($value['cat_is_select'] == 'no_lang') $cat_widget['no_lang'] = true;
+			}
 			if ($value['lettersearch'])
 			{
 				$lettersearch =& $nextmatch->get_widget_by_name('lettersearch');	// hbox for the letters
@@ -517,7 +525,8 @@ class nextmatch_widget
 		$value['rows']['_row_id']  =& $value['row_id'];
 
 		// values are NOT yet used on client side, but give warnings if array are not converted to strings
-		$value['action'] = $value['checkboxes'] = $value['selected'] = '';
+		$extension_data['action_var'] = !empty($value['action_var']) ? $value['action_var'] : 'action';
+		$value[$extension_data['action_var']] = $value['checkboxes'] = $value['selected'] = '';
 /*
 		$selected = $checkboxes = array();
 		foreach((array)$values['selected'] as $id)
@@ -604,6 +613,8 @@ class nextmatch_widget
 			'delete' => 'delete',
 			'cat'  => 'attach',		// add as category icon to api
 			'document' => 'etemplate/merge',
+			'print'=> 'print',
+			'copy' => 'copy',
 		);
 
 		$first_level = !$action_links;	// add all first level actions
@@ -1345,8 +1356,8 @@ class nextmatch_widget
 		{
 			self::csv_export($extension_data);
 		}
-
 		// allows return selected as array
+		$value[$extension_data['action_var']] = $value['nm_action']; //unset($value['nm_action']);
 		$value['selected'] = $value['selected'] === '' ? array() : boetemplate::csv_split($value['selected']);
 		$checkboxes = $value['checkboxes'];
 		$value['checkboxes'] = array();

@@ -156,7 +156,7 @@ function nm_action(_action, _senders)
 					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
 
 			var form = document.getElementsByName("eTemplate")[0];
-			document.getElementById('exec[nm][action]').value = _action.id;
+			document.getElementById('exec[nm][nm_action]').value = _action.id;
 			document.getElementById('exec[nm][selected]').value = ids;
 			if (typeof _action.data.button != 'undefined')
 			{
