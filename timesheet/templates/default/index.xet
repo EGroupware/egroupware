@@ -2,11 +2,11 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001">
-		<hbox rows="1" cols="1" class="custom_hide">
+		<hbox cols="1" rows="1" class="custom_hide">
 			<description value="Start"/>
 			<date id="startdate"/>
 			<description value="End"/>
-			<date id="enddate" statustext="Leave it empty for a full week"/>
+			<date statustext="Leave it empty for a full week" id="enddate"/>
 		</hbox>
 		<styles>
 			.custom_hide { visibility: hidden; }
@@ -39,13 +39,13 @@
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=full">
-								<nextmatch-filterheader options="All projects" id="ts_project" no_lang="1"/>
+								<nextmatch-filterheader id="ts_project" no_lang="1" options="All projects"/>
 							</row>
 							<row disabled="!@pm_integration=full">
-								<nextmatch-customfilter options="projectmanager-select,All projects" id="pm_id" onchange="1"/>
+								<nextmatch-customfilter id="pm_id" onchange="1" options="projectmanager-select,All projects"/>
 							</row>
 							<row>
-								<nextmatch-customfilter options="link-entry" onchange="1" id="linked"/>
+								<nextmatch-customfilter id="linked" onchange="1" options="link-entry"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Title" id="ts_title"/>
@@ -55,7 +55,7 @@
 					<nextmatch-sortheader label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
-						<date-duration id="duration" options=",h,,,1" readonly="true"/>
+						<date-duration id="duration" readonly="true" options=",h,,,1"/>
 					</vbox>
 					<vbox options="0,0">
 						<nextmatch-sortheader label="Quantity" id="ts_quantity"/>
@@ -66,12 +66,12 @@
 						<nextmatch-sortheader label="Total" id="ts_total"/>
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
-					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
+					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
 					<nextmatch-filterheader id="ts_status" onchange="1" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox class="noPrint">
-						<nextmatch-header label="Actions" class="noPrint" align="right" id="legacy_actions"/>
-						<button label="Check all" image="check" id="check_all" needed="1" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;"/>
+						<nextmatch-header align="right" label="Actions" id="legacy_actions" class="noPrint"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_objectManager.toggleAllSelected(); return false;" image="check"/>
 					</hbox>
 				</row>
 				<row class="$row_cont[class]">
@@ -82,12 +82,12 @@
 						<description id="${row}[ts_description]" no_lang="1"/>
 					</vbox>
 					<menulist class="noWrap">
-						<menupopup type="select-cat" readonly="true" id="${row}[cat_id]"/>
+						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
 					</menulist>
 					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
-					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" precision="3" readonly="true"/>
-					<description no_lang="1" id="${row}[ts_unitprice]"/>
-					<textbox type="float" no_lang="1" id="${row}[ts_total]" precision="2" readonly="true"/>
+					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
+					<description id="${row}[ts_unitprice]" no_lang="1"/>
+					<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
 					<menulist class="$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
@@ -95,12 +95,12 @@
 						<menupopup id="${row}[ts_status]" readonly="true"/>
 					</menulist>
 					<customfields-list id="$row" readonly="true"/>
-					<hbox class="noPrint" align="right">
-						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
-						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
-						<button id="document[$row_cont[ts_id]]" image="etemplate/merge" label="Insert in document" class="image16"/>
-						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
-						<checkbox options="$row_cont[ts_id]" id="checked[]" statustext="Select multiple timeshhets for a further action"/>
+					<hbox align="right" class="noPrint">
+						<button statustext="View this entry" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="view"/>
+						<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="edit"/>
+						<button label="Insert in document" id="document[$row_cont[ts_id]]" image="etemplate/merge" class="image16"/>
+						<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[ts_id]]" onclick="return confirm('Delete this entry');" image="delete"/>
+						<checkbox statustext="Select multiple timeshhets for a further action" id="checked[]" options="$row_cont[ts_id]"/>
 					</hbox>
 				</row>
 			</rows>
@@ -114,13 +114,13 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" no_lang="1" id="msg" align="center"/>
+					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 				</row>
 				<row disabled="1">
 					<hbox>
 						<template id="dates"/>
-						<template id="add" align="right"/>
+						<template align="right" id="add"/>
 					</hbox>
 					<description/>
 				</row>
@@ -130,8 +130,8 @@
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
-						<buttononly id="legacy_actions" statustext="Select action" label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="egw_objectManager.toggleAllSelected(); return false;" needed="1" class="checkAllArrow"/>
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_objectManager.toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
 					</hbox>
 				</row>
 			</rows>
