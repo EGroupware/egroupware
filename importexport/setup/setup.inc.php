@@ -20,6 +20,8 @@ $setup_info['importexport']['maintainer'] = array(
 	'name'  => 'eGroupware core team',
 	'email' => 'egroupware-developers@lists.sf.net'
 );
+$setup_info['importexport']['autoinstall'] = true;	// install automatically on update
+
 $setup_info['importexport']['license']  = 'GPL';
 $setup_info['importexport']['description'] =
 '';
