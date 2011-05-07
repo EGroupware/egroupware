@@ -875,12 +875,12 @@ class infolog_ui
 						'caption' => 'Delegation',
 						'group' => $group,
 						'icon' => 'users',
-						'onExecute' => 'javaScript:open_popup',
+						'nm_action' => 'open_popup',
 					),
 					'link' => array(
 						'caption' => 'Links',
 						'group' => $group,
-						'onExecute' => 'javaScript:open_popup',
+						'nm_action' => 'open_popup',
 					),
 				),
 			),
@@ -1128,7 +1128,7 @@ class infolog_ui
 					}
 					else
 					{
-						$msg .= lang('Invalid status for entry type %1. ', lang($this->bo->enums['type'][$entry['info_type']]));
+						$msg .= lang('Invalid status for entry type %1.', lang($this->bo->enums['type'][$entry['info_type']]));
 						$failed++;
 					}
 					break;
@@ -1149,15 +1149,16 @@ class infolog_ui
 
 				case 'responsible':
 					list($add_remove, $users) = explode('_', $settings, 2);
-					$action_msg = $add_remove == 'add' ? lang('added') : lang('removed') . ' ';
+					$action_msg = ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
 					$names = array();
-					foreach(explode(',', $users) as $account_id)
+					$users = explode(',', $users);
+					foreach($users as $account_id)
 					{
 						$names[] = common::grab_owner_name($account_id);
 					}
 					$action_msg .= implode(', ', $names);
 					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
-					$entry['info_responsible'] = array_unique($function($entry['info_responsible'], $users));
+					$entry['info_responsible'] = array_unique($function($entry['info_responsible'], (array)$users));
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;

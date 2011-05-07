@@ -2,15 +2,15 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.index.header_left" template="" lang="" group="0" version="1.0.1.001">
-		<description class="headertext bold" value="InfoLog"/>
+		<description value="InfoLog" class="headertext bold"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.7.001">
 		<hbox>
-			<description class="headertext" value="Add:"/>
-			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<description value="Add:" class="headertext"/>
+			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="task"/>
+			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="phone"/>
+			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="note"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.002">
@@ -31,9 +31,9 @@
 			<rows>
 				<row class="th">
 					<vbox options="0,0">
-						<nextmatch-filterheader options="Type" id="info_type" no_lang="1"/>
-						<nextmatch-filterheader options="Status" id="info_status" align="center"/>
-						<nextmatch-sortheader label="Completed" id="info_percent" align="right"/>
+						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
+						<nextmatch-filterheader align="center" id="info_status" options="Status"/>
+						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</vbox>
 					<grid width="100%" spacing="0" padding="0">
 						<columns>
@@ -42,16 +42,16 @@
 						</columns>
 						<rows>
 							<row>
-								<nextmatch-customfilter options="link-entry" id="linked" onchange="1"/>
-								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC" class="noPrint"/>
+								<nextmatch-customfilter id="linked" onchange="1" options="link-entry"/>
+								<nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Subject" id="info_subject"/>
-								<nextmatch-sortheader label="Creation" align="right" id="info_id" options="DESC" class="noPrint"/>
+								<nextmatch-sortheader align="right" label="Creation" id="info_id" options="DESC" class="noPrint"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Description" id="info_des"/>
-								<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC" class="noPrint" align="right"/>
+								<nextmatch-sortheader align="right" label="last changed" id="info_datemodified" options="DESC" class="noPrint"/>
 							</row>
 						</rows>
 					</grid>
@@ -60,53 +60,53 @@
 					<vbox options="0,0">
 						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
-						<nextmatch-sortheader id="info_datecompleted" label="Date completed"/>
+						<nextmatch-sortheader label="Date completed" id="info_datecompleted"/>
 					</vbox>
-					<vbox rows="2" cols="1">
+					<vbox cols="1" rows="2">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
 					</vbox>
-					<vbox rows="2" cols="1" options="0,0">
+					<vbox cols="1" rows="2" options="0,0">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
-						<nextmatch-sortheader id="info_replanned_time" class="replanned" label="Re-planned"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
+						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="user_filter"/>
-						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible" class="user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner" class="user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 					<description value="Sub" class="noPrint"/>
-					<nextmatch-header label="Action" class="noPrint" id="actions"/>
+					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 				<row class="row $row_cont[class] $row_cont[cat_id]" valign="top">
-					<hbox options="5" align="center">
+					<hbox align="center" options="5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]"/>
+						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_percent]"/>
 						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox options="0,0" class="fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
-							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
-							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
+							<description align="right" id="{$row}[info_number]" no_lang="1" class="infoId"/>
 						</hbox>
 						<box class="infoDes">
-							<description no_lang="1" id="${row}[info_des]" options=",,1"/>
+							<description id="${row}[info_des]" no_lang="1" options=",,1"/>
 						</box>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
-					<customfields-list class="customfields" id="$row"/>
+					<customfields-list id="$row" class="customfields"/>
 					<menulist>
 						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
 					</menulist>
-					<vbox options="0,0,1" rows="3" cols="1">
-						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
-						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
+					<vbox cols="1" rows="3" options="0,0,1">
+						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="fixedHeight"/>
+						<date id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class] fixedHeight"/>
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
-					<vbox rows="3" cols="1" options="0,0">
+					<vbox cols="1" rows="3" options="0,0">
 						<hbox readonly="true">
 							<hbox readonly="true" options="1,0">
 								<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
@@ -114,21 +114,21 @@
 							</hbox>
 							<description/>
 						</hbox>
-						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
 					</vbox>
-					<vbox rows="3" cols="1" options="0,0">
-						<hbox options="1,0" id="r_used_time">
+					<vbox cols="1" rows="3" options="0,0">
+						<hbox id="r_used_time" options="1,0">
 							<image label="Times" src="timesheet"/>
 							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
 							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
 						</hbox>
-						<hbox options="1,0" id="planified">
+						<hbox id="planified" options="1,0">
 							<image label="planned time" src="k_alarm.png"/>
-							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
 						</hbox>
-						<hbox options="1,0" id="replanified">
+						<hbox id="replanified" options="1,0">
 							<image label="Re-planned time" src="agt_reload.png"/>
-							<date-duration id="${row}[info_replanned_time]" span="all" class="replanned" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_replanned_time]" readonly="true" options="@duration_format" span="all" class="replanned"/>
 						</hbox>
 					</vbox>
 					<vbox options="0,0">
@@ -143,25 +143,25 @@
 							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox options="0" align="center" class="noPrint" orient="0">
-						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="view" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
-						<button image="parent" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
-						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
+					<vbox align="center" options="0" class="noPrint" orient="0">
+						<button align="center" statustext="Add a new sub-task, -note, -call to this entry" label="Add sub" id="sp[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="new"/>
+						<button align="center" statustext="View all subs of this entry" label="View subs" id="view[$row_cont[info_id]]" image="view"/>
+						<button align="center" statustext="View the parent of this entry and all his subs" label="View parent" id="view[$row_cont[info_id_parent]]" image="parent"/>
+						<button align="center" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="timesheet"/>
 					</vbox>
 					<vbox options="0" class="noPrint" orient="0">
 						<hbox options="0,0" class="noPrint" orient="0">
-							<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
-							<checkbox id="checked[]" options="$row_cont[info_id]" statustext="Select multiple contacts for a further action" align="right"/>
+							<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="edit"/>
+							<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[info_id]]" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');" image="delete"/>
+							<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[info_id]"/>
 						</hbox>
 						<hbox options="0,0" class="noPrint" orient="0">
-							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
-							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+							<button statustext="Sets the status of this entry to done" label="Set status to done" id="close[$row_cont[info_id]]" image="done"/>
+							<button statustext="Sets the status of this entry and its subs to done" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" image="done_all"/>
 						</hbox>
 						<hbox options="0,0" class="image16" orient="0">
-							<button id="document[$row_cont[info_id]]" image="etemplate/merge" label="Insert in document"/>
-							<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
+							<button label="Insert in document" id="document[$row_cont[info_id]]" image="etemplate/merge"/>
+							<image label="Filemanager" src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
 						</hbox>
 					</vbox>
 				</row>
@@ -176,10 +176,10 @@
 			</columns>
 			<rows>
 				<row disabled="!@css">
-					<html span="all" id="css"/>
+					<html id="css" span="all"/>
 				</row>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" no_lang="1" id="msg"/>
+					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 					<description/>
 				</row>
@@ -188,16 +188,16 @@
 					<template id="header_right"/>
 				</row>
 				<row>
-					<nextmatch span="all" id="nm" options="infolog.index.rows"/>
+					<nextmatch id="nm" options="infolog.index.rows" span="all"/>
 				</row>
 				<row class="noPrint" disabled="!@nm[selectcols]=/actions/">
 					<hbox>
-						<button label="Add" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id={$cont[nm][cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" id="add[note]" statustext="Add a new Entry"/>
-						<button label="Cancel" id="cancel" statustext="Back to main list"/>
+						<button statustext="Add a new Entry" label="Add" id="add[note]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id={$cont[nm][cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button statustext="Back to main list" label="Cancel" id="cancel"/>
 					</hbox>
 					<hbox align="right" span="all">
-						<buttononly label="Select action" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;" id="legacy_actions" statustext="Select action"/>
-						<button label="Check all" onclick="egw_objectManager.toggleAllSelected(); return false;" needed="1" id="check_all" image="arrow_ltr" statustext="Check all" class="checkAllArrow"/>
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_objectManager.executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_objectManager.toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
 					</hbox>
 				</row>
 				<row>
@@ -208,9 +208,9 @@
 								<description value="Select users or groups"/>
 								<listbox type="select-account" id="responsible" rows="5" options="both" class="action_popup-content"/>
 								<hbox>
-									<button label="Add" onclick="submit_popup(this); return false;" id="responsible_action[add]"/>
-									<button label="Delete" onclick="submit_popup(this); return false;" id="responsible_action[delete]"/>
-									<buttononly label="Cancel" onclick="hide_popup(this,'responsible_popup');"/>
+									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -219,9 +219,9 @@
 								<description value="Delete" class="promptheader"/>
 								<description value="Delete selected entries?" id="delete_prompt"/>
 								<hbox>
-									<button label="Yes - Delete" onclick="submit_popup(this); return false;" id="delete"/>
-									<button label="Yes - Delete including sub-entries" onclick="infolog_popup_action.id = 'delete_sub';submit_popup(this);return false;" id="delete_sub"/>
-									<buttononly label="No - Cancel" onclick="hide_popup(this,'delete_popup');"/>
+									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
+									<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -231,9 +231,9 @@
 							<description value="Add / Remove link" class="promptheader"/>
 							<link-entry id="link" class="action_popup-content"/>
 							<hbox>
-								<button label="Add" onclick="submit_popup(this); return false;" id="link_action[add]"/>
-								<button label="Delete" onclick="submit_popup(this); return false;" id="link_action[delete]"/>
-								<buttononly label="Cancel" onclick="hide_popup(this,'link_popup');"/>
+								<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
+								<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
 							</hbox>
 						</vbox>
 					</box>

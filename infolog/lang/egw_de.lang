@@ -74,7 +74,7 @@ change history	infolog	de	Änderungsverlauf
 change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
 changed category to %1	infolog	de	Kategorie geändert zu %1
-changed completion to %1%	infolog	de	Erledigt geändert zu %1
+changed completion to %1%	infolog	de	Erledigt geändert zu %1%
 changed status to %1	infolog	de	Status geändert zu %1
 changed type	infolog	de	Typ geändert
 charset of file	infolog	de	Zeichensatz der Datei
