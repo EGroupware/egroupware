@@ -34,3 +34,10 @@ while (false !== ($appdir = $egwdir->read())) {
 		importexport_definitions_bo::import( $file );
 	}
 }
+
+// give Default and Admins group rights for ImportExport
+foreach(array('Default' => 'Default','Admins' => 'Admin') as $account_lid => $name)
+{
+	$account_id = $GLOBALS['egw_setup']->add_account($account_lid,$name,'Group',False,False);
+	$GLOBALS['egw_setup']->add_acl('importexport','run',$account_id);
+}
