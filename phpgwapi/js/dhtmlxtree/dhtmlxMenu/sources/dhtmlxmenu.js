@@ -382,11 +382,10 @@ function dhtmlXMenuObject(baseId, skin) {
 				x = 0;
 			}
 			if (y+h > my && this.menuY2 != null) {
-				y = srcY + srcH - h + 2;
-				if (y < 2) {
-					// Don't let the menu overflow at the top
-					y = 2;
-				}
+				var sy = Math.max(
+					(_isIE?document.documentElement:document.getElementsByTagName("html")[0]).scrollTop,
+					document.body.scrollTop);
+				y = Math.max(srcY + srcH - h - sy + 2, 2) + sy;
 				// open from top level
 				if (this.itemPull[id] != null && !this.context) {
 					if (this.itemPull[id]["parent"] == this.idPrefix+this.topId) y = y - this.base.offsetHeight;
