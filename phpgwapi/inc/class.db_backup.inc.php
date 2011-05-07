@@ -330,6 +330,7 @@ class db_backup
 		'httpproxy_server_username',
 		'httpproxy_server_password',
 		'system_charset',
+		'install_id',	// do not restore install_id, as that would give two systems with identical install_id
 	);
 
 	/**
