@@ -165,6 +165,15 @@ abstract class bo_tracking
 	var $html_content_allow = false;
 
 	/**
+	 * Custom fields of type link entry or application
+	 *
+	 * Used to automatic create or update a link
+	 *
+	 * @var array field => application name pairs (or empty for link entry)
+	 */
+	var $cf_link_fields = array();
+
+	/**
 	 * Separator for 1:N relations
 	 *
 	 */
@@ -180,9 +189,15 @@ abstract class bo_tracking
 	{
 		if ($cf_app)
 		{
+			$linkable_cf_types = array('link-entry')+array_keys(egw_link::app_list());
 			foreach(config::get_customfields($cf_app, true) as $cf_name => $cf_data)
 			{
 				$this->field2history['#'.$cf_name] = '#'.$cf_name;
+
+				if (in_array($cf_data['type'],$linkable_cf_types))
+				{
+					$this->cf_link_fields['#'.$cf_name] = $cf_data['type'] == 'link-entry' ? '' : $cf_data['type'];
+				}
 			}
 		}
 	}
@@ -231,12 +246,52 @@ abstract class bo_tracking
 		{
 			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
 		}
+		if ($changes && $this->cf_link_fields)
+		{
+			$this->update_links($data,$old);
+		}
 		// do not run do_notifications if we have no changes
 		if ($changes && !$skip_notification && !$this->do_notifications($data,$old,$deleted))
 		{
 			$changes = false;
 		}
 		return $changes;
+	}
+
+	/**
+	 * Store a link for each custom field linking to an other application and update them
+	 *
+	 * @param array $data
+	 * @param array $old
+	 */
+	protected function update_links(array $data, array $old)
+	{
+		$current_ids = array_unique(array_diff(array_intersect_key($data,$this->cf_link_fields),array('',0,NULL)));
+		$old_ids = $old ? array_unique(array_diff(array_intersect_key($old,$this->cf_link_fields),array('',0,NULL))) : array();
+
+		// create links for added application entry
+		foreach(array_diff($current_ids,$old_ids) as $name => $id)
+		{
+			if (!($app = $this->cf_link_fields[$name]))
+			{
+				list($app,$id) = explode(':',$id);
+				if (!$id) continue;	// can be eg. 'addressbook:', if no contact selected
+			}
+			egw_link::link($this->app,$data[$this->id_field],$app,$id);
+			//echo "<p>egw_link::link('$this->app',{$data[$this->id_field]},'$app',$id);</p>\n";
+		}
+
+		// unlink removed application entries
+		foreach(array_diff($old_ids,$current_ids) as $name => $id)
+		{
+			if (!($app = $this->cf_link_fields[$name]))
+			{
+				list($app,$id) = explode(':',$id);
+				if (!$id) continue;
+			}
+			egw_link::unlink(null,$this->app,$data[$this->id_field],0,$app,$id);
+			//echo "<p>egw_link::unlink(NULL,'$this->app',{$data[$this->id_field]},0,'$app',$id);</p>\n";
+		}
 	}
 
 	/**
