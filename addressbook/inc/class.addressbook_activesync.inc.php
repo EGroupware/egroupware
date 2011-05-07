@@ -1,10 +1,10 @@
 <?php
 /**
- * EGroupware: ActiveSync access: Addressbook plugin
+ * EGroupware: eSync: Addressbook plugin
  *
  * @link http://www.egroupware.org
  * @package addressbook
- * @subpackage activesync
+ * @subpackage esync
  * @author Ralf Becker <rb@stylite.de>
  * @author Klaus Leithoff <kl@stylite.de>
  * @author Philip Herbert <philip@knauber.de>

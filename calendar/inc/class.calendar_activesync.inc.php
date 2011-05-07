@@ -1,10 +1,10 @@
 <?php
 /**
- * EGroupware: ActiveSync access: Calendar plugin
+ * EGroupware: eSync: Calendar plugin
  *
  * @link http://www.egroupware.org
  * @package calendar
- * @subpackage activesync
+ * @subpackage esync
  * @author Ralf Becker <rb@stylite.de>
  * @author Klaus Leithoff <kl@stylite.de>
  * @author Philip Herbert <philip@knauber.de>
@@ -13,9 +13,9 @@
  */
 
 /**
- * Calendar activesync plugin
+ * Calendar eSync plugin
  *
- * Plugin to make EGroupware calendar data available via Active Sync
+ * Plugin to make EGroupware calendar data available
  *
  * Handling of (virtual) exceptions of recurring events:
  * ----------------------------------------------------
@@ -23,12 +23,12 @@
  * compared to regular series (master). Real exceptions usually have different dates and/or other data.
  * EGroupware calendar data model does NOT store virtual exceptions as exceptions,
  * as participant status is stored per recurrence date and not just per event!
- * GetMessageList reports virtual exceptions with an id like cal_id:recur_date, which
- * is understood bei StatMessage, GetMessage and ChangeMessage (implementation is currently missing!).
- * Real exceptions have there own calendar id, under which they are reported by GetMessageList.
  *
- * @todo alarms / reminders (currently they are not reported to and not changed by the device)
- * We probably want to report only alarms of the current user (which should ring on the device)
+ * --> ActiveSync protocol does NOT support different participants or status for exceptions!
+ *
+ * Handling of alarms:
+ * ------------------
+ * We report only alarms of the current user (which should ring on the device)
  * and save alarms set on the device only for the current user, if not yet there (preserving all other alarms).
  * How to deal with multiple alarms allowed in EGroupware: report earliest one to the device
  * (and hope it resyncs before next one is due, thought we do NOT report that as change currently!).
