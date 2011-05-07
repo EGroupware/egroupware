@@ -3,7 +3,7 @@
  * eGroupWare  eTemplate Extension - Nextmatch Widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-11 by RalfBecker@outdoor-training.de
  * @package etemplate
  * @subpackage extensions
  * @link http://www.egroupware.org
@@ -870,6 +870,8 @@ class nextmatch_widget
 		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
 			json_encode(self::egw_actions($actions, $template_name, '', $action_links))).');
 		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
+		'.$prefix.'actionManager.etemplate_var_prefix="'.etemplate::$name_vars.'";
+		'.$prefix.'actionManager.etemplate_form=document.forms.'.etemplate::$name_form.';
 
 		var actionLinks = ["'.implode('","', $action_links).'"];
 

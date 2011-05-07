@@ -143,6 +143,14 @@ function nm_action(_action, _senders)
 			egw_openWindowCentered2(url,target,_action.data.width,_action.data.height);
 			break;
 			
+		case 'open_popup':
+			// open div styled as popup contained in current form and named action.id+'_popup'
+			if (typeof nm_popup_action == 'undefined')
+			{
+				nm_open_popup(_action, _senders);
+				break;
+			}
+			// fall through, if popup is open --> submit form
 		case 'submit':
 			// let user confirm select-all
 			if (select_all && select_all.checked)
@@ -150,21 +158,20 @@ function nm_action(_action, _senders)
 				if (!confirm(confirm_msg+"\n\n"+select_all.hint)) return;
 			}
 			var checkboxes = egw_actionManager.getActionsByAttr("checkbox", true);
-			var checkboxes_elem = document.getElementById('exec[nm][checkboxes]');
+			var checkboxes_elem = document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][checkboxes]');
 			if (checkboxes && checkboxes_elem)
 				for (var i in checkboxes)
 					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
 
-			var form = document.getElementsByName("eTemplate")[0];
-			document.getElementById('exec[nm][nm_action]').value = _action.id;
-			document.getElementById('exec[nm][selected]').value = ids;
+			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][nm_action]').value = _action.id;
+			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][selected]').value = ids;
 			if (typeof _action.data.button != 'undefined')
 			{
-				submitit(form.context, 'exec[nm][rows]['+_action.data.button+']['+ids+']');
+				submitit(egw_actionManager.etemplate_form.context, egw_actionManager.etemplate_var_prefix+'[nm][rows]['+_action.data.button+']['+ids+']');
 			}
 			else
 			{
-				form.submit();
+				egw_actionManager.etemplate_form.submit();
 			}
 			break;
 	}
@@ -218,4 +225,54 @@ function nm_compare_field(_action, _senders, _target)
 		return value != _action.data.fieldValue.substr(1);
 	
 	return value == _action.data.fieldValue;
+}
+
+var nm_popup_action, nm_popup_senders;
+
+/**
+ * Open popup for a certain action requiring further input
+ * 
+ * Popup needs to have eTemplate name of action id plus "_popup"
+ * 
+ * @param _action
+ * @param _senders
+ */
+function nm_open_popup(_action, _senders)
+{
+	var popup = document.getElementById(egw_actionManager.etemplate_var_prefix + '[' + _action.id + '_popup]');
+
+	if (popup) {
+		nm_popup_action = _action;
+		nm_popup_senders = _senders;
+		popup.style.display = 'block';
+	}
+}
+
+/**
+ * Submit a popup action
+ */
+function nm_submit_popup(button)
+{
+	button.form.submit_button.value = button.name;	// set name of button (sub-action)
+
+	// call regular nm_action to transmit action and senders correct
+	nm_action(nm_popup_action, nm_popup_senders);
+}
+
+/**
+ * Hide popup
+ */
+function nm_hide_popup(element, div_id) 
+{
+	var prefix = element.id.substring(0,element.id.indexOf('['));
+	var popup = document.getElementById(prefix+'['+div_id+']');
+
+	// Hide popup
+	if(popup) {
+		popup.style.display = 'none';
+	}
+	delete nm_popup_action;
+	delete nm_popup_senders;
+
+	return false;
 }

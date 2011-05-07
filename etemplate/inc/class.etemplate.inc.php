@@ -5,7 +5,7 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Ralf Becker <RalfBecker@outdoor-training.de>
-* @copyright 2002-9 by RalfBecker@outdoor-training.de
+* @copyright 2002-11 by RalfBecker@outdoor-training.de
 * @package etemplate
 * @subpackage api
 * @version $Id$
