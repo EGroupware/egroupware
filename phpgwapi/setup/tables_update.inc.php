@@ -203,3 +203,56 @@ function phpgwapi_upgrade1_9_007()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.008';
 }
 
+/**
+ * Alter column cat_owner to varchar(255) to support multiple owners/groups per cat
+ *
+ * Enable password migration to new default ssha, if current hash is the default (sql: md5, ldap:des)
+ */
+function phpgwapi_upgrade1_9_008()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_categories','cat_owner',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'nullable' => False,
+		'default' => '0'
+	));
+
+	// query password hashing from database
+	$config = array(
+		'auth_type' => 'sql',
+		'account_repository' => null,	// default is auth_type
+		'sql_encryption_type' => 'md5',
+		'ldap_encryption_type' => 'des',
+		'pwd_migration_allowed' => null,	// default off
+	);
+	foreach($GLOBALS['egw_setup']->db->select('egw_config','config_name,config_value',array(
+		'config_app' => 'phpgwapi',
+		'config_name' => array_keys($config),
+	),__LINE__,__FILE__) as $row)
+	{
+		$config[$row['config_name']] = $row['config_value'];
+	}
+	if (!isset($config['account_repository'])) $config['account_repository'] = $config['auth_type'];
+
+	// changing pw hashing only, if we auth agains our own account repository and no migration already active
+	if ($config['auth_type'] == $config['account_repository'] && !$config['pwd_migration_allowed'])
+	{
+		if ($config['auth_type'] == 'sql' && $config['sql_encryption_type'] == 'md5' ||
+			$config['auth_type'] == 'ldap'&& $config['ldap_encryption_type'] == 'des')
+		{
+			$config['sql_encryption_type'] = $config['ldap_encryption_type'] = 'ssha';
+			$config['pwd_migration_allowed'] = 'True';
+			$config['pwd_migration_types'] = 'md5,crypt';	// des is called crypt in hash
+		}
+		foreach($config as $name => $value)
+		{
+			$GLOBALS['egw_setup']->db->insert('egw_config',array(
+				'config_value' => $value,
+			),array(
+				'config_app' => 'phpgwapi',
+				'config_name' => $name,
+			),__LINE__,__FILE__);
+		}
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.009';
+}

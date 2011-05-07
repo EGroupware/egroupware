@@ -149,7 +149,7 @@ $phpgw_baseline = array(
 			'cat_main' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 			'cat_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 			'cat_level' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '0'),
-			'cat_owner' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+			'cat_owner' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '0'),
 			'cat_access' => array('type' => 'varchar','precision' => '7'),
 			'cat_appname' => array('type' => 'varchar','precision' => '50','nullable' => False),
 			'cat_name' => array('type' => 'varchar','precision' => '150','nullable' => False),
