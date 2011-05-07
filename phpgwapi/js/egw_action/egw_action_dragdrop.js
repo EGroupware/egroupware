@@ -161,7 +161,7 @@ function egwDragActionImplementation()
 
 				// Only execute the following code if a JS function is registered
 				// for the action and this is the first action link
-				if (!this.helper && _links[k].actionObj.execJSFnct)
+				if (!this.helper && _links[k].actionObj.onExecute.hasHandler())
 				{
 					this.helper = _links[k].actionObj.execute(_selected);
 				}
