@@ -1523,8 +1523,7 @@ dhtmlXMenuObject.prototype._autoDetectVisibleArea = function() {
 	this.menuX2 = this.menuX1+(window.innerWidth||document.body.clientWidth);
 	this.menuY1 = Math.max((_isIE?document.documentElement:document.getElementsByTagName("html")[0]).scrollTop, document.body.scrollTop);
 	// this.menuY2 = this.menuY1+(_isIE?(document.documentElement?Math.max(document.documentElement.clientHeight:document.body.clientHeight):window.innerHeight);
-	this.menuY2 = this.menuY1+(_isIE?Math.max(document.documentElement.clientHeight||0,document.documentElement.offsetHeight||0,document.body.clientHeight||0):window.innerHeight);
-	
+	this.menuY2 = this.menuY1+document.documentElement.clientHeight;
 }
 /* inner - returns true if prognozided polygon layout off the visible area */
 /*dhtmlXMenuObject.prototype._isInVisibleArea = function(x, y, w, h) {
