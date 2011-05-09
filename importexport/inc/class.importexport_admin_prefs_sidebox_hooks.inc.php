@@ -135,7 +135,8 @@ class importexport_admin_prefs_sidebox_hooks
 				$file_list[$_file['path']] = egw_vfs::decodePath($_file['name']);
 			}
 			$prefix = 'document_';
-			$options = 'style="max-width:175px;" onchange="var action = new egwAction(null,\''.$prefix.'\'+this.value);console.log(action); nm_action(action, egw_objectManager.selectedChildren); this.value = \'\'"';
+			
+			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\');console.log(window); var action = new window.egwAction(null,\''.$prefix.'\'+this.value);console.log(action); window.nm_action(action, window.egw_objectManager.selectedChildren); this.value = \'\'"';
 			$file[] = array(
 				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
 				'noLang'	=> true,
