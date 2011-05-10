@@ -268,7 +268,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		dataType: 'json',
 		type: 'POST', 
 		success: this.handleResponse,
-		error: function(_xmlhttp,_err) { alert('Ajax request to ' + this.url + ' failed: ' + _err); }
+		error: function(_xmlhttp,_err) { window.console.error('Ajax request to ' + this.url + ' failed: ' + _err); }
 	});
 }
 
