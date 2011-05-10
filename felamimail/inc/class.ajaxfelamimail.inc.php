@@ -48,14 +48,14 @@ class ajaxfelamimail
 			$this->icServer = $this->bofelamimail->mailPreferences->getIncomingServer($this->imapServerID);
 		}
 
-		function addACL($_accountName, $_aclData)
+		function addACL($_accountName, $_aclData, $_recursive=false)
 		{
 			if($this->_debug) error_log("ajaxfelamimail::addACL for ".$_accountName."->".array2string($_aclData));
 			$response = new xajaxResponse();
-
+			//$_recursive=false;
 			if(!empty($_accountName)) {
 				$acl = implode('',(array)$_aclData['acl']);
-				$data = $this->bofelamimail->setACL($this->sessionDataAjax['folderName'], $_accountName, $acl);
+				$data = $this->bofelamimail->setACL($this->sessionDataAjax['folderName'], $_accountName, $acl, $_recursive);
 			}
 
 			return $response->getXML();
@@ -199,7 +199,7 @@ class ajaxfelamimail
 				foreach($aclList as $acl) {
 					$row .= "<td><input type=\"checkbox\" name=\"acl[$accountName][$acl]\" id=\"acl_$accountName_$acl\"".
 						(strpos($accountAcl['RIGHTS'],$acl) !== false ? 'checked' : '') .
-						" onclick=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateSingleACL','$accountName','$acl',this.checked); document.getElementById('predefinedFor_$accountName').options[0].selected=true\"</td>";
+						" onclick=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateSingleACL','$accountName','$acl',this.checked,document.getElementById('recursive').checked); document.getElementById('recursive').checked=false; document.getElementById('predefinedFor_$accountName').options[0].selected=true\"</td>";
 				}
 
 				$selectFrom = html::select('identity', $accountAcl['RIGHTS'], $aclShortCuts, false, "id=\"predefinedFor_$accountName\" style='width: 100px;' onChange=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACL','$accountName',this.value)\"");
@@ -212,13 +212,13 @@ class ajaxfelamimail
 			return "<table border=\"0\" style=\"width: 100%;\"><tr class=\"th\"><th>&nbsp;</th><th style=\"width:100px;\">Name</th><th>L</th><th>R</th><th>S</th><th>W</th><th>I</th><th>P</th><th>C</th><th>D</th><th>A</th><th>&nbsp;</th></tr>$row</table>";
 		}
 
-		function deleteACL($_aclData)
+		function deleteACL($_aclData,$_recursive=false)
 		{
-			if($this->_debug) error_log("ajaxfelamimail::deleteACL");
+			if($this->_debug) error_log("ajaxfelamimail::deleteACL".array2string($_aclData).' Recursively:'.array2string($_recursive));
 			$response = new xajaxResponse();
 			if(is_array($_aclData)) {
 				foreach($_aclData['accountName'] as $accountName) {
-					$data = $this->bofelamimail->deleteACL($this->sessionDataAjax['folderName'], $accountName);
+					$data = $this->bofelamimail->deleteACL($this->sessionDataAjax['folderName'], $accountName, $_recursive);
 				}
 
 				if ($folderACL = $this->bofelamimail->getIMAPACL($this->sessionDataAjax['folderName'])) {
@@ -1225,13 +1225,14 @@ class ajaxfelamimail
 		 */
 		function updateACL($_user, $_acl)
 		{
+			// not sure this one is used / called anymore
 			if ($_acl == 'custom') {
 				$response = new xajaxResponse();
 				return $response->getXML();
 			}
-
+			$_recursive=false;
 			$_folderName = $this->sessionDataAjax['folderName'];
-			$result = $this->bofelamimail->setACL($_folderName, $_user, $_acl);
+			$result = $this->bofelamimail->setACL($_folderName, $_user, $_acl, $_recursive);
 			if ($result && $folderACL = $this->bofelamimail->getIMAPACL($_folderName)) {
 				return $this->updateACLView();
 			}
@@ -1251,7 +1252,6 @@ class ajaxfelamimail
 		 */
 		function updateACLView()
 		{
-
 			$response = new xajaxResponse();
 			if($folderACL = $this->bofelamimail->getIMAPACL($this->sessionDataAjax['folderName'])) {
 				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
@@ -1295,10 +1295,11 @@ class ajaxfelamimail
 			return $messageList;
 		}
 
-		function updateSingleACL($_accountName, $_aclType, $_aclStatus)
+		function updateSingleACL($_accountName, $_aclType, $_aclStatus, $_recursive=false)
 		{
 			$response = new xajaxResponse();
-			$data = $this->bofelamimail->updateSingleACL($this->sessionDataAjax['folderName'], $_accountName, $_aclType, $_aclStatus);
+			//$_recursive=false;
+			$data = $this->bofelamimail->updateSingleACL($this->sessionDataAjax['folderName'], $_accountName, $_aclType, $_aclStatus, $_recursive);
 			return $response->getXML();
 		}
 

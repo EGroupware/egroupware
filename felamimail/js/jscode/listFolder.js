@@ -19,7 +19,8 @@ function onNodeSelect(_nodeID)
 
 function resetACLAddView()
 {
-	window.xajax_doXMLHTTP('felamimail.ajaxfelamimail.addACL', document.getElementById('accountName').value, window.xajax.getFormValues('formAddACL') );
+	window.xajax_doXMLHTTP('felamimail.ajaxfelamimail.addACL', document.getElementById('accountName').value, window.xajax.getFormValues('formAddACL'),document.getElementById('recursive').checked );
+	document.getElementById('recursive').checked = false;
 	document.getElementById('accountName').value = '';
 	document.getElementById('acl_l').checked = false;
 	document.getElementById('acl_r').checked = false;

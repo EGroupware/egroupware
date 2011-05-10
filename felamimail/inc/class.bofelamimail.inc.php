@@ -199,21 +199,69 @@
 			$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
 		}
 
-		function setACL($_folderName, $_accountName, $_acl)
+		function getFolderPrefixFromNamespace($nameSpace, $folderName)
 		{
+			foreach($nameSpace as $type => $singleNameSpace) 
+			{
+				if($type == 'personal' && substr($singleNameSpace[2]['name'],0,strlen($folderName))==$folderName && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('Mail')) {
+					// uw-imap server with mailbox prefix or dovecot maybe
+					return 'Mail';
+				} elseif($type == 'personal' && substr($singleNameSpace[2]['name'],0,strlen($folderName))==$folderName && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
+					// uw-imap server with mailbox prefix or dovecot maybe
+					return 'mail';
+				} else {
+					return (substr($singleNameSpace[0]['name'],0,strlen($folderName))==$folderName ? $singleNameSpace[0]['name'] : '');
+				}
+			}
+		}
+
+		function setACL($_folderName, $_accountName, $_acl, $_recursive=false)
+		{
+			//$_recursive=true;
+			//error_log(__METHOD__.__LINE__.'-> called with:'."$_folderName, $_accountName, $_acl, $_recursive");
 			if ( PEAR::isError($this->icServer->setACL($_folderName, $_accountName, $_acl)) ) {
 				return false;
 			}
+			if ($_recursive)
+			{
+				$delimiter = $this->getHierarchyDelimiter();
+				$nameSpace = $this->icServer->getNameSpaces();
+				$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
+				//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
 
+				$subFolders = $this->getMailBoxesRecursive($_folderName, $delimiter, $prefix);
+				//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
+				foreach ($subFolders as $k => $folder)
+				{
+					// we do not monitor failure or success on subfolders
+					if ($folder <> $_folderName) $this->icServer->setACL($folder, $_accountName, $_acl);
+				}
+			}
 			return TRUE;
 		}
 
-		function deleteACL($_folderName, $_accountName)
+		function deleteACL($_folderName, $_accountName, $_recursive=false)
 		{
+			//$_recursive=true;
+			//error_log(__METHOD__.__LINE__." calledv with: $_folderName, $_accountName, $_recursive");
 			if ( PEAR::isError($this->icServer->deleteACL($_folderName, $_accountName)) ) {
 				return false;
 			}
+			if ($_recursive)
+			{
+				$delimiter = $this->getHierarchyDelimiter();
+				$nameSpace = $this->icServer->getNameSpaces();
+				$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
+				//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
 
+				$subFolders = $this->getMailBoxesRecursive($_folderName, $delimiter, $prefix);
+				//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
+				foreach ($subFolders as $k => $folder)
+				{
+					// we do not monitor failure or success on subfolders
+					if ($folder <> $_folderName) $this->icServer->deleteACL($folder, $_accountName);
+				}
+			}
 			return TRUE;
 		}
 
@@ -2227,10 +2275,14 @@
 					if(substr($headerObject['DATE'],-2) === 'UT') {
 						$headerObject['DATE'] .= 'C';
 					}
+					if(substr($headerObject['INTERNALDATE'],-2) === 'UT') {
+						$headerObject['INTERNALDATE'] .= 'C';
+					}
 
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
+					//$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
@@ -2986,19 +3038,20 @@
 			}
 		}
 
-		function updateSingleACL($_folderName, $_accountName, $_aclType, $_aclStatus)
+		function updateSingleACL($_folderName, $_accountName, $_aclType, $_aclStatus,$_recursive=false)
 		{
+			//error_log(__METHOD__.__LINE__." $_folderName, $_accountName, $_aclType, $_aclStatus,$_recursive");
 			$userACL = $this->getIMAPACL($_folderName, $_accountName);
 
-			if($_aclStatus == 'true') {
+			if($_aclStatus == 'true' || $_aclStatus == 1) {
 				if(strpos($userACL, $_aclType) === false) {
 					$userACL .= $_aclType;
-					$this->setACL($_folderName, $_accountName, $userACL);
+					$this->setACL($_folderName, $_accountName, $userACL, $_recursive);
 				}
-			} elseif($_aclStatus == 'false') {
+			} elseif($_aclStatus == 'false' || empty($_aclStatus)) {
 				if(strpos($userACL, $_aclType) !== false) {
 					$userACL = str_replace($_aclType,'',$userACL);
-					$this->setACL($_folderName, $_accountName, $userACL);
+					$this->setACL($_folderName, $_accountName, $userACL, $_recursive);
 				}
 			}
 
@@ -3093,7 +3146,8 @@
 					break;
 				case 0:
 				default:
-					$retValue = 'DATE';
+					//$retValue = 'DATE';
+					$retValue = 'ARRIVAL';
 					break;
 			}
 

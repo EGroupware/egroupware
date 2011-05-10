@@ -757,6 +757,7 @@ require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc
 			$this->t->set_var('lang_ACL',lang('ACL'));
 			$this->t->set_var('lang_save',lang('save'));
 			$this->t->set_var('lang_cancel',lang('cancel'));
+			$this->t->set_var('lang_setrecursively',lANG('apply recursively?'));
 			$this->t->set_var('lang_Overview',lang('Overview'));
 			$this->t->set_var('lang_edit_forwarding_address',lang('edit email forwarding address'));
 			$this->t->set_var('lang_forwarding_address',lang('email forwarding address'));
