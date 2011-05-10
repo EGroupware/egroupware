@@ -1233,13 +1233,46 @@ class translation
 		self::replaceEmailAdresses($_html);
 		//convert hrefs to description -> URL
 		$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
+
+		// reducing double \r\n to single ones, dont mess with pre sections
+		if ($stripcrl === true )
+		{
+			if (stripos($_html,'<pre>')!==false)
+			{
+				$contentArr = html::splithtmlByPRE($_html);
+				foreach ($contentArr as $k =>&$elem)
+				{
+					if (stripos($elem,'<pre>')===false)
+					{
+						//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
+						if ( $stripalltags ) {
+							$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+						}
+						// strip out whitespace inbetween CR/LF
+						$elem = preg_replace('~\r\n\s+\r\n~si', "\r\n\r\n", $elem);
+						// strip out / reduce exess CR/LF 
+						$elem = preg_replace('~\r\n{3,}~si',"\r\n\r\n",$elem);
+					}
+				}
+				$_html = implode('',$contentArr);
+			}
+			else
+			{
+				//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
+				if ( $stripalltags ) {
+					$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+				}
+				// strip out whitespace inbetween CR/LF
+				$_html = preg_replace('~\r\n\s+\r\n~si', "\r\n\r\n", $_html);
+				// strip out / reduce exess CR/LF 
+				$_html = preg_replace('~(\r\n){3,}~si',"\r\n\r\n",$_html);
+			}
+		}
 		//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
 		if ( $stripalltags ) {
-			$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+			//$_html = preg_replace('~<[^>^@]+>~s','',$_html);
 			//$_html = strip_tags($_html, '<a>');
 		}
-		// reducing double \r\n to single ones
-		//$_html = str_replace("\r\n\r\n", "\r\n", $_html); // ToDo: this needsv to be more sophosticated 
 		// reducing spaces
 		$_html = preg_replace('~ +~s',' ',$_html);
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
