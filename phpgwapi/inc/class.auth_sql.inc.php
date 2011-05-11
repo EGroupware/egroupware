@@ -236,7 +236,7 @@ class auth_sql implements auth_backend
 	private function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=false,$update_lastpw_change=true)
 	{
 		$update = array('account_pwd' => $encrypted_passwd);
-		if ($update_lastpw_change) $write['account_lastpwd_change'] = time();
+		if ($update_lastpw_change) $update['account_lastpwd_change'] = time();
 
 		$this->db->update($this->table,$update,array(
 			'account_id' => $account_id,
