@@ -266,9 +266,12 @@ abstract class bo_tracking
 	 */
 	protected function update_links(array $data, array $old)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($data).function_backtrace());
+		//error_log(__METHOD__.__LINE__.array2string($this->cf_link_fields));
 		$current_ids = array_unique(array_diff(array_intersect_key($data,$this->cf_link_fields),array('',0,NULL)));
 		$old_ids = $old ? array_unique(array_diff(array_intersect_key($old,$this->cf_link_fields),array('',0,NULL))) : array();
-
+		//error_log(__METHOD__.__LINE__.array2string($current_ids));
+		//error_log(__METHOD__.__LINE__.array2string($old_ids));
 		// create links for added application entry
 		foreach(array_diff($current_ids,$old_ids) as $name => $id)
 		{
@@ -277,7 +280,10 @@ abstract class bo_tracking
 				list($app,$id) = explode(':',$id);
 				if (!$id) continue;	// can be eg. 'addressbook:', if no contact selected
 			}
-			egw_link::link($this->app,$data[$this->id_field],$app,$id);
+			$source_id = $data[$this->id_field];
+			//error_log(__METHOD__.__LINE__.array2string($source_id));
+			if ($source_id) egw_link::link($this->app,$source_id,$app,$id);
+			//error_log(__METHOD__.__LINE__."egw_link::link('$this->app',".array2string($source_id).",'$app',$id);");
 			//echo "<p>egw_link::link('$this->app',{$data[$this->id_field]},'$app',$id);</p>\n";
 		}
 
@@ -289,7 +295,8 @@ abstract class bo_tracking
 				list($app,$id) = explode(':',$id);
 				if (!$id) continue;
 			}
-			egw_link::unlink(null,$this->app,$data[$this->id_field],0,$app,$id);
+			$source_id = $data[$this->id_field];
+			if ($source_id) egw_link::unlink(null,$this->app,$source_id,0,$app,$id);
 			//echo "<p>egw_link::unlink(NULL,'$this->app',{$data[$this->id_field]},0,'$app',$id);</p>\n";
 		}
 	}
