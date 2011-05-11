@@ -1270,7 +1270,7 @@ class translation
 		}
 		//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
 		if ( $stripalltags ) {
-			//$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+			$_html = preg_replace('~<[^>^@]+>~s','',$_html);
 			//$_html = strip_tags($_html, '<a>');
 		}
 		// reducing spaces
