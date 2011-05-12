@@ -133,6 +133,8 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			$import_csv->skip_records(1);
 		}
 
+		$_lookups = array();
+
 		// set eventOwner
 		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
@@ -149,6 +151,8 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
+
+			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups);
 
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {

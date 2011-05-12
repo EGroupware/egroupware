@@ -16,12 +16,6 @@
  */
 class addressbook_export_contacts_csv implements importexport_iface_export_plugin {
 
-	// Used in conversions
-	static $types = array(
-                'select-account' => array('owner','creator','modifier'),
-                'date-time' => array('modified','created','last_event','next_event'),
-                'select-cat' => array('cat_id'),
-        );
 
 	/**
 	 * Constants used for exploding categories & multi-selectboxes into seperate fields
@@ -195,7 +189,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			// Some conversion
 			$this->convert($contact, $options);
 			if($options['convert']) {
-				importexport_export_csv::convert($contact, self::$types, 'addressbook');
+				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook');
 			} else {
                                 // Implode arrays, so they don't say 'Array'
                                 foreach($contact->get_record_array() as $key => $value) {

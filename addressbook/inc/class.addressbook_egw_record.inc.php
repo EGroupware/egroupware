@@ -22,6 +22,12 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	private $contact = array();
 	private $bocontacts;
 
+	// Used in conversions
+	static $types = array(
+                'select-account' => array('owner','creator','modifier'),
+                'date-time' => array('modified','created','last_event','next_event'),
+                'select-cat' => array('cat_id'),
+        );
 
 
 	/**
