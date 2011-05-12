@@ -121,7 +121,6 @@ class boetemplate extends soetemplate
 		// use expand_name to be able to use @ or $
 		$val = $this->expand_name($val,$c,$row,'','',$content);
 		$check_val = $this->expand_name($check_val,$c,$row,'','',$content);
-
 		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
 		if ($not) $result = !$result;
 		//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
@@ -632,7 +631,7 @@ class boetemplate extends soetemplate
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
-			if (!is_array($pos) && !$reference_info)
+			if (!is_array($pos) && !$reference_into)
 			{
 				return False;
 			}
