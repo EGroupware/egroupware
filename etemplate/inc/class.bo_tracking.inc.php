@@ -268,6 +268,15 @@ abstract class bo_tracking
 	{
 		//error_log(__METHOD__.__LINE__.array2string($data).function_backtrace());
 		//error_log(__METHOD__.__LINE__.array2string($this->cf_link_fields));
+		foreach((array)$this->cf_link_fields as $name => $val)
+		{
+			//error_log(__METHOD__.__LINE__.' Field:'.$name. ' Value (new):'.array2string($data[$name]));
+			//error_log(__METHOD__.__LINE__.' Field:'.$name. ' Value (old):'.array2string($old[$name]));
+			if (is_array($data[$name]) && array_key_exists('id',$data[$name])) $data[$name] = $data[$name]['id'];
+			if (is_array($old[$name]) && array_key_exists('id',$old[$name])) $old[$name] = $old[$name]['id'];
+			//error_log(__METHOD__.__LINE__.'(After processing) Field:'.$name. ' Value (new):'.array2string($data[$name]));
+			//error_log(__METHOD__.__LINE__.'(After processing) Field:'.$name. ' Value (old):'.array2string($old[$name]));
+		}
 		$current_ids = array_unique(array_diff(array_intersect_key($data,$this->cf_link_fields),array('',0,NULL)));
 		$old_ids = $old ? array_unique(array_diff(array_intersect_key($old,$this->cf_link_fields),array('',0,NULL))) : array();
 		//error_log(__METHOD__.__LINE__.array2string($current_ids));
