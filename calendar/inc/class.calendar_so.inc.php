@@ -1142,6 +1142,12 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			if ($name[0] == '#')
 			{
+				if (is_array($value) && array_key_exists('id',$value)) 
+				{
+					//error_log(__METHOD__.__LINE__."$name => ".array2string($value).function_backtrace());
+					$value = $value['id'];
+					//error_log(__METHOD__.__LINE__."$name => ".array2string($value));
+				}
 				if ($value)
 				{
 					$this->db->insert($this->extra_table,array(
