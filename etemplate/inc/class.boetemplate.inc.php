@@ -631,7 +631,7 @@ class boetemplate extends soetemplate
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
-			if (!is_array($pos) && !$reference_info)
+			if (!is_array($pos) && !$reference_into)
 			{
 				return False;
 			}
