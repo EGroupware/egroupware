@@ -113,7 +113,8 @@ class timesheet_merge extends bo_merge
 		importexport_export_csv::convert($record, $types, 'timesheet', $selects);
 
 		$array = $record->get_record_array();
-		foreach(array('ts_duration','ts_quantity','ts_unitprice') as $key)
+		$array['ts_total'] = $array['ts_quantity'] * $array['ts_unitprice'];
+		foreach(array('ts_duration','ts_quantity','ts_unitprice','ts_total') as $key)
 		{
 			$array[$key] = self::number_format($array[$key],2,$this->mimetype);
 		}
@@ -146,7 +147,7 @@ class timesheet_merge extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('Timesheet fields:')."</h3></td></tr>";
 
 		$n = 0;
-		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label;
+		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array('ts_total' => lang('total'));
 		foreach($fields as $name => $label)
 		{
 			if (in_array($name,array('pl_id','customfields'))) continue;	// dont show them
