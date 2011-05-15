@@ -33,7 +33,7 @@
  * How to deal with multiple alarms allowed in EGroupware: report earliest one to the device
  * (and hope it resyncs before next one is due, thought we do NOT report that as change currently!).
  */
-class calendar_activesync implements activesync_plugin_write
+class calendar_activesync implements activesync_plugin_write, activesync_plugin_meeting_requests
 {
 	/**
 	 * var BackendEGW
@@ -66,8 +66,6 @@ class calendar_activesync implements activesync_plugin_write
 
 	/**
 	 *  This function is analogous to GetMessageList.
-	 *
-	 *  @ToDo implement preference, include own private calendar
 	 */
 	public function GetFolderList()
 	{
@@ -165,9 +163,10 @@ class calendar_activesync implements activesync_plugin_write
 	 *
 	 * @param string $id folder id
 	 * @param int $cutoffdate=null
+	 * @param array $not_uids=null uids NOT to return for meeting requests
 	 * @return array
   	 */
-	function GetMessageList($id, $cutoffdate=NULL)
+	function GetMessageList($id, $cutoffdate=NULL, array $not_uids=null)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
@@ -182,7 +181,9 @@ class calendar_activesync implements activesync_plugin_write
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
-			'filter' => 'default',	// not rejected
+			// default = not rejected, current user return NO meeting requests (status=unknown), as they are returned via email!
+			//'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'not-unknown') : 'default',
+			'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'default') : 'default',
 			// @todo return only etag relevant information (seems not to work ...)
 			//'cols'		=> array('egw_cal.cal_id', 'cal_start',	'recur_type', 'cal_modified', 'cal_uid', 'cal_etag'),
 			'query' => array('cal_recurrence' => 0),	// do NOT return recurrence exceptions
@@ -191,6 +192,7 @@ class calendar_activesync implements activesync_plugin_write
 		$messagelist = array();
 		foreach ($this->calendar->search($filter) as $event)
 		{
+			if ($not_uids && in_array($event['uid'], $not_uids)) continue;
 			$messagelist[] = $this->StatMessage($id, $event);
 
 			// add virtual exceptions for recuring events too
@@ -206,6 +208,240 @@ class calendar_activesync implements activesync_plugin_write
 			}*/
 		}
 		return $messagelist;
+	}
+
+	/**
+	 * List all meeting requests / invitations of user NOT having a UID in $not_uids (already received by email)
+	 *
+	 * @param array $not_uids
+	 * @param int $cutoffdate=null
+	 * @return array
+	 */
+	function GetMeetingRequests(array $not_uids, $cutoffdate=NULL)
+	{
+		$folderid = $this->backend->createID('calendar', $GLOBALS['egw_info']['user']['account_id']);	// users personal calendar
+
+		$ret = $this->GetMessageList($folderid, $cutoffdate, $not_uids);
+		// return all id's negative to not conflict with uids from fmail
+		foreach($ret as &$message)
+		{
+			$message['id'] = -$message['id'];
+		}
+
+		debugLog(__METHOD__.'('.array2string($not_uids).", $cutoffdate) returning ".array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * Stat a meeting request
+	 *
+	 * @param int $id negative! id
+	 * @return array
+	 */
+	function StatMeetingRequest($id)
+	{
+		$folderid = $this->backend->createID('calendar', $GLOBALS['egw_info']['user']['account_id']);	// users personal calendar
+
+		$ret = $this->StatMessage($folderid, abs($id));
+		$ret['id'] = $id;
+
+		debugLog(__METHOD__."($id) returning ".array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * Return a meeting request as AS SyncMail object
+	 *
+	 * @param int $id negative! cal_id
+	 * @param int $truncsize
+	 * @param int $bodypreference
+	 * @param $optionbodypreference
+	 * @param bool $mimesupport
+	 * @return SyncMail
+	 */
+	function GetMeetingRequest($id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
+	{
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+		if (!($event = $this->calendar->read(abs($id), 0, false, 'server')))
+		{
+			$message = false;
+		}
+		else
+		{
+			$message = new SyncMail();
+			$message->read = false;
+			$message->subject = $event['title'];
+			$message->importance = 1;	// 0=Low, 1=Normal, 2=High
+			$message->datereceived = $event['created'];
+			$message->to = $message->displayto = $GLOBALS['egw_info']['user']['account_email'];
+			$message->from = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname').
+				' <'.$GLOBALS['egw']->accounts->id2name($event['owner'],'account_email').'>';
+			$message->internetcpid = 65001;
+			$message->contentclass="urn:content-classes:message";
+
+			$message->meetingrequest = self::meetingRequest($event);
+			$message->messageclass = "IPM.Schedule.Meeting.Request";
+
+			// add description as message body
+			if ($bodypreference == false)
+			{
+				$message->body = $event['description'];
+				$message->bodysize = strlen($message->body);
+				$message->bodytruncated = 0;
+			}
+			else
+			{
+				$message->airsyncbasebody = new SyncAirSyncBaseBody();
+				$message->airsyncbasenativebodytype=1;
+				$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
+			}
+		}
+		debugLog(__METHOD__."($id) returning ".array2string($message));
+		return $message;
+	}
+
+	/**
+	 * Generate SyncMeetingRequest object from an event array
+	 *
+	 * Used by (calendar|felamimail)_activesync
+	 *
+	 * @param array|string $event event array or string with iCal
+	 * @return SyncMeetingRequest or null ical not parsable
+	 */
+	public static function meetingRequest($event)
+	{
+		if (!is_array($event))
+		{
+			$ical = new calendar_ical();
+			if (!($events = $ical->icaltoegw($data['attachment'], '', 'utf-8')) || count($events) != 1)
+			{
+				debugLog(__METHOD__."('$event') error parsing iCal!");
+				return null;
+			}
+			$event = array_shift($events);
+			debugLog(__METHOD__."(...) parsed as ".array2string($event));
+		}
+		$message = new SyncMeetingRequest();
+		// set timezone
+		try {
+			$as_tz = self::tz2as($event['tzid']);
+			$message->timezone = base64_encode(calendar_activesync::_getSyncBlobFromTZ($as_tz));
+		}
+		catch(Exception $e) {
+			// ignore exception, simply set no timezone, as it is optional
+		}
+		// copying timestamps (they are already read in servertime, so non tz conversation)
+		foreach(array(
+			'start' => 'starttime',
+			'end'   => 'endtime',
+			'created' => 'dtstamp',
+		) as $key => $attr)
+		{
+			if (!empty($event[$key])) $message->$attr = $event[$key];
+		}
+		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
+		{
+			++$message->endtime;	// EGw all-day-events are 1 sec shorter!
+		}
+		// copying strings
+		foreach(array(
+			'title' => 'subject',
+			'location' => 'location',
+		) as $key => $attr)
+		{
+			if (!empty($event[$key])) $message->$attr = $event[$key];
+		}
+		$message->organizer = $event['organizer'];
+
+		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
+
+		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
+		$message->busystatus = $event['non_blocking'] ? 0 : 2;
+
+		// ToDo: recurring events: InstanceType, RecurrenceId, Recurrences; ...
+		$message->instancetype = 0;	// 0=Single, 1=Master recurring, 2=Single recuring, 3=Exception
+
+		$message->responserequested = 1;	//0=No, 1=Yes
+		$message->disallownewtimeproposal = 1;	//1=forbidden, 0=allowed
+		//$message->messagemeetingtype;	// email2
+
+		// ToDo: alarme: Reminder
+
+		// convert UID to GlobalObjID
+		$message->globalobjid = BackendEGW::uid2globalObjId($event['uid']);
+
+		return $message;
+	}
+
+	/**
+	 * Process response to meeting request
+	 *
+	 * @see BackendDiff::MeetingResponse()
+	 * @param int|string $requestid uid of mail with meeting request, or < 0 for cal_id, or string with iCal from fmail plugin
+	 * @param string $folderid folder of meeting request mail
+	 * @param int $response 1=accepted, 2=tentative, 3=decline
+	 * @return int|boolean id of calendar item, false on error
+	 */
+	function MeetingResponse($requestid, $folderid, $response)
+	{
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+		static $as2status = array(	// different from self::$status2as!
+			1 => 'A',
+			2 => 'T',
+			3 => 'D',
+		);
+		$status = isset($as2status[$response]) ? $as2status[$response] : 'U';
+		$uid = $GLOBALS['egw_info']['user']['account_id'];
+
+		if (!is_numeric($event))	// iCal from fmail
+		{
+			$ical = new calendar_ical();
+			if (!($events = $ical->icaltoegw($data['attachment'], '', 'utf-8')) || count($events) != 1)
+			{
+				debugLog(__METHOD__."('$event') error parsing iCal!");
+				return null;
+			}
+			$parsed_event = array_shift($events);
+			debugLog(__METHOD__."(...) parsed as ".array2string($parsed_event));
+
+			// check if event already exist (invitation of or already imported by other user)
+			if (!($event = $this->calendar->read($parsed_event['uid'], 0, false, 'server')))
+			{
+				$event = $parsed_event;	// create new event from external invitation
+			}
+			elseif(!isset($event['participants'][$uid]))
+			{
+				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) current user is NO participant!");
+				// maybe we should silently add him, as he might not have the rights to add him himself with calendar->update ...
+			}
+		}
+		elseif($requestid > 0)	// uid from mail --> let fmail plugin call us
+		{
+			debugLog(__METHOD__."('$requestid', '$folderid', $response) returning NULL (fmail uid)");
+			return null;
+		}
+		elseif (!($event = $this->calendar->read(abs($requestid), 0, false, 'server')))
+		{
+			debugLog(__METHOD__."('$requestid', '$folderid', $response) returning FALSE");
+			return false;
+		}
+		// keep role and quantity as AS has no idea about it
+		calendar_so::split_status($event['participants'][$uid], $quantity, $role);
+		$status = calendar_so::combine_status($status,$quantity,$role);
+
+		if ($event['id'] && isset($event['participants'][$uid]))
+		{
+			$ret = $this->calendar->set_status($event, $uid, $status) ? $event['id'] : false;
+		}
+		else
+		{
+			$event['participants'][$uid] = $status;
+			$ret = $this->calendar->update($event, true);	// true = ignore conflicts, as there seems no conflict handling in AS
+		}
+		debugLog(__METHOD__.'('.array2string($requestid).", '$folderid', $response) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -422,26 +658,35 @@ class calendar_activesync implements activesync_plugin_write
 					$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
 				}
 			}
-			if (!($status = array_search($attendee->status,self::$status2as))) $status = 'U';
+			// as status and (attendee-)type are optional, keep old status, quantity and role, if not specified
+			if ($event['id'] && isset($event['participants'][$uid]))
+			{
+				$status = $event['participants'][$uid];
+				calendar_so::split_status($status, $quantity, $role);
+				//debugLog("old status for $uid is status=$status, quantity=$quantitiy, role=$role");
+			}
+			else	// set some defaults
+			{
+				$status = 'U';
+				$quantitiy = 1;
+				$role = 'REQ-PARTICIPANT';
+				//debugLog("default status for $uid is status=$status, quantity=$quantitiy, role=$role");
+			}
+			if (isset($attendee->status) && ($s = array_search($attendee->status,self::$status2as)))
+			{
+				$status = $s;
+			}
 			if ($attendee->email == $message->organizeremail)
 			{
 				$role = 'CHAIR';
 				$chair_set = true;
 			}
-			elseif (!($role = array_search($attendee->type,self::$role2as)))
+			elseif (isset($attendee->type) && ($r = array_search($attendee->type,self::$role2as)) &&
+				(int)self::$role2as[$role] != $attendee->type)	// if old role gives same type, use old role, as we have a lot more roles then AS
 			{
-				$role = 'REQ-PARTICIPANT';
+				$role = $r;
 			}
-			$quantitiy = 1;
-			// if old role gives same type, use old role, as we have a lot more roles then AS
-			if ($id && isset($event['participants'][$uid]))
-			{
-				calendar_so::split_status($status, $quantity, $old_role);
-				if ((int)self::$role2as[$old_role] == $attendee->type)
-				{
-					$role = $old_role;
-				}
-			}
+			//debugLog("-> status for $uid is status=$status ($s), quantity=$quantitiy, role=$role ($r)");
 			$participants[$uid] = calendar_so::combine_status($status,$quantitiy,$role);
 		}
 		// if organizer is not already participant, add him as chair
@@ -470,7 +715,7 @@ class calendar_activesync implements activesync_plugin_write
 			}
 		}
 		// add calendar owner as participant, as otherwise event will NOT be in his calendar, in which it was posted
-		if (!$id || !$participants || !isset($participants[$account]))
+		if (!$event['id'] || !$participants || !isset($participants[$account]))
 		{
 			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
 				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
@@ -479,13 +724,13 @@ class calendar_activesync implements activesync_plugin_write
 
 		if (isset($message->categories))
 		{
-			$event['category'] = implode(',', array_filter($this->calendar->find_or_add_categories($message->categories, $id),'strlen'));
+			$event['category'] = implode(',', array_filter($this->calendar->find_or_add_categories($message->categories, $event),'strlen'));
 		}
 
 		// check if event is recurring and import recur information (incl. timezone)
 		if ($message->recurrence)
 		{
-			if ($message->timezone && !$id)	// dont care for timezone, if no new and recurring event
+			if ($message->timezone && !$event['id'])	// dont care for timezone, if no new and recurring event
 			{
 				$event['tzid'] = self::as2tz(self::_getTZFromSyncBlob(base64_decode($message->timezone)));
 			}
@@ -646,21 +891,22 @@ class calendar_activesync implements activesync_plugin_write
 	 */
 	function SetReadFlag($folderid, $id, $flags)
 	{
+		debugLog(__METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
 		return false;
 	}
 
 	/**
-     	 * modify olflags (outlook style) flag of a message
-     	 *
-     	 * @param $folderid
-     	 * @param $id
-     	 * @param $flags
-     	 *
-     	 *
-     	 * @DESC The $flags parameter must contains the poommailflag Object
-     	 */
+	 * modify olflags (outlook style) flag of a message
+	 *
+	 * @param $folderid
+	 * @param $id
+	 * @param $flags
+	 *
+	 * @DESC The $flags parameter must contains the poommailflag Object
+	 */
 	function ChangeMessageFlag($folderid, $id, $flags)
 	{
+		debugLog(__METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
 		return false;
 	}
 
@@ -763,8 +1009,8 @@ class calendar_activesync implements activesync_plugin_write
 		foreach($event['participants'] as $uid => $status)
 		{
 			// AS does NOT want calendar owner as participant
-			if ($uid == $account) continue;
-
+// disabled, as otherwise status is NOT transfered to client
+//			if ($uid == $account) continue;
 			calendar_so::split_status($status, $quantity, $role);
 			$attendee = new SyncAttendee();
 			$attendee->status = (int)self::$status2as[$status];

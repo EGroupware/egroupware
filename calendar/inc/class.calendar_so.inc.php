@@ -476,6 +476,8 @@ class calendar_so
 					$where[] = 'cal_deleted IS NOT NULL'; break;
 				case 'unknown':
 					$where[] = "$this->user_table.cal_status='U'"; break;
+				case 'not-unknown':
+					$where[] = "$this->user_table.cal_status != 'U'"; break;
 				case 'accepted':
 					$where[] = "$this->user_table.cal_status='A'"; break;
 				case 'tentative':

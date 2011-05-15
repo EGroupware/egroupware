@@ -1546,16 +1546,16 @@ class calendar_boupdate extends calendar_bo
 	 * currently used for ical/sif import
 	 *
 	 * @param array $catname_list names of the categories which should be found or added
-	 * @param int $cal_id=-1 match against existing event and expand the returned category ids
+	 * @param int|array $old_event=null match against existing event and expand the returned category ids
 	 *  by the ones the user normally does not see due to category permissions - used to preserve categories
 	 * @return array category ids (found, added and preserved categories)
 	 */
-	function find_or_add_categories($catname_list, $cal_id=-1)
+	function find_or_add_categories($catname_list, $old_event=null)
 	{
-		if ($cal_id && $cal_id > 0)
+		if (is_array($old_event) || $old_event > 0)
 		{
 			// preserve categories without users read access
-			$old_event = $this->read($cal_id);
+			if (!is_array($old_event)) $old_event = $this->read($old_event);
 			$old_categories = explode(',',$old_event['category']);
 			$old_cats_preserve = array();
 			if (is_array($old_categories) && count($old_categories) > 0)
