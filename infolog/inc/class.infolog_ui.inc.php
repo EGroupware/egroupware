@@ -375,6 +375,16 @@ class infolog_ui
 		{
 			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 		}
+
+		// Supposed to view parents + children, but there are no children
+		if(count($parents) == 1 && count($infos) == 0 && $main = $this->bo->read($parents[0]))
+		{
+			$main = $this->get_info($main, $readonlys);
+			$main['class'] .= 'th ';
+			array_splice($rows, $id, 0, array($main));
+			$query['total'] += count($parents);
+			unset($parents[0]);
+		}
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
