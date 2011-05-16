@@ -893,9 +893,9 @@ class categories
 			return self::$cache =& $cache;
 		}
 		// check if we are already updated to global owner == 0, if not do it now
-		if (!$GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)','cat_owner=0',__LINE__,__FILE__)->fetchColumn())
+		if (!$GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',array('cat_owner'=>'0'),__LINE__,__FILE__)->fetchColumn())
 		{
-			$GLOBALS['egw']->db->update(self::TABLE,'cat_owner=0',"(cat_owner=-1 OR cat_appname='phpgw')",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->update(self::TABLE,array('cat_owner'=>'0'),"(cat_owner='-1' OR cat_appname='phpgw')",__LINE__,__FILE__);
 			$GLOBALS['egw']->db->insert(self::TABLE,array(
 				'cat_main'    => 0,
 				'cat_parent'  => 0,
