@@ -281,11 +281,11 @@ class importexport_export_csv implements importexport_iface_export_record
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
-						$names[] = $selects[$name][$_name];
+						$names[] = lang($selects[$name][$_name]);
 					}
 					$record->$name = implode(', ', $names);
 				} else {
-					$record->$name = $selects[$name][$record->$name];
+					$record->$name = lang($selects[$name][$record->$name]);
 				}
 			}
 		}
