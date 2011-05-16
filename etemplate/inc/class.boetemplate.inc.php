@@ -635,7 +635,7 @@ class boetemplate extends soetemplate
 			{
 				return False;
 			}
-			if($skip_empty && !isset($pos[$idx])) return false;
+			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return false;
 			$pos = &$pos[$idx];
 		}
 		return $pos;
