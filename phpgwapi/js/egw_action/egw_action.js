@@ -816,7 +816,7 @@ egwActionObject.prototype.getAllSelected = function()
 			if (!this.children[i].getAllSelected())
 				return false;
 		}
-
+		if (this.children.length == 0) return false;
 		return true;
 	}
 
