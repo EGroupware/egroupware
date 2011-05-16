@@ -778,7 +778,18 @@ function load_cal(url,id) {
                 if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
                 {
 			$options = '';
-			foreach(calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']) as $key => $value)
+			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+
+			// Skip spreadsheets that are in the other selectbox
+			$spreadsheets = importexport_admin_prefs_sidebox_hooks::get_spreadsheet_list('calendar');
+			foreach($spreadsheets as $file_info)
+			{
+				if($key = array_search($file_info['name'], $documents)) 
+				{
+					unset($documents[$key]);
+				}
+			}
+			foreach($documents as $key => $value)
 			{
 				$options .= '<option value="'.$key.'">'.html::htmlspecialchars($value)."</option>\n";
 			}

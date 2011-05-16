@@ -159,7 +159,7 @@ class importexport_admin_prefs_sidebox_hooks
 	/**
 	 * Get a list of spreadsheets, in the user's preference folder, and / or a system provided template folder
 	 */
-	protected static function get_spreadsheet_list($app) {
+	public static function get_spreadsheet_list($app) {
 		$config = config::read('importexport');
 		$config_dirs = $config['export_spreadsheet_folder'] ? explode(',',$config['export_spreadsheet_folder']) : array('user','stylite');
 		$appname = $_GET['app'] ? $_GET['app'] : $app;
