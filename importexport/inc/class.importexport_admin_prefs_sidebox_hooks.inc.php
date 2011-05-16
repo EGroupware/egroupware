@@ -136,7 +136,14 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 			$prefix = 'document_';
 			
-			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\');console.log(window); var action = new window.egwAction(null,\''.$prefix.'\'+this.value);console.log(action); window.nm_action(action, window.egw_objectManager.selectedChildren); this.value = \'\'"';
+			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\'); 
+var action = new window.egwAction(null,\''.$prefix.'\'+this.value);
+if(window.egw_objectManager.selectedChildren.length == 0) {
+	// Be nice and select all, if they forgot to select any
+	window.egw_actionManager.getActionById(\'select_all\').set_checked(true);
+}
+window.nm_action(action, window.egw_objectManager.selectedChildren); 
+this.value = \'\'"';
 			$file[] = array(
 				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
 				'noLang'	=> true,
