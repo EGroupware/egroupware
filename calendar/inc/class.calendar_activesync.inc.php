@@ -219,6 +219,7 @@ class calendar_activesync implements activesync_plugin_write, activesync_plugin_
 	 */
 	function GetMeetingRequests(array $not_uids, $cutoffdate=NULL)
 	{
+return array();	// temporary disabling meeting requests from calendar
 		$folderid = $this->backend->createID('calendar', $GLOBALS['egw_info']['user']['account_id']);	// users personal calendar
 
 		$ret = $this->GetMessageList($folderid, $cutoffdate, $not_uids);
@@ -812,12 +813,12 @@ class calendar_activesync implements activesync_plugin_write, activesync_plugin_
 	/**
 	 *  Creates or modifies a folder
 	 *
-	 * @param $id of the parent folder
-	 * @param $oldid => if empty -> new folder created, else folder is to be renamed
-	 * @param $displayname => new folder name (to be created, or to be renamed to)
-	 * @param type => folder type, ignored in IMAP
+	 * @param string $id of the parent folder
+	 * @param string $oldid => if empty -> new folder created, else folder is to be renamed
+	 * @param string $displayname => new folder name (to be created, or to be renamed to)
+	 * @param string $type folder type, ignored in IMAP
 	 *
-	 * @return stat | boolean false on error
+	 * @return array|boolean stat array or false on error
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
@@ -828,8 +829,8 @@ class calendar_activesync implements activesync_plugin_write, activesync_plugin_
 	/**
 	 * Deletes (really delete) a Folder
 	 *
-	 * @param $parentid of the folder to delete
-	 * @param $id of the folder to delete
+	 * @param string $parentid of the folder to delete
+	 * @param string $id of the folder to delete
 	 *
 	 * @return
 	 * @TODO check what is to be returned
