@@ -241,14 +241,19 @@ abstract class bo_tracking
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
 		$changes = true;
-
+		//error_log(__METHOD__.__LINE__);
 		if ($old && $this->field2history)
 		{
+			//error_log(__METHOD__.__LINE__.' Changedfields:'.print_r($changed_fields,true));
 			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
+			//error_log(__METHOD__.__LINE__.' Changedfields:'.print_r($changed_fields,true));
+			//error_log(__METHOD__.__LINE__.' Changes:'.print_r($changes,true));
 		}
+		
+		//error_log(__METHOD__.__LINE__.' LinkFields:'.array2string($this->cf_link_fields));
 		if ($changes && $this->cf_link_fields)
 		{
-			$this->update_links($data,$old);
+			$this->update_links($data,(array)$old);
 		}
 		// do not run do_notifications if we have no changes
 		if ($changes && !$skip_notification && !$this->do_notifications($data,$old,$deleted))
@@ -322,9 +327,11 @@ abstract class bo_tracking
 	 */
 	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
 	{
+		//error_log(__METHOD__.__LINE__.' Changedfields:'.array2string($changed_fields));
 		if (is_null($changed_fields))
 		{
 			$changed_fields = self::changed_fields($data,$old);
+			//error_log(__METHOD__.__LINE__.' Changedfields:'.array2string($changed_fields));
 		}
 		if (!$changed_fields) return 0;
 
@@ -335,8 +342,10 @@ abstract class bo_tracking
 		foreach($changed_fields as $name)
 		{
 			$status = $this->field2history[$name];
+			//error_log(__METHOD__.__LINE__." Name $name,".' Status:'.array2string($status));
 			if (is_array($status))	// 1:N relation --> remove common rows
 			{
+				//error_log(__METHOD__.__LINE__.' is Array');
 				self::compact_1_N_relation($data[$name],$status);
 				self::compact_1_N_relation($old[$name],$status);
 				$added = array_values(array_diff($data[$name],$old[$name]));
@@ -350,11 +359,13 @@ abstract class bo_tracking
 			}
 			else
 			{
+				//error_log(__METHOD__.__LINE__.' IDField:'.array2string($this->id_field).' ->'.$data[$this->id_field].' New:'.$data[$name].' Old:'.$old[$name]);
 				$this->historylog->add($status,$data[$this->id_field],
 					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
 					is_array($old[$name]) ? implode(',',$old[$name]) : $old[$name]);
 			}
 		}
+		//error_log(__METHOD__.__LINE__.' return:'.count($changed_fields));
 		return count($changed_fields);
 	}
 
