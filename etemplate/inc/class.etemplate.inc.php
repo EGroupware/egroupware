@@ -1555,7 +1555,7 @@ class etemplate extends boetemplate
 						}
 						else
 						{
-							$option_label = $sels[$val];
+							$option_label = ($sels[$val]?$sels[$val]:$val);
 							$option_title = '';
 						}
 						if (!$cell['no_lang']) $option_label = lang($option_label);
