@@ -42,7 +42,13 @@ class importexport_definitions_bo {
 
 	public function get_rows(&$query, &$rows, &$readonlys)
 	{
-		return $this->so_sql->get_rows($query, $rows, $readonlys);
+		$total = $this->so_sql->get_rows($query, $rows, $readonlys);
+		foreach($rows as $row) {
+			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] = 
+				($row['owner'] != $GLOBALS['egw_info']['user']['account_id']) &&
+				!$GLOBALS['egw_info']['user']['apps']['admin'];
+		}
+		return $total;
 	}
 
 	/**
