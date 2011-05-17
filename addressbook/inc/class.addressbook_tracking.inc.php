@@ -163,7 +163,8 @@ class addressbook_tracking extends bo_tracking
 				unset($changed_fields[array_search($code, $changed_fields)]);
 			}
 		}
-		parent::save_history($data,$old,$deleted,$changed_fields);
+		//error_log(__METHOD__.__LINE__.' ChangedFields:'.array2string($changed_fields));
+		return parent::save_history($data,$old,$deleted,$changed_fields);
 	}
 
 	/**
