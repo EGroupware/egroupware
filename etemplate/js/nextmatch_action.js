@@ -173,6 +173,9 @@ function nm_action(_action, _senders)
 			{
 				egw_actionManager.etemplate_form.submit();
 			}
+			// Clear action in case there's another one
+			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][nm_action]').value = null;
+			
 			break;
 	}
 }
