@@ -329,7 +329,11 @@ class link_widget
 		case 'link-entry':
 			if ($cell['readonly'] || $readonlys)
 			{
-				if(!is_array($value)) $value = array('app' => $cell['size'],'id' => $value);
+				if(!is_array($value))
+				{
+					if (strpos($value,':') !== false) list($app,$value) = explode(':',$value,2);
+					$value = array('app' => $app ? $app : $cell['size'],'id' => $value);
+				}
 				$value = self::link2a_href($value,$help);
 				$cell['type'] = 'html';
 				$cell['readonly'] = true;
