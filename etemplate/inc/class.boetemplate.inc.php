@@ -594,14 +594,12 @@ class boetemplate extends soetemplate
 	 */
 	static function set_array(&$arr,$idx,$val)
 	{
-		if (!is_array($arr))
-		{
-			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx','$val') \$arr is no array!");
-		}
 		$idxs = explode('[',str_replace(']','',$idx));
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
+			if (!is_array($pos) && !is_null($pos)) return;	// gives fatal error under PHP5.3
+
 			$pos = &$pos[$idx];
 		}
 		$pos = $val;
