@@ -60,3 +60,11 @@ function importexport_upgrade1_9_001()
 	// Not needed - did it wrong
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.002';
 }
+function importexport_upgrade1_9_002()
+{
+	$sql = 'UPDATE egw_importexport_definitions SET allowed_users = '.
+	$GLOBALS['egw_setup']->db->concat("','", 'allowed_users', "','");
+        $GLOBALS['egw_setup']->oProc->query($sql, __LINE__, __FILE__);
+
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.003';
+}

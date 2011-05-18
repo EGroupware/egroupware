@@ -42,9 +42,29 @@ class importexport_definitions_bo {
 
 	public function get_rows(&$query, &$rows, &$readonlys)
 	{
+		// Filter only definitions user is allowed to use
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$this_membership = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
+			$this_membership[] = $GLOBALS['egw_info']['user']['account_id'];
+			$sql .= ' (';
+			$read = array();
+			foreach($this_membership as $id)
+			{
+				$read[] = 'allowed_users '.
+					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.
+					$GLOBALS['egw']->db->quote('%,'.str_replace('_','\\_',$id) .',%');
+			}
+			$sql .= implode(' OR ', $read);
+			$sql .= ') ';
+			$query['col_filter'][] = $sql;
+		}
+
 		$total = $this->so_sql->get_rows($query, $rows, $readonlys);
 		$ro_count = 0;
-		foreach($rows as $row) {
+		foreach($rows as &$row) {
+			// Strip off leading + trailing ,
+			$row['allowed_users'] = substr($row['allowed_users'],1,-1);
+
 			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] = 
 				($row['owner'] != $GLOBALS['egw_info']['user']['account_id']) &&
 				!$GLOBALS['egw_info']['user']['apps']['admin'];

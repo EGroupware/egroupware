@@ -10,7 +10,7 @@
  */
 
 $setup_info['importexport']['name']      = 'importexport';
-$setup_info['importexport']['version']   = '1.9.002';
+$setup_info['importexport']['version']   = '1.9.003';
 $setup_info['importexport']['app_order'] = 2;
 $setup_info['importexport']['enable']    = 2;
 $setup_info['importexport']['tables']    = array('egw_importexport_definitions');

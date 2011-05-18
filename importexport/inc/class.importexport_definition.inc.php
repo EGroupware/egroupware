@@ -136,7 +136,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 * @return array
 	 */
 	private function get_allowed_users() {
-		return explode(',',$this->definition['allowed_users']);
+		return explode(',',substr($this->definition['allowed_users'],1,-1));
 	}
 	
 	/**
@@ -145,7 +145,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 * @param array $_allowed_users
 	 */
 	private function set_allowed_users( $_allowed_users ) {
-		$this->definition['allowed_users'] = implode(',',(array)$_allowed_users);
+		$this->definition['allowed_users'] = ','.implode(',',(array)$_allowed_users) .',';
 	}
 	
 	/**
