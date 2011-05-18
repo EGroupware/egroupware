@@ -50,10 +50,10 @@ class infolog_hooks
 			'title'      => 'infolog.infolog_bo.link_title',
 			'titles'     => 'infolog.infolog_bo.link_titles',
 			'view'       => array(
-				'menuaction' => 'infolog.infolog_ui.index',
-				'action' => 'sp'
+				'menuaction' => 'infolog.infolog_ui.edit',
 			),
-			'view_id'    => 'action_id',
+			'view_id'    => 'info_id',
+			'view_popup'  => '750x580',
 			'view_list'	=>	'infolog.infolog_ui.index',
 			'add' => array(
 				'menuaction' => 'infolog.infolog_ui.edit',
@@ -435,7 +435,7 @@ class infolog_hooks
 				'help'   => lang('If you specify an export definition, it will be used when you export'),
 				'run_lang' => false,
 				'xmlrpc' => True,
-				'admin'  => False, 
+				'admin'  => False,
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
 		}

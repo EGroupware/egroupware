@@ -375,16 +375,6 @@ class infolog_ui
 		{
 			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 		}
-
-		// Supposed to view parents + children, but there are no children
-		if(count($parents) == 1 && count($infos) == 0 && $main = $this->bo->read($parents[0]))
-		{
-			$main = $this->get_info($main, $readonlys);
-			$main['class'] .= 'th ';
-			array_splice($rows, $id, 0, array($main));
-			$query['total'] += count($parents);
-			unset($parents[0]);
-		}
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -1572,21 +1562,7 @@ class infolog_ui
 			}
 			else
 			{
-				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) &&
-					!($undelete = $this->bo->check_access($info_id,EGW_ACL_UNDELETE)) &&
-					!$this->bo->is_responsible($content))
-				{
-					if ($no_popup)
-					{
-						common::egw_header();
-						parse_navbar();
-						echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
-						common::egw_exit();
-					}
-					$js = "alert('".lang('Permission denied')."'); window.close();";
-					echo '<html><body onload="'.$js.'"></body></html>';
-					common::egw_exit();
-				}
+				$undelete = $this->bo->check_access($info_id,EGW_ACL_UNDELETE);
 			}
 			$content['links'] = $content['link_to'] = array(
 				'to_id' => $info_id,
@@ -1608,7 +1584,8 @@ class infolog_ui
 					break;
 
 				case 'tracker':
-					if ($action_id) {
+					if ($action_id)
+					{
 						egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
 						$content['blur_title']   = egw_link::title($action,$action_id);
 					}
@@ -1739,20 +1716,19 @@ class infolog_ui
 			}
 		}
 		$preserv = $content;
-		// for implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content) && !$undelete)
+		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
+		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT)/* && $this->bo->is_responsible($content)*/ && !$undelete)
 		{
-			$content['status_only'] = !in_array('link_to',$this->bo->responsible_edit);
-			foreach(array_diff(array_merge(array_keys($content),array('pm_id')),$this->bo->responsible_edit) as $name)
+			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
+			if ($this->bo->is_responsible($content))
 			{
-				$readonlys[$name] = true;
+				foreach($this->bo->responsible_edit as $name)
+				{
+					$readonlys[$name] = false;
+				}
+				$readonlys['button[edit]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
 			}
-			unset($readonlys[$tabs]);
-			// need to set all customfields extra, as they are not set if empty
-			foreach($this->bo->customfields as $name => $value)
-			{
-				$readonlys['#'.$name] = true;
-			}
+			$readonlys['action'] = $readonlys['button[cancel]'] = false;	// always allowed
 		}
 		// ToDo: use the old status before the delete
 		if ($undelete) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
