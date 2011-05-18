@@ -65,13 +65,11 @@ class customfields
 	 */
 	function edit($content = null)
 	{
-		$GLOBALS['egw']->translation->add_app('infolog');       // til we move the translations
-
 		// determine appname
 		$this->appname = $_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false);
 		if(!$this->appname) die(lang('Error! No appname found'));
 
-		$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
+		translation::add_app('infolog');	// til we move the translations
 		$this->tmpl = new etemplate();
 		// do we manage content-types?
 		if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
@@ -79,10 +77,10 @@ class customfields
 		$this->fields = config::get_customfields($this->appname,true);
 		$this->tmpl->read('admin.customfields');
 
-		if($this->manage_content_types) 
+		if($this->manage_content_types)
 		{
 			$this->content_types = config::get_content_types($this->appname);
-			if (count($this->content_types)==0) 
+			if (count($this->content_types)==0)
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
 				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
@@ -205,7 +203,7 @@ class customfields
 		$sel_options = array(
 			'type2' => $this->types2 + array('tmpl' => 'template'),
 		);
-		// do NOT allow to delete original contact content-type for addressbook, 
+		// do NOT allow to delete original contact content-type for addressbook,
 		// as it only creates support problems as users incidently delete it
 		if ($this->appname == 'addressbook' && $this->content_type == 'n')
 		{
@@ -267,6 +265,7 @@ class customfields
 				'rows'  => (int)$field['rows'],
 				'order' => (int)$field['order'],
 				'private' => $field['private'],
+				'needed' => $field['needed'],
 			);
 			if(!$this->fields[$name]['type2'] && $this->manage_content_types)
 			{

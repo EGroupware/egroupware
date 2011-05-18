@@ -223,6 +223,7 @@ class infolog_customfields
 				'len'   => $field['len'],
 				'rows'  => (int)$field['rows'],
 				'order' => (int)$field['order'],
+				'needed' => $field['needed'],
 			);
 		}
 		if (!function_exists('sort_by_order'))

@@ -18,23 +18,23 @@
 					<description value="Translation"/>
 					<description value="Default"/>
 					<description value="Disabled"/>
-					<description value="Action" align="center"/>
+					<description align="center" value="Action"/>
 				</row>
 				<row class="row">
-					<textbox size="10" maxlength="40" id="${row}[name]" statustext="the name used internaly (&lt;= 10 chars), changeing it makes existing data unavailible"/>
-					<textbox size="40" id="${row}[label]" statustext="the text displayed to the user"/>
+					<textbox statustext="the name used internaly (&lt;= 10 chars), changeing it makes existing data unavailible" id="${row}[name]" size="10" maxlength="40"/>
+					<textbox statustext="the text displayed to the user" id="${row}[label]" size="40"/>
 					<description id="${row}[label]"/>
-					<radio options="$row_cont[name]" align="center" id="default" statustext="default status for a new log entry"/>
-					<checkbox align="center" id="${row}[disabled]" statustext="disables a status without deleting it"/>
+					<radio align="center" statustext="default status for a new log entry" id="default" options="$row_cont[name]"/>
+					<checkbox align="center" statustext="disables a status without deleting it" id="${row}[disabled]"/>
 					<hbox>
-						<button label="Delete" id="delete[$row_cont[name]]" statustext="deletes this status"/>
-						<button label="Create" id="create$row_cont[name]" statustext="creates a new status with the given values"/>
+						<button statustext="deletes this status" label="Delete" id="delete[$row_cont[name]]"/>
+						<button statustext="creates a new status with the given values" label="Create" id="create$row_cont[name]"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.customfields.fields" template="" lang="" group="0" version="1.4.001">
+	<template id="infolog.customfields.fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -55,25 +55,28 @@
 					<description value="Values for selectbox"/>
 					<description value="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
-					<description value="Action" align="center" statustext="deletes this field"/>
+					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
 				<row class="row" valign="top">
-					<listbox rows="3" id="${row}[type2]" statustext="for which types should this field be used" no_lang="1"/>
-					<textbox size="20" maxlength="32" id="${row}[name]" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
+					<listbox statustext="for which types should this field be used" id="${row}[type2]" no_lang="1" rows="3"/>
+					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="${row}[name]" size="20" maxlength="32"/>
 					<vbox options="0,0">
-						<textbox maxlength="255" id="${row}[label]" statustext="the text displayed to the user"/>
+						<textbox statustext="the text displayed to the user" id="${row}[label]" maxlength="255"/>
 						<description id="${row}[label]"/>
 					</vbox>
-					<customfields-types id="${row}[type]" statustext="Type of customfield"/>
-					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
 					<vbox options="0,0">
-						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
-						<int options="0,10,2" id="${row}[rows]" statustext="number of row for a multiline inputfield or line of a multi-select-box" blur="1"/>
+						<customfields-types statustext="Type of customfield" id="${row}[type]"/>
+						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
-					<int options="1,,3" id="${row}[order]" statustext="determines the order the fields are displayed"/>
+					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
+					<vbox options="0,0">
+						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
+						<int blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" options="0,10,2"/>
+					</vbox>
+					<int statustext="determines the order the fields are displayed" id="${row}[order]" options="1,,3"/>
 					<hbox>
-						<button label="Delete" id="delete[$row_cont[name]]" statustext="deletes this field"/>
-						<button label="Create" id="create$row_cont[name]" statustext="creates a new field"/>
+						<button statustext="deletes this field" label="Delete" id="delete[$row_cont[name]]"/>
+						<button statustext="creates a new field" label="Create" id="create$row_cont[name]"/>
 					</hbox>
 				</row>
 			</rows>
@@ -93,38 +96,38 @@
 				<row>
 					<description value="Typ"/>
 					<menulist>
-						<menupopup id="type2" onchange="1" statustext="select a typ to edit it's status-values or delete it" no_lang="1"/>
+						<menupopup statustext="select a typ to edit it's status-values or delete it" id="type2" no_lang="1" onchange="1"/>
 					</menulist>
-					<button label="Delete" id="button[delete]" statustext="deletes the selected typ"/>
-					<textbox size="10" maxlength="40" id="new_name" statustext="name of new type to create" blur="new name"/>
-					<button label="Create" id="button[create]" statustext="creates a new typ with the given name"/>
-					<description class="error_msg" no_lang="1" align="center" id="error_msg"/>
+					<button statustext="deletes the selected typ" label="Delete" id="button[delete]"/>
+					<textbox blur="new name" statustext="name of new type to create" id="new_name" size="10" maxlength="40"/>
+					<button statustext="creates a new typ with the given name" label="Create" id="button[create]"/>
+					<description align="center" id="error_msg" no_lang="1" class="error_msg"/>
 				</row>
 				<row class="header">
-					<description span="all" value="Custom status for typ" id="typ"/>
+					<description value="Custom status for typ" id="typ" span="all"/>
 				</row>
 				<row>
-					<template content="status" span="all" id="status"/>
+					<template content="status" id="status" span="all"/>
 				</row>
 				<row class="header">
-					<description span="all" value="Custom fields"/>
+					<description value="Custom fields" span="all"/>
 				</row>
 				<row>
-					<template content="fields" span="all" id="fields"/>
+					<template content="fields" id="fields" span="all"/>
 				</row>
 				<row>
 					<hbox options="0,0" span="all">
-						<description class="header" value="Group owner for" id="type2"/>
-						<menulist class="lpadding5">
-							<menupopup type="select-account" options="None,groups" id="group_owner" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!"/>
+						<description value="Group owner for" id="type2" class="header"/>
+						<menulist>
+							<menupopup type="select-account" class="lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
 						</menulist>
 					</hbox>
 				</row>
 				<row>
 					<hbox span="all">
-						<button label="Save" id="button[save]" statustext="saves the changes made and leaves"/>
-						<button label="Apply" id="button[apply]" statustext="apply the changes"/>
-						<button label="Cancel" id="button[cancel]" statustext="leaves without saveing"/>
+						<button statustext="saves the changes made and leaves" label="Save" id="button[save]"/>
+						<button statustext="apply the changes" label="Apply" id="button[apply]"/>
+						<button statustext="leaves without saveing" label="Cancel" id="button[cancel]"/>
 					</hbox>
 				</row>
 			</rows>

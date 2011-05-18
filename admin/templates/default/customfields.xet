@@ -8,24 +8,24 @@
 				<column/>
 				<column/>
 				<column disabled="@non_deletable"/>
-				<column/>
-				<column/>
+				<column disabled="@no_add"/>
+				<column disabled="@no_add"/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="@no_edit_types">
 					<description id="app-name"/>
 					<description value="-  type"/>
 					<menulist>
-						<menupopup id="types" onchange="1" no_lang="1"/>
+						<menupopup id="types" no_lang="1" onchange="1"/>
 					</menulist>
 					<button label="Delete" id="delete" onclick="return confirm('WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.');"/>
-					<textbox id="name" blur="new name"/>
+					<textbox blur="new name" id="name"/>
 					<button label="Create" id="create"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.5.001">
+	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -40,42 +40,45 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Name" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
+					<description statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
 					<description value="Label"/>
 					<description value="Subtype"/>
 					<description value="Type"/>
 					<description value="Private"/>
-					<description value="Options" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
+					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
 					<description value="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
-					<description value="Action" align="center" statustext="deletes this field"/>
+					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
 				<row class="row" valign="top">
-					<textbox size="20" maxlength="32" id="${row}[name]" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
+					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="${row}[name]" size="20" maxlength="32"/>
 					<vbox>
-						<textbox maxlength="255" id="${row}[label]" statustext="the text displayed to the user"/>
+						<textbox statustext="the text displayed to the user" id="${row}[label]" maxlength="255"/>
 						<description id="${row}[label]"/>
 					</vbox>
 					<menulist>
-						<menupopup options="All" id="${row}[type2]" no_lang="1"/>
+						<menupopup id="${row}[type2]" no_lang="1" options="All"/>
 					</menulist>
-					<customfields-types id="{$row}[type]" statustext="Type of customfield"/>
-					<listbox type="select-account" id="${row}[private]" statustext="Select accounts for which the custom field should be visible" align="center" rows="3" options="both"/>
-					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
-					<vbox>
-						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
-						<int options="0,10,2" id="${row}[rows]" statustext="number of row for a multiline inputfield or line of a multi-select-box" blur="1"/>
+					<vbox options="0,0">
+						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
+						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
-					<int options="1,,3" id="${row}[order]" statustext="determines the order the fields are displayed"/>
+					<listbox type="select-account" align="center" statustext="Select accounts for which the custom field should be visible" id="${row}[private]" rows="3" options="both"/>
+					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="2" cols="30"/>
+					<vbox>
+						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
+						<int blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" options="0,10,2"/>
+					</vbox>
+					<int statustext="determines the order the fields are displayed" id="${row}[order]" options="1,,3"/>
 					<hbox>
-						<button label="Delete" id="delete[$row_cont[name]]" statustext="deletes this field"/>
-						<button label="Create" id="create$row_cont[name]" statustext="creates a new field"/>
+						<button statustext="deletes this field" label="Delete" id="delete[$row_cont[name]]"/>
+						<button statustext="creates a new field" label="Create" id="create$row_cont[name]"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields" template="" lang="" group="0" version="1.2">
+	<template id="admin.customfields" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -88,7 +91,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all" class="redItalic" id="error_msg" align="center" no_lang="1"/>
+					<description align="center" id="error_msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 					<description/>
 					<description/>
@@ -97,19 +100,19 @@
 					<description no_lang="1"/>
 				</row>
 				<row>
-					<template content="content_types" span="all" id="admin.customfields.types"/>
+					<template id="admin.customfields.types" content="content_types" span="all"/>
 				</row>
 				<row>
 					<template span="all"/>
 				</row>
 				<row>
-					<template content="fields" span="all" id="admin.customfields.fields"/>
+					<template id="admin.customfields.fields" content="fields" span="all"/>
 				</row>
 				<row>
 					<hbox span="all">
-						<button label="Save" id="button[save]" statustext="saves the changes made and leaves"/>
-						<button label="Apply" id="button[apply]" statustext="applies the changes"/>
-						<button label="Cancel" id="button[cancel]" statustext="leaves without saveing"/>
+						<button statustext="saves the changes made and leaves" label="Save" id="button[save]"/>
+						<button statustext="applies the changes" label="Apply" id="button[apply]"/>
+						<button statustext="leaves without saveing" label="Cancel" id="button[cancel]"/>
 					</hbox>
 				</row>
 			</rows>
