@@ -666,6 +666,11 @@ class schema_proc
 				{
 					$value = 'NULL';
 				}
+				// some stuff is NOT to be quoted
+				elseif (in_array(strtoupper($data['default']),array('CURRENT_TIMESTAMP','CURRENT_DATE','NULL','NOW()')))
+				{
+					$value = $data['default'];
+				}
 				else
 				{
 					$value = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
