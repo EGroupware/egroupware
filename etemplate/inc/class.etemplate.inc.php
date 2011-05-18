@@ -489,8 +489,21 @@ class etemplate extends boetemplate
 							$content[$tab_name] = $tab;
 							break 3;
 						}
+						elseif($name[0] == '#')
+						{
+							foreach($tab_tpl->get_widgets_by_type('customfields') as $cf_widget)
+							{
+								if (empty($cf_widget['name']))
+								{
+									$content[$tab_name] = $tab;
+									break 4;
+								}
+							}
+						}
 					}
 				}
+				// widget NOT found --> as last resort add valdation message to $content['msg']
+				$content['msg'] .= ($content['msg'] ? "\n" : '').$msg;
 			}
 		}
 
