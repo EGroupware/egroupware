@@ -43,11 +43,14 @@ class importexport_definitions_bo {
 	public function get_rows(&$query, &$rows, &$readonlys)
 	{
 		$total = $this->so_sql->get_rows($query, $rows, $readonlys);
+		$ro_count = 0;
 		foreach($rows as $row) {
 			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] = 
 				($row['owner'] != $GLOBALS['egw_info']['user']['account_id']) &&
 				!$GLOBALS['egw_info']['user']['apps']['admin'];
+			if($readonlys["edit[{$row['definition_id']}]"]) $ro_count++;
 		}
+		$readonlys['delete_selected'] = $ro_count == count($rows);
 		return $total;
 	}
 
@@ -60,8 +63,13 @@ class importexport_definitions_bo {
 		return $this->definitions;
 	}
 	public function read($definition_id) {
-            $definition = new importexport_definition( $definition_id['name'] );
-            return $definition->get_record_array();
+		if(is_numeric($definition_id)) {
+			$this->so_sql->read($definition_id);
+			$definition = new importexport_definition($this->so_sql->data['name']);
+		} else {
+			$definition = new importexport_definition( $definition_id['name'] );
+		}
+		return $definition->get_record_array();
 	}
 	/**
 	 * deletes a defintion
@@ -69,10 +77,18 @@ class importexport_definitions_bo {
 	 * @param array $keys
 	 */
 	public function delete($keys) {
-		$this->so_sql->delete(array('definition_id' => $keys));
-		// clear private cache
-		foreach ($keys as $key) {
-			unset($this->definitions[array_search($key,$this->definitions)]);
+		foreach ($keys as $index => $key) {
+			// Check for ownership
+			$definition = $this->read($key);
+			if($definition['owner'] && $definition['owner'] == $GLOBALS['egw_info']['user']['account_id'] || $GLOBALS['egw_info']['user']['apps']['admin']) {
+				// clear private cache
+				unset($this->definitions[array_search($key,$this->definitions)]);
+			} else {
+				unset($keys[$index]);
+			}
+		}
+		if(count($keys) > 0) {
+			$this->so_sql->delete(array('definition_id' => $keys));
 		}
 	}
 
