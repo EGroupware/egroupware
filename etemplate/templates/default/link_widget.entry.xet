@@ -1,22 +1,28 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.link_widget.entry" template="" lang="" group="0" version="1.3.001">
-		<box rows="1" cols="1">
-			<box options="0,0" class="box_inline" id="search_line">
-				<link-apps id="app" statustext="Select application to search"/>
-				<textbox id="query" blur="Search"/>
-				<button id="search" label="&gt;" statustext="Click here to start the search" onclick="xajax_doXMLHTTP('etemplate.link_widget.ajax_search',document.getElementById(form::name('app')).value,document.getElementById(form::name('query')).value,form::name('id'),form::name('search_line'),form::name('select_line'),form::name('query')); return false;"/>
+	<template id="etemplate.link_widget.entry" template="" lang="" group="0" version="1.7.002">
+		<box cols="1" rows="1" class="@class">
+			<box id="search_line" options="0,0" class="box_inline">
+				<link-apps statustext="Select application to search" id="app" onchange="xajax_doXMLHTTP('etemplate.link_widget.ajax_get_types',document.getElementById(form::name('app')).value,form::name('link_type'),this.form.etemplate_exec_id.value); return false;"/>
+				<box id="type_box" class="type_hide">
+					<menulist>
+						<menupopup statustext="Search only selected record type in the application" id="link_type"/>
+					</menulist>
+				</box>
+				<textbox blur="@blur" id="query" size="@extra"/>
+				<button statustext="Click here to start the search" label="&gt;" id="search" onclick="xajax_doXMLHTTP('etemplate.link_widget.ajax_search',document.getElementById(form::name('app')).value,document.getElementById(form::name('link_type')).value,document.getElementById(form::name('query')).value,form::name('id'),form::name('search_line'),form::name('select_line'),form::name('query'),this.form.etemplate_exec_id.value); return false;"/>
 			</box>
-			<box class="link_select link_hide" id="select_line">
+			<box id="select_line" class="link_select link_hide">
 				<menulist>
-					<menupopup id="id" onchange="if (!this.value) { document.getElementById(form::name('search_line')).style.display='inline'; document.getElementById(form::name('select_line')).style.display='none';}" no_lang="1"/>
+					<menupopup id="id" no_lang="1" onchange="if (this.value == '') { document.getElementById(form::name('search_line')).style.display='inline'; document.getElementById(form::name('select_line')).style.display='none';} else if (this.options[0].value == ' ' || this.value == 0) { this.form.submit(); }"/>
 				</menulist>
 			</box>
 		</box>
 		<styles>
 			.link_hide { display: none; }
-
+.type_hide { display: none;}
+.type_show { display: inline;}
 		</styles>
 	</template>
 </overlay>

@@ -420,6 +420,7 @@ class link_widget
 					(count($options) == 1 ? lang($app) : lang('Search')),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
+			if ($cell['needed']) $value['class'] = 'inputRequired';
 
 			if ($options)	// limit the app-selectbox to the given apps
 			{

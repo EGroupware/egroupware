@@ -17,7 +17,7 @@
  * All widgets here have 2+ comma-separated options ($cell[size]):
  * - sub-type to display only the cf's without subtype or with a matching one
  * - use-private to display only (non-)private cf's (0=regular ones, 1=private ones, default both)
- * - field-name to display only the named custom field(s).  Use ! before to display all but given field(s).  
+ * - field-name to display only the named custom field(s).  Use ! before to display all but given field(s).
  * Additional fields can be added with a comma between them
  *
  * Private cf's the user has no right to see (neither him nor his memberships are mentioned) are never displayed.
@@ -95,7 +95,20 @@ class customfields_widget
 		$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
 	}
 
-	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
+	/**
+	 * pre-processing of the extension
+	 *
+	 * This function is called before the extension gets rendered
+	 *
+	 * @param string $form_name form-name of the control
+	 * @param mixed &$value value / existing content, can be modified
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
+	 * @param array &$readonlys names of widgets as key, to be made readonly
+	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+	 * @param etemplate &$tmpl reference to the template we belong too
+	 * @return boolean true if extra label is allowed, false otherwise
+	 */
+	function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
 	{
 		list($app) = explode('.',$tmpl->name);
 		if ($this->appname == 'etemplate' || !$this->customfields || 	// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
@@ -127,7 +140,7 @@ class customfields_widget
 			}
 
 			// Remove filtered fields
-			if($field_filter && (!$negate_field_filter && !in_array($key, $field_filter) || 
+			if($field_filter && (!$negate_field_filter && !in_array($key, $field_filter) ||
 				$negate_field_filter && in_array($key, $field_filter)))
 			{
 				unset($fields[$key]);
@@ -140,6 +153,7 @@ class customfields_widget
 			$fields = array($name => $fields[$name]);
 			$value = array($this->prefix.$name => $value);
 			$singlefield = true;
+			$form_name = substr($form_name,0,-strlen("[$this->prefix$name]"));
 		}
 		switch($type = $cell['type'])
 		{
@@ -430,6 +444,8 @@ class customfields_widget
 						$input =& etemplate::empty_cell('link-entry',$this->prefix.$lname,array(
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
+						// register post-processing of link widget to get eg. needed/required validation
+						etemplate::$request->set_to_process(etemplate::form_name($form_name,$this->prefix.$lname), 'ext-link');
 				}
 				$cell['data'][0]['c'.$n++] = $row_class.',top';
 
@@ -437,7 +453,7 @@ class customfields_widget
 				{
 					if ($readonly) $input['readonly'] = true;
 
-					if ($cell['needed']) $input['needed'] = $cell['needed'];
+					$input['needed'] = $cell['needed'] || $field['needed'];
 
 					if (!empty($field['help']) && $row_class != 'th')
 					{
