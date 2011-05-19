@@ -132,8 +132,8 @@ class admin_passwordreset
 						// force password change on next login
 						if ((string)$content['mustchangepassword'] !== '' && !(!$content['mustchangepassword'] && $change_pw))
 						{
-							$GLOBALS['egw']->auth->setLastPwdChange($account_id, $password,
-								$content['mustchangepassword'] ? 0 : time());
+							// dont use password here, as the use of passwords indicates the usage of the functionality in usermode
+							$GLOBALS['egw']->auth->setLastPwdChange($account_id, null, $content['mustchangepassword'] ? 0 : time());
 						}
 						// allow or forbid to change password, if requested
 						if ((string)$content['changepassword'] !== '')
