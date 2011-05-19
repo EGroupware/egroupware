@@ -210,8 +210,11 @@ class auth_ldap implements auth_backend
 	 */
 	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
 	{
-		if (!$account_id)
+		$admin = True;
+		// Don't allow password changes for other accounts when using XML-RPC
+		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
 		{
+			$admin = False;
 			$username = $GLOBALS['egw_info']['user']['account_lid'];
 		}
 		else
@@ -232,7 +235,7 @@ class auth_ldap implements auth_backend
 
 		$dn = $allValues[0]['dn'];
 
-		if($passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
+		if(!$admin && $passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
 			$ds = common::ldapConnect('',$dn,$passwd);
 		}

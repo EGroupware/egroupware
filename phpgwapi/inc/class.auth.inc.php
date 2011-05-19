@@ -70,7 +70,7 @@ class auth
 		// dont check anything for anonymous sessions/ users that are flagged as anonymous
 		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A') return true;
 		static $UserKnowsAboutPwdChange;
-		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange =& egw_cache::getSession('auth_UserKnowsAboutPwdChange','phpgwapi');
+		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange =& egw_cache::getSession('phpgwapi','auth_UserKnowsAboutPwdChange');
 		// some statics to make information and timecalculation a) more readable in conditions b) persistent per  request
 		static $alpwchange_val;
 		static $passwordAgeBorder;
