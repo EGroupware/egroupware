@@ -55,7 +55,7 @@ class importexport_definitions_bo {
 					$GLOBALS['egw']->db->quote('%,'.str_replace('_','\\_',$id) .',%');
 			}
 			$sql .= implode(' OR ', $read);
-			$sql .= ') ';
+			$sql .= ') OR owner = '.$GLOBALS['egw_info']['user']['account_id'];
 			$query['col_filter'][] = $sql;
 		}
 
