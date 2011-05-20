@@ -31,10 +31,17 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 * @param egw_record $_definition
 	 */
 	public function export( $_stream, importexport_definition $_definition) {
+
 		$options = $_definition->plugin_options;
+		$export_object = new importexport_export_csv($_stream, (array)$options);
 
 		$uicontacts = new addressbook_ui();
 		$selection = array();
+
+		// Addressbook defines its own export limits
+		if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no' && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+			return;
+		}
 
 		// Need to switch the app to get the same results
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -57,6 +64,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
+		if($GLOBALS['egw_info']['server']['contact_export_limit'] && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$selection = array_slice($selection, 0, $GLOBALS['egw_info']['server']['contact_export_limit']);
+		}
 		if($options['explode_multiselects']) {
 			$customfields = config::get_customfields('addressbook');
 			$additional_fields = array();
@@ -168,7 +178,6 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			}
 		}
 
-		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
