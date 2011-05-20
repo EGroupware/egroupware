@@ -117,7 +117,8 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'Import CSV'
 			);
 		}
-		if($cache[$appname]['export']) 
+		$config = config::read('phpgwapi');
+		if(($GLOBALS['egw_info']['user']['apps']['admin'] || $config['export_limit'] !== 'no') && $cache[$appname]['export']) 
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(
