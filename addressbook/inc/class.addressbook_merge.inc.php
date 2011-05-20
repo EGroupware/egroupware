@@ -23,6 +23,12 @@ class addressbook_merge extends bo_merge
 	var $public_functions = array('show_replacements' => true);
 
 	/**
+	 * Addressbook defines its own export limit, which should take precidence over
+	 * global limit.
+	 */
+	private $exported = 0;
+
+	/**
 	 * Constructor
 	 *
 	 * @return addressbook_merge
@@ -30,6 +36,7 @@ class addressbook_merge extends bo_merge
 	function __construct()
 	{
 		parent::__construct();
+		$GLOBALS['egw_info']['server']['contact_export_limit'];
 	}
 
 	/**
@@ -41,6 +48,11 @@ class addressbook_merge extends bo_merge
 	 */
 	protected function get_replacements($id,&$content=null)
 	{
+		if($GLOBALS['egw_info']['server']['contact_export_limit'] && !$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no') return false;
+			if($this->exported > $GLOBALS['egw_info']['server']['contact_export_limit']) return false;
+		}
 		if (!($replacements = $this->contact_replacements($id)))
 		{
 			return false;
@@ -49,6 +61,7 @@ class addressbook_merge extends bo_merge
 		{
 			$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
 		}
+		$this->exported++;
 		return $replacements;
 	}
 
