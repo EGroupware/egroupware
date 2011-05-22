@@ -121,6 +121,24 @@ function egw_json_encode(input)
  */
 var egw_json_files = {};
 
+
+/**
+ * Initialize the egw_json_files object with all files which are already bound in
+ */
+$(document).ready(function() {
+	$("script, link").each(function() {
+		var file = false;
+		if ($(this).attr("src")) {
+			file = $(this).attr("src");
+		} else if ($(this).attr("href")) {
+			file = $(this).attr("href");
+		}
+		if (file) {
+			egw_json_files[file] = true;
+		}
+	});
+});
+
 /**
  * Variable which stores all currently registered plugins
  */
@@ -451,7 +469,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								this.loadedJSFiles[res.data] = false;
 
 								if (typeof console != 'undefined' && typeof console.log != 'undefined')
-									console.log("Requested JS file '%s' from server", [res.data]);
+									console.log("Requested JS file '%s' from server", res.data);
 
 								var self = this;
 
@@ -459,7 +477,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								scriptnode.onload = function(e) {
 									var file = e.target._originalSrc;
 									if (typeof console != 'undefined' && typeof console.log != 'undefined')
-										console.log("Retrieved JS file '%s' from server", [file]);
+										console.log("Retrieved JS file '%s' from server", file);
 
 									self.loadedJSFiles[file] = true;
 									self.checkLoadFinish();
@@ -529,8 +547,9 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 egw_json_request.prototype.checkLoadFinish = function()
 {
 	var complete = true;
-	for (var key in this.loadedJSFiles)
+	for (var key in this.loadedJSFiles) {
 		complete = complete && this.loadedJSFiles[key];
+	}
 
 	if (complete && this.onLoadFinish && this.handleResponseDone)
 	{

@@ -1681,8 +1681,6 @@ function egwGridViewRow_doUpdateData(_immediate)
 							icon.css("height", this.item.iconSize + "px");
 							icon.css("width", this.item.iconSize + "px"); //has to be done because of IE :-(
 						}
-						icon.attr("src", data[col.id].iconUrl);
-
 						icon.load({"item": this, "cntr": iconContainer}, function(e) {
 							e.data.cntr.css("min-height", "");
 							var icon = $(this);
@@ -1692,6 +1690,9 @@ function egwGridViewRow_doUpdateData(_immediate)
 							}, 100);
 							e.data.item.callHeightChangeProc();
 						});
+						
+						icon.attr("src", data[col.id].iconUrl);
+
 						overlayCntr.append(icon);
 
 						if (this.item.iconOverlay.length > 0)
