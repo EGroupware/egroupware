@@ -1877,7 +1877,7 @@ class calendar_bo
 
 		// resolve users to add memberships for users and members for groups
 		$users = $this->resolve_users($user);
-		$ctag = $this->so->get_ctag($users, $filter == 'owner');
+		$ctag = $users ? $this->so->get_ctag($users, $filter == 'owner') : 0;	// no rights, return 0 as ctag (otherwise we get SQL error!)
 
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
