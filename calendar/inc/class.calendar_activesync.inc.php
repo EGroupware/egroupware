@@ -673,7 +673,7 @@ return array();	// temporary disabling meeting requests from calendar
 				$role = 'REQ-PARTICIPANT';
 				//debugLog("default status for $uid is status=$status, quantity=$quantitiy, role=$role");
 			}
-			if (isset($attendee->status) && ($s = array_search($attendee->status,self::$status2as)))
+			if (isset($attendee->attendeestatus) && ($s = array_search($attendee->attendeestatus,self::$status2as)))
 			{
 				$status = $s;
 			}
@@ -682,8 +682,8 @@ return array();	// temporary disabling meeting requests from calendar
 				$role = 'CHAIR';
 				$chair_set = true;
 			}
-			elseif (isset($attendee->type) && ($r = array_search($attendee->type,self::$role2as)) &&
-				(int)self::$role2as[$role] != $attendee->type)	// if old role gives same type, use old role, as we have a lot more roles then AS
+			elseif (isset($attendee->attendeetype) && ($r = array_search($attendee->attendeetype,self::$role2as)) &&
+				(int)self::$role2as[$role] != $attendee->attendeetype)	// if old role gives same type, use old role, as we have a lot more roles then AS
 			{
 				$role = $r;
 			}
@@ -1014,8 +1014,8 @@ return array();	// temporary disabling meeting requests from calendar
 //			if ($uid == $account) continue;
 			calendar_so::split_status($status, $quantity, $role);
 			$attendee = new SyncAttendee();
-			$attendee->status = (int)self::$status2as[$status];
-			$attendee->type = (int)self::$role2as[$role];
+			$attendee->attendeestatus = (int)self::$status2as[$status];
+			$attendee->attendeetype = (int)self::$role2as[$role];
 			if (is_numeric($uid))
 			{
 				$attendee->name = $GLOBALS['egw']->accounts->id2name($uid,'account_fullname');
