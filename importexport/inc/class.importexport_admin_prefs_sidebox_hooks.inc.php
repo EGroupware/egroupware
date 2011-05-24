@@ -130,7 +130,8 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => 'Export CSV'
 			);
 		}
-		if($list = self::get_spreadsheet_list($appname)) {
+		if($list = self::get_spreadsheet_list($appname))
+		{
 			$file_list = array();
 			foreach($list as $_file) {
 				$file_list[$_file['path']] = egw_vfs::decodePath($_file['name']);
@@ -138,12 +139,21 @@ class importexport_admin_prefs_sidebox_hooks
 			$prefix = 'document_';
 			
 			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\'); 
-var action = new window.egwAction(null,\''.$prefix.'\'+this.value);
-if(window.egw_objectManager.selectedChildren.length == 0) {
-	// Be nice and select all, if they forgot to select any
-	window.egw_actionManager.getActionById(\'select_all\').set_checked(true);
+if(window.egwAction) {
+	var action = new window.egwAction(null,\''.$prefix.'\'+this.value);
+	if(window.egw_objectManager.selectedChildren.length == 0) {
+		// Be nice and select all, if they forgot to select any
+		window.egw_actionManager.getActionById(\'select_all\').set_checked(true);
+	}
+	window.nm_action(action, window.egw_objectManager.selectedChildren); 
+} else {';
+			if($appname == 'calendar')
+			{
+				$options .= "
+var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'merge='+this.value;this.value='';";
+			}
+$options .= '
 }
-window.nm_action(action, window.egw_objectManager.selectedChildren); 
 this.value = \'\'"';
 			$file[] = array(
 				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
