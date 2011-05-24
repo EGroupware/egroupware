@@ -95,6 +95,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		$this->translation = &$GLOBALS['egw']->translation;
 		$this->handle = $_stream;
+		if($_options['charset'] == 'user') $_options['charset'] = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 		$this->csv_charset = $_options['charset'] ? $_options['charset'] : 'utf-8';
 		if ( !empty( $_options ) ) {
 			$this->csv_options = array_merge( $this->csv_options, $_options );

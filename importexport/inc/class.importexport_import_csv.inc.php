@@ -83,6 +83,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	public function __construct( $_resource,  array $_options ) {
 		$this->resource = $_resource;
 		$this->csv_fieldsep = $_options['fieldsep'];
+		if($_options['charset'] == 'user') $_options['charset'] = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 		$this->csv_charset = $_options['charset'];
 		return;
 	} // end of member function __construct

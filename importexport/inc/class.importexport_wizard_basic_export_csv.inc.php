@@ -173,7 +173,7 @@ class importexport_wizard_basic_export_csv
 				$content['delimiter'] = ';';
 			}
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
-				$content['charset'] = $content['plugin_options']['charset'];
+				$content['charset'] = $content['plugin_options']['charset'] ? $content['plugin_options']['charset'] : 'user';
 			}
 			if(!array_key_exists('begin_with_fieldnames', $content) && array_key_exists('begin_with_fieldnames', $content['plugin_options'])) {
 				$content['begin_with_fieldnames'] = $content['plugin_options']['begin_with_fieldnames'];
@@ -189,7 +189,7 @@ class importexport_wizard_basic_export_csv
 				'label'	=> lang('Field labels')
 			);
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
-				array('utf-8' => 'utf-8 (Unicode)');
+				array('utf-8' => 'utf-8 (Unicode)', 'user' => lang('User preference'));
 			$sel_options['convert'] = array(
 				0	=> lang('Database values'),
 				1	=> lang('Human friendly values')
