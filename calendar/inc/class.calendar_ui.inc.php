@@ -861,7 +861,11 @@ function load_cal(url,id) {
 					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
 				));
 			}
-			list($document, $filename) = explode('_',$_GET['merge'], 2);
+			if($_GET['merge'][0] != '/') {
+				list($document, $filename) = explode('_',$_GET['merge'], 2);
+			} else {
+				$filename = $_GET['merge'];
+			}
 			return calendar_uilist::download_document($timespan, $filename);
 		}
 		return false;
