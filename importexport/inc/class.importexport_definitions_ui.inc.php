@@ -579,8 +579,18 @@ class importexport_definitions_ui
 		$bodefinitions = new importexport_definitions_bo();
 		if (is_array($content))
 		{
-			$bodefinitions->import($content['import_file']['tmp_name']);
-			// TODO make redirect here!
+			if($content['import_file']['tmp_name'])
+			{
+				$bodefinitions->import($content['import_file']['tmp_name']);
+				// TODO make redirect here!
+			}
+			if($content['update'])
+			{
+				$applist = importexport_helper_functions::get_apps('all', true);
+				foreach($applist as $appname) {
+					importexport_helper_functions::load_defaults($appname);
+				}
+			}
 			return $this->index();
 		}
 		else
@@ -640,6 +650,7 @@ class importexport_definitions_ui
 			);
 		}
 		
+		if(!$data['update']) $data['update'] = 'request';
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration') . ' - ' . lang(self::_appname);
 		$etpl = new etemplate(self::_appname.'.config');

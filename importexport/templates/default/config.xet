@@ -14,15 +14,23 @@
 				</row>
 				<row valign="top">
 					<description value="Users allowed to share their own definitions"/>
-					<listbox type="select-account" rows="5" options="both" id="share_definition"/>
+					<listbox type="select-account" id="share_definition" rows="5" options="both"/>
 				</row>
 				<row valign="top">
 					<description value="Export Spreadsheet link display folders"/>
-					<listbox rows="3" id="export_spreadsheet_folder"/>
+					<listbox id="export_spreadsheet_folder" rows="3"/>
+				</row>
+				<row valign="top">
+					<description value="Update/insert new default-definitions"/>
+					<vbox>
+						<radio label="Never" id="update" options="never"/>
+						<radio label="Only on request" id="update" options="request"/>
+						<radio label="On every update" id="update" options="auto"/>
+					</vbox>
 				</row>
 				<row>
 					<hbox span="all">
-						<button span="all" label="Save" id="save"/>
+						<button label="Save" id="save" span="all"/>
 					</hbox>
 				</row>
 			</rows>

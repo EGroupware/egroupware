@@ -404,24 +404,10 @@ class importexport_helper_functions {
 			}
 			$d->close();
 
-			// Check for new definitions to import from $appname/setup/*.xml
-			$appdir = EGW_INCLUDE_ROOT. "/$appname/setup";
-			if(!is_dir($appdir)) continue;
-			$d = dir($appdir);
-
-			// step through each file in app's setup
-			while (false !== ($entry = $d->read())) {
-				$file = $appdir. '/'. $entry;
-				list( $filename, $extension) = explode('.',$entry);
-				if ( $extension != 'xml' ) continue;
-				try {
-					// import will skip invalid files
-					importexport_definitions_bo::import( $file );
-				} catch (Exception $e) {
-					error_log(__CLASS__.__FUNCTION__. " import $appname definitions: " . $e->getMessage());
-				}
+			$config = config::read('importexport');
+			if($config['update'] == 'auto') {
+				self::load_defaults($appname);
 			}
-			$d->close();
 		}
 		//error_log(__CLASS__.__FUNCTION__.print_r($plugins,true));
 		return $plugins;
@@ -441,6 +427,27 @@ class importexport_helper_functions {
 			if(!self::has_definitions($app, $_type)) unset($apps[$key]);
 		}
 		return $apps;
+	}
+
+	public static function load_defaults($appname) {
+		// Check for new definitions to import from $appname/setup/*.xml
+		$appdir = EGW_INCLUDE_ROOT. "/$appname/setup";
+		if(!is_dir($appdir)) continue;
+		$d = dir($appdir);
+
+		// step through each file in app's setup
+		while (false !== ($entry = $d->read())) {
+			$file = $appdir. '/'. $entry;
+			list( $filename, $extension) = explode('.',$entry);
+			if ( $extension != 'xml' ) continue;
+			try {
+				// import will skip invalid files
+				importexport_definitions_bo::import( $file );
+			} catch (Exception $e) {
+				error_log(__CLASS__.__FUNCTION__. " import $appname definitions: " . $e->getMessage());
+			}
+		}
+		$d->close();
 	}
 
 	public static function guess_filetype( $_file ) {
