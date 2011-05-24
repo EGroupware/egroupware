@@ -101,7 +101,7 @@ class importexport_definitions_ui
 			}
 			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
-				$selected = array_keys($content['nm']['rows']['selected'],1);
+				$selected = array_keys($content['nm']['rows']['checked'],1);
 				if(count($selected) < 1 || !is_array($selected)) exit();
 				switch ($button)
 				{
@@ -134,6 +134,8 @@ class importexport_definitions_ui
 				'no_filter2'	=> true,
 				'header_right'	=> 'importexport.definition_index.add',
 				'csv_fields'	=> false,	// Disable CSV export, uses own export
+				'row_id'	=> 'id',
+				'actions'	=> $this->get_actions()
 			);
 		}
 		if(egw_session::appsession('index', 'importexport')) {
@@ -155,6 +157,26 @@ class importexport_definitions_ui
 
 		$etpl = new etemplate(self::_appname.'.definition_index');
 		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, $sel_options, $readonlys, $preserv );
+	}
+
+	private function get_actions() {
+		$group = 1;
+		$actions = array(
+			'edit' => array(
+				'caption' => 'Edit',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
+				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				'group' => $group,
+				'disableClass' => 'rowNoEdit',
+			),
+		);
+		$actions['select_all'] = array(
+                        'caption' => 'Whole query',
+                        'checkbox' => true,
+                        'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
+                        'group' => ++$group,
+                );
 	}
 
 	public function get_rows(&$query, &$rows, &$readonlys) {
