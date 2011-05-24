@@ -2,7 +2,7 @@
 <entry type="array" name="importExportDefinitions">
   <entry type="array" name="metainfo">
     <entry type="string" name="type">importexport definitions</entry>
-    <entry type="string" name="charset">utf-8</entry>
+    <entry type="string" name="charset">user</entry>
     <entry type="integer" name="entries">2</entry>
   </entry>
   <entry type="array" name="definitions">
@@ -31,11 +31,11 @@
           <entry type="string" name="all_custom_fields">resources</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
-        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="charset">user</entry>
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-03-28 10:59:50</entry>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
     <entry type="array" name="import-resources">
       <entry type="string" name="name">import-resources</entry>
@@ -47,7 +47,7 @@
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="string" name="fieldsep">;</entry>
-        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="charset">user</entry>
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="string" name="update_cats">add</entry>
         <entry type="array" name="csv_fields">
@@ -95,7 +95,7 @@
           </entry>
         </entry>
       </entry>
-      <entry type="string" name="modified">2011-03-28 11:02:19</entry>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
   </entry>
 </entry>

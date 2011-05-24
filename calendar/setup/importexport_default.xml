@@ -2,7 +2,7 @@
 <entry type="array" name="importExportDefinitions">
   <entry type="array" name="metainfo">
     <entry type="string" name="type">importexport definitions</entry>
-    <entry type="string" name="charset">utf-8</entry>
+    <entry type="string" name="charset">user</entry>
     <entry type="integer" name="entries">4</entry>
   </entry>
   <entry type="array" name="definitions">
@@ -36,7 +36,7 @@
           <entry type="string" name="participants-c">Participants: User, Status, Quantity, Role</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
-        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="charset">user</entry>
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
@@ -51,7 +51,7 @@
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="string" name="fieldsep">;</entry>
-        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="charset">user</entry>
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="array" name="csv_fields">
           <entry type="string" name="0">owner</entry>
