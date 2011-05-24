@@ -24,27 +24,41 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 		$this->bo = new calendar_bo();
+		$config = config::read('phpgwapi');
 
 		// Custom fields need to be specifically requested
 		$cfs = array();
 		foreach($options['mapping'] as $key => $label) {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
-		$query = array(
-			'start' => $options['selection']['start'],
-			'end'   => $options['selection']['end'],
-			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
-			'enum_recuring' => false,
-			'daywise'       => false,
-			'users'         => $options['selection']['owner'],
-			'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
-		);
-		$config = config::read('phpgwapi');
-		if($config['export_limit']) {
-			$query['offset'] = 0;
-			$query['num_rows'] = (int)$config['export_limit'];
+
+		if($options['select'] == 'criteria') {
+			$query = array(
+				'start' => $options['selection']['start'],
+				'end'   => $options['selection']['end'],
+				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
+				'enum_recuring' => false,
+				'daywise'       => false,
+				'users'         => $options['selection']['owner'],
+				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
+			);
+			if($config['export_limit']) {
+				$query['offset'] = 0;
+				$query['num_rows'] = (int)$config['export_limit'];
+			}
+			$events =& $this->bo->search($query);
+		} elseif ($options['select'] = 'search_results') {
+			$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+			$query['num_rows'] = -1;        // all
+			$query['start'] = 0;
+			$query['cfs'] = $cfs;
+
+			if($config['export_limit']) {
+				$query['num_rows'] = (int)$config['export_limit'];
+			}
+			$ui = new calendar_uilist();
+			$ui->get_rows($query, $events);
 		}
-		$events =& $this->bo->search($query);
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
@@ -61,12 +75,10 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			),
 		);
 
-		// $options['selection'] is array of identifiers as this plugin doesn't
-		// support other selectors atm.
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
 			// Get rid of yearly recurring events that don't belong
-			if($event['start'] > $query['end'] || $event['end'] < $query['start']) continue;
+			if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
 
 			// Add in participants
 			if($options['mapping']['participants']) {
@@ -88,7 +100,6 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 					if(is_array($value)) $record->$key = implode(',', $value);
 				}
  			}
-
 			$export_object->export_record($record);
 		}
 		unset($record);
