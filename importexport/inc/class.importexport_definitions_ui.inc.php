@@ -445,8 +445,42 @@ class importexport_definitions_ui
 	{
 		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_step21->$content '.print_r($content,true));
 
+		// Check for duplicate name
+		$duplicate = isset($content['duplicate_error']);
+		if($content['name'] && !$duplicate)
+		{
+			try {
+				$check_definition = new importexport_definition($content['name']);
+				if($check_definition && $check_definition->definition_id != $content['definition_id'])
+				{
+					throw new Exception('Already exists');
+				}
+			} catch (Exception $e) {
+			//		throw new Exception('Already exists');
+				$content['duplicate_error'] = lang('Duplicate name, please choose another.');
+				
+				// Try some suggestions
+				$suggestions = array(
+					$content['name'] .'-'. $GLOBALS['egw_info']['user']['account_lid'],
+					$content['name'] .'-'. $GLOBALS['egw_info']['user']['account_id'],
+					$content['name'] .'-'. egw_time::to('now', true),
+					//$content['name'] .'-'. rand(0,100),
+				);
+				foreach($suggestions as $key => $suggestion) {
+					$sug_definition = new importexport_definition($suggestion);
+					if($sug_definition->definition_id) {
+						unset($suggestions[$key]);
+					}
+				}
+				if($suggestions) {
+					$content['duplicate_error'] .= '  '. lang('Try')." \n" . implode("\n", $suggestions);
+				}
+				return $this->get_step($content['step'],0);
+			}
+		}
+
 		// return from step21
-		if ($content['step'] == 'wizard_step21')
+		if ($content['step'] == 'wizard_step21' && !$duplicate)
 		{
 			switch (array_search('pressed', $content['button']))
 			{
@@ -463,8 +497,9 @@ class importexport_definitions_ui
 		// init step21
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step21'];
+			$content['msg'] = $this->steps['wizard_step21'] . ($duplicate ? "\n".$content['duplicate_error'] : '');
 			$content['step'] = 'wizard_step21';
+			unset($content['duplicate_error']);
 			$preserv = $content;
 			unset ($preserv['button']);
 			return 'importexport.wizard_choosename';
