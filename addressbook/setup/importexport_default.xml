@@ -92,8 +92,7 @@
       <entry type="string" name="plugin">addressbook_import_contacts_csv</entry>
       <entry type="string" name="type">import</entry>
       <entry type="array" name="allowed_users">
-        <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
+        <entry type="string" name="0">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="string" name="fieldsep">;</entry>
