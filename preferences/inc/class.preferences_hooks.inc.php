@@ -342,7 +342,7 @@ class preferences_hooks
             ),
 			'csv_charset' => array(
 				'type'   => 'select',
-				'label'  => 'Charset for the CSV export',
+				'label'  => 'Charset for the CSV export/import',
 				'name'   => 'csv_charset',
 				'values' => translation::get_installed_charsets(),
 				'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
