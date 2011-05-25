@@ -1,5 +1,5 @@
-<!-- BEGIN head --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html xml:lang="{lang_code}" xmlns="http://www.w3.org/1999/xhtml"{dir_code}> 
+<!-- BEGIN head --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="{lang_code}" xmlns="http://www.w3.org/1999/xhtml"{dir_code}>
 	<head>
 		<title>{website_title}</title>
 		<meta http-equiv="content-type" content="text/html; charset={charset}" />
@@ -9,12 +9,12 @@
 		<meta name="copyright" content="Stylite GmbH 2010, see http://www.stylite.de/EPL" />
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="Stylite GmbH www.stylite.de" />
+		{pngfix}
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
 		<link href="{theme_css}" type="text/css" rel="StyleSheet" />
 		<link href="{print_css}" type="text/css" media="print" rel="StyleSheet" />
-		{pngfix}
 		<style type="text/css">
 			{app_css}
 		</style>
@@ -45,8 +45,8 @@
 			</div>
 		</div>
 		<div id="egw_fw_footer">{powered_by}</div>
- 
-		<script type="text/javascript"> 
+
+		<script type="text/javascript">
 			var
 				framework = null;
 
