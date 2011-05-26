@@ -2724,8 +2724,28 @@ class calendar_ical extends calendar_boupdate
 							$attributes['value'] = '';
 						}
 					}
-					// try X-EGROUPWARE-UID
-					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']))
+					// parse email and cn from attendee
+					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+						$attributes['value'],$matches))
+					{
+						$email = $matches[1] ? $matches[1] : $matches[3];
+						$cn = isset($matches[2]) ? $matches[2]: '';
+					}
+					elseif (!empty($attributes['value']) &&
+						preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+						$attributes['value'],$matches))
+					{
+						$cn = $matches[1];
+						$email = $matches[2];
+					}
+					elseif (strpos($attributes['value'],'@') !== false)
+					{
+						$email = $attributes['value'];
+					}
+					// try X-EGROUPWARE-UID, but only if it resolves to same email (otherwise we are in trouble if different EGw installs talk to each other)
+					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']) &&
+						($res_info = $this->resource_info($attributes['params']['X-EGROUPWARE-UID'])) &&
+						!strcasecmp($res_info['email'], $email))
 					{
 						$uid = $attributes['params']['X-EGROUPWARE-UID'];
 						if (!empty($attributes['params']['X-EGROUPWARE-QUANTITY']))
@@ -2744,23 +2764,6 @@ class calendar_ical extends calendar_boupdate
 							$uid = $this->user;
 					}
 					// try to find an email address
-					elseif (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
-						$attributes['value'],$matches))
-					{
-						$email = $matches[1] ? $matches[1] : $matches[3];
-						$cn = isset($matches[2]) ? $matches[2]: '';
-					}
-					elseif (!empty($attributes['value']) &&
-						preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
-						$attributes['value'],$matches))
-					{
-						$cn = $matches[1];
-						$email = $matches[2];
-					}
-					elseif (strpos($attributes['value'],'@') !== false)
-					{
-						$email = $attributes['value'];
-					}
 					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))
 					{
 						// we use the account we found
