@@ -137,6 +137,21 @@ class PHPMailer {
   public $AltBody           = '';
 
   /**
+   * Sets the ContentType of the AltExtended; default is text/plain
+   * usually used by text/calendar Invitations/Metting requests
+   * @var string
+   */
+  public $AltExtendedContentType = 'text/plain';
+
+  /**
+   * Sets the text-only body of the message.  This automatically sets the
+   * email to multipart/alternative. This is used to send calendar meeting requests as 
+   * Outlook does. It adds an 3rd alternative part to multipart/alternative 
+   * @var string
+   */
+  public $AltExtended       = '';
+
+  /**
    * Sets word wrapping on the body of the message to a given number of
    * characters.
    * @var int
@@ -598,7 +613,7 @@ class PHPMailer {
       }
 
       // Set whether the message is multipart/alternative
-      if(!empty($this->AltBody)) {
+      if(!empty($this->AltBody) || !empty($this->AltExtended)) {
         $this->ContentType = 'multipart/alternative';
       }
 
@@ -1112,6 +1127,7 @@ class PHPMailer {
       case 'alt':
       case 'alt_attachments':
         $this->AltBody = $this->WrapText($this->AltBody, $this->WordWrap);
+		if (!empty($this->AltExtended)) $this->AltExtended = $this->WrapText($this->AltExtended, $this->WordWrap);
         break;
       default:
         $this->Body = $this->WrapText($this->Body, $this->WordWrap);
@@ -1258,6 +1274,12 @@ class PHPMailer {
         $body .= $this->GetBoundary($this->boundary[1], '', $this->BodyContentType, ''); //is dependent on IsHTML
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
+        if (!empty($this->AltExtended))
+        {
+            $body .= $this->GetBoundary($this->boundary[1], '', $this->AltExtendedContentType, ''); // may be set by client, defaults to text/plain
+            $body .= $this->EncodeString($this->AltExtended, $this->Encoding);
+            $body .= $this->LE.$this->LE;
+        }
         $body .= $this->EndBoundary($this->boundary[1]);
         break;
       case 'plain':
@@ -1278,6 +1300,12 @@ class PHPMailer {
         $body .= $this->GetBoundary($this->boundary[2], '', 'text/html', '') . $this->LE; // Create the HTML body
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
+        if (!empty($this->AltExtended))
+        {
+            $body .= $this->GetBoundary($this->boundary[2], '', $this->AltExtendedContentType, ''); // may be set by client, defaults to text/plain
+            $body .= $this->EncodeString($this->AltExtended, $this->Encoding);
+            $body .= $this->LE.$this->LE;
+        }
         $body .= $this->EndBoundary($this->boundary[2]);
         $body .= $this->AttachAll();
         break;
@@ -1365,10 +1393,10 @@ class PHPMailer {
       if(count($this->attachment) > 0) {
         $this->message_type = 'attachments';
       }
-      if(strlen($this->AltBody) > 0 && count($this->attachment) < 1) {
+      if((strlen($this->AltBody) > 0 || strlen($this->AltExtended) > 0 ) && count($this->attachment) < 1) {
         $this->message_type = 'alt';
       }
-      if(strlen($this->AltBody) > 0 && count($this->attachment) > 0) {
+      if((strlen($this->AltBody) > 0 || strlen($this->AltExtended) > 0 ) && count($this->attachment) > 0) {
         $this->message_type = 'alt_attachments';
       }
     }
@@ -2005,7 +2033,7 @@ class PHPMailer {
   public function getMessageHeader() {
 	if(!isset($this->sentHeader)) {
 		// Set whether the message is multipart/alternative
-		if(!empty($this->AltBody)) $this->ContentType = "multipart/alternative";
+		if(!empty($this->AltBody) || !empty($this->AltExtended)) $this->ContentType = "multipart/alternative";
 
 		$this->SetMessageType();
 		$header = $this->CreateHeader();
@@ -2018,7 +2046,7 @@ class PHPMailer {
   public function getMessageBody() {
 	if(!isset($this->sentBody)) {
 		// Set whether the message is multipart/alternative
-		if(!empty($this->AltBody)) $this->ContentType = "multipart/alternative";
+		if(!empty($this->AltBody) || !empty($this->AltExtended)) $this->ContentType = "multipart/alternative";
 
 		$this->SetMessageType();
 		$body = $this->CreateBody();
