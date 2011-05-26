@@ -2078,6 +2078,7 @@ class calendar_ical extends calendar_boupdate
 				$this->supportedFields = $defaultFields['full'];
 				break;
 
+			case 'full':
 			case 'groupdav':		// all GroupDAV access goes through here
 				$this->tzid = false; // use event's TZ
 				switch ($this->productName)
