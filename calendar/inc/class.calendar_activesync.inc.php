@@ -540,7 +540,8 @@ return array();	// temporary disabling meeting requests from calendar
 
 		$event = $this->message2event($message, $account, $event);
 
-		if (!($id = $this->calendar->update($event,true)))	// true = ignore conflicts
+		// store event, ignore conflicts and skip notifications, as AS clients do their own notifications
+		if (!($id = $this->calendar->update($event,$ignore_conflicts=true,$touch_modified=true,$ignore_acl=false,$updateTS=true,$messages=null, $skip_notification=true)))
 		{
 			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
 			return false;
