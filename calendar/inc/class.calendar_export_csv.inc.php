@@ -48,16 +48,51 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			}
 			$events =& $this->bo->search($query);
 		} elseif ($options['select'] = 'search_results') {
-			$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
-			$query['num_rows'] = -1;        // all
-			$query['start'] = 0;
-			$query['cfs'] = $cfs;
+			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+			if($states['view'] == 'listview') {
+				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+				$query['num_rows'] = -1;        // all
+				$query['start'] = 0;
+				$query['cfs'] = $cfs;
 
-			if($config['export_limit']) {
-				$query['num_rows'] = (int)$config['export_limit'];
+				if($config['export_limit']) {
+					$query['num_rows'] = (int)$config['export_limit'];
+				}
+				$ui = new calendar_uilist();
+				$ui->get_rows($query, $events);
+			} else {
+				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+				$query['users'] = explode(',', $query['owner']);
+				$query['num_rows'] = -1;
+				if($config['export_limit']) {
+					$query['num_rows'] = (int)$config['export_limit'];
+				}
+
+				$events = array();
+				switch($states['view']) {
+					case 'month':
+						$query += $this->get_query_month($states);
+						break;
+					case 'week':
+						$query += $this->get_query_week($states);
+						break;
+					case 'day':
+						$query += $this->get_query_day($states);
+						break;
+					default:
+						$ui = new calendar_uiviews($query);
+						$query += array(
+							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
+							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
+						);
+
+				}
+				$bo = new calendar_boupdate();
+				$events = $bo->search($query + array(
+					'offset' => 0,
+					'order' => 'cal_start',
+				));
 			}
-			$ui = new calendar_uilist();
-			$ui->get_rows($query, $events);
 		}
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
@@ -168,5 +203,62 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				'owner'		=> $states['owner']
 			)
 		);
+	}
+
+	/**
+	 * Get additional query parameters used when in various views
+	 * This stuff copied out of calendar_uiviews
+	 */
+	private function get_query_month($states)
+	{
+		$timespan = array(
+			'start' => mktime(0,0,0,$states['month'],1,$states['year']),
+			'end' => mktime(0,0,0,$states['month']+1,1,$states['year'])-1
+		);
+		return $timespan;
+	}
+
+	public function get_query_week($states)
+	{
+		$query = array();
+		$days = $states['days'];
+		$ui = new calendar_uiviews($states);
+		if (!$days)
+                {
+                        $days = isset($_GET['days']) ? $_GET['days'] : $this->cal_prefs['days_in_weekview'];
+                        if ($days != 5) $days = 7;
+                }
+		if ($days == 4)         // next 4 days view
+                {
+                        $query['start'] = $this->bo->date2ts($states['date']);
+                        $query['end'] = strtotime("+$days days",$query['start']) - 1;
+                }
+                else
+                {
+			$query['start'] = $ui->datetime->get_weekday_start($states['year'],$states['month'],$states['day']);
+			if ($days == 5)         // no weekend-days
+			{
+				switch($ui->cal_prefs['weekdaystarts'])
+				{
+					case 'Saturday':
+						$query['start'] = strtotime("+2 days",$query['start']);
+						break;
+					case 'Sunday':
+						$query['start'] = strtotime("+1 day",$query['start']);
+						break;
+				}
+			}
+			$query['end'] = strtotime("+$days days",$query['start']) - 1;
+		}
+		return $query;
+	}
+
+	public static function get_query_day($states)
+	{
+		$query = array();
+		$bo = new calendar_bo();
+		$query['start'] = $bo->date2ts((string)$states['date']);
+		$query['end'] = $query['start']+DAY_s-1;
+		return $query;
 	}
 }
