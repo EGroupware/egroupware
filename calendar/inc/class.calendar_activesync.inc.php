@@ -396,10 +396,10 @@ return array();	// temporary disabling meeting requests from calendar
 		$status = isset($as2status[$response]) ? $as2status[$response] : 'U';
 		$uid = $GLOBALS['egw_info']['user']['account_id'];
 
-		if (!is_numeric($event))	// iCal from fmail
+		if (!is_numeric($requestid))	// iCal from fmail
 		{
 			$ical = new calendar_ical();
-			if (!($events = $ical->icaltoegw($data['attachment'], '', 'utf-8')) || count($events) != 1)
+			if (!($events = $ical->icaltoegw($requestid, '', 'utf-8')) || count($events) != 1)
 			{
 				debugLog(__METHOD__."('$event') error parsing iCal!");
 				return null;
@@ -414,8 +414,13 @@ return array();	// temporary disabling meeting requests from calendar
 			}
 			elseif(!isset($event['participants'][$uid]))
 			{
-				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) current user is NO participant!");
+				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) current user ($uid) is NO participant of event ".array2string($event));
 				// maybe we should silently add him, as he might not have the rights to add him himself with calendar->update ...
+			}
+			elseif($event['deleted'])
+			{
+				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) event ($uid) deleted on server --> return false");
+				return false;
 			}
 		}
 		elseif($requestid > 0)	// uid from mail --> let fmail plugin call us
