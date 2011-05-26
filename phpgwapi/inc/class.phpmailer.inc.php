@@ -109,11 +109,23 @@ class PHPMailer {
   public $Subject           = '';
 
   /**
+   * Sets the ContentType of the Body; default is text/plain
+   * @var string
+   */
+  public $BodyContentType = 'text/plain';
+
+  /**
    * Sets the Body of the message.  This can be either an HTML or text body.
    * If HTML then run IsHTML(true).
    * @var string
    */
   public $Body              = '';
+
+  /**
+   * Sets the ContentType of the AltBody; default is text/plain
+   * @var string
+   */
+  public $AltBodyContentType = 'text/plain';
 
   /**
    * Sets the text-only body of the message.  This automatically sets the
@@ -360,6 +372,7 @@ class PHPMailer {
     } else {
       $this->ContentType = 'text/plain';
     }
+    $this->BodyContentType = $this->ContentType;
   }
 
   /**
@@ -1098,7 +1111,6 @@ class PHPMailer {
     switch($this->message_type) {
       case 'alt':
       case 'alt_attachments':
-	  case 'alt_extended':
         $this->AltBody = $this->WrapText($this->AltBody, $this->WordWrap);
         break;
       default:
@@ -1204,7 +1216,6 @@ class PHPMailer {
         break;
       case 'attachments':
       case 'alt_attachments':
-	  case 'alt_extended':
         if($this->InlineImageExists()){
           $result .= sprintf("Content-Type: %s;%s\ttype=\"text/html\";%s\tboundary=\"%s\"%s", 'multipart/related', $this->LE, $this->LE, $this->boundary[1], $this->LE);
         } else {
@@ -1241,10 +1252,10 @@ class PHPMailer {
 
     switch($this->message_type) {
       case 'alt':
-        $body .= $this->GetBoundary($this->boundary[1], '', 'text/plain', '');
+        $body .= $this->GetBoundary($this->boundary[1], '', $this->AltBodyContentType, ''); // may be set by client, defaults to text/plain
         $body .= $this->EncodeString($this->AltBody, $this->Encoding);
         $body .= $this->LE.$this->LE;
-        $body .= $this->GetBoundary($this->boundary[1], '', 'text/html', '');
+        $body .= $this->GetBoundary($this->boundary[1], '', $this->BodyContentType, ''); //is dependent on IsHTML
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
         $body .= $this->EndBoundary($this->boundary[1]);
@@ -1266,22 +1277,6 @@ class PHPMailer {
         $body .= $this->LE.$this->LE;
         $body .= $this->GetBoundary($this->boundary[2], '', 'text/html', '') . $this->LE; // Create the HTML body
         $body .= $this->EncodeString($this->Body, $this->Encoding);
-        $body .= $this->LE.$this->LE;
-        $body .= $this->EndBoundary($this->boundary[2]);
-        $body .= $this->AttachAll();
-        break;
-      case 'alt_extended':
-        $body .= sprintf("--%s%s", $this->boundary[1], $this->LE);
-        $body .= sprintf("Content-Type: %s;%s" . "\tboundary=\"%s\"%s", 'multipart/alternative', $this->LE, $this->boundary[2], $this->LE.$this->LE);
-        $body .= $this->GetBoundary($this->boundary[2], '', 'text/plain', '') . $this->LE; // Create text body
-        $body .= $this->EncodeString($this->AltBody, $this->Encoding);
-        $body .= $this->LE.$this->LE;
-        $body .= $this->GetBoundary($this->boundary[2], '', 'text/html', '') . $this->LE; // Create the HTML body
-        $body .= $this->EncodeString($this->Body, $this->Encoding);
-        $body .= $this->LE.$this->LE;
-		// Create the extended body for an attached text/calendar
-        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE; 
-        $body .= $this->EncodeString($this->attachment[0][0], $this->attachment[0][3]);
         $body .= $this->LE.$this->LE;
         $body .= $this->EndBoundary($this->boundary[2]);
         $body .= $this->AttachAll();
@@ -1375,9 +1370,6 @@ class PHPMailer {
       }
       if(strlen($this->AltBody) > 0 && count($this->attachment) > 0) {
         $this->message_type = 'alt_attachments';
-      }
-      if(strlen($this->AltBody) > 0 && count($this->attachment) > 0 && stripos($this->attachment[0][4],'text/calendar')!==false) {
-        $this->message_type = 'alt_extended';
       }
     }
   }
