@@ -94,7 +94,14 @@ function egw_fw(_sidemenuId, _tabsId, _splitterId, _webserverUrl, _sideboxSizeCa
 
 egw_fw.prototype.alertHandler = function(_message, _details)
 {
-	alert('Error:\n ' + _message + '\n\nDetails:\n ' + _details);
+	if (_details)
+	{
+		alert('Error:\n ' + _message + '\n\nDetails:\n ' + _details);
+	}
+	else
+	{
+		alert(_message);
+	}
 }
 
 egw_fw.prototype.callManual = function()
