@@ -1416,7 +1416,7 @@ class calendar_bo
 	* Converts a participant into a (readable) user- or resource-name
 	*
 	* @param string|int $id id of user or resource
-	* @param string|boolean type-letter or false
+	* @param string|boolean $use_type=false type-letter or false
 	* @return string with name
 	*/
 	function participant_name($id,$use_type=false)
