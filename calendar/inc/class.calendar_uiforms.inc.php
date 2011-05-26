@@ -1108,11 +1108,18 @@ class calendar_uiforms extends calendar_ui
 				else
 				{
 					$event = array_shift($events);
-					$event['participant_types'] = array();
-					foreach($event['participants'] as $uid => $status)
+					if (($existing_event = $this->bo->read($event['uid'])))
 					{
-						calendar_so::split_user($uid, $user_type, $user_id);
-						$event['participant_types'][$user_type][$user_id] = $status;
+						$event = $existing_event;
+					}
+					else
+					{
+						$event['participant_types'] = array();
+						foreach($event['participants'] as $uid => $status)
+						{
+							calendar_so::split_user($uid, $user_type, $user_id);
+							$event['participant_types'][$user_type][$user_id] = $status;
+						}
 					}
 					//error_log(__METHOD__."(...) parsed as ".array2string($event));
 				}
