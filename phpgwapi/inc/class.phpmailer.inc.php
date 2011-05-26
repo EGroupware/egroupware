@@ -1268,9 +1268,12 @@ class PHPMailer {
 
     switch($this->message_type) {
       case 'alt':
-        $body .= $this->GetBoundary($this->boundary[1], '', $this->AltBodyContentType, ''); // may be set by client, defaults to text/plain
-        $body .= $this->EncodeString($this->AltBody, $this->Encoding);
-        $body .= $this->LE.$this->LE;
+        if (!empty($this->AltBody))
+        {
+            $body .= $this->GetBoundary($this->boundary[1], '', $this->AltBodyContentType, ''); // may be set by client, defaults to text/plain
+            $body .= $this->EncodeString($this->AltBody, $this->Encoding);
+            $body .= $this->LE.$this->LE;
+        }
         $body .= $this->GetBoundary($this->boundary[1], '', $this->BodyContentType, ''); //is dependent on IsHTML
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
@@ -1294,10 +1297,13 @@ class PHPMailer {
       case 'alt_attachments':
         $body .= sprintf("--%s%s", $this->boundary[1], $this->LE);
         $body .= sprintf("Content-Type: %s;%s" . "\tboundary=\"%s\"%s", 'multipart/alternative', $this->LE, $this->boundary[2], $this->LE.$this->LE);
-        $body .= $this->GetBoundary($this->boundary[2], '', 'text/plain', '') . $this->LE; // Create text body
-        $body .= $this->EncodeString($this->AltBody, $this->Encoding);
-        $body .= $this->LE.$this->LE;
-        $body .= $this->GetBoundary($this->boundary[2], '', 'text/html', '') . $this->LE; // Create the HTML body
+        if (!empty($this->AltBody))
+        {
+            $body .= $this->GetBoundary($this->boundary[2], '', $this->AltBodyContentType, '') . $this->LE; // Create text body
+            $body .= $this->EncodeString($this->AltBody, $this->Encoding);
+            $body .= $this->LE.$this->LE;
+        }
+        $body .= $this->GetBoundary($this->boundary[2], '', $this->BodyContentType, '') . $this->LE; // Create the HTML body
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
         if (!empty($this->AltExtended))
@@ -1387,7 +1393,7 @@ class PHPMailer {
    * @return void
    */
   public function SetMessageType() {
-    if(count($this->attachment) < 1 && strlen($this->AltBody) < 1) {
+    if(count($this->attachment) < 1 && strlen($this->AltBody) < 1 && strlen($this->AltExtended) < 1) {
       $this->message_type = 'plain';
     } else {
       if(count($this->attachment) > 0) {
