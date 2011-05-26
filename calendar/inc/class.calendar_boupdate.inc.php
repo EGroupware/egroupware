@@ -740,7 +740,7 @@ class calendar_boupdate extends calendar_bo
 							if (is_null($ics))
 							{
 								$calendar_ical = new calendar_ical();
-								$calendar_ical->setSupportedFields('groupdav');	// full iCal fields+event TZ
+								$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
 								$ics = $calendar_ical->exportVCal($event['id'],'2.0',$method);
 								unset($calendar_ical);
 							}
