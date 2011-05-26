@@ -773,10 +773,16 @@ function load_cal(url,id) {
 				'link' => False
 			);
 		}
+		$file[] = array(
+			'text' => lang('Import').': '.html::a_href(lang('iCal'),'calendar.calendar_uiforms.import').
+				' &amp; '.html::a_href(lang('CSV'),'/calendar/csv_import.php'),
+			'no_lang' => True,
+			'link' => False,
+		);
 
 		// Merge print
-                if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-                {
+		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+		{
 			$options = '';
 			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 
@@ -784,7 +790,7 @@ function load_cal(url,id) {
 			$spreadsheets = importexport_admin_prefs_sidebox_hooks::get_spreadsheet_list('calendar');
 			foreach($spreadsheets as $file_info)
 			{
-				if($key = array_search($file_info['name'], $documents)) 
+				if($key = array_search($file_info['name'], $documents))
 				{
 					unset($documents[$key]);
 				}
@@ -857,7 +863,7 @@ function load_cal(url,id) {
 			if(!$timespan)
 			{
 				$timespan = array(array(
-					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first, 
+					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first,
 					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
 				));
 			}

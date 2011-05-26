@@ -1080,7 +1080,7 @@ class calendar_uiforms extends calendar_ui
 			);
 			$cal_id = (int) $_GET['cal_id'];
 
-			if (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id)))
+			if (!$cal_id && empty($_GET['ical']) || $cal_id && !($event = $this->bo->read($cal_id)))
 			{
 				if ($cal_id)
 				{
@@ -1095,6 +1095,28 @@ class calendar_uiforms extends calendar_ui
 					}
 				}
 				$event =& $this->default_add_event();
+			}
+			elseif (!empty($_GET['ical']))
+			{
+				$ical = new calendar_ical();
+				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')) || count($events) != 1)
+				{
+					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
+					$msg = lang('Error: importing the iCal');
+					$event =& $this->default_add_event();
+				}
+				else
+				{
+					$event = array_shift($events);
+					$event['participant_types'] = array();
+					foreach($event['participants'] as $uid => $status)
+					{
+						calendar_so::split_user($uid, $user_type, $user_id);
+						$event['participant_types'][$user_type][$user_id] = $status;
+					}
+					//error_log(__METHOD__."(...) parsed as ".array2string($event));
+				}
+				unset($ical);
 			}
 			else
 			{
