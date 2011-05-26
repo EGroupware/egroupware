@@ -315,7 +315,7 @@ return array();	// temporary disabling meeting requests from calendar
 		if (!is_array($event))
 		{
 			$ical = new calendar_ical();
-			if (!($events = $ical->icaltoegw($data['attachment'], '', 'utf-8')) || count($events) != 1)
+			if (!($events = $ical->icaltoegw($event, '', 'utf-8')) || count($events) != 1)
 			{
 				debugLog(__METHOD__."('$event') error parsing iCal!");
 				return null;
