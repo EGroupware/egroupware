@@ -620,7 +620,7 @@ class Horde_iCalendar {
         	// old formats force folding at whitespace which must therefore be preserved
         	$vCal = preg_replace('/[\r\n]+([ \t])/', '\1', $vCal);
         } else {
-        	$vCal = preg_replace('/[\r\n]+[ \t]+/', '', $vCal);
+        	$vCal = preg_replace('/[\r\n]+[ \t]/', '', $vCal);
         }
 
 		$isDate = false;
@@ -692,10 +692,10 @@ class Horde_iCalendar {
 	                $value = $GLOBALS['egw']->translation->convert($value,
 		                empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
                 }
-                
+
                 // Get timezone info for date fields from $params.
                 $tzid = isset($params['TZID']) ? trim($params['TZID'], '\"') : false;
-                
+
                 switch ($tag) {
 	                case 'VERSION': // already processed
 		                break;
@@ -705,12 +705,12 @@ class Horde_iCalendar {
 	                case 'LAST-MODIFIED':
 		                $this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
 		                break;
-		                
+
 	                case 'BDAY':
 	                case 'X-SYNCJE-ANNIVERSARY':
 		                $this->setAttribute($tag, $value, $params, true, $this->_parseDate($value));
 		                break;
-		                
+
 	                case 'DTEND':
 	                case 'DTSTART':
 	                case 'DTSTAMP':
@@ -729,7 +729,7 @@ class Horde_iCalendar {
 			                $this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params);
 		                }
 		                break;
-		                
+
 	                case 'TRIGGER':
 		                if (isset($params['VALUE'])) {
 			                if ($params['VALUE'] == 'DATE-TIME') {
@@ -741,13 +741,13 @@ class Horde_iCalendar {
 			                $this->setAttribute($tag, $this->_parseDuration($value), $params);
 		                }
 		                break;
-		                
+
 		                // Comma or semicolon seperated dates.
 	                case 'EXDATE':
 	                case 'RDATE':
 		                $dates = array();
 		                preg_match_all('/[;,]([^;,]*)/', ';' . $value, $values);
-		                
+
 		                foreach ($values[1] as $value) {
 			                if ((isset($params['VALUE'])
 					                && $params['VALUE'] == 'DATE') || (!isset($params['VALUE']) && $isDate)) {
@@ -758,12 +758,12 @@ class Horde_iCalendar {
 		                }
 		                $this->setAttribute($tag, isset($dates[0]) ? $dates[0] : null, $params, true, $dates);
 		                break;
-		                
+
 		                // Duration fields.
 	                case 'DURATION':
 		                $this->setAttribute($tag, $this->_parseDuration($value), $params);
 		                break;
-		                
+
 		                // Period of time fields.
 	                case 'FREEBUSY':
 		                $periods = array();
@@ -771,16 +771,16 @@ class Horde_iCalendar {
 		                foreach ($values[1] as $value) {
 			                $periods[] = $this->_parsePeriod($value);
 		                }
-		                
+
 		                $this->setAttribute($tag, isset($periods[0]) ? $periods[0] : null, $params, true, $periods);
 		                break;
-		                
+
 		                // UTC offset fields.
 	                case 'TZOFFSETFROM':
 	                case 'TZOFFSETTO':
 		                $this->setAttribute($tag, $this->_parseUtcOffset($value), $params);
 		                break;
-		                
+
 		                // Integer fields.
 	                case 'PERCENT-COMPLETE':
 	                case 'PRIORITY':
@@ -788,7 +788,7 @@ class Horde_iCalendar {
 	                case 'SEQUENCE':
 		                $this->setAttribute($tag, intval($value), $params);
 		                break;
-		                
+
 		                // Geo fields.
 	                case 'GEO':
 		                if ($this->isOldFormat()) {
@@ -802,18 +802,18 @@ class Horde_iCalendar {
 		                }
 		                $this->setAttribute($tag, $value, $params);
 		                break;
-		                
+
 		                // Recursion fields. # add more flexibility
 		                #case 'EXRULE':
 		                #case 'RRULE':
 		                #    $this->setAttribute($tag, trim($value), $params);
 		                #    break;
-		                
+
 		                // Binary fields.
 	                case 'PHOTO':
 		                $this->setAttribute($tag, $value, $params);
 		                break;
-		                
+
 		                // ADR, ORG and N are lists seperated by unescaped semicolons
 		                // with a specific number of slots.
 	                case 'ADR':
@@ -825,7 +825,7 @@ class Horde_iCalendar {
 		                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
 			                array("\n", "\n", ';', ':'),
 							$value);
-		                
+
 		                // Split by unescaped semicolons:
 		                $values = preg_split('/(?<!\\\\);/', $value);
 		                $value = str_replace('\\;', ';', $value);
@@ -834,7 +834,7 @@ class Horde_iCalendar {
 		                $values = str_replace('\\,', ',', $values);
 		                $this->setAttribute($tag, trim($value), $params, true, $values);
 		                break;
-		                
+
 		                // CATEGORIES is a lists seperated by unescaped commas
 		                // with a unspecific number of slots.
 	                case 'CATEGORIES':
@@ -844,7 +844,7 @@ class Horde_iCalendar {
 		                $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
 			                array("\n", "\n", ',', ':'),
 							$value);
-		                
+
 		                // Split by unescaped commas:
 		                $values = preg_split('/(?<!\\\\),/', $value);
 		                $value = str_replace('\\;', ';', $value);
@@ -853,7 +853,7 @@ class Horde_iCalendar {
 		                $values = str_replace('\\,', ',', $values);
 		                $this->setAttribute($tag, trim($value), $params, true, $values);
 		                break;
-		                
+
 		                // String fields.
 	                default:
 		                if ($this->isOldFormat()) {
@@ -863,14 +863,14 @@ class Horde_iCalendar {
 			                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
 				                array("\n", "\n", ';', ':'),
 								$value);
-			                
+
 			                // Split by unescaped semicolons:
 			                $values = preg_split('/(?<!\\\\);/', $value);
 			                $value = str_replace('\\;', ';', $value);
 			                $values = str_replace('\\;', ';', $values);
 			                $value = str_replace('\\,', ',', $value);
 			                $values = str_replace('\\,', ',', $values);
-			                $this->setAttribute($tag, trim($value), $params, true, $values); 
+			                $this->setAttribute($tag, trim($value), $params, true, $values);
 		                } else {
 			                $value = trim($value);
 			                // As of rfc 2426 2.4.2 semicolon, comma, and colon
@@ -879,7 +879,7 @@ class Horde_iCalendar {
 			                $value = str_replace(array('\\n', '\\N', '\\;', '\\:', '\\\\'),
 				                array("\n", "\n", ';', ':', '\\'),
 								$value);
-			                
+
 			                // Split by unescaped commas.
 			                $values = preg_split('/(?<!\\\\),/', $value);
 			                $value = str_replace('\\,', ',', $value);
@@ -890,7 +890,7 @@ class Horde_iCalendar {
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -1243,7 +1243,7 @@ class Horde_iCalendar {
 		            case 'BASE64':
 			            $params_str .= ';ENCODING=' . $params['ENCODING'];
 			            // using native php wordwrap to speed up encoding of images
-			            $result .= wordwrap($name . $params_str . ':' . $this->_newline . ' ' . 
+			            $result .= wordwrap($name . $params_str . ':' . $this->_newline . ' ' .
 			            	$this->_base64Encode($value),75,$this->_newline . ' ',true) . $this->_newline;
 			            /*
 			            $attr_string = $name . $params_str . ':' . $this->_newline . ' ' . $this->_base64Encode($value);
