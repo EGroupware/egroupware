@@ -31,6 +31,7 @@ class calendar_uiforms extends calendar_ui
 		'export' => true,
 		'import' => true,
 		'cat_acl' => true,
+		'meeting' => true,
 	);
 
 	/**
@@ -1567,6 +1568,122 @@ function replace_eTemplate_onsubmit()
 		$response = new xajaxResponse();
 		$response->addScript('window.close();');
 		return $response->getXML();
+	}
+
+	/**
+	 * Display a meeting request (iCal) for FMail and allow to accept, tentative or reject it
+	 *
+	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
+	 * @param array $event=null
+	 * @param string $msg=''
+	 */
+	function meeting(array $event=null, $msg='')
+	{
+		$user = $GLOBALS['egw_info']['user']['account_id'];
+
+		if (!is_array($event))
+		{
+			$ical_string = $_GET['ical'] == 'session' ? egw_cache::getSession('calendar', 'ical') : $_GET['ical'];
+			$ical = new calendar_ical();
+			if (!($events = $ical->icaltoegw($ical_string, '', 'utf-8')) || count($events) != 1)
+			{
+				error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
+				$GLOBALS['egw']->framework->render(html::fieldset('<pre>'.htmlspecialchars($ical_string).'</pre>',
+					lang('Error: importing the iCal')));
+				return;
+			}
+			$event = array_shift($events);
+			if (($existing_event = $this->bo->read($event['uid'])) && !$existing_event['deleted'])
+			{
+				$event = $existing_event;
+				foreach((array)$event['participants'] as $uid => $status)
+				{
+					calendar_so::split_status($status, $quantity, $role);
+					if ($role == 'CHAIR')
+					{
+						$event['organizer'] = $this->bo->participant_name($uid,false,true);
+						break;
+					}
+				}
+				if (empty($event['organizer']))
+				{
+					$event['organizer'] = $this->bo->participant_name($event['owner'],false,true);
+				}
+				$msg = lang('Using already existing event on server.');
+			}
+			else
+			{
+				$event['participant_types'] = array();
+				foreach($event['participants'] as $uid => $status)
+				{
+					calendar_so::split_user($uid, $user_type, $user_id);
+					$event['participant_types'][$user_type][$user_id] = $status;
+				}
+			}
+			//error_log(__METHOD__."(...) parsed as ".array2string($event));
+			$event['recure'] = $this->bo->recure2string($event);
+			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
+
+			if (!isset($event['participants'][$user]))
+			{
+				$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
+				if ($event['id'])
+				{
+					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+				}
+			}
+			// ignore events in the past
+			if ($this->bo->date2ts($event['start']) < $this->bo->now_su)
+			{
+				$msg = lang('Requested meeting is in the past!');
+				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+			}
+		}
+		else
+		{
+			//_debug_array($event);
+			list($button) = each($event['button']);
+			unset($event['button']);
+
+			switch($button)
+			{
+				case 'reject':
+					if (!$event['id'])
+					{
+						// send reply to organizer
+						$this->bo->send_update(MSG_REJECTED,array('e'.$event['organizer'] => 'DCHAIR'),$event);
+						break;	// no need to store rejected event
+					}
+					// fall-through
+				case 'accept':
+				case 'tentativ':
+					$status = strtoupper($button[0]);	// A, R or T
+					if (!$event['id'])
+					{
+						// store event without notifications!
+						if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, false, true, $msg, true)))
+						{
+							$msg = lang('Event saved');
+						}
+						else
+						{
+							$msg = lang('Error: saving the event !!!');
+							break;
+						}
+					}
+					// set status and send notification / meeting response
+					if ($this->bo->set_status($event, $user, $status))
+					{
+						if (!$msg) $msg = lang('Status changed');
+					}
+					break;
+			}
+		}
+		$event['msg'] = $msg;
+		$readonlys['button[edit]'] = !$event['id'];
+
+		$tpl = new etemplate('calendar.meeting');
+		$tpl->exec('calendar.calendar_uiforms.meeting', $event, $sel_options, $readonlys, $event, 2);
 	}
 
 	/**

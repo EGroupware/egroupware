@@ -10,6 +10,7 @@
 , stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages des Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
+accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
 accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
@@ -290,6 +291,7 @@ make freebusy information available to not loged in persons?	calendar	de	Die Bel
 manage mapping	calendar	de	Feldzuordnung bearbeiten
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
+meeting request	calendar	de	Termineinladung
 merge document...	calendar	de	Dokument einfügen...
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
@@ -369,6 +371,7 @@ recover	calendar	de	Wiederherstellen
 recovered	calendar	de	wieder hergestellt
 recurrence	calendar	de	Wiederholung
 recurring event	calendar	de	Wiederholender Termin
+reject	calendar	de	Absagen
 rejected	calendar	de	Abgesagt
 repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
@@ -379,6 +382,7 @@ repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 replacements for inserting events into documents	calendar	de	Platzhalter für das Einfügen von Terminen in Dokumente
 requested	calendar	de	Erforderlich
+requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen
@@ -466,6 +470,7 @@ this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment vo
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
+this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Termineinladung
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet.
 this message is sent to disinvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet.
@@ -509,6 +514,7 @@ use weekday start	calendar	de	Benutzer Start der Arbeitswoche
 user or group	calendar	de	Benutzer oder Gruppe
 user selectable css file for the calendar setup	calendar	de	Benutzer können ausgwählte CSS Dateien aus dem Kalender Setup benutzen
 users + groups: inviting both allways requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
+using already existing event on server.	calendar	de	Benutze bereits existierenden Termin auf dem Server.
 view exception	calendar	de	Ausnahme anzeigen
 view series	calendar	de	Terminserie anzeigen
 view this event	calendar	de	Diesen Termin anzeigen
@@ -542,6 +548,7 @@ yearview	calendar	de	Jahresansicht
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer können gelöschte Einträge selbst bereinigen
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
+you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!

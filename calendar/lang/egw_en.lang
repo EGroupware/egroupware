@@ -10,6 +10,7 @@
 , stati of participants reset	calendar	en	, status of participants reset
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can change it in %5.
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
+accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
@@ -290,6 +291,7 @@ make freebusy information available to not loged in persons?	calendar	en	Make Fr
 manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. Number of entries to show (leave empty for no restriction)
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
+meeting request	calendar	en	Meeting request
 merge document...	calendar	en	merge document...
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
@@ -369,6 +371,7 @@ recover	calendar	en	Recover
 recovered	calendar	en	recovered
 recurrence	calendar	en	Recurrence
 recurring event	calendar	en	Recurring event
+reject	calendar	en	Reject
 rejected	calendar	en	Rejected
 repeat days	calendar	en	Repeat days
 repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date (empty means unlimited)
@@ -379,6 +382,7 @@ repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 replacements for inserting events into documents	calendar	en	Replacements for inserting events into documents
 requested	calendar	en	Requested
+requested meeting is in the past!	calendar	en	Requested meeting is in the past!
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
 reset participant stati on event shifts	calendar	en	Reset participant status on event shifts
@@ -466,6 +470,7 @@ this entry is currently opened by %1!	calendar	en	This entry is currently opened
 this entry is opened by user:	calendar	en	This entry was opened within the configured time interval by user:
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
+this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.
 this message is sent to disinvited participants.	calendar	en	This message is sent to disinvited participants.
@@ -509,6 +514,7 @@ use weekday start	calendar	en	Use weekday start
 user or group	calendar	en	User or group
 user selectable css file for the calendar setup	calendar	en	User selectable CSS file for the calendar setup
 users + groups: inviting both allways requires an invite grant	admin	en	Users + groups: inviting both always requires an invite grant
+using already existing event on server.	calendar	en	Using already existing event on server.
 view exception	calendar	en	View exception
 view series	calendar	en	View series
 view this event	calendar	en	View this event
@@ -542,6 +548,7 @@ yearview	calendar	en	Year view
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
+you are not invited to that event!	calendar	en	You are not invited to that event!
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurrence, not both !!!
 you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurrence !!!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!

@@ -683,8 +683,15 @@ class calendar_boupdate extends calendar_bo
 		if ($old_event != False) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
 		{
-			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid");
-			if (!is_numeric($userid))
+			calendar_so::split_status($statusid, $quantity, $role);
+			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
+
+			if (!is_numeric($userid) && $userid[0] == 'e')
+			{
+				if ($role != 'CHAIR' || $msg_type == MSG_ALARM) continue;	// only notify "external" chairs, but not for alarms
+				$userid = substr($userid,1);
+			}
+			elseif (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
 				$userid = $res_info['responsible'];
@@ -701,16 +708,24 @@ class calendar_boupdate extends calendar_bo
 					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)
 			{
-				$preferences = CreateObject('phpgwapi.preferences',$userid);
-				$part_prefs = $preferences->read_repository();
-
-				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event))
+				if (is_numeric($userid))
 				{
-					continue;
-				}
-				$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
-				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
+					$preferences = CreateObject('phpgwapi.preferences',$userid);
+					$part_prefs = $preferences->read_repository();
 
+					if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event))
+					{
+						continue;
+					}
+					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
+					$details['to-fullname'] = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
+				}
+				else	// external email address: use current users preferences, plus some hardcoded settings (eg. ical notification)
+				{
+					$details['to-fullname'] = $userid;
+					$part_prefs = $GLOBALS['egw_info']['user']['preferences'];
+					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
+				}
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 				$timezone = new DateTimeZone($part_prefs['common']['tz']);
@@ -746,27 +761,26 @@ class calendar_boupdate extends calendar_bo
 				switch($part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
-						if ($method == 'REQUEST')
+						if (is_null($ics))
 						{
-							if (is_null($ics))
-							{
-								$calendar_ical = new calendar_ical();
-								$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
-								$ics = $calendar_ical->exportVCal($event['id'],'2.0',$method);
-								unset($calendar_ical);
-							}
-							$attachment = array(	'string' => $ics,
-													'filename' => 'cal.ics',
-													'encoding' => '8bit',
-													'type' => 'text/calendar; method='.$method,
-													);
+							$calendar_ical = new calendar_ical();
+							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
+							$ics = $calendar_ical->exportVCal(array($event),'2.0',$method);
+							unset($calendar_ical);
 						}
+						$attachment = array(
+							'string' => $ics,
+							'filename' => 'cal.ics',
+							'encoding' => '8bit',
+							'type' => 'text/calendar; method='.$method,
+						);
 						// fall through
 					case 'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
-							if(strlen($details[$key])) {
+							if(!empty($details[$key]))
+							{
 								switch($key){
 							 		case 'access':
 									case 'priority':
@@ -781,7 +795,8 @@ class calendar_boupdate extends calendar_bo
 						break;
 				}
 				// send via notification_app
-				if($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
+				if($GLOBALS['egw_info']['apps']['notifications']['enabled'])
+				{
 					try {
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
@@ -796,7 +811,9 @@ class calendar_boupdate extends calendar_bo
 						error_log(__METHOD__.' error while notifying user '.$userid.':'.$exception->getMessage());
 						continue;
 					}
-				} else {
+				}
+				else
+				{
 					error_log(__METHOD__.' cannot send any notifications because notifications is not installed');
 				}
 			}
@@ -1482,7 +1499,7 @@ class calendar_boupdate extends calendar_bo
 			echo "<p>error opening '$this->log_file' !!!</p>\n";
 			return false;
 		}
-		fwrite($f,$type.': '.$GLOBALS['egw']->common->grab_owner_name($this->user).': '.date('r')."\n");
+		fwrite($f,$type.': '.common::grab_owner_name($this->user).': '.date('r')."\n");
 		fwrite($f,"Time: time to save / saved time read back / old time before save\n");
 		foreach(array('start','end') as $name)
 		{

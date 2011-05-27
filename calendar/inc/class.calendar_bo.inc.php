@@ -1417,11 +1417,13 @@ class calendar_bo
 	*
 	* @param string|int $id id of user or resource
 	* @param string|boolean $use_type=false type-letter or false
+	* @param boolean $append_email=false append email (Name <email>)
 	* @return string with name
 	*/
-	function participant_name($id,$use_type=false)
+	function participant_name($id,$use_type=false, $append_email=false)
 	{
 		static $id2lid = array();
+		static $id2email = array();
 
 		if ($use_type && $use_type != 'u') $id = $use_type.$id;
 
@@ -1433,14 +1435,16 @@ class calendar_bo
 				if (($info = $this->resource_info($id)))
 				{
 					$id2lid[$id] = $info['name'] ? $info['name'] : $info['email'];
+					if ($info['name']) $id2email[$id] = $info['email'];
 				}
 			}
 			else
 			{
 				$id2lid[$id] = common::grab_owner_name($id);
+				$id2email[$id] = $GLOBALS['egw']->accounts->id2name($id,'account_email');
 			}
 		}
-		return $id2lid[$id];
+		return $id2lid[$id].($append_email && $id2email[$id] ? ' <'.$id2email[$id].'>' : '');
 	}
 
 	/**
