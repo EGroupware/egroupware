@@ -856,11 +856,9 @@ class nextmatch_widget
 		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
 		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
 
-		if ($actions)
-		{
-			if (!is_array($action_links)) $action_links = array();
+		if (!is_array($action_links)) $action_links = array();
 
-			return '
+		return '
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Initialize the action manager and add some actions to it
@@ -886,7 +884,6 @@ class nextmatch_widget
 		});
 	});
 </script>';
-		}
 	}
 
 	/**
