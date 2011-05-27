@@ -865,6 +865,11 @@ class Net_IMAPProtocol {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $ret=$this->_genericCommand('EXAMINE', $mailbox_name);
         $parsed='';
+        if ( PEAR::isError( $ret ) ) {
+            error_log(__METHOD__.__LINE__.$ret->message);
+            return new PEAR_Error( 'unable to examine '.$mailbox.':'.$ret->message );
+        }
+
         if(isset( $ret["PARSED"] ) ){
             for($i=0;$i<count($ret["PARSED"]); $i++){
 				if (array_key_exists("EXT",$ret["PARSED"][$i]) && is_array($ret["PARSED"][$i]["EXT"])) {
