@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.definition_index.row" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-filterheader id="type" options="importexport" class="lr_padding"/>
+					<nextmatch-sortheader label="Name" id="name" class="lr_padding"/>
+					<nextmatch-filterheader id="application" options="Application" class="lr_padding"/>
+					<nextmatch-accountfilter align="center" label="Allowed users" id="allowed_users" options="All,groups" class="lr_padding"/>
+					<nextmatch-accountfilter label="Owner" id="owner"/>
+					<nextmatch-header align="center" label="Actions" id="actions" class="lr_padding"/>
+					<hbox>
+						<button statustext="delete ALL selected definitions" label="Delete" id="delete_selected" onclick="return confirm('Do you really want to DELETE this definitions?');" image="delete"/>
+						<button statustext="export ALL selected definitions" label="Export" id="export_selected" image="fileexport"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<image src="${row}[type]" no_lang="1" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.{$row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[name]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button"/>
+					<description id="${row}[name]" no_lang="1" options="," class="lr_padding"/>
+					<description id="${row}[application]" no_lang="1" class="lr_padding"/>
+					<listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5" options="both" class="lr_padding"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+					</menulist>
+					<hbox align="center">
+						<button label="Edit" id="edit[{$row_cont[definition_id]}]" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.edit&amp;definition=$row_cont[name]'),'','dependent=yes,width=500,height=500,location=no,menubar=no,toolbar=no,scrollbars=yes,resizable=1,status=yes'); return false; return false;" image="edit"/>
+						<button statustext="Delete this eTemplate" label="Delete" id="delete[$row_cont[definition_id]]" onclick="return confirm('Delete this definition');" image="delete"/>
+					</hbox>
+					<checkbox align="center" statustext="select this eTemplate to delete it" id="selected[]" options="$row_cont[definition_id]"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
+
+.button {
+  cursor: pointer;
+}
+		</styles>
+	</template>
+	<template id="importexport.definition_index" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" no_lang="1" span="all" class="redItalic"/>
+				</row>
+				<row>
+					<nextmatch cols="6" id="nm" rows="2" options="importexport.definition_index.row"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
+
+.button {
+  cursor: pointer;
+}
+		</styles>
+	</template>
+</overlay>
