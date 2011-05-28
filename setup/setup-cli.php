@@ -38,13 +38,8 @@ if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }
 // setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'setup',
-		'noapi' => true,
-		'no_exception_handler' => 'cli',
-));
 include('inc/functions.inc.php');
+$GLOBALS['egw_info']['flags']['no_exception_handler'] = 'cli';	// inc/functions.inc.php does NOT set it
 $GLOBALS['egw_setup']->system_charset = $charset;
 
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
