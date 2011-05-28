@@ -576,7 +576,8 @@ Preferences tabs
 	background-color: #b7c3ff;
 }
 
-.egwGridView_grid tr.draggedOver td {
+tr.draggedOver td {
+/*.egwGridView_grid tr.draggedOver td {*/
 	background-color: #ffd09c !important;
 }
 

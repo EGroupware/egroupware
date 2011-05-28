@@ -726,6 +726,15 @@ egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
 }
 
 /**
+ * Deletes all children of the egwActionObject
+ */
+egwActionObject.prototype.clear = function() {
+	this.children = [];
+	this.selectedChildren = [];
+	this.focusedChild = null;
+}
+
+/**
  * Searches for the root object in the action object tree and returns it.
  */
 egwActionObject.prototype.getRootObject = function()
@@ -816,7 +825,9 @@ egwActionObject.prototype.getAllSelected = function()
 			if (!this.children[i].getAllSelected())
 				return false;
 		}
-		if (this.children.length == 0) return false;
+//		This introduced various bugs inside the egwAction system and breaks the
+//		recursion abortion case of this function!
+//		if (this.children.length == 0) return false;
 		return true;
 	}
 
@@ -1403,7 +1414,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 	for (var i = 0; i < _objs.length; i++)
 	{
 		var obj = _objs[i];
-		if (obj.triggerCallback())
+		if (!egwBitIsSet(obj.flags, EGW_AO_FLAG_IS_CONTAINER) && obj.triggerCallback())
 		{
 			testedSelected.push(obj);
 

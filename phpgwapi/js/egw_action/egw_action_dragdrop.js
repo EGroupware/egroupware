@@ -125,7 +125,8 @@ function egwDragActionImplementation()
 					// component
 					"refreshPositions": true,
 					"scroll": false,
-					"containment": "document"
+					"containment": "document",
+					"iframeFix": true
 				}
 			);
 
