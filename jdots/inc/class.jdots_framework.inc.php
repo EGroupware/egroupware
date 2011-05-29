@@ -24,6 +24,14 @@ class jdots_framework extends egw_framework
 	 * @var string
 	 */
 	private static $link_app;
+	/**
+	 * menuaction's which should never check, if running in jdots framework (and redirect to &cd=yes to create it if not)
+	 *
+	 * @var array
+	 */
+	public static $framework_check_blacklist = array(
+		'manual.uimanual.view', 'manual.uimanual.search',	// otherwise remote manual is NOT usable
+	);
 
 	/**
 	* Constructor
@@ -249,12 +257,16 @@ class jdots_framework extends egw_framework
 		// - we are an iframe in a popup (top.opener)
 		if(!$do_framework)
 		{
-			$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
+			// for menuaction=manual.uimanual.* never check/create framework
+			if (!isset($_GET['menuaction']) || !in_array($_GET['menuaction'], self::$framework_check_blacklist))
+			{
+				$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
 	if (typeof top.framework == "undefined" && !opener && !top.opener)
 	{
 		window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 	}
 </script>';
+			}
 			// app header for print (different from website_title, which also contains app header)
 			if ($GLOBALS['egw_info']['flags']['app_header'])
 			{
