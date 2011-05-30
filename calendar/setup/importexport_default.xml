@@ -40,6 +40,7 @@
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
     <entry type="array" name="import-calendar-csv">
       <entry type="string" name="name">import-calendar-csv</entry>
@@ -98,6 +99,7 @@
         </entry>
         <entry type="string" name="field_conversion"/>
       </entry>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
     <entry type="array" name="import-calendar-ical">
       <entry type="string" name="name">import-calendar-ical</entry>
@@ -105,9 +107,10 @@
       <entry type="string" name="plugin">calendar_import_ical</entry>
       <entry type="string" name="type">import</entry>
       <entry type="array" name="allowed_users">
-        <entry type="string" name="0">Admins</entry>
+        <entry type="string" name="0">Default</entry>
       </entry>
       <entry type="string" name="plugin_options"/>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
     <entry type="array" name="export-calendar-ical">
       <entry type="string" name="name">export-calendar-ical</entry>
@@ -118,6 +121,7 @@
         <entry type="string" name="0">Default</entry>
       </entry>
       <entry type="string" name="plugin_options"/>
+      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
   </entry>
 </entry>

@@ -25,15 +25,76 @@ class calendar_export_ical extends calendar_export_csv {
 		$options = $_definition->plugin_options;
 		$this->bo = new calendar_bo();
 		$boical = new calendar_ical();
-		$events =& $this->bo->search(array(
-			'start' => $options['selection']['start'],
-			'end'   => $options['selection']['end'],
-			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
-			'enum_recuring' => false,
-			'daywise'       => false,
-			'users'         => $options['selection']['owner'],
-			'date_format'   => 'server',
-		));
+
+		// Custom fields need to be specifically requested
+		$cfs = array();
+		foreach($options['mapping'] as $key => $label) {
+			if($key[0] == '#') $cfs[] = substr($key,1);
+		}
+
+		if($options['selection']['select'] == 'criteria') {
+			$query = array(
+				'start' => $options['selection']['start'],
+				'end'   => $options['selection']['end'],
+				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
+				'enum_recuring' => false,
+				'daywise'       => false,
+				'users'         => $options['selection']['owner'],
+				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
+			);
+			if($config['export_limit']) {
+				$query['offset'] = 0;
+				$query['num_rows'] = (int)$config['export_limit'];
+			}
+			$events =& $this->bo->search($query);
+		} elseif ($options['selection']['select'] = 'search_results') {
+			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+			if($states['view'] == 'listview') {
+				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+				$query['num_rows'] = -1;        // all
+				$query['start'] = 0;
+				$query['cfs'] = $cfs;
+
+				if($config['export_limit']) {
+					$query['num_rows'] = (int)$config['export_limit'];
+				}
+				$ui = new calendar_uilist();
+				$ui->get_rows($query, $events);
+			} else {
+				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+				$query['users'] = explode(',', $query['owner']);
+				$query['num_rows'] = -1;
+				if($config['export_limit']) {
+					$query['num_rows'] = (int)$config['export_limit'];
+				}
+
+				$events = array();
+				switch($states['view']) {
+					case 'month':
+						$query += calendar_export_csv::get_query_month($states);
+						break;
+					case 'week':
+						$query += calendar_export_csv::get_query_week($states);
+						break;
+					case 'day':
+						$query += calendar_export_csv::get_query_day($states);
+						break;
+					default:
+						$ui = new calendar_uiviews($query);
+						$query += array(
+							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
+							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
+						);
+
+				}
+				$bo = new calendar_boupdate();
+				$events = $bo->search($query + array(
+					'offset' => 0,
+					'order' => 'cal_start',
+				));
+			}
+		}
+
 		$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
 		fwrite($_stream, $ical);
 	}

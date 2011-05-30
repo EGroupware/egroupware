@@ -32,7 +32,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
-		if($options['select'] == 'criteria') {
+		if($options['selection']['select'] == 'criteria') {
 			$query = array(
 				'start' => $options['selection']['start'],
 				'end'   => $options['selection']['end'],
@@ -47,7 +47,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query['num_rows'] = (int)$config['export_limit'];
 			}
 			$events =& $this->bo->search($query);
-		} elseif ($options['select'] = 'search_results') {
+		} elseif ($options['selection']['select'] = 'search_results') {
 			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
 			if($states['view'] == 'listview') {
 				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
@@ -175,14 +175,14 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 * return html for options.
 	 *
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl($definition = null) {
 	}
 
 	/**
 	 * returns selectors of this plugin
 	 *
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl($definition = null) {
 		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
 		
 		$start= new egw_time($states['date']);
@@ -194,10 +194,12 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			$end = '+1 ' . $states['view'];
 		}
 
+		$prefs = unserialize($GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
 		return array(
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(
 				'plugin_override' => true, // Plugin overrides preferences
+				'select'	=> $prefs['selection']['select'] ? $prefs['selection']['select'] : 'criteria',
 				'start'		=> $start->format('ts'),
 				'end'		=> strtotime($end, $start->format('ts'))-1,
 				'owner'		=> $states['owner']
@@ -209,7 +211,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 * Get additional query parameters used when in various views
 	 * This stuff copied out of calendar_uiviews
 	 */
-	private function get_query_month($states)
+	public static function get_query_month($states)
 	{
 		$timespan = array(
 			'start' => mktime(0,0,0,$states['month'],1,$states['year']),
@@ -218,14 +220,14 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		return $timespan;
 	}
 
-	public function get_query_week($states)
+	public static function get_query_week($states)
 	{
 		$query = array();
 		$days = $states['days'];
 		$ui = new calendar_uiviews($states);
 		if (!$days)
                 {
-                        $days = isset($_GET['days']) ? $_GET['days'] : $this->cal_prefs['days_in_weekview'];
+                        $days = isset($_GET['days']) ? $_GET['days'] : $ui->cal_prefs['days_in_weekview'];
                         if ($days != 5) $days = 7;
                 }
 		if ($days == 4)         // next 4 days view
