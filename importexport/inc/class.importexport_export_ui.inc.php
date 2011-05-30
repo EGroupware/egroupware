@@ -140,7 +140,7 @@ class importexport_export_ui {
  			if(method_exists($plugin_object, 'get_selectors_html')) {
 				$content['plugin_options_html'] = $plugin_object->get_options_html();
 			} else {
-				$options = $plugin_object->get_options_etpl();
+				$options = $plugin_object->get_options_etpl($definition);
 				if(is_array($options)) {
 					$content['plugin_options_template'] = $options['name'];
 					$content += (array)$options['content'];
@@ -169,7 +169,7 @@ class importexport_export_ui {
  			if(method_exists($plugin_object, 'get_selectors_html')) {
 				$content['plugin_selectors_html'] = $plugin_object->get_selectors_html();
 			} else {
-				$options = $plugin_object->get_selectors_etpl();
+				$options = $plugin_object->get_selectors_etpl($definition);
 				if(is_array($options)) {
 					$content['selection'] = $options['content'];
 					$sel_options += (array)$options['sel_options'];
