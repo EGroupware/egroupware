@@ -293,27 +293,28 @@ class timesheet_ui extends timesheet_bo
 				{
 					switch ($link_app)
 					{
-						case 'calendar':
-							if (!$n)	// only if calendar is first link_app (clicked on ts icon in calendar)!
-							{
-								$calendar_bo = new calendar_bo();
-								list($link_id, $recurrence) = explode(':', $link_id);
-								$event = $calendar_bo->read($link_id, $recurrence);
-								$content['ts_start'] = $event['start'];
-								$content['ts_title'] = $calendar_bo->link_title($event);
-								$content['start_time'] = egw_time::to($event['start'],'H:i');
-								$content['ts_description'] = $event['description'];
-								$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
-								$content['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
-								unset($content['end_time']);
-							}
-							break;
 						case 'projectmanager':
 							$links[] = $link_id;
 							// fall-through;
 						default:
-							// get title from first linked app
-							if(!$n) $preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+							if(!$n)
+							{
+								// get title from first linked app
+								$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+								// ask first linked app via "timesheet_set" hook, for further data to set, incl. links
+								if (($set = $GLOBALS['egw']->hooks->single(array('location'=>'timesheet_set','id'=>$link_id),$link_app)))
+								{
+									foreach((array)$set['link_app'] as $i => $l_app)
+									{
+										if (($l_id=$set['link_id'][$i])) egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$l_app,$l_id);
+										if ($l_app == 'projectmanager') $links[] = $l_id;
+									}
+									unset($set['link_app']);
+									unset($set['link_id']);
+
+									$content = array_merge($content,$set);
+								}
+							}
 							break;
 					}
 					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);

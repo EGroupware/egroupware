@@ -79,7 +79,7 @@
 					<description value="Sub" class="noPrint"/>
 					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
-				<row class="row $row_cont[class] $row_cont[cat_id]" valign="top">
+				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<hbox align="center" options="5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
 						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]"/>
@@ -147,7 +147,7 @@
 						<button align="center" statustext="Add a new sub-task, -note, -call to this entry" label="Add sub" id="sp[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="new"/>
 						<button align="center" statustext="View all subs of this entry" label="View subs" id="view[$row_cont[info_id]]" image="view"/>
 						<button align="center" statustext="View the parent of this entry and all his subs" label="View parent" id="view[$row_cont[info_id_parent]]" image="parent"/>
-						<button align="center" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="timesheet"/>
+						<button align="center" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;link_id[]=$row_cont[info_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="timesheet"/>
 					</vbox>
 					<vbox options="0" class="noPrint" orient="0">
 						<hbox options="0,0" class="noPrint" orient="0">

@@ -1946,4 +1946,30 @@ class calendar_bo
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
 	}
+
+	/**
+	 * Hook for timesheet to set some extra data and links
+	 *
+	 * @param array $data
+	 * @param int $data[id] cal_id:recurrence
+	 * @return array with key => value pairs to set in new timesheet and link_app/link_id arrays
+	 */
+	function timesheet_set($data)
+	{
+		$set = array();
+		list($id,$recurrence) = explode(':',$data['id']);
+		if ((int)$id && ($event = $this->read($id,$recurrence)))
+		{
+			$set['ts_start'] = $event['start'];
+			$set['ts_title'] = $this->link_title($event);
+			$set['start_time'] = egw_time::to($event['start'],'H:i');
+			$set['ts_description'] = $event['description'];
+			if ($this->isWholeDay($event)) $event['end']++;	// whole day events are 1sec short
+			$set['ts_duration']	= ($event['end'] - $event['start']) / 60;
+			$set['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
+			$set['end_time'] = null;	// unset end-time
+			$set['cat_id'] = (int)$event['category'];
+		}
+		return $set;
+	}
 }

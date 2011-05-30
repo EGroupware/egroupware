@@ -222,11 +222,6 @@ class infolog_ui
 					$info['pm_id'] = $link['id'];
 				}
 				if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
-
-				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
-				{
-					$info['extra_links'] .= '&link_app[]='.$link['app'].'&link_id[]='.$link['id'];
-				}
 			}
 			if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
 			{
@@ -458,6 +453,32 @@ class infolog_ui
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
 
 		return $query['total'];
+	}
+
+	/**
+	 * Hook for timesheet to set some extra data and links
+	 *
+	 * @param array $data
+	 * @param int $data[id] info_id
+	 * @return array with key => value pairs to set in new timesheet and link_app/link_id arrays
+	 */
+	function timesheet_set($data)
+	{
+		$set = array();
+		if ((int)$data['id'] && ($info = $this->bo->read($data['id'])))
+		{
+			if ($info['info_cat']) $set['cat_id'] = $info['info_cat'];
+
+			foreach(egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true) as $link)
+			{
+				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
+				{
+					$set['link_app'][] = $link['app'];
+					$set['link_id'][]  = $link['id'];
+				}
+			}
+		}
+		return $set;
 	}
 
 	/**
