@@ -106,7 +106,7 @@ egw_fw.prototype.alertHandler = function(_message, _details)
 
 egw_fw.prototype.callManual = function()
 {
-	if (this.activeApp)
+	if (this.activeApp && this.activeApp.appName != 'manual')
 	{
 		if (this.activeApp.browser.iframe)
 		{
@@ -117,7 +117,7 @@ egw_fw.prototype.callManual = function()
 
 egw_fw.prototype.print = function()
 {
-	if (this.activeApp)
+	if (this.activeApp && this.activeApp.appName != 'manual')
 	{
 		if (this.activeApp.browser.iframe)
 		{
