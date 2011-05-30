@@ -729,7 +729,7 @@ class etemplate extends boetemplate
 
 			if (($color = $data['color']))
 			{
-				//echo "<p>cats2color($cats)=$color</p>\n";
+				//echo "<p>cats2color('$cats')=$color</p>\n";
 				return $cat2color[$cats] = $cat2color[$cat] = $color;
 			}
 		}
@@ -821,14 +821,13 @@ class etemplate extends boetemplate
 			if ($cl == '@' || $cl && strpos($cl,'$') !== false)
 			{
 				$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
-
-				if (!$cl || preg_match('/^[0-9,]*$/',$cl))
+				if (!$cl || preg_match('/(^| )([0-9,]+)( |$)/',$cl,$matches))
 				{
-					if (($color = $this->cats2color($cl)))
+					if (($color = $this->cats2color($matches[2])))
 					{
 						$rows[".$row"] .= ' style="background-color: '.$color.';"';
 					}
-					$cl = 'row';
+					$cl = str_replace($matches[2],'row',$cl);
 				}
 			}
 			if ($cl == 'nmr' || substr($cl,0,3) == 'row')	// allow to have further classes behind row
