@@ -183,7 +183,8 @@ class url_widget
 						$link = $GLOBALS['egw_info']['server']['webserver_url'].'/redirect.php?go='.$link;
 						if ($link[0] == '/') $link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$link;
 					}
-					$cell['size'] = ','.$link.',,,calling,'.$GLOBALS['egw_info']['server']['call_popup'];
+					$cell['size'] = ','.$link.($GLOBALS['egw_info']['server']['call_popup']=='none' ? '' :	// 'none' = no target
+						',,,calling,'.$GLOBALS['egw_info']['server']['call_popup']);
 				}
 				break;
 		}
