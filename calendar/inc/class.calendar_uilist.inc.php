@@ -502,30 +502,21 @@ class calendar_uilist extends calendar_ui
 		{
 			// get the whole selection
 			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
-			@set_time_limit(0);					 // switch off the execution time limit, as for big selections it's too small
+			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$query['num_rows'] = -1;		// all
-			$this->get_rows($query,$checked,$readonlys,($action != 'ical'));	   // true = only return the id's
+			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
 		}
-		else
+		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
+		elseif(in_array($action,array('ical','document')))
 		{
-			// Pull the date for recurring events
-			$split = array();
-			foreach($checked as $key)
+			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
+			$this->get_rows($query,$events,$readonlys);
+			foreach($events as $key => $event)
 			{
-				if(!is_array($key) && strpos($key,':') !== false)
-				{
-					list($id, $recur_date) = explode(':', $key);
-					$split[] = array(
-						'id' => $id,
-						'recur_date' => $recur_date
-					);
-				}
-				else
-				{
-					$split[] = $key;
-				}
+				if (!in_array($event['id'],$checked)) unset($events[$key]);
 			}
-			$checked = $split;
+			$checked = $events;
 		}
 
 		// Actions where one action is done to the group
@@ -549,17 +540,18 @@ class calendar_uilist extends calendar_ui
 		{
 			$timesheet_bo = new timesheet_bo();
 		}
-		foreach($checked as $event)
+		foreach($checked as $id)
 		{
-			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+			$recur_date = $app = $app_id = null;
+			if(!(int)$id && preg_match('/^([a-z_-]+)([0-9]+)$/i',$id,$matches))
 			{
 				$app = $matches[1];
 				$app_id = $matches[2];
+				$id = null;
 			}
 			else
 			{
-				$id = $event['id'];
-				$recur_date = $event['recur_date'];
+				list($id,$recur_date) = explode(':',$id);
 			}
 			switch($action)
 			{
@@ -630,10 +622,10 @@ class calendar_uilist extends calendar_ui
 					}
 					$timesheet = array(
 						'ts_title'		=>	$event['title'],
-						'ts_description'	=>	$event['description'],
+						'ts_description' =>	$event['description'],
 						'ts_start'		=>	$event['start'],
-						'ts_duration'		=>	($event['end'] - $event['start']) / 60,
-						'ts_quantity'		=>	($event['end'] - $event['start']) / 3600,
+						'ts_duration'	=>	($event['end'] - $event['start']) / 60,
+						'ts_quantity'	=>	($event['end'] - $event['start']) / 3600,
 						'ts_owner'		=>	$GLOBALS['egw_info']['user']['account_id'],
 						'cat_id'		=>	null,
 						'pl_id'			=>	null
@@ -673,8 +665,6 @@ class calendar_uilist extends calendar_ui
 					$msg = lang('Timesheet entries created for ');
 					break;
 			}
-			unset($app);
-			unset($app_id);
 		}
 
 		return ($failure == 0);
