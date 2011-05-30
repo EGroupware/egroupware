@@ -24,14 +24,6 @@ class jdots_framework extends egw_framework
 	 * @var string
 	 */
 	private static $link_app;
-	/**
-	 * menuaction's which should never check, if running in jdots framework (and redirect to &cd=yes to create it if not)
-	 *
-	 * @var array
-	 */
-	public static $framework_check_blacklist = array(
-		'manual.uimanual.view', 'manual.uimanual.search',	// otherwise remote manual is NOT usable
-	);
 
 	/**
 	* Constructor
@@ -255,10 +247,11 @@ class jdots_framework extends egw_framework
 		// - check if iframe parent (top) has a framework loaded or
 		// - we are a popup (opener) or
 		// - we are an iframe in a popup (top.opener)
+		// - we are the (remote) manual
 		if(!$do_framework)
 		{
-			// for menuaction=manual.uimanual.* never check/create framework
-			if (!isset($_GET['menuaction']) || !in_array($_GET['menuaction'], self::$framework_check_blacklist))
+			// for remote manual never check/create framework
+			if ($GLOBALS['egw_info']['flags']['currentapp'] != 'manual')
 			{
 				$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
 	if (typeof top.framework == "undefined" && !opener && !top.opener)
@@ -282,7 +275,8 @@ class jdots_framework extends egw_framework
 		$this->tpl->set_var($vars = $this->_get_header());
 		$content = $this->tpl->fp('out','head').$content;
 
-		if (!$do_framework)
+		// for remote manual, do NOT try to reach parent windows, as it's from a different domain (manual.egroupware.org)
+		if (!$do_framework && $GLOBALS['egw_info']['flags']['currentapp'] != 'manual')
 		{
 			// set app_header
 			$app = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -322,6 +316,9 @@ class jdots_framework extends egw_framework
 	}';
 			}
 			$content .= "\n</script>";
+		}
+		if (!$do_framework)
+		{
 			return $content;
 		}
 
