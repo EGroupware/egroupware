@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -23,8 +23,8 @@ class admin_statistics
 	const CONFIG_USAGE_TYPE = 'usage_type_submit';
 	const CONFIG_INSTALL_TYPE = 'install_type_submit';
 
-	const SUBMIT_URL = 'http://www.egroupware-server.org/usage-statistic';
-	const STATISTIC_URL = 'http://www.egroupware-server.org/usage-statistic';
+	const SUBMIT_URL = 'https://www.egroupware.org/usage-statistic';
+	const STATISTIC_URL = 'http://www.egroupware.org/usage-statistic';
 
 	const SUBMISION_RATE = 2592000;	// 30 days
 
@@ -52,7 +52,7 @@ class admin_statistics
 				config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$content['postpone'],self::CONFIG_APP);
 				$what = 'postpone';
 			}
-			elseif($content['submit'])
+			elseif(!$content['canceled'])
 			{
 				config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
 				config::save_value(self::CONFIG_SUBMIT_ID,empty($content['submit_id']) ? '***none***' : $content['submit_id'],self::CONFIG_APP);
@@ -128,18 +128,45 @@ class admin_statistics
 		if (!isset($config[self::CONFIG_LAST_SUBMIT]) || $config[self::CONFIG_LAST_SUBMIT ] <= time()-self::SUBMISION_RATE)
 		{
 			// clear etemplate_exec_id and replace form.action, before submitting the form
-			$content['onclick'] = "
-var action=this.form.action;
-var exec_id=this.form['etemplate_exec_id'].value;
-this.form.action='$content[submit_url]';
-this.form['etemplate_exec_id'].value='';
-this.form.target='_blank';
-if (!confirm('".addslashes(lang('Submit displayed information?'))."')) return false;
-this.form.submit();
-this.form.action = action;
-this.form['etemplate_exec_id'].value = exec_id;
-this.form.target = '';
-return true;";
+			$content['onclick'] = "return submit_statistic(this.form,'$content[submit_url]','".addslashes(lang('Submit displayed information?'))."');";
+
+			// Webkit browsers (Chrome, Safari, ...) do NOT allow to call form.submit() from within onclick of a submit button.
+			// Therefor we first store our own form action, replace it with egroupware.org submit url and set a timeout calling
+			// submit_statistic again with just the form, to do the second submit to our own webserver
+			$GLOBALS['egw_info']['flags']['java_script'] = "<script type=\"text/javascript\">
+var own_action;
+var own_exec_id;
+
+function submit_statistic(form,submit_url,confirm_msg)
+{
+	if (submit_url) {
+		if (!confirm(confirm_msg)) return false;
+
+		own_action = form.action;
+		own_exec_id = form['etemplate_exec_id'].value;
+
+		// submit to own webserver
+		window.setTimeout(function() {
+			submit_statistic(form);
+		},100);
+
+		// submit to egroupware.org
+		form.action=submit_url;
+		form['etemplate_exec_id'].value='';
+		form.target='_blank';
+	} else {
+		// submit to own webserver
+		form.action = own_action;
+		form['etemplate_exec_id'].value=own_exec_id;
+		form.target='';
+
+		form.submit();
+	}
+
+	return true;
+}
+</script>
+";
 		}
 		else	// we are not due --> tell it the user
 		{
