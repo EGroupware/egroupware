@@ -598,10 +598,11 @@ class nextmatch_widget
 	 * @param string $prefix='' prefix for ids
 	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
 	 * @param int $max_length=self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
+	 * @param string $onExecute='' default onExecute
 	 * @return array
 	 */
 	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
-		$max_length=self::DEFAULT_MAX_MENU_LENGTH)
+		$max_length=self::DEFAULT_MAX_MENU_LENGTH, $onExecute='')
 	{
 		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
 		// default icons for some common actions
@@ -654,8 +655,9 @@ class nextmatch_widget
 				}
 			}
 
-			// add all first level actions plus ones with enabled = 'javaScript:...' to action_links
-			if ($first_level || substr($action['enabled'],0,11) == 'javaScript:')
+			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
+			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag'))) &&	// popup is the default
+				($first_level || substr($action['enabled'],0,11) == 'javaScript:'))
 			{
 				$action_links[] = $action['id'];
 			}
@@ -712,14 +714,16 @@ class nextmatch_widget
 			// add sub-menues
 			if ($action['children'])
 			{
-				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length);
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length, $action['onExecute']);
 				unset($action['prefix']);
+				unset($action['onExecute']);
 			}
+			if ($onExecute && !isset($action['onExecute'])) $action['onExecute'] = $onExecute;
 
 			static $egw_action_supported = array(	// attributes supported by egw_action
 				'id','caption','iconUrl','type','default','onExecute','group',
 				'enabled','allowOnMultiple','hideOnDisabled','data','children',
-				'hint','checkbox','checked','radioGroup',
+				'hint','checkbox','checked','radioGroup','acceptedTypes',
 			);
 			// add all not egw_action supported attributes to data
 			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
