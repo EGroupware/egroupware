@@ -331,8 +331,8 @@ class html
 		{
 			$options .= ' size="'.abs($multiple).'"';
 		}
-		// fix width for MSIE in/for selectboxes
-		if (self::$user_agent == 'msie')
+		// fix width for MSIE < 9 in/for selectboxes
+		if (self::$user_agent == 'msie' && self::$ua_version < 9)
 		{
 			if (stripos($options,'onfocus="') === false)
 			{
