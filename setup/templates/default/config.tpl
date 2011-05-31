@@ -65,6 +65,17 @@
    </tr>
 
    <tr class="row_off">
+    <td>{lang_Enforce_SSL_(allows_to_specify_just_a_path_above)}:</td>
+    <td>
+     <select name="newsettings[enforce_ssl]">
+      <option value="">None</option>
+      <option value="links"{selected_enforce_ssl_links}>{lang_By_rewriting_links_to_https_(allows_eg._SiteMgr_to_run_on_http)}</option>
+      <option value="redirect"{selected_enforce_ssl_redirect}>{lang_By_redirecting_to_https}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_on">
     <td>{lang_Image_type_selection_order}:</td>
     <td>
      <select name="newsettings[image_type]">

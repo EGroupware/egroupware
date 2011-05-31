@@ -1094,7 +1094,7 @@ class egw_session
 		{
 			if(substr($url ,0,4) != 'http')
 			{
-				$url = 'https://'.$GLOBALS['egw_info']['server']['hostname'].$url;
+				$url = 'https://'.$_SERVER['HTTP_HOST'].$url;
 			}
 			else
 			{
