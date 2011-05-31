@@ -410,7 +410,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							throw 'Invalid parameters';
 						break;
 					case 'redirect':
-						console.log(res.data.url);
+						//console.log(res.data.url);
 						if (typeof res.data.url == 'string' &&
 							typeof res.data.global == 'boolean')
 						{
