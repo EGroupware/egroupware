@@ -1583,9 +1583,17 @@ function replace_eTemplate_onsubmit()
 
 		if (!is_array($event))
 		{
-			$ical_string = $_GET['ical'] == 'session' ? egw_cache::getSession('calendar', 'ical') : $_GET['ical'];
+			$ical_charset = 'utf-8';
+			$ical_string = $_GET['ical'];
+			if ($ical_string == 'session')
+			{
+				$session_data = egw_cache::getSession('calendar', 'ical');
+				$ical_string = $session_data['attachment'];
+				$ical_charset = $session_data['charset'];
+				unset($session_data);
+			}
 			$ical = new calendar_ical();
-			if (!($events = $ical->icaltoegw($ical_string, '', 'utf-8')) || count($events) != 1)
+			if (!($events = $ical->icaltoegw($ical_string, '', $ical_charset)) || count($events) != 1)
 			{
 				error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 				$GLOBALS['egw']->framework->render(html::fieldset('<pre>'.htmlspecialchars($ical_string).'</pre>',

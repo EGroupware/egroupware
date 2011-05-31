@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.001">
+		<description id="msg" class="redItalic leftPad5"/>
+		<hbox>
+			<description value="This mail contains a meeting request" class="meetingRequestMessage"/>
+			<button label="Accept" id="button[accept]" class="leftPad5"/>
+			<button label="Tentative" id="button[tentativ]" class="leftPad5"/>
+			<button label="Reject" id="button[reject]" class="leftPad5"/>
+			<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+		</hbox>
+		<description/>
+		<grid width="100%" class="meetingRequest">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Meeting request" span="all"/>
+				</row>
+				<row class="row">
+					<description value="Title"/>
+					<description id="title" no_lang="1"/>
+				</row>
+				<row class="row">
+					<description value="Location"/>
+					<description id="location" no_lang="1"/>
+				</row>
+				<row class="row">
+					<description value="Date"/>
+					<hbox options="0,0">
+						<date-time id="start" readonly="true"/>
+						<date-time label="-" id="end" readonly="true" class="leftPad5"/>
+					</hbox>
+				</row>
+				<row class="row" disabled="!@recure">
+					<description value="Recurrence"/>
+					<description id="recure" no_lang="1"/>
+				</row>
+				<row class="row">
+					<description value="Organizer"/>
+					<url-email id="organizer" readonly="true"/>
+				</row>
+				<row class="row" valign="top">
+					<description value="Description"/>
+					<description id="description" no_lang="1"/>
+				</row>
+				<row class="row" valign="top">
+					<description value="Participants"/>
+					<description id="all_participants"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			#popupMainDiv {
+ border: none;
+ margin: 0;
+}
+
+.meetingRequestMessage {
+ font-size: 120%;
+}
+
+table.meetingRequest {
+ border: 2px solid black;
+}
+.meetingRequest tr.th {
+ background-color: #4040FF;
+}
+.meetingRequest tr.th td {
+ font-weight: bold;
+ font-size: 120%;
+ color: white;
+}
+.meetingRequest td {
+ padding: 3px;
+}
+
+
+
+		</styles>
+	</template>
+</overlay>
