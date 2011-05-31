@@ -825,10 +825,11 @@ egwActionObject.prototype.getAllSelected = function()
 			if (!this.children[i].getAllSelected())
 				return false;
 		}
-//		This introduced various bugs inside the egwAction system and breaks the
-//		recursion abortion case of this function!
-//		if (this.children.length == 0) return false;
-		return true;
+		// If this element is an container *and* does not have any children, we
+		// should return false. If this element is not an container we have to
+		// return true has this is the recursion base case
+		return (!egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER)) ||
+			(this.children.length > 0);
 	}
 
 	return false;
