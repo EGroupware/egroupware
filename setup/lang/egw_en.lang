@@ -114,6 +114,8 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	bottom
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>
+by redirecting to https	setup	en	By redirecting to https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	en	By rewriting links to https (allows eg. SiteMgr to run on http)
 ca certificate	setup	en	CA certificate
 can not connect to %1 database %2 on host %3 using user %4!	setup	en	Can not connect to %1 database %2 on host %3 using user %4!
 can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect to LDAP server on host %1 using DN %2!
@@ -253,6 +255,7 @@ email (standard maildomain should be set)	setup	en	email (Standard Maildomain sh
 emailadmin profile updated:	setup	en	EMailAdmin profile updated:
 enable for extra debug-messages	setup	en	enable for extra debug-messages
 enable mcrypt	setup	en	Enable MCrypt
+enforce ssl (allows to specify just a path above)	setup	en	Enforce SSL (allows to specify just a path above)
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br />encryption (requires mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br />Examples: /tmp, C:\TEMP
@@ -285,6 +288,7 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	en	filename
 filesystem	setup	en	Filesystem
 filesystem (default)	setup	en	Filesystem (default)
+find and register all application hooks	setup	en	Find and Register all Application Hooks
 force selectbox	setup	en	Force Selectbox
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
 gives further options	setup	en	gives further options

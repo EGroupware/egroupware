@@ -50,6 +50,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	de	Alle Anwendungen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all exit codes of the command line interface	setup	de	alle Rückgabewerte des Komandozeilen Interface
+all hooks registered	setup	de	Hooks wurden registriert
 all languages (incl. not listed ones)	setup	de	alle Sprachen (einschl. nicht aufgeführte)
 all users	setup	de	Alle Benutzer
 allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über ein Cookie
@@ -114,6 +115,8 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br /><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
+by redirecting to https	setup	de	Durch weiterleiten auf https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	de	Durch umschreiben der Links auf https (erlaubt zB. SiteMgr unter http zu verwenden)
 ca certificate	setup	de	CA Zertifikat
 can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht zur %1 Datenbank %2 auf Rechner %3 als Benutzer %4 verbinden!
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
@@ -253,6 +256,7 @@ email (standard maildomain should be set)	setup	de	email (Standard Maildomaine m
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable mcrypt	setup	de	MCrypt einschalten
+enforce ssl (allows to specify just a path above)	setup	de	Erzwinge SSL (erlaubt darüber nur einen Pfad anzugeben)
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
@@ -285,6 +289,7 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
+find and register all application hooks	setup	de	Suchen und registrieren der "Hooks" aller Anwendungen
 force selectbox	setup	de	Auswahl erzwingen
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
 gives further options	setup	de	gibt zusätzliche Optionen

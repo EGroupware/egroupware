@@ -293,9 +293,9 @@ class egw extends egw_minimal
 	 */
 	function verify_session()
 	{
-		if(isset($GLOBALS['egw_info']['server']['enforce_ssl']) && !$_SERVER['HTTPS'])
+		if($GLOBALS['egw_info']['server']['enforce_ssl'] === 'redirect' && !$_SERVER['HTTPS'])
 		{
-			Header('Location: https://' . $GLOBALS['egw_info']['server']['hostname'] . $GLOBALS['egw_info']['server']['webserver_url'] . $_SERVER['REQUEST_URI']);
+			Header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 			exit;
 		}
 		// check if we have a session, if not try to automatic create one
