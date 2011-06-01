@@ -760,7 +760,7 @@ class nextmatch_widget
 		// if more then max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
 		{
-			$cat_actions = self::category_hierarchy($cats, $parent_id);
+			$cat_actions = self::category_hierarchy($cats, $prefix, $parent_id);
 		}
 		else	// flat, indented categories
 		{
@@ -812,6 +812,7 @@ class nextmatch_widget
 				$cat_actions[$cat['id']] = array(
 					'caption' => $name,
 					'no_lang' => true,
+					'prefix' => $prefix,
 				);
 				// add category icon
 				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
