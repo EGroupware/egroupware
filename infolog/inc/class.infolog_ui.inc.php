@@ -959,6 +959,7 @@ class infolog_ui
 			$actions['undelete'] = array(
 				'caption' => 'Un-Delete',
 				'group' => $group,
+				'icon' => 'revert',
 				'disableClass' => 'rowNoUndelete',
 			);
 		}
