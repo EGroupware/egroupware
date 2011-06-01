@@ -101,7 +101,7 @@ class importexport_definitions_ui
 			}
 			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
-				$selected = array_keys($content['nm']['rows']['checked'],1);
+				$selected = $content['nm']['rows']['selected'];
 				if(count($selected) < 1 || !is_array($selected)) exit();
 				switch ($button)
 				{
