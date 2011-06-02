@@ -41,11 +41,13 @@ class timesheet_hooks
 			'title' => TIMESHEET_APP.'.timesheet_bo.link_title',
 			'titles'=> TIMESHEET_APP.'.timesheet_bo.link_titles',
 			'view'  => array(
-				'menuaction' => TIMESHEET_APP.'.timesheet_ui.view',
+				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
 			'view_id' => 'ts_id',
 			'view_popup'  => '600x425',
-			'view_list' => 'timesheet.timesheet_ui.index',
+			'index' => array(
+				'menuaction' => 'timesheet.timesheet_ui.index',
+			),
 			'add' => array(
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
