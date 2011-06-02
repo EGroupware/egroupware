@@ -598,11 +598,11 @@ class nextmatch_widget
 	 * @param string $prefix='' prefix for ids
 	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
 	 * @param int $max_length=self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
-	 * @param string $onExecute='' default onExecute
+	 * @param array $default_attrs=null default attributes
 	 * @return array
 	 */
 	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
-		$max_length=self::DEFAULT_MAX_MENU_LENGTH, $onExecute='')
+		$max_length=self::DEFAULT_MAX_MENU_LENGTH, array $default_attrs=null)
 	{
 		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
 		// default icons for some common actions
@@ -611,11 +611,13 @@ class nextmatch_widget
 			'edit' => 'edit',
 			'open' => 'edit',	// does edit if possible, otherwise view
 			'add'  => 'new',
+			'new'  => 'new',
 			'delete' => 'delete',
 			'cat'  => 'attach',		// add as category icon to api
 			'document' => 'etemplate/merge',
 			'print'=> 'print',
 			'copy' => 'copy',
+			'move' => 'move',
 		);
 
 		$first_level = !$action_links;	// add all first level actions
@@ -627,6 +629,7 @@ class nextmatch_widget
 		{
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
+			if ($default_attrs) $action += $default_attrs;
 
 			if (!$first_level && $n == $max_length && count($actions) > $max_length)
 			{
@@ -643,10 +646,11 @@ class nextmatch_widget
 			}
 			$action['id'] = $prefix.$id;
 
-			// set some default onExecute
+			// set certain enable functions
 			foreach(array(
 				'enableClass'  => 'javaScript:nm_enableClass',
 				'disableClass' => 'javaScript:nm_not_disableClass',
+				'enableId'     => 'javaScript:nm_enableId',
 			) as $attr => $check)
 			{
 				if (isset($action[$attr]) && !isset($action['enabled']))
@@ -695,10 +699,21 @@ class nextmatch_widget
 				}
 			}
 
+			// add sub-menues
+			if ($action['children'])
+			{
+				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open');
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length,
+					array_intersect_key($action, array_flip($inherit_attrs)));
+
+				unset($action['prefix']);
+				$action = array_diff_key($action, array_flip($inherit_attrs));
+			}
+
 			// link or popup action
 			if ($action['url'])
 			{
-				$action['url'] = egw::link('/index.php',$action['url']);
+				$action['url'] = egw::link('/index.php',str_replace('$action',$id,$action['url']));
 				if ($action['popup'])
 				{
 					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);
@@ -710,15 +725,10 @@ class nextmatch_widget
 					$action['data']['nm_action'] = 'location';
 				}
 			}
-
-			// add sub-menues
-			if ($action['children'])
+			if ($action['egw_open'])
 			{
-				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length, $action['onExecute']);
-				unset($action['prefix']);
-				unset($action['onExecute']);
+				$action['data']['nm_action'] = 'egw_open';
 			}
-			if ($onExecute && !isset($action['onExecute'])) $action['onExecute'] = $onExecute;
 
 			static $egw_action_supported = array(	// attributes supported by egw_action
 				'id','caption','iconUrl','type','default','onExecute','group',

@@ -145,6 +145,14 @@ function nm_action(_action, _senders)
 			egw_openWindowCentered2(url,target,_action.data.width,_action.data.height);
 			break;
 			
+		case 'egw_open':
+			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
+			console.log(params);
+			var egw_open_id = _senders[0].id;
+			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
+			egw_open(egw_open_id,params[1],params[0],params[3]);
+			break;
+			
 		case 'open_popup':
 			// open div styled as popup contained in current form and named action.id+'_popup'
 			if (typeof nm_popup_action == 'undefined')
@@ -206,6 +214,22 @@ function nm_not_disableClass(_action, _senders, _target)
 function nm_enableClass(_action, _senders, _target)
 {
 	return $(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+}
+
+/**
+ * Enable an _action, if it matches a given regular expresstion in _action.data.enableId
+ * 
+ * @param _action egwAction object, we use _action.data.enableId to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if _target.id matches _action.data.enableId
+ */
+function nm_enableId(_action, _senders, _target)
+{
+	if (typeof _action.data.enableId == 'string')
+		_action.data.enableId = new RegExp(_action.data.enableId);
+	
+	return _target.id.match(_action.data.enableId);
 }
 
 /**
