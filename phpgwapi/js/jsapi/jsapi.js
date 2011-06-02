@@ -166,6 +166,19 @@ function egw_appWindow(_app)
 }
 
 /**
+ * Open _url in window of _app
+ * @param _app
+ * @param _url
+ */
+function egw_appWindowOpen(_app, _url)
+{
+	if (typeof _url == "undefined") {
+		_url = "about:blank";
+	}
+	window.location = _url;
+}
+
+/**
  * Returns the current egw application
  * @param string _name is only used for fallback, if an onlder version of jdots is used.
  */
@@ -288,7 +301,7 @@ function egw_open(id, app, type, extra, target)
 		}
 		else
 		{
-			egw_appWindow(app).location = url;
+			egw_appWindowOpen(app, url);
 		}
 	}
 	else
