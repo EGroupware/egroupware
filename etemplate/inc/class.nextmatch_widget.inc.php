@@ -843,7 +843,7 @@ class nextmatch_widget
 	 *
 	 * @param array $actions=null
 	 * @param array $action_links=null
-	 * @param string $template_name='' name of the template, used as default for app name of images
+	 * @param string $template_name='' name of the template, used as default for app name of images - e.g. infolog.index.rows
 	 * @param string $prefix='egw_' JS action objects generated for this widget are prefixed with given prefix
 	 */
 	public static function init_egw_actions(array $actions=null, $action_links=null, $template_name='', $prefix='egw_')
@@ -863,29 +863,38 @@ class nextmatch_widget
 
 		if (!is_array($action_links)) $action_links = array();
 
+		$app = $GLOBALS['egw_info']['flags']['currentapp'];
+
+		$enc_actions = self::egw_actions($actions, $template_name, '', $action_links);
+
 		return '
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Initialize the action manager and add some actions to it
-		'.$prefix.'actionManager = new egwActionManager();
-		'.$prefix.'objectManager = new egwActionObjectManager("", '.$prefix.'actionManager);
+		var actionManager = egw_getActionManager("'.$app.'");
+		var objectManager = egw_getObjectManager("'.$app.'");
 
-		'.$prefix.'actionManager.updateActions('.str_replace('},',"},\n",
-			json_encode(self::egw_actions($actions, $template_name, '', $action_links))).');
-		'.$prefix.'actionManager.setDefaultExecute("javaScript:nm_action");
-		'.$prefix.'actionManager.etemplate_var_prefix="'.etemplate::$name_vars.'";
-		'.$prefix.'actionManager.etemplate_form=document.forms.'.etemplate::$name_form.';
+		// Create anonymous object and action container for this etemplate
+		var actionCntr = actionManager.addAction("actionManager", "'.$template_name.'");
+		var objectCntr = objectManager.addObject(new egwActionObjectManager("'.$template_name.'", actionCntr));
+
+		actionCntr.updateActions('.json_encode($enc_actions).');
+		actionCntr.setDefaultExecute("javaScript:nm_action");
+		actionCntr.etemplate_var_prefix="'.etemplate::$name_vars.'";
+		actionCntr.etemplate_form=document.forms.'.etemplate::$name_form.';
 
 		var actionLinks = ["'.implode('","', $action_links).'"];
 
 		// Create a new action object for each table row
-		// TODO: only apply function to outer level
-		$("table.egwGridView_grid>tbody>tr").each(function(index, elem)
+		var divObj = document.getElementById("'.$template_name.'");
+		$("table.egwGridView_grid>tbody>tr", divObj).each(function(index, elem)
 		{
 			// Create a new action object
-			var obj = '.$prefix.'objectManager.addObject(elem.id, new nextmatchRowAOI(elem));
+			if (elem.id) {
+				var obj = objectCntr.addObject(elem.id, new nextmatchRowAOI(elem));
 
-			obj.updateActionLinks(actionLinks);
+				obj.updateActionLinks(actionLinks);
+			}
 		});
 	});
 </script>';

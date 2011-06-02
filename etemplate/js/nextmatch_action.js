@@ -105,7 +105,9 @@ function nm_action(_action, _senders)
 	}
 	//console.log(_action); console.log(_senders);
 
-	var select_all = egw_actionManager.getActionById("select_all");
+	var mgr = _action.getManager();
+
+	var select_all = mgr.getActionById("select_all");
 	var confirm_msg = (_senders.length > 1 || select_all && select_all.checked) && 
 		typeof _action.data.confirm_multiple != 'undefined' ?
 			_action.data.confirm_multiple : _action.data.confirm;
@@ -157,24 +159,24 @@ function nm_action(_action, _senders)
 			{
 				if (!confirm((confirm_msg ? confirm_msg : _action.caption)+"\n\n"+select_all.hint)) return;
 			}
-			var checkboxes = egw_actionManager.getActionsByAttr("checkbox", true);
-			var checkboxes_elem = document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][checkboxes]');
+			var checkboxes = mgr.getActionsByAttr("checkbox", true);
+			var checkboxes_elem = document.getElementById(mgr.etemplate_var_prefix+'[nm][checkboxes]');
 			if (checkboxes && checkboxes_elem)
 				for (var i in checkboxes)
 					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
 
-			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][nm_action]').value = _action.id;
-			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][selected]').value = ids;
+			document.getElementById(mgr.etemplate_var_prefix+'[nm][nm_action]').value = _action.id;
+			document.getElementById(mgr.etemplate_var_prefix+'[nm][selected]').value = ids;
 			if (typeof _action.data.button != 'undefined')
 			{
-				submitit(egw_actionManager.etemplate_form.context, egw_actionManager.etemplate_var_prefix+'[nm][rows]['+_action.data.button+']['+ids+']');
+				submitit(mgr.etemplate_form.context, mgr.etemplate_var_prefix+'[nm][rows]['+_action.data.button+']['+ids+']');
 			}
 			else
 			{
-				egw_actionManager.etemplate_form.submit();
+				mgr.etemplate_form.submit();
 			}
 			// Clear action in case there's another one
-			document.getElementById(egw_actionManager.etemplate_var_prefix+'[nm][nm_action]').value = null;
+			document.getElementById(mgr.etemplate_var_prefix+'[nm][nm_action]').value = null;
 			
 			break;
 	}
@@ -242,7 +244,7 @@ var nm_popup_action, nm_popup_senders;
  */
 function nm_open_popup(_action, _senders)
 {
-	var popup = document.getElementById(egw_actionManager.etemplate_var_prefix + '[' + _action.id + '_popup]');
+	var popup = document.getElementById(_action.getManager().etemplate_var_prefix + '[' + _action.id + '_popup]');
 
 	if (popup) {
 		nm_popup_action = _action;
