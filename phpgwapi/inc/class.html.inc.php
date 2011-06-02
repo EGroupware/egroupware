@@ -1523,5 +1523,29 @@ class html
 		}
 		return $html2ret;
 	}
+
+
+	static private $mobileBrowser = null;
+
+	/**
+	 * Returns whether this is a mobile browser
+	 */
+	static public function is_mobile()
+	{
+		$agent = $_SERVER['HTTP_USER_AGENT'];
+
+		if (self::$mobileBrowser == null) {
+
+			self::$mobileBrowser = false;
+
+			foreach(array('iPhone','iPad','Android','SymbianOS') as $pattern)
+			{
+				self::$mobileBrowser |= (stripos($agent,$pattern) !== false);
+			}
+		}
+
+		return true;
+		//return self::$mobileBrowser;
+	}
 }
 html::_init_static();
