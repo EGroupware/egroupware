@@ -32,7 +32,10 @@
 	include('../header.inc.php');
 	auth::check_password_age('home','index');
 	$GLOBALS['egw_info']['flags']['nonavbar']=false;
-	common::egw_header();
+
+	// Start output buffering
+	ob_start();
+
 	/*
 	** Initializing the template
 	*/
@@ -293,6 +296,16 @@
 		$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
 	}
 	//_debug_array($GLOBALS['egw_info']['user']['preferences']);
+
+	// Get everything which has been output by now
+	$contents = ob_get_contents();
+	ob_end_clean();
+
+	// Display the header which contains all includes etc.
+	common::egw_header();
+
+	// Display the fetched output
+	echo($contents);
 
 	//$GLOBALS['egw']->common->debug_phpgw_info();
 	//$GLOBALS['egw']->common->debug_list_core_functions();
