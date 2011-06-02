@@ -10,7 +10,7 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
+				<column disabled="@no_actions"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -61,6 +61,41 @@
 				<row>
 					<nextmatch cols="6" id="nm" rows="2" options="importexport.definition_index.row"/>
 				</row>
+				<row disabled="!@nm[selectcols]=/actions/">
+					<hbox align="right">
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('importexport.definition_index.row').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('importexport.definition_index.row').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
+					</hbox>
+				</row>
+				<row>
+					<hbox>
+						<box class="action_popup prompt" id="owner_popup">
+							<vbox>
+								<description value="Change owner" class="promptheader"/>
+								<description value="Select owner"/>
+								<menulist class="action_popup-content">
+									<menupopup type="select-account" id="owner" options="None,users"/>
+								</menulist>
+								<hbox>
+									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box class="action_popup prompt" id="allowed_popup">
+							<vbox>
+								<description value="Change allowed users" class="promptheader"/>
+								<description value="Select groups"/>
+								<checkbox label="%s Just me" id="allowed_private"/>
+								<listbox type="select-account" id="allowed" rows="5" options="groups" class="action_popup-content"/>
+								<hbox>
+									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+					</hbox>
+				</row>
 			</rows>
 		</grid>
 		<styles>
@@ -68,6 +103,37 @@
 
 .button {
   cursor: pointer;
+}
+/**
+ * Add / remove link or category popup used for actions on multiple entries
+ */
+
+.action_popup {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
+}
+.action_popup-content {
+	display:block;
+	padding:2ex;
+	color:#666666;
+	margin: -2px -1px 0px -2px;
+}
+.action_popup &gt; table {
+	width: 100%
+}
+.action_popup .promptheader {
+	padding: 1ex;
+	width: 100%
+}
+
+.action_select {
+	width: 100%
 }
 		</styles>
 	</template>
