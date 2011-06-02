@@ -39,7 +39,7 @@ function nextmatchRowAOI(_node)
 		$(_node).mousedown(egwPreventSelect);
 
 		// Now append some action code to the node
-		$(_node).click(function(e) {
+		selectHandler = function(e) {
 
 			// Reset the prevent selection code (in order to allow wanted
 			// selection of text)
@@ -54,7 +54,13 @@ function nextmatchRowAOI(_node)
 					!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
 					state);
 			}
-		});
+		};
+
+		if (egwIsMobile()) {
+			_node.ontouchend = selectHandler;
+		} else {
+			$(node).click(selectHandler);
+		}
 
 		$(aoi.checkBox).change(function() {
 			aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
