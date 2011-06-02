@@ -350,6 +350,11 @@ class addressbook_hooks
 			),
 			'view_id' => 'contact_id',
 			'view_list'	=>	'addressbook.addressbook_ui.index',
+			'edit' => array(
+				'menuaction' => 'addressbook.addressbook_ui.edit'
+			),
+			'edit_id' => 'contact_id',
+			'edit_popup'  => '870x440',
 			'add' => array(
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
