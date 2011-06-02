@@ -10,6 +10,8 @@ admin disabled exporting	importexport	de	Ihr Adminisrator hat den Export deaktiv
 allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
+changed allowed_users	importexport	de	Erlaubten Benutzer geändert
+changed owner	importexport	de	Besitzer geändert
 charset of file	importexport	de	Zeichensatz der Datei
 check all	importexport	de	Alle markieren
 choose a name for this definition	importexport	de	Wählen sie einen Namen für diese Definition.
@@ -60,7 +62,7 @@ preview	importexport	de	Vorschau
 previous	importexport	de	Zurück
 problems during import:	importexport	de	Schwierigkeiten während des Imports:
 save as definition	importexport	de	Als Definition speichern
-schedule	common	de	Zeitplan zum Import bzw. Export festlegen
+schedule	common	de	Zeitplan
 schedule import / export	common	de	Zeitplan für Import/Export
 schedule not found	importexport	de	Kein Zeitplan gefunden
 select definition	importexport	de	Definition auswählen
@@ -82,4 +84,3 @@ users allowed to share their own definitions	importexport	de	Benutzer dürfen Ih
 which useres are allowed for this definition	importexport	de	Welche Benutzer dürden diese Definition verwenden?
 which users are allowed to use this definition	importexport	de	Welche Benutzer dürfen die Definition benutzen?
 you need to select an app and format first!	importexport	de	Sie müssen zuerst eine Anwendung und ein Format auswählen
-1	importexport	de	1
