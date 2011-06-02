@@ -193,14 +193,14 @@ class importexport_definitions_ui
 				'default' => true,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=importexport.importexport_definitions_ui.edit&definition=$id',
-				'popup' => 'width=500,height=500',
+				'popup' => '500x500',
 				'group' => $group,
 				'disableClass' => 'rowNoEdit',
 			),
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=importexport.importexport_definitions_ui.edit',
-				'popup' => 'width=500,height=500',
+				'popup' => '500x500',
 				'group' => $group,
 			),
 			'execute' => array(
@@ -214,7 +214,7 @@ class importexport_definitions_ui
 				'icon' => 'timesheet/navbar',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=importexport.importexport_schedule_ui.edit&definition=$id',
-				'popup' => 'width=500,height=500',
+				'popup' => '500x500',
 				'group' => $group,
 			),
 			'change' => array(
