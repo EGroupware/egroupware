@@ -10,6 +10,8 @@ admin disabled exporting	importexport	en	Admin disabled exporting
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by importexport
 basic csv import	importexport	en	Basic CSV import
+changed allowed_users	importexport	en	changed allowed users
+changed owner	importexport	en	changed owner
 charset of file	importexport	en	Charset of file
 check all	importexport	en	Check all
 choose a name for this definition	importexport	en	Choose a name for this definition

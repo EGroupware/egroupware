@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.import_definition" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)"/>
+				</row>
+				<row>
+					<file id="import_file"/>
+				</row>
+				<row>
+					<hbox>
+						<button label="Import" id="import"/>
+						<button label="Update default-definitions" id="update"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

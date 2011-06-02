@@ -11,3 +11,4 @@ function clear_options(id) {
 		list.options[count] = null;
 	}
 }
+

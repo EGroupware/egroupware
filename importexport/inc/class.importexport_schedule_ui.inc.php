@@ -62,6 +62,8 @@
 
 		public function edit($content = array()) {
 			$id = $_GET['id'] ? $_GET['id'] : $content['id'];
+			$definition_id = $_GET['definition'];
+
 			unset($content['id']);
 
 			$data = $content;
@@ -103,6 +105,17 @@
 				}
 			} else {
 				$data['type'] = $content['type'] ? $content['type'] : 'import';
+
+				if((int)$definition_id) {
+					$bo = new importexport_definitions_bo();
+					$definition = $bo->read($definition_id);
+					if($definition['definition_id']) {
+						$data['type'] = $definition['type'];
+						$data['appname'] = $definition['application'];
+						$data['plugin'] = $definition['plugin'];
+						$data['definition'] = $definition['name'];
+					}
+				}
 			}
 
 			if($data['target'] && $data['type']) {

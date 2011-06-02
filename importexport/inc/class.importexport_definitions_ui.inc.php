@@ -92,38 +92,62 @@ class importexport_definitions_ui
 			}
 		}
 
-		$bodefinitions = new importexport_definitions_bo(false, true);
 		if (is_array($content))
 		{
-			if (isset($content['rows']['delete']))
+			// Handle legacy actions
+			if (isset($content['nm']['rows']['delete']))
 			{
-				$bodefinitions->delete(array_keys($content['delete'],'pressed'));
+				$content['nm']['action'] = 'delete';
+				$content['nm']['selected'] = array_keys($content['nm']['rows']['delete'],'pressed');
 			}
 			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
 				$selected = $content['nm']['rows']['selected'];
-				if(count($selected) < 1 || !is_array($selected)) exit();
+				if(count($selected) < 1 || !is_array($selected)) common::egw_exit();
 				switch ($button)
 				{
 					case 'delete_selected' :
-						$bodefinitions->delete($selected);
+						$content['nm']['selected'] = $selected;
+						$content['nm']['action'] = 'delete';
 						break;
-
-					case 'export_selected' :
-						$mime_type = ($GLOBALS['egw']->html->user_agent == 'msie' || $GLOBALS['egw']->html->user_agent == 'opera') ?
-							'application/octetstream' : 'application/octet-stream';
-						$name = 'importexport_definition.xml';
-						header('Content-Type: ' . $mime_type);
-						header('Content-Disposition: attachment; filename="'.$name.'"');
-						echo $bodefinitions->export($selected);
-						exit();
-
+					case 'export_selected':
+						$content['nm']['selected'] = $selected;
+						$content['nm']['action'] = 'export';
 						break;
-
-					default:
 				}
 			}
-
+			if ($content['nm']['action'])
+			{
+				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+				{
+					$msg = lang('You need to select some entries first!');
+				}
+				else
+				{
+					// Action has an additional parameter
+					if(in_array($content['nm']['action'], array('owner', 'allowed')))
+					{
+						if($content['nm']['action'] == 'allowed' && $content['allowed_private'])
+						{
+							$content['allowed'] = null;
+						}
+						if(is_array($content[$content['nm']['action']]))
+						{
+							$content[$content['nm']['action']] = implode(',',$content[$content['nm']['action']]);
+						}
+						$content['nm']['action'] .= '_' . $content[$content['nm']['action']];
+					}
+					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
+						$success,$failed,$action_msg,'index',$msg))
+					{
+						$msg .= lang('%1 definition(s) %2',$success,$action_msg);
+					}
+					elseif(empty($msg))
+					{
+						$msg .= lang('%1 definition(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					}
+				}
+			}
 		}
 
 		if(!is_array($content['nm'])) {
@@ -134,13 +158,14 @@ class importexport_definitions_ui
 				'no_filter2'	=> true,
 				'header_right'	=> 'importexport.definition_index.add',
 				'csv_fields'	=> false,	// Disable CSV export, uses own export
-				'row_id'	=> 'id',
-				'actions'	=> $this->get_actions()
+				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
+				'row_id'	=> 'definition_id',
 			);
 		}
 		if(egw_session::appsession('index', 'importexport')) {
 			$content['nm'] = array_merge($content['nm'], egw_session::appsession('index', 'importexport'));
 		}
+		$content['nm']['actions'] = $this->get_actions();
 		$sel_options = array(
 			'type'	=> array(
 				'import'	=> lang('import'),
@@ -154,29 +179,191 @@ class importexport_definitions_ui
 				$sel_options['application'][$appname] = lang($appname);
 			}
 		}
+		if($msg) $content['msg'] = $msg;
 
 		$etpl = new etemplate(self::_appname.'.definition_index');
 		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, $sel_options, $readonlys, $preserv );
 	}
 
 	private function get_actions() {
-		$group = 1;
+		$group = 0;
 		$actions = array(
 			'edit' => array(
-				'caption' => 'Edit',
+				'caption' => 'Open',
+				'default' => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
-				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				'url' => 'menuaction=importexport.importexport_definitions_ui.edit&definition=$id',
+				'popup' => 'width=500,height=500',
 				'group' => $group,
 				'disableClass' => 'rowNoEdit',
 			),
+			'add' => array(
+                                'caption' => 'Add',
+                                'url' => 'menuaction=importexport.importexport_definitions_ui.edit',
+				'popup' => 'width=500,height=500',
+                                'group' => $group,
+                        ),
+			'execute' => array(
+				'caption' => 'Execute',
+				'icon' => 'importexport/navbar',
+				'allowOnMultiple' => false,
+				'group' => $group,
+			),
+			'schedule' => array(
+				'caption' => 'Schedule',
+				'icon' => 'schedule',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=importexport.importexport_schedule_ui.edit&definition=$id',
+				'popup' => 'width=500,height=500',
+				'group' => $group,
+			),
+			'change' => array(
+				'caption' => 'Change',
+				'icon' => 'edit',
+				'children' => array(
+					'owner' => array(
+						'caption' => 'Owner',
+						'group' => 1,
+						'nm_action' => 'open_popup',
+					),
+					'allowed' => array(
+						'caption' => 'Allowed users',
+						'group' => 1,
+						'nm_action' => 'open_popup',
+					)
+				),
+			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
+				'group' => ++$group,
+			),
+			'copy' => array(
+                                'caption' => 'Copy',
+                                'group' => ++$group,
+			),
+			'export' => array(
+                                'caption' => 'Export',
+                                'group' => $group,
+			),
+                        'delete' => array(
+                                'caption' => 'Delete',
+                                'confirm' => 'Delete this entry',
+                                'confirm_multiple' => 'Delete these entries',
+                                'group' => ++$group,
+                                'disableClass' => 'rowNoDelete',
+                        ),
 		);
-		$actions['select_all'] = array(
-                        'caption' => 'Whole query',
-                        'checkbox' => true,
-                        'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
-                        'group' => ++$group,
-                );
+
+		// Unset admin actions
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			unset($actions['schedule']);
+		}
+		return $actions;
+	}
+
+	/**
+         * apply an action to multiple entries
+         *
+         * @param string/int $action 'delete', 'export', etc.
+         * @param array $selected id's to use if !$use_all
+         * @param boolean $use_all if true use all entries of the current selection (in the session)
+         * @param int &$success number of succeded actions
+         * @param int &$failed number of failed actions (not enought permissions)
+         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
+         * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+         * @return boolean true if all actions succeded, false otherwise
+         */
+        function action($action,$selected,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+        {
+		//echo __METHOD__."('$action', ".array2string($selected).', '.array2string($use_all).",,, '$session_name')";
+		if ($use_all)
+                {
+                        // get the whole selection
+                        $old_query = $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'importexport');
+
+			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
+			$query['num_rows'] = -1;        // all
+			$this->get_rows($query,$rows,$readonlys);
+
+			$selected = array();
+			foreach($rows as $row) {
+				$selected[] = $row['definition_id'];
+			}
+			if(!is_array($session_name))
+			{
+				// Restore old query
+				egw_session::appsession($session_name, 'importexport',$old_query);
+			}
+                }
+
+		// Dialogs to get options
+		list($action, $settings) = explode('_', $action, 2);
+
+		$bodefinitions = new importexport_definitions_bo(false, true);
+
+		switch($action) {
+			case 'execute':
+				// There's probably a way to do this in just JS, all the info should be there...
+				foreach($selected as $id) {
+					$definition = $bodefinitions->read((int)$id);
+					$link = egw::link('/index.php', array(
+						'menuaction' => 'importexport.importexport_'.$definition['type'].'_ui.'.$definition['type'].'_dialog',
+						'appname' => $definition['application'],
+						'definition' => $definition['name']
+					));
+					egw_framework::set_onload("egw_openWindowCentered2('$link','_blank',850,440,'yes');");
+				}
+				break;
+			case 'allowed':
+				$action = 'allowed_users';// Field is allowed_users, popup doesn't like _
+			case 'owner':
+				$action_msg = lang('changed'. ' ' . $action);
+				foreach($selected as $id) {
+					$definition = $bodefinitions->read((int)$id);
+					if($definition['definition_id']) {
+						// Prevent private with no owner
+						if(!$definition['owner'] && !$settings) $definition['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+
+						$definition[$action] = $settings;
+						$bodefinitions->save($definition);
+						$success++;
+					}
+				}
+				break;
+			case 'delete':
+				$bodefinitions->delete($selected);
+				$action_msg = lang('deleted');
+				break;
+		
+			case 'export' :
+				$action_msg = lang('exported');
+				$mime_type = ($GLOBALS['egw']->html->user_agent == 'msie' || $GLOBALS['egw']->html->user_agent == 'opera') ?
+					'application/octetstream' : 'application/octet-stream';
+				$name = 'importexport_definition.xml';
+				header('Content-Type: ' . $mime_type);
+				header('Content-Disposition: attachment; filename="'.$name.'"');
+				echo $bodefinitions->export($selected);
+				common::egw_exit();
+				break;
+
+			case 'copy':
+				$action_msg = lang('copied');
+				// Should only be one selected
+				foreach($selected as $id) {
+					$definition = $bodefinitions->read((int)$id);
+					if($definition['definition_id']) {
+						unset($definition['definition_id']);
+						$definition['name'] = $settings ? $settings : $definition['name'] . ' copy';
+						$bodefinitions->save($definition);
+						$success++;
+					}
+				}
+				break;
+		}
+		return !$failed;
 	}
 
 	public function get_rows(&$query, &$rows, &$readonlys) {
@@ -473,7 +660,7 @@ class importexport_definitions_ui
 		{
 			try {
 				$check_definition = new importexport_definition($content['name']);
-				if($check_definition && $check_definition->definition_id != $content['definition_id'])
+				if($check_definition && $check_definition->definition_id && $check_definition->definition_id != $content['definition_id'])
 				{
 					throw new Exception('Already exists');
 				}

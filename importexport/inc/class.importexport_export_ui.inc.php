@@ -84,10 +84,10 @@ class importexport_export_ui {
 				// permission error
 				continue;
 			}
-				if ($title = $definition->get_title()) {
-					$sel_options['definition'][$title] = $title;
-				}
-				unset($definition);
+			if ($title = $definition->get_title()) {
+				$sel_options['definition'][$title] = $title;
+			}
+			unset($definition);
 		}
 		if(count($sel_options['definition']) == 2 && !$content['definition']) {
 			$content['definition'] = end($sel_options['definition']);
