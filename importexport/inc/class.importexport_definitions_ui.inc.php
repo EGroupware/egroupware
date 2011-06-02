@@ -198,11 +198,11 @@ class importexport_definitions_ui
 				'disableClass' => 'rowNoEdit',
 			),
 			'add' => array(
-                                'caption' => 'Add',
-                                'url' => 'menuaction=importexport.importexport_definitions_ui.edit',
+				'caption' => 'Add',
+				'url' => 'menuaction=importexport.importexport_definitions_ui.edit',
 				'popup' => 'width=500,height=500',
-                                'group' => $group,
-                        ),
+				'group' => $group,
+			),
 			'execute' => array(
 				'caption' => 'Execute',
 				'icon' => 'importexport/navbar',
@@ -211,7 +211,7 @@ class importexport_definitions_ui
 			),
 			'schedule' => array(
 				'caption' => 'Schedule',
-				'icon' => 'schedule',
+				'icon' => 'timesheet/navbar',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=importexport.importexport_schedule_ui.edit&definition=$id',
 				'popup' => 'width=500,height=500',
@@ -224,11 +224,13 @@ class importexport_definitions_ui
 					'owner' => array(
 						'caption' => 'Owner',
 						'group' => 1,
+						'icon' => 'addressbook/accounts',
 						'nm_action' => 'open_popup',
 					),
 					'allowed' => array(
 						'caption' => 'Allowed users',
 						'group' => 1,
+						'icon' => 'addressbook/group',
 						'nm_action' => 'open_popup',
 					)
 				),
@@ -240,20 +242,21 @@ class importexport_definitions_ui
 				'group' => ++$group,
 			),
 			'copy' => array(
-                                'caption' => 'Copy',
-                                'group' => ++$group,
+				'caption' => 'Copy',
+				'group' => ++$group,
 			),
 			'export' => array(
-                                'caption' => 'Export',
-                                'group' => $group,
+				'caption' => 'Export',
+				'group' => $group,
+				'icon' => 'filesave'
 			),
-                        'delete' => array(
-                                'caption' => 'Delete',
-                                'confirm' => 'Delete this entry',
-                                'confirm_multiple' => 'Delete these entries',
-                                'group' => ++$group,
-                                'disableClass' => 'rowNoDelete',
-                        ),
+			'delete' => array(
+				'caption' => 'Delete',
+				'confirm' => 'Delete this entry',
+				'confirm_multiple' => 'Delete these entries',
+				'group' => ++$group,
+				'disableClass' => 'rowNoDelete',
+			),
 		);
 
 		// Unset admin actions
