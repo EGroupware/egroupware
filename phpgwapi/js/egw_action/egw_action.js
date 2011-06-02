@@ -9,6 +9,80 @@
  * @version $Id$
  */
 
+/**
+ * Getter functions for the global egwActionManager and egwObjectManager objects
+ */
+
+var egw_globalActionManager = null;
+var egw_globalObjectManager = null;
+
+/**
+ * Returns the action manager for the given application - each application has its
+ * own sub-ActionManager in the global action manager object to prevent collisions
+ * from happening
+ *
+ * @param _id is the name of the sub-actionManager which should be returned.
+ * 	If the action manager does not exist right now, it is created. If the
+ * 	parameter is ommited or null, the global action manager is returned.
+ */
+function egw_getActionManager(_id, _create) {
+	if (typeof _create == 'undefined') {
+		_create = true;
+	}
+
+	// Check whether the global action manager had been created, if not do so
+	var res = egw_globalActionManager;
+	if (egw_globalActionManager == null) {
+		res = egw_globalActionManager = new egwActionManager();
+	}
+
+	// Check whether the sub-action manager exists, if not, create it
+	if (typeof _id != 'undefined' && _id != null) {
+		res = egw_globalActionManager.getActionById(_id);
+		if (res == null && _create) {
+			res = egw_globalActionManager.addAction("actionManager", _id);
+		}
+	}
+
+	return res;
+}
+
+/**
+ * Returns the object manager for the given application - each application may
+ * have its own object manager where it can place action objects or containers.
+ *
+ * @param _id is the name of the sub-object manager should be returned. If the
+ * 	object manager does not exists right now, it is created. If the parameter
+ *	is ommited or null, the global object manager is returned.
+ */
+function egw_getObjectManager(_id, _create) {
+	if (typeof _create == "undefined") {
+		_create = true;
+	}
+
+	// Check whether the global object manager exists
+	var res = egw_globalObjectManager;
+	if (res == null) {
+		res = egw_globalObjectManager =
+			new egwActionObjectManager("_egwGlobalObjectManager",
+				egw_getActionManager());
+	}
+
+	// Check whether the sub-object manager exists, if not, create it
+	if (typeof _id != 'undefined' && _id != null) {
+		res = egw_globalObjectManager.getObjectById(_id);
+		if (res == null && _create) {
+			res = new egwActionObjectManager(_id,
+				egw_getActionManager(_id));
+			egw_globalObjectManager.addObject(res);
+		}
+	}
+
+	return res;
+}
+
+
+
 /** egwActionHandler Interface **/
 
 /**
@@ -34,11 +108,15 @@ _egwActionClasses["default"] = {
 	"actionConstructor": egwAction,
 	"implementation": null
 };
+_egwActionClasses["actionManager"] = {
+	"actionConstructor": egwActionManager,
+	"implementation": null
+};
 
 function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
 {
 	//Default and check the values
-	if (_parent && (typeof _id != "string" || !_id))
+	if (_parent && (typeof _id != "string" || !_id) && _parent.type != "actionManager")
 		throw "egwAction _id must be a non-empty string!";
 	if (typeof _caption == "undefined")
 		_caption = "";
@@ -366,7 +444,7 @@ egwAction.prototype.appendToTree = function(_tree, _addChildren)
 	};
 
 
-	if (this.parent)
+	if (this.parent && this.type != "actionManager")
 	{
 		// Check whether the parent container has already been added to the tree
 		parent_cntr = _egwActionTreeContains(root, this.parent);
@@ -424,6 +502,19 @@ egwAction.prototype.appendToTree = function(_tree, _addChildren)
 	return cntr;
 }
 
+/**
+ * Returns the parent action manager
+ */
+egwAction.prototype.getManager = function() {
+	if (this.type == "actionManager") {
+		return this;
+	} else if (this.parent) {
+		return this.parent.getManager();
+	} else {
+		return null;
+	}
+}
+
 
 /** egwActionManager Object **/
 
@@ -431,9 +522,16 @@ egwAction.prototype.appendToTree = function(_tree, _addChildren)
  * egwActionManager manages a list of actions - it overwrites the egwAction class
  * and allows child actions to be added to it.
  */
-function egwActionManager()
+function egwActionManager(_parent, _id)
 {
-	var action = new egwAction(null, false);
+	if (typeof _parent == 'undefined') {
+		_parent = null;
+	}
+	if (typeof _id == 'undefined') {
+		_id = false;
+	}
+
+	var action = new egwAction(_parent, _id);
 
 	action.type = "actionManager";
 	action.canHaveChildren = true;
