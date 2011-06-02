@@ -19,7 +19,6 @@ _egwActionClasses["popup"] = {
 function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
 	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
-
 	action.type = "popup";
 	action.canHaveChildren = ["popup"];
 	action["default"] = false;
@@ -82,53 +81,77 @@ function egwPopupActionImplementation()
 
 	ai.type = "popup";
 
+	/**
+	 * Registers the handler for the default action
+	 */
+	ai._registerDefault = function(_node, _callback, _context) {
+		var defaultHandler = function(e) {
+			if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
+			{
+				document.selection.empty();
+			}
+			else if( typeof window.getSelection != "undefined")
+			{
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+			}
+
+			_callback.call(_context, "default", ai);
+
+			return false;
+		}
+
+		if (egwIsMobile()) {
+			$(_node).bind('click', defaultHandler);
+		} else {
+			_node.dblclick = defaultHandler;
+		}
+	}
+
+	/**
+	 * Registers the handler for the context menu
+	 */
+	ai._registerContext = function(_node, _callback, _context) {
+		var contextHandler = function(e) {
+			//Obtain the event object
+			if (!e)
+			{
+				e = window.event;
+			}
+
+			if (_egw_active_menu)
+			{
+				_egw_active_menu.hide()
+			}
+			else
+			{
+				_xy = ai._getPageXY(e);
+				_callback.call(_context, _xy, ai);
+			}
+
+			e.cancelBubble = true;
+			if (e.stopPropagation)
+			{
+				e.stopPropagation();
+			}
+			return false;
+		}
+
+		if (egwIsMobile()) {
+			$(_node).bind('taphold', contextHandler);
+		} else {
+			_node.oncontextmenu = contextHandler;
+		}
+	}
+
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode();
 
 		if (node)
 		{
-			node.ondblclick = function(e) {
-				if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
-				{
-					document.selection.empty();
-				}
-				else if( typeof window.getSelection != "undefined")
-				{
-					var sel = window.getSelection();
-					sel.removeAllRanges();
-				}
-
-				_callback.call(_context, "default", ai);
-
-				return false;
-			}
-
-			node.oncontextmenu = function(e) {
-				//Obtain the event object
-				if (!e)
-				{
-					e = window.event;
-				}
-
-				if (_egw_active_menu)
-				{
-					_egw_active_menu.hide()
-				}
-				else
-				{
-					_xy = ai._getPageXY(e);
-					_callback.call(_context, _xy, ai);
-				}
-
-				e.cancelBubble = true;
-				if (e.stopPropagation)
-				{
-					e.stopPropagation();
-				}
-				return false;
-			}
-
+			this._registerDefault(node, _callback, _context);
+			this._registerContext(node, _callback, _context);
 			return true;
 		}
 		return false;

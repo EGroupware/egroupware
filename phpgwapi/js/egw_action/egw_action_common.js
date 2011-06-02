@@ -375,6 +375,25 @@ egwFnct.prototype.exec = function()
 	}
 }
 
+/**
+ * Checks whether this is currently run on a mobile browser
+ */
+var _egw_mobileBrowser = null;
+
+function egwIsMobile() {
+
+	if (_egw_mobileBrowser == null)
+	{
+		var ua = navigator.userAgent;
+
+		_egw_mobileBrowser =
+			ua.match(/iPhone/i) || ua.match(/iPad/i) || ua.match(/iPod/) ||
+			ua.match(/Android/i) || ua.match(/SymbianOS/i);
+	}
+
+	return _egw_mobileBrowser;
+}
+
 
 /**
 sprintf() for JavaScript 0.6
