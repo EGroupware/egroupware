@@ -123,12 +123,14 @@ class addressbook_ldap
 		'mozillaabpersonalpha' => array(
 			'adr_one_street2'	=> 'mozillaworkstreet2',
 			'adr_one_countryname'	=> 'c',	// 2 letter country code
+			'adr_one_countrycode'	=> 'c',	// 2 letter country code
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomestreet2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
 			'adr_two_region'	=> 'mozillahomestate',
 			'adr_two_postalcode'	=> 'mozillahomepostalcode',
 			'adr_two_countryname'	=> 'mozillahomecountryname',
+			'adr_two_countrycode'	=> 'mozillahomecountryname',
 			'email_home'		=> 'mozillasecondemail',
 			'url_home'			=> 'mozillahomeurl',
 		),
@@ -1113,9 +1115,17 @@ class addressbook_ldap
 	 */
 	function _egw2mozillaabpersonalpha(&$ldapContact,$data,$isUpdate)
 	{
-		if ($data['adr_one_countryname'])
+		if ($data['adr_one_countrycode'])
+		{
+			$ldapContact['c'] = $data['adr_one_countrycode'];
+		}
+		elseif ($data['adr_one_countryname'])
 		{
 			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
+			{
+				$ldapContact['c'] = array(); // should return error...
+			}
 		}
 		elseif ($isUpdate)
 		{
