@@ -864,7 +864,7 @@ class infolog_ical extends infolog_bo
 				$txt = $GLOBALS['egw']->translation->convert($_data, $charset);
 				$txt = str_replace("\r\n", "\n", $txt);
 
-				if (preg_match('/([^\n]+)\n\n(.*)/m', $txt, $match))
+				if (preg_match('/([^\n]+)\n\n(.*)/ms', $txt, $match))
 				{
 					$note['info_subject'] = $match[1];
 					$note['info_des'] = $match[2];
