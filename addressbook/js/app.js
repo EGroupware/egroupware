@@ -145,6 +145,7 @@ function setOptions(options_str)
 
 function show_custom_country(selectbox)
 {
+	if(!selectbox) return;
 	custom_field_name = selectbox.name.replace("countrycode", "countryname");
 	custom_field = document.getElementById(custom_field_name);
 	if(custom_field && selectbox.value == "-custom-") {
