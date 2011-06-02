@@ -45,7 +45,11 @@
  *			),
  *			'view_id' => 'app_id',					// name of get parameter of the id
  *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup
- *			'view_list'  => 'app.class.method'	// Method to be called to display a list of links, method should check $_GET['search'] to filter
+ *			'view_list'  => 'app.class.method'		// deprecated use 'list' instead
+ *          'list' => array(						// Method to be called to display a list of links, method should check $_GET['search'] to filter
+ *          	'menuaction' => 'app.class.method',
+ *          ),
+ *          'list_popup' => '400x300'
  *			'add' => array(							// get parameter to add an empty entry to app
  *				'menuaction' => 'app.class.method',
  *			),
@@ -156,6 +160,15 @@ class egw_link extends solink
 					}
 					unset($data['additional']);
 				}
+				// support deprecated view_list attribute instead of new index attribute
+				if (isset($data['view_list']) && !isset($data['list']))
+				{
+					$data['list'] = array('menuaction' => $data['view_list']);
+				}
+				elseif(isset($data['list']) && !isset($data['view_list']))
+				{
+					$data['view_list'] = $data['list']['menuaction'];
+				}
 				if (is_array($data))
 				{
 					self::$app_register[$app] = $data;
@@ -171,6 +184,28 @@ class egw_link extends solink
 			self::$file_access_cache = array();
 		}
 		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
+	}
+
+	/**
+	 * Get clientside relevant attributes from app registry in json format
+	 *
+	 * Only transfering relevant information cuts approx. half of the size.
+	 *
+	 * @return string json encoded object with app: object pairs with attributes "(view|add|edit)(|_id|_popup)"
+	 */
+	public static function json_registry()
+	{
+		$to_json = array();
+		foreach(self::$app_register as $app => $data)
+		{
+			$to_json[$app] = array_intersect_key($data, array_flip(array(
+				'view','view_id','view_popup',
+				'add','add_app','add_id','add_popup',
+				'edit','edit_id','edit_popup',
+				'list','list_popup',
+			)));
+		}
+		return json_encode($to_json);
 	}
 
 	/**

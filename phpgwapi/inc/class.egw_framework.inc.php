@@ -745,7 +745,15 @@ abstract class egw_framework
 
 		// set webserver_url for json
 		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = '".
-			$GLOBALS['egw_info']['server']['webserver_url']."';\n</script>\n";
+			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
+			$GLOBALS['egw_info']['server']['webserver_url']."';\n";
+
+		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
+		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
+		{
+			$java_script .= 'window.egw_link_registry='.egw_link::json_registry().';';
+		}
+		$java_script .= "</script>\n";
 
 		/* this flag is for all javascript code that has to be put before other jscode.
 		Think of conf vars etc...  (pim@lingewoud.nl) */

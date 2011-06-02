@@ -89,7 +89,7 @@ class idots_framework extends egw_framework
 		self::$header_done = true;
 
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-		header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
+		header('Content-type: text/html; charset='.translation::charset());
 
 		// catch error echo'ed before the header, ob_start'ed in the header.inc.php
 		$content = ob_get_contents();
@@ -147,9 +147,14 @@ class idots_framework extends egw_framework
 		$apps = $this->_get_navbar_apps();
 		$vars = $this->_get_navbar($apps);
 
+		// add link registry to non-popup windows
+		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
+		{
+			$content .= '<script type="text/javascript">'."\nwindow.egw_link_registry=".egw_link::json_registry().";\n</script>\n";
+		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
 		{
-			$content = $this->topmenu($vars,$apps);
+			$content .= $this->topmenu($vars,$apps);
 			$vars['current_users'] = $vars['quick_add'] = $vars['user_info']='';
 		}
 
@@ -189,7 +194,7 @@ class idots_framework extends egw_framework
 		$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
 		// allow other apps to hook into sidebox menu of every app: sidebox_all
-		$GLOBALS['egw']->hooks->process('sidebox_all',array($GLOBALS['egw_info']['flags']['currentapp']),true);	
+		$GLOBALS['egw']->hooks->process('sidebox_all',array($GLOBALS['egw_info']['flags']['currentapp']),true);
 
 		if($this->sidebox_content)
 		{
