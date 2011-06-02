@@ -818,6 +818,11 @@ class egw_link extends solink
 		//echo "<p>egw_link::add('$app','$to_app','$to_id') app_register[$app] ="; _debug_array($app_register[$app]);
 		if (empty($app) || empty($id) || !is_array($reg = self::$app_register[$app]) || !isset($reg['edit']))
 		{
+			if ($reg && isset($reg['view']))
+			{
+				$popup = $reg['view_popup'];
+				return self::view($app,$id);	// fallback to view
+			}
 			return false;
 		}
 		$params = $reg['edit'];
