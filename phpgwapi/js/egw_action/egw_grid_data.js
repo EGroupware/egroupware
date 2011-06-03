@@ -117,7 +117,6 @@ egwGridDataElement.prototype.set_iconOverlay = function(_value)
 	}
 }
 
-
 egwGridDataElement.prototype.set_iconSize = function(_value)
 {
 	if (_value != this.iconSize)
@@ -217,6 +216,42 @@ egwGridDataElement.prototype.set_data = function(_value)
 		}
 	}
 }
+
+egwGridDataElement.prototype.addClass = function(_value) {
+	// Split the string into individual classes
+	classes = this.rowClass.split(' ');
+
+	// Add the given class if it is not already set
+	if (classes.indexOf(_value) == -1)
+	{
+		classes.push(_value);
+
+		// Write the new value
+		this.rowClass = classes.join(' ');
+
+		// Update the grid element
+		this.callGridViewObjectUpdate();
+	}
+}
+
+egwGridDataElement.prototype.removeClass = function(_value) {
+	// Split the string into individual classes
+	classes = this.rowClass.split(' ');
+
+	// Remove the given value if it exists
+	var idx = classes.indexOf(_value);
+	if (idx > -1)
+	{
+		classes.splice(idx, 1);
+
+		// Write the new value
+		this.rowClass = classes.join(' ');
+
+		// Update the grid element
+		this.callGridViewObjectUpdate();
+	}
+}
+
 
 /**
  * Loads data into the GridData element. This function has two basic operating modes:
