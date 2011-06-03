@@ -25,6 +25,11 @@ class html
 	 */
 	static $user_agent;
 	/**
+	 * User agent is a mobile browser
+	 * @var boolean
+	 */
+	static $ua_mobile;
+	/**
 	 * version of user-agent as specified by browser
 	 * @var string
 	 */
@@ -64,6 +69,7 @@ class html
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
+		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/',$_SERVER['HTTP_USER_AGENT']);
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
 		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
@@ -283,6 +289,7 @@ class html
 	 */
 	static function htmlspecialchars($str)
 	{
+		//if (!is_scalar($str) && !is_null($str)) error_log(__METHOD__.'('.array2string($str).') '.function_backtrace());
 		// as EGroupware supports only utf-8 we should not need to worry about wrong charsets
 		return htmlspecialchars($str,ENT_COMPAT,self::$charset,false);
 		// we need '&#' unchanged, so we translate it back -> this is provided by 4th param = false -> do not doubleencode
@@ -1522,30 +1529,6 @@ class html
 			//$pos=false;
 		}
 		return $html2ret;
-	}
-
-
-	static private $mobileBrowser = null;
-
-	/**
-	 * Returns whether this is a mobile browser
-	 */
-	static public function is_mobile()
-	{
-		$agent = $_SERVER['HTTP_USER_AGENT'];
-
-		if (self::$mobileBrowser == null) {
-
-			self::$mobileBrowser = false;
-
-			foreach(array('iPhone','iPad','Android','SymbianOS') as $pattern)
-			{
-				self::$mobileBrowser |= (stripos($agent,$pattern) !== false);
-			}
-		}
-
-		return true;
-		//return self::$mobileBrowser;
 	}
 }
 html::_init_static();
