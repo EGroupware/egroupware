@@ -403,30 +403,25 @@ function egw_openWindowCentered(_url, _windowName, _width, _height)
 // return the left position of the window
 function egw_getWindowLeft()
 {
-	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
-	if(is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
-	{
-		return window.screenX;
+	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	try {
+		if(is_mozilla) return window.screenX;
 	}
-	else
-	{
-		return window.screenLeft;
-	}
+	catch (e) {}
+	
+	return window.screenLeft;
 }
 
 // return the left position of the window
 function egw_getWindowTop()
 {
-	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
-	if(is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
-	{
-		return window.screenY;
+	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	try {
+		if(is_mozilla) return window.screenY;
 	}
-	else
-	{
-		//alert(window.screenTop);
-		return window.screenTop-90;
-	}
+	catch (e) {}
+	
+	return window.screenTop-90;
 }
 
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
@@ -464,29 +459,25 @@ function egw_getWindowInnerHeight()
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
 function egw_getWindowOuterWidth()
 {
-	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
-	if (is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
-	{
-		return window.outerWidth;
+	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	try {
+		if (is_mozilla) return window.outerWidth;
 	}
-	else
-	{
-		return egw_getWindowInnerWidth();
-	}
+	catch (e) {}
+
+	return egw_getWindowInnerWidth();
 }
 
 // get the outerHeight of the browser window. For IE we simply return the innerHeight
 function egw_getWindowOuterHeight()
 {
-	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
-	if (is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
-	{
-		return window.outerHeight;
+	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	try {
+		if (is_mozilla) return window.outerHeight;
 	}
-	else
-	{
-		return egw_getWindowInnerHeight();
-	}
+	catch (e) {}
+	
+	return egw_getWindowInnerHeight();
 }
 
 // ie selectbox dropdown menu hack. as ie is not able to resize dropdown menus from selectboxes, we
