@@ -104,7 +104,7 @@ function egwPopupActionImplementation()
 		if (egwIsMobile()) {
 			$(_node).bind('click', defaultHandler);
 		} else {
-			_node.dblclick = defaultHandler;
+			_node.ondblclick = defaultHandler;
 		}
 	}
 
