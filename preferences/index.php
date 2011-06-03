@@ -18,10 +18,11 @@ $GLOBALS['egw_info'] = array(
 	),
 );
 include('../header.inc.php');
+
 auth::check_password_age('preferences','index');
 $GLOBALS['egw_info']['flags']['nonavbar']=false;
 common::egw_header();
-$pref_tpl =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+$pref_tpl = new Template(EGW_APP_TPL);
 $templates = Array(
 	'pref' => 'index.tpl'
 );
@@ -33,51 +34,6 @@ $pref_tpl->set_block('pref','app_row');
 $pref_tpl->set_block('pref','app_row_noicon');
 $pref_tpl->set_block('pref','link_row');
 $pref_tpl->set_block('pref','spacer_row');
-
-if ($GLOBALS['egw']->acl->check('run',1,'admin'))
-{
-	// This is where we will keep track of our position.
-	// Developers won't have to pass around a variable then
-	$session_data = $GLOBALS['egw']->session->appsession('session_data','preferences');
-
-	if (! is_array($session_data))
-	{
-		$session_data = array('type' => 'user');
-		$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
-	}
-
-	if (! $_GET['type'])
-	{
-		$type = $session_data['type'];
-	}
-	else
-	{
-		$type = $_GET['type'];
-		$session_data = array('type' => $type);
-		$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
-	}
-
-	$tabs[] = array(
-		'label' => lang('Your preferences'),
-		'link'  => egw::link('/preferences/index.php','type=user')
-	);
-	$tabs[] = array(
-		'label' => lang('Default preferences'),
-		'link'  => egw::link('/preferences/index.php','type=default')
-	);
-	$tabs[] = array(
-		'label' => lang('Forced preferences'),
-		'link'  => egw::link('/preferences/index.php','type=forced')
-	);
-
-	switch($type)
-	{
-		case 'user':    $selected = 0; break;
-		case 'default': $selected = 1; break;
-		case 'forced':  $selected = 2; break;
-	}
-	$pref_tpl->set_var('tabs',$GLOBALS['egw']->common->create_tabs($tabs,$selected));
-}
 
 // This func called by the includes to dump a row header
 function section_start($appname='',$icon='')
@@ -128,7 +84,7 @@ function display_section($appname,$file,$file2=False)
 	{
 		$file = $file2;
 	}
-	section_start($appname,$GLOBALS['egw']->common->image($appname,Array('navbar',$appname)));
+	section_start($appname,common::image($appname,Array('navbar',$appname)));
 
 	foreach($file as $text => $url)
 	{
