@@ -139,13 +139,26 @@ class importexport_admin_prefs_sidebox_hooks
 			$prefix = 'document_';
 			
 			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\'); 
-if(window.egwAction) {
-	var action = new window.egwAction(null,\''.$prefix.'\'+this.value);
-	if(window.egw_objectManager.selectedChildren.length == 0) {
-		// Be nice and select all, if they forgot to select any
-		window.egw_actionManager.getActionById(\'select_all\').set_checked(true);
+if(window.egw_getActionManager) {
+var actionMgrs = window.egw_getActionManager(\''.$appname.'\').getActionsByAttr(\'type\', \'actionManager\');
+var actionMgr = null;
+for(var i = 0; i < actionMgrs.length; i++) {
+	if(typeof actionMgrs[i].etemplate_var_prefix != \'undefined\') {
+		actionMgr = actionMgrs[i];
+		break;
 	}
-	window.nm_action(action, window.egw_objectManager.selectedChildren); 
+}
+var objectMgr = window.egw_getObjectManager(actionMgr.id);
+if(actionMgr && objectMgr && window.egwAction) {
+	var action = new window.egwAction(actionMgr,\''.$prefix.'\'+this.value);
+	if(objectMgr.selectedChildren.length == 0) {
+		// Be nice and select all, if they forgot to select any
+		if(actionMgr.getActionById(\'select_all\')) {
+			actionMgr.getActionById(\'select_all\').set_checked(true);
+		}
+	}
+	window.nm_action(action, objectMgr.selectedChildren); 
+}
 } else {';
 			if($appname == 'calendar')
 			{
