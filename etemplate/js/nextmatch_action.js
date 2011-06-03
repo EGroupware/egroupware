@@ -59,7 +59,7 @@ function nextmatchRowAOI(_node)
 		if (egwIsMobile()) {
 			_node.ontouchend = selectHandler;
 		} else {
-			$(node).click(selectHandler);
+			$(_node).click(selectHandler);
 		}
 
 		$(aoi.checkBox).change(function() {
