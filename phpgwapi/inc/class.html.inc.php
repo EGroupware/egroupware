@@ -69,11 +69,11 @@ class html
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
-		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/',$_SERVER['HTTP_USER_AGENT']);
+		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/i',$_SERVER['HTTP_USER_AGENT']);
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
 		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
-		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', img_title: '".self::$prefered_img_title."'</p>\n";
+		//error_log("HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', isMobile=".array2string(self::$ua_mobile).", img_title: '".self::$prefered_img_title."'");
 
 		if ($GLOBALS['egw']->translation)
 		{
