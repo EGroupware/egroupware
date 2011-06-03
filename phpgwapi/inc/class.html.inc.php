@@ -69,11 +69,11 @@ class html
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
-		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/',$_SERVER['HTTP_USER_AGENT']);
+		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/i',$_SERVER['HTTP_USER_AGENT']);
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
 		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
-		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', img_title: '".self::$prefered_img_title."'</p>\n";
+		//error_log("HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', isMobile=".array2string(self::$ua_mobile).", img_title: '".self::$prefered_img_title."'");
 
 		if ($GLOBALS['egw']->translation)
 		{
@@ -612,13 +612,13 @@ class html
 		$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ? $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']: $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 		if (!(strpos($lang,'-')===false)) list($lang,$country) = explode('-',$lang);
-		
+
 		//Get the ckeditor base url
 		$basePath = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
 
 		$oCKeditor = new CKeditor($basePath);
 		$oCKeditor->returnOutput = true;
-		
+
 		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
 		$oCKeditor->config['language'] = $lang;
 		$oCKeditor->config['resize_enabled'] = false;
@@ -631,7 +631,7 @@ class html
 		$oCKeditor->config['filebrowserBrowseUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'.urlencode($_start_path);
 		$oCKeditor->config['filebrowserWindowWidth'] = 640;
 		$oCKeditor->config['filebrowserWindowHeight'] = 580;
-		//Only heights with "px" set are supported		
+		//Only heights with "px" set are supported
 		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
 		$oCKeditor->config['height'] = $pxheight;
 		$oCKeditor->config['removePlugins'] = 'elementspath';
@@ -686,7 +686,7 @@ class html
 				break;
 			case 'office2003':
 				$skin = "office2003";
-				break;				
+				break;
 		}
 
 		//Check whether the skin actually exists, if not, switch to a default
