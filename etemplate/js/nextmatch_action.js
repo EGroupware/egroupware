@@ -171,7 +171,7 @@ function nm_action(_action, _senders)
 			// let user confirm select-all
 			if (select_all && select_all.checked)
 			{
-				if (!confirm((confirm_msg ? confirm_msg : _action.caption)+"\n\n"+select_all.hint)) return;
+				if (!confirm((confirm_msg ? confirm_msg : _action.caption.replace(/^(&nbsp;| |	)+/,''))+"\n\n"+select_all.hint)) return;
 			}
 			var checkboxes = mgr.getActionsByAttr("checkbox", true);
 			var checkboxes_elem = document.getElementById(mgr.etemplate_var_prefix+'[nm][checkboxes]');
