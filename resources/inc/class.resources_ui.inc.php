@@ -477,7 +477,7 @@ class resources_ui
 	 */
 	function get_calendar_sidebox($param)
 	{
-		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
+		$cats = $this->bo->acl->get_cats(EGW_ACL_CALREAD);
 		if (!$cats) return array();
 
 		if(array_key_exists('return_array', $param))
@@ -492,6 +492,7 @@ class resources_ui
 
 		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
 		// so it is possible to select all resources of a category
+		$allowed_list = array();
 		foreach($cats as $cat_id => $cat_name)
 		{
 			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
@@ -500,6 +501,7 @@ class resources_ui
 				foreach($resources as $res)
 				{
 					$keys[] = 'r'.$res['res_id'];
+					$allowed_list[] = $res['res_id'];
 				}
 				$res_cats[implode(',',$keys)] = $cat_name;
 
@@ -521,6 +523,8 @@ class resources_ui
 				$selected[] = $owner;
 			}
 		}
+		// Take out resources not allowed by perms, above
+		$res_ids = array_intersect($res_ids,$allowed_list);
 		if (count($res_ids))
 		{
 			foreach($this->bo->so->search(array('res_id' => $res_ids),'res_id,name') as $data)
