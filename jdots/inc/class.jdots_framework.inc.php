@@ -49,13 +49,7 @@ class jdots_framework extends egw_framework
 	 */
 	public static function is_supported_user_agent()
 	{
-		$agent = $_SERVER['HTTP_USER_AGENT'];
-
-		foreach(array('iPhone','iPad','Android','SymbianOS') as $pattern)
-		{
-			if (stripos($agent,$pattern) !== false) return false;
-		}
-		if (html::$user_agent == 'msie' && html::$ua_version < 7)
+		if (html::$ua_mobile || html::$user_agent == 'msie' && html::$ua_version < 7)
 		{
 			return false;
 		}
