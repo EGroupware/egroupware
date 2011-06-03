@@ -648,7 +648,7 @@ abstract class egw_framework
 		}
 
 		// We handle this here becuase its special
-		$apps['about']['title'] = lang('About %1','EGroupware');
+		$apps['about']['title'] = 'EGroupware';
 
 		$apps['about']['url']   = egw::link('/about.php');
 		$apps['about']['icon']  = common::image('phpgwapi',Array('about','nonav'));
@@ -875,19 +875,22 @@ abstract class egw_framework
 		{
 			$this->_add_topmenu_item($apps['preferences']);
 		}
-		elseif(($pw_app = $GLOBALS['egw_info']['user']['apps']['password']) &&
+		// allways display pasword in topmenu
+		if((($pw_app = $GLOBALS['egw_info']['user']['apps']['preferences']) ||
+			($pw_app = $GLOBALS['egw_info']['user']['apps']['password'])) &&
 			!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
 		{
 			$this->_add_topmenu_item(array(
-				'title' => $pw_app['title'],
-				'url'   => egw::link($pw_app['index']),
+				'name'  => $pw_app['name'] == 'password' ? 'about' : $pw_app['name'],
+				'title' => lang('Password'),
+				'url'   => egw::link('/preferences/password.php'),
 				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
 			));
 		}
 
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
-			$this->_add_topmenu_item($apps['manual']);
+			$this->_add_topmenu_item(array_merge($apps['manual'],array('title' => lang('Help'))));
 		}
 
 		$GLOBALS['egw']->hooks->process('topmenu_info',array(),true);
