@@ -39,6 +39,8 @@ else if (document.layers)
 	is_ns4 = true;
 }
 
+//console.log('is_ie='+is_ie+', is_ie5='+is_ie5+', is_mozilla='+is_mozilla+', is_moz1_6='+is_moz1_6+', is_ns4='+is_ns4);
+
 /**
  * Seperates all script tags from the given html code and returns the seperately
  * @param object _html object that the html code from which the script should be seperated. The html code has to be stored in _html.html, the result js will be written to _html.js
@@ -220,7 +222,8 @@ function egw_openWindowCentered(_url, _windowName, _width, _height)
 // return the left position of the window
 function egw_getWindowLeft()
 {
-	if(is_mozilla)
+	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	if(is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
 	{
 		return window.screenX;
 	}
@@ -233,7 +236,8 @@ function egw_getWindowLeft()
 // return the left position of the window
 function egw_getWindowTop()
 {
-	if(is_mozilla)
+	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	if(is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
 	{
 		return window.screenY;
 	}
@@ -279,7 +283,8 @@ function egw_getWindowInnerHeight()
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
 function egw_getWindowOuterWidth()
 {
-	if (is_mozilla)
+	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	if (is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
 	{
 		return window.outerWidth;
 	}
@@ -292,7 +297,8 @@ function egw_getWindowOuterWidth()
 // get the outerHeight of the browser window. For IE we simply return the innerHeight
 function egw_getWindowOuterHeight()
 {
-	if (is_mozilla)
+	// workaround for https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+	if (is_mozilla && navigator.userAgent.toLowerCase().indexOf('fennec') == -1)
 	{
 		return window.outerHeight;
 	}
