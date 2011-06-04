@@ -88,15 +88,21 @@ class html
 	* Please note: it need to be called before the call to egw_header() !!!
 	*
 	* @param string $name the name of the input-field
-	* @param string $value the actual value for the input-field, default ''
-	* @param string $title tooltip/title for the picker-activation-icon
+	* @param string $value='' the actual value for the input-field, default ''
+	* @param string $title='' tooltip/title for the picker-activation-icon
+	* @param string $options='' options for input
 	* @return string the html
 	*/
-	static function inputColor($name,$value='',$title='')
+	static function inputColor($name,$value='',$title='',$options='')
 	{
-		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
-		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+encodeURIComponent(document.getElementById('$id').value),'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
-		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" size="7" maxsize="7" /> '.
+		$options .= ' id="'.htmlspecialchars($id=str_replace(array('[',']'),array('_',''),$name).'_colorpicker').'"';
+		$onclick = "javascript:egw_openWindowCentered2('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+encodeURIComponent(document.getElementById('$id').value),'colorPicker',240,187);";
+		if (preg_match('/^#[0-9A-F]{6}$/i',$value))
+		{
+			$options .= ' style="background-color: '.$value.'"';
+		}
+		$options .= ' onChange="this.style.backgroundColor=this.value.match(/^(#[0-9A-F]+|[a-z]+)$/i)?this.value:\'#FFFFFF\'+(this.value=\'\')"';
+		return self::input($name, $value, 'text', $options.' size="7" maxsize="7"').'&nbsp;'.
 			'<a href="#" onclick="'.$onclick.'">'.
 			'<img src="'.self::$api_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.self::htmlspecialchars($title).'"' : '')." /></a>";
 	}
@@ -659,9 +665,14 @@ class html
 	 */
 	static function input($name,$value='',$type='',$options='' )
 	{
-		if ($type)
+		switch ((string)$type)
 		{
-			$type = 'type="'.$type.'"';
+			case 'color':
+				return self::inputColor($name, $value, '', $options);
+			case '';
+				break;
+			default:
+				$type = 'type="'.$type.'"';
 		}
 		return "<input $type name=\"$name\" value=\"".self::htmlspecialchars($value)."\" $options />\n";
 	}
