@@ -1,8 +1,8 @@
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 28514)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 35166)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -490,10 +490,12 @@
+@@ -543,10 +543,12 @@
  			}
  			// call the asyncservice check_run function if it is not explicitly set to cron-only
  			//
@@ -17,9 +17,9 @@ Index: egroupware/phpgwapi/inc/class.egw.inc.php
  	}
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 28512)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 35166)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
-@@ -96,16 +96,20 @@
+@@ -99,16 +99,20 @@
  			$config->save_repository();
  			unset($config);
  		}
@@ -40,7 +40,7 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		echo '<p><b>'.lang('Run Asynchronous services').'</b>'.
  			' <select name="asyncservice" onChange="this.form.submit();">';
  		foreach ($async_use as $key => $label)
-@@ -127,8 +131,9 @@
+@@ -130,8 +134,9 @@
  		}
  		else
  		{
@@ -51,7 +51,7 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  			if (is_array($installed) && isset($installed['cronline']))
  			{
  				echo "$installed[cronline]</p>";
-@@ -143,6 +148,7 @@
+@@ -146,6 +151,7 @@
  			}
  			echo '<p><input type="submit" name="install" value="'.lang('Install crontab')."\">\n".
  				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
