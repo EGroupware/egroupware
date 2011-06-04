@@ -1,0 +1,187 @@
+(unknown sender)	felamimail	et	(tundmatu saatja)
+activate	felamimail	et	Aktiveeri
+activate script	felamimail	et	Aktiveeri skript
+add address	felamimail	et	Lisa aadress
+add script	felamimail	et	Lisa skript
+all address books	felamimail	et	Kõik Aadressi raamatud
+all folders	felamimail	et	Kõik Kaustad
+all of	felamimail	et	kõik välja
+always show html emails	felamimail	et	Alati näita HTML emaile
+and	felamimail	et	ja
+any status	felamimail	et	kõik staatused
+back to folder	felamimail	et	Tagasi kausta
+bad login name or password.	felamimail	et	Vale kasutajanimi või parool
+change folder	felamimail	et	Muuda kausta
+close all	felamimail	et	sule kõik
+close this page	felamimail	et	sulge see leht
+close window	felamimail	et	Sulge aken
+color	felamimail	et	Värv
+configuration	felamimail	et	Konfiguratsioon
+contains	felamimail	et	sisaldab
+date(newest first)	felamimail	et	Kuupäev (uuemad enne)
+date(oldest first)	felamimail	et	Kuupäev (vanemad enne)
+default	felamimail	et	vaikimisi
+default sorting order	felamimail	et	Vaikimisi sorteerimise järjekord
+delete all	felamimail	et	kustuta kõik
+delete folder	felamimail	et	Kustuta kaust
+delete script	felamimail	et	kustuta skript
+delete selected	felamimail	et	Kustuta valitud
+delete selected messages	felamimail	et	kustuta valitud teated
+deleted	felamimail	et	kustutatud
+deleted folder successfully!	felamimail	et	Kaust kustutatud täielikult!
+deleting messages	felamimail	et	kustutan kirjad
+disable	felamimail	et	Keela
+discard	felamimail	et	unusta
+discard message	felamimail	et	unusta kirjad
+display message in new window	felamimail	et	Näita kirju uues aknas
+display messages in multiple windows	felamimail	et	Näita kirju mitmes aknas
+display of html emails	felamimail	et	Näita HTML emaile
+display only when no plain text is available	felamimail	et	Näita ainult kui plain tekst pole saadaval
+display preferences	felamimail	et	Näita Eelistusi
+displaying html messages is disabled	felamimail	et	html kirjade näitamine on välja lülitatud
+do it!	felamimail	et	tee seda!
+do not use sent	felamimail	et	Ära kasuta Sent
+do not use trash	felamimail	et	Ära kasuta Trash
+do not validate certificate	felamimail	et	ära valideeri sertifikaati
+do you really want to delete the '%1' folder?	felamimail	et	Tahad tõesti kustutada '%1' kaust?
+do you really want to delete the selected signatures?	felamimail	et	Tahad tõesti kustutada valitud signatuurid?
+does not contain	felamimail	et	ei sisalda
+don't use sent	felamimail	et	Ära kasuta Sent
+don't use trash	felamimail	et	Ära kasuta Trash
+down	felamimail	et	alla
+download	felamimail	et	lae alla
+download this as a file	felamimail	et	Lae see alla kui fail
+e-mail	felamimail	et	E-Mail
+e-mail address	felamimail	et	E-Mail aadress
+e-mail folders	felamimail	et	E-Mail Kaustad
+edit email forwarding address	felamimail	et	edit emaili edasisaatmise aadressi
+edit filter	felamimail	et	Muuda filtrit
+edit selected	felamimail	et	Muuda valitut
+email address	felamimail	et	E-Mail Aadress
+email forwarding address	felamimail	et	email edasisaatmise aadress
+empty trash	felamimail	et	tühjenda prügi
+enable	felamimail	et	luba
+encrypted connection	felamimail	et	krüpteeritud ühendus
+error	felamimail	et	VIGA
+error opening	felamimail	et	Viga avamisel
+every	felamimail	et	iga
+extended	felamimail	et	laiendatud
+file into	felamimail	et	faili info
+files	felamimail	et	failid
+filter active	felamimail	et	filter aktiivne
+filter name	felamimail	et	Filtri nimi
+first name	felamimail	et	Eesnimi
+flags	felamimail	et	Lipud
+folder name	felamimail	et	Kausta nimi
+folder path	felamimail	et	Kausta Teekond
+folder preferences	felamimail	et	Kausta Eelistused
+folder settings	felamimail	et	Kausta setingud
+folder status	felamimail	et	Kausta staatus
+folderlist	felamimail	et	Kausta nimekiri
+foldername	felamimail	et	Kausta nimi
+folders	felamimail	et	Kaustad
+folders created successfully!	felamimail	et	Kaustad tehtud täielikult!
+forward	felamimail	et	Edasi
+fri	felamimail	et	Re
+full name	felamimail	et	Täis nimi
+icons only	felamimail	et	Ikoonid ainult
+if	felamimail	et	KUI
+illegal folder name.  please select a different name.	felamimail	et	Lubamatu kaustanimi. Palun vali uus.
+imap	felamimail	et	IMAP
+imap server	felamimail	et	IMAP Server
+imap server address	felamimail	et	IMAP Serveri Aadress
+imap server closed the connection.	felamimail	et	IMAP server sulges ühenduse.
+imap server closed the connection. server responded: %s	felamimail	et	IMAP Server sulges ühenduse. Server Vastas: %s
+imap server password	felamimail	et	imap serveri parool
+imap server type	felamimail	et	IMAP Serveri tüüp
+imap server username	felamimail	et	imap serveri kasutajanimi
+imaps authentication	felamimail	et	IMAPS Audentimine
+imaps encryption only	felamimail	et	IMAPS Krüpteering ainult
+in	felamimail	et	sisse
+incoming mail server(imap)	felamimail	et	Sissetuleva meili server(IMAP)
+invalid user name or password	felamimail	et	vale kasutaja või parool
+language	felamimail	et	Keel
+last name	felamimail	et	perekonnanimi
+left	felamimail	et	Vasak
+less	felamimail	et	vähem
+less than	felamimail	et	vähem kui
+mail server login type	admin	et	Mail serveri logimise tüüp
+mail settings	felamimail	et	Mail setingud
+manage emailaccounts	preferences	et	Manageeri Emailkontosid
+manage folders	common	et	Manageeri Kaustu
+manage signatures	felamimail	et	Manageeri Signatuure
+mark as deleted	felamimail	et	Märgi kui kustutatud
+mark messages as	felamimail	et	Märgi valitud kirjad kui
+mark selected as flagged	felamimail	et	Märgi valitud kui flagged
+mark selected as read	felamimail	et	Märgi valitud kui loetud
+mark selected as unflagged	felamimail	et	Märgi valitud kui unflagged
+mark selected as unread	felamimail	et	Märgi valitud kui lugematta
+messages	felamimail	et	kirjad
+mon	felamimail	et	Esm
+move	felamimail	et	liiguta
+move messages	felamimail	et	liiguta kirjad
+move to trash	felamimail	et	Liiguta trash-i
+name	felamimail	et	Nimi
+never display html emails	felamimail	et	Ära näita kunagi HTML emaile
+new	common	et	Uus
+new filter	felamimail	et	Uus filter
+next	felamimail	et	Järgmine
+next message	felamimail	et	järgmine kiri
+no active imap server found!!	felamimail	et	Aktiivset IMAP serverit ei leitud !!
+no folders found	felamimail	et	Kaustu ei leitud
+no signature	felamimail	et	pole signatuuri
+only inbox	felamimail	et	Ainult INBOX
+only one window	felamimail	et	ainult üks aken
+only unseen	felamimail	et	Ainult nägematta
+open all	felamimail	et	ava kõik
+or	felamimail	et	või
+organisation	felamimail	et	organisatsioon
+personal information	felamimail	et	Personaalne informatsioon
+please select a address	felamimail	et	Palun vali aadress
+port	felamimail	et	port
+posting	felamimail	et	postitan
+previous	felamimail	et	Eelmine
+previous message	felamimail	et	eelmine teade
+print it	felamimail	et	prindi see
+print this page	felamimail	et	prindi see leht
+quicksearch	felamimail	et	Kiirotsing
+read	felamimail	et	loetud
+reading	felamimail	et	loen
+recent	felamimail	et	hiljutised
+refresh time in minutes	felamimail	et	Värkendamise aeg minutites
+remove	felamimail	et	eemalda
+remove immediately	felamimail	et	Eemalda koheselt!
+rename	felamimail	et	Nimeta ümber
+replied	felamimail	et	vastatud
+reply	felamimail	et	Vasta
+save	felamimail	et	Salvesta
+save changes	felamimail	et	Salvesta muudatused
+script name	felamimail	et	skripti nimi
+script status	felamimail	et	scripti staatus
+search	felamimail	et	Otsi
+select	felamimail	et	Vali
+select all	felamimail	et	Vali Kõik
+select emailprofile	felamimail	et	Vali Email Profiil
+select folder	felamimail	et	vali kaust
+select your mail server type	admin	et	Vali mailiserveri tüüp
+send	felamimail	et	Saada
+size(...->0)	felamimail	et	Suurus (...->0)
+size(0->...)	felamimail	et	Suurus (0->...)
+text only	felamimail	et	Tekst ainult
+the connection to the imap server failed!!	felamimail	et	Ühendus IMAP Serveriga ebaõnnestus!!
+this folder is empty	felamimail	et	SEE KAUST ON TÜHI
+trash folder	felamimail	et	Trash Kaust
+unknown error	felamimail	et	Tundmatu vida
+unknown sender	felamimail	et	Tundmatu saatja
+unknown user or password incorrect.	felamimail	et	Tundmatu kasutaja või vale parool.
+unread	common	et	lugematta
+unseen	felamimail	et	Nägematta
+up	felamimail	et	üles
+updating view	felamimail	et	uuendan vaadet
+use a signature	felamimail	et	Kasuta signatuuri
+use a signature?	felamimail	et	Kasuta signatuuri ?
+use addresses	felamimail	et	Kasuta Aadresse
+view message	felamimail	et	Vaata teadet
+viewing message	felamimail	et	Näitan kirja
+viewing messages	felamimail	et	Näitan kirju
+writing	felamimail	et	Kirjutan

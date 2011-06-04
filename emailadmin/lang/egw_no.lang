@@ -1,0 +1,68 @@
+add profile	emailadmin	no	Legg til profil
+admin dn	emailadmin	no	Admin dn
+admin password	emailadmin	no	Admin passord
+admin username	emailadmin	no	Admin brukernavn
+advanced options	emailadmin	no	Avanserte valg
+alternate email address	emailadmin	no	Alternativ e-mailadresse
+cyrus imap server	emailadmin	no	Cyrus IMAP tjener
+cyrus imap server administration	emailadmin	no	Cyrys IMAP tjeneradministrasjon
+default	emailadmin	no	standard
+deliver extern	emailadmin	no	lever eksternt
+do you really want to delete this profile	emailadmin	no	Ønsker du virkelig å slette denne profilen
+domainname	emailadmin	no	Domenenavn
+edit email settings	emailadmin	no	Rediger e-mail oppsett
+email account active	emailadmin	no	E-mailkonto aktiv
+email address	emailadmin	no	E-mailadresse
+enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-tjener administrasjon
+enable sieve	emailadmin	no	Tillat Sieve
+enter your default mail domain (from: user@domain)	emailadmin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
+forward also to	emailadmin	no	videresend også til
+forward email's to	emailadmin	no	videresend e-mailer til
+forward only	emailadmin	no	bare videresending
+imap admin password	admin	no	IMAP Administrasjonspassord
+imap admin user	admin	no	IMAP Administrasjonsbruker
+imap c-client version < 2001	emailadmin	no	IMAP C-klient versjon < 2001
+imap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for IMAP tjener
+imap server logintyp	emailadmin	no	IMAP Tjener påloggingstype
+imap server port	emailadmin	no	IMAP Tjenerport
+imap/pop3 server name	emailadmin	no	IMAP/POP3 tjenernavn
+in mbyte	emailadmin	no	i MByte
+ldap basedn	emailadmin	no	LDAP basedn
+ldap server	emailadmin	no	LDAP Tjener
+ldap server accounts dn	emailadmin	no	LDAP Tjenerkonti DN
+ldap server admin dn	emailadmin	no	LDAP Tjeneradmin. DN
+ldap server admin password	emailadmin	no	LDAP Tjeneradmin. passord
+ldap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for LDAP tjener
+ldap settings	emailadmin	no	LDAP Instillinger
+leave empty for no quota	emailadmin	no	La stå tomt for ingen begrensning.
+mail settings	admin	no	E-post innstillinger
+name of organisation	emailadmin	no	Navn på organisasjon
+no alternate email address	emailadmin	no	ingen alternativ e-mailadresse
+no forwarding email address	emailadmin	no	ingen e-mailadresse for videresending
+pop3 server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for POP3 tjener
+pop3 server port	emailadmin	no	POP3 Tjenerport
+postfix with ldap	emailadmin	no	Postfix med LDAP
+profile list	emailadmin	no	Profilliste
+profile name	emailadmin	no	Profilnavn
+qmaildotmode	emailadmin	no	qmaildotmodus
+qouta size in mbyte	emailadmin	no	Grense Str. i Mbyte
+quota settings	emailadmin	no	Grenseinstillinger
+remove	emailadmin	no	fjern
+select type of imap/pop3 server	emailadmin	no	Velg type for IMAP/POP3 Tjener
+select type of smtp server	emailadmin	no	Velg type SMTP Tjener
+sieve server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for Sieve-tjener
+sieve server port	emailadmin	no	Sieve tjenerport
+sieve settings	emailadmin	no	Sieve innstillinger
+smtp server name	emailadmin	no	SMTP Tjenernavn
+smtp-server hostname or ip address	emailadmin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
+smtp-server port	emailadmin	no	SMTP Tjenerport
+standard	emailadmin	no	standard
+standard imap server	emailadmin	no	Standard IMAP tjener
+standard pop3 server	emailadmin	no	Standard POP3 tjener
+standard smtp-server	emailadmin	no	Standard SMTP tjener
+use ldap defaults	emailadmin	no	Bruk LDAP standaroppsett
+use smtp auth	emailadmin	no	Bruk SMTP autentisering
+use tls authentication	emailadmin	no	Bruk TLS autentisering
+use tls encryption	emailadmin	no	Bruk TLS kryptering
+users can define their own emailaccounts	emailadmin	no	Brukere kan definere egne e-post kontoer
+virtual mail manager	emailadmin	no	Virtuell Mail Manager
