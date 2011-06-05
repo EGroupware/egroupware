@@ -69,21 +69,26 @@ class auth_sql implements auth_backend
 			{
 				return false;
 			}
-			if(!($match = auth::compare_password($passwd,$row['account_pwd'],$this->type,strtolower($username))) ||
-				preg_match('/^{(.+)}/',$row['account_pwd'],$matches) &&	// explicit specified hash, eg. from ldap
-					in_array(strtolower($matches[1]),explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
+			if(!($match = auth::compare_password($passwd, $row['account_pwd'], $this->type, strtolower($username), $type)) ||
+				$type != $this->type && in_array($type, explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 			{
 				// do we have to migrate an old password ?
 				if($GLOBALS['egw_info']['server']['pwd_migration_allowed'] && !empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
 				{
-					foreach(explode(',', $GLOBALS['egw_info']['server']['pwd_migration_types']) as $type)
+					if (!$match)
 					{
-						if(($match = auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username))))
+						foreach(explode(',', $GLOBALS['egw_info']['server']['pwd_migration_types']) as $type)
 						{
-							$encrypted_passwd = auth::encrypt_sql($passwd);
-							$this->_update_passwd($encrypted_passwd,$passwd,$row['account_id'],false,true);
-							break;
+							if(($match = auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username))))
+							{
+								break;
+							}
 						}
+					}
+					if ($match)
+					{
+						$encrypted_passwd = auth::encrypt_sql($passwd);
+						$this->_update_passwd($encrypted_passwd,$passwd,$row['account_id'],false,true);
 					}
 				}
 				if (!$match) return false;

@@ -147,55 +147,44 @@ function encryptmode($config)
 
 function passwdhashes($config,$return_hashes=false)
 {
-	$hashes = array(
-		'ssha' => 'ssha'.' ('.lang('default').')',
-		'smd5' => 'smd5',
-		'sha'  => 'sha',
-		'des' => 'des',	// historically crypt is called des in ldap
-	);
-	/* Check for available crypt methods based on what is defined by php */
-	if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+	$hashes = sql_passwdhashes($config,true);
+	if (isset($hashes['crypt']))
 	{
-		$hashes['blowish_crypt'] = 'blowish_crypt';
+		$hashes['des'] = 'des (=crypt)';	// old LDAP name for crypt
 	}
-	if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
-	{
-		$hashes['md5_crypt'] = 'md5_crypt';
-	}
-	if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
-	{
-		$hashes['ext_crypt'] = 'ext_crypt';
-	}
-
-	$hashes += array(
-		'md5' => 'md5',
-		'plain' => 'plain',
-	);
-
 	return $return_hashes ? $hashes : _options_from($hashes, $config['ldap_encryption_type'] ? $config['ldap_encryption_type'] : 'des');
 }
 
-function sql_passwdhashes($config,$return_hashes=false)
+function sql_passwdhashes($config, $return_hashes=false, &$securest=null)
 {
-	$hashes = array(
-		'ssha' => 'ssha'.' ('.lang('default').')',
-		'smd5' => 'smd5',
-		'sha'  => 'sha',
-	);
+	$hashes = array();
 
 	/* Check for available crypt methods based on what is defined by php */
-	if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+	if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1)
 	{
-		$hashes['blowish_crypt'] = 'blowish_crypt';
+		$hashes['sha512_crypt'] = 'sha512_crypt';
 	}
-	if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
+	if(defined('CRYPT_SHA256') && CRYPT_SHA256 == 1)
+	{
+		$hashes['sha256_crypt'] = 'sha256_crypt';
+	}
+	if(defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+	{
+		$hashes['blowfish_crypt'] = 'blowfish_crypt';
+	}
+	if(defined('CRYPT_MD5') && CRYPT_MD5 == 1)
 	{
 		$hashes['md5_crypt'] = 'md5_crypt';
 	}
-	if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+	if(defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
 	{
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
+	$hashes += array(
+		'ssha' => 'ssha',
+		'smd5' => 'smd5',
+		'sha'  => 'sha',
+	);
 	if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
 	{
 		$hashes['crypt'] = 'crypt';
@@ -205,6 +194,10 @@ function sql_passwdhashes($config,$return_hashes=false)
 		'md5' => 'md5',
 		'plain' => 'plain',
 	);
+
+	// mark the securest algorithm for the user
+	list($securest) = each($hashes); reset($hashes);
+	$hashes[$securest] .= ' ('.lang('securest').')';
 
 	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type'] ? $config['sql_encryption_type'] : 'md5');
 }

@@ -26,7 +26,7 @@
 access denied: wrong username or password for manage-header !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für die Headerverwaltung !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für Konfiguration der Domain '%1(%2)'  !!!
 account repository need to be set to the one you migrate to!	setup	de	Speicherort für Benutzerkonten muss auf den zu migrierenden gesetzt sein!
-account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{ssha(Vorgabe) | smd5 | md5 | blowfish_crypt | md5_crypt | crypt}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 activate safe password check	setup	de	Aktiviere die "sichere Passwort" Überprüfung
@@ -544,7 +544,7 @@ smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
 smtp server port	setup	de	SMTP Server Port
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sources deleted/missing	setup	de	Quellen gelöscht/fehlen
-sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe SSHA)
+sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort
 ssl validation:	setup	de	SSL Validierung:
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
