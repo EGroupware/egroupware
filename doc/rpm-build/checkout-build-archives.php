@@ -11,7 +11,7 @@
 
 if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-cli as web-page
 {
-	die('<h1>checkout-build-tgz.php must NOT be called as web-page --> exiting !!!</h1>');
+	die('<h1>checkout-build-archives.php must NOT be called as web-page --> exiting !!!</h1>');
 }
 date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
@@ -42,7 +42,8 @@ $config = array(
 	'editor' => '/usr/bin/vi',
 	'svntag' => false,	// eg. '$version.$packaging'
 	'skip' => array(),
-	'run' => array('checkout','copy','virusscan','create','sign')
+	'run' => array('checkout','copy','virusscan','create','sign'),
+	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
 // process config from command line
@@ -86,7 +87,7 @@ while(($arg = array_shift($argv)))
 				$config[$name] = $value;
 				array_unshift($config['run'],'svntag');
 				break;
-				
+
 			case 'editsvnchangelog':
 				$config[$name] = $value ? $value : true;
 				if (!in_array('editsvnchangelog',$config['run']))
@@ -173,7 +174,7 @@ function do_editsvnchangelog()
 
 /**
  * Read changelog for given branch from (last) tag or given revision from svn
- * 
+ *
  * @param string $branch_url='svn+ssh://svn@svn.stylite.de/egroupware/branches/Stylite-EPL-10.1'
  * @param string $log_pattern=null	a preg regular expression or start of line a log message must match, to be returned
  * 	if regular perl regular expression given only first expression in brackets \\1 is used,
@@ -185,7 +186,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 {
 	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
 	global $config,$verbose,$svn;
-	
+
 	if (is_null($revision))
 	{
 		list($tags_url,$branch) = explode('/branches/',$branch_url);
@@ -208,7 +209,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 	run_cmd($cmd,$output);
 	$verbose = $v;
 	array_shift($output);	// remove the command
-	
+
 	$xml = simplexml_load_string($output=implode("\n",$output));
 	$message = '';
 	$pattern_len = strlen($log_pattern);
@@ -238,7 +239,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 
 /**
  * Get revision of last svn tag matching a given pattern in the log message
- * 
+ *
  * @param string $tags_url
  * @param string $pattern which has to be contained in the log message (NOT the tag itself)
  * 	or (perl) regular expression against which log message is matched
@@ -248,7 +249,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
 	global $config,$verbose,$svn;
-	
+
 	$cmd = $svn.' log --xml --limit 10 '.escapeshellarg($tags_url);
 	if (($v = $verbose))
 	{
@@ -259,7 +260,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 	run_cmd($cmd,$output);
 	$verbose = $v;
 	array_shift($output);	// remove the command
-	
+
 	$xml = simplexml_load_string($output=implode("\n",$output));
 	foreach($xml as $log)
 	{
@@ -491,6 +492,17 @@ function do_copy()
 	$cmd = '/usr/bin/rsync -r --delete --exclude .svn '.$config['svndir'].'/'.$config['aliasdir'].' '.$config['egw_buildroot'];
 	run_cmd($cmd);
 
+	if (($cmd = $config['patchCmd']) && $cmd[0] != '#')
+	{
+		if (strpos($cmd,'$') !== false)	// allow to use config vars like $svnbranch in module
+		{
+			$translate = array();
+			foreach($config as $name => $value) $translate['$'.$name] = $value;
+			$cmd = strtr($cmd,$translate);
+		}
+		echo "Running $cmd\n";
+		run_cmd($cmd);
+	}
 	// fix permissions
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
@@ -519,7 +531,7 @@ function do_checkout()
 		throw new Exception("svn checkout directory '{$config['svndir']} exists and is NO directory or NOT writable!");
 	}
 	chdir($config['svndir']);
-	
+
 	// do we use a just created tag --> list of taged modules
 	if ($config['svntag'] && isset($config['modules']))
 	{
@@ -595,7 +607,7 @@ function do_checkout()
 
 /**
  * Get module name per svn repro
- * 
+ *
  * @return array with $repro_url => array(module1, ..., moduleN) pairs
  */
 function get_modules_per_repro()
