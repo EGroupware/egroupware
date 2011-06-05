@@ -11,7 +11,7 @@
 
 if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-cli as web-page
 {
-	die('<h1>checkout-build-tgz.php must NOT be called as web-page --> exiting !!!</h1>');
+	die('<h1>checkout-build-archives.php must NOT be called as web-page --> exiting !!!</h1>');
 }
 date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
@@ -44,7 +44,8 @@ $config = array(
 	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs','release','copychangelog')
+	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs','release','copychangelog'),
+	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
 // process config from command line
@@ -556,6 +557,17 @@ function do_copy()
 	$cmd = '/usr/bin/rsync -r --delete --exclude .svn '.$config['svndir'].'/'.$config['aliasdir'].' '.$config['egw_buildroot'];
 	run_cmd($cmd);
 
+	if (($cmd = $config['patchCmd']) && $cmd[0] != '#')
+	{
+		if (strpos($cmd,'$') !== false)	// allow to use config vars like $svnbranch in module
+		{
+			$translate = array();
+			foreach($config as $name => $value) $translate['$'.$name] = $value;
+			$cmd = strtr($cmd,$translate);
+		}
+		echo "Running $cmd\n";
+		run_cmd($cmd);
+	}
 	// fix permissions
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
