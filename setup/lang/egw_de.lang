@@ -506,6 +506,7 @@ save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
 schedule	setup	de	planen
 scheduled backups	setup	de	Regelmäßige Datensicherungen
+securest	setup	de	sicherste
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br />Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br /><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden

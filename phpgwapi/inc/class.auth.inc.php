@@ -328,7 +328,7 @@ class auth
 				$ret = md5($cleartext) === $encrypted;
 				break;
 		}
-		error_log(__METHOD__."('$cleartext', '$encrypted', '$type_in', '$username') type='$type' returning ".array2string($ret));
+		//error_log(__METHOD__."('$cleartext', '$encrypted', '$type_in', '$username') type='$type' returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -377,7 +377,7 @@ class auth
 
 		$salt = substr($db_val, 0, $len);
 		$new_hash = crypt($form_val, $salt);
-		error_log(__METHOD__."('$form_val', '$db_val') type=$type --> len=$len --> salt='$salt' --> new_hash='$new_hash' returning ".array2string($db_val === $new_hash));
+		//error_log(__METHOD__."('$form_val', '$db_val') type=$type --> len=$len --> salt='$salt' --> new_hash='$new_hash' returning ".array2string($db_val === $new_hash));
 
 		return $db_val === $new_hash;
 	}
@@ -443,7 +443,7 @@ class auth
 				$e_password = $password;
 				break;
 		}
-		error_log(__METHOD__."('$password', ".array2string($type).") returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
+		//error_log(__METHOD__."('$password', ".array2string($type).") returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
 		return $e_password;
 	}
 
@@ -491,7 +491,7 @@ class auth
 				$e_password = false;
 				break;
 		}
-		error_log(__METHOD__."('$password') using '$type' returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
+		//error_log(__METHOD__."('$password') using '$type' returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
 		return $e_password;
 	}
 

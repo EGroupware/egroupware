@@ -506,6 +506,7 @@ save	setup	en	Save
 save this text as contents of your header.inc.php	setup	en	Save this text as contents of your header.inc.php
 schedule	setup	en	schedule
 scheduled backups	setup	en	scheduled backups
+securest	setup	en	securest
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br />If you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select one...	setup	en	select one...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
