@@ -205,8 +205,6 @@ function phpgwapi_upgrade1_9_007()
 
 /**
  * Alter column cat_owner to varchar(255) to support multiple owners/groups per cat
- *
- * Enable password migration to new default ssha, if current hash is the default (sql: md5, ldap:des)
  */
 function phpgwapi_upgrade1_9_008()
 {
@@ -217,6 +215,23 @@ function phpgwapi_upgrade1_9_008()
 		'default' => '0'
 	));
 
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.009';
+}
+
+/**
+ * Alter column account_pwd to varchar(128) to allow to store sha256_crypt hashes
+ *
+ * Enable password migration to new default "securest available", if current hash is the default (sql: md5, ldap: des)
+ * or the 1.9.009 migration to ssha is running
+ */
+function phpgwapi_upgrade1_9_009()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_accounts','account_pwd',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'nullable' => False
+	));
+
 	// query password hashing from database
 	$config = array(
 		'auth_type' => 'sql',
@@ -224,6 +239,7 @@ function phpgwapi_upgrade1_9_008()
 		'sql_encryption_type' => 'md5',
 		'ldap_encryption_type' => 'des',
 		'pwd_migration_allowed' => null,	// default off
+		'pwd_mirgation_types' => null,
 	);
 	foreach($GLOBALS['egw_setup']->db->select('egw_config','config_name,config_value',array(
 		'config_app' => 'phpgwapi',
@@ -235,14 +251,22 @@ function phpgwapi_upgrade1_9_008()
 	if (!isset($config['account_repository'])) $config['account_repository'] = $config['auth_type'];
 
 	// changing pw hashing only, if we auth agains our own account repository and no migration already active
-	if ($config['auth_type'] == $config['account_repository'] && !$config['pwd_migration_allowed'])
+	if ($config['auth_type'] == $config['account_repository'] &&
+		(!$config['pwd_migration_allowed'] || $config['pwd_migration_types'] = 'md5,crypt'))	// 1.9.009 migration to ssha
 	{
-		if ($config['auth_type'] == 'sql' && $config['sql_encryption_type'] == 'md5' ||
-			$config['auth_type'] == 'ldap'&& $config['ldap_encryption_type'] == 'des')
+		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes to get securest available password hash
+		sql_passwdhashes(array(), true, $securest);
+		// OpenLDAP has no own support for extended crypt like sha512_crypt, but relys the OS crypt implementation,
+		// do NOT automatically migrate to anything above SSHA for OS other then Linux (Darwin can not auth anymore!)
+		if ($config['auth_type'] == 'sql' && in_array($config['sql_encryption_type'], array('md5','ssha')) ||
+			$config['auth_type'] == 'ldap'&& in_array($config['ldap_encryption_type'], array('des','ssha')) &&
+				(PHP_OS == 'Linux' || $securest == 'ssha'))
 		{
-			$config['sql_encryption_type'] = $config['ldap_encryption_type'] = 'ssha';
-			$config['pwd_migration_allowed'] = 'True';
 			$config['pwd_migration_types'] = 'md5,crypt';	// des is called crypt in hash
+			if ($config['pwd_migration_allowed'] && $securest != 'ssha') $config['pwd_migration_types'] .= ',ssha';
+			$config['sql_encryption_type'] = $config['ldap_encryption_type'] = $securest;
+			$config['pwd_migration_allowed'] = 'True';
+			echo "<p>Enabling password migration to $securest</p>\n";
 		}
 		foreach($config as $name => $value)
 		{
@@ -254,5 +278,7 @@ function phpgwapi_upgrade1_9_008()
 			),__LINE__,__FILE__);
 		}
 	}
-	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.009';
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.010';
 }
+

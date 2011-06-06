@@ -56,7 +56,7 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'account_id' => array('type' => 'auto','nullable' => False),
 			'account_lid' => array('type' => 'varchar','precision' => '64','nullable' => False),
-			'account_pwd' => array('type' => 'varchar','precision' => '100','nullable' => False),
+			'account_pwd' => array('type' => 'varchar','precision' => '128','nullable' => False),
 			'account_lastlogin' => array('type' => 'int','precision' => '4'),
 			'account_lastloginfrom' => array('type' => 'varchar','precision' => '255'),
 			'account_lastpwd_change' => array('type' => 'int','precision' => '4'),
