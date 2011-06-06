@@ -8,7 +8,7 @@
 }
 .prefAppBox {
 	width: 225px;
-	min-height: 130px;
+	min-height: 12em;
 	border: 2px ridge gray;
 	border-radius: 10px;
 	margin: 5px;
