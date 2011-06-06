@@ -190,19 +190,20 @@ function egw_getApp(_name)
 }
 
 /**
- * Refresh given application _app display of entry _id, incl. outputting _msg
+ * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
  * 
  * Default implementation here only reloads window with it's current url with an added msg=_msg attached
  * 
  * @param string _msg message (already translated) to show, eg. 'Entry deleted'
  * @param string _app application name
  * @param string|int _id=null id of entry to refresh
- * @param _type=null either 'edit', 'delete', 'add' or null
+ * @param string _type=null either 'edit', 'delete', 'add' or null
+ * @param string _targetapp which app's window should be refreshed, default current
  */
-function egw_refresh(_msg, _app, _id, _type)
+function egw_refresh(_msg, _app, _id, _type, _target)
 {
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-	var win = egw_appWindow(_app);
+	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
 
 	// if window defines an app_refresh method, just call it
 	if (typeof win.app_refresh != 'undefined')

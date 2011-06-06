@@ -1366,6 +1366,7 @@ class infolog_ui
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
+					$operation = $info_id ? 'update' : 'add';
 					if ($content['info_contact'])
 					{
 						$old_link_id = (int)$content['info_link_id'];
@@ -1395,7 +1396,7 @@ class infolog_ui
 					else
 					{
 						$content['msg'] = lang('InfoLog entry saved');
-						$content['js'] = "opener.location.search += (opener.location.search ? '&msg=' : '?msg=')+'{$content['msg']}';";
+						$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'$operation');";
 					}
 					$content[$tabs] = $active_tab;
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
@@ -1458,12 +1459,12 @@ class infolog_ui
 					);
 					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
 
-					$content['js'] = "opener.location.href='".egw::link($referer,array('msg' => $content['msg']))."';";
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'delete');";
 				}
 				// called again after delete confirmation dialog
 				elseif ($button == 'deleted'  && $content['msg'])
 				{
-					$content['js'] = "opener.location.href='".egw::link($referer,array('msg' => $content['msg']))."';";
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'delete');";
 				}
 				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
 				{
