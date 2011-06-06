@@ -1,0 +1,68 @@
+add profile	emailadmin	iw	הוסף פרופיל
+admin dn	emailadmin	iw	של המנהל dn
+admin password	emailadmin	iw	סיסמת מנהל
+admin username	emailadmin	iw	שם משתמש של המנהל
+advanced options	emailadmin	iw	אופציות מתקדמות
+alternate email address	emailadmin	iw	כתובת דואר אלקטרוני חילופי
+cyrus imap server	emailadmin	iw	Cyrus IMAP שרת
+cyrus imap server administration	emailadmin	iw	Cyrus IMAP ניהול שרת
+default	emailadmin	iw	ברירת מחדל
+deliver extern	emailadmin	iw	מסירה חיצונית
+do you really want to delete this profile	emailadmin	iw	בטוח שברצונך למחוק פרופיל זה
+domainname	emailadmin	iw	שם הדומיין
+edit email settings	emailadmin	iw	ערוך הגדרות דואר אלקטרוני
+email account active	emailadmin	iw	חשבון דואר אלקטרוני פעיל
+email address	emailadmin	iw	כתובת דואר אלקטרוני
+enable cyrus imap server administration	emailadmin	iw	Cyrus IMAP איפשור ניהול שרת
+enable sieve	emailadmin	iw	Sieve אישפור
+enter your default mail domain (from: user@domain)	emailadmin	iw	(user@domain :ציין את דומיין דואר המחדלי שלך (לדוגמא
+forward also to	emailadmin	iw	להעביר גם אל
+forward email's to	emailadmin	iw	להעביר דואר אלקטרוני אל
+forward only	emailadmin	iw	העבר בלבד
+imap admin password	admin	iw	IMAP סיסמת ניהול
+imap admin user	admin	iw	IMAP שם מנהל
+imap c-client version < 2001	emailadmin	iw	IMAP C-Client Version < 2001
+imap server hostname or ip address	emailadmin	iw	שלו IP- או כתובת הIMAP שם שרת
+imap server logintyp	emailadmin	iw	IMAP סוג כניסה לשרת
+imap server port	emailadmin	iw	IMAP פורט שרת
+imap/pop3 server name	emailadmin	iw	IMAP/POP3 שם שרת
+in mbyte	emailadmin	iw	MB-ב
+ldap basedn	emailadmin	iw	dn הביסי של LDAP
+ldap server	emailadmin	iw	LDAP שרת
+ldap server accounts dn	emailadmin	iw	LDAP של שרת חשבונות DN
+ldap server admin dn	emailadmin	iw	LDAP מנהל שרת של DN
+ldap server admin password	emailadmin	iw	LDAP סיסמה של מנהל שרת
+ldap server hostname or ip address	emailadmin	iw	IP או כתובת LDAP שם שרת
+ldap settings	emailadmin	iw	LDAP הגדרות
+leave empty for no quota	emailadmin	iw	השאר ריק ללא הקצאה
+mail settings	admin	iw	הגדרות דואר
+name of organisation	emailadmin	iw	שם האירגון
+no alternate email address	emailadmin	iw	אין כתובת דואר אלקטרוני חלופי
+no forwarding email address	emailadmin	iw	אין כתובת להעברת דואר אלקטרוני
+pop3 server hostname or ip address	emailadmin	iw	IP או כתובת pop3 שם שרת
+pop3 server port	emailadmin	iw	POP3 פורט שרת
+postfix with ldap	emailadmin	iw	LDAP עם Postfix
+profile list	emailadmin	iw	רשימת פרופילים
+profile name	emailadmin	iw	שם פרופיל
+qmaildotmode	emailadmin	iw	qmaildotmode
+qouta size in mbyte	emailadmin	iw	MB-גודל הקצאה ב
+quota settings	emailadmin	iw	הגדרות הקצאה
+remove	emailadmin	iw	הסר
+select type of imap/pop3 server	emailadmin	iw	IMAP/POP3 בחר סוג שרת
+select type of smtp server	emailadmin	iw	SMTP בחר סוג שרת
+sieve server hostname or ip address	emailadmin	iw	IP או כתובת Sieve שם שרת
+sieve server port	emailadmin	iw	Sieve פורט שרת
+sieve settings	emailadmin	iw	Sieve הגדרות
+smtp server name	emailadmin	iw	SMTP שם שרת
+smtp-server hostname or ip address	emailadmin	iw	IP או כתובת SMTP שם שרת
+smtp-server port	emailadmin	iw	SMTP פורת שרת
+standard	emailadmin	iw	תקני
+standard imap server	emailadmin	iw	תקני IMAP שרת
+standard pop3 server	emailadmin	iw	תקני POP3 שרת
+standard smtp-server	emailadmin	iw	תקני SMTP שרת
+use ldap defaults	emailadmin	iw	LDAP השתמש בברירות מחדל של
+use smtp auth	emailadmin	iw	LDAP השתמש באימות משתמשים של
+use tls authentication	emailadmin	iw	TLS השתמש באימות
+use tls encryption	emailadmin	iw	TLS השתמש בהצפנת
+users can define their own emailaccounts	emailadmin	iw	משתמשים יכולים להגדיר בעצמם את חשבונות דואר האלקטרוני שלהם
+virtual mail manager	emailadmin	iw	מלהל דואר וירטואלי
