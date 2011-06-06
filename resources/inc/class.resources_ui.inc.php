@@ -48,6 +48,7 @@ class resources_ui
 	 */
 	function index($content='')
 	{
+		$msg = $content;
 		if (is_array($content))
 		{
 			$sessiondata = $content['nm'];
@@ -72,7 +73,6 @@ class resources_ui
 				}
 				return $this->index($msg);
 			}
-
 			foreach($content['nm']['rows'] as $row)
 			{
 				if(isset($row['delete']))
@@ -87,8 +87,30 @@ class resources_ui
 					return $this->index();
 				}
 			}
+			if ($content['nm']['action'])
+			{
+				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+				{
+					$msg = lang('You need to select some entries first!');
+				}
+				else
+				{
+					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
+						$success,$failed,$action_msg,'resources_index_nm',$msg))
+					{
+						$msg .= lang('%1 resource(s) %2',$success,$action_msg);
+					}
+					elseif(empty($msg))
+					{
+						$msg .= lang('%1 resource(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					}
+					else
+					{
+						$msg .= lang('%1 resource(s) %2, %3 failed',$success,$action_msg,$failed);
+					}
+				}
+			}
 		}
-		$msg = $content;
 		$content = array();
 		$content['msg'] = $msg;
 
@@ -104,6 +126,7 @@ class resources_ui
 		$content['nm']['order']		= 'name';
 		$content['nm']['sort']		= 'ASC';
 		$content['nm']['store_state']	= 'get_rows';
+		$content['nm']['row_id']	= 'res_id';
 
 		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		if($nm_session_data)
@@ -114,6 +137,7 @@ class resources_ui
 		if($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
 		}
+		$content['nm']['actions']	= $this->get_actions();
 
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
@@ -167,6 +191,111 @@ class resources_ui
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
+	}
+
+	/**
+	 * Get actions / context menu for index
+	 *
+	 * @return array see nextmatch_widget::egw_actions()
+	 */
+	protected function get_actions()
+	{
+		$actions = array(
+			'view' => array(
+				'caption' => 'View',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=resources.resources_ui.show&res_id=$id',
+				'popup' => egw_link::get_registry('resources', 'view_popup'),
+				'group' => $group=1,
+			),
+			'edit' => array(
+				'default' => true,
+				'caption' => 'Edit',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=resources.resources_ui.edit&res_id=$id',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'group' => $group,
+				'disableClass' => 'rowNoEdit',
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'url' => 'menuaction=resources.resources_ui.edit',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'group' => $group,
+			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
+				'group' => ++$group,
+			),
+/*
+			'documents' => resources_merge::document_action(
+				$GLOBALS['egw_info']['user']['preferences']['resources']['document_dir'],
+				++$group, 'Insert in document', 'document_',
+				$GLOBALS['egw_info']['user']['preferences']['resources']['default_document']
+			),
+*/
+			'delete' => array(
+				'caption' => 'Delete',
+				'confirm' => 'Delete this entry',
+				'confirm_multiple' => 'Delete these entries',
+				'group' => ++$group,
+				'disableClass' => 'rowNoDelete',
+			),
+		);
+		return $actions;
+	}
+
+	/**
+	 * apply an action to multiple timesheets
+	 *
+	 * @param string/int $action 'status_to',set status to timeshhets
+	 * @param array $checked timesheet id's to use if !$use_all
+	 * @param boolean $use_all if true use all timesheets of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 timesheets 'deleted'
+	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+	{
+		$success = $failed = 0;
+		if ($use_all)
+		{
+			// get the whole selection
+			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'resources');
+
+			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
+			$query['num_rows'] = -1;        // all
+			$this->bo->get_rows($query,$checked,$readonlys,true);       // true = only return the id's
+		}
+		echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
+
+		// Dialogs to get options
+		list($action, $settings) = explode('_', $action, 2);
+
+		switch($action)
+		{
+			case 'delete':
+				$action_msg = lang('deleted');
+				foreach((array)$checked as $n => $id)
+				{
+					$error = $this->bo->delete($id);
+					if (!$error)
+					{
+						$success++;
+					}
+					else
+					{
+						$msg = $error . "\n";
+						$failed++;
+					}
+				}
+				break;
+		}
+		return $failed == 0;
 	}
 
 	/**
