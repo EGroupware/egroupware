@@ -238,7 +238,7 @@ class importexport_definitions_ui
 			'select_all' => array(
 				'caption' => 'Whole query',
 				'checkbox' => true,
-				'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
+				'hint' => 'Apply the action on the whole query, NOT only the shown definitions!!!',
 				'group' => ++$group,
 			),
 			'copy' => array(
@@ -275,7 +275,7 @@ class importexport_definitions_ui
          * @param boolean $use_all if true use all entries of the current selection (in the session)
          * @param int &$success number of succeded actions
          * @param int &$failed number of failed actions (not enought permissions)
-         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
+         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 entries 'deleted'
          * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
          * @return boolean true if all actions succeded, false otherwise
          */
@@ -360,7 +360,18 @@ class importexport_definitions_ui
 					if($definition['definition_id']) {
 						unset($definition['definition_id']);
 						$definition['name'] = $settings ? $settings : $definition['name'] . ' copy';
-						$bodefinitions->save($definition);
+						try {
+							$bodefinitions->save($definition);
+						} catch (Exception $e) {
+							try {
+								$definition['name'] .= ' ' . $GLOBALS['egw_info']['user']['account_lid'];
+								$bodefinitions->save($definition);
+							} catch (Exception $ex) {
+								$failed++;
+								$msg .= lang('Duplicate name');
+								continue;
+							}
+						}
 						$success++;
 					}
 				}
@@ -490,7 +501,7 @@ class importexport_definitions_ui
 			if ($content['closewindow'])
 			{
 				$this->response->addScript("window.close();");
-				$this->response->addScript("opener.location.reload();");
+				$this->response->addScript("opener.location = '" . egw::link('/index.php', array('menuaction' => 'importexport.importexport_definitions_ui.index')) . "';");
 				// If Browser can't close window we display a "close" buuton and
 				// need to disable normal buttons
 				$this->response->addAssign('exec[button][previous]','style.display', 'none');
