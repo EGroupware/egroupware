@@ -144,7 +144,14 @@ function nm_action(_action, _senders)
 			break;
 			
 		case 'location':
-			window.location.href = url;
+			if(target)
+			{
+				window.open(url, target);
+			}
+			else
+			{
+				window.location.href = url;
+			}
 			break;
 			
 		case 'popup':
