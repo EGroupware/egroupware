@@ -2,8 +2,8 @@
 %1 directories and %2 files copied.	filemanager	en	%1 directories and %2 files copied.
 %1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 files deleted.
 %1 elements linked.	filemanager	en	%1 elements linked.
-%1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying (%2 diretories and %3 files copied)!
-%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleteting (%2 directories and %3 files deleted)!
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying (%2 directories and %3 files copied)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleting (%2 directories and %3 files deleted)!
 %1 errors linking (%2)!	filemanager	en	%1 errors linking (%2)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving (%2 files moved)!
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeded
@@ -15,24 +15,28 @@
 %1 successful uploaded.	filemanager	en	%1 successful uploaded.
 %1 the following files into current directory	filemanager	en	%1 the following files into current directory
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard.
-accessrights	filemanager	en	Accessrights
+%d erros while copying, %d files successfully copied.	filemanager	en	%d erros while copying, %d files successfully copied.
+%d erros while moving, %d files successfully moved.	filemanager	en	%d erros while moving, %d files successfully moved.
+%d files successfully copied.	filemanager	en	%d files successfully copied.
+%d files successfully moved.	filemanager	en	%d files successfully moved.
+accessrights	filemanager	en	Access rights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
 add to current clipboard	filemanager	en	Add to current clipboard
 all files	common	en	All files
-allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folder links to be configured in settings
-and all it's childeren	filemanager	en	and all it's childeren
+allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Allow a maximum of the above configured folder links to be configured in settings
+and all it's childeren	filemanager	en	and all it's children
 applications	common	en	Applications
-basedirectory	filemanager	en	Basedirectory
+basedirectory	filemanager	en	Base directory
 can't open directory %1!	filemanager	en	Can't open directory %1!
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
-cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
+cannot create directory because it begins or ends in a space	filemanager	en	Can not create directory because it begins or ends in a space
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
-clear search	filemanager	en	clear search
+clear search	filemanager	en	Clear search
 comment	filemanager	en	Comment
-copied	filemanager	en	copied
+copied	filemanager	en	Copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
 copy	filemanager	en	Copy
 copy to	filemanager	en	Copy to
@@ -44,16 +48,17 @@ could not move %1 to %2	filemanager	en	Could not move %1 to %2
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
 create a link	filemanager	en	Create a link
 create directory	filemanager	en	Create directory
-create file	filemanager	en	Create File
-create folder	filemanager	en	Create Folder
-created	filemanager	en	created
+create file	filemanager	en	Create file
+create folder	filemanager	en	Create folder
+created	filemanager	en	Created
 created %1,%2	filemanager	en	Created %1,%2
 created directory %1	filemanager	en	Created directory %1
 current directory	filemanager	en	Current directory
 custom fields	filemanager	en	Custom fields
-cut	filemanager	en	cut
+cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
+delete these files or directories?	filemanager	en	Delete these files or directories?
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
@@ -61,6 +66,7 @@ directory	filemanager	en	Directory
 directory %1 already exists	filemanager	en	Directory %1 already exists
 directory %1 does not exist	filemanager	en	Directory %1 does not exist
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
+directory successfully created.	filemanager	en	Directory successfully created.
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
@@ -75,7 +81,9 @@ error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error uploading file!	filemanager	en	Error uploading file!
+error while creating directory.	filemanager	en	Error while creating directory.
 executable	filemanager	en	Executable
+export definitition to use for nextmatch export	filemanager	en	Export definitition to use for nextmatch export
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
@@ -83,23 +91,25 @@ failed to create directory!	filemanager	en	Failed to create directory!
 favorites	filemanager	en	Favorites
 file	filemanager	en	File
 file %1 could not be created.	filemanager	en	File %1 could not be created.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your System administrator for further info
+file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your system administrator for further info.
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successful uploaded.
-filemanager	common	en	Filemanager
-filemanager configuration	admin	en	filemanager configuration
-filename must not be empty!	filemanager	en	Filename must not be empty!
-files from subdirectories	filemanager	en	Files from subdirectories
+filemanager	common	en	File Manager
+filemanager configuration	admin	en	File Manager configuration
+filename must not be empty!	filemanager	en	File name must not be empty!
+files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
-folder up	filemanager	en	Folder Up
+folder up	filemanager	en	Folder up
 general	filemanager	en	General
-go home	filemanager	en	go home
+go home	filemanager	en	Go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
-go up	filemanager	en	go up
-id	filemanager	en	Id
+go up	filemanager	en	Go up
+id	filemanager	en	ID
+if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
@@ -107,11 +117,11 @@ link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
 log out as superuser	filemanager	en	Log out as superuser
 mail files	filemanager	en	Mail files
-max folderlinks	admin	en	max folderlinks
-mime type	filemanager	en	mime type
-modified	filemanager	en	modified
-modified between	filemanager	en	modified between
-modify all subdirectories and their content	filemanager	en	Modify all Subdirectories and their content
+max folderlinks	admin	en	Max folderlinks
+mime type	filemanager	en	Mime type
+modified	filemanager	en	Modified
+modified between	filemanager	en	Modified between
+modify all subdirectories and their content	filemanager	en	Modify all sub directories and their content
 move	filemanager	en	Move
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
@@ -129,19 +139,19 @@ please select a file to delete.	filemanager	en	Please select a file to delete.
 preview	filemanager	en	Preview
 preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
-projectmanager	filemanager	en	Projectmanager
+projectmanager	filemanager	en	ProjectManager
 properties saved.	filemanager	en	Properties saved.
 quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
-reload	filemanager	en	reload
+reload	filemanager	en	Reload
 rename of %1 to %2 failed!	filemanager	en	Rename of %1 to %2 failed!
 rename, change permissions or ownership	filemanager	en	Rename, change permissions or ownership
 renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2.
 replaced %1	filemanager	en	Replaced %1
 rights	filemanager	en	Rights
-root	filemanager	en	root
+root	filemanager	en	Root
 root access granted.	filemanager	en	Root access granted.
 root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
@@ -150,28 +160,30 @@ save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
 saving properties failed!	filemanager	en	Saving properties failed!
 search for '%1'	filemanager	en	Search for '%1'
-searchstring	filemanager	en	searchstring
+searchstring	filemanager	en	Search string
 select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
 show link "%1" in side box menu?	filemanager	en	Show link "%1" in side box menu?
+show link "users and groups*" in side box menu?*	filemanager	en	Show link "Users and groups*" in side box menu?*
+show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side box menu?
 size	filemanager	en	Size
-start search	filemanager	en	start search
-startfolder	filemanager	en	Startfolder
-superuser	filemanager	en	Superuser
+start search	filemanager	en	Start search
+startfolder	filemanager	en	Start folder
+superuser	filemanager	en	Super user
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
-the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing file store again.
-total files	filemanager	en	Total Files
+total files	filemanager	en	Total files
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
-upload fields	filemanager	en	upload fields
+upload fields	filemanager	en	Upload fields
 upload files	filemanager	en	Upload files
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
@@ -182,7 +194,7 @@ you can only grant additional rights, you can not take rights away!	filemanager	
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
-you will be redirected to your home directory.	filemanager	en	You will be redirected to your Home Directory.
-you will be redirected to your start folder.	filemanager	en	You will be redirected to your Start Folder.
-your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, eGroupWare created a new one.
+you will be redirected to your home directory.	filemanager	en	You will be redirected to your home directory.
+you will be redirected to your start folder.	filemanager	en	You will be redirected to your start folder.
+your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, EGroupware created a new one.
 your home directory	filemanager	en	Your home directory

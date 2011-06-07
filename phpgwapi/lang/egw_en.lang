@@ -4,7 +4,7 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writeable by webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 (session restored in %1 seconds)	common	en	(session restored in %1 seconds)
-(shift-)click or drag to change value	jscalendar	en	(Shift-)Click or drag to change value
+(shift-)click or drag to change value	jscalendar	en	(Shift-) Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	en	- Hold mouse button on any of the above buttons for faster selection.
 - or click and drag for faster selection.	jscalendar	en	- or click and drag for faster selection.
@@ -41,23 +41,23 @@ add category	common	en	Add category
 add shortcut	common	en	Add Shortcut
 add sub	common	en	Add sub
 addressbook	common	en	Addressbook
-addressbooks for carddav attribute "addressbook-home-set".	common	en	Addressbooks for CardDAV attribute "addressbook-home-set".
-addressbooks to sync with apple clients	common	en	Addressbooks to sync with Apple clients
+addressbooks for carddav attribute "addressbook-home-set".	common	en	Address books for CardDAV attribute "addressbook-home-set".
+addressbooks to sync with apple clients	common	en	Address books to sync with Apple clients
 admin	common	en	Admin
 administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
-all fields	common	en	all fields
+all fields	common	en	All fields
 all in one	common	en	All in one
-all languages	common	en	all languages
+all languages	common	en	All languages
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
 american samoa	common	en	AMERICAN SAMOA
-an admin required that you must change your password upon login.	common	en	an admin required that you must change your password upon login.
+an admin required that you must change your password upon login.	common	en	Administrator requires that you must change your password upon login.
 an error happened	common	en	An error happened
-an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the webserver readable directory enables the image browser and upload.
+an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the web server readable directory enables the image browser and upload.
 and	common	en	and
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
@@ -68,8 +68,8 @@ application	common	en	Application
 apply	common	en	Apply
 apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
 april	common	en	April
-are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries ?
-are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
+are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
+are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry?
 argentina	common	en	ARGENTINA
 armenia	common	en	ARMENIA
 aruba	common	en	ARUBA
@@ -77,11 +77,11 @@ august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
 author	common	en	Author
-autohide sidebox menu's	common	en	Autohide Sidebox menu's
-autohide sidebox menus	common	en	Autohide Sidebox menus
-automatically hide the sidebox menu's?	common	en	Automatically hide the Sidebox menu's?
-automatically hide the sidebox menus?	common	en	Automatically hide the Sidebox menus?
-autosave default category	common	en	Autosave Default Category
+autohide sidebox menu's	common	en	Autohide sidebox menu's
+autohide sidebox menus	common	en	Autohide sidebox menus
+automatically hide the sidebox menu's?	common	en	Automatically hide the sidebox menu's?
+automatically hide the sidebox menus?	common	en	Automatically hide the sidebox menus?
+autosave default category	common	en	Autosave default category
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
@@ -99,7 +99,7 @@ belize	common	en	BELIZE
 benin	common	en	BENIN
 bermuda	common	en	BERMUDA
 bhutan	common	en	BHUTAN
-blocked, too many attempts	common	en	Blocked, too many attempts
+blocked, too many attempts	common	en	Blocked, too many attempts.
 bold	common	en	Bold
 bolivia	common	en	BOLIVIA
 border	common	en	Border
@@ -120,26 +120,26 @@ cameroon	common	en	CAMEROON
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory
-cannot set a category as parent, which is part of this categorys subtree!	common	en	Cannot set a category as parent, which is part of this categorys subtree!
-cannot set this cat as its own parent!	common	en	Cannot set this cat as its own parent!
+cannot set a category as parent, which is part of this categorys subtree!	common	en	Cannot set a category as parent, which is part of this category's sub-tree!
+cannot set this cat as its own parent!	common	en	Cannot set this category as its own parent!
 cant open %1, needs ziparchive	common	en	Cant open %1, needs ZipArchive
 cant open '%1' for %2	common	en	Cant open '%1' for %2
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
-categories for	common	en	categories for
+categories for	common	en	Categories for
 category	common	en	Category
 category %1 has been added !	common	en	Category %1 has been added !
 category %1 has been updated !	common	en	Category %1 has been updated !
 cayman islands	common	en	CAYMAN ISLANDS
 cc	common	en	Cc
-centered	common	en	centered
+centered	common	en	Centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
 charset	common	en	utf-8
 check installation	common	en	Check installation
-check now	common	en	Check Now
+check now	common	en	Check now
 chile	common	en	CHILE
 china	common	en	CHINA
 choose a background color	common	en	Choose a background color
@@ -152,11 +152,11 @@ choose the parent category	common	en	Choose the parent category
 chosen parent category no longer exists	common	en	Chosen parent category no longer exists
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
-clear form	common	en	Clear Form
+clear form	common	en	Clear form
 click	common	en	Click
-click here to resume your egroupware session.	common	en	Click here to resume your eGroupWare Session.
-click or mouse over to show menus	common	en	Click or Mouse Over to show menus
-click or mouse over to show menus?	common	en	Click or Mouse Over to show menus?
+click here to resume your egroupware session.	common	en	Click here to resume your eGroupWare session.
+click or mouse over to show menus	common	en	Click or mouse over to show menus
+click or mouse over to show menus?	common	en	Click or mouse over to show menus?
 click this image on the navbar: %1	common	en	Click this image on the navbar: %1
 close	common	en	Close
 close sidebox	common	en	Close sidebox
@@ -169,15 +169,15 @@ comoros	common	en	COMOROS
 company	common	en	Company
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
-contacting server...	common	en	Contacting Server...
+contacting server...	common	en	Contacting server...
 content type	common	en	Content type
 cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
-could not contact server. operation timed out!	common	en	Could not contact server. Operation Timed Out!
+could not contact server. operation timed out!	common	en	Could not contact server. Operation timed out!
 create	common	en	Create
-created by	common	en	Created By
+created by	common	en	Created by
 croatia	common	en	CROATIA
 cuba	common	en	CUBA
 currency	common	en	Currency
@@ -188,11 +188,11 @@ czech republic	common	en	CZECH REPUBLIC
 database error	common	en	Database error
 database error!	common	en	Database error!
 date	common	en	Date
-date due	common	en	Date Due
+date due	common	en	Due date
 date selection:	jscalendar	en	Date selection:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	en	December
-default category	common	en	Default Category
+default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
 delete	common	en	Delete
@@ -204,25 +204,25 @@ denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 direction left to right	common	en	Direction left to right
 directory	common	en	Directory
-directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the webserver or is not relative to the document root!
-disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
+disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png image bugfix
 disable slider effects	common	en	Disable slider effects
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page?
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
 do not notify	common	en	Do not notify
 do not notify of these changes	common	en	Do not notify of these changes
-do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+do you also want to delete all subcategories ?	common	en	Do you also want to delete all sub categories ?
 doctype:	common	en	DOCTYPE:
 document properties	common	en	Document properties
 document title:	common	en	Document title:
 domain	common	en	Domain
-domain name for mail-address, eg. "%1"	common	en	domain name for mail-address, eg. "%1"
+domain name for mail-address, eg. "%1"	common	en	Domain name for mail address, eg. "%1"
 domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
@@ -241,8 +241,8 @@ egroupware api version	common	en	eGroupWare API version
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
-email	common	en	E-Mail
-email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
+email	common	en	Email
+email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -260,11 +260,11 @@ estonia	common	en	ESTONIA
 etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
-exact	common	en	exact
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to Contact Server or Invalid Response from Server. Try to relogin. Contact Admin in case of faliure.
+exact	common	en	Exact
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to Contact Server or Invalid Response from Server. Try to re-login. Contact Admin in case of failure.
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
-fax number	common	en	fax number
+fax number	common	en	Fax number
 features of the editor?	common	en	Features of the editor?
 february	common	en	February
 fields	common	en	Fields
@@ -273,12 +273,12 @@ files	common	en	Files
 filter	common	en	Filter
 finland	common	en	FINLAND
 first name	common	en	First name
-first name of the user, eg. "%1"	common	en	first name of the user, eg. "%1"
+first name of the user, eg. "%1"	common	en	First name of the user, eg. "%1"
 first page	common	en	First page
-firstname	common	en	Firstname
+firstname	common	en	First name
 fixme!	common	en	FIXME!
 folder already exists.	common	en	Folder already exists.
-force selectbox	common	en	Force SelectBox
+force selectbox	common	en	Force select box
 forever	common	en	Forever
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
@@ -286,31 +286,31 @@ french polynesia	common	en	FRENCH POLYNESIA
 french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
-fullname	common	en	Fullname
-fullscreen mode	common	en	Fullscreen mode
+fullname	common	en	Full name
+fullscreen mode	common	en	Full screen mode
 gabon	common	en	GABON
 gambia	common	en	GAMBIA
-general menu	common	en	General Menu
+general menu	common	en	General menu
 georgia	common	en	GEORGIA
 german	common	en	German
 germany	common	en	GERMANY
 ghana	common	en	GHANA
 gibraltar	common	en	GIBRALTAR
 global	common	en	Global
-global public	common	en	Global Public
+global public	common	en	Global public
 go today	jscalendar	en	Go Today
-grant access	common	en	Grant Access
+grant access	common	en	Grant access
 greece	common	en	GREECE
 greek	common	en	Greek
 greenland	common	en	GREENLAND
 grenada	common	en	GRENADA
 group	common	en	Group
-group access	common	en	Group Access
+group access	common	en	Group access
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
 group has been updated	common	en	Group has been updated
-group name	common	en	group name
-group public	common	en	Group Public
+group name	common	en	Group name
+group public	common	en	Group public
 groupdav	common	en	CalDAV, CardDAV and GroupDAV server
 groups	common	en	Groups
 groups with permission for %1	common	en	Groups with permission for %1
@@ -329,10 +329,10 @@ high	common	en	High
 highest	common	en	Highest
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
-home email	common	en	home email
+home email	common	en	Home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navigation bar (top of the page). Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
 how to show the general egroupware menu ?	common	en	How to show the general eGroupWare menu ?
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
@@ -347,18 +347,18 @@ insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 address
 insert column after	common	en	Insert column after
 insert column before	common	en	Insert column before
 insert in %1	common	en	Insert in %1
-insert in dokument	common	en	Insert in dokument
+insert in dokument	common	en	Insert in document
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 international	common	en	International
-invalid filename	common	en	Invalid filename
+invalid filename	common	en	Invalid file name
 invalid ip address	common	en	Invalid IP address
 invalid password	common	en	Invalid password
 iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
 ireland	common	en	IRELAND
 israel	common	en	ISRAEL
-it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
+it has been more then %1 days since you changed your password	common	en	It has been more than %1 days since you have changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 italic	common	en	Italic
 italy	common	en	ITALY
@@ -370,13 +370,13 @@ jordan	common	en	JORDAN
 july	common	en	July
 jun	common	en	Jun
 june	common	en	June
-justify center	common	en	Justify Center
-justify full	common	en	Justify Full
-justify left	common	en	Justify Left
-justify right	common	en	Justify Right
+justify center	common	en	Justify center
+justify full	common	en	Justify full
+justify left	common	en	Justify left
+justify right	common	en	Justify right
 kazakstan	common	en	KAZAKSTAN
 kenya	common	en	KENYA
-keywords	common	en	Keywords
+keywords	common	en	Key words
 kiribati	common	en	KIRIBATI
 korea, democratic peoples republic of	common	en	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
 korea, republic of	common	en	KOREA, REPUBLIC OF
@@ -388,9 +388,9 @@ language_direction_rtl	common	en	language_direction_rtl
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last modified	common	en	Last modified
 last name	common	en	Last name
-last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
+last name of the user, eg. "%1"	common	en	Last name of the user, eg. "%1"
 last page	common	en	Last page
-lastname	common	en	Lastname
+lastname	common	en	Last name
 latvia	common	en	LATVIA
 ldap-mgr	common	en	LDAP-Manager
 lebanon	common	en	LEBANON
@@ -407,9 +407,9 @@ list members	common	en	List members
 lithuania	common	en	LITHUANIA
 local	common	en	Local
 login	common	en	Login
-loginid	common	en	LoginID
+loginid	common	en	Login ID
 logout	common	en	Logout
-lost login id	common	en	Lost Login Id
+lost login id	common	en	Lost login ID
 lost password	common	en	Lost password
 low	common	en	Low
 lowest	common	en	Lowest
@@ -417,7 +417,7 @@ luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
-mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
+mail domain, eg. "%1"	common	en	Mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	common	en	Maintainer
@@ -439,7 +439,7 @@ menu	common	en	Menu
 message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
-minute	common	en	minute
+minute	common	en	Minute
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
 monday	common	en	Monday
@@ -448,11 +448,11 @@ montenegro	common	en	MONTENEGRO
 montserrat	common	en	MONTSERRAT
 morocco	common	en	MOROCCO
 mozambique	common	en	MOZAMBIQUE
-multiple	common	en	multiple
+multiple	common	en	Multiple
 myanmar	common	en	MYANMAR
 name	common	en	Name
-name of the user, eg. "%1"	common	en	name of the user, eg. "%1"
-namespace	common	en	Namespace
+name of the user, eg. "%1"	common	en	Name of the user, eg. "%1"
+namespace	common	en	Name space
 namibia	common	en	NAMIBIA
 nauru	common	en	NAURU
 nepal	common	en	NEPAL
@@ -462,7 +462,7 @@ never	common	en	Never
 new caledonia	common	en	NEW CALEDONIA
 new entry added sucessfully	common	en	New entry added sucessfully
 new main category	common	en	New main category
-new value	common	en	New Value
+new value	common	en	New value
 new zealand	common	en	NEW ZEALAND
 next	common	en	Next
 next month (hold for menu)	jscalendar	en	Next month (hold for menu)
@@ -473,43 +473,43 @@ niger	common	en	NIGER
 nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
-no entries found, try again ...	common	en	no entries found, try again ...
+no entries found, try again ...	common	en	No entries found, try again ...
 no history for this record	common	en	No history for this record
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
-no subject	common	en	No Subject
+no subject	common	en	No subject
 none	common	en	None
 norfolk island	common	en	NORFOLK ISLAND
 normal	common	en	Normal
 northern mariana islands	common	en	NORTHERN MARIANA ISLANDS
 norway	common	en	NORWAY
 not	common	en	not
-not a user yet? register now	common	en	Not a user yet? Register now
-not assigned	common	en	not assigned
+not a user yet? register now	common	en	Not a user yet? Register now!
+not assigned	common	en	Not assigned
 not readable %1 entry of user %2	common	en	Not readable %1 entry of user %2
 note	common	en	Note
 notes	common	en	Notes
-notifications	common	en	notifications
-notify window	common	en	Notify Window
-notify your administrator to correct this situation	common	en	Notify your Administrator to correct this Situation
+notifications	common	en	Notifications
+notify window	common	en	Notify window
+notify your administrator to correct this situation	common	en	Notify your Administrator to correct this.
 november	common	en	November
 october	common	en	October
 ok	common	en	OK
-old value	common	en	Old Value
+old value	common	en	Old value
 oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
-on mouse over	common	en	On Mouse Over
+on mouse over	common	en	On mouse over
 only private	common	en	only private
 only yours	common	en	only yours
-oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintainance.
+oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintenance.
 open	common	en	Open
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
-open sidebox	common	en	Open sidebox
+open sidebox	common	en	Open side box
 or	common	en	or
-ordered list	common	en	Ordered List
+ordered list	common	en	Ordered list
 original	common	en	Original
 other	common	en	Other
-overview	common	en	Overview
+overview	common	en	Over view
 owner	common	en	Owner
 page	common	en	Page
 page was generated in %1 seconds	common	en	Page was generated in %1 seconds
@@ -520,7 +520,7 @@ panama	common	en	PANAMA
 papua new guinea	common	en	PAPUA NEW GUINEA
 paraguay	common	en	PARAGUAY
 parcel	common	en	Parcel
-parent category	common	en	Parent Category
+parent category	common	en	Parent category
 password	common	en	Password
 password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
@@ -529,23 +529,23 @@ password must contain at least %1 numbers	common	en	Password must contain at lea
 password must contain at least %1 special characters	common	en	Password must contain at least %1 special characters
 password must contain at least %1 uppercase letters	common	en	Password must contain at least %1 uppercase letters
 password must have at least %1 characters	common	en	Password must have at least %1 characters
-path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!!!
 permission denied!	common	en	Permission denied!
-permissions to the files/users directory	common	en	permissions to the files/users directory
+permissions to the files/users directory	common	en	Permissions to the files/users directory
 permisson denied!	common	en	Permisson denied!
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
-phone number	common	en	phone number
+phone number	common	en	Phone number
 phpgwapi	common	en	eGroupWare API
 pitcairn	common	en	PITCAIRN
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Please enter a name !
 please run setup to become current	common	en	Please run setup to become current
-please select	common	en	Please Select
+please select	common	en	Please select
 please set your global preferences	common	en	Please set your global preferences !
 please set your preferences for this application	common	en	Please set your preferences for this application !
-please wait...	common	en	Please Wait...
+please wait...	common	en	Please wait...
 please, check back with us shortly.	common	en	Please, check back with us shortly.
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
@@ -556,26 +556,26 @@ preferences for the %1 template set	preferences	en	Preferences for the %1 templa
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
-primary group	common	en	Primary Group
-primary style-sheet:	common	en	Primary style-sheet:
+primary group	common	en	Primary group
+primary style-sheet:	common	en	Primary style sheet:
 print	common	en	Print
 priority	common	en	Priority
 private	common	en	Private
 programs	common	en	Programs
 project	common	en	Project
 properties	common	en	Properties
-public	common	en	public
+public	common	en	Public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
-reading	common	en	reading
+reading	common	en	Reading
 register	common	en	Register
 regular	common	en	Regular
 reject	common	en	Reject
 remember me	common	en	Remember me
-remove selected accounts	common	en	remove selected accounts
-remove shortcut	common	en	Remove Shortcut
+remove selected accounts	common	en	Remove selected accounts
+remove shortcut	common	en	Remove shortcut
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
@@ -605,13 +605,13 @@ save	common	en	Save
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search accounts	common	en	Search accounts
-search or select accounts	common	en	search or select accounts
-second	common	en	second
+search or select accounts	common	en	Search or select accounts
+second	common	en	Second
 section	common	en	Section
 select	common	en	Select
 select action	common	en	Select action
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
-select category	common	en	Select Category
+select category	common	en	Select category
 select date	common	en	Select date
 select group	common	en	Select group
 select home email address	common	en	Select home email address
@@ -629,19 +629,19 @@ serbia	common	en	Serbia
 server %1 has been added	common	en	Server %1 has been added
 server answered. processing response...	common	en	Server answered. Processing response...
 server contacted. waiting for response...	common	en	Server Contacted. Waiting for response...
-server name	common	en	Server Name
+server name	common	en	Server name
 session has been killed	common	en	Session has been killed
 setup	common	en	Setup
-setup main menu	common	en	Setup Main Menu
+setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
-show all	common	en	show all
-show all categorys	common	en	Show all categorys
-show as topmenu	common	en	Show as Topmenu
+show all	common	en	Show all
+show all categorys	common	en	Show all categories
+show as topmenu	common	en	Show as top menu
 show clock?	common	en	Show clock?
 show home and logout button in main application bar?	common	en	Show home and logout button in main application bar?
-show in sidebox	common	en	Show in sidebox
+show in sidebox	common	en	Show in side box
 show logo's on the desktop.	common	en	Show logo's on the desktop.
-show menu	common	en	show menu
+show menu	common	en	Show menu
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
 show page generation time?	common	en	Show page generation time?
@@ -666,10 +666,10 @@ sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	en	Start directory for image browser of rich text editor in EGroupware VFS (filemanager).
 start time	common	en	Start time
-start with	common	en	start with
+start with	common	en	Start with
 starting up...	common	en	Starting Up...
 status	common	en	Status
-stretched	common	en	stretched
+stretched	common	en	Stretched
 subject	common	en	Subject
 submit	common	en	Submit
 substitutions and their meanings:	common	en	Substitutions and their meanings:
@@ -692,27 +692,27 @@ the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
 the following applications require upgrades	common	en	The following applications require upgrades
 the mail server returned	common	en	The mail server returned
-there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system-user with this name. User's should not have the same name as a systemuser
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
-tiled	common	en	tiled
+tiled	common	en	Tiled
 time	common	en	Time
 time selection:	jscalendar	en	Time selection:
-time zone	common	en	Timezone
+time zone	common	en	Time zone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
 to	common	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
-todays date, eg. "%1"	common	en	todays date, eg. "%1"
+todays date, eg. "%1"	common	en	Todays date, eg. "%1"
 toggle first day of week	jscalendar	en	Toggle first day of week
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsuccessful attempts to login: %1 for the user '%2', %3 for the IP %4
 top	common	en	Top
 total	common	en	Total
 transparant bg for the icons?	common	en	Transparant bg for the icons?
@@ -735,20 +735,20 @@ unknown	common	en	Unknown
 update	common	en	Update
 update the clock per minute or per second	common	en	Update the clock per minute or per second
 upload	common	en	Upload
-upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writeable by webserver
-upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the webserver!
+upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writable by web server
+upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the web server!
 url	common	en	URL
 uruguay	common	en	URUGUAY
-use button to search for	common	en	use Button to search for
-use button to search for address	common	en	use Button to search for Address
-use button to search for calendarevent	common	en	use Button to search for Calendarevent
-use button to search for project	common	en	use Button to search for Project
+use button to search for	common	en	Use button to search for
+use button to search for address	common	en	Use button to search for address
+use button to search for calendarevent	common	en	Use button to search for calendar event
+use button to search for project	common	en	Use button to search for project
 user	common	en	User
-user accounts	common	en	user accounts
-user groups	common	en	user groups
+user accounts	common	en	User accounts
+user groups	common	en	User groups
 username	common	en	Username
-users	common	en	users
-users choice	common	en	Users Choice
+users	common	en	Users
+users choice	common	en	Users choice
 uzbekistan	common	en	UZBEKISTAN
 value	common	en	Value
 vanuatu	common	en	VANUATU
@@ -766,21 +766,21 @@ western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have
 what style would you like the image to have?	common	en	What style would you like the image to have?
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the egroupware links like preferences, about and logout be displayed.
 which groups	common	en	Which groups
 whole query	common	en	Whole query
 width	common	en	Width
 wk	jscalendar	en	wk
-work email	common	en	work email
+work email	common	en	Work email
 would you like to display the page generation time at the bottom of every window?	common	en	Would you like to display the page generation time at the bottom of every window?
-writing	common	en	writing
+writing	common	en	Writing
 written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
-you can customize how many icons and toolbars the editor shows.	common	en	You can customize how many icons and toolbars the editor shows.
+you can customize how many icons and toolbars the editor shows.	common	en	You can customize how many icons and tool bars the editor shows.
 you have been successfully logged out	login	en	You have been successfully logged out
 you have not entered a title	common	en	You have not entered a title
 you have not entered a valid date	common	en	You have not entered a valid date
@@ -789,19 +789,19 @@ you have not entered participants	common	en	You have not entered participants
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have successfully logged out	common	en	You have successfully logged out
-you need to %1set your timezone preference%2.	common	en	You need to %1set your timezone preference%2.
-you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
+you need to %1set your timezone preference%2.	common	en	You need to %1set your time zone preference%2.
+you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the web server user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an eGroupWare administrator to access this functionality!
 you need to select some entries first!	common	en	You need to select some entries first!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You've tried to open the eGroupWare application: %1, but you have no permission to access this application.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent
 your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	en	Your Password does not meet the required strength.<br> You must meet %1 criteria. You met only %2 criteria. <br>Your Password failed the following criteria:
-your password is about to expire in %1 days, you may change your password now	common	en	your password is about to expire in %1 days, you may change your password now
-your search returned %1 matchs	common	en	your search returned %1 matches
-your search returned 1 match	common	en	your search returned 1 match
+your password is about to expire in %1 days, you may change your password now	common	en	Your password is about to expire in %1 days, you may change your password now
+your search returned %1 matchs	common	en	Search returned %1 matches
+your search returned 1 match	common	en	Search returned 1 match
 your session could not be verified.	login	en	Your session could not be verified.
-your settings have been updated	common	en	Your settings have been Updated
+your settings have been updated	common	en	Your settings have been updated
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom

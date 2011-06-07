@@ -1,6 +1,6 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
 %1 event(s) %2	calendar	en	%1 event(s) %2
-%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficent rights !!!
+%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficient rights !!!
 %1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants
 %1 records imported	calendar	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
@@ -21,7 +21,7 @@ add alarm	calendar	en	Add alarm
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronisation	calendar	en	Added by synchronisation
-after	calendar	en	after
+after	calendar	en	After
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date
 age:	calendar	en	Age:
@@ -42,16 +42,16 @@ allow users to prevent change notifications ('do not notify')	calendar	en	Allow 
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
-apply the changes	calendar	en	apply the changes
-are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
-are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
+apply the changes	calendar	en	Apply the changes
+are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this country?
+are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
 at the moment the following document-types are supported:	calendar	en	At the moment the following document-types are supported:
 automatically purge old events after	admin	en	Automatically purge old events after
-back half a month	calendar	en	back half a month
-back one month	calendar	en	back one month
-back one year	calendar	en	back one year
-before	calendar	en	before
+back half a month	calendar	en	Back half a month
+back one month	calendar	en	Back one month
+back one year	calendar	en	Back one year
+before	calendar	en	Before
 before %1	calendar	en	Before %1
 before current date	calendar	en	Before current date
 before the event	calendar	en	Before the event
@@ -59,22 +59,23 @@ birthday	calendar	en	Birthday
 birthdays	admin	en	Birthdays
 birthdays only	calendar	en	Birthdays only
 both, holidays and birthdays	calendar	en	Both, holidays and birthdays
-busy	calendar	en	busy
+busy	calendar	en	Busy
 by	calendar	en	by
 calendar - list	calendar	en	Calendar - List
-calendar - multi-weekly	calendar	en	Calendar - Multi-Weekly
+calendar - multi-weekly	calendar	en	Calendar - Multi week
 calendar - planner	calendar	en	Calendar - Planner
 calendar csv export	calendar	en	Calendar CSV export
 calendar csv import	calendar	en	Calendar CSV import
-calendar event	calendar	en	Calendar Event
+calendar event	calendar	en	Calendar event
 calendar fields:	calendar	en	Calendar fields:
-calendar holiday management	admin	en	Calendar Holiday Management
+calendar holiday management	admin	en	Calendar holiday management
 calendar ical export	calendar	en	Calendar iCal export
 calendar ical import	calendar	en	Calendar iCal import
-calendar menu	calendar	en	Calendar Menu
+calendar id	calendar	en	Calendar ID
+calendar menu	calendar	en	Calendar menu
 calendar preferences	calendar	en	Calendar preferences
 calendar settings	admin	en	Calendar settings
-calendar-fieldname	calendar	en	Calendar-Fieldname
+calendar-fieldname	calendar	en	Calendar field name
 can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
@@ -100,18 +101,18 @@ create an exception for the given date	calendar	en	Create an exception for the g
 create exception	calendar	en	Create exception
 create new links	calendar	en	Create new links
 csv	calendar	en	CSV
-csv-fieldname	calendar	en	CSV-Fieldname
-csv-filename	calendar	en	CSV-Filename
+csv-fieldname	calendar	en	CSV field name
+csv-filename	calendar	en	CSV file name
 custom fields	common	en	Custom fields
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
-day	calendar	en	day
+day	calendar	en	Day
 day of week tables	calendar	en	Day of week tables
-days	calendar	en	days
+days	calendar	en	Days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
-days repeated	calendar	en	days repeated
+days repeated	calendar	en	Days repeated
 dayview	calendar	en	Day view
 default appointment length (in minutes)	calendar	en	Default appointment length (in minutes)
 default calendar filter	calendar	en	Default calendar filter
@@ -130,20 +131,20 @@ delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
 delete this series of recuring events	calendar	en	Delete this series of recuring events
 deleted	calendar	en	Deleted
-deny ressources reservation for private events	calendar	en	Deny Resources reservation for private events
+deny ressources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
 disinvited	calendar	en	Disinvited
 display holidays or birthdays as events	calendar	en	Display holidays or birthdays as events
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
-displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page, the page you get when you enter EGroupware or click on the home page icon?
 do not include events of group members	calendar	en	Do not include events of group members
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about changes of appointments you modified?	calendar	en	Do you want to be notified about changes of appointments you modified?
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You are NOT notified about changes you made yourself.<br>You can limit the notifications to certain changes only. Each item includes all notifications listed above. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifications, he will always get participant responses like acceptions or rejections too.
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You are NOT notified about changes you made yourself.<br>You can limit the notifications to certain changes only. Each item includes all notifications listed above. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifications, he will always get participant responses like acceptations or rejections too.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifications, he will always get the participant responses like acceptations and rejections too.
 do you want to edit this event as an exception or the whole series?	calendar	en	Do you want to edit this event as an exception or the whole series?
 do you want to keep the series exceptions in your calendar?	calendar	en	Do you want to keep the series exceptions in your calendar?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive regularly a summary of your appointments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summaries.<br>It is only sent when you have any appointments on that day or week.
@@ -162,9 +163,9 @@ empty for all	calendar	en	Empty for all
 end	calendar	en	End
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	End date
-enddate / -time of the meeting, eg. for more then one day	calendar	en	End date / -time of the meeting, e.g. for more then one day
+enddate / -time of the meeting, eg. for more then one day	calendar	en	End date / -time of the meeting, e.g. for more than one day
 enddate of the export	calendar	en	End date of the export
-ends	calendar	en	ends
+ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
 error: can't delete original series!	calendar	en	Error: Can't delete original series!
 error: importing the ical	calendar	en	Error: importing the iCal
@@ -176,7 +177,7 @@ error: the entry has been updated since you opened it for editing!	calendar	en	E
 error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
 event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited
 event deleted	calendar	en	Event deleted
-event details follow	calendar	en	Event Details follow
+event details follow	calendar	en	Event details follow
 event saved	calendar	en	Event saved
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 every user can invite other users and groups	admin	en	Every user can invite other users and groups
@@ -189,6 +190,7 @@ exception created - you can now edit or delete it	calendar	en	Exception created 
 exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
+exists	calendar	en	Exists
 export	calendar	en	Export
 export definitition to use for nextmatch export	calendar	en	Export definitition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
@@ -205,13 +207,13 @@ for	calendar	en	for
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	en	For which views should calendar show distinct lines with a fixed time interval.
 format of event updates	calendar	en	Format of event updates
-forward half a month	calendar	en	forward half a month
-forward one month	calendar	en	forward one month
-forward one year	calendar	en	forward one year
+forward half a month	calendar	en	Forward half a month
+forward one month	calendar	en	Forward one month
+forward one year	calendar	en	Forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
-freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	freebusy: Unknow user '%1', or not available for unauthenticated users!
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
+freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	Free/Busy: Unknown user '%1', or not available for unauthenticated users!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	free/Busy: Unknown user '%1', wrong password or not available to not logged in users !!!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
@@ -219,13 +221,13 @@ fullname of person to notify	calendar	en	Full name of a person to notify
 general	calendar	en	General
 general fields:	calendar	en	General fields:
 global categories	calendar	en	Global Categories
-global public and group public	calendar	en	global public and group public
-global public only	calendar	en	global public only
+global public and group public	calendar	en	Global public and group public
+global public only	calendar	en	Global public only
 group invitation	calendar	en	Group invitation
 group planner	calendar	en	Group planner
-group public only	calendar	en	group public only
+group public only	calendar	en	Group public only
 group(s) or user(s) to show	calendar	en	Group(s) or user(s) to show
-group(s) or user(s) whose calendars to show (if acl exists)	calendar	en	Group(s) or user(s) whose calendars to show (if ACL exists)
+group(s) or user(s) whose calendars to show (if acl exists)	calendar	en	Group(s) or user(s) whose calendars to show, if ACL exists.
 groupmember(s) %1 not included, because you have no access.	calendar	en	Group member(s) %1 not included, because of you have no access.
 groups: other users can allways be invited, only groups require an invite grant	admin	en	Groups: other users can always be invited, only groups require an invite grant.
 h	calendar	en	h
@@ -241,34 +243,35 @@ holidays	calendar	en	Holidays
 holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many describtion lines should be directly visible. Further lines are available via a scrollbar.
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
-ical export	calendar	en	iCal Export
+ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
-ical import	calendar	en	iCal Import
+ical import	calendar	en	iCal import
 ical successful imported	calendar	en	iCal successful imported
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays are falling on a weekend, they are taken on the Monday after.
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!!!
-if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the infolog data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the infolog data inserted.
+if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the infolog data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export*	calendar	en	If you specify an export definition, it will be used when you export*
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
-import csv-file	common	en	Import CSV-File
-imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other separators.
-imports events into your calendar from an ical file.	calendar	en	Imports events into your Calendar from an iCal File.
-initially year aligned	calendar	en	initially year aligned
-insert	calendar	en	insert
+import csv-file	common	en	Import CSV file
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
+imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar .
+initially year aligned	calendar	en	Initially year aligned
+insert	calendar	en	Insert
 insert in document	calendar	en	Insert in document
 interval	calendar	en	Interval
-invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.
+invalid email-address "%1" for user %2	calendar	en	Invalid email address "%1" for user %2
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1.  Might be a bad field translation. Used %2 instead.
 invitations	calendar	en	Invitations
 invite	calendar	en	Invite
 it can not read timezones from sqlite database %1!	calendar	en	It can NOT read timezones from sqlite database %1!
@@ -277,7 +280,7 @@ keep the series unchanged.	calendar	en	Keep the series unchanged.
 last	calendar	en	Last
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
-limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view (default 5, 0 for no limit)
+limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view. Default is 5, 0 for no limit.
 link	calendar	en	Link to event
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
@@ -285,25 +288,25 @@ links, attachments	calendar	en	Links, Attachments
 listview	calendar	en	List view
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
-location, start- and endtimes, ...	calendar	en	Location, Start and End Times, ...
+location, start- and endtimes, ...	calendar	en	Location, start and end times, ...
 mail all participants	calendar	en	Mail all participants
 make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons?
 manage mapping	calendar	en	Manage mapping
-max. number of entries to show (leave empty for no restriction)	calendar	en	Max. Number of entries to show (leave empty for no restriction)
+max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
-merge document...	calendar	en	merge document...
+merge document...	calendar	en	Merge document...
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
 mon	calendar	en	Mon
 month	calendar	en	Month
 monthly	calendar	en	Monthly
-monthly (by date)	calendar	en	Monthly (by date)
-monthly (by day)	calendar	en	Monthly (by day)
+monthly (by date)	calendar	en	Monthly -by date
+monthly (by day)	calendar	en	Monthly -by day
 monthview	calendar	en	Month view
 multiple week view	calendar	en	Multiple week view
 name of current user, all other contact fields are valid too	calendar	en	Name of current user, all other contact fields are valid too
-name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Name of the week (ex: Monday), available for the first entry inside each day of week or daily table inside the selected range.
+name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Name of the week, eg: Monday, available for the first entry inside each day of week or daily table inside the selected range.
 needs action	calendar	en	Needs action
 new	calendar	en	New
 new search with the above parameters	calendar	en	New search with the above parameters
@@ -314,7 +317,7 @@ no matches found	calendar	en	No matches found
 no owner selected	calendar	en	No owner selected
 no recurrence	calendar	en	No recurrence
 no response	calendar	en	No response
-non blocking	calendar	en	non blocking
+non blocking	calendar	en	Non blocking
 not	calendar	en	not
 not rejected	calendar	en	Not rejected
 nothing to update, version is already %1.	calendar	en	Nothing to update, version is already %1.
@@ -326,9 +329,9 @@ notification messages for your alarms	calendar	en	Notification messages for your
 notification messages for your responses	calendar	en	Notification messages for your responses
 number of records to read (%1)	calendar	en	Number of records to read (%1)
 number of weeks to show	calendar	en	Number of weeks to show
-observance rule	calendar	en	Observance Rule
+observance rule	calendar	en	Observance rule
 occurence	calendar	en	Occurence
-old startdate	calendar	en	Old Start date
+old startdate	calendar	en	Old start date
 olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
 on all modification, but responses	calendar	en	On all modification, but responses
@@ -336,10 +339,10 @@ on any time change too	calendar	en	On any time change too
 on invitation / cancelation only	calendar	en	On invitation / cancelation only
 on participant responses too	calendar	en	On participant responses too
 on time change of more than 4 hours too	calendar	en	On time change of more than 4 hours too
-one month	calendar	en	one month
-one week	calendar	en	one week
-one year	calendar	en	one year
-only group-events	calendar	en	Only group-events
+one month	calendar	en	One month
+one week	calendar	en	One week
+one year	calendar	en	One year
+only group-events	calendar	en	Only group events
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recurring event is checked!
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
@@ -354,29 +357,29 @@ people holiday	calendar	en	People holiday
 permission denied	calendar	en	Permission denied
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
-please note: you can configure the field assignments after you uploaded the file.	calendar	en	Please note: You can configure the field assignments AFTER you uploaded the file.
-preselected group for entering the planner	calendar	en	Preselected group for entering the planner
+please note: you can configure the field assignments after you uploaded the file.	calendar	en	Note: You can configure the field assignments AFTER you uploaded the file.
+preselected group for entering the planner	calendar	en	Pre-selected group for entering the planner
 prevent deleting of entries	admin	en	Prevent deleting of entries
-previous	calendar	en	previous
-private and global public	calendar	en	private and global public
-private and group public	calendar	en	private and group public
-private only	calendar	en	Private Only
+previous	calendar	en	Previous
+private and global public	calendar	en	Private and global public
+private and group public	calendar	en	Private and group public
+private only	calendar	en	Private only
 quantity	calendar	en	Quantity
 range fields	calendar	en	Range fields
-re-edit event	calendar	en	Re-Edit event
+re-edit event	calendar	en	Re-edit event
 receive email updates	calendar	en	Receive email updates
 receive notifications about events you created/modified/deleted	calendar	en	Receive notifications about events you created/modified/deleted
 receive summary of appointments	calendar	en	Receive summary of appointments
 recover	calendar	en	Recover
-recovered	calendar	en	recovered
+recovered	calendar	en	Recovered
 recurrence	calendar	en	Recurrence
 recurring event	calendar	en	Recurring event
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected
 repeat days	calendar	en	Repeat days
-repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date (empty means unlimited)
+repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date. Empty for unlimited.
 repeat type	calendar	en	Repeat type
-repeating event information	calendar	en	Repeating Event Information
+repeating event information	calendar	en	Repeating event information
 repeating interval, eg. 2 to repeat every second week	calendar	en	Repeating interval, e.g. 2 to repeat every second week
 repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
@@ -406,21 +409,22 @@ select an action	calendar	en	Select an action
 select an action...	calendar	en	Select an action...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
-select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the pariticpant status reset to unkown, if an event is shifted later on.
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
 series deleted	calendar	en	Series deleted
-set a year only for one-time / non-regular holidays.	calendar	en	Set a Year only for one-time / non-regular holidays.
+set a year only for one-time / non-regular holidays.	calendar	en	Set a year only for one time / non regular holidays.
 set new events to private	calendar	en	Set new events to private
-setting lock time calender	admin	en	Setting Data lock Time for Calendar (default 1 sec.)
-shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted (e.g. from calendar module)?
-should new events created as private by default ?	calendar	en	Should new events created as private by default ?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is
+setting lock time calender	admin	en	Setting data lock time for Calendar (default 1 sec.)
+shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from calendar module?
+should new events created as private by default ?	calendar	en	Should new events be created as private by default ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is* <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk</a>	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is* <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk</a>
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brackets after each participant's name ?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event participants (accept, reject, ...) be shown in brackets after each participant's name ?
 show a calendar title	calendar	en	Show a calendar title
 show all events, as if they were private	calendar	en	Show all events, as if they were private
 show all status incl. rejected events	calendar	en	Show all status incl. rejected events
@@ -428,12 +432,12 @@ show all status, but rejected	calendar	en	Show all status, but rejected
 show also events just owned by selected user	calendar	en	Show also events just owned by selected user
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
 show default view on main screen	calendar	en	Show calendar on main screen
-show empty rows in planner	calendar	en	Show empty rows in Planner
+show empty rows in planner	calendar	en	Show empty rows in planner
 show events that have been deleted	calendar	en	Show events that have been deleted
 show list of upcoming events	calendar	en	Show list of upcoming events
 show only accepted events	calendar	en	Show only accepted events
 show only delegated events	calendar	en	Show only delegated events
-show only events flagged as public, (not checked as private)	calendar	en	Show only events flagged as public, (not checked as private)
+show only events flagged as public, (not checked as private)	calendar	en	Show only events flagged as public, -not checked as private.
 show only invitations, not yet accepted or rejected	calendar	en	Show only invitations, not yet accepted or rejected
 show only rejected events	calendar	en	Show only rejected events
 show only tentative accepted events	calendar	en	Show only tentative accepted events
@@ -443,26 +447,26 @@ show this week	calendar	en	Show this week
 single event	calendar	en	Single event
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
-start date/time	calendar	en	Start Date/Time
-start of series event changed	calendar	en	Start of Series Event Changed
-startdate	calendar	en	Startdate
-startdate / -time	calendar	en	Start date / -time
-startdate and -time of the search	calendar	en	Start date and -time of the search
+start date/time	calendar	en	Start date / time
+start of series event changed	calendar	en	Start of series event changed
+startdate	calendar	en	Start date
+startdate / -time	calendar	en	Start date / time
+startdate and -time of the search	calendar	en	Start date and time of the search
 startdate of the export	calendar	en	Start date of the export
 startrecord	calendar	en	Start record
 status changed	calendar	en	Status changed
 status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed
 status for this particular day changed	calendar	en	Status for this particular day changed
 status of participants set to unknown because of missing category rights	calendar	en	Status of participants set to unknown because of missing category rights
-submit to repository	calendar	en	Submit to Repository
+submit to repository	calendar	en	Submit to repository
 sun	calendar	en	Sun
 tag to mark positions for address labels	calendar	en	Tag to mark positions for address labels
 tentative	calendar	en	Tentative
-test import (show importable records <u>only</u> in browser)	calendar	en	Test Import (show importable records <u>only</u> in browser)
+test import (show importable records <u>only</u> in browser)	calendar	en	Test import, show importable records <u>only</u> in browser.
 the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this color to display events from this calendar.
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
-the resource you selected is already overbooked:	calendar	en	The resource you selected is already overbooked:
+the resource you selected is already overbooked:	calendar	en	The resource you selected is already over-booked:
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your day view. Events after this time, are shown below the day view.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your day view. Events before this time, are shown above the day view.<br>This time is also used as a default start time for new events.
@@ -487,15 +491,15 @@ til	calendar	en	til
 timeframe	calendar	en	Timeframe
 timeframe to search	calendar	en	Timeframe to search
 timesheet entries created for	calendar	en	Timesheet entries created for
-timezone	calendar	en	Timezone
-timezone in which recurrences have identical time	calendar	en	Timezone in which recurrences have identical time
-timezone of event exports	calendar	en	Timezone of event exports
-timezone of event ical file import/export	calendar	en	Timezone of event iCal file import/export
-timezones updated to version %1 (%2 records updated).	calendar	en	Timezones updated to version %1 (%2 records updated).
+timezone	calendar	en	Time zone
+timezone in which recurrences have identical time	calendar	en	Time zone in which recurrences have identical time
+timezone of event exports	calendar	en	Time zone of event exports
+timezone of event ical file import/export	calendar	en	Time zone of event iCal file import|export
+timezones updated to version %1 (%2 records updated).	calendar	en	Time zones updated to version %1 (%2 records updated).
 title of the event	calendar	en	Title of the event
-to many might exceed your execution-time-limit	calendar	en	too many might exceed your execution-time-limit
+to many might exceed your execution-time-limit	calendar	en	Too many might exceed your execution time limit
 to-firstname	calendar	en	To first name
-to-fullname	calendar	en	To fullname
+to-fullname	calendar	en	To full name
 to-lastname	calendar	en	To last name
 tomorrow	calendar	en	Tomorrow
 translation	calendar	en	Translation
@@ -503,13 +507,13 @@ tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
 unable to save	calendar	en	Unable to save
-update timezones	common	en	Update timezones
+update timezones	common	en	Update time zones
 updated	calendar	en	Updated
-use end date	calendar	en	Use End date
+use end date	calendar	en	Use end date
 use the selected time and close the popup	calendar	en	Use the selected time and close the popup
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
-use this timezone to export calendar data.	calendar	en	Use this timezone to export calendar data.
-use this timezone to import/export calendar data.	calendar	en	Use this timezone to import/export calendar data.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	en	Use this tag for address labels. Place the content you want to repeat between two tags.
+use this timezone to export calendar data.	calendar	en	Use this time zone to export calendar data.
+use this timezone to import/export calendar data.	calendar	en	Use this time zone to import|export calendar data.
 use weekday start	calendar	en	Use weekday start
 user or group	calendar	en	User or group
 user selectable css file for the calendar setup	calendar	en	User selectable CSS file for the calendar setup
@@ -527,13 +531,13 @@ weekdays	calendar	en	Weekdays
 weekdays to use in search	calendar	en	Weekdays to use in search
 weekly	calendar	en	Weekly
 weeks in multiple week view	calendar	en	Weeks in multiple week view
-weeks offset (for multi-column display)	calendar	en	Weeks offset (for multi-column display)
+weeks offset (for multi-column display)	calendar	en	Weeks offset for multi column display
 weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
-when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appereance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appearance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
 which view to show on home page	calendar	en	Which view to show on home page
-while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	While selecting up to X users day- and weekview is not consolidated (5 is used when not set)
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	Minimum number of users for showing day and week views as consolidated. Default is 5.
 whole day	calendar	en	Whole day
 with credentials included	calendar	en	With credentials included
 wk	calendar	en	Wk
@@ -549,11 +553,11 @@ yes, only admins can purge deleted items	admin	en	Yes, only admins can purge del
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you are not invited to that event!	calendar	en	You are not invited to that event!
-you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurrence, not both !!!
-you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurrence !!!
+you can either set a year or a occurence, not both !!!	calendar	en	You can either set a year or occurrence, not both !!!
+you can only set a year or a occurence !!!	calendar	en	You can only set a year or occurrence !!!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have a meeting scheduled for %1	calendar	en	You have a meeting scheduled for %1
-you have been disinvited from the meeting at %1	calendar	en	You have been disinvited from the meeting at %1
+you have been disinvited from the meeting at %1	calendar	en	You have been dis-invited from the meeting at %1
 you need to select an account, contact or resource first!	calendar	en	You need to select an account, contact or resource first!
 you need to select an ical file first	calendar	en	You need to select an iCal file first
 you need to select some events first	calendar	en	You need to select some events first

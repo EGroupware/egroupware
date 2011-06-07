@@ -1,37 +1,37 @@
 %1 timesheets(s) %2	timesheet	en	%1 timesheets(s) %2
-%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	en	%1 timesheets(s) %2, %3 failed because of insufficent rights !!!
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	en	%1 timesheets(s) %2, %3 failed because of insufficient rights !!!
 --> enter new name	timesheet	en	--> enter new name
 2 month ago	timesheet	en	2 month ago
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
 all projects	timesheet	en	All projects
-and its members	timesheet	en	and its members
-applies the changes	timesheet	en	applies the changes
-apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!!!
-at the moment the following document-types are supported:	timesheet	en	At the moment the following document-types are supported:
-both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project-names
+and its members	timesheet	en	And its members
+applies the changes	timesheet	en	Applies the changes
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown TimeSheets!!!
+at the moment the following document-types are supported:	timesheet	en	At the moment the following document types are supported:
+both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project names
 by	timesheet	en	by
 change category	timesheet	en	Change category
-changed category to %1	timesheet	en	changed category to %1
-changed status	timesheet	en	changed status
+changed category to %1	timesheet	en	Changed category to %1
+changed status	timesheet	en	Changed status
 check all	timesheet	en	Check all
 choose 'creator' of imported data	timesheet	en	Choose 'creator' of imported data
 comment by %1 at %2:	timesheet	en	Comment by %1 at %2:
 create new links	timesheet	en	Create new links
-creates a new field	timesheet	en	creates a new field
-creating new entry	timesheet	en	creating new entry
+creates a new field	timesheet	en	Creates a new field
+creating new entry	timesheet	en	Creating new entry
 custom fields	timesheet	en	Custom fields
 default document to insert entries	timesheet	en	Default document to insert entries
 delete this status	timesheet	en	Delete this status
-deleted	timesheet	en	deleted
-deletes this field	timesheet	en	deletes this field
-determines the order the fields are displayed	timesheet	en	determines the order the fields are displayed
+deleted	timesheet	en	Deleted
+deletes this field	timesheet	en	Deletes this field
+determines the order the fields are displayed	timesheet	en	Determines the order the fields are displayed
 directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
 document '%1' does not exist or is not readable for you!	timesheet	en	Document '%1' does not exist or is not readable for you!
-each value is a line like <id>[=<label>]	timesheet	en	each value is a line like <id>[=<label>]
+each value is a line like <id>[=<label>]	timesheet	en	Each value is a line like <id>[=<label>]
 edit status	timesheet	en	Edit status
 edit this entry	timesheet	en	Edit this entry
-empty if identical to duration	timesheet	en	empty if identical to duration
+empty if identical to duration	timesheet	en	Empty if identical to duration
 end	timesheet	en	End
 entry deleted	timesheet	en	Entry deleted
 entry saved	timesheet	en	Entry saved
@@ -42,50 +42,53 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 existing links	timesheet	en	Existing links
-exists	timesheet	en	exists
+exists	timesheet	en	Exists
 export	timesheet	en	Export
 export definitition to use for nextmatch export	timesheet	en	Export definitition to use for nextmatch export
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from your Timesheet into a CSV File.
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from your TimeSheet into a CSV file. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other separators.
 field must not be empty !!!	timesheet	en	Field must not be empty !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
 general fields:	timesheet	en	General fields:
-global categories	timesheet	en	Global Categories
+global categories	timesheet	en	Global categories
 history	timesheet	en	History
 id	timesheet	en	ID
-if you specify a directory (full vfs path) here, egroupware displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full vfs path) here, eGroupWare displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a directory (full vfs path) here, egroupware displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full vfs path) here, EGroupware displays an action for each document. That action allows to download the specified document with the %1 data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	timesheet	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export*	timesheet	en	If you specify an export definition, it will be used when you export*
+ignore	timesheet	en	Ignore
+import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the timesheet from a CSV File.
-insert	timesheet	en	insert
+insert	timesheet	en	Insert
 invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1. Might be a bad field translation. Used %2 instead.
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
 last week	timesheet	en	Last week
 last year	timesheet	en	Last year
 leave it empty for a full week	timesheet	en	Leave it empty for a full week
-leaves without saveing	timesheet	en	leaves without saveing
+leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length<br>Rows
 links	timesheet	en	Links
 manage mapping	timesheet	en	Manage mapping
-max length of the input [, length of the inputfield (optional)]	timesheet	en	max length of the input [, length of the inputfield (optional)]
+max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the inputfield (optional)]
 modified	timesheet	en	Modified
 modify status	timesheet	en	Modify status
 name of current user, all other contact fields are valid too	timesheet	en	Name of current user, all other contact fields are valid too
 new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
 new timesheet submitted by %1 at %2	timesheet	en	New timesheet submitted by %1 at %2
-no details	timesheet	en	no details
+no details	timesheet	en	No details
 no project	timesheet	en	No project
 no status	timesheet	en	No status
-none: use only free project-names	admin	en	None: use only free project-names
-number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	number of row for a multiline inputfield or line of a multi-select-box
-only admin	timesheet	en	Only Admin
-only admin can edit this status	timesheet	en	only Admin can edit this status
-or endtime	timesheet	en	or Endtime
+none: use only free project-names	admin	en	None: use only free project names
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	Number of row for a multi-line input field or line of a multi select box
+only admin	timesheet	en	Only admin
+only admin can edit this status	timesheet	en	Only admin can edit this status
+or endtime	timesheet	en	or end time
 order	timesheet	en	Order
 parent	timesheet	en	Parent
 permission denied!!!	timesheet	en	Permission denied!!!
@@ -97,43 +100,46 @@ quantity	timesheet	en	Quantity
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 save & new	timesheet	en	Save & New
 saves the changes made	timesheet	en	Saves the changes made
-saves the changes made and leaves	timesheet	en	saves the changes made and leaves
+saves the changes made and leaves	timesheet	en	Saves the changes made and leaves
 saves this entry and add a new one	timesheet	en	Saves this entry and add a new one
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
-select a status of the timesheet	timesheet	en	select a status of the timesheet
-select infolog	timesheet	en	select Infolog
-select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
-select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, whan creating a new timesheet
-select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new timesheet
+select a status of the timesheet	timesheet	en	Select a status of the timesheet
+select infolog	timesheet	en	Select InfoLog
+select multiple timeshhets for a further action	timesheet	en	Select multiple TimeSheets for a further action
+select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, when creating a new TimeSheet
+select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new TimeSheet
+set to	timesheet	en	Set to
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
+skip record	timesheet	en	Skip record
 start	timesheet	en	Start
-starttime	timesheet	en	Starttime
-starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
+starttime	timesheet	en	Start time
+starttime has to be before endtime !!!	timesheet	en	Start time has to be before endtime !!!
 status	timesheet	en	Status
 status deleted.	timesheet	en	Status deleted.
-status of created timesheets	timesheet	en	Status of created timesheets
+status of created timesheets	timesheet	en	Status of created TimeSheets
 status updated.	timesheet	en	Status updated.
 sum %1:	timesheet	en	Sum %1:
 tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
-the text displayed to the user	timesheet	en	the text displayed to the user
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	the name used internally (<= 20 chars), changing it makes existing data unavailable
+the text displayed to the user	timesheet	en	Text displayed to the user
 this month	timesheet	en	This month
 this week	timesheet	en	This week
 this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
-timesheet	common	en	TimeSheet
-timesheet csv export	timesheet	en	Timesheet CSV export
-timesheet csv import	timesheet	en	Timesheet CSV import
-timesheet fields:	timesheet	en	Timesheet fields:
-timesheet id	timesheet	en	Timesheet ID
-timesheet modified by %1 at %2	timesheet	en	Timesheet modified by %1 at %2
-timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
-timesheet status-%1 '%2' added.	timesheet	en	Timesheet Status-%1 '%2' added.
-timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
-timesheet-%1 deleted.	timesheet	en	Timesheet-%1 deleted.
+timesheet	common	en	Time Sheet
+timesheet csv export	timesheet	en	TimeSheet CSV export
+timesheet csv import	timesheet	en	TimeSheet CSV import
+timesheet fields:	timesheet	en	TimeSheet fields:
+timesheet id	timesheet	en	TimeSheet ID
+timesheet modified by %1 at %2	timesheet	en	TimeSheet modified by %1 at %2
+timesheet openoffice export	timesheet	en	TimeSheet OpenOffice export
+timesheet status-%1 '%2' added.	timesheet	en	TimeSheet Status-%1 '%2' added.
+timesheet-%1 '%2' updated.	timesheet	en	TimeSheet-%1 '%2' updated.
+timesheet-%1 deleted.	timesheet	en	TimeSheet-%1 deleted.
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.
 unitprice	timesheet	en	Unitprice
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for selectbox
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week

@@ -1,46 +1,46 @@
-all possible notification backends	notifications	en	all possible notification backends
-check both (first try (active) user defined account, if none use emailadmin profile)	admin	en	Check both (first try (active) User defined account, if none use emailadmin profile)
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification-chain. You will be notified over the backends included in the chain.<br />Note: If a notification-chain is marked as "disabled", your Administrator does not allow one or more of the backends included in the chain, the notifications falls back to "E-Mail" while notifying you.
-choose from mailsettings used for notification	admin	en	choose from mailsettings used for email notification
-common chains	notifications	en	common chains
-disabled chains	notifications	en	disabled chains
-do not notify me at all	notifications	en	do not notify me at all
-e-mail only	notifications	en	E-Mail only
+all possible notification backends	notifications	en	All possible notification backends
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	en	Check both. First try active user defined account, if none, use EmailAdmin profile.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification chain. You will be notified over the back ends included in the chain.<br />Note: If a notification chain is marked as "disabled", your administrator does not allow one or more of the back ends included in the chain, the notifications falls back to "Email" while notifying you.
+choose from mailsettings used for notification	admin	en	Choose mail settings used for email notification
+common chains	notifications	en	Common chains
+disabled chains	notifications	en	Disabled chains
+do not notify me at all	notifications	en	Do not notify me at all
+e-mail only	notifications	en	Email only
 egroupware has notifications for you	notifications	en	EGroupware has notifications for you
-egroupware-popup and e-mail	notifications	en	EGroupware-Popup and E-Mail
-egroupware-popup and windows-popup	notifications	en	EGroupware-Popup and Windows-Popup
-egroupware-popup backend	admin	en	EGroupware-Popup backend
-egroupware-popup first, if that fails notify me by e-mail	notifications	en	EGroupware-Popup first, if that fails notify me by E-Mail
-egroupware-popup first, if that fails notify me by sms	notifications	en	EGroupware-Popup first, if that fails notify me by SMS
-egroupware-popup only	notifications	en	EGroupware-Popup only
-egroupware-popup verbosity	notifications	en	EGroupware-Popup verbosity
-emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	en	Emailadmin Profile only (Do not use User defined (active) Mail Profiles for Notification)
-enable egroupware-popup backend	admin	en	enable EGroupware-Popup backend
-enable sms backend	admin	en	enable SMS backend
-enable windows-popup backend	admin	en	enable Windows-Popup backend
-enabled chains	notifications	en	enabled chains
-folder	notifications	en	folder
-from	notifications	en	from
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the EGroupware-Popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself
+egroupware-popup and e-mail	notifications	en	EGroupware popup and email
+egroupware-popup and windows-popup	notifications	en	EGroupware popup and Windows popup
+egroupware-popup backend	admin	en	EGroupware popup back end
+egroupware-popup first, if that fails notify me by e-mail	notifications	en	EGroupware popup first, if that fails notify me by email
+egroupware-popup first, if that fails notify me by sms	notifications	en	EGroupware popup first, if that fails notify me by SMS
+egroupware-popup only	notifications	en	EGroupware popup only
+egroupware-popup verbosity	notifications	en	EGroupware popup verbosity
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	en	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
+enable egroupware-popup backend	admin	en	Enable EGroupware popup back end
+enable sms backend	admin	en	Enable SMS backend
+enable windows-popup backend	admin	en	Enable Windows popup back end
+enabled chains	notifications	en	Enabled chains
+folder	notifications	en	Folder
+from	notifications	en	From
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the EGroupware-Popup behave if a notification is sent to the user:<br />low: just display the notification bell in the top menu - top menu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself
 if set, embedded links get rendered special for external clients	notifications	en	If set, embedded links get rendered special for external clients
-linked entries:	common	en	linked entries:
+linked entries:	common	en	Linked entries:
 mail backend	admin	en	Mail backend
-maximum sms messages per notification	admin	en	maximum SMS messages per notification
-message from	notifications	en	message from
-minutes	notifications	en	minutes
-notification	common	en	notification
-notify me by	notifications	en	notify me by
-optimize e-mails for external mail client	notifications	en	optimize E-Mails for external E-Mail client
-poll interval	notifications	en	poll interval
-preferences for notification	notifications	en	preferences for notification
-received	notifications	en	received
-sms backend	admin	en	SMS backend
+maximum sms messages per notification	admin	en	Maximum SMS messages per notification
+message from	notifications	en	Message from
+minutes	notifications	en	Minutes
+notification	common	en	Notification
+notify me by	notifications	en	Notify me by
+optimize e-mails for external mail client	notifications	en	Optimize emails for external email client
+poll interval	notifications	en	Poll interval
+preferences for notification	notifications	en	Preferences for notification
+received	notifications	en	Received
+sms backend	admin	en	SMS back end
 sms only	notifications	en	SMS only
-this egroupware notification has been sent to you by mail because your	notifications	en	This eGroupWare notification has been sent to you by mail because your
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. Please choose another notification-chain in your preferences!
-windows-popup and e-mail	notifications	en	Windows-Popup and E-Mail
-windows-popup backend	admin	en	Windows-Popup backend
-windows-popup first, if that fails notify me by e-mail	notifications	en	Windows-Popup first, if that fails notify me by E-Mail
-windows-popup first, if that fails notify me by sms	notifications	en	Windows-Popup first, if that fails notify me by SMS
-windows-popup only	notifications	en	Windows-Popup only
-you've got new mail	notifications	en	You've got new mail
+this egroupware notification has been sent to you by mail because your	notifications	en	This eEGroupware notification has been sent to you by mail because your
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
+windows-popup and e-mail	notifications	en	Windows popup and email
+windows-popup backend	admin	en	Windows popup back end
+windows-popup first, if that fails notify me by e-mail	notifications	en	Windows popup first, if that fails notify me by email
+windows-popup first, if that fails notify me by sms	notifications	en	Windows popup first, if that fails notify me by SMS
+windows-popup only	notifications	en	Windows popup only
+you've got new mail	notifications	en	You've got a new mail
