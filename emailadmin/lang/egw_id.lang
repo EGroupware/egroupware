@@ -1,0 +1,86 @@
+%1 entries deleted.	emailadmin	id	%1 entri dihapus.
+account '%1' not found !!!	emailadmin	id	Akoun '%1' tidak ditemukan !!!
+active templates	emailadmin	id	Templat yang aktif
+add new email address:	emailadmin	id	Tambah alamat email baru:
+add profile	emailadmin	id	Tambah Profil
+admin dn	emailadmin	id	Admin dn
+admin password	emailadmin	id	Password Admin
+admin username	emailadmin	id	Nama Admin
+advanced options	emailadmin	id	Opsi Canggih
+alternate email address	emailadmin	id	Alamat email pengganti
+any application	emailadmin	id	Semua aplikasi
+any group	emailadmin	id	Semua kelompok
+any user	emailadmin	id	semua pengguna
+back to admin/grouplist	emailadmin	id	Kembali ke Admin/Daftar Kelompok
+back to admin/userlist	emailadmin	id	Kembali ke Admin/Daftar pengguna
+bad login name or password.	emailadmin	id	Nama atau password tidak benar.
+could not open secure connection to the imap server. %s : %s.	emailadmin	id	Could not open secure connection to the IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	id	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
+cyrus imap server	emailadmin	id	Server Cyrus IMAP
+cyrus imap server administration	emailadmin	id	Administrasi server Cyrus IMAP
+default	emailadmin	id	bawaan
+deliver extern	emailadmin	id	pengiriman eksternal
+domainname	emailadmin	id	Nama Domain
+edit email settings	emailadmin	id	Edit pengaturan email
+email account active	emailadmin	id	Akoun Email aktif
+email address	emailadmin	id	Alamat Email
+email settings	common	id	Pengaturan Email
+emailadmin	emailadmin	id	AdminEMail
+emailadmin: group assigned profile	common	id	AdminEMail: Profil menurut kelompok
+emailadmin: user assigned profile	common	id	AdminEMail: Profil menurut pengguna
+enable sieve	emailadmin	id	Bolehkan Sieve
+encrypted connection	emailadmin	id	koneksi ter-enkripsi
+encryption settings	emailadmin	id	Pengaturan Enkripsi
+enter your default mail domain (from: user@domain)	emailadmin	id	Berikan nama domain email anda (dari: pengguna@domain)
+filtered by account	emailadmin	id	saringan menurut Akoun
+filtered by group	emailadmin	id	saringan menurut Kelompok
+forward only	emailadmin	id	Hanya Forward
+global options	emailadmin	id	Opsi Global
+imap admin password	admin	id	password admin IMAP
+imap admin user	admin	id	admin IMAP
+imap c-client version < 2001	emailadmin	id	IMAP C-Client Version < 2001
+in mbyte	emailadmin	id	dalam MByte
+inactive	emailadmin	id	tidak aktif
+ldap basedn	emailadmin	id	LDAP basedn
+ldap server	emailadmin	id	LDAP server
+ldap settings	emailadmin	id	Pengaturan LDAP
+leave empty for no quota	emailadmin	id	kosongkan bila tanpa kuota
+mail settings	admin	id	Pengaturan Mail
+name of organisation	emailadmin	id	Nama Organisasi
+no alternate email address	emailadmin	id	tanpa alamat email pengganti
+no encryption	emailadmin	id	tanpa enkripsi
+order	emailadmin	id	Urutan
+organisation	emailadmin	id	Organisasi
+profile list	emailadmin	id	Daftar Profil
+profile name	emailadmin	id	Nama Profil
+qmaildotmode	emailadmin	id	qmaildotmode
+qouta size in mbyte	emailadmin	id	Kuota dalam MByte
+quota settings	emailadmin	id	Pengaturan Kuota
+remove	emailadmin	id	Buang
+reset filter	emailadmin	id	ulangi penyaringan
+select type of imap server	emailadmin	id	Pilih tipe Server IMAP
+select type of imap/pop3 server	emailadmin	id	Pilih tipe Server IMAP/POP3
+select type of smtp server	emailadmin	id	Pilih tipe Server SMTP
+send using this email-address	emailadmin	id	kirim menggunakan alamat eMail ini
+server settings	emailadmin	id	Pengaturan Server
+sieve server hostname or ip address	emailadmin	id	Sieve server hostname or ip address
+sieve server port	emailadmin	id	Sieve server port
+sieve settings	emailadmin	id	Pengaturan Sieve
+smtp authentication	emailadmin	id	Otentikasi SMTP
+smtp options	emailadmin	id	Opsi SMTP
+smtp server name	emailadmin	id	Nama server SMTP
+smtp settings	emailadmin	id	Pengaturan SMTP
+smtp-server hostname or ip address	emailadmin	id	Nama atau alamat IP server SMTP
+smtp-server port	emailadmin	id	Port server SMTP
+standard	emailadmin	id	Standar
+standard imap server	emailadmin	id	Server IMAP Standar
+standard pop3 server	emailadmin	id	Server POP3 Standar
+standard smtp-server	emailadmin	id	Server SMTP Standar
+starts with	emailadmin	id	diawali dengan
+stationery	emailadmin	id	Stationery
+unexpected response from server to login command.	emailadmin	id	Unexpected response from server to LOGIN command.
+update current email address:	emailadmin	id	Memperbarui alamat email saat ini:
+username (standard)	emailadmin	id	namapengguna (standar)
+username/password defined by admin	emailadmin	id	Namapengguna/Password dibuat oleh admin
+username@domainname (virtual mail manager)	emailadmin	id	username@domainname (Virtual MAIL ManaGeR)
+virtual mail manager	emailadmin	id	Virtual MAIL ManaGeR

@@ -1,0 +1,549 @@
+%1 is not writable by you!	felamimail	en	%1 is NOT writable by you!
+(no subject)	felamimail	en	(no subject)
+(only cc/bcc)	felamimail	en	(only Cc/Bcc)
+(separate multiple addresses by comma)	felamimail	en	(separate multiple addresses by comma)
+(unknown sender)	felamimail	en	(unknown sender)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area e.g. 300. The preview will be displayed at the end of the message list on demand.
+aborted	felamimail	en	Aborted
+activate	felamimail	en	Activate
+activate script	felamimail	en	Activate script
+activating by date requires a start- and end-date!	felamimail	en	Activating by date requires a start AND end date!
+add acl	felamimail	en	Add acl
+add address	felamimail	en	Add address
+add rule	felamimail	en	Add rule
+add script	felamimail	en	Add script
+add to %1	felamimail	en	Add to %1
+add to address book	felamimail	en	Add to address book
+add to addressbook	felamimail	en	Add to address book
+adding file to message. please wait!	felamimail	en	Adding file to message. Please wait!
+additional info	felamimail	en	Additional info
+address book	felamimail	en	Address Book
+address book search	felamimail	en	Address Book search
+after message body	felamimail	en	After message body
+all address books	felamimail	en	All address books
+all folders	felamimail	en	All folders
+all messages in folder	felamimail	en	All messages in folder
+all of	felamimail	en	All of
+allow images from external sources in html emails	felamimail	en	Allow images from external sources in HTML emails
+allways a new window	felamimail	en	Always a new window
+always show html emails	felamimail	en	Always show HTML emails
+and	felamimail	en	And
+any of	felamimail	en	Any of
+any status	felamimail	en	Any status
+anyone	felamimail	en	Anyone
+as a subfolder of	felamimail	en	As a subfolder of
+attach	felamimail	en	Attach
+attachments	felamimail	en	Attachments
+authentication required	felamimail	en	Authentication required
+auto refresh folder list	felamimail	en	Auto refresh folder list
+back to folder	felamimail	en	Back to folder
+bad login name or password.	felamimail	en	Bad login name or password.
+bad or malformed request. server responded: %s	felamimail	en	Bad or malformed request. Server responded: %s
+bad request: %s	felamimail	en	Bad request: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	en	Based upon given criteria, incoming messages can have different background colors in the message list.  This helps to easily distinguish who the messages are from, especially for mailing lists.
+bcc	felamimail	en	BCC
+before headers	felamimail	en	Before headers
+between headers and message body	felamimail	en	Between headers and message body
+body part	felamimail	en	Body part
+by date	felamimail	en	By date
+can not send message. no recipient defined!	felamimail	en	Can't send a message. No recipient defined!
+can't connect to inbox!!	felamimail	en	Can't connect to INBOX!!
+cc	felamimail	en	CC
+change folder	felamimail	en	Change folder
+check message against next rule also	felamimail	en	Check message against next rule also
+checkbox	felamimail	en	Check box
+choose from vfs	felamimail	en	Choose from VFS
+clear search	felamimail	en	Clear search
+click here to log back in.	felamimail	en	Click here to log back in.
+click here to return to %1	felamimail	en	Click here to return to %1
+close all	felamimail	en	Close all
+close this page	felamimail	en	Close this page
+close window	felamimail	en	Close window
+color	felamimail	en	Color
+compose	felamimail	en	Compose
+compose as new	felamimail	en	Compose as new
+compress folder	felamimail	en	Compress folder
+condition	felamimail	en	Condition
+configuration	felamimail	en	Configuration
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	en	Configure a valid IMAP server in EmailAdmin for the profile you are using.
+connection dropped by imap server.	felamimail	en	Connection dropped by IMAP server.
+contact not found!	felamimail	en	Contact not found!
+contains	felamimail	en	Contains
+copy or move messages?	felamimail	en	Copy or move messages?
+copy to	felamimail	en	Copy to
+copying messages to	felamimail	en	Copying messages to
+could not append message:	felamimail	en	Could not append message:
+could not complete request. reason given: %s	felamimail	en	Could not complete request. %s
+could not import message:	felamimail	en	Could not import message:
+could not open secure connection to the imap server. %s : %s.	felamimail	en	Could not open secure connection to the IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	en	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
+create	felamimail	en	Create
+create folder	felamimail	en	Create folder
+create sent	felamimail	en	Create Sent
+create subfolder	felamimail	en	Create sub folder
+create trash	felamimail	en	Create Trash
+created folder successfully!	felamimail	en	Created folder successfully!
+dark blue	felamimail	en	Dark blue
+dark cyan	felamimail	en	Dark cyan
+dark gray	felamimail	en	Dark gray
+dark green	felamimail	en	Dark green
+dark magenta	felamimail	en	Dark magenta
+dark yellow	felamimail	en	Dark yellow
+date received	felamimail	en	Date Received
+date(newest first)	felamimail	en	Date -newest first
+date(oldest first)	felamimail	en	Date -oldest first
+days	felamimail	en	Days
+deactivate script	felamimail	en	De-activate script
+default	felamimail	en	Default
+default signature	felamimail	en	Default signature
+default sorting order	felamimail	en	Default sorting order
+delete all	felamimail	en	Delete all
+delete folder	felamimail	en	Delete folder
+delete script	felamimail	en	Delete script
+delete selected	felamimail	en	Delete selected
+delete selected messages	felamimail	en	Delete selected messages
+delete this folder irreversible?	felamimail	en	Delete this folder irreversible?
+deleted	felamimail	en	Deleted
+deleted folder successfully!	felamimail	en	Deleted folder successfully!
+deleting messages	felamimail	en	Deleting messages
+disable	felamimail	en	Disable
+disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	en	Disable ruler for separation of mail body and signature when adding signature to composed message .<br>If you use templates, this option is only applied to the text part of the message.
+discard	felamimail	en	Discard
+discard message	felamimail	en	Discard message
+display message in new window	felamimail	en	Display message in new window
+display messages in multiple windows	felamimail	en	Display messages in multiple windows
+display of html emails	felamimail	en	Display HTML emails
+display only when no plain text is available	felamimail	en	Display only when no plain text is available
+display preferences	felamimail	en	Display preferences
+displaying html messages is disabled	felamimail	en	Displaying html messages is disabled
+displaying plain messages is disabled	felamimail	en	Displaying plain messages is disabled
+do it!	felamimail	en	Do it!
+do not use sent	felamimail	en	Do not use Sent
+do not use trash	felamimail	en	Do not use Trash
+do not validate certificate	felamimail	en	Do not validate certificate
+do you really want to attach the selected messages to the new mail?	felamimail	en	Do you really want to attach the selected messages to the new mail?
+do you really want to delete the '%1' folder?	felamimail	en	Do you really want to delete the '%1' folder?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	en	Do you really want to delete the selected account settings and the associated identity.
+do you really want to delete the selected signatures?	felamimail	en	Do you really want to delete the selected signatures?
+do you really want to move or copy the selected messages to folder:	felamimail	en	Do you really want to move or copy the selected messages to folder:
+do you really want to move the selected messages to folder:	felamimail	en	Do you really want to move the selected messages to folder:
+do you want to be asked for confirmation before attaching selected messages to new mail?	felamimail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup for forwarding of mails via settings, even if SIEVE is enabled?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup of filter rules, even if SIEVE is enabled?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup of notification by mail to other email addresses if emails arrive, even if SIEVE is enabled?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup of the absent/vacation notice, even if SIEVE is enabled?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	en	Do you want to prevent the managing of folders -creation, access rights AND subscription?
+does not contain	felamimail	en	Does not contain
+does not exist on imap server.	felamimail	en	Does not exist on IMAP server.
+does not match	felamimail	en	Does not match
+does not match regexp	felamimail	en	Does not match regexp
+don't use draft folder	felamimail	en	Don't use Draft folder
+don't use sent	felamimail	en	Don't use Sent folder
+don't use template folder	felamimail	en	Don't use Template folder
+don't use trash	felamimail	en	Don't use Trash folder
+dont strip any tags	felamimail	en	Dont strip any tags
+down	felamimail	en	Down
+download	felamimail	en	Download
+download this as a file	felamimail	en	Download this as a file
+draft folder	felamimail	en	Draft folder
+drafts	felamimail	en	Drafts
+e-mail	felamimail	en	Email
+e-mail address	felamimail	en	Email address
+e-mail folders	felamimail	en	Email folders
+edit email forwarding address	felamimail	en	Edit email forwarding address
+edit filter	felamimail	en	Edit filter
+edit rule	felamimail	en	Edit rule
+edit selected	felamimail	en	Edit selected
+edit vacation settings	felamimail	en	Edit vacation settings
+editor type	felamimail	en	Editor type
+email address	felamimail	en	Email address
+email forwarding address	felamimail	en	Email forwarding address
+email notification update failed	felamimail	en	Email notification update failed
+email signature	felamimail	en	Email signature
+emailaddress	felamimail	en	Email address
+empty trash	felamimail	en	Empty trash
+enable	felamimail	en	Enable
+encrypted connection	felamimail	en	Encrypted connection
+enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain from user@domain
+enter your imap mail server hostname or ip address	admin	en	Enter your IMAP mail server hostname or IP address
+enter your sieve server hostname or ip address	admin	en	Enter your SIEVE server hostname or IP address
+enter your sieve server port	admin	en	Enter your SIEVE server port
+enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
+enter your smtp server port	admin	en	Enter your SMTP server port
+entry saved	felamimail	en	Entry saved
+error	felamimail	en	ERROR
+error connecting to imap serv	felamimail	en	Error connecting to IMAP server
+error connecting to imap server. %s : %s.	felamimail	en	Error connecting to IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	felamimail	en	Error connecting to IMAP server: [%s] %s.
+error creating rule while trying to use forward/redirect.	felamimail	en	Error creating rule while trying to use forward/redirect.
+error opening	felamimail	en	Error opening
+error saving %1!	felamimail	en	Error saving %1!
+error:	felamimail	en	Error:
+error: could not save message as draft	felamimail	en	Error: Could not save message as draft
+error: could not save rule	felamimail	en	Error: Could not save rule
+error: could not send message.	felamimail	en	Error: Could not send message.
+error: message could not be displayed.	felamimail	en	ERROR: Message could not be displayed.
+event details follow	felamimail	en	Event details follow
+every	felamimail	en	Every
+every %1 days	felamimail	en	Every %1 days
+expunge	felamimail	en	Expunge
+extended	felamimail	en	Extended
+felamimail	common	en	eMail
+file into	felamimail	en	File into
+file rejected, no %2. is:%1	felamimail	en	File rejected, no %2. Is:%1
+filemanager	felamimail	en	Filemanager
+files	felamimail	en	Files
+filter active	felamimail	en	Filter active
+filter name	felamimail	en	Filter name
+filter rules	common	en	Filter rules
+first name	felamimail	en	First name
+flagged	felamimail	en	Flagged
+flags	felamimail	en	Flags
+folder	felamimail	en	Folder
+folder acl	felamimail	en	Folder ACL
+folder name	felamimail	en	Folder name
+folder path	felamimail	en	Folder path
+folder preferences	felamimail	en	Folder preferences
+folder settings	felamimail	en	Folder settings
+folder status	felamimail	en	Folder status
+folderlist	felamimail	en	Folder list
+foldername	felamimail	en	Folder name
+folders	felamimail	en	Folders
+folders created successfully!	felamimail	en	Folders created successfully!
+follow	felamimail	en	Follow
+for mail to be send - not functional yet	felamimail	en	For mail to be send - not functional yet
+for received mail	felamimail	en	For received mail
+forward	felamimail	en	Forward
+forward as attachment	felamimail	en	Forward as attachment
+forward inline	felamimail	en	Forward inline
+forward messages to	felamimail	en	Forward messages to
+forward to	felamimail	en	Forward to
+forward to address	felamimail	en	Forward to address
+forwarding	felamimail	en	Forwarding
+found	felamimail	en	Found
+from	felamimail	en	From
+from(a->z)	felamimail	en	From (A->Z)
+from(z->a)	felamimail	en	From (Z->A)
+full name	felamimail	en	Full Name
+greater than	felamimail	en	Greater than
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	en	Have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about Squirrelmail.<br>
+header lines	felamimail	en	Header lines
+hide header	felamimail	en	Hide header
+hostname / address	felamimail	en	Hostname / address
+how to forward messages	felamimail	en	How to forward messages
+html	felamimail	en	HTML
+icons and text	felamimail	en	Icons and text
+icons only	felamimail	en	Icons only
+identifying name	felamimail	en	Identifying name
+identity	felamimail	en	Identity
+if	felamimail	en	IF
+if from contains	felamimail	en	If from contains
+if mail header	felamimail	en	If mail header
+if message size	felamimail	en	If message size
+if shown, which folders should appear on main screen	felamimail	en	If shown, which folders should appear on main screen
+if subject contains	felamimail	en	If subject contains
+if to contains	felamimail	en	If to contains
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+illegal folder name.  please select a different name.	felamimail	en	Invalid folder name. Please select a different name.
+imap	felamimail	en	IMAP
+imap server	felamimail	en	IMAP server
+imap server address	felamimail	en	IMAP server address
+imap server closed the connection.	felamimail	en	IMAP server closed the connection.
+imap server closed the connection. server responded: %s	felamimail	en	IMAP server closed the connection. Server responded: %s
+imap server password	felamimail	en	IMAP server password
+imap server type	felamimail	en	IMAP server type
+imap server username	felamimail	en	IMAP server user name
+imaps authentication	felamimail	en	IMAPS authentication
+imaps encryption only	felamimail	en	IMAPS encryption only
+import	felamimail	en	Import
+import mail	felamimail	en	Import mail
+import message	felamimail	en	Import message
+import of message %1 failed. could not save message to folder %2 due to: %3	felamimail	en	Import of message %1 failed. Could not save message to folder %2 due to: %3
+import of message %1 failed. destination folder %2 does not exist.	felamimail	en	Import of message %1 failed. Destination folder %2 does not exist.
+import of message %1 failed. destination folder not set.	felamimail	en	Import of message %1 failed. Destination folder not set.
+import of message %1 failed. no contacts to merge and send to specified.	felamimail	en	Import of message %1 failed. No contacts to merge and send to specified.
+importance	felamimail	en	Importance
+in	felamimail	en	In
+inbox	felamimail	en	INBOX
+incoming mail server(imap)	felamimail	en	Incoming mail server (IMAP)
+index order	felamimail	en	Index order
+info	felamimail	en	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	en	Insert the signature at top of the new message when opening compose dialog.
+invalid user name or password	felamimail	en	Invalid user name or password
+javascript	felamimail	en	JavaScript
+jumping to end	felamimail	en	Jumping to end
+jumping to start	felamimail	en	Jumping to start
+junk	felamimail	en	Junk
+keep a copy of the message in your inbox	felamimail	en	Keep a copy of the message in your inbox
+keep local copy of email	felamimail	en	Keep local copy of email
+kilobytes	felamimail	en	kilobytes
+language	felamimail	en	Language
+last name	felamimail	en	Last name
+left	felamimail	en	Left
+less	felamimail	en	Less
+less than	felamimail	en	Less than
+light gray	felamimail	en	Light gray
+list all	felamimail	en	List all
+loading	felamimail	en	Loading
+location of buttons when composing	felamimail	en	Location of buttons when composing
+mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	en	Mail Grid Behavior: how many messages should the mailgrid load? If you select all messages there will be no pagination for mail message list. (Beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)
+mail server login type	admin	en	Mail server login type
+mail settings	felamimail	en	Mail settings
+mainmessage	felamimail	en	Main message
+manage email accounts and identities	common	en	Manage eMail accounts and identities
+manage emailaccounts	common	en	Manage EMail accounts
+manage emailfilter / vacation	preferences	en	Manage EMail filter / Vacation
+manage folders	common	en	Manage folders
+manage sieve	common	en	Manage sieve scripts
+manage signatures	felamimail	en	Manage signatures
+mark as	felamimail	en	Mark as
+mark as deleted	felamimail	en	Mark as deleted
+mark messages as	felamimail	en	Mark selected messages as
+mark selected as flagged	felamimail	en	Mark selected as flagged
+mark selected as read	felamimail	en	Mark selected as read
+mark selected as unflagged	felamimail	en	Mark selected as unflagged
+mark selected as unread	felamimail	en	Mark selected as unread
+match	felamimail	en	Match
+matches	felamimail	en	Matches
+matches regexp	felamimail	en	Matches regexp
+max uploadsize	felamimail	en	Max upload size
+message highlighting	felamimail	en	Message highlighting
+message list	felamimail	en	Message list
+messages	felamimail	en	Messages
+move	felamimail	en	Move
+move folder	felamimail	en	Move folder
+move messages	felamimail	en	Move messages
+move messages?	felamimail	en	Move Messages?
+move selected to	felamimail	en	Move selected to
+move to	felamimail	en	Move to
+move to trash	felamimail	en	Move to Trash
+moving messages to	felamimail	en	Moving messages to
+name	felamimail	en	Name
+never display html emails	felamimail	en	Never display HTML emails
+new	common	en	New
+new filter	felamimail	en	New filter
+next	felamimail	en	Next
+next message	felamimail	en	Next message
+no active imap server found!!	felamimail	en	No active IMAP server found!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	en	No Address TO/CC/BCC supplied and no folder to save message provided.
+no encryption	felamimail	en	No encryption
+no filter	felamimail	en	No filter
+no folders	felamimail	en	No folders
+no folders found	felamimail	en	No folders found
+no folders were found to subscribe to!	felamimail	en	No folders were found to subscribe to!
+no folders were found to unsubscribe from!	felamimail	en	No folders were found to unsubscribe from!
+no highlighting is defined	felamimail	en	No highlighting is defined
+no imap server host configured!!	felamimail	en	No IMAP server host configured!!
+no message returned.	felamimail	en	No message returned.
+no messages found...	felamimail	en	No messages found...
+no messages selected, or lost selection. changing to folder	felamimail	en	No messages selected or lost the selection. Changing to folder
+no messages were selected.	felamimail	en	No messages were selected.
+no plain text part found	felamimail	en	No plain text part found
+no previous message	felamimail	en	No previous messages
+no recipient address given!	felamimail	en	No recipient address given!
+no signature	felamimail	en	No signature
+no stationery	felamimail	en	No stationery
+no subject given!	felamimail	en	No subject given!
+no supported imap authentication method could be found.	felamimail	en	No supported IMAP authentication method could be found.
+no text body supplied, check attachments for message text	felamimail	en	No text body supplied, check attachments for message text
+no valid data to create mailprofile!!	felamimail	en	No valid data to create email profile!!
+no valid emailprofile selected!!	felamimail	en	No valid email profile selected!!
+none	felamimail	en	None
+none, create all	felamimail	en	None, create all
+not allowed	felamimail	en	Not allowed
+notify when new mails arrive on these folders	felamimail	en	Notify when new mails arrive on these folders
+on	felamimail	en	On
+on behalf of	felamimail	en	On behalf of
+one address is not valid	felamimail	en	One address is not valid
+only inbox	felamimail	en	Only INBOX
+only one window	felamimail	en	Only one window
+only send message, do not copy a version of the message to the configured sent folder	felamimail	en	only send message, do not copy a version of the message to the configured sent folder
+only unseen	felamimail	en	Only unseen
+open all	felamimail	en	Open all
+options	felamimail	en	Options
+or	felamimail	en	Or
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	en	Or configure an valid IMAP Server connection using the Manage accounts and identities preference in the side box menu.
+organisation	felamimail	en	Organisation
+organization	felamimail	en	Organization
+organization name	admin	en	Organization name
+original message	felamimail	en	Original message
+outgoing mail server(smtp)	felamimail	en	Outgoing mail server (SMTP)
+participants	felamimail	en	Participants
+personal information	felamimail	en	Personal information
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	en	Please ask the administrator to correct the EmailAdmin IMAP server settings for you.
+please configure access to an existing individual imap account.	felamimail	en	Please configure access to an existing individual IMAP account.
+please select a address	felamimail	en	Please select an address
+please select the number of days to wait between responses	felamimail	en	Please select the number of days to wait between responses
+please supply the message to send with auto-responses	felamimail	en	Please supply the message to send with auto-responses
+port	felamimail	en	Port
+posting	felamimail	en	Posting
+preview disabled for folder:	felamimail	en	Preview disabled for folder:
+previous	felamimail	en	Previous
+previous message	felamimail	en	Previous message
+primary emailadmin profile	felamimail	en	Primary EmailAdmin profile
+print it	felamimail	en	Print
+print this page	felamimail	en	Print this page
+printview	felamimail	en	Print view
+processing of file %1 failed. failed to meet basic restrictions.	felamimail	en	Processing of file %1 failed. Failed to meet basic restrictions.
+quicksearch	felamimail	en	Quick search
+read	felamimail	en	Read
+reading	felamimail	en	Reading
+receive notification	felamimail	en	Receive notification
+recent	felamimail	en	Recent
+refresh time in minutes	felamimail	en	Refresh time in minutes
+reject with	felamimail	en	Reject with
+remove	felamimail	en	Remove
+remove immediately	felamimail	en	Remove immediately
+rename	felamimail	en	Rename
+rename a folder	felamimail	en	Rename a folder
+rename folder	felamimail	en	Rename folder
+renamed successfully!	felamimail	en	Renamed successfully!
+replied	felamimail	en	Replied
+reply	felamimail	en	Reply
+reply all	felamimail	en	Reply All
+reply to	felamimail	en	Reply To
+replyto	felamimail	en	Reply To
+required pear class mail/mimedecode.php not found.	felamimail	en	Required PEAR class Mail/mimeDecode.php not found.
+respond	felamimail	en	Respond
+respond to mail sent to	felamimail	en	Respond to mail sent to
+return	felamimail	en	Return
+return to options page	felamimail	en	Return to options page
+right	felamimail	en	Right
+row order style	felamimail	en	Row order style
+rule	felamimail	en	Rule
+save	felamimail	en	Save
+save all	felamimail	en	Save all
+save as draft	felamimail	en	Save as draft
+save as infolog	felamimail	en	Save as InfoLog
+save as ticket	felamimail	en	Save as Tracker ticket
+save as tracker	felamimail	en	Save as tracker
+save changes	felamimail	en	Save changes
+save message to disk	felamimail	en	Save message to disk
+save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
+save:	felamimail	en	Save:
+script name	felamimail	en	Script name
+script status	felamimail	en	Script status
+search	felamimail	en	Search
+search for	felamimail	en	Search for
+select	felamimail	en	Select
+select a message to switch on its preview (click on subject)	felamimail	en	Select a message to switch on its preview.
+select all	felamimail	en	Select all
+select emailprofile	felamimail	en	Select email profile
+select folder	felamimail	en	Select folder
+select your mail server type	admin	en	Select mail server type
+send	felamimail	en	Send
+send a reject message	felamimail	en	Send a reject message
+send message and move to send folder (if configured)	felamimail	en	Send message and move to send folder, if configured
+sender	felamimail	en	Sender
+sent	felamimail	en	Sent
+sent folder	felamimail	en	Sent folder
+server supports mailfilter(sieve)	felamimail	en	Server supports mail filter (sieve)
+set as default	felamimail	en	Set as default
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	en	Show all folders, subscribed AND unsubscribed, in main screen folder pane.
+show all messages	felamimail	en	Show all messages
+show header	felamimail	en	Show header
+show new messages on main screen	felamimail	en	Show new messages on main screen
+sieve script name	felamimail	en	Sieve script name
+sieve settings	admin	en	Sieve settings
+signatur	felamimail	en	Signature
+signature	felamimail	en	Signature
+simply click the target-folder	felamimail	en	Click the target folder
+size	felamimail	en	Size
+size of editor window	felamimail	en	Size of editor window
+size(...->0)	felamimail	en	Size (...->0)
+size(0->...)	felamimail	en	Size (0->...)
+skipping forward	felamimail	en	Skipping forward
+skipping previous	felamimail	en	Skipping previous
+small view	felamimail	en	Small view
+smtp settings	admin	en	SMTP settings
+start new messages with mime type plain/text or html?	felamimail	en	Start new messages with mime type plain/text or HTML?
+stationery	felamimail	en	Stationery
+subject	felamimail	en	Subject
+subject(a->z)	felamimail	en	Subject (A->Z)
+subject(z->a)	felamimail	en	Subject (Z->A)
+submit	felamimail	en	Submit
+subscribe	felamimail	en	Subscribe
+subscribed	felamimail	en	Subscribed
+subscribed successfully!	felamimail	en	Subscribed successfully!
+switching of signatures failed	felamimail	en	Switching of signatures failed
+system signature	felamimail	en	System signature
+table of contents	felamimail	en	Table of contents
+template folder	felamimail	en	Template folder
+templates	felamimail	en	Templates
+text only	felamimail	en	Text only
+text/plain	felamimail	en	Text/plain
+the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
+the connection to the imap server failed!!	felamimail	en	The connection to the IMAP Server failed!!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	en	The IMAP server does not appear to support the authentication method selected. Please contact your system administrator.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
+the mimeparser can not parse this message.	felamimail	en	The mimeparser can not parse this message.
+then	felamimail	en	THAN
+there is no imap server configured.	felamimail	en	There is no IMAP server configured.
+this folder is empty	felamimail	en	THIS FOLDER IS EMPTY
+this php has no imap support compiled in!!	felamimail	en	This PHP has no IMAP support compiled in!!
+to	felamimail	en	To
+to mail sent to	felamimail	en	To mail sent to
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
+translation preferences	felamimail	en	Translation preferences
+translation server	felamimail	en	Translation server
+trash	felamimail	en	Trash
+trash fold	felamimail	en	Trash folder
+trash folder	felamimail	en	Trash folder
+trust servers seen / unseen info when retrieving the folder status. (if you select no, we will search for the unseen messages and count them ourselves)	felamimail	en	trust servers SEEN / UNSEEN info when retrieving the folder status. (if you select no, we will search for the UNSEEN messages and count them ourselves)
+trying to recover from session data	felamimail	en	Trying to recover from session data
+type	felamimail	en	Type
+undelete	felamimail	en	Undelete
+unexpected response from server to authenticate command.	felamimail	en	Unexpected response from server to AUTHENTICATE command.
+unexpected response from server to digest-md5 response.	felamimail	en	Unexpected response from server to Digest-MD5 response.
+unexpected response from server to login command.	felamimail	en	Unexpected response from server to LOGIN command.
+unflagged	felamimail	en	Unflagged
+unknown err	felamimail	en	Unknown error
+unknown error	felamimail	en	Unknown error
+unknown imap response from the server. server responded: %s	felamimail	en	Unknown IMAP response from the server. Server responded: %s
+unknown sender	felamimail	en	Unknown sender
+unknown user or password incorrect.	felamimail	en	Unknown user or incorrect password.
+unread	common	en	Unread
+unseen	felamimail	en	Unseen
+unselect all	felamimail	en	Unselect all
+unsubscribe	felamimail	en	Unsubscribe
+unsubscribed	felamimail	en	Unsubscribed
+unsubscribed successfully!	felamimail	en	Unsubscribed successfully!
+up	felamimail	en	Up
+updating message status	felamimail	en	Updating message status
+updating view	felamimail	en	Updating view
+use <a href="%1">emailadmin</a> to create profiles	felamimail	en	Use <a href="%1">EmailAdmin</a> to create profiles
+use a signature	felamimail	en	Use a signature
+use a signature?	felamimail	en	Use a signature?
+use addresses	felamimail	en	Use addresses
+use common preferences max. messages	felamimail	en	use common preferences max. messages
+use custom identities	felamimail	en	Use custom identities
+use custom settings	felamimail	en	Use custom settings
+use regular expressions	felamimail	en	Use regular expressions
+use smtp auth	admin	en	Use SMTP auth
+users can define their own emailaccounts	admin	en	Users can define their own email accounts
+vacation notice	common	en	Vacation notice
+vacation notice is active	felamimail	en	Vacation notice is active
+vacation start-date must be before the end-date!	felamimail	en	Vacation start date must be BEFORE the end date!
+validate certificate	felamimail	en	Validate certificate
+view full header	felamimail	en	View full header
+view header lines	felamimail	en	View header lines
+view message	felamimail	en	View message
+viewing full header	felamimail	en	Viewing full header
+viewing message	felamimail	en	Viewing message
+viewing messages	felamimail	en	Viewing messages
+when deleting messages	felamimail	en	When deleting messages
+when sending messages	felamimail	en	When sending messages
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders, additionally to the Sent folder, should be displayed using the Sent Folder View Schema
+which folders - in general - should not be automatically created, if not existing	felamimail	en	Which folders - in general - should NOT be automatically created, if not existing
+with message	felamimail	en	With message
+with message "%1"	felamimail	en	With message "%1"
+wrap incoming text at	felamimail	en	Wrap incoming text at
+writing	felamimail	en	Writing
+wrote	felamimail	en	Wrote
+yes, offer copy option	felamimail	en	Yes, offer copy option
+you can either choose to save as infolog or tracker, not both.	felamimail	en	You can either choose to save as InfoLog OR Tracker, not both.
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	en	You can use %1 for the above start date and %2 for the end date.
+you have received a new message on the	felamimail	en	You have received a new message on the
+your message to %1 was displayed.	felamimail	en	Your message to %1 was displayed.
