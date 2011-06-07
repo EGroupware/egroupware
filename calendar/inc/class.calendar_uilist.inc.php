@@ -149,7 +149,7 @@ class calendar_uilist extends calendar_ui
 				'filter'          => 'after',
 				'order'           => 'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
-				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
+				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id,legacy_actions',
 				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'header_left'     => 'calendar.list.dates',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
