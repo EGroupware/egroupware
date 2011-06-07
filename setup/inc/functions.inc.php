@@ -49,10 +49,10 @@ if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
 	}
 	else	// no install
 	{
-		define('EGW_SERVER_ROOT','..');
-		define('EGW_INCLUDE_ROOT','..');
-		define('PHPGW_SERVER_ROOT','..');
-		define('PHPGW_INCLUDE_ROOT','..');
+		define('EGW_SERVER_ROOT',realpath('..'));
+		define('EGW_INCLUDE_ROOT',realpath('..'));
+		define('PHPGW_SERVER_ROOT',realpath('..'));
+		define('PHPGW_INCLUDE_ROOT',realpath('..'));
 	}
 	define('EGW_API_INC',EGW_SERVER_ROOT.'/phpgwapi/inc');
 }
