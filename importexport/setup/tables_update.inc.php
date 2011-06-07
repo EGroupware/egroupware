@@ -1,8 +1,8 @@
 <?php
 /**
  * EGroupware - Setup
- * 
- * @link http://www.egroupware.org 
+ *
+ * @link http://www.egroupware.org
  * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -60,11 +60,19 @@ function importexport_upgrade1_9_001()
 	// Not needed - did it wrong
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.002';
 }
+
 function importexport_upgrade1_9_002()
 {
 	$sql = 'UPDATE egw_importexport_definitions SET allowed_users = '.
-	$GLOBALS['egw_setup']->db->concat("','", 'allowed_users', "','");
-        $GLOBALS['egw_setup']->oProc->query($sql, __LINE__, __FILE__);
+		$GLOBALS['egw_setup']->db->concat("','", 'allowed_users', "','");
+	$GLOBALS['egw_setup']->oProc->query($sql, __LINE__, __FILE__);
+
+	// give Default and Admins group rights for ImportExport
+	foreach(array('Default' => 'Default','Admins' => 'Admin') as $account_lid => $name)
+	{
+		$account_id = $GLOBALS['egw_setup']->add_account($account_lid,$name,'Group',False,False);
+		$GLOBALS['egw_setup']->add_acl('importexport','run',$account_id);
+	}
 
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.003';
 }
