@@ -110,7 +110,7 @@ class uisettings
 		$forced  = get_var('forced',Array('POST'));
 		$default = get_var('default',Array('POST'));
 
-		$this->t = new Template(common::get_tpl_dir('preferences'));
+		$this->t = new Template(common::get_tpl_dir('preferences'),'keep');
 		$this->t->set_file(array(
 			'preferences' => 'preferences.tpl'
 		));
@@ -118,7 +118,7 @@ class uisettings
 		$this->t->set_block('preferences','row','rowhandle');
 		$this->t->set_block('preferences','help_row','help_rowhandle');
 		$this->t->set_block('preferences','section_row','section_rowhandle');
-		$this->t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => '', 'section_rowhandle'));
+		$this->t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => '', 'section_rowhandle' => ''));
 
 		$this->prefix = get_var('prefix',array('GET'),$this->bo->session_data['appname'] == $_GET['appname'] ? $this->bo->session_data['prefix'] : '');
 
