@@ -239,7 +239,7 @@ function phpgwapi_upgrade1_9_009()
 		'sql_encryption_type' => 'md5',
 		'ldap_encryption_type' => 'des',
 		'pwd_migration_allowed' => null,	// default off
-		'pwd_mirgation_types' => null,
+		'pwd_migration_types' => null,
 	);
 	foreach($GLOBALS['egw_setup']->db->select('egw_config','config_name,config_value',array(
 		'config_app' => 'phpgwapi',
