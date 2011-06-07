@@ -8,7 +8,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package importexport
  * @subpackage setup
- * @version $Id: class.db_tools.inc.php 21408 2006-04-21 10:31:06Z nelius_weiss $
+ * @version $Id$
  */
 
 function importexport_upgrade0_002()
