@@ -557,6 +557,10 @@ class infolog_ui
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
+				elseif($msg)
+				{
+					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
+				}
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['select_all']);
 			}
@@ -1106,7 +1110,13 @@ class infolog_ui
 						break;
 					}
 					$entry['info_type'] = $settings;
-					$this->bo->write($entry, true,true,true,$skip_notifications);
+					try {
+						$this->bo->write($entry, true,true,true,$skip_notifications,true); // Throw exceptions
+					} catch (egw_exception_wrong_userinput $e) {
+						$msg .= "\n".$e->getMessage();
+						$failed++;
+						break;
+					}
 					$success++;
 					break;
 

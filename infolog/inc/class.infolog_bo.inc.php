@@ -668,10 +668,11 @@ class infolog_bo
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @param boolean $user2server=true conversion between user- and server-time necessary
 	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
+	* @param boolean $throw_exception=false Throw an exception (if required fields are not set)
 	*
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false)
+	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false, $throw_exception=false)
 	{
 		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
@@ -780,6 +781,23 @@ class infolog_bo
 			if (isset($values['info_subject']) && empty($values['info_subject']))
 			{
 				$values['info_subject'] = $this->subject_from_des($values['info_des']);
+			}
+
+			// Check required custom fields
+			if($throw_exception) {
+				$custom = config::get_customfields('infolog');
+				foreach($custom as $c_name => $c_field)
+				{
+					if($c_field['type2']) $type2 = explode(',',$c_field['type2']);
+					if($c_field['needed'] && (!$c_field['type2'] || $c_field['type2'] && in_array($values['info_type'],$type2)))
+					{
+						// Required custom field
+						if(!$values['#'.$c_name])
+						{
+							throw new egw_exception_wrong_userinput(lang('For infolog type %1, %2 is required',lang($values['info_type']),$c_field['label']));
+						}
+					}
+				}
 			}
 		}
 		if (isset($this->group_owners[$values['info_type']]))
