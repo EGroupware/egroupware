@@ -883,7 +883,7 @@ abstract class egw_framework
 			$this->_add_topmenu_item(array(
 				'name'  => $pw_app['name'] == 'password' ? 'about' : $pw_app['name'],
 				'title' => lang('Password'),
-				'url'   => egw::link('/preferences/password.php'),
+				'url'   => egw::link($pw_app['name'] == 'password' ? $pw_app['index'] : '/index.php?menuaction=preferences.uipassword.change'),
 				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
 			));
 		}
