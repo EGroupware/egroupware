@@ -587,12 +587,11 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 
-		if (!$this->check_acl(EGW_ACL_EDIT,$ts_id))
+		if (!$this->check_acl(EGW_ACL_EDIT,$ts_id) || !$this->read($ts_id,true))
 		{
 			return false;
 		}
 
-		$this->read($keys,true);
 		$this->data['ts_status'] = $status;
 		if ($this->save($ts_id)!=0) $ret = false;
 
