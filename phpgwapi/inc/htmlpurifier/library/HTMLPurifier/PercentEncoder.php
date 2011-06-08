@@ -52,7 +52,7 @@ class HTMLPurifier_PercentEncoder
         //error_log(__METHOD__.__LINE__.$string);
         for ($i = 0, $c = strlen($string); $i < $c; $i++) {
             if (substr($string,$i,1) !== '%' && !isset($this->preserve[$int = ord(substr($string,$i,1))]) ) {
-                $ret .= '%' . sprintf('%02X', $int);
+                $ret .= rawurlencode(substr($string,$i,1)); // '%' . sprintf('%02X', $int);
             } else {
                 $ret .= substr($string,$i,1);
             }
