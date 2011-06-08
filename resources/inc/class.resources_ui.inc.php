@@ -115,6 +115,7 @@ class resources_ui
 		$content['msg'] = $msg;
 
 		$content['nm']['header_left']	= 'resources.resource_select.header';
+		$content['nm']['header_right']	= 'resources.show.nm_right';
 		$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= lang('Category');
@@ -174,6 +175,8 @@ class resources_ui
 			}
 		</script>";
 
+		egw_framework::validate_file('.','resources','resources');
+
 		if($content['nm']['view_accs_of'])
 		{
 			$master = $this->bo->so->read(array('res_id' => $content['nm']['view_accs_of']));
@@ -188,6 +191,7 @@ class resources_ui
 				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
+	
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
@@ -201,27 +205,54 @@ class resources_ui
 	protected function get_actions()
 	{
 		$actions = array(
-			'view' => array(
-				'caption' => 'View',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=resources.resources_ui.show&res_id=$id',
-				'popup' => egw_link::get_registry('resources', 'view_popup'),
-				'group' => $group=1,
-			),
 			'edit' => array(
 				'default' => true,
-				'caption' => 'Edit',
+				'caption' => 'open',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=resources.resources_ui.edit&res_id=$id',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 				'disableClass' => 'rowNoEdit',
 			),
+			'view' => array(
+				'caption' => 'View',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=resources.resources_ui.show&res_id=$id',
+				'popup' => egw_link::get_registry('resources', 'view_popup'),
+				'group' => $group,
+			),
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=resources.resources_ui.edit',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
+			),
+			'view_calendar' => array(
+				'caption' => 'View calendar',
+				'icon' => 'calendar/planner',
+				'group' => ++$group,
+				'allowOnMultiple' => true,
+				'onExecute' => 'javaScript:view_calendar',
+				'url' => 'menuaction=calendar.calendar_uiviews.planner&sortby=user&owner=0',
+				'nm_action' => 'location',
+				'disableClass' => 'no_view_calendar',
+			),
+			'book' => array(
+				'caption' => 'Book resource',
+				'icon' => 'navbar',
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'onExecute' => 'javaScript:view_calendar',
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=',
+				'popup' => egw_link::get_registry('calendar', 'add_popup'),
+				'disableClass' => 'no_book',
+			),
+			'new_accessory' => array(
+				'caption' => 'New accessory',
+				'group' => $group,
+				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'disableClass' => 'no_new_accessory',
 			),
 			'select_all' => array(
 				'caption' => 'Whole query',
@@ -241,7 +272,7 @@ class resources_ui
 				'confirm' => 'Delete this entry',
 				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
-				'disableClass' => 'rowNoDelete',
+				'disableClass' => 'no_delete',
 			),
 		);
 		return $actions;

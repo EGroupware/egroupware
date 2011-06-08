@@ -117,7 +117,7 @@ class resources_bo
 			return $nr;
 		}
 
-		foreach((array)$rows as $num => $resource)
+		foreach($rows as $num => &$resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
@@ -126,23 +126,29 @@ class resources_bo
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE))
 			{
 				$readonlys["delete[$resource[res_id]]"] = true;
+				$resource['class'] .= 'no_delete ';
 			}
 			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $accessory_of != -1)
 			{
 				$readonlys["new_acc[$resource[res_id]]"] = true;
+				$resource['class'] .= 'no_new_accessory ';
 			}
 			if (!$resource['bookable'])
 			{
 				$readonlys["bookable[$resource[res_id]]"] = true;
 				$readonlys["calendar[$resource[res_id]]"] = true;
+				$resource['class'] .= 'no_book ';
+				$resource['class'] .= 'no_view_calendar ';
 			}
 			if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_CALREAD))
 			{
 				$readonlys["calendar[$resource[res_id]]"] = true;
+				$resource['class'] .= 'no_view_calendar ';
 			}
 			if (!$resource['buyable'])
 			{
 				$readonlys["buyable[$resource[res_id]]"] = true;
+				$resource['class'] .= 'no_buy ';
 			}
 			$readonlys["view_acc[$resource[res_id]]"] = true;
 			$links = egw_link::get_links('resources',$resource['res_id']);
