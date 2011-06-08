@@ -12,17 +12,17 @@
 
 /**
  * class definition
- * 
- * definitions are ojects with all nessesary information to do 
+ *
+ * definitions are ojects with all nessesary information to do
  * complete import or export. All options needed for an explicit {Im|Ex}port
  * are in one assiozative array which is complely managed by {Im|Ex}port plugins
  * @todo testing
  */
 class importexport_definition implements importexport_iface_egw_record {
-	
+
 	const _appname = 'importexport';
 	const _defintion_talbe = 'egw_importexport_definitions';
-	
+
 	private $attributes = array(
 		'definition_id' => 'string',
 		'name' => 'string',
@@ -35,27 +35,27 @@ class importexport_definition implements importexport_iface_egw_record {
 		'description' => 'string',
 		'modified' => 'timestamp'
 	);
-	
+
 	/**
 	 * @var so_sql holds so_sql object
 	 */
 	private $so_sql;
-	
+
 	/**
 	 * @var array internal representation of definition
 	 */
 	private $definition = array();
-	
+
 	/**
 	 * @var int holds current user
 	 */
 	private $user;
-	
+
 	/**
 	 * @var bool is current user an admin?
 	 */
 	private $is_admin;
-	
+
 	/**
 	 * constructor
 	 * reads record from backend if identifier is given.
@@ -65,10 +65,10 @@ class importexport_definition implements importexport_iface_egw_record {
 	public function __construct( $_identifier='' ) {
 		$this->so_sql = new so_sql(self::_appname ,self::_defintion_talbe);
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
-		$this->is_admin = $GLOBALS['egw_info']['user']['apps']['admin'] ? true : false;
+		$this->is_admin = $GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_setup'] ? true : false;
 		// compability to string identifiers
 		if (is_string($_identifier) && strlen($_identifier) > 3) $_identifier = $this->name2identifier($_identifier);
-		
+
 		if ((int)$_identifier != 0) {
 			$this->definition = $this->so_sql->read(array('definition_id' => $_identifier));
 			if ( empty( $this->definition ) ) {
@@ -81,7 +81,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			$this->definition['plugin_options'] = $options_data['root'];
 		}
 	}
-	
+
 	/**
 	 * compability function for string identifiers e.g. used by cli
 	 *
@@ -100,7 +100,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		}
 		return $identifiers[0]['definition_id'];
 	}
-	
+
 	public function __get($_attribute_name) {
 		if (!array_key_exists($_attribute_name,$this->attributes)) {
 			throw new Exception('Error: "'. $_attribute_name. '" is not an attribute defintion');
@@ -114,7 +114,7 @@ class importexport_definition implements importexport_iface_egw_record {
 				return $this->definition[$_attribute_name];
 		}
 	}
-	
+
 	public function __set($_attribute_name,$_data) {
 		if (!array_key_exists($_attribute_name,$this->attributes)) {
 			throw new Exception('Error: "'. $_attribute_name. '" is not an attribute defintion');
@@ -129,7 +129,7 @@ class importexport_definition implements importexport_iface_egw_record {
 				return;
 		}
 	}
-	
+
 	/**
 	 * gets users who are allowd to use this definition
 	 *
@@ -138,7 +138,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	private function get_allowed_users() {
 		return explode(',',substr($this->definition['allowed_users'],1,-1));
 	}
-	
+
 	/**
 	 * sets allowed users
 	 *
@@ -147,7 +147,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	private function set_allowed_users( $_allowed_users ) {
 		$this->definition['allowed_users'] = ','.implode(',',(array)$_allowed_users) .',';
 	}
-	
+
 	/**
 	 * gets options
 	 *
@@ -156,7 +156,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	private function get_options() {
 		return $this->definition['plugin_options'];
 	}
-	
+
 	/**
 	 * sets options
 	 *
@@ -165,9 +165,9 @@ class importexport_definition implements importexport_iface_egw_record {
 	private function set_options(array $_plugin_options) {
 		$this->definition['plugin_options'] = $_plugin_options;
 	}
-	
+
 	/**
-	 * converts this object to array. 
+	 * converts this object to array.
 	 * @abstract We need such a function cause PHP5
 	 * dosn't allow objects do define it's own casts :-(
 	 * once PHP can deal with object casts we will change to them!
@@ -180,16 +180,16 @@ class importexport_definition implements importexport_iface_egw_record {
 		$definition['plugin_options'] = $this->get_options();
 		return $definition;
 	}
-	
+
 	/**
 	 * gets title of record
-	 * 
+	 *
 	 *@return string tiltle
 	 */
 	public function get_title() {
 		return $this->definition['name'];
 	}
-	
+
 	/**
 	 * sets complete record from associative array
 	 *
@@ -197,7 +197,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 */
 	public function set_record( array $_record ) {
 		$this->definition = array_intersect_key( $_record, $this->attributes );
-		
+
 		// anything which is not an attribute is perhaps a plugin_option.
 		// If not, it gets whiped out on save time.
 		foreach ( $_record as $attribute => $value) {
@@ -205,14 +205,14 @@ class importexport_definition implements importexport_iface_egw_record {
 				$this->definition['plugin_options'][$attribute] = $value;
 			}
 		}
-		
+
 		$this->plugin = $_record['plugin'];
 
 		// convert plugin_options into internal representation
 		$this->set_allowed_users( $this->definition['allowed_users'] );
 		$this->set_options( $this->definition['plugin_options'] ? $this->definition['plugin_options'] : array());
 	}
-	
+
 	/**
 	 * gets identifier of this record
 	 *
@@ -221,28 +221,28 @@ class importexport_definition implements importexport_iface_egw_record {
 	public function get_identifier() {
 		return $this->definition['definition_id'];
 	}
-	
-	
+
+
 	/**
 	 * saves record into backend
-	 * 
+	 *
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
 		if ( strlen($this->definition['name']) < 3 ) {
 			throw new Exception('Error: Can\'t save definition, no valid name given!');
 		}
-		
+
 		$this->so_sql->data = $this->definition;
 		$this->so_sql->data['plugin_options'] = importexport_arrayxml::array2xml( $this->definition['plugin_options'] );
 		$this->so_sql->data['modified'] = time();
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
 			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
 		}
-		
+
 		return $this->definition['definition_id'];
 	}
-	
+
 	/**
 	 * copys current record to record identified by $_dst_identifier
 	 *
@@ -262,7 +262,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		unset ($dst_object);
 		return $dst_identifier;
 	}
-	
+
 	/**
 	 * moves current record to record identified by $_dst_identifier
 	 * $this will become moved record
@@ -286,11 +286,11 @@ class importexport_definition implements importexport_iface_egw_record {
 		unset($old_object);
 		return $dst_identifier;
 	}
-	
+
 	/**
 	 * delets current record from backend
 	 * @return void
-	 * 
+	 *
 	 */
 	public function delete () {
 		if($this->user != $this->get_owner() && !$this->is_admin) {
@@ -300,7 +300,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			throw('Error: so_sql was not able to delete definition: '.$this->get_identifier());
 		}
 	}
-	
+
 	/**
 	 * destructor
 	 *
@@ -308,5 +308,5 @@ class importexport_definition implements importexport_iface_egw_record {
 	public function __destruct() {
 		unset($this->so_sql);
 	}
-	
+
 }
