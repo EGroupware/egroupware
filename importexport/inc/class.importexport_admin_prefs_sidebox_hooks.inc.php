@@ -114,7 +114,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),false)."','_blank',500,220,'yes')",
 				'icon' => 'import',
 				'app' => 'importexport',
-				'text' => 'Import CSV'
+				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Import' : 'Import CSV'
 			);
 		}
 		$config = config::read('phpgwapi');
@@ -127,7 +127,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),false)."','_blank',850,440,'yes')",
 				'icon' => 'export',
 				'app' => 'importexport',
-				'text' => 'Export CSV'
+				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Export' : 'Export CSV'
 			);
 		}
 		if($list = self::get_spreadsheet_list($appname))
