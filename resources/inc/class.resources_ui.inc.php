@@ -48,7 +48,6 @@ class resources_ui
 	 */
 	function index($content='')
 	{
-		$msg = $content;
 		if (is_array($content))
 		{
 			$sessiondata = $content['nm'];
@@ -110,6 +109,8 @@ class resources_ui
 					}
 				}
 			}
+		} else {
+			$msg = $content;
 		}
 		$content = array();
 		$content['msg'] = $msg;
@@ -227,14 +228,11 @@ class resources_ui
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 			),
-			'view_calendar' => array(
+			'view-calendar' => array(
 				'caption' => 'View calendar',
 				'icon' => 'calendar/planner',
 				'group' => ++$group,
 				'allowOnMultiple' => true,
-				'onExecute' => 'javaScript:view_calendar',
-				'url' => 'menuaction=calendar.calendar_uiviews.planner&sortby=user&owner=0',
-				'nm_action' => 'location',
 				'disableClass' => 'no_view_calendar',
 			),
 			'book' => array(
@@ -242,9 +240,6 @@ class resources_ui
 				'icon' => 'navbar',
 				'group' => $group,
 				'allowOnMultiple' => true,
-				'onExecute' => 'javaScript:view_calendar',
-				'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=',
-				'popup' => egw_link::get_registry('calendar', 'add_popup'),
 				'disableClass' => 'no_book',
 			),
 			'new_accessory' => array(
@@ -296,19 +291,53 @@ class resources_ui
 		if ($use_all)
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'resources');
+			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession('session_data', $session_name);
 
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
-			$this->bo->get_rows($query,$checked,$readonlys,true);       // true = only return the id's
+			$this->bo->get_rows($query,$resources,$readonlys);
+			foreach($resources as $resource)
+			{
+				$checked[] = $resource['res_id'];
+			}
 		}
-		echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
+		//echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
 
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
 
 		switch($action)
 		{
+			case 'view-calendar':
+				echo "window.location = '".egw::link('/index.php',$url_params);
+				$resource_ids = array(0);
+				$url_params = array(
+					'menuaction' => 'calendar.calendar_uiviews.planner',
+					'sortby' => 'user',
+				);
+				foreach($checked as $n => $id)
+				{
+					$resource_ids[] = 'r'.$id;
+				}
+				$url_params['owner'] = implode(',',$resource_ids);
+				$success = count($resource_ids);
+				egw_framework::set_onload("window.location = '".egw::link('/index.php',$url_params).'\';');
+				$action_msg = lang('view calendar');
+				break;
+			case 'book':
+				$resource_ids = array();
+				$url_params = array(
+					'menuaction' => 'calendar.calendar_uiforms.edit'
+				);
+				foreach($checked as $n => $id)
+				{
+					$resource_ids[] = 'r'.$id;
+				}
+				$url_params['participants'] = implode(',',$resource_ids);
+				$success = count($resource_ids);
+				egw_framework::set_onload("egw_openWindowCentered2('".egw::link('/index.php',$url_params) ."','_blank');");
+				$action_msg = lang('booked');
+				break;
 			case 'delete':
 				$action_msg = lang('deleted');
 				foreach((array)$checked as $n => $id)
