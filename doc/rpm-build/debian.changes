@@ -1,3 +1,21 @@
+egroupware-epl (10.1.20110608-1) hardy; urgency=low
+
+  * Setup: making SSHA (salted sha1) hashes the default password hash for SQL and LDAP
+  * setup/login: fixed not working password (hash) migration
+  * eMail: allow email specific style definitions; allow class for certain html elements;
+  * eMail: allow recursive setting of ACL; beware you should know what you do, when activating. When activated, the chosen acl-changess will be applied to the rest of the folder tree beneath the current folder; Use ARRIVAL (internal message date) as default sort criteria now instead of DATE, as sorting by date presented weird results depending on date/time formats of the send date of the message; Using ARRIVAL date in message list (for the same reason);
+  * Calendar/CalDAV: fixed SQL error on ctag generation, if no ACL rights for requested group calendar exists
+  * Calendar/CalDAV: fixed wrong line-defolding, if folding occured in whitespace
+  * Calendar/CalDAV: use X-EGROUPWARE-UID only, if it resolves to same email (otherwise we are in trouble if different EGw installs talk to each other)
+  * Calendar: fixed not included organizer in meeting request
+  * Manual: use https for accessing manual.egroupware.org to not get page contains unsave content warnings
+  * IE9: enable IE dropdown menu hack only for IE<9, as it stalls IE9 www.stylite.de bug #1722
+  * Setup/API: new option to enforce ssl (without specifying a domain in Webserver-URL)
+  * workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+  * Versioning: fixed not working delete of old versions (www.stylite.de #1734)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 08 Jun 2011 15:09:47 +0200
+
 egroupware-epl (10.1.20110429-1) hardy; urgency=low
 
   * EventMgr: Integrated new "Plattform" field
