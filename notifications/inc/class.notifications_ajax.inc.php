@@ -117,7 +117,7 @@ class notifications_ajax {
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
 			$GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 		{
-			$this->response->assign('currentusers', 'innerText', $GLOBALS['egw']->session->session_count());
+			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}
 
 		$this->get_egwpopup();
