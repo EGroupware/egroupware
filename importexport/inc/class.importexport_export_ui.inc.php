@@ -71,6 +71,10 @@ class importexport_export_ui {
 			$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
 		}
 
+		// Check for preferred definition
+		if(!$_definition && $_appname) {
+			$_definition = $GLOBALS['egw_info']['user']['preferences'][$_appname]['nextmatch-export-definition'];
+		}
 		// fill definitions
 		$sel_options['definition'] = array('' => lang('Select'));
 		$definitions = new importexport_definitions_bo(array(
