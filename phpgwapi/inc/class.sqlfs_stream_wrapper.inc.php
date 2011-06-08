@@ -525,13 +525,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $url )
+	static function unlink ( $url, $parent_stat=null )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE))
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
