@@ -28,7 +28,7 @@
 				<row class="row">
 					<image src="${row}[type]" no_lang="1" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.{$row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[name]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button"/>
 					<description id="${row}[name]" no_lang="1" options="," class="lr_padding"/>
-					<description id="${row}[application]" no_lang="1" class="lr_padding"/>
+					<description id="${row}[application]" class="lr_padding"/>
 					<listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5" options="both" class="lr_padding"/>
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
