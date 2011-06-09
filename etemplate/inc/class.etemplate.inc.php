@@ -444,6 +444,9 @@ class etemplate extends boetemplate
 					$redirect['failed_upload'] = 1;
 					$redirect['msg'] = lang('Error uploading file!')."\n".self::max_upload_size_message();
 				}
+			} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+				// Pass along any parameters
+				$redirect = $_GET;
 			}
 			$this->location($redirect);
 		}
