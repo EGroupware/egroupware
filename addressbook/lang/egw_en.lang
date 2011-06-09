@@ -1,16 +1,16 @@
 %1 added	addressbook	en	%1 added
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights !!!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
-%1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organisation member(s) changed
+%1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed
 %1 not implemented for %2!	addressbook	en	%1 not implemented for %2!
 %1 records imported	addressbook	en	%1 records imported
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read. Not yet imported, you may go %2back%3 and un-check Test import.
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
 %s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
-(empty = use global limit, no = no export at all)	admin	en	(empty = use global limit, no = no export at all)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>  Please choose a conversion type from the list
+(empty = use global limit, no = no export at all)	admin	en	Empty = use global limit, no = no export at all
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>  Choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
 account id	addressbook	en	Account ID
 account repository	admin	en	Account repository
@@ -19,9 +19,9 @@ actions	addressbook	en	Actions
 add %1	addressbook	en	Add %1
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
-add a new infolog	addressbook	en	Add a new Infolog
+add a new infolog	addressbook	en	Add a new InfoLog
 add a new list	addressbook	en	Add a new list
-add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
+add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields
 add appointment	addressbook	en	Add appointment
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add custom field
@@ -29,39 +29,39 @@ add emails of whole distribution list?	addressbook	en	Add emails of whole distri
 add or delete categories	addressbook	en	Add or delete categories
 add to distribution list	addressbook	en	Add to distribution list
 add to distribution list:	addressbook	en	Add to distribution list:
-added	addressbook	en	added
-added by synchronisation	addressbook	en	added by synchronisation
-added to distribution list	addressbook	en	added to distribution list
+added	addressbook	en	Added
+added by synchronisation	addressbook	en	Added by synchronisation
+added to distribution list	addressbook	en	Added to distribution list
 additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
 address book	common	en	Address Book
-address book - vcard in	addressbook	en	Address book - VCard in
+address book - vcard in	addressbook	en	Address book - vCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address line 2
 address type	addressbook	en	Address type
-addressbook	common	en	Addressbook
-addressbook csv export	addressbook	en	Addressbook CSV export
-addressbook csv import	addressbook	en	Addressbook CSV import
-addressbook field	addressbook	en	Addressbook field
-addressbook menu	addressbook	en	Addressbook menu
-addressbook of	addressbook	en	Addressbook of
-addressbook preferences	addressbook	en	Addressbook preferences
-addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
-addressbook the contact should be shown	addressbook	en	Addressbook the contact should be shown
-addressbook-fieldname	addressbook	en	Addressbook field name
-addvcard	addressbook	en	Add VCard
+addressbook	common	en	Address Book
+addressbook csv export	addressbook	en	Address Book CSV export
+addressbook csv import	addressbook	en	Address Book CSV import
+addressbook field	addressbook	en	Address book field
+addressbook menu	addressbook	en	Address Book menu
+addressbook of	addressbook	en	Address book of
+addressbook preferences	addressbook	en	Address Book preferences
+addressbook the contact should be saved to	addressbook	en	Address book the contact should be saved to
+addressbook the contact should be shown	addressbook	en	Address book the contact should be shown
+addressbook-fieldname	addressbook	en	Address book field name
+addvcard	addressbook	en	Add vCard
 advanced search	addressbook	en	Advanced search
 all contacts	addressbook	en	All contacts
 all in one field	addressbook	en	All in one field
-allow users to maintain their own account-data	admin	en	Allow users to maintain their own account-data
+allow users to maintain their own account-data	admin	en	Allow users to maintain their own account data
 alt. csv import	addressbook	en	Alt. CSV Import
 always	addressbook	en	Always
 apply changes to all members, whose fields have the same previous content	addressbook	en	Apply changes to all members, whose fields have the same previous content
-apply the action on the whole query, not only the shown contacts!!!	addressbook	en	Apply the action on the whole query, NOT only the shown contacts!!!
+apply the action on the whole query, not only the shown contacts!!!	addressbook	en	Apply the action on the whole query, NOT only the shown contacts!
 are you shure you want to delete this contact?	addressbook	en	Are you sure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 assistent	addressbook	en	Assistent
 assistent phone	addressbook	en	Assistent phone
-at the moment the following document-types are supported:	addressbook	en	At the moment the following document types are supported:
+at the moment the following document-types are supported:	addressbook	en	The following document types are supported:
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
@@ -97,7 +97,7 @@ choose owner of imported data	addressbook	en	Choose owner of imported data
 choose seperator and charset	addressbook	en	Choose seperator and charset
 chosse an etemplate for this contact type	admin	en	Chosse an eTemplate for this contact type
 city	common	en	City
-cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup address book fields, apply if synchronization creates duplicates.
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup address book fields, apply if synchronization creates duplicates
 company	common	en	Company
 company name	addressbook	en	Company name
 configuration	common	en	Configuration
@@ -116,11 +116,11 @@ contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact settings
 contactform	addressbook	en	Contact form
-contacts and account contact-data to ldap	admin	en	contacts and account contact-data to LDAP
-contacts and account contact-data to sql	admin	en	contacts and account contact-data to SQL
-contacts to ldap	admin	en	contacts to LDAP
-contacts to ldap, account contact-data to sql	admin	en	contacts to LDAP, account contact-data to SQL
-contains	addressbook	en	contains
+contacts and account contact-data to ldap	admin	en	Contacts and account contact data to LDAP
+contacts and account contact-data to sql	admin	en	Contacts and account contact data to SQL
+contacts to ldap	admin	en	Contacts to LDAP
+contacts to ldap, account contact-data to sql	admin	en	Contacts to LDAP, account contact data to SQL
+contains	addressbook	en	Contains
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
@@ -138,34 +138,34 @@ custom fields	addressbook	en	Custom fields
 debug output in browser	addressbook	en	Debug output in browser
 default	addressbook	en	Default
 default address format	addressbook	en	Default address format
-default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
+default addressbook for adding contacts	addressbook	en	Default address book
 default document to insert contacts	addressbook	en	Default document to insert contacts
 default file as format	addressbook	en	Default file as format
 default filter	addressbook	en	Default filter
 default format for fileas, eg. for new entries.	addressbook	en	Default format for fileas, eg. for new entries.
-defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Defines which email address, business or home, to use as the preferred one for distribution lists in mail.
-delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Which email address is used as preferred one for distribution lists.
+delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the ID.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!
 delete this contact	addressbook	en	Delete this contact
-delete this organisation including all its contacts	addressbook	en	Delete this organisation including ALL its contacts
+delete this organisation including all its contacts	addressbook	en	Delete this organization including ALL its contacts
 deleted	addressbook	en	Deleted
 deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
 departments	addressbook	en	Departments
 directory with documents to insert contacts	addressbook	en	Directory with documents to insert contacts
 display contact	addressbook	en	Display contact
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a reminder for birthdays on the Home page.
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Display birthdays on the Home page.
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution lists	addressbook	en	Distribution lists
 distribution lists, ...	addressbook	en	Distribution lists, ...
-do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want a private address book, which can not be viewed by users, if you grant access to your personal address book?
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want another private address book, which can not be viewed by other users, if you grant access to your personal address book?
 do your really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
-document '%1' does not exist or is not readable for you!	addressbook	en	Document '%1' does not exist or is not readable for you!
+document '%1' does not exist or is not readable for you!	addressbook	en	Document '%1' does not exist or is not readable by you!
 doesn't matter	addressbook	en	Doesn't matter
 domestic	addressbook	en	Domestic
-don't hide empty columns	addressbook	en	Don't hide empty columns
+don't hide empty columns	addressbook	en	Hide empty columns
 download	addressbook	en	Download
-download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
+download export file (uncheck to debug output in browser)	addressbook	en	Download export file. Un-check to debug output in browser.
 download this contact as vcard file	addressbook	en	Download this contact as vCard file
 duration	addressbook	en	Duration
 each category in its own field	addressbook	en	Each category in its own field
@@ -176,15 +176,15 @@ edit extra account-data in the addressbook	admin	en	Edit extra account data in t
 edit phonenumbers -	addressbook	en	Edit phone numbers -
 either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
-email addresses (comma separated) to send the contact data	addressbook	en	Email addresses (comma separated) to send the contact data
+email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data
 empty	admin	en	Empty
 empty for all	addressbook	en	Empty for all
-enable an extra private addressbook	addressbook	en	Enable an extra private address book
+enable an extra private addressbook	addressbook	en	Extra private address book
 enclosure	addressbook	en	Enclosure
 end	addressbook	en	End
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file
-error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
-error saving the contact !!!	addressbook	en	Error saving the contact !!!
+error deleting the contact !!!	addressbook	en	Error deleting the contact!
+error saving the contact !!!	addressbook	en	Error saving the contact!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
@@ -194,31 +194,31 @@ existing links	addressbook	en	Existing links
 exists	addressbook	en	Exists
 export	addressbook	en	Export
 export as csv	addressbook	en	Export as CSV
-export as vcard	addressbook	en	Export as VCard
+export as vcard	addressbook	en	Export as vCard
 export contacts	addressbook	en	Export contacts
 export definitition to use for nextmatch export	addressbook	en	Export definitition to use for nextmatch export
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from address book
 export selection	addressbook	en	Export selection
-exported	addressbook	en	exported
-exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV File.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
+exported	addressbook	en	Exported
+exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 extra	addressbook	en	Extra
 extra private	addressbook	en	Extra private
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	Failed to change %1 organisation member(s) (insufficient rights) !!!
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	Failed to change %1 organization member(s), insufficient rights!
 fax	addressbook	en	Fax
 fax number	common	en	Fax number
-field %1 has been added !	addressbook	en	Field %1 has been added !
-field %1 has been updated !	addressbook	en	Field %1 has been updated !
+field %1 has been added !	addressbook	en	Field %1 has been added!
+field %1 has been updated !	addressbook	en	Field %1 has been updated!
 field name	addressbook	en	Field name
 fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
-fields to copy when copying an address?	admin	en	Fields to copy when copying an address?
+fields to copy when copying an address?	admin	en	Fields to copy when copying an address
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Field separator
 fieldseperator	addressbook	en	Field seperator
 for more then one contact in a document use the tag pagerepeat!	addressbook	en	Use the tag page repeat for more than one contact in a document!
-for read only ldap	admin	en	for read only LDAP
+for read only ldap	admin	en	For read only LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	en	Use this tag for serial letter. Place the content you want to repeat between two tags.
 freebusy uri	addressbook	en	Freebusy URI
 full name	addressbook	en	Full name
@@ -229,8 +229,8 @@ global categories	addressbook	en	Global categories
 grant addressbook access	common	en	Grant address book access
 group %1	addressbook	en	Group %1
 h	addressbook	en	h
-hide accounts from addressbook	addressbook	en	Hide accounts from address book
-hides accounts completly from the adressbook.	addressbook	en	Hides accounts completly from the adress book.
+hide accounts from addressbook	addressbook	en	Hide user accounts
+hides accounts completly from the adressbook.	addressbook	en	Hide user accounts completely from the address book.
 history logging	admin	en	History logging
 home address	addressbook	en	Home address
 home address, birthday, ...	addressbook	en	Home address, Birthday, ...
@@ -242,25 +242,25 @@ home phone	addressbook	en	Home phone
 home state	addressbook	en	Home state
 home street	addressbook	en	Home street
 home zip code	addressbook	en	Home ZIP code
-how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export
+how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
 icon	addressbook	en	Icon
-if accounts are already in ldap	admin	en	if accounts are already in LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory (full vfs path) here, address book displays an action for each document. That action allows to download the specified document with the contact data inserted.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a document (full vfs path) here, address book displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.
+if accounts are already in ldap	admin	en	If accounts are already in LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory, full vfs path, address book displays an action for each document. That action allows to download the specified document with the contact data inserted.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a document, full vfs path, address book displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	addressbook	en	If you specify an export definition, it will be used when you export
 if you specify an export definition, it will be used when you export*	addressbook	en	If you specify an export definition, it will be used when you export*
 ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
-import contacts	addressbook	en	Import Contacts
-import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
+import contacts	addressbook	en	Import contacts
+import csv-file into addressbook	addressbook	en	Import CSV file into Address book
 import file	addressbook	en	Import file
 import from	addressbook	en	Import from
-import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
+import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or vCard
 import from outlook	addressbook	en	Import from Outlook
-import multiple vcard	addressbook	en	Import multiple VCard
+import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
@@ -277,7 +277,7 @@ ldap host for contacts	admin	en	LDAP host for contacts
 ldap settings for contacts	admin	en	LDAP settings for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
-link title for contacts show	addressbook	en	Link title for contacts show
+link title for contacts show	addressbook	en	Link title for contacts
 links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all custom fields
@@ -310,7 +310,7 @@ name for the distribution list	addressbook	en	Name for the distribution list
 name of current user, all other contact fields are valid too	addressbook	en	Name of current user, all other contact fields are valid too
 name, address	addressbook	en	Name, Address
 new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2
-new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog for your selection
+new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	No categories selected
 no fallback	addressbook	en	No fallback
@@ -328,18 +328,18 @@ own sorting	addressbook	en	Own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
 participants	addressbook	en	Participants
-permission denied !!!	addressbook	en	Permission denied !!!
+permission denied !!!	addressbook	en	Permission denied!
 phone number	common	en	Phone number
 phone numbers	common	en	Phone numbers
 photo	addressbook	en	Photo
-please enter a name for that field !	addressbook	en	Please enter a name for that field !
-please select only one category	addressbook	en	Please select only one category
-please update the templatename in your customfields section!	addressbook	en	Please update the template name in your custom fields section!
+please enter a name for that field !	addressbook	en	Enter a name to that field!
+please select only one category	addressbook	en	Select only one category
+please update the templatename in your customfields section!	addressbook	en	Update the template name in custom fields section!
 postal	common	en	Postal
-pref	addressbook	en	pref
-preferred email address to use in distribution lists	addressbook	en	Preferred email address to use in distribution lists
-preferred phone	addressbook	en	preferred phone
-preferred type of email address to add for distribution lists	addressbook	en	Preferred type of email address to add for distribution lists
+pref	addressbook	en	Pref
+preferred email address to use in distribution lists	addressbook	en	Preferred email address
+preferred phone	addressbook	en	Preferred phone
+preferred type of email address to add for distribution lists	addressbook	en	Preferred type of email address for distribution lists
 prefix	addressbook	en	Prefix
 prevent deleting of contacts	admin	en	Prevent deleting of contacts
 private custom fields	addressbook	en	Private custom fields
@@ -347,7 +347,7 @@ public key	addressbook	en	Public key
 publish into groups:	addressbook	en	Publish into groups:
 read a list / search for entries.	addressbook	en	Read a list / search for entries.
 read a list of entries.	addressbook	en	Read a list of entries.
-read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and field list.
+read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the ID and field list.
 read only	addressbook	en	Read only
 record access	addressbook	en	Record access
 record owner	addressbook	en	Record owner
@@ -373,45 +373,45 @@ select multiple contacts for a further action	addressbook	en	Select multiple con
 select phone number as prefered way of contact	addressbook	en	Select phone number as prefered way of contact
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
-select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
+select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved
 selected contacts	addressbook	en	Selected contacts
 send emailcopy to receiver	addressbook	en	Send email copy to receiver
 seperator	addressbook	en	Seperator
-set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and file as field in contacts of all users (either all or only empty values)
+set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'file as' field in contacts of all users. Either all or only empty values.
 set only full name	addressbook	en	Set only full name
-should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Should the columns photo and home address always be displayed, even if they are empty.
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Are photo and home address always displayed, even if columns are empty.
 show	addressbook	en	Show
-show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
+show birthday reminders on main screen	addressbook	en	Birthday reminders
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
-show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
-size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup (WxH, eg.400x300, if a popup should be used)
+show the contacts of this organisation	addressbook	en	Show contacts of this organisation
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup. Width x Height e.g. 400x300
 stadt	addressbook	en	City
 start	admin	en	Start
 startrecord	addressbook	en	Start record
 state	common	en	State
 street	common	en	Street
 subject for email	addressbook	en	Subject for email
-successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your address book.
+successfully imported %1 records into your addressbook.	addressbook	en	Imported %1 record(s) successfully into address book.
 suffix	addressbook	en	Suffix
 tag to mark positions for address labels	addressbook	en	Tag to mark positions for address labels
 tel home	addressbook	en	Tel home
 telephony integration	admin	en	Telephone integration
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test import, shows importable records <u>only</u> in browser
 thank you for contacting us.	addressbook	en	Thank you for contacting us.
-that field name has been used already !	addressbook	en	That field name has been used already !
-the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has probably no add rights for this address book.
-the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights for it!
-the anonymous user needs read it!	addressbook	en	The anonymous user needs read it!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).
+that field name has been used already !	addressbook	en	The field name has been used already!
+the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
+the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
+the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like $$n_fn$$, to be replaced with the contact data. %1Full list of placeholder names%2.
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
-there was an error saving your data :-(	addressbook	en	There was an error saving your data.
+there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
 this module displays block from a adddressbook group.	addressbook	en	This module displays a block from address book group.
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
-timezone	addressbook	en	Timezone
+timezone	addressbook	en	Time zone
 title	addressbook	en	Title
-to many might exceed your execution-time-limit	addressbook	en	Too many might exceed your execution-time-limit
+to many might exceed your execution-time-limit	addressbook	en	Too many might exceed your execution time limit
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
@@ -420,14 +420,14 @@ type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.
 unique id (uid)	addressbook	en	Unique ID (UID)
-unique id<br />(to update existing records)	addressbook	en	Unique ID<br />(to update existing records)
+unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
-update fields by edited organisations?	admin	en	Update fields by edited organisations?
+update fields by edited organisations?	admin	en	Fields to update of edited organizations
 updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
-url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)
-use an extra category tab?	addressbook	en	Use an extra category tab?
-use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields?
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
+use an extra category tab?	addressbook	en	Use an extra tab for categories
+use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	en	Use this tag for address labels. Place the content you want to repeat between two tags.
@@ -441,17 +441,17 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
 weekday	addressbook	en	Weekday
-what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the address book display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	Address book links displayed in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 where to add the email address	addressbook	en	Where to add the email address
-which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the address book use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
-which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which address book should be selected when adding a contact AND you have no add rights to the current address book.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Select which address format should be used for countries with unknown address format.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	The address book to add contacts, when you have no rights to add to the current address book.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export.
 which charset should be used for the vcard export.	addressbook	en	Which charset should be used for the vCard export.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the address book incl. the custom fields. The business or home address only contains name, company and the selected address.
 whole query	addressbook	en	Whole query
 work email if given, else home email	addressbook	en	Work email if given, else home email
 work phone	addressbook	en	Work phone
-write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
+write (update or add) a single entry by passing the fields.	addressbook	en	Update or add a single entry by passing the fields.
 wrong - try again ...	addressbook	en	Wrong - try again ...
 yes, for the next three days	addressbook	en	Yes, for the next three days
 yes, for the next two weeks	addressbook	en	Yes, for the next two weeks
@@ -463,11 +463,11 @@ you are not permitted to delete contact %1	addressbook	en	You are not permitted 
 you are not permittet to delete this contact	addressbook	en	You are not permitted to delete this contact
 you are not permittet to edit this contact	addressbook	en	You are not permitted to edit this contact
 you are not permittet to view this contact	addressbook	en	You are not permitted to view this contact
-you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	en	You can only use LDAP as contact repository if the accounts are stored in LDAP too!
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	en	LDAP can be used as contact repository only if the accounts are stored in LDAP too!
 you can respond by visiting:	addressbook	en	To view it visit:
-you must select a vcard. (*.vcf)	addressbook	en	You must select a vCard. (*.vcf)
-you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
-you need to select a distribution list	addressbook	en	You need to select a distribution list
-you need to select some contacts first	addressbook	en	You need to select some contacts first
+you must select a vcard. (*.vcf)	addressbook	en	Select a vCard. (*.vcf)
+you must select at least 1 column to display	addressbook	en	Select at least 1 column to display
+you need to select a distribution list	addressbook	en	Select a distribution list
+you need to select some contacts first	addressbook	en	Select some contacts first
 zip code	common	en	ZIP code
-zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files.  However, do not mix file types per import.
+zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files. Do not mix file types per import.
