@@ -571,7 +571,7 @@ class calendar_uilist extends calendar_ui
 					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
 						is_array($event) && $event['deleted'])
 					{
-						$event['deleted'] = false;
+						$event['deleted'] = null;
 						if($this->bo->save($event))
 						{
 							$success++;
