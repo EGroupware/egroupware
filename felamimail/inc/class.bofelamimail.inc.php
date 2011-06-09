@@ -2318,6 +2318,9 @@
 
 		static function getFileNameFromStructure(&$structure)
 		{
+			static $namecounter;
+			if (is_null($namecounter)) $namecounter = 0;
+
 			if(isset($structure->parameters['NAME'])) {
 				return self::decode_header($structure->parameters['NAME']);
 			} elseif(isset($structure->dparameters['FILENAME'])) {
@@ -2327,7 +2330,8 @@
 			} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
 				return self::decode_header($structure->filename);
 			} else {
-				return lang("unknown").($structure->subType ? ".".$structure->subType : "");
+				$namecounter++;
+				return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
 			}
 		}
 
