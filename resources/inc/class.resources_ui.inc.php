@@ -228,6 +228,12 @@ class resources_ui
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 			),
+			'select_all' => array(
+				'caption' => 'Whole query',
+				'checkbox' => true,
+				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
+				'group' => ++$group,
+			),
 			'view-calendar' => array(
 				'caption' => 'View calendar',
 				'icon' => 'calendar/planner',
@@ -248,12 +254,6 @@ class resources_ui
 				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'disableClass' => 'no_new_accessory',
-			),
-			'select_all' => array(
-				'caption' => 'Whole query',
-				'checkbox' => true,
-				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
-				'group' => ++$group,
 			),
 /*
 			'documents' => resources_merge::document_action(
