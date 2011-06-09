@@ -632,6 +632,7 @@ return array();	// temporary disabling meeting requests from calendar
 
 		if (($event['whole_day'] = $message->alldayevent))
 		{
+			if ($event['end'] == $event['start']) $event['end'] += 24*3600;	// some clients send equal start&end for 1day
 			$event['end']--;	// otherwise our whole-day event code in save makes it one more day!
 		}
 
