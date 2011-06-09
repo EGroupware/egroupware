@@ -164,7 +164,8 @@ class importexport_export_ui {
 		if($definition && $definition->plugin_options['selection']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
-		if ($_selection) {
+		
+		if ($_selection && $content['old_definition'] == $content['definition']) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
 			$preserv['selection'] = $_selection;
@@ -193,6 +194,7 @@ class importexport_export_ui {
 				disable_button('exec[export]');
 			");
 		}
+		$preserv['old_definition'] = $content['definition'];
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
 			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
 		{
