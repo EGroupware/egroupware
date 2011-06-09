@@ -1268,19 +1268,39 @@
 		// fetch a specific attachment from a message
 		function getAttachmentByCID($_uid, $_cid, $_part)
 		{
+			// some static variables to avoid fetching the same mail multiple times
+			static $uid,$part,$attachments,$structure;
+
+			if ($_uid != $uid || $_part != $part)
+			{
+				$attachments = $this->getMessageAttachments($uid=$_uid, $part=$_part);
+				$structure = null;
+			}
 			$partID = false;
-			#error_log("getAttachmentByCID:$_uid, $_cid, $_part");
-			$attachments = $this->getMessageAttachments($_uid, $_part);
-			foreach($attachments as $attachment) {
-				//error_log(__METHOD__.'Attachment#'.print_r($attachment,true).'#');
-				//error_log(__METHOD__.'CID#'.print_r($_cid,true).'#');
-				if(isset($attachment['cid']) && (strpos($attachment['cid'], $_cid) !== false || strpos($_cid, $attachment['cid']) !== false)) {
+			//list($cidname,$cidrest) = explode('@',$_cid,2);
+			//error_log("getAttachmentByCID:$_uid ($cidname -> $cidrest), $_cid, $_part");
+			foreach($attachments as $attachment)
+			{
+				//error_log(print_r($attachment,true));
+				if(isset($attachment['cid']) && (strpos($attachment['cid'], $_cid) !== false || strpos($_cid, $attachment['cid']) !== false))
+				{
 					$partID = $attachment['partID'];
 					break;
 				}
 			}
-
-			#error_log( "PARTID:$_cid $partID<bR>"); #exit;
+			if ($partID == false)
+			{
+				foreach($attachments as $attachment)
+				{
+					// if the former did not match try matching the cid to the name of the attachment
+					if(isset($attachment['cid']) && isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
+					{
+						$partID = $attachment['partID'];
+						break;
+					}
+				}
+			}
+			//error_log( "Cid:$_cid PARTID:$partID<bR>"); #exit;
 
 			if($partID == false) {
 				return false;
