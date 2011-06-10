@@ -1,17 +1,17 @@
 %1 days in advance	infolog	en	%1 days in advance
-%1 deleted	infolog	en	%1 deleted
+%1 deleted	infolog	en	%1 deleted.
 %1 deleted by %2 at %3	infolog	en	%1 deleted by %2 at %3
 %1 entries %2	infolog	en	%1 entries %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	en	%1 entries %2, %3 failed because of insufficient rights !!!
-%1 modified	infolog	en	%1 modified
+%1 modified	infolog	en	%1 modified.
 %1 modified by %2 at %3	infolog	en	%1 modified by %2 at %3
-%1 records imported	infolog	en	%1 records imported
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	en	%1 records read . Not yet imported, you may go %2back%3 and uncheck Test import.
+%1 records imported	infolog	en	%1 records imported.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	en	%1 records read. Not yet imported, you may go %2back%3 and uncheck Test import.
 %1 you are responsible for is due at %2	infolog	en	%1 you are responsible for is due at %2
 %1 you are responsible for is starting at %2	infolog	en	%1 you are responsible for is starting at %2
 %1 you delegated is due at %2	infolog	en	%1 you delegated is due at %2
 %1 you delegated is starting at %2	infolog	en	%1 you delegated is starting at %2
-(and children) deleted	infolog	en	(and children) deleted
+(and children) deleted	infolog	en	(and children) deleted.
 - subprojects from	infolog	en	- Sub projects from
 0%	infolog	en	0%
 10%	infolog	en	10%
@@ -64,12 +64,12 @@ both	infolog	en	Both
 call	infolog	en	Call
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show e.g. only tasks.
 cancel	infolog	en	Cancel
-cancelled	infolog	en	Cancelled
+cancelled	infolog	en	Cancelled.
 categories	infolog	en	Categories
 category	infolog	en	Category
 change	infolog	en	Change
 change category	infolog	en	Change category
-change completed	infolog	en	Change completed
+change completed	infolog	en	Change completed.
 change completion	infolog	en	Change completion
 change history	infolog	en	Change history
 change owner when updating	infolog	en	Change owner when updating
@@ -88,11 +88,11 @@ click here to start the search	infolog	en	Click to start the search
 close	infolog	en	Close
 close all	infolog	en	Close all
 close this entry and all listed sub-entries	infolog	en	Close this entry and all listed sub entries
-closed	infolog	en	Closed
+closed	infolog	en	Closed.
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	en	colon (:) separated list of field names to use if value is empty or to sum up
 comment	infolog	en	Comment
 compare	infolog	en	Compare
-completed	infolog	en	Completed
+completed	infolog	en	Completed.
 configuration	infolog	en	Configuration
 confirm	infolog	en	Confirm
 contact	infolog	en	Contact
@@ -146,14 +146,14 @@ determines the order the fields are displayed	infolog	en	Determines the order th
 directory with documents to insert entries	infolog	en	Directory with documents to insert entries
 disables a status without deleting it	infolog	en	Disables a status without deleting it
 do not notify of these changes	infolog	en	Do not notify of these changes
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	Do you want a confirmation of the responsible on: accepting, finishing the task or both
-do you want a notification, if items get assigned to you or assigned items get updated?	infolog	en	Do you want a notification, if items get assigned to you or assigned items get updated?
-do you want a notification, if items you are responsible for are about to start?	infolog	en	Do you want a notification, if items you are responsible for are about to start?
-do you want a notification, if items you are responsible for are due?	infolog	en	Do you want a notification, if items you are responsible for are due?
-do you want a notification, if items you created get updated?	infolog	en	Do you want a notification, if items you created get updated?
-do you want a notification, if items you delegated are about to start?	infolog	en	Do you want a notification, if items you delegated are about to start?
-do you want a notification, if items you delegated are due?	infolog	en	Do you want a notification, if items you delegated are due?
-do you want to receive notifications as html-mails or plain text?	infolog	en	Do you want to receive notifications as HTML mails or plain text?
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	Do you want a confirmation of the responsible on accepting, finishing the task or both
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	en	Get notified if entries are assigned to you or assigned entries get updated
+do you want a notification, if items you are responsible for are about to start?	infolog	en	Get notified if entries if you are responsible for are about to start
+do you want a notification, if items you are responsible for are due?	infolog	en	Get notified if entries you are responsible for are due?
+do you want a notification, if items you created get updated?	infolog	en	Get notified if entries you created get updated?
+do you want a notification, if items you delegated are about to start?	infolog	en	Get notified if entries you delegated are about to start?
+do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due?
+do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML mails or plain text?
 document '%1' does not exist or is not readable for you!	infolog	en	Document '%1' does not exist or is not readable for you!
 don't show infolog	infolog	en	DON'T show InfoLog
 done	common	en	Done
@@ -177,7 +177,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	e
 enter a textual description of the log-entry	infolog	en	Enter text description of the InfoLog entry
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
-error: saving the entry	infolog	en	Error saving the entry
+error: saving the entry	infolog	en	Error saving the entry!
 error: the entry has been updated since you opened it for editing!	infolog	en	Error: the entry has been updated since you opened it for editing!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
@@ -186,10 +186,10 @@ example {{nelfnv role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	Exists
-export definitition to use for nextmatch export	infolog	en	Export definitition to use for nextmatch export
+export definitition to use for nextmatch export	infolog	en	Export definition to use for nextmatch export
 exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into a CSV file.
 fax	infolog	en	Fax
-field must not be empty !!!	infolog	en	Field must not be empty !!!
+field must not be empty !!!	infolog	en	Field must not be empty!
 fieldseparator	infolog	en	Field separator
 finish	infolog	en	Finish
 first argument for preg_replace	infolog	en	First argument for preg_replace
@@ -205,42 +205,41 @@ history	infolog	en	History
 history logging	infolog	en	History logging
 history logging and deleting of items	infolog	en	History logging and deleting of items
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
-how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	en	How wide should the description area be. This value is numeric and interpreted as em; 60 works reasonably well.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	en	How wide should the description area be. This value is numeric e.g. 60.
 id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries than "max matches per page", as defined in your common preferences.
-if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	en	If you specify a directory (full vfs path) here, InfoLog displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
-if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	en	If you specify a document (full vfs path) here, InfoLog displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
-if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
-if you specify an export definition, it will be used when you export*	infolog	en	If you specify an export definition, it will be used when you export*
+if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	en	If you specify a directory, full vfs path, InfoLog displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
+if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	en	If you specify a document, full vfs path, InfoLog displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
+if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export.
 import	infolog	en	Import
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
+imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
-infolog - delete	infolog	en	Info Log - Delete
+infolog - delete	infolog	en	InfoLog - Delete
 infolog - edit	infolog	en	InfoLog - Edit
 infolog - import csv-file	infolog	en	InfoLog - Import CSV file
 infolog - new	infolog	en	InfoLog - New
-infolog - new subproject	infolog	en	InfoLog - New Sub project
+infolog - new subproject	infolog	en	InfoLog - New sub project
 infolog - subprojects from	infolog	en	InfoLog - Sub projects from
-infolog copied - the copy can now be edited	infolog	en	Infolog copied - the copy can now be edited
-infolog csv export	infolog	en	Infolog CSV export
-infolog csv import	infolog	en	Infolog CSV import
+infolog copied - the copy can now be edited	infolog	en	InfoLog copied - the copy can now be edited
+infolog csv export	infolog	en	InfoLog CSV export
+infolog csv import	infolog	en	InfoLog CSV import
 infolog entry deleted	infolog	en	InfoLog entry deleted
 infolog entry saved	infolog	en	InfoLog entry saved
-infolog fields:	infolog	en	Infolog fields:
+infolog fields:	infolog	en	InfoLog fields:
 infolog filter for the main screen	infolog	en	InfoLog filter for the main screen
-infolog id	infolog	en	Infolog ID
+infolog id	infolog	en	InfoLog ID
 infolog list	infolog	en	InfoLog list
 infolog preferences	common	en	InfoLog preferences
-infolog-fieldname	infolog	en	Info Log field name
+infolog-fieldname	infolog	en	InfoLog field name
 insert	infolog	en	Insert
 insert in document	infolog	en	Insert in document
-invalid filename	infolog	en	Invalid file name
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	en	Invalid owner ID: %1.  Might be a bad field translation. Used %2 instead.
+invalid filename	infolog	en	Invalid file name.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	en	Invalid owner ID: %1. Used %2 instead.
 invalid status for entry type %1.	infolog	en	Invalid status for entry type %1.
 label<br>helptext	infolog	en	Label<br>Helptext
 last changed	infolog	en	Last changed
@@ -251,7 +250,7 @@ leave it empty for a full week	infolog	en	Leave it empty for a full week
 leave without saveing the entry	infolog	en	Leave without saving the entry
 leaves without saveing	infolog	en	Leaves without saving
 length<br>rows	infolog	en	Length<br>Rows
-limit number of description lines (default 5, 0 for no limit)	infolog	en	Limit number of description lines. Default is 5, 0 = no limit.
+limit number of description lines (default 5, 0 for no limit)	infolog	en	Limit number of description lines. Default = 5, 0 = no limit.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	en	Limit width of description column. Effective only if lines limit is set. 0 = no limit.
 link	infolog	en	Link
 linked to %1	infolog	en	Linked to %1
@@ -266,7 +265,7 @@ manage mapping	infolog	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	infolog	en	Max length of the input [, length of the input field (optional)]
 modifier	infolog	en	Modifier
 modifierer	infolog	en	Modifier
-name must not be empty !!!	infolog	en	Name must not be empty !!!
+name must not be empty !!!	infolog	en	Name must not be empty!
 name of current user, all other contact fields are valid too	infolog	en	Name of current user, all other contact fields are valid too
 name of new type to create	infolog	en	Name of new type to create
 never hide search and filters	infolog	en	Never hide search and filters
@@ -275,7 +274,7 @@ new %1 created by %2 at %3	infolog	en	New %1 created by %2 at %3
 new name	infolog	en	New name
 new search	infolog	en	New search
 no - cancel	infolog	en	No - Cancel
-no describtion, links or attachments	infolog	en	No describtion, links or attachments
+no describtion, links or attachments	infolog	en	No description, links or attachments
 no details	infolog	en	No details
 no entries found, try again ...	infolog	en	No entries found, try again ...
 no filter	infolog	en	No filter
@@ -313,11 +312,11 @@ owner does not have edit rights	infolog	en	Owner does not have edit rights
 parent	infolog	en	Parent
 parent infolog	infolog	en	Parent InfoLog
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	Path on (web-)serverside<br>eg. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 pattern for search in addressbook	infolog	en	Pattern for search in Address book
 pattern for search in projects	infolog	en	Pattern for search in Projects
 percent completed	infolog	en	Percent completed
-permission denied	infolog	en	Permission denied
+permission denied	infolog	en	Permission denied!
 permissions error - %1 could not %2	infolog	en	Permissions error - %1 could not %2
 phone	infolog	en	Phone call
 phone/email	infolog	en	Phone/Email
@@ -333,23 +332,23 @@ project	infolog	en	Project
 project id	infolog	en	Project ID
 project name	infolog	en	Project name
 project settings: price, times	infolog	en	Project settings: price, times
-projectmanager	infolog	en	ProjectManager
+projectmanager	infolog	en	Project Manager
 re-planned	infolog	en	Re-planned
 re-planned time	infolog	en	Re-planned time
 re:	infolog	en	Re:
 read one record by passing its id.	infolog	en	Read one record by passing its ID.
 read rights (default)	infolog	en	Read rights (default)
-receive notifications about due entries you are responsible for	infolog	en	Receive notifications about due entries you are responsible for
-receive notifications about due entries you delegated	infolog	en	Receive notifications about due entries you delegated
-receive notifications about items assigned to you	infolog	en	Receive notifications about items assigned to you
+receive notifications about due entries you are responsible for	infolog	en	Receive notifications about due entries you are responsible for.
+receive notifications about due entries you delegated	infolog	en	Receive notifications about due entries you delegated.
+receive notifications about items assigned to you	infolog	en	Receive notifications about items assigned to you.
 receive notifications about own items	infolog	en	Receive notifications about own items
-receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
-receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
-receive notifications as html-mails	infolog	en	Receive notifications as HTML mails
+receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for.
+receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated.
+receive notifications as html-mails	infolog	en	Receive notifications as HTML mails.
 regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link -not the entry itself.
-removed	infolog	en	Removed
+removed	infolog	en	Removed.
 replacement	infolog	en	Replacement
 replacements for inserting entries into documents	infolog	en	Replacements for inserting entries into documents
 responsible	infolog	en	Responsible
@@ -389,15 +388,15 @@ set status to done	infolog	en	Set status to done
 set status to done for all entries	infolog	en	Set status to done for all entries
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
 sets the status of this entry to done	infolog	en	Sets the status of this entry to done
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Sub tasks, calls or notes in the normal view or not. You can always view the subs via their parent.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you didn't select an application for the main screen (in your preferences).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (sure name and family name) or just the login names.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show sub tasks, calls or notes in the normal view or not. You can always view the subs via their parent.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file attachments in the InfoLog list view
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the Home page and with which filter. Works only if you didn't select an application for the Home page in common preferences.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names or just the login names.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the InfoLog list show a unique numerical Id, which can be used e.g. as ticket Id.
 should the infolog list show the column "last modified".	infolog	en	Should the InfoLog list show the column "last modified".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the InfoLog list show the percent done only for status ongoing or two separate icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	Should this entry only be visible to you and people you grant private access via the ACL
-show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
+show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list
 show a x if content equals this compare value, otherwise show nothing	infolog	en	Show a X if content equals this compare value, otherwise show nothing
 show full usernames	infolog	en	Show full user names
 show in the infolog list	infolog	en	Show in the InfoLog list
@@ -425,24 +424,24 @@ tag to mark positions for address labels	infolog	en	Tag to mark positions for ad
 task	infolog	en	ToDo
 tasks of	infolog	en	Tasks of
 template	infolog	en	Template
-test import (show importable records <u>only</u> in browser)	infolog	en	Test import . Show importable records <u>only</u> in browser
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally (<= 10 chars), changing it makes existing data unavailable
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	The name used internally (<= 20 chars), changing it makes existing data unavailable
+test import (show importable records <u>only</u> in browser)	infolog	en	Test import . Show importable records <u>only</u> in browser.
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally,<= 10 chars, changing it makes existing data unavailable.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the text displayed to the user	infolog	en	The text displayed to the user
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	Default filter when entering the application. Filters limit the entries to show in the actual view.
 til when should the todo or phonecall be finished	infolog	en	When should the ToDo or Phone call be finished
 times	infolog	en	Times
-to many might exceed your execution-time-limit	infolog	en	Tpp many might exceed your execution time limit
+to many might exceed your execution-time-limit	infolog	en	Too many might exceed your execution time limit
 to what should the startdate of new entries be set.	infolog	en	To what should the start date of new entries be set.
 today	infolog	en	Today
 todays date	infolog	en	Todays date
 todo	infolog	en	ToDo
 translation	infolog	en	Translation
 typ	infolog	en	Type
-typ '%1' already exists !!!	infolog	en	Type '%1' already exists !!!
+typ '%1' already exists !!!	infolog	en	Type '%1' already exists!
 type	infolog	en	Type
 type ...	infolog	en	Type ...
-type of customfield	infolog	en	Type of customfield
+type of customfield	infolog	en	Type of custom field
 type of the log-entry: note, phonecall or todo	infolog	en	Type of the InfoLog entry: Note, Phone call or ToDo
 unlink	infolog	en	Unlink
 unlinked from %1	infolog	en	Unlinked from %1
@@ -463,7 +462,7 @@ view the parent of this entry and all his subs	infolog	en	View the parent of thi
 view this linked entry in its application	infolog	en	View this linked entry in its application
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	When should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (start page)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
-which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
+which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get
 which types should the calendar show	infolog	en	Which types should the calendar show
 will-call	infolog	en	Will call
 write (add or update) a record by passing its fields.	infolog	en	Write, add or update a record by passing its fields.
@@ -471,16 +470,16 @@ yes - close	infolog	en	Yes - Close
 yes - close including sub-entries	infolog	en	Yes - Close including sub entries
 yes - delete	infolog	en	Yes - Delete
 yes - delete including sub-entries	infolog	en	Yes - Delete including sub entries
-yes, noone can purge deleted items	infolog	en	Yes, no-one can purge deleted items
+yes, noone can purge deleted items	infolog	en	Yes, no one can purge deleted items
 yes, only admins can purge deleted items	infolog	en	Yes, only admins can purge deleted items
 yes, with larger fontsize	infolog	en	Yes, with larger font size
 yes, with purging of deleted items possible	infolog	en	Yes, with purging of deleted items possible
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	en	You can choose a category to be preselected, when you create a new InfoLog entry
-you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
-you have entered an invalid ending date	infolog	en	You have entered an invalid due date
-you have entered an invalid starting date	infolog	en	You have entered an invalid starting date
-you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new type!!!
-you must enter a subject or a description	infolog	en	You must enter a subject or a description
+you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types!
+you have entered an invalid ending date	infolog	en	You have entered an invalid due date!
+you have entered an invalid starting date	infolog	en	You have entered an invalid starting date!
+you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new type!
+you must enter a subject or a description	infolog	en	You must enter a subject or a description.
 you need to select an entry for linking.	infolog	en	You need to select an entry for linking.
-you need to select some entries first	infolog	en	You need to select some entries first
+you need to select some entries first	infolog	en	You need to select some entries first.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	en	Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update your database.

@@ -1,5 +1,5 @@
 all possible notification backends	notifications	en	All possible notification backends
-check both (first try (active) user defined account, if none use emailadmin profile)	admin	en	Check both. First try active user defined account, if none, use EmailAdmin profile.
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	en	Check both. First try active user defined account, if none, use eMailAdmin profile.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification chain. You will be notified over the back ends included in the chain.<br />Note: If a notification chain is marked as "disabled", your administrator does not allow one or more of the back ends included in the chain, the notifications falls back to "Email" while notifying you.
 choose from mailsettings used for notification	admin	en	Choose mail settings used for email notification
 common chains	notifications	en	Common chains
@@ -36,7 +36,6 @@ preferences for notification	notifications	en	Preferences for notification
 received	notifications	en	Received
 sms backend	admin	en	SMS back end
 sms only	notifications	en	SMS only
-this egroupware notification has been sent to you by mail because your	notifications	en	This eEGroupware notification has been sent to you by mail because your
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
 windows-popup and e-mail	notifications	en	Windows popup and email
 windows-popup backend	admin	en	Windows popup back end

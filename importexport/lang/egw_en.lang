@@ -1,8 +1,8 @@
 %1 definition(s) %2	importexport	en	%1 definition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	en	%1 definition(s) %2, %3 failed because of insufficient rights !!!
-%1 is not readable	importexport	en	%1 is not readable
-%1 is not writable	importexport	en	%1 is not writable
-%1 records processed	importexport	en	%1 records processed
+%1 is not readable	importexport	en	%1 is not readable.
+%1 is not writable	importexport	en	%1 is not writable.
+%1 records processed	importexport	en	%1 records processed.
 %s just me	importexport	en	%s Just me
 (* for all)	importexport	en	(* for all)
 (0-23)	importexport	en	(0-23)
@@ -21,16 +21,16 @@ choose a name for this definition	importexport	en	Choose a name for this definit
 choose a plugin	importexport	en	Choose a plugin
 choose an application	importexport	en	Choose an application
 choose fields to export	importexport	en	Choose fields to export
-choose seperator and charset	importexport	en	Choose seperator and charset
+choose seperator and charset	importexport	en	Choose separator and charset
 condition	importexport	en	Condition
-copied	importexport	en	Copied
+copied	importexport	en	Copied.
 csv field	importexport	en	CSV field
 database values	importexport	en	Database values
 day of week	importexport	en	Day of week
 define imports|exports	common	en	Define Imports|Exports
 definition	importexport	en	Definition
 delete all selected definitions	importexport	en	Delete ALL selected definitions
-deleted	importexport	en	Deleted
+deleted	importexport	en	Deleted.
 duplicate name, please choose another.	importexport	en	Duplicate name, please choose another.
 edit conditions	importexport	en	Edit conditions
 expert options	importexport	en	Expert options
@@ -39,20 +39,20 @@ export all selected definitions	importexport	en	Export ALL selected definitions
 export data as	importexport	en	Export data as
 export definition to use for nextmatch export	preferences	en	Export definition to use for nextmatch export
 export spreadsheet	importexport	en	Export Spreadsheet
-exported	importexport	en	Exported
+exported	importexport	en	Exported.
 false	importexport	en	False
 field labels	importexport	en	Field labels
 field names	importexport	en	Field names
-fieldseperator	importexport	en	Field seperator
+fieldseperator	importexport	en	Field separator
 finish	importexport	en	Finish
 general	importexport	en	General
 header lines to skip	importexport	en	Header lines to skip
 human friendly values	importexport	en	Human friendly values
-if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export.
 import	importexport	en	Import
 import definition	importexport	en	Import definition
 import definitions	common	en	Import definitions
-import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions. Attention: Existing definitions with equal names will be overwritten!!!
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions. Attention: Existing definitions with equal names will be overwritten!
 importexport	common	en	Import | Export
 importexport wizard finished successfully!	importexport	en	Import|Export wizard finished successfully!
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	en	Imports information from a CSV file.  This is only a base class, and doesn't do anything on its own.
@@ -63,7 +63,7 @@ load sample file	importexport	en	Load sample file
 manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
-no records selected	importexport	en	No records selected
+no records selected	importexport	en	No records selected!
 please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
 preview	importexport	en	Preview
@@ -72,12 +72,12 @@ problems during import:	importexport	en	Problems during import:
 save as definition	importexport	en	Save as definition
 schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import | export
-schedule not found	importexport	en	Schedule not found
+schedule not found	importexport	en	Schedule not found.
 select definition	importexport	en	Select definition
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
 some nice text	importexport	en	Some nice text
-some records may not have been imported	importexport	en	Some records may not have been imported
+some records may not have been imported	importexport	en	Some records may not have been imported.
 stop	importexport	en	Stop
 stylite template folder	importexport	en	Stylite template folder
 target	importexport	en	Target
@@ -87,13 +87,13 @@ test only	importexport	en	Test only
 translation	importexport	en	Translation
 true	importexport	en	True
 try	importexport	en	Try
-unable to schedule	importexport	en	Unable to schedule
+unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
 user preference	importexport	en	User preference
 user template folder	importexport	en	User template folder
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions
 users allowed to share their own definitions	importexport	en	Users allowed to share their own definitions
-which useres are allowed for this definition	importexport	en	Which useres are allowed for this definition
+which useres are allowed for this definition	importexport	en	Which users are allowed to use this definition
 which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
 you need to select an app and format first!	importexport	en	You need to select an app and format first!
 1	importexport	en	1

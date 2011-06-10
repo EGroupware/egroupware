@@ -6,8 +6,8 @@
 %1 is no command!	admin	en	%1 is no command!
 %1 log entries deleted.	admin	en	%1 log entries deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
-%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3
-%1 sessions killed	admin	en	%1 sessions killed
+%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3 .
+%1 sessions killed	admin	en	%1 sessions killed.
 %1 user %2	admin	en	%1 user %2
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
@@ -19,9 +19,9 @@ account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext p
 account %1 %2	admin	en	Account %1 %2
 account '%1' deleted.	admin	en	Account '%1' deleted.
 account active	admin	en	Account active
-account has been created	common	en	Account has been created
-account has been deleted	common	en	Account has been deleted
-account has been updated	common	en	Account has been updated
+account has been created	common	en	Account has been created.
+account has been deleted	common	en	Account has been deleted.
+account has been updated	common	en	Account has been updated.
 account id	admin	en	Account ID
 account list	admin	en	Account list
 account permissions	admin	en	Account permissions
@@ -49,7 +49,7 @@ add new application	admin	en	Add new application
 add peer server	admin	en	Add Peer Server
 add sub-category	admin	en	Add sub category
 admin email	admin	en	Admin email
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification.
 admin name	admin	en	Admin name
 admin queue and history	admin	en	Admin queue and history
 administration	admin	en	Administration
@@ -62,7 +62,7 @@ all applications	admin	en	All applications
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
-allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated
+allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
 alternate email address	admin	en	Alternate email address
 anonymous user	admin	en	Anonymous user
 anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in list sessions.
@@ -90,13 +90,13 @@ are you sure you want to kill this session ?	admin	en	Are you sure you want to k
 async services last executed	admin	en	Async services last executed
 asynchronous timed services	admin	en	Asynchronous timed services
 asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1) !
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct mime type for FTP instead of default 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct mime type for FTP instead of default 'application/octet-stream'.
 attribute accountstatus explained	admin	en	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
 attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the eGW internal email field.
 attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
 attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
 authentication / accounts	admin	en	Authentication | Accounts
-auto create account records for authenticated users	admin	en	Auto create account records for authenticated users
+auto create account records for authenticated users	admin	en	Auto create account records for authenticated users.
 available placeholders	admin	en	Available placeholders
 back to the list	admin	en	Back to the list
 bi-dir passthrough	admin	en	bi-dir passthrough
@@ -104,7 +104,7 @@ bi-directional	admin	en	bi-directional
 bottom	admin	en	Bottom
 bulk password reset	admin	en	Bulk password reset
 calculate next run	admin	en	Calculate next run
-calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000
+calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can change password	admin	en	Can change password
 cancel testjob!	admin	en	Cancel TestJob!
 cancel this scheduled command	admin	en	Cancel this scheduled command
@@ -120,7 +120,7 @@ change main screen message	admin	en	Change main screen message
 change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
 changed password hash for %1 to %2.	admin	en	Changed password hash for %1 to %2.
-check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not existing accounts
+check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not existing accounts.
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 children	admin	en	Children
@@ -128,8 +128,8 @@ click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
-config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php
-cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com
+config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php.
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
 could not remote execute the command	admin	en	Could not remote execute the command
 country	admin	en	Country
@@ -140,7 +140,7 @@ created with id #%1	admin	en	Created with id #%1
 creates / updates user accounts from csv file	admin	en	Creates / updates user accounts from CSV file
 creates / updates user groups from csv file	admin	en	Creates / updates user groups from CSV file
 creates a new field	admin	en	Creates a new field
-crontab only (recomended)	admin	en	Crontab only (recomended)
+crontab only (recomended)	admin	en	Crontab only (recommended)
 current hash	admin	en	Current hash
 custom fields	admin	en	Custom fields
 cyrus imap server	admin	en	Cyrus IMAP Server
@@ -178,7 +178,7 @@ deny access to db backup and restore	admin	en	Deny access to DB backup and resto
 deny access to error log	admin	en	Deny access to error log
 deny access to global categories	admin	en	Deny access to global categories
 deny access to groups	admin	en	Deny access to groups
-deny access to mainscreen message	admin	en	Deny access to mainscreen message
+deny access to mainscreen message	admin	en	Deny access to main screen message
 deny access to peer servers	admin	en	Deny access to peer servers
 deny access to phpinfo	admin	en	Deny access to phpinfo
 deny access to site configuration	admin	en	Deny access to site configuration
@@ -191,7 +191,7 @@ determines the order the fields are displayed	admin	en	Determines the order the 
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
-disabled (not recomended)	admin	en	Disabled (not recomended)
+disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
@@ -225,9 +225,9 @@ either install id and config password needed or the remote hash!	admin	en	Either
 email account active	admin	en	Email account active
 email address	admin	en	Email address
 enable	admin	en	Enable
-enable debug-messages	admin	en	Enable debug messages
+enable debug-messages	admin	en	Enable debug messages.
 enable the soap service	admin	en	Enable the soap service.
-enable the spellcheck in the ritch text editor ?	admin	en	Enable the spellcheck in the rich text editor
+enable the spellcheck in the ritch text editor ?	admin	en	Enable the spellcheck in the rich text editor.
 enable the xmlrpc service	admin	en	Enable the xmlrpc service.
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
@@ -260,12 +260,12 @@ error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer
 error changing the password for % !!!	admin	en	Error changing the password for % !
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
 error deleting log entry!	admin	en	Error deleting log entry!
-error saving	admin	en	Error saving
+error saving	admin	en	Error saving!
 error saving account!	admin	en	Error saving account!
 error saving the command!	admin	en	Error saving the command!
 error saving to db:	admin	en	Error saving to db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running!
-error! no appname found	admin	en	Error! No app name found
+error! no appname found	admin	en	Error: No app name found!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error!
 exists	admin	en	Exists
 expires	admin	en	Expires
@@ -280,7 +280,7 @@ file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
 find and register all application hooks	admin	en	Find and register all application hooks
 for the times above	admin	en	For the times above
-for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute
+for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	en	Set required password strength. 1 = weak, up to 5 = very strong. Default = empty, no password strength checked
 force selectbox	admin	en	Force select box
 force users to change their password regularily?(empty for no,number for after that number of days	admin	en	Set recurrent forced password change. Set a number of days. Empty = No
@@ -295,9 +295,9 @@ grant	admin	en	Grant
 group ?	admin	en	Group?
 group csv export	admin	en	Group CSV export
 group csv import	admin	en	Group CSV import
-group has been added	common	en	Group has been added
-group has been deleted	common	en	Group has been deleted
-group has been updated	common	en	Group has been updated
+group has been added	common	en	Group has been added.
+group has been deleted	common	en	Group has been deleted.
+group has been updated	common	en	Group has been updated.
 group list	admin	en	Group list
 group manager	admin	en	Group manager
 group name	admin	en	Group name
@@ -351,13 +351,13 @@ ldap host	admin	en	LDAP host
 ldap root password	admin	en	LDAP root password
 ldap rootdn	admin	en	LDAP rootdn
 leave empty for no quota	admin	en	Leave empty for no quota
-leave the category untouched and return back to the list	admin	en	Leave the category untouched and return back to the list
-leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list
+leave the category untouched and return back to the list	admin	en	Leave the category untouched and return back to the list.
+leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list.
 leave unchanged	admin	en	Leave unchanged
 leave without saveing the entry	admin	en	Leave without saving the entry
 leaves without saveing	admin	en	Leaves without saving
 length<br>rows	admin	en	Length<br>Rows
-limit global category to members of a certain group	admin	en	Limit global category to members of a certain group
+limit global category to members of a certain group	admin	en	Limit global category to members of a certain group.
 limit to members of	admin	en	Limit to members of
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
@@ -397,17 +397,17 @@ new name	admin	en	New name
 new password	admin	en	New password
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 next run	admin	en	Next run
-no algorithms available	admin	en	No algorithms available
-no alternate email address	admin	en	No alternate email address
+no algorithms available	admin	en	No algorithms available!
+no alternate email address	admin	en	No alternate email address!
 no jobs in the database !!!	admin	en	No jobs in the database!
-no login history exists for this user	admin	en	No login history exists for this user
-no matches found	admin	en	No matches found
-no modes available	admin	en	No modes available
-no permission to add groups	admin	en	No permission to add groups
-no permission to add users	admin	en	No permission to add users
-no permission to create groups	admin	en	No permission to create groups
+no login history exists for this user	admin	en	No login history exists for this user!
+no matches found	admin	en	No matches found!
+no modes available	admin	en	No modes available!
+no permission to add groups	admin	en	No permission to add groups!
+no permission to add users	admin	en	No permission to add users!
+no permission to create groups	admin	en	No permission to create groups!
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
-note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
+note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support.
 notification mail	admin	en	Notification mail
 notify user by email	admin	en	Notify user by email
 notifying account "%1" %2 failed!	admin	en	Notifying account "%1" %2 failed!
@@ -428,9 +428,9 @@ operating system	admin	en	Operating system
 order	admin	en	Order
 outbound	admin	en	Outbound
 own install id:	admin	en	Own install ID:
-passthrough	admin	en	passthrough
+passthrough	admin	en	Passthrough
 password for smtp-authentication	admin	en	Password for SMTP authentication
-password updated	admin	en	Password updated
+password updated	admin	en	Password updated.
 passwords and/or attributes of %1 accounts changed	admin	en	Passwords and/or attributes of %1 accounts changed
 path information	admin	en	Path information
 peer server list	admin	en	Peer server list
@@ -460,7 +460,7 @@ read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
 remote administration instances	admin	en	Remote administration instances
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
-remote instance saved	admin	en	Remote instance saved
+remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group?
@@ -470,25 +470,25 @@ return to view account	admin	en	Return to view account
 route all mails to	admin	en	Route all Mails to
 rpm or debian package	admin	en	RPM or Debian package
 run asynchronous services	admin	en	Run Asynchronous services
-save the category	admin	en	Save the category
-save the category and return back to the list	admin	en	Save the category and return back to the list
-saves the changes made and leaves	admin	en	Saves the changes made and leaves
-saves this entry	admin	en	Saves this entry
+save the category	admin	en	Save the category.
+save the category and return back to the list	admin	en	Save the category and return back to the list.
+saves the changes made and leaves	admin	en	Saves the changes made and leaves.
+saves this entry	admin	en	Saves this entry.
 scheduled	admin	en	Scheduled
 search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
 security	admin	en	Security
-select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for
+select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
 select group managers	admin	en	Select group managers
 select permissions this group will have	admin	en	Select permissions for this group
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY.
 select users	admin	en	Select users
 select users for inclusion	admin	en	Select users for inclusion
-select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information
-select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
+select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information.
+select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts.
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right).
 selectbox	admin	en	Select box
 server %1 has been updated	admin	en	Server %1 has been updated
 server list	admin	en	Server list
@@ -497,10 +497,10 @@ server type(mode)	admin	en	Server type (mode)
 server url	admin	en	Server URL
 server username	admin	en	Server user name
 sessions last 30 days	admin	en	Sessions last 30 days
-set a random password	admin	en	Set a random password
+set a random password	admin	en	Set a random password.
 set preference values.	admin	en	Set preference values.
-should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace, including function arguments
-should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page
+should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace, including function arguments.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page.
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 show access log	admin	en	Show access log
 show an asterisk (*) to mark untranslated strings	admin	en	Show an asterisk (*) to mark untranslated strings
@@ -511,8 +511,8 @@ show session ip address	admin	en	Show session IP address
 site	admin	en	Site
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
-sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1
-sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1
+sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1 .
+sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1 .
 sort the entries	admin	en	Sort the entries
 ssl	admin	en	ssl
 standard	admin	en	Standard
@@ -540,19 +540,19 @@ that server name has been used already !	admin	en	That server name has been used
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
 the cumulated and anonymised data will be publically available:	admin	en	The accumulated and anonymous data will be publicly available:
-the groups must include the primary group	admin	en	The groups must include the primary group
+the groups must include the primary group	admin	en	The groups must include the primary group.
 the install id of an instance can be found under admin > site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
-the login and password can not be the same	admin	en	The login and password can not be the same
-the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters
+the login and password can not be the same	admin	en	The login and password can not be the same.
+the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
 the two passwords are not the same	admin	en	Passwords are not the same
 the users bellow are still members of group %1	admin	en	The users below are still members of group %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	en	There is already a group with this name. User ID's can not have the same name as a group ID.
-they must be removed before you can continue	admin	en	They must be removed before you can continue
-this application is current	admin	en	This application is current
-this application requires an upgrade	admin	en	This application requires an upgrade
+they must be removed before you can continue	admin	en	They must be removed before you can continue.
+this application is current	admin	en	This application is current.
+this application requires an upgrade	admin	en	This application requires an upgrade.
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 this controls exports and merging.	admin	en	This controls exports and merge prints.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
@@ -571,10 +571,10 @@ two months	admin	en	Two months
 two weeks	admin	en	Two weeks
 type '%1' already exists !!!	admin	en	Type '%1' already exists!
 type of customfield	admin	en	Type of custom field
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view !!!
-unknown account: %1 !!!	admin	en	Unknown account: %1 !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
+unknown account: %1 !!!	admin	en	Unknown account: %1 !
 unknown command %1!	admin	en	Unknown command %1!
-unknown option %1	admin	en	Unknown option %1
+unknown option %1	admin	en	Unknown option %1 !
 unwilling to save category with current settings. check for inconsistency:	admin	en	Unable to save category with current settings. Check for inconsistency:
 up	admin	en	Up
 updated	admin	en	Updated
@@ -603,20 +603,20 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	en	Information is asked only to get an overview about the use of EGroupware worldwide.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We're not saving any data regarding your identity.
 who would you like to transfer all records owned by the deleted user to?	admin	en	To whom would you like to transfer ALL records owned by the deleted user?
-would you like egroupware to cache the egw info array ?	admin	en	Cache the EGroupware info array
-would you like egroupware to check for a new version<br>when admins login ?	admin	en	Check for version updates when admins login
-would you like egroupware to check for new application versions when admins login ?	admin	en	Check for application updates when admins login
-would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Load automatically new language files at login
-would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status
+would you like egroupware to cache the egw info array ?	admin	en	Cache the EGroupware info array.
+would you like egroupware to check for a new version<br>when admins login ?	admin	en	Check for version updates when admins login.
+would you like egroupware to check for new application versions when admins login ?	admin	en	Check for application updates when admins login.
+would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Load automatically new language files at login.
+would you like to show each application's upgrade status ?	admin	en	Show each application's upgrade status.
 wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !
 wrong admin-account or -password !!!	admin	en	Wrong admin account or password!
 xml-rpc	admin	en	XML-RPC
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
-you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
-you have no email address for your user set !!!	admin	en	You have no email address for your user set!
+you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
+you have no email address for your user set !!!	admin	en	You have no email address set for your user!
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!
 you have to enter a name, to create a new type!!!	admin	en	You have to enter a name, to create a new type!
-you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
+you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account!
 you must enter a group name.	admin	en	You must enter a group name.
 you must enter a lastname	admin	en	You must enter a last name.
 you must enter a loginid	admin	en	You must enter a login ID.

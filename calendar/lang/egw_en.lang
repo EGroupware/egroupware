@@ -1,9 +1,9 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
 %1 event(s) %2	calendar	en	%1 event(s) %2
-%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficient rights !!!
-%1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants
-%1 records imported	calendar	en	%1 records imported
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
+%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficient rights!
+%1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants.
+%1 records imported	calendar	en	%1 records imported.
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read. Not yet imported, go back and uncheck Test import.
 %1 weeks	calendar	en	%1 weeks
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
 , exceptions preserved	calendar	en	, exceptions preserved
@@ -13,7 +13,7 @@ a non blocking event will not conflict with other events	calendar	en	A non block
 accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
-access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
+access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
 actions...	calendar	en	Actions...
@@ -26,8 +26,8 @@ after %1	calendar	en	After %1
 after current date	calendar	en	After current date
 age:	calendar	en	Age:
 alarm	calendar	en	Alarm
-alarm added	calendar	en	Alarm added
-alarm deleted	calendar	en	Alarm deleted
+alarm added	calendar	en	Alarm added.
+alarm deleted	calendar	en	Alarm deleted.
 alarm for %1 at %2 in %3	calendar	en	Alarm for %1 at %2 in %3
 alarm management	calendar	en	Alarm management
 alarms	calendar	en	Alarms
@@ -38,10 +38,10 @@ all exceptions are converted into single events.	calendar	en	All exceptions are 
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
-allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications ('Do not notify')
+allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'.
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
-apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
+apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this country?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday?
@@ -89,7 +89,7 @@ charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 close the window	calendar	en	Close the window
-compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved
+compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved.
 conflict	calendar	en	Conflict
 copy of:	calendar	en	Copy of:
 copy this event	calendar	en	Copy this event
@@ -129,11 +129,11 @@ delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
 delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
-delete this series of recuring events	calendar	en	Delete this series of recuring events
-deleted	calendar	en	Deleted
+delete this series of recuring events	calendar	en	Delete this series of recurring events
+deleted	calendar	en	Deleted.
 deny ressources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
-disinvited	calendar	en	Disinvited
+disinvited	calendar	en	Disinvited.
 display holidays or birthdays as events	calendar	en	Display holidays or birthdays as events
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
@@ -163,22 +163,22 @@ empty for all	calendar	en	Empty for all
 end	calendar	en	End
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	End date
-enddate / -time of the meeting, eg. for more then one day	calendar	en	End date / -time of the meeting, e.g. for more than one day
+enddate / -time of the meeting, eg. for more then one day	calendar	en	End date / time of the meeting, e.g. for more than one day
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
 error: can't delete original series!	calendar	en	Error: Can't delete original series!
-error: importing the ical	calendar	en	Error: importing the iCal
-error: no participants selected !!!	calendar	en	Error: no participants selected !!!
-error: ressources reservation in private events is not allowed!!!	calendar	en	Error: Resources reservation in private events is not allowed !!!
-error: saving the event !!!	calendar	en	Error: saving the event !!!
+error: importing the ical	calendar	en	Error: importing the iCal!
+error: no participants selected !!!	calendar	en	Error: no participants selected!
+error: ressources reservation in private events is not allowed!!!	calendar	en	Error: Resources reservation in private events is not allowed!
+error: saving the event !!!	calendar	en	Error saving the event!
 error: starttime has to be before the endtime !!!	calendar	en	Error: Start time has to be before the end time !!!
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: The entry has been updated since you opened it for editing!
 error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
-event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited
-event deleted	calendar	en	Event deleted
+event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited.
+event deleted	calendar	en	Event deleted.
 event details follow	calendar	en	Event details follow
-event saved	calendar	en	Event saved
+event saved	calendar	en	Event saved.
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 every user can invite other users and groups	admin	en	Every user can invite other users and groups
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
@@ -186,22 +186,22 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exception	calendar	en	Exception
-exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it
+exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it.
 exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
 export	calendar	en	Export
-export definitition to use for nextmatch export	calendar	en	Export definitition to use for nextmatch export
+export definitition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your Calendar into a CSV File.
-extended	calendar	en	Extended
+extended	calendar	en	Extended.
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	en	Extended updates always include the complete event-details. iCal's can be imported by certain other calendar-applications.
 fieldseparator	calendar	en	Field separator
 filemanager	calendar	en	Filemanager
 filename	calendar	en	File name
 filename of the download	calendar	en	File name of the download
-find free timeslots where the selected participants are availible for the given timespan	calendar	en	Find free time slots where the selected participants are available for the given time span
+find free timeslots where the selected participants are availible for the given timespan	calendar	en	Find free time slots where the selected participants are available for the given time span.
 firstname of person to notify	calendar	en	First name of a person to notify
 for	calendar	en	for
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
@@ -213,7 +213,7 @@ forward one year	calendar	en	Forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	Free/Busy: Unknown user '%1', or not available for unauthenticated users!
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	free/Busy: Unknown user '%1', wrong password or not available to not logged in users !!!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	free/Busy: Unknown user '%1', wrong password or not available to not logged in users!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
@@ -231,14 +231,14 @@ group(s) or user(s) whose calendars to show (if acl exists)	calendar	en	Group(s)
 groupmember(s) %1 not included, because you have no access.	calendar	en	Group member(s) %1 not included, because of you have no access.
 groups: other users can allways be invited, only groups require an invite grant	admin	en	Groups: other users can always be invited, only groups require an invite grant.
 h	calendar	en	h
-here is your requested alarm.	calendar	en	Here is your requested alarm.
+here is your requested alarm.	calendar	en	Your requested alarm.
 hide private events	calendar	en	Hide private events
 hide private infos	calendar	en	Hide private infos
 high priority	calendar	en	High priority
 history	calendar	en	History
 history logging	admin	en	History logging
 holiday	calendar	en	Holiday
-holiday management	calendar	en	Holiday Management
+holiday management	calendar	en	Holiday management
 holidays	calendar	en	Holidays
 holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
@@ -246,31 +246,30 @@ how far to search (from startdate)	calendar	en	How far to search (from start dat
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
-how much entries to skip	calendar	en	How much entries to skip
+how much entries to skip	calendar	en	How much entries to skip?
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
 ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
 ical import	calendar	en	iCal import
-ical successful imported	calendar	en	iCal successful imported
+ical successful imported	calendar	en	iCal successful imported.
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays are falling on a weekend, they are taken on the Monday after.
 if start day differs	calendar	en	If start day differs
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!!!
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the infolog data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
-if you specify an export definition, it will be used when you export*	calendar	en	If you specify an export definition, it will be used when you export*
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV file
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
-imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar .
+imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar.
 initially year aligned	calendar	en	Initially year aligned
 insert	calendar	en	Insert
 insert in document	calendar	en	Insert in document
 interval	calendar	en	Interval
-invalid email-address "%1" for user %2	calendar	en	Invalid email address "%1" for user %2
+invalid email-address "%1" for user %2	calendar	en	Invalid email address "%1" for user %2 .
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1.  Might be a bad field translation. Used %2 instead.
 invitations	calendar	en	Invitations
 invite	calendar	en	Invite
@@ -311,14 +310,14 @@ needs action	calendar	en	Needs action
 new	calendar	en	New
 new search with the above parameters	calendar	en	New search with the above parameters
 no automatic purging	admin	en	No automatic purging
-no events found	calendar	en	No events found
+no events found	calendar	en	No events found.
 no filter	calendar	en	No filter
-no matches found	calendar	en	No matches found
-no owner selected	calendar	en	No owner selected
-no recurrence	calendar	en	No recurrence
-no response	calendar	en	No response
+no matches found	calendar	en	No matches found.
+no owner selected	calendar	en	No owner selected.
+no recurrence	calendar	en	No recurrence.
+no response	calendar	en	No response.
 non blocking	calendar	en	Non blocking
-not	calendar	en	not
+not	calendar	en	Not
 not rejected	calendar	en	Not rejected
 nothing to update, version is already %1.	calendar	en	Nothing to update, version is already %1.
 notification messages for added events	calendar	en	Notification messages for added events
@@ -330,7 +329,7 @@ notification messages for your responses	calendar	en	Notification messages for y
 number of records to read (%1)	calendar	en	Number of records to read (%1)
 number of weeks to show	calendar	en	Number of weeks to show
 observance rule	calendar	en	Observance rule
-occurence	calendar	en	Occurence
+occurence	calendar	en	Occurrence
 old startdate	calendar	en	Old start date
 olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
@@ -354,7 +353,7 @@ participants disinvited from an event	calendar	en	Participants disinvited from a
 participants, resources, ...	calendar	en	Participants, Resources, ...
 password for not loged in users to your freebusy information?	calendar	en	Password for not logged in users to your Free/Busy information?
 people holiday	calendar	en	People holiday
-permission denied	calendar	en	Permission denied
+permission denied	calendar	en	Permission denied.
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
 please note: you can configure the field assignments after you uploaded the file.	calendar	en	Note: You can configure the field assignments AFTER you uploaded the file.
@@ -368,14 +367,14 @@ quantity	calendar	en	Quantity
 range fields	calendar	en	Range fields
 re-edit event	calendar	en	Re-edit event
 receive email updates	calendar	en	Receive email updates
-receive notifications about events you created/modified/deleted	calendar	en	Receive notifications about events you created/modified/deleted
+receive notifications about events you created/modified/deleted	calendar	en	Receive notifications about events you created/modified/deleted.
 receive summary of appointments	calendar	en	Receive summary of appointments
 recover	calendar	en	Recover
-recovered	calendar	en	Recovered
+recovered	calendar	en	Recovered.
 recurrence	calendar	en	Recurrence
 recurring event	calendar	en	Recurring event
 reject	calendar	en	Reject
-rejected	calendar	en	Rejected
+rejected	calendar	en	Rejected.
 repeat days	calendar	en	Repeat days
 repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date. Empty for unlimited.
 repeat type	calendar	en	Repeat type
@@ -397,13 +396,13 @@ restrict set status to	calendar	en	Restrict set status to
 role	calendar	en	Role
 rule	calendar	en	Rule
 sat	calendar	en	Sat
-save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	en	Save event as exception - Delete single occurrence - Edit status or alarms for this particular day
-saves the changes made	calendar	en	Saves the changes made
-saves the event ignoring the conflict	calendar	en	Saves the event ignoring the conflict
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	en	Save event as exception - Delete single occurrence - Edit status or alarms for this particular day.
+saves the changes made	calendar	en	Saves the changes made.
+saves the event ignoring the conflict	calendar	en	Saves the event ignoring the conflict.
 scheduling conflict	calendar	en	Scheduling conflict
 search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
-select a color for this calendar	calendar	en	Select a color for this calendar
+select a color for this calendar	calendar	en	Select a color for calendar
 select a time	calendar	en	Select a time
 select an action	calendar	en	Select an action
 select an action...	calendar	en	Select an action...
@@ -430,14 +429,14 @@ show all events, as if they were private	calendar	en	Show all events, as if they
 show all status incl. rejected events	calendar	en	Show all status incl. rejected events
 show all status, but rejected	calendar	en	Show all status, but rejected
 show also events just owned by selected user	calendar	en	Show also events just owned by selected user
-show birthdays from addressbook	admin	en	Show birthdays from addressbook
+show birthdays from addressbook	admin	en	Show birthdays from address book
 show default view on main screen	calendar	en	Show calendar on main screen
 show empty rows in planner	calendar	en	Show empty rows in planner
 show events that have been deleted	calendar	en	Show events that have been deleted
 show list of upcoming events	calendar	en	Show list of upcoming events
 show only accepted events	calendar	en	Show only accepted events
 show only delegated events	calendar	en	Show only delegated events
-show only events flagged as public, (not checked as private)	calendar	en	Show only events flagged as public, -not checked as private.
+show only events flagged as public, (not checked as private)	calendar	en	Show only events flagged as public, -not checked as private
 show only invitations, not yet accepted or rejected	calendar	en	Show only invitations, not yet accepted or rejected
 show only rejected events	calendar	en	Show only rejected events
 show only tentative accepted events	calendar	en	Show only tentative accepted events
@@ -448,16 +447,16 @@ single event	calendar	en	Single event
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
 start date/time	calendar	en	Start date / time
-start of series event changed	calendar	en	Start of series event changed
+start of series event changed	calendar	en	Start of series event changed.
 startdate	calendar	en	Start date
 startdate / -time	calendar	en	Start date / time
 startdate and -time of the search	calendar	en	Start date and time of the search
 startdate of the export	calendar	en	Start date of the export
 startrecord	calendar	en	Start record
-status changed	calendar	en	Status changed
-status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed
-status for this particular day changed	calendar	en	Status for this particular day changed
-status of participants set to unknown because of missing category rights	calendar	en	Status of participants set to unknown because of missing category rights
+status changed	calendar	en	Status changed.
+status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed.
+status for this particular day changed	calendar	en	Status for this particular day changed.
+status of participants set to unknown because of missing category rights	calendar	en	Status of participants set to unknown because of missing category rights.
 submit to repository	calendar	en	Submit to repository
 sun	calendar	en	Sun
 tag to mark positions for address labels	calendar	en	Tag to mark positions for address labels
@@ -482,7 +481,7 @@ this message is sent to every participant of events you own, who has requested n
 this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentative accept or reject an event.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event. Include all information you might need.
 this module displays a planner calendar.	calendar	en	This module displays a planner calendar.
-this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	en	This module displays a user's calendar as multiple weeks. Don't give calendar application access to the anon user!
+this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	en	This module displays a user's calendar as multiple weeks. Don't give calendar application access to the anonymous user!
 this module displays calendar events as a list.	calendar	en	This module displays calendar events as a list.
 this module displays the current month	calendar	en	This module displays the current month
 three month	calendar	en	Three month
@@ -495,7 +494,7 @@ timezone	calendar	en	Time zone
 timezone in which recurrences have identical time	calendar	en	Time zone in which recurrences have identical time
 timezone of event exports	calendar	en	Time zone of event exports
 timezone of event ical file import/export	calendar	en	Time zone of event iCal file import|export
-timezones updated to version %1 (%2 records updated).	calendar	en	Time zones updated to version %1 (%2 records updated).
+timezones updated to version %1 (%2 records updated).	calendar	en	Time zones updated to version %1, %2 records updated.
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	Too many might exceed your execution time limit
 to-firstname	calendar	en	To first name
@@ -553,15 +552,15 @@ yes, only admins can purge deleted items	admin	en	Yes, only admins can purge del
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you are not invited to that event!	calendar	en	You are not invited to that event!
-you can either set a year or a occurence, not both !!!	calendar	en	You can either set a year or occurrence, not both !!!
-you can only set a year or a occurence !!!	calendar	en	You can only set a year or occurrence !!!
+you can either set a year or a occurence, not both !!!	calendar	en	You can either set a year or occurrence, not both!
+you can only set a year or a occurence !!!	calendar	en	You can only set a year or occurrence!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have a meeting scheduled for %1	calendar	en	You have a meeting scheduled for %1
 you have been disinvited from the meeting at %1	calendar	en	You have been dis-invited from the meeting at %1
 you need to select an account, contact or resource first!	calendar	en	You need to select an account, contact or resource first!
-you need to select an ical file first	calendar	en	You need to select an iCal file first
-you need to select some events first	calendar	en	You need to select some events first
-you need to set either a day or a occurence !!!	calendar	en	You need to set either a day or a occurence !!!
+you need to select an ical file first	calendar	en	You need to select an iCal file first.
+you need to select some events first	calendar	en	You need to select some events first.
+you need to set either a day or a occurence !!!	calendar	en	You need to set either a day or a occurrence!
 you requested more than available for the selected resource:	calendar	en	You requested more than available for the selected resource:
 your meeting scheduled for %1 has been canceled	calendar	en	Your meeting scheduled for %1 has been canceled
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	en	Your meeting that had been scheduled for %1 has been rescheduled to %2

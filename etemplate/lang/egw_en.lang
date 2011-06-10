@@ -1,249 +1,249 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	en	%1 (%2 new) Messages writen for Application '%3' and Languages '%4'
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	en	%1 (%2 new) messages written for application '%3' and languages '%4'
 %1 entries found, select one ...	etemplate	en	%1 entries found, select one ...
-%1 etemplates deleted	etemplate	en	%1 eTemplates deleted
-%1 etemplates for application '%2' dumped to '%3'	etemplate	en	%1 eTemplates for Application '%2' dumped to '%3'
-%1 etemplates found	etemplate	en	%1 eTemplates found
+%1 etemplates deleted	etemplate	en	%1 eTemplates deleted.
+%1 etemplates for application '%2' dumped to '%3'	etemplate	en	%1 eTemplates for application '%2' dumped to '%3'
+%1 etemplates found	etemplate	en	%1 eTemplates found.
 %1 matches on search criteria	etemplate	en	%1 matches on search criteria
 %1 more...	etemplate	en	%1 more...
-%1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for Application '%2'
+%1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for application '%2'
 %1 not implemented for %2!	etemplate	en	%1 not implemented for %2!
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
 %s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
-'%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format !!!
+'%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format!
 '%1' is no php file in the egw server root (%2)!	etemplate	en	'%1' is no php file in the eGW server root (%2)!
-'%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floatingpoint number !!!
-'%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer !!!
+'%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date!
+'%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floating point number!
+'%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer!
 '%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
-a pattern to be searched for	etemplate	en	a pattern to be searched for
-accesskey	etemplate	en	Accesskey
-accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Accesskeys can also be specified with an & in the label (eg. &Name)
-account contactdata	etemplate	en	Account contactdata
-add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
+a pattern to be searched for	etemplate	en	Pattern to be searched for
+accesskey	etemplate	en	Access key
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Access keys can also be specified with an & in the label (eg. &Name)
+account contactdata	etemplate	en	Account contact data
+add a new column (after the existing ones)	etemplate	en	Add a new column
 add a new entry of the selected application	etemplate	en	Add a new entry of the selected application
 add a new multi-column index	etemplate	en	Add a new multi-column index
-add column	etemplate	en	Add Column
-add index	etemplate	en	Add Index
+add column	etemplate	en	Add column
+add index	etemplate	en	Add index
 add new	etemplate	en	Add new
-add table	etemplate	en	Add Table
+add table	etemplate	en	Add table
 advanced search	etemplate	en	Advanced search
 align	etemplate	en	Align
-alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
-alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
-all days	etemplate	en	all days
-all operations save the template!	etemplate	en	all operations save the template!
+alignment of label and input-field in table-cell	etemplate	en	Alignment of label and input field in table cell
+alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table cell
+all days	etemplate	en	All days
+all operations save the template!	etemplate	en	All operations save the template!
 allowed file type: %1	etemplate	en	Allowed file type: %1
 am	etemplate	en	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	An indexed column speeds up query using that column, cost space on the disk!
 and	etemplate	en	AND
 application	etemplate	en	Application
-application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
+application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates!
 applications	etemplate	en	Applications
-applies the changes made	etemplate	en	applies the changes made
-applies the changes to the given version of the template	etemplate	en	applies the changes to the given version of the template
-as default	etemplate	en	as default
+applies the changes made	etemplate	en	Applies the changes
+applies the changes to the given version of the template	etemplate	en	Applies the changes to the given version of the template
+as default	etemplate	en	As default
 attach	etemplate	en	Attach
-attach file	etemplate	en	attach file
+attach file	etemplate	en	Attach file
 baseline	etemplate	en	Baseline
 blurtext	etemplate	en	blurText
 border	etemplate	en	Border
-border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
+border-line-thickness for the table-tag	etemplate	en	Border line thickness for the table tag
 bottom	etemplate	en	Bottom
 box	etemplate	en	Box
 box...	etemplate	en	Box...
 broken link	etemplate	en	Broken link
-can not have special sql-value null	etemplate	en	can not have special SQL-value NULL
+can not have special sql-value null	etemplate	en	Can not have special SQL-value NULL.
 cancel	etemplate	en	Cancel
-cant delete a single widget from a grid !!!	etemplate	en	cant delete a single widget from a grid !!!
-cant delete the only column of a grid !!!	etemplate	en	cant delete the only column of a grid !!!
-cant delete the only row in a grid !!!	etemplate	en	cant delete the only row in a grid !!!
+cant delete a single widget from a grid !!!	etemplate	en	Can't delete a single widget from a grid!
+cant delete the only column of a grid !!!	etemplate	en	Can't delete the only column of a grid!
+cant delete the only row in a grid !!!	etemplate	en	Can't delete the only row in a grid!
 category	etemplate	en	Category
 category tree	etemplate	en	Category tree
-cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
+cellpadding for the table-tag	etemplate	en	Cell padding for the table tag
 cells	etemplate	en	Cells
-cellspacing for the table-tag	etemplate	en	Cellspacing for the table-tag
+cellspacing for the table-tag	etemplate	en	Cell spacing for the table tag
 center	etemplate	en	Center
 changed	etemplate	en	Changed
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
-check if field has to be filled by user	etemplate	en	check if field has to be filled by user
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	Should content be displayed only, but not altered.
+check if field has to be filled by user	etemplate	en	Check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
 class	etemplate	en	Class
-class, valign	etemplate	en	class, Valign
-click here to attach the file	etemplate	en	click here to attach the file
-click here to create the link	etemplate	en	click here to create the Link
-click here to start the search	etemplate	en	Click here to start the search
-click here to upload the file	etemplate	en	Click here to upload the file
-click to order after that criteria	etemplate	en	click to order after that criteria
-clickable path	etemplate	en	clickable path
-closes the window without saving the changes	etemplate	en	closes the window without saving the changes
+class, valign	etemplate	en	Vlass, Valign
+click here to attach the file	etemplate	en	Attach file
+click here to create the link	etemplate	en	Create link
+click here to start the search	etemplate	en	Start the search
+click here to upload the file	etemplate	en	Upload the file
+click to order after that criteria	etemplate	en	Order after criteria
+clickable path	etemplate	en	Clickable path
+closes the window without saving the changes	etemplate	en	Close without saving
 column...	etemplate	en	Column...
-columnname	etemplate	en	ColumnName
+columnname	etemplate	en	Column name
 comment	etemplate	en	Comment
-confirm	etemplate	en	confirm
-confirmation message or custom javascript (returning true or false)	etemplate	en	confirmation message or custom javascript (returning true or false)
-confirmation necesary or custom java-script	etemplate	en	confirmation necesary or custom java-script
+confirm	etemplate	en	Confirm
+confirmation message or custom javascript (returning true or false)	etemplate	en	Confirmation message or custom javascript, returning true or false.
+confirmation necesary or custom java-script	etemplate	en	Confirmation necessary or custom java-script
 contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
-contains	etemplate	en	contains
+contains	etemplate	en	Contains
 create a new table for the application	etemplate	en	Create a new table for the application
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
-css class for the table-tag	etemplate	en	CSS class for the table-tag
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)
+css class for the table-tag	etemplate	en	CSS class for the table tag
 css properties	etemplate	en	CSS properties
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	en	CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
-css-styles	etemplate	en	CSS-styles
-custom	etemplate	en	custom
-custom fields	etemplate	en	custom fields
-custom javascript for onchange	etemplate	en	custom javascript for onChange
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	en	CSS class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
+css-styles	etemplate	en	CSS styles
+custom	etemplate	en	Custom
+custom fields	etemplate	en	Custom fields
+custom javascript for onchange	etemplate	en	Custom javascript for onChange
 cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
 day	etemplate	en	Day
-days	etemplate	en	days
+days	etemplate	en	Days
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	en	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
-db-tools	etemplate	en	DB-Tools
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	en	DB specific index options, comma separated, e.g. mysql(FULLTEXT) or mysql(100) for the indexed length of a column.
+db-tools	etemplate	en	DB tools
 deck	etemplate	en	Deck (internal)
 default	etemplate	en	Default
-delete a single entry by passing the id.	etemplate	en	Delete a single entry by passing the id.
-delete all selected etemplates, without further inquiry	etemplate	en	delete ALL selected eTemplates, WITHOUT further inquiry
-delete and cut save the template!	etemplate	en	delete and cut save the template!
-delete column	etemplate	en	Delete Column
-delete index	etemplate	en	Delete Index
-delete the spezified etemplate	etemplate	en	Delete the spezified eTemplate
-delete this column	etemplate	en	delete this column
-delete this etemplate	etemplate	en	delete this eTemplate
-delete this file	etemplate	en	Delete this file
-delete this row	etemplate	en	delete this row
-delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
-deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
-deletes this column	etemplate	en	Deletes this column
-deletes this index	etemplate	en	Deletes this index
-discard changes	etemplate	en	discard changes
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
-displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
-displayed in the top line of the groupbox (legend)	etemplate	en	displayed in the top line of the groupbox (legend)
+delete a single entry by passing the id.	etemplate	en	Delete a single entry by passing the ID
+delete all selected etemplates, without further inquiry	etemplate	en	Delete ALL selected eTemplates, WITHOUT further inquiry
+delete and cut save the template!	etemplate	en	Delete and cut save the template!
+delete column	etemplate	en	Delete column
+delete index	etemplate	en	Delete index
+delete the spezified etemplate	etemplate	en	Delete eTemplate
+delete this column	etemplate	en	Delete column
+delete this etemplate	etemplate	en	Delete eTemplate
+delete this file	etemplate	en	Delete file
+delete this row	etemplate	en	Delete row
+delete whole column (can not be undone!!!)	etemplate	en	Delete whole column
+deletes the above spez. etemplate from the database, can not be undone	etemplate	en	Deletes eTemplate from the database
+deletes the etemplate spez. above	etemplate	en	Deletes eTemplate.
+deletes this column	etemplate	en	Deletes column.
+deletes this index	etemplate	en	Deletes index.
+discard changes	etemplate	en	Discard changes
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	Displayed in front of input or input is inserted for a '%s' in the label of the Submit button or image file name.
+displayed in statusline of browser if input-field gets focus	etemplate	en	Displayed in status line of browser if input field gets focus.
+displayed in the top line of the groupbox (legend)	etemplate	en	Displayed in the top line of the group box (legend).
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
 document '%1' does not exist or is not readable for you!	etemplate	en	Document '%1' does not exist or is not readable for you!
 documentation	etemplate	en	Documentation
-doesn't matter	etemplate	en	doesn't matter
+doesn't matter	etemplate	en	Doesn't matter
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
-drop table	etemplate	en	Drop Table
+drop table	etemplate	en	Drop table
 dump4setup	etemplate	en	Dump4Setup
 duration	etemplate	en	Duration
 edit	etemplate	en	Edit
-edit embeded css styles or of the applications app.css file	etemplate	en	edit embeded CSS styles or of the applications app.css file
-edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
+edit embeded css styles or of the applications app.css file	etemplate	en	Edit embedded CSS styles or of the applications app.css file
+edit the etemplate spez. above	etemplate	en	Edit eTemplate
 edit...	etemplate	en	Edit...
 editable templates - db-tools	etemplate	en	Editable Templates - DB-Tools
-editable templates - delete template	etemplate	en	Editable Templates - Delete Template
+editable templates - delete template	etemplate	en	Editable Templates - Delete template
 editable templates - editor	etemplate	en	Editable Templates - Editor
 editable templates - search	etemplate	en	Editable Templates - Search
-editable templates - show template	etemplate	en	Editable Templates - Show Template
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
-enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
-enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
+editable templates - show template	etemplate	en	Editable Templates - Show template
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
+enable javascript onchange submit	etemplate	en	Enable JavaScript onChange submit
+enter '' for an empty default, nothing mean no default	etemplate	en	Enter '' for an empty default, nothing means no default
 enter a search pattern	etemplate	en	Enter a search pattern
-enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter filename to upload and attach, use [Browse...] to search for it
-enter the new version number here (> old_version), empty for no update-file	etemplate	en	enter the new version number here (> old_version), empty for no update-file
-enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
-entry saved	etemplate	en	Entry saved
-error copying uploaded file to vfs!	etemplate	en	Error copying uploaded file to vfs!
-error create parent directory %1!	etemplate	en	Error create parent directory %1!
+enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter file name to upload and attach, use [Browse...] to search for it
+enter the new version number here (> old_version), empty for no update-file	etemplate	en	Enter new version number, > old_version, empty for no update file
+enter the new version number here (has to be > old_version)	etemplate	en	Enter new version number, has to be > old_version
+entry saved	etemplate	en	Entry saved.
+error copying uploaded file to vfs!	etemplate	en	Error copying uploaded file to VFS!
+error create parent directory %1!	etemplate	en	Error creating parent directory %1!
 error deleting %1!	etemplate	en	Error deleting %1!
 error uploading file!	filemanager	en	Error uploading file!
-error: template not found !!!	etemplate	en	Error: Template not found !!!
-error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
-error: while saving !!!	etemplate	en	Error: while saving !!!
-error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
+error: template not found !!!	etemplate	en	Error: Template not found!
+error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: web server is not allowed to write into '%1' !!!
+error: while saving !!!	etemplate	en	Error while saving!
+error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error writing file, no write permission for the web server!
 etemplate	common	en	eTemplate
-etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
+etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, click Save to store it in the database
 etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
-etemplate editor	etemplate	en	eTemplate Editor
-etemplate reference	etemplate	en	eTemplate Reference
-etemplate tutorial	etemplate	en	eTemplate Tutorial
-exchange this row with the one above	etemplate	en	exchange this row with the one above
-exchange this two columns	etemplate	en	exchange this two columns
-export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
+etemplate editor	etemplate	en	eTemplate editor
+etemplate reference	etemplate	en	eTemplate reference
+etemplate tutorial	etemplate	en	eTemplate tutorial
+exchange this row with the one above	etemplate	en	Exchange this row with the one above
+exchange this two columns	etemplate	en	Exchange these two columns
+export the loaded etemplate into a xml-file	etemplate	en	Export the loaded eTemplate into a xml-file
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
 field	etemplate	en	Field
-field must not be empty !!!	etemplate	en	Field must not be empty !!!
+field must not be empty !!!	etemplate	en	Field must not be empty!
 file	etemplate	en	File
 file '%1' not found!	etemplate	en	File '%1' not found!
-file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown !!!
-file is of wrong type (%1 != %2)!	etemplate	en	File is of wrong type (%1 != %2)!
-file writen	etemplate	en	File writen
-fileupload	etemplate	en	FileUpload
+file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown!
+file is of wrong type (%1 != %2)!	etemplate	en	File is wrong type (%1 != %2)!
+file writen	etemplate	en	File written.
+fileupload	etemplate	en	File upload
 first	etemplate	en	First
-floating point	etemplate	en	Floating Point
-for more then one contact in a document use the tag pagerepeat!	etemplate	en	for more then one contact in a document use the tag pagerepeat!
-foreign key	etemplate	en	Foreign Key
-formatted text (html)	etemplate	en	Formatted Text (HTML)
-go to the first entry	etemplate	en	go to the first entry
-go to the last entry	etemplate	en	go to the last entry
-go to the next page of entries	etemplate	en	go to the next page of entries
-go to the previous page of entries	etemplate	en	go to the previous page of entries
+floating point	etemplate	en	Floating point
+for more then one contact in a document use the tag pagerepeat!	etemplate	en	Use the tag page repeat for more than one contact in a document!
+foreign key	etemplate	en	Foreign key
+formatted text (html)	etemplate	en	Formatted text (HTML)
+go to the first entry	etemplate	en	Go to the first entry
+go to the last entry	etemplate	en	Go to the last entry
+go to the next page of entries	etemplate	en	Go to the next page of entries
+go to the previous page of entries	etemplate	en	Go to the previous page of entries
 grid	etemplate	en	Grid
 grid column attributes	etemplate	en	Grid column attributes
 grid row attributes	etemplate	en	Grid row attributes
 groupbox	etemplate	en	GroupBox
 hbox	etemplate	en	HBox
 height	etemplate	en	Height
-height of row (in % or pixel)	etemplate	en	height of row (in % or pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
-height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
+height of row (in % or pixel)	etemplate	en	Height of row (in % or pixel)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	Height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table tag and (optional) div
 height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
-history log	etemplate	en	History Log
-horizontal rule	etemplate	en	Horizontal Rule
+history log	etemplate	en	History log
+horizontal rule	etemplate	en	Horizontal ruler
 hour	etemplate	en	Hour
-hours	etemplate	en	hours
+hours	etemplate	en	Hours
 how many entries should the list show	etemplate	en	How many entries should the list show
-html	etemplate	en	Html
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
+html	etemplate	en	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	If field is disabled an empty table cell is displayed
 image	etemplate	en	Image
 import	etemplate	en	Import
-import an etemplate from a xml-file	etemplate	en	import an eTemplate from a xml-file
-import table-definitions from existing db-table	etemplate	en	Import table-definitions from existing db-table
+import an etemplate from a xml-file	etemplate	en	Import an eTemplate from a xml-file
+import table-definitions from existing db-table	etemplate	en	Import table definitions from existing DB table
 import xml	etemplate	en	Import XML
-increment version to not overwrite the existing template	etemplate	en	increment version to not overwrite the existing template
-index/name of returned content (name of the template, link / method for image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
-indexed	etemplate	en	Indexed
-indexoptions	etemplate	en	Indexoptions
-insert a column before	etemplate	en	insert a column before
-insert a column behind	etemplate	en	insert a column behind
-insert a row above	etemplate	en	insert a row above
-insert a row below	etemplate	en	insert a row below
-insert a widget before	etemplate	en	insert a widget before
-insert a widget behind	etemplate	en	insert a widget behind
+increment version to not overwrite the existing template	etemplate	en	Increment version to not overwrite the existing template.
+index/name of returned content (name of the template, link / method for image)	etemplate	en	Index/name of returned content, name of the Template, link / method for image.
+indexed	etemplate	en	Indexed.
+indexoptions	etemplate	en	Index options
+insert a column before	etemplate	en	Insert a column before
+insert a column behind	etemplate	en	Insert a column after
+insert a row above	etemplate	en	Insert a row above
+insert a row below	etemplate	en	Insert a row below
+insert a widget before	etemplate	en	Insert a widget before
+insert a widget behind	etemplate	en	Insert a widget after
 insert in document	etemplate	en	Insert in document
-insert new column behind this one	etemplate	en	insert new column behind this one
-insert new column in front of all	etemplate	en	insert new column in front of all
-insert new row after this one	etemplate	en	insert new row after this one
-insert new row in front of first line	etemplate	en	insert new row in front of first Line
+insert new column behind this one	etemplate	en	Insert new column after
+insert new column in front of all	etemplate	en	Insert new column before all
+insert new row after this one	etemplate	en	Insert new row after
+insert new row in front of first line	etemplate	en	Insert new row before first line
 integer	etemplate	en	Integer
 key	etemplate	en	Key
 label	etemplate	en	Label
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	en	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 lang	etemplate	en	Lang
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	Language short (eg. 'en' for English) for language dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 last	etemplate	en	Last
 left	etemplate	en	Left
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	Length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	en	Link
-linkapps	etemplate	en	LinkApps
-linkentry	etemplate	en	LinkEntry
-linklist	etemplate	en	LinkList
-linkstring	etemplate	en	LinkString
-linkto	etemplate	en	LinkTo
-load this template into the editor	etemplate	en	load this template into the editor
-maximum size for uploads	filemanager	en	Maximum size for uploads
+linkapps	etemplate	en	Link apps
+linkentry	etemplate	en	Link entry
+linklist	etemplate	en	Link list
+linkstring	etemplate	en	Link string
+linkto	etemplate	en	Link to
+load this template into the editor	etemplate	en	Load template to the editor
+maximum size for uploads	filemanager	en	Maximum upload size
 message ...	etemplate	en	Message ...
 middle	etemplate	en	Middle
 minute	etemplate	en	Minute
@@ -251,186 +251,186 @@ minutes	etemplate	en	Minutes
 missing: %1	etemplate	en	Missing: %1
 month	etemplate	en	Month
 more than 1 match for '%1'	etemplate	en	More than 1 match for '%1'
-multicolumn indices	etemplate	en	Multicolumn Indices
+multicolumn indices	etemplate	en	Multi column indices
 name	etemplate	en	Name
-name of other table where column is a key from	etemplate	en	name of other table where column is a key from
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
+name of other table where column is a key from	etemplate	en	Name of other table where column is a key from
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	Name of phpgw template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	etemplate	en	Name of table to add
-name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	Name of the eTemplate, should be in form application.function[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	Need to be unique in the table and no reserved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 new search	common	en	New search
 new table created	etemplate	en	New table created
-newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
+newer version '%1' exists !!!	etemplate	en	Newer version '%1' exists!
 nextmatch	etemplate	en	Nextmatch
-nextmatch accountfilter	etemplate	en	Nextmatch Accountfilter
-nextmatch custom filterheader	etemplate	en	Nextmatch Custom Filterheader
-nextmatch filterheader	etemplate	en	Nextmatch Filterheader
-nextmatch header	etemplate	en	Nextmatch Header
-nextmatch sortheader	etemplate	en	Nextmatch Sortheader
-no column to swap with !!!	etemplate	en	no column to swap with !!!
-no file	etemplate	en	no file
-no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
-no matches found	etemplate	en	No matches found
-no row to swap with !!!	etemplate	en	no row to swap with !!!
+nextmatch accountfilter	etemplate	en	Nextmatch account filter
+nextmatch custom filterheader	etemplate	en	Nextmatch custom filter header
+nextmatch filterheader	etemplate	en	Nextmatch filter header
+nextmatch header	etemplate	en	Nextmatch header
+nextmatch sortheader	etemplate	en	Nextmatch sort header
+no column to swap with !!!	etemplate	en	No column to swap with!
+no file	etemplate	en	No file
+no filename given or selected via browse...	etemplate	en	No filename
+no matches found	etemplate	en	No matches found.
+no row to swap with !!!	etemplate	en	No row to swap with!
 not null	etemplate	en	NOT NULL
-nothing	etemplate	en	nothing
-nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
-nothing in clipboard to paste !!!	etemplate	en	nothing in clipboard to paste !!!
-nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria !!!
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
+nothing	etemplate	en	Nothing
+nothing found - try again !!!	etemplate	en	Nothing found - try again!
+nothing in clipboard to paste !!!	etemplate	en	Nothing in clipboard to paste!
+nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria!
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	Number of columns the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	Number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
 onchange	etemplate	en	onChange
 onclick	etemplate	en	onClick
-only an other version found !!!	etemplate	en	only an other Version found !!!
-open the online help.	etemplate	en	Open the online help.
+only an other version found !!!	etemplate	en	Other version found!
+open the online help.	etemplate	en	Open the online help
 operator	etemplate	en	Operator
-optional note about the link	etemplate	en	optional note about the Link
+optional note about the link	etemplate	en	Optional note for Link
 options	etemplate	en	Options
 or	etemplate	en	OR
 order to navigating by tab key through the form	etemplate	en	Order to navigating by tab key through the form
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
-parent is a '%1' !!!	etemplate	en	parent is a '%1' !!!
+parent is a '%1' !!!	etemplate	en	Parent is a '%1' !
 paste	etemplate	en	Paste
 path	etemplate	en	Path
-please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
+please enter table-name first !!!	etemplate	en	Enter table name first!
 pm	etemplate	en	pm
 popup	etemplate	en	Popup
 precision	etemplate	en	Precision
-primary key	etemplate	en	Primary Key
-primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
-radiobutton	etemplate	en	Radiobutton
+primary key	etemplate	en	Primary key
+primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automatically indexed
+radiobutton	etemplate	en	Radio button
 read	etemplate	en	Read
 read a list of entries.	etemplate	en	Read a list of entries.
-read a single entry by passing the id and fieldlist.	etemplate	en	Read a single entry by passing the id and fieldlist.
-read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
-readonly	etemplate	en	readonly
-remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
-remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
+read a single entry by passing the id and fieldlist.	etemplate	en	Read a single entry by passing the ID and field list.
+read etemplate from database (for the keys above)	etemplate	en	Read eTemplate from database (for the keys above)
+readonly	etemplate	en	Read only
+remove row (can not be undone!!!)	etemplate	en	Remove row
+remove this link (not the entry itself)	etemplate	en	Remove link
 required	etemplate	en	Required
-returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
+returns savely, without deleting	etemplate	en	Returns WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
-save selected columns as default preference for all users.	etemplate	en	Save selected columns as default preference for all users.
-save the changes made and close the window	etemplate	en	Save the changes made and close the window
-save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
-saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
-saves the template with given version number and closes the window	etemplate	en	saves the template with given version number and closes the window
+save selected columns as default preference for all users.	etemplate	en	Save columns as default preference for all users.
+save the changes made and close the window	etemplate	en	Save changes and close
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs
+saves changes to tables_current.inc.php	etemplate	en	Saves changes to tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	en	Saves the template with version number and closes the window.
 scale	etemplate	en	Scale
-scale for float	etemplate	en	scale for float
+scale for float	etemplate	en	Scale for float
 search	etemplate	en	Search
 search...	etemplate	en	Search...
-select a category	etemplate	en	select a Category
-select a primary contact, to show in the list	etemplate	en	Select a primary contact, to show in the list
-select access	etemplate	en	Select Access
-select account	etemplate	en	Select Account
-select an app first !!!	etemplate	en	Select an app first !!!
-select an app to search in	etemplate	en	Select an App to search in
-select an application	etemplate	en	Select an application
-select an application, (*) = uninstalled	etemplate	en	Select an application, (*) = uninstalled
-select an entry to link with	etemplate	en	Select an entry to link with
-select an table of the application	etemplate	en	Select an table of the application
-select application	etemplate	en	Select Application
+select a category	etemplate	en	Select category
+select a primary contact, to show in the list	etemplate	en	Select primary contact, to show in the list
+select access	etemplate	en	Select access
+select account	etemplate	en	Select account
+select an app first !!!	etemplate	en	Select application first!
+select an app to search in	etemplate	en	Select application to search in
+select an application	etemplate	en	Select application
+select an application, (*) = uninstalled	etemplate	en	Select application, (*) = uninstalled
+select an entry to link with	etemplate	en	Select entry to link with
+select an table of the application	etemplate	en	Select application table
+select application	etemplate	en	Select application
 select application to search	etemplate	en	Select application to search
-select category	etemplate	en	Select Category
+select category	etemplate	en	Select category
 select columns	etemplate	en	Select columns
-select country	etemplate	en	Select Country
-select day	etemplate	en	Select Day
-select day of week	etemplate	en	select day of week
+select country	etemplate	en	Select country
+select day	etemplate	en	Select day
+select day of week	etemplate	en	Select week day
 select entry	etemplate	en	Select entry
 select hour	etemplate	en	Select hour
-select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
-select language	etemplate	en	Select Language
-select month	etemplate	en	Select Month
-select number	etemplate	en	Select Number
-select one ...	etemplate	en	Select One ...
-select percentage	etemplate	en	Select Percentage
-select priority	etemplate	en	Select Priority
-select state	etemplate	en	Select State
-select the columns to display in the list	etemplate	en	Select the columns to display in the list
-select the indexed columns in their desired order	etemplate	en	Select the indexed columns in their desired order
-select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
-select which accounts to show	etemplate	en	select which accounts to show
-select which values to show	etemplate	en	select which values to show
-select year	etemplate	en	Select Year
-selectbox	etemplate	en	Selectbox
-sets today as date	etemplate	en	sets today as date
-should the form be submitted or any custom javascript be executed	etemplate	en	Should the form be submitted or any custom javascript be executed
+select if content of field should not be translated (label gets always translated)	etemplate	en	Select if field content should not be translated, label gets always translated.
+select language	etemplate	en	Select language
+select month	etemplate	en	Select month
+select number	etemplate	en	Select number
+select one ...	etemplate	en	Select ...
+select percentage	etemplate	en	Select percentage
+select priority	etemplate	en	Select priority
+select state	etemplate	en	Select state
+select the columns to display in the list	etemplate	en	Select columns to display in the list
+select the indexed columns in their desired order	etemplate	en	Select indexed columns in desired order
+select this etemplate to delete it	etemplate	en	Select eTemplate to delete
+select which accounts to show	etemplate	en	Select accounts to show
+select which values to show	etemplate	en	Select values to show
+select year	etemplate	en	Select year
+selectbox	etemplate	en	Select box
+sets today as date	etemplate	en	Set today as date
+should the form be submitted or any custom javascript be executed	etemplate	en	Should form be submitted or any custom javascript executed
 show	etemplate	en	Show
 show (no save)	etemplate	en	Show (no save)
 show all / cancel filter	etemplate	en	Show all / cancel filter
-show values	etemplate	en	Show Values
-showing	etemplate	en	showing
-shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
-shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
+show values	etemplate	en	Show values
+showing	etemplate	en	Showing
+shows / allows you to enter values into the etemplate for testing	etemplate	en	Shows / allows to enter values into the eTemplate for testing
+shows/displays etemplate for testing, does not save it before	etemplate	en	Shows / displays eTemplate for testing, does NOT save it
 spacing	etemplate	en	Spacing
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
 stack	etemplate	en	Stack
-start a new search, cancel this link	etemplate	en	start a new search, cancel this link
-start new search for the above pattern	etemplate	en	start new search for the above pattern
-submit form	etemplate	en	submit form
-submitbutton	etemplate	en	Submitbutton
-swap	etemplate	en	swap
-swap widget with next one	etemplate	en	swap widget with next one
-swap with next column	etemplate	en	swap with next column
-swap with next row	etemplate	en	swap with next row
-switch to a parent widget	etemplate	en	switch to a parent widget
-switch to an other widgets of that container	etemplate	en	switch to an other widgets of that container
-tabindex	etemplate	en	Tabindex
-table unchanged, no write necessary !!!	etemplate	en	Table unchanged, no write necessary !!!
-tablename	etemplate	en	TableName
+start a new search, cancel this link	etemplate	en	Start new search, cancel this link
+start new search for the above pattern	etemplate	en	Start new search for the above pattern
+submit form	etemplate	en	Submit form
+submitbutton	etemplate	en	Submit button
+swap	etemplate	en	Swap
+swap widget with next one	etemplate	en	Swap widget with next one
+swap with next column	etemplate	en	Swap with next column
+swap with next row	etemplate	en	Swap with next row
+switch to a parent widget	etemplate	en	Switch to a parent widget
+switch to an other widgets of that container	etemplate	en	Switch to an other widgets of that container
+tabindex	etemplate	en	Tab index
+table unchanged, no write necessary !!!	etemplate	en	Table unchanged, no write necessary!
+tablename	etemplate	en	Table name
 tabs	etemplate	en	Tabs
 template	etemplate	en	Template
-template deleted	etemplate	en	Template deleted
-template saved	etemplate	en	Template saved
+template deleted	etemplate	en	Template deleted.
+template saved	etemplate	en	Template saved.
 text	etemplate	en	Text
-textarea	etemplate	en	Textarea
-this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	this text gets displayed if the input-field is empty and has no focus (blur)
+textarea	etemplate	en	Text area
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	Text gets displayed if the input field is empty and has no focus (blur)
 time	etemplate	en	Time
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
-to start the db-tools	etemplate	en	to start the DB-Tools
-to start the etemplate editor	etemplate	en	to start the eTemplate editor
-to start the search	etemplate	en	to start the search
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
+to start the db-tools	etemplate	en	To start DB tools
+to start the etemplate editor	etemplate	en	To start eTemplate editor
+to start the search	etemplate	en	To start search
 today	etemplate	en	Today
 top	etemplate	en	Top
 tree	etemplate	en	Tree
 type	etemplate	en	Type
-type of the column	etemplate	en	type of the column
-type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
+type of the column	etemplate	en	Type of column
+type of the field (select label if field should be empty)	etemplate	en	Type of field. Select label if field should be empty.
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
-update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
-update from version '%s' to	etemplate	en	Update from Version '%s' to
+update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields
+update from version '%s' to	etemplate	en	Update from version '%s' to
 upload	etemplate	en	Upload
 valign	etemplate	en	vAlign
 value	etemplate	en	Value
-value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !!!
-value has to be at maximum '%1' !!!	etemplate	en	Value has to be at maximum '%1' !!!
+value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !
+value has to be at maximum '%1' !!!	etemplate	en	Value has to be maximum '%1' !
 vbox	etemplate	en	VBox
 version	etemplate	en	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
-vertical alignment of row	etemplate	en	vertical alignment of row
-view this etemplate	etemplate	en	view this eTemplate
-view this linked entry in its application	etemplate	en	view this linked entry in its application
-weekend	etemplate	en	weekend
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-widget copied into clipboard	etemplate	en	widget copied into clipboard
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
+vertical alignment of row	etemplate	en	Vertical alignment of row
+view this etemplate	etemplate	en	View eTemplate
+view this linked entry in its application	etemplate	en	View linked entry in its application
+weekend	etemplate	en	Weekend
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
+widget copied into clipboard	etemplate	en	Widget copied into clipboard
 width	etemplate	en	Width
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
-width of column (in % or pixel)	etemplate	en	width of column (in % or pixel)
-width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	Width of column in % or pixels, disable col: [! = not]<value>[=<check>] e.g: '!@data' disable column if content of data is empty
+width of column (in % or pixel)	etemplate	en	Width of column in % or pixels
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table tag and (optional) div
 width, disabled	etemplate	en	Width, Disabled
-working days	etemplate	en	working days
+working days	etemplate	en	Working days
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
-write langfile	etemplate	en	Write Langfile
-write tables	etemplate	en	Write Tables
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
-xml-file to import	etemplate	en	xml-file to import
+write langfile	etemplate	en	Write language file
+write tables	etemplate	en	Write tables
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	Writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
+xml-file to import	etemplate	en	Xml file to import
 xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
-you are not allowed to export more then %1 entries!	etemplate	en	You are not allowed to export more then %1 entries!
-you can respond by visiting:	etemplate	en	You can respond by visiting:
-you need to select a file first!	etemplate	en	You need to select a file first!
-your code is incorrect !!!	etemplate	en	Your code is incorrect !!!
+you are not allowed to export more then %1 entries!	etemplate	en	You are not allowed to export more than %1 entries!
+you can respond by visiting:	etemplate	en	You can respond by visiting
+you need to select a file first!	etemplate	en	Select a file first!
+your code is incorrect !!!	etemplate	en	Code is incorrect!
