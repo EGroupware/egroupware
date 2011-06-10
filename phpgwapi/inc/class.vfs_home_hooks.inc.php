@@ -127,6 +127,9 @@ class vfs_home_hooks
 	/**
 	 * Hook called after group has been modified
 	 *
+	 * Checks if group has been renamed and renames the group directory too,
+	 * or if the group directory exists and creates it if not.
+	 *
 	 * @param array $data
 	 * @param int $data['account_id'] numerical id
 	 * @param string $data['account_name'] new group-name
@@ -135,12 +138,22 @@ class vfs_home_hooks
 	static function editGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
-		if ($data['account_name'] == $data['old_name']) return;	// nothing to do here
 
-		// rename the group-dir
-		egw_vfs::$is_root = true;
-		egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_name']);
-		egw_vfs::$is_root = false;
+		if ($data['account_name'] == $data['old_name'])
+		{
+			// check if group directory exists and create it if not (by calling addGroup hook)
+			if (!egw_vfs::stat('/home/'.$data['account_name']))
+			{
+				self::addGroup($data);
+			}
+		}
+		else
+		{
+			// rename the group-dir
+			egw_vfs::$is_root = true;
+			egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_name']);
+			egw_vfs::$is_root = false;
+		}
 	}
 
 	/**
