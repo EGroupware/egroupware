@@ -1300,6 +1300,19 @@
 					}
 				}
 			}
+			if ($partID == false)
+			{
+				foreach($attachments as $attachment)
+				{
+					// if the former did not match try matching the cid to the name of the attachment, AND there is no mathing attachment with cid
+					if(isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
+					{
+						$partID = $attachment['partID'];
+						break;
+					}
+				}
+			}
+
 			//error_log( "Cid:$_cid PARTID:$partID<bR>"); #exit;
 
 			if($partID == false) {
