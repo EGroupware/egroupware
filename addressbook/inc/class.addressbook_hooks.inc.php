@@ -273,6 +273,7 @@ class addressbook_hooks
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default' => '/templates/addressbook',
 			);
 		}
 

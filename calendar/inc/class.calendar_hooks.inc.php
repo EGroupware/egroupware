@@ -609,6 +609,7 @@ class calendar_hooks
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default' => '/templates/calendar',
 			);
 		}
 		// Import / Export for nextmatch

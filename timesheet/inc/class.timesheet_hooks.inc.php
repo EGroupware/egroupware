@@ -192,6 +192,7 @@ class timesheet_hooks
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default' => '/templates/timesheet',
 			);
 		}
 		// Import / Export for nextmatch

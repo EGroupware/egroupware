@@ -205,3 +205,29 @@ $oProc->UpdateSequence('egw_sqlfs','fs_id');
 // Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 $GLOBALS['egw_setup']->add_acl('addressbook',$defaultgroup,$defaultgroup,1|2|4|8);
+
+/**
+ * Create template directory and set default document_dir preference of addressbook, calendar, infolog, tracker, timesheet and projectmanager
+ */
+$admins = $GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
+
+egw_vfs::$is_root = true;
+$prefs = new preferences();
+$prefs->read_repository(false);
+foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', 'projectmanager') as $app)
+{
+	if ($app && !file_exists(EGW_SERVER_ROOT.'/'.$app)) continue;
+
+	// create directory and set permissions: Admins writable and other readable
+	$dir = '/templates'.($app ? '/'.$app : '');
+	egw_vfs::mkdir($dir, 075, STREAM_MKDIR_RECURSIVE);
+	egw_vfs::chgrp($dir, abs($admins));
+	egw_vfs::chmod($dir, 075);
+	if (!$app) continue;
+
+	// set default preference for app (preserving a maybe already set document-directory)
+	if ($prefs->default[$app]['document_dir']) $dir .= ' '.$prefs->default[$app]['document_dir'];
+	$prefs->add($app, 'document_dir', $dir, 'default');
+}
+$prefs->save_repository(false, 'default');
+egw_vfs::$is_root = false;
