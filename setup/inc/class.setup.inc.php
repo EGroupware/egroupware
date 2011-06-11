@@ -262,7 +262,6 @@ class setup
 				$this->set_cookie('ConfigUser','',$expire,'/');
 				$this->set_cookie('ConfigPW','',$expire,'/');
 				$this->set_cookie('ConfigDomain','',$expire,'/');
-//					$this->set_cookie('ConfigLang','',$expire,'/');
 				$GLOBALS['egw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
 				$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
 				$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
@@ -272,7 +271,6 @@ class setup
 				$expire = time() - 86400;
 				$this->set_cookie('HeaderUser','',$expire,'/');
 				$this->set_cookie('HeaderPW','',$expire,'/');
-//					$this->set_cookie('ConfigLang','',$expire,'/');
 				$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
 				$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 				return False;
@@ -743,19 +741,20 @@ class setup
 			}
 		}
 		// store default/forced preferences, if any found
+		$preferences = new preferences();
+		$preferences->read_repository(false);
 		foreach(array(
-			preferences::DEFAULT_ID => $default,
-			preferences::FORCED_ID  => $forced,
-		) as $owner => $prefs)
+			'default' => $default,
+			'forced'  => $forced,
+		) as $type => $prefs)
 		{
 			if ($prefs)
 			{
-				$this->db->insert($this->prefs_table,array(
-					'preference_value' => serialize($prefs),
-				),array(
-					'preference_owner' => $owner,
-					'preference_app'   => $appname == 'preferences' ? 'common' : $appname,
-				),__LINE__,__FILE__);
+				foreach($prefs as $name => $value)
+				{
+					$preferences->add($appname == 'preferences' ? 'common' : $appname, $name, $value, $type);
+				}
+				$preferences->save_repository(false, $type);
 				//error_log(__METHOD__."('$appname') storing ".($owner==preferences::DEFAULT_ID?'default':'forced')." prefs=".array2string($prefs));
 			}
 		}
