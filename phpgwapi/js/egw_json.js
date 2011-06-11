@@ -226,10 +226,19 @@ function egw_json_request(_menuaction, _parameters, _context)
 	this.onLoadFinish = null;
 	this.loadedJSFiles = {};
 	this.handleResponseDone = false;
+	this.app = null;
 	if (window.egw_alertHandler)
 	{
 		this.alertHandler = window.egw_alertHandler;
 	}
+}
+
+/**
+ * Sets the "application" object which is passed to egw_appWindowOpen when a redirect is done
+ */
+egw_json_request.prototype.setAppObject = function(_app)
+{
+	this.app = _app;
 }
 
 egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
@@ -423,7 +432,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							else
 							{
-								window.location.href = res.data.url;
+								egw_appWindowOpen(this.app, res.data.url);
 							}
 
 							hasResponse = true;

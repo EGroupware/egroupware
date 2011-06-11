@@ -15,6 +15,14 @@
  */
 class egw_json_request
 {
+
+	private static $_hadJSONRequest = false;
+	
+	public static function isJSONRequest()
+	{
+		return self::$_hadJSONRequest;
+	}
+
 	/**
 	 * Parses the raw input data supplied with the input_data parameter and calls the menuaction
 	 * passing all parameters supplied in the request to it.
@@ -24,6 +32,9 @@ class egw_json_request
 	 */
 	public function parseRequest($menuaction, $input_data)
 	{
+		// Remember that we currently are in a JSON request - e.g. used in the redirect code
+		self::$_hadJSONRequest = true;
+		
 		if (empty($input_data))
 		{
 			$this->handleRequest($menuaction, array());
@@ -177,6 +188,11 @@ class egw_json_response
 			self::$response = new egw_json_response();
 		}
 		return self::$response;
+	}
+	
+	public static function isJSONResponse()
+	{
+		return isset(self::$response);
 	}
 
 	/**
@@ -433,7 +449,7 @@ class egw_json_response
 			'params' => $params
 		);
 	}
-
+	
 	/**
 	 * Destructor
 	 */

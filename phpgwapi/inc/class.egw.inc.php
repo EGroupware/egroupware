@@ -480,6 +480,9 @@ class egw extends egw_minimal
 
 		$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
 
+		// Determines whether the current output buffer should be flushed
+		$do_flush = true;
+
 		if(!$url)
 		{
 			$url = $_SERVER['PHP_SELF'];
@@ -492,6 +495,14 @@ class egw extends egw_minimal
 			echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
 			echo "\n</BODY></HTML>";
 		}
+		else if (egw_json_response::isJSONResponse() || egw_json_request::isJSONRequest())
+		{
+			$response = egw_json_response::get();
+			$response->redirect($url);
+
+			// If we are in a json request, we should not flush the current output!
+			$do_flush = false;
+		}
 		else
 		{
 			if (headers_sent($file,$line))
@@ -501,7 +512,11 @@ class egw extends egw_minimal
 			Header("Location: $url");
 			print("\n\n");
 		}
-		@ob_flush(); flush();
+
+		if ($do_flush)
+		{
+			@ob_flush(); flush();
+		}
 
 		// commit session (if existing), to fix timing problems sometimes preventing session creation ("Your session can not be verified")
 		if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
