@@ -192,7 +192,7 @@ class resources_ui
 				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
-	
+
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
@@ -212,7 +212,7 @@ class resources_ui
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=resources.resources_ui.edit&res_id=$id',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
-				'group' => $group,
+				'group' => $group=1,
 				'disableClass' => 'rowNoEdit',
 			),
 			'view' => array(
