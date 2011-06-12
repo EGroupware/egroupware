@@ -445,8 +445,10 @@ egwGridDataElement.prototype.insertElement = function(_index, _id)
 		null);
 	element.index = _index;
 
-	// Create the action object
-	var object = this.actionObject.insertObject(_index, _id, null, 0);
+	// Create the action object with a temporary AOI which can be used to make
+	// the object visible
+	var object = this.actionObject.insertObject(_index, _id,
+		new egwGridTmpAOI(this.getRootElement().gridObject, _index), 0);
 	object.data = element;
 
 	// Link the two together

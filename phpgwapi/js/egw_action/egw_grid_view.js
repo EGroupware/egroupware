@@ -127,6 +127,8 @@ function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAl
 	// Insert the base grid container into the DOM-Tree
 	this.grid = new egwGridViewGrid(null, null, true, this); // (No parent grid, no height change callback, scrollable)
 	this.grid.insertIntoDOM(this.outer_tr, []);
+
+	this.dataRoot.gridObject = this.grid;
 }
 
 /**
@@ -1435,6 +1437,7 @@ function egwGridViewRow_aoiSetup()
 	this.aoi.row = this;
 	this.aoi.doSetState = egwGridViewRow_aoiSetState;
 	this.aoi.doTriggerEvent = egwGridViewRow_aoiTriggerEvent;
+	this.aoi.doMakeVisible = egwGridViewRow_aoiMakeVisible;
 	this.aoi.getDOMNode = egwGridViewRow_aoiGetDOMNode;
 }
 
@@ -1471,6 +1474,11 @@ function egwGridViewRow_aoiTriggerEvent(_event, _data)
 	{
 		this.row.parentNode.removeClass("draggedOver");
 	}
+}
+
+function egwGridViewRow_aoiMakeVisible()
+{
+	egwGridView_scrollToArea(this.row.grid.scrollarea, this.row.getArea());
 }
 
 /**
@@ -2041,4 +2049,54 @@ function egwGridViewFullRow_doSetViewArea()
 	//
 }
 
+/**
+ * Temporary AOI which has to be assigned to invisible grid objects in order
+ * to give them the possiblity to make them visible when using e.g. keyboard navigation
+ */
+function egwGridTmpAOI(_grid, _index)
+{
+	var aoi = new egwActionObjectDummyInterface();
+
+	// Assign the make visible function
+	aoi.grid = _grid;
+	aoi.index = _index;
+	aoi.doMakeVisible = egwGridTmpAOI_makeVisible;
+
+	return aoi;
+}
+
+function egwGridTmpAOI_makeVisible()
+{
+	// Assume an area for the element (this code is not optimal, but it should
+	// work in most cases - problem is that the elements in the grid may have equal
+	// sizes and the grid is scrolled to some area where the element is not)
+	// TODO: Support for trees
+	var avgHeight = this.grid.getOuter().avgRowHeight;
+	var area = egwArea(this.index * avgHeight, avgHeight);
+
+	egwGridView_scrollToArea(this.grid.scrollarea, area);
+}
+
+function egwGridView_scrollToArea(_scrollarea, _visarea)
+{
+	// Get the current view area
+	var va = egwArea(_scrollarea.scrollTop(), _scrollarea.height());
+
+	// Calculate the assumed position of this element
+	var pos = _visarea;
+
+	// Check whether it is currently (completely) visible, if not scroll the
+	// scroll area to that position
+	if (!(pos.top >= va.top && pos.bottom <= va.bottom))
+	{
+		if (pos.top < va.top)
+		{
+			_scrollarea.scrollTop(pos.top);
+		}
+		else
+		{
+			_scrollarea.scrollTop(va.top + pos.bottom - va.bottom);
+		}
+	}
+}
 

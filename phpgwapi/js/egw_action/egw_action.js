@@ -1027,7 +1027,8 @@ egwActionObject.prototype.getIndex = function()
  */
 egwActionObject.prototype.getFocusedObject = function()
 {
-	var cr = this.getContainerRoot();
+	/*var cr = this.getContainerRoot();*/
+	var cr = this.getRootObject();
 	return cr ? cr.focusedChild : null;
 }
 
@@ -1114,6 +1115,115 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _changedBit, _shi
 }
 
 /**
+ * Handler for key presses
+ */
+egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _alt) {
+	switch (_keyCode) {
+	case EGW_KEY_ARROW_UP:
+	case EGW_KEY_ARROW_DOWN:
+	case EGW_KEY_PAGE_UP:
+	case EGW_KEY_PAGE_DOWN:
+		var intval = 
+			(_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ?
+			1 : 10;
+
+		if (this.children.length > 0)
+		{
+			// Get the focused object
+			var focused = this.getFocusedObject();
+
+			// Determine the object which should get selected
+			var selObj = null;
+			if (!focused)
+			{
+				selObj = this.children[0];
+			}
+			else
+			{
+				selObj = (_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_PAGE_UP) ?
+					focused.getPrevious(intval) : focused.getNext(intval);
+			}
+
+			if (selObj != null)
+			{
+				if (!_shift)
+				{
+					this.setAllSelected(false);
+				}
+				else
+				{
+					var objs = focused.traversePath(selObj);
+					for (var i = 0; i < objs.length; i++)
+					{
+						objs[i].setSelected(true);
+					}
+				}
+
+				selObj.setSelected(true);
+				selObj.setFocused(true);
+
+				// Tell the aoi of the object to make it visible
+				selObj.makeVisible();
+			}
+
+			return true;
+		}
+
+		break;
+
+	// Handle CTRL-A to select all elements in the current container
+	case EGW_KEY_A:
+		if (_ctrl)
+		{
+			this.setAllSelected(true);
+			return true;
+		}
+
+		break;
+	}
+
+	return false;
+}
+
+egwActionObject.prototype.getPrevious = function(_intval)
+{
+	if (this.parent != null)
+	{
+		var idx = this.parent.children.indexOf(this);
+		if (idx > 0)
+		{
+			idx = Math.max(0, idx - _intval);
+			return this.parent.children[idx];
+		}
+		else
+		{
+			// TODO: Implement traversal of trees
+		}
+	}
+
+	return this;
+}
+
+egwActionObject.prototype.getNext = function(_intval)
+{
+	if (this.parent != null)
+	{
+		var idx = this.parent.children.indexOf(this);
+		if (idx < this.parent.children.length - 1)
+		{
+			idx = Math.min(this.parent.children.length - 1, idx + _intval);
+			return this.parent.children[idx];
+		}
+		else
+		{
+			// TODO: Implement traversal of trees
+		}
+	}
+
+	return this;
+}
+
+/**
  * Returns whether the object is currently selected.
  */
 egwActionObject.prototype.getSelected = function()
@@ -1174,6 +1284,11 @@ egwActionObject.prototype.setFocused = function(_focused)
 		{
 			this.parent.updateFocusedChild(this, _focused);
 		}
+	}
+
+	if (this.focusedChild != null && _focused == false)
+	{
+		this.focusedChild.setFocused(false);
 	}
 }
 
@@ -1289,7 +1404,7 @@ egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
 		}
 	}
 
-	if (this.parent && !egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER))
+	if (this.parent /*&& !egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER)*/)
 	{
 		this.parent.updateFocusedChild(_child, _focused);
 	}
@@ -1409,6 +1524,15 @@ egwActionObject.prototype.triggerCallback = function()
 		return this.onBeforeTrigger();
 	}
 	return true;
+}
+
+/**
+ * Calls the corresponding function of the AOI which tries to make the object
+ * visible.
+ */
+egwActionObject.prototype.makeVisible = function()
+{
+	this.iface.makeVisible();
 }
 
 var EGW_AO_EXEC_SELECTED = 0;
@@ -1660,6 +1784,8 @@ function egwActionObjectInterface()
 	// or EGW_AI_DRAG_OUT
 	this.doTriggerEvent = function(_event, _data) {return false;}
 
+	this.doMakeVisible = function() {};
+
 	this._state = EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE;
 
 	this.stateChangeCallback = null;
@@ -1778,8 +1904,13 @@ egwActionObjectInterface.prototype.triggerEvent = function(_event, _data)
 	return this.doTriggerEvent(_event, _data);
 }
 
-
-
+/**
+ * Scrolls the element into a visble area if it is currently hidden
+ */
+egwActionObjectInterface.prototype.makeVisible = function()
+{
+	return this.doMakeVisible();
+}
 
 /** -- egwActionObjectDummyInterface Class -- **/
 
