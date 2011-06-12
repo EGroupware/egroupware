@@ -869,6 +869,7 @@ class nextmatch_widget
 		egw_framework::validate_file('egw_action','egw_action_popup');
 		egw_framework::validate_file('egw_action','egw_menu');
 		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
+		egw_framework::validate_file('egw_action','egw_keymanager');
 		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
 
 		if (!is_array($action_links)) $action_links = array();
