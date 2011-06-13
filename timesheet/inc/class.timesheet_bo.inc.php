@@ -193,11 +193,13 @@ class timesheet_bo extends so_sql_cf
 		$map = array(
 			'' => array('substatus' => array())
 		);
-		foreach($this->status_labels_config as $id => &$status) {
+		foreach($this->status_labels_config as $id => &$status)
+		{
 			$status['substatus'] = array();
 			$map[$id] = &$status;
 		}
-		foreach($this->status_labels_config as &$status) {
+		foreach($this->status_labels_config as &$status)
+		{
 			$map[$status['parent']]['substatus'][] = &$status;
 		}
 		$tree = $map['']['substatus'];
@@ -208,7 +210,8 @@ class timesheet_bo extends so_sql_cf
 
 		// Sort config based on tree
 		$sorted = array();
-		foreach($this->status_labels as $status_id => $label) {
+		foreach($this->status_labels as $status_id => $label)
+		{
 			$sorted[$status_id] = $this->status_labels_config[$status_id];
 			//$sorted[$status_id]['name'] = $label;
 			unset($sorted[$status_id]['substatus']);
@@ -225,11 +228,13 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @return None, labels are built in labels parameter
 	 */
-	protected function make_status_labels($statuses, &$labels, $depth=0) {
-		foreach($statuses as $status) {
+	protected function make_status_labels($statuses, &$labels, $depth=0)
+	{
+		foreach($statuses as $status)
+		{
 			$labels[$status['id']] = str_pad('',$depth*12, "&nbsp;",STR_PAD_LEFT).trim(str_replace('&nbsp;','',$status['name']));
-			//$labels[$status['id']] = str_pad('',$depth, "+------",STR_PAD_LEFT).$status['name'];
-			if(count($status['substatus']) > 0) {
+			if(count($status['substatus']) > 0)
+			{
 				$this->make_status_labels($status['substatus'], $labels, $depth+1);
 			}
 		}
