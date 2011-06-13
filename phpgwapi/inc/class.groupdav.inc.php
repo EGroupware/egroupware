@@ -133,6 +133,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			case 'kde':	// KAddressbook (at least in 3.5 can NOT subscribe / does NOT find addressbook)
 				$this->client_require_href_as_url = true;
+				$this->cnrnd = true; // Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
 				break;
 			case 'cfnetwork':	// Apple addressbook app
 			case 'dataaccess':	// iPhone addressbook
