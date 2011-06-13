@@ -162,7 +162,7 @@ class calendar_uiviews extends calendar_ui
 		$this->owner = str_replace('%2C',',',$this->owner);
 		$this->search_params = array(
 			'start'   => $this->date,
-			'cat_id'  => $this->cat_id,
+			'cat_id'  => explode(',',$this->cat_id),
 			'users'   => explode(',',$this->owner),
 			'filter'  => $this->filter,
 			'daywise' => True,

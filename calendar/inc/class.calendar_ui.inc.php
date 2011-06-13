@@ -696,10 +696,43 @@ class calendar_ui
 		{
 			$baseurl = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiviews.index'),false);
 		}
+
 		// Category Selection
-		$file[++$n] = $this->_select_box('Category','cat_id',
-			'<option value="0">'.lang('All categories').'</option>'.
-		$this->categories->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
+		$onchange = "var value = '';
+		if(selectBox = document.getElementById('cat_id')) {
+			for(i=0; i < selectBox.length; ++i) {
+				if (selectBox.options[i].selected) {
+					value += (value ? ',' : '') + selectBox.options[i].value;
+				}
+			}
+		}";
+		if ($baseurl)	// we append the value to the baseurl
+		{
+			$cat_baseurl = $baseurl ? $baseurl.'&cat_id=' : '';
+			if (substr($cat_baseurl,-1) != '=') $cat_baseurl .= strpos($cat_baseurl,'?') === False ? '?' : '&';
+			$onchange.="egw_appWindow('calendar').location='$cat_baseurl'+value;";
+		}
+		else			// we add $name=value to the actual location
+		{
+			$onchange.="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'cat_id='+value;";
+		}
+
+		$cat_id = explode(',',$this->cat_id);
+		$options = '<option value="0">'.lang('All categories').'</option>'.
+			$this->categories->formatted_list('select','all',$cat_id,'True');
+		$icon_onclick = "if(selectBox = document.getElementById('cat_id')) {
+		if (!selectBox.multiple) {selectBox.size=4; selectBox.multiple=true;}}";
+
+		$select = ' <select style="width: 87%;" id="cat_id" name="cat_id" onchange="'.$onchange.'" title="'.
+			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
+			$options."</select>\n" . html::image('phpgwapi','attach','','onclick="'.$icon_onclick.'"');
+
+		$file[++$n] =  array(
+			'text' => $select,
+			'no_lang' => True,
+			'link' => False
+		);
+
 
 		// Filter all or hideprivate
 		$options = '';
