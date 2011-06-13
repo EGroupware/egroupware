@@ -111,10 +111,6 @@ class timesheet_bo extends so_sql_cf
 	 */
 	var $status_labels_config = array();
 	/**
-	 * Array with substatus of label configuration
-	 */
-	var $status_labels_substatus = array();
-	/**
 	 * Instance of the timesheet_tracking object
 	 *
 	 * @var timesheet_tracking
@@ -158,48 +154,10 @@ class timesheet_bo extends so_sql_cf
 
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
-		if($this->config_data['status_labels'])
-		{
-			$this->status_labels =&  $this->config_data['status_labels'];
-			if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
-			foreach ($this->status_labels as $status_id => $label)
-			{
-				if (!is_array($label))
-				{	//old values, bevor parent status
-					$name = $label;
-					$label=array();
-					$label['name'] = $name;
-					$label['parent'] = '';
-				}
-				$sort_labels[$status_id][] = $label['name'];
-				$this->status_labels_config[$status_id] = $label;
-				if ($label['parent']!='')
-				{
-					$sort = $label['parent']?$label['parent']:$status_id;
-					$sort_labels[$sort][$status_id]= $label['name'];
-					$this->status_labels_substatus[$sort][$status_id] = $status_id;
-					if (!isset($this->status_labels_substatus[$sort][$sort]))
-					{
-						$this->status_labels_substatus[$sort][$sort]= $sort;
-					}
-				}
-			}
-			unset($this->status_labels);
-			foreach ($sort_labels as $status_id => $label_sub)
-			{
-				if (!isset($this->status_labels[$status_id])) $this->status_labels[$status_id] = $this->status_labels_config[$status_id]['name'];
-				foreach ($sort_labels[$status_id] as $sub_status_id => $sub_label)
-				{
-					if (isset($this->status_labels_config[$sub_status_id]))
-					{
-						$level = '&nbsp;&nbsp;';
-						if (isset($this->status_labels_substatus[$sub_status_id])) $this->status_labels_substatus['2level'][$sub_status_id] = $sub_status_id ;
-						if (isset($this->status_labels_substatus['2level'][$status_id])) $level = '&nbsp;&nbsp;&nbsp;&nbsp;';
-						$this->status_labels[$sub_status_id]= $level.$this->status_labels_config[$sub_status_id]['name'];
-					}
-				}
-			}
-		}
+
+		// Load & process statuses
+		if($this->config_data['status_labels']) $this->load_statuses();
+
 		$this->today = mktime(0,0,0,date('m',$this->now),date('d',$this->now),date('Y',$this->now));
 
 		// save us in $GLOBALS['timesheet_bo'] for ExecMethod used in hooks
@@ -208,6 +166,73 @@ class timesheet_bo extends so_sql_cf
 			$GLOBALS['timesheet_bo'] =& $this;
 		}
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
+	}
+
+	/**
+	 * Load status labels
+	 */
+	protected function load_statuses()
+	{
+		$this->status_labels =&  $this->config_data['status_labels'];
+		if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
+		
+		foreach ($this->status_labels as $status_id => $label)
+		{
+			if (!is_array($label))
+			{	//old values, before parent status
+				$name = $label;
+				$label=array();
+				$label['name'] = $name;
+				$label['parent'] = '';
+			}
+			$label['id'] = $status_id;
+			$this->status_labels_config[$status_id] = $label;
+		}
+
+		// Organise into tree structure
+		$map = array(
+			'' => array('substatus' => array())
+		);
+		foreach($this->status_labels_config as $id => &$status) {
+			$status['substatus'] = array();
+			$map[$id] = &$status;
+		}
+		foreach($this->status_labels_config as &$status) {
+			$map[$status['parent']]['substatus'][] = &$status;
+		}
+		$tree = $map['']['substatus'];
+
+		// Make nice selectbox labels
+		$this->status_labels = array();
+		$this->make_status_labels($tree, $this->status_labels);
+
+		// Sort config based on tree
+		$sorted = array();
+		foreach($this->status_labels as $status_id => $label) {
+			$sorted[$status_id] = $this->status_labels_config[$status_id];
+			//$sorted[$status_id]['name'] = $label;
+			unset($sorted[$status_id]['substatus']);
+		}
+		$this->status_labels_config = $sorted;
+	}
+
+	/**
+	 * Make nice labels with leading spaces depending on depth
+	 *
+	 * @param statuses List of statuses to process, with sub-statuses in a 'substatus' array
+	 * @param labels Array of labels, pass array() and labels will be built in it
+	 * @param depth Current depth
+	 *
+	 * @return None, labels are built in labels parameter
+	 */
+	protected function make_status_labels($statuses, &$labels, $depth=0) {
+		foreach($statuses as $status) {
+			$labels[$status['id']] = str_pad('',$depth*12, "&nbsp;",STR_PAD_LEFT).trim(str_replace('&nbsp;','',$status['name']));
+			//$labels[$status['id']] = str_pad('',$depth, "+------",STR_PAD_LEFT).$status['name'];
+			if(count($status['substatus']) > 0) {
+				$this->make_status_labels($status['substatus'], $labels, $depth+1);
+			}
+		}
 	}
 
 	/**

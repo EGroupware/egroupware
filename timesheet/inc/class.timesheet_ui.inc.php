@@ -1067,14 +1067,13 @@ class timesheet_ui extends timesheet_bo
 					break;
 				case 'apply':
 				case 'save':
-					foreach($content['statis'] as $cat)
+					foreach($content['statis'] as &$cat)
 					{
 						$id = $cat['id'];
 						if (($cat ['name'] !== $this->status_labels_config[$id]) && ($cat ['name'] !== '') || ($cat ['parent'] !== $this->status_labels_config[$id]['parent']) && ($cat ['parent'] !== ''))
 						{
-							$this->status_labels[$id] = $cat['name'];
 							$this->status_labels_config[$id] = array(
-							'name'   => $cat['name'],
+							'name'   => trim(str_replace('&nbsp;', '', $cat['name'])),
 							'parent' => $cat['parent'],
 							'admin'  => $cat['admin']);
 							$need_update = true;
@@ -1083,6 +1082,8 @@ class timesheet_ui extends timesheet_bo
 					if ($need_update)
 					{
 						config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
+						$this->config_data = config::read(TIMESHEET_APP);
+						$this->load_statuses();
 						$msg .= lang('Status updated.');
 					}
 					if ($button == 'apply') break;
@@ -1108,6 +1109,7 @@ class timesheet_ui extends timesheet_bo
 		}
 
 		$i = 1;
+		$max_id = 0;
 		unset($content['statis']);
 		foreach($this->status_labels_config as $id => $label)
 		{
@@ -1116,11 +1118,12 @@ class timesheet_ui extends timesheet_bo
 			$content['statis'][$i]['parent']= $label['parent'];
 			$content['statis'][$i]['admin']= $label['admin'];
 			$i++;
+			$max_id = max($id, $max_id);
 		}
 		$content['statis'][$i]['name'] = '';
 		$content['statis'][$i]['parent'];
 		$content['statis'][$i]['admin'] = '';
-		$content['statis'][$i]['id'] = ++$id;
+		$content['statis'][$i]['id'] = ++$max_id;
 
 		$content['msg'] = $msg;
 		$preserv = $content;
