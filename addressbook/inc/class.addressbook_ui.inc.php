@@ -857,7 +857,9 @@ class addressbook_ui extends addressbook_bo
 				return false;
 
 			case 'document':
-				$msg = $this->download_document($checked,$document);
+				if (!$document) $document = $this->prefs['default_document'];
+				$document_merge = new addressbook_merge();
+				$msg = $document_merge->download($document, $checked, '', $this->prefs['document_dir']);
 				return false;
 
 			case 'infolog_add':
@@ -2304,32 +2306,6 @@ class addressbook_ui extends addressbook_bo
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
 		common::egw_footer();
-	}
-
-	/**
-	 * Download a document with inserted contact(s)
-	 *
-	 * @param array $ids contact-ids
-	 * @param string $document vfs-path of document
-	 * @return string error-message or error, otherwise the function does NOT return!
-	 */
-	function download_document($ids,$document='')
-	{
-		if (!$document)
-		{
-			$document = $this->prefs['default_document'];
-		}
-		elseif ($document[0] != '/')
-		{
-			$document = $this->prefs['document_dir'].'/'.$document;
-		}
-		if (!@egw_vfs::stat($document))
-		{
-			return lang("Document '%1' does not exist or is not readable for you!",$document);
-		}
-		$document_merge = new addressbook_merge();
-
-		return $document_merge->download($document,$ids);
 	}
 
 	/**

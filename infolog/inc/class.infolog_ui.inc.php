@@ -1051,7 +1051,9 @@ class infolog_ui
 				return $failed == 0;
 
 			case 'document':
-				$msg = $this->download_document($checked,$settings);
+				if (!$settings) $settings = $this->prefs['default_document'];
+				$document_merge = new infolog_merge();
+				$msg = $document_merge->download($settings, $checked, '', $this->prefs['document_dir']);
 				$failed = count($checked);
 				return false;
 
@@ -2213,59 +2215,5 @@ class infolog_ui
 			);
 		}
 		return $fields;
-	}
-
-	/**
-	 * Returning document actions / files from the document_dir
-	 *
-	 * @return array
-	 */
-	function get_document_actions()
-	{
-		if (!$this->prefs['document_dir']) return array();
-
-		//if (!is_array($actions = egw_session::appsession('document_actions','infolog')))
-		//{
-			$actions = array();
-			if (($files = egw_vfs::find($this->prefs['document_dir'],array('need_mime'=>true),true)))
-			{
-				foreach($files as $file)
-				{
-					// return only the mime-types we support
-					if (!infolog_merge::is_implemented($file['mime'],substr($file['name'],-4))) continue;
-
-					$actions['document_'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
-				}
-			}
-			egw_session::appsession('document_actions','infolog',$actions);
-		//}
-		return $actions;
-	}
-
-	/**
-	 * Download a document with inserted entries
-	 *
-	 * @param array $ids infolog-ids
-	 * @param string $document vfs-path of document
-	 * @return string error-message or error, otherwise the function does NOT return!
-	 */
-	function download_document($ids,$document='')
-	{
-		if (!$document)
-		{
-			$document = $this->prefs['default_document'];
-		}
-		elseif($document[0] !== '/')
-		{
-			$document = $this->prefs['document_dir'].'/'.$document;
-		}
-		if (!@egw_vfs::stat($document))
-		{
-			return lang("Document '%1' does not exist or is not readable for you!",$document);
-		}
-		require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_merge.inc.php');
-		$document_merge = new infolog_merge();
-
-		return $document_merge->download($document,$ids);
 	}
 }

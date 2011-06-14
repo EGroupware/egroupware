@@ -529,8 +529,11 @@ class calendar_uilist extends calendar_ui
 				echo $ical;
 				common::egw_exit();
 				break;
+
 			case 'document':
-				$msg = $this->download_document($checked,$settings);
+				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
+				$document_merge = new calendar_merge();
+				$msg = $document_merge->download($settings, $checked, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 				$failed = count($checked);
 				return false;
 		}
@@ -704,32 +707,6 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		return $checked;
-	}
-
-	/**
-	 * Download a document with inserted entries
-	 *
-	 * @param array $ids timesheet-ids
-	 * @param string $document vfs-path of document
-	 * @return string error-message or error, otherwise the function does NOT return!
-	 */
-	function download_document($ids,$document='')
-	{
-		if (!$document)
-		{
-			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
-		}
-		elseif ($document[0] != '/')
-		{
-			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'].'/'.$document;
-		}
-		if (!@egw_vfs::stat($document))
-		{
-			return lang("Document '%1' does not exist or is not readable for you!",$document);
-		}
-		$document_merge = new calendar_merge();
-
-		return $document_merge->download($document,$ids);
 	}
 
 	/**

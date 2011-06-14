@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -752,10 +752,15 @@ abstract class bo_merge
 	 * @param string $document vfs-path of document
 	 * @param array $ids array with contact id(s)
 	 * @param string $name='' name to use for downloaded document
+	 * @param string $dirs comma or whitespace separated directories, used if $document is a relative path
 	 * @return string with error-message on error, otherwise it does NOT return
 	 */
-	public function download($document,$ids,$name='')
+	public function download($document, $ids, $name='', $dirs='')
 	{
+		if (($error = $this->check_document($document, $dirs)))
+		{
+			return $error;
+		}
 		$content_url = egw_vfs::PREFIX.$document;
 		switch (($mimetype = egw_vfs::mime_content_type($document)))
 		{
@@ -972,6 +977,35 @@ abstract class bo_merge
 			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined
 			'group' => $group,
 		);
+	}
+
+	/**
+	 * Check if given document (relative path from document_actions()) exists in one of the given dirs
+	 *
+	 * @param string &$document maybe relative path of document, on return true absolute path to existing document
+	 * @param string $dirs comma or whitespace separated directories
+	 * @return string|boolean false if document exists, otherwise string with error-message
+	 */
+	public static function check_document(&$document, $dirs)
+	{
+		if($document[0] !== '/')
+		{
+			// split multiple comma or whitespace separated directories
+			// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+			if ($dirs && ($dirs = preg_split('/[,\s]+\//', $dirs)))
+			{
+				foreach($dirs as $n => $dir)
+				{
+					if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
+					if (egw_vfs::stat($dir.'/'.$document) && egw_vfs::is_readable($dir.'/'.$document))
+					{
+						$document = $dir.'/'.$document;
+						return false;
+					}
+				}
+			}
+		}
+		return lang("Document '%1' does not exist or is not readable for you!",$document);
 	}
 
 	/**
