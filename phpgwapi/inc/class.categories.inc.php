@@ -693,6 +693,7 @@ class categories
 			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
 			'cat_parent' => $values['parent'],
 			'cat_access' => $values['access'],
+			'cat_owner' => $values['owner'],
 			'cat_main' => $values['main'],
 			'cat_level' => $values['level'],
 			'last_mod' => time(),

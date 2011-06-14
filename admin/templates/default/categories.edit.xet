@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.categories.delete" template="" lang="" group="0" version="1.7.001">
+	<template id="admin.categories.delete" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -17,14 +17,14 @@
 							</columns>
 							<rows>
 								<row height="30">
-									<description span="all" value="Are you sure you want to delete this category ?" align="center"/>
+									<description align="center" value="Are you sure you want to delete this category ?" span="all"/>
 								</row>
 								<row class="confirmSubs">
-									<checkbox label="Do you also want to delete all global subcategories ?" id="delete[subs]" span="all" align="center"/>
+									<checkbox align="center" label="Do you also want to delete all global subcategories ?" id="delete[subs]" span="all"/>
 								</row>
 								<row height="40">
-									<button label="Delete" id="delete[delete]" align="center"/>
-									<buttononly label="Cancel" id="delete[cancel]" align="center" onclick="set_style_by_class('fieldset','confirmDelete','display','none');"/>
+									<button align="center" label="Delete" id="delete[delete]"/>
+									<buttononly align="center" label="Cancel" id="delete[cancel]" onclick="set_style_by_class('fieldset','confirmDelete','display','none');"/>
 								</row>
 							</rows>
 						</grid>
@@ -50,7 +50,7 @@
 }
 		</styles>
 	</template>
-	<template id="admin.categories.edit" template="" lang="" group="0" version="1.7.001">
+	<template id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -58,32 +58,32 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" id="msg"/>
+					<description align="center" id="msg" span="all" class="redItalic"/>
 					<description/>
 				</row>
 				<row class="th" height="25">
-					<description options=",,,parent" value="Parent category"/>
+					<description value="Parent category" options=",,,parent"/>
 					<menulist>
-						<menupopup type="select-cat" options="None,,,$cont[appname],,-1" id="parent"/>
+						<menupopup type="select-cat" id="parent" options="None,,,$cont[appname],,-1"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,name" value="Name"/>
-					<textbox size="50" maxlength="150" id="name"/>
+					<description value="Name" options=",,,name"/>
+					<textbox id="name" size="50" maxlength="150"/>
 				</row>
 				<row class="row" valign="top">
-					<description options=",,,description" value="Description"/>
-					<textbox multiline="true" rows="5" cols="50" id="description"/>
+					<description value="Description" options=",,,description"/>
+					<textbox multiline="true" id="description" rows="5" cols="50"/>
 				</row>
 				<row class="row">
-					<description options=",,,cat_data[color]" value="Color"/>
+					<description value="Color" options=",,,cat_data[color]"/>
 					<colorpicker id="data[color]"/>
 				</row>
 				<row class="row">
-					<description options=",,,data[icon]" value="Icon"/>
+					<description value="Icon" options=",,,data[icon]"/>
 					<hbox options="0,0">
 						<menulist>
-							<menupopup id="data[icon]" options="None" onchange="document.getElementById('icon_url').src = '$cont[base_url]' + this.value;"/>
+							<menupopup id="data[icon]" onchange="document.getElementById('icon_url').src = '$cont[base_url]' + this.value;" options="None"/>
 						</menulist>
 						<image src="icon_url" class="leftPad5"/>
 					</hbox>
@@ -95,10 +95,8 @@
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,owner" value="Limit to members of"/>
-					<menulist>
-						<menupopup type="select-account" options="All users,groups" id="owner" statustext="Limit global category to members of a certain group"/>
-					</menulist>
+					<description value="Limit to members of" options=",,,owner"/>
+					<listbox statustext="Limit global category to members of a certain group" id="owner" rows="3"/>
 				</row>
 				<row class="row" disabled="!@last_mod">
 					<description value="Modified"/>
@@ -106,12 +104,12 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]"/>
+						<button label="Save" id="button[save]" onclick="return check_owner(form::name('owner'));"/>
+						<button label="Apply" id="button[apply]" onclick="return check_owner(form::name('owner'));"/>
 					</hbox>
 					<hbox>
-						<buttononly id="button[cancel]" label="Cancel" onclick="window.close();"/>
-						<buttononly label="Delete" align="right" id="button[delete]" statustext="Delete this category" onclick="set_style_by_class('tr','confirmSubs','visibility','$cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block');"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="set_style_by_class('tr','confirmSubs','visibility','$cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block');"/>
 					</hbox>
 				</row>
 			</rows>

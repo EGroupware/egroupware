@@ -187,9 +187,23 @@ class admin_categories
 		}
 		$content['msg'] = $msg;
 		$sel_options['icon'] = self::get_icons();
+		$sel_options['owner'] = array(0 => lang('All users'));
+		$accs = $GLOBALS['egw']->accounts->get_list('groups');
+		foreach($accs as $acc) 
+		{
+			if ($acc['account_type'] == 'g')
+			{
+				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+			}
+		}
+
+		egw_framework::validate_file('.','global_categories','admin');
+		egw_framework::set_onload('$(document).ready(function() {
+			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : '0') .'];
+			permission_prompt = \'' . lang('cat_permission_confirm').'\';
+		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete;	// cant delete not yet saved category
-		$readonlys['owner'] = $content['id'] > 0;
 
 		$tmpl = new etemplate('admin.categories.edit');
 		$tmpl->exec('admin.admin_categories.edit',$content,$sel_options,$readonlys,$content+array(
