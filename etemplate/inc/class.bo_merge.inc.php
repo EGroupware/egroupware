@@ -867,6 +867,12 @@ abstract class bo_merge
 	{
 		if (!$dir) return array();
 
+		// split multiple comma or whitespace separated directories
+		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+		if (count($dir = preg_split('/[,\s]+\//', $dir)) > 1)
+		{
+			foreach($dir as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
+		}
 		$list = array();
 		if (($files = egw_vfs::find($dir,array('need_mime'=>true),true)))
 		{
@@ -911,6 +917,12 @@ abstract class bo_merge
 			);
 		}
 
+		// split multiple comma or whitespace separated directories
+		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+		if ($dir && count($dir = preg_split('/[,\s]+\//', $dir)) > 1)
+		{
+			foreach($dir as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
+		}
 		if ($dir && ($files = egw_vfs::find($dir,array(
 			'need_mime' => true,
 			'order' => 'fs_name',
