@@ -16,7 +16,7 @@ $verbosity_values = array(
 	'medium' 	=> lang('medium'),
 	'high' 		=> lang('high'),
 );
- 
+
 $GLOBALS['settings'] = array(
 	'notification_chain' => array(
 		'type'   => 'select',
@@ -26,6 +26,7 @@ $GLOBALS['settings'] = array(
 		'help'   => 'Choose a notification-chain. You will be notified over the backends included in the chain.<br />'
 					.'Note: If a notification-chain is marked as "disabled", your Administrator does not allow one or'
 					.' more of the backends included in the chain and notifications falls back to "E-Mail" while notifying you.',
+		'default'=> 'popup_or_email',
 		'xmlrpc' => True,
 		'admin'  => False
 	),
@@ -38,6 +39,7 @@ $GLOBALS['settings'] = array(
 					.'low: just display the notification bell in the topmenu - topmenu must be enabled!<br />'
 					.'medium: bring notification window to front<br />'
 					.'high: bring notification window to front and let the browser do something to announce itself',
+		'default'=> 'medium',
 		'xmlrpc' => True,
 		'admin'  => False
 	),
@@ -50,4 +52,3 @@ $GLOBALS['settings'] = array(
 		'admin'  => False
 	),
 );
-?>

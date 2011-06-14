@@ -37,6 +37,11 @@ final class notifications {
 	const _fallback = 'email_only';
 
 	/**
+	 * backend to use if EGroupware user has no preferenc set and no default preference set
+	 */
+	const user_fallback = 'popup_or_email';
+
+	/**
 	 * registered backends
 	 * @var array
 	 */
@@ -376,7 +381,7 @@ final class notifications {
 								$notification_chain = $available_chains[self::_fallback];
 							}
 						} else {
-							$notification_chain = $available_chains[self::_fallback]; // fallback: no prefs
+							$notification_chain = $available_chains[self::user_fallback]; // fallback: no prefs
 						}
 					} else {
 						$notification_chain = $available_chains[self::_fallback]; // fallback: no rights to app
@@ -535,6 +540,7 @@ final class notifications {
 		foreach($this->backends as $id => $backend) {
 			switch($backend) {
 				case 'email':
+				case 'popup':
 					$enabled_backends[$backend] = true; // fallback must always be enabled
 					break;
 				default:
@@ -617,7 +623,7 @@ final class notifications {
 
 	/**
 	 * Actions to take when an account is deleted
-	 * 
+	 *
 	 * @param settings array with keys account_id and new_owner (new_owner is optional)
 	 */
 	public function deleteaccount($settings) {

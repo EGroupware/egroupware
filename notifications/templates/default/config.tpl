@@ -11,18 +11,21 @@
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_eGroupWare-Popup_backend}</b></td>
+    <td colspan="2">&nbsp;<b>{lang_Mail_backend}</b></td>
    </tr>
    <tr class="row_on">
-    <td>{lang_Enable_eGroupWare-Popup_backend}</td>
+    <td>{lang_choose_from_mailsettings_used_for_notification}</td>
     <td>
-     <select name="newsettings[popup_enable]">
-      <option value=""{selected_popup_enable_False}>{lang_No}</option>
-      <option value="True"{selected_popup_enable_True}>{lang_Yes}</option>
+     <select name="newsettings[dontUseUserDefinedProfiles]">
+      <option value=""{selected_dontUseUserDefinedProfiles_False}>{lang_Check_both_(first_try_(active)_User_defined_account,_if_none_use_emailadmin_profile)}</option>
+      <option value="True"{selected_dontUseUserDefinedProfiles_True}>{lang_Emailadmin_Profile_only_(Do_not_use_User_defined_(active)_Mail_Profiles_for_Notification)}</option>
      </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_eGroupWare-Popup_backend}</b></td>
+   </tr>
+   <tr class="row_on">
     <td>{lang_Poll_interval}</td>
     <td>
      <select name="newsettings[popup_poll_interval]">
@@ -55,7 +58,7 @@
       <option value="True"{selected_sms_enable_True}>{lang_Yes}</option>
      </select>
     </td>
-   </tr> 
+   </tr>
    <tr class="row_off">
     <td>{lang_Maximum_SMS_messages_per_notification}</td>
     <td>
@@ -63,18 +66,6 @@
       <option value="1"{selected_sms_maxmessages_1}>1</option>
       <option value="2"{selected_sms_maxmessages_2}>2</option>
       <option value="3"{selected_sms_maxmessages_3}>3</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_Mail_backend}</b></td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_choose_from_mailsettings_used_for_notification}</td>
-    <td>
-     <select name="newsettings[dontUseUserDefinedProfiles]">
-      <option value=""{selected_dontUseUserDefinedProfiles_False}>{lang_Check_both_(first_try_(active)_User_defined_account,_if_none_use_emailadmin_profile)}</option>
-      <option value="True"{selected_dontUseUserDefinedProfiles_True}>{lang_Emailadmin_Profile_only_(Do_not_use_User_defined_(active)_Mail_Profiles_for_Notification)}</option>
      </select>
     </td>
    </tr>
