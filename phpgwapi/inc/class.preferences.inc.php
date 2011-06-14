@@ -693,7 +693,7 @@ class preferences
 		}
 		//echo "<p>preferences::save_repository(,$type): account_id=$account_id, prefs="; print_r($prefs); echo "</p>\n";
 
-		if (!$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
+		if (isset($GLOBALS['egw_setup']) || !$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
 		{
 			$this->db->transaction_begin();
 			$this->db->delete($this->table,array('preference_owner' => $account_id),__LINE__,__FILE__);
@@ -715,13 +715,18 @@ class preferences
 			}
 			$this->db->transaction_commit();
 
-			// no need to invalidate session cache, if we write the prefs to the session too
-			$egw = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
-			$egw->preferences = $this;
-			$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($egw);
+			if (!isset($GLOBALS['egw_setup']))
+			{
+				// no need to invalidate session cache, if we write the prefs to the session too
+				$egw = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
+				$egw->preferences = $this;
+				$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($egw);
+			}
 		}
-		$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
-
+		if (!isset($GLOBALS['egw_setup']))
+		{
+			$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
+		}
 		return $this->data;
 	}
 
