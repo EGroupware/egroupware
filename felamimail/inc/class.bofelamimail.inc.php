@@ -1421,7 +1421,7 @@
 			if (self::$debug) error_log(__METHOD__." called with:".$_folderName);
 			$retValue = array();
 			$retValue['subscribed'] = false;
-			if(!$icServer = $this->mailPreferences->getIncomingServer(0)) {
+			if(!$icServer = $this->mailPreferences->getIncomingServer($this->profileID)) {
 				return false;
 			}
 
@@ -1474,7 +1474,7 @@
 				$retValue['unseen']		= $folderStatus['UNSEEN'];
 				if ($retValue['unseen']==0) // some servers dont serve the UNSEEN information
 				{
-					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>'UNSEEN'));
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>'UNSEEN'),$byUid=true,false);
 					$retValue['unseen'] = count($sortResult);
 				}
 			}
@@ -2099,24 +2099,26 @@
 		* @param array $_filter the search filter
 		* @return bool
 		*/
-		function getSortedList($_folderName, $_sort, $_reverse, $_filter, &$resultByUid=true)
+		function getSortedList($_folderName, $_sort, $_reverse, $_filter, &$resultByUid=true, $setSession=true)
 		{
+			//ToDo: FilterSpecific Cache
 			if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
 				return false;
 			}
-			if(is_array($this->sessionData['folderStatus'][0][$_folderName]) &&
-				$this->sessionData['folderStatus'][0][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
-				$this->sessionData['folderStatus'][0][$_folderName]['messages']	=== $folderStatus['EXISTS'] &&
-				$this->sessionData['folderStatus'][0][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
-				$this->sessionData['folderStatus'][0][$_folderName]['filter']	=== $_filter &&
-				$this->sessionData['folderStatus'][0][$_folderName]['sort']	=== $_sort &&
-				!empty($this->sessionData['folderStatus'][0][$_folderName]['sortResult'])
+			//error_log(__METHOD__.__LINE__.' ProfileID:'.$this->profileID.' -> '.array2string($this->sessionData['folderStatus'][$this->profileID][$_folderName]).' fetched:'.array2string($folderStatus));
+			if(is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	=== $folderStatus['EXISTS'] &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['filter']	=== $_filter &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['sort']	=== $_sort &&
+				!empty($this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'])
 			) {
-				if (self::$debug) error_log(__METHOD__." USE CACHE");
-				$sortResult = $this->sessionData['folderStatus'][0][$_folderName]['sortResult'];
+				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName);
+				$sortResult = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'];
 
 			} else {
-				if (self::$debug) error_log(__METHOD__." USE NO CACHE");
+				if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName);
 				$filter = $this->createIMAPFilter($_folderName, $_filter);
 				if($this->icServer->hasCapability('SORT')) {
 					if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability");
@@ -2135,7 +2137,7 @@
 								$sortResult = $this->icServer->search($filter, $resultByUid);
 								if (PEAR::isError($sortResult))
 								{
-									$sortResult = $this->sessionData['folderStatus'][0][$_folderName]['sortResult'];
+									$sortResult = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'];
 								}
 							}
 						}
@@ -2165,16 +2167,21 @@
 					}
 					if (self::$debug) error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 				}
-
-				$this->sessionData['folderStatus'][0][$_folderName]['uidValidity'] = $folderStatus['UIDVALIDITY'];
-				$this->sessionData['folderStatus'][0][$_folderName]['messages']	= $folderStatus['EXISTS'];
-				$this->sessionData['folderStatus'][0][$_folderName]['uidnext']	= $folderStatus['UIDNEXT'];
-				$this->sessionData['folderStatus'][0][$_folderName]['filter']	= $_filter;
-				$this->sessionData['folderStatus'][0][$_folderName]['sortResult'] = $sortResult;
-				$this->sessionData['folderStatus'][0][$_folderName]['sort']	= $_sort;
+				if ($setSession)
+				{
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity'] = $folderStatus['UIDVALIDITY'];
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	= $folderStatus['EXISTS'];
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidnext']	= $folderStatus['UIDNEXT'];
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['filter']	= $_filter;
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'] = $sortResult;
+					$this->sessionData['folderStatus'][$this->profileID][$_folderName]['sort']	= $_sort;
+				}
 			}
-			$this->sessionData['folderStatus'][0][$_folderName]['reverse'] 	= $_reverse;
-			$this->saveSessionData();
+			if ($setSession)
+			{
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['reverse'] 	= $_reverse;
+				$this->saveSessionData();
+			}
 
 			return $sortResult;
 		}
