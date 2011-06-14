@@ -332,6 +332,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsi
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 requested	calendar	de	Erforderlich
+requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholdende Termine ausgelassen!
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen

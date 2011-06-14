@@ -332,6 +332,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	en	Repeating inte
 repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 requested	calendar	en	Requested
+requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
 reset participant stati on event shifts	calendar	en	Reset participant status on event shifts

@@ -202,17 +202,17 @@ class calendar_ui
 			{
 				return $msg;
 			}
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 			if ($GLOBALS['egw_info']['flags']['nonavbar']) parse_navbar();
 
 			echo $msg;
 
-			$GLOBALS['egw']->common->egw_footer();
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_footer();
+			common::egw_exit();
 		}
 		if (count($no_access_group))
 		{
-			$this->group_warning = lang('Groupmember(s) %1 not included, because you have no access.',implode(', ',$no_access_group));
+			$this->bo->warnings['groupmembers'] = lang('Groupmember(s) %1 not included, because you have no access.',implode(', ',$no_access_group));
 		}
 		return false;
 	}
@@ -223,11 +223,11 @@ class calendar_ui
 	function do_header()
 	{
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 
 		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
-		if ($this->group_warning) echo '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
+		if ($this->bo->warnings) echo '<p class="redItalic" align="center">'.implode('<br />',$this->bo->warnings)."</p>\n";
 	}
 
 	/**
@@ -717,7 +717,8 @@ class calendar_ui
 
 		// Add in deleted for admins
 		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'] && $GLOBALS['egw_info']['user']['apps']['admin']) {
+		if($config['calendar_delete_history'])
+		{
 			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
 
