@@ -2350,15 +2350,14 @@ class calendar_boupdate extends calendar_bo
 		}
     }
 	/**
-	* Delete events that are more than $age years old
-	*
-	* Purges old events from the database
-	*
-	* @param int $age How many years old the event must be before it is deleted
-	*/
+	 * Delete events that are more than $age years old
+	 *
+	 * Purges old events from the database
+	 *
+	 * @param int|float $age How many years old the event must be before it is deleted
+	 */
 	function purge($age)
 	{
-		$time = strtotime("-$age years", time());
-		$this->so->purge($time);
+		$this->so->purge(time() - 365*24*3600*(float)$age);
 	}
 }

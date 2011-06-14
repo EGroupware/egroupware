@@ -572,18 +572,20 @@ class calendar_hooks
 }
 
 // Not part of the class, since config hooks are still using the old style
-function calendar_purge_old($config) {
+function calendar_purge_old($config)
+{
 	$id = 'calendar_purge';
 
 	// Cancel old purge
 	ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
 
-	if((int)$config > 0) {
+	if((int)$config > 0)
+	{
 		$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 			array('month' => '*', 'day' => 1),
 			$id,
 			'calendar.calendar_boupdate.purge',
-			(int)$config
+			(float)$config
 		);
 	}
 	if(!$result)
