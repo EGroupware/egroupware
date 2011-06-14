@@ -34,7 +34,7 @@
  *
  * The two following methods can be used to persitently mount further filesystems (without editing the code):
  *
- * - boolean/array egw_vfs::mount($url,$path) to mount $ur on $path or to return the fstab when called without argument
+ * - boolean|array egw_vfs::mount($url,$path) to mount $ur on $path or to return the fstab when called without argument
  * - boolean egw_vfs::umount($path) to unmount a path or url
  *
  * The stream wrapper interface allows to access hugh files in junks to not be limited by the
@@ -403,7 +403,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * find = recursive search over the filesystem
 	 *
-	 * @param string/array $base base of the search
+	 * @param string|array $base base of the search
 	 * @param array $options=null the following keys are allowed:
 	 * - type => {d|f|F} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
@@ -423,7 +423,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
-	 * @param string/array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
+	 * @param string|array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
@@ -705,7 +705,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
-	 * @param string/array $urls url or array of url's
+	 * @param string|array $urls url or array of url's
 	 * @param boolean $allow_urls=false allow to use url's, default no only pathes (to stay within the vfs)
 	 * @return array
 	 */
@@ -760,7 +760,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param array/string $path stat array or path
+	 * @param array|string $path stat array or path
 	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
 	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
 	 * @param array $stat=null stat array, to not query it again
@@ -879,7 +879,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $path string with path
 	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int|boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
 	static function eacl($url,$rights=null,$owner=null)
@@ -893,7 +893,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Calls itself recursive, to get the parent directories
 	 *
 	 * @param string $path
-	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 * @return array|boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
 	static function get_eacl($path)
 	{
@@ -942,7 +942,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Convert a symbolic mode string or octal mode to an integer
 	 *
-	 * @param string/int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
+	 * @param string|int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
 	 * @param int $mode=0 current mode of the file, necessary for +/- operation
 	 * @return int
 	 */
@@ -1132,8 +1132,10 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Get the directory / parent of a given path or url(!), return false for '/'!
 	 *
+	 * Also works around PHP under Windows returning dirname('/something') === '\\', which is NOT understood by EGroupware's VFS!
+	 *
 	 * @param string $path path or url
-	 * @return string/boolean parent or false if there's none ($path == '/')
+	 * @return string|boolean parent or false if there's none ($path == '/')
 	 */
 	static function dirname($url)
 	{
