@@ -257,7 +257,7 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$search_params = array(
-			'cat_id'  => explode(',',$this->cat_id),
+			'cat_id'  => $this->cat_id ? explode(',',$this->cat_id) : 0,
 			'filter'  => $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
