@@ -71,6 +71,7 @@ calendar fields:	calendar	de	Kalender  Felder:
 calendar holiday management	admin	de	Feiertage verwalten
 calendar ical export	calendar	de	Kalender iCal Export
 calendar ical import	calendar	de	Kalender iCal Import
+calendar id	calendar	de	Kalender ID
 calendar menu	calendar	de	Kalender Menü
 calendar preferences	calendar	de	Kalender Einstellungen
 calendar settings	admin	de	Kalender Einstellungen
@@ -189,6 +190,7 @@ exception created - you can now edit or delete it	calendar	de	Ausnahme erzeugt -
 exceptions	calendar	de	Ausnahmen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
+exists	calendar	de	existiert
 export	calendar	de	Exportieren
 export definitition to use for nextmatch export	calendar	de	Export Profil der Listenansicht (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal Format
@@ -311,6 +313,7 @@ no automatic purging	admin	de	Keine automatische Bereinigung alter Termine
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
+no meeting requests	calendar	de	Keine Einladungen
 no owner selected	calendar	de	Kein Besitzer ausgewählt
 no recurrence	calendar	de	Keine Wiederholung
 no response	calendar	de	Keine Antwort
@@ -382,6 +385,7 @@ repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 replacements for inserting events into documents	calendar	de	Platzhalter für das Einfügen von Terminen in Dokumente
 requested	calendar	de	Erforderlich
+requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholdende Termine ausgelassen!
 requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
@@ -425,6 +429,7 @@ show a calendar title	calendar	de	Soll der Kalender Titel angezeigt werden?
 show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
 show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgesagte Termine
 show all status, but rejected	calendar	de	Zeige alle Status außer abgesagte Termine
+show all status, but unknown	calendar	de	Zeige alle Status außer Einladungen
 show also events just owned by selected user	calendar	de	Zeige zusätzlich Termine die dem ausgewählten Benutzer nur gehören
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
 show default view on main screen	calendar	de	Kalenderansicht auf der Startseite anzeigen

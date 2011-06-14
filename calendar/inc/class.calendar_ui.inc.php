@@ -202,17 +202,17 @@ class calendar_ui
 			{
 				return $msg;
 			}
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 			if ($GLOBALS['egw_info']['flags']['nonavbar']) parse_navbar();
 
 			echo $msg;
 
-			$GLOBALS['egw']->common->egw_footer();
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_footer();
+			common::egw_exit();
 		}
 		if (count($no_access_group))
 		{
-			$this->group_warning = lang('Groupmember(s) %1 not included, because you have no access.',implode(', ',$no_access_group));
+			$this->bo->warnings['groupmembers'] = lang('Groupmember(s) %1 not included, because you have no access.',implode(', ',$no_access_group));
 		}
 		return false;
 	}
@@ -223,11 +223,11 @@ class calendar_ui
 	function do_header()
 	{
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 
 		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
-		if ($this->group_warning) echo '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
+		if ($this->bo->warnings) echo '<p class="redItalic" align="center">'.implode('<br />',$this->bo->warnings)."</p>\n";
 	}
 
 	/**
@@ -748,6 +748,7 @@ class calendar_ui
 			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
 			'showonlypublic' =>  array(lang('Hide private events'),lang('Show only events flagged as public, (not checked as private)')),
 			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
+			'not-unknown' => array(lang('No meeting requests'),lang('Show all status, but unknown')),
 		) as $value => $label)
 		{
 			list($label,$title) = $label;
@@ -756,7 +757,8 @@ class calendar_ui
 
 		// Add in deleted for admins
 		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history']) {
+		if($config['calendar_delete_history'])
+		{
 			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
 
@@ -808,8 +810,8 @@ function load_cal(url,id) {
 		}
 
 		// Merge print
-                if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-                {
+		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+		{
 			$options = '';
 			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 
@@ -817,7 +819,7 @@ function load_cal(url,id) {
 			$spreadsheets = importexport_admin_prefs_sidebox_hooks::get_spreadsheet_list('calendar');
 			foreach($spreadsheets as $file_info)
 			{
-				if($key = array_search($file_info['name'], $documents)) 
+				if($key = array_search($file_info['name'], $documents))
 				{
 					unset($documents[$key]);
 				}
@@ -890,7 +892,7 @@ function load_cal(url,id) {
 			if(!$timespan)
 			{
 				$timespan = array(array(
-					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first, 
+					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first,
 					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
 				));
 			}

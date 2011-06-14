@@ -313,6 +313,7 @@ no automatic purging	admin	en	No automatic purging
 no events found	calendar	en	No events found.
 no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found.
+no meeting requests	calendar	en	No meeting requests
 no owner selected	calendar	en	No owner selected.
 no recurrence	calendar	en	No recurrence.
 no response	calendar	en	No response.
@@ -384,6 +385,7 @@ repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 replacements for inserting events into documents	calendar	en	Replacements for inserting events into documents
 requested	calendar	en	Requested
+requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 requested meeting is in the past!	calendar	en	Requested meeting is in the past!
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
@@ -418,7 +420,6 @@ setting lock time calender	admin	en	Setting data lock time for Calendar (default
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from calendar module?
 should new events created as private by default ?	calendar	en	Should new events be created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is* <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk</a>	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is* <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=mkk</a>
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
@@ -428,6 +429,7 @@ show a calendar title	calendar	en	Show a calendar title
 show all events, as if they were private	calendar	en	Show all events, as if they were private
 show all status incl. rejected events	calendar	en	Show all status incl. rejected events
 show all status, but rejected	calendar	en	Show all status, but rejected
+show all status, but unknown	calendar	en	Show all status, but unknown
 show also events just owned by selected user	calendar	en	Show also events just owned by selected user
 show birthdays from addressbook	admin	en	Show birthdays from address book
 show default view on main screen	calendar	en	Show calendar on main screen

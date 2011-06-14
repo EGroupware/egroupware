@@ -192,6 +192,13 @@ class calendar_bo
 	public $calview_no_consolidate = 5;
 
 	/**
+	 * Warnings to show in regular UI
+	 *
+	 * @var array
+	 */
+	var $warnings = array();
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -626,13 +633,13 @@ class calendar_bo
 	{
 		if ((int) $this->debug >= 2 || $this->debug == 'check_move_horizont')
 		{
-			$this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
+			$this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2',true,$new_horizont,(int)$this->config['horizont']);
 		}
 		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
 
 		if ($new_horizont <= $this->config['horizont'])	// no move necessary
 		{
-			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
+			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,(int)$this->config['horizont']);
 			return;
 		}
 		if (!empty($GLOBALS['egw_info']['server']['calendar_horizont']))
@@ -642,8 +649,9 @@ class calendar_bo
 		if (empty($maxdays)) $maxdays = 1000; // old default
 		if ($new_horizont > time()+$maxdays*DAY_s)		// some user tries to "look" more then the maximum number of days in the future
 		{
-			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
-			$new_horizont = time()+$maxdays*DAY_s;
+			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 new horizont more then %3 days from now --> ignoring it',true,$new_horizont,(int)$this->config['horizont'],$maxdays);
+			$this->warnings['horizont'] = lang('Requested date %1 outside allowed range of %2 days: recurring events obmitted!', egw_time::to($new_horizont,true), $maxdays);
+			return;
 		}
 		if ($new_horizont < time()+31*DAY_s)
 		{
@@ -655,6 +663,7 @@ class calendar_bo
 		// create further recurrences for all recurring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
 		{
+			@set_time_limit(0);	// disable time-limit, in case it takes longer to calculate the recurrences
 			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
 			{
 				if ($this->debug == 'check_move_horizont')
@@ -666,10 +675,9 @@ class calendar_bo
 			}
 		}
 		// update the horizont
-		$config = CreateObject('phpgwapi.config','calendar');
-		$config->save_value('horizont',$this->config['horizont'],'calendar');
+		config::save_value('horizont',$this->config['horizont'],'calendar');
 
-		if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
+		if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,(int)$this->config['horizont']);
 	}
 
 	/**
@@ -926,7 +934,8 @@ class calendar_bo
 		if (!$event['recur_enddate'] || $this->date2ts($event['recur_enddate']) > $this->date2ts($end))
 		{
 			//echo "<p>recur_enddate={$event['recur_enddate']}=".egw_time::to($event['recur_enddate'])." > end=$end=".egw_time::to($end)." --> using end instead of recur_enddate</p>\n";
-			$event['recur_enddate'] = $end;
+			// insert at least the event itself, if it's behind the horizont
+			$event['recur_enddate'] = $this->date2ts($end) < $this->date2ts($event['end']) ? $event['end'] : $end;
 		}
 		// loop over all recurrences and insert them, if they are after $start
 		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
