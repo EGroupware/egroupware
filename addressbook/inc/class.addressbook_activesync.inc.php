@@ -128,7 +128,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			if ($return_all_in_one && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
 				$abs = array(
-					$GLOBALS['egw_info']['user']['account_id'] => lang('personal'),
+					$GLOBALS['egw_info']['user']['account_id'] => lang('All'),
 				);
 			}
 			else
