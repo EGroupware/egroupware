@@ -87,6 +87,7 @@
     <td>
      <select name="newsettings[calendar_purge_old]">
       <option value="0ff">{lang_No_automatic_purging}</option>
+      <option value=".5"{selected_calendar_purge_old_.5}>0.5 {lang_years}</option>
       <option value="1"{selected_calendar_purge_old_1}>1 {lang_year}</option>
       <option value="2"{selected_calendar_purge_old_2}>2 {lang_years}</option>
       <option value="3"{selected_calendar_purge_old_3}>3 {lang_years}</option>
