@@ -390,7 +390,7 @@ class bo_resources
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
 		}
-		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
+		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
 		if (is_array($pattern) && isset($pattern['exec']) )
