@@ -238,7 +238,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$this->opened_stream = tmpfile();
 			}
 			// create the hash-dirs, if they not yet exist
-			elseif(!file_exists($fs_dir=dirname(self::_fs_path($this->opened_fs_id))))
+			elseif(!file_exists($fs_dir=egw_vfs::dirname(self::_fs_path($this->opened_fs_id))))
 			{
 				$umaskbefore = umask();
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
@@ -531,7 +531,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		$path = parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(dirname($path),egw_vfs::WRITABLE, $parent_stat))
+		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(egw_vfs::dirname($path),egw_vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -580,9 +580,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
 		$path_from = parse_url($url_from,PHP_URL_PATH);
-		$from_dir = dirname($path_from);
+		$from_dir = egw_vfs::dirname($path_from);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
-		$to_dir = dirname($path_to);
+		$to_dir = egw_vfs::dirname($path_to);
 		$operation = self::url2operation($url_from);
 
 		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
@@ -654,7 +654,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$maxdepth=10;
 		$depth2propagate = (int)$depth + 1;
 		if ($depth2propagate > $maxdepth) return is_dir($pathname);
-    	is_dir(dirname($pathname)) || self::mkdir_recursive(dirname($pathname), $mode, $depth2propagate);
+    	is_dir(egw_vfs::dirname($pathname)) || self::mkdir_recursive(egw_vfs::dirname($pathname), $mode, $depth2propagate);
     	return is_dir($pathname) || @mkdir($pathname, $mode);
 	}
 
@@ -686,7 +686,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 			return false;
 		}
-		$parent_path = dirname($path);
+		$parent_path = egw_vfs::dirname($path);
 		if (($query = parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
 		$parent = self::url_stat($parent_path,STREAM_URL_STAT_QUIET);
 
@@ -743,7 +743,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
 		$path = parse_url($url,PHP_URL_PATH);
-		$parent = dirname($path);
+		$parent = egw_vfs::dirname($path);
 
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
 			!egw_vfs::check_access($parent,egw_vfs::WRITABLE))
@@ -1050,6 +1050,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$eacl_access = self::check_extended_acl($path,egw_vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
 		}
+
 		foreach($parts as $n => $name)
 		{
 			if ($n == 0)
@@ -1217,7 +1218,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
 
-		if (self::url_stat($link,0) || !($dir = dirname($link)) ||
+		if (self::url_stat($link,0) || !($dir = egw_vfs::dirname($link)) ||
 			!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!stat('$link') || !is_writable('$dir'))");
@@ -1318,7 +1319,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $path string with path
 	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int|boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
 	 * @param int $fs_id=null fs_id to use, to not query it again (eg. because it's already deleted)
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
@@ -1379,7 +1380,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Calls itself recursive, to get the parent directories
 	 *
 	 * @param string $path
-	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 * @return array|boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
 	function get_eacl($path)
 	{
@@ -1414,8 +1415,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Searches the stat_cache first and then the db.
 	 * Calls itself recursive to to determine the path of the parent/directory
 	 *
-	 * @param int/array $fs_ids integer fs_id or array of them
-	 * @return string/array path or array or pathes indexed by fs_id
+	 * @param int|array $fs_ids integer fs_id or array of them
+	 * @return string|array path or array or pathes indexed by fs_id
 	 */
 	static function id2path($fs_ids)
 	{
@@ -1870,7 +1871,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
 				}
 				$filename = self::_fs_path($fs_id);
-				if (!file_exists($fs_dir=dirname($filename)))
+				if (!file_exists($fs_dir=egw_vfs::dirname($filename)))
 				{
 					self::mkdir_recursive($fs_dir,0700,true);
 				}

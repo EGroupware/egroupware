@@ -201,10 +201,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
 		return false;
 	}
-	
+
 	/**
 	 * Returns mount url of a full url returned by resolve_url
-	 * 
+	 *
 	 * @param string $fullurl full url returned by resolve_url
 	 * @return string|NULL mount url or null if not found
 	 */
@@ -653,7 +653,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
 				$stat = call_user_func(array($class,'url_stat'),parse_url($url,PHP_URL_PATH),0);
-				if ($stat[$mime_attr])
+				if ($stat && $stat[$mime_attr])
 				{
 					$mime = $stat[$mime_attr];
 				}
@@ -703,9 +703,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$basepath = parse_url($path,PHP_URL_PATH);
 		foreach(self::$fstab as $mounted => $url)
 		{
-			if (((dirname($mounted) == $basepath || dirname($mounted).'/' == $basepath) && $mounted != '/') &&
+			if (((egw_vfs::dirname($mounted) == $basepath || egw_vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
 				// only return children readable by the user, if dir is not writable
-				(!self::HIDE_UNREADABLES || $this->opened_dir_writable || 
+				(!self::HIDE_UNREADABLES || $this->opened_dir_writable ||
 					egw_vfs::check_access($mounted,egw_vfs::READABLE)))
 			{
 				$this->extra_dirs[] = basename($mounted);
@@ -777,7 +777,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
-		if (!$stat && $try_create_home && dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
+		if (!$stat && $try_create_home && egw_vfs::dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
 			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
 			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
 		{
@@ -805,7 +805,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
 		// Problem: this does NOT stop (calles itself infinit recursive)!
 		if (self::HIDE_UNREADABLES && !egw_vfs::check_access($path,egw_vfs::READABLE,$stat) &&
-			!egw_vfs::check_access(dirname($path,egw_vfs::WRITABLE)))
+			!egw_vfs::check_access(egw_vfs::dirname($path,egw_vfs::WRITABLE)))
 		{
 			return false;
 		}
@@ -954,11 +954,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			do {
 				$file = readdir($this->opened_dir);
 			}
-			while($file !== false && 
+			while($file !== false &&
 				(is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) || // do NOT return extra_dirs twice
 				self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
 				!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
-		}		
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $this->opened_dir ) = '$file'");
 		return $file;
 	}
