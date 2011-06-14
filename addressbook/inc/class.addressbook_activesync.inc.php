@@ -82,7 +82,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		//'radiophonenumber'	=> '',
 		//'spouse'	=> '',
 		'suffix'	=>	'n_suffix',
-		'title'	=> 'title',	// @TODO: check if n_prefix
+		'title'	=> 'n_prefix',	
 		'webpage'	=> 'url',
 		//'yomicompanyname'	=> '',
 		//'yomifirstname'	=>	'',
@@ -128,7 +128,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			if ($return_all_in_one && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
 				$abs = array(
-					$GLOBALS['egw_info']['user']['account_id'] => lang('All'),
+					$GLOBALS['egw_info']['user']['account_id'] => lang('personal'),
 				);
 			}
 			else
@@ -695,7 +695,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
 		$items = array();
-		if (($contacts =& $this->addressbook->search($searchquery, false, false, '', '%', false, 'OR')))
+		if (($contacts =& $this->addressbook->search($searchquery['query'], false, false, '', '%', false, 'OR')))
 		{
 			foreach($contacts as $contact)
 			{
