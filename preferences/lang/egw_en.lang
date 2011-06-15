@@ -1,4 +1,3 @@
-$label	preferences	en	$label
 %1 - preferences	preferences	en	%1 - Preferences
 %1 hours	preferences	en	%1 hour
 12 hour	preferences	en	12 hour
@@ -33,11 +32,13 @@ enable drag and drop functionality (experimental)	preferences	en	Drag and drop
 enable selectbox dropdown resizing for ie (experimental)	preferences	en	Select box drop down menu resizing
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables select box drop down menu resizing for IE in all applications. If the browser is not an IE, the option will not apply.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
 enter your new password	preferences	en	Enter new password
 enter your old password	preferences	en	Enter old password
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password. Contact your administrator.
 forced preferences	preferences	en	Forced preferences
 help off	preferences	en	Help off
+holding ctrl/cmd key and click on the line	preferences	en	holding Ctrl/Cmd key and click on the line
 hours	preferences	en	Hours
 how do you like to display accounts	preferences	en	Account display
 how do you like to select accounts	preferences	en	Account select
@@ -47,14 +48,17 @@ how should egroupware display dates for you.	preferences	en	Select displayed dat
 icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	Icons only
+if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	en	If a line is already selected, further lines get either selected by holding Ctrl/Cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. If no line is selected clicking on one allways selects it. Holding down Shift key selects everything between current select line and the one clicked.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	en	Images linked to an entry can be displayed as thumbnails. Turn this off to speed up page display.
 in which country are you. this is used to set certain defaults for you.	preferences	en	Select the country. It sets some defaults e.g. in Calendar.
 interface/template selection	preferences	en	Interface | Template
+just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
 no user-selection at all	common	en	No user selection at all
+note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does NOT change your email password. It needs to be done manually.
 number format	preferences	en	Number format
 office 2003 theme	preferences	en	Office 2003 theme
@@ -70,6 +74,7 @@ re-enter your password	preferences	en	Re-enter your password
 read prefs for the specified application.	preferences	en	Read preferences for the specified application.
 rich text editor enter mode	preferences	en	Rich text editor enter mode
 rich text editor theme	preferences	en	Rich text editor theme
+select additional lines in lists by	preferences	en	Select additional lines in lists by
 select different theme	preferences	en	Select different theme
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	en	Select how the rich text editor will generate the line break tag.
 select one	preferences	en	Select
@@ -84,6 +89,7 @@ should the number of active sessions be displayed for you all the time.	preferen
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Show help messages when modifying preferences or only on request.
 show helpmessages by default	preferences	en	Help messages
 show links between egroupware aps as	common	en	Application icons and links
+show navigation bar as	preferences	en	Show navigation bar as
 show number of current users	preferences	en	Current users
 show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
@@ -92,7 +98,9 @@ spellchecker language	addressbook	en	Spellchecker language
 text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.
 the old password is not correct	preferences	en	The old password is not correct!
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	en	Select box shows all available users, which can be very slow on big installs with many users. Popup can search users by name or group.<br>The last two options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	en	The two passwords are not the same!
 theme (colors/fonts) selection	preferences	en	Theme
 this server is located in the %1 timezone	preferences	en	This server is located in the %1 time zone
@@ -104,6 +112,7 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Select character set for the CSV Import|Export.
 which currency symbol or name should be used in egroupware.	preferences	en	Currency symbol or name.
 write prefs for the specified application.	preferences	en	Write preferences for the specified application.
+you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you can show the linked entries with icons only, icons with app-name or both.	common	en	Show applications with icons only, icons with application name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	en	You must enter a password.

@@ -176,8 +176,8 @@ class preferences_hooks
 				'label'		=>	'Select additional lines in lists by',
 				'name'		=>	'select_mode',
 				'values'    =>  array(
-					'EGW_SELECTMODE_DEFAULT' => 'holding Ctrl/Cmd key and click on the line',
-					'EGW_SELECTMODE_TOGGLE'  => 'just clicking on the line, like a checkbox',
+					'EGW_SELECTMODE_DEFAULT' => lang('holding Ctrl/Cmd key and click on the line'),
+					'EGW_SELECTMODE_TOGGLE'  => lang('just clicking on the line, like a checkbox'),
 				),
 				'help'		=>	'If a line is already selected, further lines get either selected by holding Ctrl/Cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. If no line is selected clicking on one allways selects it. Holding down Shift key selects everything between current select line and the one clicked.',
 				'xmlrpc'	=>	True,

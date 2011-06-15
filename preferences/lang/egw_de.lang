@@ -13,6 +13,7 @@ change your password	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
+charset for the csv export/import	preferences	de	Zeichensatz
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 color	preferences	de	Farbe
 country	preferences	de	Land
@@ -37,6 +38,7 @@ enter your old password	preferences	de	Altes Passwort eingeben
 failed to change password.  please contact your administrator.	preferences	de	Passwortänderung fehlgeschlagen. Bitte kontaktieren Sie Ihren Administrator!
 forced preferences	preferences	de	Erzwungene Einstellungen
 help off	preferences	de	Keine Hilfe
+holding ctrl/cmd key and click on the line	preferences	de	halten der Strg/Cmd Taste und anklicken der Zeile
 hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
@@ -46,9 +48,11 @@ how should egroupware display dates for you.	preferences	de	Wie soll eGroupWare 
 icon	preferences	de	Icon
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
+if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) and anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox. Wenn keine Zeile ausgewählt ist, wählt anklicken eine immer aus. Das Halten der Umschalt Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
+just clicking on the line, like a checkbox	preferences	de	rein durch anklicken der Zeile, wie eine Checkbox
 language	preferences	de	Sprache
 max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
@@ -70,6 +74,7 @@ re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 rich text editor enter mode	preferences	de	Zeilenumbruchmodus des Editors
 rich text editor theme	preferences	de	Farbschema des Editors
+select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
 select different theme	preferences	de	anderes Schema wählen
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	de	Auswählen welches Tag der Editor bei einem Zeilenumbruch verwendet.
 select one	preferences	de	Bitte wählen
