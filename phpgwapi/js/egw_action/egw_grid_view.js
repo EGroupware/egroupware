@@ -854,6 +854,9 @@ function egwGridViewGrid(_grid, _heightChangeProc, _scrollable, _outer)
 	container.doInsertIntoDOM = egwGridViewGrid_doInsertIntoDOM;
 	container.doSetViewArea = egwGridViewGrid_doSetviewArea;
 
+	// Set the default selectmode
+	container.selectmode = EGW_SELECTMODE_DEFAULT;
+
 	return container;
 }
 
@@ -1494,9 +1497,18 @@ function egwGridViewRow__columnClick(_shiftState, _column)
 	var state = this.aoi.getState();
 	var isSelected = egwBitIsSet(state, EGW_AO_STATE_SELECTED);
 
-	this.aoi.updateState(EGW_AO_STATE_SELECTED, 
-		!egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI) || !isSelected,
-		_shiftState);
+	switch (this.grid.selectmode)
+	{
+		case EGW_SELECTMODE_DEFAULT:
+			this.aoi.updateState(EGW_AO_STATE_SELECTED,
+				!egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI) || !isSelected,
+				_shiftState);
+			break;
+		case EGW_SELECTMODE_TOGGLE:
+			this.aoi.updateState(EGW_AO_STATE_SELECTED, !isSelected,
+				egwSetBit(EGW_AO_SHIFT_STATE_MULTI, _shiftState, true));
+			break;
+	}
 }
 
 function egwGridViewRow__checkboxClick()

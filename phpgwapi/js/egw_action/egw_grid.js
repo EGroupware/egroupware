@@ -18,7 +18,8 @@ uses
 	egw_action_columns
 */
 
-function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnChangeCallback, _context)
+function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback,
+	_columnChangeCallback, _context)
 {
 	this.parentNode = _parentNode;
 	this.objectManager = _objectManager;
@@ -64,6 +65,14 @@ function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback, _columnC
 	this.gridOuter = new egwGridViewOuter(_parentNode, this.dataRoot,
 		this.selectcolsClick, this.toggleAllClick, this.sortColsClick, this);
 	this.gridOuter.updateColumns(this.columns.getColumnData());
+}
+
+var EGW_SELECTMODE_DEFAULT = 0;
+var EGW_SELECTMODE_TOGGLE = 1;
+
+egwGrid.prototype.setSelectmode = function(_mode)
+{
+	this.gridOuter.grid.selectmode = _mode;
 }
 
 egwGrid.prototype.setActionLinkGroup = function(_group, _links)
