@@ -33,7 +33,7 @@ class Net_IMAPProtocol {
      * The auth methods this class support
      * @var array
      */
-    var $supportedAuthMethods=array('DIGEST-MD5', 'CRAM-MD5', 'LOGIN');
+    var $supportedAuthMethods=array('DIGEST-MD5', 'CRAM-MD5', 'LOGIN', 'PLAIN');
 
 
     /**
@@ -507,7 +507,9 @@ class Net_IMAPProtocol {
             case 'LOGIN':
                 $result = $this->_authLOGIN( $uid , $pwd , $cmdid );
                 break;
-
+            case 'PLAIN':
+                $result = $this->_authPLAIN( $uid , $pwd , $cmdid );
+                break;
             default :
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
                 break;
@@ -682,7 +684,43 @@ class Net_IMAPProtocol {
 
 
 
+     /* Authenticates the user using the PLAIN method.
+     *
+     * @param string The userid to authenticate as.
+     * @param string The password to authenticate with.
+     * @param string The cmdID.
+     *
+     * @return array Returns an array containing the response
+     *
+     * @access private
+     * @since  1.0
+     */
+    function _authPLAIN($uid, $pwd, $cmdid)
+    {
 
+        if (PEAR::isError($error = $this->_putCMD($cmdid,"AUTHENTICATE", "PLAIN"))) {
+            return $error;
+        }
+
+        if (PEAR::isError($args = $this->_recvLn() )) {
+            return $args;
+        }
+
+        $this->_getNextToken( $args , $plus );
+
+        $this->_getNextToken( $args , $space );
+
+        $this->_getNextToken( $args , $challenge );
+
+        $challenge = base64_decode( $challenge );
+
+        $auth_str = base64_encode(chr(0).$uid.chr(0).$pwd );
+
+        if ( PEAR::isError( $error = $this->_send( $auth_str."\r\n" ) ) ) {
+            return $error;
+        }
+
+    }
 
 
 
