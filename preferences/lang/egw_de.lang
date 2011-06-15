@@ -52,7 +52,7 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
-just clicking on the line, like a checkbox	preferences	de	rein durch anklicken der Zeile, wie eine Checkbox
+just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
 language	preferences	de	Sprache
 max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
