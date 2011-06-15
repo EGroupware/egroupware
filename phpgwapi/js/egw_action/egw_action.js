@@ -81,6 +81,20 @@ function egw_getObjectManager(_id, _create) {
 	return res;
 }
 
+/**
+ * Returns the object manager for the current application
+ */
+function egw_getAppObjectManager(_create) {
+	return egw_getObjectManager(egw_getAppName(), _create);
+}
+
+/**
+ * Returns the action manager for the current application
+ */
+function egw_getAppActionManager(_create) {
+	return egw_getActionManager(egw_getAppName(), _create);
+}
+
 
 
 /** egwActionHandler Interface **/
@@ -665,6 +679,10 @@ var EGW_AO_SHIFT_STATE_BLOCK = 0x02;
 // flag is not applied to container objects, it may lead to some strange behaviour.
 var EGW_AO_FLAG_IS_CONTAINER = 0x01;
 
+// If this flag is set, the object will gets its focus when no other object is
+// selected and e.g. a key is pressed.
+var EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
+
 /**
  * The egwActionObject represents an abstract object to which actions may be
  * applied. Communication with the DOM tree is established by using the
@@ -1189,6 +1207,11 @@ egwActionObject.prototype.getPrevious = function(_intval)
 {
 	if (this.parent != null)
 	{
+		if (this.getFocused() && !this.getSelected()) {
+			return this;
+		}
+
+
 		var idx = this.parent.children.indexOf(this);
 		if (idx > 0)
 		{
@@ -1208,6 +1231,10 @@ egwActionObject.prototype.getNext = function(_intval)
 {
 	if (this.parent != null)
 	{
+		if (this.getFocused() && !this.getSelected()) {
+			return this;
+		}
+
 		var idx = this.parent.children.indexOf(this);
 		if (idx < this.parent.children.length - 1)
 		{

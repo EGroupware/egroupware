@@ -119,6 +119,26 @@ function egw_keycode_makeValid(_keyCode) {
 	return -1;
 }
 
+function _egw_nodeIsInInput(_node)
+{
+	if ((_node != null) && (_node != document))
+	{
+		var tagName = _node.tagName.toLowerCase();
+		if (tagName == "input" || tagName == "select")
+		{
+			return true;
+		}
+		else
+		{
+			return _egw_nodeIsInInput(_node.parentNode);
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
 /**
  * Register the onkeypress handler on the document 
  */
@@ -136,11 +156,17 @@ $(document).ready(function() {
 		// Only go on if this is a valid key code - call the key handler
 		if (keyCode != -1)
 		{
-			if (egw_keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+			// Check whether the event came from an input field - if yes, only
+			// allow function keys (like F1) to be captured by our code
+			var inInput = _egw_nodeIsInInput(e.target);
+			if (!inInput || (keyCode >= EGW_KEY_F1 && keyCode <= EGW_KEY_F12))
 			{
-				// If the key handler successfully passed the key event to some
-				// sub component, prevent the default action
-				e.preventDefault();
+				if (egw_keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+				{
+					// If the key handler successfully passed the key event to some
+					// sub component, prevent the default action
+					e.preventDefault();
+				}
 			}
 		}
 	});
@@ -223,13 +249,43 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 		// Get the object manager and fetch the container of the currently
 		// focused object
-		var focusedObject = egw_getObjectManager().getFocusedObject();
-		if (focusedObject)
+		var appMgr = egw_getAppObjectManager(false);
+		if (appMgr)
 		{
-			var cntr = focusedObject.getContainerRoot();
-			if (cntr)
+			var focusedObject = appMgr.getFocusedObject();
+
+			if (!focusedObject)
 			{
-				return cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
+				// If the current application doesn't have a focused object,
+				// check whether the application object manager contains an object
+				// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
+				var cntr = null;
+				for (var i = 0; i < appMgr.children.length; i++)
+				{
+					var child = appMgr.children[i];
+					if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags))
+					{
+						cntr = child;
+						break;
+					}
+				}
+
+				// Get the first child of the found container and focus the first
+				// object
+				if (cntr && cntr.children.length > 0)
+				{
+					cntr.children[0].setFocused(true);
+					focusedObject = cntr.children[0];
+				}
+			}
+
+			if (focusedObject)
+			{
+				var cntr = focusedObject.getContainerRoot();
+				if (cntr)
+				{
+					return cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
+				}
 			}
 		}
 

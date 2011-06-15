@@ -190,6 +190,21 @@ function egw_getApp(_name)
 }
 
 /**
+ * Returns the name of the currently active application
+ */
+function egw_getAppName()
+{
+	if (typeof egw_appName == 'undefined')
+	{
+		return 'egroupware';
+	}
+	else
+	{
+		return egw_appName;
+	}
+}
+
+/**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
  * 
  * Default implementation here only reloads window with it's current url with an added msg=_msg attached

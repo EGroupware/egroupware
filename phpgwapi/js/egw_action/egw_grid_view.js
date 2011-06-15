@@ -1506,7 +1506,7 @@ function egwGridViewRow__columnClick(_shiftState, _column)
 			break;
 		case EGW_SELECTMODE_TOGGLE:
 			this.aoi.updateState(EGW_AO_STATE_SELECTED, !isSelected,
-				egwSetBit(EGW_AO_SHIFT_STATE_MULTI, _shiftState, true));
+				egwSetBit(_shiftState, EGW_AO_SHIFT_STATE_MULTI, true));
 			break;
 	}
 }

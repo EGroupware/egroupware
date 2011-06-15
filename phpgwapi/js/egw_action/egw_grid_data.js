@@ -49,7 +49,7 @@ function egwGridDataElement(_id, _parent, _columns, _readQueue, _objectManager)
 	if (!_parent)
 	{
 		this.actionObject = this.parentActionObject.addObject(_id, null,
-			EGW_AO_FLAG_IS_CONTAINER);
+			EGW_AO_FLAG_IS_CONTAINER | EGW_AO_FLAG_DEFAULT_FOCUS);
 		this.readQueue.setDataRoot(this);
 	}
 
