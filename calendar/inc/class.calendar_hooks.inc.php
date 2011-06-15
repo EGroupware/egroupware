@@ -666,7 +666,7 @@ function calendar_purge_old($config)
 	// Cancel old purge
 	ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
 
-	if((int)$config > 0)
+	if((float)$config > 0)
 	{
 		$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 			array('month' => '*', 'day' => 1),
