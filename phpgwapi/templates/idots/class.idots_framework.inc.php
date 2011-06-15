@@ -161,7 +161,7 @@ class idots_framework extends egw_framework
 		// add the name of the current application as global js variable - the
 		// name of the current application can be obtained by using the
 		// jsapi egw_getAppName() function
-		$content .= '<script type="tex/javascript">window.egw_appName = "'.
+		$content .= '<script type="text/javascript">window.egw_appName = "'.
 			$GLOBALS['egw_info']['flags']['currentapp'].'";</script>'."\n";
 
 		$this->tpl->set_var($vars);
