@@ -15,15 +15,19 @@
  * row.
  */
 
+var EGW_SELECTMODE_DEFAULT = 0;
+var EGW_SELECTMODE_TOGGLE = 1;
+
 /**
  * An action object interface for each nextmatch widget row - "inherits" from 
  * egwActionObjectInterface
  */
-function nextmatchRowAOI(_node)
+function nextmatchRowAOI(_node, _selectMode)
 {
 	var aoi = new egwActionObjectInterface();
 
 	aoi.node = _node;
+	aoi.selectMode = _selectMode;
 
 	aoi.checkBox = ($(":checkbox", aoi.node))[0];
 
@@ -50,9 +54,18 @@ function nextmatchRowAOI(_node)
 				var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
 				var state = egwGetShiftState(e);
 
-				aoi.updateState(EGW_AO_STATE_SELECTED,
-					!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
-					state);
+				switch (aoi.selectMode)
+				{
+				case EGW_SELECTMODE_DEFAULT:
+					aoi.updateState(EGW_AO_STATE_SELECTED,
+						!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
+						state);
+					break;
+				case EGW_SELECTMODE_TOGGLE:
+					aoi.updateState(EGW_AO_STATE_SELECTED, !selected,
+						egwSetBit(EGW_AO_SHIFT_STATE_MULTI, state, true));
+					break;
+				}
 			}
 		};
 
