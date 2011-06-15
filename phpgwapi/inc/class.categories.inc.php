@@ -513,7 +513,7 @@ class categories
 		// Load the application grants
 		if ($category['appname'] == $this->app_name && is_null($this->grants))
 		{
-			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
+			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name,true);
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
@@ -693,7 +693,7 @@ class categories
 			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
 			'cat_parent' => $values['parent'],
 			'cat_access' => $values['access'],
-			'cat_owner' => $values['owner'],
+			'cat_owner' => isset($values['owner']) ? $values['owner'] : $this->account_id,
 			'cat_main' => $values['main'],
 			'cat_level' => $values['level'],
 			'last_mod' => time(),
