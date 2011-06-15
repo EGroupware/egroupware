@@ -902,7 +902,8 @@ class nextmatch_widget
 		{
 			// Create a new action object
 			if (elem.id) {
-				var obj = objectCntr.addObject(elem.id, new nextmatchRowAOI(elem));
+				var obj = objectCntr.addObject(elem.id, new nextmatchRowAOI(elem, '.
+					($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']?$GLOBALS['egw_info']['user']['preferences']['common']['select_mode']:'EGW_SELECTMODE_DEFAULT').'));
 
 				obj.updateActionLinks(actionLinks);
 			}
