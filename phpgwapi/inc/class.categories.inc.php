@@ -321,7 +321,7 @@ class categories
 	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
 	 * @return array with cats
 	 */
-	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0,$unserialize_data=false)
+	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0,$unserialize_data=false,$filter=null)
 	{
 		if (!$sort)  $sort = 'ASC';
 		if (!$order) $order = 'cat_name';
@@ -329,7 +329,7 @@ class categories
 		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id,$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 
 		$parents = $cats = array();
-		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id,-1,'',null,$unserialize_data)))
+		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id,-1,'',$filter,$unserialize_data)))
 		{
 			$cats = array();
 		}
@@ -339,7 +339,7 @@ class categories
 		}
 		while (count($parents))
 		{
-			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents,-1,'',null,$unserialize_data)))
+			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents,-1,'',$filter,$unserialize_data)))
 			{
 				break;
 			}
