@@ -110,7 +110,10 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function login($user, $pass, $useauthenticate = true, $selectMailbox=true)
     {
+        //error_log(__METHOD__.':'.$user.','.$pass.','.$useauthenticate.','.$selectMailbox);
         if ( $useauthenticate ){
+            //$useauthenticate = 'LOGIN';
+            //error_log(__METHOD__.':'.'about to authenticate');
             //$useauthenticate is a string if the user hardcodes an AUTHMethod
             // (the user calls $imap->login("user","password","CRAM-MD5"); for example!
 
@@ -125,6 +128,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                     $this->_serverAuthMethods=null;
                 }
                 if($this->_serverAuthMethods == null  || count($commonMethods) == 0 || $this->supportedAuthMethods == null ){
+					//error_log(__METHOD__.":The server does not have any auth method, so I try LOGIN");
                     // The server does not have any auth method, so I try LOGIN
                     if ( PEAR::isError( $ret = $this->cmdLogin( $user, $pass ) ) ) {
                         return $ret;
@@ -137,6 +141,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                 return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
             }
         }else{
+            //error_log(__METHOD__.':'.'about to use plain login');
             //The user request "PLAIN"  auth, we use the login command
             if ( PEAR::isError( $ret = $this->cmdLogin( $user, $pass ) ) ) {
                 return $ret;

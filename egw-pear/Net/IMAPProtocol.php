@@ -716,22 +716,31 @@ class Net_IMAPProtocol {
         }else{
             $methods = $this->supportedAuthMethods;
         }
-
+        //error_log(__METHOD__.' Supported Methods:'.array2string($methods).' Server methods:'.array2string($this->_serverAuthMethods));
         if( ($methods != null) && ($this->_serverAuthMethods != null)){
             foreach ( $methods as $method ) {
                 if ( in_array( $method , $this->_serverAuthMethods ) ) {
+                    //error_log(__METHOD__.' choose:'.$method);
                     return $method;
                 }
             }
             $serverMethods=implode(',' ,$this->_serverAuthMethods);
             $myMethods=implode(',' ,$this->supportedAuthMethods);
+            if (!empty($userMethod) && !in_array($userMethod,$this->_serverAuthMethods))
+            {
+                foreach ( $this->supportedAuthMethods as $method ) {
+                    if ( in_array( $method , $this->_serverAuthMethods ) ) {
+                        if ($this->_debug) error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
+                        return $method;
+                    }
+                }
+            }
             return new PEAR_Error("$method NOT supported authentication method!. This IMAP server " .
                 "supports these methods: $serverMethods, but I support $myMethods");
         }else{
             return new PEAR_Error("This IMAP server don't support any Auth methods");
         }
     }
-
 
 
 
