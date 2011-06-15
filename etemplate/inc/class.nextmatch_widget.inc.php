@@ -888,6 +888,7 @@ class nextmatch_widget
 		// Create anonymous object and action container for this etemplate
 		var actionCntr = actionManager.addAction("actionManager", "'.$template_name.'");
 		var objectCntr = objectManager.addObject(new egwActionObjectManager("'.$template_name.'", actionCntr));
+		objectCntr.flags = objectCntr.flags | EGW_AO_FLAG_DEFAULT_FOCUS;
 
 		actionCntr.updateActions('.json_encode($enc_actions).');
 		actionCntr.setDefaultExecute("javaScript:nm_action");

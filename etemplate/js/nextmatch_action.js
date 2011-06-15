@@ -63,7 +63,7 @@ function nextmatchRowAOI(_node, _selectMode)
 					break;
 				case EGW_SELECTMODE_TOGGLE:
 					aoi.updateState(EGW_AO_STATE_SELECTED, !selected,
-						egwSetBit(EGW_AO_SHIFT_STATE_MULTI, state, true));
+						egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, true));
 					break;
 				}
 			}
