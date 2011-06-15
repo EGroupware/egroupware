@@ -524,7 +524,7 @@ class defaultimap extends Net_IMAP
 			if ($this->debug) error_log(__METHOD__."No username supplied.".function_backtrace());
 			return false;
 		}
-		if( PEAR::isError($status = parent::login($username, $password, TRUE, !$this->isAdminConnection)) ) {
+		if( PEAR::isError($status = parent::login($username, $password, 'LOGIN', !$this->isAdminConnection)) ) {
 			if ($this->debug) error_log(__METHOD__."Could not log in with ->".$username.":".$password."<-");
 			if ($this->debug) error_log(__METHOD__."Status login:".array2string($status->message));
 			//error_log(__METHOD__.'Called from:'.function_backtrace());
