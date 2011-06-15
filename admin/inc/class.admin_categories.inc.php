@@ -31,6 +31,11 @@ class admin_categories
 	const ICON_PATH = '/phpgwapi/images';
 
 	/**
+	 * Flag used in the nextmatch filter to indicate filtering by user
+	 */
+	const FILTER_USER = '-user-';
+
+	/**
 	 * Stupid old admin ACL - dont think anybody uses or understands it ;-)
 	 *
 	 * @var boolean
@@ -187,7 +192,11 @@ class admin_categories
 		}
 		$content['msg'] = $msg;
 		$sel_options['icon'] = self::get_icons();
+
 		$sel_options['owner'] = array(0 => lang('All users'));
+		// User's category - add current value to be able to preserve owner
+		if($content['owner'] > 0) $sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
+
 		$accs = $GLOBALS['egw']->accounts->get_list('groups');
 		foreach($accs as $acc) 
 		{
@@ -260,15 +269,24 @@ class admin_categories
 		{
 			throw new egw_exception_assertion_failed(__METHOD__.'($query,...) $query[appname] NOT set!');
 		}
-		$globalcat = true;
+		$globalcat = ($query['filter'] == categories::GLOBAL_ACCOUNT);
 		if (isset($query['global_cats']) && $query['global_cats']===false)
 		{
 			$globalcat = false;
 		}
 		egw_cache::setSession(__CLASS__,'nm',$query);
 
-		$cats = new categories(categories::GLOBAL_ACCOUNT,$query['appname']);
-		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],$globalcat,0,true);
+		if($query['filter'])
+		{
+			$filter['owner'] = $query['filter'] == self::FILTER_USER ? $query['col_filter']['owner'] : $query['filter'];
+		}
+
+		$cats = new categories($query['filter'] == self::FILTER_USER ? $query['col_filter']['owner'] : $query['filter'],$query['appname']);
+
+		// Use all parents, in case user has their cat as a child of a global or something
+		$parent = array(0);
+		if($query['filter']) $parent += $cats->return_array('all',0,false,'','ASC','',true,$parent,-1, 'id');
+		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true, $filter);
 
 		foreach($rows as &$row)
 		{
@@ -306,13 +324,20 @@ class admin_categories
 		if(!isset($content))
 		{
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
+			$appname = $content['nm']['appname'] ? $content['nm']['appname'] : categories::GLOBAL_APPNAME;
 
 			$content['nm'] = egw_cache::getSession(__CLASS__,'nm');
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'admin_categories::get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'no_filter'      => True,	// I  disable the 1. filter
+					'no_filter'      => false,
+					'filter'         => categories::GLOBAL_ACCOUNT,
+					'options-filter' => array(
+						'' => lang('All categories'),
+						categories::GLOBAL_ACCOUNT => lang('Global categories'),
+						$GLOBALS['egw_info']['user']['account_id'] => lang('Own categories'),
+					),
 					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
 					'no_cat'         => True,	// I  disable the cat-selectbox
 					'header_left'    =>	false,	// I  template to show left of the range-value, left-aligned (optional)
@@ -325,7 +350,7 @@ class admin_categories
 					'default_cols'   => '!color,last_mod,subs',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false,	// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'appname'        => categories::GLOBAL_APPNAME,
+					'appname'        => $appname,
 					'no_search'      => !self::$acl_search,
 				);
 			}
@@ -356,6 +381,12 @@ class admin_categories
 		}
 		$content['msg'] = $msg;
 		$readonlys['add'] = !self::$acl_add;
+		if($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$content['nm']['options-filter'][self::FILTER_USER] = lang('Limit to user');
+		} else {
+			$readonlys['nm']['rows']['owner'] = true;
+		}
 
 		$tmpl = new etemplate('admin.categories.index');
 		$tmpl->exec('admin.admin_categories.index',$content,$sel_options,$readonlys,array(
