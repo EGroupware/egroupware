@@ -762,7 +762,7 @@ class infolog_bo
 				$status = 'done';
 				if (isset($values['info_type'])) {
 					if (isset($this->status[$values['info_type']]['done'])) {
-                        $status = 'done';
+						$status = 'done';
 					} elseif (isset($this->status[$values['info_type']]['billed'])) {
 						$status = 'billed';
 					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
@@ -943,6 +943,11 @@ class infolog_bo
 
 			if ($info_from_set) $values['info_from'] = '';
 
+			// Change new values back to user time before sending them back
+			if($user2server)
+			{
+				$this->time2time($values);
+			}
 			// merge changes (keeping extra values from the UI)
 			$values_in = array_merge($values_in,$values);
 		}
@@ -1066,7 +1071,7 @@ class infolog_bo
 			'info_addr' => implode(', ',$email),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
-			'info_startdate' => $_date,
+			'info_startdate' => egw_time::server2user($_date),
 			'info_status' => $status,
 			'info_priority' => 1,
 			'info_percent' => $status == 'done' ? 100 : 0,
