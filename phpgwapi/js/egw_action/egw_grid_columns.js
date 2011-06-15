@@ -521,7 +521,7 @@ egwGridColumns.prototype.getColumnVisibilitySet = function()
 			result[this.columns[i].id] = {
 				"caption": this.columns[i].caption,
 				"enabled": (this.columns[i].visibility != EGW_COL_VISIBILITY_ALWAYS) &&
-					(this.columns[i].type == EGW_COL_TYPE_DEFAULT),
+					(this.columns[i].type != EGW_COL_TYPE_NAME_ICON_FIXED),
 				"visible": this.columns[i].visibility != EGW_COL_VISIBILITY_INVISIBLE
 			};
 		}

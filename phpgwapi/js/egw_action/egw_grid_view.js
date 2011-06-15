@@ -352,12 +352,12 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 				});
 
 				cont.append(this.checkbox);
+			} else {
+				var caption = $(document.createElement("span"));
+				caption.html(col.caption);
+
+				cont.append(caption);
 			}
-
-			var caption = $(document.createElement("span"));
-			caption.html(col.caption);
-
-			cont.append(caption);
 
 			if (col.type != EGW_COL_TYPE_CHECKBOX && col.sortable != EGW_COL_SORTABLE_NONE)
 			{
