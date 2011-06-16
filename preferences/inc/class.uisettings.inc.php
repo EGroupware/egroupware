@@ -349,6 +349,10 @@ class uisettings
 			}
 			$this->t->set_var('tabs',common::create_tabs($tabs,$selected));
 		}
+		else
+		{
+			$this->t->set_var('tabs','');
+		}
 		$this->t->set_var('lang_save', lang('save'));
 		$this->t->set_var('lang_apply', lang('apply'));
 		$this->t->set_var('lang_cancel', lang('cancel'));
