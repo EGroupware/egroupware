@@ -139,6 +139,7 @@ class admin_categories
 			{
 				case 'save':
 				case 'apply':
+					if($content['owner'] == '') $content['owner'] = 0;
 					if ($content['id'] && self::$acl_edit)
 					{
 						try {
@@ -195,14 +196,18 @@ class admin_categories
 
 		$sel_options['owner'] = array(0 => lang('All users'));
 		// User's category - add current value to be able to preserve owner
-		if($content['owner'] > 0) $sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
-
-		$accs = $GLOBALS['egw']->accounts->get_list('groups');
-		foreach($accs as $acc) 
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			if($content['owner'] > 0) $sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
+		}
+		else
 		{
-			if ($acc['account_type'] == 'g')
+			$accs = $GLOBALS['egw']->accounts->get_list('groups');
+			foreach($accs as $acc) 
 			{
-				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+				if ($acc['account_type'] == 'g')
+				{
+					$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+				}
 			}
 		}
 
