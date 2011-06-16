@@ -48,6 +48,15 @@ abstract class bo_merge
 	var $table_plugins = array();
 
 	/**
+	 * Export limit in number of entries or some non-numerical value, if no export allowed at all, empty means no limit
+	 *
+	 * Set by constructor to $GLOBALS[egw_info][server][export_limit]
+	 *
+	 * @var int|string
+	 */
+	public $export_limit;
+
+	/**
 	 * Constructor
 	 *
 	 * @return bo_merge
@@ -58,6 +67,8 @@ abstract class bo_merge
 
 		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
 			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12 ? 'h:i a' : 'H:i');
+
+		$this->export_limit = $GLOBALS['egw_info']['server']['export_limit'];
 	}
 
 	/**
@@ -281,15 +292,19 @@ abstract class bo_merge
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
+
+		// check export-limit and fail if user tries to export more entries then allowed
+		if ($this->export_limit && //!$GLOBALS['egw_info']['user']['apps']['admin'] &&
+			count($ids) > (int)$this->export_limit)
+		{
+			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
+			return false;
+		}
+
 		// fix application/msword mimetype for rtf files
 		if ($mimetype == 'application/msword' && strtolower(substr($document,-4)) == '.rtf')
 		{
 			$mimetype = 'application/rtf';
-		}
-
-		$config = config::read('phpgwapi');
-		if($config['export_limit'] && !$GLOBALS['egw_info']['user']['apps']['admin']) {
-			$ids = array_slice($ids, 0, (int)$config['export_limit']);
 		}
 		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
 	}
@@ -757,6 +772,7 @@ abstract class bo_merge
 	 */
 	public function download($document, $ids, $name='', $dirs='')
 	{
+		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs')");
 		if (($error = $this->check_document($document, $dirs)))
 		{
 			return $error;
@@ -808,6 +824,7 @@ abstract class bo_merge
 		}
 		if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
 		{
+			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
 		if(!empty($name))
@@ -864,29 +881,31 @@ abstract class bo_merge
 	/**
 	 * Get a list of document actions / files from the given directory
 	 *
-	 * @param dir Directory to search
-	 *
+	 * @param string $dirs Directory(s comma or space separated) to search
 	 * @return List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dir, $prefix='document_')
+	public static function get_documents($dirs, $prefix='document_')
 	{
-		if (!$dir) return array();
+		if (!$dirs) return array();
 
 		// split multiple comma or whitespace separated directories
 		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-		if (count($dir = preg_split('/[,\s]+\//', $dir)) > 1)
+		if (count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
 		{
-			foreach($dir as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
+			foreach($dirs as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
 		}
 		$list = array();
-		if (($files = egw_vfs::find($dir,array('need_mime'=>true),true)))
+		foreach($dirs as $dir)
 		{
-			foreach($files as $file)
+			if (($files = egw_vfs::find($dir,array('need_mime'=>true),true)))
 			{
-				// return only the mime-types we support
-				if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
+				foreach($files as $file)
+				{
+					// return only the mime-types we support
+					if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
 
-				$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
+					$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
+				}
 			}
 		}
 		return $list;
@@ -902,15 +921,19 @@ abstract class bo_merge
 	 *
 	 * If more then SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
 	 *
-	 * @param string $dir
+	 * @param string $dirs Directory(s comma or space separated) to search
 	 * @param int $group see nextmatch_widget::egw_actions
 	 * @param string $caption='Insert in document'
 	 * @param string $prefix='document_'
 	 * @param string $default_doc='' full path to default document to show on top with action == 'document'!
+	 * @param int|string $export_limit=null export-limit, default $GLOBALS['egw_info']['server']['export_limit']
 	 * @return array see nextmatch_widget::egw_actions
 	 */
-	public static function document_action($dir, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='')
+	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
+		$export_limit=null)
 	{
+		if (is_null($export_limit)) $export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+
 		$documents = array();
 
 		if ($default_doc && ($file = egw_vfs::stat($default_doc)))	// put default document on top
@@ -922,59 +945,66 @@ abstract class bo_merge
 			);
 		}
 
-		// split multiple comma or whitespace separated directories
-		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-		if ($dir && count($dir = preg_split('/[,\s]+\//', $dir)) > 1)
+		$files = array();
+		if ($dirs)
 		{
-			foreach($dir as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
-		}
-		if ($dir && ($files = egw_vfs::find($dir,array(
-			'need_mime' => true,
-			'order' => 'fs_name',
-			'sort' => 'ASC',
-		),true)))
-		{
-			foreach($files as $key => $file)
+			// split multiple comma or whitespace separated directories
+			// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+			if (count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
 			{
-				// use only the mime-types we support
-				if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name']))) ||
-					$file['path'] === $default_doc)	// default doc already added
-				{
-					unset($files[$key]);
-				}
+				foreach($dirs as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
 			}
-			foreach($files as $file)
+			foreach($dirs as $dir)
 			{
-				if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
+				$files += egw_vfs::find($dir,array(
+					'need_mime' => true,
+					'order' => 'fs_name',
+					'sort' => 'ASC',
+				),true);
+			}
+		}
+		foreach($files as $key => $file)
+		{
+			// use only the mime-types we support
+			if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name']))) ||
+				!egw_vfs::check_access($file['path'], egw_vfs::READABLE, $file) ||	// remove files not readable by user
+				$file['path'] === $default_doc)	// default doc already added
+			{
+				unset($files[$key]);
+			}
+		}
+		foreach($files as $file)
+		{
+			if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
+			{
+				if (!isset($documents[$file['mime']]))
 				{
-					if (!isset($documents[$file['mime']]))
-					{
-						$documents[$file['mime']] = array(
-							'icon' => egw_vfs::mime_icon($file['mime']),
-							'caption' => mime_magic::mime2label($file['mime']),
-							'group' => 2,
-							'children' => array(),
-						);
-					}
-					$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
-				}
-				else
-				{
-					$documents[$prefix.$file['name']] = array(
+					$documents[$file['mime']] = array(
 						'icon' => egw_vfs::mime_icon($file['mime']),
-						'caption' => egw_vfs::decodePath($file['name']),
+						'caption' => mime_magic::mime2label($file['mime']),
 						'group' => 2,
+						'children' => array(),
 					);
 				}
+				$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
+			}
+			else
+			{
+				$documents[$prefix.$file['name']] = array(
+					'icon' => egw_vfs::mime_icon($file['mime']),
+					'caption' => egw_vfs::decodePath($file['name']),
+					'group' => 2,
+				);
 			}
 		}
-
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,
 			'children' => $documents,
-			'enabled' => (boolean)$documents,
-			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined
+			// disable action if no document or export completly forbidden for non-admins
+			'enabled' => (boolean)$documents && (empty($export_limit) ||
+				(int)$export_limit > 0 || $GLOBALS['egw_info']['user']['apps']['admin']),
+			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
 			'group' => $group,
 		);
 	}

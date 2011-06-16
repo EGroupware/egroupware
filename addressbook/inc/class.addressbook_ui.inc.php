@@ -583,7 +583,7 @@ class addressbook_ui extends addressbook_bo
 
 		$actions['documents'] = addressbook_merge::document_action(
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
-			$this->prefs['default_document']
+			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
 
 		++$group;
@@ -860,6 +860,7 @@ class addressbook_ui extends addressbook_bo
 				if (!$document) $document = $this->prefs['default_document'];
 				$document_merge = new addressbook_merge();
 				$msg = $document_merge->download($document, $checked, '', $this->prefs['document_dir']);
+				$failed = count($checked);
 				return false;
 
 			case 'infolog_add':
