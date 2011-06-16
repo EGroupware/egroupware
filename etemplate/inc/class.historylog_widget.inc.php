@@ -116,6 +116,11 @@ class historylog_widget
 					$cell['type'] = 'select';
 				}
 			}
+			// For all times, show time in user time
+			elseif ($type == 'date-time' && $value)
+			{
+				$value = egw_time::server2user($value);
+			}
 			if ($cell['type'] == 'label') $cell['no_lang'] = 'true';
 			return true;
 		}
