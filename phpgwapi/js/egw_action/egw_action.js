@@ -1214,7 +1214,7 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 	case EGW_KEY_A:
 		if (_ctrl)
 		{
-			this.setAllSelected(true);
+			this.toggleAllSelected();
 			return true;
 		}
 
