@@ -108,6 +108,34 @@ function egwPopupActionImplementation()
 		}
 	}
 
+	ai._getDefaultLink = function(_links) {
+		var defaultAction = null;
+		for (var k in _links)
+		{
+			if (_links[k].actionObj["default"] && _links[k].enabled)
+			{
+				defaultAction = _links[k].actionObj;
+				break;
+			}
+		}
+
+		return defaultAction;
+	}
+
+	/**
+	 * Handles a key press
+	 */
+	ai._handleKeyPress = function(_key, _selected, _links, _target) {
+		if (_key.keyCode == EGW_KEY_ENTER && !_key.ctrl && !_key.shift && !_key.alt) {
+			var defaultAction = this._getDefaultLink(_links);
+			if (defaultAction)
+			{
+				defaultAction.execute(_selected);
+				return false;
+			}
+		}
+	}
+
 	/**
 	 * Registers the handler for the context menu
 	 */
@@ -162,7 +190,6 @@ function egwPopupActionImplementation()
 		//
 	}
 
-
 	/**
 	 * Builds the context menu and shows it at the given position/DOM-Node.
 	 */
@@ -173,7 +200,11 @@ function egwPopupActionImplementation()
 			_target = null;
 		}
 
-		if (_context != "default")
+		if (typeof _context == "object" && typeof _context.keyEvent == "object")
+		{
+			return ai._handleKeyPress(_context.keyEvent, _selected, _links, _target);
+		}
+		else if (_context != "default")
 		{
 			//Check whether the context has the posx and posy parameters
 			if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
@@ -195,16 +226,7 @@ function egwPopupActionImplementation()
 		}
 		else
 		{
-			var defaultAction = null;
-			for (var k in _links)
-			{
-				if (_links[k].actionObj["default"] && _links[k].enabled)
-				{
-					defaultAction = _links[k].actionObj;
-					break;
-				}
-			}
-
+			var defaultAction = ai._getDefaultLink(_links);
 			if (defaultAction)
 			{
 				defaultAction.execute(_selected);

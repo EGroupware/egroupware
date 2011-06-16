@@ -281,11 +281,27 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 			if (focusedObject)
 			{
+
+				// Handle the default keys (arrow_up, down etc.)
 				var cntr = focusedObject.getContainerRoot();
+				var handled = false;
+
 				if (cntr)
 				{
-					return cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
+					handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
 				}
+
+				// Execute the egw_popup key handler of the focused object
+				if (!handled) {
+					!focusedObject.executeActionImplementation({"keyEvent": {
+						"keyCode": _keyCode,
+						"shift": _shift,
+						"ctrl": _ctrl,
+						"alt": _alt
+					}}, "popup", EGW_AO_EXEC_SELECTED);
+				}
+
+				return handled;
 			}
 		}
 
