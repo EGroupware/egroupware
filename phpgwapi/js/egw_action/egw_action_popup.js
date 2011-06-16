@@ -28,6 +28,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	action.checkbox = false;
 	action.radioGroup = 0;
 	action.checked = false;
+	action.shortcut = null;
 
 	action.set_default = function(_value) {
 		action["default"] = _value;
@@ -58,6 +59,30 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	// the group of radio buttons this one belongs to
 	action.set_radioGroup = function(_value) {
 		action.radioGroup = _value;
+	}
+
+	action.set_shortcut = function(_value) {
+		var sc = {
+			"keyCode": -1,
+			"shift": false,
+			"ctrl": false,
+			"alt": false
+		}
+
+		if (typeof _value == "number")
+		{
+			sc.keyCode = _value;
+		}
+
+		if (typeof _value == "object" && _value.keyCode != "undefined")
+		{
+			sc.keyCode = _value.keyCode;
+			sc.shift = (typeof _value.shift == "undefined") ? false : _value.shift;
+			sc.ctrl = (typeof _value.ctrl == "undefined") ? false : _value.ctrl;
+			sc.alt = (typeof _value.shift == "undefined") ? false : _value.alt;
+		}
+
+		this.shortcut = null;
 	}
 
 	return action;

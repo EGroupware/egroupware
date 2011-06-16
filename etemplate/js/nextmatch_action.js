@@ -45,6 +45,10 @@ function nextmatchRowAOI(_node, _selectMode)
 		// Now append some action code to the node
 		selectHandler = function(e) {
 
+			// Reset the focus so that keyboard navigation will work properly
+			// after the element has been clicked
+			egwUnfocus();
+
 			// Reset the prevent selection code (in order to allow wanted
 			// selection of text)
 			_node.onselectstart = null;

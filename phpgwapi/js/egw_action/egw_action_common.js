@@ -113,6 +113,14 @@ function egwResetPreventSelect(elem)
 {
 }
 
+function egwUnfocus()
+{
+	if (document.activeElement)
+	{
+		document.activeElement.blur();
+	}
+}
+
 
 function egwCallAbstract(_obj, _fn, _args)
 {

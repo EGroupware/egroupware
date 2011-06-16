@@ -1565,6 +1565,9 @@ function egwGridViewRow_doInsertIntoDOM()
 		else
 		{
 			td.click({"item": this, "col": col.id}, function(e) {
+				// Reset the browser focus, so that key navigation will work
+				// properly
+				egwUnfocus();
 				this.onselectstart = null;
 				if (!e.data.item.checkbox || this != e.data.item.checkbox.context)
 				{
