@@ -1,17 +1,20 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fi	%1 '%2' EI ole olemassa tai Wep-palvelimella ei ole lukuoikeutta siihen tai se ei sisällä eGroupWare asennusta!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fi	%1 '%2' EI ole olemassa tai Web-palvelimella ei ole lukuoikeutta tai se ei sisällä EGroupware asennusta!
 %1 already exists in %2.	setup	fi	%1 on jo olemassa %2:ssa.
 %1 created in %2.	setup	fi	%1 luotu %2:n
 %1 database %2 on %3 already contains the following tables:	setup	fi	%1 tietokanta %2 %3:ssa jo sisältää seuraavat taulut:
 %1 does not exist !!!	setup	fi	%1 ei ole !!!
-%1 is %2%3 !!!	setup	fi	%1 on %2%3 !!!
+%1 entries modified.	setup	fi	%1 merkintää muokattu.
+%1 entries would have been modified.	setup	fi	%1 merkintää muokattu.
+%1 is %2%3 !!!	setup	fi	%1 on %2%3 !
 %1 is needed by: %2.	setup	fi	%2 vaatii %1
-%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	fi	%1 on asetettu %2, Suurempien tiedostojen lataaminen tai liittäminen on estetty!
-%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fi	%1 on asetettu %2. Tätä EI suositella (for a production system), näytettäväät virheviestit voivat sisältää salasanoja tai muuta salaista tietoa!
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	fi	%1 on asetettu %2, suurempien tiedostojen lataaminen tai liittäminen on estetty!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fi	%1 on asetettu %2. Tätä EI suositella, sillä näytettäväät virheviestit voivat sisältää salasanoja tai muuta salaista tietoa!
+%1 users and %2 groups created, %3 errors	setup	fi	%1 käyttäjä(ä) ja %2 ryhmä(ä) luotu, %3 virhettä!
 %1, %2 or %3 the configuration file.	setup	fi	%1, %2 tai %3 konfigurointitiedostossa.
-'%1' is no valid domain name!	setup	fi	%1 ei ole voimassaoleva Domain-nimi!
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	fi	'%1' ei ole sallittu jos %2 asetuksen muuttujalla %3 !!!
+'%1' is no valid domain name!	setup	fi	%1 on virheellinen Domainnimi!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	fi	'%1' ei ole sallittu jos %2 asetuksen muuttujalla %3 !
 '%1' must be integer	setup	fi	%1 pitää olla kokonaisluku!
-(searching accounts and changing passwords)	setup	fi	(etsitään tunnuksia ja vaihdetaan salasanoja)
+(searching accounts and changing passwords)	setup	fi	Etsitään tunnuksia ja vaihdetaan salasanoja..
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fi	*** Älä päivitä tietokantaa asennuksen kautta, koska päivitysaika saattaa ylittää max_execution_time-määrityksen, jolloin tietokanta jää toimimattomaan tilaan (data menetetään) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa käsin (tiedosto on Linuxissa yleensä hakemistossa /etc) voidaksesi käyttää eGW:n kaikkia ominaisuuksia !!!
 00 (disable)	setup	fi	00 (ei käytössä / suositus)
@@ -21,7 +24,7 @@
 [header-password],[header-user],[new-password],[new-user]	setup	fi	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	fi	Pääsy estetty: Väärä käyttäjätunnus tai salasana manage-header osioon !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fi	Pääsy estetty: Väärä käyttäjätunnus tai salasana Domainin '%1(%2)' konfigurointitiedostoon !!!
-accounts existing	setup	fi	Käyttäjätunnuksia on olemassa
+accounts existing	setup	fi	Käyttäjätilit on olemassa
 actions	setup	fi	Toimenpiteet
 activate safe password check	setup	fi	Aktivoi salasanan turvallisuuden tarkistus
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fi	Lisää automaattisesti luodut käyttäjätunnukset tähän ryhmään (käytetään ryhmää 'default', jos et määrittele)
@@ -40,16 +43,17 @@ admin user for header manager	setup	fi	Header-ylläpidon käyttäjätunnus
 admin username	setup	fi	Ylläpitäjän käyttäjätunnus
 admins	setup	fi	Ylläpitäjät
 after backing up your tables first.	setup	fi	Varmuuskopioidaan taulusi ensin
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fi	Kun olet hakenut tiedoston, tallenna se nimellä header.inc.php, ja paina "Jatka".
-all applications	setup	fi	kaikki sovellukset
-all core tables and the admin and preferences applications	setup	fi	kaikki runkotaulut ja ylläpito- sekä asetussovellus
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fi	Kun olet hakenut tiedoston, tallenna se nimellä header.inc.php, ja klikkaa "Jatka".
+all applications	setup	fi	Kaikki sovellukset
+all core tables and the admin and preferences applications	setup	fi	all core tables and the admin and preferences applications
 all languages (incl. not listed ones)	setup	fi	Kaikki kielet (sisältää myös luettelossa olemattomat)
 all users	setup	fi	Kaikki käyttäjät
 allow authentication via cookie	setup	fi	Salli käyttäjätunnistus evästeistä
 allow password migration	setup	fi	Salli salasana-migraatio
-allowed migration types (comma-separated)	setup	fi	Sallitut migraatiotyypit (pilkulla erotettuina)
+allow usernames identical to system users?	setup	fi	S
+allowed migration types (comma-separated)	setup	fi	Sallitut migraatiotyypit, pilkulla erotettuina
 and is up to date	setup	fi	on päivitetty
-and reload your webserver, so the above changes take effect !!!	setup	fi	ja käynnistä www-palvelin uudelleen, jotta asetukset tulevat käyttöön !!!
+and reload your webserver, so the above changes take effect !!!	setup	fi	JA käynnistä www-palvelin uudelleen, jotta asetukset tulevat käyttöön !!!
 app details	setup	fi	Sovelluksen tiedot
 app install/remove/upgrade	setup	fi	Sovelluksen asennus/poistaminen/päivitys
 app process	setup	fi	Sovelluksen prosessi
@@ -87,12 +91,13 @@ backup and restore	setup	fi	varmuuskopiointi ja palautus
 backup failed	setup	fi	Varmuuskopiointi epäonnistui
 backup files (needs ziparchive)	setup	fi	Varmuuskopion tiedostot (vaatii ZipArchiven)
 backup finished	setup	fi	Varmuuskopiointi päättynyt
+backup housekeeping	setup	fi	Ainoastaan uudelleennimetyt backup tiedostot eivät ole postettavissa automaattisesti.
 backup min count	setup	fi	Varmuuskopioiden minimimäärä
 backup now	setup	fi	Varmuuskopioi nyt
 backup sets	setup	fi	Varmuuskopion asetukset
 backup skipped!	setup	fi	Varmuuskopiointi ohitettu
 backup started, this might take a few minutes ...	setup	fi	Varmuuskopiointi aloitettu, se voi kestää useita minuutteja...
-because an application it depends upon was upgraded	setup	fi	koska sovellus, josta se riippuu, on päivitetty
+because an application it depends upon was upgraded	setup	fi	Koska sovellus, josta se riippuu, on päivitetty
 because it depends upon	setup	fi	koska se riippuu sovelluksesta
 because it is not a user application, or access is controlled via acl	setup	fi	koska se ei ole käyttäjien sovellus, tai sen käyttöä hallitaan acl:n avulla
 because it requires manual table installation, <br />or the table definition was incorrect	setup	fi	koska sen taulut täytyy asentaa käsin, <br />tai sen taulumääritykset ovat virheellisiä
@@ -197,7 +202,7 @@ deleting tables	setup	fi	Poistetaan tauluja
 demo server setup	setup	fi	Demopalvelimen asennus
 deny access	setup	fi	Estä käyttöoikeus
 deny all users access to grant other users access to their entries ?	setup	fi	Estetäänkö kaikilta käyttäjiltä ACL-oikeuksien myöntäminen toisille käyttäjille?
-dependency failure	setup	fi	Riippuvuusongelma
+dependency failure	setup	fi	Dependency failure
 deregistered	setup	fi	Rekisteröinti poistettu
 details for admin account	setup	fi	Ylläpitäjän tiedot
 developers' table schema toy	setup	fi	Sovelluskehittäjien taulukkoskeeman lelu

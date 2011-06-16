@@ -114,7 +114,7 @@ days	calendar	en	Days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
 days repeated	calendar	en	Days repeated
 dayview	calendar	en	Day view
-default appointment length (in minutes)	calendar	en	Default appointment length (in minutes)
+default appointment length (in minutes)	calendar	en	Default appointment length in minutes
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 default document to insert entries	calendar	en	Default document to insert entries
@@ -213,7 +213,7 @@ forward one year	calendar	en	Forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	Free/Busy: Unknown user '%1', or not available for unauthenticated users!
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	free/Busy: Unknown user '%1', wrong password or not available to not logged in users!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	Free/Busy: Unknown user '%1', wrong password or not available to not logged in users!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
@@ -289,7 +289,7 @@ location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
 location, start- and endtimes, ...	calendar	en	Location, start and end times, ...
 mail all participants	calendar	en	Mail all participants
-make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons?
+make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons
 manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
@@ -315,7 +315,7 @@ no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found.
 no meeting requests	calendar	en	No meeting requests
 no owner selected	calendar	en	No owner selected.
-no recurrence	calendar	en	No recurrence.
+no recurrence	calendar	en	No recurrence
 no response	calendar	en	No response.
 non blocking	calendar	en	Non blocking
 not	calendar	en	Not
@@ -352,7 +352,7 @@ participant table	calendar	en	Participant table
 participants	calendar	en	Participants
 participants disinvited from an event	calendar	en	Participants disinvited from an event
 participants, resources, ...	calendar	en	Participants, Resources, ...
-password for not loged in users to your freebusy information?	calendar	en	Password for not logged in users to your Free/Busy information?
+password for not loged in users to your freebusy information?	calendar	en	Password for not logged in users to your Free/Busy information
 people holiday	calendar	en	People holiday
 permission denied	calendar	en	Permission denied.
 planner by category	calendar	en	Planner by category
@@ -418,7 +418,7 @@ set a year only for one-time / non-regular holidays.	calendar	en	Set a year only
 set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting data lock time for Calendar (default 1 sec.)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from calendar module?
-should new events created as private by default ?	calendar	en	Should new events be created as private by default ?
+should new events created as private by default ?	calendar	en	Should new events be created as private by default?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
@@ -474,7 +474,7 @@ this defines the start of your dayview. events before this time, are shown above
 this entry is currently opened by %1!	calendar	en	This entry is currently opened by %1!
 this entry is opened by user:	calendar	en	This entry was opened within the configured time interval by user:
 this event is part of a series	calendar	en	This event is part of a series
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.

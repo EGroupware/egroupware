@@ -47,7 +47,7 @@ if you specify an export definition, it will be used when you export	resources	e
 implies booking permission	resources	en	Implies booking permission
 implies read permission	resources	en	Implies read permission
 imports a list of resources from a csv file.	resources	en	Imports a list of resources from a CSV file.
-information about storage	resources	en	Information about storage
+information about storage	resources	en	Storage information
 informations about the location of resource	resources	en	Location information
 insert	resources	en	Insert
 inventory number	resources	en	Inventory number
@@ -97,7 +97,7 @@ show calendar of resource	resources	en	Show calendar of resource
 something went wrong by deleting resource	resources	en	Error deleting resource!
 something went wrong by saving resource	resources	en	Error saving resource!
 storage	resources	en	Storage
-storage information	resources	en	Storage information
+storage information	resources	en	Storage
 storage information:	resources	en	Storage information:
 the calendar of this resource	resources	en	Calendar of the resource
 this module displays the resources app	resources	en	This module displays the resources app

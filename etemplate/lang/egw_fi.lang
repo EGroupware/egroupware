@@ -1,4 +1,4 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fi	%1(%2 uusi) Viestit kirjoitetaan sovelluksella %3 ja kielillä %4
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fi	%1(%2 uudet) viestit kirjoitetaan sovelluksella %3 ja kielillä %4
 %1 entries found, select one ...	etemplate	fi	%1 tapahtuma(a) löydetty, valitse yksi...
 %1 etemplates deleted	etemplate	fi	%1 eMallipohja(a) poistettu
 %1 etemplates for application '%2' dumped to '%3'	etemplate	fi	%1 sovelluksen %2  eMallipohja(a) viety %3
@@ -12,18 +12,18 @@
 %s notranslation	etemplate	fi	%s Ei käännöstä
 %s onchange	etemplate	fi	%s onChange
 %s readonly	etemplate	fi	%s vain lukuoikeus
-'%1' has an invalid format !!!	etemplate	fi	%1 on väärässä muodossa !!!
-'%1' is no php file in the egw server root (%2)!	etemplate	fi	'%1' ei ole PHP tiedosto EGroupwaren Server Rootissa (%2)!
-'%1' is not a valid date !!!	etemplate	fi	%1 on epäkelpo päiväys !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	fi	%1 ei ole desimaaliluku !!!
-'%1' is not a valid integer !!!	etemplate	fi	%1 ei ole kokonaisluku !!!
+'%1' has an invalid format !!!	etemplate	fi	%1 on väärässä muodossa!
+'%1' is no php file in the egw server root (%2)!	etemplate	fi	'%1' ei ole PHP tiedosto EGroupwaren server rootissa (%2)!
+'%1' is not a valid date !!!	etemplate	fi	%1 on epäkelpo päiväys!
+'%1' is not a valid floatingpoint number !!!	etemplate	fi	%1 ei ole desimaaliluku!
+'%1' is not a valid integer !!!	etemplate	fi	%1 ei ole kokonaisluku!
 '%1' is not allowed ('%2')!	etemplate	fi	'%1' ei ole sallittu ('%2')!
-a pattern to be searched for	etemplate	fi	Kaavaa etsitään
-accesskey	etemplate	fi	Pääsyavain
-accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fi	Pääsyavaimet voidaan myös määritellä & merkeillä otsikossa (esim. &nimi)
+a pattern to be searched for	etemplate	fi	Hakuehdot
+accesskey	etemplate	fi	Käyttöavain
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fi	Käyttöavaimet voidaan myös määritellä & merkeillä otsikossa (esim. &nimi)
 account contactdata	etemplate	fi	Tilin yhteystieto
-add a new column (after the existing ones)	etemplate	fi	Lisää uusi sarake (käytössä olevan jälkeen)
-add a new entry of the selected application	etemplate	fi	Lisää uusi pääsy/tapahtuma valittuun sovellukseen
+add a new column (after the existing ones)	etemplate	fi	Lisää uusi sarake
+add a new entry of the selected application	etemplate	fi	Lisää uusi merkintä sovellukseen
 add a new multi-column index	etemplate	fi	Lisää uusi monisarakkeen indeksi
 add column	etemplate	fi	Lisää sarake
 add index	etemplate	fi	Lisää indeksi
@@ -37,7 +37,7 @@ all days	etemplate	fi	Kaikki päivät
 all operations save the template!	etemplate	fi	Kaikki toiminnot tallentavat mallipohjan!
 allowed file type: %1	etemplate	fi	Sallittu tiedostotyyppi: %1
 am	etemplate	fi	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fi	Indeksoitu sarake nopeuttaa kyselyjen käyttöä sarakkeessa (maksaa tilaa levyllä !!!)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fi	Indeksoitu sarake nopeuttaa kyselyjen käyttöä sarakkeessa, maksaa tilaa levyllä!
 and	etemplate	fi	JA
 application	etemplate	fi	Sovellus
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fi	Sovelluksen nimi pitää kirjoittaa kielitiedostoon tai vedostaa eMallipohjat !!!
@@ -55,7 +55,7 @@ bottom	etemplate	fi	Alareuna
 box	etemplate	fi	Valintalaatikko
 box...	etemplate	fi	Valintalaatikko...
 broken link	etemplate	fi	Virheellinen linkki
-can not have special sql-value null	etemplate	fi	ei voi olla SQL-value NULL
+can not have special sql-value null	etemplate	fi	Ei voi olla SQL-value NULL
 cancel	etemplate	fi	Keskeytä
 cant delete a single widget from a grid !!!	etemplate	fi	Yksittäistä Widgetiä ei voi poistaa ruudukosta!!
 cant delete the only column of a grid !!!	etemplate	fi	Ainoata saraketta ei voi poistaa ruudukosta!!
@@ -67,7 +67,7 @@ cells	etemplate	fi	Solut
 cellspacing for the table-tag	etemplate	fi	Cellspacing table tagissa
 center	etemplate	fi	Asettaa keskelle
 changed	etemplate	fi	Muokattu
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fi	Valitse, jos sisällön tulisi olla vain nähtävillä mutta ei vaihdettavissa (silloin sisältöä ei lähetetä takaisin).
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fi	Onko sisältö vain nähtävillä mutta ei vaihdettavissa
 check if field has to be filled by user	etemplate	fi	Valitse, jos kenttä on pakollinen
 checkbox	etemplate	fi	Valintalaatikko
 class	etemplate	fi	Luokka
@@ -83,8 +83,8 @@ column...	etemplate	fi	Sarake...
 columnname	etemplate	fi	Sarakkeen nimi
 comment	etemplate	fi	Kommentti
 confirm	etemplate	fi	Vahvista
-confirmation message or custom javascript (returning true or false)	etemplate	fi	Vahvistusviesti tai oma javascripti (palauttaa true tai false)
-confirmation necesary or custom java-script	etemplate	fi	Vahvistus tai oma javaskripti on välttämätön
+confirmation message or custom javascript (returning true or false)	etemplate	fi	Vahvistusviesti tai oma javaskripti, palauttaa true=totta tai false=väärin
+confirmation necesary or custom java-script	etemplate	fi	Vahvistus vaaditaan tai oma javaskripti
 contact	etemplate	fi	Yhteystiedot
 contact field to show	etemplate	fi	Näytä yhteystietokenttä
 contact fields	etemplate	fi	Yhteystietokentät
@@ -118,10 +118,10 @@ delete this etemplate	etemplate	fi	Poista tämä eMallipohja
 delete this file	etemplate	fi	Poista tämä tiedosto
 delete this row	etemplate	fi	Poista tämä rivi
 delete whole column (can not be undone!!!)	etemplate	fi	Poista koko sarake (lopullisesti, ei voida palauttaa!!!)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	fi	Poistaa valitut (yläpuolella määritellyt) emallipohjat tietokannasta, toiminto on lopullinen (ei voida palauttaa).
-deletes the etemplate spez. above	etemplate	fi	Poistaa valitun (yläpuolella määritellyn) eMallipohjan
-deletes this column	etemplate	fi	Poistaa tämän sarakkeen
-deletes this index	etemplate	fi	Poistaa tämän indeksin
+deletes the above spez. etemplate from the database, can not be undone	etemplate	fi	Poistaa valitut eMallipohjat tietokannasta
+deletes the etemplate spez. above	etemplate	fi	Poistaa eMallipohjan
+deletes this column	etemplate	fi	Poistaa sarakkeen
+deletes this index	etemplate	fi	Poistaa indeksin
 discard changes	etemplate	fi	Hylkää muutokset
 displayed in the top line of the groupbox (legend)	etemplate	fi	Näytetään ryhmävalintalaatikon ylärivillä (legend)
 do you want to save the changes you made in table %s?	etemplate	fi	Tallennetaanko tekemäsi muutokset taulukkoon %s?
@@ -132,7 +132,7 @@ drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - t�
 drop table	etemplate	fi	Poista tietokannan taulu
 dump4setup	etemplate	fi	Dump4Setup
 duration	etemplate	fi	Kesto
-edit	etemplate	fi	Muokkaus
+edit	etemplate	fi	Muokkaa
 edit embeded css styles or of the applications app.css file	etemplate	fi	Muokkaa upotettua CSS tyyliä tai sovelluksen app.css tiedostoa
 edit the etemplate spez. above	etemplate	fi	Muokkaa valittua eMallipohjaa
 edit...	etemplate	fi	Muokkaa...
@@ -146,17 +146,17 @@ enable javascript onchange submit	etemplate	fi	Salli JavaScript onChange lähety
 enter '' for an empty default, nothing mean no default	etemplate	fi	Syötä '' määritelläksesi tyhjä arvo, tyhjä=ei oletusarvoa.
 enter a search pattern	etemplate	fi	Syötä haun kaava
 enter filename to upload and attach, use [browse...] to search for it	etemplate	fi	Anna ladattavan ja liitettävän tiedoston nimi, käytä [Selaa...] löytääksesi tiedosto
-enter the new version number here (> old_version), empty for no update-file	etemplate	fi	Anna uusi versio-numero (>vanha_versio), tyhjä jos ei ole päivitettävää tiedostoa
-enter the new version number here (has to be > old_version)	etemplate	fi	Anna uusi versio-numero (täytyy olla > vanha_versio)
-entry saved	etemplate	fi	Tietue tallennettu
-error copying uploaded file to vfs!	etemplate	fi	Virhe kopioitaessa ladattua tiedostoa VFSään.
-error create parent directory %1!	etemplate	fi	Virhe luotaessa pää/isäntähakemistoa %1!
+enter the new version number here (> old_version), empty for no update-file	etemplate	fi	Anna uusi versio numero (>vanha_versio), tyhjä jos ei ole päivitettävää tiedostoa
+enter the new version number here (has to be > old_version)	etemplate	fi	Anna uusi versio numero (täytyy olla > vanha_versio)
+entry saved	etemplate	fi	Merkintä tallennettu
+error copying uploaded file to vfs!	etemplate	fi	Virhe kopioitaessa ladattua tiedostoa Tiedostonhallintaan
+error create parent directory %1!	etemplate	fi	Virhe luotaessa päähakemistoa %1!
 error deleting %1!	etemplate	fi	Virhe poistaessa: %1!
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
 error: template not found !!!	etemplate	fi	Virhe: Mallipohjaa ei löytynyt !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	fi	Virhe: Webpalvelin ei sallinut kirjoittaa %1 !!!
 error: while saving !!!	etemplate	fi	Virhe tallentaessa !!!
-error: writing file (no write-permission for the webserver) !!!	etemplate	fi	Virhe: kirjoitettaessa tiedostoa ( ei kirjoittamislupaa webpalvelimelle)!!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	fi	Virhe: kirjoitettaessa tiedostoa, ei kirjoittamisoikeutta webpalvelimelle!
 etemplate	common	fi	eMallipohja
 etemplate '%1' imported, use save to put it in the database	etemplate	fi	eMallipohja '%1' tuotu, tallenna se tietokantaan.
 etemplate '%1' written to '%2'	etemplate	fi	eMallipohja %1 kirjoitetaan %2
@@ -169,7 +169,7 @@ export the loaded etemplate into a xml-file	etemplate	fi	Vie ladattu eMallipohja
 export xml	etemplate	fi	Vie XML-tiedostoon
 extensions loaded:	etemplate	fi	Ladatut laajennukset:
 field	etemplate	fi	Kenttä
-field must not be empty !!!	etemplate	fi	Kenttä ei saa olla tyhjä !!!
+field must not be empty !!!	etemplate	fi	Kenttä ei saa olla tyhjä!
 file	etemplate	fi	Tiedosto
 file '%1' not found!	etemplate	fi	Tiedostoa '%1' ei löytynyt!
 file contains more than one etemplate, last one is shown !!!	etemplate	fi	Tiedosto sisältää enemmän kuin yhden eMallipohjan, viimeisin näytetään !!!
@@ -193,7 +193,7 @@ height	etemplate	fi	Korkeus
 height of row (in % or pixel)	etemplate	fi	Rivin korkeus (% tai pikseleinä)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	fi	Rivin korkeus (% tai pikseleinä), piiloita rivi: [! = not]<value>[=<check>] esim: '!@data' piiloita rivi jos sillä ei ole sisältöä.
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	fi	Taulukon korkeus prosentteina tai pikseleinä table tagissa ja (vaihtoehtoisesti) div tagissa.
-height, disabled	etemplate	fi	Pituus estetty
+height, disabled	etemplate	fi	Pituus, Estetty
 help	etemplate	fi	Ohjeet
 history log	etemplate	fi	Historia loki
 horizontal rule	etemplate	fi	Vaakasuuntainen viiva
@@ -201,6 +201,7 @@ hour	etemplate	fi	Tunti
 hours	etemplate	fi	Tuntia
 how many entries should the list show	etemplate	fi	Kuinka monta merkintää näytetään listalla
 html	etemplate	fi	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fi	Jo kenttä ei ole sallittu, tyhjä solu näytetään
 image	etemplate	fi	Kuva
 import	etemplate	fi	Tuonti
 import an etemplate from a xml-file	etemplate	fi	Tuo eMallipohja XML-tiedostosta
@@ -214,6 +215,7 @@ insert a row above	etemplate	fi	Lisää rivi ennen
 insert a row below	etemplate	fi	Lisää rivi jälkeen
 insert a widget before	etemplate	fi	Lisää widget ennen
 insert a widget behind	etemplate	fi	Lisää widget jälkeen
+insert in document	etemplate	fi	Syötä asiakirjaan
 insert new column behind this one	etemplate	fi	Lisää uusi sarake valitun taakse
 insert new column in front of all	etemplate	fi	Lisää uusi sarake kaikkien eteen
 insert new row after this one	etemplate	fi	Lisää uusi rivi valitun jälkeen
@@ -236,6 +238,7 @@ message ...	etemplate	fi	Viesti...
 middle	etemplate	fi	Keskellä
 minute	etemplate	fi	Minuutti
 minutes	etemplate	fi	Minuuttia
+missing: %1	etemplate	fi	Puuttuva: %1
 month	etemplate	fi	Kuukausi
 more than 1 match for '%1'	etemplate	fi	Useampi kuin yksi osuma kohteelle '%1'
 multicolumn indices	etemplate	fi	Usean sarakkeen indeksi
@@ -344,6 +347,7 @@ span	etemplate	fi	Span
 span, class	etemplate	fi	Span, Class
 stack	etemplate	fi	Pino
 start a new search, cancel this link	etemplate	fi	Aloita uusi haku, peruuta tämä yhteys.
+start new search for the above pattern	etemplate	fi	Aloita uusi haku määriteillä
 submit form	etemplate	fi	Lähetä lomake
 submitbutton	etemplate	fi	Lähetä-painike
 swap	etemplate	fi	Vaihda
@@ -401,3 +405,5 @@ xslt template	etemplate	fi	XSLT -mallipohja
 year	etemplate	fi	Vuosi
 you are not allowed to export more then %1 entries!	etemplate	fi	Sinulla ei ole riittäviä oikeuksia viedä enemmän kuin %1 tietuetta!!!
 you can respond by visiting:	etemplate	fi	Voit vastata vierailemalla:
+you need to select a file first!	etemplate	fi	Valitse tiedosto!
+your code is incorrect !!!	etemplate	fi	Virheellinen koodi!

@@ -92,7 +92,7 @@ closed	infolog	en	Closed.
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	en	colon (:) separated list of field names to use if value is empty or to sum up
 comment	infolog	en	Comment
 compare	infolog	en	Compare
-completed	infolog	en	Completed.
+completed	infolog	en	Completed
 configuration	infolog	en	Configuration
 confirm	infolog	en	Confirm
 contact	infolog	en	Contact
@@ -149,10 +149,10 @@ do not notify of these changes	infolog	en	Do not notify of these changes
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	Do you want a confirmation of the responsible on accepting, finishing the task or both
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	en	Get notified if entries are assigned to you or assigned entries get updated
 do you want a notification, if items you are responsible for are about to start?	infolog	en	Get notified if entries if you are responsible for are about to start
-do you want a notification, if items you are responsible for are due?	infolog	en	Get notified if entries you are responsible for are due?
-do you want a notification, if items you created get updated?	infolog	en	Get notified if entries you created get updated?
-do you want a notification, if items you delegated are about to start?	infolog	en	Get notified if entries you delegated are about to start?
-do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due?
+do you want a notification, if items you are responsible for are due?	infolog	en	Get notified if entries you are responsible for are due
+do you want a notification, if items you created get updated?	infolog	en	Get notified if entries you created get updated
+do you want a notification, if items you delegated are about to start?	infolog	en	Get notified if entries you delegated are about to start
+do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due
 do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML mails or plain text?
 document '%1' does not exist or is not readable for you!	infolog	en	Document '%1' does not exist or is not readable for you!
 don't show infolog	infolog	en	DON'T show InfoLog
@@ -338,12 +338,12 @@ re-planned time	infolog	en	Re-planned time
 re:	infolog	en	Re:
 read one record by passing its id.	infolog	en	Read one record by passing its ID.
 read rights (default)	infolog	en	Read rights (default)
-receive notifications about due entries you are responsible for	infolog	en	Receive notifications about due entries you are responsible for.
-receive notifications about due entries you delegated	infolog	en	Receive notifications about due entries you delegated.
+receive notifications about due entries you are responsible for	infolog	en	Receive notifications about due entries you are responsible for
+receive notifications about due entries you delegated	infolog	en	Receive notifications about due entries you delegated
 receive notifications about items assigned to you	infolog	en	Receive notifications about items assigned to you.
 receive notifications about own items	infolog	en	Receive notifications about own items
-receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for.
-receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated.
+receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
+receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
 receive notifications as html-mails	infolog	en	Receive notifications as HTML mails.
 regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark

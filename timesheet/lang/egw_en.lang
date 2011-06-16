@@ -88,7 +88,7 @@ none: use only free project-names	admin	en	None: use only free project names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	Number of row for a multi-line input field or line of a multi select box
 only admin	timesheet	en	Only admin
 only admin can edit this status	timesheet	en	Only admin can edit this status
-or endtime	timesheet	en	Or end time
+or endtime	timesheet	en	or end time
 order	timesheet	en	Order
 parent	timesheet	en	Parent
 permission denied!!!	timesheet	en	Permission denied!

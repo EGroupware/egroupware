@@ -1,113 +1,146 @@
 %1 timesheets(s) %2	timesheet	fi	%1 merkintä(ä) %2
-%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	fi	%1 merkintä(ä) %2, %3 epäonnistui riittämättömien ACL-oikeuksien vuoksi!
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	fi	%1 merkintä(ä) %2, %3 epäonnistui riittämättömien oikeuksien vuoksi!
 --> enter new name	timesheet	fi	---> Uusi nimi
 2 month ago	timesheet	fi	2 kuukautta sitten
 2 years ago	timesheet	fi	2 vuotta sitten
 3 years ago	timesheet	fi	3 vuotta sitten
-actions	timesheet	fi	Toiminnot
 all projects	timesheet	fi	Kaikki projektit
-all status	timesheet	fi	Kaikki tilat
 and its members	timesheet	fi	ja sen jäsenet
 applies the changes	timesheet	fi	Lisää muutokset
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!!
+at the moment the following document-types are supported:	timesheet	fi	Käytössä olevat asiakirjatyypit
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
+change category	timesheet	fi	Muuta kategoria
+changed category to %1	timesheet	fi	Kategoria muutettu: %1
 changed status	timesheet	fi	Tila muutettu
 check all	timesheet	fi	Valitse kaikki
+choose 'creator' of imported data	timesheet	fi	Valitse omistaja tuodulle tiedostolle
 comment by %1 at %2:	timesheet	fi	Kommentoinut: %1, %1
 create new links	timesheet	fi	Luo uusi linkki
-creates a new field	timesheet	fi	Luo uusi kenttä
+creates a new field	timesheet	fi	Luo uuden kentän
 creating new entry	timesheet	fi	Uutta merkintää luodaan
 custom fields	timesheet	fi	Lisäkentät
-delete this entry	timesheet	fi	Poista tämä merkintä
-delete this status	timesheet	fi	Poista tämä tila
-delete timesheet	timesheet	fi	Poista Ajanseuranta-merkintä
+default document to insert entries	timesheet	fi	Oletusasiakirja
+delete this status	timesheet	fi	Poista tila
 deleted	timesheet	fi	Poistettu
 deletes this field	timesheet	fi	Poistaa tämän kentän
 determines the order the fields are displayed	timesheet	fi	Määrittelee järjestyksen, jossa kentät näytetään
+directory with documents to insert entries	timesheet	fi	Asiakirjan oletuskansio
+document '%1' does not exist or is not readable for you!	timesheet	fi	Asiakirjaa '%1' ei ole olemassa tai sinulla ei ole oikeuksia lukea sitä!
 each value is a line like <id>[=<label>]	timesheet	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
 edit status	timesheet	fi	Muokkaa tilaa
-edit this entry	timesheet	fi	Muokkaa tätä merkintää
-empty if identical to duration	timesheet	fi	Poista, jos kesto on yhtä pitkä
+edit this entry	timesheet	fi	Muokkaa merkintää
+empty if identical to duration	timesheet	fi	Tyhjä, jos kesto on yhtä pitkä
 end	timesheet	fi	Päätös
 entry deleted	timesheet	fi	Merkintä poistettu
 entry saved	timesheet	fi	Merkintä tallennettu
-error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkintää !!!
-error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkintää !!!
+error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkintää!
+error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkintää!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	fi	Esimerkki {{NELF role}} - jos kenttä 'role'='rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	fi	Esimerkki {{NELFNV role}} - jos kenttä 'role'='rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 existing links	timesheet	fi	Olemassa olevat linkit
+exists	timesheet	fi	Olemassaoleva
 export	timesheet	fi	Vienti
-export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheetiin
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöja Ajanmerkinnästä CSV tiedostoon. CSV-'Comma Seperated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+export definitition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nextmatch' vientiin
+export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
+exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
-full: use only projectmanager	admin	fi	Täydellinen: Käytä vain projektinhallintaa
+for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
+full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
 general	timesheet	fi	Yleinen
+general fields:	timesheet	fi	Yleiset kentät:
 global categories	timesheet	fi	Yleiset kategoriat
 history	timesheet	fi	Historia
 id	timesheet	fi	ID
+if you specify a directory (full vfs path) here, egroupware displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	fi	Oletuskansio näyttää valikossa kaikki kansiossa olevat asiakirjat. Merkitse kenttään täydellinen kansion VFS polku!
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	timesheet	fi	Oletusasiakirja, %1 näyttää ylimääräisen asiakirjakuvakkeen jokaiselle merkinnälle. Merkitse kenttään täydellinen asiakirjan VFS polku!
+if you specify an export definition, it will be used when you export	timesheet	fi	Valitse viennin oletusasetus
+if you specify an export definition, it will be used when you export*	timesheet	fi	Valitse viennin oletusasetus
+ignore	timesheet	fi	Ohita
+import options	timesheet	fi	Tuontiasetukset
+imports entries into the timesheet from a csv file.	timesheet	fi	Tuo merkintöjä CSV tiedostosta Ajanhallintaan.
+insert	timesheet	fi	Syötä
+invalid field: %1 = %2, it needs to be a number.	timesheet	fi	Virheellinen kenttä: %1 = %2, valitse numero.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	fi	Virheellinen omistaja ID: %1. %2 käytetty sen sijaan.
 last modified	timesheet	fi	Viimeksi muokattu
 last month	timesheet	fi	Viime kuussa
 last week	timesheet	fi	Viime viikolla
 last year	timesheet	fi	Viime vuonna
-leave it empty for a full week	timesheet	fi	Jätä tyhjä koko viikon ajalta
+leave it empty for a full week	timesheet	fi	Jätä tyhjäksi, jos koko viikko
 leaves without saveing	timesheet	fi	Poistuu tallentamatta
 length<br>rows	timesheet	fi	Pituus<br>Rivit
 links	timesheet	fi	Linkit
+manage mapping	timesheet	fi	Valitse kentät
 max length of the input [, length of the inputfield (optional)]	timesheet	fi	Maksimipituus merkinnälle. [, merkintäkentän pituus (valinnainen)]
-modify the status of the timesheet	timesheet	fi	Muokkaa tilaa
+modified	timesheet	fi	Muokattu
+modify status	timesheet	fi	Muokkaa tilaa
+name of current user, all other contact fields are valid too	timesheet	fi	Käyttäjän nimi, myös muut kentät ovat voimassaolevia
 new ticket submitted by %1 at %2	timesheet	fi	Uusi merkintä henkilöltä %1, %2
 new timesheet submitted by %1 at %2	timesheet	fi	Uusi merkintä henkilöltä %1, %2
-no details	timesheet	fi	Ei lisätietoja
+no details	timesheet	fi	Ei yksityiskohtia
 no project	timesheet	fi	Ei projektia
 no status	timesheet	fi	Ei tilaa
 none: use only free project-names	admin	fi	Ei mitään: käytä vain vapaita projektinimiä
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	fi	Rivien määrä useariviseen merkintäkenttään tai multi-valintalaatikkoon
-only admin	timesheet	fi	Vain Admin
+only admin	timesheet	fi	Vain ylläpitäjä
 only admin can edit this status	timesheet	fi	Vain ylläpitäjät voivat muokata tätä tilaa.
 or endtime	timesheet	fi	tai päättymisaika
 order	timesheet	fi	Järjestys
 parent	timesheet	fi	Pää-
-permission denied!!!	timesheet	fi	Pääsy estetty!!!
+permission denied!!!	timesheet	fi	Pääsy estetty!
+permissions error - %1 could not %2	timesheet	fi	Virhe oikeuksissa - %1 ei voinut: %2
 price	timesheet	fi	Hinta
+project fields	timesheet	fi	Projektikentät
 projectmanager integration	admin	fi	Projektinhallinnan integrointi
 quantity	timesheet	fi	Määrä
-save & new	timesheet	fi	Tallenna ja tee uusi
-saves the changes made	timesheet	fi	Tallenna tehdyt muutokset
-saves the changes made and leaves	timesheet	fi	Tallenna tehdyt muutokset ja poistu
-saves this entry and add a new one	timesheet	fi	Tallenna tämä merkintä ja lisää uusi
+replacements for inserting entries into documents	timesheet	fi	Sijaismerkinnät asiakirjoihin
+save & new	timesheet	fi	Tallenna & Uusi
+saves the changes made	timesheet	fi	Tallenna muutokset
+saves the changes made and leaves	timesheet	fi	Tallenna muutokset ja poistu
+saves this entry and add a new one	timesheet	fi	Tallenna merkintä ja lisää uusi
 select a price	timesheet	fi	Valitse hinta
 select a project	timesheet	fi	Valitse projekti
 select a status of the timesheet	timesheet	fi	Valitse tila
-select action	timesheet	fi	Valitse toimenpide
-select infolog	timesheet	fi	Valitse InfoLog
+select infolog	timesheet	fi	Valitse tehtävä
 select multiple timeshhets for a further action	timesheet	fi	Valitse useampi merkintä jatkaaksesi
 select the predefined status, whan creating a new timesheet	preferences	fi	Valitse oletustila uutta merkintää luotaessa.
-select the predefined status, when creating a new timesheet	preferences	fi	Valitse käytettävä (oletus-)tila uutta Ajanseurannan merkintää luotaessa
-show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa (esim. negatiivisen ylityön summa)
+select the predefined status, when creating a new timesheet	preferences	fi	Valitse oletustila uutta merkintää luotaessa.
+set to	timesheet	fi	Aseta
+show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa
+skip record	timesheet	fi	Ohita
 start	timesheet	fi	Alku
 starttime	timesheet	fi	Aloitusaika
 starttime has to be before endtime !!!	timesheet	fi	Aloitusajan pitää olla ennen päättymiaikaa
+status	timesheet	fi	Tila
 status deleted.	timesheet	fi	Tila poistettu.
 status of created timesheets	timesheet	fi	Luotujen merkintöjen tila.
 status updated.	timesheet	fi	Tila päivitetty.
 sum %1:	timesheet	fi	Summa %1:
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fi	Nimeä käytetään tietokannassa (<=20 merkkiä). ÄLÄ muuta nimeä, tai jo olemassa olevia tietoja ei voi enää löytää.
+tag to mark positions for address labels	timesheet	fi	Käytä tägiä osoitetarroihin
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fi	Tietokannassa käytettävä nimi, <=20 merkkiä. ÄLÄ muuta nimeä tai jo olemassa olevia tietoja ei voi enää löytää.
 the text displayed to the user	timesheet	fi	Käyttäjälle näkyvä nimi
 this month	timesheet	fi	Tässä kuussa
 this week	timesheet	fi	Tällä viikolla
 this year	timesheet	fi	Tänä vuonna
 ticket modified by %1 at %2	timesheet	fi	Merkintää muokannut %1, %2
-timesheet	common	fi	Ajanseuranta
-timesheet csv export	timesheet	fi	Ajanseurannan CSV-vienti
+timesheet	common	fi	Ajanhallinta
+timesheet csv export	timesheet	fi	Ajanhallinnan CSV-vienti
+timesheet csv import	timesheet	fi	Ajanhallinnan CSV-tuonti
+timesheet fields:	timesheet	fi	Ajanhallinnan kentät:
+timesheet id	timesheet	fi	Ajanhallinnan ID
 timesheet modified by %1 at %2	timesheet	fi	Merkintää muokannut %1, %2
-timesheet openoffice export	timesheet	fi	Ajanseurannan OpenOffice-vienti
-timesheet status-%1 '%2' added.	timesheet	fi	Tila-%1 '%2' lisätty.
-timesheet-%1 '%2' updated.	timesheet	fi	Merkintä-%1 '%2' päivitetty.
-timesheet-%1 deleted.	timesheet	fi	Merkintä-%1 poistettu.
-tracker	timesheet	fi	HelpDesk
+timesheet openoffice export	timesheet	fi	Ajanhallinnan OpenOffice-vienti
+timesheet status-%1 '%2' added.	timesheet	fi	Tila %1 '%2' lisätty.
+timesheet-%1 '%2' updated.	timesheet	fi	Merkintä %1 '%2' päivitetty.
+timesheet-%1 deleted.	timesheet	fi	Merkintä %1 poistettu.
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fi	'%1' ei voitu muuttaa tili IDksi. Käytetty sen sijaan (%2) %3
 unitprice	timesheet	fi	Yksikköhinta
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fi	Käytä tätä tägiä osoitteisiin. Lisää halutut tekstit kahden tägin väliin.
 values for selectbox	timesheet	fi	Valintalaatikon arvot
 view this entry	timesheet	fi	Näytä tämä merkintä
 week	timesheet	fi	Viikko
-whole query	timesheet	fi	Koko sarja
 yesterday	timesheet	fi	Eilen
-you need to select some timesheets first	timesheet	fi	Valitse ensin merkinnät
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), suorita %3setup%4 päivittääksesi tietokantasi.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), %3päivitä%4 tietokanta.

@@ -50,7 +50,7 @@ create a link	filemanager	en	Create a link
 create directory	filemanager	en	Create directory
 create file	filemanager	en	Create file
 create folder	filemanager	en	Create folder
-created	filemanager	en	Created.
+created	filemanager	en	Created
 created %1,%2	filemanager	en	Created %1,%2
 created directory %1	filemanager	en	Created directory %1
 current directory	filemanager	en	Current directory
