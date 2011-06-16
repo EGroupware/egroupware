@@ -271,6 +271,7 @@ no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 no matches found	etemplate	de	Keine Treffer gefunden
+no rights to export more then %1 entries!	etemplate	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
 not null	etemplate	de	NOT NULL
 nothing	etemplate	de	nichts
