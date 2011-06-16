@@ -851,6 +851,27 @@ egwActionObject.prototype.clear = function() {
 }
 
 /**
+ * Deletes this object from the parent container
+ */
+egwActionObject.prototype.remove = function() {
+	// Remove focus and selection from this element
+	this.setFocused(false);
+	this.setSelected(false);
+	this.setAllSelected(false);
+
+	// Clear the child-list
+	this.clear();
+
+	// Remove this element from the parent list
+	if (this.parent != null)
+	{
+		var idx = this.parent.children.indexOf(this);
+
+		this.parent.children.splice(idx, 1);
+	}
+}
+
+/**
  * Searches for the root object in the action object tree and returns it.
  */
 egwActionObject.prototype.getRootObject = function()
