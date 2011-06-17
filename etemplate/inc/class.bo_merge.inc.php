@@ -883,7 +883,7 @@ abstract class bo_merge
 	 *
 	 * @param string $dirs Directory(s comma or space separated) to search
 	 * @param string $prefix='document_' prefix for array keys
-	 * @param array|string $mime_filter=null allowed mime type(s), default all
+	 * @param array|string $mime_filter=null allowed mime type(s), default all, negative filter if $mime_filter[0] === '!'
 	 * @return array List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
 	public static function get_documents($dirs, $prefix='document_', $mime_filter=null)
@@ -896,6 +896,17 @@ abstract class bo_merge
 		{
 			foreach($dirs as $n => &$d) if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
 		}
+		if ($mime_filter && ($negativ_filter = $mime_filter[0] === '!'))
+		{
+			if (is_array($mime_filter))
+			{
+				unset($mime_filter[0]);
+			}
+			else
+			{
+				$mime_filter = substr($mime_filter, 1);
+			}
+		}
 		$list = array();
 		foreach($dirs as $dir)
 		{
@@ -905,8 +916,7 @@ abstract class bo_merge
 				{
 					// return only the mime-types we support
 					if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
-					if ($mime_filter && !in_array($file['mime'], (array)$mime_filter)) continue;
-
+					if ($mime_filter && $negativ_filter === in_array($file['mime'], (array)$mime_filter)) continue;
 					$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 				}
 			}

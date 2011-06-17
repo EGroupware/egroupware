@@ -813,20 +813,17 @@ function load_cal(url,id) {
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
 			$options = '';
-			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
-
-			// Skip spreadsheets that are in the other selectbox
-			$spreadsheets = importexport_admin_prefs_sidebox_hooks::get_spreadsheet_list('calendar');
-			foreach($spreadsheets as $file_info)
+			if ($GLOBALS['egw_info']['user']['apps']['importexport'])
 			{
-				if($key = array_search($file_info['name'], $documents))
-				{
-					unset($documents[$key]);
-				}
+				$mime_filter = array('!',	// negativ filter, everything but ...
+					'application/vnd.oasis.opendocument.spreadsheet',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+				);
 			}
+			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter);
 			foreach($documents as $key => $value)
 			{
-				$options .= '<option value="'.$key.'">'.html::htmlspecialchars($value)."</option>\n";
+				$options .= '<option value="'.html::htmlspecialchars($key).'">'.html::htmlspecialchars($value)."</option>\n";
 			}
 			if($options != '') {
 				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
@@ -896,13 +893,8 @@ function load_cal(url,id) {
 					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
 				));
 			}
-			if($_GET['merge'][0] != '/') {
-				list($document, $filename) = explode('_',$_GET['merge'], 2);
-			} else {
-				$filename = $_GET['merge'];
-			}
 			$merge = new calendar_merge();
-			return $merge->download($filename, $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+			return $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 		}
 		return false;
 	}

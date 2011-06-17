@@ -789,12 +789,12 @@ class calendar_uilist extends calendar_ui
 			'hint' => 'Download this event as iCal',
 			'disableClass' => 'rowNoView',
 		);
-
+/* not working, needs fixing
 		$actions['documents'] = addressbook_merge::document_action(
 			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',
 			$this->bo->cal_prefs['default_document']
 		);
-
+*/
 		++$group;
 		$actions['delete'] = array(
 			'caption' => 'Delete',
