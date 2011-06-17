@@ -105,7 +105,7 @@ class importexport_admin_prefs_sidebox_hooks
 
 		// Add in import / export, if available
 		$file = array();
-		if($cache[$appname]['import']) 
+		if($cache[$appname]['import'])
 		{
 			$file['Import CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(
@@ -118,7 +118,7 @@ class importexport_admin_prefs_sidebox_hooks
 			);
 		}
 		$config = config::read('phpgwapi');
-		if(($GLOBALS['egw_info']['user']['apps']['admin'] || $config['export_limit'] !== 'no') && $cache[$appname]['export']) 
+		if (($GLOBALS['egw_info']['user']['apps']['admin'] || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(
@@ -130,15 +130,14 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Export' : 'Export CSV'
 			);
 		}
-		if($list = self::get_spreadsheet_list($appname))
+		if(($file_list = bo_merge::get_documents($GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'], '', array(
+			'application/vnd.oasis.opendocument.spreadsheet',
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		))))
 		{
-			$file_list = array();
-			foreach($list as $_file) {
-				$file_list[$_file['path']] = egw_vfs::decodePath($_file['name']);
-			}
 			$prefix = 'document_';
-			
-			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\'); 
+
+			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\');
 if(window.egw_getActionManager) {
 var actionMgrs = window.egw_getActionManager(\''.$appname.'\').getActionsByAttr(\'type\', \'actionManager\');
 var actionMgr = null;
@@ -157,7 +156,7 @@ if(actionMgr && objectMgr && window.egwAction) {
 			actionMgr.getActionById(\'select_all\').set_checked(true);
 		}
 	}
-	window.nm_action(action, objectMgr.selectedChildren); 
+	window.nm_action(action, objectMgr.selectedChildren);
 }
 } else {';
 			if($appname == 'calendar')
@@ -174,7 +173,7 @@ this.value = \'\'"';
 				'link'	=> false,
 			);
 		}
-	
+
 		$config = config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
@@ -186,52 +185,4 @@ this.value = \'\'"';
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
-
-	/**
-	 * Get a list of spreadsheets, in the user's preference folder, and / or a system provided template folder
-	 */
-	public static function get_spreadsheet_list($app) {
-		$config = config::read('importexport');
-		$config_dirs = $config['export_spreadsheet_folder'] ? explode(',',$config['export_spreadsheet_folder']) : array('user','stylite');
-		$appname = $_GET['app'] ? $_GET['app'] : $app;
-		$stylite_dir = '/stylite/templates/merge';
-		$dir_list = array();
-		$file_list = array();
-		$mimes = array(
-			'application/vnd.oasis.opendocument.spreadsheet',
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-		);
-
-		if(in_array('user', $config_dirs)) {
-			$dir_list[] = $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'];
-		}
-		if(in_array('stylite', $config_dirs) && is_dir($stylite_dir)) {
-			$dir_list[] = $stylite_dir;
-		}
-		
-		foreach($dir_list as $dir) {
-			if ($dir && ($files = egw_vfs::find($dir,array(
-				'need_mime' => true,
-				'order' => 'fs_name',
-				'sort' => 'ASC',
-			),true)))
-			{
-				foreach($files as $file) {
-					if($dir != $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir']) {
-						// Stylite files have a naming convention that must be adhered to
-						list($export, $application, $name) = explode('-', $file['name'], 3);
-					}
-					if(($dir == $GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'] || ($export == 'export' && $application == $appname)) && in_array($file['mime'], $mimes)) {
-						$file_list[] = array(
-							'name'	=>	$name ? $name : $file['name'],
-							'path'	=>	$file['path'],
-							'mime'	=>	$file['mime']
-						);
-					}
-				}
-			}
-		}
-		return $file_list;
-	}
-
 }

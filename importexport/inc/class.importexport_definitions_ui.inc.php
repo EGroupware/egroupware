@@ -340,7 +340,7 @@ class importexport_definitions_ui
 				$bodefinitions->delete($selected);
 				$action_msg = lang('deleted');
 				break;
-		
+
 			case 'export' :
 				$action_msg = lang('exported');
 				$mime_type = ($GLOBALS['egw']->html->user_agent == 'msie' || $GLOBALS['egw']->html->user_agent == 'opera') ?
@@ -681,7 +681,7 @@ class importexport_definitions_ui
 			} catch (Exception $e) {
 			//		throw new Exception('Already exists');
 				$content['duplicate_error'] = lang('Duplicate name, please choose another.');
-				
+
 				// Try some suggestions
 				$suggestions = array(
 					$content['name'] .'-'. $GLOBALS['egw_info']['user']['account_lid'],
@@ -859,20 +859,6 @@ class importexport_definitions_ui
 		$data = config::read(self::_appname);
 		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
 
-		// Folder stuff should really be part of etemplate (merge base is in there) 
-		// but the sidebox link works best if they're together
-		if(!array_key_exists('export_spreadsheet_folder', $data)) $data['export_spreadsheet_folder'] = 'user,stylite';
-		$sel_options = array(
-			'export_spreadsheet_folder' => array(
-				'user'	=>	lang('User template folder'),
-			)
-		);
-		if($GLOBALS['egw_info']['apps']['stylite']) {
-			$sel_options['export_spreadsheet_folder'] += array(
-				'stylite'	=> lang('Stylite template folder'),
-			);
-		}
-		
 		if(!$data['update']) $data['update'] = 'request';
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration') . ' - ' . lang(self::_appname);
