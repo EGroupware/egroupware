@@ -1,0 +1,410 @@
+(no subject)	felamimail	pl	(bez tematu)
+(only cc/bcc)	felamimail	pl	(tylko DW/UDW)
+(unknown sender)	felamimail	pl	(nieznany nadawca)
+activate	felamimail	pl	Aktywuj
+activate script	felamimail	pl	aktywuj skrypt
+add acl	felamimail	pl	dodaj listę ACL
+add address	felamimail	pl	Dodaj adres
+add rule	felamimail	pl	Dodaj regułę
+add script	felamimail	pl	Dodaj skrypt
+add to %1	felamimail	pl	Dodaj do %1
+add to address book	felamimail	pl	Dodaj do książki adresowej
+add to addressbook	felamimail	pl	dodaj do książki adresowej
+adding file to message. please wait!	felamimail	pl	Dodaję plik do wiadomości. Proszę czekać
+additional info	felamimail	pl	Informacje dodatkowe
+address book	felamimail	pl	Książka adresowa
+address book search	felamimail	pl	Przeszukiwanie książki adresowej
+after message body	felamimail	pl	Za treścią wiadomości
+all address books	felamimail	pl	Wszystkie książki adresowe
+all folders	felamimail	pl	Wszystkie foldery
+all of	felamimail	pl	wszystkie z
+allow images from external sources in html emails	felamimail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
+allways a new window	felamimail	pl	zawsze w nowym oknie
+always show html emails	felamimail	pl	Zawsze pokazuj maile napisane w HTML
+and	felamimail	pl	i
+any of	felamimail	pl	dowolny z
+any status	felamimail	pl	dowolny status
+anyone	felamimail	pl	ktokolwiek
+as a subfolder of	felamimail	pl	jako podfolder w
+attachments	felamimail	pl	Załączniki
+authentication required	felamimail	pl	wymagane jest uwierzytelnianie
+auto refresh folder list	felamimail	pl	Automatycznie odświeżaj listę folderów
+back to folder	felamimail	pl	Wróć do folderu
+bad login name or password.	felamimail	pl	Zła nazwa użytkownika lub hasło
+bad or malformed request. server responded: %s	felamimail	pl	Nieprawidłowe lub źle skonstruowane żądane. Serwer odpowiedział: %s
+bad request: %s	felamimail	pl	Nieprawidłowe żądanie: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	pl	Zgodnie ze wskazanymi dyspozycjami, wiadomości przychodzące będą miały odpowiednie tło wiadomości na liście. Pozwala to łatwo odróżnić nadawców wiadomości, szczególnie gdy są to listy mailingowe.
+bcc	felamimail	pl	UDW
+before headers	felamimail	pl	Przed nagłówkiem
+between headers and message body	felamimail	pl	Pomiędzy nagłówkiem a treścią
+body part	felamimail	pl	treść wiadomości
+can't connect to inbox!!	felamimail	pl	nie można podłączyć się do INBOX!
+cc	felamimail	pl	DW
+change folder	felamimail	pl	Zmień folder
+check message against next rule also	felamimail	pl	sprawdź również kolejnę regułę
+clear search	felamimail	pl	wyczyść wyszukiwanie
+click here to log back in.	felamimail	pl	Kliknij aby zalogować się ponownie
+click here to return to %1	felamimail	pl	Kliknij tutaj aby wrócić do %1
+close all	felamimail	pl	zamknij wszystko
+close this page	felamimail	pl	zamknij tę stronę
+close window	felamimail	pl	Zamknij okno
+color	felamimail	pl	Kolor
+compose	felamimail	pl	Utwórz
+compress folder	felamimail	pl	Kompaktuj folder
+condition	felamimail	pl	warunek
+configuration	felamimail	pl	Konfiguracja
+connection dropped by imap server.	felamimail	pl	Połączenie zerwane przez serwer IMAP
+contains	felamimail	pl	zawiera
+could not complete request. reason given: %s	felamimail	pl	Nie udało się zrealizować żądania. Powód: %s
+could not open secure connection to the imap server. %s : %s.	felamimail	pl	Nie udało się nawiązać bezpiecznego połączenia
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	pl	CRAM-MD5 lub DIGEST-MD5 wymagają obecności pakietu Auth_SASL.
+create	felamimail	pl	Stwórz
+create folder	felamimail	pl	Tworzenie folderu
+create sent	felamimail	pl	Stwórz Wysłane
+create subfolder	felamimail	pl	Stwórzy podfolder
+create trash	felamimail	pl	Stwórz Kosz
+created folder successfully!	felamimail	pl	Utworzono folder pomyślnie!
+dark blue	felamimail	pl	Ciemno Niebieski
+dark cyan	felamimail	pl	Ciemny Cyan
+dark gray	felamimail	pl	Ciemny Szary
+dark green	felamimail	pl	Ciemny Zielony
+dark magenta	felamimail	pl	Ciemny Magenta
+dark yellow	felamimail	pl	Ciemny Żółty
+date(newest first)	felamimail	pl	Data (od najnowszych)
+date(oldest first)	felamimail	pl	Data (od najstarszych)
+days	felamimail	pl	dni
+deactivate script	felamimail	pl	deaktywuj skrypt
+default signature	felamimail	pl	domyślna sygnaturka
+default sorting order	felamimail	pl	Domyślny porządek sortowania
+delete all	felamimail	pl	kasuj wszystko
+delete folder	felamimail	pl	Usuń folder
+delete script	felamimail	pl	usuń skrypt
+delete selected	felamimail	pl	Usuń zaznaczone
+delete selected messages	felamimail	pl	skasuj wybrane wiadomości
+deleted	felamimail	pl	skasowany
+deleted folder successfully!	felamimail	pl	Folder został pomyślnie usunięty!
+deleting messages	felamimail	pl	usuwanie wiadomości w toku
+disable	felamimail	pl	Wyłącz
+discard	felamimail	pl	odrzuć
+discard message	felamimail	pl	odrzuć wiadomość
+display message in new window	felamimail	pl	Wyświetl wiadomość w nowym oknie
+display messages in multiple windows	felamimail	pl	wyświetl wiadomości w wielu oknach
+display of html emails	felamimail	pl	Wyświetlaj wiadomość w HTML
+display only when no plain text is available	felamimail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
+display preferences	felamimail	pl	Wyświetl preferencje
+displaying html messages is disabled	felamimail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
+do it!	felamimail	pl	zrób to!
+do not use sent	felamimail	pl	Nie używaj Wysłanych
+do not use trash	felamimail	pl	Nie używaj Kosza
+do not validate certificate	felamimail	pl	nie sprawdzaj poprawności certyfikatu
+do you really want to delete the '%1' folder?	felamimail	pl	Czy na pewno chcesz usunąć folder '%1'?
+do you really want to delete the selected signatures?	felamimail	pl	Czy na pewno chcesz usunąć wybrane podpisy?
+does not contain	felamimail	pl	nie zawiera
+does not match	felamimail	pl	nie pasuje
+does not match regexp	felamimail	pl	nie pasuje do wzorca
+don't use draft folder	felamimail	pl	Nie używaj folderu szkiców
+don't use sent	felamimail	pl	Nie używaj Wysłanych
+don't use trash	felamimail	pl	Nie używaj Kosza
+down	felamimail	pl	w dół
+download	felamimail	pl	pobierz
+download this as a file	felamimail	pl	pobierz jako plik
+draft folder	felamimail	pl	folder szkiców
+e-mail	felamimail	pl	E-mail
+e-mail address	felamimail	pl	Adres e-mail
+e-mail folders	felamimail	pl	Foldery e-mail
+edit email forwarding address	felamimail	pl	edytuj adres e-mail przekazywania wiadomości
+edit filter	felamimail	pl	Edytuj filtr
+edit rule	felamimail	pl	edytuj regułę
+edit selected	felamimail	pl	Edytuj wybrane
+edit vacation settings	felamimail	pl	edytuj ustawienia autorespondera
+email address	felamimail	pl	Adres e-mail
+email forwarding address	felamimail	pl	adres e-mail przekazywania wiadomości
+email signature	felamimail	pl	Sygnaturka
+emailaddress	felamimail	pl	adres_email
+empty trash	felamimail	pl	opróżnij kosz
+enable	felamimail	pl	włącz
+encrypted connection	felamimail	pl	połączenie szyfrowane
+enter your default mail domain ( from: user@domain )	admin	pl	Podaj domyślną domenę pocztową (Od: użytkownik@domena)
+enter your imap mail server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera IMAP
+enter your sieve server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera SIEVE
+enter your sieve server port	admin	pl	Podaj port serwera SIEVE
+enter your smtp server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera SMTP
+enter your smtp server port	admin	pl	Podaj port serwera SMTP
+error	felamimail	pl	BŁĄD
+error connecting to imap serv	felamimail	pl	Błąd łączenia z serwerem IMAP
+error connecting to imap server. %s : %s.	felamimail	pl	Błąd połączenia do serwera IMAP. %s : %s
+error connecting to imap server: [%s] %s.	felamimail	pl	Błąd połączenia do serwera IMAP. [%s]  %s
+error opening	felamimail	pl	Błąd podczas otwierania
+every	felamimail	pl	co
+every %1 days	felamimail	pl	co %1 dni
+expunge	felamimail	pl	Opróżnij
+extended	felamimail	pl	rozszerzone
+felamimail	common	pl	FelaMiMail
+file into	felamimail	pl	informacja o pliku
+files	felamimail	pl	pliki
+filter active	felamimail	pl	filtr jest aktywny
+filter name	felamimail	pl	nazwa filtra
+filter rules	common	pl	reguły filtra
+first name	felamimail	pl	Imię
+flagged	felamimail	pl	oflagowano
+flags	felamimail	pl	flagi
+folder acl	felamimail	pl	lista ACL folderu
+folder name	felamimail	pl	Nazwa foldera
+folder path	felamimail	pl	Ścieżka foldera
+folder preferences	felamimail	pl	Preferencje folderów
+folder settings	felamimail	pl	Ustawienia foldera
+folder status	felamimail	pl	Status foldera
+folderlist	felamimail	pl	Lista folderów
+foldername	felamimail	pl	Nazwa foldera
+folders	felamimail	pl	Foldery
+folders created successfully!	felamimail	pl	Pomyślnie utworzono folder
+follow	felamimail	pl	odpowiedz
+for mail to be send - not functional yet	felamimail	pl	Dla wiadomości przygtowanych do wysłania - jeszcze nie działa ;-)
+for received mail	felamimail	pl	Dla wiadomości otrzymanych
+forward	felamimail	pl	Prześlij dalej
+forward to	felamimail	pl	Prześlij do
+forward to address	felamimail	pl	Prześlij na adres
+forwarding	felamimail	pl	Przekazywanie
+found	felamimail	pl	Znaleziono
+fri	felamimail	pl	Pią
+from	felamimail	pl	Od
+from(a->z)	felamimail	pl	Od (A->Z)
+from(z->a)	felamimail	pl	Od (Z->A)
+full name	felamimail	pl	Pełna nazwa
+greater than	felamimail	pl	większe niż
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	pl	Aby dowiedzieć się więcej o Squirrelmail, zajrzyj na <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
+header lines	felamimail	pl	Linie nagłówka
+hide header	felamimail	pl	ukryj nagłówek
+hostname / address	felamimail	pl	adres domenowy / adres IP
+html	felamimail	pl	HTML
+icons and text	felamimail	pl	Ikony i tekst
+icons only	felamimail	pl	Tylko ikony
+identifying name	felamimail	pl	Nazwa identyfikatora
+identity	felamimail	pl	tożsamość
+if	felamimail	pl	JEŻELI
+if from contains	felamimail	pl	jeżeli pole 'From:" zawiera
+if mail header	felamimail	pl	jeżeli nagłówek wiadomości
+if message size	felamimail	pl	jeżeli rozmiar wiadomości
+if subject contains	felamimail	pl	jeżeli pole "Temat" zawiera
+if to contains	felamimail	pl	jeżeli pole "Adresat" zawiera
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	pl	Jeżeli korzystasz z SSL lub TLS, musisz mieć dołączone rozszerzenie OpenSSL do PHP.
+illegal folder name.  please select a different name.	felamimail	pl	Nazwa folderu nie jest poprawna. Proszę wybrać inną nazwę.
+imap	felamimail	pl	IMAP
+imap server	felamimail	pl	Serwer IMAP
+imap server address	felamimail	pl	Adres serwera IMAP
+imap server closed the connection.	felamimail	pl	Serwer IMAP zakończył połączenie.
+imap server closed the connection. server responded: %s	felamimail	pl	Serwer IMAP zakończył połączenie. Serwer zwrócił: %s
+imap server password	felamimail	pl	hasło do serwera IMAP
+imap server type	felamimail	pl	Typ serwera IMAP
+imap server username	felamimail	pl	nazwa użytkownika do serwera IMAP
+imaps authentication	felamimail	pl	Autentykacja IMAPS
+imaps encryption only	felamimail	pl	Tylko szyfrowanie IMAPS
+in	felamimail	pl	w
+inbox	felamimail	pl	ODEBRANE
+incoming mail server(imap)	felamimail	pl	serwer poczty przychodzącej (IMAP)
+index order	felamimail	pl	Porządek indeksu
+info	felamimail	pl	Info
+invalid user name or password	felamimail	pl	Zła nazwa użytkownika lub hasło
+javascript	felamimail	pl	JavaScript
+jumping to end	felamimail	pl	skacze na koniec
+jumping to start	felamimail	pl	skacze na początek
+keep a copy of the message in your inbox	felamimail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
+keep local copy of email	felamimail	pl	zachowja lokalną kopię tej wiadomości
+kilobytes	felamimail	pl	kilobajtów
+language	felamimail	pl	Język
+last name	felamimail	pl	Nazwisko
+less	felamimail	pl	mniej
+less than	felamimail	pl	mniej niż
+light gray	felamimail	pl	Jasny Szary
+list all	felamimail	pl	Pokaż wszystko
+loading	felamimail	pl	ładowanie
+location of buttons when composing	felamimail	pl	Położenie przycisków przy pisaniu maila
+mail server login type	admin	pl	Typ logowania do serwera poczty
+mail settings	felamimail	pl	Ustawienia poczty
+mainmessage	felamimail	pl	treść_wiadomości
+manage emailaccounts	preferences	pl	Zarządzaj kontami pocztowymi
+manage emailfilter / vacation	preferences	pl	Zarządzaj filtrem pocztym / powiadomieniami
+manage folders	common	pl	Zarządzanie folderami
+manage sieve	common	pl	Zarządzaj skryptami Sieve
+manage signatures	felamimail	pl	Zarządzaj sygnaturkami
+mark as deleted	felamimail	pl	Zaznacz jako usunietą
+mark messages as	felamimail	pl	Zaznacz wybrane wiadomości jako
+mark selected as flagged	felamimail	pl	Zaznacz wybrane oflagowaniem
+mark selected as read	felamimail	pl	Zaznacz wybrane wiadomości jako przeczytane
+mark selected as unflagged	felamimail	pl	Zaznacz wybrane jako nie oflagowane
+mark selected as unread	felamimail	pl	Zaznacz wybrane wiadomości jako nieprzeczytane
+match	felamimail	pl	Zgodne
+matches	felamimail	pl	pasuje do
+matches regexp	felamimail	pl	pasuje do wyrażenia regularnego
+max uploadsize	felamimail	pl	limit ładowania danych
+message highlighting	felamimail	pl	Podświetlanie wiadomości
+message list	felamimail	pl	Lista wiadomości
+messages	felamimail	pl	wiadomości
+mon	felamimail	pl	Pon
+move	felamimail	pl	przenieś
+move messages	felamimail	pl	przenieś wiadomości
+move to	felamimail	pl	przenieś wiadomości do
+move to trash	felamimail	pl	przenieś do kosza
+moving messages to	felamimail	pl	przenoszę wiadomości do
+name	felamimail	pl	Nazwa
+never display html emails	felamimail	pl	Nigdy nie wyświetlaj emaili HTML
+new	common	pl	Nowe
+new filter	felamimail	pl	Nowy filtr
+next	felamimail	pl	Następny
+next message	felamimail	pl	następna wiadomość
+no active imap server found!!	felamimail	pl	Nie znaleziono aktywnego serwera IMAP!
+no encryption	felamimail	pl	brak szyfrowania
+no filter	felamimail	pl	Brak filtra
+no folders found	felamimail	pl	Nie znaleziono folderów
+no folders were found to subscribe to!	felamimail	pl	Nie znaleziono folderów do aktywowania subskrypcji!
+no folders were found to unsubscribe from!	felamimail	pl	Nie znaleziono folderów do anulowania subskrypcji!
+no highlighting is defined	felamimail	pl	Nie zdefiniowano podświetleń
+no message returned.	felamimail	pl	Nie otrzymano wiadomości.
+no messages found...	felamimail	pl	nie znaleziono wiadomości...
+no messages were selected.	felamimail	pl	Nie wybrano żadnej wiadomości
+no plain text part found	felamimail	pl	brak części 'czystym' tekstem
+no previous message	felamimail	pl	brak poprzedniej wiadomości
+no supported imap authentication method could be found.	felamimail	pl	Nie znaleziono obsługiwanej metody autentykacji IMAP.
+no valid emailprofile selected!!	felamimail	pl	Nie wybrano poprawnego profilu e-mail.
+none	felamimail	pl	Żaden
+on behalf of	felamimail	pl	w imieniu
+one address is not valid	felamimail	pl	Jeden adres nie jest poprawny
+only inbox	felamimail	pl	Tylko ODEBRANE
+only one window	felamimail	pl	tylko jedno okno
+only unseen	felamimail	pl	tylko nie przeczytane
+open all	felamimail	pl	otwórzy wszystkie
+options	felamimail	pl	Opcje
+or	felamimail	pl	lub
+organisation	felamimail	pl	instytucja
+organization	felamimail	pl	instytucja
+organization name	admin	pl	Nazwa instutucji
+outgoing mail server(smtp)	felamimail	pl	serwer poczty wychodzącej (SMTP)
+participants	felamimail	pl	Uczestnicy
+personal information	felamimail	pl	Informacje osobiste
+please select a address	felamimail	pl	Proszę wybrać adres
+please select the number of days to wait between responses	felamimail	pl	Wybierz, ile dni czekać między odpowiedziami
+please supply the message to send with auto-responses	felamimail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
+previous	felamimail	pl	Poprzedni
+previous message	felamimail	pl	poprzednia wiadomość
+print it	felamimail	pl	wydrukuj to
+print this page	felamimail	pl	wydrukuj tę stronę
+quicksearch	felamimail	pl	Szybkie wyszukiwanie
+read	felamimail	pl	Odczytaj
+reading	felamimail	pl	odczytywanie
+receive notification	felamimail	pl	Odebrano powiadomienie
+recent	felamimail	pl	ostatnie
+refresh time in minutes	felamimail	pl	Czas odświeżania w minutach
+reject with	felamimail	pl	odrzuć z
+remove	felamimail	pl	usuń
+remove immediately	felamimail	pl	usuń natychmiast
+rename	felamimail	pl	Zmiana nazwy
+rename a folder	felamimail	pl	Zmiana nazwy foldera
+rename folder	felamimail	pl	Zmień nazwę foldera
+renamed successfully!	felamimail	pl	Pomyślnie zmieniono nazwę
+replied	felamimail	pl	odpowiedziano
+reply	felamimail	pl	Odpowiedz
+reply all	felamimail	pl	Odpowiedz wszystkim
+reply to	felamimail	pl	Odpowiedz
+replyto	felamimail	pl	Odpowiedz
+respond	felamimail	pl	Odpowiedź
+respond to mail sent to	felamimail	pl	odpowiedz na mail wysłany do
+return	felamimail	pl	Powrót
+return to options page	felamimail	pl	Powrót do strony konfiguracji
+row order style	felamimail	pl	styl porządku wierszy
+rule	felamimail	pl	Reguła
+sat	felamimail	pl	Sob
+save	felamimail	pl	Zapisz
+save as draft	felamimail	pl	zapisz jako szkic
+save as infolog	felamimail	pl	zapisz jako zadanie Dziennika CRM
+save changes	felamimail	pl	zachowaj zmiany
+save message to disk	felamimail	pl	zachowaj wiadomość na dysku
+script name	felamimail	pl	nazwa skryptu
+script status	felamimail	pl	status skryptu
+search	felamimail	pl	Szukaj
+search for	felamimail	pl	Szukaj dla
+select	felamimail	pl	Wybierz
+select all	felamimail	pl	Wybierz wszystko
+select emailprofile	felamimail	pl	Wybierz profil email
+select folder	felamimail	pl	Wybierz folder
+select your mail server type	admin	pl	Wybierz typ serwera email
+send	felamimail	pl	Wyślij
+send a reject message	felamimail	pl	odeślij wiadomość odrzucającą
+sent folder	felamimail	pl	Folder Wysłane
+server supports mailfilter(sieve)	felamimail	pl	serwer posiada filtr poczy (sieve - sito)
+show header	felamimail	pl	pokaż nagłówek
+show new messages on main screen	felamimail	pl	Wyświetlać nowe wiadomości na stronie głównej?
+sieve script name	felamimail	pl	Nazwa skryptu sita ('sieve')
+sieve settings	admin	pl	Ustawienia Sieve
+signature	felamimail	pl	Sygnaturka
+simply click the target-folder	felamimail	pl	Kliknij folder docelowy
+size	felamimail	pl	Wielkość
+size of editor window	felamimail	pl	Wielkość okna edytora
+size(...->0)	felamimail	pl	Rozmiar (...->0)
+size(0->...)	felamimail	pl	Rozmiar (0->...)
+skipping forward	felamimail	pl	omija kolejną
+skipping previous	felamimail	pl	omija poprzednią
+small view	felamimail	pl	widok uproszczony
+smtp settings	admin	pl	Ustawienia SMTP
+subject	felamimail	pl	Temat
+subject(a->z)	felamimail	pl	Temat (A->Z)
+subject(z->a)	felamimail	pl	Temat (Z->A)
+submit	felamimail	pl	Wyślij
+subscribe	felamimail	pl	Subskrybuj
+subscribed	felamimail	pl	Uruchomiono subskrypcję
+subscribed successfully!	felamimail	pl	Uruchomiono subskrypcję poprawnie!
+sun	felamimail	pl	Nie
+table of contents	felamimail	pl	Spis treści
+text only	felamimail	pl	Tylko tekst
+the connection to the imap server failed!!	felamimail	pl	Nieudane połączenie z serwerem SMTP!!
+the mimeparser can not parse this message.	felamimail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
+then	felamimail	pl	WTEDY
+this folder is empty	felamimail	pl	TEN FOLDER JEST PUSTY
+this php has no imap support compiled in!!	felamimail	pl	PHP nie ma skompilowanej obsługi IMAP!!
+thu	felamimail	pl	Czw
+to	felamimail	pl	Do
+translation preferences	felamimail	pl	Preferencje tłumaczenia
+translation server	felamimail	pl	Serwer tłumaczeń
+trash fold	felamimail	pl	Folder Kosza
+trash folder	felamimail	pl	Folder Kosza
+tue	felamimail	pl	Wto
+type	felamimail	pl	typ
+unexpected response from server to authenticate command.	felamimail	pl	Niespodziewana odpowiedź z serwera na polecenie AUTHENTICATE
+unexpected response from server to digest-md5 response.	felamimail	pl	Niespodziewana odpowiedź z serwera na polecenie Digest-MD5
+unexpected response from server to login command.	felamimail	pl	Niespodziewana odpowiedź serwera na polecenie LOGIN.
+unflagged	felamimail	pl	nie oflagowano
+unknown err	felamimail	pl	Nieznany błąd
+unknown error	felamimail	pl	Nieznany błąd
+unknown sender	felamimail	pl	Nieznany nadawca
+unknown user or password incorrect.	felamimail	pl	Użytkownik nieznany lub hasło niezgodne.
+unread	common	pl	nieprzeczytane
+unseen	felamimail	pl	nieprzeczytane (nie pobrane)
+unselect all	felamimail	pl	Odznacz wszystko
+unsubscribe	felamimail	pl	Anuluj subskrypcję
+unsubscribed	felamimail	pl	Anulowano subskrypcję
+unsubscribed successfully!	felamimail	pl	Anulowano subskrypcję poprawnie!
+up	felamimail	pl	w górę
+updating message status	felamimail	pl	aktualizuję status wiadomości
+updating view	felamimail	pl	aktualizuję widok
+use a signature	felamimail	pl	Użyj sygnaturki
+use a signature?	felamimail	pl	Użyć sygnaturki?
+use addresses	felamimail	pl	użyj adresów
+use custom settings	felamimail	pl	Użyj ustawień użytkownika
+use regular expressions	felamimail	pl	użyj wyrażeń regularnych
+use smtp auth	admin	pl	Skorzystaj z autentykacji SMTP
+users can define their own emailaccounts	admin	pl	Użytkownicy mogą definiować swoje własne konta poczty elektronicznej
+vacation notice	common	pl	powiadomienie urlopowe
+vacation notice is active	felamimail	pl	Powiadomienie urlopowe jest aktywne
+validate certificate	felamimail	pl	sprawdź poprawność certyfikatu
+view full header	felamimail	pl	Pokaż pełny nagłówek
+view header lines	felamimail	pl	pokaż linie nagłówka
+view message	felamimail	pl	Pokaż wiadomość
+viewing full header	felamimail	pl	Pokazuje cały nagłówek
+viewing message	felamimail	pl	Pokazuje wiadomość
+viewing messages	felamimail	pl	Pokazuje wiadomości
+wed	felamimail	pl	Śro
+when deleting messages	felamimail	pl	Gdy usuwasz wiadomość
+with message	felamimail	pl	z wiadomością
+with message "%1"	felamimail	pl	z wiadomością '%1'
+wrap incoming text at	felamimail	pl	Szerokość zawijania werszy
+writing	felamimail	pl	zapisywanie
+wrote	felamimail	pl	zapisano

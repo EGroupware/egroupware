@@ -1,0 +1,68 @@
+add profile	emailadmin	hr	Add Profile
+admin dn	emailadmin	hr	admin dn
+admin password	emailadmin	hr	admin password
+admin username	emailadmin	hr	admin username
+advanced options	emailadmin	hr	advanced options
+alternate email address	emailadmin	hr	alternate email address
+cyrus imap server	emailadmin	hr	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	hr	Cyrus IMAP server administration
+default	emailadmin	hr	default
+deliver extern	emailadmin	hr	deliver extern
+do you really want to delete this profile	emailadmin	hr	Do you really want to delete this Profile
+domainname	emailadmin	hr	domainname
+edit email settings	emailadmin	hr	edit email settings
+email account active	emailadmin	hr	email account active
+email address	emailadmin	hr	email address
+enable cyrus imap server administration	emailadmin	hr	enable Cyrus IMAP server administration
+enable sieve	emailadmin	hr	enable Sieve
+enter your default mail domain (from: user@domain)	emailadmin	hr	Enter your default mail domain (from: user@domain)
+forward also to	emailadmin	hr	forward also to
+forward email's to	emailadmin	hr	forward email's to
+forward only	emailadmin	hr	forward only
+imap admin password	admin	hr	IMAP admin password
+imap admin user	admin	hr	IMAP admin user
+imap server hostname or ip address	emailadmin	hr	IMAP server hostname or ip address
+imap server logintyp	emailadmin	hr	IMAP server login type
+imap server port	emailadmin	hr	IMAP server port
+imap/pop3 server name	emailadmin	hr	IMAP/POP3 server name
+in mbyte	emailadmin	hr	in MByte
+ldap basedn	emailadmin	hr	LDAP basedn
+ldap server	emailadmin	hr	LDAP server
+ldap server accounts dn	emailadmin	hr	LDAP server accounts DN
+ldap server admin dn	emailadmin	hr	LDAP server admin DN
+ldap server admin password	emailadmin	hr	LDAP server admin password
+ldap server hostname or ip address	emailadmin	hr	LDAP server hostname or ip address
+ldap settings	emailadmin	hr	LDAP settings
+leave empty for no quota	emailadmin	hr	leave empty for no quota
+mail settings	admin	hr	Mail settings
+name of organisation	emailadmin	hr	Name of organization
+no alternate email address	emailadmin	hr	no alternate email address
+no forwarding email address	emailadmin	hr	no forwarding email address
+pop3 server hostname or ip address	emailadmin	hr	POP3 server hostname or ip address
+pop3 server port	emailadmin	hr	POP3 server port
+postfix with ldap	emailadmin	hr	Postfix with LDAP
+profile list	emailadmin	hr	Profile List
+profile name	emailadmin	hr	Profile Name
+qmaildotmode	emailadmin	hr	qmaildotmode
+qouta size in mbyte	emailadmin	hr	qouta size in MByte
+quota settings	emailadmin	hr	quota settings
+remove	emailadmin	hr	remove
+select type of imap/pop3 server	emailadmin	hr	Select type of IMAP/POP3 server
+select type of smtp server	emailadmin	hr	Select type of SMTP Server
+sieve server hostname or ip address	emailadmin	hr	Sieve server hostname or ip address
+sieve server port	emailadmin	hr	Sieve server port
+sieve settings	emailadmin	hr	Sieve settings
+smtp server name	emailadmin	hr	SMTP server name
+smtp-server hostname or ip address	emailadmin	hr	SMTP server hostname or IP address
+smtp-server port	emailadmin	hr	SMTP server port
+standard	emailadmin	hr	Standard
+standard imap server	emailadmin	hr	Standard IMAP server
+standard pop3 server	emailadmin	hr	Standard POP3 server
+standard smtp-server	emailadmin	hr	Standard SMTP server
+use ldap defaults	emailadmin	hr	use LDAP defaults
+use smtp auth	emailadmin	hr	Use SMTP auth
+use tls authentication	emailadmin	hr	Use TLS authentication
+use tls encryption	emailadmin	hr	Use TLS encryption
+users can define their own emailaccounts	emailadmin	hr	Users can define their own email accounts
+virtual mail manager	emailadmin	hr	Virtual MAIL ManaGeR
+IMAP C-Client Version < 2001	emailadmin	hr	IMAP C-Client Version < 2001

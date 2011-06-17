@@ -1,0 +1,350 @@
+%1 is not writable by you!	felamimail	id	%1 TIDAK dapat anda tulisi!
+(no subject)	felamimail	id	(tanpa subyek)
+(only cc/bcc)	felamimail	id	(hanya CC/BCC)
+(separate multiple addresses by comma)	felamimail	id	(pisahkan alamat-alamat dengan koma)
+(unknown sender)	felamimail	id	(pengirim takdikenal)
+aborted	felamimail	id	dibatalkan
+activate	felamimail	id	Aktifkan
+activate script	felamimail	id	Aktifkan skrip
+activating by date requires a start- and end-date!	felamimail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
+add acl	felamimail	id	Tambah ACL
+add address	felamimail	id	Tambah alamat
+add rule	felamimail	id	Tambah Rule/Aturan
+add script	felamimail	id	Tambah Skrip
+add to %1	felamimail	id	Tambahkan ke %1
+add to address book	felamimail	id	Tambahkan ke buku alamat
+add to addressbook	felamimail	id	Tambahkan ke buku alamat
+adding file to message. please wait!	felamimail	id	Menambahkan berkas ke pesan. Mohon tunggu!
+additional info	felamimail	id	Info Tambahan
+address book	felamimail	id	Buku Alamat
+address book search	felamimail	id	Mencari Buku Alamat
+after message body	felamimail	id	Setelah tubuh-pesan
+all address books	felamimail	id	Semua buku alamat
+all folders	felamimail	id	Semua Folder
+all messages in folder	felamimail	id	semua pesan dalam folder
+all of	felamimail	id	semua
+and	felamimail	id	and
+any of	felamimail	id	sembarang
+any status	felamimail	id	status apapun
+anyone	felamimail	id	siapapun
+as a subfolder of	felamimail	id	sebagai subfolder dari
+attach	felamimail	id	Lampirkan
+attachments	felamimail	id	Lampiran
+authentication required	felamimail	id	authentication required
+back to folder	felamimail	id	Kembali ke folder
+bcc	felamimail	id	BCC
+before headers	felamimail	id	Sebelum header
+between headers and message body	felamimail	id	Diantara header dan tubuh-pesan
+body part	felamimail	id	batang tubuh
+by date	felamimail	id	menurut tanggal
+cc	felamimail	id	CC
+change folder	felamimail	id	Ubah folder
+checkbox	felamimail	id	Checkbox
+clear search	felamimail	id	bersihkan pencarian
+click here to log back in.	felamimail	id	Klik disini untuk masuk lagi.
+click here to return to %1	felamimail	id	Klik disini untuk kembali ke %1
+close all	felamimail	id	tutup semuanya
+close this page	felamimail	id	tutup halaman ini
+close window	felamimail	id	Tutup jendela
+color	felamimail	id	Warna
+compose	felamimail	id	Tulis
+compose as new	felamimail	id	tulis sbg pesan baru
+compress folder	felamimail	id	Mampatkan folder
+condition	felamimail	id	kondisi
+configuration	felamimail	id	Konfigurasi
+contact not found!	felamimail	id	Kontak tidak ditemukan!
+contains	felamimail	id	mengandung
+copy or move messages?	felamimail	id	Salin atau Pindahkan Pesan?
+copying messages to	felamimail	id	menyalin pesan ke
+create	felamimail	id	Bikin
+create folder	felamimail	id	Bikin Folder
+create sent	felamimail	id	Bikin Sent
+create subfolder	felamimail	id	Bikin subfolder
+create trash	felamimail	id	Bikin Trash
+created folder successfully!	felamimail	id	Sukses bikin folder!
+dark blue	felamimail	id	Dark Blue
+dark cyan	felamimail	id	Dark Cyan
+dark gray	felamimail	id	Dark Gray
+dark green	felamimail	id	Dark Green
+dark magenta	felamimail	id	Dark Magenta
+dark yellow	felamimail	id	Dark Yellow
+date(newest first)	felamimail	id	Tanggal (terbaru)
+date(oldest first)	felamimail	id	Tanggal (terkuno)
+days	felamimail	id	hari
+deactivate script	felamimail	id	batalkan skrip
+default	felamimail	id	bawaan
+default signature	felamimail	id	tandatangan bawaan
+default sorting order	felamimail	id	Pengurutan bawaan
+delete all	felamimail	id	hapus semuanya
+delete folder	felamimail	id	Hapus Folder
+delete script	felamimail	id	hapus skrip
+delete selected	felamimail	id	Hapus selected
+delete selected messages	felamimail	id	hapus pesan terpilih
+deleted	felamimail	id	dihapus
+deleted folder successfully!	felamimail	id	Sukses menghapus folder!
+deleting messages	felamimail	id	menghapus pesan
+disable	felamimail	id	Disable
+discard	felamimail	id	buang
+discard message	felamimail	id	buang pesan
+display preferences	felamimail	id	Kesukaan Tampilan
+do it!	felamimail	id	laksanakan!
+do you really want to delete the '%1' folder?	felamimail	id	Anda sungguh ingin menghapus folder '%1'?
+down	felamimail	id	turun
+download	felamimail	id	unduh
+download this as a file	felamimail	id	Unduh sebagai berkas
+draft folder	felamimail	id	draft folder
+drafts	felamimail	id	Drafts
+e-mail	felamimail	id	E-Mail
+e-mail address	felamimail	id	Alamat E-Mail
+e-mail folders	felamimail	id	Folder E-Mail
+edit filter	felamimail	id	Edit saringan
+edit rule	felamimail	id	edit rule/aturan
+edit selected	felamimail	id	Edit yang dipilih
+editor type	felamimail	id	Tipe Editor
+email address	felamimail	id	Alamat E-Mail
+email signature	felamimail	id	Tandatangan Email
+emailaddress	felamimail	id	alamat email
+empty trash	felamimail	id	kosongkan trash
+enable	felamimail	id	enable
+encrypted connection	felamimail	id	encrypted connection
+entry saved	felamimail	id	Entri disimpan
+error	felamimail	id	ERROR
+error opening	felamimail	id	Error opening
+error saving %1!	felamimail	id	Error menyimpan %1!
+error:	felamimail	id	Error:
+event details follow	felamimail	id	Berikut ini detil kegiatan
+every	felamimail	id	setiap
+every %1 days	felamimail	id	setiap %1 hari
+expunge	felamimail	id	Expunge
+extended	felamimail	id	extended
+felamimail	common	id	eMail
+file into	felamimail	id	file into
+filemanager	felamimail	id	Manajer berkas
+files	felamimail	id	berkas
+filter active	felamimail	id	saringan aktif
+filter name	felamimail	id	Nama saringan
+filter rules	common	id	aturan saringan
+first name	felamimail	id	Nama Depan
+flagged	felamimail	id	ditandai
+flags	felamimail	id	Bendera
+folder	felamimail	id	folder
+folder acl	felamimail	id	ACL folder
+folder name	felamimail	id	Nama Folder
+folder path	felamimail	id	Jejak Folder
+folder preferences	felamimail	id	Kesukaan Folder
+folder settings	felamimail	id	Pengaturan Folder
+folder status	felamimail	id	Status Folder
+folderlist	felamimail	id	Daftar Folder
+foldername	felamimail	id	Nama Folder
+folders	felamimail	id	Folder
+folders created successfully!	felamimail	id	sukses bikin Folder!
+follow	felamimail	id	follow
+forward	felamimail	id	Forward
+forward as attachment	felamimail	id	forward as attachment
+forward inline	felamimail	id	forward inline
+forward messages to	felamimail	id	Forward messages to
+forward to	felamimail	id	forward to
+forward to address	felamimail	id	forward to address
+forwarding	felamimail	id	Forwarding
+found	felamimail	id	Ditemukan
+fri	felamimail	id	Jum
+from	felamimail	id	Dari
+from(a->z)	felamimail	id	Dari (A->Z)
+from(z->a)	felamimail	id	Dari (Z->A)
+full name	felamimail	id	Nama Lengkap
+greater than	felamimail	id	lebih dari
+header lines	felamimail	id	Baris Header
+hide header	felamimail	id	sembunyikan header
+hostname / address	felamimail	id	namahost / alamat
+html	felamimail	id	HTML
+icons and text	felamimail	id	Ikon dan teks
+icons only	felamimail	id	Hanya Ikon
+identifying name	felamimail	id	Mengenali nama
+identity	felamimail	id	identitas
+if	felamimail	id	IF
+imap	felamimail	id	IMAP
+imap server	felamimail	id	IMAP Server
+imap server address	felamimail	id	IMAP Server Address
+imap server password	felamimail	id	imap server password
+imap server type	felamimail	id	IMAP Server type
+imap server username	felamimail	id	imap server username
+imaps authentication	felamimail	id	IMAPS Authentication
+imaps encryption only	felamimail	id	IMAPS Encryption only
+import	felamimail	id	impor
+import mail	felamimail	id	Impor Mail
+in	felamimail	id	dalam
+inbox	felamimail	id	INBOX
+index order	felamimail	id	Urutan Indeks
+info	felamimail	id	Info
+javascript	felamimail	id	JavaScript
+jumping to end	felamimail	id	loncat ke akhir
+jumping to start	felamimail	id	loncat ke awal
+junk	felamimail	id	Junk
+kilobytes	felamimail	id	kilobyte
+language	felamimail	id	Bahasa
+last name	felamimail	id	Nama Belakang
+left	felamimail	id	Kiri
+less	felamimail	id	kurang
+less than	felamimail	id	kurang dari
+light gray	felamimail	id	Light Gray
+list all	felamimail	id	Tampilkan semuanya
+loading	felamimail	id	memuatkan
+mail settings	felamimail	id	Pengaturan Mail
+mainmessage	felamimail	id	Pesan utama
+manage email accounts and identities	common	id	Mengelola Akoun eMail dan Identitas
+manage emailaccounts	common	id	Mengelola akoun EMail
+manage emailfilter / vacation	preferences	id	Mengelola saringan eMail / Liburan
+manage folders	common	id	Mengelola Folder
+manage sieve	common	id	Manage Sieve scripts
+manage signatures	felamimail	id	Mengelola Tandatangan
+mark as deleted	felamimail	id	Tandai sbg terhapus
+match	felamimail	id	Cocok
+matches	felamimail	id	kecocokan
+matches regexp	felamimail	id	cocok regexp
+max uploadsize	felamimail	id	max uploadsize
+message highlighting	felamimail	id	Penyorotan Pesan
+message list	felamimail	id	Daftar Pesan
+messages	felamimail	id	pesan-pesan
+mon	felamimail	id	Sen
+move	felamimail	id	Pindahkan
+move folder	felamimail	id	pindahkan folder
+move messages	felamimail	id	pindahkan pesan
+move messages?	felamimail	id	Pindahkan Pesan?
+name	felamimail	id	Nama
+new	common	id	Baru
+new filter	felamimail	id	Saringan baru
+next	felamimail	id	Berikutnya
+next message	felamimail	id	pesan berikutnya
+no encryption	felamimail	id	tiada enkripsi
+no filter	felamimail	id	Tiada Saringan
+no folders	felamimail	id	tiada folder
+no signature	felamimail	id	tiada tandatangan
+no stationery	felamimail	id	no stationery
+no subject given!	felamimail	id	tiada subyek diisikan!
+none	felamimail	id	tiada
+not allowed	felamimail	id	tidak dibolehkan
+on	felamimail	id	pada
+on behalf of	felamimail	id	bertindak sebagai
+only inbox	felamimail	id	Hanya INBOX
+only unseen	felamimail	id	Hanya yang belum dilihat
+open all	felamimail	id	buka semuanya
+options	felamimail	id	Pilihan
+or	felamimail	id	or
+organisation	felamimail	id	organisasi
+organization	felamimail	id	organisasi
+organization name	admin	id	Nama Organisasi
+original message	felamimail	id	pesan asal
+participants	felamimail	id	Peserta
+personal information	felamimail	id	Info Pribadi
+port	felamimail	id	port
+posting	felamimail	id	posting
+previous	felamimail	id	Sebelumnya
+previous message	felamimail	id	pesan sebelumnya
+print it	felamimail	id	cetak
+print this page	felamimail	id	cetak halaman ini
+printview	felamimail	id	lihat cetakan
+quicksearch	felamimail	id	Cari cepat
+read	felamimail	id	terbaca
+reading	felamimail	id	membaca
+receive notification	felamimail	id	Terima notifikasi
+recent	felamimail	id	terbaru
+reject with	felamimail	id	tolak dengan
+remove	felamimail	id	buang
+remove immediately	felamimail	id	Buang segera
+rename	felamimail	id	Ubah
+rename a folder	felamimail	id	Ubah Folder
+rename folder	felamimail	id	Ubah folder
+renamed successfully!	felamimail	id	Sukses mengubah!
+replied	felamimail	id	dibalas
+reply	felamimail	id	Balas
+reply all	felamimail	id	Balas ke Semua
+reply to	felamimail	id	Balas Ke
+replyto	felamimail	id	ReplyTo
+respond	felamimail	id	Tanggapan
+return	felamimail	id	Kembali
+right	felamimail	id	Kanan
+rule	felamimail	id	Rule/Aturan
+sat	felamimail	id	Sab
+save	felamimail	id	Simpan
+save all	felamimail	id	Simpan semuanya
+save as draft	felamimail	id	simpan sbg draft
+save as infolog	felamimail	id	simpan sbg infolog
+save changes	felamimail	id	simpan perubahan
+save message to disk	felamimail	id	simpan pesan ke disk
+script name	felamimail	id	nama skrip
+script status	felamimail	id	status skrip
+search	felamimail	id	Pencarian
+search for	felamimail	id	Mencari
+select	felamimail	id	Pilih
+select all	felamimail	id	Pilih Semuanya
+select emailprofile	felamimail	id	Pilih Profil Email
+select folder	felamimail	id	pilih folder
+send	felamimail	id	Kirim
+send a reject message	felamimail	id	kirim pesan penolakan
+sent	felamimail	id	Sent
+sent folder	felamimail	id	Sent Folder
+set as default	felamimail	id	Tetapkan sbg bawaan
+show header	felamimail	id	tampilkan header
+sieve settings	admin	id	Sieve settings
+signatur	felamimail	id	Tandatangan
+signature	felamimail	id	Tandatangan
+simply click the target-folder	felamimail	id	Cukup klik folder tujuan
+size	felamimail	id	Ukuran
+size(...->0)	felamimail	id	Ukuran (...->0)
+size(0->...)	felamimail	id	Ukuran (0->...)
+skipping forward	felamimail	id	skipping forward
+skipping previous	felamimail	id	skipping previous
+small view	felamimail	id	small view
+smtp settings	admin	id	SMTP settings
+stationery	felamimail	id	stationery
+subject	felamimail	id	Subyek
+subject(a->z)	felamimail	id	Subyek (A->Z)
+subject(z->a)	felamimail	id	Subyek (Z->A)
+submit	felamimail	id	Kirimkan
+subscribe	felamimail	id	Berlangganan
+subscribed	felamimail	id	Berlangganan
+subscribed successfully!	felamimail	id	Sukses berlangganan!
+sun	felamimail	id	Min
+system signature	felamimail	id	tandatangan sistem
+table of contents	felamimail	id	Daftar Isi
+template folder	felamimail	id	Folder Templat
+templates	felamimail	id	Templat
+text only	felamimail	id	Hanya teks
+text/plain	felamimail	id	text/plain
+then	felamimail	id	THEN
+this folder is empty	felamimail	id	THIS FOLDER IS EMPTY
+thu	felamimail	id	Kam
+to	felamimail	id	Kepada
+translation preferences	felamimail	id	Kesukaan Penerjemahan
+translation server	felamimail	id	Server Penerjemahan
+trash	felamimail	id	Trash
+trash fold	felamimail	id	Trash Fold
+trash folder	felamimail	id	Trash Folder
+tue	felamimail	id	Sel
+type	felamimail	id	tipe
+unflagged	felamimail	id	tak ditandai
+unknown err	felamimail	id	Unknown err
+unknown error	felamimail	id	Unknown error
+unknown sender	felamimail	id	Pengirim Takdikenal
+unread	common	id	Tak dibaca
+unseen	felamimail	id	Tak dilihat
+unselect all	felamimail	id	Batalkan semua pilihan
+unsubscribe	felamimail	id	Batal berlangganan
+unsubscribed	felamimail	id	Batal berlangganan
+unsubscribed successfully!	felamimail	id	Sukses membatalkan langganan!
+up	felamimail	id	naik
+updating view	felamimail	id	memperbarui tampilan
+use addresses	felamimail	id	Gunakan Alamat
+vacation notice	common	id	vacation notice
+validate certificate	felamimail	id	validate certificate
+view full header	felamimail	id	Lihat header penuh
+view message	felamimail	id	Lihat pesan
+viewing full header	felamimail	id	Melihat header penuh
+viewing message	felamimail	id	Melihat pesan
+viewing messages	felamimail	id	Melihat pesan
+wed	felamimail	id	Rab
+with message	felamimail	id	dengan pesan
+with message "%1"	felamimail	id	dengan pesan "%1"
+wrap incoming text at	felamimail	id	Gulung teks pada
+writing	felamimail	id	menulis
+wrote	felamimail	id	menulis
