@@ -882,9 +882,11 @@ abstract class bo_merge
 	 * Get a list of document actions / files from the given directory
 	 *
 	 * @param string $dirs Directory(s comma or space separated) to search
-	 * @return List of documents, suitable for a selectbox.  The key is document_<filename>.
+	 * @param string $prefix='document_' prefix for array keys
+	 * @param array|string $mime_filter=null allowed mime type(s), default all
+	 * @return array List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dirs, $prefix='document_')
+	public static function get_documents($dirs, $prefix='document_', $mime_filter=null)
 	{
 		if (!$dirs) return array();
 
@@ -903,6 +905,7 @@ abstract class bo_merge
 				{
 					// return only the mime-types we support
 					if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
+					if ($mime_filter && !in_array($file['mime'], (array)$mime_filter)) continue;
 
 					$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 				}
