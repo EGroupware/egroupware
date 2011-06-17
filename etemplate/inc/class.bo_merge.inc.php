@@ -1035,6 +1035,11 @@ abstract class bo_merge
 				}
 			}
 		}
+		elseif (egw_vfs::stat($document) && egw_vfs::is_readable($document))
+		{
+			return false;
+		}
+		//error_log(__METHOD__."('$document', dirs='$dirs') returning 'Document '$document' does not exist or is not readable for you!'");
 		return lang("Document '%1' does not exist or is not readable for you!",$document);
 	}
 
