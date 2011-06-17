@@ -294,7 +294,7 @@ abstract class bo_merge
 		}
 
 		// check export-limit and fail if user tries to export more entries then allowed
-		if ($this->export_limit && //!$GLOBALS['egw_info']['user']['apps']['admin'] &&
+		if ($this->export_limit && !$GLOBALS['egw_info']['user']['apps']['admin'] &&
 			count($ids) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
