@@ -1,23 +1,6 @@
-Index: egroupware/phpgwapi/inc/class.egw.inc.php
-===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 35166)
-+++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -543,10 +543,12 @@
- 			}
- 			// call the asyncservice check_run function if it is not explicitly set to cron-only
- 			//
-+/* not needed as rpm uses /etc/cron.d/egroupware
- 			if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
- 			{
- 				ExecMethod('phpgwapi.asyncservice.check_run','fallback');
- 			}
-+*/
- 			$this->db->disconnect();
- 		}
- 	}
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 35166)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 35356)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
 @@ -99,16 +99,20 @@
  			$config->save_repository();
@@ -59,3 +42,20 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		}
  
  		echo "<hr><table border=0><tr>\n";
+Index: egroupware/phpgwapi/inc/class.egw.inc.php
+===================================================================
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 35356)
++++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
+@@ -558,10 +558,12 @@
+ 			}
+ 			// call the asyncservice check_run function if it is not explicitly set to cron-only
+ 			//
++/* not needed as rpm uses /etc/cron.d/egroupware
+ 			if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
+ 			{
+ 				ExecMethod('phpgwapi.asyncservice.check_run','fallback');
+ 			}
++*/
+ 			$this->db->disconnect();
+ 		}
+ 	}
