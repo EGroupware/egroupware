@@ -901,7 +901,8 @@ function load_cal(url,id) {
 			} else {
 				$filename = $_GET['merge'];
 			}
-			return calendar_uilist::download_document($timespan, $filename);
+			$merge = new calendar_merge();
+			return $merge->download($filename, $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 		}
 		return false;
 	}
