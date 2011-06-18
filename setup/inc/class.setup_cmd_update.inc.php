@@ -28,8 +28,9 @@ class setup_cmd_update extends setup_cmd
 	 * @param string $config_passwd=null pw of above user
 	 * @param string $backup=null filename of backup to use instead of new install, default new install
 	 * @param boolean $verbose=false if true, echos out some status information during the run
+	 * @param string $app=null single application to update or install
 	 */
-	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$verbose=false)
+	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$verbose=false,$app=null)
 	{
 		if (!is_array($domain))
 		{
@@ -39,6 +40,7 @@ class setup_cmd_update extends setup_cmd
 				'config_passwd' => $config_passwd,
 				'backup'        => $backup,
 				'verbose'       => $verbose,
+				'app'           => $app,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
@@ -46,7 +48,7 @@ class setup_cmd_update extends setup_cmd
 	}
 
 	/**
-	 * run the command: update
+	 * run the command: update or install/update a single app ($this->app)
 	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
@@ -62,17 +64,57 @@ class setup_cmd_update extends setup_cmd
 
 		$this->check_installed($this->domain,array(14),$this->verbose);
 
-		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4)
+		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4 &&
+			(!$this->app || !in_array($this->app, self::$apps_to_install) && !in_array($this->app, self::$apps_to_upgrade)))
 		{
 			return lang('No update necessary, domain %1(%2) is up to date.',$this->domain,$GLOBALS['egw_domain'][$this->domain]['db_type']);
 		}
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 
-		self::_echo_message($this->verbose,lang('Start updating the database ...'));
-
-		ob_start();
 		self::$egw_setup->process->init_process();	// we need a new schema-proc instance for each new domain
-		self::$egw_setup->process->pass($setup_info,'upgrade',false);
+
+		// request to install a single app
+		if ($this->app && in_array($this->app, self::$apps_to_install))
+		{
+			$app_title = $setup_info[$this->app]['title'] ? $setup_info[$this->app]['title'] : $setup_info[$this->app]['name'];
+			self::_echo_message($this->verbose,lang('Start installing application %1 ...',$app_title));
+			ob_start();
+			$terror = array($this->app => $setup_info[$this->app]);
+
+			if ($setup_info[$this->app]['tables'])
+			{
+				$terror = self::$egw_setup->process->current($terror,$DEBUG);
+				$terror = self::$egw_setup->process->default_records($terror,$DEBUG);
+				echo $app_title . ' ' . lang('tables installed, unless there are errors printed above') . '.';
+			}
+			else
+			{
+				// check default_records for apps without tables, they might need some initial work too
+				$terror = self::$egw_setup->process->default_records($terror,$DEBUG);
+				if (self::$egw_setup->app_registered($setup_info[$this->app]['name']))
+				{
+					self::$egw_setup->update_app($setup_info[$this->app]['name']);
+				}
+				else
+				{
+					self::$egw_setup->register_app($setup_info[$this->app]['name']);
+				}
+				echo $app_title . ' ' . lang('registered') . '.';
+
+				if ($setup_info[$this->app]['hooks'])
+				{
+					self::$egw_setup->register_hooks($setup_info[$this->app]['name']);
+					echo "\n".$app_title . ' ' . lang('hooks registered') . '.';
+				}
+			}
+			self::$egw_setup->process->translation->drop_add_all_langs(false,$this->app);
+		}
+		else
+		{
+			self::_echo_message($this->verbose,lang('Start updating the database ...'));
+			ob_start();
+			self::$egw_setup->process->pass($setup_info,'upgrade',false);
+		}
 		$messages = ob_get_contents();
 		ob_end_clean();
 		if ($messages && $this->verbose) echo strip_tags($messages)."\n";

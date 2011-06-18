@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /**
- * eGroupWare - RPM post install: automatic install or update EGroupware
+ * EGroupware - RPM post install: automatic install or update EGroupware
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -59,6 +59,7 @@ $config = array(
 	'postfix'       => '',	// see setup-cli.php --help config
 	'cyrus'         => '',
 	'sieve'         => '',
+	'install-update-app' => '',	// install or update a single (non-default) app
 );
 
 // read language from LANG enviroment variable
@@ -109,7 +110,7 @@ function set_distro_defaults($distro=null)
 				$config['start_webserver'] = '/usr/sbin/service apache2';
 			}
 			else
-			{	
+			{
 				$config['start_db'] = '/etc/init.d/mysql';
 				$config['start_webserver'] = '/etc/init.d/apache2';
 			}
@@ -350,7 +351,7 @@ else
 	register_shutdown_function('patch_header',$config['header'],$config['config_user'],$old_password);
 
 	// update egroupware
-	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd']);
+	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].',,'.$config['install-update-app']);
 	$ret = run_cmd($setup_update,$output,array(4,15));
 
 	switch($ret)

@@ -247,15 +247,15 @@ function do_backup($arg,$quite_check=false)
 }
 
 /**
- * Update one or all domains
+ * Update one or all domains, optional install a given app
  *
- * @param string $arg domain(all),[config user(admin)],password,[backup-file, 'no' for no backup or empty for default name]
+ * @param string $arg domain(all),[config user(admin)],password,[backup-file, 'no' for no backup or empty for default name],[app to install or uppdate]
  */
 function do_update($arg)
 {
 	global $setup_info;
 
-	list($domain,$user,$password,$backup) = explode(',',$arg);
+	list($domain,$user,$password,$backup,$app) = explode(',',$arg);
 	_fetch_user_password($user,$password);
 
 	$domains = $GLOBALS['egw_domain'];
@@ -269,7 +269,8 @@ function do_update($arg)
 
 		_check_auth_config($arg,14);
 
-		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4)
+		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4 &&
+			(!$app || !in_array($app, setup_cmd::$apps_to_install) && !in_array($app, setup_cmd::$apps_to_upgrade)))
 		{
 			echo lang('No update necessary, domain %1(%2) is up to date.',$domain,$data['db_type'])."\n";
 		}
@@ -277,7 +278,7 @@ function do_update($arg)
 		{
 			do_backup($arg,true);
 
-			$cmd = new setup_cmd_update($domain,$user,$password,$backup,true);
+			$cmd = new setup_cmd_update($domain,$user,$password,$backup,true,$app);
 			echo $cmd->run()."\n";
 		}
 	}
@@ -501,7 +502,7 @@ function do_usage($what='')
 		echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
 		echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
 		echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
-		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password').'[,no = no backup]'."\n";
+		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password').'[,[no = no backup][,app to install]]'."\n";
 		echo lang('You can use the header user and password for every domain too. If the password is not set via the commandline, it is read from the enviroment variable EGW_CLI_PASSWORD or queried from the user.')."\n";
 	}
 	if (!$what || $what == 'header')

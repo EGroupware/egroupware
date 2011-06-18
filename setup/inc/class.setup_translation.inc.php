@@ -116,18 +116,24 @@ class setup_translation
 		return translation::add_langs($appname,$DEBUG,$force_langs);
 	}
 
-	static function drop_add_all_langs($langs=False)
+	/**
+	 * installs translations for the selected langs into the database
+	 *
+	 * @param array|boolean $langs langs to install (as data NOT keys (!))
+	 * @param string|boolean $only_app=false app-name to install only one app or default false for all
+	 */
+	static function drop_add_all_langs($langs=false,$only_app=false)
 	{
 		if (!$langs && !count($langs = translation::get_langs()))
 		{
 			$langs[] = 'en';
 		}
-		return translation::install_langs($langs,'dumpold');
+		return translation::install_langs($langs,'dumpold',$only_app);
 	}
 
 	/**
 	 * Languages we support (alphabetically sorted)
-	 * 
+	 *
 	 * @param boolean $array_values=true true: values are an array, false values are just the descriptiong
 	 * @return array
 	 */
@@ -150,7 +156,7 @@ class setup_translation
 			}
 		}
 		fclose($f);
-	
+
 		if ($array_values)
 		{
 			$d = dir(EGW_SERVER_ROOT.'/setup/lang');

@@ -209,7 +209,22 @@ abstract class setup_cmd extends admin_cmd
 	}
 
 	/**
+	 * Applications which are currently not installed (set after call to check_installed, for the last/only domain only)
+	 *
+	 * @var array
+	 */
+	static public $apps_to_install=array();
+	/**
+	 * Applications which are currently need update (set after call to check_installed, for the last/only domain only)
+	 *
+	 * @var array
+	 */
+	static public $apps_to_upgrade=array();
+
+	/**
 	 * Check if eGW is installed, which versions and if an update is needed
+	 *
+	 * Sets self::$apps_to_update and self::$apps_to_install for the last/only domain only!
 	 *
 	 * @param string $domain='' domain to check, default '' = all
 	 * @param int/array $stop=0 stop checks before given exit-code(s), default 0 = all checks
@@ -306,30 +321,29 @@ abstract class setup_cmd extends admin_cmd
 				case 4: throw new egw_exception_wrong_userinput(lang('eGroupWare API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'),14);
 
 				case 10:	// also check apps of updates
-					$apps_to_upgrade = array();
-					$apps_to_install = array();
+					self::$apps_to_upgrade = self::$apps_to_install = array();
 					foreach($setup_info as $app => $data)
 					{
 						if ($data['currentver'] && $data['version'] && $data['version'] != 'deleted' && $data['version'] != $data['currentver'])
 						{
-							$apps_to_upgrade[] = $app;
+							self::$apps_to_upgrade[] = $app;
 						}
 						if (!isset($data['enabled']))
 						{
-							$apps_to_install[] = $app;
+							self::$apps_to_install[] = $app;
 						}
 					}
-					if ($apps_to_install)
+					if (self::$apps_to_install)
 					{
 						self::_echo_message($verbose);
-						$messages[] = self::_echo_message($verbose,lang('The following applications are NOT installed:').' '.implode(', ',$apps_to_install));
+						$messages[] = self::_echo_message($verbose,lang('The following applications are NOT installed:').' '.implode(', ',self::$apps_to_install));
 					}
-					if ($apps_to_upgrade)
+					if (self::$apps_to_upgrade)
 					{
 						$db_stage = 4;
 						if ($stop && in_array(10+$db_stage,$stop)) return $messages;
 
-						throw new egw_exception_wrong_userinput(lang('The following applications need to be upgraded:').' '.implode(', ',$apps_to_upgrade).'! '.lang('Use --update to do so.'),14);
+						throw new egw_exception_wrong_userinput(lang('The following applications need to be upgraded:').' '.implode(', ',self::$apps_to_upgrade).'! '.lang('Use --update to do so.'),14);
 					}
 					break;
 			}
