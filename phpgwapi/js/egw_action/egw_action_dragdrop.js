@@ -272,22 +272,25 @@ function egwDropActionImplementation()
 			$(node).droppable(
 				{
 					"accept": function(_draggable) {
-						var accepted = ai._fetchAccepted(
-							_callback.call(_context, "links", ai, EGW_AO_EXEC_THIS));
-
-						// Check whether all drag types of the selected objects
-						// are accepted
-						var ddTypes = _draggable.data("ddTypes");
-
-						for (var i = 0; i < ddTypes.length; i++)
+						if (typeof _draggable.data("ddTypes") != "undefined")
 						{
-							if (accepted.indexOf(ddTypes[i]) == -1)
-							{
-								return false;
-							}
-						}
+							var accepted = ai._fetchAccepted(
+								_callback.call(_context, "links", ai, EGW_AO_EXEC_THIS));
 
-						return true;
+							// Check whether all drag types of the selected objects
+							// are accepted
+							var ddTypes = _draggable.data("ddTypes");
+
+							for (var i = 0; i < ddTypes.length; i++)
+							{
+								if (accepted.indexOf(ddTypes[i]) == -1)
+								{
+									return false;
+								}
+							}
+
+							return true;
+						}
 					},
 					"drop": function(event, ui) {
 						var draggable = ui.draggable;
