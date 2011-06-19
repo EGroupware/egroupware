@@ -558,7 +558,13 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array(self::PATH_ATTRIBUTE => $id));
+		$contact = $this->bo->read(self::PATH_ATTRIBUTE == 'id' ? $id : array(self::PATH_ATTRIBUTE => $id));
+
+		if ($contact && $contact['tid'] == addressbook_so::DELETED_TYPE)
+		{
+			$contact = null;	// handle deleted events, as not existing (404 Not Found)
+		}
+		return $contact;
 	}
 
 	/**
