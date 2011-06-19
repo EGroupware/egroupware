@@ -734,6 +734,7 @@ class nextmatch_widget
 				'id','caption','iconUrl','type','default','onExecute','group',
 				'enabled','allowOnMultiple','hideOnDisabled','data','children',
 				'hint','checkbox','checked','radioGroup','acceptedTypes','dragType',
+				'shortcut'
 			);
 			// add all not egw_action supported attributes to data
 			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
