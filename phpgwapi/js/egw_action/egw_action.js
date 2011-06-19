@@ -1162,57 +1162,61 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 	case EGW_KEY_ARROW_DOWN:
 	case EGW_KEY_PAGE_UP:
 	case EGW_KEY_PAGE_DOWN:
-		var intval = 
-			(_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ?
-			1 : 10;
 
-		if (this.children.length > 0)
+		if (!_shift && !_ctrl && !_alt)
 		{
-			// Get the focused object
-			var focused = this.getFocusedObject();
+			var intval = 
+				(_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ?
+				1 : 10;
 
-			// Determine the object which should get selected
-			var selObj = null;
-			if (!focused)
+			if (this.children.length > 0)
 			{
-				selObj = this.children[0];
-			}
-			else
-			{
-				selObj = (_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_PAGE_UP) ?
-					focused.getPrevious(intval) : focused.getNext(intval);
-			}
+				// Get the focused object
+				var focused = this.getFocusedObject();
 
-			if (selObj != null)
-			{
-				if (!_shift)
+				// Determine the object which should get selected
+				var selObj = null;
+				if (!focused)
 				{
-					this.setAllSelected(false);
+					selObj = this.children[0];
 				}
 				else
 				{
-					var objs = focused.traversePath(selObj);
-					for (var i = 0; i < objs.length; i++)
-					{
-						objs[i].setSelected(true);
-					}
+					selObj = (_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_PAGE_UP) ?
+						focused.getPrevious(intval) : focused.getNext(intval);
 				}
 
-				selObj.setSelected(true);
-				selObj.setFocused(true);
+				if (selObj != null)
+				{
+					if (!_shift)
+					{
+						this.setAllSelected(false);
+					}
+					else
+					{
+						var objs = focused.traversePath(selObj);
+						for (var i = 0; i < objs.length; i++)
+						{
+							objs[i].setSelected(true);
+						}
+					}
 
-				// Tell the aoi of the object to make it visible
-				selObj.makeVisible();
+					selObj.setSelected(true);
+					selObj.setFocused(true);
+
+					// Tell the aoi of the object to make it visible
+					selObj.makeVisible();
+				}
+
+				return true;
 			}
-
-			return true;
 		}
 
 		break;
 
 	// Handle CTRL-A to select all elements in the current container
 	case EGW_KEY_A:
-		if (_ctrl)
+		if (_ctrl && !_shift && !_alt)
 		{
 			this.toggleAllSelected();
 			return true;

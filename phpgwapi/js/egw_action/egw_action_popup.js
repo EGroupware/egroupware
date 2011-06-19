@@ -62,27 +62,34 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	}
 
 	action.set_shortcut = function(_value) {
-		var sc = {
-			"keyCode": -1,
-			"shift": false,
-			"ctrl": false,
-			"alt": false
-		}
-
-		if (typeof _value == "number")
+		if (_value)
 		{
-			sc.keyCode = _value;
-		}
+			var sc = {
+				"keyCode": -1,
+				"shift": false,
+				"ctrl": false,
+				"alt": false
+			}
 
-		if (typeof _value == "object" && _value.keyCode != "undefined")
+			if (typeof _value == "number")
+			{
+				sc.keyCode = _value;
+			}
+
+			if (typeof _value == "object" && _value.keyCode != "undefined")
+			{
+				sc.keyCode = _value.keyCode;
+				sc.shift = (typeof _value.shift == "undefined") ? false : _value.shift;
+				sc.ctrl = (typeof _value.ctrl == "undefined") ? false : _value.ctrl;
+				sc.alt = (typeof _value.alt == "undefined") ? false : _value.alt;
+			}
+
+			this.shortcut = sc;
+		}
+		else
 		{
-			sc.keyCode = _value.keyCode;
-			sc.shift = (typeof _value.shift == "undefined") ? false : _value.shift;
-			sc.ctrl = (typeof _value.ctrl == "undefined") ? false : _value.ctrl;
-			sc.alt = (typeof _value.shift == "undefined") ? false : _value.alt;
+			this.shortcut = false;
 		}
-
-		this.shortcut = null;
 	}
 
 	return action;
@@ -147,18 +154,61 @@ function egwPopupActionImplementation()
 		return defaultAction;
 	}
 
+	ai._searchShortcut = function (_key, _objs, _links) {
+		for (var i = 0; i < _objs.length; i++)
+		{
+			var sc = _objs[i].shortcut;
+			if (sc && sc.keyCode == _key.keyCode && sc.shift == _key.shift &&
+			    sc.ctrl == _key.ctrl && sc.alt == _key.alt &&
+			    _objs[i].type == "popup" && (typeof _links[_objs[i].id] == "undefined" ||
+			    _links[_objs[i].id].enabled))
+			{
+				return _objs[i];
+			}
+
+			var obj = this._searchShortcut(_key, _objs[i].children, _links);
+			if (obj) {
+				return obj;
+			}
+		}
+	}
+
+	ai._searchShortcutInLinks = function(_key, _links) {
+		var objs = [];
+		for (var k in _links)
+		{
+			if (_links[k].enabled)
+			{
+				objs.push(_links[k].actionObj);
+			}
+		}
+
+		return ai._searchShortcut(_key, objs, _links);
+	}
+
 	/**
 	 * Handles a key press
 	 */
 	ai._handleKeyPress = function(_key, _selected, _links, _target) {
+		// Handle the default
 		if (_key.keyCode == EGW_KEY_ENTER && !_key.ctrl && !_key.shift && !_key.alt) {
 			var defaultAction = this._getDefaultLink(_links);
 			if (defaultAction)
 			{
 				defaultAction.execute(_selected);
-				return false;
+				return true;
 			}
 		}
+
+		// Check whether the given shortcut exists
+		var obj = this._searchShortcutInLinks(_key, _links);
+		if (obj)
+		{
+			obj.execute(_selected);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -386,6 +436,13 @@ function egwPopupActionImplementation()
 						item.set_checkbox(link.actionObj.checkbox);
 						item.set_checked(link.actionObj.checked);
 						item.set_groupIndex(link.actionObj.radioGroup);
+
+						if (link.actionObj.shortcut)
+						{
+							var sc = link.actionObj.shortcut;
+							item.set_shortcutCaption(egw_shortcutCaption(
+								sc.keyCode, sc.shift, sc.ctrl,  sc.alt));
+						}
 					}
 
 					item.set_data(link.actionObj);

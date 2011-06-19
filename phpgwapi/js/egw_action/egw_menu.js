@@ -69,7 +69,8 @@ function _egwGenMenuStructure(_elements, _parent)
 				//TODO Implement menu item getters?
 				if (key == "id" || key == "caption" || key == "iconUrl" ||
 				    key == "checkbox" || key == "checked" || key == "groupIndex" ||
-				    key == "enabled" || key == "default" || key == "onClick")
+				    key == "enabled" || key == "default" || key == "onClick" ||
+				    key == "hint" || key == "shortcutCaption")
 				{
 					item['set_' + key](obj[key]);
 				}
@@ -289,6 +290,7 @@ function egwMenuItem(_parent, _id)
 	this.onClick = null;
 	this["default"] = false;
 	this.data = null;
+	this.shortcutCaption = null;
 
 	this.children = [];
 	this.parent = _parent;
@@ -409,5 +411,10 @@ egwMenuItem.prototype.set_data = function(_value)
 egwMenuItem.prototype.set_hint = function(_value)
 {
 	this.hint = _value;
+}
+
+egwMenuItem.prototype.set_shortcutCaption = function(_value)
+{
+	this.shortcutCaption = _value;
 }
 

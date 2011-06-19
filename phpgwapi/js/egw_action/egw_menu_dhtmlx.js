@@ -126,6 +126,11 @@ egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idC
 					elem.iconUrl, elem.iconUrl);
 			}
 
+			if (elem.shortcutCaption != null)
+			{
+				this.dhtmlxmenu.setHotKey(id, elem.shortcutCaption);
+			}
+
 			if (elem.children.length > 0)
 			{
 				counter += this._translateStructure(elem.children, id, (_idCnt + counter));
