@@ -775,6 +775,9 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
+		// handle deleted events, as not existing
+		if ($event['deleted']) $event = null;
+
 		if ($this->debug > 1) error_log(__METHOD__."($id) returning ".array2string($event));
 
 		return $event;
