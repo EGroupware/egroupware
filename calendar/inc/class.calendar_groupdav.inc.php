@@ -787,11 +787,22 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	{
 		if ($this->debug > 1) error_log("bo-ical read  :$id:");
 		$event = $this->bo->read($id, null, true, 'server');
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))) return $retval;
+
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
+		{
+			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
+			return $retval;
+		}
+
 		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
+		// handle deleted events, as not existing
+		if ($event['deleted']) $event = null;
+
+		if ($this->debug > 1) error_log(__METHOD__."($id) returning ".array2string($event));
+
 		return $event;
 	}
 
