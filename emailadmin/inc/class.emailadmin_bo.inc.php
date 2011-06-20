@@ -766,9 +766,9 @@ class emailadmin_bo extends so_sql
 			$profile = array(
 				'smtpType' => 'defaultsmtp',
 				'description' => 'default profile (created by setup)',
-				'ea_appname' => '',
-				'ea_group' => 0,
-				'ea_user' => 0,
+				//'ea_appname' => '',
+				//'ea_group' => 0,
+				//'ea_user' => 0,
 				'ea_active' => 1,
 			);
 

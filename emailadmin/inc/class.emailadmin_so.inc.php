@@ -286,9 +286,9 @@
 			}
 			elseif ($_defaultProfile)
 			{
-				$where['ea_appname'] = '';
-				$where['ea_group'] = 0;
-				$where['ea_user'] = 0;
+				$where[] = "(ea_appname ='' or ea_appname is NULL)";
+				$where[] = "(ea_group=0 or ea_group is NULL)";
+				$where[] = "(ea_user =0 or ea_user is NULL)";
 			}
 			elseif ($_appName)
 			{
