@@ -1163,7 +1163,7 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 	case EGW_KEY_PAGE_UP:
 	case EGW_KEY_PAGE_DOWN:
 
-		if (!_shift && !_ctrl && !_alt)
+		if (!_alt)
 		{
 			var intval = 
 				(_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ?
