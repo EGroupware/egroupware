@@ -150,13 +150,19 @@ for(var i = 0; i < actionMgrs.length; i++) {
 var objectMgr = window.egw_getObjectManager(actionMgr.id);
 if(actionMgr && objectMgr && window.egwAction) {
 	var action = new window.egwAction(actionMgr,\''.$prefix.'\'+this.value);
+	var toggle_select = false;
 	if(objectMgr.selectedChildren.length == 0) {
 		// Be nice and select all, if they forgot to select any
 		if(actionMgr.getActionById(\'select_all\')) {
 			actionMgr.getActionById(\'select_all\').set_checked(true);
+			toggle_select = true;
 		}
 	}
 	window.nm_action(action, objectMgr.selectedChildren);
+	if(toggle_select) {
+		// Turn it back off again
+		actionMgr.getActionById(\'select_all\').set_checked(false);
+	}
 }
 } else {';
 			if($appname == 'calendar')
