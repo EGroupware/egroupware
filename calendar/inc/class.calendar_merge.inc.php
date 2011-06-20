@@ -398,7 +398,7 @@ class calendar_merge extends bo_merge
 				$replacements = $this->contact_replacements(substr($participant,1),'');
 				break;
 			case 'r':
-				if (is_null(self::$resources)) self::$resources = CreateObject('resources.bo_resources');
+				if (is_null(self::$resources)) self::$resources = CreateObject('resources.resources_bo');
 				if (($resource = self::$resources->read(substr($participant,1))))
 				{
 					foreach($resource as $name => $value)

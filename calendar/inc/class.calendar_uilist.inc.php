@@ -97,6 +97,13 @@ class calendar_uilist extends calendar_ui
 
 		$etpl = new etemplate('calendar.list');
 
+		// Handle merge from sidebox
+		if($_GET['merge'])
+		{
+			$content['nm']['action'] = 'document_'.$_GET['merge'];
+			$content['nm']['select_all'] = true;
+		}
+
 		if (is_array($content))
 		{
 			// handle a single button like actions
@@ -704,6 +711,9 @@ class calendar_uilist extends calendar_ui
 					$checked['start'] = $nm['startdate'];
 					$checked['end'] = $nm['enddate'];
 					break;
+				default:
+					$date = date_create_from_format('Ymd',$this->date);
+					$checked['start']= $date->format('U');
 			}
 		}
 		return $checked;
@@ -789,12 +799,10 @@ class calendar_uilist extends calendar_ui
 			'hint' => 'Download this event as iCal',
 			'disableClass' => 'rowNoView',
 		);
-/* not working, needs fixing
 		$actions['documents'] = addressbook_merge::document_action(
 			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',
 			$this->bo->cal_prefs['default_document']
 		);
-*/
 		++$group;
 		$actions['delete'] = array(
 			'caption' => 'Delete',
