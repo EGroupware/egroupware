@@ -530,7 +530,12 @@ class emailadmin_bo extends so_sql
 		$profileData['imapTLSEncryption'] = ($profileData['imapTLSEncryption'] == 'yes' ? 1 : (int)$profileData['imapTLSEncryption']);
 		if(strlen($profileData['ea_stationery_active_templates']) > 0)
 		{
-			$profileData['ea_stationery_active_templates'] = unserialize($profileData['ea_stationery_active_templates']);
+			if(is_array(($templates=unserialize($profileData['ea_stationery_active_templates']))))
+			{
+				$profileData['ea_stationery_active_templates'] = $templates;
+			} else {
+				$profileData['ea_stationery_active_templates'] = explode(',',$profileData['ea_stationery_active_templates']);
+			}
 		}
 		self::$sessionData['profile'][$_profileID] = $profileData;
 		$this->saveSessionData();
@@ -727,7 +732,12 @@ class emailadmin_bo extends so_sql
 			$eaPreferences->ea_default_signature		= $data['ea_default_signature'];
 			if(strlen($data['ea_stationery_active_templates']) > 0)
 			{
-				$eaPreferences->ea_stationery_active_templates = unserialize($data['ea_stationery_active_templates']);
+				if(is_array(($templates=unserialize($data['ea_stationery_active_templates']))))
+				{
+					$eaPreferences->ea_stationery_active_templates = $templates;
+				} else {
+					$eaPreferences->ea_stationery_active_templates = explode(',',$data['ea_stationery_active_templates']);
+				}
 			}
 			self::$sessionData['ea_preferences'] = $eaPreferences;
 			$this->saveSessionData();
