@@ -30,8 +30,11 @@
 						'email_home' => $_searchString,
 					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,20));
 
+					$showAccounts = true;
+					if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 					// additionally search the accounts, if the contact storage is not the account storage
-					if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+					if ($showAccounts &&
+						$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 						$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
 					{
 						$accounts = $GLOBALS['egw']->contacts->search(array(
