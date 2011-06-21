@@ -367,6 +367,12 @@ class emailadmin_ui extends emailadmin_bo
 			}
 		}
 		if ($rowfound) $content = array_merge($this->data,array());
+		if(isset($content['ea_stationery_active_templates']) && 
+			strlen($content['ea_stationery_active_templates'])>0 && 
+			is_array(($templates=unserialize($content['ea_stationery_active_templates']))))
+		{
+			$content['ea_stationery_active_templates']=implode(',',$templates);
+		}
 		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] = 
 			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'defaultsmtp').'::CAPABILITIES');
 		$preserv['imapcapabilities'] = $content['imapcapabilities'] = 
