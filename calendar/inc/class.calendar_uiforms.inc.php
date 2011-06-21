@@ -375,7 +375,7 @@ class calendar_uiforms extends calendar_ui
 								$id = $uid;
 								$type = 'u';
 							}
-							else
+							elseif ($uid)
 							{
 								$id = substr($uid,1);
 								$type = $uid[0];
