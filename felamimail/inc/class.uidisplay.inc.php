@@ -364,6 +364,10 @@
 			if($partID != '') {
 				$headerData['partid'] = $partID;
 			}
+			if (strpos(array2string($flags),'Deleted')!==false)
+			{
+				$headerData['deleted']=1;
+			}
 			$this->t->set_var('navbarButtonsLeft',$uiWidgets->displayMessageActions($headerData, $this->mailbox, $this->icServer));
 
 			$navbarButtons = '';

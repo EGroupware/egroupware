@@ -777,7 +777,7 @@
 			return null;
 		}
 
-		function flagMessages($_flag, $_messageUID)
+		function flagMessages($_flag, $_messageUID, $_folder=NULL)
 		{
 			#error_log("felamimail::bocompose::flagMessages");
 			if(!is_array($_messageUID)) {
@@ -792,9 +792,12 @@
 				}
 			}
 
-			$this->icServer->selectMailbox($this->sessionData['mailbox']);
+			$this->icServer->selectMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
 
 			switch($_flag) {
+				case "undelete":
+					$this->icServer->setFlags($_messageUID, '\\Deleted', 'remove', true);
+					break;
 				case "flagged":
 					$this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
 					break;
