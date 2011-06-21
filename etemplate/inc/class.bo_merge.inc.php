@@ -306,7 +306,12 @@ abstract class bo_merge
 		{
 			$mimetype = 'application/rtf';
 		}
-		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
+		try {
+			return $this->merge_string($content,$ids,$err,$mimetype,$fix);
+		} catch (Exception $e) {
+			$err = $e->getMessage();
+			return false;
+		}
 	}
 
 	/**
