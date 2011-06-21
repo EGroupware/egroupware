@@ -379,8 +379,8 @@ class admin_categories
 			else
 			{
 				$content['nm']['start']=0;
-				$content['nm']['filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
+			$content['nm']['filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
 
