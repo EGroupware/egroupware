@@ -730,6 +730,12 @@ class nextmatch_widget
 				$action['data']['nm_action'] = 'egw_open';
 			}
 
+			// give all delete actions a delete shortcut
+			if ($id == 'delete' && !isset($action['shortcut']))
+			{
+				$action['shortcut'] = egw_keymanager::shortcut(EGW_KEY_DELETE);
+			}
+
 			static $egw_action_supported = array(	// attributes supported by egw_action
 				'id','caption','iconUrl','type','default','onExecute','group',
 				'enabled','allowOnMultiple','hideOnDisabled','data','children',
