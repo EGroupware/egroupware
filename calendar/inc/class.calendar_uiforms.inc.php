@@ -378,7 +378,7 @@ class calendar_uiforms extends calendar_ui
 							{
 								$uid = false;	// entry has been deleted
 							}
-							else
+							elseif ($uid)
 							{
 								if (is_numeric($uid))
 								{
