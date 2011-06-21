@@ -2109,6 +2109,12 @@ function calendar_upgrade1_8()
  */
 function calendar_upgrade1_9_001()
 {
+	// delete in the past wrongly created entries for a singel recurrence, which mess up the update, beside being wrong anyway
+	$GLOBALS['egw_setup']->db->delete('egw_api_content_history',array(
+		'sync_appname' => 'calendar',
+		"sync_contentid LIKE '%:%'",
+	), __LINE__, __FILE__);
+
 	/* done by RefreshTable() anyway
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_deleted',array(
 		'type' => 'int',
