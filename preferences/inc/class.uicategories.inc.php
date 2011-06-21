@@ -107,6 +107,8 @@
 
 		function index()
 		{
+$cats = new preferences_categories_ui();
+return $cats->index();
 			$cats_app    = get_var('cats_app',array('GET','POST'));
 			$extra       = get_var('extra',array('GET','POST'));
 			$global_cats = get_var('global_cats',array('GET','POST'));
