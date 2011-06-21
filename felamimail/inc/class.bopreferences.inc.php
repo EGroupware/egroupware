@@ -299,45 +299,6 @@
 			return $this->profileData;
 		}
 
-		function ggetSignature($_signatureID, $_unparsed = false)
-		{
-			if($_signatureID == -1) {
-				$profileData = $this->boemailadmin->getUserProfile('felamimail');
-
-				$systemSignatureIsDefaultSignature = !parent::getDefaultSignature($GLOBALS['egw_info']['user']['account_id']);
-
-				$systemSignature = array(
-					'signatureid'		=> -1,
-					'description'		=> 'eGroupWare '. lang('default signature'),
-					'signature'		=> ($_unparsed === true ? $profileData->ea_default_signature : $GLOBALS['egw']->preferences->parse_notify($profileData->ea_default_signature)),
-					'defaultsignature'	=> $systemSignatureIsDefaultSignature,
-				);
-
-				return $systemSignature;
-
-			} else {
-				require_once('class.felamimail_signatures.inc.php');
-				$signature = new felamimail_signatures($_signatureID);
-				if($_unparsed === false) {
-					$signature->fm_signature = $GLOBALS['egw']->preferences->parse_notify($signature->fm_signature);
-				}
-				return $signature;
-			}
-		}
-
-		function ggetDefaultSignature()
-		{
-			return parent::getDefaultSignature($GLOBALS['egw_info']['user']['account_id']);
-		}
-
-		function ddeleteSignatures($_signatureID)
-		{
-			if(!is_array($_signatureID)) {
-				return false;
-			}
-			return parent::deleteSignatures($GLOBALS['egw_info']['user']['account_id'], $_signatureID);
-		}
-
 		function saveAccountData($_icServer, $_ogServer, $_identity)
 		{
 			if(is_object($_icServer) && !isset($_icServer->validatecert)) {
@@ -368,11 +329,6 @@
 			$this->sessionData = array();
 			$this->saveSessionData();
 			parent::deleteAccountData($GLOBALS['egw_info']['user']['account_id'], $identity);
-		}
-
-		function ssaveSignature($_signatureID, $_description, $_signature, $_isDefaultSignature)
-		{
-			return parent::saveSignature($GLOBALS['egw_info']['user']['account_id'], $_signatureID, $_description, $_signature, (bool)$_isDefaultSignature);
 		}
 
 		function setProfileActive($_status, $_identity=NULL)
