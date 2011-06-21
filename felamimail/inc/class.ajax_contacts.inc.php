@@ -12,7 +12,7 @@
 	* option) any later version.                                                *
 	\***************************************************************************/
 
-	/* $Id: class.ajaxfelamimail.inc.php 21848 2006-06-15 21:50:59Z ralfbecker $ */
+	/* $Id$ */
 
 	class ajax_contacts {
 		function ajax_contacts() {
@@ -24,14 +24,14 @@
 			if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 				if (method_exists($GLOBALS['egw']->contacts,'search')) {
 					// 1.3+
+					$showAccounts = true;
+					if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 					$contacts = $GLOBALS['egw']->contacts->search(array(
 						'n_fn'       => $_searchString,
 						'email'      => $_searchString,
 						'email_home' => $_searchString,
-					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,20));
+					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,20),($showAccounts?array():array('account_id' => null)));
 
-					$showAccounts = true;
-					if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 					// additionally search the accounts, if the contact storage is not the account storage
 					if ($showAccounts &&
 						$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
