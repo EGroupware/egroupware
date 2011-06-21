@@ -449,7 +449,7 @@ class addressbook_ui extends addressbook_bo
 				),
 				'cat_edit' => array(
 					'caption' => 'Edit categories',
-					'url' => 'menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True',
+					'url' => 'menuaction=preferences.preferences_categories_ui.index&cats_app=addressbook&cats_level=True&global_cats=True',
 					'icon' => 'edit',
 					'group' => $group,
 				),

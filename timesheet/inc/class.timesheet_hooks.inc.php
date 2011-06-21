@@ -109,7 +109,7 @@ class timesheet_hooks
 			$file = array(
 				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
 				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Edit Categories' => egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 
 			if ($location == 'preferences')
@@ -128,7 +128,7 @@ class timesheet_hooks
 				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 				'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname='.$appname),
 				'Global Categories'  => egw::link('/index.php',array(
-					'menuaction' => 'admin.uicategories.index',
+					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
 				'Edit Status' => egw::link('/index.php','menuaction=timesheet.timesheet_ui.editstatus'),

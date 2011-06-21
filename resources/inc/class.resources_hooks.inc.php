@@ -62,7 +62,7 @@ class resources_hooks
 		{
 			$file = Array(
 				'Global Categories'  => egw::link('/index.php',array(
-					'menuaction' => 'admin.uicategories.index',
+					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> true)),
 				'Configure Access Permissions' => egw::link('/index.php',

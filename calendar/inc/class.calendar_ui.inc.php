@@ -863,7 +863,7 @@ function load_cal(url,id) {
 			$file = Array(
 				'Calendar preferences'=>egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
 				'Grant Access'=>egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
-				'Edit Categories' =>egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=calendar&cats_level=True&global_cats=True'),
+				'Edit Categories' =>egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			);
 			display_sidebox($appname,$menu_title,$file);
 		}
@@ -875,7 +875,7 @@ function load_cal(url,id) {
 				'Configuration'=>egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
 				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
 				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
-				'Global Categories' =>egw::link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
+				'Global Categories' =>egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			);
 			display_sidebox($appname,$menu_title,$file);
 		}

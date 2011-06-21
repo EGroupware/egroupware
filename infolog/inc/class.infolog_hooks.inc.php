@@ -99,7 +99,7 @@ class infolog_hooks
 			$file = array(
 				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
 				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Edit Categories' => egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -117,7 +117,7 @@ class infolog_hooks
 				'Site configuration' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.admin' )),
 				'Global Categories'  => egw::link('/index.php',array(
-					'menuaction' => 'admin.uicategories.index',
+					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
 				'Custom fields, typ and status' => egw::link('/index.php',array(

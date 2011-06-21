@@ -115,7 +115,7 @@ class calendar_hooks
 			'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
 			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
 			'Calendar Holiday Management' => egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
-			'Global Categories' => egw::link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
+			'Global Categories' => egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			'Category ACL' => egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
 			'Update timezones' => egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
 		);
@@ -130,7 +130,7 @@ class calendar_hooks
 		$file = array(
 			'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
 			'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
-			'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=calendar&cats_level=True&global_cats=True'),
+			'Edit Categories' => egw::link('/index.php','menuaction=preferences.admin_categories.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			'Import CSV-File' => egw::link('/calendar/csv_import.php'),
 		);
 		display_section('calendar','calendar',$file);
