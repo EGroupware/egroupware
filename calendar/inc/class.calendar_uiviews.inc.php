@@ -340,7 +340,13 @@ class calendar_uiviews extends calendar_ui
 		}
 
 		$merge = $this->merge();
-		if($merge) return $merge;
+		if($merge)
+		{
+			egw::redirect_link('/index.php',array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'msg'        => $merge,
+			));
+		}
 
 		$search_params = $this->search_params;
 		$search_params['daywise'] = false;
@@ -395,7 +401,13 @@ class calendar_uiviews extends calendar_ui
 		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->year;
 
 		$merge = $this->merge();
-		if($merge) return $merge;
+		if($merge)
+		{
+			egw::redirect_link('/index.php',array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'msg'        => $merge,
+			));
+		}
 
 		$days =& $this->bo->search(array(
 			'start'   => $this->first,
@@ -636,7 +648,13 @@ class calendar_uiviews extends calendar_ui
 			);
 		}
 		$merge = $this->merge($timespan);
-		if($merge) return $merge;
+		if($merge)
+		{
+			egw::redirect_link('/index.php',array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'msg'        => $merge,
+			));
+		}
 
 		if ($weeks)
 		{
@@ -819,7 +837,13 @@ class calendar_uiviews extends calendar_ui
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
 
 		$merge = $this->merge();
-		if($merge) return $merge;
+		if($merge)
+		{
+			egw::redirect_link('/index.php',array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'msg'        => $merge,
+			));
+		}
 
 		$search_params = array(
 				'start'   => $this->first,
@@ -876,7 +900,13 @@ class calendar_uiviews extends calendar_ui
 		$this->search_params['end'] = $this->last = $this->first+DAY_s-1;
 
 		$merge = $this->merge();
-		if($merge) return $merge;
+		if($merge)
+		{
+			egw::redirect_link('/index.php',array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'msg'        => $merge,
+			));
+		}
 
 		if (!$home)
 		{
