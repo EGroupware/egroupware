@@ -112,7 +112,7 @@ class admin_categories
 					$appname = categories::GLOBAL_APPNAME;
 				}
 			}
-			elseif (!self::$acl_edit || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']))
+			elseif (!self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
 			{
 				// only allow to view category
 				$readonlys['__ALL__'] = true;
@@ -236,7 +236,7 @@ class admin_categories
 		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
-			 (!$GLOBALS['egw_info']['user']['apps']['admin'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
+			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
 
 		$tmpl = new etemplate('admin.categories.edit');
 		$tmpl->exec($this->edit_link,$content,$sel_options,$readonlys,$content+array(
