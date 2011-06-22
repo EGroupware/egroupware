@@ -307,7 +307,7 @@ class admin_categories
 		}
 		elseif ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT)
 		{
-			$owner = 0;
+			$filter['owner'] = 0;
 		}
 
 		$cats = new categories($filter['owner'],$query['appname']);
