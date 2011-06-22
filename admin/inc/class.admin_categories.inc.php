@@ -373,6 +373,7 @@ class admin_categories
 					'get_rows'       =>	$this->get_rows,	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 					'no_filter'      => ($appname == categories::GLOBAL_APPNAME),// Can't have personal categories in global
 					'options-filter' => array(
+						'' => lang('All categories'),
 						categories::GLOBAL_ACCOUNT => lang('Global categories'),
 						$GLOBALS['egw_info']['user']['account_id'] => lang('Own categories'),
 					),
@@ -441,10 +442,8 @@ class admin_categories
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 		$readonlys['add'] = !self::$acl_add;
-		if($GLOBALS['egw_info']['user']['apps']['admin'])
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$content['nm']['options-filter'][''] = lang('All categories');
-		} else {
 			$readonlys['nm']['rows']['owner'] = true;
 			$readonlys['nm']['col_filter']['owner'] = true;
 		}
