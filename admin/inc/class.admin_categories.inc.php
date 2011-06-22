@@ -313,9 +313,9 @@ class admin_categories
 		//$cats = new categories($query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'],$query['appname']);
 		$cats = new categories($filter['owner'],$query['appname']);
 
-		// Use all parents, in case user has their cat as a child of a global or something
 		$parent =array(0);
-		if($filter['owner']) $parent += $cats->return_array('all',0,false,'','ASC','',true,null,-1, 'id');
+		// Use all parents, in case user has their cat as a child of a global or something
+		//if($filter['owner']) $parent += $cats->return_array('all',0,false,'','ASC','',true,null,-1, 'id');
 		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true, $filter);
 		foreach($rows as &$row)
 		{
