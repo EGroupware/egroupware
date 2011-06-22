@@ -521,9 +521,9 @@ class calendar_uilist extends calendar_ui
 			$this->get_rows($query,$events,$readonlys);
 			foreach($events as $key => $event)
 			{
-				if (!in_array($event['id'],$checked)) unset($events[$key]);
+				if (!in_array($event['id'],$checked) && !in_array($event['id'].':'.$event['recur_date'], $checked)) unset($events[$key]);
 			}
-			$checked = $events;
+			$checked = array_values($events); // Clear keys
 		}
 
 		// Actions where one action is done to the group
@@ -540,7 +540,7 @@ class calendar_uilist extends calendar_ui
 			case 'document':
 				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
 				$document_merge = new calendar_merge();
-				$msg = $document_merge->download($settings, $checked, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+				$msg = $document_merge->download($settings, array($checked), '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 				$failed = count($checked);
 				return false;
 		}

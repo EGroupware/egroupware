@@ -57,6 +57,11 @@ class calendar_merge extends bo_merge
 	protected $query = array();
 
 	/**
+	 * Stored IDs, if user passed in ID / events instead of date range
+	 */
+	protected $ids = array();
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -97,7 +102,7 @@ class calendar_merge extends bo_merge
 		$prefix = '';
 
 		// List events ?
-		if(is_array($id) && !$id['id'])
+		if(is_array($id) && !$id['id'] && !$id[0]['id'])
 		{
 			$events = $this->bo->search($this->query + $id + array(
 				'offset' => 0,
@@ -109,10 +114,25 @@ class calendar_merge extends bo_merge
 				$prefix = 'calendar/%d';
 			}
 		}
+		elseif ($id[0]['id'])
+		{
+			// Passed an array of events, to be handled like a date range
+			$events = $id;
+			$id = array('start' => PHP_INT_MAX, 'end' => 0);
+			$this->ids = array();
+			foreach($events as $event) {
+				if($event['start'] < $id['start']) $id['start'] = $event['start'];
+				if($event['end'] > $id['end']) $id['end'] = $event['end'];
+				// Keep ids for future use
+				$this->ids[]  = $event['id'];
+			}
+		}
 		else
 		{
 			$events = array($id);
+			$this->ids = $events;
 		}
+
 		$replacements = array();
 		$n = 0;
 		foreach($events as $event)
@@ -201,13 +221,22 @@ class calendar_merge extends bo_merge
 	{
 		static $days;
 		if(is_array($date) && !$date['start']) {
-			$event = $this->bo->read(is_array($date) ? $date['id'] : $date, is_array($date) ? $date['recur_date'] : null);
-			if(date('l',$event['start']) != $plugin) return array();
-			$date = $event['start'];
+			// List of IDs
+			if($date[0]['start']) {
+				$id = array('start' => PHP_INT_MAX, 'end' => 0);
+				foreach($date as $event) {
+					if($event['start'] < $id['start']) $id['start'] = $event['start'];
+					if($event['end'] > $id['end']) $id['end'] = $event['end'];
+				}
+				$date = $id;
+			} else {
+				$event = $this->bo->read(is_array($date) ? $date['id'] : $date, is_array($date) ? $date['recur_date'] : null);
+				if(date('l',$event['start']) != $plugin) return array();
+				$date = $event['start'];
+			}
 		}
 
 		$_date = $date['start'] ? $date['start'] : $date;
-
 		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
 
 		$events = $this->bo->search($this->query + array(
@@ -218,6 +247,7 @@ class calendar_merge extends bo_merge
 			'order' => 'cal_start',
 			'daywise' => true
 		));
+
 		$days = array();
 		$replacements = array();
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
@@ -225,6 +255,7 @@ class calendar_merge extends bo_merge
 		{
 			foreach($list as $key => $event)
 			{
+				if($this->ids && !in_array($event['id'], $this->ids)) continue;
 				$start = egw_time::to($event['start'], 'array');
 				$end = egw_time::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
@@ -274,6 +305,15 @@ class calendar_merge extends bo_merge
 		list($type, $which) = explode('_',$plugin);
 		if($type == 'day' && $which)
 		{
+			if($id[0]['start'])
+			{
+				$dates = array('start' => PHP_INT_MAX, 'end' => 0);
+				foreach($id as $event) {
+					if($event['start'] < $dates['start']) $dates['start'] = $event['start'];
+					if($event['end'] > $dates['end']) $dates['end'] = $event['end'];
+				}
+				$id = $dates;
+			}
 			$date = $this->bo->date2array($id['start']);
 			$date['day'] = $which;
 			$date = $this->bo->date2ts($date);
@@ -310,6 +350,7 @@ class calendar_merge extends bo_merge
 		{
 			foreach($list as $key => $event)
 			{
+				if($this->ids && !in_array($event['id'], $this->ids)) continue;
 				$start = egw_time::to($event['start'], 'array');
 				$end = egw_time::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
