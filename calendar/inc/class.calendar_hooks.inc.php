@@ -130,7 +130,7 @@ class calendar_hooks
 		$file = array(
 			'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
 			'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
-			'Edit Categories' => egw::link('/index.php','menuaction=preferences.admin_categories.index&cats_app=calendar&cats_level=True&global_cats=True'),
+			'Edit Categories' => egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			'Import CSV-File' => egw::link('/calendar/csv_import.php'),
 		);
 		display_section('calendar','calendar',$file);
