@@ -183,7 +183,6 @@ class admin_categories
 				'menuaction' => $this->list_link,
 				'appname' => $appname,
 				'msg' => $msg,
-				'global_cats' => (empty($global_cats)? false : true),
 			));
 			$js = "window.opener.location='$link';";
 			if ($button == 'save' || $button == 'delete')
@@ -207,6 +206,11 @@ class admin_categories
 		{
 			$sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
 		}
+		// Add 'All users', in case owner is readonlys
+		if($content['id'] && $content['owner'] == 0)
+		{
+			$sel_options['owner'][0] = lang('All users');
+		}
 		if($this->appname == 'admin')
 		{
 			$sel_options['owner'][0] = lang('All users');
@@ -219,8 +223,10 @@ class admin_categories
 				}
 			}
 			$content['no_private'] = true;
+		} else {
+			$readonlys['owner'] = true;
+			$readonlys['access'] = $content['owner'] != $GLOBALS['egw_info']['user']['account_id'];
 		}
-		$readonlys['owner'] = $this->appname != 'admin' && !$GLOBALS['egw_info']['user']['apps']['admin'];
 
 		egw_framework::validate_file('.','global_categories','admin');
 		egw_framework::set_onload('$(document).ready(function() {
@@ -375,12 +381,12 @@ class admin_categories
 					'no_search'      => !self::$acl_search,
 					'row_id'         => 'id',
 				);
+				$content['nm']['filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
 			else
 			{
 				$content['nm']['start']=0;
 			}
-			$content['nm']['filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
 
