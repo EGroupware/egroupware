@@ -285,7 +285,7 @@ class admin_categories
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @return int total number of rows
 	 */
-	static function get_rows($query,&$rows,&$readonlys)
+	public function get_rows($query,&$rows,&$readonlys)
 	{
 		self::init_static();
 
@@ -310,15 +310,21 @@ class admin_categories
 			$filter['owner'] = 0;
 		}
 
-		//$cats = new categories($query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'],$query['appname']);
 		$cats = new categories($filter['owner'],$query['appname']);
 
-		$parent =array(0);
-		// Use all parents, in case user has their cat as a child of a global or something
-		//if($filter['owner']) $parent += $cats->return_array('all',0,false,'','ASC','',true,null,-1, 'id');
-		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true, $filter);
-		foreach($rows as &$row)
+$globalcat=1;
+$parent = 0;
+		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true);
+		$count = $cats->total_records;
+		foreach($rows as $key => &$row)
 		{
+			if($filter['owner'] && $filter['owner'] != $row['owner'])
+			{
+				unset($rows[$key]);
+				$count--;
+				continue;
+			}
+
 			$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
 
 			if ($row['data']['icon']) $row['icon_url'] = self::icon_url($row['data']['icon']);
@@ -334,13 +340,14 @@ class admin_categories
 			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
 			$readonlys["delete[$row[id]]"] = !self::$acl_delete;
 		}
+		$rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
 		// make appname available for actions
 		$rows['appname'] = $query['appname'];
 
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Global categories').
+		$GLOBALS['egw_info']['flags']['app_header'] = lang($this->appname).' - '.lang('categories').
 			($query['appname'] != categories::GLOBAL_APPNAME ? ': '.lang($query['appname']) : '');
 
-		return $cats->total_records;
+		return $count;
 	}
 
 	/**
