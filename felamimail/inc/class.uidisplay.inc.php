@@ -1257,7 +1257,8 @@
 				{
 					$test = json_encode($singleBodyPart['body']);
 					//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error());
-					if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0) 
+					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
+					if ($test=="null" && strlen($singleBodyPart['body'])>0)  
 					{
 						// this should not be needed, unless something fails with charset detection/ wrong charset passed
 						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
