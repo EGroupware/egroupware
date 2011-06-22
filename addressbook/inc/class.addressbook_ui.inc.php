@@ -2001,6 +2001,10 @@ class addressbook_ui extends addressbook_bo
 		if (!empty($content['id'])) list(,$dates) = each($this->read_calendar(array($content['id']),false));
 		if(is_array($dates)) $content += $dates;
 
+		// Disable importexport
+		$GLOBALS['egw_info']['flags']['disable_importexport']['export'] = true;
+		$GLOBALS['egw_info']['flags']['disable_importexport']['merge'] = true;
+
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 		// Load JS for infolog actions

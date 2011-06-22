@@ -93,6 +93,7 @@ class importexport_admin_prefs_sidebox_hooks
 	 */
 	public static function other_apps() {
 		if(!$GLOBALS['egw_info']['user']['apps']['importexport']) return array();
+		if($GLOBALS['egw_info']['flags']['no_importexport'] === true) return array();
 
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		$cache = egw_cache::getCache(egw_cache::SESSION, 'importexport', 'sidebox_links');
@@ -116,6 +117,9 @@ class importexport_admin_prefs_sidebox_hooks
 				'app' => 'importexport',
 				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Import' : 'Import CSV'
 			);
+			if($GLOBALS['egw_info']['flags']['disable_importexport']['import']) {
+				$file['Import CSV']['link'] = '';
+			}
 		}
 		$config = config::read('phpgwapi');
 		if (($GLOBALS['egw_info']['user']['apps']['admin'] || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
@@ -129,6 +133,9 @@ class importexport_admin_prefs_sidebox_hooks
 				'app' => 'importexport',
 				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Export' : 'Export CSV'
 			);
+			if($GLOBALS['egw_info']['flags']['disable_importexport']['export']) {
+				unset($file['Export CSV']['link']);
+			}
 		}
 		if(($file_list = bo_merge::get_documents($GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'], '', array(
 			'application/vnd.oasis.opendocument.spreadsheet',
@@ -137,9 +144,9 @@ class importexport_admin_prefs_sidebox_hooks
 		{
 			$prefix = 'document_';
 
-			$options = 'style="max-width:175px;" onchange="var window = egw_appWindow(\''.$appname.'\');
-if(window.egw_getActionManager) {
-var actionMgrs = window.egw_getActionManager(\''.$appname.'\').getActionsByAttr(\'type\', \'actionManager\');
+			$options = 'style="max-width:175px;" onchange="var win= egw_appWindow(\''.$appname.'\');
+if(win.egw_getActionManager) {
+var actionMgrs = win.egw_getActionManager(\''.$appname.'\').getActionsByAttr(\'type\', \'actionManager\');
 var actionMgr = null;
 for(var i = 0; i < actionMgrs.length; i++) {
 	if(typeof actionMgrs[i].etemplate_var_prefix != \'undefined\') {
@@ -147,9 +154,9 @@ for(var i = 0; i < actionMgrs.length; i++) {
 		break;
 	}
 }
-var objectMgr = window.egw_getObjectManager(actionMgr.id);
-if(actionMgr && objectMgr && window.egwAction) {
-	var action = new window.egwAction(actionMgr,\''.$prefix.'\'+this.value);
+var objectMgr = win.egw_getObjectManager(actionMgr.id);
+if(actionMgr && objectMgr && win.egwAction) {
+	var action = new win.egwAction(actionMgr,\''.$prefix.'\'+this.value);
 	var toggle_select = false;
 	if(objectMgr.selectedChildren.length == 0) {
 		// Be nice and select all, if they forgot to select any
@@ -158,7 +165,7 @@ if(actionMgr && objectMgr && window.egwAction) {
 			toggle_select = true;
 		}
 	}
-	window.nm_action(action, objectMgr.selectedChildren);
+	win.nm_action(action, objectMgr.selectedChildren);
 	if(toggle_select) {
 		// Turn it back off again
 		actionMgr.getActionById(\'select_all\').set_checked(false);
@@ -173,6 +180,9 @@ var win=egw_appWindow('calendar'); win.location=win.location+(win.location.searc
 $options .= '
 }
 this.value = \'\'"';
+			if($GLOBALS['egw_info']['flags']['disable_importexport']['merge']) {
+				$options = 'disabled="disabled"';
+			}
 			$file[] = array(
 				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
 				'noLang'	=> true,
