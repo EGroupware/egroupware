@@ -17,7 +17,7 @@
 class preferences_categories_ui extends admin_categories {
 
 	protected $appname = 'preferences';
-	protected $get_rows = 'preferencespreferences_categories_ui.get_rows';
+	protected $get_rows = 'preferences.preferences_categories_ui.get_rows';
 	protected $list_link = 'preferences.preferences_categories_ui.index';
 	protected $edit_link = 'preferences.preferences_categories_ui.edit';
 	protected $add_link = 'preferences.preferences_categories_ui.edit';
