@@ -69,11 +69,15 @@
 				</row>
 				<row class="row">
 					<description value="Name" options=",,,name"/>
-					<textbox id="name" size="50" maxlength="150"/>
+					<textbox id="name" needed="1" size="50" maxlength="150"/>
 				</row>
 				<row class="row" valign="top">
 					<description value="Description" options=",,,description"/>
 					<textbox multiline="true" id="description" rows="5" cols="50"/>
+				</row>
+				<row class="nmr" disabled="@no_private">
+					<description value="Private"/>
+					<checkbox id="access" options="private,public"/>
 				</row>
 				<row class="row">
 					<description value="Color" options=",,,cat_data[color]"/>
@@ -96,7 +100,7 @@
 				</row>
 				<row class="row">
 					<description value="Limit to members of" options=",,,owner"/>
-					<listbox statustext="Limit global category to members of a certain group" id="owner" rows="3"/>
+					<listbox statustext="Limit global category to members of a certain group" id="owner" needed="1" rows="3"/>
 				</row>
 				<row class="row" disabled="!@last_mod">
 					<description value="Modified"/>
