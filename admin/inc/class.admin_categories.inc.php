@@ -223,6 +223,7 @@ class admin_categories
 				}
 			}
 			$content['no_private'] = true;
+			$content['access'] = 'public';
 		} else {
 			$readonlys['owner'] = true;
 			$readonlys['access'] = $content['owner'] != $GLOBALS['egw_info']['user']['account_id'];
