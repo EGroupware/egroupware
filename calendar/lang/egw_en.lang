@@ -38,7 +38,7 @@ all exceptions are converted into single events.	calendar	en	All exceptions are 
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
-allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'.
+allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
@@ -316,7 +316,7 @@ no matches found	calendar	en	No matches found.
 no meeting requests	calendar	en	No meeting requests
 no owner selected	calendar	en	No owner selected.
 no recurrence	calendar	en	No recurrence
-no response	calendar	en	No response.
+no response	calendar	en	No response
 non blocking	calendar	en	Non blocking
 not	calendar	en	Not
 not rejected	calendar	en	Not rejected
@@ -375,7 +375,7 @@ recovered	calendar	en	Recovered.
 recurrence	calendar	en	Recurrence
 recurring event	calendar	en	Recurring event
 reject	calendar	en	Reject
-rejected	calendar	en	Rejected.
+rejected	calendar	en	Rejected
 repeat days	calendar	en	Repeat days
 repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date. Empty for unlimited.
 repeat type	calendar	en	Repeat type
@@ -538,7 +538,7 @@ weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appearance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
 which view to show on home page	calendar	en	Which view to show on home page
-while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	Minimum number of users for showing day and week views as consolidated. Default is 5.
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	Minimum number of users for showing day and week views as consolidated. Default = 5
 whole day	calendar	en	Whole day
 with credentials included	calendar	en	With credentials included
 wk	calendar	en	Wk

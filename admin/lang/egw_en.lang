@@ -34,7 +34,7 @@ actions	admin	en	Actions
 activate wysiwyg-editor	admin	en	Activate WYSIWYG-editor
 add a category	admin	en	Add a category
 add a group	admin	en	Add a group
-add a new account.	admin	en	Add a new account.
+add a new account.	admin	en	Add a new account
 add a new remote instance	admin	en	Add a new remote instance
 add a subcategory	admin	en	Add a sub category
 add a user	admin	en	Add a user

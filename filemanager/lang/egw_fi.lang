@@ -15,9 +15,13 @@
 %1 successful uploaded.	filemanager	fi	%1 ladattu.
 %1 the following files into current directory	filemanager	fi	%1 seuraavat tiedostot nykyiseen hakemistoon.
 %1 urls %2 to clipboard.	filemanager	fi	%1 URL(:ää) %2 leikepöydälle.
-accessrights	filemanager	fi	ACL-käyttöoikeudet
-acl added.	filemanager	fi	ACL lisätty.
-acl deleted.	filemanager	fi	ACL poistettu.
+%d erros while copying, %d files successfully copied.	filemanager	fi	%d virhettä kopioitaessa, %d tiedostoa kopioitu onnistuneesti.
+%d erros while moving, %d files successfully moved.	filemanager	fi	%d virhettä siirrettäessä, %d tiedostoa siirretty onnistuneesti.
+%d files successfully copied.	filemanager	fi	%d tiedostoa kopioitu onnistuneesti.
+%d files successfully moved.	filemanager	fi	%d tiedostoa siirretty onnistuneesti.
+accessrights	filemanager	fi	Käyttöoikeudet
+acl added.	filemanager	fi	Käyttöoikeus lisätty.
+acl deleted.	filemanager	fi	Käyttöoikeus poistettu.
 actions	filemanager	fi	Toiminnot
 add to current clipboard	filemanager	fi	Lisää leikepöydälle
 all files	common	fi	Kaikki tiedostot
@@ -53,6 +57,7 @@ custom fields	filemanager	fi	Lisäkentät
 cut	filemanager	fi	Leikkaa
 cut to clipboard	filemanager	fi	Leikkaa leikepöydälle
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fi	Oletus on EI. Linkkiä ei näytetä, mutta voit silti navigoida osoitteeseen tai konfiguroida sen aloituskansioksi tai kansiolinkiksi.
+delete these files or directories?	filemanager	fi	Poista nämä tiedostot tai hakemistot?
 delete this file or directory	filemanager	fi	Poista tämä tiedosto tai hakemisto.
 deleted %1	filemanager	fi	Poistettiin %1
 directories sorted in	filemanager	fi	Sisällytetyt hakemistot
@@ -60,6 +65,7 @@ directory	filemanager	fi	Hakemisto
 directory %1 already exists	filemanager	fi	Hakemisto %1 on jo olemassa
 directory %1 does not exist	filemanager	fi	Hakemisto %1 ei ole
 directory not found or no permission to access it!	filemanager	fi	Hakemistoa ei löydy tai sinulla ei ole lukuoikeuksia kyseiseen hakemistoon!
+directory successfully created.	filemanager	fi	Hakemisto luotu onnistuneesti
 display and modification of content	filemanager	fi	Sisällön muokaus ja näyttö
 display of content	filemanager	fi	Sisällön näyttö (lukuoikeus)
 do you want to overwrite the existing file %1?	filemanager	fi	Haluatko tallentaa jo olemassaolevan tiedoston %1 päälle (overwrite)?
@@ -74,6 +80,8 @@ error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
 error deleting the acl entry!	filemanager	fi	Virhe ACL -oikeuksia poistettaessa!
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
+error while creating directory.	filemanager	fi	Virhe luotaessa hakemistoa
+export definitition to use for nextmatch export	filemanager	fi	Vienti asetukset 'nextmatch' vientiin
 extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
 extended acl	filemanager	fi	Laajennetut ACL -oikeudet
 failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen epäonnistui!
@@ -88,6 +96,7 @@ file or directory not found!	filemanager	fi	Tiedostoa tai hakemistoa ei löytyny
 file successful uploaded.	filemanager	fi	Tiedosto ladattu.
 filemanager	common	fi	Tiedostonhallinta
 filemanager configuration	admin	fi	Tiedostonhallinnan asetukset
+filename must not be empty!	filemanager	fi	Tiedoston nimi ei voi olla tyhjä!
 files from subdirectories	filemanager	fi	Alakansioiden tiedostot
 files in this directory	filemanager	fi	Tiedostot tässä kansiossa
 folder up	filemanager	fi	Ylempi kansio
@@ -97,6 +106,7 @@ go to	filemanager	fi	Mene
 go to your home directory	filemanager	fi	Kotihakemistoon
 go up	filemanager	fi	ylös
 id	filemanager	fi	Id
+if you specify an export definition, it will be used when you export	filemanager	fi	Valitse viennin oletusasetus
 inherited	filemanager	fi	Perityt oikeudet
 link	filemanager	fi	Linkki
 link %1: %2	filemanager	fi	Linkki %1: %2
@@ -152,6 +162,9 @@ select action...	filemanager	fi	Valitse toiminto...
 select file to upload in current directory	filemanager	fi	Valitse ladattava tiedosto
 show	filemanager	fi	Näytä
 show hidden files	filemanager	fi	Näytä piilotetut tiedostot
+show link "%1" in side box menu?	filemanager	fi	Näyt linkki "%1" navigointipalkissa
+show link "users and groups*" in side box menu?*	filemanager	fi	Näyt linkki "Käyttäjät ja Ryhmät" navigointipalkissa
+show link "your home directory*" in side box menu?*	filemanager	fi	Näyt linkki "Oma kansio" navigointipalkissa
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan kantahakemistoon (base directory) (/) sivuvalikossa?
 size	filemanager	fi	Koko
 start search	filemanager	fi	Aloita haku

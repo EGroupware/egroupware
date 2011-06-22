@@ -18,6 +18,7 @@ account active	admin	fi	Käyttäjätili aktiivinen
 account has been created	common	fi	Käyttäjätili luotu
 account has been deleted	common	fi	Käyttäjätili poistettu
 account has been updated	common	fi	Käyttäjätili päivitetty
+account id	admin	fi	Käyttäjätilin ID
 account list	admin	fi	Käyttäjätilit
 account permissions	admin	fi	Käyttäjätilien oikeudet
 account preferences	admin	fi	Käyttäjätilien asetukset
@@ -52,6 +53,7 @@ advanced options	admin	fi	Lisäasetukset
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen tunnus lukitaan (oletus: 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)?
 aliases	admin	fi	Aliakset
+all applications	admin	fi	Kaikki sovellukset
 all records and account information will be lost!	admin	fi	Kaikki tietueet ja tunnuksen tiedot poistetaan!
 all users	admin	fi	Kaikki käyttäjät
 allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
@@ -85,14 +87,18 @@ asyncservices not yet installed or other error (%1) !!!	admin	fi	asyncservices e
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fi	Yritä käytä oikeaa mime-tyyppiä FTP siirrossa oletuksen 'application/octet-stream' sijasta
 authentication / accounts	admin	fi	Käyttäjäntunnistus / Käyttäjätilit
 auto create account records for authenticated users	admin	fi	Luo käyttäjätietueet automaattisesti tunnistetuille käyttäjille
+available placeholders	admin	fi	Käytettävät sijaismerkinnät
 back to the list	admin	fi	Takaisin luetteloon
 bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
 bottom	admin	fi	Alas
+bulk password reset	admin	fi	Salasanojen hallinta
 calculate next run	admin	fi	Laske seuraava suoritusaika
 calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvien tapahtumien takaraja päivinä (oletus 1000)
 can change password	admin	fi	Voi vaihtaa salasanaa
 cancel testjob!	admin	fi	Peruuta TestiTyö!
+cancel this scheduled command	admin	fi	Peruuta tämä ajastettu toiminto
+cat_permission_confirm	admin	fi	Ryhmän valitsematta jättäminen voi aiheuttaa ongelmia kategoriaan merkittyjen tietojen näkyvyydessä ryhmälle:
 categories list	admin	fi	Kategorialuettelo
 category %1 has been saved !	admin	fi	Kategoria %1 on tallennettu !
 category deleted.	admin	fi	Kategoria poistettu!
@@ -103,6 +109,8 @@ change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
 change main screen message	admin	fi	Vaihda päänäytön viesti
 change password for %1	admin	fi	Vaihda salasana %1
+change password hash to	admin	fi	Muuta salasana hash:
+changed password hash for %1 to %2.	admin	fi	Salasana hash %1 muutettu %1
 check acl for entries of not (longer) existing accounts	admin	fi	Tarkista ACL- oikeudet tietueista, jotka kuuluvat poistetuille käyttäjätileille.
 check ip address of all sessions	admin	fi	Tarkista IP-osoite kaikille istunnoille
 check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 kohdasta %3
@@ -116,6 +124,8 @@ country selection	admin	fi	Maan valinta
 create group	admin	fi	Uusi ryhmä
 created	admin	fi	Luotu
 created with id #%1	admin	fi	Luotu ID numerolla #%1
+creates / updates user accounts from csv file	admin	fi	Luo uusia tai päivitä olemassaolevia käyttäjätilejä CSV tiedostosta
+creates / updates user groups from csv file	admin	fi	Luo uusia tai päivitä olemassaolevia käyttäjäryhmiä CSV tiedostosta
 creates a new field	admin	fi	Luodaan uusi kenttä
 crontab only (recomended)	admin	fi	Vain crontab (suositellaan)
 custom fields	admin	fi	Lisäkentät
@@ -138,6 +148,7 @@ delete peer server	admin	fi	Poista rinnakkaispalvelin
 delete selected entries	admin	fi	Poista valitut tietueet
 delete the category	admin	fi	Poista kategoria
 delete the group	admin	fi	Poista ryhmä
+delete the selected entries	admin	fi	Poista valitut merkinnät
 delete this category	admin	fi	Poista tämä kategoria
 delete this group	admin	fi	Poista tämä ryhmä
 delete this log entry	admin	fi	Poista tämä lokitietue
@@ -162,6 +173,7 @@ deny all users access to grant other users access to their entries ?	admin	fi	Es
 deny all users access to preferences ?	admin	fi	Estetäänkö kaikilta käyttäjiltä pääsy asetuksiin?
 description can not exceed 255 characters in length !	admin	fi	Kuvaus ei voi ylittää 255 merkkiä!
 determines the order the fields are displayed	admin	fi	Määrittelee järjestyksen, jossa kentät näytetään.
+disable	admin	fi	Ota pois käytöstä
 disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen täyttö" ei käytössä.
 disable wysiwyg-editor	admin	fi	Älä käytä WYSIWYG-toimitinta
 disabled (not recomended)	admin	fi	Ei käytössä (ei suositella)
@@ -171,6 +183,8 @@ do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa 
 do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alakategoriat?
 do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirtää kaikkia yleisiä alakategorioita tason verran alemmas?
 document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
+down	admin	fi	Alas
+download csv	admin	fi	Lataa CSV
 each value is a line like <id>[=<label>]	admin	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
 each value is a line like id[=label]	admin	fi	Jokainen arvo on rivillä kuten id[=label]
 edit account	admin	fi	Muokkaa käyttäjätiliä
@@ -194,6 +208,7 @@ egroupware directory	admin	fi	EGroupware hakemisto
 egroupware version	admin	fi	EGroupware versio
 email account active	admin	fi	Sähköpostilin aktivointi
 email address	admin	fi	Sähköpostiosoite
+enable	admin	fi	Ota käyttöön
 enable debug-messages	admin	fi	Näytä virheenjäljitysviestit
 enable the soap service	admin	fi	Salli SOAP palvelut
 enable the spellcheck in the ritch text editor ?	admin	fi	Salli oikolukuohjelma Rich text editorissa.
@@ -236,8 +251,12 @@ error saving to db:	admin	fi	Virhe tallennettaessa tietokantaan:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fi	Virhe tehtäessä ajastusta, komento väärin muotoiltu tai ajastus on jo olemassa !!!
 error! no appname found	admin	fi	Virhe! Sovellusta ei lödy!
 error: %1 not found or other error !!!	admin	fi	Virhe: %1 ei löydy tai muu virhe !!!
+exists	admin	fi	Olemassaoleva
 expires	admin	fi	Vanhentuu
 explanation of ldapman	admin	fi	Tämä moduuli on toistaiseksi testattu POSTFIX:lla, LDAP:lla, Courier-IMAP:lla ja se tarvitsee schemat Core ja QMAIL (OID7914). Jos haluat lisätietoja käytöstä ja säätämisestä järjestelmääsi varten, lue README.ldapman hakemistosta Admin/doc.
+exports groups into a csv file.	admin	fi	Vie ryhmiä CSV tiedostoon
+exports users into a csv file.	admin	fi	Vie käyttäjätilejä CSV tiedostoon
+failed to change password for account "%1"!	admin	fi	Käyttäjätilin %1 salasanan vaihto epäonnistui!
 fallback (after each pageview)	admin	fi	fallback (tarkista sivuhaun yhteydessä)
 false	admin	fi	false
 field '%1' already exists !!!	admin	fi	Kenttä'%1' on jo olemassa !!!
@@ -252,10 +271,13 @@ force users to change their password regularily?(empty for no,number for after t
 forward also to	admin	fi	Välitä eteenpäin myös
 forward emails to	admin	fi	Eteenpäin välitetyt sähköpostit
 forward only	admin	fi	Välitä vain eteenpäin
+full name	admin	fi	Koko nimi
 global categories	common	fi	Yleiset kategoriat
 governmental: incl. state or municipal authorities or services	admin	fi	Hallituksellinen: Sisältää osavaltioiden ja paikallishallinnot ja palvelut
 grant	admin	fi	Myönnä
 group ?	admin	fi	Ryhmä ?
+group csv export	admin	fi	Ryhmän CSV vienti
+group csv import	admin	fi	Ryhmän CSV tuonti
 group has been added	common	fi	Ryhmä lisätty
 group has been deleted	common	fi	Ryhmä poistettu
 group has been updated	common	fi	Ryhmä päivitetty
@@ -285,7 +307,7 @@ installed applications	common	fi	Asennetut sovellukset
 installed applications, percentage of allowed users and total number of entries.	admin	fi	Asennetut sovellukset, sallittujen käyttäjien prosentuaalinen määrä ja tietueiden kokonaismäärä.
 installed crontab	admin	fi	Asennettu crontab
 interface	admin	fi	Käyttöliittymä
-international use	admin	fi	kansainvälinen käyttö
+international use	admin	fi	Kansainvälinen käyttö
 invalid formated date "%1"!	admin	fi	Virheellinen päivämäärä "%1"!
 invalid remote id or name "%1"!	admin	fi	Virheellinen Remote ID tai nimi "%1"!
 invalid value "%1" use yes or no!	admin	fi	Virheellinen arvo "%1", aseta Kyllä tai Ei!
@@ -295,8 +317,10 @@ kill	admin	fi	Keskeytä
 kill session	admin	fi	Keskeytä istunto
 last %1 logins	admin	fi	Viimeiset %1 kirjautumista
 last %1 logins for %2	admin	fi	Viimeiset %1 kirjautumista käyttäjälle %2
+last action	admin	fi	Viimeisin toimenpide
 last login	admin	fi	Kirjautunut viimeksi
 last login from	admin	fi	Kirjautunut viimeksi osoitteesta
+last password change	admin	fi	Viimeisin salasanan vaihto
 last time read	admin	fi	Luettu viimeksi
 ldap accounts context	admin	fi	LDAP -tunnusten konteksti
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
@@ -309,6 +333,7 @@ ldap rootdn	admin	fi	LDAP rootdn
 leave empty for no quota	admin	fi	Jätä tyhjäksi, jollei rajoituksia ole.
 leave the category untouched and return back to the list	admin	fi	Palaa luetteloon muuttamatta kategoriaa
 leave the group untouched and return back to the list	admin	fi	Palaa luetteloon muuttamatta ryhmää
+leave unchanged	admin	fi	Älä muuta
 leave without saveing the entry	admin	fi	Poistu tallentamatta tietuetta
 leaves without saveing	admin	fi	Poistu tallentamatta
 length<br>rows	admin	fi	Pituus<br>Rivit
@@ -330,10 +355,12 @@ logoutime	admin	fi	Uloskirjautumisaika
 mail settings	admin	fi	Sähköpostiasetukset
 main email-address	admin	fi	Pääsähköpostiosoite
 main screen message	admin	fi	Päänäytön viesti
+manage mapping	admin	fi	Valitse kentät
 manager	admin	fi	Hallinnoija
 max length of the input [, length of the inputfield (optional)]	admin	fi	Max. sisällön pituus [,sisältökenttä pituus (valinnainen)]
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian maksimikoko
+members	admin	fi	Jäsenet
 message has been updated	admin	fi	Viesti päivitetty
 method	admin	fi	Tapa
 minimum account id (e.g. 500 or 100, etc.)	admin	fi	Pienin tunnus-id (esim. 100 tai 500)
@@ -347,6 +374,7 @@ name must not be empty !!!	admin	fi	Nimi ei saa olla tyhjä !!!
 name of the egroupware instance, eg. default	admin	fi	Palvelun nimi esim. yrityksesi nimi
 new group name	admin	fi	Uuden ryhmän nimi
 new name	admin	fi	Uusi nimi
+new password	admin	fi	Uusi salasana
 new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhjä = ei muutosta ]
 next run	admin	fi	Suoritetaan seuraavan kerran
 no algorithms available	admin	fi	Ei käytettävissä
@@ -360,10 +388,14 @@ no permission to add users	admin	fi	Ei oikeutta lisätä käyttäjiä
 no permission to create groups	admin	fi	Ei oikeutta luoda ryhmiä
 non profit: clubs, associations, ...	admin	fi	Yleishyödylliset: Klubit, Yhteisöt,...
 note: ssl available only if php is compiled with curl support	admin	fi	Huomaa: SSL on käytettävissä vain jos PHP on käännetty curl-tuella
+notification mail	admin	fi	Huomautusviesti
+notify user by email	admin	fi	Huomauta käyttäjiä sähköpostilla
+notifying account "%1" %2 failed!	admin	fi	Käyttäjätilin %1 huomauttaminen epäonnistui %2
 number of active users	admin	fi	Aktiivisten käyttäjien lukumäärä
 number of row for a multiline inputfield or line of a multi-select-box	admin	fi	Rivien määrä (useariviseen syöttökenttään tai multi-valintalaatikkoon)
 number of sessions / egroupware logins in the last 30 days	admin	fi	Istuntojen / sisäänkirjautumisien määrä kuukauden ajalta.
 number of users	admin	fi	Käyttäjien lukumäärä
+nummeric account id	admin	fi	Numeerinen käyttäjätilin ID
 official egroupware usage statistic	admin	fi	Virallinen EGroupwaren käyttötilasto
 one day	admin	fi	Yksi päivä
 one hour	admin	fi	Yksi tunti
@@ -377,6 +409,7 @@ own install id:	admin	fi	Asennus ID:
 passthrough	admin	fi	Läpikulku
 password for smtp-authentication	admin	fi	Salasana SMTP-tunnistukselle
 password updated	admin	fi	salasana päivitetty
+passwords and/or attributes of %1 accounts changed	admin	fi	Salasanat ja attribuutit %1 käyttäjätili(in) vaihdettu
 path information	admin	fi	Polut
 peer server list	admin	fi	Rinnakkaispalvelinluettelo
 peer servers	admin	fi	Rinnakkaispalvelimet
@@ -406,6 +439,7 @@ register application hooks	admin	fi	Rekisteröi sovelluskoukut
 remove	admin	fi	Poista
 remove all users from this group	admin	fi	Poista käyttäjät ryhmästä
 remove all users from this group ?	admin	fi	Poistetaanko kaikki käyttäjät tästä ryhmästä?
+requested	admin	fi	Vaadittu
 return to admin mainscreen	admin	fi	Takaisin hallinnan päänäyttöön
 return to view account	admin	fi	Palaa käyttäjätilin tietoihin
 route all mails to	admin	fi	Reititä kaikki viestit
@@ -415,6 +449,7 @@ save the category	admin	fi	Tallenna kategoria
 save the category and return back to the list	admin	fi	Tallenna kategoria ja palaa luetteloon
 saves the changes made and leaves	admin	fi	Tallenna muutokset ja poistu
 saves this entry	admin	fi	Tallenna tietue
+scheduled	admin	fi	Ajastettu toiminto
 search accounts	admin	fi	Etsi tunnuksia
 search categories	admin	fi	Etsi kategoroita
 search groups	admin	fi	Etsi ryhmiä
@@ -424,6 +459,7 @@ select accounts for which the custom field should be visible	admin	fi	valitse k�
 select group managers	admin	fi	Valitse ryhmien ylläpitäjät
 select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
 select the parent category. if this is a main category select no category	admin	fi	Valitse yläkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA
+select users	admin	fi	Valitse käyttäjät
 select users for inclusion	admin	fi	Valitse mukaan otettavat käyttäjät
 select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostojärjestelmän tiedot.
 select where you want to store/retrieve user accounts	admin	fi	Valitse minne haluat tallentaa/noutaa käyttäjätilit.
@@ -450,12 +486,13 @@ soap	admin	fi	SOAP
 sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, the above users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
 sorry, the follow users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
-sort the entries	admin	fi	lajittele kohteet
+sort the entries	admin	fi	Lajittele kohteet
 ssl	admin	fi	ssl
-standard	admin	fi	vakio
-standard imap server	admin	fi	standardi IMAP palvelin
-standard pop3 server	admin	fi	standardi POP3 palvelin
-standard smtp-server	admin	fi	standardi SMTP palvelin
+standard	admin	fi	Vakio
+standard imap server	admin	fi	Standardi IMAP palvelin
+standard pop3 server	admin	fi	Standardi POP3 palvelin
+standard smtp-server	admin	fi	Standardi SMTP palvelin
+start	admin	fi	Aloita
 start testjob!	admin	fi	Käynnistä TestiTyö!
 submit changes	admin	fi	Lähetä muutokset
 submit displayed information?	admin	fi	Lähetä esitetty tieto?
@@ -494,6 +531,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	fi	Ylös
 total of %1 id's changed.	admin	fi	Kaikkiaan %1 ID muutettu.
 total records	admin	fi	Tietueita
+true	admin	fi	Totta
 trust level	admin	fi	Luottamuksen taso
 trust relationship	admin	fi	Luottosuhde
 two days	admin	fi	Kaksi päivää
@@ -506,6 +544,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	fi	Tuntematon käyttäjätili: %1!!!
 unknown command %1!	admin	fi	Tuntematon komento: %1!!!
 unknown option %1	admin	fi	Tuntematon optio: %1!!!
+up	admin	fi	Ylös
 updated	admin	fi	Päivitetty
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fi	EGroupwaren URL, esim. http://domain.com/egroupware
 usage	admin	fi	Käyttö
@@ -513,6 +552,8 @@ use cookies to pass sessionid	admin	fi	Käytä evästeitä (cookie) istuntotunnu
 use pure html compliant code (not fully working yet)	admin	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin).
 use theme	admin	fi	Käytä teemaa
 user accounts	admin	fi	Käyttäjätilit
+user csv export	admin	fi	Käyttäjätilien CSV vienti
+user csv import	admin	fi	Käyttäjätilien CsV tuonti
 user data	common	fi	Käyttäjän tiedot
 user for smtp-authentication (leave it empty if no auth required)	admin	fi	SMTP -käyttäjätunnus (tyhjä, jos ei käytetä)
 user groups	admin	fi	Käyttäjäryhmät
@@ -526,6 +567,7 @@ view error log	admin	fi	Näytä virheloki
 view sessions	admin	fi	Näytä istunnot
 view this user	admin	fi	Näytä tämä käyttäjä
 view user account	admin	fi	Näytä käyttäjätili
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	fi	Kuinka monta päivää etukäteen käyttäjiä huomautetaan tulevasta salasanan vaihdosta. Tyhjä = Ei huomautusta
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	fi	Tietoja käytetään ainoastaan tilastolliseen tarkoitukseen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fi	Mitään identiteetin paljastavaa tietoa ei tallenneta.
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
@@ -551,6 +593,8 @@ you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
 you must select a file type	admin	fi	Anna tiedostotyyppi
 you must select at least one group member.	admin	fi	Valitse vähintään yksi ryhmän jäsen.
 you need to enter install id and password!	admin	fi	Anna asennus ID ja salasana!
+you need to select as least one action!	admin	fi	Valitse vähintään yksi toiminto!
+you need to select some users first!	admin	fi	Valitse ensin käyttäjät!
 you will need to remove the subcategories before you can delete this category	admin	fi	Alikategoriat on poistettava ennen kuin voit poistaa tämän kategorian!
 your last submission was less then %1 days ago!	admin	fi	Viimeisin lähettämäsi tieto on vähemmän kuin %1 päivää sitten!
 your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.
