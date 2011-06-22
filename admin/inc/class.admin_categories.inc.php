@@ -89,9 +89,9 @@ class admin_categories
 	public function edit(array $content=null,$msg='')
 	{
 		// read the session, as the global_cats param is stored with it.
-		$session = egw_cache::getSession(__CLASS__,'nm');
-		$global_cats = $session['global_cats'];
 		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:categories::GLOBAL_APPNAME);
+		$session = egw_cache::getSession(__CLASS__.$appname,'nm');
+		$global_cats = $session['global_cats'];
 		unset($session);
 		if (!isset($content))
 		{
@@ -300,7 +300,7 @@ class admin_categories
 			$globalcat = false;
 		}
 		if($globalcat) $filter['access'] = 'public';
-		egw_cache::setSession(__CLASS__,'nm',$query);
+		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
 		if($query['filter'] > 0 || $query['col_filter']['owner']) {
 			$filter['owner'] = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
@@ -356,13 +356,22 @@ class admin_categories
 		if(!isset($content))
 		{
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
-			$appname = $content['nm']['appname'] ? $content['nm']['appname'] : $_GET['cats_app']?$_GET['cats_app']:categories::GLOBAL_APPNAME;
-			$content['nm'] = egw_cache::getSession(__CLASS__,'nm');
+
+			$appname = categories::GLOBAL_APPNAME;
+			foreach(array($content['nm']['appname'], $_GET['cats_app'], $_GET['appname']) as $field)
+			{
+				if($field) 
+				{
+					$appname = $field;
+					break;
+				}
+			}
+			$content['nm'] = egw_cache::getSession(__CLASS__.$appname,'nm');
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	$this->get_rows,	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'no_filter'      => false,
+					'no_filter'      => ($appname == categories::GLOBAL_APPNAME),// Can't have personal categories in global
 					'options-filter' => array(
 						categories::GLOBAL_ACCOUNT => lang('Global categories'),
 						$GLOBALS['egw_info']['user']['account_id'] => lang('Own categories'),
@@ -382,7 +391,7 @@ class admin_categories
 					'no_search'      => !self::$acl_search,
 					'row_id'         => 'id',
 				);
-				$content['nm']['filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
+				$content['nm']['filter'] = $this->appname == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
 			else
 			{
