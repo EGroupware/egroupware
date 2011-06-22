@@ -303,22 +303,22 @@ class admin_categories
 		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
 		if($query['filter'] > 0 || $query['col_filter']['owner']) {
-			$filter['owner'] = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
+			$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		}
 		elseif ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT)
 		{
-			$filter['owner'] = 0;
+			$owner = 0;
 		}
 
 		$cats = new categories($filter['owner'],$query['appname']);
 
 $globalcat=1;
 $parent = 0;
-		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true);
+		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
 		{
-			if($filter['owner'] && $filter['owner'] != $row['owner'])
+			if($owner && $owner != $row['owner'])
 			{
 				unset($rows[$key]);
 				$count--;
