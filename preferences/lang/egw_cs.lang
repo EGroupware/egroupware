@@ -1,0 +1,111 @@
+%1 - preferences	preferences	cs	%1 - Předvolby
+%1 hours	preferences	cs	%1 hodin
+12 hour	preferences	cs	12 hodinový
+24 hour	preferences	cs	24 hodinový
+a template defines the layout of egroupware and it contains icons for each application.	preferences	cs	Šablona definuje vzhled eGroupWaru a obsahuje ikony pro každou aplikaci.
+a theme defines the colors and fonts used by the template.	preferences	cs	Téma definuje barvy a fonty použité šablonou.
+acl grants have been updated	preferences	cs	ACL práva byla aktualizována
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Každý výpis v eGroupWaru zobrazí tento počet položek na stránku.<br>Příliš velká hodnota zpomalí zobrazování stránky, příliš malá Vám znesnadní přehled.
+are you sure you want to delete this category ?	preferences	cs	Určitě chcete smazat tuto kategorii ?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	cs	Mění uživatelské heslo po zadání starého a nového hesla. Vrací TRUE je-li vše v pořádku, FALSE při chybě.
+change your password	preferences	cs	Změnit Vaše heslo
+change your profile	preferences	cs	Změnit Váš profil
+change your settings	preferences	cs	Změnit Vaše nastavení
+charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
+click to select a color	preferences	cs	Klikněte pro výběr barvy
+color	preferences	cs	Barva
+country	preferences	cs	Země
+date format	preferences	cs	Formát datumu
+default	preferences	cs	výchozí
+default application	preferences	cs	Výchozí aplikace
+default preferences	preferences	cs	Výchozí předvolby
+default theme	preferences	cs	Výchozí téma
+delete categories	preferences	cs	Vymazat kategorie
+description can not exceed 255 characters in length !	preferences	cs	Popis nemůže být delší jak 255 znaků!
+display thumbnails for linked images	preferences	cs	Zobrazovat náhledy pro odkazované obrázky
+div	preferences	cs	div
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	cs	Preferujete 24ti hodinový formát času nebo 12ti hodinový s dodatkem am/pm.
+edit custom fields	preferences	cs	editovat uživatelsky definované položky
+enable drag and drop functionality (experimental)	preferences	cs	Povolit funkcionalitu táhni a pusť (experimentální)
+enable selectbox dropdown resizing for ie (experimental)	preferences	cs	Povolit změnu velikosti rozbalovacích nabídek pro IE (experimentální)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje funkce táhni a pusť ve všech aplikacích. Pokud webový prohlížeč ovládání způsobem táhni a pusť nepodporuje, bude automaticky zakázáno. Tato vlastnost je v současnosti v experimentálním stádiu.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje změnu velikosti rozbalovacích nabídek v IE pro všechny aplikace. Ostatních prohlížečů se tato volba nedotkne. V současné době se jedná o experimentální funkci.
+enter your new password	preferences	cs	Zadejte Vaše nové heslo
+enter your old password	preferences	cs	Zadejte Vaše staré heslo
+failed to change password.  please contact your administrator.	preferences	cs	Nepodařilo se změnit heslo. Kontaktujte prosím Vašeho administrátora.
+forced preferences	preferences	cs	Vynucené předvolby
+help off	preferences	cs	Vypnout nápovědu
+hours	preferences	cs	hodiny
+how do you like to display accounts	preferences	cs	Jak chcete zobrazovat účty
+how do you like to select accounts	preferences	cs	Jak chcete vybírat účty
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	cs	O kolik hodin dopředu nebo dozadu je posunuto Vaše časové pásmo vůči časovému pásmu serveru?<br>Pokud jste ve stejném časovém pásmu, vyberte 0 hodin, v opačném případě zvolte Váše lokální datum a čas.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně lišty.
+how should egroupware display dates for you.	preferences	cs	Jak má eGroupWare zobrazovat datumy.
+icon	preferences	cs	Ikona
+icons and text	preferences	cs	Ikony a text
+icons only	preferences	cs	Jen ikony
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	cs	Obrázky připojené k záznamu mohou být zobrazeny jako náhledy. Funkci můžete vypnout, pokud chcete zrychlit vykreslování stránek.
+in which country are you. this is used to set certain defaults for you.	preferences	cs	V jaké se nacházíte zemi. Dle této informace Vám budou nastaveny některé výchozí hodnoty.
+interface/template selection	preferences	cs	Výběr rozhranní/šablony
+language	preferences	cs	Jazyk
+max matches per page	preferences	cs	Maximální počet zobrazených výsledků na stránku
+max number of icons in navbar	preferences	cs	Maximální počet ikon v navigační liště
+no default	preferences	cs	Není výchozí
+no user-selection at all	common	cs	Žádný výběr uživatelem
+note: this feature does *not* change your email password. this will	preferences	cs	Poznámka: Tato funkce NEZMĚNÍ Vaše heslo pro e-mail. To bude
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	cs	Poznámka: Tato funkce NEZMĚNÍ Vaše heslo pro e-mail. To budete muset změnit ručně.
+number format	preferences	cs	Formát čísel
+office 2003 theme	preferences	cs	Téma Office 2003
+p: paragraph	preferences	cs	p: Odstavec
+permanent time zone selection	preferences	cs	Trvalá volba časové zóny
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	cs	Vyberte prosím časové zóny, mezi kterými chcete mít možnost rychle přepínat. Přepínač se nezobrazuje, pokud nejsou vybrány alespoň dvě zóny.
+please select your timezone.	preferences	cs	Vyberte prosím svou časovou zónu.
+please, select a new theme	preferences	cs	Vyberte prosím nové téma
+popup with search	preferences	cs	Překryvné okno s hledáním
+re-enter your password	preferences	cs	Zadejte znovu své heslo
+read prefs for the specified application.	preferences	cs	Načíst předvolby pro vybranou aplikaci.
+rich text editor enter mode	preferences	cs	Vstupní režim richtext editoru
+rich text editor theme	preferences	cs	Téma richtext editoru
+select different theme	preferences	cs	Vybrat jiné téma
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	cs	Vyberte jaký tag bude richtext editor generovat pro zalomení řádky při stisku klávesy Enter.
+select one	preferences	cs	Vybrat jeden
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Vyberte jazyk pro texty a hlášky v eGroupWaru.<br>Některé jazyky nemusí obsahovat překlad všech hlášek, v takovém případě se zobrazí anglický originál.
+select the language of the spellchecker integrated into the rich text editor.	preferences	cs	Vyberte jazyk pro kontrolu pravopisu v richtext editoru.
+select the theme (visualization) of the rich text editor.	preferences	cs	Vyberte téma (vizualizaci) richtext editoru.
+selectbox	preferences	cs	Rozbalovací nabídka
+selectbox with groupmembers	common	cs	Rozbalovací nabídka se členy skupiny
+selectbox with primary group and search	preferences	cs	Rozbalovací nabídka s primární skupinou a hledáním
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	cs	Nastavte dle své chuti. Z bezpečnostních důvodů však nemusí být žádoucí zobrazovat veřejně Vaše uživatelské jméno.
+should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.
+show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
+show links between egroupware aps as	addressbook	cs	Zobrazovat odkazy mezi eGroupWare aplikacemi jako
+show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
+show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
+show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
+show_more_apps	common	cs	Zobrazit více aplikací
+silver theme	preferences	cs	Stříbrné téma
+spellchecker language	addressbook	cs	Jazyk kontroly pravopisu
+text only	preferences	cs	Jen text
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spuštěna když se přihlásíte do eGroupWaru nebo kliknete na ikonu hlavní strany.<br>Také můžete na hlavní straně zobrazit více aplikací, pokud zde žádnou konkrétní nevyberete (lze nakonfigurovat v předvolbách každé aplikace).
+the old password is not correct	preferences	cs	Staré heslo je chybné
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	cs	Rozbalovací nabídka zobrazuje všechny dostupné uživatele (může trvat velmi dlouho na velkých instalacích s mnoha uživateli). Překryvné okno umožňuje prohledávat uživatele podle jména nebo skupiny.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	cs	Rozbalovací nabídka zobrazuje všechny dostupné uživatele (může trvat velmi dlouho na velkých instalacích s mnoha uživateli). Překryvné okno umožňuje prohledávat uživatele podle jména nebo skupiny. Poslední dvě volby omezují viditelnost ostatních uživatelů. Proto by měly být vynucené a neuplatňují se v případě administrátorů.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	cs	Poslední dvě volby omezují viditelnost ostatních uživatelů. Proto by měly být vynucené a neuplatňují se v případě administrátorů.
+the two passwords are not the same	preferences	cs	Zadaná hesla se neshodují
+theme (colors/fonts) selection	preferences	cs	Výběr tématu (barev/fontů)
+this server is located in the %1 timezone	preferences	cs	Server se nachází v časové zóně %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	cs	Oddělovač tisíců se používá jen pro zobrazování čísel, ne pro jejich editaci.
+time format	preferences	cs	Formát času
+use default	preferences	cs	Použít výchozí
+users choice	preferences	cs	Uživatelská volba
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	cs	Pokud odpovíte kladně, tlačítka pro hlavní stranu a odhlášení budou zobrazena stejně jako aplikace v navigační liště.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Jaká znaková sada má být použita pro export do CSV souboru. Výchozí znakovou sadou systému je ta, která byla použita při instalaci eGroupWaru.
+which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má eGroupWare používat.
+write prefs for the specified application.	preferences	cs	Uložit předvolby pro vybranou aplikaci.
+you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
+you do not have permission to set acl's in this mode!	preferences	cs	Nemáte oprávnění nastavovat ACL v tomto režimu!
+you must enter a password	preferences	cs	Musíte zadat heslo
+your current theme is: %1	preferences	cs	Vaše aktuální téma je: %1
+your preferences	preferences	cs	Vaše předvolby

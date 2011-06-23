@@ -40,6 +40,8 @@ add category	common	cs	Přidat kategorii
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
 addressbook	common	cs	Adresář
+addressbooks for carddav attribute "addressbook-home-set".	common	cs	Adresáře pro CardDAV atribut "addressbook-home-set".
+addressbooks to sync with apple clients	common	cs	Adresáře, které mají být synchronizovány s klienty Apple
 admin	common	cs	Administrátor
 administration	common	cs	Administrace
 afghanistan	common	cs	AFGHÁNISTÁN
@@ -113,6 +115,7 @@ cameroon	common	cs	KAMERUN
 canada	common	cs	KANADA
 cancel	common	cs	Storno
 cannot replace %1 because it is a directory	common	cs	Nemohu přepsat %1 protože je to adresář
+cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, vyžaduje knihovnu ZipArchive
 cant open '%1' for %2	common	cs	Nemohu otevřít '%1' pro %2
 cape verde	common	cs	KAPVERDSKÉ OSTROVY
 caption	common	cs	Záhlaví
@@ -150,6 +153,8 @@ click this image on the navbar: %1	common	cs	Klikněte na tento obrázek v navig
 close	common	cs	Zavřít
 close sidebox	common	cs	Zavřít postranní panel
 cocos (keeling) islands	common	cs	KOKOSOVÉ OSTROVY
+collection empty.	common	cs	Prázdná kolekce.
+collection listing	common	cs	Výpis kolekce
 colombia	common	cs	KOLUMBIE
 common preferences	common	cs	Společné předvolby
 comoros	common	cs	KOMORSKÉ OSTROVY
@@ -157,6 +162,7 @@ company	common	cs	Společnost
 congo	common	cs	KONGO
 congo, the democratic republic of the	common	cs	DEMOKRATICKÁ REPUBLIKA KONGO
 contacting server...	common	cs	Kontaktuji server...
+content type	common	cs	Typ obsahu
 cook islands	common	cs	COOKOVY OSTROVY
 copy	common	cs	Kopírovat
 costa rica	common	cs	KOSTARIKA
@@ -238,6 +244,7 @@ error creating %1 %2 directory	common	cs	Chyba při vytáření adresáře %1 %2
 error deleting %1 %2 directory	common	cs	Chyba při mazání adresáře %1 %2
 error renaming %1 %2 directory	common	cs	Chyba při přejmenování adresáře %1 %2
 estonia	common	cs	ESTONSKO
+etag	common	cs	ETag
 ethiopia	common	cs	ETIOPIE
 everything	common	cs	Vše
 exact	common	cs	přesný (výraz)
@@ -291,6 +298,7 @@ group has been deleted	common	cs	Skupina byla smazána
 group has been updated	common	cs	Skupina byla aktualizována
 group name	common	cs	název skupiny
 group public	common	cs	Přístupný skupině
+groupdav	common	cs	CalDAV, CardDAV a GroupDAV server
 groups	common	cs	Skupiny
 groups with permission for %1	common	cs	Skupiny s právy na %1
 groups without permission for %1	common	cs	Skupiny bez oprávnění na %1
@@ -363,6 +371,7 @@ kyrgyzstan	common	cs	KYRGYZSTÁN
 language	common	cs	Jazyk
 language_direction_rtl	common	cs	směr_jazyka_zprava_doleva
 lao peoples democratic republic	common	cs	LAOS
+last modified	common	cs	Naposledy změněno
 last name	common	cs	Příjmení
 last name of the user, eg. "%1"	common	cs	příjmení uživatele, např. "%1"
 last page	common	cs	Poslední strana
@@ -428,6 +437,7 @@ multiple	common	cs	vícenásobný
 myanmar	common	cs	MYANMAR
 name	common	cs	Jméno
 name of the user, eg. "%1"	common	cs	jméno uživatele, např. "%1"
+namespace	common	cs	Jmenný prostor
 namibia	common	cs	NAMIBIE
 nauru	common	cs	NAURU
 nepal	common	cs	NEPÁL
@@ -505,6 +515,7 @@ password must have at least %1 characters	common	cs	Heslo musí mít nejméně %
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 permission denied!	common	cs	Přístup zamítnut!
 permissions to the files/users directory	common	cs	práva k souborům / uživatelským adresářům
+permisson denied!	common	cs	Přístup zamítnut!
 personal	common	cs	Osobní
 peru	common	cs	PERU
 philippines	common	cs	FILIPÍNY
@@ -534,6 +545,7 @@ priority	common	cs	Priorita
 private	common	cs	Soukromé
 programs	common	cs	Programy
 project	common	cs	Projekt
+properties	common	cs	Vlastnosti
 public	common	cs	Veřejné
 puerto rico	common	cs	PORTORIKO
 qatar	common	cs	KATAR
@@ -549,6 +561,8 @@ remove shortcut	common	cs	Odstranit zástupce
 rename	common	cs	Přejmenovat
 replace	common	cs	Nahradit
 replace with	common	cs	Nahradit s
+resource type	common	cs	Typ zdroje
+restore failed	common	cs	Obnovení se nezdařilo
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	cs	Vrací kompletní seznam účtů v systému. Varování: výpis může být velmi dlouhý.
 returns an array of todo items	common	cs	Vrací pole s položkami úkolů
 returns struct of users application access	common	cs	Vrací strukturu uživatelských přístupů k aplikaci
@@ -620,6 +634,7 @@ sierra leone	common	cs	SIERRA LEONE
 simple	common	cs	Jednoduchý
 singapore	common	cs	SINGAPUR
 site configuration	common	cs	Konfigurace webu
+size	common	cs	Velikost
 slovakia	common	cs	SLOVENSKO
 slovenia	common	cs	SLOVINSKO
 solomon islands	common	cs	ŠALAMOUNOVY OSTROVY
@@ -646,6 +661,7 @@ swaziland	common	cs	SVAZIJSKO
 sweden	common	cs	ŠVÉDSKO
 switzerland	common	cs	ŠVÝCARSKO
 syrian arab republic	common	cs	SÝRIE
+table %1 is excluded from backup and restore. data will not be restored.	common	cs	Tabulka %1 je vyjmuta ze zálohování a obnovy. Data nebudou obnovena.
 table properties	common	cs	Vlastnosti tabulky
 taiwan	common	cs	TCHAJ-WAN
 tajikistan	common	cs	TÁDŽIKISTÁN
@@ -656,6 +672,7 @@ the api is current	common	cs	API je aktuální
 the api requires an upgrade	common	cs	API vyžaduje aktualizaci
 the following applications require upgrades	common	cs	Následující aplikace vyžadují aktualizaci
 the mail server returned	common	cs	Poštovní server odpověděl
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	Systémový uživatel tohoto jména již existuje. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
 this application is current	common	cs	Tato aplikace je aktuální
 this application requires an upgrade	common	cs	Tato aplikace vyžaduje aktualizaci
 this name has been used already	common	cs	Takové jméno již bylo použito!
@@ -713,6 +730,7 @@ username	common	cs	Uživatelské jméno
 users	common	cs	uživatelé
 users choice	common	cs	Uživatelská volba
 uzbekistan	common	cs	UZBEKISTÁN
+value	common	cs	Hodnota
 vanuatu	common	cs	VANUATU
 venezuela	common	cs	VENEZUELA
 version	common	cs	Verze
@@ -749,6 +767,7 @@ you have not entered participants	common	cs	Nevložil(a) jste účastníky
 you have selected an invalid date	common	cs	Vybral(a) jste neplatné datum!
 you have selected an invalid main category	common	cs	Vybral(a) jste neplatnou hlavní kategorii!
 you have successfully logged out	common	cs	Úspěšně jste se odhlásil(a)
+you need to %1set your timezone preference%2.	common	cs	Musíte %1nastavit časovou zónu%1.
 you need to add the webserver user '%1' to the group '%2'.	common	cs	Musíte přidat uživatele webového serveru '%1' do skupiny '%2'.
 you need to be an egroupware administrator to access this functionality!	common	cs	Musíte být administrátorem eGroupWaru, abyste měl(a) přístup k této funkci.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	cs	Pokusil(a) jste se otevřít aplikaci eGroupWaru: %1, ale nemáte oprávnění pro přístup k této aplikaci.

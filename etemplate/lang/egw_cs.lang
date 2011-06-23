@@ -1,0 +1,425 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
+%1 entries found, select one ...	etemplate	cs	Nalezeno %1 záznamů, vyberte jeden ...
+%1 etemplates deleted	etemplate	cs	%1 eŠablon smazáno
+%1 etemplates for application '%2' dumped to '%3'	etemplate	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
+%1 etemplates found	etemplate	cs	%1 eŠablon nalezeno
+%1 matches on search criteria	etemplate	cs	%1 shod s kritériem vyhledávání
+%1 more...	etemplate	cs	%1 více...
+%1 new etemplates imported for application '%2'	etemplate	cs	%1 nových eŠablon importováno pro aplikaci '%2'
+%s disabled	etemplate	cs	%s zablokováno
+%s needed	etemplate	cs	%s zapotřebí
+%s notranslation	etemplate	cs	%s bez překladu
+%s onchange	etemplate	cs	%s onChange (při změně)
+%s readonly	etemplate	cs	%s jen ke čtení
+'%1' has an invalid format !!!	etemplate	cs	%1' má neplatný formát !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	cs	'%1' není php souborem v server root eGW (%2)!
+'%1' is not a valid date !!!	etemplate	cs	%1' není platné datum !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	cs	%1' není platné číslo s pohyblivou desetinnou čárkou !!!
+'%1' is not a valid integer !!!	etemplate	cs	%1' není platné celé číslo
+'%1' is not allowed ('%2')!	etemplate	cs	'%1' NENÍ povoleno ('%2')!
+a pattern to be searched for	etemplate	cs	hledaný výraz
+accesskey	etemplate	cs	Přístupový klíč
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
+account contactdata	etemplate	cs	Kontaktní údaje účtu
+add a new column (after the existing ones)	etemplate	cs	Přidat nový sloupec (za stávající)
+add a new entry of the selected application	etemplate	cs	Přidat nový záznam vybrané aplikace
+add a new multi-column index	etemplate	cs	Přidat nový vicesloupcový index
+add column	etemplate	cs	Přidat sloupec
+add index	etemplate	cs	Přidat index
+add new	etemplate	cs	Přidat nový
+add table	etemplate	cs	Přidat tabulku
+advanced search	etemplate	cs	Rozšířené hledání
+align	etemplate	cs	Zarovnat
+alignment of label and input-field in table-cell	etemplate	cs	zarovnání popisku a vstupního pole v buňce tabulky
+alignment of the v/hbox containing table-cell	etemplate	cs	Zarovnání V/HBoxu obsahujícího buňku tabulky
+all days	etemplate	cs	všechny dny
+all operations save the template!	etemplate	cs	všechny operace ukládají šablonu !
+allowed file type: %1	etemplate	cs	Povolený typ souboru: %1
+am	etemplate	cs	am
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
+application	etemplate	cs	Aplikace
+application name needed to write a langfile or dump the etemplates !!!	etemplate	cs	Název aplikace potřeboval zapsat jazykový soubor nebo vypsat eŠablony !!!
+applies the changes made	etemplate	cs	použije provedené změny
+applies the changes to the given version of the template	etemplate	cs	použije změny provedené v dané verzi šablony
+as default	etemplate	cs	jako výchozí
+attach	etemplate	cs	Připojit
+attach file	etemplate	cs	připojit soubor
+baseline	etemplate	cs	Základna
+blurtext	etemplate	cs	rozmazaný text
+border	etemplate	cs	Okraj
+border-line-thickness for the table-tag	etemplate	cs	Tloušťka okraje pro tag tabulky
+bottom	etemplate	cs	Dolní okraj
+box	etemplate	cs	Rámeček
+box...	etemplate	cs	Rámeček...
+can not have special sql-value null	etemplate	cs	nemůže mít speciální SQL hodnotu NULL
+cancel	etemplate	cs	Zrušit
+cant delete a single widget from a grid !!!	etemplate	cs	nemohu smazat jednotlivý widget z mřížky !!!
+cant delete the only column of a grid !!!	etemplate	cs	nemohu smazat jediný sloupec ve mřížce !!!
+cant delete the only row in a grid !!!	etemplate	cs	nemohu smazat jediný řádek ve mřížce !!!
+category	etemplate	cs	Kategorie
+category tree	etemplate	cs	Strom kategorií
+cellpadding for the table-tag	etemplate	cs	Vzdálenost mezi buňkou a jejím obsahem pro tag tabulky
+cells	etemplate	cs	Buňky
+cellspacing for the table-tag	etemplate	cs	Vzdálenost mezi buňkami pro tag tabulky
+center	etemplate	cs	Střed
+changed	etemplate	cs	Změněno
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	cs	zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
+check if field has to be filled by user	etemplate	cs	zaškrtněte, pokud musí uživatel položku vyplnit
+checkbox	etemplate	cs	Zaškrtávací políčko
+class	etemplate	cs	Třída
+class, valign	etemplate	cs	třída, svislé zarovnání
+click here to attach the file	etemplate	cs	klikněte sem pro připojení souboru
+click here to create the link	etemplate	cs	klikněte sem pro vytvoření odkazu
+click here to start the search	etemplate	cs	Klikněte sem pro zahájení hledání
+click here to upload the file	etemplate	cs	Klikněte sem pro upload souboru
+click to order after that criteria	etemplate	cs	klikněte sem pro řazení dle daného kritéria
+clickable path	etemplate	cs	rozkliknutelná cesta
+closes the window without saving the changes	etemplate	cs	uzavře okno bez uložení změn
+column...	etemplate	cs	Sloupec...
+columnname	etemplate	cs	Jméno sloupce
+comment	etemplate	cs	Komentář
+confirm	etemplate	cs	potvrdit
+confirmation message or custom javascript (returning true or false)	etemplate	cs	Potvrzující zpráva nebo uživatelsky definovaný javascript (vracející true nebo false)
+confirmation necesary or custom java-script	etemplate	cs	vyžadováno potvrzení nebo uživatelský javaskript
+contact	etemplate	cs	Kontakt
+contact field to show	etemplate	cs	Zobrazit položku kontaktu
+contact fields	etemplate	cs	Kontaktní položky
+contains	etemplate	cs	obsahuje
+create a new table for the application	etemplate	cs	Vytvořit novou tabulku pro aplikaci
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
+css class for the table-tag	etemplate	cs	CSS třída pro tag tabulky
+css properties	etemplate	cs	Vlastnosti CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	cs	název CSS třídy pro tento řádek, přednastaveno: 'nmh' = NextMatch header (záhlaví DalšíShoda),'nmr' = alternating NM row (střídavý NM řádek),'nmr0'+'nmr1' NM řádky
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	cs	název CSS třídy pro tento řádek, přednastaveno: 'th' = záhlaví, 'row' = střídavý řádek, řádky 'row_off'+'row_on'
+css-styles	etemplate	cs	CSS styly
+custom	etemplate	cs	uživatelsky definované
+custom fields	etemplate	cs	uživatelsky definované položky
+custom javascript for onchange	etemplate	cs	uživatelsky definovaný javaskript pro onChange (při změně)
+cut	etemplate	cs	Vyjmout
+date+time	etemplate	cs	Datum a čas
+datum	etemplate	cs	Datum
+day	etemplate	cs	Den
+days	etemplate	cs	dnů
+db ensures that every row has a unique value in that column	etemplate	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	cs	volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce
+db-tools	etemplate	cs	Databázové nástroje
+deck	etemplate	cs	Paluba (interní)
+default	etemplate	cs	Výchozí
+delete a single entry by passing the id.	etemplate	cs	Vymazat záznam vložením ID.
+delete all selected etemplates, without further inquiry	etemplate	cs	smazat VŠECHNY vybrané eŠablony BEZ dalšího dotazu
+delete and cut save the template!	etemplate	cs	smazat a šablonu vyjmout a uložit !
+delete column	etemplate	cs	Smazat sloupec
+delete index	etemplate	cs	Smazat index
+delete the spezified etemplate	etemplate	cs	Smazat určenou eŠablonu
+delete this column	etemplate	cs	smazat tento sloupec
+delete this etemplate	etemplate	cs	smazat tuto eŠablonu
+delete this file	etemplate	cs	Smazat tento soubor
+delete this row	etemplate	cs	smazat tento řádek
+delete whole column (can not be undone!!!)	etemplate	cs	smazat celý sloupec (nelze vrátit zpět!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	cs	vymaže výše uvedenou eŠablonu z databáze, nelze vrátit zpět
+deletes the etemplate spez. above	etemplate	cs	smaže výše uvedenou eŠablonu
+deletes this column	etemplate	cs	Smaže tento sloupec
+deletes this index	etemplate	cs	Smaže tento index
+discard changes	etemplate	cs	zahodit změny
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	cs	zobrazeno před vstupem nebo je vstup vložen za '%s' v označení (tlačítka pro odeslání nebo názvu souboru s obrázkem)
+displayed in statusline of browser if input-field gets focus	etemplate	cs	zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
+displayed in the top line of the groupbox (legend)	etemplate	cs	zobrazeno v horní řádce rámečku skupiny (v legendě)
+do you want to save the changes you made in table %s?	etemplate	cs	Chcete uložit změny, které jste udělal(a)v tabulce %s?
+documentation	etemplate	cs	Dokumentace
+doesn't matter	etemplate	cs	nezáleží na tom
+drop a table - this can not be undone	etemplate	cs	Smazat tabulku - nelze vrátit zpět
+drop table	etemplate	cs	Smazat Tabulku
+dump4setup	etemplate	cs	Vypsat pro setup
+duration	etemplate	cs	Trvání
+edit	etemplate	cs	Editovat
+edit embeded css styles or of the applications app.css file	etemplate	cs	upravit vložené CSS styly nebo CSS styly aplikací v souboru app.css
+edit the etemplate spez. above	etemplate	cs	upravit výše uvedenou eŠablonu
+edit...	etemplate	cs	Editovat....
+editable templates - db-tools	etemplate	cs	Editovatelné šablony - Databázové nástroje
+editable templates - delete template	etemplate	cs	Editovatelné šablony - Smazat šablonu
+editable templates - editor	etemplate	cs	Editovatelné šablony - Editor
+editable templates - search	etemplate	cs	Editovatelné šablony - Hledat
+editable templates - show template	etemplate	cs	Editovatelné šablony - Zobrazit šablonu
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	cs	vložené CSS styly, např. '.red { background: red; }' (všimněte si tečky před názvem třídy) nebo '@import url(...)' (názvy tříd jsou globální pro celou stránku!)
+enable javascript onchange submit	etemplate	cs	povolit odesílání onChange v javaskriptu
+enter '' for an empty default, nothing mean no default	etemplate	cs	zadejte '' pro prázdnou hodnotu jako výchozí, nic znamená bez výchozí hodnoty
+enter a search pattern	etemplate	cs	Zadejte hledaný výraz
+enter filename to upload and attach, use [browse...] to search for it	etemplate	cs	Zadejte název souboru, který chcete uploadovat a připojit, použijte [Procházet] pro vyhledání souboru
+enter the new version number here (> old_version), empty for no update-file	etemplate	cs	sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
+enter the new version number here (has to be > old_version)	etemplate	cs	sem zadejte číslo nové verze (musí být > stará_verze)
+entry saved	etemplate	cs	Záznam uložen
+error copying uploaded file to vfs!	etemplate	cs	Chyba při kopírování uploadovaného souboru do vfs!
+error create parent directory %1!	etemplate	cs	Chyba při vytváření nadřazeného adresáře %1!
+error deleting %1!	etemplate	cs	Chyba při mazání %1!
+error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+error: template not found !!!	etemplate	cs	Chyba: Šablona nebyla nalezena !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	cs	Chyba: webový server nemá oprávnění k zápisu do '%1' !!!
+error: while saving !!!	etemplate	cs	Chyba při ukládání !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	cs	Chyba při ukládání souboru (webový server nemá oprávnění k zápisu) !!!
+etemplate	common	cs	eŠablona
+etemplate '%1' imported, use save to put it in the database	etemplate	cs	eŠablona '%1' naimportována, použijte Uložit pro zápis do databáze
+etemplate '%1' written to '%2'	etemplate	cs	eŠablona '%1'  zapsána do '%2'
+etemplate editor	etemplate	cs	Editor eŠablon
+etemplate reference	etemplate	cs	Referenční příručka eŠablon
+etemplate tutorial	etemplate	cs	Výuka eŠablon
+exchange this row with the one above	etemplate	cs	zaměnit tento řádek s řádkem nad ním
+exchange this two columns	etemplate	cs	zaměnit tyto dva sloupce
+export the loaded etemplate into a xml-file	etemplate	cs	exportovat načtenou eŠablonu do XML souboru
+export xml	etemplate	cs	Exportovat XML
+extensions loaded:	etemplate	cs	Načtená rozšíření:
+field	etemplate	cs	Položka
+field must not be empty !!!	etemplate	cs	Položka nesmí být prázdná !!!
+file	etemplate	cs	Soubor
+file '%1' not found!	etemplate	cs	Soubor '%1' nebyl nalezen!
+file contains more than one etemplate, last one is shown !!!	etemplate	cs	Soubor obsahuje více jak jednu eŠablonu, zobrazena je poslední !!!
+file is of wrong type (%1 != %2)!	etemplate	cs	Soubor je špatného typu (%1 != %2)!
+file writen	etemplate	cs	Soubor zapsán
+fileupload	etemplate	cs	Upload souboru
+first	etemplate	cs	První
+floating point	etemplate	cs	Plovoucí desetinná čárka
+foreign key	etemplate	cs	Cizí klíč
+formatted text (html)	etemplate	cs	Formátovaný text (HTML)
+go to the first entry	etemplate	cs	jít na první záznam
+go to the last entry	etemplate	cs	jít na poslední záznam
+go to the next page of entries	etemplate	cs	jít na další stránku záznamů
+go to the previous page of entries	etemplate	cs	jít na předchozí stránku záznamů
+grid	etemplate	cs	Mřížka
+grid column attributes	etemplate	cs	Atributy sloupců ve mřížce
+grid row attributes	etemplate	cs	Atributy řádků ve mřížce
+groupbox	etemplate	cs	Rámeček skupiny
+hbox	etemplate	cs	Vodorovný rámeček
+height	etemplate	cs	Výška
+height of row (in % or pixel)	etemplate	cs	výška řádku (v % nebo pixelech)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	cs	výška řádku (v % nebo pixelech), zakázání řádku: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže řádek pokud obsah data je prázdný
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	cs	Výška tabulky v % nebo pixelech pro tag tabulky a (volitelně) div
+height, disabled	etemplate	cs	Výška, vypnuto
+help	etemplate	cs	Nápověda
+history log	etemplate	cs	Protokol historie
+horizontal rule	etemplate	cs	Vodorovné pravítko
+hour	etemplate	cs	Hodina
+hours	etemplate	cs	hodin
+how many entries should the list show	etemplate	cs	Kolik záznamů má seznam zobrazovat
+html	etemplate	cs	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	cs	pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
+image	etemplate	cs	Obrázek
+import	etemplate	cs	Importovat
+import an etemplate from a xml-file	etemplate	cs	importovat eŠablonu z XML souboru
+import table-definitions from existing db-table	etemplate	cs	Importovat definice tabulky ze stavající databázové tabulky
+import xml	etemplate	cs	Importovat XML
+increment version to not overwrite the existing template	etemplate	cs	zvyšte číslo verze, aby nedošlo k přepsání stávající šablony
+index/name of returned content (name of the template, link / method for image)	etemplate	cs	index/název vráceného obsahu (název šablony, odkaz/metoda pro obrázek)
+indexed	etemplate	cs	Indexovaný
+indexoptions	etemplate	cs	Volby indexu
+insert a column before	etemplate	cs	vložit sloupec před
+insert a column behind	etemplate	cs	vložit sloupec za
+insert a row above	etemplate	cs	vložit řádek nad
+insert a row below	etemplate	cs	vložit řádek pod
+insert a widget before	etemplate	cs	vložit widget před
+insert a widget behind	etemplate	cs	vložit widget za
+insert new column behind this one	etemplate	cs	vložit nový sloupec za tento
+insert new column in front of all	etemplate	cs	vložit nový sloupec před všechny ostatní
+insert new row after this one	etemplate	cs	vložit nový řádek za tento
+insert new row in front of first line	etemplate	cs	vložit nový řádek před první řádek
+integer	etemplate	cs	Celé číslo
+key	etemplate	cs	Klíč
+label	etemplate	cs	Jmenovka
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	cs	Jmenovka:[bold][italic] Text:[len][,max] Čísla:[min][,[max][,len]] Textová oblast:[rows][,cols] Přepínací tlačítko:value Vodorovné pravítko:[width] Šablona:[IndexInContent] Výběr:[multiselect] Datum:[hodnoty: např. 'Y-m-d']
+lang	etemplate	cs	Jazyk
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	cs	zkratka jazyka (např. 'en' u angličtiny) pro jazykově závislou šablonu ('' načte Vaše předvolené jazyky nebo výchozí, použijte 'výchozí' pro načtení výchozí šablony '')
+last	etemplate	cs	Poslední
+left	etemplate	cs	Levý
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	cs	délka pro char+varchar, přesnost celých čísel: 2, 4, 8 a desetinných: 4, 8
+link	etemplate	cs	Odkaz
+linkapps	etemplate	cs	Odkaz na aplikace
+linkentry	etemplate	cs	Záznam odkazu
+linklist	etemplate	cs	Seznam odkazů
+linkstring	etemplate	cs	Řetězec odkazu
+linkto	etemplate	cs	Odkaz na
+load this template into the editor	etemplate	cs	Načíst tuto šablonu do editoru
+maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
+message ...	etemplate	cs	Zpráva...
+middle	etemplate	cs	Prostřední
+minute	etemplate	cs	Minuta
+minutes	etemplate	cs	minut
+month	etemplate	cs	Měsíc
+more than 1 match for '%1'	etemplate	cs	Více než jeden záznam pro '%1'
+multicolumn indices	etemplate	cs	Vícesloupcové indexy
+name	etemplate	cs	Jméno
+name of other table where column is a key from	etemplate	cs	název jiné tabulky kde je skoupec klíčem
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	cs	název skupiny šablon z phpgw (např. verdilak): '' = výchozí (načte předvolenou šablonu, použijte 'výchozí' pro načtení výchozí šablony '')
+name of table to add	etemplate	cs	Název tabulky, která se má přidat
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
+new search	common	cs	Nové hledání
+new table created	etemplate	cs	Nová tabulka vytvořena
+newer version '%1' exists !!!	etemplate	cs	existuje novější verze '%1'  !!!
+nextmatch	etemplate	cs	Nextmatch (Další shoda)
+nextmatch accountfilter	etemplate	cs	Další shoda s filtrem účtů
+nextmatch custom filterheader	etemplate	cs	Další shoda s uživatelským filtrem záhlaví
+nextmatch filterheader	etemplate	cs	Další shoda s filtrem záhlaví
+nextmatch header	etemplate	cs	Další shoda záhlaví
+nextmatch sortheader	etemplate	cs	Další shoda setříděného záhlaví
+no column to swap with !!!	etemplate	cs	není sloupec, za který se dá prohodit !!!
+no file	etemplate	cs	žádný soubor
+no filename given or selected via browse...	etemplate	cs	nebyl zadán název souboru ani vybrán přes Procházet
+no matches found	etemplate	cs	Nenalezeny žádné záznamy
+no row to swap with !!!	etemplate	cs	není řádek, za který se dá prohodit !!!
+not null	etemplate	cs	NENÍ NULL
+nothing	etemplate	cs	nic
+nothing found - try again !!!	etemplate	cs	Nic nenalezeno - zkuste znovu !!!
+nothing in clipboard to paste !!!	etemplate	cs	v clipboardu není nic ke vložení !!!
+nothing matched search criteria !!!	etemplate	cs	Zadanému kritériu hledání nic neodpovídá !!!
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	cs	počet sloupců, přes které se má pole/buňka roztáhnout nebo 'all' pro zbývající sloupce, jméno CSS třídy (pro tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	cs	počet řádků/sloupců ve Svislém/Vodorovném rámečku, vzdálenost mezi buňkou a jejím obsahem, vzdálenost mezi buňkami
+of	etemplate	cs	z
+onchange	etemplate	cs	onChange (při změně)
+onclick	etemplate	cs	onClick (při kliknutí)
+only an other version found !!!	etemplate	cs	našla se jen jiná verze !!!
+open the online help.	etemplate	cs	Otevřit online nápovědu.
+operator	etemplate	cs	Operátor
+optional note about the link	etemplate	cs	volitelná poznámka o odkazu
+options	etemplate	cs	Volby
+order to navigating by tab key through the form	etemplate	cs	Pořadí v navigaci fomulářem pomocí klávesy tabulátor
+overflow	etemplate	cs	Přetečení
+padding	etemplate	cs	Odsazení
+parent is a '%1' !!!	etemplate	cs	nadřazený je '%1' !!!
+paste	etemplate	cs	Vložit
+path	etemplate	cs	Cesta
+please enter table-name first !!!	etemplate	cs	Zadejte prosím nejprve název tabulky !!!
+pm	etemplate	cs	pm
+popup	etemplate	cs	Překryvné
+precision	etemplate	cs	Přesnost
+primary key	etemplate	cs	Primární klíč
+primary key for the table, gets automaticaly indexed	etemplate	cs	Primární klíč tabulky, je automaticky indexován
+radiobutton	etemplate	cs	Přepínací tlačítko
+read	etemplate	cs	Číst
+read a list of entries.	etemplate	cs	Načíst seznam záznamů
+read a single entry by passing the id and fieldlist.	etemplate	cs	Načíst jednotlivý záznam zadáním jeho id a seznamu polí
+read etemplate from database (for the keys above)	etemplate	cs	načíst eŠablonu z databáze (pro výše uvedené klíče)
+readonly	etemplate	cs	jen pro čtení
+remove row (can not be undone!!!)	etemplate	cs	odstranit řádek (nelze vrátit zpět!!!)
+remove this link (not the entry itself)	etemplate	cs	Odstranit tento odkaz (ne celý záznam)
+required	etemplate	cs	Vyžadováno
+returns savely, without deleting	etemplate	cs	vrátí bezpečně zpět, BEZ smazání
+right	etemplate	cs	Pravý
+row...	etemplate	cs	Řádek...
+save selected columns as default preference for all users.	etemplate	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
+save the changes made and close the window	etemplate	cs	Uložit provedené změny a zavřít okno
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	cs	uložit eŠablonu pod výše uvedenými klíči (název, ...), změnit je pro Uložit jako
+saves changes to tables_current.inc.php	etemplate	cs	uloží změny do tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	cs	uloží šablonu s daným číslem verze a zavře okno
+scale	etemplate	cs	Škála
+scale for float	etemplate	cs	Škála pro plovoucí
+search	etemplate	cs	Hledat
+select a category	etemplate	cs	vybrat kategorii
+select a primary contact, to show in the list	etemplate	cs	Vybrat primární kontakt, který má být zobrazen v seznamu
+select access	etemplate	cs	Vybrat přístup
+select account	etemplate	cs	Vybrat účet
+select an app first !!!	etemplate	cs	Vyberte nejprve aplikaci !!!
+select an app to search in	etemplate	cs	Vybrat aplikaci k prohledání
+select an application	etemplate	cs	Vybrat aplikaci
+select an application, (*) = uninstalled	etemplate	cs	Vybrat aplikaci, (*) = nenainstalovaná
+select an entry to link with	etemplate	cs	Vybrat záznam, na který se má odkazovat
+select an table of the application	etemplate	cs	Vybrat tabulku aplikace
+select application	etemplate	cs	Vybrat aplikaci
+select application to search	etemplate	cs	Vybrat aplikaci k prohledání
+select category	etemplate	cs	Vybrat kategorii
+select columns	etemplate	cs	Vybrat sloupce
+select country	etemplate	cs	Vybrat zemi
+select day	etemplate	cs	Vybrat den
+select day of week	etemplate	cs	vybrat den v týdnu
+select entry	etemplate	cs	Vybrat záznam
+select hour	etemplate	cs	Vybrat hodinu
+select if content of field should not be translated (label gets always translated)	etemplate	cs	vyberte pokud nemá být obsah pole přeložen (jmenovka je přeložena vždy)
+select language	etemplate	cs	Vybrat jazyk
+select month	etemplate	cs	Vybrat měsíc
+select number	etemplate	cs	Vybrat číslo
+select one ...	etemplate	cs	Vybrat jeden ...
+select percentage	etemplate	cs	Vybrat procento
+select priority	etemplate	cs	Vybrat prioritu
+select state	etemplate	cs	Vybrat stát
+select the columns to display in the list	etemplate	cs	Vybrat sloupce, které mají být zobrazeny v seznamu
+select the indexed columns in their desired order	etemplate	cs	Vybrat indexované sloupce v požadovaném pořadí
+select this etemplate to delete it	etemplate	cs	vybrat tuto eŠablonu ke smazání
+select which accounts to show	etemplate	cs	vybrat účty ke zobrazení
+select which values to show	etemplate	cs	vybrat hodnoty ke zobrazení
+select year	etemplate	cs	Vybrat rok
+selectbox	etemplate	cs	Rozbalovací nabídka
+sets today as date	etemplate	cs	nastaví dnešek jako datum
+should the form be submitted or any custom javascript be executed	etemplate	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
+show	etemplate	cs	Zobrazit
+show (no save)	etemplate	cs	Zobrazit (neukládat)
+show all / cancel filter	etemplate	cs	Zobrazit vše / zrušit filtr
+show values	etemplate	cs	Zobrazit hodnoty
+showing	etemplate	cs	zobrazuji
+shows / allows you to enter values into the etemplate for testing	etemplate	cs	zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování
+shows/displays etemplate for testing, does not save it before	etemplate	cs	zobrazí eŠablonu pro testování, předtím jí NEukládá
+spacing	etemplate	cs	Rozestupy
+span	etemplate	cs	Roztažení
+span, class	etemplate	cs	Roztažení, Třída
+stack	etemplate	cs	Zásobník
+start a new search, cancel this link	etemplate	cs	začít nové hledání, zrušit tento odkaz
+start new search for the above pattern	etemplate	cs	začít nové hledání pro výše uvedený výraz
+submit form	etemplate	cs	odeslat formulář
+submitbutton	etemplate	cs	Tlačitko pro odeslání
+swap	etemplate	cs	prohodit
+swap widget with next one	etemplate	cs	prohodit widget s následujícím
+swap with next column	etemplate	cs	prohodit s následujícím sloupcem
+swap with next row	etemplate	cs	prohodit s následujícím řádkem
+switch to a parent widget	etemplate	cs	přepnout na nadřízený widget
+switch to an other widgets of that container	etemplate	cs	přepnout na jiné widgety v daném kontejneru
+tabindex	etemplate	cs	Index tabulek
+table unchanged, no write necessary !!!	etemplate	cs	Tabulka se nezměnila, zápis není zapotřebí !!!
+tablename	etemplate	cs	Název tabulky
+tabs	etemplate	cs	Záložky
+template	etemplate	cs	Šablona
+template deleted	etemplate	cs	Šablona smazána
+template saved	etemplate	cs	Šablona uložena
+text	etemplate	cs	Text
+textarea	etemplate	cs	Textová oblast
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	cs	tento text se zobrazí, pokud je vstupní pole prázdné a nemá fokus
+time	etemplate	cs	Čas
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	cs	pro zákaz: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže pokud obsah data je prázdný
+to start the db-tools	etemplate	cs	pro start databázových nástrojů
+to start the etemplate editor	etemplate	cs	pro start editoru eŠablon
+to start the search	etemplate	cs	pro start hledání
+today	etemplate	cs	Dnes
+top	etemplate	cs	Horní okraj
+tree	etemplate	cs	Strom
+type	etemplate	cs	Typ
+type of the column	etemplate	cs	typ sloupce
+type of the field (select label if field should be empty)	etemplate	cs	typ pole (vyberte Jmenovku, pokud má být pole prázdné)
+unique	etemplate	cs	Unikátní
+unlink	etemplate	cs	Zrušit odkaz
+update a single entry by passing the fields.	etemplate	cs	Aktualizovat záznam vyplněním položek.
+update from version '%s' to	etemplate	cs	Aktualizovat z verze '%s' na
+upload	etemplate	cs	Uploadovat
+valign	etemplate	cs	svislé zarovnání
+value	etemplate	cs	Hodnota
+value has to be at least '%1' !!!	etemplate	cs	Hodnota musí být nejméně '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	cs	Hodnota musí být nejvýše '%1' !!!
+vbox	etemplate	cs	Svislý rámeček
+version	etemplate	cs	Verze
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	cs	číslo verze, mělo být mít podobu: hlavní.vedlejší.revize.číslo (např. 0.9.13.001 všechna čísla doplněná nulami)
+vertical alignment of row	etemplate	cs	svislé zarovnání řádku
+view this etemplate	etemplate	cs	zobrazit tuto eŠablonu
+view this linked entry in its application	etemplate	cs	zobrazit odkazovaný záznam v jeho aplikaci
+weekend	etemplate	cs	víkend
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	cs	co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
+widget copied into clipboard	etemplate	cs	widget zkopírovaný do klipboradu
+width	etemplate	cs	Šířka
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	cs	šířka sloupce (v % nebo pixelech), zakázat sloupec: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakázat sloupec pokud je obsah data prázdný
+width of column (in % or pixel)	etemplate	cs	šířka sloupce (v % nebo pixelech)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	cs	Šířka tabulky (v % nebo pixelech) pro tag tabulky a (volitelně) div
+width, disabled	etemplate	cs	Šířka, vypnuto
+working days	etemplate	cs	pracovní dny
+write <app>/setup/tables_current.inc.php	etemplate	cs	Zapsat <app>/setup/tables_current.inc.php
+write langfile	etemplate	cs	Zapsat jazykový soubor
+write tables	etemplate	cs	Zapsat tabulky
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	cs	zapíše soubor 'etemplates.inc.php' (pro aplikaci v Názvu) do setup adresáře aplikace
+xml-file to import	etemplate	cs	XML soubor pro import
+xslt template	etemplate	cs	XSLT šablona
+year	etemplate	cs	Rok
+you are not allowed to export more then %1 entries!	etemplate	cs	Nemáte oprávnění exportovat více než %1 záznamů!
+you can respond by visiting:	etemplate	cs	Můžete odpovědět navštívením:
+you need to select a file first!	etemplate	cs	Nejprve musíte vybrat soubor!

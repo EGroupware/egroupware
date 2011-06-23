@@ -1,0 +1,45 @@
+all possible notification backends	notifications	cs	všechny dostupné backendy pro upozornění
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	cs	Zkusit obojí (nejprve aktivní, uživatelem definovaný účet a pokud neexistuje, tak emailadmin profil)
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	cs	Vyberte si posloupnost upozornění. Budete upozorňování na základě backendů zahrnutých v posloupnosti.<br />Poznámka: Pokud je posloupnost upozornění označena jako "zakázaná", znamená to, že Váš Administrátor nepovoluje jeden či více backendů zahrnutých v posloupnosti a tak budete upozorňování jen e-mailem.
+choose from mailsettings used for notification	admin	cs	vyberte nastavení e-mailu pro zasílání upozornění
+common chains	notifications	cs	Společné posloupnosti
+disabled chains	notifications	cs	Zakázané posloupnosti
+do not notify me at all	notifications	cs	vůbec mě neupozorňuj
+e-mail only	notifications	cs	jen e-mail
+egroupware has notifications for you	notifications	cs	eGroupWare má pro Vás upozornění
+egroupware-popup and e-mail	notifications	cs	Překryvná okna v eGroupWaru a e-mail
+egroupware-popup and windows-popup	notifications	cs	Překryvná okna v eGroupWaru a překryvná okna ve Windows
+egroupware-popup backend	admin	cs	Backend Překryvná okna v eGroupWaru
+egroupware-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna v eGroupWaru, pokud se nezdaří, upozorni mě e-mailem
+egroupware-popup first, if that fails notify me by sms	notifications	cs	Nejprve překryvná okna v eGroupWaru, pokud se nezdaří, upozorni mě SMS zprávou
+egroupware-popup only	notifications	cs	Jen překryvná okna v eGroupWaru
+egroupware-popup verbosity	notifications	cs	Intenzita sdělení pro Překryvná okna v eGroupWaru
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	cs	Jen emailadmin profil (Nepoužívat aktivní, uživatelem definovaný účet, pro zasílání upozornění)
+enable egroupware-popup backend	admin	cs	Povolit backend Překryvná okna v eGroupWaru
+enable sms backend	admin	cs	Povolit SMS backend
+enable windows-popup backend	admin	cs	Povolit backend Překryvná okna ve Windows
+enabled chains	notifications	cs	Povolené posloupnosti
+folder	notifications	cs	Složka
+from	notifications	cs	Od
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	cs	Jak důrazně se mají překryvná okna eGroupWaru chovat, když je uživateli zasláno upozornění:<br />nízká: jen zobrazit zvoneček v horním menu - horní menu musí být povoleno!<br />střední: na popředí zobrazit okno s upozorněním<br />vysoká: na popředí zobrazit okno s upozorněním a nechat prohlížeč, ať na sebe nějak upozorní
+if set, embedded links get rendered special for external clients	notifications	cs	Pokud je nastaveno, vložené odkazy jsou speciálně renderovány pro externí klienty
+linked entries:	common	cs	Odkazované záznamy:
+mail backend	admin	cs	Poštovní backend
+maximum sms messages per notification	admin	cs	Maximální počet SMS zpráv na jedno upozornění
+message from	notifications	cs	Zpráva od
+minutes	notifications	cs	minut
+notification	common	cs	Upozornění
+notify me by	notifications	cs	Upozorni mě pomocí
+optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
+poll interval	notifications	cs	Interval dotazování (poll)
+preferences for notification	notifications	cs	Předvolby pro upozornění
+received	notifications	cs	Přijato
+sms backend	admin	cs	SMS backend
+sms only	notifications	cs	Jen SMS
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění od eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
+windows-popup and e-mail	notifications	cs	Překryvná okna ve Windows a e-mail
+windows-popup backend	admin	cs	Backend Překryvná okna ve Windows
+windows-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě e-mailem
+windows-popup first, if that fails notify me by sms	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě SMS zprávou
+windows-popup only	notifications	cs	Jen překryvná okna ve Windows
+you've got new mail	notifications	cs	Přišel Vám nový e-mail
