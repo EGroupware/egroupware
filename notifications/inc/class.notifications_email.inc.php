@@ -44,14 +44,14 @@ class notifications_email implements notifications_iface {
 	/**
 	 * holds preferences object of user to notify
 	 *
-	 * @var object
+	 * @var preferences
 	 */
 	private $preferences;
 
 	/**
 	 * holds mail object
 	 *
-	 * @var object
+	 * @var send
 	 */
 	private $mail;
 
@@ -95,7 +95,7 @@ class notifications_email implements notifications_iface {
 		$this->mail->AddCustomHeader('X-eGroupWare-type: notification-mail');
 		$this->mail->From = $this->sender->account_email;
 		$this->mail->FromName = $this->sender->account_fullname;
-		$this->mail->Subject = $this->mail->encode_subject($_subject);
+		$this->mail->Subject = $_subject;
 		//error_log(__METHOD__.__LINE__.array2string($_attachments));
 		if ($_attachments && stripos($_attachments[0]->type,"text/calendar; method=")!==false)
 		{
@@ -106,12 +106,22 @@ class notifications_email implements notifications_iface {
 		$this->mail->IsHTML(true);
 		$this->mail->Body = $body_html;
 		$this->mail->AltBody = $body_plain;
-		if(is_array($_attachments) && count($_attachments) > 0) {
-			foreach($_attachments as $attachment) {
-				$this->mail->AddStringAttachment($attachment->string, $attachment->filename, $attachment->encoding, $attachment->type);
+		if(is_array($_attachments) && count($_attachments) > 0)
+		{
+			foreach($_attachments as $attachment)
+			{
+				if ($attachment->string)
+				{
+					$this->mail->AddStringAttachment($attachment->string, $attachment->filename, $attachment->encoding, $attachment->type);
+				}
+				elseif($attachment->path)
+				{
+					$this->mail->AddAttachment($attachment->path, $attachment->filename, $attachment->encoding, $attachment->type);
+				}
 	  		}
 		}
-		if(!$error=$this->mail->Send()) {
+		if(!$error=$this->mail->Send())
+		{
 			throw new Exception("Failed sending notification message via email.$error".print_r($this->mail->ErrorInfo,true));
 		}
 	}

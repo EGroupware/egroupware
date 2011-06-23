@@ -298,11 +298,13 @@ final class notifications {
 		$this->attachments = array(); // clear array if set
 		foreach($_attachments as $attachment) {
 			if(is_array($attachment)) {
-				$this->add_attachment(	$attachment['string'],
-										$attachment['filename'],
-										$attachment['encoding'],
-										$attachment['type']
-										);
+				$this->add_attachment(
+					$attachment['string'],
+					$attachment['filename'],
+					$attachment['encoding'],
+					$attachment['type'],
+					$attachment['path']
+				);
 			}
 		}
 		return true;
@@ -313,18 +315,21 @@ final class notifications {
 	 * This method can be used to attach ascii or binary data,
 	 * such as a BLOB record from a database.
 	 *
-	 * @param string $_string Attachment data.
+	 * @param string $_string Attachment data or null to use $_path
 	 * @param string $_filename Name of the attachment.
 	 * @param string $_encoding File encoding (see $Encoding).
 	 * @param string $_type File extension (MIME) type.
+	 * @param string $_path optional path to attachment, if !$_string
 	 */
-	public function add_attachment($_string, $_filename, $_encoding = "base64", $_type = "application/octet-stream") {
-		if(!$_string || !$_filename) { return false; }
-		$this->attachments[] = (object)array(	'string' => $_string,
-												'filename' => $_filename,
-												'encoding' => $_encoding,
-												'type' => $_type,
-												);
+	public function add_attachment($_string, $_filename, $_encoding = "base64", $_type = "application/octet-stream", $_path=null) {
+		if(!$_string && (!$_path || !file_exists($_path)) || !$_filename) return false;
+		$this->attachments[] = (object)array(
+			'string' => $_string,
+			'filename' => $_filename,
+			'encoding' => $_encoding ? $_encoding : "base64",
+			'type' => $_type ? $_type : "application/octet-stream",
+			'path' => $_path,
+		);
 		return true;
 	}
 
