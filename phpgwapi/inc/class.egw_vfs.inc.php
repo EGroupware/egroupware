@@ -760,14 +760,50 @@ class egw_vfs extends vfs_stream_wrapper
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param array|string $path stat array or path
+	 * @param string $path path
 	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
 	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
 	 * @param array $stat=null stat array, to not query it again
+	 * @param int $user=null user used for check, if not current user (egw_vfs::$user)
 	 * @return boolean
 	 */
-	static function check_access($path,$check,$stat=null)
+	static function check_access($path, $check, array $stat=null, $user=null)
 	{
+		if (!$stat && $user && $user != self::$user)
+		{
+			static $path_user_stat = array();
+
+			$backup_user = self::$user;
+			self::$user = $user;
+
+			if (!isset($path_user_stat[$path]) || !isset($path_user_stat[$path][$user]))
+			{
+				self::clearstatcache($path);
+
+				$path_user_stat[$path][$user] = self::url_stat($path, 0);
+			}
+			if (($stat = $path_user_stat[$path][$user]))
+			{
+				// some backend mounts use $user:$pass in their url, for them we have to deny access!
+				if (strpos(self::resolve_url($path, false, false, false), '$user') !== false)
+				{
+					$ret = false;
+				}
+				else
+				{
+					$ret = self::check_access($path, $check, $stat);
+				}
+			}
+			else
+			{
+				$ret = false;	// no access, if we can not stat the file
+			}
+			self::$user = $backup_user;
+
+			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check,$user) ".array2string($ret));
+			return $ret;
+		}
+
 		if (self::$is_root)
 		{
 			return true;
@@ -819,12 +855,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// check if there's a group access and we have the right membership
 		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
 		{
-			static $memberships;
-			if (is_null($memberships))
-			{
-				$memberships = $GLOBALS['egw']->accounts->memberships(self::$user,true);
-			}
-			if (in_array(-abs($stat['gid']),$memberships))
+			if (in_array(-abs($stat['gid']), $GLOBALS['egw']->accounts->memberships(self::$user, true)))
 			{
 				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
@@ -1420,7 +1451,24 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function getExtraInfo($path,array $content=null)
 	{
-		return self::_call_on_backend('extra_info',array($path,$content),true);	// true = fail silent if backend does NOT support it
+		$extra = array();
+		if (($extra_info = self::_call_on_backend('extra_info',array($path,$content),true)))	// true = fail silent if backend does NOT support it
+		{
+			$extra[] = $extra_info;
+		}
+
+		if (($vfs_extra = $GLOBALS['egw']->hooks->process(array(
+			'location' => 'vfs_extra',
+			'path' => $path,
+			'content' => $content,
+		))))
+		{
+			foreach($vfs_extra as $app => $data)
+			{
+				$extra = $extra ? array_merge($extra, $data) : $data;
+			}
+		}
+		return $extra;
 	}
 
 	/**

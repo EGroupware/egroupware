@@ -73,6 +73,30 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	private $opened_stream;
 	/**
+	 * Mode of opened stream, eg. "r" or "w"
+	 *
+	 * @var string
+	 */
+	private $opened_stream_mode;
+	/**
+	 * Path of opened stream
+	 *
+	 * @var string
+	 */
+	private $opened_stream_path;
+	/**
+	 * URL of opened stream
+	 *
+	 * @var string
+	 */
+	private $opened_stream_url;
+	/**
+	 * Opened stream is a new file, false for existing files
+	 *
+	 * @var boolean
+	 */
+	private $opened_stream_is_new;
+	/**
 	 * directory-ressouce this class is opened for by dir_open
 	 *
 	 * @var ressource
@@ -110,16 +134,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $path
 	 * @param boolean $file_exists=true true if file needs to exists, false if not
+	 * @param boolean $resolve_last_symlink=true
+	 * @param array|boolean &$stat=null on return: stat of existing file or false for non-existing files
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url_symlinks($path,$file_exists=true,$resolve_last_symlink=true)
+	static function resolve_url_symlinks($path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
 	{
 		$path = self::get_path($path);
 
 		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
 		{
-			$ret = self::check_symlink_components($path,0,$url);
-			if (self::LOG_LEVEL > 1) $log = " (check_symlink_components('$path',0,'$url') = $ret)";
+			$stat = self::check_symlink_components($path,0,$url);
+			if (self::LOG_LEVEL > 1) $log = " (check_symlink_components('$path',0,'$url') = $stat)";
 		}
 		else
 		{
@@ -139,24 +165,27 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $path
 	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param boolean $use_symlinkcache=true
+	 * @param boolean $replace_user_pass_host=true replace $user,$pass,$host in url, default true, if false result is not cached
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($path,$do_symlink=true,$use_symlinkcache=true)
+	static function resolve_url($path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true)
 	{
 		static $cache = array();
 
 		$path = self::get_path($path);
 
 		// we do some caching here
-		if (isset($cache[$path]))
+		if (isset($cache[$path]) && $replace_user_pass_host)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '{$cache[$path]}' (from cache)");
 			return $cache[$path];
 		}
 		// check if we can already resolve path (or a part of it) with a known symlinks
 		if ($use_symlinkcache)
+		{
 			$path = self::symlinkCache_resolve($path,$do_symlink);
-
+		}
 		// setting default user, passwd and domain, if it's not contained int the url
 		static $defaults;
 		if (is_null($defaults))
@@ -188,13 +217,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				}
 				$url = egw_vfs::concat($url,substr($parts['path'],strlen($mounted)));
 
-				$url = str_replace(array('$user','$pass','$host'),array($parts['user'],$parts['pass'],$parts['host']),$url);
-
+				if ($replace_user_pass_host)
+				{
+					$url = str_replace(array('$user','$pass','$host'),array($parts['user'],$parts['pass'],$parts['host']),$url);
+				}
 				if ($parts['query']) $url .= '?'.$parts['query'];
 				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
 
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$url'");
-				return $cache[$path] = $url;
+
+				if ($replace_user_pass_host) $cache[$path] = $url;
+
+				return $url;
 			}
 		}
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path') can't resolve path!\n");
@@ -237,7 +271,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		$this->opened_stream = null;
 
-		if (!($url = self::resolve_url_symlinks($path,$mode[0]=='r')))
+		if (!($url = self::resolve_url_symlinks($path,$mode[0]=='r',true,$stat)))
 		{
 			return false;
 		}
@@ -245,6 +279,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		$this->opened_stream_mode = $mode;
+		$this->opened_stream_path = $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH);
+		$this->opened_stream_url = $url;
+		$this->opened_stream_is_new = !$stat;
+
 		return true;
 	}
 
@@ -252,12 +291,24 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * This method is called when the stream is closed, using fclose().
 	 *
 	 * You must release any resources that were locked or allocated by the stream.
+	 *
+	 * VFS calls either "vfs_read", "vfs_added" or "vfs_modified" hook
 	 */
 	function stream_close ( )
 	{
 		$ret = fclose($this->opened_stream);
 
-		$this->opened_stream = null;
+		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => str_replace('b','',$this->opened_stream_mode) == 'r' ? 'vfs_read' :
+					($this->opened_stream_is_new ? 'vfs_added' : 'vfs_modified'),
+				'path' => $this->opened_stream_path,
+				'mode' => $this->opened_stream_mode,
+				'url'  => $this->opened_stream_url,
+			),'',true);
+		}
+		$this->opened_stream = $this->opened_stream_mode = $this->opened_stream_path = $this->opened_stream_url = $this->opened_stream_is_new = null;
 
 		return $ret;
 	}
@@ -384,6 +435,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		// call "vfs_unlink" hook, before unlink
+		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'vfs_unlink',
+				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'url'  => $url,
+			),'',true);
+		}
 		self::symlinkCache_remove($path);
 		return unlink($url);
 	}
@@ -428,6 +488,17 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			error_log(__METHOD__."('$path_from','$path_to') url_from='$url_from', url_to='$url_to' returning ".array2string($ret));
 		}
+		// call "vfs_rename" hook
+		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'vfs_rename',
+				'from' => $path_from[0] == '/' ? $path_from : parse_url($path_from, PHP_URL_PATH),
+				'to' => $path_to[0] == '/' ? $path_to : parse_url($path_to, PHP_URL_PATH),
+				'url_from' => $url_from,
+				'url_to' => $url_to,
+			),'',true);
+		}
 		return $ret;
 	}
 
@@ -448,7 +519,18 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		return mkdir($url,$mode,$options);
+		$ret = mkdir($url,$mode,$options);
+
+		// call "vfs_mkdir" hook
+		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'vfs_mkdir',
+				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'url' => $url,
+			),'',true);
+		}
+		return $ret;
 	}
 
 	/**
@@ -466,6 +548,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!($url = self::resolve_url_symlinks($path)))
 		{
 			return false;
+		}
+		// call "vfs_rmdir" hook, before removing
+		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'vfs_rmdir',
+				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'url' => $url,
+			),'',true);
 		}
 		self::symlinkCache_remove($path);
 		return rmdir($url);
@@ -930,6 +1021,24 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1 && isset($target)) error_log(__METHOD__."($path) = $target");
 		return isset($target) ? $target : $path;
+	}
+
+	/**
+	 * Clears our internal stat and symlink cache
+	 *
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS egw_vfs::$user changes!
+	 *
+	 * We have to clear the symlink cache before AND after calling the backend,
+	 * because auf traversal rights may be different when egw_vfs::$user changes!
+	 *
+	 * @param string $path='/' path of backend, whos cache to clear
+	 */
+	static function clearstatcache($path='/')
+	{
+		//error_log(__METHOD__."('$path')");
+		self::$symlink_cache = array();
+		self::_call_on_backend('clearstatcache', array($path), true, 0);
+		self::$symlink_cache = array();
 	}
 
 	/**

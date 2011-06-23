@@ -1095,18 +1095,26 @@ class filemanager_ui
 				'align' => 'right',
 			));
 		}
-		if (($extra_tab = egw_vfs::getExtraInfo($path,$content)))
+		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
 			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
-			$tabs['name'] .= '|'.$extra_tab['name'];
-			$tabs['label'] .= '|'.$extra_tab['label'];
-			if ($extra_tab['data'] && is_array($extra_tab['data']))
+			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
-				$content += $extra_tab['data'];
-			}
-			if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
-			{
-				$readonlys += $extra_tab['readonlys'];
+				$tabs['name'] .= '|'.$extra_tab['name'];
+				$tabs['label'] .= '|'.$extra_tab['label'];
+				$tabs['help'] .= '|'.$extra_tab['help'];
+				if ($extra_tab['data'] && is_array($extra_tab['data']))
+				{
+					$content = array_merge($content, $extra_tab['data']);
+				}
+				if ($extra_tab['preserve'] && is_array($extra_tab['preserve']))
+				{
+					$preserve = array_merge($preserve, $extra_tab['preserve']);
+				}
+				if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
+				{
+					$readonlys = array_merge($content, $extra_tab['readonlys']);
+				}
 			}
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";

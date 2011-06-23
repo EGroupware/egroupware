@@ -60,6 +60,26 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	const DEBUG = false;
 
 	/**
+	 * Clears our stat-cache
+	 *
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS egw_vfs::$user changes!
+	 *
+	 * We have to clear file_access cache of egw_link, as our ACL depends on it!
+	 *
+	 * @param string $path='/apps' to be able to clear only file_access cache of a certain app
+	 */
+	public static function clearstatcache($path='/apps')
+	{
+		//error_log(__METHOD__."('$path')");
+		if ($path[0] != '/') $path = parse_url($path, PHP_URL_PATH);
+		list(,,$app) = explode('/',$path);
+		egw_link::delete_cache($app, null);	// null = delete only file_access cache, if app implements it, otherwise title cache is deleted too
+
+		// need to call sqlfs clearstatcache too
+		parent::clearstatcache($path);
+	}
+
+	/**
 	 * Implements ACL based on the access of the user to the entry the files are linked to.
 	 *
 	 * @param string $url url to check

@@ -161,6 +161,21 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	static public $extra_columns = ',fs_link';
 
 	/**
+	 * Clears our stat-cache
+	 *
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS egw_vfs::$user changes!
+	 *
+	 * @param string $path='/'
+	 */
+	public static function clearstatcache($path='/')
+	{
+		//error_log(__METHOD__."('$path')");
+		self::$stat_cache = array();
+
+		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl = array());
+	}
+
+	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve

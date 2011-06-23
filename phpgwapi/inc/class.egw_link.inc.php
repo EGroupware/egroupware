@@ -1229,11 +1229,19 @@ class egw_link extends solink
 	/**
 	 * Delete the diverse caches for $app/$id
 	 *
-	 * @param string $app
-	 * @param int|string $id
+	 * @param string $app app-name or null to delete the whole cache
+	 * @param int|string $id id or null to delete only file_access cache of given app (keeps title cache, if app implements file_access!)
 	 */
-	private static function delete_cache($app,$id)
+	public static function delete_cache($app,$id)
 	{
+		if (empty($app) || empty($id))
+		{
+			self::$file_access_cache = array();
+			if (empty($app) || !self::get_registry($app, 'file_access'))
+			{
+				self::$title_cache = array();
+			}
+		}
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
 	}
