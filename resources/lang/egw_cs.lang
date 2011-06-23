@@ -22,18 +22,16 @@ configure access permissions	admin	cs	Konfigurovat přístupová práva
 conflict	resources	cs	konflikt
 create new accessory for this resource	resources	cs	Vytvořit nové příslušenství k tomtuto zdroji
 create new links	resources	cs	Vytvořit nové odkazy
-custom fields	resources	cs	Uživatelsky definované položky
 delete selected resources	resources	cs	Smazat vybrané zdroje
 delete this entry	resources	cs	Smazat záznam
 description (short)	resources	cs	Popis (stručný)
-direct booking permissions	resources	cs	Přímá rezervační práva
+direct booking permissions	resources	cs	Práva na přímou rezervaci
 don't use vfs (this will need a symlink --> see readme)	resources	cs	Nepoužívat vfs (bude zapotřebí symbolický odkaz --> přečtěte si README)
 edit this entry	resources	cs	Editovat tento záznam
 existing links	resources	cs	Stávající odkazy
 general	resources	cs	Obecné
 general informations about resource	resources	cs	Obecné informace o zdroji
 gernal resource	resources	cs	Obecný zdroj
-global categories	resources	cs	Globální kategorie
 how many of the resources are useable?	resources	cs	Kolik ze zdrojů je použitelných?
 how many of them are useable?	resources	cs	Kolik z nich je použitelných?
 how many of this resource are usable	resources	cs	Kolik z tohoto zdroje je použitelných?

@@ -40,6 +40,8 @@ add category	common	cs	Přidat kategorii
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
 addressbook	common	cs	Adresář
+addressbooks for carddav attribute "addressbook-home-set".	common	cs	Adresáře pro CardDAV atribut "addressbook-home-set".
+addressbooks to sync with apple clients	common	cs	Adresáře, které mají být synchronizovány s klienty Apple
 admin	common	cs	Administrátor
 administration	common	cs	Administrace
 afghanistan	common	cs	AFGHÁNISTÁN
@@ -53,7 +55,6 @@ alternate style-sheet:	common	cs	Alternativní formátovací sada
 american samoa	common	cs	AMERICKÁ SAMOA
 an error happened	common	cs	Došlo k chybě
 an existing and by the webserver readable directory enables the image browser and upload.	common	cs	Existující adresář pro který má web server práva pro čtení povolí prohlížeč obrázků a upload.
-and	common	cs	a
 andorra	common	cs	ANDORA
 angola	common	cs	ANGOLA
 anguilla	common	cs	ANGUILLA
@@ -114,7 +115,7 @@ cameroon	common	cs	KAMERUN
 canada	common	cs	KANADA
 cancel	common	cs	Storno
 cannot replace %1 because it is a directory	common	cs	Nemohu přepsat %1 protože je to adresář
-cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, je zapotřebí ZipArchive
+cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, vyžaduje knihovnu ZipArchive
 cant open '%1' for %2	common	cs	Nemohu otevřít '%1' pro %2
 cape verde	common	cs	KAPVERDSKÉ OSTROVY
 caption	common	cs	Záhlaví
@@ -297,6 +298,7 @@ group has been deleted	common	cs	Skupina byla smazána
 group has been updated	common	cs	Skupina byla aktualizována
 group name	common	cs	název skupiny
 group public	common	cs	Přístupný skupině
+groupdav	common	cs	CalDAV, CardDAV a GroupDAV server
 groups	common	cs	Skupiny
 groups with permission for %1	common	cs	Skupiny s právy na %1
 groups without permission for %1	common	cs	Skupiny bez oprávnění na %1
@@ -487,7 +489,6 @@ oops! you caught us in the middle of system maintainance.	common	cs	Omlouváme s
 open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
 open sidebox	common	cs	Otevřít postranní panel
-or	common	cs	nebo
 ordered list	common	cs	Setříděný seznam
 original	common	cs	Původní
 other	common	cs	Ostatní
@@ -514,7 +515,7 @@ password must have at least %1 characters	common	cs	Heslo musí mít nejméně %
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 permission denied!	common	cs	Přístup zamítnut!
 permissions to the files/users directory	common	cs	práva k souborům / uživatelským adresářům
-permisson denied!	common	cs	Přístup zamítnut
+permisson denied!	common	cs	Přístup zamítnut!
 personal	common	cs	Osobní
 peru	common	cs	PERU
 philippines	common	cs	FILIPÍNY
@@ -534,7 +535,7 @@ portugal	common	cs	PORTUGALSKO
 postal	common	cs	Poštovní
 powered by	common	cs	Založeno na
 preferences	common	cs	Předvolby
-preferences for the %1 template set	preferences	cs	Předvolby pro šablony %1
+preferences for the idots template set	common	cs	Předvolby pro šablony idots
 prev. month (hold for menu)	jscalendar	cs	Předchozí měsíc (podržte pro menu)
 prev. year (hold for menu)	jscalendar	cs	Předchozí rok (podržte pro menu)
 previous page	common	cs	Predchozí strana
@@ -660,7 +661,7 @@ swaziland	common	cs	SVAZIJSKO
 sweden	common	cs	ŠVÉDSKO
 switzerland	common	cs	ŠVÝCARSKO
 syrian arab republic	common	cs	SÝRIE
-table %1 is excluded from backup and restore. data will not be restored.	common	cs	Tabulka %1 je vyňata ze zálohy a obnovení. Data nebudou obnovena.
+table %1 is excluded from backup and restore. data will not be restored.	common	cs	Tabulka %1 je vyjmuta ze zálohování a obnovy. Data nebudou obnovena.
 table properties	common	cs	Vlastnosti tabulky
 taiwan	common	cs	TCHAJ-WAN
 tajikistan	common	cs	TÁDŽIKISTÁN
@@ -671,7 +672,7 @@ the api is current	common	cs	API je aktuální
 the api requires an upgrade	common	cs	API vyžaduje aktualizaci
 the following applications require upgrades	common	cs	Následující aplikace vyžadují aktualizaci
 the mail server returned	common	cs	Poštovní server odpověděl
-there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	V současnosti již existuje systémový uživatel tohoto jména. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	Systémový uživatel tohoto jména již existuje. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
 this application is current	common	cs	Tato aplikace je aktuální
 this application requires an upgrade	common	cs	Tato aplikace vyžaduje aktualizaci
 this name has been used already	common	cs	Takové jméno již bylo použito!
@@ -766,7 +767,7 @@ you have not entered participants	common	cs	Nevložil(a) jste účastníky
 you have selected an invalid date	common	cs	Vybral(a) jste neplatné datum!
 you have selected an invalid main category	common	cs	Vybral(a) jste neplatnou hlavní kategorii!
 you have successfully logged out	common	cs	Úspěšně jste se odhlásil(a)
-you need to %1set your timezone preference%2.	common	cs	Musíte %1nastavit Vaše časové pásmo%2.
+you need to %1set your timezone preference%2.	common	cs	Musíte %1nastavit časovou zónu%1.
 you need to add the webserver user '%1' to the group '%2'.	common	cs	Musíte přidat uživatele webového serveru '%1' do skupiny '%2'.
 you need to be an egroupware administrator to access this functionality!	common	cs	Musíte být administrátorem eGroupWaru, abyste měl(a) přístup k této funkci.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	cs	Pokusil(a) jste se otevřít aplikaci eGroupWaru: %1, ale nemáte oprávnění pro přístup k této aplikaci.

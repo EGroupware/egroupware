@@ -80,8 +80,7 @@ select a status of the timesheet	timesheet	cs	vybrat stav pracovního výkazu
 select action	timesheet	cs	Vybrat akci
 select infolog	timesheet	cs	vybrat Infolog
 select multiple timeshhets for a further action	timesheet	cs	Vybrat více pracovních výkazů pro další akci
-select the predefined status, whan creating a new timesheet	preferences	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
-select the predefined status, when creating a new timesheet	preferences	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
+select the predefined status, whan creating a new timesheet	timesheet	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
 show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit součet množství (např. pro sečtení záporného přesčasu)
 start	timesheet	cs	Začátek
 starttime	timesheet	cs	Počáteční čas

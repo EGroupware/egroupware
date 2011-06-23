@@ -3,10 +3,13 @@
 %1 created in %2.	setup	cs	%1 vytvořen v %2.
 %1 database %2 on %3 already contains the following tables:	setup	cs	%1 databáze %2 na %3 již obsahuje následující tabulky:
 %1 does not exist !!!	setup	cs	%1 neexistuje !!!
+%1 entries modified.	setup	cs	%1 záznamů bylo změněno.
+%1 entries would have been modified.	setup	cs	%1 záznamů by bylo změněno.
 %1 is %2%3 !!!	setup	cs	%1 je %2%3 !!!
 %1 is needed by: %2.	setup	cs	%1 je zapotřebí pro: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	cs	%1 je nastaveno na %2, nebudete moci uploadovat nebo připojovat soubory větší než stanoví tento limit.
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	cs	%1 je nastaveno na %2. To se nedoporučuje pro produkční systém, jelikož zobrazená chybová hlášení mohou obsahovat hesla a jiné citlivé údaje.
+%1 users and %2 groups created, %3 errors	setup	cs	bylo vytvořeno %1 uživatelů a %2 skupin, vyskytlo se %3 chyb
 %1, %2 or %3 the configuration file.	setup	cs	%1, %2 nebo %3 konfigurační soubor.
 '%1' is no valid domain name!	setup	cs	'%1' není platné doménové jméno!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	cs	'%1' není povoleno jako %2. argumenty volby %3 !!!
@@ -18,6 +21,7 @@
 13 (ntp)	setup	cs	13 (ntp)
 80 (http)	setup	cs	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	cs	<b>používat znakovou sadu</b>(použijte utf-8 pokud plánujete používat jazyky s rozdílnými znakovými sadami)
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	cs	==> jiná skupina '%1' s tímto gidNumber %2, nemohu nastavit členství!
 [header-password],[header-user],[new-password],[new-user]	setup	cs	[hlavička-heslo],[hlavička-uživatel],[nové heslo],[nový uživatel]
 access denied: wrong username or password for manage-header !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro správu hlaviček !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro konfiguraci domény '%1(%2)' !!!
@@ -98,6 +102,7 @@ backup now	setup	cs	Zálohovat nyní
 backup sets	setup	cs	záložní sady
 backup skipped!	setup	cs	Záloha přeskočena!
 backup started, this might take a few minutes ...	setup	cs	zálohování začalo, může trvat několik miut ...
+base dn "%1" not found!	setup	cs	Base dn "%1" nebylo nalezeno!
 because an application it depends upon was upgraded	setup	cs	protože aplikace, na které závisí, byla zaktualizována
 because it depends upon	setup	cs	protože závisí na
 because it is not a user application, or access is controlled via acl	setup	cs	protože se nejedná o uživatelskou aplikaci nebo je přístup kontrolován prostřednictvím acl
@@ -114,6 +119,7 @@ can not connect to %1 database %2 on host %3 using user %4!	setup	cs	Nemohu se p
 can not connect to ldap server on host %1 using dn %2!	setup	cs	Nemohu se připojit k LDAP serveru na počítači %1 jako DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	cs	Nemohu vytvořit %1 databázi %2 na %3 pro uživatele %4!
 can not create dn %1!	setup	cs	Nemohu vytvořit DN %1!
+can not instancate accounts object for %1	setup	cs	Nemohu vytvořit instanci účtu pro %1
 cancel	setup	cs	Storno
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	cs	Není možné vytvořit header.inc.php kvůli omezeným oprávněním.<br />Místo toho můžete soubor %1 nebo %2.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	cs	DNS jméno CAS serveru:<br />příklad: sso-cas.univ-rennes1.fr
@@ -131,6 +137,7 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	cs	Kontroluji, zda je rozšíření %1 načtené nebo ho lze načíst
 checking file-permissions of %1 for %2 %3: %4	setup	cs	Kontroluji souborová oprávnění %1 pro %2 %3: %4
 checking for gd support...	setup	cs	Kontroluji podporu GD...
+checking for jpgraph in %1	setup	cs	Kontroluji přítomnost JPGraph v %1
 checking function %1 exists	setup	cs	Kontroluji existenci funkce %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	cs	Kontroluji zda do umístění nastaveného v php.ini parametrem session.save_path='%1' může zapisovat webový server
 checking pear%1 is installed	setup	cs	Kontroluji, zda je instalaván PEAR%1
@@ -210,7 +217,7 @@ delete all old languages and install new ones	setup	cs	Smazat všechny staré ja
 deleting tables	setup	cs	Mažu tabulky
 demo server setup	setup	cs	Nastavení Demo serveru
 deny access	setup	cs	Zakázat přístup
-deny all users access to grant other users access to their entries ?	setup	cs	Zakázat všem uživatelům přidělovat práva na jejich soubory jiným uživatelům?
+deny all users access to grant other users access to their entries ?	setup	cs	Zakázat všem uživatelům přidělovat práva na jejich záznamy jiným uživatelům?
 dependency failure	setup	cs	Chyba závislosti
 deregistered	setup	cs	odregistrované
 details for admin account	setup	cs	Podrobnosti k účtu administrátora
@@ -262,9 +269,12 @@ enter your http proxy server	setup	cs	Zadejte Váš HTTP proxy server
 enter your http proxy server password	setup	cs	Zadejte heslo Vašeho HTTP proxy serveru
 enter your http proxy server port	setup	cs	Zadejte port Vašeho HTTP proxy serveru
 enter your http proxy server username	setup	cs	Zadejte uživatelské jméno Vašeho HTTP proxy serveru
+error deleting "dn=%1"!	setup	cs	Chyba při mazání "dn=%1"!
 error dropping user!	setup	cs	Chyba při mazání uživatele!
 error in admin-creation !!!	setup	cs	Chyba při vytváření administrátora !!!
 error in group-creation !!!	setup	cs	Chyba při vytváření skupiny !!!
+error listing "dn=%1"!	setup	cs	Chyba při výpisu "dn=%1"!
+error modifying dn=%1: %2='%3'!	setup	cs	Chyba při změně dn=%1: %2='%3'!
 export has been completed!	setup	cs	Export byl dokončen!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	cs	Zápis konfiguračního souboru header.inc.php se nezdařil, zkontrolujte oprávnění !!!
 false	setup	cs	Ne
@@ -293,7 +303,8 @@ hooks deregistered	setup	cs	háčky (hooks) od-registrovány
 hooks registered	setup	cs	háčky (hooks) zaregistrovány
 host information	setup	cs	Informace o serveru (host)
 host,[smtp port],[smtp user],[smtp password]	setup	cs	server,[smtp port],[smtp uživatel],[smtp heslo]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	cs	server,{imap | pop3 | imaps | pop3s},[doména],[{standard(výchozí)|vmailmgr = přidat doménu do přihlášení na poštovní server}]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	cs	server,{imap | imaps},[doména],[{standard(výchozí)|vmailmgr = přidat doménu do přihlášení na poštovní server}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	cs	server,{imap | pop3 | imaps | pop3s},[doména],[{standard(výchozí)|vmailmgr = přidat doménu do přihlášení na poštovní server|email = použít e-mail uživatele (měla by být nastavena standardní poštovní doména)}]
 host/ip domain controler	setup	cs	DNS jméno nebo IP řadiče domény
 hostname/ip of database server	setup	cs	DNS jméno nebo IP databázového serveru
 hour (0-24)	setup	cs	hodina (0-24)
@@ -341,6 +352,7 @@ ldap accounts context	setup	cs	LDAP kontext účtů
 ldap config	setup	cs	Konfigurace LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	cs	LDAP výchozí prefix domovských adresářů (např. /home pro /home/username)
 ldap default shell (e.g. /bin/bash)	setup	cs	LDAP výchozí shell (např. /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	cs	LDAP dn="%1" s %2 záznamy bylo smazáno.
 ldap encryption type	setup	cs	LDAP typ šifrování
 ldap groups context	setup	cs	LDAP kontext skupin
 ldap host	setup	cs	LDAP server
@@ -378,6 +390,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id účtu (např
 minute	setup	cs	minuta
 missing or uncomplete mailserver configuration	setup	cs	Chybějící nebo nekompletní konfigurace poštovního serveru
 modifications have been completed!	setup	cs	Změny byly dokončeny!
+modified	setup	cs	změněno
 modify	setup	cs	Změnit
 month	setup	cs	měsíc
 multi-language support setup	setup	cs	Nastavení podpory více jazyků
@@ -394,6 +407,7 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	cs	Není nastaveno heslo administrátora hlaviček! Pro nastavení použijte --edit-header <heslo>[,<uživatel>] (--usage nabídne další volby).
 no modes available	setup	cs	žádné režimy nejsou k dispozici
 no update necessary, domain %1(%2) is up to date.	setup	cs	Není potřeba žádná aktualizace, doména %1(%2) je aktuální.
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	cs	Není nastaveno platné časové pásmo! ("%1" nestačí, musíte použít identifikátor časového pásma ve stylu "%2", podívejte se na %3kompletní seznam platných identifikátorů%4)
 no xml support found. disabling	setup	cs	Nebyla nalezena podpora XML. Zakazuji
 not	setup	cs	ne
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	cs	Ne všechny algoritmy a režimy mcryptu pracují s eGroupWarem. Pokud zaznamenáte problémy, zkuste ho vypnout.
@@ -437,6 +451,7 @@ please check for sql scripts within the application's directory	setup	cs	Podíve
 please check read/write permissions on directories, or back up and use another option.	setup	cs	Zkontrolujte prosím oprávnění ke čtení/zápisu na adresáře, nebo se vraťte zpět a zkuste jinou volbu.
 please configure egroupware for your environment	setup	cs	Zkonfigurujte prosím eGroupWare pro Vaše prostředí
 please consult the %1.	setup	cs	Konsultujte prosím %1.
+please download a recent version from %1 and install it as %2.	setup	cs	Stáhněte si prosím aktuální verzi z %1 a nainstalujte jí jako %2.
 please fix the above errors (%1) and warnings(%2)	setup	cs	Opravte prosím výše uvedené chyby (%1) a varování (%2)
 please install	setup	cs	Nainstalujte prosím
 please login	setup	cs	Přihlaště se prosím
@@ -459,6 +474,7 @@ re-enter password	setup	cs	Zadejte heslo znovu
 read translations from	setup	cs	Načíst překlady z
 readable by the webserver	setup	cs	čitelné webovým serverem
 really uninstall all applications	setup	cs	OPRAVDU odinstalovat všechny aplikace
+refusing to delete dn "%1"!	setup	cs	Odmítám smazat dn "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom eGroupWare ho nepotřebuje a obecně je bezpečnější ho vypnout
 registered	setup	cs	zaregistrované
 rejected lines	setup	cs	Zamítnuté řádky
@@ -504,6 +520,7 @@ server root	setup	cs	Server Root
 session handler class used.	setup	cs	Použitá třída správce relací.
 sessions handler	setup	cs	Správce relací
 set	setup	cs	nastavit
+set and not	setup	cs	nastaveno a ne
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	cs	Nastavení znakové sady systému na UTF-8 (unicode) dovoluje koexistenci dat i pro jazyky s různými znakovými sadami
 settings	setup	cs	Nastavení
 setup	setup	cs	Instalátor
@@ -548,18 +565,20 @@ tcp port number of database server	setup	cs	Číslo TCP portu databázového ser
 text entry	setup	cs	Textový záznam
 the %1 extension is needed from: %2.	setup	cs	Rozšíření %1 je vyžadováno (čím): %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	cs	Rozšíření %1 je zapotřebí, pokud plánujete použít databázi %2.
-the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	cs	Rozšíření ctype je zapotřebí, aby mohl HTMLpurifier kontrolovat obsah vytvořený FCK editorem proti Cross Site Skriptingu.
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	cs	HTMLpurifier potřebuje rozšíření ctype, aby mohl kontrolovat obsah FCKeditoru na výskyt Cross Site Scriptingu.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	cs	Parametr db_type ve výchozích nastaveních (%1) není na tomto serveru podporován. Použiji první podporovaný typ.
 the file	setup	cs	soubor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	cs	V prvním kroku instalace eGroupWaru je třeba zajistit, aby Vaše prostředí mělo všechny parametry potřebné pro běh aplikace.
 the following applications are not installed:	setup	cs	Následující aplikace NEJSOU nainstalovány:
+the following applications are required, but not installed:	setup	cs	Následující aplikace jsou vyžadovány, ale NEJSOU nainstalovány.
 the following applications need to be upgraded:	setup	cs	Následující aplikace potřebují aktualizovat:
 the function %1 is needed from: %2.	setup	cs	Funkce %1 je vyžadována (čím): %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	cs	Funkce imagecreatefromjpeg je součástí rozšíření gd (zkompilovaného s podporou jpeg!). Je zapotřebí pro uploady fotek ke kontaktům.
+the json extension is required by egroupware for ajax.	setup	cs	eGroupWare vyžaduje json rozšíření kvůli AJAXu.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	cs	Rozšíření pro LDAP je zapotřebí v případě, pokud chcete LDAP používat pro ukládání uživatelských účtů nebo kontaktů nebo se chcete autentikovat vůči LDAP či Active Directory. Není potřeba pro standardní SQL instalaci.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Rozšíření mbstring je zapotřebí pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
-the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	cs	Rozšíření mcrypt je zapotřebí, aby mohl být stav formulářů vytvořených v eŠabloně ukládán na straně klienta, což je preferovaný způsob.
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	cs	Rozšíření mcrypt je používáno k ukládání stavu formulářů v eŠablonách na straně klienta, což je preferovaný způsob.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	cs	Rozšíření PDO a databázový ovladač jsou zapotřebí pro VFS (virtuální souborový systém)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	cs	Rozšíření session je zapotřebí pro použití php relací (databázové relace fungují i bez něj).
 the session extension is required!	setup	cs	Je vyžadováno rozšíření session.
@@ -654,6 +673,7 @@ you didn't enter a config username for domain %1	setup	cs	Nezadal(a) jste uživa
 you didn't enter a header admin password	setup	cs	Nezadal(a) jste heslo administrátora hlaviček
 you didn't enter a header admin username	setup	cs	Nezadal(a) jste uživatelské jméno administrátora hlaviček
 you do not have any languages installed. please install one now <br />	setup	cs	Nemáte nainstalované žádné jazyky. Prosím, nainstalujte jeden nyní<br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	cs	Nemáte nainstalován JPGraph ve verzi %1 nebo vyšší! Je zapotřebí pro tvorbu Ganttových diagramů ve Správci projektů.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	cs	Zatím jste nevytvořil(a) svůj header.inc.php!<br />Můžete ho teď vytvořit.
 you have successfully logged out	setup	cs	Byl(a) jste úspěšně odhlášen(a)
 you must enter a username for the admin	setup	cs	Musíte zadat uživatelské jméno pro administrátora
@@ -663,6 +683,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	cs	Nejprve musíte uložit zde provedená nastavení!
 you need to select your current charset!	setup	cs	Musíte vybrat svou aktuální znakovou sadu!
 you need to specify a password!	setup	cs	Musíte zadat heslo!
+you should %1log out%2 and in again, to update your current session!	setup	cs	Měl(a) byste se %1odhlásit%2 a pak znovu přihlásit, abyste zaktualizoval(a) svou aktuální relaci!
 you should either install the sources or uninstall it, to get rid of the tables	setup	cs	Měl(a) by jste buď nainstalovat zdrojové kódy, nebo jí odinstalovat, aby jste se zbavil(a) tabulek
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	cs	Měl by jste ho buď odinstalovat a potom nainstalovat znovu nebo se pokusit o manuální opravu
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	cs	NEBUDETE se moci přihlásit do eGroupwaru pomocí PHP relací: "relace nemohla být ověřena" !!!

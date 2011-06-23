@@ -6,7 +6,6 @@
 %1 matches on search criteria	etemplate	cs	%1 shod s kritériem vyhledávání
 %1 more...	etemplate	cs	%1 více...
 %1 new etemplates imported for application '%2'	etemplate	cs	%1 nových eŠablon importováno pro aplikaci '%2'
-%1 not implemented for %2!	etemplate	cs	%1 není implementováno pro %2!
 %s disabled	etemplate	cs	%s zablokováno
 %s needed	etemplate	cs	%s zapotřebí
 %s notranslation	etemplate	cs	%s bez překladu
@@ -38,10 +37,8 @@ all operations save the template!	etemplate	cs	všechny operace ukládají šabl
 allowed file type: %1	etemplate	cs	Povolený typ souboru: %1
 am	etemplate	cs	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
-and	etemplate	cs	A
 application	etemplate	cs	Aplikace
 application name needed to write a langfile or dump the etemplates !!!	etemplate	cs	Název aplikace potřeboval zapsat jazykový soubor nebo vypsat eŠablony !!!
-applications	etemplate	cs	Aplikace
 applies the changes made	etemplate	cs	použije provedené změny
 applies the changes to the given version of the template	etemplate	cs	použije změny provedené v dané verzi šablony
 as default	etemplate	cs	jako výchozí
@@ -54,7 +51,6 @@ border-line-thickness for the table-tag	etemplate	cs	Tloušťka okraje pro tag t
 bottom	etemplate	cs	Dolní okraj
 box	etemplate	cs	Rámeček
 box...	etemplate	cs	Rámeček...
-broken link	etemplate	cs	Neplatný odkaz
 can not have special sql-value null	etemplate	cs	nemůže mít speciální SQL hodnotu NULL
 cancel	etemplate	cs	Zrušit
 cant delete a single widget from a grid !!!	etemplate	cs	nemohu smazat jednotlivý widget z mřížky !!!
@@ -96,7 +92,7 @@ css properties	etemplate	cs	Vlastnosti CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	cs	název CSS třídy pro tento řádek, přednastaveno: 'nmh' = NextMatch header (záhlaví DalšíShoda),'nmr' = alternating NM row (střídavý NM řádek),'nmr0'+'nmr1' NM řádky
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	cs	název CSS třídy pro tento řádek, přednastaveno: 'th' = záhlaví, 'row' = střídavý řádek, řádky 'row_off'+'row_on'
 css-styles	etemplate	cs	CSS styly
-custom	etemplate	cs	Uživatelsky definované
+custom	etemplate	cs	uživatelsky definované
 custom fields	etemplate	cs	uživatelsky definované položky
 custom javascript for onchange	etemplate	cs	uživatelsky definovaný javaskript pro onChange (při změně)
 cut	etemplate	cs	Vyjmout
@@ -129,7 +125,6 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	cs	zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
 displayed in the top line of the groupbox (legend)	etemplate	cs	zobrazeno v horní řádce rámečku skupiny (v legendě)
 do you want to save the changes you made in table %s?	etemplate	cs	Chcete uložit změny, které jste udělal(a)v tabulce %s?
-document '%1' does not exist or is not readable for you!	etemplate	cs	Dokument '%1' buď neexistuje nebo pro něj nemáte oprávnění ke čtení!
 documentation	etemplate	cs	Dokumentace
 doesn't matter	etemplate	cs	nezáleží na tom
 drop a table - this can not be undone	etemplate	cs	Smazat tabulku - nelze vrátit zpět
@@ -182,7 +177,6 @@ file writen	etemplate	cs	Soubor zapsán
 fileupload	etemplate	cs	Upload souboru
 first	etemplate	cs	První
 floating point	etemplate	cs	Plovoucí desetinná čárka
-for more then one contact in a document use the tag pagerepeat!	etemplate	cs	pro více než jeden kontakt v dokumentu použijte tag pagerepeat!
 foreign key	etemplate	cs	Cizí klíč
 formatted text (html)	etemplate	cs	Formátovaný text (HTML)
 go to the first entry	etemplate	cs	jít na první záznam
@@ -285,7 +279,6 @@ open the online help.	etemplate	cs	Otevřit online nápovědu.
 operator	etemplate	cs	Operátor
 optional note about the link	etemplate	cs	volitelná poznámka o odkazu
 options	etemplate	cs	Volby
-or	etemplate	cs	NEBO
 order to navigating by tab key through the form	etemplate	cs	Pořadí v navigaci fomulářem pomocí klávesy tabulátor
 overflow	etemplate	cs	Přetečení
 padding	etemplate	cs	Odsazení
@@ -318,7 +311,6 @@ saves the template with given version number and closes the window	etemplate	cs	
 scale	etemplate	cs	Škála
 scale for float	etemplate	cs	Škála pro plovoucí
 search	etemplate	cs	Hledat
-search...	etemplate	cs	Hledat...
 select a category	etemplate	cs	vybrat kategorii
 select a primary contact, to show in the list	etemplate	cs	Vybrat primární kontakt, který má být zobrazen v seznamu
 select access	etemplate	cs	Vybrat přístup
@@ -430,5 +422,4 @@ xslt template	etemplate	cs	XSLT šablona
 year	etemplate	cs	Rok
 you are not allowed to export more then %1 entries!	etemplate	cs	Nemáte oprávnění exportovat více než %1 záznamů!
 you can respond by visiting:	etemplate	cs	Můžete odpovědět navštívením:
-you need to select a file first!	etemplate	cs	Musíte nejprve vybrat soubor!
-your code is incorrect !!!	etemplate	cs	Váš kód obsahuje chyby !!!
+you need to select a file first!	etemplate	cs	Nejprve musíte vybrat soubor!

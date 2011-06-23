@@ -12,7 +12,6 @@
 (empty = use global limit, no = no export at all)	admin	cs	(prázdné = použít globální limit, ne = žádný export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	cs	<b>Žádný konverzní typ <none> nebyl nalezen.</b> Vyberte si prosím konverzní typ ze seznamu
 @-eval() is only availible to admins!!!	addressbook	cs	@-eval() je přístupná jen administrátorům!!!
-account id	addressbook	cs	ID účtu
 account repository	admin	cs	Databáze účtů
 accounts	addressbook	cs	Účty
 actions	addressbook	cs	Akce
@@ -38,10 +37,8 @@ address line 2	addressbook	cs	Adresa - řádek 2
 address type	addressbook	cs	Typ adresy
 addressbook	common	cs	Adresář
 addressbook csv export	addressbook	cs	Export adresáře do CSV
-addressbook csv import	addressbook	cs	Import do adresáře z CSV
 addressbook field	addressbook	cs	Položka adresáře
 addressbook menu	addressbook	cs	Menu adresáře
-addressbook of	addressbook	cs	Adresář
 addressbook preferences	addressbook	cs	Předvolby adresáře
 addressbook the contact should be saved to	addressbook	cs	Kontakty adresáře by měly být uloženy do
 addressbook the contact should be shown	addressbook	cs	Kontakty adresáře by měly být zobrazeny
@@ -84,7 +81,6 @@ category tree	admin	cs	Strom kategorií
 cell phone	addressbook	cs	Mobilní telefon
 change all organisation members	addressbook	cs	změnit všechny členy organizace
 charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
-charset for the vcard export	addressbook	cs	Znaková sada pro export do vCard
 charset of file	addressbook	cs	Znaková sada souboru
 check all	addressbook	cs	Označit všechny
 choose an icon for this contact type	admin	cs	Vybrat ikonu pro tento typ kontaktu
@@ -92,7 +88,7 @@ choose owner of imported data	addressbook	cs	Vyberte vlastníka importovaných d
 choose seperator and charset	addressbook	cs	Vyberte oddělovač a znakovou sadu
 chosse an etemplate for this contact type	admin	cs	Vybrat eTemplate pro tento typ kontaktu
 city	common	cs	Město
-cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	cs	Pročištění položek adresáře (použijte pokud synchronizace vytvořila duplicity)
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	cs	Vyčistit položky adresáře (použijte pokud synchronizace vytvořila duplicity)
 company	common	cs	Společnost
 company name	addressbook	cs	jméno firmy
 configuration	common	cs	Konfigurace
@@ -103,7 +99,6 @@ contact deleted	addressbook	cs	Kontakt smazán
 contact fields to show	addressbook	cs	Zobrazovat položky kontaktu
 contact fields:	addressbook	cs	Položky kontaktu:
 contact id	addressbook	cs	ID kontaktu
-contact id cannot be changed by import	addressbook	cs	ID kontaktu nelze měnit importem
 contact maintenance	admin	cs	Údržba kontaktu
 contact modified by %1 at %2	addressbook	cs	Kontakt změněnil(a) %1v %2
 contact not found!	addressbook	cs	Kontakt nebyl nalezen!
@@ -179,12 +174,7 @@ error deleting the contact !!!	addressbook	cs	Chyba při mazání kontaktu
 error saving the contact !!!	addressbook	cs	Chyba při ukládání kontaktu
 error: the entry has been updated since you opened it for editing!	addressbook	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený k editaci!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	cs	Příklad $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - prohledej pole "n_prefix", pokud nalezneš "Mr", napiš Hello Mr., v opačném případě napiš Hello Ms.
-example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	cs	Příklad $$LETTERPREFIX$$ - Vrací titul bez mezer, např. pokud položka titul prázdná
-example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	cs	Příklad $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Příklad: Mr Dr. James Miller
-example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	cs	Příklad $$NELF role$$ - pokud není položka role prázdná, vrací nový řádek s hodnotou položky role
-example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	cs	Příklad $$NELFNV role$$ - pokud není položka role prázdná, vrací znak LF bez hodnoty položky
 existing links	addressbook	cs	Stávající odkazy
-exists	addressbook	cs	existuje
 export	addressbook	cs	export
 export as csv	addressbook	cs	Exportovat jako CSV
 export as vcard	addressbook	cs	Exportovat jako VCard
@@ -221,7 +211,6 @@ group %1	addressbook	cs	Skupina %1
 h	addressbook	cs	h
 hide accounts from addressbook	addressbook	cs	Nezobrazovat účty v adresáři
 hides accounts completly from the adressbook.	addressbook	cs	Kompletně skryje účty před adresářem.
-history logging	admin	cs	Protokolování historie
 home address	addressbook	cs	Domácí adresa
 home address, birthday, ...	addressbook	cs	Domácí adresa, narozeniny, ...
 home city	addressbook	cs	Domov - město
@@ -252,7 +241,6 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 income	addressbook	cs	Hospodářský výsledek
 infolog	addressbook	cs	InfoLog
-insert	addressbook	cs	vložit
 insert in document	addressbook	cs	Vložit do dokumentu
 insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
 international	addressbook	cs	Mezinárodní
@@ -328,7 +316,6 @@ preferred email address to use in distribution lists	addressbook	cs	Preferovaná
 preferred phone	addressbook	cs	preferovaný telefon
 preferred type of email address to add for distribution lists	addressbook	cs	preferovaný typ e-mailové adresy pro přidávání do distribučních seznamů
 prefix	addressbook	cs	Titul/Oslovení
-prevent deleting of contacts	admin	cs	Blokovat mazání kontaktů
 private custom fields	addressbook	cs	Soukromá uživatelsky definovaná pole
 public key	addressbook	cs	Veřejný klíč
 publish into groups:	addressbook	cs	Zveřejnit ve skupinách:
@@ -360,7 +347,6 @@ select the type of conversion	addressbook	cs	Vybrat typ konverze
 select the type of conversion:	addressbook	cs	Vybrat typ konverze:
 select where you want to store / retrieve contacts	admin	cs	Vybrat úložiště kontaktů
 selected contacts	addressbook	cs	vybrané kontakty
-send emailcopy to receiver	addressbook	cs	Odeslat příjemci kopii e-mailem
 seperator	addressbook	cs	Oddělovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	cs	Nastavit celé jméno a evidovat jako pole v kontaktech všech uživatelů (buď všechny nebo jen prázdné hodnoty)
 set only full name	addressbook	cs	Nastavit jen celé jméno
@@ -388,14 +374,12 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
 the anonymous user needs read it!	addressbook	cs	Anonymní uživatel potřebuje právo pro čtení!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	cs	Dokument může obsahovat rezervovaná místa jako $$n_fn$$, která budou nahrazena daty kontaktu (%1kompletní seznam názvů rezervovaných míst%2).
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	cs	Pro vložení údajů kontaktu do dokumentů OpenOffice a MS Office je zapotřebí rozšíření zip
 there was an error saving your data :-(	addressbook	cs	Došlo k chybě při ukládání Vašich dat :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	cs	Tento modul zobrazuje formulář kontaktu, který ukládá data přímo do adresáře.
 this module displays block from a adddressbook group.	addressbook	cs	Tento modul zobrazuje blok z adresářové skupiny.
 this person's first name was not in the address book.	addressbook	cs	Křestní jméno této osoby nebylo v adresáři.
 this person's last name was not in the address book.	addressbook	cs	Příjmení této osoby nebylo v adresáři.
 timezone	addressbook	cs	Časová zóna
-title	addressbook	cs	Titul
 to many might exceed your execution-time-limit	addressbook	cs	příliš mnoho může překročit nastavený časový limit spuštění
 today is %1's birthday!	common	cs	Dnes má narozeniny %1!
 tomorrow is %1's birthday.	common	cs	Zítra má narozeniny %1!
@@ -429,7 +413,6 @@ where to add the email address	addressbook	cs	kam přidat e-mailovou adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	cs	Jaký formát adres má adresář používat u zemí, jejichž adresní formát nezná. Pokud je formát znám, je použit bez ohledu na toto nastavení.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	cs	Který adresář má být vybrán v případě, že přidáváte kontakt a pro aktuální adresář nemáte dostatečná práva.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Která znaková sada má být použita pro CSV export? Výchozí znakovou sadou je znaková sada použitá pro instalaci eGroupWare.
-which charset should be used for the vcard export.	addressbook	cs	Jaká znaková sada má být použita pro export do vCard.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	cs	Které položky budou exportovány. Všechny znamená každou položku včetně uživatelsky definovaných. Firemní nebo domácí obsahuje jen jméno, firmu a vybranou adresu.
 whole query	addressbook	cs	celý dotaz
 work email if given, else home email	addressbook	cs	Pracovní e-mail, je-li definován, jinak domácí
@@ -440,7 +423,6 @@ yes, for the next three days	addressbook	cs	Ano, po následující tři měsíce
 yes, for the next two weeks	addressbook	cs	Ano, po následující dva týdny
 yes, for the next week	addressbook	cs	Ano, po následující týden
 yes, for today and tomorrow	addressbook	cs	Ano, po dnešní a zítřejší den
-yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou trvale odstranit smazané položky
 you are not permitted to delete contact %1	addressbook	cs	Nemáte oprávnění ke smazání kontaktu %1
 you are not permittet to delete this contact	addressbook	cs	Nemáte oprávnění ke smazání tohoto kontaktu
 you are not permittet to edit this contact	addressbook	cs	Nemáte oprávnění k editaci tohoto kontaktu
