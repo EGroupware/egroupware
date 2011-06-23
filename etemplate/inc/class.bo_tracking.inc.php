@@ -208,6 +208,18 @@ abstract class bo_tracking
 	}
 
 	/**
+	 * Get the details of an entry
+	 *
+	 * @param array|object $data
+	 * @param int|string $receiver nummeric account_id or email address
+	 * @return array of details as array with values for keys 'label','value','type'
+	 */
+	function get_details($data,$receiver=null)
+	{
+		return array();
+	}
+
+	/**
 	 * Get a config value, which can depend on $data and $old
 	 *
 	 * Need to be implemented in your extended tracking class!
@@ -216,6 +228,8 @@ abstract class bo_tracking
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
 	 *  - 'subject' string subject line for the notification of $data,$old, defaults to link-title
+	 *  - 'link' string of link to view $data
+	 *  - 'sender' sender of email
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
@@ -249,7 +263,7 @@ abstract class bo_tracking
 			//error_log(__METHOD__.__LINE__.' Changedfields:'.print_r($changed_fields,true));
 			//error_log(__METHOD__.__LINE__.' Changes:'.print_r($changes,true));
 		}
-		
+
 		//error_log(__METHOD__.__LINE__.' LinkFields:'.array2string($this->cf_link_fields));
 		if ($changes && $this->cf_link_fields)
 		{
@@ -545,11 +559,12 @@ abstract class bo_tracking
 	 * @param string $user_or_lang='en' user-id or 2 char lang-code for a non-system user
 	 * @param string $check=null pref. to check if a notification is wanted
 	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success or false on error (error-message is in $this->errors)
 	 */
-	public function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
+	public function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true,$deleted=null)
 	{
-		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
+		//error_log(__METHOD__."(,,'$email',$user_or_lang,$check,$assignment_changed,$deleted)");
 		if (!$email) return false;
 
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
@@ -591,13 +606,15 @@ abstract class bo_tracking
 			try {
 				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($this->get_body(false,$data,$old,false)); // set message as plaintext
-				$notification->set_message($this->get_body(true,$data,$old,false)); // and html
-				$notification->set_sender($this->get_sender($data,$old,true));
-				$notification->set_subject($this->get_subject($data,$old));
-				$notification->set_links(array($this->get_notification_link($data,$old)));
-				$attachments = $this->get_attachments($data,$old);
-				if(is_array($attachments)) { $notification->set_attachments($attachments); }
+				$notification->set_message($this->get_body(false,$data,$old,false,$receiver)); // set message as plaintext
+				$notification->set_message($this->get_body(true,$data,$old,false,$receiver)); // and html
+				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
+				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
+				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));
+				if (($attachments = $this->get_attachments($data,$old,$receiver)) && is_array($attachments))
+				{
+					$notification->set_attachments($attachments);
+				}
 				$notification->send();
 			}
 			catch (Exception $exception) {
@@ -646,9 +663,10 @@ abstract class bo_tracking
 	 * @param array $data
 	 * @param array $old
 	 * @param bool $prefer_id returns the userid rather than email
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string or userid
 	 */
-	protected function get_sender($data,$old,$prefer_id=false)
+	protected function get_sender($data,$old,$prefer_id=false,$receiver=null)
 	{
 		$sender = $this->get_config('sender',$data,$old);
 		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
@@ -691,9 +709,11 @@ abstract class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
-	protected function get_subject($data,$old)
+	protected function get_subject($data,$old,$deleted=null,$receiver=null)
 	{
 		return egw_link::title($this->app,$data[$this->id_field]);
 	}
@@ -705,9 +725,10 @@ abstract class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
-	protected function get_message($data,$old)
+	protected function get_message($data,$old,$receiver=null)
 	{
 		return '';
 	}
@@ -720,13 +741,14 @@ abstract class bo_tracking
 	 * @param array $data
 	 * @param array $old
 	 * @param string $allow_popup=false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
-	 * @return string/array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
+	 * @param int|string $receiver nummeric account_id or email address
+	 * @return string|array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
 	 */
-	protected function get_link($data,$old,$allow_popup=false)
+	protected function get_link($data,$old,$allow_popup=false,$receiver=null)
 	{
 		if (($link = $this->get_config('link',$data,$old)))
 		{
-			if (strpos($link,$this->id_field.'=') === false)
+			if (strpos($link,$this->id_field.'=') === false && isset($data[$this->id_field]))
 			{
 				$link .= strpos($link,'?') === false ? '?' : '&';
 				$link .= $this->id_field.'='.$data[$this->id_field];
@@ -752,6 +774,7 @@ abstract class bo_tracking
 
 			if ($popup) $link .= '&nopopup=1';
 		}
+		//error_log(__METHOD__."(..., $allow_popup, $receiver) returning ".array2string($allow_popup ? array($link,$popup) : $link));
 		return $allow_popup ? array($link,$popup) : $link;
 	}
 
@@ -760,62 +783,65 @@ abstract class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return array with link
 	 */
-	protected function get_notification_link($data,$old)
+	protected function get_notification_link($data,$old,$receiver=null)
 	{
-		if($view = egw_link::view($this->app,$data[$this->id_field])) {
-			return array(	'text' 	=> $this->get_title($data,$old),
-							'view' 	=> $view,
-							'popup'	=> egw_link::is_popup($this->app,'view'),
-							);
+		if (($view = egw_link::view($this->app,$data[$this->id_field])))
+		{
+			return array(
+				'text' 	=> $this->get_title($data,$old),
+				'view' 	=> $view,
+				'popup'	=> egw_link::is_popup($this->app,'view'),
+			);
 		}
 		return false;
 	}
 
 	/**
-     * Get the body of the notification message, can be reimplemented
-     *
-     * @param boolean $html_email
-     * @param array $data
-     * @param array $old
-     * @param boolean $integrate_link to have links embedded inside the body
-     * @return string
-     */
-    public function get_body($html_email,$data,$old,$integrate_link = true)
-    {
-        $body = '';
-        if ($html_email)
-        {
-            $body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
-        }
-        // new or modified message
-        if (($message = $this->get_message($data,$old)))
-        {
-            $body .= $this->format_line($html_email,'message',false,$message);
-        }
-        if ($integrate_link && ($link = $this->get_link($data,$old)))
-        {
-            $body .= $this->format_line($html_email,'link',false,lang('You can respond by visiting:'),$link);
-        }
-        foreach($this->get_details($data) as $name => $detail)
-        {
-            // if there's no old entry, the entry is not modified by definition
-            // if both values are '', 0 or null, we count them as equal too
-            $modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
-            //if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
-            if (empty($detail['value']) && !$modified) continue;    // skip unchanged, empty values
+	 * Get the body of the notification message, can be reimplemented
+	 *
+	 * @param boolean $html_email
+	 * @param array $data
+	 * @param array $old
+	 * @param boolean $integrate_link to have links embedded inside the body
+	 * @param int|string $receiver nummeric account_id or email address
+	 * @return string
+	 */
+	public function get_body($html_email,$data,$old,$integrate_link = true,$receiver=null)
+	{
+		$body = '';
+		if ($html_email)
+		{
+			$body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
+		}
+		// new or modified message
+		if (($message = $this->get_message($data,$old,$receiver)))
+		{
+			$body .= $this->format_line($html_email,'message',false,$message);
+		}
+		if ($integrate_link && ($link = $this->get_link($data,$old,false,$receiver)))
+		{
+			$body .= $this->format_line($html_email,'link',false,$integrate_link === true ? lang('You can respond by visiting:') : $integrate_link,$link);
+		}
+		foreach($this->get_details($data,$receiver) as $name => $detail)
+		{
+			// if there's no old entry, the entry is not modified by definition
+			// if both values are '', 0 or null, we count them as equal too
+			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
+			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
+			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 
-            $body .= $this->format_line($html_email,$detail['type'],$modified,
-                ($detail['label'] ? $detail['label'].': ':'').$detail['value']);
-        }
-        if ($html_email)
-        {
-            $body .= "</table>\n";
-        }
-
-        return $body;
-    }
+			$body .= $this->format_line($html_email,$detail['type'],$modified,
+				$detail['label'] ? $detail['label'].': ' : '', $detail['value']);
+		}
+		if ($html_email)
+		{
+			$body .= "</table>\n";
+		}
+		return $body;
+	}
 
 	/**
 	 * Format one line to the mail body
@@ -824,11 +850,11 @@ abstract class bo_tracking
 	 * @param boolean $html_mail
 	 * @param string $type 'link', 'message', 'summary', 'multiline', 'reply' and ''=regular content
 	 * @param boolean $modified mark field as modified
-	 * @param string $line
-	 * @param string $link=null
+	 * @param string $line whole line or just label
+	 * @param string $data=null data or null to display just $line over 2 columns
 	 * @return string
 	 */
-	protected function format_line($html_mail,$type,$modified,$line,$link=null)
+	protected function format_line($html_mail,$type,$modified,$line,$data=null)
 	{
 		$content = '';
 
@@ -865,11 +891,11 @@ abstract class bo_tracking
 					$background = '#F1F1F1';
 					break;
 				default:
-					$size = '100%';
+					$size = false;
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
 
-			$content = '<tr style="background-color: '.$background.';"><td style="'.$style.'">';
+			$content = '<tr style="background-color: '.$background.';"><td style="'.$style.($data?'':'" colspan="2').'">';
 		}
 		else	// text-mail
 		{
@@ -879,19 +905,28 @@ abstract class bo_tracking
 		}
 		$content .= $line;
 
-		if ($link)
+		if ($data)
 		{
-			$content .= ' ';
-
 			if ($html_mail)
 			{
-				// the link is often too long for html boxes
-				// chunk-split allows to break lines if needed
-				$content .= html::a_href(chunk_split($link,40,'&#8203'),$link,'','target="_blank"');
+				$content .= '</td><td style="'.$style.'">';
+				if ($type == 'link')
+				{
+					// the link is often too long for html boxes chunk-split allows to break lines if needed
+					$content .= html::a_href(chunk_split($data,40,'&#8203'),$data,'','target="_blank"');
+				}
+				elseif ($this->html_content_allow)
+				{
+					$content .= html::activate_links($data);
+				}
+				else
+				{
+					$content .= html::htmlspecialchars($data);
+				}
 			}
 			else
 			{
-				$content .= $link;
+				$content .= ' '.$data;
 			}
 		}
 		if ($html_mail) $content .= '</td></tr>';
@@ -906,9 +941,10 @@ abstract class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
-	 * @return array with values for either 'content' or 'path' and optionally 'mimetype', 'filename' and 'encoding'
+	 * @param int|string $receiver nummeric account_id or email address
+	 * @return array or array with values for either 'string' or 'path' and optionally (mime-)'type', 'filename' and 'encoding'
 	 */
-	protected function get_attachments($data,$old)
+	protected function get_attachments($data,$old,$receiver=null)
 	{
 	 	return array();
 	}
