@@ -737,9 +737,9 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		if (is_dir($url) && !is_link($url))
 		{
-			return rmdir($url);
+			return egw_vfs::rmdir($url);
 		}
-		return unlink($url);
+		return egw_vfs::unlink($url);
 	}
 
 	/**
