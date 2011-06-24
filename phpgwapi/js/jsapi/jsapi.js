@@ -214,8 +214,10 @@ function egw_getAppName()
  * @param string|int _id=null id of entry to refresh
  * @param string _type=null either 'edit', 'delete', 'add' or null
  * @param string _targetapp which app's window should be refreshed, default current
+ * @param string|RegExp _replace regular expression to replace in url
+ * @param string _with
  */
-function egw_refresh(_msg, _app, _id, _type, _target)
+function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 {
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
@@ -228,9 +230,14 @@ function egw_refresh(_msg, _app, _id, _type, _target)
 	}
 	var href = win.location.href;
 	
+	if (typeof _replace != 'undefined')
+	{
+		href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, typeof _with != 'undefined' ? _with : '');
+	}
+	
 	if (href.indexOf('msg=') != -1)
 	{
-		href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
+		href = href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
 	}
 	else if (_msg)
 	{

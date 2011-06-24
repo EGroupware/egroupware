@@ -370,7 +370,7 @@ class filemanager_ui
 		{
 			$sel_options['action']['mail'] = lang('Mail files');
 			list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
-			$GLOBALS['egw_info']['flags']['java_script'] .= "<script>
+			$GLOBALS['egw_info']['flags']['java_script'] .= "<script type=\"text/javascript\">
 	function open_mail(attachments)
 	{
 		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
@@ -402,7 +402,7 @@ class filemanager_ui
 			selbox.value = '';
 		}
 	}
-</script>";
+</script>\n";
 		}
 		else
 		{
@@ -998,7 +998,8 @@ class filemanager_ui
 				}
 			}
 			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','filemanager','".
-				str_replace("'","\\'",$refresh_path ? $refresh_path : $path)."','edit');";
+				str_replace("'","\\'",$refresh_path ? $refresh_path : $path)."','edit',null,/&path=[^&]*/);";
+
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save') common::egw_exit();
