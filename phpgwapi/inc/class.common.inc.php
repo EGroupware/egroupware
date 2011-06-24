@@ -398,11 +398,14 @@ class common
 	 * grab the owner name
 	 *
 	 * @param $id account id
+	 * @return string full name of user or "#$accountid" if user not found
 	 */
 	static function grab_owner_name($accountid = '')
 	{
-		$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
-
+		if (!$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname))
+		{
+			return '#'.$accountid;
+		}
 		return self::display_fullname($lid,$fname,$lname,$accountid);
 	}
 
