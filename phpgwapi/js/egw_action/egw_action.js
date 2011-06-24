@@ -654,7 +654,7 @@ egwActionLink.prototype.set_actionId = function(_value)
 	this.actionObj = this.manager.getActionById(_value);
 
 	if (!this.actionObj)
-		throw "Given action object does not exist!"
+		throw "Action object with id '"+_value+"' does not exist!"
 }
 
 /** egwActionObject Object **/
