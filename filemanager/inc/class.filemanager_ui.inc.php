@@ -1114,7 +1114,7 @@ class filemanager_ui
 				}
 				if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
 				{
-					$readonlys = array_merge($content, $extra_tab['readonlys']);
+					$readonlys = array_merge($readonlys, $extra_tab['readonlys']);
 				}
 			}
 		}
