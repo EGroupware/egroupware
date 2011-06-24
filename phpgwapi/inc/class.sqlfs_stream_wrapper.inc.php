@@ -172,7 +172,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		//error_log(__METHOD__."('$path')");
 		self::$stat_cache = array();
 
-		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl = array());
+		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl = null);
 	}
 
 	/**
