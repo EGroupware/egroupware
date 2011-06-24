@@ -198,7 +198,7 @@ class admin_categories
 
 		$sel_options['icon'] = self::get_icons();
 		$sel_options['owner'] = array();
-		
+
 		// User's category - add current value to be able to preserve owner
 		if(!$content['id'] && $this->appname != 'admin') $content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -215,7 +215,7 @@ class admin_categories
 		{
 			$sel_options['owner'][0] = lang('All users');
 			$accs = $GLOBALS['egw']->accounts->get_list('groups');
-			foreach($accs as $acc) 
+			foreach($accs as $acc)
 			{
 				if ($acc['account_type'] == 'g')
 				{
@@ -299,7 +299,7 @@ class admin_categories
 		{
 			$globalcat = false;
 		}
-		if($globalcat) $filter['access'] = 'public';
+		if ($globalcat) $filter['access'] = 'public';
 		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
 		if($query['filter'] > 0 || $query['col_filter']['owner']) {
@@ -311,10 +311,7 @@ class admin_categories
 		}
 
 		$cats = new categories($filter['owner'],$query['appname']);
-
-$globalcat=1;
-$parent = 0;
-		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true,$filter);
+		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],'all_no_acl',$parent=0,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
 		{
@@ -367,7 +364,7 @@ $parent = 0;
 			$appname = categories::GLOBAL_APPNAME;
 			foreach(array($content['nm']['appname'], $_GET['cats_app'], $_GET['appname']) as $field)
 			{
-				if($field) 
+				if($field)
 				{
 					$appname = $field;
 					break;

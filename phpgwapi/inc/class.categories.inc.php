@@ -171,7 +171,8 @@ class categories
 	 * @param string $query='' query-pattern
 	 * @param string $sort='ASC' sort order, defaults to 'ASC'
 	 * @param string $order='' order by, default cat_main, cat_level, cat_name ASC
-	 * @param boolean $globals include the global egroupware categories or not
+	 * @param boolean|string $globals includes the global egroupware categories or not,
+	 * 	'all_no_acl' to return global and all non-private user categories independent of ACL
 	 * @param array|int $parent_id=null return only subcats of $parent_id(s)
 	 * @param int $lastmod = -1 if > 0 return only cats modified since then
 	 * @param string $column='' if column-name given only that column is returned, not the full array with all cat-data
@@ -234,7 +235,7 @@ class categories
 			}
 
 			// check for read permission
-			if(!$this->check_perms(EGW_ACL_READ, $cat))
+			if(!$this->check_perms(EGW_ACL_READ, $cat, $globals === 'all_no_acl'))
 			{
 				continue;
 			}
@@ -316,7 +317,8 @@ class categories
 	 * @param string $query='' query-pattern
 	 * @param string $sort='ASC' sort order, either defaults to 'ASC'
 	 * @param string $order='cat_name' order by
-	 * @param boolean $globals includes the global egroupware categories or not
+	 * @param boolean|string $globals includes the global egroupware categories or not,
+	 * 	'all_no_acl' to return global and all non-private user categories independent of ACL
 	 * @param array|int $parent_id=0 return only subcats of $parent_id(s)
 	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
 	 * @return array with cats
@@ -479,9 +481,10 @@ class categories
 	 *
 	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
 	 * @param mixed $category category as array or the category_id
+	 * @param boolean $no_acl_check=false if true, grants are NOT checked, gives access to all non-private categories of all users
 	 * @return boolean true permission granted, false for permission denied, null for category does not exist
 	 */
-	public function check_perms($needed,$category)
+	public function check_perms($needed, $category, $no_acl_check=false)
 	{
 		if (!is_array($category) && !($category = self::read($category)))
 		{
@@ -510,6 +513,12 @@ class categories
 			return true;
 		}
 
+		// if $no_acl_check is set, allow access to all public (non-private) categories
+		if ($no_acl_check && $category['access'] == 'public' && $this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name)
+		{
+			return true;
+		}
+
 		// Load the application grants
 		if ($category['appname'] == $this->app_name && is_null($this->grants))
 		{
@@ -517,8 +526,9 @@ class categories
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
-		return ($this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
-					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
+		return $this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name &&
+			($this->grants[$category['owner']] & $needed) &&
+			($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE));
 	}
 
 	/**
