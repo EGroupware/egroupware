@@ -932,7 +932,7 @@ class egw_link extends solink
 		{
 			$path = egw_vfs::resolve_url($path);
 		}
-		//error_log(__METHOD__."($app,$id,$file)=$path");
+		//error_log(__METHOD__."($app,$id,$file,$just_the_path)=$path");
 		return $path;
 	}
 
@@ -959,11 +959,13 @@ class egw_link extends solink
 		}
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,egw_vfs::encodePathComponent($file['name']))) &&
-				($stat = egw_vfs::url_stat($fname,0))) && $comment)
+			// use vfs:// url, to ensure vfs_add|modified hook get called
+			$fname = egw_vfs::PREFIX.self::vfs_path($app,$id,egw_vfs::encodePathComponent($file['name']),true);
+			if (($Ok = copy($file['tmp_name'], $fname)) && ($stat = egw_vfs::url_stat($fname, 0)) && $comment)
 			{
 				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
 			}
+			//error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called copy('$file[tmp_name]', '$fname')=".array2string($Ok).', stat='.array2string($stat));
 		}
 		else
 		{
