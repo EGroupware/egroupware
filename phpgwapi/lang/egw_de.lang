@@ -53,6 +53,7 @@ all fields	common	de	alle Felder
 all in one	common	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
+alt	common	de	Alt
 alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
 an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. (Dies wurde von einem Administrator veranlasst.)
@@ -179,6 +180,7 @@ could not contact server. operation timed out!	common	de	Konnte Server nicht kon
 create	common	de	Erstellen
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
+ctrl	common	de	Strg
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
@@ -195,6 +197,7 @@ december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
+del	common	de	Entf
 delete	common	de	Löschen
 delete category	common	de	Kategorie entfernen
 delete row	common	de	Zeile löschen
@@ -534,6 +537,8 @@ permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien
 permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	persönlich
 peru	common	de	PERU
+pg down	common	de	Bild ab
+pg up	common	de	Bild auf
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 phpgwapi	common	de	EGroupware API
@@ -633,6 +638,7 @@ session has been killed	common	de	Session wurde beendet
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
+shift	common	de	Umsch
 show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
@@ -660,6 +666,7 @@ somalia	common	de	SOMALIA
 sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
 south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+space	common	de	Leer
 spain	common	de	SPANIEN
 sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
@@ -680,6 +687,7 @@ swaziland	common	de	SWAZILAND
 sweden	common	de	SCHWEDEN
 switzerland	common	de	SCHWEIZ
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+tab	common	de	Tab
 table %1 is excluded from backup and restore. data will not be restored.	common	de	Tabelle %1 ist ausgeschlossen von der Datensicherung und der Wiederherstellung. Die Daten werden nicht wiederhergestellt.
 table properties	common	de	Tabelleneigenschaften
 taiwan	common	de	TAIWAN/TAIPEI
