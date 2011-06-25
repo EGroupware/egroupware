@@ -598,6 +598,7 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 			{
 				if (_returnData)
 				{
+					// If the data should be returned, simply return it
 					if (typeof this.data[_columnId].data != "undefined")
 					{
 						res = this.data[_columnId];
@@ -605,7 +606,17 @@ egwGridDataElement.prototype.hasColumn = function(_columnId, _returnData)
 				}
 				else
 				{
-					res = this.data[_columnId].queued;
+					// Otherwise check whether the data has been loaded - if this
+					// is the case, return true
+					if (typeof this.data[_columnId].data != "undefined")
+					{
+						res = true;
+					}
+					else
+					{
+						// Otherwise return the "queued" state
+						res = this.data[_columnId].queued;
+					}
 				}
 			}
 			// Probably there is a default value specified for this column...
@@ -1151,7 +1162,7 @@ egwGridDataQueue.prototype._queue = function(_obj, _last)
 			var tid = this.timeoutId;
 			var self = this;
 			this.eventQueue.queueTimeout(this.flushQueue, this, [true],
-				EGW_DATA_QUEUE_FLUSH_TIMEOUT, "dataQueueTimeout");
+				"dataQueueTimeout", EGW_DATA_QUEUE_FLUSH_TIMEOUT);
 		}
 	}
 
