@@ -2502,14 +2502,11 @@ class calendar_ical extends calendar_boupdate
 									);
 								}
 							}
-							elseif (preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
+							elseif (preg_match('/MD(\d+)(?: [^ ]+)? ([0-9T]+)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
-								if ($recurenceMatches[1] > 1)
-								{
-									$vcardData['recur_interval'] = $recurenceMatches[1];
-								}
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
+								$vcardData['recur_interval'] = $recurenceMatches[1];
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 							}
 							elseif (preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
 							{
@@ -2551,7 +2548,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'Y':		// 1.0
-							if (preg_match('/YM(\d+)[^#]*#(\d+)/', $recurence, $recurenceMatches))
+							if (preg_match('/YM(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if ($recurenceMatches[2] > 0 && $vcardData['end'])
@@ -2566,18 +2563,10 @@ class calendar_ical extends calendar_boupdate
 									);
 								}
 							}
-							elseif (preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches))
+							elseif (preg_match('/YM(\d+)(?: [^ ]+)? ([0-9T]+)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$enddate = trim($recurenceMatches[2]);
-								if ($enddate != '#0')
-								{
-									if (preg_match('/([\d,]+) (.*)/', $enddate, $fixMatches))
-									{
-										$enddate = trim($fixMatches[2]);
-									}
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($enddate);
-								}
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 							} else break;
 
 							// fall-through
