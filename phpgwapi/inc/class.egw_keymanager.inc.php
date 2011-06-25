@@ -11,75 +11,139 @@
  * @version $Id$
  */
 
-define("EGW_KEY_BACKSPACE", 8);
-define("EGW_KEY_TAB", 9);
-define("EGW_KEY_ENTER", 13);
-define("EGW_KEY_ESCAPE", 27);
-define("EGW_KEY_DELETE", 46);
-
-define("EGW_KEY_SPACE", 32);
-
-define("EGW_KEY_PAGE_UP", 33);
-define("EGW_KEY_PAGE_DOWN", 34);
-
-define("EGW_KEY_ARROW_LEFT", 37);
-define("EGW_KEY_ARROW_UP", 38);
-define("EGW_KEY_ARROW_RIGHT", 39);
-define("EGW_KEY_ARROW_DOWN", 40);
-
-define("EGW_KEY_0", 48);
-define("EGW_KEY_1", 49);
-define("EGW_KEY_2", 50);
-define("EGW_KEY_3", 51);
-define("EGW_KEY_4", 52);
-define("EGW_KEY_5", 53);
-define("EGW_KEY_6", 54);
-define("EGW_KEY_7", 55);
-define("EGW_KEY_8", 56);
-define("EGW_KEY_9", 57);
-
-define("EGW_KEY_A", 65);
-define("EGW_KEY_B", 66);
-define("EGW_KEY_C", 67);
-define("EGW_KEY_D", 68);
-define("EGW_KEY_E", 69);
-define("EGW_KEY_F", 70);
-define("EGW_KEY_G", 71);
-define("EGW_KEY_H", 72);
-define("EGW_KEY_I", 73);
-define("EGW_KEY_J", 74);
-define("EGW_KEY_K", 75);
-define("EGW_KEY_L", 76);
-define("EGW_KEY_M", 77);
-define("EGW_KEY_N", 78);
-define("EGW_KEY_O", 79);
-define("EGW_KEY_P", 80);
-define("EGW_KEY_Q", 81);
-define("EGW_KEY_R", 82);
-define("EGW_KEY_S", 83);
-define("EGW_KEY_T", 84);
-define("EGW_KEY_U", 85);
-define("EGW_KEY_V", 86);
-define("EGW_KEY_W", 87);
-define("EGW_KEY_X", 88);
-define("EGW_KEY_Y", 89);
-define("EGW_KEY_Z", 90);
-
-define("EGW_KEY_F1", 112);
-define("EGW_KEY_F2", 113);
-define("EGW_KEY_F3", 114);
-define("EGW_KEY_F4", 115);
-define("EGW_KEY_F5", 116);
-define("EGW_KEY_F6", 117);
-define("EGW_KEY_F7", 118);
-define("EGW_KEY_F8", 119);
-define("EGW_KEY_F9", 120);
-define("EGW_KEY_F10", 121);
-define("EGW_KEY_F11", 122);
-define("EGW_KEY_F12", 123);
-
 class egw_keymanager
 {
+	const BACKSPACE = 8;
+	const TAB = 9;
+	const ENTER = 13;
+	const ESCAPE = 27;
+	const DELETE = 46;
+
+	const SPACE = 32;
+
+	const PAGE_UP = 33;
+	const PAGE_DOWN = 34;
+
+	const ARROW_LEFT = 37;
+	const ARROW_UP = 38;
+	const ARROW_RIGHT = 39;
+	const ARROW_DOWN = 40;
+
+	const _0 = 48;
+	const _1 = 49;
+	const _2 = 50;
+	const _3 = 51;
+	const _4 = 52;
+	const _5 = 53;
+	const _6 = 54;
+	const _7 = 55;
+	const _8 = 56;
+	const _9 = 57;
+
+	const A = 65;
+	const B = 66;
+	const C = 67;
+	const D = 68;
+	const E = 69;
+	const F = 70;
+	const G = 71;
+	const H = 72;
+	const I = 73;
+	const J = 74;
+	const K = 75;
+	const L = 76;
+	const M = 77;
+	const N = 78;
+	const O = 79;
+	const P = 80;
+	const Q = 81;
+	const R = 82;
+	const S = 83;
+	const T = 84;
+	const U = 85;
+	const V = 86;
+	const W = 87;
+	const X = 88;
+	const Y = 89;
+	const Z = 90;
+
+	const F1 = 112;
+	const F2 = 113;
+	const F3 = 114;
+	const F4 = 115;
+	const F5 = 116;
+	const F6 = 117;
+	const F7 = 118;
+	const F8 = 119;
+	const F9 = 120;
+	const F10 = 121;
+	const F11 = 122;
+	const F12 = 123;
+
+	/**
+	 * Converts the given key codes into translated key names.
+	 */
+	public static function key_name($keyCode)
+	{
+		// Keys which can be directly translated into ASCII chars
+		if (($keyCode >= self::_0 && $keyCode <= self::_9) ||
+			($keyCode >= self::A && $keyCode <= self::Z))
+		{
+			return chr($keyCode);
+		}
+
+		// Function keys
+		if ($keyCode >= self::F1 && $keyCode <= self::F12)
+		{
+			return "F".($keyCode - EGW_KEY_F1 + 1);
+		}
+
+		// Special keys
+		switch ($keyCode) {
+			case self::BACKSPACE:
+				return lang("Back");
+			case self::TAB:
+				return lang("Tab");
+			case self::DELETE:
+				return lang("Del");
+			case self::SPACE:
+				return lang("Space");
+			case self::PAGE_UP:
+				return lang("Pg up");
+			case self::PAGE_DOWN:
+				return lang("Pg down");
+		}
+
+		return "";
+	}
+
+	/**
+	 * Generates the caption of the given shortcut and returns it
+	 */
+	public static function shortcut_caption($keyCode, $shift = false, $ctrl = false, $alt = false)
+	{
+		$elems = array();
+
+		if ($shift)
+		{
+			$elems[] = lang("Shift");
+		}
+
+		if ($ctrl)
+		{
+			$elems[] = lang("Ctrl");
+		}
+
+		if ($alt)
+		{
+			$elems[] = lang("Alt");
+		}
+
+		$elems[] = self::key_name($keyCode);
+
+		return implode(" + ", $elems);
+	}
+
 	/**
 	 * Generates a shortcut structure which can be JSON encoded and send to the
 	 * egw action system. This function and class could later be used to provide
@@ -87,16 +151,12 @@ class egw_keymanager
 	 */
 	public static function shortcut($keyCode, $shift = false, $ctrl = false, $alt = false)
 	{
-		if ($shift == false && $ctrl == false && $alt == false)
-		{
-			return $keyCode;
-		}
-
 		return array(
 			"keyCode" => $keyCode,
 			"shift" => (boolean)$shift,
 			"ctrl" => (boolean)$ctrl,
-			"alt" => (boolean)$alt
+			"alt" => (boolean)$alt,
+			"caption" => self::shortcut_caption($keyCode, $shift, $ctrl, $alt)
 		);
 	}
 }

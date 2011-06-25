@@ -71,14 +71,11 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 				"alt": false
 			}
 
-			if (typeof _value == "number")
-			{
-				sc.keyCode = _value;
-			}
-
-			if (typeof _value == "object" && _value.keyCode != "undefined")
+			if (typeof _value == "object" && _value.keyCode != "undefined" &&
+			    _value.caption != "undefined")
 			{
 				sc.keyCode = _value.keyCode;
+				sc.caption = _value.caption;
 				sc.shift = (typeof _value.shift == "undefined") ? false : _value.shift;
 				sc.ctrl = (typeof _value.ctrl == "undefined") ? false : _value.ctrl;
 				sc.alt = (typeof _value.alt == "undefined") ? false : _value.alt;
@@ -440,8 +437,7 @@ function egwPopupActionImplementation()
 						if (link.actionObj.shortcut)
 						{
 							var sc = link.actionObj.shortcut;
-							item.set_shortcutCaption(egw_shortcutCaption(
-								sc.keyCode, sc.shift, sc.ctrl,  sc.alt));
+							item.set_shortcutCaption(sc.caption);
 						}
 					}
 
