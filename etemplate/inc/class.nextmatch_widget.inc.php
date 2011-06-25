@@ -870,7 +870,6 @@ class nextmatch_widget
 
 		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
 		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');
-		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
 		egw_framework::validate_file('egw_action','egw_action');
 		egw_framework::validate_file('egw_action','egw_action_common');
 		egw_framework::validate_file('egw_action','egw_action_popup');
@@ -878,6 +877,8 @@ class nextmatch_widget
 		egw_framework::validate_file('egw_action','egw_menu_dhtmlx');
 		egw_framework::validate_file('egw_action','egw_keymanager');
 		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
+
+		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
 
 		if (!is_array($action_links)) $action_links = array();
 
