@@ -2490,7 +2490,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'M':
-							if (preg_match('/MD(\d+)(?: [^ ])? #(\d+)/', $recurence, $recurenceMatches))
+							if (preg_match('/MD(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
 								$vcardData['recur_interval'] = $recurenceMatches[1];
