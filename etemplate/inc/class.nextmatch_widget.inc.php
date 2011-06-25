@@ -733,7 +733,7 @@ class nextmatch_widget
 			// give all delete actions a delete shortcut
 			if ($id == 'delete' && !isset($action['shortcut']))
 			{
-				$action['shortcut'] = egw_keymanager::shortcut(EGW_KEY_DELETE);
+				$action['shortcut'] = egw_keymanager::shortcut(egw_keymanager::DELETE);
 			}
 
 			static $egw_action_supported = array(	// attributes supported by egw_action
