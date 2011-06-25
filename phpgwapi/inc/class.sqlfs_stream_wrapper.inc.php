@@ -1399,7 +1399,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function get_eacl($path)
 	{
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
+		if (!($stat = self::url_stat($_path=$path,STREAM_URL_STAT_QUIET)))
 		{
 			error_log(__METHOD__.__LINE__.' '.array2string($path).' not found!');
 			return false;	// not found
@@ -1416,11 +1416,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (($path = egw_vfs::dirname($path)))
 		{
-			return array_merge((array)self::get_eacl($path),$eacls);
+			$eacls = array_merge((array)self::get_eacl($path),$eacls);
 		}
 		// sort by length descending, to show precedence
 		usort($eacls,create_function('$a,$b','return strlen($b["path"])-strlen($a["path"]);'));
-
+		//error_log(__METHOD__."('$_path') returning ".array2string($eacls));
 		return $eacls;
 	}
 
