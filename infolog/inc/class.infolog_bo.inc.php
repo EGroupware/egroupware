@@ -1220,7 +1220,7 @@ class infolog_bo
 	}
 
 	/**
-	 * Check access to the projects file store
+	 * Check access to the file store
 	 *
 	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
