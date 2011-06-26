@@ -362,6 +362,7 @@ class addressbook_hooks
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
 			'add_popup'  => '870x440',
+			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'file_access'=> 'addressbook.addressbook_bo.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
 			// registers an addtional type 'addressbook-email', returning only contacts with email, title has email appended

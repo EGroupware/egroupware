@@ -6,7 +6,7 @@
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -233,15 +233,6 @@ class addressbook_so
 			$this->contact_repository = 'ldap';
 			$this->somain = new addressbook_ldap();
 
-			if ($this->user)	// not set eg. in setup
-			{
-				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
-				$this->grants = array($this->user => ~0);
-				foreach($this->memberships as $gid)
-				{
-					$this->grants[$gid] = ~0;
-				}
-			}
 			$this->columns_to_search = $this->ldap_search_attributes;
 		}
 		else	// sql or sql->ldap
@@ -252,14 +243,12 @@ class addressbook_so
 			}
 			$this->somain = new addressbook_sql($db);
 
-			if ($this->user)	// not set eg. in setup
-			{
-				// group grants are now grants for the group addressbook and NOT grants for all its members,
-				// therefor the param false!
-				$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
-			}
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
+		}
+		if ($this->user)
+		{
+			$this->grants = $this->get_grants($this->user);
 		}
 		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
 		{
@@ -336,6 +325,40 @@ class addressbook_so
 				)
 			);
 		}
+	}
+
+	/**
+	 * Get grants for a given user, taking into account static LDAP ACL
+	 *
+	 * @param int $user
+	 * @return array
+	 */
+	function get_grants($user)
+	{
+		if ($user)
+		{
+			// contacts backend (contacts in LDAP require accounts in LDAP!)
+			if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
+			{
+				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
+				$grants = array($user => ~0);
+				foreach($GLOBALS['egw']->accounts->memberships($user,true) as $gid)
+				{
+					$grants[$gid] = ~0;
+				}
+			}
+			else	// sql or sql->ldap
+			{
+				// group grants are now grants for the group addressbook and NOT grants for all its members,
+				// therefor the param false!
+				$grants = $GLOBALS['egw']->acl->get_grants($contact_app,false,$user);
+			}
+		}
+		else
+		{
+			$grants = array();
+		}
+		return $grants;
 	}
 
 	/**

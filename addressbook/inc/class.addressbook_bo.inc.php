@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
- * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -1000,18 +1000,31 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
-	* Checks if the current user has the necessary ACL rights
-	*
-	* If the access of a contact is set to private, one need a private grant for a personal addressbook
-	* or the group membership for a group-addressbook
-	*
-	* @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
-	* @param mixed $contact contact as array or the contact-id
-	* @param boolean $deny_account_delete=false if true never allow to delete accounts
-	* @return boolean true permission granted, false for permission denied, null for contact does not exist
-	*/
-	function check_perms($needed,$contact,$deny_account_delete=false)
+	 * Checks if the current user has the necessary ACL rights
+	 *
+	 * If the access of a contact is set to private, one need a private grant for a personal addressbook
+	 * or the group membership for a group-addressbook
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param mixed $contact contact as array or the contact-id
+	 * @param boolean $deny_account_delete=false if true never allow to delete accounts
+	 * @param int $user=null for which user to check, default current user
+	 * @return boolean true permission granted, false for permission denied, null for contact does not exist
+	 */
+	function check_perms($needed,$contact,$deny_account_delete=false,$user=null)
 	{
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
+		{
+			$grants = $this->grants;
+			$memberships = $this->memberships;
+		}
+		else
+		{
+			$grants = $this->get_grants($user);
+			$memberships =  $GLOBALS['egw']->accounts->memberships($user,true);
+		}
+
 		if ((!is_array($contact) || !isset($contact['owner'])) &&
 			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
@@ -1020,24 +1033,42 @@ class addressbook_bo extends addressbook_so
 		$owner = $contact['owner'];
 
 		// allow the user to edit his own account
-		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user && $this->own_account_acl)
+		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $user && $this->own_account_acl)
 		{
-			return true;
+			$access = true;
 		}
 		// dont allow to delete own account (as admin handels it too)
-		if (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $this->user))
+		elseif (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $user))
 		{
-			return false;
+			$access = false;
 		}
 		// for reading accounts (owner == 0) and account_selection == groupmembers, check if current user and contact are groupmembers
-		if ($owner == 0 && $needed == EGW_ACL_READ &&
+		elseif ($owner == 0 && $needed == EGW_ACL_READ &&
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers')
 		{
-			return !!array_intersect($GLOBALS['egw']->accounts->memberships($this->user,true),
-				$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
+			$access = !!array_intersect($memberships,$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
-		return ($this->grants[$owner] & $needed) &&
-			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
+		else
+		{
+			$access = ($grants[$owner] & $needed) &&
+				(!$contact['private'] || ($grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$memberships));
+		}
+		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
+		return $access;
+	}
+
+	/**
+	 * Check access to the file store
+	 *
+	 * @param int|array $id id of entry or entry array
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in InfoLog
+	 * @param int $user=null for which user to check, default current user
+	 * @return boolean true if access is granted or false otherwise
+	 */
+	function file_access($id,$check,$rel_path=null,$user=null)
+	{
+		return $this->check_perms($check,$id,false,$user);
 	}
 
 	/**
@@ -1381,17 +1412,6 @@ class addressbook_bo extends addressbook_so
 		$options['type'] = 'email';
 
 		return $this->link_query($pattern,$options);
-	}
-	/**
-	 * Check access to the projects file store
-	 *
-	 * @param int $id id of entry
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
-	 * @return boolean true if access is granted or false otherwise
-	 */
-	function file_access($id,$check,$rel_path)
-	{
-		return $this->check_perms($check,$id);
 	}
 
 	/**
