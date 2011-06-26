@@ -147,12 +147,9 @@ egwGridViewOuter.prototype.addHeightToAvg = function(_value)
  */
 egwGridViewOuter.prototype.remHeightFromAvg = function(_value)
 {
-	if (this.avgRowCnt > 1)
-	{
-		var sum = this.avgRowHeight * this.avgRowCnt - _value;
-		this.avgRowCnt--;
-		this.avgRowCount = sum / this.avgRowCnt;
-	}
+	var sum = this.avgRowHeight * this.avgRowCnt - _value;
+	this.avgRowCnt--;
+	this.avgRowCount = sum / this.avgRowCnt;
 }
 
 /**
@@ -683,11 +680,14 @@ egwGridViewContainer.prototype.setPosition = function(_top)
  */
 if ($.browser.mozilla)
 {
-	egwGridViewContainer.prototype.getHeight = function()
+	egwGridViewContainer.prototype.getHeight = function(_update)
 	{
+		if (typeof _update == "undefined")
+			_update = false;
+
 		if (this.visible && this.parentNode)
 		{
-			if (this.height === false && this.assumedHeight === false)
+			if ((this.height === false && this.assumedHeight === false) || _update)
 			{
 				// Firefox sometimes provides fractional pixel values - we are
 				// forced to use those - we can obtain the fractional pixel height
@@ -698,9 +698,13 @@ if ($.browser.mozilla)
 					var styleHeightStr = compStyle.getPropertyValue("height");
 					this.height = parseFloat(styleHeightStr.substr(0, styleHeightStr.length - 2));
 
-					if (isNaN(this.height))
+					if (isNaN(this.height) || this.height < 1)
 					{
-						this.height = 0;
+						this.height = false;
+					}
+					else
+					{
+						this.assumedHeight = false;
 					}
 				}
 			}
@@ -713,13 +717,24 @@ if ($.browser.mozilla)
 }
 else
 {
-	egwGridViewContainer.prototype.getHeight = function()
+	egwGridViewContainer.prototype.getHeight = function(_update)
 	{
+		if (typeof _update == "undefined")
+			_update = false;
+
 		if (this.visible && this.parentNode)
 		{
-			if (this.height === false && this.assumedHeight === false)
+			if ((this.height === false && this.assumedHeight === false) || _update)
 			{
-				this.height = this.parentNode.context.offsetHeight;
+				this.height = this.parentNode.context.offsetHeight
+
+				if (this.height < 1) {
+					this.height = false;
+				}
+				else
+				{
+					this.assumedHeight = false;
+				}
 			}
 
 			return this.height !== false ? this.height : this.assumedHeight;
@@ -1080,8 +1095,7 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 				// Get the difference (delta) between the assumed and the real
 				// height
 				var oldHeight = child.assumedHeight;
-				child.invalidateHeightCache();
-				var newHeight = child.getHeight();
+				var newHeight = child.getHeight(true);
 
 				if (child.containerClass == "row")
 				{
