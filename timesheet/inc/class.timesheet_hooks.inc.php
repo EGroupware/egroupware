@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -55,6 +55,7 @@ class timesheet_hooks
 			'add_id'     => 'link_id',
 			'add_popup'  => '600x425',
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
+			'file_access_user' => true,	// file_access supports 4th parameter $user
 		);
 	}
 

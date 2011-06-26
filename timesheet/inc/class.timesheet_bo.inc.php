@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -19,8 +19,6 @@ if (!defined('TIMESHEET_APP'))
  * Business object of the TimeSheet
  *
  * Uses eTemplate's so_sql as storage object (Table: egw_timesheet).
- *
- * @todo Implement sorting&filtering by and searching of custom fields
  */
 class timesheet_bo extends so_sql_cf
 {
@@ -37,15 +35,15 @@ class timesheet_bo extends so_sql_cf
 	 */
 	var $quantity_sum=false;
 	/**
-	 * Timestaps that need to be adjusted to user-time on reading or saving
-	 *
-	 * @var array
-	 */
-	var $user;
-	/**
 	 * current user
 	 *
 	 * @var int
+	 */
+	var $user;
+	/**
+	 * Timestaps that need to be adjusted to user-time on reading or saving
+	 *
+	 * @var array
 	 */
 	var $timestamps = array(
 		'ts_start','ts_modified'
@@ -175,7 +173,7 @@ class timesheet_bo extends so_sql_cf
 	{
 		$this->status_labels =&  $this->config_data['status_labels'];
 		if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
-		
+
 		foreach ($this->status_labels as $status_id => $label)
 		{
 			if (!is_array($label))
@@ -267,12 +265,12 @@ class timesheet_bo extends so_sql_cf
 	 * Rights are given via owner grants or role based acl
 	 *
 	 * @param int $required EGW_ACL_READ, EGW_ACL_WRITE, EGW_ACL_ADD, EGW_ACL_DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET
-	 * @param array/int $data=null project or project-id to use, default the project in $this->data
+	 * @param array|int $data=null project or project-id to use, default the project in $this->data
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true if the rights are ok, null if not found, false if no rights
 	 */
-	function check_acl($required,$data=null)
+	function check_acl($required,$data=null,$user=null)
 	{
-		//error_log(__METHOD__."($required,".array2string($data).")");
 		if (is_null($data) || (int)$data == $this->data['ts_id'])
 		{
 			$data =& $this->data;
@@ -285,9 +283,19 @@ class timesheet_bo extends so_sql_cf
 
 			if (!$data) return null; 	// entry not found
 		}
-		$rights = $this->grants[$data['ts_owner']];
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
+		{
+			$grants = $this->grants;
+		}
+		else
+		{
+			$grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP,true,$user);
+		}
+		$ret = $data && !!($grants[$data['ts_owner']] & $required);
 
-		return $data && !!($rights & $required);
+		//error_log(__METHOD__."($required,$data[ts_id],$user) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -371,7 +379,7 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * reimplemented to limit result to users we have grants from
 	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
@@ -474,7 +482,7 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @param int $ts_id
 	 * @param boolean $ignore_acl=false should the acl be checked
-	 * @return array/boolean array with timesheet entry, null if timesheet not found or false if no rights
+	 * @return array|boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
 	function read($ts_id,$ignore_acl=false)
 	{
@@ -700,15 +708,17 @@ class timesheet_bo extends so_sql_cf
 	}
 
 	/**
-	 * Check access to the projects file store
+	 * Check access to the file store
 	 *
-	 * @param int $id id of entry
+	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in InfoLog
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
-	function file_access($id,$check,$rel_path)
+	function file_access($id,$check,$rel_path=null,$user=null)
 	{
-		return $this->check_acl($check,$id);
+		return $this->check_acl($check,$id,$user);
 	}
 
 	/**
