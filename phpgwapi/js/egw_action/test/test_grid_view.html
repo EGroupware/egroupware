@@ -30,6 +30,8 @@
 	<body>
 		<h1>Test for dynamically displaying and loading grid lines</h1>
 		<b>Simulates network trafic by using window.setTimeout(), 100ms network latency</b>
+		<button onclick="buildGrid();">Leak</button>
+		<button onclick="clean();">Clean</button>
 		<div id="container"></div>
 		<script>
 			var grid = null;
@@ -231,13 +233,25 @@
 				}, 100);
 			}
 
-			$(document).ready(function() {
+			function clean() {
+				$("#container").children().remove();
+				actionManager = null;
+				objectManager = null;
+				grid = null;
+			}
+
+			function buildGrid() {
+				clean();
+
+				var cnt = $(document.createElement("div"));
+				$("#container").append(cnt);
+
 				actionManager = new egwActionManager();
 				actionManager.updateActions(actions);
 
 				objectManager = new egwActionObjectManager("", actionManager);
 
-				grid = new egwGrid($("#container"), columns, objectManager, fetchDataProc,
+				grid = new egwGrid(cnt, columns, objectManager, fetchDataProc,
 					null, window);
 				grid.setActionLinkGroup("folder", listboxFolderLinks);
 				grid.dataRoot.loadData(
@@ -250,8 +264,12 @@
 						}
 					]
 				);
-				grid.resize(1500, 500);
+				grid.resize(1000, 500);
 				grid.reload();
+			}
+
+			$(document).ready(function() {
+				buildGrid();
 			});
 
 			function check_positions(_grid, _delta)

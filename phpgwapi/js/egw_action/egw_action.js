@@ -845,7 +845,12 @@ egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
  * Deletes all children of the egwActionObject
  */
 egwActionObject.prototype.clear = function() {
-	this.children = [];
+	// Remove all children
+	while (this.children.length > 0) {
+		this.children[0].remove();
+	}
+
+	// Delete all other references
 	this.selectedChildren = [];
 	this.focusedChild = null;
 }
@@ -858,6 +863,9 @@ egwActionObject.prototype.remove = function() {
 	this.setFocused(false);
 	this.setSelected(false);
 	this.setAllSelected(false);
+
+	// Unregister all registered action implementations
+	this.unregisterActions();
 
 	// Clear the child-list
 	this.clear();
@@ -1565,6 +1573,20 @@ egwActionObject.prototype.registerActions = function()
 		}
 	}
 }
+
+/**
+ * Unregisters all action implementations registerd to this element
+ */
+egwActionObject.prototype.unregisterActions = function()
+{
+	while (this.registeredImpls.length > 0) {
+		var impl = this.registeredImpls.pop();
+		if (this.iface) {
+			impl.unregisterAction(this.iface);
+		}
+	}
+}
+
 
 /**
  * Calls the onBeforeTrigger function - if it is set - or returns false.

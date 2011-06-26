@@ -137,7 +137,11 @@ function egwDragActionImplementation()
 
 	ai.doUnregisterAction = function(_aoi)
 	{
-		//
+		var node = _aoi.getDOMNode();
+
+		if (node) {
+			$(node).draggable("destroy");
+		}
 	}
 
 	/**
@@ -266,6 +270,7 @@ function egwDropActionImplementation()
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode();
+		var self = this;
 
 		if (node)
 		{
@@ -274,8 +279,8 @@ function egwDropActionImplementation()
 					"accept": function(_draggable) {
 						if (typeof _draggable.data("ddTypes") != "undefined")
 						{
-							var accepted = ai._fetchAccepted(
-								_callback.call(_context, "links", ai, EGW_AO_EXEC_THIS));
+							var accepted = self._fetchAccepted(
+								_callback.call(_context, "links", self, EGW_AO_EXEC_THIS));
 
 							// Check whether all drag types of the selected objects
 							// are accepted
@@ -297,7 +302,7 @@ function egwDropActionImplementation()
 						var ddTypes = draggable.data("ddTypes");
 						var selected = draggable.data("selected");
 
-						var links = _callback.call(_context, "links", ai, EGW_AO_EXEC_THIS);
+						var links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
 
 						// Disable all links which only accept types which are not
 						// inside ddTypes
@@ -370,7 +375,11 @@ function egwDropActionImplementation()
 
 	ai.doUnregisterAction = function(_aoi)
 	{
-		//
+		var node = _aoi.getDOMNode();
+
+		if (node) {
+			$(node).droppable("destroy");
+		}
 	}
 
 	ai._fetchAccepted = function(_links)
