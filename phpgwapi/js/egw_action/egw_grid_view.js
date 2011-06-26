@@ -887,7 +887,7 @@ function egwGridViewGrid_beginUpdate()
 
 function egwGridViewGrid_triggerUpdateAssumedHeights()
 {
-/*	this.triggerID++;
+	this.triggerID++;
 	var self = this;
 	var id = this.triggerID;
 	window.setTimeout(function() {
@@ -898,7 +898,7 @@ function egwGridViewGrid_triggerUpdateAssumedHeights()
 			}
 		},
 		EGW_GRID_UPDATE_HEIGHTS_TIMEOUT
-	);*/
+	);
 }
 
 function egwGridViewGrid_endUpdate(_recPrev)
@@ -1005,9 +1005,9 @@ function egwGridViewGrid_setupContainer()
 		this.scrollarea.scroll(this, function(e) {
 			e.data.scrollEvents++;
 			var cnt = e.data.scrollEvents;
-/*			window.setTimeout(function() {
+			window.setTimeout(function() {
 				e.data.scrollCallback(cnt);
-			}, EGW_GRID_SCROLL_TIMEOUT);*/
+			}, EGW_GRID_SCROLL_TIMEOUT);
 		});
 	}
 
@@ -1129,9 +1129,9 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 		// Otherwise, all elements have been checked - we'll now call "setViewArea"
 		// which may check whether new objects are now in the currently visible range
 		var self = this;
-/*		window.setTimeout(function() {
+		window.setTimeout(function() {
 			self.setViewArea(self.viewArea);
-		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);*/
+		}, EGW_GRID_UPDATE_HEIGHTS_TIMEOUT);
 	}
 }
 
@@ -1707,10 +1707,10 @@ function egwGridViewRow_doUpdateData(_immediate)
 						icon.load({"item": this, "cntr": iconContainer}, function(e) {
 							e.data.cntr.css("min-height", "");
 							var icon = $(this);
-/*							window.setTimeout(function() {
+							window.setTimeout(function() {
 								e.data.item.grid.setIconWidth(icon.width());
 								e.data.item.grid.addIconHeightToAvg(icon.height());
-							}, 100);*/
+							}, 100);
 							e.data.item.callHeightChangeProc();
 						});
 						
