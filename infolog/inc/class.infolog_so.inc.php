@@ -136,9 +136,9 @@ class infolog_so
 		$access_ok = $owner == $user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
 			(!!($grants[$owner] & $required_rights) ||
-			$this->is_responsible($info,$user) &&			// implicite rights for responsible user(s) and his memberships
-			($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)); // &&
-			//($info['info_access'] == 'public' || !!($this->grants[$this->user] & EGW_ACL_PRIVATE));
+				$this->is_responsible($info,$user) &&	// implicite rights for responsible user(s) and his memberships
+				($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
+			($info['info_access'] == 'public' || !!($this->grants[$user] & EGW_ACL_PRIVATE));
 
 		// error_log(__METHOD__."($info[info_id],$required_rights,$implicit_edit,".array2string($grants).",$user) returning ".array2string($access_ok));
 		return $access_ok;
