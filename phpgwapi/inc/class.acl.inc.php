@@ -669,58 +669,65 @@ class acl
 	 * @param string $app optional defaults to $GLOBALS['egw_info']['flags']['currentapp']
 	 * @param boolean/array $enum_group_acls=true should group acls be returned for all members of that group, default yes
 	 * 	if an array of group-id's is given, that id's will NOT be enumerated!
+	 * @param int $user=null user whos grants to return, default current user
 	 * @return array with account-ids (of owners) and granted rights as values
 	 */
-	function get_grants($app='',$enum_group_acls=true)
+	function get_grants($app='',$enum_group_acls=true,$user=null)
 	{
 		if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
+		if (!$user) $user = $this->account_id;
 
-		$memberships = array($this->account_id);
-		foreach((array)$GLOBALS['egw']->accounts->membership($this->account_id) as $group)
-		{
-			$memberships[] = $group['account_id'];
-		}
-		$grants = $accounts = Array();
-		foreach($this->db->select(acl::TABLE,array('acl_account','acl_rights','acl_location'),array(
-			'acl_appname'  => $app,
-			'acl_location' => $memberships,
-		),__LINE__,__FILE__) as $row)
-		{
-			$grantor    = $row['acl_account'];
-			$rights     = $row['acl_rights'];
-			$granted_to = (int) $row['acl_location'];
+		static $cache = array();	// some caching withing the request
 
-			if(!isset($grants[$grantor]))
+		$grants =& $cache[$app][$user];
+		if (!isset($grants))
+		{
+			$memberships = array($user);
+			foreach((array)$GLOBALS['egw']->accounts->membership($user) as $group)
 			{
-				$grants[$grantor] = 0;
+				$memberships[] = $group['account_id'];
 			}
-			$grants[$grantor] |= $rights;
-
-			// if the right is granted from a group and we enummerated group ACL's
-			if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
-				(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
+			$grants = $accounts = Array();
+			foreach($this->db->select(acl::TABLE,array('acl_account','acl_rights','acl_location'),array(
+				'acl_appname'  => $app,
+				'acl_location' => $memberships,
+			),__LINE__,__FILE__) as $row)
 			{
-				// return the grant for each member of the group
-				foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
+				$grantor    = $row['acl_account'];
+				$rights     = $row['acl_rights'];
+				$granted_to = (int) $row['acl_location'];
+
+				if(!isset($grants[$grantor]))
 				{
-					if (!$member) continue;	// can happen if group has no members
+					$grants[$grantor] = 0;
+				}
+				$grants[$grantor] |= $rights;
 
-					// Don't allow to override private with group ACL's!
-					$rights &= ~EGW_ACL_PRIVATE;
-
-					$grantor = $member['account_id'];
-
-					if(!isset($grants[$grantor]))
+				// if the right is granted from a group and we enummerated group ACL's
+				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
+					(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
+				{
+					// return the grant for each member of the group
+					foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
 					{
-						$grants[$grantor] = 0;
+						if (!$member) continue;	// can happen if group has no members
+
+						// Don't allow to override private with group ACL's!
+						$rights &= ~EGW_ACL_PRIVATE;
+
+						$grantor = $member['account_id'];
+
+						if(!isset($grants[$grantor]))
+						{
+							$grants[$grantor] = 0;
+						}
+						$grants[$grantor] |= $rights;
 					}
-					$grants[$grantor] |= $rights;
 				}
 			}
+			// user has implizit all rights on own data
+			$grants[$user] = ~0;
 		}
-		// user has implizit all rights on own data
-		$grants[$GLOBALS['egw_info']['user']['account_id']] = ~0;
-
 		//echo "acl::get_grants('$app',$enum_group_acls) ".function_backtrace(); _debug_array($grants);
 		return $grants;
 	}
