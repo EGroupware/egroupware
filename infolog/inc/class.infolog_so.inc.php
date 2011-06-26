@@ -83,13 +83,16 @@ class infolog_so
 	 * @param array $info infolog entry as array
 	 * @return boolean
 	 */
-	function is_responsible($info)
+	function is_responsible($info,$user=null)
 	{
-		static $user_and_memberships;
-		if (is_null($user_and_memberships))
+		if (!$user) $user = $this->user;
+
+		static $um_cache = array();
+		$user_and_memberships =& $um_cache[$user];
+		if (!isset($user_and_memberships))
 		{
-			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
-			$user_and_memberships[] = $this->user;
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+			$user_and_memberships[] = $user;
 		}
 		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
 	}
@@ -100,10 +103,15 @@ class infolog_so
 	 * @param array|int $info data or info_id of InfoLog entry
 	 * @param int $required_rights EGW_ACL_xyz anded together
 	 * @param boolean $implicit_edit=false responsible has only implicit read and add rigths, unless this is set to true
+	 * @param array $grants=null grants to use, default (null) $this->grants
+	 * @param int $user=null user to check, default (null) $this->user
 	 * @return boolean True if access is granted else False
 	 */
-	function check_access( $info,$required_rights,$implicit_edit=false )
+	function check_access( $info,$required_rights,$implicit_edit=false,array $grants=null,$user=null )
 	{
+		if (is_null($grants)) $grants = $this->grants;
+		if (!$user) $user = $this->user;
+
 		if (is_array($info))
 		{
 
@@ -125,14 +133,14 @@ class infolog_so
 		}
 		$owner = $info['info_owner'];
 
-		$access_ok = $owner == $this->user ||	// user has all rights
+		$access_ok = $owner == $user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
-			(!!($this->grants[$owner] & $required_rights) ||
-			$this->is_responsible($info) &&			// implicite rights for responsible user(s) and his memberships
+			(!!($grants[$owner] & $required_rights) ||
+			$this->is_responsible($info,$user) &&			// implicite rights for responsible user(s) and his memberships
 			($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)); // &&
 			//($info['info_access'] == 'public' || !!($this->grants[$this->user] & EGW_ACL_PRIVATE));
 
-		//echo "<p align=right>check_access(info_id=".$info['info_id'].",required=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
+		// error_log(__METHOD__."($info[info_id],$required_rights,$implicit_edit,".array2string($grants).",$user) returning ".array2string($access_ok));
 		return $access_ok;
 	}
 

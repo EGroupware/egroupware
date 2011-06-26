@@ -290,53 +290,73 @@ class infolog_bo
 	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
+	 * @param int $user=null user whos rights to check, default current user
 	 * @return boolean
 	 */
-	function check_access($info,$required_rights,$other=0)
+	function check_access($info,$required_rights,$other=0,$user=null)
 	{
 		static $cache = array();
 
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
+		{
+			$grants = $this->grants;
+			$access =& $cache[$info_id][$required_rights];	// we only cache the current user!
+		}
+		else
+		{
+			$grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true,$user);
+		}
+
 		if (!$info)
 		{
-			$owner = $other ? $other : $this->user;
-			$grants = $this->grants[$owner];
-			return $grants & $required_rights;
+			$owner = $other ? $other : $user;
+			$grant = $grants[$owner];
+			return $grant & $required_rights;
 		}
 
 		$info_id = is_array($info) ? $info['info_id'] : $info;
 
-		if (isset($cache[$info_id][$required_rights]))
+		if (!isset($access))
 		{
-			return $cache[$info_id][$required_rights];
-		}
-		// handle delete for the various history modes
-		if ($this->history)
-		{
-			if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
+			// handle delete for the various history modes
+			if ($this->history)
+			{
+				if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
 
-			if ($info['info_status'] == 'deleted' &&
-				($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
-				 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
-				 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
-				 $this->history == 'history_admin_delete' && !isset($GLOBALS['egw_info']['user']['apps']['admin']))))	// delete only for admins
-			{
-				return $cache[$info_id][$required_rights] = false;
-			}
-			if ($required_rights == EGW_ACL_UNDELETE)
-			{
-				if ($info['info_status'] != 'deleted')
+				if ($info['info_status'] == 'deleted' &&
+					($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
+					 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
+					 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
+					 $this->history == 'history_admin_delete' && (!isset($GLOBALS['egw_info']['user']['apps']['admin']) || $user!=$this->user))))	// delete only for admins
 				{
-					return $cache[$info_id][$required_rights] = false;	// can only undelete deleted items
+					$access = false;
 				}
-				// undelete requires edit rights
-				return $cache[$info_id][$required_rights] = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit' );
+				elseif ($required_rights == EGW_ACL_UNDELETE)
+				{
+					if ($info['info_status'] != 'deleted')
+					{
+						$access = false;	// can only undelete deleted items
+					}
+					else
+					{
+						// undelete requires edit rights
+						$access = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit',$grants,$user );
+					}
+				}
+			}
+			elseif ($required_rights == EGW_ACL_UNDELETE)
+			{
+				$access = false;
+			}
+			if (!isset($access))
+			{
+				$access = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit',$grants,$user );
 			}
 		}
-		elseif ($required_rights == EGW_ACL_UNDELETE)
-		{
-			return $cache[$info_id][$required_rights] = false;
-		}
-		return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
+		// else $cached = ' (from cache)';
+		// error_log(__METHOD__."($info_id,$required_rights,$other,$user) returning$cached ".array2string($access));
+		return $access;
 	}
 
 	/**
@@ -1204,11 +1224,13 @@ class infolog_bo
 	 *
 	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in InfoLog
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
-	function file_access($id,$check,$rel_path=null)
+	function file_access($id,$check,$rel_path=null,$user=null)
 	{
-		return $this->check_access($id,$check);
+		return $this->check_access($id,$check,0,$user);
 	}
 
 	/**

@@ -57,8 +57,10 @@
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
  *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup
  *			'notify' => 'app.class.method',			// method to be called if an other applications liks or unlinks with app: notify(array $data)
- * 			'file_access' => 'app.class.method',	// method to be called to check file access rights, see links_stream_wrapper class
- *													// boolean file_access(string $id,int $check,string $rel_path)
+ * 			'file_access' => 'app.class.method',	// method to be called to check file access rights of a given user, see links_stream_wrapper class
+ *													// boolean file_access(string $id,int $check,string $rel_path=null,int $user=null)
+ * 			'file_access_user' => false,			// true if file_access method supports 4th parameter $user, if app is NOT supporting it
+ *                                                  // egw_link::file_access() returns false for $user != current user!
  *			'find_extra'  => array('name_preg' => '/^(?!.picture.jpg)$/')	// extra options to egw_vfs::find, to eg. remove some files from the list of attachments
  *			'edit' => array(
  *				'menuaction' => 'app.class.method',
@@ -1234,32 +1236,46 @@ class egw_link extends solink
 	 * @param string $app app-name or null to delete the whole cache
 	 * @param int|string $id id or null to delete only file_access cache of given app (keeps title cache, if app implements file_access!)
 	 */
-	public static function delete_cache($app,$id)
+	private static function delete_cache($app,$id)
 	{
-		if (empty($app) || empty($id))
-		{
-			self::$file_access_cache = array();
-			if (empty($app) || !self::get_registry($app, 'file_access'))
-			{
-				self::$title_cache = array();
-			}
-		}
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
 	}
 
 	/**
-	 * Check the file access perms for $app/id
+	 * Check the file access perms for $app/id and given user $user
+	 *
+	 * If $user given and != current user AND app does not set file_access_user=true,
+	 * allways return false, as there's no way to check access for an other user!
 	 *
 	 * @ToDo $rel_path is not yet implemented, as no app use it currently
 	 * @param string $app
 	 * @param string|int $id id of entry
 	 * @param int $required=EGW_ACL_READ EGW_ACL_{READ|EDIT}
-	 * @param string $rel_path
-	 * @return boolean
+	 * @param string $rel_path=null
+	 * @param int $user=null default null = current user
+	 * @return boolean true if access granted, false otherwise
 	 */
-	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null)
+	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null,$user=null)
 	{
+		// are we called for an other user
+		if ($user && $user != self::$user)
+		{
+			// check if app supports file_access WITH 4th $user parameter --> return false if not
+			if (!self::get_registry($app,'file_access_user') || !($method = self::get_registry($app,'file_access')))
+			{
+				$ret = false;
+				$err = "(no file_access_user)";
+			}
+			else
+			{
+				$ret = ExecMethod2($method,$id,$required,$rel_path,$user);
+				$err = "(from $method)";
+			}
+			//error_log(__METHOD__."('$app',$id,$required,'$rel_path',$user) returning $err ".array2string($ret));
+			return $ret;
+		}
+
 		$cache =& self::get_cache($app,$id,'file_access');
 
 		if (!isset($cache) || $required == EGW_ACL_EDIT && !($cache & $required))
