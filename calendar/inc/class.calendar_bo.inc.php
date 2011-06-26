@@ -1071,10 +1071,21 @@ class calendar_bo
 	 * @param int $other uid to check (if event==0) or 0 to check against $this->user
 	 * @param string $date_format='ts' date-format used for reading: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
 	 * @param mixed $date_to_read=null date used for reading, internal param for the caching
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true permission granted, false for permission denied or null if event not found
 	 */
-	function check_perms($needed,$event=0,$other=0,$date_format='ts',$date_to_read=null)
+	function check_perms($needed,$event=0,$other=0,$date_format='ts',$date_to_read=null,$user=null)
 	{
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
+		{
+			$grants = $this->grants;
+		}
+		else
+		{
+			$grants = $GLOBALS['egw']->acl->get_grants('calendar',true,$user);
+		}
+
 		$event_in = $event;
 		if ($other && !is_numeric($other))
 		{
@@ -1083,7 +1094,7 @@ class calendar_bo
 		}
 		if (is_int($event) && $event == 0)
 		{
-			$owner = $other ? $other : $this->user;
+			$owner = $other ? $other : $user;
 		}
 		else
 		{
@@ -1102,10 +1113,10 @@ class calendar_bo
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$grants = $this->grants[$owner];
+		$grant = $grants[$owner];
 
 		// now any ACL rights (but invite rights!) implicate FREEBUSY rights (at least READ has to include FREEBUSY)
-		if ($grants & ~EGW_ACL_INVITE) $grants |= EGW_ACL_FREEBUSY;
+		if ($grant & ~EGW_ACL_INVITE) $grant |= EGW_ACL_FREEBUSY;
 
 		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
@@ -1116,29 +1127,29 @@ class calendar_bo
 			{
 				foreach($event['participants'] as $uid => $accept)
 				{
-					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
+					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
-						$grants |= EGW_ACL_FREEBUSY;
+						$grant |= EGW_ACL_FREEBUSY;
 						// if we are a participant, we have an implicite READ and PRIVAT grant
 						// exept the group gives its members only EGW_ACL_FREEBUSY and the participant is not the current user
-						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $this->user) continue;
+						if ($grants[$uid] == EGW_ACL_FREEBUSY && $uid != $user) continue;
 
-						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
+						$grant |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
 					}
-					elseif ($this->grants[$uid] & EGW_ACL_READ)
+					elseif ($grants[$uid] & EGW_ACL_READ)
 					{
 						// if we have a READ grant from a participant, we dont give an implicit privat grant too
-						$grants |= EGW_ACL_READ;
+						$grant |= EGW_ACL_READ;
 						// we cant break here, as we might be a participant too, and would miss the privat grant
 					}
 					elseif (!is_numeric($uid))
 					{
-						// if the owner only grants EGW_ACL_BUSY we are not interested in the recources explicit rights
-						if ($grants == EGW_ACL_FREEBUSY) break;
+						// if the owner only grants EGW_ACL_FREEBUSY we are not interested in the recources explicit rights
+						if ($grant == EGW_ACL_FREEBUSY) break;
 						// if we have a resource as participant
 						$resource = $this->resource_info($uid);
-						$grants |= $resource['rights'];
+						$grant |= $resource['rights'];
 					}
 				}
 			}
@@ -1149,21 +1160,21 @@ class calendar_bo
 		}
 		else
 		{
-			$access = $this->user == $owner || $grants & $needed
-				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grants & EGW_ACL_PRIVATE);
+			$access = $user == $owner || $grant & $needed
+				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grant & EGW_ACL_PRIVATE);
 		}
 		// do NOT allow users to purge deleted events, if we dont have 'user_purge' enabled
 		if ($access && $needed == EGW_ACL_DELETE && $event['deleted'] &&
-			!$GLOBALS['egw_info']['user']['apps']['admin'] &&
+			!$GLOBALS['egw_info']['user']['apps']['admin'] && $user != $this->user &&
 			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'user_purge')
 		{
 			$access = false;
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
-			$this->debug_message('calendar_bo::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
+			$this->debug_message('calendar_bo::check_perms(%1,%2,other=%3,%4,%5,user=%6)=%7',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$date_format,$date_to_read,$user,$access);
 		}
-		//error_log(__METHOD__."($needed,".array2string($event).",$other) returning ".array2string($access));
+		//error_log(__METHOD__."($needed,".array2string($event).",$other,...,$user) returning ".array2string($access));
 		return $access;
 	}
 
@@ -1780,15 +1791,17 @@ class calendar_bo
 	}
 
 	/**
-	 * Check access to the projects file store
+	 * Check access to the file store
 	 *
 	 * @param int $id id of entry
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in calendar
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
-	function file_access($id,$check,$rel_path)
+	function file_access($id,$check,$rel_path,$user=null)
 	{
-		return $this->check_perms($check,$id);
+		return $this->check_perms($check,$id,0,'ts',null,$user);
 	}
 
 	/**
