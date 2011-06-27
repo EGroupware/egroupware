@@ -108,7 +108,6 @@ calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence
 can change password	admin	en	Can change password
 cancel testjob!	admin	en	Cancel TestJob!
 cancel this scheduled command	admin	en	Cancel this scheduled command
-cat_permission_confirm	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
 categories list	admin	en	Categories list
 category %1 has been saved !	admin	en	Category %1 has been saved!
 category deleted.	admin	en	Category deleted.
@@ -465,6 +464,7 @@ remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group?
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
 requested	admin	en	Requested
 return to admin mainscreen	admin	en	Return to admin main screen
 return to view account	admin	en	Return to view account

@@ -18,8 +18,8 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-header label="Application" id="app"/>
-					<nextmatch-accountfilter label="Limit to members of" id="owner"/>
+					<nextmatch-filterheader label="Application" id="app"/>
+					<nextmatch-accountfilter label="Category owner" id="owner" options="all,both"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>
 					<nextmatch-header label="Color" id="color"/>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
@@ -33,7 +33,7 @@
 					</hbox>
 					<description id="${row}[description]"/>
 					<menulist>
-						<menupopup type="select-app" id="${row}[appname]" readonly="true"/>
+						<menupopup id="${row}[appname]" readonly="true"/>
 					</menulist>
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
