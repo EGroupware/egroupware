@@ -212,7 +212,7 @@ class admin_categories
 			}
 		}
 
-		if($content['owner'] > 0 )
+		if($this->appname != 'admin' && $content['owner'] > 0 )
 		{
 			$sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
 		}
@@ -223,6 +223,7 @@ class admin_categories
 		}
 		if($this->appname == 'admin' || ($content['id'] && !((int)$content['owner'] > 0)))
 		{
+			if($content['owner'] > 0) $content['owner'] = 0;
 			$sel_options['owner'][0] = lang('All users');
 			$accs = $GLOBALS['egw']->accounts->get_list('groups');
 			foreach($accs as $acc)
@@ -238,7 +239,7 @@ class admin_categories
 		if($this->appname == 'admin')
 		{
 			$content['access'] = 'public';
-			$readonlys['owner'] = $content['owner'] > 0;
+			$readonlys['owner'] = false;
 		} else {
 			$readonlys['owner'] = true;
 			$readonlys['access'] = $content['owner'] != $GLOBALS['egw_info']['user']['account_id'];
