@@ -194,6 +194,10 @@ class select_widget
 							}
 						}
 					}
+					else
+					{
+						$value = '';
+					}
 					break;
 				}
 				if ((!$type3 || $type3 === $GLOBALS['egw']->categories->app_name) &&
