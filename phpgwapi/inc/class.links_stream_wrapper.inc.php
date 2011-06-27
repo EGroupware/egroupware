@@ -101,7 +101,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			$required = $check & egw_vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
 			$access = egw_link::file_access($app,$id,$required,$rel_path,egw_vfs::$user);
 		}
-		if (self::DEBUG) error_log(__METHOD__."($url,$check) user={egw_vfs::$user} ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
+		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".egw_vfs::$user.' '.($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
 	}
 
