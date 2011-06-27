@@ -246,7 +246,7 @@ class admin_categories
 		egw_framework::validate_file('.','global_categories','admin');
 		egw_framework::set_onload('$(document).ready(function() {
 			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : $content['id'] ? '0' : '') .'];
-			permission_prompt = \'' . lang('cat_permission_confirm').'\';
+			permission_prompt = \'' . lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:').'\';
 		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
@@ -303,10 +303,6 @@ class admin_categories
 	{
 		self::init_static();
 
-		if (!isset($query['appname']))
-		{
-			throw new egw_exception_assertion_failed(__METHOD__.'($query,...) $query[appname] NOT set!');
-		}
 		$filter = array();
 		$globalcat = ($query['filter'] === categories::GLOBAL_ACCOUNT || !$query['filter']);
 		if (isset($query['global_cats']) && $query['global_cats']===false)
@@ -316,17 +312,18 @@ class admin_categories
 		if ($globalcat) $filter['access'] = 'public';
 		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
-		if($query['filter'] > 0 || $query['col_filter']['owner']) {
+		if($query['filter'] > 0 || $query['col_filter']['owner'])
+		{
 			$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		}
-
 		$cats = new categories($filter['owner'],$query['appname']);
 		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : 1;	// ignore acl only for admins
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent=0,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
 		{
-			if($owner && $owner != $row['owner'] || ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT && $row['owner'] > 0))
+			$row['owner'] = explode(',',$row['owner']);
+			if(($owner && !in_array($owner, $row['owner'])) || ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT && $row['owner'][0] > 0))
 			{
 				unset($rows[$key]);
 				$count--;
@@ -456,6 +453,9 @@ class admin_categories
 		$content['msg'] = $msg;
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
+
+		$sel_options['appname'] = $this->get_app_list();
+
 		$readonlys['add'] = !self::$acl_add;
 		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
@@ -557,6 +557,28 @@ class admin_categories
 		}
 
 		return $failed == 0;
+	}
+
+	/**
+	 * Get a list of apps for selectbox / filter
+	 */
+	protected function get_app_list() {
+		$apps = array();
+		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
+		{
+			if ($app == 'phpgwapi')
+			{
+				$apps['phpgw'] = lang('Global');
+				continue;
+			}
+			// Skip apps that don't show in the app bar, they [usually] don't have categories
+			if($data['status'] > 1 || in_array($app, array('home','admin','felamimail','sitemgr','sitemgr-link'))) continue;
+			if ($GLOBALS['egw_info']['user']['apps'][$app])
+			{
+				$apps[$app] = $data['title'] ? $data['title'] : lang($app);
+			}
+		}
+		return $apps;
 	}
 }
 
