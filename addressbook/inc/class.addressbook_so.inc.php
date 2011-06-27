@@ -248,7 +248,7 @@ class addressbook_so
 		}
 		if ($this->user)
 		{
-			$this->grants = $this->get_grants($this->user);
+			$this->grants = $this->get_grants($this->user,$contact_app);
 		}
 		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
 		{
@@ -331,9 +331,10 @@ class addressbook_so
 	 * Get grants for a given user, taking into account static LDAP ACL
 	 *
 	 * @param int $user
+	 * @param string $contact_app='addressbook'
 	 * @return array
 	 */
-	function get_grants($user)
+	function get_grants($user,$contact_app='addressbook')
 	{
 		if ($user)
 		{
