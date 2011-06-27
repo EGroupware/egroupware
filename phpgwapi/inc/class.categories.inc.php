@@ -500,7 +500,7 @@ class categories
 		}
 
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && in_array($category['owner'],$this->global_owners) &&
+		if ($needed == EGW_ACL_READ && array_intersect(explode(',',$category['owner']),$this->global_owners) &&
 			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name))
 		{
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";
@@ -526,9 +526,14 @@ class categories
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
-		return $this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name &&
-			($this->grants[$category['owner']] & $needed) &&
-			($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE));
+		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name;
+		$owner_grant = false;
+		foreach(explode(',',$category['owner']) as $owner)
+		{
+			$owner_grant = $owner_grant || (($this->grants[$owner] & $needed) &&
+				($category['access'] == 'public' ||  ($this->grants[$owner] & EGW_ACL_PRIVATE)));
+		}
+		return $acl_grant && $owner_grant;
 	}
 
 	/**
@@ -787,7 +792,12 @@ class categories
 	{
 		if (!is_array($cat) && !($cat = self::read($cat))) return null;	// cat not found
 
-		return $cat['owner'] <= self::GLOBAL_ACCOUNT && !$application_global || $cat['appname'] == self::GLOBAL_APPNAME;
+		$global_owner = false;
+		foreach(explode(',',$cat['owner']) as $owner)
+		{
+			$global_owner = $global_owner || $owner <= self::GLOBAL_ACCOUNT;
+		}
+		return $global_owner && !$application_global || $cat['appname'] == self::GLOBAL_APPNAME;
 	}
 
 	/**
