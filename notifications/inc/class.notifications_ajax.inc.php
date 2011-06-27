@@ -156,10 +156,12 @@ class notifications_ajax {
 			return true; //no folders configured for notifying - exit
 		}
 
-		$bofelamimail = felamimail_bo::getInstance();
-		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
-		$bufferFMailSession = $bofelamimail->sessionData;
-		if(!$bofelamimail->openConnection()) {
+		$activeProfile = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		//error_log(__METHOD__.__LINE__.' (user: '.$this->recipient->account_lid.') Active Profile:'.$activeProfile);
+		$bofelamimail = felamimail_bo::getInstance(true, $activeProfile);
+ 		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
+ 		$bufferFMailSession = $bofelamimail->sessionData;
+		if(!$bofelamimail->openConnection($activeProfile)) {
 			// TODO: This is ugly. Log a bit nicer!
 			error_log(self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox. Please check your prefs!');
 			return false; // cannot connect to mailbox
@@ -177,7 +179,8 @@ class notifications_ajax {
 			$cutoffdate = time();
 			$cutoffdate = $cutoffdate - (60*60*24*14); // last 14 days
 			$_filter = array('status'=>'UNSEEN','type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
-			$headers = $bofelamimail->getHeaders($notify_folder, 1, false, 0, true, $_filter,true,false);
+			// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
+			$headers = $bofelamimail->getHeaders($notify_folder, 1, 999, 0, true, $_filter,null,false);
 			if(is_array($headers['header']) && count($headers['header']) > 0) {
 				foreach($headers['header'] as $id=>$header) {
 					// check if unseen mail has already been notified
