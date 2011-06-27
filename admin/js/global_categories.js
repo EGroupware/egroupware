@@ -31,6 +31,17 @@ function check_owner(element_id) {
 		}
 	}
 
+	// Single selection? 
+	if(checkboxes.length == 0) {
+		var new_group = $(document.getElementById(element_id));
+		if(new_group.attr('value') != 0 && cat_original_owner.length > 0) {
+			diff.push(cat_original_owner[0]);
+			var selector = 'option[value="'+cat_original_owner[0]+'"]';
+			labels.push("\n"+$(selector, new_group).text());
+		}
+	}
+
+
 	// Somebody will lose permission, give warning.
 	if(diff.length > 0) {
 		var msg = permission_prompt;
