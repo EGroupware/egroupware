@@ -134,7 +134,7 @@ class importexport_admin_prefs_sidebox_hooks
 				'text' => in_array($appname, array('calendar', 'sitemgr')) ? 'Export' : 'Export CSV'
 			);
 			if($GLOBALS['egw_info']['flags']['disable_importexport']['export']) {
-				unset($file['Export CSV']['link']);
+				$file['Export CSV']['link'] = '';
 			}
 		}
 		if(($file_list = bo_merge::get_documents($GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'], '', array(
@@ -161,8 +161,14 @@ if(actionMgr && objectMgr && win.egwAction) {
 	if(objectMgr.selectedChildren.length == 0) {
 		// Be nice and select all, if they forgot to select any
 		if(actionMgr.getActionById(\'select_all\')) {
-			actionMgr.getActionById(\'select_all\').set_checked(true);
-			toggle_select = true;
+			var total = parseInt($(\'span#total\',actionMgr.etemplate_form).text());
+			if(total > 0) {
+				actionMgr.getActionById(\'select_all\').set_checked(true);
+				toggle_select = true;
+			} else {
+				alert(\''.lang('You need to select some entries first!').'\');
+				return false;
+			}
 		}
 	}
 	win.nm_action(action, objectMgr.selectedChildren);
