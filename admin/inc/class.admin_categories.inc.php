@@ -305,10 +305,6 @@ class admin_categories
 		if($query['filter'] > 0 || $query['col_filter']['owner']) {
 			$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		}
-		elseif ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT)
-		{
-			$filter['owner'] = 0;
-		}
 
 		$cats = new categories($filter['owner'],$query['appname']);
 		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : 1;	// ignore acl only for admins
@@ -316,7 +312,7 @@ class admin_categories
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
 		{
-			if($owner && $owner != $row['owner'])
+			if($owner && $owner != $row['owner'] || ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT && $row['owner'] > 0))
 			{
 				unset($rows[$key]);
 				$count--;
