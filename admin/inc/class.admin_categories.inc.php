@@ -200,7 +200,17 @@ class admin_categories
 		$sel_options['owner'] = array();
 
 		// User's category - add current value to be able to preserve owner
-		if(!$content['id'] && $this->appname != 'admin') $content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		if(!$content['id'])
+		{
+			if($this->appname != 'admin')
+			{
+				$content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			else
+			{
+				$content['owner'] = 0;
+			}
+		}
 
 		if($content['owner'] > 0 )
 		{
@@ -231,7 +241,7 @@ class admin_categories
 
 		egw_framework::validate_file('.','global_categories','admin');
 		egw_framework::set_onload('$(document).ready(function() {
-			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : '0') .'];
+			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : $content['id'] ? '0' : '') .'];
 			permission_prompt = \'' . lang('cat_permission_confirm').'\';
 		});');
 
