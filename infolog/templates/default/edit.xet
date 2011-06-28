@@ -9,11 +9,11 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Description" options=",,,info_des"/>
+					<description value="Description" options=",,,info_des" span="all"/>
 				</row>
 				<row class="row" valign="top">
 					<description/>
-					<textbox multiline="true" rows="13" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry" class="description"/>
+					<textbox multiline="true" statustext="enter a textual description of the log-entry" id="info_des" no_lang="1" rows="13" class="description"/>
 				</row>
 			</rows>
 		</grid>
@@ -26,24 +26,24 @@
 			</columns>
 			<rows>
 				<row class="th" disabled="@status_only">
-					<description span="all" value="Create new links"/>
+					<description value="Create new links" span="all"/>
 				</row>
 				<row class="row" disabled="@status_only">
-					<link-to span="all" id="link_to"/>
+					<link-to id="link_to" span="all"/>
 				</row>
 				<row>
-					<link-add span="all" id="link_to"/>
+					<link-add id="link_to" span="all"/>
 				</row>
 				<row class="th">
-					<description span="all" value="Existing links"/>
+					<description value="Existing links" span="all"/>
 				</row>
 				<row class="row_off" valign="top">
-					<link-list span="all" id="link_to"/>
+					<link-list id="link_to" span="all"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.3.001">
+	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
@@ -51,29 +51,47 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="General"/>
+					<description value="General" span="all"/>
 				</row>
 				<row class="row">
-					<description options=",,,info_priority" value="Priority"/>
+					<description value="Priority" options=",,,info_priority"/>
 					<menulist>
-						<menupopup id="info_priority" statustext="select a priority for this task"/>
+						<menupopup statustext="select a priority for this task" id="info_priority"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,info_location" value="Location"/>
-					<textbox size="80" maxlength="255" id="info_location"/>
+					<description value="Location" options=",,,info_location"/>
+					<textbox id="info_location" size="80" maxlength="255"/>
 				</row>
 				<row class="th">
-					<description span="all" value="Delegation"/>
+					<description value="Delegation" span="all"/>
+				</row>
+				<row class="nmr">
+					<description value="CC"/>
+					<grid width="100%" border="0">
+						<columns>
+							<column/>
+							<column width="16"/>
+						</columns>
+						<rows>
+							<row>
+								<textbox id="info_cc" maxlength="254" class="inputFullWidth"/>
+								<buttononly label="Add from Addressbook" onclick="return add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
+							</row>
+							<row class="hiddenRow">
+								<link-entry blur="Search" id="ab" options="addressbook-email" span="all"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 				<row class="row" valign="top">
-					<description options=",,,info_responsible" value="Responsible"/>
-					<listbox type="select-account" id="info_responsible" rows="10" options="both" statustext="select a responsible user: a person you want to delegate this task"/>
+					<description value="Responsible" options=",,,info_responsible"/>
+					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="9" options="both"/>
 				</row>
 				<row class="row" disabled="1">
-					<description options=",,,info_confirm" value="Confirm"/>
+					<description value="Confirm" options=",,,info_confirm"/>
 					<menulist>
-						<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
+						<menupopup statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" id="info_confirm"/>
 					</menulist>
 				</row>
 			</rows>
@@ -87,7 +105,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Projectmanager"/>
+					<description value="Projectmanager" span="all"/>
 				</row>
 				<row class="row">
 					<description value="Project"/>
@@ -96,20 +114,20 @@
 				<row class="row">
 					<description value="Price"/>
 					<hbox span="all">
-						<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
+						<projectmanager-pricelist id="pl_id" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
 						<textbox type="float" id="info_price" span="all"/>
 					</hbox>
 				</row>
 				<row class="row">
-					<description options=",,,info_planned_time" value="planned time"/>
+					<description value="planned time" options=",,,info_planned_time"/>
 					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
 				</row>
 				<row class="row">
-					<description options=",,,info_replanned_time" value="Re-planned time"/>
+					<description value="Re-planned time" options=",,,info_replanned_time"/>
 					<date-duration id="info_replanned_time" options=",$cont[duration_format]"/>
 				</row>
 				<row class="row" valign="top" height="60%">
-					<description options=",,,info_used_time" value="used time" statustext="Leave blank to get the used time calculated by timesheet entries"/>
+					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" options=",,,info_used_time"/>
 					<date-duration id="info_used_time"/>
 				</row>
 			</rows>
@@ -152,18 +170,18 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<html align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 					<description/>
 					<description/>
 				</row>
 				<row class="th" height="28">
 					<description value="Type" options=",,,info_type"/>
-					<hbox span="all" options="0,0">
+					<hbox options="0,0" span="all">
 						<menulist>
-							<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1"/>
+							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
-						<int id="info_number" class="infoId" readonly="true"/>
+						<int id="info_number" readonly="true" class="infoId"/>
 					</hbox>
 				</row>
 				<row class="row">
@@ -171,29 +189,29 @@
 					<vbox options="0,0">
 						<hbox options="0,0">
 							<link-entry id="info_contact" class="noWrap"/>
-							<checkbox id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';" statustext="Check to specify custom contact"/>
+							<checkbox statustext="Check to specify custom contact" id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';"/>
 						</hbox>
-						<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title" class="$cont[hide_from_css]"/>
+						<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="36" maxlength="255" class="$cont[hide_from_css]"/>
 					</vbox>
-					<description options=",,,info_addr" value="Phone/Email"/>
-					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link" class="inputFullWidth"/>
+					<description value="Phone/Email" options=",,,info_addr"/>
+					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="inputFullWidth"/>
 				</row>
 				<row class="row">
 					<description value="Category" options=",,,info_cat"/>
 					<menulist>
-						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
+						<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
 					</menulist>
 					<hbox span="all">
 						<description value="Parent"/>
-						<link-entry options="infolog" id="info_id_parent" align="right" class="noWrap"/>
+						<link-entry align="right" id="info_id_parent" options="infolog" class="noWrap"/>
 					</hbox>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>
-					<textbox size="80" maxlength="255" span="all" id="info_subject" statustext="a short subject for the entry"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all"/>
 				</row>
 				<row valign="top" height="250">
-					<tabbox span="all" id="description|links|delegation|project|customfields|history">
+					<tabbox id="description|links|delegation|project|customfields|history" span="all">
 						<tabs>
 							<tab label="Description" statustext="longer textual description"/>
 							<tab label="Links" statustext="Links of this entry"/>
@@ -213,29 +231,29 @@
 					</tabbox>
 				</row>
 				<row class="th" disabled="1">
-					<description span="all" value="Dates, Status, Access"/>
+					<description value="Dates, Status, Access" span="all"/>
 				</row>
 				<row class="row_on">
 					<description value="Startdate" options=",,,info_startdate"/>
-					<date-time options=",2" id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" options=",2"/>
 					<description value="Enddate" options=",,,info_enddate"/>
-					<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished"/>
+					<date statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
 				</row>
 				<row class="row">
 					<description value="Status" options=",,,info_status"/>
 					<menulist>
-						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
+						<menupopup statustext="@status_help" id="info_status" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
 					</menulist>
 					<description value="Completed" options=",,,info_percent"/>
 					<menulist>
-						<menupopup type="select-percent" id="info_percent" statustext="Percent completed" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
+						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,info_datecompleted" value="Date completed"/>
-					<date-time id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)"/>
+					<description value="Date completed" options=",,,info_datecompleted"/>
+					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted"/>
 					<description value="Private" options=",,,info_access"/>
-					<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>
+					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 				</row>
 				<row class="row" disabled="!@info_owner">
 					<description value="Owner"/>
@@ -247,26 +265,29 @@
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
-						<date-time class="lpadding5" id="info_datemodified" readonly="true"/>
+						<date-time id="info_datemodified" readonly="true" class="lpadding5"/>
 					</hbox>
 				</row>
 				<row>
 					<hbox span="3">
-						<button label="Save" id="button[save]" statustext="Saves this entry"/>
-						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
-						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" onclick="window.close();"/>
+						<button statustext="Saves this entry" label="Save" id="button[save]"/>
+						<button statustext="Apply the changes" label="Apply" id="button[apply]"/>
+						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						<menulist>
-							<menupopup id="action" statustext="Execute a further action for this entry" options="Actions..." onchange="this.form.submit(); this.value='';"/>
+							<menupopup statustext="Execute a further action for this entry" id="action" onchange="this.form.submit(); this.value='';" options="Actions..."/>
 						</menulist>
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 						<html id="js"/>
 					</hbox>
-					<button label="Delete" align="right" id="button[delete]" statustext="delete this entry" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
+					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
 				</row>
 			</rows>
 		</grid>
 		<styles>
 			.hideFrom input { display: none; }
+.hiddenRow {
+  display: none;
+}
 .link_select select { width: 250px; }
 .description textarea { width: 98%; }
 		</styles>
