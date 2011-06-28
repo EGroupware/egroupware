@@ -79,18 +79,22 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		if ($apps != 'apps')
 		{
 			$access = false;							// no access to anything, but /apps
+			$what = '!= apps';
 		}
 		elseif (!$app)
 		{
 			$access = !($check & egw_vfs::WRITABLE);	// always grant read access to /apps
+			$what = '!$app';
 		}
 		elseif(!isset($GLOBALS['egw_info']['user']['apps'][$app]))
 		{
 			$access = false;							// user has no access to the $app application
+			$what = 'no app-rights';
 		}
 		elseif (!$id)
 		{
 			$access = true;								// grant read&write access to /apps/$app
+			$what = 'app dir';
 		}
 		// allow applications to implement their own access control to the file storage
 		// otherwise use the title method to check if user has (at least read access) to the entry
@@ -100,8 +104,9 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			// vfs & stream-wrapper use posix rights, egw_link::file_access uses EGW_ACL_{EDIT|READ}!
 			$required = $check & egw_vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
 			$access = egw_link::file_access($app,$id,$required,$rel_path,egw_vfs::$user);
+			$what = "from egw_link::file_access('$app',$id,$required,'$rel_path,".egw_vfs::$user.")";
 		}
-		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".egw_vfs::$user.' '.($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
+		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".egw_vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
 	}
 
@@ -123,7 +128,9 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		return parent::url_stat($url,$flags,self::check_extended_acl($url,egw_vfs::READABLE));
+		$ret = parent::url_stat($url,$flags,$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE));
+		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) calling parent::url_stat(,,".array2string($eacl_check).') returning '.array2string($ret));
+		return $ret;
 	}
 
 	/**
