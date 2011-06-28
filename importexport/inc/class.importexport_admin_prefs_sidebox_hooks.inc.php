@@ -167,6 +167,7 @@ if(actionMgr && objectMgr && win.egwAction) {
 				toggle_select = true;
 			} else {
 				alert(\''.lang('You need to select some entries first!').'\');
+				this.value = \'\';
 				return false;
 			}
 		}
