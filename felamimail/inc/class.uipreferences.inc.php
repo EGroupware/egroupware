@@ -713,7 +713,7 @@ require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc
 					false,
 					true
 				);
-			print '<script type="text/javascript">function onNodeSelect(_folderName){opener.document.getElementById("newMailboxMoveName").value = _folderName + "' . $this->bofelamimail->getHierarchyDelimiter() . '" + opener.document.getElementById("newMailboxName").value;self.close();}</script>';
+			print '<script type="text/javascript">function onNodeSelect(_folderName){opener.document.getElementById("newMailboxMoveName").value = _folderName + (opener.document.getElementById("newMailboxName").value?"' . $this->bofelamimail->getHierarchyDelimiter() . '":"") + opener.document.getElementById("newMailboxName").value;self.close();}</script>';
 			print '<div id="divFolderTree" style="overflow:auto; width:375px; height:474px; margin-bottom: 0px;padding-left: 0px; padding-top:0px; z-index:100; border : 1px solid Silver;"></div>';
 			print $folderTree;
 		}
