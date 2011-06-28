@@ -272,7 +272,7 @@ class ajax_select_widget
 					echo "$get_rows_app.$get_rows_class.$get_rows_method is not a valid method for getting the rows";
 				} else {
 					$query = array_merge($extension_data['options'], $value_in);
-					$count = $get_rows_obj->$get_rows_method($query, $results);
+					$count = $get_rows_obj->$get_rows_method($query, $results, $readonlys=array());
 
 					if($count == 1) {
 						$value = $results[0][$extension_data['options']['id_field']];
@@ -351,7 +351,7 @@ class ajax_select_widget
 			}
 		}
 		$query['search'] = $value;
-		
+
 		if($query['id_field'] == self::ARRAY_KEY) {
 			// Pass base_id so we can get the right values
 			$query['field_name'] = $base_id;
@@ -397,7 +397,7 @@ class ajax_select_widget
 						continue;
 					}
 				}
-				
+
 				//check for multiple id's
 				//this if control statement is to determine if there are multiple ids in the ID FIELD of the Ajax Widget
 				if(stristr($query['id_field'], ';') !=  FALSE) {
@@ -410,8 +410,8 @@ class ajax_select_widget
 					}
 					foreach($id_field_keys as $value) {
 						$id_field_keys_values[] = $value.':'.$row[$value];
-					}		
-					$row['id_field'] = implode(';',$id_field_keys_values); 
+					}
+					$row['id_field'] = implode(';',$id_field_keys_values);
 					unset($id_field_keys_values);
 				} else {
 					if($query['id_field'] && $query['get_title']) {
@@ -430,7 +430,7 @@ class ajax_select_widget
 				$widget =& CreateObject('etemplate.etemplate', $query['template']);
 				$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
 				$row['title'] = addslashes($row['title']);
-				
+
 				$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 				$count++;
 				if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
