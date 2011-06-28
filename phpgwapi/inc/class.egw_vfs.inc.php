@@ -181,37 +181,19 @@ class egw_vfs extends vfs_stream_wrapper
 		$ret = false;
 
 		$old_props = self::file_exists($to) ? self::propfind($to,null) : array();
+		// copy properties (eg. file comment), if there are any and evtl. existing old properties
+		$props = self::propfind($from,null);
 
-		if (($from_fp = self::fopen($from,'r')) &&
-			($to_fp = self::fopen($to,'w')))
+		foreach($old_props as $prop)
 		{
-			$ret = stream_copy_to_stream($from_fp,$to_fp) !== false;
-		}
-		if ($from_fp)
-		{
-			fclose($from_fp);
-		}
-		if ($to_fp)
-		{
-			fclose($to_fp);
-
-			if ($ret)	// successful copyied file
+			if (!self::find_prop($props,$prop))
 			{
-				// copy properties (eg. file comment), if there are any and evtl. existing old properties
-				$props = self::propfind($from,null);
-
-				foreach($old_props as $prop)
-				{
-					if (!self::find_prop($props,$prop))
-					{
-						$prop['val'] = null;	// null = delete prop
-						$props[] = $prop;
-					}
-				}
-				if ($props) self::proppatch($to, $props);
+				$prop['val'] = null;	// null = delete prop
+				$props[] = $prop;
 			}
 		}
-		return $ret;
+		// using self::copy_uploaded() to treat copying incl. properties as atomar operation in respect of notifications
+		return self::copy_uploaded(self::PREFIX.$from,$to,$props,false);	// false = no is_uploaded_file check!
 	}
 
 	/**
@@ -781,6 +763,8 @@ class egw_vfs extends vfs_stream_wrapper
 				self::clearstatcache($path);
 
 				$path_user_stat[$path][$user] = self::url_stat($path, 0);
+
+				self::clearstatcache($path);	// we need to clear the stat-cache after the call too, as the next call might be the regular user again!
 			}
 			if (($stat = $path_user_stat[$path][$user]))
 			{
@@ -1704,6 +1688,64 @@ class egw_vfs extends vfs_stream_wrapper
 				}
 			}
 		}
+	}
+
+	/**
+	 * Copy an uploaded file into the vfs, optionally set some properties (eg. comment or other cf's)
+	 *
+	 * Treat copying incl. properties as atomar operation in respect of notifications (one notification about an added file).
+	 *
+	 * @param array|string $src path to uploaded file or etemplate file array (value for key 'tmp_name')
+	 * @param string $target path or directory to copy uploaded file
+	 * @param array|string $props=null array with properties (name => value pairs, eg. 'comment' => 'FooBar','#cfname' => 'something'),
+	 * 	array as for proppatch (array of array with values for keys 'name', 'val' and optional 'ns') or string with comment
+	 * @param boolean $check_is_uploaded_file=true should method perform an is_uploaded_file check, default yes
+	 * @return boolean|array stat array on success, false on error
+	 */
+	static public function copy_uploaded($src,$target,$props=null,$check_is_uploaded_file=true)
+	{
+		$tmp_name = is_array($src) ? $src['tmp_name'] : $src;
+
+		if (self::stat($target) && self::is_dir($target))
+		{
+			$target = self::concat($target, self::encodePathComponent(is_array($src) ? $src['name'] : basename($tmp_name)));
+		}
+		if ($check_is_uploaded_file && !is_uploaded_file($tmp_name) ||
+			!(self::is_writable($target) || self::is_writable(self::dirname($target))))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning false");
+			return false;
+		}
+		if ($props)
+		{
+			if (!is_array($props)) $props = array(array('name' => 'comment','val' => $props));
+
+			// if $props is name => value pairs, convert it to internal array or array with values for keys 'name', 'val' and optional 'ns'
+			if (!isset($props[0]))
+			{
+				foreach($props as $name => $val)
+				{
+					if (($name == 'comment' || $name[0] == '#') && $val)	// only copy 'comment' and cfs
+					{
+						$vfs_props[] = array(
+							'name' => $name,
+							'val'  => $val,
+						);
+					}
+				}
+				$props = $vfs_props;
+			}
+			// set props before copying the file, so notifications already contain them
+			if (!self::stat($target))
+			{
+				self::touch($target);	// create empty file, to be able to attach properties
+				self::$treat_as_new = true;	// notify as new
+			}
+			self::proppatch($target, $props);
+		}
+		$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
+		return $ret;
 	}
 }
 

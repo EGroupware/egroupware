@@ -256,6 +256,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * Can be used from egw_vfs to tell vfs notifications to treat an opened file as a new file
+	 *
+	 * @var boolean
+	 */
+	static protected $treat_as_new;
+
+	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * @param string $path URL that was passed to fopen() and that this object is expected to retrieve
@@ -284,6 +291,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_stream_url = $url;
 		$this->opened_stream_is_new = !$stat;
 
+		// are we requested to treat the opened file as new file (only for files opened NOT for reading)
+		if ($mode[0] != 'r' && !$this->opened_stream_is_new && self::$treat_as_new)
+		{
+			$this->opened_stream_is_new = true;
+			//error_log(__METHOD__."($path,$mode,...) stat=$stat, treat_as_new=".self::$treat_as_new." --> ".array2string($this->opened_stream_is_new));
+			self::$treat_as_new = null;
+		}
 		return true;
 	}
 

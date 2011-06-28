@@ -961,19 +961,14 @@ class egw_link extends solink
 		}
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			// use vfs:// url, to ensure vfs_add|modified hook get called
-			$fname = egw_vfs::PREFIX.self::vfs_path($app,$id,egw_vfs::encodePathComponent($file['name']),true);
-			if (($Ok = copy($file['tmp_name'], $fname)) && ($stat = egw_vfs::url_stat($fname, 0)) && $comment)
-			{
-				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
-			}
-			//error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called copy('$file[tmp_name]', '$fname')=".array2string($Ok).', stat='.array2string($stat));
+			$Ok = egw_vfs::copy_uploaded($file, $p=self::vfs_path($app,$id,'',true), $comment);
+			error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called egw_vfs::copy('$file[tmp_name]', '$p')=".array2string($Ok));
 		}
 		else
 		{
 			error_log(__METHOD__."($app,$id,".array2string($file).",$comment) Can't mkdir $entry_dir!");
 		}
-		return $Ok ? -$stat['ino'] : false;
+		return $Ok ? -$Ok['ino'] : false;
 	}
 
 	/**
@@ -1094,9 +1089,9 @@ class egw_link extends solink
 			foreach($url2stats as $url => &$fileinfo)
 			{
 				$link = self::fileinfo2link($fileinfo,$url);
-				if (isset($props[$path = parse_url($url,PHP_URL_PATH)]))
+				if ($props && isset($props[$url]))
 				{
-					foreach($props[$path] as $prop)
+					foreach($props[$url] as $prop)
 					{
 						if ($prop['ns'] == egw_vfs::DEFAULT_PROP_NAMESPACE && $prop['name'] == 'comment')
 						{
