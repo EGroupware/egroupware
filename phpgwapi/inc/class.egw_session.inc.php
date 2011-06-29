@@ -1078,7 +1078,7 @@ class egw_session
 		}
 
 		// append the url to the webserver url, but avoid more then one slash between the parts of the url
-		if ($url[0] != '/' || $GLOBALS['egw_info']['server']['webserver_url'] != '/')
+		if (($url[0] != '/' || $GLOBALS['egw_info']['server']['webserver_url'] != '/') && strpos($url, $GLOBALS['egw_info']['server']['webserver_url']) === false)
 		{
 			if($url[0] != '/' && substr($GLOBALS['egw_info']['server']['webserver_url'],-1) != '/')
 			{
