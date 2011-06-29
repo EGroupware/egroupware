@@ -81,6 +81,11 @@ switch($action)
 		do_update($arguments[0]);
 		break;
 
+	case '--register-hooks':
+	case '--register-all-hooks':
+		do_hooks($arguments[0]);
+		break;
+
 	case '--backup':
 		do_backup($arguments[0]);
 		break;
@@ -159,6 +164,32 @@ function do_config($args)
 	echo $cmd->run()."\n\n";
 
 	$cmd->get_config(true);
+}
+
+/**
+ * Register all hooks
+ *
+ * @param array $args domain(default),[config user(admin)],password
+ */
+function do_hooks($arg)
+{
+	global $setup_info;
+
+	list($domain,$user,$password) = explode(',',$arg);
+	_fetch_user_password($user,$password);
+
+	$domains = $GLOBALS['egw_domain'];
+	if ($domain && $domain != 'all')
+	{
+		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
+	}
+
+	foreach($domains as $domain => $data)
+	{
+		$cmd = new setup_cmd_hooks($domain,$user,$password);
+		echo "$domain: ".$cmd->run()."\n";
+	}
+	echo "\n";
 }
 
 /**
@@ -503,6 +534,7 @@ function do_usage($what='')
 		echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
 		echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
 		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password').'[,[no = no backup][,app to install]]'."\n";
+		echo '--register-hooks '.lang('Find and Register all Application Hooks').": domain(all),[config user(admin)],password\n";
 		echo lang('You can use the header user and password for every domain too. If the password is not set via the commandline, it is read from the enviroment variable EGW_CLI_PASSWORD or queried from the user.')."\n";
 	}
 	if (!$what || $what == 'header')
