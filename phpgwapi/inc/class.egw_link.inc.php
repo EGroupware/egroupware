@@ -941,6 +941,8 @@ class egw_link extends solink
 	/**
 	 * Put a file to the corrosponding place in the VFS and set the attributes
 	 *
+	 * Does NO is_uploaded_file check, calling application is responsible for doing that for uploaded files!
+	 *
 	 * @param string $app appname to linke the file to
 	 * @param string $id id in $app
 	 * @param array $file informations about the file in format of the etemplate file-type
@@ -961,8 +963,8 @@ class egw_link extends solink
 		}
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			$Ok = egw_vfs::copy_uploaded($file, $p=self::vfs_path($app,$id,'',true), $comment);
-			error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called egw_vfs::copy('$file[tmp_name]', '$p')=".array2string($Ok));
+			$Ok = egw_vfs::copy_uploaded($file, $p=self::vfs_path($app,$id,'',true), $comment, false);	// no is_uploaded_file() check!
+			if (!$Ok) error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called egw_vfs::copy_uploaded('$file[tmp_name]', '$p', '$comment', false)=".array2string($Ok));
 		}
 		else
 		{

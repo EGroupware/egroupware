@@ -1710,10 +1710,14 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$target = self::concat($target, self::encodePathComponent(is_array($src) ? $src['name'] : basename($tmp_name)));
 		}
-		if ($check_is_uploaded_file && !is_uploaded_file($tmp_name) ||
-			!(self::is_writable($target) || self::is_writable(self::dirname($target))))
+		if ($check_is_uploaded_file && !is_uploaded_file($tmp_name))
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning false");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !is_uploaded_file()");
+			return false;
+		}
+		if (!(self::is_writable($target) || self::is_writable(self::dirname($target))))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !writable");
 			return false;
 		}
 		if ($props)
@@ -1744,7 +1748,7 @@ class egw_vfs extends vfs_stream_wrapper
 			self::proppatch($target, $props);
 		}
 		$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
+		if (self::LOG_LEVEL > 1 || !$ret && self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
 		return $ret;
 	}
 }
