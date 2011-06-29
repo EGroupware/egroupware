@@ -1292,12 +1292,31 @@ pre {
 					$style .= $singleBodyPart['body'];
 					continue;
 				}
+				if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = bofelamimail::detect_encoding($singleBodyPart['body']);
+				$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
+					$singleBodyPart['body'],
+					strtolower($singleBodyPart['charSet'])
+				);
+
 				$ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
 				if ($ct>0)
 				{
 					//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
-					$style .= implode('',$newStyle[0]);
+					$style2buffer = implode('',$newStyle[0]);
 				}
+				if (strtoupper($this->displayCharset) == 'UTF-8')
+				{
+					$test = json_encode($style2buffer);
+					//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+					//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+					if ($test=="null" && strlen($style2buffer)>0)
+					{
+						// this should not be needed, unless something fails with charset detection/ wrong charset passed
+						error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.bofelamimail::detect_encoding($style2buffer));
+						$style2buffer = utf8_encode($style2buffer);
+					}
+				}
+				$style .= $style2buffer;
 			}
 			return $style;
 		}
@@ -1368,7 +1387,7 @@ pre {
 					if ($test=="null" && strlen($singleBodyPart['body'])>0)  
 					{
 						// this should not be needed, unless something fails with charset detection/ wrong charset passed
-						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
+						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.bofelamimail::detect_encoding($singleBodyPart['body']));
 						$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
 					}
 				}
