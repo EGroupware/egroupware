@@ -704,7 +704,7 @@ class nextmatch_widget
 			// add sub-menues
 			if ($action['children'])
 			{
-				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open');
+				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open','allowOnMultiple','confirm','confirm_multiple');
 				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length,
 					array_intersect_key($action, array_flip($inherit_attrs)));
 

@@ -129,6 +129,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	en	Displayed in status line of browser if input field gets focus.
 displayed in the top line of the groupbox (legend)	etemplate	en	Displayed in the top line of the group box (legend).
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
+do you want to send the message to all selected entries, without further editing?	etemplate	en	Do you want to send the message to all selected entries, WITHOUT further editing?
 document '%1' does not exist or is not readable for you!	etemplate	en	Document '%1' does not exist or is not readable for you!
 documentation	etemplate	en	Documentation
 doesn't matter	etemplate	en	Doesn't matter
@@ -245,6 +246,8 @@ linkto	etemplate	en	Link to
 load this template into the editor	etemplate	en	Load template to the editor
 maximum size for uploads	filemanager	en	Maximum upload size
 message ...	etemplate	en	Message ...
+message(s) send failed!	etemplate	en	Message(s) send failed!
+message(s) send ok.	etemplate	en	Message(s) send ok.
 middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 minutes	etemplate	en	Minutes

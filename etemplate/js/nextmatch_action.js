@@ -141,6 +141,11 @@ function nm_action(_action, _senders)
 	{
 		if (!confirm(confirm_msg)) return;
 	}
+	// in case we only need to confirm multiple selected (only _action.data.confirm_multiple)
+	else if (typeof _action.data.confirm_multiple != 'undefined' &&  (_senders.length > 1 || select_all && select_all.checked))
+	{
+		if (!confirm(_action.data.confirm_multiple)) return;		
+	}
 	
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')

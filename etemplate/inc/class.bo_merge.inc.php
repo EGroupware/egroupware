@@ -804,7 +804,7 @@ abstract class bo_merge
 				$retString = '';
 				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.lang('Message(s) send ok.');//implode('<br />',$msgs['success']);
 				//if (strlen($retString)>0) $retString .= '<br />';
-				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed.').'=>'.implode(', ',$msgs['failed']);
+				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed!').'=>'.implode(', ',$msgs['failed']);
 				return $retString;
 				break;
 			case 'application/vnd.oasis.opendocument.text':
@@ -1025,6 +1025,13 @@ abstract class bo_merge
 						'group' => 2,
 						'children' => array(),
 					);
+					if ($file['mime'] == 'message/rfc822')
+					{
+						// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
+						//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
+						// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
+						if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $documents[$file['mime']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+					}
 				}
 				$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 			}
@@ -1035,6 +1042,13 @@ abstract class bo_merge
 					'caption' => egw_vfs::decodePath($file['name']),
 					'group' => 2,
 				);
+				if ($file['mime'] == 'message/rfc822')
+				{
+					// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
+					//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
+					// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
+					if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $documents[$prefix.$file['name']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+				}
 			}
 		}
 		return array(
