@@ -560,14 +560,18 @@ function check_install_pear_packages()
 			$need_upgrade[] = $package;
 		}
 	}
-	if (($to_install || $need_upgrade) && getmyuid())
+	if (($to_install || $need_upgrade))
 	{
-		echo "You need to run as user root to be able to install/upgrade required PEAR packages!\n";
-	}
-	else
-	{
-		if ($to_install) system($config['pear'].' install '.implode(' ',$to_install));
-		if ($need_upgrade) system($config['pear'].' upgrade '.implode(' ',$need_upgrade));
+		if (getmyuid())
+		{
+			echo "You need to run as user root to be able to install/upgrade required PEAR packages!\n";
+		}
+		else
+		{
+			echo "Install/upgrade required PEAR packages:\n";
+			if ($to_install) system($config['pear'].' install '.implode(' ',$to_install));
+			if ($need_upgrade) system($config['pear'].' upgrade '.implode(' ',$need_upgrade));
+		}
 	}
 }
 
