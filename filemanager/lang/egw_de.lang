@@ -54,6 +54,7 @@ custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
+delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
 directories sorted in	filemanager	de	Verzeichnisse einsortiert
@@ -61,12 +62,13 @@ directory	filemanager	de	Verzeichnis
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
 directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
+directory successfully created.	filemanager	de	Verzeichnis erfolgreich angelegt.
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
-edit settings	filemanager	de	Einstellungen bearbeiten
+edit settings	filemanager	de	Eigenschaften bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu bekommen
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
@@ -75,6 +77,7 @@ error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
+error while creating directory.	filemanager	de	Fehler beim Anlegen des Verzeichnisses
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
@@ -103,6 +106,7 @@ id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
+link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
@@ -115,6 +119,7 @@ modify all subdirectories and their content	filemanager	de	Änderungen auf alle 
 move	filemanager	de	verschieben
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
+new directory	filemanager	de	Neues Verzeichnis
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
 no preview available	filemanager	de	Keine Vorschau verfügbar

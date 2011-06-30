@@ -112,6 +112,7 @@ if you specify an export definition, it will be used when you export	filemanager
 inherited	filemanager	en	Inherited
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
+link target	filemanager	en	Link target
 link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
 log out as superuser	filemanager	en	Log out as super user
@@ -124,6 +125,7 @@ modify all subdirectories and their content	filemanager	en	Modify all sub direct
 move	filemanager	en	Move
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
+new directory	filemanager	en	New directory
 no access	filemanager	en	No access
 no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available.
@@ -165,8 +167,6 @@ select file to upload in current directory	filemanager	en	Select file to upload 
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
 show link "%1" in side box menu?	filemanager	en	Show link "%1" in side menu
-show link "users and groups*" in side box menu?*	filemanager	en	Show link "Users and groups" in side menu?
-show link "your home directory*" in side box menu?*	filemanager	en	Show link "Home directory" in side menu?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
 start search	filemanager	en	Start search

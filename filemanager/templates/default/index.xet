@@ -18,25 +18,25 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Type" id="mime" align="center"/>
+					<nextmatch-sortheader align="center" label="Type" id="mime"/>
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Size" id="size"/>
 					<nextmatch-sortheader label="Modified" id="mtime"/>
 					<nextmatch-sortheader label="Created" id="ctime"/>
 					<nextmatch-sortheader label="Permissions" id="mode"/>
-					<nextmatch-sortheader id="uid" label="Owner"/>
-					<nextmatch-sortheader id="gid" label="Group"/>
+					<nextmatch-sortheader label="Owner" id="uid"/>
+					<nextmatch-sortheader label="Group" id="gid"/>
 					<nextmatch-header label="Comment" id="comment"/>
-					<nextmatch-customfields readonly="true" id="customfields"/>
+					<nextmatch-customfields id="customfields" readonly="true"/>
 					<hbox options="0,0">
-						<description value="Actions"/>
-						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
+						<nextmatch-header label="Actions" id="legacy_actions"/>
+						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="toggle_all(this.form,form::name('checked[]')); return false;" image="check"/>
 					</hbox>
 				</row>
 				<row class="row">
-					<vfs-mime id="${row}[path]" align="center"/>
+					<vfs-mime align="center" id="${row}[path]"/>
 					<vfs id="$row" no_lang="1"/>
-					<vfs-size id="${row}[size]" align="right"/>
+					<vfs-size align="right" id="${row}[size]"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
 					<date-time id="${row}[ctime]" readonly="true"/>
 					<vfs-mode id="${row}[mode]"/>
@@ -45,16 +45,16 @@
 					<description id="${row}[comment]"/>
 					<customfields-list id="$row" class="customfields"/>
 					<hbox align="right">
-						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
-						<buttononly options="mail_post_to" id="mail[$row_cont[path]]" onclick="open_mail('$row_cont[path]'); return false;" align="center"/>
-						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
-						<checkbox id="checked[]" align="right" options="&quot;$row_cont[path]&quot;"/>
+						<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[$row_cont[path]]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
+						<buttononly align="center" id="mail[$row_cont[path]]" onclick="open_mail('$row_cont[path]'); return false;" options="mail_post_to"/>
+						<button align="center" statustext="Delete this file or directory" label="Delete" id="delete[$row_cont[path]]" onclick="return confirm('Delete this file or directory');" image="delete"/>
+						<checkbox align="right" id="checked[]" options="&quot;$row_cont[path]&quot;"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.7.003">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -62,40 +62,48 @@
 			</columns>
 			<rows>
 				<row disabled="!@nm[msg]">
-					<description span="all" class="redItalic" id="nm[msg]"/>
+					<description id="nm[msg]" span="all" class="redItalic"/>
 					<description/>
 				</row>
 				<row>
 					<hbox span="all">
 						<image label="Up" src="goup" options="filemanager.filemanager_ui.index&amp;path=.."/>
-						<image src="gohome" options="filemanager.filemanager_ui.index&amp;path=~" label="Go to your home directory"/>
-						<vfs-name id="nm[path]" options="80,,1" label="Path" onchange="1" class="address"/>
-						<button id="button[go]" image="key_enter" label="Go to"/>
+						<image label="Go to your home directory" src="gohome" options="filemanager.filemanager_ui.index&amp;path=~"/>
+						<vfs-name label="Path" id="nm[path]" onchange="1" options="80,,1" class="address"/>
+						<button label="Go to" id="button[go]" image="key_enter"/>
 						<image src="buttonseparator"/>
-						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
-						<button id="button[createdir]" image="button_createdir" ro_image="createdir_disabled" label="Create directory" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;"/>
-						<button image="link" ro_image="link_disabled" label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;"/>
-						<button id="button[paste]" image="editpaste" ro_image="editpaste_disabled" statustext="$cont[paste_tooltip]"/>
-						<button id="button[linkpaste]" image="linkpaste" ro_image="linkpaste_disabled" statustext="$cont[linkpaste_tooltip]"/>
-						<button id="button[mailpaste]" image="mailpaste" ro_image="mailpaste_disabled" statustext="$cont[mailpaste_tooltip]" onclick="open_mail('$cont[mailpaste_files]'); return false;"/>
+						<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[{$cont[nm][path]}]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
+						<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;" image="button_createdir" ro_image="createdir_disabled"/>
+						<button label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;" image="link" ro_image="link_disabled"/>
+						<button statustext="$cont[paste_tooltip]" id="button[paste]" image="editpaste" ro_image="editpaste_disabled"/>
+						<button statustext="$cont[linkpaste_tooltip]" id="button[linkpaste]" image="linkpaste" ro_image="linkpaste_disabled"/>
+						<button statustext="$cont[mailpaste_tooltip]" id="button[mailpaste]" onclick="open_mail('$cont[mailpaste_files]'); return false;" image="mailpaste" ro_image="mailpaste_disabled"/>
+						<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 					</hbox>
 				</row>
 				<row>
-					<nextmatch options="filemanager.index.rows" span="all" id="nm"/>
+					<nextmatch id="nm" options="filemanager.index.rows" span="all"/>
+				</row>
+				<row valign="bottom" disabled="!@nm[selectcols]=/legacy_actions/">
+					<description options="1"/>
+					<hbox align="right">
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('filemanager.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" image="arrow_ltr" class="checkAllArrow"/>
+					</hbox>
 				</row>
 				<row>
 					<hbox>
-						<file id="upload[]" statustext="Select file to upload in current directory" onchange="xajax_doXMLHTTP('filemanager_ui::ajax_check_upload_target',this.id,this.value,'{$cont[nm][path]}');"/>
+						<file statustext="Select file to upload in current directory" id="upload[]" onchange="xajax_doXMLHTTP('filemanager_ui::ajax_check_upload_target',this.id,this.value,'{$cont[nm][path]}');"/>
 						<button label="Upload" id="button[upload]"/>
 					</hbox>
-					<hbox align="right">
-						<menulist>
-							<menupopup id="action" options="Select action..." onchange="do_action(this);" no_lang="1"/>
-						</menulist>
-						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
-					</hbox>
+					<description/>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			input[type='file'] {
+width: 50ex
+}
+		</styles>
 	</template>
 </overlay>

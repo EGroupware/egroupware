@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -100,6 +100,52 @@ class filemanager_ui
 	}
 
 	/**
+	 * Context menu
+	 *
+	 * @return array
+	 */
+	private static function get_actions()
+	{
+		return  array(
+			'open' => array(
+				'caption' => lang('Open'),
+				'icon' => 'filemanager/folder',
+				'group' => $group=1,
+				'allowOnMultiple' => false,
+				'onExecute' => 'javaScript:nm_activate_link',
+				'default' => true
+			),
+			'edit' => array(
+				'caption' => lang('Edit settings'),
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=filemanager.filemanager_ui.file&path=$id',
+				'popup' => '495x425',
+			),
+			'mail' => array(
+				'caption' => lang('Mail files'),
+				'icon' => 'filemanager/mail_post_to',
+				'group' => $group,
+				'onExecute' => 'javaScript:egw_fileman_mail',
+			),
+			'copy' => array(
+				'caption' => lang('Copy'),
+				'group' => ++$group,
+			),
+			'cut' => array(
+				'caption' => lang('Cut'),
+				'group' => $group,
+			),
+			'delete' => array(
+				'caption' => lang('Delete'),
+				'group' => ++$group,
+				'confirm' => 'Delete these files or directories?',
+			),
+		);
+	}
+
+
+	/**
 	 * Main filemanager page
 	 *
 	 * @param array $content=null
@@ -127,6 +173,8 @@ class filemanager_ui
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+					'actions'        => self::get_actions(),
+					'row_id'         => 'path',
 				);
 				$content['nm']['path'] = self::get_home_dir();
 			}
@@ -209,18 +257,16 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-
 		$tpl = new etemplate('filemanager.index');
 
 		$content['nm']['msg'] = $msg;
 
-		if ($content['action'] || $content['nm']['rows'])
+		if ($content['nm']['action'] || $content['nm']['rows'])
 		{
-			if ($content['action'])
+			if ($content['nm']['action'])
 			{
-				$content['nm']['msg'] = self::action($content['action'],$content['nm']['rows']['checked'],$content['nm']['path']);
-				unset($content['action']);
+				$content['nm']['msg'] = self::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
+				unset($content['nm']['action']);
 			}
 			elseif($content['nm']['rows']['delete'])
 			{
@@ -374,33 +420,22 @@ class filemanager_ui
 	function open_mail(attachments)
 	{
 		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
-		var i = 0;
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 
-		for(i=0; i < attachments.length; i++)
+		for(var i=0; i < attachments.length; i++)
 		{
 		   link += '&preset[file][]='+encodeURIComponent('vfs://default'+attachments[i]);
 		}
 		egw_openWindowCentered2(link, '_blank', $width, $height, 'yes');
 	}
-	function do_action(selbox)
+	function egw_fileman_mail(_action, _elems)
 	{
-		if (selbox.value != '')
+		var ids = [];
+		for (var i = 0; i < _elems.length; i++)
 		{
-			if (selbox.value == 'mail' && (ids = get_selected_array(selbox.form,'[rows][checked][]')))
-			{
-				open_mail(ids);
-			}
-			else if (selbox.value == 'delete')
-			{
-				if (confirm('".lang('Delete these files or directories?')."')) selbox.form.submit();
-			}
-			else
-			{
-				selbox.form.submit();
-			}
-			selbox.value = '';
+			ids.push(_elems[i].id);
 		}
+		open_mail(ids);
 	}
 </script>\n";
 		}
@@ -486,7 +521,6 @@ class filemanager_ui
 	 */
 	static private function action($action,$selected,$dir=null,&$errs=null,&$files=null,&$dirs=null)
 	{
-		//echo '<p>'.__METHOD__."($action,array(".implode(', ',$selected).",$dir)</p>\n";
 		if (!count($selected))
 		{
 			return lang('You need to select some files first!');
@@ -1216,7 +1250,7 @@ class filemanager_ui
 		}
 
 		$response->data($arr);
-		error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
+		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
 	}
 
 	/**
