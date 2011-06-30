@@ -118,8 +118,7 @@ abstract class bo_merge
 			case 'application/xml':
 				return true;	// alias for text/xml, eg. ms office 2003 word format
 			case 'message/rfc822':
-				if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') return true; // ToDo: check if you are theoretical able to send mail
-				else break;
+				return true; // ToDo: check if you are theoretical able to send mail
 			default:
 				if (substr($mimetype,0,5) == 'text/')
 				{
