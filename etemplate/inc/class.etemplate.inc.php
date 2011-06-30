@@ -1265,6 +1265,7 @@ class etemplate extends boetemplate
 					if (preg_match('/^[a-z]+$/i',$html5type))
 					{
 						$cell_opts[2] = substr($cell_opts[2],0,-strlen($html5type)-1);
+						if ($cell_opts[2][0] == ',') $cell_opts[2] = '';	// happens in link-entry under some condition
 						$cell_opts[] = $html5type;
 					}
 				}
@@ -2233,7 +2234,7 @@ class etemplate extends boetemplate
 								self::set_validation_error($form_name,lang("'%1' is not a valid floatingpoint number !!!",$value),'');
 								break;
 							default:
-								self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
+								self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value)/*." !preg_match('$attr[preg]', '$value')"*/,'');
 								break;
 						}
 					}
