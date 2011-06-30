@@ -117,6 +117,8 @@ abstract class bo_merge
 				return true;	// ms word xml format
 			case 'application/xml':
 				return true;	// alias for text/xml, eg. ms office 2003 word format
+			case 'message/rfc822':
+				return true; // ToDo: check if you are theoretical able to send mail
 			default:
 				if (substr($mimetype,0,5) == 'text/')
 				{
@@ -777,7 +779,7 @@ abstract class bo_merge
 	 */
 	public function download($document, $ids, $name='', $dirs='')
 	{
-		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs')");
+		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
 		if (($error = $this->check_document($document, $dirs)))
 		{
 			return $error;
@@ -785,6 +787,26 @@ abstract class bo_merge
 		$content_url = egw_vfs::PREFIX.$document;
 		switch (($mimetype = egw_vfs::mime_content_type($document)))
 		{
+			case 'message/rfc822':
+				//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs')=>$content_url ->".function_backtrace());
+				$bofelamimail = felamimail_bo::getInstance();
+				$bofelamimail->openConnection();
+				try
+				{
+					$msgs = $bofelamimail->importMessageToMergeAndSend($this, $content_url, $ids, $_folder='', $importID='');
+				}
+				catch (egw_exception_wrong_userinput $e)
+				{
+					// if this returns with an exeption, something failed big time
+					return $e->getMessage();
+				}
+				//error_log(__METHOD__.__LINE__.' Message after importMessageToMergeAndSend:'.array2string($msgs));
+				$retString = '';
+				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.lang('Message(s) send ok.');//implode('<br />',$msgs['success']);
+				//if (strlen($retString)>0) $retString .= '<br />';
+				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed.').'=>'.implode(', ',$msgs['failed']);
+				return $retString;
+				break;
 			case 'application/vnd.oasis.opendocument.text':
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 				$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
@@ -1066,7 +1088,7 @@ abstract class bo_merge
 	 */
 	public static function get_file_extensions()
 	{
-		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml');
+		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml', 'eml');
 	}
 
 	/**
