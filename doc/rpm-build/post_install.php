@@ -16,6 +16,7 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling post_in
 $verbose = false;
 $config = array(
 	'php'         => '/usr/bin/php',
+	'pear'        => '/usr/bin/pear',
 	'source_dir'  => '/usr/share/egroupware',
 	'data_dir'    => '/var/lib/egroupware',
 	'header'      => '$data_dir/header.inc.php',	// symlinked to source_dir by rpm
@@ -91,6 +92,7 @@ function set_distro_defaults($distro=null)
 	{
 		case 'suse':
 			$config['php'] = '/usr/bin/php5';
+			$config['pear'] = '/usr/bin/pear5';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/sbin/service apache2';
@@ -321,6 +323,9 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			system($config['start_webserver'].' reload');
 		}
 	}
+	// install/upgrade required pear packages
+	check_install_pear_packages();
+
 	echo "\n";
 	echo "EGroupware successful installed\n";
 	echo "===============================\n";
@@ -370,6 +375,9 @@ else
 			echo "\nEGroupware successful updated\n";
 			break;
 	}
+	// install/upgrade required pear packages
+	check_install_pear_packages();
+
 	exit($ret);
 }
 
@@ -491,3 +499,76 @@ function usage($error=null)
 	}
 	exit(0);
 }
+
+/**
+ * Check if required PEAR packges are installed and install them if not, update pear packages with to low version
+ */
+function check_install_pear_packages()
+{
+	global $config;
+
+	exec($config['pear'].' list',$out,$ret);
+	if ($ret)
+	{
+		echo "Error running pear command ($config[pear])!\n";
+		exit(95);
+	}
+	$packages_installed = array();
+	foreach($out as $n => $line)
+	{
+		if (preg_match('/^([a-z0-9_]+)\s+([0-9.]+[a-z0-9]*)\s+([a-z]+)/i',$line,$matches))
+		{
+			$packages_installed[$matches[1]] = $matches[2];
+		}
+	}
+	// read required packages from apps
+	$packages = array('HTTP_WebDAV_Server' => '999.egw-pear');
+	$egw_pear_packages = array();
+	foreach(scandir($config['source_dir']) as $app)
+	{
+		if (is_dir($dir=$config['source_dir'].'/'.$app) && file_exists($file=$dir.'/setup/setup.inc.php')) include $file;
+	}
+	foreach($setup_info as $app => $data)
+	{
+		if (isset($data['check_install']))
+		{
+			foreach($data['check_install'] as $package => $args)
+			{
+				if ($args['func'] == 'pear_check')
+				{
+					$packages[$package?$package:'PEAR'] = isset($args['version']) ? $args['version'] : true;
+				}
+			}
+		}
+		if ($app == 'egw-pear')
+		{
+			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_Socket'] =
+			$egw_pear_packages['Net_IMAP'] = $egw_pear_packages['Net_Sieve'] = $egw_pear_packages['Log'] = '999.egw-pear';
+		}
+	}
+	//echo 'Installed: '; print_r($packages_installed);
+	//echo 'egw-pear: '; print_r($egw_pear_packages);
+	//echo 'Required: '; print_r($packages);
+	$to_install = array_diff(array_keys($packages),array_keys($packages_installed),array_keys($egw_pear_packages));
+
+	$need_upgrade = array();
+	foreach($packages as $package => $version)
+	{
+		if ($version !== true && isset($packages_installed[$package]) &&
+			version_compare($version, $packages_installed[$package], '>'))
+		{
+			$need_upgrade[] = $package;
+		}
+	}
+	if (($to_install || $need_upgrade) && getmyuid())
+	{
+		echo "You need to run as user root to be able to install/upgrade required PEAR packages!\n";
+	}
+	else
+	{
+		if ($to_install) system($config['pear'].' install '.implode(' ',$to_install));
+		if ($need_upgrade) system($config['pear'].' upgrade '.implode(' ',$need_upgrade));
+	}
+}
+
+function lang() {}	// required to be able to include */setup/setup.inc.php files
