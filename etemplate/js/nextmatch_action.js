@@ -335,3 +335,23 @@ function nm_hide_popup(element, div_id)
 
 	return false;
 }
+
+/**
+ * Activate/click first link in row
+ */
+function nm_activate_link(_action, _senders)
+{
+	// $(_senders[0].iface.getDOMNode()).find('a:first').trigger('click');	not sure why this is NOT working
+
+	var a_href = $(_senders[0].iface.getDOMNode()).find('a:first');
+	
+	if (typeof a_href != undefined)
+	{
+		var target = a_href.attr('target');
+		var href = a_href.attr('href');
+		if (target)
+			window.open(href,target);
+		else
+			window.location = href;
+	}
+}

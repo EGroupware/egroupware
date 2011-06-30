@@ -618,6 +618,8 @@ class nextmatch_widget
 			'print'=> 'print',
 			'copy' => 'copy',
 			'move' => 'move',
+			'cut'  => 'cut',
+			'paste'=> 'editpaste',
 		);
 
 		$first_level = !$action_links;	// add all first level actions
@@ -731,7 +733,7 @@ class nextmatch_widget
 			}
 
 			// give all delete actions a delete shortcut
-			if ($id == 'delete' && !isset($action['shortcut']))
+			if ($id === 'delete' && !isset($action['shortcut']))
 			{
 				$action['shortcut'] = egw_keymanager::shortcut(egw_keymanager::DELETE);
 			}
