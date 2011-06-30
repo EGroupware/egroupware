@@ -1240,6 +1240,9 @@ class etemplate extends boetemplate
 			case 'int':		// size: [min],[max],[len],[precission/sprint format]
 			case 'float':
 				list($min,$max,$cell_options,$pre) = explode(',',$cell_options);
+				// a few html5 options
+				if ((string)$min !== '') $options .= ' min="'.htmlspecialchars($min).'"';
+				if ((string)$max !== '') $options .= ' max="'.htmlspecialchars($max).'"';
 				if ($cell_options == '' && !$readonly)
 				{
 					$cell_options = $cell['type'] == 'int' ? 5 : 8;
@@ -1248,12 +1251,23 @@ class etemplate extends boetemplate
 				{
 					$value = is_numeric($pre) ? self::number_format($value,$pre,$readonly) : sprintf($pre,$value);
 				}
-				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
+				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/').',number';
 				// fall-through
 			case 'hidden':
 			case 'passwd':
-			case 'text':		// size: [length][,maxLength[,preg]]
-				$cell_opts = explode(',',$cell_options,3);
+			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
+				$cell_opts = $c = explode(',',$cell_options);
+				// fix preg, in case it contains a comma (html5type is only letters and always last option!)
+				if (count($cell_opts) > 3)
+				{
+					$html5type = array_pop($cell_opts);
+					$cell_opts = explode(',',$cell_options,3);
+					if (preg_match('/^[a-z]+$/i',$html5type))
+					{
+						$cell_opts[2] = substr($cell_opts[2],0,-strlen($html5type)-1);
+						$cell_opts[] = $html5type;
+					}
+				}
 				if ($readonly && (int)$cell_opts[0] >= 0)
 				{
 					$html .= strlen($value) ? html::bold(html::htmlspecialchars($value)) : '';
@@ -1261,8 +1275,8 @@ class etemplate extends boetemplate
 				else
 				{
 					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
-					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : ''),
-						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH'));
+					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : $cell_opts[3]),
+						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($cell['needed']?' required="required"':''));
 
 					if (!$readonly)
 					{
@@ -1288,7 +1302,7 @@ class etemplate extends boetemplate
 					// browser would only send the content of the readonly (and therefore unchanged) field
 					if ($readonly && self::$request->isset_to_process($form_name)) $form_name = '';
 					$html .= html::textarea($form_name,$value,
-						$options.html::formatOptions($cell_options,'ROWS,COLS'));
+						$options.html::formatOptions($cell_options,'ROWS,COLS').($cell['needed']?' required="required"':''));
 				}
 				if (!$readonly)
 				{

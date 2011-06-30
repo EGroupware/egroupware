@@ -100,7 +100,7 @@ class url_widget
 						{
 							$cell['size'] .= '|[^<]+ ?<'.self::EMAIL_PREG.'>';
 						}
-						$cell['size'] .= ')$/i';
+						$cell['size'] .= ')$/i,email';
 					}
 					#_debug_array($cell);
 					break;
@@ -141,6 +141,7 @@ class url_widget
 				if (!$readonly)
 				{
 					$cell['type'] = 'text';
+					$cell['size'] = "$size,$max_size,$preg,url";
 					// todo: (optional) validation
 					break;
 				}
@@ -171,6 +172,7 @@ class url_widget
 				if (!$readonly)
 				{
 					$cell['type'] = 'text';
+					$cell['size'] = "$size,$max_size,$preg,tel";
 					// todo: (optional) validation
 					break;
 				}

@@ -672,7 +672,7 @@ class html
 			case '';
 				break;
 			default:
-				$type = 'type="'.$type.'"';
+				$type = 'type="'.htmlspecialchars($type).'"';
 		}
 		return "<input $type name=\"$name\" value=\"".self::htmlspecialchars($value)."\" $options />\n";
 	}

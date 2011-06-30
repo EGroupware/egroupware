@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.7.001">
+	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" spacing="0" padding="3">
 			<columns>
 				<column width="1%"/>
@@ -30,8 +30,8 @@
 					<menulist>
 						<menupopup align="center" statustext="@filter2_help" label="@filter2_label" id="filter2" onchange="@filter2_onchange"/>
 					</menulist>
-					<textbox align="right" statustext="a pattern to be searched for" id="search" onchange="1" size="12"/>
-					<button statustext="to start the search" label="Search" id="start_search"/>
+					<textbox align="right" blur="Search" statustext="a pattern to be searched for" id="search" onchange="1" size="12" validator=",search"/>
+					<button statustext="to start the search" label="&gt;" id="start_search"/>
 					<menulist class="nm_num_rows">
 						<menupopup statustext="How many entries should the list show" id="num_rows" no_lang="1" onchange="1"/>
 					</menulist>
