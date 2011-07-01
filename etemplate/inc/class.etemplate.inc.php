@@ -1670,12 +1670,13 @@ class etemplate extends boetemplate
 						self::$form_options .= ' enctype="multipart/form-data"';
 						if (strpos($options,'onChange="') !== false)
 						{
-							$options = preg_replace('/onChange="([^"]+)"/i','onChange="\\1; add_upload(this);"',$options);
+							$options = preg_replace('/onChange="([^"]+)"/i','onChange="\\1; if (!this.multiple) add_upload(this);"',$options);
 						}
 						else
 						{
-							$options .= ' onChange="add_upload(this);"';
+							$options .= ' onChange="if (!this.multiple) add_upload(this);"';
 						}
+						$options .= ' multiple="multiple"';	// allow html5 browsers to select more then one file
 					}
 					else
 					{
