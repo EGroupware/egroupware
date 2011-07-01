@@ -1,3 +1,28 @@
+egroupware-epl (11.1.20110701-1) hardy; urgency=low
+
+  * CalDAV: handle deleted events, as not existing (404 Not Found)
+  * CardDAV/GroupDAV: handle deleted contacts, as not existing (404 Not Found)
+  * emailadmin: restored capability of storing setup mail server settings to first default emailadmin profile (no app, no group, no user)
+  * emailadmin: restored capability of storing setup mail server settings to first default emailadmin profile (no app, no group, no user)
+  * emailadmin: restored capability of storing basic default mail server settings back to config on saving active profiles that are allowed for all apps, groups and users
+  * eMail: fix Bug regarding 'could not parse mime message' as of selection of a different folder in MainView
+  * eMail: fixed 'bug' regarding the flagging of multiple messages tagged/untagged - you may now flag or unflag messages not regarding the flagged state of the messages in the selection
+  * eMail: regard addressbook preference to hide accounts or not in ajax search for emailadresses while composing messages
+  * eMail: fix missing pictures in display window (where supressed as attachment->cid was set to NIL)
+  * eMail: fix for displayed message body  is null: if charset reported is reported not correctly, converting to utf-8 may not succeed as expected, leaving some non utf-8 chars which may lead to problems with json_encode;
+  * eSync: add substantially miore effort in determination of the preselected Profile; thus fixing strange behavior if you selected Primary emailadmin profile
+  * Fix RRULE parser - Bug#2991@egroupware.org
+  * Fix RRULE parser (2nd part) - Bug#2991@egroupware.org
+  * Fix RRULE parser (UTC fix) - Bug#2991@egroupware.org
+  * Calendar: fixed not working accept/reject of invitations, if participant is in a group with only a freebusy grant
+  * Tracker: implemented explicit file_access method, required to differenciate between read and write access
+  * eMail: fix behavior for importMessage FolderSelection (additional hierarchyDelimiter)
+  * eMail: feature to use merge_print on emails for sending previously prepared (and stored) emails to contacts. The email address is used as To address. If no email address is specified, email_home is used. Addressbook replacements are performed on text/html body and subject; BugFix regarding problems with styledefinitions containing umlauts
+  * Filemanager: subscriptions for files and directories, to get notified about changes
+  * Windows/EPL-11.1 update: fix for SQL error on update: PDO->query('1') >> sqlfs_stream_wrapper::url_stat('\\', 0)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 01 Jul 2011 15:21:43 +0200
+
 egroupware-epl (11.1.20110617-1) hardy; urgency=low
 
   * print- and report-tempaltes for addressbook, calendar, infolog, timesheet, tracker and projectmanager
