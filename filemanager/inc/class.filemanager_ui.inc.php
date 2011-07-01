@@ -475,6 +475,7 @@ function check_files(upload)
 
 		//$response->addAlert(__METHOD__."('$id',".array2string($name).",'$dir')");
 
+		$ask_overwrite = array();
 		foreach((array)$names as $name)
 		{
 			$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
@@ -487,6 +488,8 @@ function check_files(upload)
 			{
 				$response->addAlert(lang('You are NOT allowed to upload a script!'));
 				$response->addScript("document.getElementById('$id').value='';");
+				$ask_overwrite = array();
+				break;
 			}
 			elseif (egw_vfs::stat($path))
 			{
@@ -494,16 +497,22 @@ function check_files(upload)
 				{
 					$response->addAlert(lang("There's already a directory with that name!"));
 					$response->addScript("document.getElementById('$id').value='';");
+					$ask_overwrite = array();
+					break;
 				}
 				else
 				{
-					$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',egw_vfs::decodePath($path)))."')) document.getElementById('$id').value='';");
+					$ask_overwrite[] = egw_vfs::decodePath($path);
 				}
 			}
 			else
 			{
 				// do nothing new file
 			}
+		}
+		if ($ask_overwrite)
+		{
+			$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',implode(', ',$ask_overwrite)))."')) document.getElementById('$id').value='';");
 		}
 		return $response->getXML();
 	}
