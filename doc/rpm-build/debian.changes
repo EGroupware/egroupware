@@ -1,3 +1,29 @@
+egroupware-epl (10.1.20110701-1) hardy; urgency=low
+
+  * eMail: fixed bug for not getting multiple unnamed attachments, while saving a mail to infolog or tracker
+  * eMail: improving of the fetching of cids; match cid to filename if the attempt to match the cid failed
+  * eMail: match cid to filename if the attempt to match the cid failed -> extending the fetch attempt even for non cid attachments, when nothing is found within the previous loops
+  * eMail: fix bug regarding the poisoning of the message session cache by filter driven execution of getSortedList to validate the SEEN/UNSEEN information
+  * eMail: action to undelete/revert single messages that may be marked as deleted in preview or view message mode; using revert icon for that action
+  * eMail: regard addressbook preference to hide accounts or not in ajax search for emailadresses while composing messages
+  * eMail: fix for displayed message body  is null: if charset reported is reported not correctly, converting to utf-8 may not succeed as expected, leaving some non utf-8 chars which may lead to problems with json_encode;
+  * eMail: fix behavior for importMessage FolderSelection (additional hierarchyDelimiter)
+  * emailadmin: restored capability of storing setup mail server settings to first default emailadmin profile (no app, no group, no user)
+  * emailadmin: restored capability of storing basic default mail server settings back to config on saving active profiles that are allowed for all apps, groups and users; remove obsolet code
+  * Admin/VFS/LDAP: on saving a group, check if group directory exists and create it if not
+  * CalDAV/GroupDAV/KDE Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
+  * Calendar: added purge interval of half a year
+  * Calendar: warning if user tries to move horizont further then default 1000 days and NOT start moving horizont, to allow adding events after the horizont
+  * CalDAV: handle deleted events, as not existing (404 Not Found)
+  * CardDAV/GroupDAV: handle deleted contacts, as not existing (404 Not Found)
+  * Fix RRULE parser - Bug#2991@egroupware.org
+  * Fix RRULE parser (2nd part) - Bug#2991@egroupware.org
+  * Fix RRULE parser (UTC fix) - Bug#2991@egroupware.org
+  * Calendar: fixed not working accept/reject of invitations, if participant is in a group with only a freebusy grant
+  * Versioning: do NOT create a new version of a file, if current one is empty
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 01 Jul 2011 11:51:24 +0200
+
 egroupware-epl (10.1.20110608-1) hardy; urgency=low
 
   * Setup: making SSHA (salted sha1) hashes the default password hash for SQL and LDAP
