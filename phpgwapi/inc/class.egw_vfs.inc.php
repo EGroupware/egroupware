@@ -1739,6 +1739,9 @@ class egw_vfs extends vfs_stream_wrapper
 				}
 				$props = $vfs_props;
 			}
+		}
+		if ($props)
+		{
 			// set props before copying the file, so notifications already contain them
 			if (!self::stat($target))
 			{
