@@ -93,7 +93,7 @@
 				</row>
 				<row>
 					<hbox>
-						<file statustext="Select file to upload in current directory" id="upload[]" onchange="xajax_doXMLHTTP('filemanager_ui::ajax_check_upload_target',this.id,this.value,'{$cont[nm][path]}');"/>
+						<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this);"/>
 						<button label="Upload" id="button[upload]"/>
 					</hbox>
 					<description/>

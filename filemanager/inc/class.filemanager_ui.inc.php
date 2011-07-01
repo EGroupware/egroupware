@@ -106,7 +106,7 @@ class filemanager_ui
 	 */
 	private static function get_actions()
 	{
-		return  array(
+		$actions = array(
 			'open' => array(
 				'caption' => lang('Open'),
 				'icon' => 'filemanager/folder',
@@ -142,6 +142,11 @@ class filemanager_ui
 				'confirm' => 'Delete these files or directories?',
 			),
 		);
+		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))
+		{
+			unset($actions['mail']);
+		}
+		return $actions;
 	}
 
 
@@ -401,11 +406,6 @@ class filemanager_ui
 		$readonlys['button[symlink]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
 
-		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['delete'] = lang('Delete');
-		$sel_options['action']['copy'] = lang('Copy to clipboard');
-		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['cut'] = lang('Cut to clipboard');
-		if ($clipboard_files) $sel_options['action']['add'] = lang('Add to current clipboard');
-
 		$sel_options['filter'] = array(
 			'1' => 'Current directory',
 			'2' => 'Directories sorted in',
@@ -414,7 +414,6 @@ class filemanager_ui
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{
-			$sel_options['action']['mail'] = lang('Mail files');
 			list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
 			$GLOBALS['egw_info']['flags']['java_script'] .= "<script type=\"text/javascript\">
 	function open_mail(attachments)
@@ -439,10 +438,26 @@ class filemanager_ui
 	}
 </script>\n";
 		}
-		else
+		$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
+function check_files(upload)
+{
+	var files = [];
+	if (upload.files)
+	{
+		for(var i = 0; i < upload.files.length; ++i)
 		{
-			$tpl->set_cell_attribute('action','onchange','this.form.submit()');
+			files.push(upload.files[i].fileName);
 		}
+	}
+	else if (upload.value)
+	{
+		files = upload.value;
+	}
+	var path = document.getElementById(upload.id.replace(/upload\]\[/,"nm][path"));
+
+	xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);
+}
+</script>'."\n";
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
@@ -450,42 +465,45 @@ class filemanager_ui
 	 * Check if a file upload would overwrite an existing file and get a user confirmation in that case
 	 *
 	 * @param string $id id of the input
-	 * @param string $name name (incl. client-path) of the file to upload
+	 * @param string|array $names name(s) (incl. client-path) of the file(s) to upload
 	 * @param string $dir current vfs directory
 	 * @return string xajax output
 	 */
-	static function ajax_check_upload_target($id,$name,$dir)
+	static function ajax_check_upload_target($id,$names,$dir)
 	{
 		$response = new xajaxResponse();
 
-		//$response->addAlert(__METHOD__."('$id','$name','$dir')");
+		//$response->addAlert(__METHOD__."('$id',".array2string($name).",'$dir')");
 
-		$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
-		$name = array_pop($name);
-
-		// encode chars which special meaning in url/vfs (some like / get removed!)
-		$path = egw_vfs::concat($dir,egw_vfs::encodePathComponent($name));
-
-		if(egw_vfs::deny_script($path))
+		foreach((array)$names as $name)
 		{
-			$response->addAlert(lang('You are NOT allowed to upload a script!'));
-			$response->addScript("document.getElementById('$id').value='';");
-		}
-		elseif (egw_vfs::stat($path))
-		{
-			if (egw_vfs::is_dir($path))
+			$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
+			$name = array_pop($name);
+
+			// encode chars which special meaning in url/vfs (some like / get removed!)
+			$path = egw_vfs::concat($dir,egw_vfs::encodePathComponent($name));
+
+			if(egw_vfs::deny_script($path))
 			{
-				$response->addAlert(lang("There's already a directory with that name!"));
+				$response->addAlert(lang('You are NOT allowed to upload a script!'));
 				$response->addScript("document.getElementById('$id').value='';");
+			}
+			elseif (egw_vfs::stat($path))
+			{
+				if (egw_vfs::is_dir($path))
+				{
+					$response->addAlert(lang("There's already a directory with that name!"));
+					$response->addScript("document.getElementById('$id').value='';");
+				}
+				else
+				{
+					$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',egw_vfs::decodePath($path)))."')) document.getElementById('$id').value='';");
+				}
 			}
 			else
 			{
-				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',egw_vfs::decodePath($path)))."')) document.getElementById('$id').value='';");
+				// do nothing new file
 			}
-		}
-		else
-		{
-			// do nothing new file
 		}
 		return $response->getXML();
 	}
