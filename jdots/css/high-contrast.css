@@ -1,0 +1,21 @@
+/**
+ * Stylite: jdots template
+ *
+ * @link http://www.stylite.de
+ * @package jdots
+ * @author Andreas Stöckel <as@stylite.de>
+ * @author Ralf Becker <rb@stylite.de>
+ * @author Nathan Gray <ng@stylite.de>
+ * @version $Id$
+ */
+
+@import url("jdots.css");
+
+/**
+ * theme changes from jdots follow
+ */
+
+
+#egw_fw_topmenu li {
+	font-weight:bold;
+}

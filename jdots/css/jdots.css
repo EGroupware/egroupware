@@ -1,0 +1,109 @@
+/**
+ * Stylite: jdots template
+ *
+ * @link http://www.stylite.de
+ * @package jdots
+ * @author Andreas Stöckel <as@stylite.de>
+ * @author Ralf Becker <rb@stylite.de>
+ * @author Nathan Gray <ng@stylite.de>
+ * @version $Id: class.jdots_framework.inc.php 958 2010-06-02 09:32:26Z ralfbecker $
+ */
+
+@import url("../../phpgwapi/templates/idots/css/traditional.css");
+@import url("../jquery-ui.css");
+@import url("../egw_fw.css");
+
+/**
+ * theme changes from idots-traditional follow
+ */
+
+body {
+	background-image:none;
+}
+
+.th {
+	background-color: #e0e0e0;
+}
+
+a:link, a:visited, select, input, textarea {
+	color: #003075;
+}
+
+.lettersearch_active,.lettersearch:hover {
+	background-color: #d0d0d0 !important;
+}
+
+.lettersearch {
+	background-color: #e0e0e0 !important;
+}
+
+.nextmatch_header table {
+	border: none !important;
+}
+
+/* login page */
+#loginMainDiv {
+	padding: 0px;
+	background-position: center 64px;
+	height: 720px;
+}
+
+.divLoginbox {
+	border: 1px solid #d3d3d3;
+	border-top: none;
+}
+.divLoginbox td {
+	padding-left: 8px;
+}
+.divLoginboxHeader {
+	background-image: url(../images/gradient22.png);
+}
+/* felamimail uses the styledefinitions below to format navButton/navSeparator */
+tr.navbarBackground {
+	background-color:#dddddd;
+}
+
+div.navButton { 
+	background-color:#dddddd;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid #dddddd 1px;
+}
+
+div.navButton:hover, div.navButtonHover { 
+	background-color:#eeeeee;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+	position: relative;
+}
+
+div.navButton:active, div.navButtonActive { 
+	background-color:#dddddd;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-left: solid black 1px;
+	border-top: solid black 1px;
+	position: relative;
+}
+
+div.navSeparator { 
+	background-color:#dddddd;
+	float:left;
+	padding: 0px;
+	margin: 2px;
+	border: solid silver 1px;
+	height:24px;
+	position: relative;
+}
+
+/* Fixes z-index problem with the calendar year selection (displays behind selectboxes)*/
+.calendar .combo {
+	z-index: 1 !important;
+}

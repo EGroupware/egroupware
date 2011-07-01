@@ -1,0 +1,35 @@
+/**
+ * Stylite: jdots template: orange-green theme
+ *
+ * @link http://www.stylite.de
+ * @package jdots
+ * @author Andreas Stöckel <as@stylite.de>
+ * @author Ralf Becker <rb@stylite.de>
+ * @author Nathan Gray <ng@stylite.de>
+ * @version $Id$
+ */
+
+@import url("jdots.css");
+
+/**
+ * theme changes from jdots follow
+ */
+
+.egw_fw_ui_sidemenu_entry_header_active {
+	background-image: url(../images/gradient30orange.png);
+	border-color: #fedf9e;
+}
+
+.egw_fw_ui_sidemenu_entry_content {
+	background-image: url(../images/gradient10orange.png);
+	border-color: #fedf9e;
+}
+
+.egw_fw_ui_sidemenu_entry_header:hover {
+	background-image:url(../images/gradient30orange.png);
+	border-color: #fedf9e;
+}
+
+.egw_fw_ui_tabs_header, #egw_fw_topmenu, #egw_fw_footer {
+	background-image: url(../images/gradient22green.png);
+}

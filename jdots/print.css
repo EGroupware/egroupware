@@ -1,0 +1,28 @@
+/**
+ * Stylite: jdots template: CSS for printing
+ *
+ * @link http://www.stylite.de
+ * @package jdots
+ * @author Andreas Stöckel <as@stylite.de>
+ * @author Ralf Becker <rb@stylite.de>
+ * @author Nathan Gray <ng@stylite.de>
+ * @version $Id$
+ */
+
+@import url("../phpgwapi/templates/idots/print.css");
+
+/**
+ * Changes for jDots
+ */
+
+#egw_fw_sidebar, #egw_fw_topmenu, .egw_fw_ui_tabs_header {
+	display: none;
+}
+
+#egw_fw_main {
+	margin: 0;
+}
+
+.egw_fw_ui_tab_content iframe {
+	height: auto;
+}
