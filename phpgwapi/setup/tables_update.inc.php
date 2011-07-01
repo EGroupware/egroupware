@@ -308,8 +308,6 @@ function phpgwapi_upgrade1_9_010()
 		$prefs->add($app, 'document_dir', $dir, 'default');
 	}
 	$prefs->save_repository(false, 'default');
-	// mount EPL document dir "under" /templates
-	egw_vfs::mount('stylite.merge://default/templates?merge=stylite/printtemplates&lang=1','/templates');
 	egw_vfs::$is_root = false;
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.011';
