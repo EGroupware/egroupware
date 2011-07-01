@@ -61,6 +61,7 @@ $config = array(
 	'cyrus'         => '',
 	'sieve'         => '',
 	'install-update-app' => '',	// install or update a single (non-default) app
+	'webserver_user'=> 'apache',	// required to fix permissions
 );
 
 // read language from LANG enviroment variable
@@ -103,6 +104,7 @@ function set_distro_defaults($distro=null)
 			$config['ldap_base'] = '$suffix';
 			$config['ldap_context'] = 'ou=people,$base';
 			$config['ldap_group_context'] = 'ou=group,$base';
+			$config['webserver_user'] = 'wwwrun';
 			break;
 		case 'debian':
 			// service not in Debian5, only newer Ubuntu, which complains about /etc/init.d/xx
@@ -118,6 +120,7 @@ function set_distro_defaults($distro=null)
 			}
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
+			$config['webserver_user'] = 'www-data';
 			break;
 		case 'mandriva':
 			$config['ldap_suffix'] = 'dc=site';
@@ -325,6 +328,8 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	}
 	// install/upgrade required pear packages
 	check_install_pear_packages();
+	// fix egw_cache evtl. created by root, stoping webserver from accessing it
+	fix_perms();
 
 	echo "\n";
 	echo "EGroupware successful installed\n";
@@ -377,6 +382,8 @@ else
 	}
 	// install/upgrade required pear packages
 	check_install_pear_packages();
+	// fix egw_cache evtl. created by root, stoping webserver from accessing it
+	fix_perms();
 
 	exit($ret);
 }
@@ -576,3 +583,14 @@ function check_install_pear_packages()
 }
 
 function lang() {}	// required to be able to include */setup/setup.inc.php files
+
+/**
+ * fix egw_cache perms evtl. created by root, stoping webserver from accessing it
+ */
+function fix_perms()
+{
+	global $config;
+
+	system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
+	system('/bin/chmod 700 /tmp/egw_cache');
+}
