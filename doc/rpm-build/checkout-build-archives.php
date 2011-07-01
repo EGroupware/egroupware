@@ -17,33 +17,37 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'eGroupware',
-	'version' => 'trunk',				// '1.6'
+	'packagename' => 'egroupware-epl',
+	'version' => '11.1',				// '1.6'
 	'packaging' => date('Ymd'),			// '001'
 	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/egw_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/egw_buildroot',
-	'sourcedir' => '~/rpm/SOURCES',
-	'svnbase' => 'http://svn.egroupware.org/egroupware',
-	'svnbranch' => 'trunk',				// 'branches/1.6' or 'tags/1.6.001'
-	'svnalias' => 'aliases/default',	// default alias
+	'svndir' => '/tmp/build_root/epl_11.1_svn',
+	'egw_buildroot' => '/tmp/build_root/epl_11.1_buildroot',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-11.1',
+	'svnbase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
+	'egwbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
+	'svnbranch' => 'branches/Stylite-EPL-11.1',	// 'branches/1.6' or 'tags/1.6.001'
+	'svnalias' => 'epl-ssh',			// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
-	'extra' => array('egw-pear','gallery','mydms','icalsrv'),
+	'extra' => array('stylite','jdots','$egwbase/$svnbranch/egw-pear','svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
+	'rsync' => 'rsync --progress -e "ssh -P 9922"',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
-	'packager' => 'packager@egroupware.org',
-	'obs' => false,
+	'packager' => 'build@stylite.de',
+	'obs' => './obs',
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
-	'svntag' => false,	// eg. '$version.$packaging'
-	'skip' => array(),
-	'run' => array('checkout','copy','virusscan','create','sign'),
-	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
+	'svntag' => 'tags/Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
+        'release' => 'root@download.stylite.de:/var/www/html/stylite-epl/stylite-epl-$version/',
+        'copychangelog' => 'root@download.stylite.de:/var/www/html/stylite-epl/stylite-epl-$version/changelog.txt',
+        'skip' => array(),
+        'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs'),
+	'patchCmd' => 'cp $obs/egroupware-epl-11.1/debian.changes $egw_buildroot/egroupware/doc/rpm-build/',	//'# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
 // process config from command line
@@ -71,11 +75,11 @@ while(($arg = array_shift($argv)))
 			case 'run':
 				if ($value[0] == '+')
 				{
-					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',$value)));
+					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',substr($value,1))));
 				}
 				elseif ($value[0] == '-')
 				{
-					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',$value));
+					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',substr($value,1)));
 				}
 				else
 				{
@@ -84,8 +88,10 @@ while(($arg = array_shift($argv)))
 				break;
 
 			case 'svntag':
+			case 'release':
+			case 'copychangelog':
 				$config[$name] = $value;
-				array_unshift($config['run'],'svntag');
+				array_unshift($config['run'],$name);
 				break;
 
 			case 'editsvnchangelog':
@@ -122,7 +128,45 @@ $svn = $config['svn'];
 
 foreach(array_diff($config['run'],$config['skip']) as $func)
 {
+	chdir(dirname(__FILE__));	// make relative filenames work, if other command changes dir
 	call_user_func('do_'.$func);
+}
+
+/**
+ * Release sources by rsync'ing them to a distribution / download directory
+ */
+function do_release()
+{
+	global $config,$verbose;
+
+	$target = $config['release'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
+	passthru($cmd);
+}
+
+/**
+ * Copy changelog by rsync'ing it to a distribution / download directory
+ */
+function do_copychangelog()
+{
+	global $config,$verbose;
+
+	$changelog = __DIR__.'/debian.changes';
+	$target = $config['copychangelog'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$changelog.' '.$target;
+	passthru($cmd);
 }
 
 /**
@@ -159,16 +203,24 @@ function do_editsvnchangelog()
 	file_put_contents($logfile,$changelog);
 	$cmd = $config['editor'].' '.escapeshellarg($logfile);
 	passthru($cmd);
-	$config['changlog'] = file_get_contents($logfile);
+	$config['changelog'] = file_get_contents($logfile);
 	// remove trailing newlines
 	while (substr($config['changelog'],-1) == "\n")
 	{
 		$config['changelog'] = substr($config['changelog'],0,-1);
 	}
 	// allow user to abort, by deleting the changelog
-	if (strlen($config['changlog']) <= 2)
+	if (strlen($config['changelog']) <= 2)
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
+	}
+	// commit changelog
+	$changelog = __DIR__.'/debian.changes';
+	if (file_exists($changelog))
+	{
+		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		run_cmd($cmd);
 	}
 }
 
@@ -191,7 +243,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 	{
 		list($tags_url,$branch) = explode('/branches/',$branch_url);
 		$tags_url .= '/tags';
-		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.\d{8})/');
+		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
 	}
@@ -250,7 +302,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
 	global $config,$verbose,$svn;
 
-	$cmd = $svn.' log --xml --limit 10 '.escapeshellarg($tags_url);
+	$cmd = $svn.' log --xml --limit 20 '.escapeshellarg($tags_url);
 	if (($v = $verbose))
 	{
 		echo "Querying SVN for last tags\n$cmd\n";
@@ -294,7 +346,7 @@ function do_obs()
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
 		if (basename(dirname($path)) == '.osc') continue;
-		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-'.preg_quote($config['version']).'/',$path)) continue;
+		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*'.'/',$path)) continue;
 
 		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
@@ -326,11 +378,7 @@ function do_obs()
 			}
 			if (basename($path) == 'debian.changes' && strpos($content,$config['version'].'.'.$config['packaging']) === false)
 			{
-				list($new_header) = explode("\n",$content);
-				$new_header = preg_replace('/\('.preg_quote($config['version']).'.[0-9]+(.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
-				if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
-				$content = $new_header."\n\n".$config['changelog'].
-					"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+				$content = update_changelog($content);
 			}
 			if (!empty($config['changelog']) && substr($path,-5) == '.spec' &&
 				($pos_changelog = strpos($content,'%changelog')) !== false)
@@ -354,6 +402,25 @@ function do_obs()
 		run_cmd('osc addremove '.$config['obs'].'/*');
 		run_cmd('osc commit -m '.escapeshellarg('Version: '.$config['version'].'.'.$config['packaging'].":\n".$config['changelog']).' '.$config['obs']);
 	}
+}
+
+/**
+ * Update content of debian changelog file with new content from $config[changelog]
+ *
+ * @param string $content existing changelog content
+ * @return string updated changelog content
+ */
+function update_changelog($content)
+{
+	global $config,$verbose;
+
+	list($new_header) = explode("\n",$content);
+	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+	if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
+	$content = $new_header."\n\n".$config['changelog'].
+		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+
+	return $content;
 }
 
 /**
