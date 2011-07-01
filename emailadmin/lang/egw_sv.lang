@@ -1,0 +1,68 @@
+add profile	emailadmin	sv	Skapa profil
+admin dn	emailadmin	sv	Admin dn
+admin password	emailadmin	sv	Admin lösenord
+admin username	emailadmin	sv	Admin användare
+advanced options	emailadmin	sv	Avanserade alternativ
+alternate email address	emailadmin	sv	Alternerande e-post adress
+cyrus imap server	emailadmin	sv	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	sv	Cyrus IMAP server administration
+default	emailadmin	sv	Standard
+deliver extern	emailadmin	sv	Leverera extern
+do you really want to delete this profile	emailadmin	sv	Vill du verkligen radera profilen?
+domainname	emailadmin	sv	Domän namn
+edit email settings	emailadmin	sv	Redigera e-post alternativ
+email account active	emailadmin	sv	Aktivt e-post konto
+email address	emailadmin	sv	E-post adress
+enable cyrus imap server administration	emailadmin	sv	Aktivera Cyrus IMAP server administration
+enable sieve	emailadmin	sv	Aktivera Sieve
+enter your default mail domain (from: user@domain)	emailadmin	sv	Standard e-post domän (från: user@domain)
+forward also to	emailadmin	sv	Vidarebefodra även till
+forward email's to	emailadmin	sv	Vidarebefodra e-post till
+forward only	emailadmin	sv	Vidarebefodra endast
+imap admin password	admin	sv	IMAP admin lösenord
+imap admin user	admin	sv	IMAP admin användare
+imap c-client version < 2001	emailadmin	sv	IMAP C-Client version < 2001
+imap server hostname or ip address	emailadmin	sv	IMAP server hostnamn eller IP adress
+imap server logintyp	emailadmin	sv	IMAP server inloggnings typ
+imap server port	emailadmin	sv	IMAP server port
+imap/pop3 server name	emailadmin	sv	IMAP/POP3 server namn
+in mbyte	emailadmin	sv	i MByte
+ldap basedn	emailadmin	sv	LDAP basedn
+ldap server	emailadmin	sv	LDAP server
+ldap server accounts dn	emailadmin	sv	LDAP server konton DN
+ldap server admin dn	emailadmin	sv	LDAP server admin DN
+ldap server admin password	emailadmin	sv	LDAP server admin lösenord
+ldap server hostname or ip address	emailadmin	sv	LDAP server hostnamn eller IP adress
+ldap settings	emailadmin	sv	LDAP alternativ
+leave empty for no quota	emailadmin	sv	Lämna tomt för ingen kvot
+mail settings	admin	sv	E-post alternativ
+name of organisation	emailadmin	sv	Organisations namn
+no alternate email address	emailadmin	sv	Ingen alternerande e-post adress
+no forwarding email address	emailadmin	sv	Ingen e-post vidarebefodrings adress
+pop3 server hostname or ip address	emailadmin	sv	POP3 server hostnamn eller IP adress
+pop3 server port	emailadmin	sv	POP3 server port
+postfix with ldap	emailadmin	sv	Postfix med LDAP
+profile list	emailadmin	sv	Profil lista
+profile name	emailadmin	sv	Profil namn
+qmaildotmode	emailadmin	sv	qmaildotmode
+qouta size in mbyte	emailadmin	sv	Kvot storlek i Mb
+quota settings	emailadmin	sv	Kvot alternativ
+remove	emailadmin	sv	Radera
+select type of imap/pop3 server	emailadmin	sv	Välj typ av IMAP/POP3 server
+select type of smtp server	emailadmin	sv	Välj typ av SMTP Server
+sieve server hostname or ip address	emailadmin	sv	Sieve server hostnamn eller IP adress
+sieve server port	emailadmin	sv	Sieve server port
+sieve settings	emailadmin	sv	Sieve alternativ
+smtp server name	emailadmin	sv	SMTP server namn
+smtp-server hostname or ip address	emailadmin	sv	SMTP server hostnamn eller IP adress
+smtp-server port	emailadmin	sv	SMTP server port
+standard	emailadmin	sv	Standard
+standard imap server	emailadmin	sv	Standard IMAP server
+standard pop3 server	emailadmin	sv	Standard POP3 server
+standard smtp-server	emailadmin	sv	Standard SMTP server
+use ldap defaults	emailadmin	sv	använd LDAP standarder
+use smtp auth	emailadmin	sv	Använd SMTP autentisering
+use tls authentication	emailadmin	sv	Använd TLS autentisering
+use tls encryption	emailadmin	sv	Använd TLS kryptering
+users can define their own emailaccounts	emailadmin	sv	Användare kan definiera egna epost konton?
+virtual mail manager	emailadmin	sv	Virtuell E-post administration

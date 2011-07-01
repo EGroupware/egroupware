@@ -1,0 +1,538 @@
+%1 is not writable by you!	felamimail	de	%1 is NICHT beschreibar von Ihnen!
+(no subject)	felamimail	de	(kein Betreff)
+(only cc/bcc)	felamimail	de	(kein Kopie/Blindkopie)
+(separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
+(unknown sender)	felamimail	de	(unbekannter Absender)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	de	Vorschauansicht: Wenn Sie eine Vorschauansicht von eMails wünschen, müssen Sie hier die Höhe des Vorschaubereichs und der Nachrichtenliste festlegen. (300 hat sich als zufriedenstellender Wert erwiesen). Sie können ebenfalls die Mindesthöhe der eMail Liste festlegen, indem Sie die gewünschte Mindesthöhe, durch Komma getrennt, an den Wert für die Höhe des Vorschaubereiches anhängen (Bsp.: 300,190). Die Vorschau wird durch einen einfachen Klick auf den Betreff der anzuzeigenden Nachricht aktiviert.
+aborted	felamimail	de	abgebrochen
+activate	felamimail	de	aktivieren
+activate script	felamimail	de	Script aktivieren
+activating by date requires a start- and end-date!	felamimail	de	Aktivieren nach Datum benötigt ein Start- UND Endedatum!
+add acl	felamimail	de	ACL zufügen
+add address	felamimail	de	Addresse zufügen
+add rule	felamimail	de	Regel hinzufügen
+add script	felamimail	de	Script hinzufügen
+add to %1	felamimail	de	Zu %1 zufügen
+add to address book	felamimail	de	Zum Adressbuch hinzufügen
+add to addressbook	felamimail	de	Zum Adressbuch hinzufügen
+adding file to message. please wait!	felamimail	de	Füge Datei zur Nachricht hinzu. Bitte warten!
+additional info	felamimail	de	Zusätzliche Info
+address book	felamimail	de	Adressbuch
+address book search	felamimail	de	Adressbuch durchsuchen
+after message body	felamimail	de	nach dem Editorfenster
+all address books	felamimail	de	Alle Adressbücher
+all folders	felamimail	de	Alle Ordner
+all messages in folder	felamimail	de	Alle Nachrichten im Ordner
+all of	felamimail	de	mit allen
+allow images from external sources in html emails	felamimail	de	Erlaube Bilder von externen Quellen in HTML emails
+allways a new window	felamimail	de	jede E-Mail in einem neuen Fenster
+always show html emails	felamimail	de	HTML-E-Mails immer anzeigen
+and	felamimail	de	und
+any of	felamimail	de	mit einem
+any status	felamimail	de	Alle Status
+anyone	felamimail	de	jeder
+as a subfolder of	felamimail	de	als Unterordner von
+attach	felamimail	de	Anhängen
+attachments	felamimail	de	Anlagen
+authentication required	felamimail	de	Anmeldung erforderlich
+auto refresh folder list	felamimail	de	Ordnerliste automatisch aktualisieren
+back to folder	felamimail	de	zurück zu Ordner
+bad login name or password.	felamimail	de	Falscher Benutzername oder Passwort.
+bad or malformed request. server responded: %s	felamimail	de	Falsche oder ungültige Anfrage. Server antwortet: %s
+bad request: %s	felamimail	de	Falsche Anfrage: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	de	Eingehende Nachrichten können, basierend auf angegebenen Kriterien, unterschiedliche Hintergrundfarben in der Nachrichtenliste haben. Das kann helfen einfach zu unterscheiden woher die Nachricht kommt, speziell für Mailinglisten.
+bcc	felamimail	de	Blindkopie
+before headers	felamimail	de	vor den Kopfzeilen
+between headers and message body	felamimail	de	zwischen Kopfzeilen und Editorfenster
+body part	felamimail	de	Hauptteil
+by date	felamimail	de	nach Datum
+can not send message. no recipient defined!	felamimail	de	Kann Nachricht nicht senden. Kein Empfänger angegeben!
+can't connect to inbox!!	felamimail	de	kann nicht mit ihrer INBOX verbinden!!!
+cc	felamimail	de	Kopie
+change folder	felamimail	de	Ordner wechseln
+check message against next rule also	felamimail	de	Nachricht auch gegen nächste Regel prüfen
+checkbox	felamimail	de	Auswahlbox
+choose from vfs	felamimail	de	aus dem VFS auswählen
+clear search	felamimail	de	Suche zurücksetzen
+click here to log back in.	felamimail	de	Hier klicken um sich wieder einzulogen.
+click here to return to %1	felamimail	de	Hier klicken um zu %1 zurückzukehren
+close all	felamimail	de	Schließe alle
+close this page	felamimail	de	Diese Seite schließen
+close window	felamimail	de	Fenster schließen
+color	felamimail	de	Farbe
+compose	felamimail	de	Verfassen
+compose as new	felamimail	de	Als neu bearbeiten
+compress folder	felamimail	de	Ordner komprimieren
+condition	felamimail	de	Bedingung
+configuration	felamimail	de	Konfiguration
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	de	Konfigurieren Sie einen gültigen IMAP Server im emailadmin für das von Ihnen verwendete Profil
+connection dropped by imap server.	felamimail	de	Verbindung von IMAP Server beendet.
+contact not found!	felamimail	de	Kontakt nicht gefunden!
+contains	felamimail	de	enthält
+copy or move messages?	felamimail	de	Nachrichten kopieren oder Verschieben?
+copy to	felamimail	de	Kopieren in
+copying messages to	felamimail	de	kopiere Nachrichten in folgenden Ordner
+could not append message:	felamimail	de	Konnte die Nachricht nicht hinzufügen:
+could not complete request. reason given: %s	felamimail	de	Konnte Anfrage nicht beenden. Grund: %s
+could not import message:	felamimail	de	Konnte diese Nachricht nicht importieren:
+could not open secure connection to the imap server. %s : %s.	felamimail	de	Konnte sichere Verbindung zum IMAP Server nicht öffnen. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	de	CRAM-MD5 oder DIGEST-MD5 benötigt das Auth_SASL Packet.
+create	felamimail	de	Erzeugen
+create folder	felamimail	de	Ordner anlegen
+create sent	felamimail	de	Gesendete Objekte (Sent) Ordner anlegen
+create subfolder	felamimail	de	Unterordner anlegen
+create trash	felamimail	de	Gelöschte Objekte (Trash) Ordner anlegen
+created folder successfully!	felamimail	de	Ordner erfolgreich angelegt
+dark blue	felamimail	de	Dunkelblau
+dark cyan	felamimail	de	Dunkelzyan
+dark gray	felamimail	de	Dunkelgrau
+dark green	felamimail	de	Dunkelgrün
+dark magenta	felamimail	de	Dunkelrot
+dark yellow	felamimail	de	Braun
+date(newest first)	felamimail	de	Datum (neue zuerst)
+date(oldest first)	felamimail	de	Datum (alte zuerst)
+days	felamimail	de	Tage
+deactivate script	felamimail	de	Script abschalten
+default	felamimail	de	Vorgabe
+default signature	felamimail	de	Standard Signatur
+default sorting order	felamimail	de	Standard-Sortierreihenfolge
+delete all	felamimail	de	alle löschen
+delete folder	felamimail	de	Ordner löschen
+delete script	felamimail	de	Skript löschen
+delete selected	felamimail	de	ausgewählte Nachrichten löschen
+delete selected messages	felamimail	de	ausgewählte Nachrichten löschen
+delete this folder irreversible?	felamimail	de	Ordner unwiderruflich löschen?
+deleted	felamimail	de	gelöscht
+deleted folder successfully!	felamimail	de	Ordner erfolgreich gelöscht
+deleting messages	felamimail	de	lösche Nachrichten
+disable	felamimail	de	Deaktivieren
+disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	de	Deaktiviere den automatisch hinzugefügten Trenner zwischen EMailkörper und Signatur (Achtung: Dies ist nicht RFC konform). <br>Wenn Sie Templates zur Formatierung Ihrer EMail benutzen, wird diese Option nur dann Auswirkungen haben, wenn Sie die Signatur am Anfang der EMail einfügen lassen.
+discard	felamimail	de	verwerfen
+discard message	felamimail	de	Nachricht verwerfen
+display message in new window	felamimail	de	Nachricht in neuem Fenster anzeigen
+display messages in multiple windows	felamimail	de	Nachrichten in mehreren Fenstern anzeigen
+display of html emails	felamimail	de	HTML-E-Mails anzeigen
+display only when no plain text is available	felamimail	de	nur anzeigen wenn kein Plain Text vorhanden ist
+display preferences	felamimail	de	Anzeige Einstellungen
+displaying html messages is disabled	felamimail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
+displaying plain messages is disabled	felamimail	de	Die Anzeige von reinen Text E-Mails ist deaktiviert.
+do it!	felamimail	de	Mach es!
+do not use sent	felamimail	de	Gesendete Objekte (Sent) nicht verwenden
+do not use trash	felamimail	de	Gelöschte Objekte (Trash) nicht verwenden
+do not validate certificate	felamimail	de	Zertifikat nicht überprüfen
+do you really want to attach the selected messages to the new mail?	felamimail	de	Wollen Sie die ausgewählten Nachrichten wirklich an eine neue Mail anhängen?
+do you really want to delete the '%1' folder?	felamimail	de	Wollen Sie wirklich den '%1' Ordner löschen?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	de	Wollen Sie die ausgewählten Konteneinstellungen und die damit verbundenen Identitäten wirklich löschen?
+do you really want to delete the selected signatures?	felamimail	de	Möchten Sie die ausgewählte Signatur wirklich löschen?
+do you really want to move or copy the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben oder kopieren:
+do you really want to move the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben:
+do you want to be asked for confirmation before attaching selected messages to new mail?	felamimail	de	Wollen Sie vor dem Anhängen von einer oder mehreren (ausgewählten) Mails an eine neue eMail gefragt werden?
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	de	Wollen Sie vor dem Verschieben von Mails in andere Ordner gefragt werden?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden.
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden.
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Benachrichtigungen per eMail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden.
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden.
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren, Zugriffsrechte)?
+does not contain	felamimail	de	enthält nicht
+does not exist on imap server.	felamimail	de	existiert nicht auf dem IMAP Server
+does not match	felamimail	de	trifft nicht zu
+does not match regexp	felamimail	de	trift nicht zu regulärer Ausdruck
+don't use draft folder	felamimail	de	keine Entwurfs Ordner verwenden
+don't use sent	felamimail	de	Keinen gesendeten E-Mails speichern
+don't use template folder	felamimail	de	Keinen Vorlagen Ordner verwenden
+don't use trash	felamimail	de	Keinen Mülleimer verwenden
+dont strip any tags	felamimail	de	keine HTML Tags entfernen.
+down	felamimail	de	runter
+download	felamimail	de	Speichern
+download this as a file	felamimail	de	als Datei downloaden
+draft folder	felamimail	de	Entwurfs Ordner
+drafts	felamimail	de	Entwürfe
+e-mail	felamimail	de	E-Mail
+e-mail address	felamimail	de	E-Mailadresse
+e-mail folders	felamimail	de	E-Mail Ordner
+edit email forwarding address	felamimail	de	Bearbeiten der E-Mail-Weiterleitung
+edit filter	felamimail	de	Filter bearbeiten
+edit rule	felamimail	de	Regel bearbeiten
+edit selected	felamimail	de	Ausgewählte bearbeiten
+edit vacation settings	felamimail	de	Abwesenheitsnotiz bearbeiten
+editor type	felamimail	de	Editortyp
+email address	felamimail	de	E-Mail-Adresse
+email forwarding address	felamimail	de	Zieladresse
+email notification update failed	felamimail	de	Die Benachrichtigung über den Gelesen-Status der eMail ist fehlgeschlagen.
+email signature	felamimail	de	E-Mail-Signatur
+emailaddress	felamimail	de	E-Mail-Adresse
+empty trash	felamimail	de	Papierkorb leeren
+enable	felamimail	de	Aktivieren
+encrypted connection	felamimail	de	verschlüsselte Verbindung
+enter your default mail domain ( from: user@domain )	admin	de	Geben sie eine Vorgabewert für die Maildomain ein (Von: benutzer@domain)
+enter your imap mail server hostname or ip address	admin	de	IMAP-Server Hostname oder IP-Adresse
+enter your sieve server hostname or ip address	admin	de	Sieve-Server Hostname oder IP-Adresse
+enter your sieve server port	admin	de	Port Adresse des Sieve Servers
+enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
+enter your smtp server port	admin	de	Port Adresse des SMTP Servers
+entry saved	felamimail	de	Eintrag gespeichert
+error	felamimail	de	FEHLER
+error connecting to imap serv	felamimail	de	Konnte den IMAP Server (Mailserver) nicht erreichen
+error connecting to imap server. %s : %s.	felamimail	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
+error connecting to imap server: [%s] %s.	felamimail	de	Fehler beim Verbinden mit dem IMAP Server: [%s]  %s.
+error creating rule while trying to use forward/redirect.	felamimail	de	Fehler bei der Erstellung einer Regel zur Weiterleitung.
+error opening	felamimail	de	Fehler beim Öffnen
+error saving %1!	felamimail	de	Fehler beim Speichern von %1!
+error:	felamimail	de	FEHLER:
+error: could not save message as draft	felamimail	de	FEHLER: Die Nachricht konnte nicht als Entwurf gespeichert werden.
+error: could not save rule	felamimail	de	FEHLER: Die Regel konnte nicht gespeichert werden.
+error: could not send message.	felamimail	de	FEHLER: Die Nachricht konnte nicht versendet werden.
+error: message could not be displayed.	felamimail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
+event details follow	felamimail	de	Termindetails folgend
+every	felamimail	de	alle
+every %1 days	felamimail	de	alle %1 Tage
+expunge	felamimail	de	Endgültig löschen
+extended	felamimail	de	Erweitert
+felamimail	common	de	eMail
+file into	felamimail	de	verschiebe nach
+file rejected, no %2. is:%1	felamimail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
+filemanager	felamimail	de	Dateimanager
+files	felamimail	de	Dateien
+filter active	felamimail	de	Filter aktiv
+filter name	felamimail	de	Filtername
+filter rules	common	de	Filter Regeln
+first name	felamimail	de	Vorname
+flagged	felamimail	de	wichtig
+flags	felamimail	de	Markierungen
+folder	felamimail	de	Ordner
+folder acl	felamimail	de	Ordner ACL
+folder name	felamimail	de	Ordner Name
+folder path	felamimail	de	Ordner Pfad
+folder preferences	felamimail	de	Ordnereinstellungen
+folder settings	felamimail	de	Ordner Einstellungen
+folder status	felamimail	de	Ordner Status
+folderlist	felamimail	de	Ordnerliste
+foldername	felamimail	de	Ordnername
+folders	felamimail	de	Ordner
+folders created successfully!	felamimail	de	Ordner erfolgreich angelegt
+follow	felamimail	de	folgen
+for mail to be send - not functional yet	felamimail	de	Für zu sendende Mail - funktioniert noch nicht
+for received mail	felamimail	de	Für empfangene Mail
+forward	felamimail	de	Weiterleiten
+forward as attachment	felamimail	de	weiterleiten als Anhang
+forward inline	felamimail	de	Inline weiterleiten
+forward messages to	felamimail	de	Nachricht weiterleiten an
+forward to	felamimail	de	weiterleiten an
+forward to address	felamimail	de	weiterleiten an Adresse
+forwarding	felamimail	de	Weiterleitung
+found	felamimail	de	Gefunden
+from	felamimail	de	Von
+from(a->z)	felamimail	de	Von (A->Z)
+from(z->a)	felamimail	de	Von (Z->A)
+full name	felamimail	de	Vollständiger Name
+greater than	felamimail	de	größer als
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	de	Schauen Sie mal bei <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> vorbei, um mehr über Squirrelmail zu lernen.
+header lines	felamimail	de	Kopfzeilen
+hide header	felamimail	de	Kopfzeilen verbergen
+hostname / address	felamimail	de	Servername / Adresse
+how to forward messages	felamimail	de	Wie wollen Sie Nachrichten weiterleiten?
+html	felamimail	de	HTML
+icons and text	felamimail	de	Icons und Text
+icons only	felamimail	de	nur Icons
+identifying name	felamimail	de	Identifizierender Name
+identity	felamimail	de	Identität
+if	felamimail	de	Wenn
+if from contains	felamimail	de	wenn Von enthält
+if mail header	felamimail	de	wenn E-Mail-Header enthält
+if message size	felamimail	de	wenn Nachrichtengröße
+if shown, which folders should appear on main screen	felamimail	de	Welche Ordner, sollen in Home angezeigt werden?
+if subject contains	felamimail	de	wenn Betreff enthält
+if to contains	felamimail	de	wenn An enthält
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	de	Wenn Sie SSL oder TLS benützen, muss die openssl PHP Erweiterung geladen sein.
+illegal folder name.  please select a different name.	felamimail	de	Ilegaler Ordnername. Bitte wählen Sie einen anderen Namen
+imap	felamimail	de	IMAP
+imap server	felamimail	de	IMAP Server
+imap server address	felamimail	de	IMAP Server Adresse
+imap server closed the connection.	felamimail	de	IMAP Server hat die Verbindung beendet.
+imap server closed the connection. server responded: %s	felamimail	de	IMAP Server hat die Verbindung beendet. Server antworted: %s
+imap server password	felamimail	de	IMAP Server Password
+imap server type	felamimail	de	IMAP-Servertyp
+imap server username	felamimail	de	IMAP Server Benutzername
+imaps authentication	felamimail	de	IMAPS Authetifizierung
+imaps encryption only	felamimail	de	IMAPS nur Verschlüsselung
+import	felamimail	de	Importieren
+import mail	felamimail	de	Mail Importieren
+import message	felamimail	de	Nachricht importieren
+import of message %1 failed. could not save message to folder %2 due to: %3	felamimail	de	Der Import der Nachricht %1 schlug fehl. Die Nachricht konnte nicht in dem Ordner %2 abgelegt werden. Grund: %3
+import of message %1 failed. destination folder %2 does not exist.	felamimail	de	Der Import der Nachricht %1 schlug fehl. Zielordner %2 existiert nicht.
+import of message %1 failed. destination folder not set.	felamimail	de	Der Import der Nachricht %1 schlug fehl. Zielordner nicht gesetzt.
+import of message %1 failed. no contacts to merge and send to specified.	felamimail	de	Der Import der Nachricht %1 schlug fehl. Es wurde keine Kontaktinformation für das Versenden und Zusammenführen von Mail und Kontaktdaten angegeben.
+importance	felamimail	de	Wichtigkeit
+in	felamimail	de	In
+inbox	felamimail	de	Posteingang
+incoming mail server(imap)	felamimail	de	eingehender Mailserver (IMAP)
+index order	felamimail	de	Spaltenanordnung
+info	felamimail	de	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	de	Einfügen der Signatur am Anfang einer neuen EMail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der EMail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
+invalid user name or password	felamimail	de	Falscher Benutzername oder Pasword
+javascript	felamimail	de	JavaScript
+jumping to end	felamimail	de	springe zum Ende
+jumping to start	felamimail	de	springe zum Anfang
+junk	felamimail	de	Spammails
+keep a copy of the message in your inbox	felamimail	de	eine Kopie der Nachricht in der INBOX behalten
+keep local copy of email	felamimail	de	Kopie der E-Mail behalten
+kilobytes	felamimail	de	Kilobytes
+language	felamimail	de	Sprache
+last name	felamimail	de	Nachname
+left	felamimail	de	Links
+less	felamimail	de	kleiner
+less than	felamimail	de	kleiner als
+light gray	felamimail	de	Hellgrau
+list all	felamimail	de	Alle anzeigen
+loading	felamimail	de	lade
+location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schreiben
+mail server login type	admin	de	Typ der Mailserver Anmeldung
+mail settings	felamimail	de	E-Mail-Einstellungen
+mainmessage	felamimail	de	Hauptnachricht
+manage email accounts and identities	common	de	Verwaltung von E-Mail-Konten/Identitäten
+manage emailaccounts	common	de	E-Mail-Konten verwalten
+manage emailfilter / vacation	preferences	de	Verwalten der E-Mail-Filter und Abwesenheitsnotiz
+manage folders	common	de	Ordner verwalten
+manage sieve	common	de	Sieve-Scripte verwalten
+manage signatures	felamimail	de	Signaturen verwalten
+mark as	felamimail	de	Markieren als
+mark as deleted	felamimail	de	als gelöscht markieren
+mark messages as	felamimail	de	ausgewählte Nachrichten markieren als
+mark selected as flagged	felamimail	de	ausgewählte Nachrichten markieren
+mark selected as read	felamimail	de	ausgewählte Nachrichten als gelesen markieren
+mark selected as unflagged	felamimail	de	ausgewählte Nachrichten nicht markieren
+mark selected as unread	felamimail	de	ausgewählte Nachrichten als ungelesen markieren
+match	felamimail	de	Übereinstimmung
+matches	felamimail	de	stimmt überein (*, ? erlaubt)
+matches regexp	felamimail	de	stimmt überein mit regulärem Ausdruck
+max uploadsize	felamimail	de	maximal Dateigröße
+message highlighting	felamimail	de	Nachrichtenhervorhebung
+message list	felamimail	de	Nachrichtenliste
+messages	felamimail	de	Nachrichten
+move	felamimail	de	Verschieben
+move folder	felamimail	de	Ordner verschieben
+move messages	felamimail	de	Nachrichten verschieben
+move messages?	felamimail	de	Nachrichten verschieben?
+move to	felamimail	de	Verschieben in
+move to trash	felamimail	de	in den Papierkorb verschieben
+moving messages to	felamimail	de	verschiebe Nachrichten nach
+name	felamimail	de	Name
+never display html emails	felamimail	de	niemals anzeigen
+new	common	de	Neu
+new filter	felamimail	de	neuer Filter
+next	felamimail	de	nächste
+next message	felamimail	de	nächste Nachricht
+no active imap server found!!	felamimail	de	Kein aktiver IMAP Server gefunden!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	de	Keine Empfänger Adresse (To/CC/BCC ) angegeben und kein Ordner zur Ablage der Mail spezifiziert.
+no encryption	felamimail	de	keine Verschlüsselung
+no filter	felamimail	de	kein Filter
+no folders	felamimail	de	Keine Ordner
+no folders found	felamimail	de	Keine Ordner gefunden
+no folders were found to subscribe to!	felamimail	de	Keine Order gefunden, die bestellt werden können!
+no folders were found to unsubscribe from!	felamimail	de	Keine Order gefunden, die abbestellt werden können!
+no highlighting is defined	felamimail	de	keine Hervorhebung definiert
+no imap server host configured!!	felamimail	de	Kein IMAP Server (Host) konfiguriert!
+no message returned.	felamimail	de	Keine Nachrichten gefunden.
+no messages found...	felamimail	de	keine Nachrichten gefunden...
+no messages selected, or lost selection. changing to folder	felamimail	de	Es wurden keine Nachrichten ausgewählt, oder die Auswahl ging verloren. Wechsel zum Ordner
+no messages were selected.	felamimail	de	Es wurde keine NAchricht ausgewählt
+no plain text part found	felamimail	de	Kein Text Teil gefunden.
+no previous message	felamimail	de	Keine vorherige Nachricht vorhanden
+no recipient address given!	felamimail	de	Keine Empfängeradresse angegeben!
+no signature	felamimail	de	keine Signatur
+no stationery	felamimail	de	Kein Briefkopf
+no subject given!	felamimail	de	Kein Betreff angegeben!
+no supported imap authentication method could be found.	felamimail	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
+no text body supplied, check attachments for message text	felamimail	de	Kein E-Mail Text vorhanden, bitte prüfen Sie die Anlagen zu dieser E-Mail, um den Text zu lesen
+no valid data to create mailprofile!!	felamimail	de	Keine gültigen Daten zur Erzeugung eines Mailprofils!!
+no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-Profil ausgewählt!
+none	felamimail	de	kein
+none, create all	felamimail	de	keine, erstellt alle
+not allowed	felamimail	de	nicht erlaubt
+notify when new mails arrive on these folders	felamimail	de	Benachrichtigung, wenn neue E-Mails in diesen Ordnern ankommen
+on	felamimail	de	am
+on behalf of	felamimail	de	im Auftrag von
+one address is not valid	felamimail	de	Eine Adresse ist ungültig
+only inbox	felamimail	de	Nur Posteingang
+only one window	felamimail	de	nur ein einziges Fenster
+only unseen	felamimail	de	Nur nicht gesehene
+open all	felamimail	de	Öffne alle
+options	felamimail	de	Optionen
+or	felamimail	de	oder
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	de	oder konfigurieren Sie einen gültigen IMAP Server unter Verwendung von persönlichen Identitäten (Sidebox Menü).
+organisation	felamimail	de	Organisation
+organization	felamimail	de	Organisation
+organization name	admin	de	Name der Organisation
+original message	felamimail	de	ursprüngliche Nachricht
+outgoing mail server(smtp)	felamimail	de	ausgehender Mailserver (SMTP)
+participants	felamimail	de	Teilnehmer
+personal information	felamimail	de	persönliche Informationen
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	de	Bitte fragen Sie Ihren Administrator um die IMAP Einstellungen für Sie zu korrigieren
+please configure access to an existing individual imap account.	felamimail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
+please select a address	felamimail	de	Bitte wählen Sie eine Adresse
+please select the number of days to wait between responses	felamimail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll
+please supply the message to send with auto-responses	felamimail	de	Bitte geben Sie eine Nachricht eine die mit der automatischen Antwort gesendet werden soll
+port	felamimail	de	Port
+posting	felamimail	de	sende
+preview disabled for folder:	felamimail	de	Die Vorschau für eMails wird in dem ausgewählten Ordner nicht unterstützt:
+previous	felamimail	de	vorherige
+previous message	felamimail	de	vorherige Nachricht
+print it	felamimail	de	E-Mail drucken
+print this page	felamimail	de	Diese Seite drucken
+printview	felamimail	de	Druckansicht
+processing of file %1 failed. failed to meet basic restrictions.	felamimail	de	Das Verarbeiten der Datei %1 schlug fehl. Grundlegende Voraussetzungen wurden nicht erfüllt.
+quicksearch	felamimail	de	Schnellsuche
+read	felamimail	de	gelesen
+reading	felamimail	de	lese
+receive notification	felamimail	de	Empfangsbestätigung
+recent	felamimail	de	neu
+refresh time in minutes	felamimail	de	Aktualisierungsintervall in Minuten
+reject with	felamimail	de	zurückweisen mit
+remove	felamimail	de	entfernen
+remove immediately	felamimail	de	sofort löschen
+rename	felamimail	de	Umbenennen
+rename a folder	felamimail	de	Ordner umbenennen
+rename folder	felamimail	de	Ordner umbenennen
+renamed successfully!	felamimail	de	Erfolgreich umbenannt
+replied	felamimail	de	beantwortet
+reply	felamimail	de	Antworten
+reply all	felamimail	de	allen Antworten
+reply to	felamimail	de	Antwort an
+replyto	felamimail	de	Antwort an
+required pear class mail/mimedecode.php not found.	felamimail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
+respond	felamimail	de	Antworte
+respond to mail sent to	felamimail	de	Antworte auf E-Mails die gesendet werden an
+return	felamimail	de	Zurück
+return to options page	felamimail	de	zurück zu Einstellungen
+right	felamimail	de	Rechts
+row order style	felamimail	de	Spaltenanordnung
+rule	felamimail	de	Regel
+save	felamimail	de	Speichern
+save all	felamimail	de	Alle speichern
+save as draft	felamimail	de	als Entwurf speichern
+save as infolog	felamimail	de	Als Infolog speichern
+save as ticket	felamimail	de	Als Ticket speichern
+save changes	felamimail	de	Änderungen speichern
+save message to disk	felamimail	de	Nachricht speichern
+save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	de	Das speichern der Nachricht %1 schlug fehl. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
+save:	felamimail	de	Speichern:
+script name	felamimail	de	Skriptname
+script status	felamimail	de	Skriptstatus
+search	felamimail	de	Suchen
+search for	felamimail	de	Suchen nach
+select	felamimail	de	Auswählen
+select a message to switch on its preview (click on subject)	felamimail	de	Wählen Sie eine Nachricht durch einen Mausklick auf den Betreff aus, um den Vorschaumodus für diese zu aktivieren.
+select all	felamimail	de	alle auswählen
+select emailprofile	felamimail	de	E-Mail-Profil auswählen
+select folder	felamimail	de	Ordner auswählen
+select your mail server type	admin	de	Wählen Sie den Typ des Mailservers
+send	felamimail	de	Senden
+send a reject message	felamimail	de	Ablehnungs-E-Mail senden
+sender	felamimail	de	Absender
+sent	felamimail	de	Gesendet
+sent folder	felamimail	de	Ordner für gesendete Nachrichten
+server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(Sieve)
+set as default	felamimail	de	Als Vorgabe setzen
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	de	zeige alle Ordner (subscribed UND unsubscribed) in der Ordnerleiste des Hauptfensters
+show header	felamimail	de	Kopfzeilen anzeigen
+show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
+sieve script name	felamimail	de	Sieve Skript Name
+sieve settings	admin	de	Sieve Einstellungen
+signatur	felamimail	de	Signatur
+signature	felamimail	de	Signatur
+simply click the target-folder	felamimail	de	Ziel Ordner auswählen
+size	felamimail	de	Größe
+size of editor window	felamimail	de	Größe des Editorfensters
+size(...->0)	felamimail	de	Größe(...->0)
+size(0->...)	felamimail	de	Größe(0->...)
+skipping forward	felamimail	de	blättere vorwärts
+skipping previous	felamimail	de	blättere zurück
+small view	felamimail	de	schmale Ansicht
+smtp settings	admin	de	SMTP Einstellungen
+start new messages with mime type plain/text or html?	felamimail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
+stationery	felamimail	de	Briefkopf
+subject	felamimail	de	Betreff
+subject(a->z)	felamimail	de	Betreff(A->Z)
+subject(z->a)	felamimail	de	Betreff(Z->A)
+submit	felamimail	de	Absenden
+subscribe	felamimail	de	Bestellen
+subscribed	felamimail	de	abonniert
+subscribed successfully!	felamimail	de	Erfolgreich abonniert
+switching of signatures failed	felamimail	de	Umschalten der Signatur schlug fehl
+system signature	felamimail	de	System Signatur
+table of contents	felamimail	de	Inhaltsverzeichnis
+template folder	felamimail	de	Vorlagen Ordner
+templates	felamimail	de	Vorlagen
+text only	felamimail	de	Nur Text
+text/plain	felamimail	de	text/plain
+the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	de	Die Aktion wird auf ALLE Nachrichten des aktuellen Ordners angewendet.\nMöchten Sie fortfahren?
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	de	Die Aktion wird auf ALLE Nachrichten des aktuellen Ordners angewendet.\nMöchten Sie fortfahren?
+the connection to the imap server failed!!	felamimail	de	Die Verbindung zum IMAP Server ist fehlgeschlagen
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	de	Der IMAP Server scheint die ausgewählte Authentifizierungsmethode nicht zu unterstützen. Bitte sprechen Sie mit Ihrem Systemadministrator.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	de	Der Absender der Nachricht hat eine Antwort angefordert, welche Ihm anzeigt das Sie seine Nachricht gelesen haben. Wollen Sie diese Antwort senden?
+the mimeparser can not parse this message.	felamimail	de	Der MIME Parser versteht diese Nachricht nicht.
+then	felamimail	de	dann
+there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
+this folder is empty	felamimail	de	DIESER ORDNER IST LEER
+this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
+to	felamimail	de	An
+to mail sent to	felamimail	de	Mail an senden an
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	de	Für eine TLS Verbindung, benötigen Sie PHP 5.1.0 oder neuer.
+translation preferences	felamimail	de	Übersetzungseinstellungen
+translation server	felamimail	de	Übersetzungsserver
+trash	felamimail	de	Papierkorb
+trash fold	felamimail	de	Abfall Ordner
+trash folder	felamimail	de	Ordner für gelöschte Nachrichten
+trying to recover from session data	felamimail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten.
+type	felamimail	de	Typ
+undelete	felamimail	de	wiederherstellen
+unexpected response from server to authenticate command.	felamimail	de	Unerwartete Antwort vom Server auf das AUTHENTICATE Kommando.
+unexpected response from server to digest-md5 response.	felamimail	de	Unerwartete Antwort vom Server auf die Digest-MD5 Antwort.
+unexpected response from server to login command.	felamimail	de	Unerwartete Antwort vom Server auf das LOGIN Kommando.
+unflagged	felamimail	de	unwichtig
+unknown err	felamimail	de	Unbekannter Fehler
+unknown error	felamimail	de	Unbekannter Fehler
+unknown imap response from the server. server responded: %s	felamimail	de	Unbekannte IMAP Antwort vom Server. Server antwortet: %s
+unknown sender	felamimail	de	Unbekannter Absender
+unknown user or password incorrect.	felamimail	de	Unbekannter Benutzer oder das Password ist falsch
+unread	common	de	ungelesen
+unseen	felamimail	de	Ungelesen
+unselect all	felamimail	de	keine auswählen
+unsubscribe	felamimail	de	Abbestellen
+unsubscribed	felamimail	de	abbestellt
+unsubscribed successfully!	felamimail	de	Erfolgreich abbestellt
+up	felamimail	de	hoch
+updating message status	felamimail	de	aktualisiere Nachrichtenstatus
+updating view	felamimail	de	aktualisiere Ansicht
+use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a href="%1">E-MailAdmin</a> um Profile zu erstellen
+use a signature	felamimail	de	Signatur benutzen
+use a signature?	felamimail	de	Eine Signatur benutzen?
+use addresses	felamimail	de	Adresse benutzen
+use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
+use custom settings	felamimail	de	benutze angepaßte Einstellungen
+use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
+use smtp auth	admin	de	SMTP Auth benutzen
+users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
+vacation notice	common	de	Abwesenheitsnotiz
+vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
+vacation start-date must be before the end-date!	felamimail	de	Startdatum der Urlaubsbenachrichtigung muss VOR dem Endedatum liegen!
+validate certificate	felamimail	de	Zertifikat überprüfen
+view full header	felamimail	de	alle Kopfzeilen anzeigen
+view header lines	felamimail	de	Kopfzeilen anzeigen
+view message	felamimail	de	zeige Nachricht
+viewing full header	felamimail	de	zeige alle Kopfzeilen
+viewing message	felamimail	de	zeige Nachricht
+viewing messages	felamimail	de	zeige Nachrichten
+when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden.
+which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren
+with message	felamimail	de	mit folgender Nachricht
+with message "%1"	felamimail	de	mit der Nachricht "%1"
+wrap incoming text at	felamimail	de	Text umbrechen nach
+writing	felamimail	de	schreiben
+wrote	felamimail	de	schrieb
+yes, offer copy option	felamimail	de	ja, mit Kopieroption
+you can either choose to save as infolog or tracker, not both.	felamimail	de	Sie können eine Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Endedatum verwenden.
+you have received a new message on the	felamimail	de	Sie haben eine neue Nachricht erhalten:
+your message to %1 was displayed.	felamimail	de	Ihre Nachricht an %1 wurde angezeigt.
