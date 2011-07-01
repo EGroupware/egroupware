@@ -126,7 +126,7 @@ class preferences_hooks
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'idots',
+				'forced' => file_exists(EGW_SERVER_ROOT.'/jdots') ? 'jdots' : 'idots',
 			),
 			'theme' => array(
 				'type'   => 'select',
@@ -136,7 +136,7 @@ class preferences_hooks
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'idots',
+				'forced' => file_exists(EGW_SERVER_ROOT.'/jdots') ? 'jdots' : 'idots',
 			),
 			'navbar_format' => array(
 				'type'   => 'select',
