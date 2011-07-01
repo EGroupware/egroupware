@@ -2105,11 +2105,13 @@ function calendar_upgrade1_8()
 /**
  * Convert bool column cal_deleted with egw_api_content_history table to a unix timestamp
  *
+ * Using cal_modified as deleted-timestamp, as querying it from SyncML tables creates too many problems (refresh table stops before copying all rows!)
+ *
  * @return string
  */
 function calendar_upgrade1_9_001()
 {
-	// delete in the past wrongly created entries for a singel recurrence, which mess up the update, beside being wrong anyway
+	// delete in the past wrongly created entries for a single recurrence, which mess up the update, beside being wrong anyway
 	$GLOBALS['egw_setup']->db->delete('egw_api_content_history',array(
 		'sync_appname' => 'calendar',
 		"sync_contentid LIKE '%:%'",
@@ -2149,10 +2151,8 @@ function calendar_upgrade1_9_001()
 		'ix' => array('cal_uid','cal_owner','cal_deleted'),
 		'uc' => array()
 	),array(
-		'cal_deleted' => 'CASE cal_deleted WHEN '.$GLOBALS['egw_setup']->db->quote(true,'bool').' THEN '.
-			'(SELECT '.$GLOBALS['egw_setup']->db->unix_timestamp('sync_deleted').
-			" FROM egw_api_content_history WHERE sync_appname='calendar' AND ".$GLOBALS['egw_setup']->db->to_int('sync_contentid').'=cal_id)'.
-			' ELSE NULL END',
+		// for deleted rows use cal_modified as deleted date, NULL for not deleted ones
+		'cal_deleted' => 'CASE cal_deleted WHEN '.$GLOBALS['egw_setup']->db->quote(true,'bool').' THEN cal_modified ELSE NULL END',
 	));
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.002';
