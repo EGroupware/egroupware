@@ -249,11 +249,13 @@ class infolog_tracking extends bo_tracking
 					);
 					$header_done = true;
 				}
+				//error_log(__METHOD__."() $name: data['#$name']=".array2string($data['#'.$name]).", field[values]=".array2string($field['values']));
 				$details['#'.$name] = array(
 					'label' => $field['label'],
-					'value' => (is_array($field['values']) && !empty($field['values']) && isset($data['#'.$name]) &&
-						array_key_exists($data['#'.$name],$field['values']))?$field['values'][$data['#'.$name]] : $data['#'.$name],
+					'value' => is_array($field['values']) && $field['values'] && isset($data['#'.$name]) &&
+						array_key_exists((string)$data['#'.$name],$field['values']) ? $field['values'][$data['#'.$name]] : $data['#'.$name],
 				);
+				//error_log("--> details['#$name']=".array2string($details['#'.$name]));
 			}
 		}
 		return $details;
