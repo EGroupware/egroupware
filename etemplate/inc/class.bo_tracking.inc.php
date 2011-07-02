@@ -834,7 +834,7 @@ abstract class bo_tracking
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 
 			$body .= $this->format_line($html_email,$detail['type'],$modified,
-				$detail['label'] ? $detail['label'].': ' : '', $detail['value']);
+				$detail['label'] ? $detail['label'] : '', $detail['value']);
 		}
 		if ($html_email)
 		{
@@ -856,6 +856,7 @@ abstract class bo_tracking
 	 */
 	protected function format_line($html_mail,$type,$modified,$line,$data=null)
 	{
+		//error_log(__METHOD__.'('.array2string($html_mail).",'$type',".array2string($modified).",'$line',".array2string($data).')');
 		$content = '';
 
 		if ($html_mail)
@@ -881,10 +882,10 @@ abstract class bo_tracking
 					break;
 				case 'multiline':
 					// Only Convert nl2br on non-html content
-					$pos = strpos($line, '<br');
-					if ($pos===false)
+					if (strpos($data, '<br') === false)
 					{
-						$line = nl2br($line);
+						$data = nl2br($this->html_content_allow ? $data : html::htmlspecialchars($data));
+						$this->html_content_allow = true;	// to NOT do htmlspecialchars again
 					}
 					break;
 				case 'reply':
@@ -895,7 +896,7 @@ abstract class bo_tracking
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
 
-			$content = '<tr style="background-color: '.$background.';"><td style="'.$style.($data?'':'" colspan="2').'">';
+			$content = '<tr style="background-color: '.$background.';"><td style="'.$style.($line && $data?'" width="20%':'" colspan="2').'">';
 		}
 		else	// text-mail
 		{
@@ -905,29 +906,26 @@ abstract class bo_tracking
 		}
 		$content .= $line;
 
-		if ($data)
+		if ($html_mail)
 		{
-			if ($html_mail)
+			if ($line && $data) $content .= '</td><td style="'.$style.'">';
+			if ($type == 'link')
 			{
-				$content .= '</td><td style="'.$style.'">';
-				if ($type == 'link')
-				{
-					// the link is often too long for html boxes chunk-split allows to break lines if needed
-					$content .= html::a_href(chunk_split($data,40,'&#8203'),$data,'','target="_blank"');
-				}
-				elseif ($this->html_content_allow)
-				{
-					$content .= html::activate_links($data);
-				}
-				else
-				{
-					$content .= html::htmlspecialchars($data);
-				}
+				// the link is often too long for html boxes chunk-split allows to break lines if needed
+				$content .= html::a_href(chunk_split($data,40,'&#8203'),$data,'','target="_blank"');
+			}
+			elseif ($this->html_content_allow)
+			{
+				$content .= html::activate_links($data);
 			}
 			else
 			{
-				$content .= ' '.$data;
+				$content .= html::htmlspecialchars($data);
 			}
+		}
+		else
+		{
+			$content .= ($content?': ':'').$data;
 		}
 		if ($html_mail) $content .= '</td></tr>';
 
