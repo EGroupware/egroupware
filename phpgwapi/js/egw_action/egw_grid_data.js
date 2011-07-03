@@ -807,6 +807,7 @@ egwGridDataElement.prototype.callEndUpdate = function()
  */
 egwGridDataElement.prototype.empty = function()
 {
+	this.actionObject.clear();
 	this.children = [];
 
 	// Prevent all event handlers which are associated to elements in the read
