@@ -105,30 +105,30 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 
 	//Add a new div for the new entry to the base div
 	this.headerDiv = document.createElement("div");
-	$(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header");
+	$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header");
 
 	//Create the icon and set its image
 	var iconDiv = document.createElement("img");
 	iconDiv.src = this.icon;
 	iconDiv.alt = _name;
-	$(iconDiv).addClass("egw_fw_ui_sidemenu_entry_icon");
+	$j(iconDiv).addClass("egw_fw_ui_sidemenu_entry_icon");
 	
 	//Create the AJAX loader image (currently NOT used)
 	this.ajaxloader = document.createElement("div");
-	$(this.ajaxloader).addClass("egw_fw_ui_ajaxloader");
-	$(this.ajaxloader).hide();
+	$j(this.ajaxloader).addClass("egw_fw_ui_ajaxloader");
+	$j(this.ajaxloader).hide();
 
 	//Create the entry name header
 	var entryH1 = document.createElement("h1");
-	$(entryH1).text(this.entryName);
+	$j(entryH1).text(this.entryName);
 
 	//Append icon, name, and ajax loader
-	$(this.headerDiv).append(iconDiv);
-	$(this.headerDiv).append(entryH1);
-	$(this.headerDiv).append(this.ajaxloader);
+	$j(this.headerDiv).append(iconDiv);
+	$j(this.headerDiv).append(entryH1);
+	$j(this.headerDiv).append(this.ajaxloader);
 	this.headerDiv._parent = this;
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
-	$(this.headerDiv).click(function(){
+	$j(this.headerDiv).click(function(){
 		if (!this._parent.isDraged)
 		{
 			this._callbackObject.call(this);
@@ -139,8 +139,8 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 
 	//Create the content div
 	this.contentDiv = document.createElement("div");
-	$(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content");
-	$(this.contentDiv).hide();
+	$j(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content");
+	$j(this.contentDiv).hide();
 
 	this.setBottomLine(this.parent.entries);
 
@@ -149,25 +149,25 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 	this.marker._parent = this;
 	this.marker.className = 'egw_fw_ui_sidemenu_marker';
 	var entryH1_ = document.createElement("h1");
-	$(entryH1_).text(this.entryName);
-	$(this.marker).append(entryH1_);
-	$(this.marker).hide();
+	$j(entryH1_).text(this.entryName);
+	$j(this.marker).append(entryH1_);
+	$j(this.marker).hide();
 
 	//Create a container which contains all generated elements and is then added
 	//to the baseDiv
 	this.containerDiv = document.createElement("div");
 	this.containerDiv._parent = this;
-	$(this.containerDiv).append(this.marker);
-	$(this.containerDiv).append(this.headerDiv);
-	$(this.containerDiv).append(this.contentDiv);
+	$j(this.containerDiv).append(this.marker);
+	$j(this.containerDiv).append(this.headerDiv);
+	$j(this.containerDiv).append(this.contentDiv);
 
 	//Append header and content div to the base div
-	$(this.elemDiv).append(this.containerDiv);
+	$j(this.elemDiv).append(this.containerDiv);
 
 	//Make the base Div sortable. Set all elements with the style "egw_fw_ui_sidemenu_entry_header"
 	//as handle
-	$(this.elemDiv).sortable("destroy");
-	$(this.elemDiv).sortable({
+	$j(this.elemDiv).sortable("destroy");
+	$j(this.elemDiv).sortable({
 		handle: ".egw_fw_ui_sidemenu_entry_header",
 		distance: 15,
 		start: function(event, ui)
@@ -203,11 +203,11 @@ egw_fw_ui_sidemenu_entry.prototype.setBottomLine = function(_entryList)
 	//If this is the last tab in the tab list, the bottom line must be closed
 	for (i = 0; i < _entryList.length; i++)
 	{
-		$(_entryList[i].contentDiv).removeClass("egw_fw_ui_sidemenu_entry_content_bottom");
-		$(_entryList[i].headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_bottom");
+		$j(_entryList[i].contentDiv).removeClass("egw_fw_ui_sidemenu_entry_content_bottom");
+		$j(_entryList[i].headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_bottom");
 	}
-	$(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content_bottom");
-	$(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_bottom");
+	$j(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content_bottom");
+	$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_bottom");
 }
 
 /**
@@ -218,8 +218,8 @@ egw_fw_ui_sidemenu_entry.prototype.setBottomLine = function(_entryList)
 egw_fw_ui_sidemenu_entry.prototype.setContent = function(_content)
 {
 	//Set the content of the contentDiv
-	$(this.contentDiv).empty();
-	$(this.contentDiv).append(_content);
+	$j(this.contentDiv).empty();
+	$j(this.contentDiv).append(_content);
 }
 
 /**
@@ -228,12 +228,12 @@ egw_fw_ui_sidemenu_entry.prototype.setContent = function(_content)
 egw_fw_ui_sidemenu_entry.prototype.open = function()
 {
 	/* Move this entry to the top of the list */
-	$(this.baseDiv).prepend(this.contentDiv);
-	$(this.baseDiv).prepend(this.headerDiv);
+	$j(this.baseDiv).prepend(this.contentDiv);
+	$j(this.baseDiv).prepend(this.headerDiv);
 	this.atTop = true;
 
-	$(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_active");
-	$(this.contentDiv).show();
+	$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_active");
+	$j(this.contentDiv).show();
 }
 
 /**
@@ -244,13 +244,13 @@ egw_fw_ui_sidemenu_entry.prototype.close = function()
 	/* Move the content and header div behind the marker again */
 	if (this.atTop)
 	{
-		$(this.marker).after(this.contentDiv);
-		$(this.marker).after(this.headerDiv);
+		$j(this.marker).after(this.contentDiv);
+		$j(this.marker).after(this.headerDiv);
 		this.atTop = false;
 	}
 
-	$(this.headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_active");
-	$(this.contentDiv).hide();
+	$j(this.headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_active");
+	$j(this.contentDiv).hide();
 }
 
 /**egw_fw_ui_sidemenu_entry_header_active
@@ -259,7 +259,7 @@ egw_fw_ui_sidemenu_entry.prototype.close = function()
  */
 egw_fw_ui_sidemenu_entry.prototype.showAjaxLoader = function()
 {
-	$(this.ajaxloader).show();
+	$j(this.ajaxloader).show();
 }
 
 /**
@@ -267,7 +267,7 @@ egw_fw_ui_sidemenu_entry.prototype.showAjaxLoader = function()
  */
 egw_fw_ui_sidemenu_entry.prototype.hideAjaxLoader = function()
 {
-	$(this.ajaxloader).hide();
+	$j(this.ajaxloader).hide();
 }
 
 /**
@@ -275,8 +275,8 @@ egw_fw_ui_sidemenu_entry.prototype.hideAjaxLoader = function()
  */
 egw_fw_ui_sidemenu_entry.prototype.remove = function()
 {
-	$(this.headerDiv).remove();
-	$(this.contentDiv).remove();
+	$j(this.headerDiv).remove();
+	$j(this.contentDiv).remove();
 }
 
 
@@ -296,7 +296,7 @@ function egw_fw_ui_sidemenu(_baseDiv, _sortCallback)
 	this.baseDiv = _baseDiv;
 	this.elemDiv = document.createElement('div');
 	this.sortCallback = _sortCallback;
-	$(this.baseDiv).append(this.elemDiv);
+	$j(this.baseDiv).append(this.elemDiv);
 	this.entries = new Array();
 	this.activeEntry = null;
 }
@@ -324,8 +324,8 @@ egw_fw_ui_sidemenu.prototype.startDrag = function()
 {
 	if (this.activeEntry)
 	{
-		$(this.activeEntry.marker).show();
-		$(this.elemDiv).sortable("refresh");
+		$j(this.activeEntry.marker).show();
+		$j(this.elemDiv).sortable("refresh");
 	}
 }
 
@@ -333,8 +333,8 @@ egw_fw_ui_sidemenu.prototype.stopDrag = function()
 {
 	if (this.activeEntry)
 	{
-		$(this.activeEntry.marker).hide();
-		$(this.elemDiv).sortable("refresh");
+		$j(this.activeEntry.marker).hide();
+		$j(this.elemDiv).sortable("refresh");
 	}
 }
 
@@ -442,31 +442,31 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	//Create the header div and set its "click" function and "hover" event
 	this.headerDiv = document.createElement("span");
 	this.headerDiv._position = _pos;
-	$(this.headerDiv).addClass("egw_fw_ui_tab_header");
+	$j(this.headerDiv).addClass("egw_fw_ui_tab_header");
 
 	//Create a new callback object and attach it to the header div	
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
-	$(this.headerDiv).click(
+	$j(this.headerDiv).click(
 		function(){
 			this._callbackObject.call(this);
 		});
 
 	//Attach the hover effect to the header div
-	$(this.headerDiv).hover(
+	$j(this.headerDiv).hover(
 		function() {
-			if (!$(this).hasClass("egw_fw_ui_tab_header_active"))
-				$(this).addClass("egw_fw_ui_tab_header_hover");
+			if (!$j(this).hasClass("egw_fw_ui_tab_header_active"))
+				$j(this).addClass("egw_fw_ui_tab_header_hover");
 		},
 		function() {
-			$(this).removeClass("egw_fw_ui_tab_header_hover")
+			$j(this).removeClass("egw_fw_ui_tab_header_hover")
 		}
 	);
 		
 	//Create the close button and append it to the header div
 	this.closeButton = document.createElement("span");
 	this.closeButton._callbackObject = new egw_fw_class_callback(this, _closeCallback);
-	$(this.closeButton).addClass("egw_fw_ui_tab_close_button");
-	$(this.closeButton).click(
+	$j(this.closeButton).addClass("egw_fw_ui_tab_close_button");
+	$j(this.closeButton).click(
 		function(){
 			//Only call the close callback if the tab is set closeable
 			if (this._callbackObject.context.closeable)
@@ -484,33 +484,33 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	}
 	else
 	{
-		$(this.headerDiv).append(this.closeButton);
+		$j(this.headerDiv).append(this.closeButton);
 	}
 
 	//Create the icon and append it to the header div
 	var icon = document.createElement("img");
-	$(icon).addClass("egw_fw_ui_tab_icon");
+	$j(icon).addClass("egw_fw_ui_tab_icon");
 	icon.src = _icon;
 	icon.alt = 'Tab icon';
-	$(this.headerDiv).append(icon);
+	$j(this.headerDiv).append(icon);
 
 	//Create the title h1 and append it to the header div
 	this.headerH1 = document.createElement("h1");	
 	this.setTitle('');
-	$(this.headerDiv).append(this.headerH1);
+	$j(this.headerDiv).append(this.headerH1);
 
 	if (typeof jQuery.browser['msie'] != 'undefined')
 	{
-		$(this.headerDiv).append(this.closeButton);
+		$j(this.headerDiv).append(this.closeButton);
 	}
 
 	this.contentDiv = document.createElement("div");
-	$(this.contentDiv).addClass("egw_fw_ui_tab_content");
-	$(this.contentDiv).hide();
+	$j(this.contentDiv).addClass("egw_fw_ui_tab_content");
+	$j(this.contentDiv).hide();
 	
 	//Sort the element in at the given position
 	var _this = this;
-	var $_children = $(this.contHeaderDiv).children();
+	var $_children = $j(this.contHeaderDiv).children();
 	var _cnt = $_children.size();
 
 	if (_cnt > 0 && _pos > -1)
@@ -518,22 +518,22 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 		$_children.each(function(i) {
 			if (_pos <= this._position)
 			{
-				$(this).before(_this.headerDiv);
+				$j(this).before(_this.headerDiv);
 				return false;
 			}
 			else if (i == (_cnt - 1))
 			{
-				$(this).after(_this.headerDiv);
+				$j(this).after(_this.headerDiv);
 				return false;
 			}
 		});
 	}
 	else
 	{
-		$(this.contHeaderDiv).append(this.headerDiv);
+		$j(this.contHeaderDiv).append(this.headerDiv);
 	}
 
-	$(this.contDiv).append(this.contentDiv);	
+	$j(this.contDiv).append(this.contentDiv);	
 }
 
 /**
@@ -544,8 +544,8 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 egw_fw_ui_tab.prototype.setTitle = function(_title)
 {
 	this.title = _title;
-	$(this.headerH1).empty();
-	$(this.headerH1).text(_title);
+	$j(this.headerH1).empty();
+	$j(this.headerH1).text(_title);
 }
 
 /**
@@ -555,8 +555,8 @@ egw_fw_ui_tab.prototype.setTitle = function(_title)
  */
 egw_fw_ui_tab.prototype.setContent = function(_content)
 {
-	$(this.contentDiv).empty();
-	$(this.contentDiv).append(_content);
+	$j(this.contentDiv).empty();
+	$j(this.contentDiv).append(_content);
 }
 
 /**
@@ -565,8 +565,8 @@ egw_fw_ui_tab.prototype.setContent = function(_content)
  */
 egw_fw_ui_tab.prototype.show = function()
 {
-	$(this.headerDiv).addClass("egw_fw_ui_tab_header_active");
-	$(this.contentDiv).show();
+	$j(this.headerDiv).addClass("egw_fw_ui_tab_header_active");
+	$j(this.contentDiv).show();
 }
 
 /**
@@ -574,8 +574,8 @@ egw_fw_ui_tab.prototype.show = function()
  */
 egw_fw_ui_tab.prototype.hide = function()
 {
-	$(this.headerDiv).removeClass("egw_fw_ui_tab_header_active");
-	$(this.contentDiv).hide();
+	$j(this.headerDiv).removeClass("egw_fw_ui_tab_header_active");
+	$j(this.contentDiv).hide();
 }
 
 /**
@@ -584,8 +584,8 @@ egw_fw_ui_tab.prototype.hide = function()
 egw_fw_ui_tab.prototype.remove = function()
 {
 	this.hide();
-	$(this.contentDiv).remove();
-	$(this.headerDiv).remove();
+	$j(this.contentDiv).remove();
+	$j(this.headerDiv).remove();
 }
 
 /**
@@ -597,9 +597,9 @@ egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
 {
 	this.closeable = _closeable;
 	if (_closeable)
-		$(this.closeButton).show();
+		$j(this.closeButton).show();
 	else
-		$(this.closeButton).hide();
+		$j(this.closeButton).hide();
 }
 
 
@@ -620,17 +620,17 @@ function egw_fw_ui_tabs(_contDiv)
 
 	//Create a div for the tab headers
 	this.contHeaderDiv = document.createElement("div");
-	$(this.contHeaderDiv).addClass("egw_fw_ui_tabs_header");
-	$(this.contDiv).append(this.contHeaderDiv);
+	$j(this.contHeaderDiv).addClass("egw_fw_ui_tabs_header");
+	$j(this.contDiv).append(this.contHeaderDiv);
 
 	this.appHeaderContainer = document.createElement("div");
-	$(this.appHeaderContainer).addClass("egw_fw_ui_app_header_container");
-	$(this.contDiv).append(this.appHeaderContainer);
+	$j(this.appHeaderContainer).addClass("egw_fw_ui_app_header_container");
+	$j(this.contDiv).append(this.appHeaderContainer);
 
 	this.appHeader = document.createElement("div");
-	$(this.appHeader).addClass("egw_fw_ui_app_header");
-	$(this.appHeader).hide();
-	$(this.appHeaderContainer).append(this.appHeader);
+	$j(this.appHeader).addClass("egw_fw_ui_app_header");
+	$j(this.appHeader).hide();
+	$j(this.appHeaderContainer).append(this.appHeader);
 
 	this.tabs = Array();
 	
@@ -647,13 +647,13 @@ egw_fw_ui_tabs.prototype.setAppHeader = function(_text)
 {
 	if (_text != "")
 	{
-		$(this.appHeader).empty();
-		$(this.appHeader).append("<span style=\"color:gray \">&raquo;</span> " + _text);
-		$(this.appHeader).show();
+		$j(this.appHeader).empty();
+		$j(this.appHeader).append("<span style=\"color:gray \">&raquo;</span> " + _text);
+		$j(this.appHeader).show();
 	}
 	else
 	{
-		$(this.appHeader).hide();
+		$j(this.appHeader).hide();
 	}
 }
 
@@ -842,25 +842,25 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 
 	//Create the ui divs
 	this.headerDiv = document.createElement('div');
-	$(this.headerDiv).addClass('egw_fw_ui_category');
+	$j(this.headerDiv).addClass('egw_fw_ui_category');
 	
 	//Add the text	
 	var entryH1 = document.createElement('h1');
-	$(entryH1).append(_title);
-	$(this.headerDiv).append(entryH1);
+	$j(entryH1).append(_title);
+	$j(this.headerDiv).append(entryH1);
 
 	//Add the content
 	this.contentDiv = document.createElement('div');
 	this.contentDiv._parent = this;
-	$(this.contentDiv).addClass('egw_fw_ui_category_content');
-	$(this.contentDiv).append(_content);
-	$(this.contentDiv).hide();
+	$j(this.contentDiv).addClass('egw_fw_ui_category_content');
+	$j(this.contentDiv).append(_content);
+	$j(this.contentDiv).hide();
 
 	//Add content and header to the content div, add some magic jQuery code in order to make it foldable
 	this.headerDiv._parent = this;
-	$(this.headerDiv).click(
+	$j(this.headerDiv).click(
 		function() {
-			if (!$(this).hasClass('egw_fw_ui_category_active'))
+			if (!$j(this).hasClass('egw_fw_ui_category_active'))
 			{
 				this._parent.open(false);
 			}
@@ -869,23 +869,23 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 				this._parent.close(false);
 			}
 		});
-	$(this.contDiv).append(this.headerDiv);
-	$(this.contDiv).append(this.contentDiv);
+	$j(this.contDiv).append(this.headerDiv);
+	$j(this.contDiv).append(this.contentDiv);
 }
 
 egw_fw_ui_category.prototype.open = function(_instantly)
 {
 	this.callback.call(this, true);
-	$(this.headerDiv).addClass('egw_fw_ui_category_active');
+	$j(this.headerDiv).addClass('egw_fw_ui_category_active');
 
 	if (_instantly)
 	{
-		$(this.contentDiv).show();
+		$j(this.contentDiv).show();
 		this.animationCallback();
 	}
 	else
 	{
-		$(this.contentDiv).slideDown(200, function() {
+		$j(this.contentDiv).slideDown(200, function() {
 			this._parent.animationCallback.call(this._parent);
 		});
 	}
@@ -894,16 +894,16 @@ egw_fw_ui_category.prototype.open = function(_instantly)
 egw_fw_ui_category.prototype.close = function(_instantly)
 {
 	this.callback.call(this, false);
-	$(this.headerDiv).removeClass('egw_fw_ui_category_active');
+	$j(this.headerDiv).removeClass('egw_fw_ui_category_active');
 
 	if (_instantly)
 	{
-		$(this.contentDiv).hide();
+		$j(this.contentDiv).hide();
 		this.animationCallback();
 	}
 	else
 	{
-		$(this.contentDiv).slideUp(200, function() {
+		$j(this.contentDiv).slideUp(200, function() {
 			this._parent.animationCallback.call(this._parent);
 		});
 	}
@@ -912,8 +912,8 @@ egw_fw_ui_category.prototype.close = function(_instantly)
 egw_fw_ui_category.prototype.remove = function()
 {
 	//Delete the content and header div
-	$(this.contDiv).remove();
-	$(this.headerDiv).remove();
+	$j(this.contDiv).remove();
+	$j(this.headerDiv).remove();
 }
 
 /**
@@ -942,11 +942,11 @@ function egw_fw_ui_scrollarea(_contDiv)
 	//Wrap a new "scroll" div around the content of the content div
 	this.scrollDiv = document.createElement("div");
 	this.scrollDiv.style.position = "relative";
-	$(this.scrollDiv).addClass("egw_fw_ui_scrollarea");
+	$j(this.scrollDiv).addClass("egw_fw_ui_scrollarea");
 
 	//Mousewheel handler
 	var self = this;
-	$(this.scrollDiv).mousewheel(function(e, delta) {
+	$j(this.scrollDiv).mousewheel(function(e, delta) {
 		if (delta)
 		{
 			self.scrollDelta(- delta * 30);
@@ -955,53 +955,53 @@ function egw_fw_ui_scrollarea(_contDiv)
 
 	//Create a container which contains the up/down buttons and the scrollDiv
 	this.outerDiv = document.createElement("div");
-	$(this.outerDiv).addClass("egw_fw_ui_scrollarea_outerdiv");
-	$(this.outerDiv).append(this.scrollDiv);
+	$j(this.outerDiv).addClass("egw_fw_ui_scrollarea_outerdiv");
+	$j(this.outerDiv).append(this.scrollDiv);
 
-	$(this.contDiv).children().appendTo(this.scrollDiv);
-	$(this.contDiv).append(this.outerDiv);
+	$j(this.contDiv).children().appendTo(this.scrollDiv);
+	$j(this.contDiv).append(this.outerDiv);
 	this.contentDiv = this.scrollDiv;
 
 	//Create the "up" and the "down" button
 	this.btnUp = document.createElement("span");
-	$(this.btnUp).addClass("egw_fw_ui_scrollarea_button");
-	$(this.btnUp).addClass("egw_fw_ui_scrollarea_button_up");
-	$(this.btnUp).hide();
+	$j(this.btnUp).addClass("egw_fw_ui_scrollarea_button");
+	$j(this.btnUp).addClass("egw_fw_ui_scrollarea_button_up");
+	$j(this.btnUp).hide();
 
 	this.btnUp._parent = this;
-	$(this.btnUp).mouseenter(function(){
+	$j(this.btnUp).mouseenter(function(){
 		this._parent.mouseOverToggle(true, -1);
-		$(this).addClass("egw_fw_ui_scrollarea_button_hover");
+		$j(this).addClass("egw_fw_ui_scrollarea_button_hover");
 	});
-	$(this.btnUp).click(function(){
+	$j(this.btnUp).click(function(){
 		this._parent.setScrollPos(0);
 	});
-	$(this.btnUp).mouseleave(function(){
+	$j(this.btnUp).mouseleave(function(){
 		this._parent.mouseOverToggle(false, -1);
-		$(this).removeClass("egw_fw_ui_scrollarea_button_hover");
+		$j(this).removeClass("egw_fw_ui_scrollarea_button_hover");
 	});
 
-	$(this.outerDiv).prepend(this.btnUp);
+	$j(this.outerDiv).prepend(this.btnUp);
 
 	this.btnDown = document.createElement("span");
-	$(this.btnDown).addClass("egw_fw_ui_scrollarea_button");
-	$(this.btnDown).addClass("egw_fw_ui_scrollarea_button_down");
-	$(this.btnDown).hide();
+	$j(this.btnDown).addClass("egw_fw_ui_scrollarea_button");
+	$j(this.btnDown).addClass("egw_fw_ui_scrollarea_button_down");
+	$j(this.btnDown).hide();
 
 	this.btnDown._parent = this;
-	$(this.btnDown).mouseenter(function(){
+	$j(this.btnDown).mouseenter(function(){
 		this._parent.mouseOverToggle(true, 1);
-		$(this).addClass("egw_fw_ui_scrollarea_button_hover");
+		$j(this).addClass("egw_fw_ui_scrollarea_button_hover");
 	});
-	$(this.btnDown).click(function() {
+	$j(this.btnDown).click(function() {
 		this._parent.setScrollPos(this._parent.maxScrollPos);
 	});
-	$(this.btnDown).mouseleave(function(){
+	$j(this.btnDown).mouseleave(function(){
 		this._parent.mouseOverToggle(false, 1);
-		$(this).removeClass("egw_fw_ui_scrollarea_button_hover");
+		$j(this).removeClass("egw_fw_ui_scrollarea_button_hover");
 	});
 
-	$(this.outerDiv).prepend(this.btnDown);
+	$j(this.outerDiv).prepend(this.btnDown);
 
 	//Update - read height of the children elements etc.
 	this.update();
@@ -1014,9 +1014,9 @@ egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 		if (_pos <= 0)
 		{			
 			if (this.btnUpEnabled)
-				$(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
 			if (!this.btnDownEnabled)
-				$(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
 			this.btnDownEnabled = true;
 			this.btnUpEnabled = false;
 
@@ -1025,9 +1025,9 @@ egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 		else if (_pos >= this.maxScrollPos)
 		{
 			if (this.btnDownEnabled)
-				$(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
 			if (!this.btnUpEnabled)
-				$(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
 			this.btnDownEnabled = false;
 			this.btnUpEnabled = true;
 
@@ -1036,9 +1036,9 @@ egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 		else
 		{
 			if (!this.btnUpEnabled)
-				$(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
 			if (!this.btnDownEnabled)
-				$(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				$j(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
 			this.btnUpEnabled = true;
 			this.btnDownEnabled = true;
 		}
@@ -1059,17 +1059,17 @@ egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 {
 	if (_visible)
 	{
-		$(this.btnDown).show();
-		$(this.btnUp).show();
-		this.buttonHeight = $(this.btnDown).outerHeight();
+		$j(this.btnDown).show();
+		$j(this.btnUp).show();
+		this.buttonHeight = $j(this.btnDown).outerHeight();
 		this.maxScrollPos = this.contHeight - this.boxHeight;
 		this.setScrollPos(this.scrollPos);
 	}
 	else
 	{
 		this.scrollDiv.style.top = '0';
-		$(this.btnDown).hide();
-		$(this.btnUp).hide();
+		$j(this.btnDown).hide();
+		$j(this.btnUp).hide();
 	}
 
 	this.buttonsVisible = _visible;
@@ -1078,8 +1078,8 @@ egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 egw_fw_ui_scrollarea.prototype.update = function()
 {
 	//Get the height of the content and the outer box
-	this.contHeight = $(this.scrollDiv).outerHeight();
-	this.boxHeight = $(this.contDiv).height();
+	this.contHeight = $j(this.scrollDiv).outerHeight();
+	this.boxHeight = $j(this.contDiv).height();
 
 	this.toggleButtons(this.contHeight > this.boxHeight);
 	this.setScrollPos(this.scrollPos);
@@ -1181,7 +1181,7 @@ function egw_fw_ui_splitter(_contDiv, _orientation, _resizeCallback, _constraint
 	//Create the actual splitter div
 	this.splitterDiv = document.createElement('div');
 	this.splitterDiv._parent = this;
-	$(this.splitterDiv).addClass("egw_fw_ui_splitter");
+	$j(this.splitterDiv).addClass("egw_fw_ui_splitter");
 
 	//Setup the options for the dragable object
 	var dragoptions = {
@@ -1207,24 +1207,24 @@ function egw_fw_ui_splitter(_contDiv, _orientation, _resizeCallback, _constraint
 	{
 		case EGW_SPLITTER_HORIZONTAL:
 			dragoptions.axis = 'y';
-			$(this.splitterDiv).addClass("egw_fw_ui_splitter_horizontal");
+			$j(this.splitterDiv).addClass("egw_fw_ui_splitter_horizontal");
 			break;
 		case EGW_SPLITTER_VERTICAL:
 			dragoptions.axis = 'x';
-			$(this.splitterDiv).addClass("egw_fw_ui_splitter_vertical");
+			$j(this.splitterDiv).addClass("egw_fw_ui_splitter_vertical");
 			break;
 	}
-	$(this.splitterDiv).draggable(dragoptions);
+	$j(this.splitterDiv).draggable(dragoptions);
 
 	//Handle mouse hovering of the splitter div
-	$(this.splitterDiv).mouseenter(function() {
-		$(this).addClass("egw_fw_ui_splitter_hover");
+	$j(this.splitterDiv).mouseenter(function() {
+		$j(this).addClass("egw_fw_ui_splitter_hover");
 	});
-	$(this.splitterDiv).mouseleave(function() {
-		$(this).removeClass("egw_fw_ui_splitter_hover");
+	$j(this.splitterDiv).mouseleave(function() {
+		$j(this).removeClass("egw_fw_ui_splitter_hover");
 	});
 
-	$(this.contDiv).append(this.splitterDiv);
+	$j(this.contDiv).append(this.splitterDiv);
 }
 
 egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
@@ -1274,12 +1274,12 @@ egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
 		case EGW_SPLITTER_HORIZONTAL:
 			var old = ui.offset.top - this.startPos;
 			clipped = this.clipDelta(old);
-			$(this.splitterDiv).data('draggable').offset.click.top += (old - clipped);
+			$j(this.splitterDiv).data('draggable').offset.click.top += (old - clipped);
 			break;
 		case EGW_SPLITTER_VERTICAL:
 			var old = ui.offset.left - this.startPos;
 			clipped = this.clipDelta(old);
-			$(this.splitterDiv).data('draggable').offset.click.left += (old - clipped);
+			$j(this.splitterDiv).data('draggable').offset.click.left += (old - clipped);
 			break;
 	}*/
 }

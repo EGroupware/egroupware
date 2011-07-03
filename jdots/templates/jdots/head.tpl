@@ -56,7 +56,7 @@
 				document.getElementById('egw_fw_sidebar').style.width = _size + 'px';
 			}
 
-			$(document).ready(function() {
+			$j(document).ready(function() {
 				framework = new egw_fw("egw_fw_sidemenu", "egw_fw_tabs", "egw_fw_splitter",
 					"{webserver_url}", egw_setSideboxSize, {sidebox_width}, {sidebox_min_width});
 			}

@@ -77,13 +77,13 @@ function egw_fw(_sidemenuId, _tabsId, _splitterId, _webserverUrl, _sideboxSizeCa
 	_sideboxSizeCallback(_sideboxStartSize);
 
 	//Register the resize handler
-	$(window).resize(function(){window.framework.resizeHandler()});
+	$j(window).resize(function(){window.framework.resizeHandler()});
 
 	//Register the global alert handler
 	window.egw_alertHandler = this.alertHandler;
 
 	//Register the key press handler
-	//$(document).keypress(this.keyPressHandler);
+	//$j(document).keypress(this.keyPressHandler);
 
 	//Override the old egw_openWindowCentered2
 	window.egw_openWindowCentered2 = this.egw_openWindowCentered2;
@@ -304,7 +304,7 @@ egw_fw.prototype.resizeHandler = function()
 
 egw_fw.prototype.getIFrameHeight = function()
 {
-	var height = $(window).height() - (
+	var height = $j(window).height() - (
 		this.tabsUi.appHeaderContainer.offsetTop +
 		this.tabsUi.appHeaderContainer.offsetHeight + 30); /* 30 is the height of the footer */
 	return height;
@@ -760,7 +760,7 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 			}
 
 			//Rewrite all form actions if they contain some javascript
-			var forms = $('form', contDiv).toArray();
+			var forms = $j('form', contDiv).toArray();
 			for (var i = 0; i < forms.length; ++i)
 			{
 				var form = forms[i];
@@ -776,7 +776,7 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 			_app.sidebox_md5 = _md5;
 			
 			//console.log(contJS);
-			$(contDiv).append(contJS);
+			$j(contDiv).append(contJS);
 		}
 
 		_app.hasSideboxMenuContent = true;
@@ -995,7 +995,7 @@ egw_fw_content_browser.prototype.callResizeHandler = function()
 	// Call the resize handler (we have to use the jquery object of the iframe!)
 	if (wnd && typeof wnd.$ != "undefined")
 	{
-		wnd.$(wnd).trigger("resize");
+		wnd.$j(wnd).trigger("resize");
 	}
 }
 
@@ -1023,7 +1023,7 @@ egw_fw_content_browser.prototype.setBrowserType = function(_type)
 	if (_type != this.type)
 	{
 		//Destroy the iframe and/or the contentDiv
-		$(this.baseDiv).empty();
+		$j(this.baseDiv).empty();
 		this.iframe = null;
 		this.contentDiv = null;
 		this.ajaxLoaderDiv = null;
@@ -1033,8 +1033,8 @@ egw_fw_content_browser.prototype.setBrowserType = function(_type)
 			//Create the div for displaying the content
 			case EGW_BROWSER_TYPE_DIV:
 				this.contentDiv = document.createElement('div');
-				$(this.contentDiv).addClass('egw_fw_content_browser_div');
-				$(this.baseDiv).append(this.contentDiv);
+				$j(this.contentDiv).addClass('egw_fw_content_browser_div');
+				$j(this.baseDiv).append(this.contentDiv);
 				
 				break;
 			
@@ -1045,8 +1045,8 @@ egw_fw_content_browser.prototype.setBrowserType = function(_type)
 				this.iframe.style.borderWidth = 0;
 				this.iframe.frameBorder = 0;
 				this.iframe.name = 'egw_app_iframe_' + this.app.appName;
-				$(this.iframe).addClass('egw_fw_content_browser_iframe');
-				$(this.baseDiv).append(this.iframe);
+				$j(this.iframe).addClass('egw_fw_content_browser_iframe');
+				$j(this.baseDiv).append(this.iframe);
 
 				break;
 		}
@@ -1154,11 +1154,11 @@ egw_fw_content_browser.prototype.browse_finished = function()
 	egw_seperateJavaScript(content);
 
 	// Insert the content
-	$(this.contentDiv).html(content.html);
+	$j(this.contentDiv).html(content.html);
 
 	// Run the javascript code
 	//console.log(content.js);
-	$(this.contentDiv).append(content.js);
+	$j(this.contentDiv).append(content.js);
 }
 
 egw_fw_content_browser.prototype.reload = function()

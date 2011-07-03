@@ -343,7 +343,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			window.callManual();
 		}
 	}
-	$(document).keypress(keyPressHandler);\n";
+	$j(document).keypress(keyPressHandler);\n";
 */
 			// if manual is enabled, assamble manual url and define global callManual() function
 			if ($GLOBALS['egw_info']['user']['apps']['manual'])
@@ -545,7 +545,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 		$md5_session[$app] = $md5;	// update md5 in session
 
 		return $header.'<script type="text/javascript">
-	$(document).ready(function() {
+	$j(document).ready(function() {
 		if (typeof window.parent.framework != "undefined")
 		{
 			window.parent.framework.setSidebox(egw_getApp("'.$app.'"),'.$sidebox.',"'.$md5.'");
