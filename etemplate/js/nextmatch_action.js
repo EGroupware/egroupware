@@ -29,7 +29,7 @@ function nextmatchRowAOI(_node, _selectMode)
 	aoi.node = _node;
 	aoi.selectMode = _selectMode;
 
-	aoi.checkBox = ($(":checkbox", aoi.node))[0];
+	aoi.checkBox = ($j(":checkbox", aoi.node))[0];
 
 	// Rows without a checkbox OR an id set are unselectable
 	if (typeof aoi.checkBox != "undefined" || _node.id)
@@ -40,7 +40,7 @@ function nextmatchRowAOI(_node, _selectMode)
 
 		// Prevent the browser from selecting the content of the element, when
 		// a special key is pressed.
-		$(_node).mousedown(egwPreventSelect);
+		$j(_node).mousedown(egwPreventSelect);
 
 		// Now append some action code to the node
 		selectHandler = function(e) {
@@ -76,15 +76,15 @@ function nextmatchRowAOI(_node, _selectMode)
 		if (egwIsMobile()) {
 			_node.ontouchend = selectHandler;
 		} else {
-			$(_node).click(selectHandler);
+			$j(_node).click(selectHandler);
 		}
 
-		$(aoi.checkBox).change(function() {
+		$j(aoi.checkBox).change(function() {
 			aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
 		});
 
 		// Don't execute the default action when double clicking on an entry
-		$(aoi.checkBox).dblclick(function() {
+		$j(aoi.checkBox).dblclick(function() {
 			return false;
 		});
 
@@ -96,9 +96,9 @@ function nextmatchRowAOI(_node, _selectMode)
 				this.checkBox.checked = selected;
 			}
 
-			$(this.node).toggleClass('focused',
+			$j(this.node).toggleClass('focused',
 				egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
-			$(this.node).toggleClass('selected',
+			$j(this.node).toggleClass('selected',
 				selected);
 		}
 	}
@@ -235,7 +235,7 @@ function nm_action(_action, _senders)
  */
 function nm_not_disableClass(_action, _senders, _target)
 {
-	return !$(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
 }
 
 /**
@@ -248,7 +248,7 @@ function nm_not_disableClass(_action, _senders, _target)
  */
 function nm_enableClass(_action, _senders, _target)
 {
-	return $(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+	return $j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
 }
 
 /**
@@ -283,7 +283,7 @@ function nm_compare_field(_action, _senders, _target)
 
 	if (!field) return false;
 
-	var value = $(field).val();
+	var value = $j(field).val();
 	
 	if (_action.data.fieldValue.substr(0,1) == '!')
 		return value != _action.data.fieldValue.substr(1);
@@ -346,9 +346,9 @@ function nm_hide_popup(element, div_id)
  */
 function nm_activate_link(_action, _senders)
 {
-	// $(_senders[0].iface.getDOMNode()).find('a:first').trigger('click');	not sure why this is NOT working
+	// $j(_senders[0].iface.getDOMNode()).find('a:first').trigger('click');	not sure why this is NOT working
 
-	var a_href = $(_senders[0].iface.getDOMNode()).find('a:first');
+	var a_href = $j(_senders[0].iface.getDOMNode()).find('a:first');
 	
 	if (typeof a_href != undefined)
 	{

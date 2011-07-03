@@ -142,11 +142,11 @@ function _egw_nodeIsInInput(_node)
 /**
  * Register the onkeypress handler on the document 
  */
-$(document).ready(function() {
+$j(document).ready(function() {
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states
-	$(document).keydown( function(e) {
+	$j(document).keydown( function(e) {
 
 		// Translate the given key code and make it valid
 		var keyCode = e.which;

@@ -246,7 +246,7 @@ class admin_categories
 		}
 
 		egw_framework::validate_file('.','global_categories','admin');
-		egw_framework::set_onload('$(document).ready(function() {
+		egw_framework::set_onload('$j(document).ready(function() {
 			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : ($content['id'] ? '0' : '')) .'];
 			permission_prompt = \'' . lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:').'\';
 		});');

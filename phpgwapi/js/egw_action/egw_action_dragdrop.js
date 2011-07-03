@@ -87,7 +87,7 @@ function egwDragActionImplementation()
 				return false;
 			};
 
-			$(node).draggable(
+			$j(node).draggable(
 				{
 					"distance": 20,
 					"cursor": "move",
@@ -102,8 +102,8 @@ function egwDragActionImplementation()
 						// and the multiple dragDropTypes (ai.ddTypes)
 						 _callback.call(_context, false, ai);
 
-						$(node).data("ddTypes", ai.ddTypes);
-						$(node).data("selected", ai.selected);
+						$j(node).data("ddTypes", ai.ddTypes);
+						$j(node).data("selected", ai.selected);
 
 						if (ai.helper)
 						{
@@ -111,12 +111,12 @@ function egwDragActionImplementation()
 							// fixes a bug in IE: If the element isn't inserted into
 							// the DOM-tree jquery appends it to the parent node.
 							// In case this is a table it doesn't work correctly
-							$("body").append(ai.helper);
+							$j("body").append(ai.helper);
 							return ai.helper;
 						}
 
 						// Return an empty div if the helper dom node is not set
-						return $(document.createElement("div"));
+						return $j(document.createElement("div"));
 					},
 					"start": function(e) {
 						return ai.helper != null;
@@ -140,7 +140,7 @@ function egwDragActionImplementation()
 		var node = _aoi.getDOMNode();
 
 		if (node) {
-			$(node).draggable("destroy");
+			$j(node).draggable("destroy");
 		}
 	}
 
@@ -185,7 +185,7 @@ function egwDragActionImplementation()
 		// If no helper has been defined, create an default one
 		if (!this.helper && hasLink)
 		{
-			this.helper = $(document.createElement("div"));
+			this.helper = $j(document.createElement("div"));
 			this.helper.addClass("egw_action_ddHelper");
 			this.helper.text("(" + _selected.length + ")");
 		}
@@ -274,7 +274,7 @@ function egwDropActionImplementation()
 
 		if (node)
 		{
-			$(node).droppable(
+			$j(node).droppable(
 				{
 					"accept": function(_draggable) {
 						if (typeof _draggable.data("ddTypes") != "undefined")
@@ -378,7 +378,7 @@ function egwDropActionImplementation()
 		var node = _aoi.getDOMNode();
 
 		if (node) {
-			$(node).droppable("destroy");
+			$j(node).droppable("destroy");
 		}
 	}
 

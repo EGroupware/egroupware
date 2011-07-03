@@ -21,7 +21,7 @@ function dhtmlxTree_getNode(_tree, _itemId) {
 	{
 		// Get the outer html table node of the tree node - return the first
 		// "tr" child of the element
-		return $("tr:first", node.htmlNode);
+		return $j("tr:first", node.htmlNode);
 	}
 }
 
@@ -41,11 +41,11 @@ function dhtmlxtreeItemAOI(_tree, _itemId)
 	aoi.doTriggerEvent = function(_event) {
 		if (_event == EGW_AI_DRAG_OVER)
 		{
-			$(this.node).addClass("draggedOver");
+			$j(this.node).addClass("draggedOver");
 		}
 		if (_event == EGW_AI_DRAG_OUT)
 		{
-			$(this.node).removeClass("draggedOver");
+			$j(this.node).removeClass("draggedOver");
 		}
 	}
 

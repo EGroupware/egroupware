@@ -89,7 +89,7 @@
 			var actionManager = null;
 			var objectManager = null;
 
-			$(document).ready(function() {
+			$j(document).ready(function() {
 				init();
 			});
 
@@ -100,7 +100,7 @@
 				var aoi = new egwActionObjectInterface();
 
 				aoi.node = _node;
-				aoi.checkBox = ($(":checkbox", aoi.node))[0];
+				aoi.checkBox = ($j(":checkbox", aoi.node))[0];
 				aoi.checkBox.checked = false;
 
 				aoi.doGetDOMNode = function() {
@@ -116,7 +116,7 @@
 				}
 
 				// Now append some action code to the node
-				$(_node).click(function(e) {
+				$j(_node).click(function(e) {
 					if (e.target != aoi.checkBox)
 					{
 						var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
@@ -133,27 +133,27 @@
 					}
 				});
 
-				$(aoi.checkBox).change(function() {
+				$j(aoi.checkBox).change(function() {
 					aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
 				});
 
 				aoi.doTriggerEvent = function(_event) {
 					if (_event == EGW_AI_DRAG_OVER)
 					{
-						$(this.node).addClass("draggedOver");
+						$j(this.node).addClass("draggedOver");
 					}
 					if (_event == EGW_AI_DRAG_OUT)
 					{
-						$(this.node).removeClass("draggedOver");
+						$j(this.node).removeClass("draggedOver");
 					}
 				}
 
 				aoi.doSetState = function(_state) {
 					var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
 					this.checkBox.checked = selected;
-					$(this.node).toggleClass('focused',
+					$j(this.node).toggleClass('focused',
 						egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
-					$(this.node).toggleClass('selected',
+					$j(this.node).toggleClass('selected',
 						selected);
 				}
 
@@ -178,7 +178,7 @@
 					text.push(_senders[i].id);
 				}
 
-				return $("<div class=\"ddhelper\">" + _senders.length + " (" + text.join(", ") + ") Elements selected </div>")
+				return $j("<div class=\"ddhelper\">" + _senders.length + " (" + text.join(", ") + ") Elements selected </div>")
 			}
 
 			function init()
@@ -380,11 +380,11 @@
 					"folder_drop", "folder_drop2"
 				];
 
-				$('#lb1 tr:odd').addClass('odd');
+				$j('#lb1 tr:odd').addClass('odd');
 
 				//Create an object representation for each listbox-row and append
 				//each to its own listboxItemAOI
-				$('#lb1 tr').each(function(index, elem) {
+				$j('#lb1 tr').each(function(index, elem) {
 					var obj = objectManager.addObject(elem.id, new listboxItemAOI(elem));
 					//Apply the links to the actions
 					if (elem.id.substr(0,4) == "file")
@@ -393,11 +393,11 @@
 						obj.updateActionLinks(listboxFolderLinks);
 				});
 
-				$("#selectAll").click(function() {
+				$j("#selectAll").click(function() {
 					objectManager.toggleAllSelected();
 				});
 
-				$("#performAction").click(function(e) {
+				$j("#performAction").click(function(e) {
 					if (!objectManager.executeActionImplementation(this, "popup"))
 						alert("Please select one or more objects.");
 					return false;
