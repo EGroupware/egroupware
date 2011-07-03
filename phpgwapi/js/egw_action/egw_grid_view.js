@@ -216,9 +216,16 @@ egwGridViewOuter.prototype.updateColumns = function(_columns)
 
 			// Ugly browser dependant code - each browser seems to treat the 
 			// right (collapsed) border of the row differently
-			var addBorder = 0;
-			if ($j.browser.mozilla || ($j.browser.webkit && !first))
-			{ 
+			addBorder = 0;
+			if ($j.browser.mozilla)
+			{
+				var maj = $j.browser.version.split(".")[0];
+				if (maj < 2) {
+					addBorder = 1; // Versions <= FF 3.6
+				}
+			}
+			if ($j.browser.webkit && !first)
+			{
 				addBorder = 1;
 			}
 			if (($j.browser.msie || $j.browser.opera) && first)
@@ -792,6 +799,23 @@ egwGridViewContainer.prototype.getArea = function()
 	return egwArea(this.position, this.getHeight());
 }
 
+egwGridViewContainer.prototype.getAbsolutePosition = function()
+{
+	if (this.grid)
+	{
+		return this.grid.getAbsolutePosition() + this.position;
+	}
+	else
+	{
+		return this.position;
+	}
+}
+
+egwGridViewContainer.prototype.getAbsoluteArea = function()
+{
+	return egwArea(this.getAbsolutePosition(), this.getHeight());
+}
+
 /**
  * Function which is called whenever the column count or the data inside the columns
  * has probably changed - the checkViewArea function of the grid element is called
@@ -1095,7 +1119,24 @@ function egwGridViewGrid_updateAssumedHeights(_maxCount)
 				// Get the difference (delta) between the assumed and the real
 				// height
 				var oldHeight = child.assumedHeight;
-				var newHeight = child.getHeight(true);
+
+				//XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX
+				// This is an ugly hack, but currently I don't have the time to
+				// provide a proper fix - problem is that with the "invalidateHeightCache"
+				// line wrong height values may be returned which causes all
+				// grid data to be loaded. The workaround for this causes
+				// the tree view not to work correctly.
+				var newHeight;
+				if (egw_getObjectManager("felamimail", false) != null)
+				{
+					newHeight = child.getHeight(true);
+				}
+				else
+				{
+					child.invalidateHeightCache();
+					newHeight = child.getHeight();
+				}
+				//XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX
 
 				if (child.containerClass == "row")
 				{
@@ -1495,7 +1536,8 @@ function egwGridViewRow_aoiTriggerEvent(_event, _data)
 
 function egwGridViewRow_aoiMakeVisible()
 {
-	egwGridView_scrollToArea(this.row.grid.scrollarea, this.row.getArea());
+	egwGridView_scrollToArea(this.row.grid.getOuter().grid.scrollarea,
+		this.row.getAbsoluteArea());
 }
 
 /**
@@ -2099,11 +2141,11 @@ function egwGridTmpAOI_makeVisible()
 	// Assume an area for the element (this code is not optimal, but it should
 	// work in most cases - problem is that the elements in the grid may have equal
 	// sizes and the grid is scrolled to some area where the element is not)
-	// TODO: Support for trees
 	var avgHeight = this.grid.getOuter().avgRowHeight;
-	var area = egwArea(this.index * avgHeight, avgHeight);
+	var area = egwArea(this.grid.getAbsolutePosition() + this.index * avgHeight,
+		avgHeight);
 
-	egwGridView_scrollToArea(this.grid.scrollarea, area);
+	egwGridView_scrollToArea(this.grid.getOuter().grid.scrollarea, area);
 }
 
 function egwGridView_scrollToArea(_scrollarea, _visarea)

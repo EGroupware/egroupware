@@ -1002,7 +1002,7 @@ egwActionObject.prototype.toggleAllSelected = function(_select)
  * @param object _obj is used internally to pass references to the array inside
  * 	the object.
  */
-egwActionObject.prototype.flatList = function(_obj)
+egwActionObject.prototype.flatList = function(_visibleOnly, _obj)
 {
 	if (typeof(_obj) == "undefined")
 	{
@@ -1011,11 +1011,19 @@ egwActionObject.prototype.flatList = function(_obj)
 		}
 	}
 
-	_obj.elements.push(this);
+	if (typeof(_visibleOnly) == "undefined")
+	{
+		_visibleOnly = false;
+	}
+
+	if (!_visibleOnly || this.getVisible())
+	{
+		_obj.elements.push(this);
+	}
 
 	for (var i = 0; i < this.children.length; i++)
 	{
-		this.children[i].flatList(_obj);
+		this.children[i].flatList(_visibleOnly, _obj);
 	}
 
 	return _obj.elements;
@@ -1244,16 +1252,13 @@ egwActionObject.prototype.getPrevious = function(_intval)
 			return this;
 		}
 
+		var flatTree = this.getContainerRoot().flatList();
 
-		var idx = this.parent.children.indexOf(this);
+		var idx = flatTree.indexOf(this);
 		if (idx > 0)
 		{
-			idx = Math.max(0, idx - _intval);
-			return this.parent.children[idx];
-		}
-		else
-		{
-			// TODO: Implement traversal of trees
+			idx = Math.max(1, idx - _intval);
+			return flatTree[idx];
 		}
 	}
 
@@ -1268,15 +1273,13 @@ egwActionObject.prototype.getNext = function(_intval)
 			return this;
 		}
 
-		var idx = this.parent.children.indexOf(this);
-		if (idx < this.parent.children.length - 1)
+		var flatTree = this.getContainerRoot().flatList(true);
+
+		var idx = flatTree.indexOf(this);
+		if (idx < flatTree.length - 1)
 		{
-			idx = Math.min(this.parent.children.length - 1, idx + _intval);
-			return this.parent.children[idx];
-		}
-		else
-		{
-			// TODO: Implement traversal of trees
+			idx = Math.min(flatTree.length - 1, idx + _intval);
+			return flatTree[idx];
 		}
 	}
 
