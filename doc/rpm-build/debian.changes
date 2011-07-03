@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20110703-1) hardy; urgency=low
+
+  * jQuery: changed $ to $j to work around mootools use in Joomla templates and other js code in imported projects
+
+ -- Ralf Becker <rb@stylite.de>  Sun, 03 Jul 2011 20:53:15 +0200
+
 egroupware-epl (11.1.20110701-1) hardy; urgency=low
 
   * CalDAV: handle deleted events, as not existing (404 Not Found)
