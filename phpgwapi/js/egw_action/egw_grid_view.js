@@ -76,7 +76,7 @@ var EGW_UNIQUE_COUNTER = 0;
 function egwGridViewOuter(_parentNode, _dataRoot, _selectColsCallback, _toggleAllCallback,
 	_sortColsCallback, _context)
 {
-	this.parentNode = $(_parentNode);
+	this.parentNode = $j(_parentNode);
 	this.dataRoot = _dataRoot;
 
 	EGW_UNIQUE_COUNTER++;
@@ -217,11 +217,11 @@ egwGridViewOuter.prototype.updateColumns = function(_columns)
 			// Ugly browser dependant code - each browser seems to treat the 
 			// right (collapsed) border of the row differently
 			var addBorder = 0;
-			if ($.browser.mozilla || ($.browser.webkit && !first))
+			if ($j.browser.mozilla || ($j.browser.webkit && !first))
 			{ 
 				addBorder = 1;
 			}
-			if (($.browser.msie || $.browser.opera) && first)
+			if (($j.browser.msie || $j.browser.opera) && first)
 			{
 				addBorder = -1;
 			}
@@ -276,12 +276,12 @@ egwGridViewOuter.prototype.buildBase = function()
 		</table>
 	*/
 
-	this.outer_table = $(document.createElement("table"));
+	this.outer_table = $j(document.createElement("table"));
 	this.outer_table.addClass("egwGridView_outer");
-	this.outer_thead = $(document.createElement("thead"));
-	this.outer_tbody = $(document.createElement("tbody"));
-	this.outer_tr = $(document.createElement("tr"));
-	this.outer_head_tr = $(document.createElement("tr"));
+	this.outer_thead = $j(document.createElement("thead"));
+	this.outer_tbody = $j(document.createElement("tbody"));
+	this.outer_tr = $j(document.createElement("tr"));
+	this.outer_head_tr = $j(document.createElement("tr"));
 
 	this.outer_table.append(this.outer_thead, this.outer_tbody);
 	this.outer_tbody.append(this.outer_tr);
@@ -294,7 +294,7 @@ egwGridViewOuter.prototype.updateColSortmode = function(_colIdx, _sortArrow)
 {
 	if (typeof _sortArrow == "undefined")
 	{
-		_sortArrow = $("span.sort", this.headerColumns[_colIdx]);
+		_sortArrow = $j("span.sort", this.headerColumns[_colIdx]);
 	}
 
 	var col = this.columns[_colIdx];
@@ -328,29 +328,29 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 			var col = this.columns[i];
 
 			// Create the column element and insert it into the DOM-Tree
-			var column = $(document.createElement("th"));
+			var column = $j(document.createElement("th"));
 			column.addClass(col.tdClass);
 			this.headerColumns.push(column);
 
-			var cont = $(document.createElement("div"));
+			var cont = $j(document.createElement("div"));
 			cont.addClass("innerContainer");
 			cont.addClass(col.divClass);
 
 			if (col.type == EGW_COL_TYPE_CHECKBOX)
 			{
-				this.checkbox = $(document.createElement("input"));
+				this.checkbox = $j(document.createElement("input"));
 				this.checkbox.attr("type", "checkbox");
 				this.checkbox.change(this, function(e) {
 					// Call the toggle all callback
 					if (e.data.toggleAllCallback)
 					{
-						e.data.toggleAllCallback.call(e.data.context, $(this).is(":checked"));
+						e.data.toggleAllCallback.call(e.data.context, $j(this).is(":checked"));
 					}
 				});
 
 				cont.append(this.checkbox);
 			} else {
-				var caption = $(document.createElement("span"));
+				var caption = $j(document.createElement("span"));
 				caption.html(col.caption);
 
 				cont.append(caption);
@@ -358,7 +358,7 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 
 			if (col.type != EGW_COL_TYPE_CHECKBOX && col.sortable != EGW_COL_SORTABLE_NONE)
 			{
-				var sortArrow = $(document.createElement("span"));
+				var sortArrow = $j(document.createElement("span"));
 				sortArrow.addClass("sort");
 				cont.append(sortArrow);
 
@@ -379,11 +379,11 @@ egwGridViewOuter.prototype.buildBaseHeader = function()
 		}
 
 		// Build the "select columns" icon
-		this.selectcols = $(document.createElement("span"));
+		this.selectcols = $j(document.createElement("span"));
 		this.selectcols.addClass("selectcols");
 
 		// Build the option column
-		this.optcol = $(document.createElement("th"));
+		this.optcol = $j(document.createElement("th"));
 		this.optcol.addClass("optcol");
 		this.optcol.append(this.selectcols);
 
@@ -408,9 +408,9 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 	if (EGW_GRID_SCROLLBAR_WIDTH === false)
 	{
 		// Create a temporary td and two div, which are inserted into the dom-tree
-		var td = $(document.createElement("td"));
-		var div_outer = $(document.createElement("div"));
-		var div_inner = $(document.createElement("div"));
+		var td = $j(document.createElement("td"));
+		var div_outer = $j(document.createElement("div"));
+		var div_inner = $j(document.createElement("div"));
 
 		// The outer div has a fixed size and "overflow" set to auto. When the second
 		// div is inserted, it will be forced to display a scrollbar.
@@ -423,10 +423,10 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 		// Clone the outer table and insert it into the top window (which should)
 		// always be visible.
 		var clone = this.outer_table.clone();
-		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		var top_body = $j(window.top.document.getElementsByTagName("body")[0]);
 		top_body.append(clone);
 
-		$("tbody tr", clone).append(td);
+		$j("tbody tr", clone).append(td);
 		td.append(div_outer);
 		div_outer.append(div_inner);
 
@@ -448,20 +448,20 @@ egwGridViewOuter.prototype.getScrollbarWidth = function()
 	if (EGW_GRID_HEADER_BORDER_WIDTH === false)
 	{
 		// Create a temporary th which is appended to the outer thead row
-		var cont = $(document.createElement("div"));
+		var cont = $j(document.createElement("div"));
 		cont.addClass("innerContainer");
 
-		var th = $(document.createElement("th"));
+		var th = $j(document.createElement("th"));
 		th.append(cont);
 
 		// Clone the outer table and insert it into the top window (which should)
 		// always be visible.
 		var clone = this.outer_table.clone();
-		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		var top_body = $j(window.top.document.getElementsByTagName("body")[0]);
 		top_body.append(clone);
 
 		// Insert the th into the document tree
-		$("thead tr", clone).append(th);
+		$j("thead tr", clone).append(th);
 
 		// Calculate the total border width
 		EGW_GRID_HEADER_BORDER_WIDTH = th.outerWidth(true) - cont.width();
@@ -481,19 +481,19 @@ egwGridViewOuter.prototype.getColumnBorderWidth = function()
 	if (EGW_GRID_COLUMN_BORDER_WIDTH === false)
 	{
 		// Create a temporary td which is appended to the outer tbody row
-		var cont = $(document.createElement("div"));
+		var cont = $j(document.createElement("div"));
 		cont.addClass("innerContainer");
 
-		var td = $(document.createElement("td"));
+		var td = $j(document.createElement("td"));
 		td.append(cont);
 
 		// Insert the th into the document tree
 		var clone = this.outer_table.clone();
-		var top_body = $(window.top.document.getElementsByTagName("body")[0]);
+		var top_body = $j(window.top.document.getElementsByTagName("body")[0]);
 		top_body.append(clone);
 
 		clone.addClass("egwGridView_grid");
-		$("tbody tr", clone).append(td);
+		$j("tbody tr", clone).append(td);
 
 		// Calculate the total border width
 		EGW_GRID_COLUMN_BORDER_WIDTH = td.outerWidth(true) - cont.width();
@@ -568,7 +568,7 @@ egwGridViewContainer.prototype.setVisible = function(_visible, _force)
 
 	if ((_visible != this.visible || _force) && this.parentNode)
 	{
-		$(this.parentNode).toggleClass("hidden", !_visible);
+		$j(this.parentNode).toggleClass("hidden", !_visible);
 
 		if (_visible)
 		{
@@ -607,7 +607,7 @@ egwGridViewContainer.prototype.insertIntoDOM = function(_parentNode, _columns)
 	{
 		// Copy the function arguments
 		this.columns = _columns;
-		this.parentNode = $(_parentNode);
+		this.parentNode = $j(_parentNode);
 
 		// Call the interface function of the implementation which will insert its data
 		// into the parent node.
@@ -678,7 +678,7 @@ egwGridViewContainer.prototype.setPosition = function(_top)
  * of the mostly called functions in the whole grid code and should stay
  * quite fast.
  */
-if ($.browser.mozilla)
+if ($j.browser.mozilla)
 {
 	egwGridViewContainer.prototype.getHeight = function(_update)
 	{
@@ -1009,12 +1009,12 @@ function egwGridViewGrid_setupContainer()
 		</td>
 	*/
 
-	this.outerNode = $(document.createElement("td"));
+	this.outerNode = $j(document.createElement("td"));
 	this.outerNode.addClass("frame");
 
 	if (this.scrollable)
 	{
-		this.scrollarea = $(document.createElement("div"));
+		this.scrollarea = $j(document.createElement("div"));
 		this.scrollarea.addClass("egwGridView_scrollarea");
 		this.scrollarea.css("height", this.scrollHeight + "px");
 		this.scrollarea.scroll(this, function(e) {
@@ -1026,10 +1026,10 @@ function egwGridViewGrid_setupContainer()
 		});
 	}
 
-	var table = $(document.createElement("table"));
+	var table = $j(document.createElement("table"));
 	table.addClass("egwGridView_grid");
 
-	this.innerNode = $(document.createElement("tbody"));
+	this.innerNode = $j(document.createElement("tbody"));
 
 	if (this.scrollable)
 	{
@@ -1174,7 +1174,7 @@ function egwGridViewGrid_insertContainer(_after, _class, _params)
 		this.children.splice(idx, 0, container);
 
 		// Create a table row for that element
-		var tr = $(document.createElement("tr"));
+		var tr = $j(document.createElement("tr"));
 
 		// Insert the table row after the container specified in the _after parameter
 		// and set the top position of the node
@@ -1552,10 +1552,10 @@ function egwGridViewRow_doInsertIntoDOM()
 	{
 		var col = this.columns[i];
 
-		var td = $(document.createElement("td"));
+		var td = $j(document.createElement("td"));
 		td.addClass(col.tdClass);
 
-		var cont = $(document.createElement("div"));
+		var cont = $j(document.createElement("div"));
 		cont.addClass(col.divClass);
 		cont.addClass("innerContainer");
 
@@ -1565,7 +1565,7 @@ function egwGridViewRow_doInsertIntoDOM()
 		td.mousedown(egwPreventSelect);
 		if (col.type == EGW_COL_TYPE_CHECKBOX)
 		{
-			this.checkbox = $(document.createElement("input"));
+			this.checkbox = $j(document.createElement("input"));
 			this.checkbox.attr("type", "checkbox");
 			this.checkbox.attr("checked", egwBitIsSet(this.aoi.getState(),
 				EGW_AO_STATE_SELECTED));
@@ -1663,20 +1663,20 @@ function egwGridViewRow_doUpdateData(_immediate)
 					if (depth > 0)
 					{
 							// Build the indentation object
-						var indentation = $(document.createElement("span"));
+						var indentation = $j(document.createElement("span"));
 						indentation.addClass("indentation");
 						indentation.css("width", (depth * 20) + "px");
 						cont.append(indentation);
 					}
 
 					// Insert the open/close arrow
-					var arrow = $(document.createElement("span"));
+					var arrow = $j(document.createElement("span"));
 					arrow.addClass("arrow");
 					if (this.item.canHaveChildren)
 					{
 						arrow.addClass(this.item.opened ? "opened" : "closed");
 						arrow.click(this, function(e) {
-							$this = $(this);
+							$this = $j(this);
 
 							if (!e.data.opened)
 							{
@@ -1701,7 +1701,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 					if (data[col.id].iconUrl)
 					{
 						// Build the icon container
-						var iconContainer = $(document.createElement("span"));
+						var iconContainer = $j(document.createElement("span"));
 						iconContainer.addClass("iconContainer " + this.grid.uniqueId);
 
 						// Default the iconContainer height to the average height - this attribute
@@ -1709,10 +1709,10 @@ function egwGridViewRow_doUpdateData(_immediate)
 						iconContainer.css("min-height", this.grid.avgIconHeight + "px");
 
 						// Build the icon
-						var overlayCntr = $(document.createElement("span"));
+						var overlayCntr = $j(document.createElement("span"));
 						overlayCntr.addClass("iconOverlayContainer");
 
-						var icon = $(document.createElement("img"));
+						var icon = $j(document.createElement("img"));
 						if (this.item.iconSize)
 						{
 							icon.css("height", this.item.iconSize + "px");
@@ -1720,7 +1720,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 						}
 						icon.load({"item": this, "cntr": iconContainer}, function(e) {
 							e.data.cntr.css("min-height", "");
-							var icon = $(this);
+							var icon = $j(this);
 							window.setTimeout(function() {
 								e.data.item.grid.setIconWidth(icon.width());
 								e.data.item.grid.addIconHeightToAvg(icon.height());
@@ -1734,11 +1734,11 @@ function egwGridViewRow_doUpdateData(_immediate)
 
 						if (this.item.iconOverlay.length > 0)
 						{
-							var overlayCntr2 = $(document.createElement("span"));
+							var overlayCntr2 = $j(document.createElement("span"));
 							overlayCntr2.addClass("overlayContainer");
 							for (var i = 0; i < this.item.iconOverlay.length; i++)
 							{
-								var overlay = $(document.createElement("img"));
+								var overlay = $j(document.createElement("img"));
 								overlay.addClass("overlay");
 								overlay.attr("src", this.item.iconOverlay[i]);
 								overlayCntr2.append(overlay);
@@ -1754,7 +1754,7 @@ function egwGridViewRow_doUpdateData(_immediate)
 					// Build the caption
 					if (data[col.id].caption)
 					{
-						var caption = $(document.createElement("span"));
+						var caption = $j(document.createElement("span"));
 						caption.addClass("caption");
 						caption.html(data[col.id].caption);
 						cont.append(caption);
@@ -1819,7 +1819,7 @@ function egwGridViewRow_setOpen(_open, _force)
 			if (!this.childGrid)
 			{
 				// Get the arrow and put it to "loading" state
-				var arrow = $(".arrow", this.parentNode);
+				var arrow = $j(".arrow", this.parentNode);
 				arrow.removeClass("closed");
 				arrow.addClass("loading");
 
@@ -1918,7 +1918,7 @@ function egwGridViewSpacer_setItemList(_items)
  */
 function egwGridViewSpacer_doInsertIntoDOM()
 {
-	this.domNode = $(document.createElement("td"));
+	this.domNode = $j(document.createElement("td"));
 	this.domNode.addClass("egwGridView_spacer");
 	this.domNode.addClass(this.grid.getOuter().uniqueId + "_spacer_fullRow");
 	this.domNode.css("height", (this.items.length * this.itemHeight) + "px");
@@ -2026,10 +2026,10 @@ function egwGridViewFullRow_doInsertIntoDOM()
 		this.item.setGridViewObj(this);
 	}
 
-	var td = this.td = $(document.createElement("td"));
+	var td = this.td = $j(document.createElement("td"));
 	td.attr("colspan", this.columns.length);
 
-	var cont = this.cont = $(document.createElement("div"));
+	var cont = this.cont = $j(document.createElement("div"));
 	cont.addClass("innerContainer");
 	cont.addClass(this.grid.getOuter().uniqueId + '_div_fullRow');
 
@@ -2052,14 +2052,14 @@ function egwGridViewFullRow_doUpdateData(_immediate)
 		if (depth > 0)
 		{
 				// Build the indentation object
-			var indentation = $(document.createElement("span"));
+			var indentation = $j(document.createElement("span"));
 			indentation.addClass("indentation");
 			indentation.css("width", (depth * 20) + "px");
 			this.cont.append(indentation);
 		}
 
 		// Insert the caption
-		var caption = $(document.createElement("span"));
+		var caption = $j(document.createElement("span"));
 		caption.addClass("caption");
 		caption.html(this.item.caption);
 		this.cont.append(caption);

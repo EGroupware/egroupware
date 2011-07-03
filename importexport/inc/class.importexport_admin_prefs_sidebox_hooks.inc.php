@@ -161,7 +161,7 @@ if(actionMgr && objectMgr && win.egwAction) {
 	if(objectMgr.selectedChildren.length == 0) {
 		// Be nice and select all, if they forgot to select any
 		if(actionMgr.getActionById(\'select_all\')) {
-			var total = parseInt($(\'span#total\',actionMgr.etemplate_form).text());
+			var total = parseInt($j(\'span#total\',actionMgr.etemplate_form).text());
 			if(total > 0) {
 				actionMgr.getActionById(\'select_all\').set_checked(true);
 				toggle_select = true;

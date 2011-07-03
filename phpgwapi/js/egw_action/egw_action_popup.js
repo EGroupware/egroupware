@@ -131,7 +131,7 @@ function egwPopupActionImplementation()
 		}
 
 		if (egwIsMobile()) {
-			$(_node).bind('click', defaultHandler);
+			$j(_node).bind('click', defaultHandler);
 		} else {
 			_node.ondblclick = defaultHandler;
 		}
@@ -238,7 +238,7 @@ function egwPopupActionImplementation()
 		}
 
 		if (egwIsMobile()) {
-			$(_node).bind('taphold', contextHandler);
+			$j(_node).bind('taphold', contextHandler);
 		} else {
 			_node.oncontextmenu = contextHandler;
 		}
@@ -285,8 +285,8 @@ function egwPopupActionImplementation()
 				// Calculate context menu position from the given DOM-Node
 				var node = _context;
 
-				x = $(node).offset().left;
-				y = $(node).offset().top;
+				x = $j(node).offset().left;
+				y = $j(node).offset().top;
 
 				_context = {"posx": x, "posy": y}
 			}

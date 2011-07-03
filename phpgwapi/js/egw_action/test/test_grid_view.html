@@ -234,7 +234,7 @@
 			}
 
 			function clean() {
-				$("#container").children().remove();
+				$j("#container").children().remove();
 				actionManager = null;
 				objectManager = null;
 				grid = null;
@@ -243,8 +243,8 @@
 			function buildGrid() {
 				clean();
 
-				var cnt = $(document.createElement("div"));
-				$("#container").append(cnt);
+				var cnt = $j(document.createElement("div"));
+				$j("#container").append(cnt);
 
 				actionManager = new egwActionManager();
 				actionManager.updateActions(actions);
@@ -268,7 +268,7 @@
 				grid.reload();
 			}
 
-			$(document).ready(function() {
+			$j(document).ready(function() {
 				buildGrid();
 			});
 

@@ -890,7 +890,7 @@ class nextmatch_widget
 
 		return '
 <script type="text/javascript">
-	$(document).ready(function() {
+	$j(document).ready(function() {
 		// Initialize the action manager and add some actions to it
 		var actionManager = egw_getActionManager("'.$app.'");
 		var objectManager = egw_getObjectManager("'.$app.'");
@@ -909,7 +909,7 @@ class nextmatch_widget
 
 		// Create a new action object for each table row
 		var divObj = document.getElementById("'.$template_name.'");
-		$("table.egwGridView_grid>tbody>tr", divObj).each(function(index, elem)
+		$j("table.egwGridView_grid>tbody>tr", divObj).each(function(index, elem)
 		{
 			// Create a new action object
 			if (elem.id) {

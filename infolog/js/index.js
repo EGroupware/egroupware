@@ -20,7 +20,7 @@ function confirm_delete(_action, _senders)
 	var child_button = document.getElementById(egw_globalObjectManager.getObjectById('infolog.index.rows').etemplate_var_prefix+'[delete_sub]');
 	if(child_button) {
 		for(var i = 0; i < _senders.length; i++) {
-			if ($(_senders[i].iface.node).hasClass('rowHasSubs')) {
+			if ($j(_senders[i].iface.node).hasClass('rowHasSubs')) {
 				children = true;
 				break;
 			}

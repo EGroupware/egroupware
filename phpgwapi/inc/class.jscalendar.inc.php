@@ -149,7 +149,7 @@ class jscalendar
 		{
 			inputField  : "'.$name.'",'.(!$useicon ? '' : '
 			button      : "'.$name.'-trigger"').',
-			onUpdate    : function(){var input = document.getElementById("'.$name.'"); $(input).change(); }
+			onUpdate    : function(){var input = document.getElementById("'.$name.'"); $j(input).change(); }
 		}
 	);
 </script>

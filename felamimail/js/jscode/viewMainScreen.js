@@ -33,16 +33,16 @@ function mailGridGetSelected()
 function mail_enabledByClass(_action, _senders, _target)
 {
 //alert('enableByClass:'+_action.data.enableClass);
-//alert($(_target.iface.getDOMNode()).hasClass(_action.data.enableClass));
-	return $(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+//alert($j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass));
+	return $j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
 }
 
 function mail_disabledByClass(_action, _senders, _target)
 {
 // as there only is an enabled attribute, we must negate the result (we find the class -> we return false to set enabled to false)
 //alert('disableByClass:'+_action.data.disableClass);
-//alert(!$(_target.iface.getDOMNode()).hasClass(_action.data.disableClass));
-	return !$(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+//alert(!$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass));
+	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
 }
 
 function mail_parentRefreshListRowStyle(oldID, newID)
@@ -1070,21 +1070,21 @@ function handleResize()
 	if (isNaN(IFRAME_HEIGHT) || IFRAME_HEIGHT<0) IFRAME_HEIGHT=0;
 
 	// Calculate how many space is actually there for the whole mail view
-	var outerContainer = $('#divMessageList');
-	var mainViewArea = $('#divMainView');
+	var outerContainer = $j('#divMessageList');
+	var mainViewArea = $j('#divMainView');
 
 	// Exit if the felamimail containers do not exist
-	// maybe check on  $(mainViewArea).offset()== null as well
-	if (!outerContainer || !mainViewArea ||  $(mainViewArea).offset()== null) {
+	// maybe check on  $j(mainViewArea).offset()== null as well
+	if (!outerContainer || !mainViewArea ||  $j(mainViewArea).offset()== null) {
 		return;
 	}
 
-	var viewportHeight = $(window).height();
-	var documentHeight =  $("body").height() == 0 ? $(document).height() : $("body").height();
-	var containerHeight = $(outerContainer).height();
+	var viewportHeight = $j(window).height();
+	var documentHeight =  $j("body").height() == 0 ? $j(document).height() : $j("body").height();
+	var containerHeight = $j(outerContainer).height();
 	
 	var totalHeight = viewportHeight;
-	if ($(mainViewArea).offset().top == 0)
+	if ($j(mainViewArea).offset().top == 0)
 	{
 		// if the mainViewArea offset from top is 0 we are in frameview, containerheight may/should be set decently
 		totalHeight = Math.max(0, viewportHeight - (documentHeight - containerHeight));
@@ -1092,7 +1092,7 @@ function handleResize()
 	else
 	{
 		// containerHeight is not set with a decent height when in idots/jerryr, for this reason we use this to calculate the
-		totalHeight = Math.max(0, Math.min(documentHeight, viewportHeight)-$(mainViewArea).offset().top - 100);
+		totalHeight = Math.max(0, Math.min(documentHeight, viewportHeight)-$j(mainViewArea).offset().top - 100);
 	}
 	var resultIframeHeight = IFRAME_HEIGHT;
 	var resultGridHeight = 0;
@@ -1132,7 +1132,7 @@ function handleResize()
 		divMessageTableList.style.height = resultGridHeight + 'px';
 		if (mailGrid != null)
 		{
-			mailGrid.resize($(divMessageTableList).outerWidth(), resultGridHeight);
+			mailGrid.resize($j(divMessageTableList).outerWidth(), resultGridHeight);
 		}
 	}
 
@@ -1325,7 +1325,7 @@ function felamimail_transform_foldertree() {
 
 function mail_dragStart(_action, _senders) {
 	//TODO 
-	return $("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>")
+	return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>")
 }
 
 function mail_getFormData(_actionObjects) {
@@ -1393,5 +1393,5 @@ function mail_cleanup() {
 	var objectManager = egw_getObjectManager("felamimail");
 	objectManager.clear();
 	mailGrid = null;
-	$("#divMessageTableList").children().remove();
+	$j("#divMessageTableList").children().remove();
 }

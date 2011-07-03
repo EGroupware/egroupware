@@ -509,7 +509,7 @@ class uiwidgets
 			$action_links=array();
 			$js = '<script type="text/javascript">
 if (typeof mailGrid == "undefined") var mailGrid = null;
-$(document).ready(function() {
+$j(document).ready(function() {
 	// Cleanup any old instance
 	mail_cleanup();
 
@@ -551,7 +551,7 @@ $(document).ready(function() {
 	if (wnd && typeof wnd.handleResize != "undefined")
 	{
 		wnd.handleResize();
-		$(window).resize(handleResize);
+		$j(window).resize(handleResize);
 	}
 
 	var allSelected = mailGrid.dataRoot.actionObject.getSelectedObjects();
