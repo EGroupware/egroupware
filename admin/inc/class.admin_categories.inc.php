@@ -341,7 +341,12 @@ class admin_categories
 			$row['class'] = 'level'.$row['level'];
 			if($row['owner'] > 0 && !$GLOBALS['egw_info']['user']['apps']['admin'] && $row['owner'] != $GLOBALS['egw_info']['user']['account_id'])
 			{
-				$row['class'] . ' rowNoEdit rowNoDelete ';
+				$row['class'] .= ' rowNoEdit rowNoDelete ';
+			}
+			// Can only edit (via context menu) categories for the selected app (backend restriction)
+			if($row['appname'] != $query['appname'])
+			{
+				$row['class'] .= ' rowNoEdit ';
 			}
 			$readonlys["edit[$row[id]]"]   = !self::$acl_edit;
 			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
@@ -441,6 +446,17 @@ class admin_categories
                         else
                         {
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
+				if(in_array($content['nm']['action'], array('owner')))
+				{
+					$action = $content['nm']['action'];
+					$content['nm']['action'] .= '_' . key($content[$action . '_action']);
+
+					if(is_array($content[$action]))
+					{
+						$content[$action] = implode(',',$content[$action]);
+					}
+					$content['nm']['action'] .= '_' . $content[$action];
+				}
                                 if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
                                         $success,$failed,$action_msg,$content['nm'],$msg))
                                 {
@@ -457,6 +473,15 @@ class admin_categories
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 
 		$sel_options['appname'] = $this->get_app_list();
+		$sel_options['owner'][0] = lang('All users');
+		$accs = $GLOBALS['egw']->accounts->get_list('groups');
+		foreach($accs as $acc)
+		{
+			if ($acc['account_type'] == 'g')
+			{
+				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+			}
+		}
 
 		$readonlys['add'] = !self::$acl_add;
 		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
@@ -482,7 +507,7 @@ class admin_categories
 				'popup' => '600x380',
 				'group' => $group=1,
 			),
-			'add' => array(        // does edit if allowed, otherwise view
+			'add' => array(
 				'caption' => 'Add',
 				'allowOnMultiple' => false,
 				'icon' => 'new',
@@ -490,7 +515,7 @@ class admin_categories
 				'popup' => '600x380',
 				'group' => $group,
 			),
-			'sub' => array(        // does edit if allowed, otherwise view
+			'sub' => array(
 				'caption' => 'Add sub',
 				'allowOnMultiple' => false,
 				'icon' => 'new',
@@ -499,14 +524,26 @@ class admin_categories
 				'group' => $group,
 				'disableClass' => 'rowNoSub',
 			),
-			'delete' => array(        // does edit if allowed, otherwise view
+			'owner' => array(
+				'caption' => 'Change owner',
+				'icon' => 'users',
+				'nm_action' => 'open_popup',
+				'group' => $group,
+				'disableClass' => 'rowNoEdit',
+			),
+			'delete' => array(
 				'caption' => 'Delete',
 				'allowOnMultiple' => true,
 				'nm_action' => 'open_popup',
-				'group' => $group,
+				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 			),
 		);
+
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			unset($actions['owner']);
+		}
 
 		return $actions;
 	}
@@ -547,15 +584,39 @@ class admin_categories
 		$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		$cats = new categories($owner,$query['appname']);
 
-		foreach($checked as $id) {
-			switch($action) {
-				case 'delete':
-				case 'delete_sub':
-					$cats->delete($id,$action == 'delete_sub',$action != 'delete_sub');
+		list($action, $settings) = explode('_', $action, 2);
+
+		switch($action) {
+			case 'delete':
+				foreach($checked as $id) {
+					$cats->delete($id,$settings == 'sub',$settings != 'sub');
 					$action_msg = lang('deleted');
 					$success++;
-					break;
-			}
+				}
+				break;
+			case 'owner':
+				$action_msg = lang('updated');
+				list($add_remove, $ids) = explode('_', $settings, 2);
+				$ids = explode(',',$ids);
+				foreach($checked as $id) {
+					if (!$data = $cats->read($id)) continue;
+					/* Multi-owner
+					$data['owner'] = $add_remove == 'add' ?
+						array_merge($data['owner'],$ids) :
+						array_diff($data['owner'],$ids);
+					*/
+					$data['owner'] = $ids;
+
+					if ($cats->edit($data))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
 		}
 
 		return $failed == 0;
