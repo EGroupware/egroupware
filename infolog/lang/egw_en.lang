@@ -54,7 +54,6 @@ apply the action on the whole query, not only the shown entries!!!	infolog	en	Ap
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	Archive
 are you shure you want to close this entry ?	infolog	en	Are you sure you want to close this entry ?
-at the moment the following document-types are supported:	infolog	en	At the moment the following document types are supported:
 attach a file	infolog	en	Attach a file
 attach file	infolog	en	Attach file
 attention: no contact with address %1 found.	infolog	en	Attention: No contact with address %1 found.
@@ -154,7 +153,6 @@ do you want a notification, if items you created get updated?	infolog	en	Get not
 do you want a notification, if items you delegated are about to start?	infolog	en	Get notified if entries you delegated are about to start.
 do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due.
 do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML mails or plain text.
-document '%1' does not exist or is not readable for you!	infolog	en	Document '%1' does not exist or is not readable for you!
 don't show infolog	infolog	en	DON'T show InfoLog
 done	common	en	Done
 download	infolog	en	Download
@@ -179,10 +177,6 @@ enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
 error: saving the entry	infolog	en	Error saving the entry!
 error: the entry has been updated since you opened it for editing!	infolog	en	Error: the entry has been updated since you opened it for editing!
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	Exists
@@ -210,8 +204,6 @@ id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries than "max matches per page", as defined in your common preferences.
-if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	en	If you specify a directory, full vfs path, InfoLog displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
-if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	en	If you specify a document, full vfs path, InfoLog displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export.
 import	infolog	en	Import
 import next set	infolog	en	Import next set

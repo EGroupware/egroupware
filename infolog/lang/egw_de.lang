@@ -53,7 +53,6 @@ apply the action on the whole query, not only the shown entries!!!	infolog	de	We
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
-at the moment the following document-types are supported:	infolog	de	Zur Zeit werden die folgenden Dokument Typen unterstützt:
 attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
 attention: no contact with address %1 found.	infolog	de	Achtung: Kein Kontakt mit der Adresse %1 gefunden!
@@ -153,7 +152,6 @@ do you want a notification, if items you created get updated?	infolog	de	Wollen 
 do you want a notification, if items you delegated are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben beginnen sollen?
 do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
-document '%1' does not exist or is not readable for you!	infolog	de	Dokument '%1' existiert nicht, oder ist nicht lesbar für Sie!
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	common	de	erledigt
 download	infolog	de	Datei laden
@@ -178,10 +176,6 @@ enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
 error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
 error: the entry has been updated since you opened it for editing!	infolog	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
@@ -209,8 +203,6 @@ id	infolog	de	Id
 id#	infolog	de	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
-if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
-if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
 if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
 import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
