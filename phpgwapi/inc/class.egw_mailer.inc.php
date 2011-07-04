@@ -89,6 +89,29 @@ class egw_mailer extends PHPMailer
 	private $addresses = array();
 
 	/**
+	 * Initiates a connection to an SMTP server.
+	 * Returns false if the operation failed.
+	 * @uses SMTP
+	 * @access public
+	 * @return bool
+	 */
+	public function SmtpConnect() 
+	{
+		$port = $this->Port;
+		$hosts = explode(';',$this->Host);
+		foreach ($hosts as $k => &$host)
+		{
+			if (in_array($port,array(465,587)) && strpos($host,'://')===false) 
+			{
+				//$host = ($port==587?'tls://':'ssl://').trim($host);
+				$this->SMTPSecure = ($port==587?'tls':'ssl');
+			}
+			//error_log(__METHOD__.__LINE__.' Smtp Host:'.$host.' SmtpSecure:'.($this->SMTPSecure?$this->SMTPSecure:'no'));
+		}
+		return parent::SmtpConnect();
+	}
+
+	/**
 	 * Sends mail via SMTP using PhpSMTP
 	 *
 	 * Overwriting this method from phpmailer, to allow apps to intercept it
