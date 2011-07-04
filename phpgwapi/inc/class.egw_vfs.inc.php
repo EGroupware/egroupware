@@ -661,7 +661,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			list($type,$subtype) = explode('/',$options['mime']);
 			// no subtype (eg. 'image') --> check only the main type
-			if ($sub_type || substr($mime,0,strlen($type)+1) != $type.'/')
+			if ($sub_type || substr($stat['mime'],0,strlen($type)+1) != $type.'/')
 			{
 				return;	// wrong mime-type
 			}
