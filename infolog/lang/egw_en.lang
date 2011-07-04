@@ -77,7 +77,6 @@ changed category to %1	infolog	en	Changed category to %1
 changed completion to %1%	infolog	en	Changed completion to %1%
 changed status to %1	infolog	en	Changed status to %1
 changed type	infolog	en	Changed type
-charset of file	infolog	en	Charset of file
 check all	infolog	en	Check all
 check to set startday	infolog	en	Check to set start day
 check to specify custom contact	infolog	en	Check to specify custom contact
@@ -180,7 +179,6 @@ error: the entry has been updated since you opened it for editing!	infolog	en	Er
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	Exists
-export definitition to use for nextmatch export	infolog	en	Export definition to use for nextmatch export
 exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into a CSV file.
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty!
@@ -190,8 +188,6 @@ first argument for preg_replace	infolog	en	First argument for preg_replace
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	en	For serial letter use this tag. Place the content you want to repeat between two tags.
 for which types should this field be used	infolog	en	For which types should this field be used
 from	infolog	en	From
-general	infolog	en	General
-general fields:	infolog	en	General fields:
 global categories	infolog	en	Global categories
 group owner for	infolog	en	Group owner for
 high	infolog	en	High
@@ -204,8 +200,6 @@ id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries than "max matches per page", as defined in your common preferences.
-if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export.
-import	infolog	en	Import
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
@@ -253,7 +247,6 @@ list no subs/childs	infolog	en	List no subs/childs
 location	infolog	en	Location
 longer textual description	infolog	en	Longer text description
 low	infolog	en	Low
-manage mapping	infolog	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	infolog	en	Max length of the input [, length of the input field (optional)]
 modifier	infolog	en	Modifier
 modifierer	infolog	en	Modifier
@@ -428,7 +421,6 @@ to what should the startdate of new entries be set.	infolog	en	To what should th
 today	infolog	en	Today
 todays date	infolog	en	Todays date
 todo	infolog	en	ToDo
-translation	infolog	en	Translation
 typ	infolog	en	Type
 typ '%1' already exists !!!	infolog	en	Type '%1' already exists!
 type	infolog	en	Type

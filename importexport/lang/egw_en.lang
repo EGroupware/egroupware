@@ -45,7 +45,8 @@ field labels	importexport	en	Field labels
 field names	importexport	en	Field names
 fieldseperator	importexport	en	Field separator
 finish	importexport	en	Finish
-general	importexport	en	General
+general	preferences	en	General
+general fields:	preferences	en	General fields:
 header lines to skip	importexport	en	Header lines to skip
 human friendly values	importexport	en	Human friendly values
 if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export.

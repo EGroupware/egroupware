@@ -37,21 +37,15 @@ error deleting the entry!!!	timesheet	en	Error deleting the entry!
 error saving the entry!!!	timesheet	en	Error saving the entry!
 existing links	timesheet	en	Existing links
 exists	timesheet	en	Exists
-export	timesheet	en	Export
-export definitition to use for nextmatch export	timesheet	en	Export definition to use for nextmatch export
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from Time Sheet into a CSV file
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from Time Sheet into a CSV file. CSV means 'Comma Separated Values'. In the options Tab you can also choose other separators.
 field must not be empty !!!	timesheet	en	Field must not be empty!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 full: use only projectmanager	admin	en	Full: use only Project Manager
-general	timesheet	en	General
-general fields:	timesheet	en	General fields:
 global categories	timesheet	en	Global categories
 history	timesheet	en	History
 id	timesheet	en	ID
-if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
-if you specify an export definition, it will be used when you export*	timesheet	en	If you specify an export definition, it will be used when you export
 ignore	timesheet	en	Ignore
 import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the Time Sheet from a CSV file
@@ -66,7 +60,6 @@ leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length<br>Rows
 links	timesheet	en	Links
-manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
 modified	timesheet	en	Modified
 modify status	timesheet	en	Modify status

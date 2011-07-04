@@ -84,7 +84,6 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	en	Chair
 change history	calendar	en	Change history
 change your status	calendar	en	Change your status
-charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 close the window	calendar	en	Close the window
@@ -185,8 +184,6 @@ exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
-export	calendar	en	Export
-export definitition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your Calendar into a CSV File.
 extended	calendar	en	Extended.
@@ -212,8 +209,6 @@ freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
 fullname of person to notify	calendar	en	Full name of a person to notify
-general	calendar	en	General
-general fields:	calendar	en	General fields:
 global categories	calendar	en	Global Categories
 global public and group public	calendar	en	Global public and group public
 global public only	calendar	en	Global public only
@@ -251,9 +246,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
-if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
 ignore conflict	calendar	en	Ignore conflict
-import	calendar	en	Import
 import csv-file	common	en	Import CSV file
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
 imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar.
@@ -282,7 +275,6 @@ location to autoload from	admin	en	Location to autoload from
 location, start- and endtimes, ...	calendar	en	Location, start and end times, ...
 mail all participants	calendar	en	Mail all participants
 make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons
-manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
@@ -495,7 +487,6 @@ to-firstname	calendar	en	To first name
 to-fullname	calendar	en	To full name
 to-lastname	calendar	en	To last name
 tomorrow	calendar	en	Tomorrow
-translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
