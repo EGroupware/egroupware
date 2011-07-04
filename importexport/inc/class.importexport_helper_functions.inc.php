@@ -29,9 +29,6 @@ class importexport_helper_functions {
 		'news_admin' => array(
 			'class.news_admin_import.inc.php',
 		),
-		'calendar' => array(
-			'class.calendar_import_csv.inc.php'
-		),
 	);
 
 	/**
