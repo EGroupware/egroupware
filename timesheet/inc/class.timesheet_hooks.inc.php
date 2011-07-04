@@ -225,7 +225,7 @@ class timesheet_hooks
 			$settings['nextmatch-export-definition'] = array(
 				'type'   => 'select',
 				'values' => $options,
-				'label'  => 'Export definitition to use for nextmatch export',
+				'label'  => 'Export definition to use for nextmatch export',
 				'name'   => 'nextmatch-export-definition',
 				'help'   => lang('If you specify an export definition, it will be used when you export'),
 				'run_lang' => false,
