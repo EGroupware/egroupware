@@ -82,4 +82,97 @@ class egw_mailer extends PHPMailer
 		// calling the orginal callback of phpMailer
 		parent::doCallback($isSent,$to,$cc,$bcc,$subject,$body);
 	}
+
+	private $addresses = array();
+
+	/**
+	 * Initiates a connection to an SMTP server.
+	 * Returns false if the operation failed.
+	 *
+	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls 
+	 * are configured for the given profile
+	 *
+	 * @uses SMTP
+	 * @access public
+	 * @return bool
+	 */
+	public function SmtpConnect() 
+	{
+		$port = $this->Port;
+		$hosts = explode(';',$this->Host);
+		foreach ($hosts as $k => &$host)
+		{
+			if (in_array($port,array(465,587)) && strpos($host,'://')===false) 
+			{
+				//$host = ($port==587?'tls://':'ssl://').trim($host);
+				$this->SMTPSecure = ($port==587?'tls':'ssl');
+			}
+			//error_log(__METHOD__.__LINE__.' Smtp Host:'.$host.' SmtpSecure:'.($this->SMTPSecure?$this->SMTPSecure:'no'));
+		}
+		return parent::SmtpConnect();
+	}
+
+	/**
+	 * Sends mail via SMTP using PhpSMTP
+	 *
+	 * Overwriting this method from phpmailer, to allow apps to intercept it
+	 * via "send_mail" hook, eg. to log or authorize sending of mail.
+	 * Hooks can throw phpmailerException($message, phpMailer::STOP_CRITICAL),
+	 * to stop sending the mail out like an SMTP error.
+	 *
+	 * @param string $header The message headers
+	 * @param string $body The message body
+	 * @return bool
+	 */
+	public function SmtpSend($header, $body)
+	{
+		$GLOBALS['egw']->hooks->process(array(
+			'location' => 'send_mail',
+			'subject' => $this->Subject,
+			'from' => $this->Sender ? $this->Sender : $this->From,
+			'to' => $this->addresses['To'],
+			'cc' => $this->addresses['Cc'],
+			'bcc' => $this->addresses['Bcc'],
+			'body_sha1' => sha1($body),
+			'message_id' => preg_match('/^Message-ID: (.*)$/m', $header,$matches) ? $matches[1] : null,
+		), array(), true);	// true = call all apps
+
+		$this->addresses = array();	// reset addresses for next mail
+
+		// calling the overwritten method
+		return parent::SmtpSend($header, $body);
+	}
+
+	/**
+	 * Creates recipient headers.
+	 *
+	 * Overwritten to get To, Cc and Bcc addresses, which are private in phpMailer
+	 *
+	 * @access public
+	 * @return string
+ 	 */
+	public function AddrAppend($type, $addr)
+	{
+		foreach($addr as $data)
+		{
+			$this->addresses[$type][] = $data[0];
+		}
+		return parent::AddrAppend($type, $addr);
+	}
+
+	/**
+	 * Adds a "Bcc" address.
+	 *
+	 * Reimplemented as AddrAppend() for Bcc get's NOT called for SMTP!
+	 *
+	 * @param string $address
+	 * @param string $name
+	 * @return boolean true on success, false if address already used
+	 */
+	public function AddBCC($address, $name = '')
+	{
+		$this->AddrAppend('Bcc', array(array($address,$name)));
+
+		return parent::AddBCC($address, $name);
+	}
 }
