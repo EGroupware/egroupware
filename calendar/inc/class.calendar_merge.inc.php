@@ -121,8 +121,8 @@ class calendar_merge extends bo_merge
 			$id = array('start' => PHP_INT_MAX, 'end' => 0);
 			$this->ids = array();
 			foreach($events as $event) {
-				if($event['start'] < $id['start']) $id['start'] = $event['start'];
-				if($event['end'] > $id['end']) $id['end'] = $event['end'];
+				if($event['start'] && $event['start'] < $id['start']) $id['start'] = $event['start'];
+				if($event['end'] && $event['end'] > $id['end']) $id['end'] = $event['end'];
 				// Keep ids for future use
 				$this->ids[]  = $event['id'];
 			}
@@ -225,8 +225,8 @@ class calendar_merge extends bo_merge
 			if($date[0]['start']) {
 				$id = array('start' => PHP_INT_MAX, 'end' => 0);
 				foreach($date as $event) {
-					if($event['start'] < $id['start']) $id['start'] = $event['start'];
-					if($event['end'] > $id['end']) $id['end'] = $event['end'];
+					if($event['start'] && $event['start'] < $id['start']) $id['start'] = $event['start'];
+					if($event['end'] && $event['end'] > $id['end']) $id['end'] = $event['end'];
 				}
 				$date = $id;
 			} else {
@@ -309,8 +309,8 @@ class calendar_merge extends bo_merge
 			{
 				$dates = array('start' => PHP_INT_MAX, 'end' => 0);
 				foreach($id as $event) {
-					if($event['start'] < $dates['start']) $dates['start'] = $event['start'];
-					if($event['end'] > $dates['end']) $dates['end'] = $event['end'];
+					if($event['start'] && $event['start'] < $dates['start']) $dates['start'] = $event['start'];
+					if($event['end'] && $event['end'] > $dates['end']) $dates['end'] = $event['end'];
 				}
 				$id = $dates;
 			}
