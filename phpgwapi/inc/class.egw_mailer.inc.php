@@ -91,6 +91,10 @@ class egw_mailer extends PHPMailer
 	/**
 	 * Initiates a connection to an SMTP server.
 	 * Returns false if the operation failed.
+	 *
+	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls 
+	 * are configured for the given profile
+	 *
 	 * @uses SMTP
 	 * @access public
 	 * @return bool
