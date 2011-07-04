@@ -42,65 +42,6 @@
       </entry>
       <entry type="string" name="modified">2011-05-24 10:00:00</entry>
     </entry>
-    <entry type="array" name="import-calendar-csv">
-      <entry type="string" name="name">import-calendar-csv</entry>
-      <entry type="string" name="application">calendar</entry>
-      <entry type="string" name="plugin">calendar_import_csv</entry>
-      <entry type="string" name="type">import</entry>
-      <entry type="array" name="allowed_users">
-        <entry type="string" name="0">Admins</entry>
-      </entry>
-      <entry type="array" name="plugin_options">
-        <entry type="string" name="fieldsep">;</entry>
-        <entry type="string" name="charset">user</entry>
-        <entry type="string" name="num_header_lines">1</entry>
-        <entry type="array" name="csv_fields">
-          <entry type="string" name="0">owner</entry>
-          <entry type="string" name="1">category</entry>
-          <entry type="string" name="2">priority</entry>
-          <entry type="string" name="3">public</entry>
-          <entry type="string" name="4">title</entry>
-          <entry type="string" name="5">description</entry>
-          <entry type="string" name="6">location</entry>
-          <entry type="string" name="7">reference</entry>
-          <entry type="string" name="8">modifier</entry>
-          <entry type="string" name="9">non_blocking</entry>
-          <entry type="string" name="10">special</entry>
-          <entry type="string" name="11">creator</entry>
-          <entry type="string" name="12">recurrence</entry>
-          <entry type="string" name="13">tz_id</entry>
-          <entry type="string" name="14">start</entry>
-          <entry type="string" name="15">end</entry>
-          <entry type="string" name="16">participants</entry>
-          <entry type="string" name="17">participants-c</entry>
-          <entry type="string" name="18">no_csv_1</entry>
-          <entry type="string" name="19">no_csv_2</entry>
-          <entry type="string" name="20">no_csv_3</entry>
-        </entry>
-        <entry type="array" name="field_mapping">
-          <entry type="string" name="0">owner</entry>
-          <entry type="string" name="1">category</entry>
-          <entry type="string" name="2">priority</entry>
-          <entry type="string" name="3">public</entry>
-          <entry type="string" name="4">title</entry>
-          <entry type="string" name="5">description</entry>
-          <entry type="string" name="6">location</entry>
-          <entry type="string" name="7">reference</entry>
-          <entry type="string" name="8">modifier</entry>
-          <entry type="string" name="9">non_blocking</entry>
-          <entry type="string" name="10">special</entry>
-          <entry type="string" name="11">creator</entry>
-          <entry type="string" name="12">recurrence</entry>
-          <entry type="string" name="13">tz_id</entry>
-          <entry type="string" name="14">start</entry>
-          <entry type="string" name="15">end</entry>
-          <entry type="string" name="16">participants</entry>
-          <entry type="string" name="17">participants-c</entry>
-        </entry>
-        <entry type="string" name="field_conversion"/>
-      </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
-    </entry>
     <entry type="array" name="import-calendar-ical">
       <entry type="string" name="name">import-calendar-ical</entry>
       <entry type="string" name="application">calendar</entry>
