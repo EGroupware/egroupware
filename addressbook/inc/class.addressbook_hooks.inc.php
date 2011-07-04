@@ -255,9 +255,9 @@ class addressbook_hooks
 				'size'   => 60,
 				'label'  => 'Default document to insert contacts',
 				'name'   => 'default_document',
-				'help'   => lang('If you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.').' '.
-					lang('The document can contain placeholder like {{n_fn}}, to be replaced with the contact data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>').' '.
-					lang('At the moment the following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.', lang('addressbook')).' '.
+					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>', 'n_fn').' '.
+					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -267,9 +267,9 @@ class addressbook_hooks
 				'size'   => 60,
 				'label'  => 'Directory with documents to insert contacts',
 				'name'   => 'document_dir',
-				'help'   => lang('If you specify a directory (full vfs path) here, addressbook displays an action for each document. That action allows to download the specified document with the contact data inserted.').' '.
-					lang('The document can contain placeholder like {{n_fn}}, to be replaced with the contact data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>').' '.
-					lang('At the moment the following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('addressbook')).' '.
+					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','n_fn').' '.
+					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,

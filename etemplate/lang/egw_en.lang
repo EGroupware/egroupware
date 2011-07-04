@@ -101,6 +101,7 @@ custom fields	etemplate	en	Custom fields
 custom javascript for onchange	etemplate	en	Custom javascript for onChange
 cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
+date	preferences	en	Date
 datum	etemplate	en	Datum
 day	etemplate	en	Day
 days	etemplate	en	Days
@@ -130,7 +131,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	en	Displa
 displayed in the top line of the groupbox (legend)	etemplate	en	Displayed in the top line of the group box (legend).
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
 do you want to send the message to all selected entries, without further editing?	etemplate	en	Do you want to send the message to all selected entries, WITHOUT further editing?
-document '%1' does not exist or is not readable for you!	etemplate	en	Document '%1' does not exist or is not readable for you!
+document '%1' does not exist or is not readable for you!	preferences	en	Document '%1' does not exist or is not readable for you!
 documentation	etemplate	en	Documentation
 doesn't matter	etemplate	en	Doesn't matter
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
@@ -168,6 +169,9 @@ etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
 etemplate editor	etemplate	en	eTemplate editor
 etemplate reference	etemplate	en	eTemplate reference
 etemplate tutorial	etemplate	en	eTemplate tutorial
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	etemplate	en	Exchange this row with the one above
 exchange this two columns	etemplate	en	Exchange these two columns
 export the loaded etemplate into a xml-file	etemplate	en	Export the loaded eTemplate into a xml-file
@@ -183,9 +187,10 @@ file writen	etemplate	en	File written.
 fileupload	etemplate	en	File upload
 first	etemplate	en	First
 floating point	etemplate	en	Floating point
-for more then one contact in a document use the tag pagerepeat!	etemplate	en	Use the tag page repeat for more than one contact in a document!
+for more then one contact in a document use the tag pagerepeat!	preferences	en	Use the tag page repeat for more than one contact in a document!
 foreign key	etemplate	en	Foreign key
 formatted text (html)	etemplate	en	Formatted text (HTML)
+general fields:	preferences	en	General fields:
 go to the first entry	etemplate	en	Go to the first entry
 go to the last entry	etemplate	en	Go to the last entry
 go to the next page of entries	etemplate	en	Go to the next page of entries
@@ -208,6 +213,8 @@ hours	etemplate	en	Hours
 how many entries should the list show	etemplate	en	How many entries should the list show
 html	etemplate	en	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	If field is disabled an empty table cell is displayed
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 image	etemplate	en	Image
 import	etemplate	en	Import
 import an etemplate from a xml-file	etemplate	en	Import an eTemplate from a xml-file
@@ -391,6 +398,8 @@ template deleted	etemplate	en	Template deleted.
 template saved	etemplate	en	Template saved.
 text	etemplate	en	Text
 textarea	etemplate	en	Text area
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	en	The document can contain placeholder like {{%3}}, to be replaced with the data. %1Full list of placeholder names%2.
+the following document-types are supported:	preferences	en	The following document types are supported:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	Text gets displayed if the input field is empty and has no focus (blur)
 time	etemplate	en	Time
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty

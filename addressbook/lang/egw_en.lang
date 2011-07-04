@@ -61,7 +61,6 @@ are you shure you want to delete this contact?	addressbook	en	Are you sure you w
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 assistent	addressbook	en	Assistent
 assistent phone	addressbook	en	Assistent phone
-at the moment the following document-types are supported:	addressbook	en	The following document types are supported:
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
@@ -160,7 +159,6 @@ distribution lists	addressbook	en	Distribution lists
 distribution lists, ...	addressbook	en	Distribution lists, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want another private address book, which can not be viewed by other users, if you grant access to your personal address book?
 do your really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
-document '%1' does not exist or is not readable for you!	addressbook	en	Document '%1' does not exist or is not readable by you!
 doesn't matter	addressbook	en	Doesn't matter
 domestic	addressbook	en	Domestic
 don't hide empty columns	addressbook	en	Hide empty columns
@@ -186,10 +184,7 @@ enter the path to the exported file here	addressbook	en	Enter the path to the ex
 error deleting the contact !!!	addressbook	en	Error deleting the contact!
 error saving the contact !!!	addressbook	en	Error saving the contact!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 existing links	addressbook	en	Existing links
 exists	addressbook	en	Exists
 export	addressbook	en	Export
@@ -217,7 +212,6 @@ fields to copy when copying an address?	admin	en	Fields to copy when copying an 
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Field separator
 fieldseperator	addressbook	en	Field separator
-for more then one contact in a document use the tag pagerepeat!	addressbook	en	Use the tag page repeat for more than one contact in a document!
 for read only ldap	admin	en	For read only LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	en	Use this tag for serial letter. Place the content you want to repeat between two tags.
 freebusy uri	addressbook	en	FreeBusy URI
@@ -245,8 +239,6 @@ home zip code	addressbook	en	Home ZIP code
 how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	If accounts are already in LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a directory, full vfs path, address book displays an action for each document. That action allows to download the specified document with the contact data inserted.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	en	If you specify a document, full vfs path, address book displays an extra document icon for each address. That icon allows to download the specified document with the contact data inserted.
 if you specify an export definition, it will be used when you export	addressbook	en	If you specify an export definition, it will be used when you export
 ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
@@ -401,7 +393,6 @@ that field name has been used already !	addressbook	en	The field name has been u
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like $$n_fn$$, to be replaced with the contact data. %1Full list of placeholder names%2.
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
