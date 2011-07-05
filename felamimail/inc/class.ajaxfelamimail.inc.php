@@ -345,6 +345,8 @@ class ajaxfelamimail
 			try
 			{
 				$this->bofelamimail->deleteMessages(($_messageList == 'all'? 'all':$_messageList['msg']));
+				unset($this->sessionData['previewMessage']);
+				$this->saveSessionData();
 			}
 			catch (egw_exception $e)
 			{
