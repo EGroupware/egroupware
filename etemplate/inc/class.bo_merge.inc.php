@@ -63,6 +63,7 @@ abstract class bo_merge
 	 */
 	function __construct()
 	{
+		translation::add_app('addressbook');
 		$this->contacts = new addressbook_bo();
 
 		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
