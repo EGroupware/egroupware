@@ -191,6 +191,8 @@ class link_widget
 			$cell['type'] = 'label';
 			//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 			list($cell['size']) = explode(',',$cell['size']);
+			// Pass link through framework's handler
+			if(!$popup) $link = str_replace(',','%2C',egw::link('/index.php?menuaction='.$link,false,$value['app']));
 			$cell['size'] .= ','.$link.',,,'.$target.','.$popup.','.$value['extra_title'];
 			$value = $value['title'] ? $value['title'] : egw_link::title($value['app'],$value['id']);
 			return true;
