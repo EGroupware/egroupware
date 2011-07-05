@@ -18,7 +18,7 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-filterheader label="Application" id="app"/>
+					<nextmatch-header label="Application" id="app"/>
 					<nextmatch-accountfilter label="Category owner" id="owner" options="all,both"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>
 					<nextmatch-header label="Color" id="color"/>
@@ -26,7 +26,7 @@
 					<nextmatch-header align="center" label="Children" id="subs"/>
 					<nextmatch-header label="Actions" id="legacy_actions"/>
 				</row>
-				<row class="$row_cont[id]">
+				<row class="$row_cont[id] $row_cont[class]">
 					<hbox options="0,0">
 						<html id="${row}[level_spacer]"/>
 						<description id="${row}[name]" class="$row_cont[class]"/>
@@ -76,6 +76,19 @@
 					<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
 					<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
 					<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+				</hbox>
+			</vbox>
+		</box>
+		<box class="action_popup prompt" id="owner_popup">
+			<vbox>
+				<description value="Change owner" class="promptheader"/>
+				<description value="Select owner"/>
+				<listbox id="owner" no_lang="1" rows="4" class="action_popup-content"/>
+				<hbox>
+					<button label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"/>
+					<button label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+					<button disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"/>
+					<buttononly label="Cancel" onclick="nm_hide_popup(this,'owner_popup');"/>
 				</hbox>
 			</vbox>
 		</box>

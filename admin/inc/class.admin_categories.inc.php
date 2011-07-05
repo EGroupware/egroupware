@@ -223,7 +223,11 @@ class admin_categories
 		}
 		if($this->appname == 'admin' || ($content['id'] && !((int)$content['owner'] > 0)))
 		{
-			if($content['owner'] > 0) $content['owner'] = 0;
+			if($content['owner'] > 0)
+			{
+				$content['msg'] .= "\n".lang('owner "%1" removed, please select group-owner', common::grab_owner_name($content['owner']));
+				$content['owner'] = 0;
+			}
 			$sel_options['owner'][0] = lang('All users');
 			$accs = $GLOBALS['egw']->accounts->get_list('groups');
 			foreach($accs as $acc)
@@ -586,9 +590,11 @@ class admin_categories
 
 		list($action, $settings) = explode('_', $action, 2);
 
-		switch($action) {
+		switch($action)
+		{
 			case 'delete':
-				foreach($checked as $id) {
+				foreach($checked as $id)
+				{
 					$cats->delete($id,$settings == 'sub',$settings != 'sub');
 					$action_msg = lang('deleted');
 					$success++;
@@ -598,14 +604,22 @@ class admin_categories
 				$action_msg = lang('updated');
 				list($add_remove, $ids) = explode('_', $settings, 2);
 				$ids = explode(',',$ids);
-				foreach($checked as $id) {
+
+				// Adding 'All users' removes all the others
+				if($add_remove == 'add' && array_search(categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(categories::GLOBAL_ACCOUNT);
+
+				foreach($checked as $id)
+				{
 					if (!$data = $cats->read($id)) continue;
-					/* Multi-owner
+					$data['owner'] = explode(',',$data['owner']);
+					if(array_search(categories::GLOBAL_ACCOUNT,$data['owner']) !== false)
+					{
+						$data['owner'] = array();
+					}
 					$data['owner'] = $add_remove == 'add' ?
-						array_merge($data['owner'],$ids) :
+						$ids == array(categories::GLOBAL_ACCOUNT) ? $ids : array_merge($data['owner'],$ids) :
 						array_diff($data['owner'],$ids);
-					*/
-					$data['owner'] = $ids;
+					$data['owner'] = implode(',',array_unique($data['owner']));
 
 					if ($cats->edit($data))
 					{
@@ -625,7 +639,8 @@ class admin_categories
 	/**
 	 * Get a list of apps for selectbox / filter
 	 */
-	protected function get_app_list() {
+	protected function get_app_list()
+	{
 		$apps = array();
 		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 		{

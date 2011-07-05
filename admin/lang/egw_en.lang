@@ -429,6 +429,7 @@ operating system	admin	en	Operating system
 order	admin	en	Order
 outbound	admin	en	Outbound
 own install id:	admin	en	Own install ID:
+owner "%1" removed, please select group-owner	admin	en	Owner "%1" removed, please select group owner
 passthrough	admin	en	Passthrough
 password for smtp-authentication	admin	en	Password for SMTP authentication
 password updated	admin	en	Password updated.
