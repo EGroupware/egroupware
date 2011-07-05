@@ -158,7 +158,7 @@ class timesheet_merge extends bo_merge
 				$n++;
 			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.$label.'</td>';
+			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}
@@ -191,7 +191,7 @@ class timesheet_merge extends bo_merge
 			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
 			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
 			'NENVLF' => lang('Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for example'),
+			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example'),
 			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
 			) as $name => $label)
 		{

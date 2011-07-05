@@ -63,7 +63,11 @@ abstract class bo_merge
 	 */
 	function __construct()
 	{
+		// Common messages are in preferences
+		translation::add_app('preferences');
+		// All contact fields are in addressbook
 		translation::add_app('addressbook');
+
 		$this->contacts = new addressbook_bo();
 
 		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.

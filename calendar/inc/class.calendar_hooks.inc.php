@@ -604,9 +604,9 @@ class calendar_hooks
 				'size'   => 60,
 				'label'  => 'Directory with documents to insert entries',
 				'name'   => 'document_dir',
-				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the infolog data inserted.',lang('calendar')).' '.
-					lang('The document can contain placeholder like {{calendar_title}}, to be replaced with the contact data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>').' '.
-					lang('At the moment the following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('calendar')).' '.
+					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','calendar_title').' '.
+					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
