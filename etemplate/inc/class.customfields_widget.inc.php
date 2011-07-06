@@ -112,7 +112,7 @@ class customfields_widget
 	{
 		list($app) = explode('.',$tmpl->name);
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
-		if ($app && $app != 'stylite' && $app != $this->appname && ($this->appname == 'etemplate' || !$this->customfields))
+		if ($app && $app != 'stylite' && $app != $this->appname && ($this->appname == 'etemplate' || !$this->customfields || etemplate::$hooked))
 		{
 			self::__construct(null,$app); 	// app changed
 		}
