@@ -385,6 +385,9 @@ class ajaxfelamimail
 			$boPreferences  = CreateObject('felamimail.bopreferences');
 			$boPreferences->setProfileActive(false);
 			if ($accountData) $boPreferences->setProfileActive(true,$accountData);
+			// unset the previewID, as the Message will not be available on another server
+			unset($this->sessionData['previewMessage']);
+			$this->saveSessionData();
 
 			$response = new xajaxResponse();
 			$response->addScript('refreshView();');
@@ -439,6 +442,8 @@ class ajaxfelamimail
 			// start displaying at message 1
 			$this->sessionData['startMessage']      = 1;
 			$this->sessionData['activeFilter']	= (int)$_filterID;
+			// unset the previewID, as the Message will not probably not be within the selection
+			unset($this->sessionData['previewMessage']);
 			$this->saveSessionData();
 			$GLOBALS['egw']->session->commit_session();
 
@@ -625,6 +630,7 @@ class ajaxfelamimail
 			if($this->_debug) error_log('generateMessageList done');
 			if ($this->sessionData['previewMessage']>0) 
 			{
+				$response->addScript('fm_previewMessageID = "";');
 				$response->addScript('mail_focusGridElement('.$this->sessionData['previewMessage'].');');
 			}
 			else
@@ -855,6 +861,8 @@ class ajaxfelamimail
 			$this->sessionData['messageFilter'] = $filter;
 
 			$this->sessionData['startMessage'] = 1;
+			// unset the previewID, as the Message will not be available with the filtered view
+			unset($this->sessionData['previewMessage']);
 
 			$this->saveSessionData();
 
@@ -1293,6 +1301,9 @@ class ajaxfelamimail
 
 		function skipForward()
 		{
+			// unset the previewID, as the Message will not be available with the next subset
+			unset($this->sessionData['previewMessage']);
+
 			$sortedList = $this->bofelamimail->getSortedList(
 				$this->sessionData['mailbox'],
 				$this->sessionData['sort'],
@@ -1327,6 +1338,8 @@ class ajaxfelamimail
 
 		function skipPrevious()
 		{
+			// unset the previewID, as the Message will not be available on the prev subset
+			unset($this->sessionData['previewMessage']);
 
 			$maxMessages = $GLOBALS['egw_info']["user"]["preferences"]["common"]["maxmatchs"];
 			if (isset($this->bofelamimail->mailPreferences->preferences['prefMailGridBehavior']) && (int)$this->bofelamimail->mailPreferences->preferences['prefMailGridBehavior'] > 0)
@@ -1412,7 +1425,13 @@ class ajaxfelamimail
 		function updateMessageView($_folderName)
 		{
 			$folderName = $this->_decodeEntityFolderName($_folderName);
-			if($this->_debug) error_log("ajaxfelamimail::updateMessageView $folderName $this->charset");
+			if($this->_debug)
+			{
+				error_log("ajaxfelamimail::updateMessageView $folderName $this->charset");
+				error_log(__METHOD__.__LINE__.' '.$folderName.' <=> '.$this->sessionData['mailbox']);
+			}
+			// unset the previewID, as the Message will not be available on another folder
+			if ($folderName != $this->sessionData['mailbox']) unset($this->sessionData['previewMessage']);
 
 			$this->sessionData['mailbox'] 		= $folderName;
 			$this->sessionData['startMessage']	= 1;

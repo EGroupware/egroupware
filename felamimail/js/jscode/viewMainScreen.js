@@ -569,11 +569,14 @@ function selectedGridChange(_selectAll) {
 
 		if (focused)
 		{
+			// Get the iframe height, as indicator for preview active
+			var IFRAME_HEIGHT = typeof felamimail_iframe_height == "number" ? felamimail_iframe_height : 0;
+			if (isNaN(IFRAME_HEIGHT) || IFRAME_HEIGHT<0) IFRAME_HEIGHT=0;
 			// Get all currently selected object - we don't want to do a preview
 			// if more than one message is selected.
 			var allSelected = mailGrid.dataRoot.actionObject.getSelectedObjects();
 
-			if (allSelected.length > 0 && fm_previewMessageID != focused.id) {
+			if (allSelected.length > 0 && fm_previewMessageID != focused.id && IFRAME_HEIGHT > 0) {
 				if (allSelected.length == 1)
 				{
 					MessageBuffer ='';
