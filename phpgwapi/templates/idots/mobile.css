@@ -1,0 +1,44 @@
+/**
+ * Mobile support for idots: only show application area, all apps are in slideout instead of navbar
+ *
+ * @version $Id$
+ */
+
+#divLogo,#XXXdivAppIconBar,#tdSidebox,#divStatusBar,#topmenu,#divGenTime,#divPoweredBy,#divUpperTabs,.tdAppIcon,#divAppboxHeader {
+	display:none;
+}
+
+#divAppIconBar {
+	position: relative;
+	height: 0px;
+	overflow: visible;
+	border: none;
+}
+
+#extra_icons_show {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#menu1Container {
+	left: 5px;
+}
+
+#sideboxdragarea {
+	top: 20px;
+}
+
+#divMain,#popupMainDiv {
+	border:none;
+	margin:0px;
+	padding:0px;
+}
+
+#tdAppbox,#divAppboxHeader,#divSubContainer,#divAppbox {
+	border: none;
+	text-align: left;
+}
+#divAppboxHeader {
+	background: none;
+}

@@ -6,7 +6,7 @@
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,'right');
+	new ypSlideOutMenu("menu1", "down", 10, {menu1top}, 160, 200,'right');
 </script>
 
 <div id="menu1Container">
@@ -46,11 +46,11 @@
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 <!-- BEGIN app_icon_block -->
-							<td width="{tdwidth}%" align="center" style="text-align:center"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
+							<td width="{tdwidth}%" align="center" style="text-align:center" class="tdAppIcon"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
 <!-- END app_icon_block -->
 <!-- BEGIN app_extra_icons_icon -->
 							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
-								<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
+								<a id="extra_icons_show" title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
 							</td>
 <!-- END app_extra_icons_icon -->
 						</tr>
@@ -84,10 +84,10 @@
 
 <!-- BEGIN sidebox_hide_header -->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 105, 100, 200)
+		new ypSlideOutMenu("menu2", "right", 0, {menu2top}, 100, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="z-index:100;position:absolute;left:0px;top:105px">
+	<div id="sideboxdragarea">
 		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
