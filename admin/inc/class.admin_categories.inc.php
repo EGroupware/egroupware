@@ -305,7 +305,7 @@ class admin_categories
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @return int total number of rows
 	 */
-	public function get_rows($query,&$rows,&$readonlys)
+	public function get_rows(&$query,&$rows,&$readonlys)
 	{
 		self::init_static();
 
@@ -479,6 +479,7 @@ class admin_categories
 		$content['msg'] = $msg;
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
+		$content['owner'] = '';
 
 		$sel_options['appname'] = $sel_options['app'] = $this->get_app_list();
 
@@ -591,7 +592,8 @@ class admin_categories
 			}
 		}
 		$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
-		$cats = new categories($owner,$query['appname']);
+		$app = $query['col_filter']['app'] ? $query['col_filter']['app'] : $query['appname'];
+		$cats = new categories($owner,$app);
 
 		list($action, $settings) = explode('_', $action, 2);
 
@@ -609,7 +611,6 @@ class admin_categories
 				$action_msg = lang('updated');
 				list($add_remove, $ids) = explode('_', $settings, 2);
 				$ids = explode(',',$ids);
-
 				// Adding 'All users' removes all the others
 				if($add_remove == 'add' && array_search(categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(categories::GLOBAL_ACCOUNT);
 
@@ -617,7 +618,7 @@ class admin_categories
 				{
 					if (!$data = $cats->read($id)) continue;
 					$data['owner'] = explode(',',$data['owner']);
-					if(array_search(categories::GLOBAL_ACCOUNT,$data['owner']) !== false)
+					if(array_search(categories::GLOBAL_ACCOUNT,$data['owner']) !== false || $data['owner'][0] > 0)
 					{
 						$data['owner'] = array();
 					}
