@@ -53,7 +53,7 @@ class importexport_admin_prefs_sidebox_hooks
 			{
 				$file['Define imports|exports']	= egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.index',
-				));
+				),'preferences');
 			}
 			if ($location == 'preferences')
 			{
@@ -72,7 +72,7 @@ class importexport_admin_prefs_sidebox_hooks
 				'Import definitions' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
 				'Define imports|exports'  => egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
-				)),
+				),$location),
 				'Schedule' => egw::link('/index.php', array(
 					'menuaction' => 'importexport.importexport_schedule_ui.index'
 				)),
@@ -204,7 +204,7 @@ this.value = \'\'"';
 		{
 			$file['Define imports|exports']	= egw::link('/index.php',array(
 				'menuaction' => 'importexport.importexport_definitions_ui.index',
-			), 'importexport');
+			), 'preferences');
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
