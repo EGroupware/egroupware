@@ -492,6 +492,11 @@ class link_widget
 		{
 			$options = ' target="'.($target ? $target : '_blank').'"';
 		}
+		else
+		{
+			// Pass link through framework's handler
+			$href = str_replace(',','%2C',egw::link('/index.php',egw_link::view($link['app'],$link['id'],$link),$link['app']));
+		}
 		if ($help)
 		{
 			$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
@@ -499,7 +504,7 @@ class link_widget
 		}
 		return html::a_href(
 			html::htmlspecialchars(egw_link::title($link['app'],$link['id'])),
-			egw_link::view($link['app'],$link['id'],$link),'',$options);
+			$href ? $href : egw_link::view($link['app'],$link['id'],$link),'',$options);
 	}
 
 	/**
