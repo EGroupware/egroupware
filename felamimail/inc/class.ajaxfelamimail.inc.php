@@ -766,6 +766,8 @@ class ajaxfelamimail
 					try
 					{
 						$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']));
+						unset($this->sessionData['previewMessage']);
+						$this->saveSessionData();
 					}
 					catch (egw_exception $e)
 					{
