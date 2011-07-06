@@ -18,7 +18,7 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-header label="Application" id="app"/>
+					<nextmatch-filterheader label="Application" id="app" options=","/>
 					<nextmatch-accountfilter label="Category owner" id="owner" options="all,both"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>
 					<nextmatch-header label="Color" id="color"/>

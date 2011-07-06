@@ -322,6 +322,10 @@ class admin_categories
 		{
 			$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		}
+		if($query['col_filter']['app'])
+		{
+			$query['appname'] = $query['col_filter']['app'];
+		}
 		$cats = new categories($filter['owner'],$query['appname']);
 		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : 1;	// ignore acl only for admins
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent=0,true,$filter);
@@ -421,7 +425,7 @@ class admin_categories
 			{
 				$content['nm']['start']=0;
 			}
-			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
+			$content['nm']['appname'] = $content['nm']['col_filter']['app'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
 
 			$content['nm']['global_cats'] = true;
@@ -476,7 +480,8 @@ class admin_categories
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 
-		$sel_options['appname'] = $this->get_app_list();
+		$sel_options['appname'] = $sel_options['app'] = $this->get_app_list();
+
 		$sel_options['owner'][0] = lang('All users');
 		$accs = $GLOBALS['egw']->accounts->get_list('groups');
 		foreach($accs as $acc)
