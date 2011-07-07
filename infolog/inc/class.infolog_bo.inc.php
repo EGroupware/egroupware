@@ -297,17 +297,18 @@ class infolog_bo
 	{
 		static $cache = array();
 
+		$info_id = is_array($info) ? $info['info_id'] : $info;
+
 		if (!$user) $user = $this->user;
 		if ($user == $this->user)
 		{
 			$grants = $this->grants;
-			$access =& $cache[$info_id][$required_rights];	// we only cache the current user!
+			if ($info_id) $access =& $cache[$info_id][$required_rights];	// we only cache the current user!
 		}
 		else
 		{
 			$grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true,$user);
 		}
-
 		if (!$info)
 		{
 			$owner = $other ? $other : $user;
@@ -315,7 +316,6 @@ class infolog_bo
 			return $grant & $required_rights;
 		}
 
-		$info_id = is_array($info) ? $info['info_id'] : $info;
 
 		if (!isset($access))
 		{
