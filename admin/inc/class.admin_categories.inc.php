@@ -112,7 +112,7 @@ class admin_categories
 					$appname = categories::GLOBAL_APPNAME;
 				}
 			}
-			elseif (!self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
+			elseif ($content['appname'] != $appname || !self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
 			{
 				// only allow to view category
 				$readonlys['__ALL__'] = true;
@@ -193,7 +193,7 @@ class admin_categories
 			if (!empty($js)) $GLOBALS['egw']->js->set_onload($js);
 		}
 		$content['msg'] = $msg;
-		$content['appname'] = $appname;
+		if(!$content['appname']) $content['appname'] = $appname;
 		$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
 
 		$sel_options['icon'] = self::get_icons();
@@ -256,6 +256,7 @@ class admin_categories
 		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
+			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
 
 		$tmpl = new etemplate('admin.categories.edit');
