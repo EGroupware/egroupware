@@ -88,7 +88,7 @@ class infolog_so
 		if (!$user) $user = $this->user;
 
 		static $um_cache = array();
-		$user_and_memberships =& $um_cache[$user];
+		if ($user == $this->user) $user_and_memberships =& $um_cache[$user];
 		if (!isset($user_and_memberships))
 		{
 			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
@@ -120,7 +120,7 @@ class infolog_so
 		{
 			// dont change our own internal data,
 			$backup_data = $this->data;
-			$info = $this->read((array)$info);
+			$info = $this->read(array('info_id'=>$info));
 			$this->data = $backup_data;
 		}
 		else
@@ -132,7 +132,6 @@ class infolog_so
 			return False;
 		}
 		$owner = $info['info_owner'];
-
 		$access_ok = $owner == $user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
 			(!!($grants[$owner] & $required_rights) ||
