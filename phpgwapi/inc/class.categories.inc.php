@@ -423,7 +423,7 @@ class categories
 		}
 		$this->db->insert(self::TABLE,array(
 			'cat_parent'  => $values['parent'],
-			'cat_owner'   => $this->account_id,
+			'cat_owner' => isset($values['owner']) ? $values['owner'] : $this->account_id,
 			'cat_access'  => isset($values['access']) ? $values['access'] : 'public',
 			'cat_appname' => $this->app_name,
 			'cat_name'    => $values['name'],
