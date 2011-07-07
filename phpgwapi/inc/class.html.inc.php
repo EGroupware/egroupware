@@ -20,7 +20,7 @@
 class html
 {
 	/**
-	 * user-agent: 'firefox', 'msie', 'safari' (incl. iPhone, Chrome), 'opera', 'konqueror', 'mozilla'
+	 * user-agent: 'firefox', 'msie', 'safari' (incl. iPhone), 'chrome', 'opera', 'konqueror', 'mozilla'
 	 * @var string
 	 */
 	static $user_agent;
@@ -65,7 +65,7 @@ class html
 		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
 			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts,PREG_SET_ORDER);
-			$parts = array_pop($parts);
+			$parts = $parts[2][1] == 'Chrome' ? $parts[2] : array_pop($parts);
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
