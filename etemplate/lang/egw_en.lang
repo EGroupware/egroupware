@@ -89,6 +89,7 @@ contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
 contains	etemplate	en	Contains
+creator	preferences	en	Creator
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table tag
@@ -260,6 +261,7 @@ middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 minutes	etemplate	en	Minutes
 missing: %1	etemplate	en	Missing: %1
+modifier	preferences	en	Modifier
 month	etemplate	en	Month
 more than 1 match for '%1'	etemplate	en	More than 1 match for '%1'
 multicolumn indices	etemplate	en	Multi column indices
