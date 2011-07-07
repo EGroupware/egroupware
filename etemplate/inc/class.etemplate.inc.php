@@ -1243,6 +1243,11 @@ class etemplate extends boetemplate
 				// a few html5 options
 				if ((string)$min !== '') $options .= ' min="'.htmlspecialchars($min).'"';
 				if ((string)$max !== '') $options .= ' max="'.htmlspecialchars($max).'"';
+				// disable html5 form validation for float, as Chrome 12 rejects float values with comma as decimal separator
+				if ($type == 'float' && !$readonly && html::$user_agent == 'chrome' && strpos(self::$form_options,'novalidate') === false)
+				{
+					self::$form_options .= ' novalidate="novalidate"';
+				}
 				if ($cell_options == '' && !$readonly)
 				{
 					$cell_options = $cell['type'] == 'int' ? 5 : 8;
