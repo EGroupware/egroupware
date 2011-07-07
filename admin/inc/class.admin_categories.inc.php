@@ -112,7 +112,7 @@ class admin_categories
 					$appname = categories::GLOBAL_APPNAME;
 				}
 			}
-			elseif (!self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
+			elseif ($content['appname'] != $appname || !self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
 			{
 				// only allow to view category
 				$readonlys['__ALL__'] = true;
@@ -193,7 +193,7 @@ class admin_categories
 			if (!empty($js)) $GLOBALS['egw']->js->set_onload($js);
 		}
 		$content['msg'] = $msg;
-		$content['appname'] = $appname;
+		if(!$content['appname']) $content['appname'] = $appname;
 		$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
 
 		$sel_options['icon'] = self::get_icons();
@@ -223,7 +223,11 @@ class admin_categories
 		}
 		if($this->appname == 'admin' || ($content['id'] && !((int)$content['owner'] > 0)))
 		{
-			if($content['owner'] > 0) $content['owner'] = 0;
+			if($content['owner'] > 0)
+			{
+				$content['msg'] .= "\n".lang('owner "%1" removed, please select group-owner', common::grab_owner_name($content['owner']));
+				$content['owner'] = 0;
+			}
 			$sel_options['owner'][0] = lang('All users');
 			$accs = $GLOBALS['egw']->accounts->get_list('groups');
 			foreach($accs as $acc)
@@ -252,6 +256,7 @@ class admin_categories
 		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
+			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
 
 		$tmpl = new etemplate('admin.categories.edit');
@@ -301,7 +306,7 @@ class admin_categories
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @return int total number of rows
 	 */
-	public function get_rows($query,&$rows,&$readonlys)
+	public function get_rows(&$query,&$rows,&$readonlys)
 	{
 		self::init_static();
 
@@ -318,8 +323,12 @@ class admin_categories
 		{
 			$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		}
+		if($query['col_filter']['app'])
+		{
+			$globalcat = false;
+		}
 		$cats = new categories($filter['owner'],$query['appname']);
-		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : 1;	// ignore acl only for admins
+		$globalcat = $globalcat && isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent=0,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
@@ -341,7 +350,12 @@ class admin_categories
 			$row['class'] = 'level'.$row['level'];
 			if($row['owner'] > 0 && !$GLOBALS['egw_info']['user']['apps']['admin'] && $row['owner'] != $GLOBALS['egw_info']['user']['account_id'])
 			{
-				$row['class'] . ' rowNoEdit rowNoDelete ';
+				$row['class'] .= ' rowNoEdit rowNoDelete ';
+			}
+			// Can only edit (via context menu) categories for the selected app (backend restriction)
+			if($row['appname'] != $query['appname'])
+			{
+				$row['class'] .= ' rowNoEdit ';
 			}
 			$readonlys["edit[$row[id]]"]   = !self::$acl_edit;
 			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
@@ -441,6 +455,17 @@ class admin_categories
                         else
                         {
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
+				if(in_array($content['nm']['action'], array('owner')))
+				{
+					$action = $content['nm']['action'];
+					$content['nm']['action'] .= '_' . key($content[$action . '_action']);
+
+					if(is_array($content[$action]))
+					{
+						$content[$action] = implode(',',$content[$action]);
+					}
+					$content['nm']['action'] .= '_' . $content[$action];
+				}
                                 if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
                                         $success,$failed,$action_msg,$content['nm'],$msg))
                                 {
@@ -455,14 +480,34 @@ class admin_categories
 		$content['msg'] = $msg;
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
+		$content['owner'] = '';
 
 		$sel_options['appname'] = $this->get_app_list();
+		$sel_options['app'] = array(
+			'' => lang('All'),
+			$appname => lang($appname)
+		);
+
+		$sel_options['owner'][0] = lang('All users');
+		$accs = $GLOBALS['egw']->accounts->get_list('groups');
+		foreach($accs as $acc)
+		{
+			if ($acc['account_type'] == 'g')
+			{
+				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+			}
+		}
+
 
 		$readonlys['add'] = !self::$acl_add;
 		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$readonlys['nm']['rows']['owner'] = true;
 			$readonlys['nm']['col_filter']['owner'] = true;
+		}
+		if($appname == categories::GLOBAL_APPNAME) {
+			$sel_options['app'] = array(''=>'');
+			$readonlys['nm']['rows']['app'] = true;
 		}
 
 		$tmpl = new etemplate('admin.categories.index');
@@ -482,7 +527,7 @@ class admin_categories
 				'popup' => '600x380',
 				'group' => $group=1,
 			),
-			'add' => array(        // does edit if allowed, otherwise view
+			'add' => array(
 				'caption' => 'Add',
 				'allowOnMultiple' => false,
 				'icon' => 'new',
@@ -490,7 +535,7 @@ class admin_categories
 				'popup' => '600x380',
 				'group' => $group,
 			),
-			'sub' => array(        // does edit if allowed, otherwise view
+			'sub' => array(
 				'caption' => 'Add sub',
 				'allowOnMultiple' => false,
 				'icon' => 'new',
@@ -499,14 +544,26 @@ class admin_categories
 				'group' => $group,
 				'disableClass' => 'rowNoSub',
 			),
-			'delete' => array(        // does edit if allowed, otherwise view
+			'owner' => array(
+				'caption' => 'Change owner',
+				'icon' => 'users',
+				'nm_action' => 'open_popup',
+				'group' => $group,
+				'disableClass' => 'rowNoEdit',
+			),
+			'delete' => array(
 				'caption' => 'Delete',
 				'allowOnMultiple' => true,
 				'nm_action' => 'open_popup',
-				'group' => $group,
+				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 			),
 		);
+
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			unset($actions['owner']);
+		}
 
 		return $actions;
 	}
@@ -545,17 +602,51 @@ class admin_categories
 			}
 		}
 		$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
-		$cats = new categories($owner,$query['appname']);
+		$app = $query['col_filter']['app'] ? $query['col_filter']['app'] : $query['appname'];
+		$cats = new categories($owner,$app);
 
-		foreach($checked as $id) {
-			switch($action) {
-				case 'delete':
-				case 'delete_sub':
-					$cats->delete($id,$action == 'delete_sub',$action != 'delete_sub');
+		list($action, $settings) = explode('_', $action, 2);
+
+		switch($action)
+		{
+			case 'delete':
+				foreach($checked as $id)
+				{
+					$cats->delete($id,$settings == 'sub',$settings != 'sub');
 					$action_msg = lang('deleted');
 					$success++;
-					break;
-			}
+				}
+				break;
+			case 'owner':
+				$action_msg = lang('updated');
+				list($add_remove, $ids) = explode('_', $settings, 2);
+				$ids = explode(',',$ids);
+				// Adding 'All users' removes all the others
+				if($add_remove == 'add' && array_search(categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(categories::GLOBAL_ACCOUNT);
+
+				foreach($checked as $id)
+				{
+					if (!$data = $cats->read($id)) continue;
+					$data['owner'] = explode(',',$data['owner']);
+					if(array_search(categories::GLOBAL_ACCOUNT,$data['owner']) !== false || $data['owner'][0] > 0)
+					{
+						$data['owner'] = array();
+					}
+					$data['owner'] = $add_remove == 'add' ?
+						$ids == array(categories::GLOBAL_ACCOUNT) ? $ids : array_merge($data['owner'],$ids) :
+						array_diff($data['owner'],$ids);
+					$data['owner'] = implode(',',array_unique($data['owner']));
+
+					if ($cats->edit($data))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
 		}
 
 		return $failed == 0;
@@ -564,7 +655,8 @@ class admin_categories
 	/**
 	 * Get a list of apps for selectbox / filter
 	 */
-	protected function get_app_list() {
+	protected function get_app_list()
+	{
 		$apps = array();
 		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 		{

@@ -99,7 +99,7 @@
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Limit to members of" options=",,,owner"/>
+					<description value="Category owner" options=",,,owner"/>
 					<listbox statustext="Limit global category to members of a certain group" id="owner" needed="1" rows="3"/>
 				</row>
 				<row class="row" disabled="!@last_mod">
