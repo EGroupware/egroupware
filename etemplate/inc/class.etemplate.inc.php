@@ -247,6 +247,9 @@ class etemplate extends boetemplate
 		self::$request->ignore_validation = $ignore_validation;
 		self::$request->name_vars = self::$name_vars;
 
+		// tell html5 form validation NOT to validate
+		if ($ignore_validation) self::$form_options .= ' novalidate="novalidate"';
+
 		if((int) $output_mode == 3)
 		{
 			self::$styles_included[$this->name] = True;
@@ -1419,6 +1422,7 @@ class etemplate extends boetemplate
 			case 'button':
 			case 'buttononly':
 			case 'cancel':	// cancel button
+				if ($name == 'cancel' || stripos($name,'[cancel]') !== false) $type = 'cancel';
 				list($app) = explode('.',$this->name);
 				list($img,$ro_img) = explode(',',$cell_options);
 				if ($img[0] != '/' && strpos($img,'/') !== false && count($img_parts = explode('/',$img)) == 2)
@@ -1458,6 +1462,7 @@ class etemplate extends boetemplate
 					{
 						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').$cell['onchange'];
 					}
+					if ($type == 'cancel') $options .= ' novalidate="novalidate"';	// tell html5 form validation NOT to validate
 					$html .= !$readonly ? html::submit_button($form_name,$label,$onclick,
 						strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app,$type == 'buttononly' ? 'button' : 'submit') :
 						html::image($app,$ro_img,'',$options);
@@ -1465,11 +1470,7 @@ class etemplate extends boetemplate
 				$extra_label = False;
 				if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 				{
-					self::$request->set_to_process($form_name,$cell['type']);
-					if ($name == 'cancel' || stripos($name,'[cancel]') !== false)
-					{
-						self::$request->set_to_process($form_name,'cancel');
-					}
+					self::$request->set_to_process($form_name,$type);
 				}
 				break;
 			case 'hrule':
