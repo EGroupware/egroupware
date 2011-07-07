@@ -1091,7 +1091,7 @@ function open_edit(series)
 						$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\" nowrap>".
 							($this->bo->printer_friendly?$icons:($edit_icon_href ? $edit_icon_href : $icon_href)).
 							"</td>\n  <td>".($this->printer_friendly?$todo['title']:
-							$href)."</td>\n </tr>\n";
+							$edit_href)."</td>\n </tr>\n";
 						/**
 						 * ToDo: add delete and closing action
 						 */
