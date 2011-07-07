@@ -324,10 +324,10 @@ class admin_categories
 		}
 		if($query['col_filter']['app'])
 		{
-			$globalcat = false;
+			$filter['appname'] = $query['col_filter']['app'];
 		}
 		$cats = new categories($filter['owner'],$query['appname']);
-		$globalcat = $globalcat && isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
+		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent=0,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
