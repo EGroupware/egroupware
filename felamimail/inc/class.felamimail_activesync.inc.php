@@ -300,6 +300,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		if ($protocolversion < 14.0)
     		debugLog("IMAP-SendMail: " . (isset($rfc822) ? $rfc822 : ""). "task: ".(isset($smartdata['task']) ? $smartdata['task'] : "")." itemid: ".(isset($smartdata['itemid']) ? $smartdata['itemid'] : "")." folder: ".(isset($smartdata['folderid']) ? $smartdata['folderid'] : ""));
 		if ($this->debugLevel>0) debugLog("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
+		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 		// if we cannot decode the mail in question, fail
 		if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false)
 		{
@@ -687,6 +688,28 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
             debugLog("The email could not be sent. Last-SMTP-error: ". $e->getMessage());
 			$send = false;
 		}
+
+		if (( $smartdata['task'] == 'reply' || $smartdata['task'] == 'forward') && $send == true)
+		{
+			$uid = $smartdata['itemid'];
+			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' tASK:'.$smartdata['task']." FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
+			$this->splitID($smartdata['folderid'], $account, $folder);
+			//error_log(__METHOD__.__LINE__.' Folder:'.$folder.' Uid:'.$uid);
+			$this->mail->reopen($folder);
+			// if the draft folder is a starting part of the messages folder, the draft message will be deleted after the send
+			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
+			if ($this->mail->isDraftFolder($folder) && !$this->mail->isTemplateFolder($folder))
+			{
+				$bofelamimail->deleteMessages(array($uid));
+			} else {
+				$this->mail->flagMessages("answered", array($uid));
+				if ($smartdata['task']== "forward")
+				{
+					$this->mail->flagMessages("forwarded", array($uid));
+				}
+			}
+		}
+
 		$asf = ($send ? true:false); // initalize accordingly
 		if (($smartdata['saveinsentitems']==1 || !isset($smartdata['saveinsentitems'])) && $send==true && $this->mail->mailPreferences->preferences['sendOptions'] != 'send_only')
 		{
