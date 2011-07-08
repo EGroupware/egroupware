@@ -2290,7 +2290,7 @@
 			$queryString = implode(',', $sortResult);
 			// fetch the data for the selected messages
 			$headersNew = $this->icServer->getSummary($queryString, $rByUid);
-			if ($headersNew == null)
+			if ($headersNew == null && empty($_thisUIDOnly)) // -> if we request uids, do not try to look for messages with ids
 			{
 				// message retrieval via uid failed try one by one via message number
 				$rByUid = false;
