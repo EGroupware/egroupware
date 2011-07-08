@@ -1077,17 +1077,18 @@ function handleResize()
 	var mainViewArea = $j('#divMainView');
 
 	// Exit if the felamimail containers do not exist
-	// maybe check on  $j(mainViewArea).offset()== null as well
-	if (!outerContainer || !mainViewArea ||  $j(mainViewArea).offset()== null) {
+	if (!outerContainer || !mainViewArea ) {
 		return;
 	}
+	// maybe check on  $j(mainViewArea).offset()== null as well
+	var mainAreaOffsetTop = $j(mainViewArea).offset()==null ? 0 : $j(mainViewArea).offset().top;
 
 	var viewportHeight = $j(window).height();
 	var documentHeight =  $j("body").height() == 0 ? $j(document).height() : $j("body").height();
 	var containerHeight = $j(outerContainer).height();
 	
 	var totalHeight = viewportHeight;
-	if ($j(mainViewArea).offset().top == 0)
+	if (mainAreaOffsetTop == 0)
 	{
 		// if the mainViewArea offset from top is 0 we are in frameview, containerheight may/should be set decently
 		totalHeight = Math.max(0, viewportHeight - (documentHeight - containerHeight));
@@ -1095,7 +1096,7 @@ function handleResize()
 	else
 	{
 		// containerHeight is not set with a decent height when in idots/jerryr, for this reason we use this to calculate the
-		totalHeight = Math.max(0, Math.min(documentHeight, viewportHeight)-$j(mainViewArea).offset().top - 100);
+		totalHeight = Math.max(0, Math.min(documentHeight, viewportHeight)- mainAreaOffsetTop - 100);
 	}
 	var resultIframeHeight = IFRAME_HEIGHT;
 	var resultGridHeight = 0;
