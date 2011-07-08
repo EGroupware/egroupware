@@ -838,6 +838,8 @@ class Horde_SyncML_State {
 		$manufacturer = isset($deviceInfo['manufacturer']) ? strtolower($deviceInfo['manufacturer']) : 'unknown';
 		switch ($manufacturer) {
 			case 'funambol':
+				// Funambol requires well-formed XML
+				$res['ContentFormat'] = 'strictxml';
 				switch (strtolower($deviceInfo['model'])) {
 					case 'thunderbird':
 					case 'mozilla plugin':
@@ -853,6 +855,9 @@ class Horde_SyncML_State {
 						break;
 				}
 				break;
+			case 'patrick ohly':
+				// SyncEvolution requires well-formed XML, too
+				$res['ContentFormat'] = 'strictxml';
 			default:
 				$res['mayFragment'] = 1;
 				break;
