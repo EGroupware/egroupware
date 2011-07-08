@@ -108,7 +108,7 @@ class bo_acl
 				$perm_cats[$cat['id']] = $s;
 			}
 		}
-		return $perm_cats;
+		return isset($perm_cats)?$perm_cats:array();
 	}
 
 
