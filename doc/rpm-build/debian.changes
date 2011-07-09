@@ -1,3 +1,14 @@
+egroupware-epl (11.1.20110709-1) hardy; urgency=low
+
+  * Template for mobile browsers: only show application area, all apps are available via slideout menu
+  * CalDAV/GroupDAV: disabling not working iterator, causing not all events to be returned to client
+  * eSync: Take care of serverside message flagging on reply and forward
+  * Generate well-formed XML for Funambol and SyncEvolution clients (community bug#2975)
+  * Improved support for new SyncML clients/client versions
+  * many bugfixes in all areas/apps
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 09 Jul 2011 19:37:29 +0200
+
 egroupware-epl (11.1.20110703-1) hardy; urgency=low
 
   * jQuery: changed $ to $j to work around mootools use in Joomla templates and other js code in imported projects
