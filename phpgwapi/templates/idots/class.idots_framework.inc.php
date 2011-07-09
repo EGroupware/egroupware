@@ -101,6 +101,10 @@ class idots_framework extends egw_framework
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 
+		if (html::$ua_mobile)
+		{
+			self::$css_include_files[] = '/phpgwapi/templates/idots/mobile.css';
+		}
 		$this->tpl->set_var($this->_get_header());
 
 		$content .= $this->tpl->fp('out','head');
@@ -142,6 +146,12 @@ class idots_framework extends egw_framework
 		$this->tpl->set_block('navbar','app_extra_icons_div');
 		$this->tpl->set_block('navbar','app_extra_icons_icon');
 
+		if (html::$ua_mobile)	// replace whole navbar with just the extra apps icon
+		{
+			$this->tpl->set_block('navbar','navbar','mobil_not_needed');
+			$this->tpl->set_block('app_extra_icons_icon','extra_icons_show');
+			$this->tpl->set_var('mobil_not_needed',$this->tpl->get_var('extra_icons_show'));
+		}
 		$this->tpl->set_block('navbar','navbar_header','navbar_header');
 
 		$apps = $this->_get_navbar_apps();
@@ -152,7 +162,7 @@ class idots_framework extends egw_framework
 		{
 			$content .= '<script type="text/javascript">'."\nwindow.egw_link_registry=".egw_link::json_registry().";\n</script>\n";
 		}
-		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
+		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox' && !html::$ua_mobile)
 		{
 			$content .= $this->topmenu($vars,$apps);
 			$vars['current_users'] = $vars['quick_add'] = $vars['user_info']='';
@@ -204,7 +214,7 @@ class idots_framework extends egw_framework
 
 		if($this->sidebox_content)
 		{
-			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'])
+			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'] || html::$ua_mobile)
 			{
 				$this->tpl->set_var('lang_show_menu',lang('show menu'));
 				$content .= $this->tpl->parse('out','sidebox_hide_header');
@@ -466,7 +476,7 @@ class idots_framework extends egw_framework
 	{
 		$var = parent::_get_navbar($apps);
 
-		if($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover')
+		if($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover' && !html::$ua_mobile)
 		{
 			$var['show_menu_event'] = 'onMouseOver';
 		}
@@ -497,7 +507,12 @@ class idots_framework extends egw_framework
 			$this->tpl->set_var('upper_tabs','');
 		}
 
-		if (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
+		if (html::$ua_mobile)
+		{
+			$max_icons = 0;
+			$this->tpl->set_var('app_icons','');
+		}
+		elseif (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
 		{
 			$max_icons = 30;
 		}
@@ -516,7 +531,8 @@ class idots_framework extends egw_framework
 		foreach($apps as $app => $app_data)
 		{
 			if ($app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual' &&
-				($app != 'home' || $GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no'))
+				($app != 'home' || $GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no') ||
+				html::$ua_mobile && in_array($app,array('preferences','logout','home')))
 			{
 				$this->tpl->set_var($app_data);
 
@@ -568,6 +584,10 @@ class idots_framework extends egw_framework
 		{
 			$var['app_titles'] = '<td colspan="'.$max_icons.'">&nbsp;</td>';
 		}
+		// mobile support
+		$var['menu1top'] = html::$ua_mobile ? 0 : 114;
+		$var['menu2top'] = html::$ua_mobile ? 0 : 105;
+
 		return $var;
 	}
 

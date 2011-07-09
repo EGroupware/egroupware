@@ -1078,7 +1078,8 @@ Calendar._keyEvent = function(ev) {
 Calendar.prototype._init = function (firstDayOfWeek, date) {
 	var today = new Date();
 	date.setHours(12);	// Bugfix: Required for daylight saving!!!
-	this.table.style.visibility = "hidden";
+	// disabled, as it seems not to be needed and stalls hiding sidebox in calendar
+	//this.table.style.visibility = "hidden";
 	var year = date.getFullYear();
 	if (year < this.minYear) {
 		year = this.minYear;
@@ -1177,7 +1178,8 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 	this.ar_days = ar_days;
 	Calendar._setCellText(this.title,this.params ? this.date.print(this.params.titleFormat) : Calendar._MN[month] + ", " + year);
 	this.onSetTime();
-	this.table.style.visibility = "visible";
+	// disabled, as it seems not to be needed and stalls hiding sidebox in calendar
+	//this.table.style.visibility = "visible";
 	// PROFILE
 	// Calendar._setCellText(this.tooltips,"Generated in " + ((new Date()) - today) + " ms");
 };
