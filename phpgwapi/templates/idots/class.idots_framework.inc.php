@@ -507,12 +507,7 @@ class idots_framework extends egw_framework
 			$this->tpl->set_var('upper_tabs','');
 		}
 
-		if (html::$ua_mobile)
-		{
-			$max_icons = 0;
-			$this->tpl->set_var('app_icons','');
-		}
-		elseif (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
+		if (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
 		{
 			$max_icons = 30;
 		}
