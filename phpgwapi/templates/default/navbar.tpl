@@ -6,18 +6,14 @@
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 10, {menu1top}, 160, 200,'right');
+	new ypSlideOutMenu("menu1", "down", 10, {menu1top}, 180, 200,'right');
 </script>
 
 <div id="menu1Container">
 	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
 		<div id="extraIcons">
+			<a id="menu1close" href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
-				<tr>
-					<td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd; padding:1px;">
-						<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
-					</td>
-				</tr>
 <!-- BEGIN app_extra_block -->
 				<tr>
 					<td class="extraIconsRow"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
@@ -31,6 +27,7 @@
 <!-- END app_extra_icons_div -->
 
 <div id="divMain">
+<!-- BEGIN navbar -->
 	<div id="divUpperTabs">
 		<ul>
 <!-- BEGIN upper_tab_block -->
@@ -50,7 +47,9 @@
 <!-- END app_icon_block -->
 <!-- BEGIN app_extra_icons_icon -->
 							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
+<!-- BEGIN extra_icons_show -->
 								<a id="extra_icons_show" title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
+<!-- END extra_icons_show -->
 							</td>
 <!-- END app_extra_icons_icon -->
 						</tr>
@@ -69,6 +68,7 @@
 		<td align="center" id="admin_info">{current_users}</td>
 		<td width="33%"  align="right" id="quick_add">{quick_add}</td>
 	</tr></table></div>
+<!-- END navbar -->
 <!-- END navbar_header -->
 
 
@@ -102,7 +102,7 @@
 
 <!-- BEGIN sidebox_hide_footer -->
 					</div>
-				</td><td style="padding-top:10px" valign="top">
+				</td><td id="menu2handle" valign="top">
 					<a href="#" onclick="ypSlideOutMenu.hide('menu2')" ><img src="{img_root}/dragarea_left.png" align="right" /></a>
 				</td>
 			</tr></table>
@@ -167,9 +167,3 @@
 
 <div class="sideboxSpace"></div>
 <!-- END extra_blocks_footer -->
-
-
-
-
-
-

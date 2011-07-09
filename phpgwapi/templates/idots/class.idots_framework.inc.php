@@ -146,6 +146,12 @@ class idots_framework extends egw_framework
 		$this->tpl->set_block('navbar','app_extra_icons_div');
 		$this->tpl->set_block('navbar','app_extra_icons_icon');
 
+		if (html::$ua_mobile)	// replace whole navbar with just the extra apps icon
+		{
+			$this->tpl->set_block('navbar','navbar','mobil_not_needed');
+			$this->tpl->set_block('app_extra_icons_icon','extra_icons_show');
+			$this->tpl->set_var('mobil_not_needed',$this->tpl->get_var('extra_icons_show'));
+		}
 		$this->tpl->set_block('navbar','navbar_header','navbar_header');
 
 		$apps = $this->_get_navbar_apps();
@@ -156,7 +162,7 @@ class idots_framework extends egw_framework
 		{
 			$content .= '<script type="text/javascript">'."\nwindow.egw_link_registry=".egw_link::json_registry().";\n</script>\n";
 		}
-		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
+		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox' && !html::$ua_mobile)
 		{
 			$content .= $this->topmenu($vars,$apps);
 			$vars['current_users'] = $vars['quick_add'] = $vars['user_info']='';
@@ -208,7 +214,7 @@ class idots_framework extends egw_framework
 
 		if($this->sidebox_content)
 		{
-			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'])
+			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'] || html::$ua_mobile)
 			{
 				$this->tpl->set_var('lang_show_menu',lang('show menu'));
 				$content .= $this->tpl->parse('out','sidebox_hide_header');
@@ -579,8 +585,8 @@ class idots_framework extends egw_framework
 			$var['app_titles'] = '<td colspan="'.$max_icons.'">&nbsp;</td>';
 		}
 		// mobile support
-		$var['menu1top'] = html::$ua_mobile ? 20 : 114;
-		$var['menu2top'] = html::$ua_mobile ? 20 : 105;
+		$var['menu1top'] = html::$ua_mobile ? 0 : 114;
+		$var['menu2top'] = html::$ua_mobile ? 0 : 105;
 
 		return $var;
 	}

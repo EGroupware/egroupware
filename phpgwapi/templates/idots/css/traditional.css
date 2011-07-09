@@ -69,7 +69,17 @@ a:hover,a:active
 	z-index:100;
 	position:absolute;
 	left:0px;
-	top:105px"
+	top:105px;
+}
+
+#menu2handle {
+	padding-top: 10px;
+}
+
+#menu1close {
+	position: absolute;
+	right: 7px;
+	top: 7px;	
 }
 
 /*
