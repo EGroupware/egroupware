@@ -993,7 +993,7 @@ egw_fw_content_browser.prototype.callResizeHandler = function()
 	}
 
 	// Call the resize handler (we have to use the jquery object of the iframe!)
-	if (wnd && typeof wnd.$ != "undefined")
+	if (wnd && typeof wnd.$j != "undefined")
 	{
 		wnd.$j(wnd).trigger("resize");
 	}
