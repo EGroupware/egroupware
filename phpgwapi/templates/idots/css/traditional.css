@@ -109,10 +109,7 @@ input,button,select
 }
 
 input[type=submit],input[type=button],input[type=reset],button,.egwbutton
-
 {
-	background-color:#c5c5c5;
-	border:  outset 1px #dcdad5;
 	background-color:#b9d5e3;
 	border:  outset 1px #b9d5e3;
 	margin:  1px;
@@ -125,20 +122,22 @@ input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button
 {
 	background-color:#94bfd4;
 	border:  outset 1px #b9d5e3;
-	color:  #006699;
 	color:  #004e7d;
 }
 
 input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
-
 {
 	border:  inset 1px #bbbbbb;
 }
 
+input[type=submit]:disabled,input[type=button]:disabled,input[type=reset]:disabled,button:disabled,.egwbutton:disabled
+{
+	background-color: transparent;
+	color: gray;
+}
+
 input.egwbutton
 {
-	background-color:#c5c5c5;
-	border:  outset 1px #dcdad5;
 	background-color:#b9d5e3;
 	border:  outset 1px #b9d5e3;
 	margin:  1px;
@@ -151,9 +150,7 @@ input.egwbutton:hover
 {
    background-color:#94bfd4;
    border:  outset 1px #b9d5e3;
-   color:  #006699;
    color:  #004e7d;
-
 }
 input.egwbutton:active
 {
