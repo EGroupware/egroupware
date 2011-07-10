@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20110710-1) hardy; urgency=low
+
+  * eMail: fixed not resized grid/preview when eMail was started in a not activated tab
+
+ -- Ralf Becker <rb@stylite.de>  Sun, 10 Jul 2011 13:09:21 +0200
+
 egroupware-epl (11.1.20110709-1) hardy; urgency=low
 
   * Template for mobile browsers: only show application area, all apps are available via slideout menu
