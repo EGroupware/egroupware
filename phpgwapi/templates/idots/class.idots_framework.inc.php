@@ -104,6 +104,8 @@ class idots_framework extends egw_framework
 		if (html::$ua_mobile)
 		{
 			self::$css_include_files[] = '/phpgwapi/templates/idots/mobile.css';
+			// hide location bar
+			egw_framework::set_onload('window.setTimeout(function(){window.scrollTo(0, 1);}, 100);');
 		}
 		$this->tpl->set_var($this->_get_header());
 
@@ -507,12 +509,17 @@ class idots_framework extends egw_framework
 			$this->tpl->set_var('upper_tabs','');
 		}
 
-		if (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
+		if (html::$ua_mobile)
+		{
+			$max_icons = 0;
+			$this->tpl->set_var('app_icons','');
+		}
+		elseif (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
 		{
 			$max_icons = 30;
 		}
 
-		if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] == 'no')
+		if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] == 'no' && !html::$ua_mobile)
 		{
 			$tdwidth = 100 / $max_icons;
 		}
