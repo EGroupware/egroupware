@@ -65,27 +65,7 @@ include('./header.inc.php');
 // check if users are supposed to change their password every x sdays, then check if password is of old age or the devil-admin reset the users password
 // and forced the user to change his password on next login.
 auth::check_password_age($app,$class,$method);
-/*if ((($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] &&
-	 egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400)>$GLOBALS['egw_info']['user']['account_lastpwd_change']
-	) || $GLOBALS['egw_info']['user']['account_lastpwd_change']==666) &&
-	($GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['user']['apps']['password'])&&
-	!($app == 'preferences' && $class == 'uipassword' && $method=='change'))
-{
-	error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
-		'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
-		'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
-	if ($GLOBALS['egw_info']['user']['account_lastpwd_change']==666)
-	{
-		$message = lang('an admin required that you must change your password upon login.');
-	}
-	else
-	{
-		$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
-	}
-	if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
-	egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
-}
-*/
+
 // user changed timezone
 if (isset($_GET['tz']))
 {
@@ -116,7 +96,7 @@ if(@file_exists($tpl_info))
 	}
 }
 
-if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes'))
+if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
 	{
