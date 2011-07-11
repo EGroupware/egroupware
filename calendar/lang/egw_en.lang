@@ -46,7 +46,6 @@ apply the changes	calendar	en	Apply the changes
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this country?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
-at the moment the following document-types are supported:	calendar	en	At the moment the following document-types are supported:
 automatically purge old events after	admin	en	Automatically purge old events after
 back half a month	calendar	en	Back half a month
 back one month	calendar	en	Back one month
@@ -85,7 +84,6 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	en	Chair
 change history	calendar	en	Change history
 change your status	calendar	en	Change your status
-charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 close the window	calendar	en	Close the window
@@ -149,7 +147,6 @@ do you want to edit this event as an exception or the whole series?	calendar	en	
 do you want to keep the series exceptions in your calendar?	calendar	en	Do you want to keep the series exceptions in your calendar?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive regularly a summary of your appointments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summaries.<br>It is only sent when you have any appointments on that day or week.
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to auto-load calendar holidays files dynamically?
-document '%1' does not exist or is not readable for you!	calendar	en	Document '%1' does not exist or is not readable for you!
 download	calendar	en	Download
 download this event as ical	calendar	en	Download this event as iCal
 duration	calendar	en	Duration
@@ -181,18 +178,12 @@ event details follow	calendar	en	Event details follow
 event saved	calendar	en	Event saved.
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 every user can invite other users and groups	admin	en	Every user can invite other users and groups
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exception	calendar	en	Exception
 exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it.
 exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
-export	calendar	en	Export
-export definitition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your Calendar into a CSV File.
 extended	calendar	en	Extended.
@@ -218,8 +209,6 @@ freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
 fullname of person to notify	calendar	en	Full name of a person to notify
-general	calendar	en	General
-general fields:	calendar	en	General fields:
 global categories	calendar	en	Global Categories
 global public and group public	calendar	en	Global public and group public
 global public only	calendar	en	Global public only
@@ -257,11 +246,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the infolog data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the InfoLog data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.
-if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
 ignore conflict	calendar	en	Ignore conflict
-import	calendar	en	Import
 import csv-file	common	en	Import CSV file
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
 imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar.
@@ -290,7 +275,6 @@ location to autoload from	admin	en	Location to autoload from
 location, start- and endtimes, ...	calendar	en	Location, start and end times, ...
 mail all participants	calendar	en	Mail all participants
 make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons
-manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
@@ -503,7 +487,6 @@ to-firstname	calendar	en	To first name
 to-fullname	calendar	en	To full name
 to-lastname	calendar	en	To last name
 tomorrow	calendar	en	Tomorrow
-translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner

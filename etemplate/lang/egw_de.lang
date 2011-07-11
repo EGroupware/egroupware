@@ -100,6 +100,7 @@ custom	etemplate	de	Benutzerdefiniert
 custom fields	etemplate	de	Benutzerdefinierte Felder
 custom javascript for onchange	etemplate	de	Benutzerdefiniertes Javascript für onChange
 cut	etemplate	de	Ausschneiden
+date	preferences	de	Datum
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
 day	etemplate	de	Tag
@@ -130,7 +131,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	de	wird i
 displayed in the top line of the groupbox (legend)	etemplate	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 do you want to send the message to all selected entries, without further editing?	etemplate	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?
-document '%1' does not exist or is not readable for you!	etemplate	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
+document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 documentation	etemplate	de	Dokumentation
 doesn't matter	etemplate	de	spielt keine Rolle
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
@@ -168,6 +169,9 @@ etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' gesch
 etemplate editor	etemplate	de	eTemplate Editor
 etemplate reference	etemplate	de	eTemplate Handbuch
 etemplate tutorial	etemplate	de	eTemplate Einführung
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen
 export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate als XML Datei (.xet) exportieren
@@ -183,9 +187,10 @@ file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
-for more then one contact in a document use the tag pagerepeat!	etemplate	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
+for more then one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
+general fields:	preferences	de	General fields:
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gege zum letzten Eintrag
 go to the next page of entries	etemplate	de	gehe zur nächsten Seite
@@ -208,6 +213,8 @@ hours	etemplate	de	Stunden
 how many entries should the list show	etemplate	de	Wieviele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the contact data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 image	etemplate	de	Grafik
 import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei
@@ -391,6 +398,8 @@ template deleted	etemplate	de	Template gelöscht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den daten ersetzt werden (%1komplette Liste der Platzhalter%2).
+the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 time	etemplate	de	Uhrzeit
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	de	zum deaktiviereb: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist

@@ -61,7 +61,6 @@ are you shure you want to delete this contact?	addressbook	de	Diesen Kontakt lö
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen möchten?
 assistent	addressbook	de	Assistent
 assistent phone	addressbook	de	Telefon Assistent
-at the moment the following document-types are supported:	addressbook	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
@@ -160,7 +159,6 @@ distribution lists	addressbook	de	Verteilerlisten
 distribution lists, ...	addressbook	de	Verteilerlisten, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Sie können mit dieser Funktion ein privates Adressbuch nutzen, das nicht an andere Benutzer freigegeben werden kann und Ihre Privatsphäre optimal schützt. Aktivieren Sie diese Funktion nach Bedarf.
 do your really want to delete this contact?	addressbook	de	Wollen Sie diesen Kontakt wirklich löschen?
-document '%1' does not exist or is not readable for you!	addressbook	de	Dokument '%1' existiert nicht oder ist für Sie nicht lesbar!
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
@@ -186,10 +184,7 @@ enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 existing links	addressbook	de	Bestehende Verknüpfungen
 exists	addressbook	de	besteht bereits
 export	addressbook	de	Export
@@ -217,7 +212,6 @@ fields to copy when copying an address?	admin	de	Welche Felder sollen beim Kopie
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
 fieldseperator	addressbook	de	Feldtrenner
-for more then one contact in a document use the tag pagerepeat!	addressbook	de	Um mehr als eine Adresse in ein Dokument einzufügen, benutzen Sie das 'Seiten-Wiederholungs-Zeichen' in Ihrer Vorlage. Auf diese Art können Sie Serienbriefe erstellen.
 for read only ldap	admin	de	für nur lesendes LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	de	Wenn Sie Serienbriefe erzeugen möchten, dann benutzen Sie dieses 'Markierungszeichen'. Setzen Sie den Inhalt, der wiederholt werden soll (Anschriftstags und Briefinhalt) zwischen zwei 'Seiten-Wiederholungs-Zeichen'.
 freebusy uri	addressbook	de	Freebusy URI
@@ -245,8 +239,6 @@ home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte sollen Nicht-Adminstratoren exportieren können?
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify an export definition, it will be used when you export	addressbook	de	Wählen Sie eine Export Definition für den Export
 ignore first line	addressbook	de	Erste Zeile ignorieren
 import	addressbook	de	Import
@@ -401,7 +393,6 @@ that field name has been used already !	addressbook	de	Dieser Feldname wird bere
 the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für dieses Adressbuch.
 the anonymous user needs add rights for it!	addressbook	de	Der Anonymous Benutzer benötigt Hinzufügen Rechte dafür!
 the anonymous user needs read it!	addressbook	de	Der Anonymous Benutzer muss dies lesen können
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	de	Das Dokument kann Platzhalter wie $$n_fn$$ enthalten, die mit den Kontaktdaten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	de	Die zip Erweiterung (Extension) wird benötigt, um Daten in eine OpenOffice oder MsOffice Dokument einzufügen.
 there was an error saving your data :-(	addressbook	de	Beim Speichern Ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Dieses Modul ist ein Kontaktformular, welches direkt in das Adressbuch speichert.

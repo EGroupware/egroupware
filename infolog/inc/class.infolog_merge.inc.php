@@ -134,6 +134,7 @@ class infolog_merge extends bo_merge
 		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
 		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label;
+		translation::add_app('projectmanager');
 		foreach($fields as $name => $label)
 		{
 			if (in_array($name,array('custom'))) continue;	// dont show them
@@ -144,7 +145,7 @@ class infolog_merge extends bo_merge
 				$n++;
 			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.$label.'</td>';
+			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}

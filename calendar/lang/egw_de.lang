@@ -46,7 +46,6 @@ apply the changes	calendar	de	Übernimmt die Änderungen
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
-at the moment the following document-types are supported:	calendar	de	Aktuell werden die folgenden Dokumenttypen unterstützt:
 automatically purge old events after	admin	de	Bereinigt bzw. löschet alte Termine automatisch nach
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
@@ -149,7 +148,6 @@ do you want to edit this event as an exception or the whole series?	calendar	de	
 do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
-document '%1' does not exist or is not readable for you!	calendar	de	Dokument '%1' steht Ihnen nicht zur Verfügung oder ist für Sie nicht lesbar!
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration	calendar	de	Dauer
@@ -181,10 +179,6 @@ event details follow	calendar	de	Details zum Termin folgen
 event saved	calendar	de	Termin gespeichert
 event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
 every user can invite other users and groups	admin	de	Jeder Benutzer kann andere Benutzer und Gruppen einladen
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 exception	calendar	de	Ausnahme
 exception created - you can now edit or delete it	calendar	de	Ausnahme erzeugt - Sie können sie jetzt bearbeiten oder löschen
 exceptions	calendar	de	Ausnahmen
@@ -257,8 +251,6 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the infolog data inserted.	calendar	de	Wenn Sie ein Verzeichnis (kompletter VFS Pfad) angeben, %1 zeigt Ihnen EGroupware für jede Datei in der Auswahlbox (unten rechts), eine Zeile zur Auswahl der Dokumente an. Mit diesen Vorlagendokumenten können Sie Termine in Office Dokumenten darstellen.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	calendar	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt der Kalender in der Listenansicht ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Terminen eingefügt herunterzuladen.
 if you specify an export definition, it will be used when you export	calendar	de	Wenn Sie Export Definition auswählen, wird diese für den Export verwendet.
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren

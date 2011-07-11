@@ -381,9 +381,9 @@ class infolog_hooks
 				'size'   => 60,
 				'label'  => 'Default document to insert entries',
 				'name'   => 'default_document',
-				'help'   => lang('If you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. That icon allows to download the specified document with the contact data inserted.').' '.
-					lang('The document can contain placeholder like {{info_subject}}, to be replaced with the contact data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>').' '.
-					lang('At the moment the following document-types are supported:').'*.rtf, *.txt',
+				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('infolog')).' '.
+					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','info_subject').' '.
+					lang('The following document-types are supported:').'*.rtf, *.txt',
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -393,9 +393,9 @@ class infolog_hooks
 				'size'   => 60,
 				'label'  => 'Directory with documents to insert entries',
 				'name'   => 'document_dir',
-				'help'   => lang('If you specify a directory (full vfs path) here, infolog displays an action for each document. That action allows to download the specified document with the infolog data inserted.').' '.
-					lang('The document can contain placeholder like {{info_subject}}, to be replaced with the contact data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>').' '.
-					lang('At the moment the following document-types are supported:').'*.rtf, *.txt',
+				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('infolog')).' '.
+					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','info_subject').' '.
+					lang('The following document-types are supported:').'*.rtf, *.txt',
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -432,7 +432,7 @@ class infolog_hooks
 			$settings['nextmatch-export-definition'] = array(
 				'type'   => 'select',
 				'values' => $options,
-				'label'  => 'Export definitition to use for nextmatch export',
+				'label'  => 'Export definition to use for nextmatch export',
 				'name'   => 'nextmatch-export-definition',
 				'help'   => lang('If you specify an export definition, it will be used when you export'),
 				'run_lang' => false,
