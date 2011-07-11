@@ -404,9 +404,9 @@
 		{
 			$this->sessionData = array();
 			$this->saveSessionData();
-			if (!empty($_identity))
+			if (!empty($_identity) && $_status == true)
 			{
-				//error_log(__METHOD__.__LINE__.' change status of '.$_identity.' to '.$_status);
+				//error_log(__METHOD__.__LINE__.' change status of Profile '.$_identity.' to '.$_status);
 				// globals preferences add appname varname value
 				$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_identity,'user');
 				// save prefs
