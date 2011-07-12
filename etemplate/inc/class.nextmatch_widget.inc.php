@@ -365,6 +365,7 @@ class nextmatch_widget
 				$cell['size'] = $cell['name'].'[rows]';
 				$cell['obj'] = &$value['template'];
 				$cell['name'] = $value['template']->name;
+				$cell['span'] .= (strpos($cell['span'],',') === false ? ',' : '').' egwGridView_grid';
 			}
 		}
 		else
