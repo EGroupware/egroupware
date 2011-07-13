@@ -656,10 +656,6 @@ tr.draggedOver td {
 	display: inline-block;
 }
 
-.egwGridView_grid span {
-	vertical-align: middle;
-}
-
 .egwGridView_grid span.iconOverlayContainer {
 	margin: 2px 5px 2px 2px;
 	position: relative;
@@ -740,7 +736,6 @@ tr.draggedOver td {
 	background-color: #E0E0E0;
 	font-weight: normal;
 	padding: 2px;
-	text-align: left;
 	border-left: 1px solid silver;
 	border-top: 1px solid silver;
 	border-right: 1px solid gray;
