@@ -43,7 +43,7 @@
 					<date-time id="${row}[last_mod]" readonly="true"/>
 					<description align="center" id="${row}[subs]"/>
 					<hbox options="0,0">
-						<buttononly label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="edit"/>
+						<buttononly label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction={$cont[edit_link]}&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="edit"/>
 						<buttononly label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="new"/>
 						<buttononly statustext="Delete this category" label="Delete" id="delete[$row_cont[id]]" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" options="delete" class="leftPad5"/>
 					</hbox>
@@ -55,20 +55,26 @@
 		<grid width="100%">
 			<columns>
 				<column/>
+				<column disabled="!@nm[selectcols]=/legacy_actions/"/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
 					<description align="center" id="msg" span="all" class="redItalic"/>
+					<description/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="admin.categories.index.rows"/>
+					<nextmatch id="nm" options="admin.categories.index.rows" span="all"/>
 				</row>
 				<row>
 					<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=$cont[add_link]&amp;cat_id=&amp;appname=$cont[nm][appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+					<hbox align="right" span="all">
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('admin.categories.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('admin.categories.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
-		<box class="action_popup" id="delete_popup">
+		<box class="action_popup prompt" id="delete_popup">
 			<vbox class="prompt">
 				<description value="Delete" class="promptheader"/>
 				<description value="Delete selected entries?" id="delete_prompt"/>
