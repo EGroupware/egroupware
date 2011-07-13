@@ -460,11 +460,13 @@ abstract class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $email_notified=null if present will return the emails notified, if given emails in that list will not be notified
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
-	public function do_notifications($data,$old,$deleted=null)
+	public function do_notifications($data,$old,$deleted=null,&$email_notified=null)
 	{
 		$this->errors = $email_sent = array();
+		if (!empty($email_notified) && is_array($email_notified)) $email_sent = $email_notified;
 
 		if (!$this->notify_current_user && $this->user)		// do we have a current user and should we notify the current user about his own changes
 		{
@@ -545,6 +547,7 @@ abstract class bo_tracking
 		{
 			translation::init();
 		}
+		$email_notified = $email_sent;
 		return !count($this->errors);
 	}
 
