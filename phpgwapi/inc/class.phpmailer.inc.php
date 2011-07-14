@@ -924,6 +924,7 @@ class PHPMailer {
       'execute' => 'Could not execute: ',
       'instantiate' => 'Could not instantiate mail function.',
       'authenticate' => 'SMTP Error: Could not authenticate.',
+      'tls' => 'SMTP Error: Could not start TLS communication.',
       'from_failed' => 'The following From address failed: ',
       'recipients_failed' => 'SMTP Error: The following recipients failed: ',
       'data_not_accepted' => 'SMTP Error: Data not accepted.',
