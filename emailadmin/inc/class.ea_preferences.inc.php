@@ -30,10 +30,14 @@
 		// enable userdefined signatures
 		var $ea_user_defined_signatures = false;
 		
-		function getIdentity($_id = false)
+		function getIdentity($_id = false, $_byProfileID=false)
 		{
 			if($_id !== false)
 			{
+				if ($_byProfileID===true)
+				{
+					foreach ((array)$this->identities as $id => $ident) if ($ident->id==$_id) return $ident;
+				}
 				return $this->identities[$_id];
 			}
 			else
@@ -92,6 +96,7 @@
 
 		function setIdentity($_identityObject, $_id = false)
 		{
+			//error_log(__METHOD__.__LINE__.' called with ID '.$_id.' ->'.array2string($_identityObject).function_backtrace());
 			if(is_a($_identityObject, 'ea_identity'))
 			{
 				if($_id !== false)
@@ -101,7 +106,14 @@
 				else
 				{
 					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
-					$this->identities[] = $_identityObject;
+					if ($_identityObject->id)
+					{
+						$this->identities[$_identityObject->id] = $_identityObject;
+					}
+					else
+					{
+						$this->identities[] = $_identityObject;
+					}
 				}
 
 				return true;
