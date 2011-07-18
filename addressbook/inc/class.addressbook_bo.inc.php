@@ -974,7 +974,8 @@ class addressbook_bo extends addressbook_so
 		}
 		// for reading accounts (owner == 0) and account_selection == groupmembers, check if current user and contact are groupmembers
 		if ($owner == 0 && $needed == EGW_ACL_READ &&
-			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers')
+			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			return !!array_intersect($GLOBALS['egw']->accounts->memberships($this->user,true),
 				$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
