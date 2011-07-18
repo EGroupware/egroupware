@@ -63,7 +63,7 @@ function initAll()
 }
 
 function updateTitle() {
-	var _text = document.getElementById('subjectDATA').firstChild.nodeValue;
+	var _text = document.getElementById('subjectDATA').firstChild ? document.getElementById('subjectDATA').firstChild.nodeValue:'';
     if(_text.length>40) {
         _text = _text.substring(0,40) + '...';
     }
