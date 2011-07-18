@@ -147,7 +147,14 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		{
 			if (!$this->mail) $this->mail = felamimail_bo::getInstance(true,(self::$profileID=='G'?0:self::$profileID));
 			$selectedID = $this->mail->getIdentitiesWithAccounts($identities);
-			$activeIdentity =& $this->mail->mailPreferences->getIdentity((self::$profileID=='G'?0:self::$profileID));
+			if (self::$profileID=='G')
+			{
+				$activeIdentity =& $this->mail->mailPreferences->getIdentity(0);
+			}
+			else
+			{
+				$activeIdentity =& $this->mail->mailPreferences->getIdentity(self::$profileID, true);
+			}
 			// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
 			if ($activeIdentity->id || self::$profileID == 'G') {
 				$boemailadmin = new emailadmin_bo();
@@ -309,7 +316,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		}
 		// initialize our felamimail_bo
 		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID);
-		$activeMailProfile = $this->mail->mailPreferences->getIdentity(self::$profileID);
+		$activeMailProfile = $this->mail->mailPreferences->getIdentity(self::$profileID, true);
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending
