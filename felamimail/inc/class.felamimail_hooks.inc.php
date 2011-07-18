@@ -648,7 +648,7 @@ class felamimail_hooks
 					break;
 				}
 				//error_log(__METHOD__.__LINE__.array2string($preferences->identities));
-				$activeIdentity =& $preferences->getIdentity($icServerID);
+				$activeIdentity =& $preferences->getIdentity($icServerID, true);
 				//error_log(__METHOD__.__LINE__.' ActiveIdentity for profileID'.$icServerID.'->'.array2string($activeIdentity));
 				if ($imapServer->_connected != 1) $connectionStatus = $bofelamimail->openConnection($icServerID);
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);

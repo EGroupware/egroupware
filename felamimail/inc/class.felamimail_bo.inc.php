@@ -4190,7 +4190,7 @@ class felamimail_bo
 							//error_log(__METHOD__.__LINE__.' ID:'.$val.' Data:'.array2string($contact));
 							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-							$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID);
+							$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
 							//error_log(__METHOD__.__LINE__.array2string($activeMailProfile));
 							$mailObject->From = $activeMailProfile->emailAddress;
 							//$mailObject->From  = $_identity->emailAddress;

@@ -692,7 +692,7 @@
 		{
 			$bofelamimail	= $this->bofelamimail;
 			$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
-			$activeMailProfile = $this->preferences->getIdentity($this->bofelamimail->profileID);
+			$activeMailProfile = $this->preferences->getIdentity($this->bofelamimail->profileID, true);
 			$_mailObject->IsSMTP();
 			$_mailObject->CharSet	= $this->displayCharset;
 			// you need to set the sender, if you work with different identities, since most smtp servers, dont allow

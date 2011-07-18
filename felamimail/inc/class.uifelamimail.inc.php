@@ -646,7 +646,7 @@ class uifelamimail
 			//_debug_array($preferences->preferences);
 			//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
 			//error_log(__METHOD__.__LINE__.' ImapServerObject:'.array2string($imapServer));
-			if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity(self::$icServerID);
+			if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity(self::$icServerID, true);
 			//_debug_array($activeIdentity);
 			$maxMessages	=  50;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefMailGridBehavior']) && (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['prefMailGridBehavior'] <> 0)
