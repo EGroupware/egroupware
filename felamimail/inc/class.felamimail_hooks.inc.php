@@ -624,7 +624,7 @@ class felamimail_hooks
 					$showMainScreenStuff= false;
 					break;
 				}
-				$activeIdentity =& $preferences->getIdentity($icServerID);
+				$activeIdentity =& $preferences->getIdentity($icServerID,true);
 				if ($imapServer->_connected != 1) $connectionStatus = $bofelamimail->openConnection($icServerID);
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
 				$folderStatus = $bofelamimail->getFolderStatus($mailbox);
