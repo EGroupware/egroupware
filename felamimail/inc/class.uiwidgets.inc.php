@@ -377,6 +377,18 @@ class uiwidgets
 				   substr($header['mimetype'],0,11) == 'application' ||
 				   substr($header['mimetype'],0,5) == 'audio') {
 					$image = html::image('felamimail','attach');
+					if (//$header['mimetype'] != 'multipart/mixed' &&
+						$header['mimetype'] != 'multipart/signed'
+					)
+					{
+						if ($this->bofelamimail->icServer->_connected != 1) 
+						{
+							$this->bofelamimail->openConnection(0); // connect to the current server
+							$this->bofelamimail->reopen($_folderName);
+						}
+						$attachments = $this->bofelamimail->getMessageAttachments($header['uid'],'','',$resolveTNEF=false);
+						if (count($attachments)<1) $image = '&nbsp;';
+					}
 					$this->t->set_var('attachment_image', $image);
 				} else {
 					$this->t->set_var('attachment_image', '&nbsp;');
@@ -683,6 +695,13 @@ class uiwidgets
 					$image = "<a name=\"subject_url\" href=\"#\" 
 						onclick=\"fm_readAttachments('".$GLOBALS['egw']->link('/index.php',$linkDataAttachments)."', '".$windowName."', this); return false;\" 
 						title=\"".$headerData['subject']."\">".$image."</a>";
+					if (//$headerData['mimetype'] != 'multipart/mixed' &&
+						$header['mimetype'] != 'multipart/signed'
+					)
+					{
+						$attachments = $this->bofelamimail->getMessageAttachments($headerData['uid'],'','',$resolveTNEF=false);
+						if (count($attachments)<1) $image = '&nbsp;';
+					}
 
 					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);
 				} else {

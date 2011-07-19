@@ -480,8 +480,10 @@
 		function decode_winmail( $_uid, $_partID, $_filenumber=0 )
 		{
 			$attachment = $this->getAttachment( $_uid, $_partID );
-
-			$dir = $GLOBALS['egw_info']['server']['temp_dir']."/fmail_winmail/$_uid";
+			$dirname = $this->accountid.'_'.$this->profileID.'_'.$this->sessionData['mailbox'].'_'.$_uid.'_'.$_partID;
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Dirname:'.$dirname);
+			$dirname = md5($dirname);
+			$dir = $GLOBALS['egw_info']['server']['temp_dir']."/fmail_winmail/$dirname";
 			$mime = CreateObject('phpgwapi.mime_magic');
 			if ( $attachment['type'] == 'APPLICATION/MS-TNEF' && $attachment['filename'] == 'winmail.dat' )
 			{
@@ -2243,7 +2245,7 @@
 			return $this->mailPreferences;
 		}
 
-		function getMessageAttachments($_uid, $_partID='', $_structure='')
+		function getMessageAttachments($_uid, $_partID='', $_structure='', $resolveTNEF=true)
 		{
 			if (self::$debug) echo __METHOD__."$_uid, $_partID<br>";
 
@@ -2275,7 +2277,7 @@
 					$newAttachment['cid']	= $structure->cid;
 				}
 				# if the new attachment is a winmail.dat, we have to decode that first
-				if ( $newAttachment['name'] == 'winmail.dat' &&
+				if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
 					( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
 				{
 					$attachments = array_merge( $attachments, $wmattachments );
@@ -2307,7 +2309,7 @@
 				{
 					if ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE')
 					{
-						$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart), $attachments);
+						$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $resolveTNEF), $attachments);
 					}
 					if (!($subPart->type=='TEXT' && $subPart->disposition =='INLINE' && $subPart->filename)) continue;
 				}
@@ -2319,7 +2321,7 @@
 					$subPart->subType == 'SIGNED' ||
 					$subPart->subType == 'APPLEDOUBLE'))
 				{
-				   	$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart), $attachments);
+				   	$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $resolveTNEF), $attachments);
 				} else {
 					$newAttachment = array();
 					$newAttachment['name']		= self::getFileNameFromStructure($subPart);
@@ -2334,7 +2336,7 @@
 						$newAttachment['cid']	= $subPart->cid;
 					}
 					# if the new attachment is a winmail.dat, we have to decode that first
-					if ( $newAttachment['name'] == 'winmail.dat' &&
+					if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
 						( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
 					{
 						$attachments = array_merge( $attachments, $wmattachments );
