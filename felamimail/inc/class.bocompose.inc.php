@@ -859,7 +859,7 @@
 			$bofelamimail->closeConnection();
 		}
 
-		function saveAsDraft($_formData)
+		function saveAsDraft($_formData, &$savingDestination='')
 		{
 			$bofelamimail	= $this->bofelamimail;
 			$mail		= new egw_mailer();
@@ -895,11 +895,15 @@
 			// if it is called from printview then save it with the draft folder
 			//error_log(__METHOD__.__LINE__.array2string($this->preferences->ic_server));
 			$savingDestination = ($this->preferences->ic_server[$bofelamimail->profileID]->draftfolder ? $this->preferences->ic_server[$bofelamimail->profileID]->draftfolder : $this->preferencesArray['draftFolder']);
-			if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox'])) $this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
+			if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox']))
+			{
+				$this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
+			}
 			if ($bofelamimail->isDraftFolder($this->sessionData['messageFolder'])
 				|| $bofelamimail->isTemplateFolder($this->sessionData['messageFolder']))
 			{
 				$savingDestination = $this->sessionData['messageFolder'];
+				//error_log(__METHOD__.__LINE__.' SavingDestination:'.$savingDestination);
 			}
 			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = ($this->preferences->ic_server[$bofelamimail->profileID]->draftfolder ? $this->preferences->ic_server[$bofelamimail->profileID]->draftfolder : $this->preferencesArray['draftFolder']);
 

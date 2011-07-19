@@ -153,9 +153,9 @@
 				$folder = ($this->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->mailPreferences->preferences['draftFolder']);
 				$this->bofelamimail->reopen($folder);
 				$status = $this->bofelamimail->getFolderStatus($folder);
-				//error_log(__METHOD__.__LINE__.array2string($status));
+				//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
 				$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
-				$messageUid = $this->bocompose->saveAsDraft($formData);
+				$messageUid = $this->bocompose->saveAsDraft($formData,$folder); // folder may change
 				if (!$messageUid) {
 					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
 					//try to reopen the mail from session data
