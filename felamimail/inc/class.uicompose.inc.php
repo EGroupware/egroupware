@@ -57,8 +57,9 @@
 				$this->bocompose   = CreateObject('felamimail.bocompose',$this->composeID,$this->displayCharset);
 			}
 			$this->t 		= CreateObject('phpgwapi.Template',EGW_APP_TPL);
-			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$this->mailPreferences  =& $this->bofelamimail->mailPreferences;// ExecMethod('felamimail.bopreferences.getPreferences');
+
+			$this->bofelamimail	=& $this->bocompose->bofelamimail;
+			$this->mailPreferences  =& $this->bofelamimail->mailPreferences;
 			$this->t->set_unknowns('remove');
 
 			$this->rowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
@@ -129,9 +130,9 @@
 				$folder = ($this->mailPreferences->ic_server[0]->draftfolder ? $this->mailPreferences->ic_server[0]->draftfolder : $this->mailPreferences->preferences['draftFolder']);
 				$this->bofelamimail->reopen($folder);
 				$status = $this->bofelamimail->getFolderStatus($folder);
-				//error_log(__METHOD__.__LINE__.array2string($status));
+				//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
 				$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
-				$messageUid = $this->bocompose->saveAsDraft($formData);
+				$messageUid = $this->bocompose->saveAsDraft($formData,$folder); // folder may change
 				if (!$messageUid) {
 					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
 					//try to reopen the mail from session data
@@ -142,10 +143,11 @@
 				unset($_POST['composeid']);
 				unset($_GET['composeid']);
 				$uicompose   = CreateObject('felamimail.uicompose');
+				if (!$uicompose->bofelamimail->icServer->_connected) $uicompose->bofelamimail->openConnection($uicompose->bofelamimail->profileID);	
 				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-				if ($this->bofelamimail->getMessageHeader($messageUid))
+				if ($uicompose->bofelamimail->getMessageHeader($messageUid))
 				{
-					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder); 
+					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
 					$uicompose->bocompose->getDraftData($uicompose->bofelamimail->icServer, $folder, $messageUid);
 					$uicompose->compose();
 					return;
