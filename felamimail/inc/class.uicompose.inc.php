@@ -100,7 +100,7 @@
 		{
 			$formData['identity']	= (int)$_POST['identity'];
 
-			foreach($_POST['destination'] as $key => $destination) {
+			foreach((array)$_POST['destination'] as $key => $destination) {
 				if(!empty($_POST['address'][$key])) {
 					if($destination == 'folder') {
 						$formData[$destination][] = $GLOBALS['egw']->translation->convert($_POST['address'][$key], $this->charset, 'UTF7-IMAP');
