@@ -377,7 +377,7 @@ class uiwidgets
 							$this->bofelamimail->openConnection(0); // connect to the current server
 							$this->bofelamimail->reopen($_folderName);
 						}
-						$attachments = $this->bofelamimail->getMessageAttachments($header['uid']);
+						$attachments = $this->bofelamimail->getMessageAttachments($header['uid'],'','',$resolveTNEF=false);
 						if (count($attachments)<1) $image = '&nbsp;';
 					}
 					$this->t->set_var('attachment_image', $image);
@@ -703,7 +703,7 @@ class uiwidgets
 						$header['mimetype'] != 'multipart/signed'
 					)
 					{
-						$attachments = $this->bofelamimail->getMessageAttachments($headerData['uid']);
+						$attachments = $this->bofelamimail->getMessageAttachments($headerData['uid'],'','',$resolveTNEF=false);
 						if (count($attachments)<1) $image = '&nbsp;';
 					}
 
