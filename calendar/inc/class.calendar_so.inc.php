@@ -344,7 +344,7 @@ class calendar_so
 		{
 			$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
 			array_walk($cats,create_function('&$val,$key','$val = (int) $val;'));
-
+			if (is_array($cat_id) && count($cat_id)==1) $cat_id = $cat_id[0];
 			$sql = '(cal_category'.(count($cats) > 1 ? " IN ('".implode("','",$cats)."')" : '='.$this->db->quote((int)$cat_id));
 			foreach($cats as $cat)
 			{
