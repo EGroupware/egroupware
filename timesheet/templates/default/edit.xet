@@ -11,43 +11,43 @@
 			</columns>
 			<rows>
 				<row class="row" disabled="@ts_viewtype">
-					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" blur="@ts_title_blur" span="all" class="fullWidth" id="ts_title"/>
+					<description value="Title" options=",,,ts_title"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
 					<description value="comment"/>
-					<textbox multiline="true" span="all" class="fullWidth" id="ts_description" rows="5" cols="50"/>
+					<textbox multiline="true" id="ts_description" rows="5" cols="50" span="all" class="fullWidth"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row">
-					<description options=",,,cat_id" value="Category"/>
+					<description value="Category" options=",,,cat_id"/>
 					<menulist span="all">
 						<menupopup type="select-cat" id="cat_id" options="None"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,ts_start" value="Date"/>
-					<date needed="1" id="ts_start" options=",8"/>
+					<description value="Date" options=",,,ts_start"/>
+					<date id="ts_start" needed="1" options=",8"/>
 					<description value="Starttime"/>
 					<date-timeonly id="start_time" options="H:i"/>
 				</row>
 				<row class="row">
-					<description options=",,,ts_duration" value="Duration"/>
+					<description value="Duration" options=",,,ts_duration"/>
 					<date-duration id="ts_duration" options=",hm"/>
 					<description value="or endtime" class="noWrap"/>
 					<date-timeonly id="end_time" options="H:i"/>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description options=",,,ts_quantity" value="Quantity"/>
-					<textbox type="float" blur="@ts_quantity_blur" precision="3" span="all" id="ts_quantity" statustext="empty if identical to duration"/>
+					<description value="Quantity" options=",,,ts_quantity"/>
+					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" span="all"/>
 				</row>
 				<row class="row" disabled="@no_ts_status">
 					<description value="Status"/>
 					<menulist span="all">
-						<menupopup id="ts_status" options="please select" statustext="select a status of the timesheet"/>
+						<menupopup statustext="select a status of the timesheet" id="ts_status" options="please select"/>
 					</menulist>
 				</row>
 			</rows>
@@ -73,16 +73,16 @@
 			</columns>
 			<rows>
 				<row class="th" disabled="@view">
-					<description span="all" value="Create new links"/>
+					<description value="Create new links" span="all"/>
 				</row>
 				<row class="row" disabled="@status_only">
-					<link-to span="all" id="link_to"/>
+					<link-to id="link_to" span="all"/>
 				</row>
 				<row class="th">
-					<description span="all" value="Existing links"/>
+					<description value="Existing links" span="all"/>
 				</row>
 				<row class="row_off" valign="top">
-					<link-list span="all" id="link_to"/>
+					<link-list id="link_to" span="all"/>
 				</row>
 			</rows>
 		</grid>
@@ -111,7 +111,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.7.003">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -119,33 +119,33 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" no_lang="1" align="center" id="msg"/>
+					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 				</row>
 				<row class="th" height="28">
-					<description options=",,,ts_owner" value="User"/>
+					<description value="User" options=",,,ts_owner"/>
 					<menulist span="all">
-						<menupopup no_lang="1" id="ts_owner"/>
+						<menupopup id="ts_owner" no_lang="1"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,ts_project" value="Project"/>
+					<description value="Project" options=",,,ts_project"/>
 					<grid spacing="1" padding="1">
 						<columns>
 							<column/>
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=none">
-								<projectmanager-select span="all" class="fullWidth" onchange="1" id="pm_id" options="None" statustext="Select a project"/>
+								<projectmanager-select statustext="Select a project" id="pm_id" onchange="1" options="None" span="all" class="fullWidth"/>
 							</row>
 							<row disabled="@pm_integration=full">
-								<textbox blur="@ts_project_blur" size="65" maxlength="80" id="ts_project" class="fullWidth"/>
+								<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="fullWidth"/>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description options=",,ts_unitprice" value="Unitprice"/>
+					<description value="Unitprice" options=",,ts_unitprice"/>
 					<grid>
 						<columns>
 							<column disabled="@pm_integration=none"/>
@@ -153,14 +153,14 @@
 						</columns>
 						<rows>
 							<row>
-								<projectmanager-pricelist onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" id="pl_id" options="None"/>
-								<textbox type="float" span="all" id="ts_unitprice"/>
+								<projectmanager-pricelist id="pl_id" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
+								<textbox type="float" id="ts_unitprice" span="all"/>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row>
-					<tabbox span="all" id="timesheet.edit.general|timesheet.edit.notes|timesheet.edit.links|timesheet.edit.customfields|timesheet.edit.history">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Notes" statustext=""/>
@@ -180,23 +180,23 @@
 				<row disabled="!@ts_modified">
 					<description value="Last modified"/>
 					<hbox>
-						<date-time readonly="true" id="ts_modified"/>
+						<date-time id="ts_modified" readonly="true"/>
 						<menulist>
-							<menupopup type="select-account" label="by" readonly="true" id="ts_modifier"/>
+							<menupopup type="select-account" label="by" id="ts_modifier" readonly="true"/>
 						</menulist>
 					</hbox>
 				</row>
 				<row>
 					<hbox span="2">
 						<hbox>
-							<button label="Edit" id="button[edit]" statustext="Edit this entry"/>
-							<button label="Save &amp; New" id="button[save_new]" statustext="Saves this entry and add a new one"/>
-							<button label="Save" id="button[save]" statustext="Saves the changes made"/>
-							<button label="Apply" id="button[apply]" statustext="Applies the changes made"/>
-							<button label="Cancel" onclick="window.close();" id="button[cancel]" statustext="closes the window without saving the changes"/>
+							<button statustext="Edit this entry" label="Edit" id="button[edit]"/>
+							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]"/>
+							<button statustext="Saves the changes made" label="Save" id="button[save]"/>
+							<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();"/>
 							<html id="js"/>
 						</hbox>
-						<button label="Delete" align="right" onclick="return confirm('Delete this entry');" id="button[delete]" statustext="Delete this entry"/>
+						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');"/>
 					</hbox>
 				</row>
 			</rows>
