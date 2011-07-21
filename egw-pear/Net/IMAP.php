@@ -419,15 +419,16 @@ class Net_IMAP extends Net_IMAPProtocol {
 			}
             #return $ret;
         }
-		# this seems to be obsolet, since errors while retrieving header informations are 'covered' above
-        #if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
-		#	error_log("egw-pear::NET::IMAP:getSummary->ResponseCode not OK");
-        #    return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
-        #}
+        // this seems to be obsolet, since errors while retrieving header informations are 'covered' above
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK")
+        {
+            error_log("egw-pear::NET::IMAP:getSummary->ResponseCode not OK");
+            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+        }
 
-        #print "<hr>"; 
-		#error_log("egw-pear::NET::IMAP:getSummary->".print_r($ret["PARSED"],TRUE)); 
-		#print "<hr>";
+        //print "<hr>";
+        //if (PEAR::isError($ret)) error_log("egw-pear::NET::IMAP:getSummary->".print_r($ret->message,TRUE));
+        //print "<hr>";
         if(isset( $ret["PARSED"] ) ){
             for($i=0; $i<count($ret["PARSED"]) ; $i++){
 				if ($ret["PARSED"][$i]['COMMAND'] != 'FETCH') continue;
@@ -714,7 +715,20 @@ class Net_IMAP extends Net_IMAPProtocol {
         $part = $this->_parseStructureCommonFields($_structure);
         $part->cid = $_structure[3];
         $part->partID = $_partID;
-        
+        // there may be a part 8 for images too, ...
+        if(is_array($_structure[8])) {
+          if(isset($_structure[8][0]) && $_structure[8][0] != 'NIL') {
+            $part->disposition = strtoupper($_structure[8][0]);
+          }
+          if(is_array($_structure[8][1])) {
+            foreach($_structure[8][1] as $key => $value) {
+              if($key%2 == 0) {
+                $part->dparameters[trim(strtoupper($_structure[8][1][$key]))] = $_structure[8][1][$key+1];
+              }
+            }
+          }
+        }
+
         $_mimeParts[$_partID] = $part;
     }
 
