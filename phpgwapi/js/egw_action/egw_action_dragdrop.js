@@ -337,7 +337,9 @@ function egwDropActionImplementation()
 
 						if (cnt == 1)
 						{
-							lnk.actionObj.execute(selected, _context);
+							window.setTimeout(function() {
+								lnk.actionObj.execute(selected, _context);
+							},0);
 						}
 
 						if (cnt > 1)
