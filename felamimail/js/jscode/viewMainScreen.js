@@ -1316,13 +1316,25 @@ function felamimail_transform_foldertree() {
 	// Go over the folder list
 	if (typeof felamimail_folders != 'undefined' && felamimail_folders.length > 0)
 	{
+		if (typeof prefAskForMove == 'undefined') prefAskForMove = egw_appWindow('felamimail').prefAskForMove; 
 		for (var i = 0; i < felamimail_folders.length; i++) {
 			var folderName = felamimail_folders[i];
 
 			// Add a new action object to the object manager
 			var obj = treeObj.addObject(folderName,
 				new dhtmlxtreeItemAOI(tree, folderName));
-			obj.updateActionLinks(["drop_move_mail", "drop_copy_mail", "drop_cancel"]);
+			if (prefAskForMove == 2) 
+			{
+				obj.updateActionLinks(["drop_move_mail", "drop_copy_mail", "drop_cancel"]);
+			}
+			else if ( prefAskForMove == 1 )
+			{
+				obj.updateActionLinks(["drop_move_mail", "drop_cancel"]);
+			}
+			else
+			{
+				obj.updateActionLinks(["drop_move_mail"]);
+			}
 		}
 	}
 }
