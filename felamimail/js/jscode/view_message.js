@@ -110,7 +110,3 @@ function fm_resizeBodyDIV() {
 		bodyDIV.style.height = egw_getWindowInnerHeight() - bodyDIV.offsetTop - 2 + 'px';
 	}
 }
-
-function fm_displayHeaderLines(_url) {
-	egw_openWindowCentered(_url,'fm_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
-}

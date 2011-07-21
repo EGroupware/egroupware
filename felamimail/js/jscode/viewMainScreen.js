@@ -336,6 +336,7 @@ function displayMessage(_url,_windowName) {
 }
 
 function mail_displayHeaderLines(_url) {
+	// only used by right clickaction
 	egw_openWindowCentered(_url,'fm_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
 }
 

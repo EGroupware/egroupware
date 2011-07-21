@@ -1489,6 +1489,8 @@ $j(document).ready(function() {
 
 		function displayMessageActions($_headerData, $_folderName, $_icServer, $_forceNewWindow=false)
 		{
+			$fm_width = 700;
+			$fm_height = 600;
 			if ($_forceNewWindow)
 			{
 				list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
@@ -1669,13 +1671,13 @@ $j(document).ready(function() {
 			}
 			// save email as
 			$navbarImages['fileexport'] = array(
-				'action'	=> "document.location='$saveMessageURL';",//"($_forceNewWindow ? "window.open('$saveMessageURL','_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')": "window.location.href = '$saveMessageURL'"),
+				'action'	=> "document.location='$saveMessageURL';",
 				'tooltip'	=> lang('Save message to disk'),
 			);
 
 			// view header lines
 			$navbarImages['kmmsgread'] = array(
-				'action'	=> "mail_displayHeaderLines('$viewHeaderURL')",
+				'action'	=> "egw_openWindowCentered('$viewHeaderURL','fm_displayHeaderLines_".$_headerData['uid']."',".$fm_width.",".$fm_height.");",
 				'tooltip'	=> lang('view header lines'),
 			);
 
