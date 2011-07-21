@@ -105,6 +105,7 @@ class egw_mailer extends PHPMailer
 		$hosts = explode(';',$this->Host);
 		foreach ($hosts as $k => &$host)
 		{
+			$host = trim($host); // make sure there is no whitespace leading or trailling the host string
 			if (in_array($port,array(465,587)) && strpos($host,'://')===false) 
 			{
 				//$host = ($port==587?'tls://':'ssl://').trim($host);
