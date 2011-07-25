@@ -1079,7 +1079,9 @@ class egw_session
 
 		// append the url to the webserver url, but avoid more then one slash between the parts of the url
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-		if (($url[0] != '/' || $webserver_url != '/') && (!$webserver_url || strpos($url, $webserver_url) === false))
+		// patch inspired by vladimir kolobkov -> we should not try to match the webserver url against the url without '/' as delimiter, 
+		// as $webserver_url may be part of $url (as /egw is part of phpgwapi/js/egw_instant_load.html)
+		if (($url[0] != '/' || $webserver_url != '/') && (!$webserver_url || strpos($url, $webserver_url.'/') === false))
 		{
 			if($url[0] != '/' && substr($webserver_url,-1) != '/')
 			{
