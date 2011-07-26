@@ -114,7 +114,7 @@ class egw_json_request
 
 		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
 			$menuaction != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
-			!preg_match('/^[A-Za-z0-9_]+(\.[A-Za-z0-9_]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
+			!preg_match('/^[A-Za-z0-9_-]+(\.[A-Za-z0-9_]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
 		{
 			// stopped for security reasons
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
