@@ -1050,7 +1050,8 @@ $j(document).ready(function() {
 						$header['mimetype'] == 'text/calendar' ||
 						substr($header['mimetype'],0,11) == 'application' ||
 						substr($header['mimetype'],0,5) == 'audio' ||
-						substr($header['mimetype'],0,5) == 'video')
+						substr($header['mimetype'],0,5) == 'video' ||
+						($this->bofelamimail->htmlOptions !='always_display' && $header['mimetype'] == 'multipart/alternative'))
 					{
 						$linkDataAttachments = array (
 							'menuaction'    => 'felamimail.uidisplay.displayAttachments',
@@ -1408,7 +1409,8 @@ $j(document).ready(function() {
 					$headerData['mimetype'] == 'text/calendar' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
 					substr($headerData['mimetype'],0,5) == 'audio' ||
-					substr($headerData['mimetype'],0,5) == 'video')
+					substr($headerData['mimetype'],0,5) == 'video' ||
+					($this->bofelamimail->htmlOptions !='always_display' && $headerData['mimetype'] == 'multipart/alternative'))
 				{
 					$image = html::image('felamimail','attach');
 

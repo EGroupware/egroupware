@@ -295,7 +295,9 @@
 			#_debug_array($headers);exit;
 			$rawheaders	= $this->bofelamimail->getMessageRawHeader($this->uid, $partID);
 			//_debug_array($rawheaders);exit;
-			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID, '',false);
+			$fetchEmbeddedImages = false;
+			if ($this->bofelamimail->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID, '',$fetchEmbeddedImages);
 			//_debug_array($attachments); //exit;
 			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
 			//_debug_array($envelope); exit;
@@ -1033,7 +1035,9 @@ blockquote[type=cite] {
 			$bodyParts	= $this->bofelamimail->getMessageBody($uid, '', $partID);
 			//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 			$meetingRequest = false;
-			$attachments    = $this->bofelamimail->getMessageAttachments($uid, $partID, '',false,true);
+			$fetchEmbeddedImages = false;
+			if ($this->bofelamimail->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+			$attachments    = $this->bofelamimail->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
 			foreach ((array)$attachments as $key => $attach)
 			{
 				if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
