@@ -2071,6 +2071,7 @@ class felamimail_bo
 								if($part->disposition != 'ATTACHMENT') {
 									$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
 								}
+								//error_log(__METHOD__.__LINE__.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
 								break;
 						}
 						break;
@@ -2552,7 +2553,7 @@ class felamimail_bo
 					return $retValue;
 				}
 			} else {
-				error_log(__METHOD__." -> retrieval of Message Details failed: ".print_r($headersNew,TRUE));
+				if ($headersNew == null && empty($_thisUIDOnly)) error_log(__METHOD__." -> retrieval of Message Details to Query $queryString failed: ".print_r($headersNew,TRUE));
 				$retValue = array();
 				$retValue['info']['total']  = 0;
 				$retValue['info']['first']  = 0;
@@ -2848,6 +2849,7 @@ class felamimail_bo
 				}
 			}
 			if (self::$debug) _debug_array($structure);
+
 			switch($structure->type) {
 				case 'APPLICATION':
 					return array(
@@ -3434,7 +3436,8 @@ class felamimail_bo
 						$cnt = strlen($v);
 						// only break long words within the wordboundaries,
 						// but it may destroy links, so we check for href and dont do it if we find one
-						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false)
+						// we check for any html within the word, because we du not want to break html by accident
+						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false && $cnt == strlen(html_entity_decode($v)))
 						{
 							$v=wordwrap($v, $allowedLength, $cut, true);
 						}
@@ -4025,21 +4028,22 @@ class felamimail_bo
 				if ($ct>0)
 				{
 					//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
-                    $style2buffer = implode('',$newStyle[0]);
-                }
-                if (strtoupper(self::$displayCharset) == 'UTF-8')
-                {
-                    $test = json_encode($style2buffer);
-                    //error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
-                    //if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
-                    if ($test=="null" && strlen($style2buffer)>0)
-                    {
-                        // this should not be needed, unless something fails with charset detection/ wrong charset passed
-                        error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.felamimail_bo::detect_encoding($style2buffer));
-                        $style2buffer = utf8_encode($style2buffer);
-                    }
-                }
-                $style .= $style2buffer;
+					$style2buffer = implode('',$newStyle[0]);
+				}
+				if ($style2buffer && strtoupper(self::$displayCharset) == 'UTF-8')
+				{
+					//error_log(__METHOD__.__LINE__.array2string($style2buffer));
+					$test = json_encode($style2buffer);
+					//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+					//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+					if ($test=="null" && strlen($style2buffer)>0)
+					{
+						// this should not be needed, unless something fails with charset detection/ wrong charset passed
+						error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.felamimail_bo::detect_encoding($style2buffer));
+						$style2buffer = utf8_encode($style2buffer);
+					}
+				}
+				$style .= $style2buffer;
 			}
 			// CSS Security
 			// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
