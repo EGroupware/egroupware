@@ -694,7 +694,8 @@
 			$_mailObject->CharSet	= $this->displayCharset;
 			// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
 			// sending in the name of someone else
-			$_mailObject->Sender  = $activeMailProfile->emailAddress;
+			if ($_identity->id != $activeMailProfile->id) error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile->emailAddress.' with ID:'.$activeMailProfile->id.'. Identitiy to use for sending:'.array2string($_identity));
+			$_mailObject->Sender  = ($_identity->id<0 && $activeMailProfile->id < 0 ? $_identity->emailAddress : $activeMailProfile->emailAddress);
 			$_mailObject->From 	= $_identity->emailAddress;
 			$_mailObject->FromName = $_mailObject->EncodeHeader($_identity->realName);
 			$_mailObject->Priority = $_formData['priority'];
