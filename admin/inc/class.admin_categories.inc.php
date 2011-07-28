@@ -364,6 +364,7 @@ class admin_categories
 		$rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
 		// make appname available for actions
 		$rows['appname'] = $query['appname'];
+		$rows['edit_link'] = $this->edit_link;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang($this->appname).' - '.lang('categories').
 			($query['appname'] != categories::GLOBAL_APPNAME ? ': '.lang($query['appname']) : '');
