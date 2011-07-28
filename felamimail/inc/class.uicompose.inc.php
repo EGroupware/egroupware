@@ -364,7 +364,7 @@
 			$defaultIdentity = 0;
 			foreach($allIdentities as $key => $singleIdentity) {
 				#$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
-				$identities[$key] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
+				if (array_search($singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>',$identities)==false) $identities[$key] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
 				if(!empty($singleIdentity->default)) {
 					#$defaultIdentity = $singleIdentity->id;
 					$defaultIdentity = $key;
