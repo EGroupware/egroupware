@@ -617,11 +617,13 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		} // end forward
 
 		// add signature!! -----------------------------------------------------------------
+		$bosignatures	= CreateObject('felamimail.felamimail_bosignatures');
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
-		$presetSig = (!empty($activeMailProfile->signature) ? $activeMailProfile->signature : -1); // thats the default
+		$defaultSig = $bosignatures->getDefaultSignature();
+		if ($defaultSig === false) $defaultSig = -1;
+		$presetSig = (!empty($activeMailProfile->signature) ? $activeMailProfile->signature : $defaultSig); // thats the default
 		$disableRuler = false;
 
-		$bosignatures	= CreateObject('felamimail.felamimail_bosignatures');
 		$_signature = $bosignatures->getSignature($presetSig);
 		$signature = $_signature->fm_signature;
 		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&

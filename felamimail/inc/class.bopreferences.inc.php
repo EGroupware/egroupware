@@ -363,7 +363,7 @@
 				if (!isset($userPrefs['sendOptions']) || empty($userPrefs['sendOptions'])) $userPrefs['sendOptions'] = 'move_to_sent';
 			}
 
-			$userPrefs['signature']		= $userPrefs['email_sig'];
+			if (!empty($userPrefs['email_sig'])) $userPrefs['signature'] = $userPrefs['email_sig'];
 
  			unset($userPrefs['email_sig']);
 			return $userPrefs;
