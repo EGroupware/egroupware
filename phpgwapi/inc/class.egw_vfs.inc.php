@@ -383,6 +383,19 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Check if file is hidden: name starts with a '.' or is Thumbs.db
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	public static function is_hidden($path)
+	{
+		$file = self::basename($path);
+
+		return $file[0] == '.' || $file == 'Thumbs.db';
+	}
+
+	/**
 	 * find = recursive search over the filesystem
 	 *
 	 * @param string|array $base base of the search
@@ -481,7 +494,7 @@ class egw_vfs extends vfs_stream_wrapper
 				{
 					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
 
-					if (($file[0] == '.' || $file == 'Thumbs.db') && !$options['hidden']) continue;	// ignore hidden files
+					if (self::is_hidden($file) && !$options['hidden']) continue;	// ignore hidden files
 
 					$file = self::concat($path,$file);
 
