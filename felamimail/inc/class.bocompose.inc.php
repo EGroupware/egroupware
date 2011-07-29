@@ -36,6 +36,7 @@
 			$this->displayCharset	= strtolower($_charSet);
 			$this->bosignatures	= new felamimail_bosignatures();
 			$this->bofelamimail	= felamimail_bo::getInstance(true,$profileID);
+			$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->bopreferences =& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences; // $this->bopreferences->getPreferences();
 			// we should get away from this $this->preferences->preferences should hold the same info

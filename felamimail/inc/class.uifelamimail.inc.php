@@ -69,7 +69,7 @@ class uifelamimail
 
 			//error_log(__METHOD__.'->'.self::$icServerID);
 			$this->bofelamimail     = felamimail_bo::getInstance(false,self::$icServerID);
-
+			self::$icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->bofilter		= new felamimail_bofilter(false);
 			$this->bopreferences=& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences;

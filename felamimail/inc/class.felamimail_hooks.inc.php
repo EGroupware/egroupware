@@ -20,7 +20,12 @@ class felamimail_hooks
  */
 	static public function accountHooks($hookData)
 	{
-		$bofelamimail = felamimail_bo::getInstance();
+		$profileID = 0;
+		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+
+		$bofelamimail = felamimail_bo::getInstance(true,$profileID);
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
 
 		switch(is_array($hookData) ? $hookData['location'] : $hookData)
 		{
@@ -93,7 +98,8 @@ class felamimail_hooks
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
-			$bofelamimail = felamimail_bo::getInstance($profileID);
+			$bofelamimail = felamimail_bo::getInstance(true,$profileID);
+			$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
 			if($bofelamimail->openConnection($profileID)) {
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
@@ -542,7 +548,8 @@ class felamimail_hooks
 		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
-		$bofelamimail = felamimail_bo::getInstance($profileID);
+		$bofelamimail = felamimail_bo::getInstance(true,$profileID);
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
 		$mailPreferences =& $bofelamimail->mailPreferences;
 
 		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.uisettings.index&appname=' . $appname);
@@ -590,6 +597,7 @@ class felamimail_hooks
 			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
 		$bofelamimail = felamimail_bo::getInstance(true,$profileID);
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
 		$preferences =& $bofelamimail->mailPreferences;
 		$showMainScreenStuff = false;
 		if(($_GET['menuaction'] == 'felamimail.uifelamimail.viewMainScreen' ||

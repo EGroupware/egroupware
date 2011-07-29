@@ -53,6 +53,8 @@ class uiwidgets
 				$this->profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
 			$this->bofelamimail = felamimail_bo::getInstance(true,$this->profileID);
+			$this->profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
+
 			$this->_connectionStatus = $this->bofelamimail->openConnection($this->profileID);
 			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
 			$previewFrameHeight = -1;

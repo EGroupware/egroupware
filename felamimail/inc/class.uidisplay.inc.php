@@ -101,6 +101,7 @@
 				$this->icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
 			$this->bofelamimail		= felamimail_bo::getInstance(true,$this->icServerID);
+			$this->icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->bopreferences	=& $this->bofelamimail->bopreferences;
 
 			$this->mailPreferences	=& $this->bofelamimail->mailPreferences;//bopreferences->getPreferences();
@@ -1396,7 +1397,7 @@ blockquote[type=cite] {
 				if (strtoupper($this->displayCharset) == 'UTF-8')
 				{
 					$test = json_encode($singleBodyPart['body']);
-					//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error());
+					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
 					if ($test=="null" && strlen($singleBodyPart['body'])>0)  
 					{
@@ -1486,6 +1487,7 @@ blockquote[type=cite] {
 					// replace emails within the text with clickable links.
 					$this->parseEmail($newBody);
 				}
+
 				$body .= $newBody;
 				#print "<hr><pre>$body</pre><hr>";
 			}

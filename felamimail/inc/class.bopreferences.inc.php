@@ -215,9 +215,10 @@
 		 *
 		 * @param boolean $getUserDefinedProfiles 
 		 * @param int $_profileID - use this profile to be set its prefs as active profile (0) 
+		 * @param string $_appName - the app the profile is fetched for
 		 * @return object ea_preferences object with the active emailprofile set to ID = 0 
 		 */
-		function getPreferences($getUserDefinedProfiles=true,$_profileID=0)
+		function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='felamimail')
 		{
 			if (isset($this->sessionData['profileData']) && is_a($this->sessionData['profileData'],'ea_preferences')) 
 			{
@@ -229,7 +230,7 @@
 				$userPreferences = $GLOBALS['egw_info']['user']['preferences']['felamimail'];
 
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
-				$profileData		= $this->boemailadmin->getUserProfile('felamimail'); // by now we assume only one profile to be returned
+				$profileData		= $this->boemailadmin->getUserProfile($_appName); // by now we assume only one profile to be returned
 				$icServerKeys = array_keys((array)$profileData->ic_server); 
 				$icProfileID = array_shift($icServerKeys);
 				$ogServerKeys = array_keys((array)$profileData->og_server); 

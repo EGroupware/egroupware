@@ -91,7 +91,7 @@ class felamimail_bo
 		}
 
 		/**
-		 * Hold instances by profileID for getInstances() singleton
+		 * Hold instances by profileID for getInstance() singleton
 		 *
 		 * @var array
 		 */
@@ -102,9 +102,26 @@ class felamimail_bo
 		 *
 		 * @param boolean $_restoreSession=true
 		 * @param int $_profileID=0
+		 * @param boolean $_validate=true - flag wether the profileid should be validatet or not, if validation is true, you may receive a profile
+		 *                                  not matching the input profileID, if we can not find a profile matching the given ID
+		 * @return object instance of felamimail_bo
 		 */
-		public static function getInstance($_restoreSession=true, $_profileID=0)
+		public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 		{
+			if ($_profileID != 0 && $_validate)
+			{
+				$profileID = self::validateProfileID($_restoreSession, $_profileID);
+				if ($profileID != $_profileID)
+				{
+					error_log(__METHOD__.__LINE__.' Validation of profile with ID:'.$_profileID.' failed. Using '.$profileID.' instead.');
+					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
+					$_profileID = $profileID;
+					$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_identity,'user');
+					// save prefs
+					$GLOBALS['egw']->preferences->save_repository(true);
+					egw_cache::setSession('felamimail','activeProfileID',$_profileID);
+				}
+			}
 			//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 			if (!isset(self::$instances[$_profileID]))
 			{
@@ -126,6 +143,62 @@ class felamimail_bo
 			self::$instances[$_profileID]->profileID = $_profileID;
 			//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
 			return self::$instances[$_profileID];
+		}
+
+		/**
+		 * validate the given profileId to make sure it is valid for the active user
+		 *
+		 * @param boolean $_restoreSession=true - needed to pass on to getInstance
+		 * @param int $_profileID=0
+		 * @return int validated profileID -> either the profileID given, or a valid one
+		 */
+		public static function validateProfileID($_restoreSession=true, $_profileID=0)
+		{
+			$identities = array();
+			$mail = felamimail_bo::getInstance($_restoreSession, $_profileID, $validate=false); // we need an instance of felamimail_bo
+			$selectedID = $mail->getIdentitiesWithAccounts($identities);
+			$activeIdentity =& $mail->mailPreferences->getIdentity($_profileID, true);
+			// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
+			if ($activeIdentity->id || $_profileID < 0) {
+				$boemailadmin = new emailadmin_bo();
+				$defaultProfile = $boemailadmin->getUserProfile() ;
+				//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
+				$identitys =& $defaultProfile->identities;
+				$icServers =& $defaultProfile->ic_server;
+				foreach ($identitys as $tmpkey => $identity)
+				{
+					if (empty($icServers[$tmpkey]->host)) continue;
+					$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+				}
+				//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
+			}
+
+			//error_log(__METHOD__.__LINE__.array2string($identities));
+			if (array_key_exists($_profileID,$identities))
+			{
+				// everything seems to be in order self::$profileID REMAINS UNCHANGED
+			}
+			else
+			{
+				if (array_key_exists($selectedID,$identities))
+				{
+					$_profileID = $selectedID; 
+				}
+				else
+				{
+					foreach (array_keys((array)$identities) as $k => $ident) if ($ident <0) $_profileID = $ident;
+					if (self::$debug) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string($_profileID));
+					if (!array_key_exists($_profileID,$identities))
+					{
+						// everything failed, try first profile found
+						$keys = array_keys((array)$identities);
+						if (count($keys)>0) $_profileID = array_shift($keys);
+						else $_profileID = 0;
+					}
+				}
+			}
+			if (self::$debug) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.$_profileID.' -> '.$identities[$_profileID]);
+			return $_profileID;
 		}
 
 		/**
@@ -3436,7 +3509,7 @@ class felamimail_bo
 						$cnt = strlen($v);
 						// only break long words within the wordboundaries,
 						// but it may destroy links, so we check for href and dont do it if we find one
-						// we check for any html within the word, because we du not want to break html by accident
+						// we check for any html within the word, because we do not want to break html by accident
 						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false && $cnt == strlen(html_entity_decode($v)))
 						{
 							$v=wordwrap($v, $allowedLength, $cut, true);

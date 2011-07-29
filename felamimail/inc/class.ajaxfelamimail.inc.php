@@ -51,6 +51,7 @@ class ajaxfelamimail
 
 			$this->charset		=  translation::charset();
 			$this->bofelamimail	= felamimail_bo::getInstance(true,$this->imapServerID);
+			$this->imapServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 			$this->icServer = $this->bofelamimail->mailPreferences->getIncomingServer($this->imapServerID);
 			$this->_connectionStatus = $this->bofelamimail->openConnection($this->imapServerID);
