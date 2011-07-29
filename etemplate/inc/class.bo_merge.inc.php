@@ -366,7 +366,7 @@ abstract class bo_merge
 				}
 				catch (Exception $e)
 				{
-echo $content;die();
+					error_log($e);
 					// Failed...
 				}
 			}
@@ -655,7 +655,6 @@ echo $content;die();
 				{
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
-					//$value = strip_tags($value);
 					$value = strip_tags($value,implode('',$replace_tags));
 				}
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
@@ -819,7 +818,7 @@ echo $content;die();
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					$LF ='</w:r></w:p><w:r><w:t>';
+					$LF ='</w:t></w:r></w:p><w:p><w:r><w:t>';
 					break;
 				case 'application/xml';
 					$LF ='</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
