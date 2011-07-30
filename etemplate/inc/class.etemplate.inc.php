@@ -1240,16 +1240,16 @@ class etemplate extends boetemplate
 				if ($activate_links) $value = html::activate_links($value);
 				$html .= $value;
 				break;
-			case 'int':		// size: [min],[max],[len],[precission/sprint format]
+			case 'int':		// size: [min],[max],[len],[precision/sprint format],[step]
 			case 'float':
-				list($min,$max,$cell_options,$pre) = explode(',',$cell_options);
+				list($min,$max,$cell_options,$pre,$step) = explode(',',$cell_options);
 				// a few html5 options
 				if ((string)$min !== '') $options .= ' min="'.htmlspecialchars($min).'"';
 				if ((string)$max !== '') $options .= ' max="'.htmlspecialchars($max).'"';
-				// disable html5 form validation for float, as Chrome 12 rejects float values with comma as decimal separator
-				if ($type == 'float' && !$readonly && html::$user_agent == 'chrome' && strpos(self::$form_options,'novalidate') === false)
+				//  default step="any" for float, as not setting it limits value to integer as step defaults to 1 in html5!
+				if (is_numeric($step) || $type == 'float')
 				{
-					self::$form_options .= ' novalidate="novalidate"';
+					$options .= ' step="'.(is_numeric($step)?$step:'any').'"';
 				}
 				if ($cell_options == '' && !$readonly)
 				{
