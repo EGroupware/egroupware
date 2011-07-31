@@ -128,7 +128,28 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
         $source = $this->base .$options["path"];
         if (!file_exists($source)) return "404 Not found";
 
+        if (is_dir($source)) { // resource is a collection
+            switch ($options["depth"]) {
+            case "infinity": // valid
+                break;
+            case "0": // valid for COPY only
+                if ($del) { // MOVE?
+                    return "400 Bad request";
+                }
+                break;
+            case "1": // invalid for both COPY and MOVE
+            default:
+                return "400 Bad request";
+            }
+        }
+
         $dest         = $this->base . $options["dest"];
+        $destdir      = dirname($dest);
+
+        if (!file_exists($destdir) || !is_dir($destdir)) {
+            return "409 Conflict";
+        }
+
         $new          = !file_exists($dest);
         $existing_col = false;
 
@@ -158,11 +179,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             }
         }
 
-        if (is_dir($source) && ($options["depth"] != "infinity")) {
-            // RFC 2518 Section 9.2, last paragraph
-            return "400 Bad request";
-        }
-
         if ($del) {
             if (!rename($source, $dest)) {
                 return "500 Internal server error";
@@ -182,9 +198,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             mysql_query($query);
 */
         } else {
-            if (is_dir($source)) {
-                $files = System::find($source);
-                $files = array_reverse($files);
+            if (is_dir($source) && $options['depth'] == 'infinity') {
+            	$files = egw_vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!
             } else {
                 $files = array($source);
             }
