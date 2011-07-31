@@ -62,16 +62,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		// special treatment for litmus compliance test
 		// reply on its identifier header
 		// not needed for the test itself but eases debugging
-		if (function_exists('apache_request_headers'))
-		{
-			foreach (apache_request_headers() as $key => $value)
-			{
-				if (stristr($key, 'litmus'))
-				{
-					error_log("Litmus test $value");
-					header('X-Litmus-reply: '.$value);
-				}
-			}
+		if (isset($this->_SERVER['HTTP_X_LITMUS'])) {
+			error_log("Litmus test ".$this->_SERVER['HTTP_X_LITMUS']);
+			header("X-Litmus-reply: ".$this->_SERVER['HTTP_X_LITMUS']);
 		}
 		// let the base class do all the work
 		HTTP_WebDAV_Server::ServeRequest();
@@ -260,6 +253,10 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('getlastmodified', filemtime($fspath));
 
+        // Microsoft extensions: last access time and 'hidden' status
+        $info["props"][] = HTTP_WebDAV_Server::mkprop("lastaccessed",    fileatime($fspath));
+        $info["props"][] = HTTP_WebDAV_Server::mkprop("ishidden",        egw_vfs::is_hidden($fspath));
+
 		// type and size (caller already made sure that path exists)
 		if (is_dir($fspath)) {
 			// directory (WebDAV collection)
@@ -353,6 +350,28 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		return egw_vfs::mime_content_type($path);
 	}
+
+    /**
+     * Check if path is readable by current user
+     *
+     * @param string $fspath
+     * @return boolean
+     */
+    function _is_readable($fspath)
+    {
+    	return egw_vfs::is_readable($fspath);
+    }
+
+    /**
+     * Check if path is writable by current user
+     *
+     * @param string $fspath
+     * @return boolean
+     */
+    function _is_writable($fspath)
+    {
+    	return egw_vfs::is_writable($fspath);
+    }
 
 	/**
 	 * PROPPATCH method handler
@@ -472,7 +491,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		return egw_vfs::checkLock($path);
 	}
-	
+
 	/**
 	 * GET method handler for directories
 	 *
