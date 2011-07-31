@@ -701,7 +701,7 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
                            WHERE path = '".$options["path"]."'";
             mysql_query($query);
         } else {
-            if (is_dir($source)) {
+            if (is_dir($source) && $options["depth"] == "infinity") {	// no find for depth="0"
                 $files = System::find($source);
                 $files = array_reverse($files);
             } else {
