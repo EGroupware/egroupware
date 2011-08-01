@@ -374,9 +374,8 @@ class egw_time extends DateTime
 		}
 		catch(Exception $e)
 		{
-			throw new egw_exception_wrong_userinput(lang('You need to %1set your timezone preference%2.','<a href="'.egw::link('/index.php',array(
-				'menuaction' => 'preferences.uisettings.index',
-				'appname'    => 'preferences')).'">','</a>'));
+			// silently use server timezone, as we have no means to report the wrong timezone to the user from this class
+			self::$user_timezone = clone(self::$server_timezone);
 		}
 		return self::$user_timezone;
 	}
@@ -406,7 +405,22 @@ class egw_time extends DateTime
 		{
 			$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get();
 		}
-		self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
+		// make sure we have a valid server timezone set
+		try {
+			self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
+		}
+		catch(Exception $e)
+		{
+			try {
+				self::$server_timezone = new DateTimeZone(date_default_timezone_get());
+			}
+			catch(Exception $e)
+			{
+				self::$server_timezone = new DateTimeZone('Europe/Berlin');
+			}
+			error_log(__METHOD__."() invalid server_timezone='{$GLOBALS['egw_info']['server']['server_timezone']}' setting now '".self::$server_timezone->getName()."'!");
+			config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = self::$server_timezone->getName(),'phpgwapi');
+		}
 		if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
