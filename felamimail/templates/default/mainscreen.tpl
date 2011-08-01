@@ -36,10 +36,12 @@ var MessageBuffer;
 var activeServerID			= '{activeServerID}';
 var activeFolder			= '{activeFolder}';
 var activeFolderB64			= '{activeFolderB64}';
-var draftFolder			    = '{draftFolder}';
-var draftFolderB64          = '{draftFolderB64}';
+var sentFolder				= '{sentFolder}';
+var sentFolderB64			= '{sentFolderB64}';
+var draftFolder				= '{draftFolder}';
+var draftFolderB64			= '{draftFolderB64}';
 var templateFolder			= '{templateFolder}';
-var templateFolderB64       = '{templateFolderB64}';
+var templateFolderB64		= '{templateFolderB64}';
 var activityImagePath		= '{ajax-loader}';
 var test = '';
 

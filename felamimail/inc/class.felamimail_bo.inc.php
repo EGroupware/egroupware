@@ -451,6 +451,7 @@ class felamimail_bo
 		}
 
 		function closeConnection() {
+			//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
 			if ($icServer->_connected) $this->icServer->disconnect();
 		}
 
@@ -3328,12 +3329,13 @@ class felamimail_bo
 				$this->icServer->_connectionErrorObject->message .= $this->errorMessage .= $errormessage;
 				return false;
 			}
-			//error_log( "---------------------------open connection ".function_backtrace());
-			//error_log(print_r($this->icServer,true));
+			//error_log( "-------------------------->open connection ".function_backtrace());
+			//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
 			if ($this->icServer->_connected == 1) {
 				$tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
 				//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 			} else {
+				//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
 				$tretval = $this->icServer->openConnection($_adminConnection);
 				//error_log(__METHOD__." open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 			}

@@ -711,6 +711,9 @@ class uifelamimail
 			$this->t->set_var('activeServerID',self::$icServerID);
 			$this->t->set_var('activeFolder',$urlMailbox);
 			$this->t->set_var('activeFolderB64',base64_encode($this->mailbox));
+			$sentFolder = $this->bofelamimail->getSentFolder(false);
+			$this->t->set_var('sentFolder',($sentFolder?$sentFolder:''));
+			$this->t->set_var('sentFolderB64',($sentFolder?base64_encode($sentFolder):''));
 			$draftFolder = $this->bofelamimail->getDraftFolder(false);
 			$this->t->set_var('draftFolder',($draftFolder?$draftFolder:''));
 			$this->t->set_var('draftFolderB64',($draftFolder?base64_encode($draftFolder):''));

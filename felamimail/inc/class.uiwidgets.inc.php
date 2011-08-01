@@ -1311,6 +1311,7 @@ $j(document).ready(function() {
 
 		function updateMessagePreview($headerData,$_folderType,$_folderName,$_icServer=0)
 		{
+			//error_log(__METHOD__.__LINE__." Type:$_folderType, Folder:$_folderName ->".function_backtrace());
 			// IFrame for Preview ....
 			if ($headerData['uid'] && $this->use_preview)
 			{

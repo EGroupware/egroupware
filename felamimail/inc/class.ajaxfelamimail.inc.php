@@ -519,6 +519,8 @@ class ajaxfelamimail
 
 			$this->bofelamimail->restoreSessionData();
 			//error_log($this->sessionData['previewMessage']);
+			//error_log(__METHOD__.__LINE__.' ->'.$_folderName.' ShowAsSent:'.$GLOBALS['egw_info']['user']['preferences']['felamimail']['messages_showassent_0']);
+
 			if($this->bofelamimail->isSentFolder($_folderName) ||
 				false !== in_array($_folderName,explode(',',$GLOBALS['egw_info']['user']['preferences']['felamimail']['messages_showassent_0'])))
 			{

@@ -583,6 +583,7 @@ function selectedGridChange(_selectAll) {
 					MessageBuffer ='';
 
 					fm_previewMessageFolderType = 0;
+					if (activeFolderB64 == sentFolderB64) fm_previewMessageFolderType = 1;
 					if (activeFolderB64 == draftFolderB64) fm_previewMessageFolderType = 2;
 					if (activeFolderB64 == templateFolderB64) fm_previewMessageFolderType = 3;
 
