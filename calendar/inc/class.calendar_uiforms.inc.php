@@ -1411,18 +1411,10 @@ function replace_eTemplate_onsubmit()
 
 		if ($view)
 		{
-			foreach($event as $key => $val)
-			{
-				if ($key != 'alarm') $readonlys[$key] = true;
-			}
-			// we need to unset the tab itself, as this would make all content (incl. the change-status selects) readonly
-			unset($readonlys['tabs']);
-			// participants are handled individual
-			unset($readonlys['participants']);
-
-			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['freetime'] = true;
-			$readonlys['link_to'] = $readonlys['customfields'] = true;
-			$readonlys['duration'] = true;
+			$readonlys['__ALL__'] = true;	// making everything readonly, but widgets set explicitly to false
+			$readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
+				$readonlys['before_after'] = $readonlys['button[add_alarm]'] = $readonlys['new_alarm[owner]'] =
+				$readonlys['new_alarm[days]'] = $readonlys['new_alarm[hours]'] = $readonlys['new_alarm[mins]'] = false;
 
 			$content['participants']['no_add'] = true;
 
