@@ -93,6 +93,11 @@ tr.unseen a {
 
 tr.flagged div,
 tr.flagged a {
+	color: #ff0000 !important;
+}
+
+tr.prio_high div,
+tr.prio_high a {
 	color: #ac0000 !important;
 }
 
@@ -116,6 +121,14 @@ tr.deleted span.status_img {
 
 tr.unseen span.status_img {
 	background-image: url(../default/images/kmmsgunseen.png);
+}
+
+tr.flagged_seen span.status_img {
+	background-image: url(images/read_flagged_small.png) !important;
+}
+
+tr.flagged_unseen span.status_img {
+	background-image: url(images/unread_flagged_small.png) !important;
 }
 
 tr.recent span.status_img {

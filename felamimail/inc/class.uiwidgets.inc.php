@@ -760,7 +760,7 @@ $j(document).ready(function() {
 						array(
 							"id" => "attachments",
 							"caption" => '',
-							"width" => "26px",
+							"width" => "35px",
 							"visibility" => EGW_COL_VISIBILITY_ALWAYS_NOSELECT,
 						),
 						array(
@@ -810,7 +810,7 @@ $j(document).ready(function() {
 						array(
 							"id" => "attachments",
 							"caption" => '',
-							"width" => "26px",
+							"width" => "35px",
 							"visibility" => EGW_COL_VISIBILITY_ALWAYS_NOSELECT,
 						),
 						array(
@@ -962,8 +962,21 @@ $j(document).ready(function() {
 					$css_styles[] = 'recent';
 					$is_recent=true;
 				}
+				if ($header['priority'] < 3) {
+					$css_styles[] = 'prio_high';
+				}
 				if ($header['flagged']) {
 					$css_styles[] = 'flagged';
+/*
+					if (!$header['seen'])
+					{
+						$css_styles[] = 'flagged_unseen';
+					}
+					else
+					{
+						$css_styles[] = 'flagged_seen';
+					}
+*/
 				}
 				if (!$header['seen']) {
 					$css_styles[] = 'unseen'; // different status image for recent // solved via css !important
@@ -1093,8 +1106,13 @@ $j(document).ready(function() {
 					} else {
 						$image = '';
 					}
-
-					$data["attachments"] = $image.$attachmentFlag; // icon for attachments available
+					// show a flag for flagged messages
+					$imageflagged ='';
+					if ($header['flagged'])
+					{
+						$imageflagged = html::image('felamimail','unread_flagged_small');
+					}
+					$data["attachments"] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
 				}
 
 				// sent or draft or template folder -> to address
