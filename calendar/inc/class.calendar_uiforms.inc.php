@@ -1317,15 +1317,9 @@ function replace_eTemplate_onsubmit()
 								'uid'      => $member,
 								'status'   => 'G',
 							);
+							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
 							// read access is enough to invite participants, but you need edit rights to change status
-							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
-							{
-								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
-							}
-							else
-							{
-								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
-							}
+							$readonlys[$row.'[status]'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
 							$content['participants'][$row++]['title'] = common::grab_owner_name($member);
 						}
 					}
