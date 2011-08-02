@@ -142,6 +142,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$this->cnrnd = true;
 				break;
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
+			case 'coredav':	// iCal app in OS X 10.7
 				$this->client_require_href_as_url = false;
 				$this->cnrnd = true;
 				break;
