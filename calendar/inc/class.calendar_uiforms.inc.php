@@ -634,7 +634,7 @@ class calendar_uiforms extends calendar_ui
 											($last = $occurrence));
 									$last->setTime(0, 0, 0);
 									$old_event['recur_enddate'] = egw_time::to($last, 'ts');
-									if (!$this->bo->update($old_event,true,true,false,true,null,$content['no_notifications']))
+									if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$content['no_notifications']))
 									{
 										$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 											lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
