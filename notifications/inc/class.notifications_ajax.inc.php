@@ -153,7 +153,12 @@ class notifications_ajax {
 				$this->session_data['notified_mail_uids'][$notify_folder] = array();
 			}
 			$folder_status[$notify_folder] = $bofelamimail->getFolderStatus($notify_folder);
-			$headers = $bofelamimail->getHeaders($notify_folder, 1, false, 0, true, array('status'=>'UNSEEN'));
+			$cutoffdate = time();
+			$cutoffdate = $cutoffdate - (60*60*24*14); // last 14 days
+			$_filter = array('status'=>'UNSEEN','type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+			//error_log(__METHOD__.__LINE__.' (user: '.$this->recipient->account_lid.') Mailbox:'.$notify_folder.' filter:'.array2string($_filter));
+			// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
+			$headers = $bofelamimail->getHeaders($notify_folder, 1, 999, 0, true, $_filter);
 			if(is_array($headers['header']) && count($headers['header']) > 0) {
 				foreach($headers['header'] as $id=>$header) {
 					// check if unseen mail has already been notified
