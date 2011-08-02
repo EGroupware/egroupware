@@ -642,19 +642,29 @@ class html
 
 		// Now setting the admin settings
 		$spell = '';
+		//error_log(__METHOD__.__LINE__.' Spellcheck:'.$GLOBALS['egw_info']['server']['enabled_spellcheck']);
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
 		{
 			$spell = '_spellcheck';
 			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
-				is_executable($GLOBALS['egw_info']['server']['aspell_path']))
+				is_executable($GLOBALS['egw_info']['server']['aspell_path']) &&
+				!($GLOBALS['egw_info']['server']['enabled_spellcheck']=='YesUseWebSpellCheck')
+			)
 			{
 				$spell = '_aspell';
 				$oCKeditor->config['extraPlugins'] = 'aspell';
 			}
-			$oCKeditor->config['scayt_autoStartup']=true;
-			$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);
+			if (!($GLOBALS['egw_info']['server']['enabled_spellcheck']=='YesNoSCAYT'))
+			{
+				$oCKeditor->config['scayt_autoStartup']=true;
+				$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);
+			}
 		}
-		$oCKeditor->config['disableNativeSpellChecker'] = true;
+		else
+		{
+			$oCKeditor->config['scayt_autoStartup']=false;
+			$oCKeditor->config['disableNativeSpellChecker'] = true; // seems to have no effect
+		}
 
 		// Now setting the user preferences
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))

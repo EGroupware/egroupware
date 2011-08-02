@@ -600,6 +600,8 @@ would you like to show each application's upgrade status ?	admin	de	Soll der Upg
 wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e) %2 !!!
 wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort !!!
 xml-rpc	admin	de	XML-RPC
+yes, but no scayt	admin	de	Ja, aber keine automatische Rechtschreibüberprüfung
+yes, use webspellchecker	admin	de	Ja, benutze nur den WebSpellChecker (online)
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	de	Sie können die Passwort-Verschlüsselung nur ändern, wenn sie ein zufälliges Passwort setzen oder bisher Passworte im Klartext gespeichert haben!
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.

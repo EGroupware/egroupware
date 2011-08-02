@@ -132,6 +132,8 @@
      <select name="newsettings[enabled_spellcheck]">
       <option value="">{lang_No}</option>
       <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
+	  <option value="YesNoSCAYT"{selected_enabled_spellcheck_YesNoSCAYT}>{lang_Yes,_but_no_SCAYT}</option>
+	  <option value="YesUseWebSpellCheck"{selected_enabled_spellcheck_YesUseWebSpellCheck}>{lang_Yes,_use_WebSpellChecker}</option>
      </select>
     </td>
    </tr>
