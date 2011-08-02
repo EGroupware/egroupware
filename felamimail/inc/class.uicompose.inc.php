@@ -362,6 +362,7 @@
 			$allIdentities = $this->mailPreferences->getIdentity();
 			//_debug_array($allIdentities);
 			$defaultIdentity = 0;
+			$identities = array();
 			foreach($allIdentities as $key => $singleIdentity) {
 				#$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
 				if (array_search($singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>',$identities)==false) $identities[$key] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
