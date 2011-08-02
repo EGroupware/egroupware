@@ -173,17 +173,23 @@ class egw_ckeditor_config
 	 */
 	private static function add_spellchecker_options(&$config, &$spellchecker_button)
 	{
+		//error_log(__METHOD__.__LINE__.' Spellcheck:'.$GLOBALS['egw_info']['server']['enabled_spellcheck']);
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
 		{
 			$spellchecker_button = 'SpellChecker';
 			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
-				is_executable($GLOBALS['egw_info']['server']['aspell_path']))
+				is_executable($GLOBALS['egw_info']['server']['aspell_path']) &&
+				!($GLOBALS['egw_info']['server']['enabled_spellcheck']=='YesUseWebSpellCheck')
+			)
 			{
 				$spellchecker_button = 'SpellCheck';
 				$config['extraPlugins'] = "aspell";
 			}
-			$config['scayt_autoStartup'] = true;
-			$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
+			if (!($GLOBALS['egw_info']['server']['enabled_spellcheck']=='YesNoSCAYT'))
+			{
+				$config['scayt_autoStartup'] = true;
+				$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
+			}
 			
 		}
 		else
