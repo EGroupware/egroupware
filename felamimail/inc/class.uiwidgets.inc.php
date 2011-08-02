@@ -1596,8 +1596,8 @@ $j(document).ready(function() {
 					'action'	=> ($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
-				'delete'	=> array(
-					'action'	=> ($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
+				'delete'	=> array(// json_encode(array('msg'=>array($_headerData['uid']))) may be used for {msg:[".$_headerData['uid']."]}
+					'action'	=> ($_forceNewWindow ? "mail_deleteMessages({msg:[".$_headerData['uid']."]});": "window.location.href = '$deleteURL'"),
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
 			);

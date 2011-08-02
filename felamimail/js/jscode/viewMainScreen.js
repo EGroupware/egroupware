@@ -760,7 +760,6 @@ var searchesPending=0;
 function refresh() {
 	//searchesPending++;
 	//document.title=searchesPending;
-	mail_resetMessageSelect();
 	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshMessageList');
 }
 

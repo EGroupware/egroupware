@@ -497,7 +497,7 @@ class ajaxfelamimail
 		}
 
 
-		function generateMessageList($_folderName,$modifyoffset=0)
+		function generateMessageList($_folderName,$modifyoffset=0,$listOnly=false)
 		{
 			if($this->_debug) error_log("ajaxfelamimail::generateMessageList with $_folderName,$modifyoffset".function_backtrace());
 			$response = new xajaxResponse();
@@ -505,6 +505,9 @@ class ajaxfelamimail
 			$response->addScript("activeServerID=".$this->imapServerID.";");
 			$response->addScript("activeFolder = \"".$_folderName."\";");
 			$response->addScript("activeFolderB64 = \"".base64_encode($_folderName)."\";");
+			$sentFolder = $this->bofelamimail->getSentFolder(false);
+			$response->addScript("sentFolder = \"".($sentFolder?$sentFolder:'')."\";");
+			$response->addScript("sentFolderB64 = \"".($sentFolder?base64_encode($sentFolder):'')."\";");
 			$draftFolder = $this->bofelamimail->getDraftFolder(false);
 			$response->addScript("draftFolder = \"".($draftFolder?$draftFolder:'')."\";");
 			$response->addScript("draftFolderB64 = \"".($draftFolder?base64_encode($draftFolder):'')."\";");
@@ -599,7 +602,7 @@ class ajaxfelamimail
 				$response->addAssign("messageCounter", "innerHTML", '<b>'.$shortName.': </b>'.lang('Viewing messages').($maxMessages>0?" <b>$firstMessage</b> - <b>$lastMessage</b>":"")." ($totalMessage ".lang("total").')');
 			}
 
-			$response->addAssign("divMessageList", "innerHTML", $headerJs.$headerTable);
+			$response->addAssign("divMessage".($listOnly?'Table':'')."List", "innerHTML", $headerJs.$headerTable);
 			$response->addAssign("skriptGridOnFirstLoad","innerHTML","");
 
 			if($quota = $this->bofelamimail->getQuotaRoot()) {
@@ -932,7 +935,7 @@ class ajaxfelamimail
 
 		function refreshMessageList()
 		{
-			return $this->generateMessageList($this->sessionData['mailbox']);
+			return $this->generateMessageList($this->sessionData['mailbox'],0,$listOnly=true);
 		}
 
 		function refreshFolder($injectIntoResponse = false)
