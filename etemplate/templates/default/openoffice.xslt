@@ -28,7 +28,7 @@
 			<xsl:call-template name="extract-fonts"/>
 		</xsl:copy>
 	</xsl:template>
-
+	
 	<!-- Add in some known styles -->
 	<xsl:template match="office:automatic-styles">
 		<xsl:copy>
@@ -47,7 +47,10 @@
 		</xsl:copy>
 <!-- Pre-made styles from http://fisheye.liip.ch/browse/PUB/fluxcms/branches/matrix/inc/bx/editors/ooo/html2odt.xsl?r=9331 -->
 		<office:styles>
-	<style:style style:name="Pol" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
+	<style:style style:name="Pol" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="LO">
+           <style:text-properties style:text-position="0% 100%"/>
+       </style:style>
+	<style:style style:name="Pul" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="LU">
            <style:text-properties style:text-position="0% 100%"/>
        </style:style>
        <style:style style:name="TableX" style:family="table">
@@ -96,43 +99,43 @@
            </text:list-level-style-number>
        </text:list-style>
        <text:list-style style:name="LU">
-           <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="●">
+           <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="0.635cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="○">
+           <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="1.27cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="■">
+           <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="1.905cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="●">
+           <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="2.54cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="○">
+           <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="3.175cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="■">
+           <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="3.81cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="●">
+           <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="4.445cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="○">
+           <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="5.08cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="■">
+           <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="5.715cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
-           <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="●">
+           <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="&#8226;">
                <style:list-level-properties text:space-before="6.35cm" text:min-label-width="0.635cm"/>
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
@@ -219,7 +222,13 @@
 	</xsl:template>
 
 	<xsl:template match="li">
-		<text:list-item><text:p text:style-name="L1">
+		<xsl:variable name="list_style">
+			<xsl:choose>
+				<xsl:when test="name(..) = 'ul'">Pul</xsl:when>
+				<xsl:otherwise>Pol</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<text:list-item><text:p text:style-name="{$list_style}">
 			<xsl:apply-templates/>
 		</text:p></text:list-item>
 	</xsl:template>
