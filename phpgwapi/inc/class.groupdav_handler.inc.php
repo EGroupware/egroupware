@@ -344,9 +344,10 @@ abstract class groupdav_handler
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
 				'iphone'            => 'iphone',	// Apple iPhone iCal
-				'davkit'            => 'davkit',	// Apple iCal
+				'davkit'            => 'davkit',	// Apple iCal 10.6
+				'coredav'           => 'coredav',	// Apple iCal 10.7
 				'dataaccess'        => 'dataaccess',	// Apple addressbook iPhone
-				'cfnetwork'         => 'cfnetwork', // Apple Addressbook
+				'cfnetwork'         => 'cfnetwork',	// Apple Addressbook 10.6/7
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
