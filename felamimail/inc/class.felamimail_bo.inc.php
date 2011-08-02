@@ -116,7 +116,7 @@ class felamimail_bo
 					error_log(__METHOD__.__LINE__.' Validation of profile with ID:'.$_profileID.' failed. Using '.$profileID.' instead.');
 					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 					$_profileID = $profileID;
-					$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_identity,'user');
+					$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_profileID,'user');
 					// save prefs
 					$GLOBALS['egw']->preferences->save_repository(true);
 					egw_cache::setSession('felamimail','activeProfileID',$_profileID);
@@ -159,18 +159,16 @@ class felamimail_bo
 			$selectedID = $mail->getIdentitiesWithAccounts($identities);
 			$activeIdentity =& $mail->mailPreferences->getIdentity($_profileID, true);
 			// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
-			if ($activeIdentity->id || $_profileID < 0) {
-				$boemailadmin = new emailadmin_bo();
-				$defaultProfile = $boemailadmin->getUserProfile() ;
-				//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
-				$identitys =& $defaultProfile->identities;
-				$icServers =& $defaultProfile->ic_server;
-				foreach ($identitys as $tmpkey => $identity)
-				{
-					if (empty($icServers[$tmpkey]->host)) continue;
-					$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
-				}
-				//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
+			// as we validate the profile in question and may need to return an emailadminprofile, we fetch this one all the time
+			$boemailadmin = new emailadmin_bo();
+			$defaultProfile = $boemailadmin->getUserProfile() ;
+			//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
+			$identitys =& $defaultProfile->identities;
+			$icServers =& $defaultProfile->ic_server;
+			foreach ($identitys as $tmpkey => $identity)
+			{
+				if (empty($icServers[$tmpkey]->host)) continue;
+				$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
 			}
 
 			//error_log(__METHOD__.__LINE__.array2string($identities));
@@ -186,7 +184,11 @@ class felamimail_bo
 				}
 				else
 				{
-					foreach (array_keys((array)$identities) as $k => $ident) if ($ident <0) $_profileID = $ident;
+					foreach (array_keys((array)$identities) as $k => $ident) 
+					{
+						//error_log(__METHOD__.__LINE__.' Testing Identity with ID:'.$ident.' for being provided by emailadmin.');
+						if ($ident <0) $_profileID = $ident;
+					}
 					if (self::$debug) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string($_profileID));
 					if (!array_key_exists($_profileID,$identities))
 					{
