@@ -1218,7 +1218,7 @@ function check_files(upload)
 				}
 				else
 				{
-					$arr['msg'] = sprintf(lang("%d erros while copying, %d files successfully copied."),
+					$arr['msg'] = sprintf(lang("%d errors while copying, %d files successfully copied."),
 						$arr['errs'], count($copied));
 				}
 
@@ -1235,7 +1235,7 @@ function check_files(upload)
 				}
 				else
 				{
-					$arr['msg'] = sprintf(lang("%d erros while moving, %d files successfully moved."),
+					$arr['msg'] = sprintf(lang("%d errors while moving, %d files successfully moved."),
 						$arr['errs'], count($moved));
 				}
 
