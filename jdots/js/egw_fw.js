@@ -1059,20 +1059,18 @@ egw_fw_content_browser.prototype.setBrowserType = function(_type)
 egw_fw_content_browser.prototype.browse = function(_url)
 {
 	var useIframe = true;
-
-//	_url = _url + "&ajax=true";
+	var targetUrl = _url;
 
 	// Check whether the given url is a pseudo url which should be executed
 	// by calling the ajax_exec function
 	var matches = _url.match(/\/index.php\?menuaction=([A-Za-z0-9\.]*).*&ajax=true$/);
 	if (matches) {
-		useIframe = false;
-
 		// Matches[1] contains the menuaction which should be executed - replace
 		// the given url with the following line. This will be evaluated by the
 		// jdots_framework ajax_exec function which will be called by the code
 		// below as we set useIframe to false.
-		_url = "index.php?menuaction=" + matches[1];
+		targetUrl = "index.php?menuaction=" + matches[1];
+		useIframe = false;
 	}
 
 	//Set the browser type
@@ -1103,10 +1101,12 @@ egw_fw_content_browser.prototype.browse = function(_url)
 	else
 	{
 		this.setBrowserType(EGW_BROWSER_TYPE_DIV)
+
+		// Save the actual url which has been passed as parameter
 		this.currentLocation = _url;
 
 		//Special treatement of "about:blank"
-		if (_url == "about:blank")
+		if (targetUrl == "about:blank")
 		{
 			if (this.app.sidemenuEntry)
 				this.app.sidemenuEntry.hideAjaxLoader();
@@ -1120,7 +1120,7 @@ egw_fw_content_browser.prototype.browse = function(_url)
 				this.app.sidemenuEntry.showAjaxLoader();
 			var req = new egw_json_request(
 				this.app.getMenuaction('ajax_exec'),
-				[_url], this.contentDiv);
+				[targetUrl], this.contentDiv);
 			req.setAppObject(this.app);
 			req.sendRequest(true, this.browse_callback, this);
 
