@@ -1700,7 +1700,11 @@ class egw_vfs extends vfs_stream_wrapper
 					++$errs;
 				}
 			}
+
+			return $errs == 0;
 		}
+
+		return false;
 	}
 
 	/**
