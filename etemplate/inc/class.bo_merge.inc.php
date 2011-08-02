@@ -740,7 +740,7 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					$LF ='</w:r></w:p><w:r><w:t>';
+					$LF ='</w:t></w:r></w:p><w:p><w:r><w:t>';
 					break;
 				case 'application/xml';
 					$LF ='</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
