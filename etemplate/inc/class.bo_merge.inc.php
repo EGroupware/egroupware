@@ -314,67 +314,70 @@ abstract class bo_merge
 			$mimetype = 'application/rtf';
 		}
 
-		// Apply HTML formatting to target document, if possible
 		try {
 			$content = $this->merge_string($content,$ids,$err,$mimetype,$fix);
-			// Tags we can replace with the target document's version
-			$replace_tags = array();
-			switch($mimetype)
-			{
-				case 'application/vnd.oasis.opendocument.text':		// open office
-				case 'application/vnd.oasis.opendocument.spreadsheet':
-					// It seems easier to split the parent tags here
-					$replace_tags = array(
-						'/<(ol|ul|table)>/' => '</text:p><$1>',
-						'/<\/(ol|ul|table)>/' => '</$1><text:p>',
-						//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
-					);
-					$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
-//echo $content;die();
-					$doc = new DOMDocument();
-					$xslt = new XSLTProcessor();
-					$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
-					$xslt->importStyleSheet($doc);
-					break;
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					$replace_tags = array(
-						'b','strong','i','em','u','span'
-					);
-					// It seems easier to split the parent tags here
-					$replace_tags = array(
-						'/<(ol|ul|table)(.*?)>/' => '</w:t></w:r></w:p><$1$2>',
-						'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
-						'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
-					);
-					$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
-//echo $content;die();
-					$doc = new DOMDocument();
-					$xslt = new XSLTProcessor();
-					$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/msoffice.xslt');
-					$xslt->importStyleSheet($doc);
-					break;
-			}
-			// XSLT transform known tags
-			if($xslt)
-			{
-				try
-				{
-					$element = new SimpleXMLelement($content);
-					$content = $xslt->transformToXml($element);
-//echo $content;die();
-				}
-				catch (Exception $e)
-				{
-					error_log($e);
-					// Failed...
-				}
-			}
-			return $content;
-
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 			return false;
+		}
+		return $content;
+	}
+	
+	protected function apply_styles (&$content, $mimetype) {
+		// Tags we can replace with the target document's version
+		$replace_tags = array();
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+				// It seems easier to split the parent tags here
+				$replace_tags = array(
+					'/<(ol|ul|table)>/' => '</text:p><$1>',
+					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
+					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+				);
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+
+				$doc = new DOMDocument();
+				$xslt = new XSLTProcessor();
+				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
+				$xslt->importStyleSheet($doc);
+
+//echo $content;die();
+				break;
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$replace_tags = array(
+					'b','strong','i','em','u','span'
+				);
+				// It seems easier to split the parent tags here
+				$replace_tags = array(
+					'/<(ol|ul|table)(.*?)>/' => '</w:t></w:r></w:p><$1$2>',
+					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
+					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+				);
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+//echo $content;die();
+				$doc = new DOMDocument();
+				$xslt = new XSLTProcessor();
+				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/msoffice.xslt');
+				$xslt->importStyleSheet($doc);
+				break;
+		}
+		// XSLT transform known tags
+		if($xslt)
+		{
+			try
+			{
+				$element = new SimpleXMLelement($content);
+				$content = $xslt->transformToXml($element);
+//echo $content;die();
+			}
+			catch (Exception $e)
+			{
+				error_log($e);
+				// Failed...
+			}
 		}
 	}
 
@@ -937,6 +940,10 @@ abstract class bo_merge
 			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
+
+		// Apply HTML formatting to target document, if possible
+		$this->apply_styles($merged, $mimetype);
+
 		if(!empty($name))
 		{
 			if(empty($ext))
