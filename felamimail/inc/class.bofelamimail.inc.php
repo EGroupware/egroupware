@@ -454,7 +454,7 @@
 					case 'BEFORE':
 					case 'ON':
 					case 'SINCE':
-						$imapFilter .= $criteria .' "'. date() .'" ';
+						$imapFilter .= $criteria .' '. $_criterias['string'].' ';
 						break;
 				}
 			#}
