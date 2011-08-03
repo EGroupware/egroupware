@@ -1133,7 +1133,7 @@ class calendar_bo
 					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite FREEBUSY, READ and PRIVAT grant
-						$grant |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
+						$grants |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
 					}
 					elseif ($this->grants[$uid] & EGW_ACL_READ)
@@ -1578,7 +1578,7 @@ class calendar_bo
 		{
 			$arr = &$users;
 		}
-		
+
 		$arr[$name] = Array(
 			'grantor' => $id,
 			'value'   => ($type == 'g' ? 'g_' : '') . $id,
@@ -1623,7 +1623,7 @@ class calendar_bo
 		}
 		uksort($users,'strnatcasecmp');
 		uksort($groups,'strnatcasecmp');
-		
+
 		return $users + $groups;	// users first and then groups, both alphabeticaly
 	}
 
