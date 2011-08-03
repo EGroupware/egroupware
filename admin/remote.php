@@ -67,6 +67,7 @@ if (is_object($cmd))
 // check if requests contains a reasonable looking admin command to be queued
 if (!$_REQUEST['uid'] ||	// no uid
 	!$_REQUEST['type'] ||	// no command class name
+	!preg_match('/^[a-z0-9_]+$/i', $_REQUEST['type']) ||	// type is a (autoloadable) class name, prevent inclusion of arbitrary files
 	!$_REQUEST['creator_email'])	// no creator email
 {
 	header("HTTP/1.1 200 Bad format!");
