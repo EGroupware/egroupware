@@ -9,7 +9,7 @@
  * @subpackage groupdav
  * @author Andreas Stöckel
  * @copyright (c) 2011 Stylite
- * @version $Id
+ * @version $Id$
  */
 
 /**
@@ -59,7 +59,8 @@ class egw_include_mgr
 	private $included_files = array();
 
 	/**
-	 * Set to the file which is current processed to get usable debug messages.
+	 * Set to the file which is currently processed, in order to get usable
+	 * debug messages.
 	 */
 	private $debug_processing_file = false;
 
@@ -123,7 +124,7 @@ class egw_include_mgr
 			$modules = explode(";", $uses);
 			$modules2 = array();
 
-			// Split all modules at "," and remove entries which empty parts
+			// Split all modules at "." and remove entries with empty parts
 			foreach ($modules as $mod)
 			{
 				// Remove trailing space characters
