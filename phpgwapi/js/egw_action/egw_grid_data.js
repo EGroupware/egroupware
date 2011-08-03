@@ -9,10 +9,9 @@
  * @version $Id$
  */
 
-/*
-uses
-	egw_action,
-	egw_action_common,
+/*egw:uses
+	egw_action;
+	egw_action_common;
 	egw_grid_columns;
 */
 

@@ -9,14 +9,13 @@
  * @version $Id$
  */
 
-/*
-uses
-	egw_action,
-	egw_action_common,
-	egw_action_popup,
-	jquery,
-	jquery-ui
- */
+/*egw:uses
+	egw_action;
+	egw_action_common;
+	egw_action_popup;
+	jquery.jquery;
+	jquery.jquery-ui;
+*/
 
 /**
  * Register the drag and drop handlers
@@ -195,7 +194,6 @@ function egwDragActionImplementation()
 
 	return ai;
 }
-
 
 
 

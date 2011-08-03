@@ -9,8 +9,9 @@
  * @version $Id$
  */
 
-/*
-uses egw_action, jquery
+/*egw:uses
+	jquery.jquery;
+	egw_action;
 */
 
 /**

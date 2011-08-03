@@ -9,12 +9,9 @@
  * @version $Id$
  */
 
-/*
-uses
-	egw_action_common,
-	egw_action_data,
-	egw_stylesheet,
-	jquery;
+/*egw:uses
+	jquery.jquery;
+	egw_stylesheet;
 */
 
 /**

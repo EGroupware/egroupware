@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+/*egw:uses
+	egw_menu;
+*/
+
 function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object

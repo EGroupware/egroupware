@@ -9,13 +9,12 @@
  * @version $Id$
  */
 
-/*
-uses
-	egw_action,
-	egw_action_common,
-	egw_action_view,
-	egw_action_data,
-	egw_action_columns
+/*egw:uses
+	jquery.jquery;
+	egw_action;
+	egw_grid_columns;
+	egw_grid_data;
+	egw_grid_view;
 */
 
 function egwGrid(_parentNode, _columns, _objectManager, _fetchCallback,

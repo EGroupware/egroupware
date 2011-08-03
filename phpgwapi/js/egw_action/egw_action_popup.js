@@ -9,6 +9,11 @@
  * @version $Id$
  */
 
+/*egw:uses
+	jquery.jquery;
+	egw_menu;
+*/
+
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {}
 _egwActionClasses["popup"] = {

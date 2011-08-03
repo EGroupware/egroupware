@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+/*egw:uses
+	egw_action_common;
+*/
+
 /**
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */

@@ -9,10 +9,6 @@
  * @version $Id$
  */
 
-/*
-uses; //No dependencies
-*/
-
 /**
  * Contains the egwDynStyleSheet class which allows dynamic generation of stylesheet
  * rules - updating a single stylesheet rule is way more efficient than updating

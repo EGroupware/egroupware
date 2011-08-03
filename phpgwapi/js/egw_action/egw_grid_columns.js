@@ -9,8 +9,7 @@
  * @version $Id$
  */
 
-/*
-uses
+/*egw:uses
 	egw_action_common;
 */
 
