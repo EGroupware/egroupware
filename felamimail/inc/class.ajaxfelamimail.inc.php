@@ -1198,9 +1198,18 @@ class ajaxfelamimail
 			$preferences =& $boPreferences->getPreferences();
 			$Identities = $preferences->getIdentity($identity);
 			//error_log(print_r($Identities->signature,true));
-
 			$response = new xajaxResponse();
-			$response->addScript('setSignature('.$Identities->signature.');');
+			if ($Identities->signature)
+			{
+				$response->addScript('setSignature('.$Identities->signature.');');
+			}
+			else
+			{
+				$bosignatures	= CreateObject('felamimail.felamimail_bosignatures');
+				$defaultSig = $bosignatures->getDefaultSignature();
+				if ($defaultSig === false) $defaultSig = -1;
+				$response->addScript('setSignature('.$defaultSig.');');
+			}
 
 			return $response->getXML();
 		}
