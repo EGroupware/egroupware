@@ -213,15 +213,16 @@ class calendar_so
 			if ($recur_date)
 			{
 				// also remember recur_date, maybe we need it later, duno now
-				$recur_date = $events[$ids]['recur_date'] = $events[$ids]['start'];
+				$recur_date = array(0,$events[$ids]['recur_date'] = $events[$ids]['start']);
 			}
 		}
 
-		// participants, if a recur_date give, we read that recurance, else the one users from the default entry with recur_date=0
+		// participants, if a recur_date give, we read that recurance, plus the one users from the default entry with recur_date=0
+		// sorting by cal_recur_date ASC makes sure recurence status always overwrites series status
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
-		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
+		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date ASC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
 			$uid    = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
@@ -634,6 +635,9 @@ class calendar_so
 			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
+			// compile a list of recurrences per cal_id
+			if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
+
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
 		//_debug_array($events);
@@ -652,13 +656,25 @@ class calendar_so
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
-				if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
-
-				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
 
 				// combine all participant data in uid and status values
-				$events[$id]['participants'][self::combine_user($row['cal_user_type'],$row['cal_user_id'])] =
-					self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
+				$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+				$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
+
+				// set accept/reject/tentative of series for all recurrences
+				if (!$row['cal_recur_date'])
+				{
+					foreach((array)$recur_ids[$row['cal_id']] as $i)
+					{
+						if (isset($events[$i]) && !isset($events[$i]['participants'][$uid]))
+						{
+							$events[$i]['participants'][$uid] = $status;
+						}
+					}
+				}
+
+				// set data, if recurrence is requested
+				if (isset($events[$id])) $events[$id]['participants'][$uid] = $status;
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
 			if (!is_null($params['cfs']))
@@ -1476,11 +1492,6 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.time().')';
 		}
-
-		// check if the user has any status database entries and create the default set if needed
-		// a status update before having the necessary entries happens on e.g. group invitations
-// commented out, as it causes problems when called with a single / not all participants (not sure why it is necessary anyway)
-//		$this->participants($cal_id,array(self::combine_user($user_type,$user_id) => 'U'),0,true);
 
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
 		{
