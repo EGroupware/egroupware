@@ -428,7 +428,8 @@ class calendar_so
 					$users_by_type[$user[0]][] = (int) substr($user,1);
 				}
 			}
-			$to_or = $user_or = $owner_or = array();
+			$to_or = $user_or = array();
+			$owner_or = null;
 			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
@@ -441,10 +442,10 @@ class calendar_so
 					),' AND '.$this->user_table.'.',array(
 						'cal_user_id'   => $ids,
 					));
-					if ($type == 'u' && ($filter == 'owner'))
+					if ($type == 'u' && $filter == 'owner')
 					{
 						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-						$owner_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+						$owner_or = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
 					}
 				}
 				else
@@ -511,11 +512,12 @@ class calendar_so
 				$where[] = (int)$start.' < (CASE WHEN recur_type IS NULL THEN cal_end ELSE (CASE WHEN recur_enddate!=0 THEN recur_enddate ELSE 9999999999 END) END)';
 			}
 		}
+		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
 		if (!$params['enum_recuring'])
 		{
 			$where[] = "$this->user_table.cal_recur_date=0";
-			$group_by = 'GROUP BY '.str_replace('cal_start,','',implode(', ',(array)$cols));
-			$cols = str_replace('cal_start','MIN(cal_start) AS cal_start',$cols);
+			$group_by = 'GROUP BY '.str_replace(array('cal_start,','cal_end,'),'',implode(', ',(array)$cols));
+			$cols = str_replace(array('cal_start','cal_end'),array('MIN(cal_start) AS cal_start','MIN(cal_end) AS cal_end'),$cols);
 		}
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
@@ -553,7 +555,7 @@ class calendar_so
 			$selects = array();
 			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
-			if (!empty($owner_or)||!empty($user_or))
+			if ($owner_or || $user_or)
 			{
 				foreach($user_or as $user_sql)
 				{
