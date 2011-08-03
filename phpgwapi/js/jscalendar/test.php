@@ -1,10 +1,9 @@
 <?php
 
-$lang = $_GET['lang'];
-if (!$lang) {
+if (preg_match('/^[a-z0-9-]+$/i', $_REQUEST['lang'])) {
     $lang = $_REQUEST['lang'];
 }
-if (!$lang) {
+else {
     $lang = 'en';
 }
 setcookie('lang', $lang);
