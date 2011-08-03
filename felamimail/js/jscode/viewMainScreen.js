@@ -956,6 +956,7 @@ function fm_readMessage(_url, _windowName, _node) {
 
 					// Mark the message as read
 					fm_msg_removeClass(windowArray[1], 'unseen');
+					fm_msg_removeClass(windowArray[1], 'recent');
 				}
 
 			}, felamimail_rm_timeout);

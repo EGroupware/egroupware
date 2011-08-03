@@ -948,7 +948,6 @@ $j(document).ready(function() {
 				if(!empty($header['deleted'])) $flags .= "D";
 				if(!empty($header['seen'])) $flags .= "S";
 
-
 				$data["status"] = "<span class=\"status_img\"></span>";
 				//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
 
@@ -1336,7 +1335,9 @@ $j(document).ready(function() {
 					}
 				}
 
-				//if (strpos( array2string($flags),'Seen')===false) $this->bofelamimail->flagMessages('read', $headerData['uid']);
+				// flag the message as read/seen (if not already flagged)
+				if (strpos( array2string($flags),'Seen')===false) $this->bofelamimail->flagMessages('read', $headerData['uid']);
+
 				if ($_folderType > 0) {
 					$addtoaddresses='';
 					// sent or drafts or template folder
