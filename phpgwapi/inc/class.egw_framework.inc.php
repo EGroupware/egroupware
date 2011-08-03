@@ -84,6 +84,20 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Constructor for static variables
+	 */
+	public function init_static()
+	{
+		self::$js_include_mgr = new egw_include_mgr(array(
+			// allways load jquery (not -ui) and egw_json first
+			'/phpgwapi/js/jquery/jquery.js',
+			'/phpgwapi/js/./egw_json.js',
+			// always include javascript helper functions
+			'/phpgwapi/js/jsapi/jsapi.js',
+		));
+	}
+
+	/**
 	 * PHP4-Constructor
 	 *
 	 * The constructor instanciates the class in $GLOBALS['egw']->framework, from where it should be used
@@ -1078,17 +1092,9 @@ abstract class egw_framework
 	}
 
 	/**
-	 * Content from validate_file calls plus preloaded files
-	 *
-	 * @var array
+	 * The include manager manages including js files and their dependencies
 	 */
-	protected static $js_include_files = array(
-		// allways load jquery (not -ui) and egw_json first
-		'/phpgwapi/js/jquery/jquery.js',
-		'/phpgwapi/js/./egw_json.js',
-		// always include javascript helper functions
-		'/phpgwapi/js/jsapi/jsapi.js',
-	);
+	protected static $js_include_mgr;
 
 	/**
 	* Checks to make sure a valid package and file name is provided
@@ -1111,27 +1117,7 @@ abstract class egw_framework
 	*/
 	static function validate_file($package, $file=null, $app='phpgwapi')
 	{
-		//echo "<p>".__METHOD__."($package,$file,$app) --> ".EGW_INCLUDE_ROOT ."/$app/js/$package/$file.js</p>\n";
-		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
-			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
-			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
-		{
-			if (is_array($file))
-			{
-				foreach($file as $name => $val)
-				{
-					$args .= (empty($args) ? '?' : '&').$name.'='.urlencode($val);
-				}
-				$path .= $args;
-			}
-			if (!self::$js_include_files || !in_array($path,self::$js_include_files))
-			{
-				self::$js_include_files[] = $path;
-			}
-			return True;
-		}
-		//error_log(__METHOD__."($package,$file,$app) $path NOT found!");
-		return False;
+		self::$js_include_mgr->include_js_file($package, $file, $app);
 	}
 
 	/**
@@ -1144,9 +1130,9 @@ abstract class egw_framework
 	{
 		if (isset($files) && is_array($files))
 		{
-			self::$js_include_files = $files;
+			self::$js_include_mgr->include_files($files);
 		}
-		return self::$js_include_files;
+		return self::$js_include_mgr->get_included_files();
 	}
 
 	/**
@@ -1160,15 +1146,13 @@ abstract class egw_framework
 	static protected function get_script_links()
 	{
 		$links  = "\n";
-		if(!empty(self::$js_include_files) && is_array(self::$js_include_files))
+		$files = self::$js_include_mgr->get_included_files();
+		foreach($files as $path)
 		{
-			foreach(self::$js_include_files as $path)
-			{
-				$query = '';
-				list($path,$query) = explode('?',$path,2);
-				$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
-				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
-			}
+			$query = '';
+			list($path,$query) = explode('?',$path,2);
+			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
 		}
 		return $links."\n";
 	}
@@ -1237,7 +1221,8 @@ abstract class egw_framework
 		self::validate_file('.', 'app', $app);
 
 		// add all js files from egw_framework::validate_file()
-		foreach(self::$js_include_files as $path)
+		$files = self::$js_include_mgr->get_included_files();
+		foreach($files as $path)
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
@@ -1246,6 +1231,9 @@ abstract class egw_framework
 		}
 	}
 }
+
+// Init all static variables
+egw_framework::init_static();
 
 /**
  * Public functions to be compatible with the exiting eGW framework
