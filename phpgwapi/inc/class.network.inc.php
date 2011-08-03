@@ -191,7 +191,7 @@
 			//allows for access to http-auth pages - added by Dave Hall <dave.hall@mbox.com.au>
 			if(!((empty($user))&&(empty($passwd))))
 			{
-				$auth = 'Authorization: Basic '.base64_encode("$user:$passwd")."\n";
+				$auth = 'Authorization: Basic '.base64_encode("$user:$passwd")."\r\n";
 			}
 			else
 			{
@@ -205,11 +205,11 @@
 				{
 					$proxyUsername = $GLOBALS['egw_info']['server']['httpproxy_server_username'];
 					$proxyPassword = $GLOBALS['egw_info']['server']['httpproxy_server_password'];
-					$proxyAuth = 'Proxy-Authorization: Basic '.base64_encode("$proxyUsername:$proxyPassword")."\n";
+					$proxyAuth = 'Proxy-Authorization: Basic '.base64_encode("$proxyUsername:$proxyPassword")."\r\n";
 				}
 				if($this->open_port($server,80, 15))
 				{
-					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n".$proxyAuth.$auth."\r\n\r\n"))
+					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\r\n".$proxyAuth.$auth."\r\n\r\n"))
 					{
 						return False;
 					}
@@ -237,10 +237,10 @@
 			}
 			else
 			{
-				if($this->open_port($server, 80, 15))
+				if($this->open_port($server, 80, 30))
 				{
 					$lines = array();
-					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n".$auth."\r\n\r\n"))
+					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\r\n".'Host: '.$server."\r\nAccept: */*".($auth?"\r\n".$auth:'')."\r\n\r\n"))
 					{
 						return 0;
 					}
