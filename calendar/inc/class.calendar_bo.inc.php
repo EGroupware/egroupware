@@ -1091,7 +1091,7 @@ class calendar_bo
 					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite FREEBUSY, READ and PRIVAT grant
-						$grant |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
+						$grants |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
 					}
 					elseif ($this->grants[$uid] & EGW_ACL_READ)
