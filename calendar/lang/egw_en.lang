@@ -132,7 +132,7 @@ deleted	calendar	en	Deleted.
 deny ressources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
 disinvited	calendar	en	Disinvited.
-display holidays or birthdays as events	calendar	en	Display holidays or birthdays as events
+display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view

@@ -129,6 +129,11 @@ class calendar_uiviews extends calendar_ui
 	 */
 	var $allowEdit = true;
 
+	/**
+	 * Display holidays as event, currenlty only used in day-view
+	 *
+	 * @var array
+	 */
 	var $display_holiday_event_types = array(
 		'bdays' => false,
 		'hdays' => false
@@ -170,14 +175,6 @@ class calendar_uiviews extends calendar_ui
 		$this->holidays = $this->bo->read_holidays($this->year);
 
 		$this->check_owners_access();
-
-		//Load the ""show holiday as event" preference here and set the event
-		//types mask accordingly.
-		$display_holidays_event = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_holidays_event'];
-		$this->display_holiday_event_types = array(
-			'bdays' => ((int)$display_holidays_event & 1) != 0,
-			'hdays' => ((int)$display_holidays_event & 2) != 0
-		);
 
 		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
 		{
@@ -934,6 +931,14 @@ class calendar_uiviews extends calendar_ui
 			}
 			$cols = array();
 
+			//Load the ""show holiday as event" preference here and set the event
+			//types mask accordingly.
+			$display_holidays_event = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_holidays_event'];
+			$this->display_holiday_event_types = array(
+				'bdays' => ((int)$display_holidays_event & 1) != 0,
+				'hdays' => ((int)$display_holidays_event & 2) != 0
+			);
+
 			//Add the holiday events
 			$holidays = $this->_get_holiday_events($this->date, $this->display_holiday_event_types);
 			foreach($dayEvents as &$events)
@@ -1664,7 +1669,7 @@ function open_edit(series)
 				$icons = self::integration_get_icons($app,$app_id,$event);
 			}
 		}
-		else
+		elseif($event['id'])
 		{
 			if (($is_private = !$this->bo->check_perms(EGW_ACL_READ,$event)))
 			{
@@ -2902,10 +2907,8 @@ function open_edit(series)
 			'title' => $title,
 			'description' => $description,
 			'participants' => array(
-				'-1' => 'U'
 			),
 			'whole_day_on_top' => true,
-			'public' => true,
 			'start' => $day_start,
 			'end' => $day_end,
 			'non_blocking' => true,

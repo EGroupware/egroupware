@@ -129,7 +129,7 @@ deleted	calendar	fi	Poistetut
 deny ressources reservation for private events	calendar	fi	Estä resurssien varaaminen henkilökohtaisiin tapahtumiin
 directory with documents to insert entries	calendar	fi	Asiakirjan oletuskansio
 disinvited	calendar	fi	Kutsu peruttu
-display holidays or birthdays as events	calendar	fi	Esitä lomat ja syntymäpäivät tapahtumina
+display holidays or birthdays as events in dayview	calendar	fi	Esitä lomat ja syntymäpäivät tapahtumina
 display in header	calendar	fi	Esitä aiheena
 display status of events	calendar	fi	Näytä tapahtumien tila
 displayed view	calendar	fi	Valittu näkymä

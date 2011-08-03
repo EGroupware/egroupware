@@ -567,7 +567,7 @@ class calendar_hooks
 			),
 			'display_holidays_event' => array(
                 'type'   => 'select',
-                'label'  => 'Display holidays or birthdays as events',
+                'label'  => 'Display holidays or birthdays as events in dayview',
                 'name'   => 'display_holidays_event',
                 'values' => array(
 					'0'	 => lang('Display in header'), //Please note that these values are a binary mask

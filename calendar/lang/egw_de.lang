@@ -133,7 +133,7 @@ deleted	calendar	de	Gelöscht
 deny ressources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
 directory with documents to insert entries	calendar	de	Verzeichnis mit Dokumenten zum Einfügen von Kalendereinträgen
 disinvited	calendar	de	Ausgeladen
-display holidays or birthdays as events	calendar	de	Zeige Feier- oder Geburtstage als Ereignisse
+display holidays or birthdays as events in dayview	calendar	de	Zeige Feier- oder Geburtstage in der Tagesansicht als Termine
 display in header	calendar	de	Im Titel anzeigen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
