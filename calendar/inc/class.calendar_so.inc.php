@@ -98,7 +98,6 @@ class calendar_so
 	 */
 	protected static $tz_cache = array();
 
-
 	/**
 	 * Constructor of the socal class
 	 */
@@ -373,17 +372,18 @@ class calendar_so
 	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
 	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
 	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
+	 * @param int $remove_rejected_by_user=null add join to remove entry, if given user has rejected it
 	 * @return array of cal_ids, or false if error in the parameters
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array())
+	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
-		//error_log('*** '.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
+		//error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
 		$cols = self::get_columns('calendar', $this->cal_table);
 		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
-		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".implode(',',$cols).",cal_start,cal_end,cal_recur_date";
+		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 
 		$where = array();
 		if (is_array($params['query']))
@@ -423,7 +423,8 @@ class calendar_so
 					$users_by_type[$user[0]][] = (int) substr($user,1);
 				}
 			}
-			$to_or = $user_or = $owner_or = array();
+			$to_or = $user_or = array();
+			$owner_or = null;
 			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
@@ -431,20 +432,22 @@ class calendar_so
 				// when we are able to use Union Querys, we do not OR our query, we save the needed parts for later construction of the union
 				if ($useUnionQuery)
 				{
-					$user_or[] = $this->db->expression($table_def,array(
+					$user_or[] = $this->db->expression($table_def,$this->user_table.'.',array(
 						'cal_user_type' => $type,
+					),' AND '.$this->user_table.'.',array(
 						'cal_user_id'   => $ids,
 					));
-					if ($type == 'u' && ($filter == 'owner'))
+					if ($type == 'u' && $filter == 'owner')
 					{
 						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-						$owner_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+						$owner_or = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
 					}
 				}
 				else
 				{
-					$to_or[] = $this->db->expression($table_def,array(
+					$to_or[] = $this->db->expression($table_def,$this->user_table.'.',array(
 						'cal_user_type' => $type,
+					),' AND '.$this->user_table.'.',array(
 						'cal_user_id'   => $ids,
 					));
 					if ($type == 'u' && ($filter == 'owner'))
@@ -465,24 +468,24 @@ class calendar_so
 			{
 				case 'showonlypublic':
 					$where['cal_public'] = 1;
-					$where[] = "cal_status != 'R'"; break;
+					$where[] = "$this->user_table.cal_status != 'R'"; break;
 				case 'deleted':
 					$where['cal_deleted'] = true; break;
 				case 'unknown':
-					$where[] = "cal_status='U'"; break;
+					$where[] = "$this->user_table.cal_status='U'"; break;
 				case 'accepted':
-					$where[] = "cal_status='A'"; break;
+					$where[] = "$this->user_table.cal_status='A'"; break;
 				case 'tentative':
-					$where[] = "cal_status='T'"; break;
+					$where[] = "$this->user_table.cal_status='T'"; break;
 				case 'rejected':
-					$where[] = "cal_status='R'"; break;
+					$where[] = "$this->user_table.cal_status='R'"; break;
 				case 'delegated':
-					$where[] = "cal_status='D'"; break;
+					$where[] = "$this->user_table.cal_status='D'"; break;
 				case 'all':
 				case 'owner':
 					break;
 				default:
-					$where[] = "cal_status != 'R'";
+					$where[] = "$this->user_table.cal_status != 'R'";
 					break;
 			}
 		}
@@ -490,11 +493,44 @@ class calendar_so
 		{
 			$where[] = $this->cat_filter($cat_id);
 		}
-		if ($start) $where[] = (int)$start.' < cal_end';
+		if ($start)
+		{
+			if ($params['enum_recuring'])
+			{
+				$where[] = (int)$start.' < cal_end';
+			}
+			else
+			{
+				// we check recur_endate!=0, because it can be NULL, 0 or !=0 !!!
+				$where[] = (int)$start.' < (CASE WHEN recur_type IS NULL THEN cal_end ELSE (CASE WHEN recur_enddate!=0 THEN recur_enddate ELSE 9999999999 END) END)';
+			}
+		}
+		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
+		if (!$params['enum_recuring'])
+		{
+			$where[] = "$this->user_table.cal_recur_date=0";
+			$group_by = 'GROUP BY '.str_replace(array('cal_start,','cal_end,'),'',implode(', ',(array)$cols));
+			$cols = str_replace(array('cal_start','cal_end'),array('MIN(cal_start) AS cal_start','MIN(cal_end) AS cal_end'),$cols);
+		}
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
-		if (!preg_match('/^[a-z_ ,]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
+		if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
 
+		if ($remove_rejected_by_user)
+		{
+			$rejected_by_user_join = "LEFT JOIN $this->user_table rejected_by_user".
+				" ON $this->cal_table.cal_id=rejected_by_user.cal_id".
+				" AND rejected_by_user.cal_user_type='u'".
+				" AND rejected_by_user.cal_user_id=".$this->db->quote($remove_rejected_by_user).
+				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)";
+			$or_required = array(
+				'rejected_by_user.cal_status IS NULL',
+				"rejected_by_user.cal_status!='R'",
+			);
+			if ($filter == 'owner') $or_required[] = 'cal_owner='.(int)$remove_rejected_by_user;
+			$where[] = '('.implode(' OR ',$or_required).')';
+		}
+		//$starttime = microtime(true);
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
@@ -503,89 +539,72 @@ class calendar_so
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
-				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
+				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id $rejected_by_user_join",
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
-				'append'=> $params['append'],
+				'append'=> $params['append'].' '.$group_by,
 			);
+			$selects = array();
 			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
-			if (!empty($owner_or)||!empty($user_or))
+			if ($owner_or || $user_or)
 			{
-				if (!empty($owner_or) && !empty($user_or))
+				foreach($user_or as $user_sql)
 				{
-					// if the query is to be filtered by owner OR user we need 4 selects for the union
-					//_debug_array($owner_or);
-					$selects = array();
-					foreach(array_keys($user_or) as $key)
+					$selects[] = $select;
+					$selects[count($selects)-1]['where'][] = $user_sql;
+					if ($params['enum_recuring'])
 					{
+						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
 						$selects[] = $select;
-						$selects[count($selects)-1]['where'][] = $user_or[$key];
-						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-						$selects[] = $select;
-						$selects[count($selects)-1]['where'][] = $user_or[$key];
-						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
+						$selects[count($selects)-1]['where'][] = $user_sql;
+						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
 					}
-					$selects[] = $select;
-					$selects[count($selects)-1]['where'][] = $owner_or;
-					$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-					$selects[] = $select;
-					$selects[count($selects)-1]['where'][] = $owner_or;
-					$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
 				}
-				else
+				// if the query is to be filtered by owner we need to add more selects for the union
+				if ($owner_or)
 				{
-					// if the query is to be filtered only by user we need 2 selects for the union
-					$selects = array();
-					foreach(array_keys($user_or) as $key)
+					$selects[] = $select;
+					$selects[count($selects)-1]['where'][] = $owner_or;
+					if ($params['enum_recuring'])
 					{
+						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
 						$selects[] = $select;
-						$selects[count($selects)-1]['where'][] = $user_or[$key];
-						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-						$selects[] = $select;
-						$selects[count($selects)-1]['where'][] = $user_or[$key];
-						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
+						$selects[count($selects)-1]['where'][] = $owner_or;
+						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
 					}
 				}
 			}
 			else
 			{
 				// if the query is to be filtered by neither by user nor owner (should not happen?) we need 2 selects for the union
-				$selects = array($select,$select);
-				$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-				$selects[1]['where'][] = 'cal_recur_date=cal_start';
+				$selects[] = $select;
+				if ($params['enum_recuring'])
+				{
+					$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
+					$selects[] = $select;
+					$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
+				}
 			}
-			if (is_numeric($offset))	// get the total too
+			if (is_numeric($offset) && !$params['no_total'])	// get the total too
 			{
+				$save_selects = $selects;
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				$countSelects = count($selects);
 				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,cal_recur_date";
-					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
+					if (!$params['enum_recuring'])
+					{
+						$selects[$key]['cols'] = str_replace('cal_start','MIN(cal_start) AS cal_start',$selects[$key]['cols']);
+					}
 				}
 				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
-				$i = 0;
-				foreach(array_keys($selects) as $key)
-				{
-					if ($i >= $countSelects) continue;
-					$i++;
-					$selects[$key]['cols'] = $select['cols']; // restore the original cols
-					//$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
-				}
-				$i = 0;
-				$selections = array();
-				foreach(array_keys($selects) as $key)
-				{
-					if ($i >= $countSelects) continue;
-					$i++;
-					$selections[] = $selects[$key];
-				}
 
-				$selects = $selections;
+				// restore original cols / selects
+				$selects = $save_selects; unset($save_selects);
 			}
 			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
@@ -593,7 +612,7 @@ class calendar_so
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
-			$where[] = '(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)';
+			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0 OR $this->user_table.cal_recur_date=cal_start)";
 
 			//_debug_array($where);
 			if (is_numeric($offset))	// get the total too
@@ -601,12 +620,13 @@ class calendar_so
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				$this->total = $this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
 					$where,__LINE__,__FILE__,false,'','calendar',0,
-					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
+					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
 			}
 			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').$cols,
 				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
-				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
+				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
+		//error_log(__METHOD__."() useUnionQuery=$useUnionQuery --> query took ".(microtime(true)-$starttime));
 		if (isset($params['cols']))
 		{
 			return $rs;	// if colums are specified we return the recordset / iterator
@@ -651,7 +671,7 @@ class calendar_so
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
 					'cal_recur_date' => $recur_dates,
-				),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar',$num_rows=0,$join='',
+				),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar',$num_rows,$join='',
 				$this->db->get_table_definitions('calendar',$this->user_table)) as $row)	// DESC puts users before resources and contacts
 			{
 				$id = $row['cal_id'];
@@ -715,6 +735,7 @@ class calendar_so
 			}
 		}
 		//echo "<p>socal::search\n"; _debug_array($events);
+		//error_log(__METHOD__."(,filter=".array2string($params['query']).",offset=$offset, num_rows=$num_rows) returning ".count($events)." entries".($offset!==false?" total=$this->total":'').' '.function_backtrace());
 		return $events;
 	}
 

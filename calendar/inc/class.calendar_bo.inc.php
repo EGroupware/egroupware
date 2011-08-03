@@ -156,6 +156,10 @@ class calendar_bo
 	 */
 	var $cached_holidays;
 	/**
+	 * @var boholiday
+	 */
+	var $holidays;
+	/**
 	 * Instance of the socal class
 	 *
 	 * @var calendar_so
@@ -445,10 +449,17 @@ class calendar_bo
 			$this->check_move_horizont($end);
 		}
 		$daywise = !isset($params['daywise']) ? False : !!$params['daywise'];
-		$enum_recuring = $daywise || !isset($params['enum_recuring']) || !!$params['enum_recuring'];
+		$params['enum_recuring'] = $enum_recuring = $daywise || !isset($params['enum_recuring']) || !!$params['enum_recuring'];
 		$cat_id = isset($params['cat_id']) ? $params['cat_id'] : 0;
 		$filter = isset($params['filter']) ? $params['filter'] : 'all';
 		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
+		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
+		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
+		$users_in = (array)$params_in['users'];
+		$remove_rejected_by_user = !in_array($filter,array('all','rejected')) &&
+			count($users_in) == 1 && $users_in[0] > 0 ? $users_in[0] : null;
+		//error_log(__METHOD__.'('.array2string($params_in).", $sql_filter) params[users]=".array2string($params['users']).' --> remove_rejected_by_user='.array2string($remove_rejected_by_user));
+
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
 			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
@@ -456,7 +467,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$offset,(int)$params['num_rows'],$params);
+			$users,$cat_id,$filter,$offset,(int)$params['num_rows'],$params,$remove_rejected_by_user);
 
 		if (isset($params['cols']))
 		{
@@ -465,24 +476,9 @@ class calendar_bo
 		$this->total = $this->so->total;
 		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
 
-		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
-		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
-		$remove_rejected_by_user = !in_array($filter,array('all','rejected','owner')) && count($params['users']) == 1 ? $params['users'][0] : false;
 		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
 		{
-			if (isset($start) && $event['end'] < $start)
-			{
-				unset($events[$id]);	// remove former events (e.g. whole day)
-				$this->total--;
-				continue;
-			}
-			if ($remove_rejected_by_user && $event['participants'][$remove_rejected_by_user] == 'R')
-			{
-				unset($events[$id]);	// remove the rejected event
-				$this->total--;
-				continue;
-			}
 			if ($params['enum_groups'] && $this->enum_groups($event))
 			{
 				$events[$id] = $event;
@@ -538,29 +534,11 @@ class calendar_bo
 				$this->debug_message('socalendar::search daywise events=%1',False,$events);
 			}
 		}
-		elseif(!$enum_recuring)
-		{
-			$recur_ids = array();
-			foreach($events as $k => $event)
-			{
-				if ($event['recur_type'] != MCAL_RECUR_NONE)
-				{
-					if (!in_array($event['id'],$recur_ids))
-					{
-						$recur_ids[] = $event['id'];
-					}
-					unset($events[$k]);
-				}
-			}
-			if (count($recur_ids))
-			{
-				$events = array_merge($this->read($recur_ids,null,false,$params['date_format']),$events);
-			}
-		}
 		if ($this->debug && ($this->debug > 0 || $this->debug == 'search'))
 		{
 			$this->debug_message('bocal::search(%1)=%2',True,$params,$events);
 		}
+		//error_log(__METHOD__."() returning ".count($events)." entries, total=$this->total ".function_backtrace());
 		return $events;
 	}
 
