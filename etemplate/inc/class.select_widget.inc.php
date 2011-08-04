@@ -466,7 +466,18 @@ class select_widget
 				break;
 
 			case 'select-timezone':	// options: #rows,$type
-				$cell['sel_options'] = $type ? egw_time::getTimezones() : egw_time::getUserTimezones($value);
+				if (is_numeric($value))
+				{
+					$value = calendar_timezones::id2tz($value);
+				}
+				if ($readonly)	// for readonly we dont need to fetch all TZ's
+				{
+					$cell['sel_options'][$value] = calendar_timezones::tz2id($value,'name');
+				}
+				else
+				{
+					$cell['sel_options'] = $type ? egw_time::getTimezones() : egw_time::getUserTimezones($value);
+				}
 				break;
 		}
 		if ($rows > 1)
