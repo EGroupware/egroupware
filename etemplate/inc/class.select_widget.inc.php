@@ -189,7 +189,7 @@ class select_widget
 								}
 								elseif ($id) // Display id of no longer existing cat
 								{
-									$cell['sel_options'][$id] = lang('Missing: %1',$id);
+									$cell['sel_options'][$id] = $type6 == '2' ? $id : lang('Missing: %1',$id);
 								}
 							}
 						}

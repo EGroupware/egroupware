@@ -79,14 +79,15 @@ class historylog_widget
 			if($type == 'select-cat')
 			{
 				list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',$options);
-				$type6 = true;
+				$type6 = 2;
 				$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
 			}
 			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
 			if (is_array($type))
 			{
+				list($t) = explode(':',$type[0]);
 				if (isset($type[0]) &&	// numeric indexed array --> multiple values of 1:N releation
-					$tmpl->widgetExists($type[0]))
+					$tmpl->widgetExists($t))
 				{
 					$cell['type'] = 'vbox';
 					$cell['size'] = '0,,0,0';
