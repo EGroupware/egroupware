@@ -25,7 +25,7 @@
 				<row class="row">
 					<description value="Category" options=",,,cat_id"/>
 					<menulist span="all">
-						<menupopup type="select-cat" id="cat_id" options="None"/>
+						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"/>
 					</menulist>
 				</row>
 				<row class="row">
