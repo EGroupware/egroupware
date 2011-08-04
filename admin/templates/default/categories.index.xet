@@ -43,7 +43,7 @@
 					<date-time id="${row}[last_mod]" readonly="true"/>
 					<description align="center" id="${row}[subs]"/>
 					<hbox options="0,0">
-						<buttononly label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction={$cont[edit_link]}&amp;cat_id=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="edit"/>
+						<buttononly label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction={$cont[edit_link]}&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="edit"/>
 						<buttononly label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="new"/>
 						<buttononly statustext="Delete this category" label="Delete" id="delete[$row_cont[id]]" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" options="delete" class="leftPad5"/>
 					</hbox>
