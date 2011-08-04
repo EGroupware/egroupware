@@ -433,12 +433,12 @@ class translation
 
 	/**
 	 * provides centralization and compatibility to locate the lang files
-         *
-         * @param string $app application name
-         * @param string $lang language code
-         * @return the full path of the filename for the requested app and language
-         */
-        static function get_lang_file($app,$lang)
+	 *
+	 * @param string $app application name
+	 * @param string $lang language code
+	 * @return the full path of the filename for the requested app and language
+	 */
+	static function get_lang_file($app,$lang)
 	{
 		// Visit each lang file dir, look for a corresponding ${prefix}_lang file
 		$langprefix=EGW_SERVER_ROOT . SEP ;
@@ -447,15 +447,16 @@ class translation
 		$cur_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::LANGFILE_PREFIX . $langsuffix;
 		$old_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::OLD_LANGFILE_PREFIX . $langsuffix;
 		// Note there's no chance for 'lang/phpgw_' files
+		$appfile = $new_appfile;	// set as default
 		if (file_exists($new_appfile))
 		{
-			$appfile=$new_appfile;
+			// nothing to do, already default
 		}
 		elseif (file_exists($cur_appfile))
 		{
 			$appfile=$cur_appfile;
 		}
-		else
+		elseif (file_exists($old_appfile))
 		{
 			$appfile=$old_appfile;
 		}
