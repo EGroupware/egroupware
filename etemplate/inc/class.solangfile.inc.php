@@ -339,10 +339,6 @@ class solangfile
 				 fclose($fp);
 			}
 		}
-		else
-		{
-			$fn = lang('no file');
-		}
 		if ($target)
 		{
 			$this->tgt_file = $fn;
