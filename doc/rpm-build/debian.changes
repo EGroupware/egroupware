@@ -1,3 +1,29 @@
+egroupware-epl (10.1.20110804-1) hardy; urgency=low
+
+  * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect  
+  --> we recommend to update ASAP
+  * Generate well-formed XML for Funambol and SyncEvolution clients (community bug#2975)
+  * Improved support for new SyncML clients/client versions
+  * bookmark: fix broken delete on edit bookmark
+  * email: compose, control the display of identities - identical identities should only be displayed once
+  * eMail: if the identity used for sending is part of the users mainProfile Identities (provided with the mainProfile by ogServer->getAccountEmailAddress ->NOT USER DEFINED<-) then the sender information is set accordingly, as it is assumed that the emailaddresses fetched with getAccountEmailAdress are known to the SMTP Server, thus allowing to be used as Sender/Return-Path
+  * Calendar: fixed in readonly events custom fields were still editable
+  * admin: allow to choose which kind of spellchecking you would like to employ when using the CK Editor (Options now: Yes, No, Without SpellCheckAsYouType, WebSpellChecker)
+  * notification/email: support filter since (only check unseen mails for the last 14 days) when notify for unseen mails
+  * CalDAV: user agent detection of OS X 10.7 Lion iCal app (CoreDav instead of DavKit)
+  * CalDAV/CardDAV redirect for iOS 4.3.1+ to autodetect accounts
+  --> requires to manually merge groupdav.htaccess changes or evtl. apache.conf (if modified)
+  * Calendar: show status set for the whole series at recurrences too, unless they have an individual status
+  * Calendar: fixed typo in merge, denying implicit participants rights eg. required to accept a meeting
+  * CalDAV/calendar backported iterator from trunk to minimize resource usage
+  * NTLM authentication: limit redirect, if NTLM auth could not be performed, to same domain, EGroupware domain, or explicitly whitelisted domains
+  * API: upgrade ck editor from v3.3.1 to v3.6.1 (latest release as of June 2011)
+  * Calendar: fixed various issues with history in calendar: id display, unecessary stuff loged, ...
+  * Filemanager popup: fixed sometimes missing first directory, eg. in favorites
+  * Filemanager: fixed showing of accounts in /apps/addressbook/all$, if disabled by user pref (bug #866)
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 04 Aug 2011 19:58:54 +0200
+
 egroupware-epl (10.1.20110701-1) hardy; urgency=low
 
   * eMail: fixed bug for not getting multiple unnamed attachments, while saving a mail to infolog or tracker
