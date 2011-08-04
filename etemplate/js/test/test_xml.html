@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>ET2 - Test</title>
+
+		<script src="../et2_xml.js"></script>
+		<script src="../et2_inheritance.js"></script>
+		<script src="../et2_common.js"></script>
+		<script src="../et2_widget.js"></script>
+	</head>
+	<body onload="init();">
+		<script>
+			var doc = null;
+
+			function init() {
+				et2_loadXMLFromURL("../../../timesheet/templates/default/edit.xet",
+					function(_xmldoc) {
+						var container = new et2_container(null);
+						container.setParentDOMNode(document.body);
+						container.loadFromXML(_xmldoc);
+					});
+				}
+		</script>
+	</body>
+</html>
