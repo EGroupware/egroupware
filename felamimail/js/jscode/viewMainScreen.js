@@ -820,7 +820,9 @@ function mail_openComposeWindow(_url,forwardByCompose) {
 	var _messageList;
 	var sMessageList='';
 	var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
-	var cbAllVisibleMessages = mailGrid.dataRoot.actionObject.getAllSelected();
+	// check if mailgrid exists, before accessing it
+	var cbAllVisibleMessages;
+	if (mailGrid) cbAllVisibleMessages = mailGrid.dataRoot.actionObject.getAllSelected();
 	if (typeof forwardByCompose == 'undefined') forwardByCompose = true;
 	if (forwardByCompose == false)
 	{
