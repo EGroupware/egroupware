@@ -233,9 +233,10 @@ class filemanager_select
 		{
 			$n = 0;
 			$content['dir'] = array('mode' => $content['mode']);
-			array_shift($files);	// remove directory itself
 			foreach($files as $path)
 			{
+				if ($path == $content['path']) continue;	// remove directory itself
+
 				$name = egw_vfs::basename($path);
 				$is_dir = egw_vfs::is_dir($path);
 				if ($content['mime'] && !$is_dir && egw_vfs::mime_content_type($path) != $content['mime'])
