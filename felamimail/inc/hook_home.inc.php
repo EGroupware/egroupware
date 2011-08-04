@@ -115,9 +115,9 @@
 						'menuaction'    => 'felamimail.uifelamimail.changeFolder',
 						'mailbox'	=> urlencode($key)
 					);
-					$folderLink = $GLOBALS['egw']->link('/index.php',$linkData);
+					$folderLink = $GLOBALS['egw']->link('/index.php',$linkData,'felamimail');
 
-					$extra_data .= "<tr><td><a href='$folderLink'>$value->displayName</a></td><td>$messages</td><td>$newMessages</td></tr>";
+					$extra_data .= "<tr><td><a href=\"$folderLink\">$value->displayName</a></td><td>$messages</td><td>$newMessages</td></tr>";
 				}
 			}
 			$extra_data .= '</table>';
