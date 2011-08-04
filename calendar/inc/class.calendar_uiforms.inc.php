@@ -2260,13 +2260,16 @@ function replace_eTemplate_onsubmit()
 		$content['history'] = array(
 			'id'    =>      $content['id'],
 			'app'   =>      'calendar',
-			'status-widgets'        =>      array(
-				'owner'         =>      'select-account',
-				'cat_id'        =>      'select-cat',
-				'non_blocking'	=>	array(''=>lang('No'), 1=>lang('Yes')),
+			'status-widgets' => array(
+				'owner'        => 'select-account',
+				'creator'      => 'select-account',
+				'category'     => 'select-cat',
+				'non_blocking' => array(''=>lang('No'), 1=>lang('Yes')),
+				'public'       => array(''=>lang('No'), 1=>lang('Yes')),
 
-				'start'		=>	'date-time',
-				'end'		=>	'date-time',
+				'start'		   => 'date-time',
+				'end'		   => 'date-time',
+				'tz_id'        => 'select-timezone',
 
 				// Participants
 				'participants'	=>	array(
@@ -2280,12 +2283,19 @@ function replace_eTemplate_onsubmit()
 					'label',
 					$sel_options['role']
 				),
+				'participants-r'	=>	array(
+					'link:resources',
+					$sel_options['status'],
+					'label',
+					$sel_options['role']
+				),
 			),
 		);
 
 
 		// Get participants for only this one, if it's recurring.  The date is on the end of the value.
-		if($content['recur_type'] || $content['recurrence']) {
+		if($content['recur_type'] || $content['recurrence'])
+		{
 			$content['history']['filter'] = array(
 				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
 					history_new_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR
@@ -2295,7 +2305,8 @@ function replace_eTemplate_onsubmit()
 
 		// Translate labels
 		$tracking = new calendar_tracking();
-		foreach($tracking->field2label as $field => $label) {
+		foreach($tracking->field2label as $field => $label)
+		{
 			$sel_options[$status][$field] = lang($label);
 		}
 		// custom fields are now "understood" directly by historylog widget

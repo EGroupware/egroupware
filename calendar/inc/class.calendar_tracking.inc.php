@@ -6,7 +6,7 @@
  * @author Nathan Gray
  * @package calendar
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.addressbook_tracking.inc.php 29164 2010-02-09 21:56:39Z jlehrke $
+ * @version $Id$
  */
 
 /**
@@ -52,7 +52,6 @@ class calendar_tracking extends bo_tracking
 		'description'	=>	'description',
 		'location'	=>	'location',
 		'reference'	=>	'reference',
-		'modifier'	=>	'modifier',
 		'non_blocking'	=>	'non_blocking',
 		'special'	=>	'special',
 		'creator'	=>	'creator',
@@ -64,13 +63,14 @@ class calendar_tracking extends bo_tracking
 
 		'participants'	=>	array('user_id', 'status', 'role', 'recur'),
 		'participants-c'	=>	array('user_id', 'status', 'quantity', 'role', 'recur'),
+		'participants-r'	=>	array('user_id', 'status', 'quantity', 'role', 'recur'),
 
 		// Custom fields added in constructor
 	);
 
 	/**
-	* Translate field name to label
-	*/
+	 * Translate field name to label
+	 */
 	public $field2label = array(
 		'owner'		=>	'owner',
 		'category'	=>	'category',
@@ -80,18 +80,18 @@ class calendar_tracking extends bo_tracking
 		'description'	=>	'description',
 		'location'	=>	'location',
 		'reference'	=>	'reference',
-		'modifier'	=>	'modifier',
 		'non_blocking'	=>	'non blocking',
 		'special'	=>	'special',
 		'creator'	=>	'creator',
-		'recurrence'	=>	'recurrence',
-		'tz_id'		=>	'tz_id',
+		'recurrence'=>	'recurrence',
+		'tz_id'		=>	'timezone',
 
 		'start'		=>	'start',
 		'end'		=>	'end',
 
 		'participants'	=>	'Participants: User, Status, Role',
-		'participants-c'=>	'Participants: User, Status, Quantity, Role'
+		'participants-c'=>	'Participants: User, Status, Quantity, Role',
+		'participants-r'=>	'Participants: Resource, Status, Quantity',
 
 		// Custom fields added in constructor
 	);
@@ -114,14 +114,15 @@ class calendar_tracking extends bo_tracking
 	}
 
 	/**
-	* Tracks the changes in one entry $data, by comparing it with the last version in $old
-	* Overrides parent to reformat participants into a format parent can handle
-	*/
+	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
+	 * Overrides parent to reformat participants into a format parent can handle
+	 */
 	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
-        {
+	{
 		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
-		if($data['recur_type']) {
+		if($data['recur_type'])
+		{
 			unset($data['start']); unset($data['end']);
 			unset($old['start']); unset($old['end']);
 		}
@@ -132,14 +133,17 @@ class calendar_tracking extends bo_tracking
 		* filter by it later.
 		*/
 		$recur_prefix = $data['recur_date'] ? $data['recur_date'] : '';
-		if(is_array($data['participants'])) {
+		if(is_array($data['participants']))
+		{
 			$participants = $data['participants'];
 			$data['participants'] = array();
-			foreach($participants as $id => $status) {
+			foreach($participants as $uid => $status)
+			{
 				calendar_so::split_status($status, $quantity, $role);
-				$field = ($id[0] == 'c' ? 'participants-c' : 'participants');
+				calendar_so::split_user($uid, $user_type, $user_id);
+				$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
 				$data[$field][] = array(
-					'user_id'	=>	$id[0] == 'c' ? substr($id,1) : $id,
+					'user_id'	=>	$user_id,
 					'status'	=>	$status,
 					'quantity'	=>	$quantity,
 					'role'		=>	$role,
@@ -147,14 +151,17 @@ class calendar_tracking extends bo_tracking
 				);
 			}
 		}
-		if(is_array($old['participants'])) {
+		if(is_array($old['participants']))
+		{
 			$participants = $old['participants'];
 			$old['participants'] = array();
-			foreach($participants as $id => $status) {
+			foreach($participants as $uid => $status)
+			{
 				calendar_so::split_status($status, $quantity, $role);
-				$field = ($id[0] == 'c' ? 'participants-c' : 'participants');
+				calendar_so::split_user($uid, $user_type, $user_id);
+				$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
 				$old[$field][] = array(
-					'user_id'	=>	$id[0] == 'c' ? substr($id,1) : $id,
+					'user_id'	=>	$user_id,
 					'status'	=>	$status,
 					'quantity'	=>	$quantity,
 					'role'		=>	$role,
@@ -166,9 +173,10 @@ class calendar_tracking extends bo_tracking
 	}
 
 	/**
-	* Overrides parent because calendar_boupdates handles the notifications
-	*/
-	public function do_notifications($data,$old,$deleted=null) {
+	 * Overrides parent because calendar_boupdates handles the notifications
+	 */
+	public function do_notifications($data,$old,$deleted=null)
+	{
 		return true;
 	}
 }

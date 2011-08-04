@@ -1,10 +1,10 @@
 <?php
 /**
- * eGroupWare EditableTemplates - Business Objects
+ * EGroupware EditableTemplates - Business Objects
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-10 by RalfBecker@outdoor-training.de
+ * @copyright 2002-11 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -488,7 +488,15 @@ class boetemplate extends soetemplate
 	 */
 	public function widgetExists($type)
 	{
-		return isset(self::$types[$type]) || $this->haveExtension($type);
+		if (isset(self::$types[$type])) return true;
+
+		list($main,$sub) = explode('-',$type);
+
+		if ($this->haveExtension($main) && $this->loadExtension($main) && ($extension = self::$extensions[$main]))
+		{
+			return $type == $main || is_array($extension->human_name) && isset($extension->human_name[$type]);
+		}
+		return false;
 	}
 
 	/**
