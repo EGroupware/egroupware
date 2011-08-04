@@ -619,7 +619,7 @@ class html
 		$oCKeditor = new CKeditor($basePath);
 		$oCKeditor->returnOutput = true;
 
-		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
+		$oCKeditor->config['customConfig'] = "./ckeditor.egwconfig.js";
 		$oCKeditor->config['language'] = $lang;
 		$oCKeditor->config['resize_enabled'] = false;
 		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
