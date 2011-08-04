@@ -173,7 +173,14 @@ class select_widget
 							}
 							else
 							{
-								unset($value[$key]);	// remove not (longer) existing or inaccessible cats
+								if(!$type6)
+								{
+									unset($value[$key]);	// remove not (longer) existing or inaccessible cats
+								}
+								elseif ($id) // Display id of no longer existing cat
+								{
+									$cell['sel_options'][$id] = $type6 == '2' ? $id : lang('Missing: %1',$id);
+								}
 							}
 						}
 					}

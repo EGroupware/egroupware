@@ -994,8 +994,6 @@ class calendar_boupdate extends calendar_bo
 
 		// Update history
 		$tracking = new calendar_tracking($this);
-		$event['category'] = implode(',', $this->get_categories($event['category']));
-		$old_event['category'] = implode(',', $this->get_categories($old_event['category']));
 		$tracking->track($event, $old_event);
 
 		return $cal_id;
