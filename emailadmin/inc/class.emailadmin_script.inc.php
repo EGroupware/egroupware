@@ -510,6 +510,9 @@ class emailadmin_script {
 		#print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
 		if (!$connection->installScript($this->name, $newscript, true)) {
 			$this->errstr = 'updateScript: putscript failed: ' . $connection->errstr;
+			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
+			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
+			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 			return false;
 		}
 
