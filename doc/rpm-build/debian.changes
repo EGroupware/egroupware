@@ -1,3 +1,36 @@
+egroupware-epl (11.1.20110804-1) hardy; urgency=low
+
+  * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect
+  --> we recommend to update ASAP
+  * tracker: fix bug regarding tracker creator was not notified in certain cases
+  * bookmark: fix broken delete on edit bookmark
+  * timesheet: fix tabcontrol not working, fix for broken saving description in simple/short view mode
+  * eMail: carry the preference regarding the move or copy of mails over to drag and drop dialog
+  * eMail: fix for broken showHeader in Message Display window, code cleanup
+  * email: if you want to see eMails as text/plain, you may want to see embedded images, as they are commonly only displayed with html messages
+  * eMail: if the identity used for sending is part of the users mainProfile Identities (provided with the mainProfile by ogServer->getAccountEmailAddress ->NOT USER DEFINED<-) then the sender information is set accordingly, as it is assumed that the emailaddresses fetched with getAccountEmailAdress are known to the SMTP Server, thus allowing to be used as Sender/Return-Path
+  * eMail: if profileID given does not exist, next possible valid profileID is used. This should fix problems regarding the storing of no longer existing profileIDs with the activeProfileID preference.
+  * eSync: fix signature problem, when using emailadmin defined profile
+  * eMail: enhancement of visual decoration of high_priority mails and messages that are flagged
+  * eMail: fix bug regarding ->foldertype SENT not detected on preview of message <-
+  * Calendar: fixed in readonly events custom fields were still editable
+  * admin: allow to choose which kind of spellchecking you would like to employ when using the CK Editor (Options now: Yes, No, Without SpellCheckAsYouType, WebSpellChecker)
+  * CalDAV: user agent detection of OS X 10.7 Lion iCal app (CoreDav instead of DavKit)
+  * eMail: fix refresh behavior, regarding the reading of an eMail in previewMessageArea; timed refresh of Message list, now only refreshes the messageList Area, not the preview area; fix reload behavior on MailDeletion in preview mode (click on delete Icon within previewArea)
+  * CalDAV/CardDAV redirect for iOS 4.3.1+ to autodetect accounts
+  --> requires to manually merge groupdav.htaccess changes or evtl. apache.conf (if modified)
+  * Calendar: show status set for the whole series at recurrences too, unless they have an individual status
+  * API: upgrade ck editor from v3.3.1 to v3.6.1 (latest release as of June 2011)
+  * CalDAV: fixed and enabled iterator again, to minimize resource usage, fix for mystylite bug #1942
+  * NTLM authentication: limit redirect, if NTLM auth could not be performed, to same domain, EGroupware domain, or explicitly whitelisted domains
+  * Calendar: fixed various issues with history in calendar: id display, unecessary stuff loged, ...
+  * Filemanager popup: fixed sometimes missing first directory, eg. in favorites
+  * Timesheet: using only timesheet categories (tracker initialises global cat object)
+  * filemanager: do NOT notify about temporary files or lockfiles created by office programms
+  * Filemanager: fixed showing of accounts in /apps/addressbook/all$, if disabled by user pref (bug #866)
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 04 Aug 2011 19:44:30 +0200
+
 egroupware-epl (11.1.20110711-1) hardy; urgency=low
 
   * eMail: bugfix for 'identities are set as active profile': status is now checked for active
