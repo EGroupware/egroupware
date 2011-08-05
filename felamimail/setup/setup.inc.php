@@ -53,6 +53,7 @@ $setup_info['felamimail']['depends'][] = array(
 $setup_info['felamimail']['check_install'] = array(
 	'' => array(
 		'func' => 'pear_check',
+		'version' => '1.6.0',	// otherwise install of Mail_Mime fails!
 	),
 # get's provided by egw-pear temporarly
 	'Net_Sieve' => array(

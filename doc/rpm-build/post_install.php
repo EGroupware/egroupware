@@ -529,7 +529,7 @@ function check_install_pear_packages()
 		}
 	}
 	// read required packages from apps
-	$packages = array('HTTP_WebDAV_Server' => '999.egw-pear');
+	$packages = array('PEAR' => true, 'HTTP_WebDAV_Server' => '999.egw-pear');	// pear must be the first, to run it's update first!
 	$egw_pear_packages = array();
 	foreach(scandir($config['source_dir']) as $app)
 	{
@@ -543,14 +543,18 @@ function check_install_pear_packages()
 			{
 				if ($args['func'] == 'pear_check')
 				{
-					$packages[$package?$package:'PEAR'] = isset($args['version']) ? $args['version'] : true;
+					if (!$package) $package = 'PEAR';
+					// only overwrite lower version or no version
+					if (!isset($packages[$package]) || $packages[$package] === true || isset($args['version']) && version_compare($args['version'],$packages[$package],'>'))
+					{
+						$packages[$package] = isset($args['version']) ? $args['version'] : true;
+					}
 				}
 			}
 		}
 		if ($app == 'egw-pear')
 		{
-			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_Socket'] =
-			$egw_pear_packages['Net_IMAP'] = $egw_pear_packages['Net_Sieve'] = $egw_pear_packages['Log'] = '999.egw-pear';
+			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_IMAP'] = $egw_pear_packages['Net_Sieve'] = $egw_pear_packages['Log'] = '999.egw-pear';
 		}
 	}
 	//echo 'Installed: '; print_r($packages_installed);
@@ -567,6 +571,8 @@ function check_install_pear_packages()
 			$need_upgrade[] = $package;
 		}
 	}
+	//echo 'Need upgrade: '; print_r($need_upgrade);
+	//echo 'To install: '; print_r($to_install);
 	if (($to_install || $need_upgrade))
 	{
 		if (getmyuid())
@@ -576,8 +582,24 @@ function check_install_pear_packages()
 		else
 		{
 			echo "Install/upgrade required PEAR packages:\n";
-			if ($to_install) system($config['pear'].' install '.implode(' ',$to_install));
-			if ($need_upgrade) system($config['pear'].' upgrade '.implode(' ',$need_upgrade));
+			// need to run upgrades first, they might be required for install!
+			if ($need_upgrade)
+			{
+				if (in_array('PEAR',$need_upgrade))	// updating pear itself can be very tricky, this is what's needed for stock RHEL pear
+				{
+					$cmd = $config['pear'].' channel-update pear.php.net';
+					echo "$cmd\n";	system($cmd);
+					$cmd = $config['pear'].' upgrade --force Console_Getopt Archive_Tar';
+					echo "$cmd\n";	system($cmd);
+				}
+				$cmd = $config['pear'].' upgrade '.implode(' ',$need_upgrade);
+				echo "$cmd\n";	system($cmd);
+			}
+			if ($to_install)
+			{
+				$cmd = $config['pear'].' install '.implode(' ',$to_install);
+				echo "$cmd\n";	system($cmd);
+			}
 		}
 	}
 }
@@ -591,6 +613,9 @@ function fix_perms()
 {
 	global $config;
 
-	system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
-	system('/bin/chmod 700 /tmp/egw_cache');
+	if (file_exists('/tmp/egw_cache'))
+	{
+		system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
+		system('/bin/chmod 700 /tmp/egw_cache');
+	}
 }
