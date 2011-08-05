@@ -78,7 +78,7 @@ if (egw_session::init_handler())
 			}
 			$GLOBALS['egw'] = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
 
-			if (is_object($GLOBALS['egw']))
+			if (is_object($GLOBALS['egw']) && is_a($GLOBALS['egw'], 'egw'))	// only egw object has wakeup2, setups egw_minimal eg. has not!
 			{
 				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
 
