@@ -1,3 +1,45 @@
+egroupware (1.8.001.20110805) hardy; urgency=low
+
+  * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect  
+  --> we recommend to update ASAP
+  * PostgreSQL/EMailAdmin: fixed not storable EMailAdmin profiles
+  * Addressbook/LDAP: fixed lettersearch by backporting LDAP class from trunk
+  * Setup: making SSHA (salted sha1) hashes the default password hash for SQL and LDAP
+  * setup/login: fixed not working password (hash) migration
+  * InfoLog: fixed not working link-search (Parameter 2 to infolog_bo::link_query() expected to be a reference)
+  * Calendar/CalDAV: fixed SQL error on ctag generation, if no ACL rights for requested group calendar exists
+  * Calendar/CalDAV: fixed wrong line-defolding, if folding occured in whitespace
+  * Calendar/CalDAV: use X-EGROUPWARE-UID only, if it resolves to same email (otherwise we are in trouble if different EGw installs talk to each other)
+  * Calendar: fixed not included organizer in meeting request
+  * Calendar: fixed not working freetime search caused by not mbstring.func_overload supporting xajax libary
+  * Manual: use https for accessing manual.egroupware.org to not get page contains unsave content warnings
+  * IE9: enable IE dropdown menu hack only for IE<9, as it stalls IE9 www.stylite.de bug #1722
+  * workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
+  * eMail: fixed bug for not getting multiple unnamed attachments, while saving a mail to infolog or tracker
+  * eMail: improving of the fetching of cids; match cid to filename if the attempt to match the cid failed
+  * eMail: match cid to filename if the attempt to match the cid failed -> extending the fetch attempt even for non cid attachments, when nothing is found within the previous loops
+  * Admin/VFS/LDAP: on saving a group, check if group directory exists and create it if not
+  * CalDAV/GroupDAV/KDE Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
+  * eMail: regard addressbook preference to hide accounts or not in ajax search for emailadresses while composing messages
+  * eMail: fix for displayed message body  is null: if charset reported is reported not correctly, converting to utf-8 may not succeed as expected, leaving some non utf-8 chars which may lead to problems with json_encode;
+  * Fix RRULE parser (UTC fix) - Bug#2991@egroupware.org
+  * Calendar: fixed not working accept/reject of invitations, if participant is in a group with only a freebusy grant
+  * Generate well-formed XML for Funambol and SyncEvolution clients (community bug#2975)
+  * Improved support for new SyncML clients/client versions
+  * Calendar: fixed in readonly events custom fields were still editable
+  * notification/email: support filter since (only check unseen mails for the last 14 days) when notify for unseen mails
+  * CalDAV: user agent detection of OS X 10.7 Lion iCal app (CoreDav instead of DavKit)
+  * CalDAV/CardDAV redirect for iOS 4.3.1+ to autodetect accounts
+  * Calendar: show status set for the whole series at recurrences too, unless they have an individual status
+  * Calendar: fixed typo in merge, denying implicit participants rights eg. required to accept a meeting
+  * NTLM authentication: limit redirect, if NTLM auth could not be performed, to same domain, EGroupware domain, or explicitly whitelisted domains
+  * Filemanager popup: fixed sometimes missing first directory, eg. in favorites
+  * API fix PHP fatal error wakeup2 is no method ..., when comming from setup
+  * API fix webserver_url of just a domain eg. http://domain.com gives PHP Warning empty delimiter ...
+  * PEAR: automatic upgrade or install of required PEAR packages via package post_instal.php (only package installs!)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 05 Aug 2011 15:35:39 +0200
+
 egroupware (1.8.001.20110421) hardy; urgency=low
 
   * Addressbook: lettersearch was not working for addressbooks in LDAP if PostgreSQL database was used (bug #2851)
