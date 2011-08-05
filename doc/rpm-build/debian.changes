@@ -1,3 +1,11 @@
+egroupware-epl (10.1.20110805-1) hardy; urgency=low
+
+  * API fix webserver_url of just a domain eg. http://domain.com gives PHP Warning empty delimiter ...
+  * API fix PHP fatal error wakeup2 is no method ..., when comming from setup
+  * PEAR: automatic upgrade or install of required PEAR packages via package post_instal.php (only package installs!)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 05 Aug 2011 12:00:07 +0200
+
 egroupware-epl (10.1.20110804-1) hardy; urgency=low
 
   * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect  
