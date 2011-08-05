@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<overlay>
+	<template id="test" template="" lang="" group="0" version="1">
+		<description value="This description is inside the 'test' template" options=""/>
+	</template>
+	<description value="Test template:" options=""/>
+	<template id="test" />
+	<template id="test" />
+	<template id="test" />
+	<template id="test" />
+	<template id="test" />
+</overlay>
+

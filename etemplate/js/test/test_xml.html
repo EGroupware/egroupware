@@ -2,20 +2,92 @@
 	<head>
 		<title>ET2 - Test</title>
 
+		<script src="jquery.js"></script>
 		<script src="../et2_xml.js"></script>
 		<script src="../et2_inheritance.js"></script>
 		<script src="../et2_common.js"></script>
 		<script src="../et2_widget.js"></script>
-	</head>
-	<body onload="init();">
-		<script>
-			var doc = null;
+		<script src="../et2_template.js"></script>
+		<script src="../et2_description.js"></script>
+		<style type="text/css">
+			body {
+				font-family: Lucida Grande, sans-serif;
+				font-size: 10pt;
+			}
 
-			function init() {
-				et2_loadXMLFromURL("../../../timesheet/templates/default/edit.xet",
+			#linklist a {
+				color: blue;
+				display: block;
+			}
+
+			#linklist a:visited {
+				color: blue;
+			}
+
+			#linklist a:hover {
+				color: #5050FF;
+			}
+
+			#container {
+				margin: 10px;
+				border: 1px solid gray;
+				padding: 10px;
+			}
+
+			.header {
+				color: #111;
+				margin: 30px 0 5px 0;
+				border-bottom: 1px solid #111;
+			}
+
+			.et2_placeholder {
+				display: inline-block;
+				border: 1px solid cornflowerblue;
+				background-color: #FCFCFC;
+				padding: 3px;
+				margin: 1px;
+			}
+
+			.et2_placeholder .et2_caption {
+				display: block;
+				font-size: 8pt;
+				margin: 0 0 5px 0;
+				font-weight: bold;
+				color: #2E2E2E;
+				text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
+			}
+
+			.et2_placeholder .et2_attr {
+				display: block;
+				font-size: 8pt;
+				color: #3030A0;
+				margin: 2px 0 2px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>EGroupware ETemplate2 Test</h1>
+		<div class="header">Choose one of the following tests:</div>
+		<div id="linklist">
+			<a href="#" onclick="open_xet('../../../timesheet/templates/default/edit.xet');">Timesheet edit dialog</a>
+			<a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
+		</div>
+		<div class="header">ETemplate2 container:</div>
+		<div id="container"></div>
+		<script>
+			var container = null;
+
+			function open_xet(file) {
+				et2_loadXMLFromURL(file,
 					function(_xmldoc) {
-						var container = new et2_container(null);
-						container.setParentDOMNode(document.body);
+						if (container != null)
+						{
+							container.destroy();
+							container = null;
+						}
+
+						container = new et2_container(null);
+						container.setParentDOMNode(document.getElementById("container"));
 						container.loadFromXML(_xmldoc);
 					});
 				}

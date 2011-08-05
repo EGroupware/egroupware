@@ -21,11 +21,11 @@
  * where "interfaces" is a single interface or an array of interfaces and
  * functions an object containing the functions the class implements.
  *
- * A single interface is also a simple object defining (empty) functions. Example:
+ * An interface has to be created in the following way:
  *
- * IBreathingObject = {
+ * IBreathingObject = new Interface({
  * 		breath: function() {}
- * }
+ * });
  * 
  * Human = Class.extend(IBreathingObject, {
  * 		walk: function() {
@@ -72,6 +72,15 @@
 	// check whether a 
 	var fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
+	// Base "Class" for interfaces - needed to check whether an object is an
+	// interface
+	this.Interface = function(fncts) {
+		for (var key in fncts)
+		{
+			this[key] = fncts[key];
+		}
+	};
+
 	/**
 	 * The addInterfaceStuff function adds all interface functions the class has
 	 * to implement to the class prototype.
@@ -84,15 +93,23 @@
 
 		prototype["_ifacefuncs"] = [];
 
-		for (var i in interfaces)
+		for (var i = 0; i < interfaces.length; i++)
 		{
-			for (var key in interfaces[i])
+			var iface = interfaces[i];
+			if (iface instanceof Interface)
 			{
-				prototype["_ifacefuncs"].push(key);
+				for (var key in iface)
+				{
+					prototype["_ifacefuncs"].push(key);
+				}
+			}
+			else
+			{
+				throw("Interfaces must be instanceof Interface!");
 			}
 		}
 
-		for (var i in ifaces)
+		for (var i = 0; i < ifaces.length; i++)
 		{
 			prototype["_ifacefuncs"].push(ifaces[i]);
 		}
@@ -109,7 +126,21 @@
 			}
 			return true;
 		}
-	}
+
+		// The instanceOf function can be used to check for both - classes and
+		// interfaces. Please don't change the case of this function as this
+		// affects IE and Opera support.
+		prototype["instanceOf"] = function(_obj) {
+			if (_obj instanceof Interface)
+			{
+				return this.implements(_obj);
+			}
+			else
+			{
+				return this instanceof _obj;
+			}
+		}
+	};
 
 	// The base Class implementation (does nothing)
 	this.Class = function(){};
@@ -179,13 +210,8 @@
 			// All construction is actually done in the init method
 			if (!initializing)
 			{
-				if (this.init)
-				{
-					this.init.apply(this, arguments);
-				}
-
 				// Check whether the object implements all interface functions
-				for (var i in this._ifacefuncs)
+				for (var i = 0; i < this._ifacefuncs.length; i++)
 				{
 					var func = this._ifacefuncs[i];
 					if (!(typeof this[func] == "function"))
@@ -193,6 +219,11 @@
 						throw("Trying to create abstract object, interface " + 
 							"function '" + func + "' not implemented.");
 					}
+				}
+
+				if (this.init)
+				{
+					this.init.apply(this, arguments);
 				}
 			}
 		}

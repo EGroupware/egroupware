@@ -31,3 +31,19 @@ function et2_debug(_level, _msg)
 	}
 }
 
+/**
+ * IE Fix for array.indexOf
+ */
+if (typeof Array.prototype.indexOf == "undefined")
+{
+	Array.prototype.indexOf = function(_elem) {
+		for (var i = 0; i < this.length; i++)
+		{
+			if (this[i] === _elem)
+				return i;
+		}
+		return -1;
+	};
+}
+
+
