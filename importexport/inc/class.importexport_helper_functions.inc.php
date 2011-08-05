@@ -218,9 +218,12 @@ class importexport_helper_functions {
 	 * This constructs something like
 	 * 		Company: FamilyName, GivenName or FamilyName, GivenName if 'Company' is empty.
 	 *
-	 * Moreover the two helper function cat() and account() can be used.
+	 * Moreover the following helper functions can be used:
 	 * cat(Cat1,...,CatN) returns a (','-separated) list with the cat_id's. If a
 	 * category isn't found, it will be automaticaly added.
+	 *
+	 * account(name) returns an account ID, if found in the system
+	 * list(sep, data, index) lets you explode a field on sep, then select just one part (index)
 	 *
 	 * Patterns as well as the replacement can be regular expressions (the replacement is done
 	 * via str_replace).
@@ -259,7 +262,7 @@ class importexport_helper_functions {
 			// conversion list may be longer than $_record aka (no_csv)
 			$val = array_key_exists( $idx, $_record ) ? $_record[$idx] : '';
 
-			$c_functions = array('cat', 'account', 'strtotime');
+			$c_functions = array('cat', 'account', 'strtotime', 'list');
 			if($_cclass) {
 				// Add in additional methods
 				$reflection = new ReflectionClass(get_class($_cclass));
@@ -310,6 +313,11 @@ class importexport_helper_functions {
 			case 'strtotime' :
 				list( $string, $format ) = explode( ',', $data );
 				return self::custom_strtotime( trim( $string ), trim( $format ) );
+			case 'list':
+				list( $split, $data, $index) = explode(',',$data);
+				$exploded = explode($split, $data);
+				// 1 based indexing for user ease
+				return $exploded[$index - 1];
 			default :
 				if(self::$cclass && method_exists(self::$cclass, $action)) {
 					$class = get_class(self::$cclass);

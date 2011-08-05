@@ -368,7 +368,7 @@ class importexport_definitions_ui
 								$bodefinitions->save($definition);
 							} catch (Exception $ex) {
 								$failed++;
-								$msg .= lang('Duplicate name');
+								$msg .= lang('Duplicate name, please choose another.');
 								continue;
 							}
 						}
