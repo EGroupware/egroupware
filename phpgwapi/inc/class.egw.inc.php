@@ -310,11 +310,11 @@ class egw extends egw_minimal
 		{
 			//echo "<p>account_callback='$account_callback', account=".print_r($account,true).", sessionid=$sessionid</p>\n"; exit;
 			// we forward to the same place after the re-login
-			if ($GLOBALS['egw_info']['server']['webserver_url'] && $GLOBALS['egw_info']['server']['webserver_url'] != '/')
+			if ($GLOBALS['egw_info']['server']['webserver_url'] && $GLOBALS['egw_info']['server']['webserver_url'] != '/' &&
+				($webserver_path = parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH)) && $webserver_path != '/')
 			{
 				// we have to use only path component, to cope with domains like http://egroupware.domain.com and /egroupware
-				list(,$relpath) = explode(parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH),
-					parse_url($_SERVER['PHP_SELF'],PHP_URL_PATH),2);
+				list(,$relpath) = explode($webserver_path,parse_url($_SERVER['PHP_SELF'],PHP_URL_PATH),2);
 			}
 			else	// the webserver-url is empty or just a slash '/' (eGW is installed in the docroot and no domain given)
 			{
