@@ -1,3 +1,12 @@
+egroupware-epl (11.1.20110805-1) hardy; urgency=low
+
+  * API fix PHP fatal error wakeup2 is no method ..., when comming from setup
+  * API fix webserver_url of just a domain eg. http://domain.com gives PHP Warning empty delimiter ...
+  * PEAR/Email: fixed not working automatic install of Mail_Mime because PEAR in RHEL5 is way to old
+  * Tracker: fixed context menus actions were NOT checking ACL and other context menu fixes
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 05 Aug 2011 13:10:25 +0200
+
 egroupware-epl (11.1.20110804-1) hardy; urgency=low
 
   * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect
