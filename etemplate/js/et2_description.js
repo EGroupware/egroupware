@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Template base class
+ * eGroupWare eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -42,6 +42,6 @@ et2_description = et2_DOMWidget.extend({
 
 });
 
-et2_register_widget(et2_description, ["description"]);
+et2_register_widget(et2_description, ["description", "label"]);
 
 

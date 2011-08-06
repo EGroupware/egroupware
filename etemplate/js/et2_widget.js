@@ -132,22 +132,28 @@ et2_widget = Class.extend({
 		// Create the copy
 		var copy = new (this.constructor)(_parent, _type);
 
-		// Create a clone of all child elements
-		for (var i = 0; i < this._children.length; i++)
+		// Assign this element to the copy
+		copy.assign(this);
+
+		return copy;
+	},
+
+	assign: function(_obj) {
+
+		// Create a clone of all child elements of the given object
+		for (var i = 0; i < _obj._children.length; i++)
 		{
-			this._children[i].clone(copy, this._children[i].type);
+			_obj._children[i].clone(this, _obj._children[i].type);
 		}
 
 		// Copy all properties for which a setter function exists
-		for (var key in this)
+		for (var key in _obj)
 		{
-			if (key != "id" && typeof copy["set_" + key] == "function")
+			if (key != "id" && typeof this["set_" + key] == "function")
 			{
-				copy["set_" + key](this[key]);
+				this["set_" + key](_obj[key]);
 			}
 		}
-
-		return copy;
 	},
 
 	/**
@@ -269,6 +275,24 @@ et2_widget = Class.extend({
 		return false;
 	},
 
+	createElementFromNode: function(_node, _nodeName) {
+		if (typeof _nodeName == "undefined")
+		{
+			_nodeName = _node.nodeName.toLowerCase();
+		}
+
+		// Check whether a widget with the given type is registered.
+		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
+			et2_placeholder : et2_registry[_nodeName];
+
+		// Creates the new widget, passes this widget as an instance and
+		// passes the widgetType. Then it goes on loading the XML for it.
+		var widget = new constructor(this, _nodeName)
+		widget.loadFromXML(_node);
+
+		return widget;
+	},
+
 	/**
 	 * Loads the widget tree from an XML node
 	 */
@@ -299,13 +323,8 @@ et2_widget = Class.extend({
 				continue;
 			}
 
-			// Check whether a widget with the given type is registered.
-			var constructor = typeof et2_registry[widgetType] == "undefined" ?
-				et2_placeholder : et2_registry[widgetType];
-
-			// Creates the new widget, passes this widget as an instance and
-			// passes the widgetType. Then it goes on loading the XML for it.
-			(new constructor(this, widgetType)).loadFromXML(node);
+			// Create the new element
+			this.createElementFromNode(node, widgetType);
 		}
 	},
 
@@ -370,7 +389,17 @@ et2_widget = Class.extend({
  * Interface for all widget classes, which are based on a DOM node.
  */
 et2_IDOMNode = new Interface({
-	getDOMNode: function() {}
+	/**
+	 * Returns the DOM-Node of the current widget.
+	 * 
+	 * @param _sender The _sender parameter defines which widget is asking for
+	 * 	the DOMNode.depending on that, the widget may return different nodes.
+	 * 	This is used in the grid. Normally the _sender parameter can be omitted
+	 * 	in most implementations of the getDOMNode function.
+	 * 	However, you should always define the _sender parameter when calling
+	 * 	getDOMNode!
+	 */
+	getDOMNode: function(_sender) {}
 });
 
 /**
@@ -403,14 +432,14 @@ et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
 		if (this._parent && this._parent.implements(et2_IDOMNode)) {
-			this.setParentDOMNode(this._parent.getDOMNode());
+			this.setParentDOMNode(this._parent.getDOMNode(this));
 		}
 	},
 
 	detatchFromDOM: function() {
 		if (this.parentNode)
 		{
-			var node = this.getDOMNode();
+			var node = this.getDOMNode(this);
 			if (node)
 			{
 				this.parentNode.removeChild(node);
@@ -432,8 +461,8 @@ et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			this.parentNode = _node;
 
 			// Attach the DOM node of this widget (if existing) to the new parent
-			var node = this.getDOMNode();
-			if (node)
+			var node = this.getDOMNode(this);
+			if (node && this.parentNode)
 			{
 				this.parentNode.appendChild(node);
 			}
@@ -447,23 +476,12 @@ et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	set_id: function(_value) {
 		this._super(_value);
 
-		var node = this.getDOMNode();
+		var node = this.getDOMNode(this);
 		if (node)
 		{
 			node.setAttribute("id", _value);
 		}
 	},
-
-	set_visible: function(_value) {
-		/*if (_value != this.visible)
-		{
-			var node = this.getDOMNode();
-			if (node)
-			{
-				node.set
-			}
-		}*/
-	}
 
 });
 

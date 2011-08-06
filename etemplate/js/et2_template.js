@@ -44,7 +44,7 @@ et2_template = et2_DOMWidget.extend({
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
 		if (this._parent && this._parent.implements(et2_IDOMNode)) {
-			var parentNode = this._parent.getDOMNode();
+			var parentNode = this._parent.getDOMNode(this);
 
 			if (parentNode)
 			{

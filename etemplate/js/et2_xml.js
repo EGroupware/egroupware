@@ -82,3 +82,16 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 	}
 }
 
+function et2_filteredNodeIterator(_node, _callback, _context)
+{
+	for (var i = 0; i < _node.childNodes.length; i++)
+	{
+		var node = _node.childNodes[i];
+		var nodeName = node.nodeName.toLowerCase();
+		if (nodeName.charAt(0) != "#")
+		{
+			_callback.call(_context, node, nodeName);
+		}
+	}
+}
+

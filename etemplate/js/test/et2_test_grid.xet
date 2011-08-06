@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<overlay>
+	<label value="Grid with horizontal orientation:"/>
+	<grid>
+		<columns>
+			<column/>
+			<column/>
+		</columns>
+
+		<rows>
+			<row>
+				<label value="Northwest"/>
+				<label value="Northeast"/>
+			</row>
+			<label value="Equator"/>
+			<row>
+				<label value="Southwest"/>
+				<label value="Southeast"/>
+			</row>
+		</rows>
+	</grid>
+
+	<label value="Grid with vertical orientation:"/>
+	<grid>
+		<columns>
+			<column>
+				<label value="Northwest"/>
+				<label value="Northeast"/>
+			</column>
+			<label value="Equator"/>
+			<column>
+				<label value="Southwest"/>
+				<label value="Southeast"/>
+			</column>
+		</columns>
+
+		<rows>
+			<row/>
+			<row/>
+		</rows>
+	</grid>
+
+</overlay>
+
