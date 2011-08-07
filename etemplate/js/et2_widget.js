@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /*egw:uses
 	jquery.jquery;
 	et2_xml;
@@ -49,7 +51,7 @@ function et2_register_widget(_constructor, _types)
 /**
  * The et2 widget base class.
  */
-et2_widget = Class.extend({
+var et2_widget = Class.extend({
 
 	/**
 	 * The init function is the constructor of the widget. When deriving new
@@ -388,7 +390,7 @@ et2_widget = Class.extend({
 /**
  * Interface for all widget classes, which are based on a DOM node.
  */
-et2_IDOMNode = new Interface({
+var et2_IDOMNode = new Interface({
 	/**
 	 * Returns the DOM-Node of the current widget.
 	 * 
@@ -407,7 +409,7 @@ et2_IDOMNode = new Interface({
  * deriving from this class have to care about implementing the "getDOMNode"
  * function which has to return the DOM-Node.
  */
-et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
+var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 	/**
 	 * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
@@ -481,14 +483,14 @@ et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		{
 			node.setAttribute("id", _value);
 		}
-	},
+	}
 
 });
 
 /**
  * Container object for not-yet supported widgets
  */
-et2_placeholder = et2_DOMWidget.extend({
+var et2_placeholder = et2_DOMWidget.extend({
 
 	init: function() {
 		// Create the placeholder div
@@ -532,7 +534,7 @@ et2_placeholder = et2_DOMWidget.extend({
 /**
  * Common container object
  */
-et2_container = et2_DOMWidget.extend({
+var et2_container = et2_DOMWidget.extend({
 
 	init: function() {
 		this.div = document.createElement("div");
@@ -550,7 +552,7 @@ et2_container = et2_DOMWidget.extend({
  * Interface for all widgets which support returning a value
  */
 
-et2_IValue = new Interface({
+var et2_IValue = new Interface({
 	getValue: function() {}
 });
 

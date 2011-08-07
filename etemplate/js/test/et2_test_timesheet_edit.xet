@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<!-- $Id: edit.xet 35783 2011-07-20 15:23:36Z leithoff $ -->
+<overlay>
+	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%" height="165">
+			<columns>
+				<column width="95"/>
+				<column width="120"/>
+				<column width="80" disabled="@ts_viewtype"/>
+				<column disabled="@ts_viewtype"/>
+			</columns>
+			<rows>
+				<row class="row" disabled="@ts_viewtype">
+					<description value="Title" options=",,,ts_title"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="row" disabled="!@ts_viewtype">
+					<description value="comment"/>
+					<textbox multiline="true" id="ts_description" rows="5" cols="50" span="all" class="fullWidth"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="row">
+					<description value="Category" options=",,,cat_id"/>
+					<menulist span="all">
+						<menupopup type="select-cat" id="cat_id" options="None"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description value="Date" options=",,,ts_start"/>
+					<date id="ts_start" needed="1" options=",8"/>
+					<description value="Starttime"/>
+					<date-timeonly id="start_time" options="H:i"/>
+				</row>
+				<row class="row">
+					<description value="Duration" options=",,,ts_duration"/>
+					<date-duration id="ts_duration" options=",hm"/>
+					<description value="or endtime" class="noWrap"/>
+					<date-timeonly id="end_time" options="H:i"/>
+				</row>
+				<row class="row" disabled="@ts_viewtype">
+					<description value="Quantity" options=",,,ts_quantity"/>
+					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" span="all"/>
+				</row>
+				<row class="row" disabled="@no_ts_status">
+					<description value="Status"/>
+					<menulist span="all">
+						<menupopup statustext="select a status of the timesheet" id="ts_status" options="please select"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%" height="165">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" valign="top">
+					<textbox multiline="true" id="ts_description" rows="11" cols="70" class="fullWidth"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
+		<grid width="100%" height="165" overflow="auto">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th" disabled="@view">
+					<description value="Create new links" span="all"/>
+				</row>
+				<row class="row" disabled="@status_only">
+					<link-to id="link_to" span="all"/>
+				</row>
+				<row class="th">
+					<description value="Existing links" span="all"/>
+				</row>
+				<row class="row_off" valign="top">
+					<link-list id="link_to" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
+		<grid width="100%" height="165" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<customfields/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" height="165" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<historylog id="history"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
+					<description/>
+				</row>
+				<row class="th" height="28">
+					<description value="User" options=",,,ts_owner"/>
+					<menulist span="all">
+						<menupopup id="ts_owner" no_lang="1"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description value="Project" options=",,,ts_project"/>
+					<grid spacing="1" padding="1">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="@pm_integration=none">
+								<projectmanager-select statustext="Select a project" id="pm_id" onchange="1" options="None" span="all" class="fullWidth"/>
+							</row>
+							<row disabled="@pm_integration=full">
+								<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="fullWidth"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row class="row" disabled="@ts_viewtype">
+					<description value="Unitprice" options=",,ts_unitprice"/>
+					<grid>
+						<columns>
+							<column disabled="@pm_integration=none"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<projectmanager-pricelist id="pl_id" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
+								<textbox type="float" id="ts_unitprice" span="all"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<tabbox id="tabs" span="all">
+						<tabs>
+							<tab label="General" statustext=""/>
+							<tab label="Notes" statustext=""/>
+							<tab label="Links" statustext=""/>
+							<tab label="Custom Fields" statustext=""/>
+							<tab label="History" statustext=""/>
+						</tabs>
+						<tabpanels>
+							<template id="timesheet.edit.general"/>
+							<template id="timesheet.edit.notes"/>
+							<template id="timesheet.edit.links"/>
+							<template id="timesheet.edit.customfields"/>
+							<template id="timesheet.edit.history"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row disabled="!@ts_modified">
+					<description value="Last modified"/>
+					<hbox>
+						<date-time id="ts_modified" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" label="by" id="ts_modifier" readonly="true"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<hbox span="2">
+						<hbox>
+							<button statustext="Edit this entry" label="Edit" id="button[edit]"/>
+							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]"/>
+							<button statustext="Saves the changes made" label="Save" id="button[save]"/>
+							<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();"/>
+							<html id="js"/>
+						</hbox>
+						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.fullWidth select { widht: 100%; }
+.fullWidth input { widht: 100%; }
+.fullWidth textarea { widht: 100%; }
+		</styles>
+	</template>
+</overlay>

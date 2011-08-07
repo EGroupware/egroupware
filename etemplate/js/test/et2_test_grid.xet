@@ -40,5 +40,169 @@
 		</rows>
 	</grid>
 
+	<label value="Horizontal span test:" />
+	<grid>
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+
+		<rows>
+			<row>
+				<label value="1" span="2"/>
+				<label value="3" span="2"/>
+			</row>
+			<row>
+				<label value="1"/>
+				<label value="2" span="3"/>
+			</row>
+			<row>
+				<label value="1"/>
+				<label value="2"/>
+				<label value="3"/>
+				<label value="4"/>
+			</row>
+			<row>
+				<label value="1"/>
+				<label value="2" span="1"/>
+			</row>
+			<row>
+				<label value="1"/>
+				<label value="2"/>
+			</row>
+			<row>
+				<label value="1"/>
+				<label value="2" span="all"/>
+			</row>
+		</rows>
+	</grid>
+
+	<label value="Vertical span test:" />
+	<grid>
+		<columns>
+			<column>
+				<label span="3" value="1"/>
+				<label span="1" value="4"/>
+				<label span="1" value="5"/>
+			</column>
+			<column>
+				<label span="1" value="1"/>
+				<label span="2" value="2"/>
+				<label span="2" value="4"/>
+			</column>
+			<column>
+				<label span="1" value="1"/>
+				<label value="2"/>
+			</column>
+			<column>
+				<label span="1" value="1"/>
+				<label span="all" value="2"/>
+			</column>
+			<column>
+				<label span="1" value="1"/>
+				<label span="1" value="2"/>
+			</column>
+		</columns>
+
+		<rows>
+			<row/>
+			<row/>
+			<row/>
+			<row/>
+			<row/>
+		</rows>
+	</grid>
+
+	<template id="embedded_grid">
+		<label value="Grid embedded in template:"/>
+		<grid>
+			<columns>
+				<column>
+					<label value="Northwest"/>
+					<label value="Northeast"/>
+				</column>
+				<label value="Equator"/>
+				<column>
+					<label value="Southwest"/>
+					<label value="Southeast"/>
+				</column>
+			</columns>
+
+			<rows>
+				<row/>
+				<row/>
+			</rows>
+		</grid>
+	</template>
+
+	<template id="embedded_grid" />
+
+	<label value="MDN XUL Grid Tutorial Example 1:"/>
+	<grid>
+		<columns>
+			<column/>
+			<column/>
+		</columns>
+
+		<rows>
+			<row>
+				<button label="Rabbit"/>
+				<button label="Elephant"/>
+			</row>
+			<row>
+				<button label="Koala"/>
+				<button label="Gorilla"/>
+			</row>
+		</rows>
+	</grid>
+
+	<label value="MDN XUL Grid Tutorial Example 2:"/>
+	<grid>
+		<columns>
+			<column/>
+			<column/>
+		</columns>
+
+		<rows>
+			<row>
+				<label value="Document Title:"/>
+				<textbox id="doctitle"/>
+			</row>
+			<row>
+				<label value="Path:"/>
+				<hbox>
+					<textbox id="docpath"/>
+					<button label="Browse..."/>
+				</hbox>
+			</row>
+		</rows>
+	</grid>
+
+	<label value="Grid in grid"/>
+	<grid spacing="1" padding="1">
+		<columns>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<label value="There is another grid to my right:"/>
+				<grid>
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row>
+							<label value="Lonely label in a grid." />
+						</row>
+					</rows>
+				</grid>
+			</row>
+		</rows>
+	</grid>
+
+
 </overlay>
 

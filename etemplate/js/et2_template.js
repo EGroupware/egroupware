@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /*egw:uses
 	et2_widget;
 */
@@ -22,7 +24,7 @@
  * 
  * TODO: Check whether this widget behaves as it should.
  */ 
-et2_template = et2_DOMWidget.extend({
+var et2_template = et2_DOMWidget.extend({
 
 	/**
 	 * Initializes this template widget as a simple container.

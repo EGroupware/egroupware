@@ -7,8 +7,10 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @copyright Stylite 2011
- * @version $Id: et2_description.js 36016 2011-08-05 14:53:54Z igel457 $
+ * @version $Id$
  */
+
+"use strict";
 
 /*egw:uses
 	jquery.jquery;
@@ -19,12 +21,13 @@
 /**
  * Class which implements the "grid" XET-Tag
  */ 
-et2_grid = et2_DOMWidget.extend({
+var et2_grid = et2_DOMWidget.extend({
 
 	init: function(_parent) {
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
-		this.table = $j(document.createElement("table"));
+		this.table = $j(document.createElement("table"))
+			.addClass("et2_grid");
 		this.table.append(this.tbody);
 
 		// Call the parent constructor
@@ -65,7 +68,9 @@ et2_grid = et2_DOMWidget.extend({
 					"colData": _colData[x],
 					"rowData": _rowData[y],
 					"colSpan": 1,
+					"autoColSpan": false,
 					"rowSpan": 1,
+					"autoRowSpan": false,
 					"x": x,
 					"y": y
 				};
@@ -158,11 +163,22 @@ et2_grid = et2_DOMWidget.extend({
 	},
 
 	_fillCells: function(cells, columns, rows) {
+		var h = cells.length;
+		var w = (h > 0) ? cells[0].length : 0;
+
 		// Read the elements inside the columns
 		var x = 0;
+
 		et2_filteredNodeIterator(columns, function(node, nodeName) {
 
 			function _readColNode(node, nodeName) {
+				if (y >= h)
+				{
+					et2_debug("warn", "Skipped grid cell in column, '" +
+						nodeName + "'");
+					return;
+				}
+
 				var cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
@@ -173,6 +189,7 @@ et2_grid = et2_DOMWidget.extend({
 				else
 				{
 					cell.rowSpan = cell.colData["span"];
+					cell.autoRowSpan = true;
 				}
 
 				if (cell.rowSpan == "all")
@@ -212,6 +229,13 @@ et2_grid = et2_DOMWidget.extend({
 		et2_filteredNodeIterator(rows, function(node, nodeName) {
 
 			function _readRowNode(node, nodeName) {
+				if (x >= w)
+				{
+					et2_debug("warn", "Skipped grid cell in row, '" +
+						nodeName + "'");
+					return;
+				}
+
 				var cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
@@ -222,6 +246,7 @@ et2_grid = et2_DOMWidget.extend({
 				else
 				{
 					cell.colSpan = cell.rowData["span"];
+					cell.autoColSpan = true;
 				}
 
 				if (cell.colSpan == "all")
@@ -266,6 +291,49 @@ et2_grid = et2_DOMWidget.extend({
 		}, this);
 	},
 
+	_expandLastCells: function(_cells) {
+		var h = _cells.length;
+		var w = (h > 0) ? _cells[0].length : 0;
+
+		// Determine the last cell in each row and expand its span value if
+		// the span has not been explicitly set.
+		for (var y = 0; y < h; y++)
+		{
+			for (var x = w - 1; x >= 0; x--)
+			{
+				var cell = _cells[y][x];
+
+				if (cell.widget != null)
+				{
+					if (cell.autoColSpan)
+					{
+						cell.colSpan = w - x;
+					}
+					break;
+				}
+			}
+		}
+
+		// Determine the last cell in each column and expand its span value if
+		// the span has not been explicitly set.
+		for (var x = 0; x < w; x++)
+		{
+			for (var y = h - 1; y >= 0; y--)
+			{
+				var cell = _cells[y][x];
+
+				if (cell.widget != null)
+				{
+					if (cell.autoRowSpan)
+					{
+						cell.rowSpan = h - y;
+					}
+					break;
+				}
+			}
+		}
+	},
+
 	/**
 	 * As the does not fit very well into the default widget structure, we're
 	 * overwriting the loadFromXML function and doing a two-pass reading - 
@@ -273,8 +341,8 @@ et2_grid = et2_DOMWidget.extend({
 	 */
 	loadFromXML: function(_node) {
 		// Get the columns and rows tag
-		var rowsElems = _node.getElementsByTagName("rows");
-		var columnsElems = _node.getElementsByTagName("columns");
+		var rowsElems = et2_directChildrenByTagName(_node, "rows");
+		var columnsElems = et2_directChildrenByTagName(_node, "columns");
 
 		if (rowsElems.length == 1 && columnsElems.length == 1)
 		{
@@ -291,6 +359,9 @@ et2_grid = et2_DOMWidget.extend({
 
 			// Create the widgets inside the cells and read the span values
 			this._fillCells(cells, columns, rows);
+
+			// Expand the span values of the last cells
+			this._expandLastCells(cells);
 
 			// Create the table rows
 			this.createTableFromCells(cells);
@@ -337,8 +408,8 @@ et2_grid = et2_DOMWidget.extend({
 					cell.widget.onSetParent();
 
 					// Set the span values of the cell
-					var cs = Math.min(w - x, cell.colSpan);
-					var rs = Math.min(h - y, cell.rowSpan);
+					var cs = (x == w - 1) ? w - x : Math.min(w - x, cell.colSpan);
+					var rs = (y == h - 1) ? h - y : Math.min(h - y, cell.rowSpan);
 
 					// Set the col and row span values
 					if (cs > 1) {
@@ -365,6 +436,45 @@ et2_grid = et2_DOMWidget.extend({
 					x++;
 				}
 			}
+		}
+	},
+
+	/**
+	 * The grid needs its own assign function in order to fill the grid
+	 * accordingly.
+	 */
+	assign: function(_obj) {
+		if (_obj instanceof et2_grid)
+		{
+			// Copy the cells array of the other grid and clone the widgets
+			// inside of it
+			var cells = new Array(_obj.cells.length);
+
+			for (var y = 0; y < _obj.cells.length; y++)
+			{
+				cells[y] = new Array(_obj.cells[y].length);
+
+				for (var x = 0; x < _obj.cells[y].length; x++)
+				{
+					var srcCell = _obj.cells[y][x];
+					cells[y][x] = {
+						"widget": (srcCell.widget ?
+							srcCell.widget.clone(this, srcCell.widget.type) :
+							null),
+						"td": null,
+						"colSpan": srcCell.colSpan,
+						"rowSpan": srcCell.rowSpan
+					}
+				}
+			}
+
+			// Create the table
+			this.createTableFromCells(cells);
+
+		}
+		else
+		{
+			throw("Invalid assign to grid!");
 		}
 	},
 

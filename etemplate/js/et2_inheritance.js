@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /**
  * Usage of the JS inheritance system
  * ----------------------------------
@@ -23,11 +25,11 @@
  *
  * An interface has to be created in the following way:
  *
- * IBreathingObject = new Interface({
+ * var IBreathingObject = new Interface({
  * 		breath: function() {}
  * });
  * 
- * Human = Class.extend(IBreathingObject, {
+ * var Human = Class.extend(IBreathingObject, {
  * 		walk: function() {
  * 			console.log("Walking");
  * 		},
@@ -44,7 +46,7 @@
  * 
  * will return true. Lets create a specific class of "Human":
  *
- * ChuckNorris = Human.extend({
+ * var ChuckNorris = Human.extend({
  * 		breath: function() {
  * 			console.log("Chuck Norris does not breath, he holds air hostage.");
  * 		},
@@ -142,13 +144,7 @@
 		}
 	};
 
-	// The base Class implementation (does nothing)
-	this.Class = function(){};
-
-	// Create a new Class that inherits from this class. The first parameter
-	// is an array which defines a set of interfaces the object has to
-	// implement. An interface is simply an object with named functions.
-	Class.extend = function(interfaces, prop) {
+	function classExtend(interfaces, prop) {
 
 		if (typeof prop == "undefined")
 		{
@@ -235,9 +231,17 @@
 		Class.prototype.constructor = Class;
 
 		// And make this class extendable
-		Class.extend = arguments.callee;
+		Class.extend = classExtend;
 
 		return Class;
 	};
-})();
+
+	// The base Class implementation (does nothing)
+	this.Class = function(){};
+
+	// Create a new Class that inherits from this class. The first parameter
+	// is an array which defines a set of interfaces the object has to
+	// implement. An interface is simply an object with named functions.
+	Class.extend = classExtend;
+}).call(window);
 

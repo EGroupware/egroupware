@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Description object
+ * eGroupWare eTemplate2 - JS Button object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,33 +18,32 @@
 */
 
 /**
- * Class which implements the "description" XET-Tag
+ * Class which implements the "button" XET-Tag
  */ 
-var et2_description = et2_DOMWidget.extend({
+var et2_button = et2_DOMWidget.extend({
 
 	init: function(_parent) {
-		this.span = $j(document.createElement("span"))
-			.addClass("et2_label");
+		this.btn = $j(document.createElement("button"))
+			.addClass("et2_button");
 
 		this._super.apply(this, arguments);
-		this.value = "";
+		this.label = "";
 	},
 
-	set_value: function(_value) {
+	set_label: function(_value) {
 		if (_value != this.value)
 		{
-			this.value = _value;
+			this.label = _value;
 
-			this.span.text(_value);
+			this.btn.text(_value);
 		}
 	},
 
 	getDOMNode: function() {
-		return this.span[0];
+		return this.btn[0];
 	}
 
 });
 
-et2_register_widget(et2_description, ["description", "label"]);
-
+et2_register_widget(et2_button, ["button"]);
 

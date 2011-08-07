@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /**
  * Loads the given URL asynchronously from the server. When the file is loaded,
  * the given callback function is called, where "this" is set to the given
@@ -80,6 +82,23 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 	{
 		throw("XML Request object could not be created!");
 	}
+}
+
+function et2_directChildrenByTagName(_node, _tagName)
+{
+	// Normalize the tag name
+	_tagName = _tagName.toLowerCase();
+
+	var result = [];
+	for (var i = 0; i < _node.childNodes.length; i++)
+	{
+		if (_tagName == _node.childNodes[i].nodeName.toLowerCase())
+		{
+			result.push(_node.childNodes[i]);
+		}
+	}
+
+	return result;
 }
 
 function et2_filteredNodeIterator(_node, _callback, _context)
