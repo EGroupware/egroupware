@@ -717,19 +717,13 @@ class emailadmin_bo extends so_sql
 
 			foreach($ogServer->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']) as $emailAddresses)
 			{
-				// as we map the identities to ids, and use the first one to idetify the identity of the mainProfile
-				// we should take care that our mapping index does not interfere with the profileID
-				if ($i==$data['profileID']) $i++;
 				$identity = CreateObject('emailadmin.ea_identity');
 				$identity->emailAddress	= $emailAddresses['address'];
 				$identity->realName	= $emailAddresses['name'];
 				$identity->default	= ($emailAddresses['type'] == 'default');
 				$identity->organization	= $data['organisationName'];
-				$identity->id = ($i==0?$data['profileID']*-1:$i*-1);
-				// first identity found will be associated with the profileID, 
-				// others will be set to a negative value, to indicate that they belong to the account
-				$eaPreferences->setIdentity($identity,($i==0?$data['profileID']*-1:$i*-1));
-				$i++;
+
+				$eaPreferences->setIdentity($identity);
 			}
 
 			$eaPreferences->userDefinedAccounts		= ($data['userDefinedAccounts'] == 'yes');
