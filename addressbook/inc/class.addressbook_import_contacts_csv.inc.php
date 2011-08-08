@@ -135,9 +135,15 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 		$_lookups = array();
 
-		// set eventOwner
-		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ?
+		// set contact owner
+		
+		$contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
+		// Import into importer's personal addressbook
+		if($contact_owner == 'personal') 
+		{
+			$contact_owner = $this->user;
+		}
 
 		// Start counting successes
 		$count = 0;
@@ -163,15 +169,15 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.',
 							$record['owner'],
-							common::grab_owner_name($_definition->plugin_options['contact_owner'])
+							common::grab_owner_name($contact_owner)
 						);
-						$record['owner'] = $_definition->plugin_options['contact_owner'];
+						$record['owner'] = $contact_owner;
 					} else {
 						$record['owner'] = $new_owner;
 					}
 				}
 			} else {
-				$record['owner'] = $_definition->plugin_options['contact_owner'];
+				$record['owner'] = $contact_owner;
 			}
 
 			// Automatically handle text categories without explicit translation

@@ -112,7 +112,7 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			}
 
 			$bocontacts = new addressbook_bo();
-			$sel_options['contact_owner'] = $bocontacts->get_addressbooks(EGW_ACL_ADD);
+			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(EGW_ACL_ADD);
 			if(!in_array('owner', $content['field_mapping'])) {
 				$content['no_owner_map'] = true;
 			}
