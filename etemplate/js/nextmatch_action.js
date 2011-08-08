@@ -190,7 +190,7 @@ function nm_action(_action, _senders)
 			
 		case 'open_popup':
 			// open div styled as popup contained in current form and named action.id+'_popup'
-			if (typeof nm_popup_action == 'undefined')
+			if (nm_popup_action == null)
 			{
 				nm_open_popup(_action, _senders);
 				break;
@@ -291,7 +291,7 @@ function nm_compare_field(_action, _senders, _target)
 	return value == _action.data.fieldValue;
 }
 
-var nm_popup_action, nm_popup_senders;
+var nm_popup_action, nm_popup_senders = null;
 
 /**
  * Open popup for a certain action requiring further input
@@ -335,8 +335,8 @@ function nm_hide_popup(element, div_id)
 	if(popup) {
 		popup.style.display = 'none';
 	}
-	delete nm_popup_action;
-	delete nm_popup_senders;
+	nm_popup_action = null;
+	nm_popup_senders = null;
 
 	return false;
 }
