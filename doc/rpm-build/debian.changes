@@ -1,3 +1,10 @@
+egroupware-epl (10.1.20110808-1) hardy; urgency=low
+
+  * CalDAV/CardDAV fixed empty REPORT causing clients display no events/contacts anymore (PROPFIND was not affected)
+  * EMail(Admin) changing back from a user-defined account to default account is working again
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 08 Aug 2011 16:48:29 +0200
+
 egroupware-epl (10.1.20110805-1) hardy; urgency=low
 
   * API fix webserver_url of just a domain eg. http://domain.com gives PHP Warning empty delimiter ...
