@@ -161,8 +161,8 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups);
 
 			// Set owner, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv']) {
-				if($record['owner'] && !is_numeric($record['owner'])) {
+			if($_definition->plugin_options['owner_from_csv'] && $record['owner']) {
+				if(!is_numeric($record['owner'])) {
 					// Automatically handle text owner without explicit translation
 					$new_owner = importexport_helper_functions::account_name2id($record['owner']);
 					if($new_owner == '') {
