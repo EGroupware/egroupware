@@ -536,6 +536,7 @@ class groupdav_propfind_iterator implements Iterator
 
 		$this->start = 0;
 		$this->files = $this->common_files;
+		if (!$this->files) $this->next();	// otherwise valid will return false and nothing get returned
 		reset($this->files);
 	}
 
