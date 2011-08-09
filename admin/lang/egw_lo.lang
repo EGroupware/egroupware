@@ -1,0 +1,572 @@
+%1 - %2 of %3 user accounts	admin	lo	%1 - %2 ຂອງ %3 ບັນຊີຜູ້ໃຊ້
+%1 - %2 of %3 user groups	admin	lo	%1 - %2 ຂອງ %3 ກຸ່ມຜູ້ໃຊ້
+%1 acl records of not (longer) existing accounts deleted.	admin	lo	%1 ACL ຈະບໍ່ບັນທຶກບັນຊີທີລຶບ
+%1 class not instanciated	admin	lo	%1 class not instanciated
+%1 group %2	admin	lo	%1 ກຸ່ມ %2
+%1 is no command!	admin	lo	%1 ບໍ່ມີຄໍາສັ່ງ!
+%1 log entries deleted.	admin	lo	%1 ລ໋ອກຟາຍທີ່່ບັນທຶກໄດ້ຖືກລຶບອອກ
+%1 not found or not executable !!!	admin	lo	%1 ບໍ່ພົບ ຫຼື ບໍ່ປະຕິບັດ !!!
+%1 rights for %2 and applications %3	admin	lo	%1 ສິດທິແລະການໃຊ້ງານ%2
+%1 user %2	admin	lo	%1 ຜູ້ໃຊ້ %2
+(default no, leave it off if you dont use it)	admin	lo	(ຄ່າເລີ່ມຕົ້ນ "ບໍ່", ປ່ອຍມັນໄວ້ ຖ້າເຈົ້າບໍ່ໃຊ້)
+(stored password will not be shown here)	admin	lo	(ລະຫັດຜ່ານທີ່ເກັບໄວ້ຈະບໍ່ໄດ້ສະແດງຢູ່ນີ້)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lo	(ຕິດຕັ້ງໂປຼແກຼມໃໝ່ ນໍາໃຊ້ href="setup/" <br> <a target="setup"> ການຕັ້ງຄ່າ </ a> [ຈັດການການໃຊ້ງານ]!)
+-  type	admin	lo	ຊະນິດ
+accesslog and bruteforce defense	admin	lo	ບັນທຶກການເຂົ້າລະບົບແລະການປ້ອງກັນ
+account %1 %2	admin	lo	ບັນຊີ %1 %2
+account '%1' deleted.	admin	lo	ບັນຊີ '%1' ຖືກລຶບ
+account active	admin	lo	ບັນຊີທີ່ໃຊ້ງານຢູ່
+account has been created	common	lo	ບັນຊີໄດ້ຖືກສ້າງຂື້ນແລ້ວ
+account has been deleted	common	lo	ບັນຊີໄດ້ຖືກລຶບແລ້ວ
+account has been updated	common	lo	ບັນຊີໄດ້ຮັບການປັບປຸງແລ້ວ
+account list	admin	lo	ລາຍການບັນຊີ
+account permissions	admin	lo	ສິດທິບັນຊີຜູ້ໃຊ້
+account preferences	admin	lo	ການຕັ້ງຄ່າບັນຊີ
+account-id's have to be integers!	admin	lo	ລະຫັດຂອງບັນຊີຈະຕ້ອງເປັນຕົວເລກຈໍານວນຖ້ວນ!
+acl manager	admin	lo	ຜູ້ຈັດການ ACL
+acl rights	common	lo	ສິດທິ ACL
+action	admin	lo	ປະຕິບັດ
+actions	admin	lo	ການດໍາເນີນງານ
+activate wysiwyg-editor	admin	lo	ເປີດໃຊ້ງານ WYSIWYG-ຕົວແກ້ໄຂ
+add a category	admin	lo	ເພີ່ມໝວດໝູ່
+add a group	admin	lo	ເພີ່ມກຸ່ມ
+add a new account.	admin	lo	ເພີ່ມບັນຊີໃໝ່
+add a new remote instance	admin	lo	ເພີ່ມການຮ້ອງຂໍການຄວບຄຸມໄລຍະໄກໃໝ່
+add a subcategory	admin	lo	ເພີ່ມໝວດຍ່ອຍ
+add a user	admin	lo	ເພີ່ມຜູ້ໃຊ້
+add account	admin	lo	ເພີ່ມບັນຊີ
+add application	admin	lo	ເພີ່ມ ແອບພຼິແຄຊັ້ນ
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	lo	ເພີ່ມຜູ້ໃຊເຂົ້າໃນກຸ່ມນີ້ອັດຕະໂນມັດ ('ຄ່າເລີ່ມຕົ້ນ'ຈະຖືກກໍານົດເປັນຄ່າວ່າງເປົ່າ)
+add global category	admin	lo	ເພີ່ມໝວດທົ່ວໄປ
+add global category for %1	admin	lo	ເພີ່ມໝວດທົ່ວໄປ%1
+add group	admin	lo	ເພີ່ມກຸ່ມ
+add new account	admin	lo	ເພີ່ມບັນຊີໃໝ່
+add new application	admin	lo	ເພີ່ມ ແອບພຼິເຄຊັນ ໃໝ່
+add peer server	admin	lo	ເພີ່ມ ເພຍ ເຊີບເວີ້
+add sub-category	admin	lo	ເພີ່ມໝວດຍ່ອຍ
+admin email	admin	lo	Email ຜູ້ເບິ່່ງແຍງລະບົບ
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lo	ທີ່ຢູ່ email ຜູ້ເບິ່ງແຍງລະບົບ(ຂັ້ນດ້ວຍຈຸດ)ເພື່ອແຈ້ງເຕືອນໃຫ້ຮູ້ blocking(ຄ່າວ່າງເປົ່າແມ່ນບໍ່ໄດ້ແຈ້ງເຕືອນ)
+admin name	admin	lo	ຊື່ຜູ້ເບິ່ງແຍງລະບົບ
+admin queue and history	admin	lo	ລໍາດັບຄິວຜູ້ຄຸ້ມຄອງລະບົບ ແລະ ປະຫວັດຜ່ານມາ
+administration	admin	lo	ການບໍລິຫານ
+admins	admin	lo	ຜູ້ເບິ່ງແຍງລະບົບ
+advanced options	admin	lo	ການຕັ້ງຄ່າແບບພິເສດ
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ບັນຊີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ໄອພີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
+aliases	admin	lo	ຊື່ແທນ
+all records and account information will be lost!	admin	lo	ຂໍ້ມູນທີ່ບັນທຶກ ແລະ ບັນຊີທັງໝົດຈະສູນຫາຍ!
+all users	admin	lo	ຜູ້ໃຊ້ທັງໝົດ
+allow anonymous access to this app	admin	lo	ອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ງານທີ່ບໍ່ໄດ້ລະບຸຊື່ app
+allow remote administration from following install id's (comma separated)	admin	lo	ອະນຸຍາດໃຫ້ຢູ່ບ່ອນອື່ນຕິດຕັ້ງID(ຂັ້ນດ້ວຍຈຸດ)
+alternate email address	admin	lo	ທີ່ຢູ່ email ອື່ນ
+anonymous user	admin	lo	ຜູ້ບໍ່ປະສົງອອກນາມ
+anonymous user (not shown in list sessions)	admin	lo	ຜູ້ບໍ່ປະສົງອອກນາມ (ບໍ່ສະແດງໃນລາຍການ)
+anonymous user does not exist!	admin	lo	ບໍ່ມີ ຜູ້ບໍ່ປະສົງອອກນາມ !
+anonymous user has no run-rights for the application!	admin	lo	ຜູ້ບໍ່ປະສົງອອກນາມບໍ່ມີສິດທິນໍາໃຊ້ ແອັບພຼິເຄຊັນ!
+appearance	admin	lo	ຮູບຮ່າງ
+application	admin	lo	ແອັບພຼິເຄຊັນ
+application '%1' not found (maybe not installed or misspelled)!	admin	lo	ແອັບພຼິເຄຊັນ'%1'ບໍ່ພົບ(ອາດຈະບໍ່ໄດ້ຕິດຕັ້ງຫຼືຕົກເຮ່ຍໄປ)
+application name	admin	lo	ຊື່ ແອັບພຼິເຄຊັນ
+application title	admin	lo	ຫົວຂໍ້ ແອັບພຼິເຄຊັນ
+applications	admin	lo	ແອັບພຼິເຄຊັນ
+applications list	admin	lo	ລາຍການແອັບພຼິເຄຊັນ
+applications run rights updated.	admin	lo	ອະນຸຍາດປັບປຸງແອັບພຼິເຄຊັນ
+applies the changes	admin	lo	ໃຊ້ການປ່ຽນແປງ
+apply the changes	admin	lo	ໃຊ້ການປ່ຽນແປງ
+archive: zip or tar	admin	lo	ບີບອັດເປັນ: zip ຫຼື tar
+are you sure you want to delete the application %1 ?	admin	lo	ທ່ານຕ້ອງການລຶບແອັບພຼິເຄຊັນ %1ນີ້ບໍ?
+are you sure you want to delete this account ?	admin	lo	ທ່ານຕ້ອງການລຶບບັນຊີນີ້ບໍ?
+are you sure you want to delete this application ?	admin	lo	ທ່ານຕ້ອງການລຶບ ແອັບພຼິເຄຊັນ ນີ້ບໍ?
+are you sure you want to delete this category ?	common	lo	ທ່ານຕ້ອງການລຶບໝວດໝູ່ນີ້ບໍ?
+are you sure you want to delete this global category ?	admin	lo	ທ່ານຕ້ອງການລຶບໝວດທົ່ວນີ້ບໍ?
+are you sure you want to delete this group ?	admin	lo	ທ່ານຕ້ອງການລຶບກຸ່ມນີ້ບໍ?
+are you sure you want to delete this server?	admin	lo	ທ່ານຕ້ອງການລຶບ ເຊີບເວີ້ ນີ້ບໍ?
+are you sure you want to kill this session ?	admin	lo	ທ່ານຕ້ອງການທໍາລາຍ ເຊັ້ສຊັ້ນ ນີ້ບໍ?
+async services last executed	admin	lo	ຈັດການ Async ຫຼ້າສຸດ
+asynchronous timed services	admin	lo	ການສີ້ນສຸດຂອງເວລາບໍ່ກົງກັນ
+asyncservices not yet installed or other error (%1) !!!	admin	lo	asyncservices ຍັງບໍ່ໄດ້ຕິດຕັ້ງຫຼືມີຂໍ້ຜິດພາດອື່ນໆ!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lo	ພະຍາຍາມທີຈະໃຊ້ mimetype ທີ່ຖືກຕ້ອງສໍາລັບ FTP ແທນທີ່ຈະໃຊ້ຄ່າເລີ່ມຕົນ 'application/octet-stream'
+attribute accountstatus explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-accuntStatus-</i></b>ຈາກ QMAIL schema
+attribute mail explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mail-</i></b>ຈາກ QMAIL schema
+attribute mailalternateaddress explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mailAlternateAddress-</i></b>ຈາກ QMAIL schema
+attribute mailforwardingaddress explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mailForwardingAddress-</i></b>ຈາກ QMAIL schema
+authentication / accounts	admin	lo	ການຮັບຮອງ/ບັນຊີ
+auto create account records for authenticated users	admin	lo	ສ້າງຕົວບັນທຶກອັດຕະໂນມັດຂອງບັນຊີຜູ້ໃຊ້ເພື່ອຍືນຍັນສິດນໍາໃຊ້
+back to the list	admin	lo	ກັບຄືນຫາລາຍການ
+bi-dir passthrough	admin	lo	bi-dir ຜ່ານຕະຫຼອດ
+bi-directional	admin	lo	ສອງທິດທາງ
+bottom	admin	lo	ຜ່ານສ່ວນລຸ່ມ
+calculate next run	admin	lo	ຄິດໄລໂຕຕໍ່ໄປ
+can change password	admin	lo	ສາມາດປ່ຽນລະຫັດຜ່ານ
+cancel testjob!	admin	lo	ຍົກເລີກ TestJob!
+cancel this scheduled command	admin	lo	ຍົກເລີກຄໍາສັ່ງທີ່ກໍານົດ
+categories list	admin	lo	ລາຍການໝວດໝູ່
+category %1 has been saved !	admin	lo	ໝວດໝູ່ %1ໄດ້ຮັບການບັນທຶກແລ້ວ!
+category deleted.	admin	lo	ໝວດໝູ່ຖືກລຶບແລ້ວ
+category list	admin	lo	ລາຍການໝວດໝູ່
+category saved.	admin	lo	ໝວດໝູ່ໄດ້ຖືກບັນທຶກແລ້ວ
+change account_id	admin	lo	ປ່ຽນ ລະຫັດບັນຊີຜູ້ໃຊ້
+change acl rights	admin	lo	ປຽ່ນ ACL
+change config settings	admin	lo	ປ່ຽນແປງການຕັ້ງຄ່າ ຄັອນຟິກ
+change main screen message	admin	lo	ປ່ຽນແປງຂໍ້ຄວາມທີ່ສະແດງໃນໜ້າຫຼັກ
+change password for %1	admin	lo	ປ່ຽນລະຫັດຜ່ານສໍາຫຼັບ%1
+check acl for entries of not (longer) existing accounts	admin	lo	ກວດສອບACLສໍາສັບລາຍການ(ຍາວ)ບັນຊີທີ່ມີບໍ່
+check ip address of all sessions	admin	lo	ກວດສອບທີ່ຢູ່ IP ຂອງທຸກ session
+check items to <b>%1</b> to %2 for %3	admin	lo	ກວດສອບລາຍການທີ່ <b>%1</b> ຫາ %2 ສໍາລັບ %3
+click to select a color	admin	lo	ກົດເພື່ອເລືອກສີ
+color	admin	lo	ສີ
+command scheduled to run at %1	admin	lo	ຄໍາສັ້ງຕັ້ງເວລາໃຫ້ເຮັດວຽກທີ່ %1
+commercial: all sorts of companies	admin	lo	ທາງການຄ້າ: ທຸກບໍລິສັດ
+config password or md5 hash from the header.inc.php	admin	lo	Config ລະຫັດຜ່ານ ຫຼື md5 hash ຈາກ header.inc.php
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	lo	Cookie domain (ວ່າງເປົ່າແມ່ນໃຊ້ຊື່ເຕັມຂອງ domain,ສໍາລັບ SiteMgr."domain.com" ອະນຸຍາດໃຫ້ການໃຊ້ Cookie ທີ່ຄືກັນສໍາລັບ egw.domian.com ແລະ www.domain.com)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	lo	Cookie path (ອະນຸຍາດໃຫ້ຫຼາຍ egw session ທີ່ແຕກຕ່າງກັນແຕ່ລະປັນຫາກັບSiteMgr!)
+could not remote execute the command	admin	lo	ບໍ່ສາມາດເຂົ້າໄປໃຊ້ຄໍາສັ້ງໄດ້
+country	admin	lo	ປະເທດ
+country selection	admin	lo	ເລືອກປະເທດ
+create group	admin	lo	ສ້າງກຸ່ມ
+created	admin	lo	ຖືກສ້າງແລ້ວ
+created with id #%1	admin	lo	ສ້າງຂື້ນດ້ວຍ#%1
+creates a new field	admin	lo	ສ້າງfieldໄໝ
+crontab only (recomended)	admin	lo	ສະເພາະ crontab (ແນະນໍາ)
+custom fields	admin	lo	ກໍານົດ fields
+cyrus imap server	admin	lo	Cyrus IMAP Server
+data	admin	lo	ຂໍ້ມູນ
+day	admin	lo	ມື້
+day of week<br>(0-6, 0=sun)	admin	lo	ມື້້ນັ້ນຂອງອາທິດ<br>(0-6, 0=Sun)
+db backup and restore	admin	lo	DB backup and restore
+default	admin	lo	ຄ່າເລີ່ມຕົ້ນ
+default file system space per user	admin	lo	ຄ່າເລີ່ມຕົ້ນຂອງພື້ນທີ່ສໍາລັບ 1 ຜູ້ໃຊ້
+default file system space per user/group ?	admin	lo	ຄ່າເລີ່ມຕົ້ນຂອງພື້ນທີ່ສໍາລັບ 1 ຜູ້ໃຊ້/ກຸ່ມ
+deinstall crontab	admin	lo	Deinstall crontab
+delete account	admin	lo	ລຶບບັນຊີ
+delete account %1	admin	lo	ລຶບບັນຊີ%1
+delete all records	admin	lo	ລຶບບັນທຶກທັງໝົດ
+delete application	admin	lo	ລຶບແອັບພຼິເຄຊັນ
+delete category	admin	lo	ລຶບໝວດໝູ່
+delete group	admin	lo	ລຶບກຸ່ມ
+delete peer server	admin	lo	ລຶບ peer ເຊີບເວີ້
+delete selected entries	admin	lo	ລຶບລາຍການທີ່ເລຶອກ
+delete the category	admin	lo	ລຶບໝວດໝູ່ນີ້
+delete the group	admin	lo	ລຶບກຸ່ມນີ້
+delete the selected entries	admin	lo	ລຶບລາຍການທີ່ເລຶອກ
+delete this category	admin	lo	ລຶບໝວດໝູ່ນີ້
+delete this group	admin	lo	ລຶບກຸ່ມນີ້
+delete this log entry	admin	lo	ລຶບລາຍການບັນທຶກນີ້
+delete this user	admin	lo	ລຶບຜູ້ໃຊ້ນີ້
+deletes this field	admin	lo	ລຶບ field ນີ້
+deliver extern	admin	lo	ສົ່ງ extern
+deny access to access log	admin	lo	ບໍ່ອະນຸຍາດເຂົ້າເຖິງຂໍ້ມູນທີ່ບັນທຶກ(log)
+deny access to application registery	admin	lo	ບໍ່ອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ຕົວຈົດທະບຽນ
+deny access to applications	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ແອັບພຼິເຄຊັນ
+deny access to asynchronous timed services	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ຕົວກໍານົດເວລາທີ່ບໍ່ກົງກັນ
+deny access to current sessions	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງ sessions ປັດຈຸບັນ
+deny access to db backup and restore	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ການແບັກອັບ ແລະ ກູ້ຄືນຖານຂໍ້ມູນ
+deny access to error log	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າຫາຂໍ້ມູນບັນທຶກທີ່ຜິດພາດ
+deny access to global categories	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງໝວດທົ່ວໄປ
+deny access to groups	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງກຸ່ມ
+deny access to mainscreen message	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງຂໍ້ຄວາມທີ່ສະແດງໃນໜ້າຫຼັກ
+deny access to peer servers	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງ peer ເຊີບເວີ້
+deny access to phpinfo	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງ phpinfo
+deny access to site configuration	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງດ້ານການຕັ້ງຄ່າ
+deny access to user accounts	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂົ້າເຖິງບັນຊີຜູ້ໃຊ້
+description can not exceed 255 characters in length !	admin	lo	ລາຍລະອຽດບໍ່ໃຫ້ກາຍ 255 ຕົວອັກສອນ!
+determines the order the fields are displayed	admin	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
+disable "auto completion" of the login form	admin	lo	ປິດການໃຊ້ງານ"auto completion" ຂອງແບບຟອມການເຂົ້າລະລຶບ
+disable wysiwyg-editor	admin	lo	ປິດການໃຊ້ WYSIWYG-ຕົວແກ້ໄຂ
+disabled (not recomended)	admin	lo	ປິດການໃຊ້(ບໍ່ຂໍແນະນໍາ)
+display	admin	lo	ສະແດງ
+do not delete the category and return back to the list	admin	lo	ຫ້າມລຶບໝວດໝູ່ ແລະ ໃຫ້ກັບມາທີ່ໜ້າລາຍການ
+do you also want to delete all global subcategories ?	admin	lo	ທ່ານຍັງຕ້ອງການລຶບໝວດທົວໄປທັງໝົດບໍ່?
+do you want to delete all global subcategories ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະລຶບໝວດຍ່ອຍທົ່ວໄປທັງໝົດບໍ່?
+do you want to move all global subcategories one level down ?	admin	lo	ທ່ານຕ້ອງການຍ້າຍໝວດຍ່ອຍທົ່ວໄປ ທັງໝົດລົງໜຶ່ງລະດັບບໍ່?
+document root (default)	admin	lo	ເອກະສານຕົ້ນສະບັບ(ຄ່າເລີ່ມຕົ້ນ)
+each value is a line like <id>[=<label>]	admin	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]
+each value is a line like id[=label]	admin	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ id[=label]
+edit account	admin	lo	ແກ້ໄຂບັນຊີ
+edit application	admin	lo	ແກ້ໄຂ ແອັບພຼິເຄຊັນ
+edit email settings	admin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
+edit global category	admin	lo	ແກ້ໄຂໝວດທົ່ວໄປ
+edit global category for %1	admin	lo	ແກ້ໄຂໝວດທົ່ວໄປລໍາລັບ %1
+edit group	admin	lo	ແກ້ໄຂກຸ່ມ
+edit group acl's	admin	lo	ແກ້ໄຂກຸ່ມຂອງ ACL
+edit login screen message	admin	lo	ແກ້ໄຂຂໍ້ຄວາມເຂົ້າລະບົບ
+edit main screen message	admin	lo	ແກ້ໄຂຂໍ້ຄວາມທີ່ສະແດງໃນໜ້າຫຼັກ
+edit peer server	admin	lo	ແກ້ໄຂ peer ເຊີບເວີ້
+edit table format	admin	lo	ແກ້ໄຂຮູບແບບຕາຕະລາງ
+edit this category	admin	lo	ແກ້ໄຂໝວດໝູ່ນີ້
+edit this group	admin	lo	ແກ້ໄຂກຸ່ມນີ້
+edit this user	admin	lo	ແກ້ໄຂຜູ້ໃຊ້ນີ້
+edit user	admin	lo	ແກ້ໄຂຜູ້ໃຊ້
+edit user account	admin	lo	ແກ້ໄຂບັນຊີຜູ້ໃຊ້
+educational: universities, schools, ...	admin	lo	ການສຶກສາ: ມະຫາວິທະຍາໄລ, ໂຮງຮຽນ, ...
+egroupware directory	admin	lo	eGroupWare directory
+egroupware version	admin	lo	Egroupware Version
+either install id and config password needed or the remote hash!	admin	lo	ບໍ່ວ່າຈະຢູ່ໃນຫຼືເຂົ້າມາຈາກຂ້າງນອກ(ລີໂມດ)ຕ້ອງມີລະຫັດປະຈໍາຕົວແລະລະຫັດຜ່ານ
+email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
+email address	admin	lo	ທີ່ຢູ່ email
+enable debug-messages	admin	lo	ເປິດການໃຊ້ debug-messages
+enable the soap service	admin	lo	ເປິດການໃຊ້ບໍລິການ soap
+enable the spellcheck in the ritch text editor ?	admin	lo	ເປິດການໃຊ້ການກວດແກ້ຄໍໍາສັບ?
+enable the xmlrpc service	admin	lo	ເປິດການໃຊ້ບໍລິການ xmlrpc
+enabled - hidden from navbar	admin	lo	ໄດ້ເປິດໃຊ້ Hidden ຈາກ navbar
+enabled - popup window	admin	lo	ໄດ້ເປິດໃຊ້ Popup Window
+enter a description for the category	admin	lo	ພິມຄໍາອະທິບາຍສໍາລັບໝວດໝູ່
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	lo	ພິມຄໍາສັບແບບສຸ່ມສໍາລັບ app-session <br> encryption (requires mcrypt)
+enter the background color for the login page	admin	lo	ພິມສີພື້ນສໍາລັບໜ້າເຂົ້າສູ່ລະບົບ
+enter the background color for the site title	admin	lo	ພິມສີພື້ນສໍາລັບ ຫົວຂໍ້ຂອງເວບ
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lo	ພິມພາດເກັບຟາຍຊົ່ວຄາວສໍາລັບ. <br> ຕົວຢ່າງ: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	lo	ຕື່ມພາດເກັບຟາຍສໍາລັບຜູ້ໃຊ້ ແລະ ກຸ່ມ. <br> ຕົວຢ່າງ: /files, E:\FILE
+enter the hostname of the machine on which this server is running	admin	lo	ພິມ ຊື່ໂຮສ ຂອງເຄື່ອງ ເຊີບເວີ້ ທີ່ກໍາລັງໃຊ້ຢູ່
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ພິມບ່ອນທີ່ຈັດເກັບຂອງ eGroupWare's URL.<br> ຕົວຢ່າງ: http://www.domain.com/egroupware   ຫຼື   /egroupware<br><b>No trailing slash</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	lo	ພິມຂໍ້ຄວາມຄົ້ນຫາ. ເພື່ອສະແດງທຸ່ກລາຍການທີ່ມີ,ພື້ນທີ່ນີ້ເປົ່າວ່າງໃຫ້ກົດປຸ່ມນໍາສະເໜີອີກຄັ້ງ
+enter the site password for peer servers	admin	lo	ພິມລະຫັດຜ່ານສໍາລັບ peer servers
+enter the site username for peer servers	admin	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
+enter the title for your site	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ເວບໄຊ້ ຂອງທ່ານ
+enter the title of your logo	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ໂລໂກ້ ຂອງທ່ານ
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	lo	ພິມ URL ຫຼື filename (ທີ່ phpgwapi/templates/default/images) ສໍາລັບ ໂລໂກ້ ທ່ານ
+enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	lo	ພິມ URL ຫຼື ຊື່່ຟາຍ (ທີ່ templates image directory ຂອງທ່ານ) ສໍາລັບ ໄອຄອນທີ່່ທ່ານມັກ (ເຊິ່ງຈະສະແດງໄອຄັອນນ້ອຍໆ ຢູ່ໃນ ແທັບສ ຂອງບຣາວເຊີ)
+enter the url where your logo should link to	admin	lo	ພິມ URL ທີ່ ໂລໂກ້ ຂອງທ່ານຈະເຊື່ອມຕໍ່ຫາ
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	lo	ພິມ VFS-Path ບ່ອນທີ່ສາມາດຈັດເກັບ ບັນດາ ຮູບພາບ, ໄອຄອນ ຫຼື ໂລໂກ້ ( ແລະ ຊອກຫາໄດ້ດ້ວຍ ແອັບພຼິເຄຊັນຂອງ EGroupwares ). ພາດເກັບຟາຍ ຕ້ອງສາມາດຂຽນແລະອ່ານໄດ້ດ້ວຍທຸ່ກຜູ້ໃຊ້.
+enter your default ftp server	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ FTP ເຊີບເວີ້ ຂອງທ່ານ
+enter your default mail domain ( from: user@domain )	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ mail domain ຂອງທ່ານ(ຈາກ: user@domain)
+enter your http proxy server	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ຂອງທ່ານ
+enter your http proxy server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ ພອດ ຂອງທ່ານ
+enter your smtp server hostname or ip address	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ຊື່ໂຮສ ຫຼື ທີ່ຢູ່ IP ຂອງທ່ານ
+enter your smtp server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ພອດ ຂອງທ່ານ
+error canceling timer, maybe there's none set !!!	admin	lo	ການຕັ້ງເວລາຍົກເລີກພົບຂໍ້ຜິດພາດ, ອາດຈະຍັງບໍ່ມີການຕັ້ງຄ້າ !!!
+error changing the password for % !!!	admin	lo	ການປ່ຽນລະຫັດຜ່ານພົບຂໍ້ຜິດພາດ ສໍາລັບ % !!!
+error changing the password for %1 !!!	admin	lo	ການປ່ຽນລະຫັດຜ່ານພົບຂໍ້ຜິດພາດ ສໍາລັບ %1 !!!
+error deleting log entry!	admin	lo	ການລຶບລາຍການບັນທຶກຂໍ້ຜິດພາດ!
+error saving	admin	lo	ການບັນທຶກຂໍ້ຜິດພາດ
+error saving account!	admin	lo	ການບັນທຶກບັນຊີພົບຂໍ້ຜິດພາດ!
+error saving the command!	admin	lo	ການບັນທຶກຄໍາສັ່ງພົບຂໍ້ຜິດພາດ!
+error saving to db:	admin	lo	ການບັນທຶກເຂົ້າຖານຂໍ້ມູນພົບຂໍ້ຜິດພາດ:
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	lo	ການຕັ້ງຄ່າເວລາພົບຂໍ້ຜິດພາດ, ອາດຈະຜິດທີ່ໄວຍະກອນ ຫຼື ອາດຈະມີບາງສ່ວນກໍາລັງຖືກໃຊ້ງານຢູ່
+error! no appname found	admin	lo	ພົບຂໍ້ຜິດພາດ! ບໍ່ເຫັນ appname
+error: %1 not found or other error !!!	admin	lo	ພົບຂໍ້ຜິດພາດ: %1 ບໍ່ພົບ ຫຼື ພົບຂໍ້ຜິດພາດອື່ນໆ!!!
+expires	admin	lo	ໝົດອາຍຸ
+explanation of ldapman	admin	lo	moduleນີ້ໄດ້ຮັບການທົດສອບເພື່ອ POSTFIX, LDAP, Courier-IMAP ແລະຈະຕ້ອງມີ schemas CORE ແລະ QMAIL(OID7914). ສ່ວນລາຍລະອຽດເພີ່ມເຕີມກ່ຽວກັບການນໍາໃຊ້ແລະກໍາໜົດຄ່າຂອງລະບົບນີ້ສາມາດພົບໄດ້ທີ່ README.Idapman in doc folder of ADMIN.
+fallback (after each pageview)	admin	lo	ທາງເລືອກ(ຫຼັງຈາກການສະແດງໃນແຕ່ລະໜ້າ)
+false	admin	lo	ຜິດ/ບໍ່ຜ່ານ
+field '%1' already exists !!!	admin	lo	Field '%1' ມີຢູ່ແລ້ວ !!!
+file space	admin	lo	ເນື້ອທີ່ຈັດເກັບຟາຍ
+file space must be an integer	admin	lo	ເນື້ອທີ່ຈັດເກັບຟາຍ ຈະຕ້ອງເປັນຈໍານວນເຕັມ
+find and register all application hooks	admin	lo	ຄົ້ນຫາແລະລົງທະບຽນທຸກ ແອັບພຼິເຄຊັນ Hooks
+for the times above	admin	lo	ສໍາລັບເວລາຂ້າງຕົ້ນ
+for the times below (empty values count as '*', all empty = every minute)	admin	lo	ສໍາລັບເວລາຂ້າງລຸ່ມນີ້(ຄ່າເປົ່າຫວ່າງໃຫ້ນັບເປັນ '*', ຄ່າເປົ່າຫວ່າງທັງໝົດ=ທຸກໆນາທີ)
+force selectbox	admin	lo	ຕ້ອງເລືອກເອົາ
+forward also to	admin	lo	ສົ່ງຕໍ່ໄປຫາ
+forward emails to	admin	lo	ສົ່ງເມລໃຫ້ນີ້ໃຫ້ຄົນອື່ນຕໍ່
+forward only	admin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
+global categories	common	lo	ໝວດທົ່ວໄປ
+go directly to admin menu, returning here the next time you click on administration.	admin	lo	ໄປທີ່ເມນູຜູ້ຄຸ້ມຄອງລະບົບ, ກັບຄືນມາໜ້ານີ້ຫຼັງຈາກກົດທີ່ ການບໍລິຫານ(administration)
+governmental: incl. state or municipal authorities or services	admin	lo	ລັດທະບານ: ລວມມີໜ່ວຍງານຫຼືເທດສະບານຫຼືໜ່ວຍງານບໍລິການ
+grant	admin	lo	ອະນຸຍາດ
+group ?	admin	lo	ກຸ່ມ ?
+group has been added	common	lo	ກຸ່ມໄດ້ຖືກເພີ່ມເຂົ້າ
+group has been deleted	common	lo	ກຸ່ມໄດ້ຖືກລຶບອອກ
+group has been updated	common	lo	ກຸ່ມໄດ້ຖືກປັບປຸງແລ້ວ
+group list	admin	lo	ລາຍຊື່ກຸ່ມ
+group manager	admin	lo	ຜູ້ຈັດການກຸ່ມ
+group name	admin	lo	ຊື່ກຸ່ມ
+hash	admin	lo	Hash
+hide php information	admin	lo	ເຊື່ອງຂໍ້ມູນ PHP
+home directory	admin	lo	Home directory
+host information	admin	lo	ຂໍ້ມູນ ໂຮສ
+hour<br>(0-23)	admin	lo	ຊົ່ວໂມງ<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	lo	ຂາດໜາດຮູບທີ່ເຊື່ອມຕໍ່ຄວນຈະເປັນຂະໜາດໃຫຍ່ເທົ່າໃດ(pixels ສູງສຸດ)?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lo	ຄວນໃຊ້ເວລາຈັກມື້ເພື່ອຈະຢູ່ໃນລ໋ອກຟາຍຂອງລະບົບ, ກ່ອນທີ່ຈະຖືກລຶບ(ຄ່າເລີ່ມຕົ້ນ 90 ມື້)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lo	ຫຼາຍວິທີທີ່ບໍມີຜູ້ຄຸ້ມຄອງລະບົບກໍ່ສາມາດສົ່ງອອກ  (empty = no limit, no = no export) ມີຈັກວິທິໃນການເຂົ້າ
+how many minutes should an account or ip be blocked (default 30) ?	admin	lo	ຄວນໃຊ້ຈັກນາທີທີ່ບັນຊີ ຫຼື IP ຈະຖືກ block (ຄ່າເລີ່ມຕົ້ນ 30)?
+icon	admin	lo	Icon
+idle	admin	lo	ວ່າງ
+if no acl records for user or any group the user is a member of	admin	lo	ຖ້າບໍ່ມີການບັນທຶກ ACL ສໍາລັບຜູ້ໃຊ້ຫຼືກຸ່ມຜູ້ໃຊ້ທີ່ເປັນສະມາຊິກຂອງ
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	lo	ຖ້ານໍາໃຊ້ LDAP, ທ່ານຕ້ອງການທີ່ຈະຈັດການຄຸນລັກສະນະ ໄດເລັກທໍລີຫຼັກ ແລະ loginshell ບໍ?
+in mbyte	admin	lo	ໃນ Mbyte
+inbound	admin	lo	ຂາເຂົ້າ
+initial	admin	lo	ເບືອງຕົ້ນ
+install crontab	admin	lo	ຕິດຕັ້ງ crontab
+install id	admin	lo	ຕິດຕັ້ງ ID
+installation type	admin	lo	ປະເພດການຕິດຕັ້ັ້ງ
+installed applications	common	lo	ຕິດຕັ້ງ ແອັບພຼິເຄຊັນສ
+installed applications, percentage of allowed users and total number of entries.	admin	lo	ຕິດຕັ້ງ ແອັບພຼິເຄຊັນສ, ເປີເຊັນຜູ້ໃຊ້ທີ່ໄດ້ຮັບອະນຸຍາດ ແລະ ຈໍານວນຜູ້ເຂົ້າລະບົບທັງໝົດ
+installed crontab	admin	lo	ໄດ້ຕິດຕັ້ງ crontab
+instance	admin	lo	Instance
+interface	admin	lo	Interface
+international use	admin	lo	ມາດຖານການໃຊ້
+invalid formated date "%1"!	admin	lo	ຮູບແບບວັນທີບໍ່ຖືກຕ້ອງ"%1"!
+invalid remote id or name "%1"!	admin	lo	id ຫຼື ຊື່ທີ່ເຂົ້າມາບໍ່ຖືກຕ້ອງ"%1"!
+invalid value "%1" use yes or no!	admin	lo	ຄ່າບໍ່ຖືກຕ້ອງ"%1"ໃຊ້ ຫຼື ບໍ່ໄດ້ໃຊ້!
+ip	admin	lo	IP
+jobs	admin	lo	ຕໍາແນງງານ
+kill	admin	lo	ທໍາລາຍ
+kill session	admin	lo	ທໍາລາຍ session
+last %1 logins	admin	lo	%1 ທີ່່ເຂົ້າລະບົບລ່າສຸດ
+last %1 logins for %2	admin	lo	%1 ທີ່່ເຂົ້າລະບົບລ່າສຸດສໍາລັບ%2
+last action	admin	lo	ເຂົ້າລະບົບລ່າສຸດ
+last login	admin	lo	ເຂົ້າລະບົບລ່າສຸດ
+last login from	admin	lo	ເຂົ້າລະບົບລ່າສຸດຈາກ
+last submission:	admin	lo	subsession ລ່າສຸດ:
+last time read	admin	lo	ເວລາອ່ານລ່າສຸດ
+ldap accounts context	admin	lo	LDAP ບັນຊີ
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	lo	LDAP ຄ່າເລີ່ມຕົ້ນ ໄດເລັກເທີລີຫຼັກ prefix (ເຊັ່ນ: /home ສໍາລັບ /home/username)
+ldap default shell (e.g. /bin/bash)	admin	lo	LDAP  ຄ່າເລີ່ມຕົ້ນ shell (ເຊັ່ນ: /bin/bash)
+ldap encryption type	admin	lo	LDAP ຊະນິດການເຂົ້າລະຫັດ
+ldap groups context	admin	lo	LDAP ກຸ່ມ
+ldap host	admin	lo	LDAP host
+ldap root password	admin	lo	LDAP root ລະຫັດຜ່ານ
+ldap rootdn	admin	lo	LDAP rootdn
+leave empty for no quota	admin	lo	ອອກຈາກລະບົບສໍາລັບບໍ່ມີໂກຕ້າ
+leave the category untouched and return back to the list	admin	lo	ອອກຈາກໝວດໝູ່ ແລະ ກັບຄືນລາຍການ
+leave the group untouched and return back to the list	admin	lo	ອອກຈາກໝກຸ່ມ ແລະ ກັບຄືນລາຍການ
+leave without saveing the entry	admin	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກການເຂົ້າ
+leaves without saveing	admin	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
+length<br>rows	admin	lo	ຄວາມຍາວ <br> ແຖວ
+list config settings	admin	lo	ລາຍການຕັ້ງຄ່າ config
+list current sessions	admin	lo	ລາຍການ session ໃນປັດຈຸບັນ
+list of current users	admin	lo	ລາຍຊື່ຜູ້ໃຊ້ໃນປັດຈຸບັນ
+logged out	admin	lo	ອອກຈາກລະບົບ
+login history	admin	lo	ປະຫວັດການເຂົ້າລະບົບ
+login message	admin	lo	ຂໍ້ຄວາມເຂົ້າລະບົບ
+login screen	admin	lo	ໜ້າຈໍເຂົ້າລະບົບ
+login shell	admin	lo	shell ເຂົ້າລະບົບ
+login time	admin	lo	ເວລາເຂົ້າລະບົບ
+login-status	admin	lo	ສະຖານະເຂົ້າລະບົບ
+loginid	admin	lo	ID ເຂົ້າລະບົບ
+logintime	admin	lo	ເວລາເຂົ້າລະບົບ
+logoutime	admin	lo	ເວລາອອກລະບົບ
+mail settings	admin	lo	ຕັ້ງຄ່າ mail
+main email-address	admin	lo	ທີ່ຢູ່ email ຫຼັກ
+main screen message	admin	lo	ຂໍ້ຄວາມໜ້າຈໍຫຼັກ
+manager	admin	lo	ຜູ້ຈັດການ
+max length of the input [, length of the inputfield (optional)]	admin	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
+maximum account id (e.g. 65535 or 1000000)	admin	lo	ຈໍານວນ ID ບັບຊີສູງສຸດ(ເຊັ່ນ: 65535 ຫຼື 1000000)
+maximum entries in click path history	admin	lo	ຄ່າສູງສຸດຂອງປະຫວັດພາດເກັບຟາຍທີ່ໄດ້ກົດ
+message has been updated	admin	lo	ຂໍ້ຄວາມໄດ້ຮັບການປັບປຸງແລ້ວ
+method	admin	lo	Method
+minimum account id (e.g. 500 or 100, etc.)	admin	lo	ຈໍານວນ ID ບັບຊີ ຕໍ່າສຸດ(ເຊັ່ນ: 500 ຫຼື 100, ...)
+minute	admin	lo	ນາທີ
+mode	admin	lo	Mode
+modified	admin	lo	ປັບປຸງ
+month	admin	lo	ເດືອນ
+more secure	admin	lo	ຄວາມປອດໄພຫຼາຍຂື້ນ
+name must not be empty !!!	admin	lo	ຫ້າມໃຫ້ຊື່ວ່າງ !!!
+new group name	admin	lo	ຊື່ກຸ່ມໃໝ່
+new name	admin	lo	ຊື່ໃໝ່
+new password [ leave blank for no change ]	admin	lo	ລະຫັດຜ່ານໃໝ່ [ ປະວ່າງໄວ້ກໍລະນີບໍ່ໄດ້ປ່ຽນແປງ ]
+next run	admin	lo	ດໍາເນີນການຂັ້ນຕໍ່ໄປ
+no algorithms available	admin	lo	ບໍ່ມີຂັ້ນຕອນໃດໃຊ້ໄດ້
+no alternate email address	admin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
+no jobs in the database !!!	admin	lo	ບໍ່ມີ jobs ໃນຖານຂໍ້ມູນ
+no login history exists for this user	admin	lo	ບໍ່ມີປະຫວັດການເຂົ້າລະບົບຂອງຜູ້ໃຊ້ນີ້
+no matches found	admin	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ
+no modes available	admin	lo	ບໍ່ມີ modes ທີ່ໃຊ້ໄດ້
+no permission to add groups	admin	lo	ບໍ່ມີສິດເພີ່ມກຸ່ມ
+no permission to add users	admin	lo	ບໍ່ມີສິດເພີ່ມຜູ້ໃຊ້
+no permission to create groups	admin	lo	ບໍ່ມີສິດສ້າງກຸ່ມ
+non profit: clubs, associations, ...	admin	lo	ບໍ່ມີ ຜົນກໍາໄລ: ສະໂມສອນ, ສະມາຄົມ,​ ...
+note: ssl available only if php is compiled with curl support	admin	lo	ໝາຍເຫດ: SSL ໃຊ້ໄດ້ສະເພາະກໍລະນີ PHP ໄດ້ມີການປະມວນຜົນແລ້ວ ພ້ອມທັງໄດ້ຮັບການສະນັບສະນູນຂອງ curl
+number of active users	admin	lo	ຈໍານວນຜູ້ໃຊ້ບໍລິການ
+number of row for a multiline inputfield or line of a multi-select-box	admin	lo	ຈໍານວນແຖວສໍາລັບຂອບເຂດຂອງການປ້ອນຂໍ້ມູນຫຼາຍໆແຖວ ຫຼື ຕົວເລືອກຫຼາຍໆຕົວ
+number of sessions / egroupware logins in the last 30 days	admin	lo	ຈໍານວນ sessions / ການເຂົ້າລະບົບ Egroupware ພາຍໃນ 30 ມື້ຫຼ້າສຸດ
+number of users	admin	lo	ຈໍານວນຜູ້ໃຊ້
+official egroupware usage statistic	admin	lo	ສະທິຕິການນໍາໃຊ້ Egroupware ຢ່າງເປັນທາງການ
+one day	admin	lo	ໜຶ່ງມື້
+one hour	admin	lo	ໜຶ່ງຊົ່ວໂມງ
+one month	admin	lo	ໜຶ່ງເດືອນ
+one week	admin	lo	ໜຶ່ງອາທິດ
+only below displayed information is directly submitted to %s.	admin	lo	ສະເພາະຂໍ້ມູນທີ່ສະແດງຈະຖືກສົ່ງໄປທີ່ %s.
+operating system	admin	lo	ລະບົບປະຕິບັດການ
+order	admin	lo	Order
+outbound	admin	lo	ຂາອອກ
+own install id:	admin	lo	ID ຕິດຕັ້ງຂອງຕົນເອງ:
+passthrough	admin	lo	ຜ່ານຕະຫຼອດ
+password for smtp-authentication	admin	lo	ລະຫັດຜ່ານສໍາລັບການຮັບຮອງຂອງ SMTP
+password updated	admin	lo	ລະຫັດຜ່ານໄດ້ຮັບການປັບປຸງ
+path information	admin	lo	ຂໍ້ມູນຂອງພາດຈັດເກັບຟາຍ
+peer server list	admin	lo	ລາຍການ peer ເຊີບເວີ້
+peer servers	admin	lo	Peer ເຊີບເວີ
+percent of users that logged out	admin	lo	ເປີເຊັນຜູ້ໃຊ້ທີ່ອອກຈາກລະບົບ
+percent this user has logged out	admin	lo	ເປີເຊັນຜູ້ໃຊ້ນີ້ທີ່ອອກຈາກລະບົບ
+permission denied	admin	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ
+permission denied !!!	admin	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ !!!
+permissions	admin	lo	ການອະນຸຍາດ
+permissions this group has	admin	lo	ອະນຸຍາດໃຫ້ກຸ່ມນີ້
+personal: eg. within a family	admin	lo	ສ່ວນບຸກຄົນ: ເຊັ່ນ. ພາຍໃນຄອບຄົວ
+php version	admin	lo	PHP Version
+phpinfo	admin	lo	ຂໍ້ມູນ PHP
+please enter a name	admin	lo	ກະລຸນາພີມຊື່
+please enter a name for that server !	admin	lo	ກະລຸນາພີມຊື່ສໍາລັບ ເຊີເວີ້ !
+please run setup to become current	admin	lo	ກະລຸນາຮ້ອງໃຊ້ການຕັ້ງຄ່າປັດຈຸບັນ
+please select	admin	lo	ກະລຸນາເລືອກ
+postfix with ldap	admin	lo	Postfix ດ້ວຍ LDAP
+postpone for	admin	lo	ເລືອນໄປສໍາລັບ
+preferences	admin	lo	ການຕັ້ງຄ່າ
+primary group	admin	lo	ກຸ່ມຫຼັກ
+qmaildotmode	admin	lo	qmaildotmode
+quota settings	admin	lo	ໂກຕ້າການຕັ້ງຄ່າ
+quota size in mbyte	admin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
+re-enter password	admin	lo	ພິມລະຫັດຜ່ານອີກ
+read this list of methods.	admin	lo	ອ່ານລາຍການຂອງວິທີການນີ້.
+register application hooks	admin	lo	ລົງທະບຽນ ແອັບພຼິເຄຊັນ ຮ໋ອກ
+remote administration instances	admin	lo	Remote administration instances
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	lo	ການບໍລິຫານໃນໄລຍະໄກ ຕ້ອງມີການເປີດໃຊ້ງານໃນໄລຍະໄກ ເຊັ່ນພາຍໃຕ້ການກໍານົດຄ່າ Admin > Site configuration!
+remote instance saved	admin	lo	Remote instance ໄດ້ບັນທຶກແລ້ວ
+remove	admin	lo	ລຶບອອກ
+remove all users from this group	admin	lo	ລຶບຜູ້ໃຊ້ງານທັງບໝົດອອກຈາກກຸ່ມນີ້
+remove all users from this group ?	admin	lo	ລຶບຜູ້ໃຊ້ງານທັງບໝົດອອກຈາກກຸ່ມນີ້ ?
+requested	admin	lo	ການຮ້ອງຂໍ
+return to admin mainscreen	admin	lo	ກັບຄືນໜ້າຜູ້ເບີ່ງແຍງລະບົບ
+return to view account	admin	lo	ກັບຄືນສູ່ໜ້າສະແດງບັນຊີ
+route all mails to	admin	lo	ເສັ້ນທາງເມລ ທັງໝົດໄປຍັງ
+rpm or debian package	admin	lo	RPM ຫຼື Debian package
+run asynchronous services	admin	lo	ເປີດບໍລິການ Asynchronous
+save the category	admin	lo	ບັນທຶກໝວດໝູ່
+save the category and return back to the list	admin	lo	ບັນທຶກໝວດໝູ່ ແລະ ກັບຄືນສູ່ລາຍການ
+saves the changes made and leaves	admin	lo	ບັນທຶກການປ່ຽນແປງ made ແລະ leaves
+saves this entry	admin	lo	ບັນທຶກຂໍ້ມູນການເຂົ້ານີ້
+scheduled	admin	lo	ກໍານົດເວລາ
+search accounts	admin	lo	ຄົ້ນຫາບັນຊີ
+search categories	admin	lo	ຄົ້ນຫາໝວດໝູ່
+search groups	admin	lo	ຄົ້ນຫາກຸ່ມ
+search peer servers	admin	lo	ຄົ້ນຫາ peer ເຊີເວີ້
+security	admin	lo	ຄວາມປອດໄພ
+select accounts for which the custom field should be visible	admin	lo	ເລືອກບັນຊີສໍາລັບຟີລທີ່ກໍານົດເອງ ຄວນຈະສະແດງ
+select group managers	admin	lo	ເລືອກກຸ່ມຜູ້ຈັດການ
+select permissions this group will have	admin	lo	ເລືອກສິດທິກຸ່ມນີ້ຈະມີ
+select the parent category. if this is a main category select no category	admin	lo	ເລືອກໝວດໝູ່ຫຼັກ. ຖ້ານີ້ແມ່ນໝວດໝູ່ຫຼັກເລືອກ NO CATEGORY
+select users for inclusion	admin	lo	ເລືອກຜູ້ໃຊ້ສໍາລັບການລວມເຂົ້າ
+select where you want to store/retrieve filesystem information	admin	lo	ເລືອກບ່ອນຈັດເກັບ / ຮ້ອງໃຊ້ ຟາຍຂໍ້ມູນລະບົບ
+select where you want to store/retrieve user accounts	admin	lo	ເລືອກບ່ອນຈັດເກັບ / ຮ້ອງໃຊ້ ບັນຊີຜູ້ໃຊ້
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	lo	ເລືອກບ່ອນໃດທີ່ ແອັບພຼິເຄຊັນນີ້ຄວນຢູ່ໃນ navbar, ຕໍ່າສຸດ(ຊ້າຍ) ຫາ ສູງສຸດ(ຂວາ)
+selectbox	admin	lo	ຊ່ອງສໍາລັບເລືອກ
+server %1 has been updated	admin	lo	ເຊີເວີ້ 1% ໄດ້ຮັບການປັບປຸງ
+server list	admin	lo	ລາຍການ ເຊີເວີ້
+server password	admin	lo	ລະຫັດຜ່ານ ເຊີເວີ້
+server type(mode)	admin	lo	ປະເພດ(ຮູບແບບ) ເຊີເວີ້
+server url	admin	lo	URL ເຊີເວີ້
+server username	admin	lo	ຊື່ຜູ້ໃຊ້ ເຊີເວີ້
+sessions last 30 days	admin	lo	ໝົດກໍານົດພາຍໃນ 30 ມື້
+set preference values.	admin	lo	ກໍານົດຄ່າການຕັ້ງຄ່າ
+should exceptions contain a trace (including function arguments)	admin	lo	ຄວນມີການຕິດຕາມຂໍ້ຍົກເວັ້ນ (ລວມທັງຂໍ້ໂຕ້ແຍ່ງ ຂອງຟັງຊັນ)
+should the login page include a language selectbox (useful for demo-sites) ?	admin	lo	ໜ້າຈໍລ໋ອກອິນຄວນມີຊ່ອງເລືອກພາສາ(ໃຊ້ສໍາລັບ demo-sites)
+show 'powered by' logo on	admin	lo	Show 'powered by' logo on
+show access log	admin	lo	ສະແດງການເຂົ້າໃຊ້ງານລະບົບ
+show an asterisk (*) to mark untranslated strings	admin	lo	ສະແດງເຄືອງໝາຍ(*)ເພື່ອບອກວ່າປະໂຫຍກທີ່ບໍ່ໄດ້ມີການແປ
+show current action	admin	lo	ສະແດງການເຮັດວຽກປັດຈຸບັນ
+show error log	admin	lo	ສະແດງລ໋ອກຟາຍຂໍ້ຜິດພາດ
+show phpinfo()	admin	lo	ສະແດງຂໍ້ມູນຂອງ php (phpinfo())
+show session ip address	admin	lo	ສະແດງເຊສຊັ້ນທີ່ຢູ່ IP
+site	admin	lo	ໄຊລ
+soap	admin	lo	ເບົາບາງ
+sorry, that group name has already been taken.	admin	lo	ຂໍອະໄພ, ຊື່ກຸ່ມມີຢູ່ແລ້ວ.
+sorry, the above users are still a member of the group %1	admin	lo	ຂໍອະໄພ, ຜູ້ໃຊ້ຂ້າງເທີງຍັງເປັນສະມາຊິກຂອງກຸ່ມ %1
+sorry, the follow users are still a member of the group %1	admin	lo	ຂໍອະໄພ, ຜູ້ໃຊ້ຕໍ່ໄປນີ້ຍັງເປັນສະມາຊິກຂອງກຸ່ມ %1
+sort the entries	admin	lo	ການຈັດລຽນລາຍການ
+ssl	admin	lo	ssl
+standard	admin	lo	ມາດຕະຖານ
+standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
+standard pop3 server	admin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
+standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
+start testjob!	admin	lo	ເລີ່ມຕົ້ນທົດສອບການເຮັດວຽກ!
+submit changes	admin	lo	ນໍາສະເໜີການປ່ຽນແປງ
+submit displayed information?	admin	lo	ນໍາສະເໜີການສະແດງຂໍ້ມູນ ບໍ?
+submit statistic information	admin	lo	ນໍາສະເໜີຂໍ້ມູນທາງສະຖີຕິ
+submit the search string	admin	lo	ນໍາສະເໜີຂໍ້ຄວາມທີຄົ້ນຫາ
+submit to egroupware.org	admin	lo	ສົ່ງໄປທີ່ egroupware.org
+subtype	admin	lo	ຊະນິດຍ່ອຍ
+subversion checkout	admin	lo	Subversion ແຈ້ງອອກ
+success	admin	lo	ສໍາເລັດ
+switch it off, if users are randomly thrown out	admin	lo	ປິດການເຮັດວຽກ, ຖ້າຜູ້ໃຊ້ອອກລະບົບ
+template selection	admin	lo	ການເລືອກແມ່ແບບ
+text entry	admin	lo	ລາຍການຂໍ້ຄວາມ
+that application name already exists.	admin	lo	ຊື່ຂອງແອັບພຼິເຄຊັນ ມີແລ້ວ.
+that application order must be a number.	admin	lo	ລາຍການ ແອັບພຼິເຄຊັນ ຕ້ອງເປັນຕົວເລກ.
+that loginid has already been taken	admin	lo	ລະຫັດທີ່ໄດ້ເຂົ້າລະບົບແລ້ວ
+that name has been used already	admin	lo	ຊື່ນີ້ມີຜູ້ໃຊ້ແລ້ວ
+that server name has been used already !	admin	lo	ຊື່ ເຊີເວີ້ ນີ້ມີຜູ້ໃຊ້ແລ້ວ !
+the api is current	admin	lo	API ປັດຈຸບັນ
+the api requires an upgrade	admin	lo	API ຕ້ອງມີການປັບລຸ້ນ
+the cumulated and anonymised data will be publically available:	admin	lo	cumulated ແລະ anonymised ຂໍ້ມູນຈະຢູ່ໃນຖານະໃຫ້ບໍລິການ
+the groups must include the primary group	admin	lo	ກຸ່ມຕ້ອງລວມທັງກຸ່ມຫຼັກ
+the install id of an instance can be found under admin > site configuration	admin	lo	ລະຫັດການຕິດຕັ້ງຂອງ instance ສາມາດຊອກໄດ້ທີ່  Admin > Site configuration
+the login and password can not be the same	admin	lo	ລະຫັດຜ່ານ ແລະ ຊື່ບໍ່ສາມາດຄືກັນໄດ້
+the loginid can not be more then 8 characters	admin	lo	ລະຫັດການເຂົ້າລະບົບບໍ່ສາມາດຫຼາຍກວ່າ8ຕົວອັກສອນ
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	lo	ຊື່ທີ່ໃຊ້(<=20ຕົວອັກສອນ), ຖ້າມີການປ່ຽນແປງຂໍ້ມູນທີ່ມີຢູ່ຈະເຮັດໃຫ້ໃຊ້ບໍ່ໄດ້
+the testjob sends you a mail everytime it is called.	admin	lo	ການທົດສອບຈະສົ່ງເມລທຸກໆສິ່ງທີ່ໄດ້ຮ້ອງໃຊ້
+the text displayed to the user	admin	lo	ຂໍ້ຄວາມທີ່ສະແດງໄປຫາຜູ້ໃຊ້
+the two passwords are not the same	admin	lo	ລະຫັດຜ່ານທັງ2ບໍ່ກົງກັນ
+the users bellow are still members of group %1	admin	lo	ຜູ້ໃຊ້ລຸ່ມນີ້ຍັງເປັນສະມາຊິກຂອງກຸ່ມ 1%
+there already is a group with this name. userid's can not have the same name as a groupid	admin	lo	ຊື່ກຸ່ມມີແລ້ວ. ລະຫັດຜູ້ໃຊ້ບໍ່ສາມາດຄືກັນກັບລະຫັດກຸ່ມ
+they must be removed before you can continue	admin	lo	ພວກເຂົ້າຈະຕ້ອງເອົາອອກກ່ອນຈຶ່ງສາມາດດໍາເນີນງານຕໍ່
+this application is current	admin	lo	ປັດຈຸບັນແມ່ນ application ນີ້
+this application requires an upgrade	admin	lo	application ນີ້ຕ້ອງມີການປັບລຸ້ນ
+this category is currently being used by applications as a parent category	admin	lo	ປັດຈຸບັນແມ່ນໝວດໝູ່ນີ້ນໍາໃຊ້ດ້ວຍແອັບພຼິເຄຊັນທີ່ເປັນໝວດໝູ່ຫຼັກ
+timeout for application session data in seconds (default 86400 = 1 day)	admin	lo	ໝົດເວລາສໍາລັບ ແອັບພຼິເຄຊັນ ຂໍ້ມູນເຊສຊັ້ນ ໃນວິນາທີ(ຄ່າເລີ່ມຕົ້ນ 86400 = 1 ມື້)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	lo	ໝົດເວລາສໍາລັບເຊສຊັ້ນ ໃນວິນາທີ(ຄ່າເລີ່ມຕົ້ນ 14400 = 4 ຊົ່ວໂມງ)
+times	admin	lo	ຄັ້ງ
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	lo	ເພື່ອໃຫ້ສາມາດຕິດຕາມການຕິດຕັ້ງໃຫ້ໃສ່ ID, ບໍ່ສະນັ້ນຈະຖືກລຶບ
+top	admin	lo	ຂ້າງເທິງ
+total of %1 id's changed.	admin	lo	ທັງໝົດ %1 ຂອງລະຫັດທີ່ໄດ້ປ່ຽນແປງ
+total records	admin	lo	ລວມລາຍການທັງໝົດ
+true	admin	lo	ຖືກ
+trust level	admin	lo	ລະດັບຄວາມໜ້າເຊື່ອຖື
+trust relationship	admin	lo	ຄວາມສໍາພັນຂອງຄວາມໜ້າເຊື່ອຖື
+two days	admin	lo	ສອງມື້
+two hours	admin	lo	ສອງຊົ່ວໂມງ
+two months	admin	lo	ສອງເດືອນ
+two weeks	admin	lo	ສອງອາທິດ
+type '%1' already exists !!!	admin	lo	ຊະນິດ '%1' ມີຢູ່ແລ້ວ !!!
+type of customfield	admin	lo	ຊະນິດຂອງ ຟິລທີ່ກໍານົດເອງ
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	lo	ພາຍໃຕ້ Windows ທ່ານຈະຕ້ອງຕິດຕັ້ງ asycserver %1 ດ້ວຍຕົນເອງ %2 ຫຼືໃຊ້ mode ທາງເລືອກ. ເຊິ່່ງໂມດນີ້ຈະເປັນການກວດສອບວຽກຫຼັງຈາກສະແດງແຕ່ລະໜ້າ
+unknown account: %1 !!!	admin	lo	ບັນຊີທີ່ບໍ່ຮູ້ຈັກ: %1 !!!
+unknown command %1!	admin	lo	ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ: %1 !
+unknown option %1	admin	lo	ຕົວເລືອກທີ່ບໍ່ຮູ້ຈັກ: %1
+updated	admin	lo	ປັບປຸງແລ້ວ
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	lo	URL ຂອງການຕິດຕັ້ງລະບົບຕາຕະລາງ(eGroupware) ເຊັ່ນ.http://domain.com/egroupware
+usage	admin	lo	ການໃຊ້
+use cookies to pass sessionid	admin	lo	ໃຊ້ cookies ເພື່ອຜ່ານ sessionid
+use pure html compliant code (not fully working yet)	admin	lo	ໃຊ້ HTML code (ຍັງເຮັດວຽກບໍ່ເຕັມທີ່)
+use theme	admin	lo	ຮູບແບບການໃຊ້
+user accounts	admin	lo	ບັນຊີຜູ້ໃຊ້ງານ
+user data	common	lo	ຂໍ້ມູນຜູ້ໃຊ້
+user for smtp-authentication (leave it empty if no auth required)	admin	lo	ນໍາໃຊ້ສໍາລັບ SMTP-authentication ກວດສອບຜູ້ໃຊ້(ຄ່າເປົ່າຖ້າບໍ່ໃສ່ຫຍັງ)
+user groups	admin	lo	ກຸ່ມຜູ້ໃຊ້
+userdata	admin	lo	ຂໍ້ມູນຜູ້ໃຊ້
+users choice	admin	lo	ເລືອກຜູ້ໃຊ້
+value for column %1 is not unique!	admin	lo	ຄ່າຂອງຖັນ %1 ບໍ່ແມ່ນຄ່າດຽວ
+view access log	admin	lo	ສະແດງຂໍ້ມູນການເຂົ້າລະບົບ
+view account	admin	lo	ສະແດງບັນຊີ
+view category	admin	lo	ສະແດງໝວດໝູ່
+view error log	admin	lo	ສະແດງຂໍ້ມູນຜິດພາດ
+view sessions	admin	lo	ສະແດງ ເຊສຊັ້ນ
+view this user	admin	lo	ສະແດງຜູ້ໃຊ້ນີ້
+view user account	admin	lo	ສະແດງບັນຊີຜູ້ໃຊ້
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	lo	ພວກເຮົາຂໍໃຫ້ຂໍ້ມູນເຫຼົ່ານັ້ນເພື່ອວັດຖຸປະສົງສະເພາະທາງສະຖິຕິເພື່ອໃຫ້ໄດ້ພາບລວມທົ່ວໄປກ່ຽວກັບການໃຊ້ ລະບົບຕາຕະລາງ (Egroupware) ໃນທົ່ວໂລກ
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	lo	ພວກເຮົາບໍ່ສາມາດບັນທຶກຂໍ້ມູນໃດໆກ່ຽວກັບຕົວທ່ານ
+who would you like to transfer all records owned by the deleted user to?	admin	lo	ແມ່ນຜູ້ໃດທີ່ຕ້ອງການເອົາຂໍ້ມູນຂອງຜູ້ທີ່ຖືກລຶບໄປ ?
+would you like egroupware to cache the egw info array ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ໃຫ້ເກັບເປັນຊຸດຂໍ້ມູນ egw?
+would you like egroupware to check for a new version<br>when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ເພື່ອກວດສອບ <br> ສໍາລັບເວີເຊິ້ນໃໝ່ເມື່ອ admins ເຂົ້າສູ່ລະບົບ ?
+would you like egroupware to check for new application versions when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ເພື່ອກວດສອບ ແອັບພຼິເຄຊັນໃໝ່ເມື່ອຜູ້ຄຸ້ມຄອງລະບົບ ເຂົ້າສູ່ລະບົບ ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະໂຫຼດອັດຕະໂນມັດໄຟລພາສາໃໝ່ (ເວລາລ໋ອກອິນ) ?
+would you like to show each application's upgrade status ?	admin	lo	ທ່ານຕ້ອງການສະແດງສະຖານະການປັບປຸງຂອງແຕ່ລະແອັບພຼິເຄຊັນ ບໍ?
+wrong account type: %1 is no %2 !!!	admin	lo	ປະເພດບັນຊີຜິດພາດ: %1 ບໍ່ແມ່ນ %2!
+wrong admin-account or -password !!!	admin	lo	ບັນຊີຜູ້ຄຸ້ມຄອງລະບົບ ຫຼື ລະຫັດຜ່ານຜີດພາດ !
+xml-rpc	admin	lo	XML-RPC
+you have entered an invalid expiration date	admin	lo	ທ່ານມີການປ້ອນວັນໝົດອາຍຸບໍ່ຖືກຕ້ອງ
+you have no email address for your user set !!!	admin	lo	ທ່ານຍັງບໍ່ມີທີຢູ່ອີເມລສໍາລັບການຕັ້ງຄ່າຂອງທ່ານ !
+you have to enter a name, to create a new field!!!	admin	lo	ທ່ານມີການໃສ່ຊື່ໃນການສ້າງຟີລໃໝ່ !
+you have to enter a name, to create a new type!!!	admin	lo	ທ່ານມີການໃສ່ຊື່ໃນການສ້າງຮູບແບບໃໝ່ !
+you must add at least 1 permission or group to this account	admin	lo	ທ່ານຕ້ອງໄດ້ເພີ່ມຢ່າງໜ້ອຍ 1 ສິດທິ ຫຼື ກຸ່ມໃຫ້ກັບບັນຊີນີ້
+you must enter a group name.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ກຸ່ມ
+you must enter a lastname	admin	lo	ທ່ານຕ້ອງໃສ່ນາມສະກຸນ
+you must enter a loginid	admin	lo	ທ່ານຕ້ອງໃສ່ລະຫັດເຂົ້າສູ່ລະບົບ
+you must enter an application name and title.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ ແອັບພຼິເຄຊັນ ແລະ ຫົວຂໍ້
+you must enter an application name.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ ແອັບພຼິເຄຊັນ
+you must enter an application title.	admin	lo	ທ່ານຕ້ອງໃສ່ຫົວຂໍ້ ແອັບພຼິເຄຊັນ
+you must select a file type	admin	lo	ທ່ານຕ້ອງເລືອກປະເພດຂອງໄຟລ
+you must select at least one group member.	admin	lo	ທ່ານຕ້ອງເລືອກຢ່າງໜ້ອຍໜື່ງສະມາຊິກຂອງກຸ່ມ
+you need to enter install id and password!	admin	lo	ທ່ານຕ້ອງໃສ່ ລະຫັດສ່ວນຕົວ ແລະ ລະຫັດຜ່ານໃນການຕິດຕັ້ງ
+you will need to remove the subcategories before you can delete this category	admin	lo	ທ່ານຕ້ອງລຶບໝວດໝູ່ຍ່ອຍກ່ອນທີ່ຈະລຶບໝວດໝູ່ນີ້
+your last submission was less then %1 days ago!	admin	lo	ຄັ້ງລ່າສຸດໃນການສົ່ງຢ່າງໜ້ອຍ % 1 ມຶ້ທີ່ຜ່ານມາ
+your session could not be verified.	admin	lo	ເຊສຊັ້ນຂອງທ່ານຈະບໍ່ສາມາດຢືນຢັນ
