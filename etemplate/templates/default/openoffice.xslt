@@ -216,16 +216,24 @@
 		<text:span text:style-name="Tunderline"><xsl:apply-templates/></text:span>
 	</xsl:template>
 
-	<xsl:template match="ul">
+	<xsl:template match="ul[parent::office:text]">
 		<text:list text:style-name="LU">
 			<xsl:apply-templates/>
 		</text:list>
 	</xsl:template>
 
-	<xsl:template match="ol">
+	<xsl:template match="ol[parent::office:text]">
 		<text:list text:style-name="LO">
 			<xsl:apply-templates/>
 		</text:list>
+	</xsl:template>
+
+	<!-- You can't have lists in a table?  Doesn't work in calc at least, so fake it-->
+	<xsl:template match="ul[ancestor::office:spreadsheet] | ol[ancestor::office:spreadsheet]" >
+		<text:p><xsl:apply-templates/></text:p>
+	</xsl:template>
+	<xsl:template match="ul[ancestor::office:spreadsheet]/li | ol[ancestor::office:spreadsheet]/li" >
+<text:tab-stop />&#8226; <xsl:value-of select="normalize-space()" /><text:line-break />
 	</xsl:template>
 
 	<xsl:template match="li">
@@ -240,11 +248,18 @@
 		</text:p></text:list-item>
 	</xsl:template>
 
-	<xsl:template match="table">
+	<xsl:template match="table[ancestor::office:text]">
 		<table:table table:name="Table{generate-id(.)}" table:style-name="TableX">
 			<table:table-column table:style-name="TableX.A" table:number-columns-repeated="{count(tr[position() = 1]/td | tr[position() = 1]/th)}"/>
 			<xsl:apply-templates/>
 		</table:table>
+	</xsl:template>
+
+	<!-- You can't have tables in a table?  Doesn't work in calc at least, so fake it-->
+	<xsl:template match="table[ancestor::office:spreadsheet]" >
+		<text:p>
+		<xsl:apply-templates/>
+		</text:p>
 	</xsl:template>
 
 	<xsl:template match="tr[th]">
@@ -269,6 +284,9 @@
 		<table:table-row>
 			<xsl:apply-templates/>
 		</table:table-row>
+	</xsl:template>
+	<xsl:template match="tr[ancestor::office:spreadsheet]" >
+		<xsl:apply-templates/><text:line-break />
 	</xsl:template>
 
 	<xsl:template match="a">
