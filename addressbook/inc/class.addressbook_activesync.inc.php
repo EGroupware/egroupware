@@ -42,7 +42,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		'body'	=> 'note',
 		//'bodysize'	=> '',
 		//'bodytruncated'	=> '',
-		//'business2phonenumber'	=> '',
+		'business2phonenumber'	=> 'tel_other',
 		'businesscity'	=>	'adr_one_locality',
 		'businesscountry'	=> 'adr_one_countryname',
 		'businesspostalcode'	=> 'adr_one_postalcode',
@@ -52,7 +52,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		'businessphonenumber'	=> 'tel_work',
 		'carphonenumber'	=> 'tel_car',
 		'categories'	=> 'cat_id',
-		//'children'	=> '',
+		//'children'	=> '',	// collection of 'child' elements
 		'companyname'	=> 'org_name',
 		'department'	=>	'org_unit',
 		'email1address'	=> 'email',
@@ -60,7 +60,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		//'email3address'	=> '',
 		'fileas'	=>	'n_fileas',
 		'firstname'	=>	'n_given',
-		//'home2phonenumber'	=> '',
+		'home2phonenumber'	=> 'tel_cell_private',
 		'homecity'	=> 'adr_two_locality',
 		'homecountry'	=> 'adr_two_countryname',
 		'homepostalcode'	=> 'adr_two_postalcode',
@@ -68,7 +68,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		'homestreet'	=>	'adr_two_street',
 		'homefaxnumber'	=> 'tel_fax_home',
 		'homephonenumber'	=>	'tel_home',
-		'jobtitle'	=>	'role',
+		'jobtitle'	=>	'title',	// unfortunatly outlook only has title & jobtitle, while EGw has 'n_prefix', 'title' & 'role',
 		'lastname'	=> 'n_family',
 		'middlename'	=> 'n_middle',
 		'mobilephonenumber'	=> 'tel_cell',
@@ -82,7 +82,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		//'radiophonenumber'	=> '',
 		//'spouse'	=> '',
 		'suffix'	=>	'n_suffix',
-		'title'	=> 'n_prefix',	
+		'title'	=> 'n_prefix',
 		'webpage'	=> 'url',
 		//'yomicompanyname'	=> '',
 		//'yomifirstname'	=>	'',
@@ -533,6 +533,9 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 							$contact[$attr] = $message->$key;
 						}
 						break;
+					case 'title':	// as ol jobtitle mapping changed in egw from role to title, do NOT overwrite title with value of role
+						if ($id && $message->$key == $contact['role']) break;
+						// fall throught
 					default:
 						$contact[$attr] = $message->$key;
 						break;
