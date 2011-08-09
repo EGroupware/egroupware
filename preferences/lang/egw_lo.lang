@@ -1,0 +1,105 @@
+%1 - preferences	preferences	lo	%1 ການຕັ້ງຄ່າ
+%1 hours	preferences	lo	%1 ຊົ່ວໂມງ
+12 hour	preferences	lo	12 ຊົ່ວໂມງ
+24 hour	preferences	lo	24 ຊົ່ວໂມງ
+a template defines the layout of egroupware and it contains icons for each application.	preferences	lo	ຕົວແບບກໍານົດຮູບແບບຂອງຕາຕະລາງເວລາ ແລະ ຈະມີໄອຄ໋ອນສໍາຫຼັບແຕ່ລະໂປຼແກຼມ
+a theme defines the colors and fonts used by the template.	preferences	lo	ຊຸດຮູບແບບກໍາໜົດສີ ແລະ ແບບອັກສອນໂດຍໃຊ້ຕົວແບບ
+acl grants have been updated	preferences	lo	ACLອະນຸຍາດໄດ້ຮັບການປັບປຸງ
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	lo	ໃນລາຍການຕາຕະລາງເວລາຈະສະແດງຈໍານວນແຖວຕໍ່ໜ້າໜຶ່ງ. <br> ຫຼຸດລົງຫຼາຍເກີນໄປ
+are you sure you want to delete this category ?	preferences	lo	ທ່ານແນ່ໃຈບໍ່ຕ້ອງການລຶບໝວດນີ້?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	lo	ປ່ຽນລະຫັດຜ່ານຂອງຜູ້ໃຊ້ໂດຍການສົ່ງລະຫັດເກົ່າ ແລະ ໃສ່ລະຫັດໃໝ່. ສົ່ງຄ່າຄືນ TRUE ໃນຄວາມສໍາເລັດ,  FALSE ໃນຄວາມລົ້ມເຫຼວ
+change your password	preferences	lo	ປ່ຽນລະຫັດຜ່ານຂອງທ່ານ
+change your profile	preferences	lo	ປ່ຽນຂໍ້ມູນສ່ວນຕົວຂອງທ່ານ
+change your settings	preferences	lo	ປ່ຽນການຕັ້ງຄ່າຂອງທ່ານ
+charset for the csv export	addressbook	lo	ລະຫັດຕົວອັກສອນສໍາຫຼັບການສົ່ງອອກ  CSV
+click to select a color	preferences	lo	ຄຼີກເພື່ອເລືອກສີ
+color	preferences	lo	ສີ
+country	preferences	lo	ປະເທດ
+date format	preferences	lo	ຮູບແບບວັນທີ
+default	preferences	lo	ຄ່າເລີ່ມຕົ້ນ
+default application	preferences	lo	ແອັບພຼິເຄເຊັນເລີ່ມຕົ້ນ
+default preferences	preferences	lo	ການຕັ້ງຄ່າເລີ່ມຕົ້ນ
+default theme	preferences	lo	ຮູບແບບຄ່າເລີ່ມຕົ້ນ
+delete categories	preferences	lo	ລຶບໝວດໝູ່
+description can not exceed 255 characters in length !	preferences	lo	ລາຍລະອຽດບໍ່ເກີນ 255 ຕົວອັກສອນ
+display thumbnails for linked images	preferences	lo	ສະແດງພາບຂະໜາດຫຍໍ້ສຳລັບການເຊື່ອມຕໍ່ຮູບ
+div	preferences	lo	div
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lo	ທ່ານມັກຮູບແບບເວລາ 24 ຊົ່ວໂມງ ຫຼື 12 ຊົ່ວໂມງ
+edit custom fields	preferences	lo	ແກ້ໄຂຟີລທີ່ກໍານົດເອງ
+enable drag and drop functionality (experimental)	preferences	lo	ເປີດໃຊ້ງານຟັງຊັນຈັບມາໃສ່
+enable selectbox dropdown resizing for ie (experimental)	preferences	lo	ເປີດໃຊ້ງານການປັບຂະໜາດຊ່ອງເລືອກ-ແບບເມນູເລື່ອນລົງສຳຫຼັບ IE (ທົດລອງ)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານຟັງຊັນຈັບມາໃສໃນທຸກແອບພຼີຊັນ. ຖ້າໜ້າຕ່າງບໍ່ສະໜັບສະໜູນການຈັບມາໃສ່, ຈະປິດອັດຕະໂນມັດ. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານການປັບຂະໜາດຊ່ອງເລືອກ-ເມນູແບບເລື່ອນລົງສຳຫຼັບ IE ໃນທຸກແອບພຼິເຄຊັນ. ຖ້າໜ້າຕ່າງບໍ່ແມ່ນ IE, ຕົວເລືອກຈະນໍາໃຊ້ບໍ່ໄດ້. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
+enter your new password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຂອງທ່ານ
+enter your old password	preferences	lo	ໃສ່ລະຫັດຜ່ານເກົ່າຂອງທ່ານ
+failed to change password.  please contact your administrator.	preferences	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
+forced preferences	preferences	lo	ການຕັ້ງຄ່າແບບບັງຄັບ
+help off	preferences	lo	ປິດຄວາມຊ່ວຍເຫຼືອ
+hours	preferences	lo	ຊົ່ວໂມງ
+how do you like to display accounts	preferences	lo	ທ່ານຕ້ອງການສະແດງບັນຊີບໍ່?
+how do you like to select accounts	preferences	lo	ທ່ານຕ້ອງການເລືອກບັນຊີບໍ່?
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	lo	ເວລາຂອງທ່ານໄວຫຼືຊ້າກ່ວາເວລາຂອງເຊີບເວີ້ຈັກຊົ່ວໂມງ.<br> ຖ້າທ່ານຢູ່ໃນເຂດເວລາດຽວກັບເຊີບເວີ້ໃຫ້ເລືອກ 0 ຊົ່ວໂມງ, ຖ້າບໍ່ແມ່ນໃຫ້ເລືອກສະຖານທີ່ວັນແລະເວລາຂອງທ່ານ
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	lo	ຈະມີໄອຄ໋ອນຫຼາຍເທົ່າໃດໃນຊ່ອງຕົວເລືອກຕົ້ນໆຂອງໜ້າ. ໄອຄ໋ອນອື່ນຈະຢູ່ທີ່ເມນູເລື່ອນລົງ, ສາມາດຮ້ອງໃຊ້ດ້ວຍໄອຄ໋ອນທີ່ຢູ່ຂວາສຸດໃນຊ່ອງຕົວເລືອກ.
+icon	preferences	lo	ໄອຄ໋ອນ
+icons and text	preferences	lo	ໄອຄ໋ອນ ແລະ ເນື້ອຫາ
+icons only	preferences	lo	ສະເພາະໄອຄ໋ອນ
+interface/template selection	preferences	lo	ການເລືອກຮູບແບບຫຼືແມ່ແບບ
+language	preferences	lo	ພາສາ
+max matches per page	preferences	lo	ຈໍານວນສຸງສຸດທີ່ກົງກັນຕໍ່ໜ້າ
+max number of icons in navbar	preferences	lo	ຈໍານວນສູງສຸດຂອງໄອຄ໋ອນໃນຊ່ອງສະແດງຕົວເລືອກ
+no default	preferences	lo	ບໍ່ມີຄ່າເລີ່ມຕົ້ນ
+no user-selection at all	common	lo	ບໍ່ມີຜູ້ໃຊ້ເລືອກທັງໝົດ
+note: this feature does *not* change your email password. this will	preferences	lo	ໝາຍເຫດ: ຄຸນສົມບັດນີ້ *ບໍ່* ໄດ້ປ່ຽນລະຫັດຜ່ານອີເມວຂອງທ່ານ. ນີ້ຈະ
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	lo	ໝາຍເຫດ: ຄຸນສົມບັດນີ້ *ບໍ່* ໄດ້ປ່ຽນລະຫັດຜ່ານອີເມວຂອງທ່ານ. ຈະຕ້ອງດຳເນີນດ້ວຍຕົນເອງ
+number format	preferences	lo	ຮູບແບບຕົວເລກ
+office 2003 theme	preferences	lo	ຮູບແບບ Office 2003
+p: paragraph	preferences	lo	p: ຫຍໍ້ໜ້າ
+permanent time zone selection	preferences	lo	ການເລືອກເຂດເວລາແບບຖາວອນ
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາ, ທ່ານສາມາດສະລັບໄປມາຢ່າງໄວ. ຖ້າເລືອກໜ້ອຍກວ່າສອງ ຈະບໍ່ສະແດງ
+please select your timezone.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາຂອງທ່ານ
+please, select a new theme	preferences	lo	ກະລຸນາເລືອກຮູບແບບໃໝ່
+popup with search	preferences	lo	Popup ສໍາລັບການຄົ້ນຫາ
+re-enter your password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຊໍ້າຄືນອີກ
+read prefs for the specified application.	preferences	lo	ຕັ້ງຄ່າການອ່ານສຳລັບແອບພຼິເຄຊັນພິເສດ
+rich text editor enter mode	preferences	lo	ຂໍ້ຄວາມແກ້ໄຂສົມບູນເຂົ້າສູ່ຮູບແບບ
+rich text editor theme	preferences	lo	ຮູບແບບຂໍ້ຄວາມແກ້ໄຂສົມບູນ
+select different theme	preferences	lo	ເລືອກຮູບແບບທີ່ແຕກຕ່າງກັນ
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	lo	ວິທີການເລືອກຂໍ້ຄວາມແກ້ໄຂສົມບູນຈະສ້າງ (ລົງແຖວ) .
+select one	preferences	lo	ເລືອກ
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. <br> ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
+select the language of the spellchecker integrated into the rich text editor.	preferences	lo	ເລືອກພາສາຂອງຕົວກວດສອບສະກົດຄຳຢູ່ໃນການແກ້ໄຂຂໍ້ຄວາມທີ່ສົມບູນ
+select the theme (visualization) of the rich text editor.	preferences	lo	ເລືອກຮູບແບບ (ສະແດງຜົນ) ຂໍ້ຄວາມແກ້ໄຂສົມບູນ
+selectbox	preferences	lo	ຊ່ອງສໍາລັບເລືອກ
+selectbox with groupmembers	common	lo	ຊ່ອງເລືອກສະມະຊິກກຸ່ມ
+selectbox with primary group and search	preferences	lo	ຊ່ອງເລືອກກຸ່ມທໍາອິດ ແລະ ຄົ້ນຫາ
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	lo	ກຳໜົດຕາມຄວາມມັກຂອງທ່ານ. ເພື່ອຄວາມປອດໄພ, ທ່ານອາດຈະບໍ່ສະແດງຊື່ເຂົ້າໃຊ້ງານໃນສາທາລະນະ
+should the number of active sessions be displayed for you all the time.	preferences	lo	ຈຳນວນຄັ້ງທີ່ໃຊ້ງານຈະສະແດງໃຫ້ທ່ານຕະຫຼອດເວລາ
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	lo	ຂໍ້ຄວາມຊ່ວຍເຫຼືອເຫຼົ່ານີ້ຈະສະແດງຕະຫຼອດເມື່ອມີການປັບປຽນການຕັ້ງຄ່າຫຼືສະເພາະເມື່ອມີການຮ້ອງຂໍ
+show navigation bar as	preferences	lo	ສະແດງຊ່ອງຕົວເລືອກ
+show number of current users	preferences	lo	ສະແດງຈໍານວນຂອງຜູ້ໃຊ້ປັດຈຸບັນ
+show text on navigation icons	preferences	lo	ສະແດງຂໍ້ຄວາມໃນຊ່ອງຕົວເລືອກໄອຄ໋ອນ
+show_more_apps	common	lo	ສະແດງແອບພຼິເຄຊັນຕື່ມອີກ
+silver theme	preferences	lo	ຮູບແບບສີເງິນ
+spellchecker language	addressbook	lo	ຕົວກວດສອບສະກົດຄຳຂອງພາສາ
+text only	preferences	lo	ສະເພາະຂໍ້ຄວາມ
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	lo	ຄ່າເລີ່ມຕົ້ນແອບພຼິເຄຊັນຈະເລີ່ມເມື່ອທ່ານໃຊ້ຕາຕະລາງເວລາ ຫຼື ຄຼິກທີ່ໄອຄ໋ອນໜ້າທຳອິດ. <br> ທ່ານຍັງສາມາດມີຫຼາຍກວ່າໜຶ່ງແອບພຼິເຄຊັນທີ່ສະແດງໃນໜ້າທຳອິດ, ຖ້າທ່ານບໍ່ເລືອກໃຊ້ງານສະເພາະບ່ອນນີ້(ຕ້ອງມີການກຳໜົດຄ່າໃນການຕິດຕັ້ງຄ່າຂອງແຕ່ລະແອບພຼິເຄຊັນ)
+the old password is not correct	preferences	lo	ລະຫັດຜ່ານເກົ່າບໍ່ຖືກຕ້ອງ
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	lo	ຊ່ອງເລືອກສະແດງຜູ້ໃຊ້ທັງໝົດ(ສາມາດຊ້າຫຼາຍໃນການຕິດຕັ້ງຂະໜາດໃຫຍ່ທີ່ມີຜູ້ໃຊ້ຈໍານວນຫຼາຍ) popup ສາມາດຄົ້ນຫາໄດ້ດ້ວຍຊື່ ຫຼື ກຸ່ມ
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	lo	ເລືອກຊ່ອງສະແດງທີ່ມີຜູ້ໃຊ້ທັງໝົດ(ສາມາດຊ້າຫຼາຍໃນການຕິດຕັ້ງຂະໜາດໃຫຍ່ທີ່ມີຜູ້ໃຊ້ຈໍານວນຫຼາຍ) popup ສາມາດຄົ້ນຫາໄດ້ດ້ວຍຊື່ ຫຼື ກຸ່ມ. ສອງຕົວເລືອກສຸດທ້າຍກຳນົດການສະແດງຜົນຂອງຜູ້ໃຊ້ຄົນອື່ນໆ. ດັ່ງນັ້ນພວກເຂົາຄວນຈະຖືກບັງຄັບ ແລະ ບໍ່ໃຫ້ໃຊ້ເປັນຜູ້ດູແລລະບົບ.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	lo	ສອງຕົວເລືອກສຸດທ້າຍກຳນົດການສະແດງຜົນຂອງຜູ້ໃຊ້ຄົນອື່ນໆ. ດັ່ງນັ້ນພວກເຂົາຄວນຈະຖືກບັງຄັບ ແລະ ບໍ່ໃຫ້ໃຊ້ເປັນຜູ້ດູແລລະບົບ
+the two passwords are not the same	preferences	lo	ລະຫັດຜ່ານທັງສອງແມ່ນບໍ່ຄືກັນ
+theme (colors/fonts) selection	preferences	lo	ຮູບແບບ
+this server is located in the %1 timezone	preferences	lo	ເຊີບເວີ້ນີ້ຕັ້ງຢູ່ %1 ເຂດເວລາ
+thousands separator is only used for displaying and not for editing numbers.	preferences	lo	ການແບ່ງຫຼັກພັນແມ່ນໃຊ້ພຽງແຕ່ການສະແດງ ແລະ ບໍ່ໄດ້ໃຊ້ໃນການແກ້ໄຂຈຳນວນ
+time format	preferences	lo	ຮູບແບບເວລາ
+use default	preferences	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ
+users choice	preferences	lo	ທາງເລືອກຂອງຜູ້ໃຊ້
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	lo	ຕົວອັກສອນໃດຄວນຈະໃຊ້ໃນ CSV ສົ່ງອອກ.
+which currency symbol or name should be used in egroupware.	preferences	lo	ເຄື່ອງໝາຍສະກຸນເງິນ ຫຼື ຊ
+write prefs for the specified application.	preferences	lo	ຂຽນການຕັ້ງຄ່າຂອງການໃຊ້ງານພິເສດ
+you can show the applications as icons only, icons with app-name or both.	preferences	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ແອບພຼິເຄຊັນໃຊ້ງານດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
+you can show the linked entries with icons only, icons with app-name or both.	common	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
+you do not have permission to set acl's in this mode!	preferences	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຕັ້ງ ACL
+you must enter a password	preferences	lo	ທ່ານຕ້ອງໃສ່ລະຫັດຜ່ານ
+your current theme is: %1	preferences	lo	ຮູບແບບຂອງທ່ານປັດຈຸບັນແມ່ນ: %1
+your preferences	preferences	lo	ການຕັ້ງຄ່າຂອງທ່ານ

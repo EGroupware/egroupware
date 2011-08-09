@@ -1,0 +1,421 @@
+%1 %2 in %3	calendar	lo	%1 %2ໃນ %3
+%1 participants removed because of missing invite grants	calendar	lo	%1 ໄດ້​ຍ້າ​ຍຜູ້ເຂົ້າຮ່ວມ​ອອກ ເພາະບໍ່ມີການເຊີດເຊີນ
+%1 records imported	calendar	lo	%1 ບັນທຶກການນໍາເຂົ້າ
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	lo	%1 ບັນທຶກການອ່ານ(ຍັງບໍ່ທັນໄດ້ນໍາເຂົ້າ, ທ່ານສາມາດກັບຄືນ ແລະ ບໍ່ເອົາການທົດສອບຂອງການນຳເຂົ້າ )
+%1 weeks	calendar	lo	%1 ອາທິດ
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	lo	<b>ໝາຍ​ເຫດ</b>: ໃຫ້ນໍາໃຊ້ມື້ພັກໃນປະຕິທິນຂອງປະເທດທ່ານ ທີ່ຖືກຕັ້ງຄ່າເປັນ %1. ​ທ່ານສາ​ມາດປ່ຽນໄດ້ໃນ %2 ຂອງ​ທ່ານ. <br/> ມື້ພັກ​ແມ່ນ %3 ​ໄດ້ຕິດຕັ້ງອັດຕະໂນມັດຈາກ %4. ​ທ່ານສາ​ມາດປ່ຽນເປັນ %5.
+a non blocking event will not conflict with other events	calendar	lo	ເຫດການທີ່ບໍ່ປິດກັ້ນຈະບໍ່ມີຄວາມຂັດແຍ້ງກັບເຫດການອື່ນໆ
+accept or reject an invitation	calendar	lo	ຍອມຮັບ ຫຼື ປະຕີເສດການເຊີນ
+accepted	calendar	lo	ໄດ້ຍອມຮັບ
+access denied to the calendar of %1 !!!	calendar	lo	ການປະຕິເສດການເຂົ້າເຖິງບັນຊີ %1!!!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	lo	ການກະທຳທີ່ກໍ່ໃຫ້ເກີດການແຈ້ງເຕືອນ: ການເພີ່ມ, ຍົກເລີກ, ການຍອມຮັບ, ປະຕິເສດ
+actions	calendar	lo	ການປະຕິບັດ
+add alarm	calendar	lo	ເພີ່ມສັນຍານເຕືອນ
+added	calendar	lo	ເພີ່ມເຕີມ
+added by synchronisation	calendar	lo	ເພີ່ມໂດຍການເຮັດໃຫ້ຂໍ້ມູນຖືກກັນ
+after %1	calendar	lo	ຫຼັງຈາກ %1
+after current date	calendar	lo	ວັນທີຕໍ່ມາ
+alarm	calendar	lo	ສັນຍານເຕືອນ
+alarm added	calendar	lo	ໄດ້ເພີ່ມການແຈ້ງເຕືອນເຂົ້າ
+alarm deleted	calendar	lo	ສັນຍານເຕືອນໄດ້ຖືກລຶບ
+alarm for %1 at %2 in %3	calendar	lo	ການແຈ້ງເຕືອນ %1 ຢູ່ %2 ໃນ %3
+alarm management	calendar	lo	ການຈັດການການແຈ້ງເຕືອນ
+alarms	calendar	lo	ແຈ້ງເຕືອນ
+all categories	calendar	lo	ໝວດໝູ່ທັງໝົດ
+all day	calendar	lo	ໝົດມື້
+all events	calendar	lo	ທຸກເຫດການ
+all future	calendar	lo	ໃນອານາຄົດທັງໝົດ
+all incl. rejected	calendar	lo	ແມ່ນທັງໝົດ ລວມທັງການປະຕິເສດ
+all participants	calendar	lo	ຜູ້ເຂົ້າຮ່ວມທັງໝົດ
+allows to edit the event again	calendar	lo	ອະນຸຍາດໃຫ້ແກ້ໄຂເຫດການອີກເທື່ອໜື່ງ
+apply the action on the whole query, not only the shown events	calendar	lo	ຍອມຮັບທຸກໆການສອບຖາມ ບໍ່ພຽງແຕ່ສະແດງເຫດການທີ່ເກີດຂຶຶ້ນ
+apply the changes	calendar	lo	ນໍາໃຊ້ການປ່ຽນແປງ
+are you sure you want to delete this country ?	calendar	lo	ແນ່ໃຈບໍ່ວ່າ ທ່ານຕ້ອງການລຶບປະເທດນີ້?
+are you sure you want to delete this holiday ?	calendar	lo	ແນ່ໃຈບໍ່ວ່າ ທ່ານຕ້ອງການລຶບມື້ພັກນີ້?
+back half a month	calendar	lo	ກັບຄືນເຄິ່ງເດືອນ
+back one month	calendar	lo	ກັບຄືນເດືອນໜຶ່ງ
+before %1	calendar	lo	ກ່ອນໜ້າ %1
+before current date	calendar	lo	ກ່ອນວັນທີ່ປະຈຸບັນ
+before the event	calendar	lo	ກ່ອນເຫດການ
+birthday	calendar	lo	ວັນເກີດ
+birthdays	admin	lo	ວັນຄ້າຍວັນເກີດ
+busy	calendar	lo	ບໍ່ຫວ່າງ
+by	calendar	lo	ໂດຍ
+calendar csv export	calendar	lo	ການສົ່ງອອກປະຕິທິນ CSV
+calendar event	calendar	lo	ປະຕິທິນກິດຈະກໍາ
+calendar holiday management	admin	lo	ປະຕິທິນການຈັດການມື້ພັກ
+calendar menu	calendar	lo	ລາຍການປະຕິທິນ
+calendar preferences	calendar	lo	ປະຕິທິນທີມັກເບິ່ງ
+calendar settings	admin	lo	ການຕັ້ງຄ່າປະຕິທິນ
+calendar-fieldname	calendar	lo	ຊື່ຂອບເຂດຂອງປະຕິທິນ
+can't add alarms in the past !!!	calendar	lo	ບໍ່ສາມາດເພີ່ມການແຈ້ງເຕືອນຍ້ອນຫຼັງ ຫຼື ໃນອະດີດ
+can't aquire lock!	calendar	lo	ບໍ່ສາມາດໃສ່ລ໋ອກໄດ້
+canceled	calendar	lo	ຖືກຍົກເລີກ
+category %1 removed because of missing rights	calendar	lo	ໝວດໝູ່ທີ່ %1 ໄດ້ຍ້າຍອອກ ເພາະສິດທິທິ່ຂາດຫາຍໄປ
+category acl	common	lo	ໝວດ ACL
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	lo	ໝວດໝູ່ ACL ຈໍາກັດສະເພາະການເພີ່ມໝວດໝູ່ເຂົ້າໃນເຫດການ ຫຼື ການປ່ຽນສະຖານະຂອງຜູ້ມີສ່ວນຮ່ວມ. ມັນຈະບໍ່ປ່ຽນການສະແດງຜົນຂອງເຫດການ
+chair	calendar	lo	ປະທານ
+change history	calendar	lo	ປະຫວັດການປ່ຽນແປງ
+check all	calendar	lo	ກວດສອບທັງໝົດ
+close the window	calendar	lo	ປິດໜ້າຕ່າງ
+compose a mail to all participants after the event is saved	calendar	lo	ຂຽນຈົດໝາຍຫາຜູ້ມີສ່ວນຮ່ວມທັງໝົດຫຼັງຈາກໄດ້ມີການຖືກບັນທືກແລ້ວ
+conflict	calendar	lo	ການຂັດແຍ່ງ
+copy of:	calendar	lo	ກອບປີ້ ຂອງ:
+copy this event	calendar	lo	ກອບປີ້ເຫດການນີ້
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	lo	ຄັດລອກການປ່ຽນແປງຂອງທ່ານໄປຄຼິບບອດ,%1ໂຫຼດຄືນການບັນທຶກ/ຂໍ້ມູນ %2 ແລະ ລວມມັນເຂົ້າກັນ
+countries	calendar	lo	ຫຼາຍປະເທດ
+country	calendar	lo	ປະເທດ
+create an exception for the given date	calendar	lo	ສ້າງຂໍ້ຍົກເວັ້ນສໍາລັບວັນທີ ທີ່ຖືກລະບຸ
+create exception	calendar	lo	ສ້າງຂໍ້ຍົກເວັ້ນ
+create new links	calendar	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+csv	calendar	lo	CSV
+csv-fieldname	calendar	lo	ຊື່ຂອບເຂດຂອງ CSV
+csv-filename	calendar	lo	ຊື່ຟາຍຂອງ CSV
+custom fields	common	lo	ເຂດຂໍ້ມູນທີ່ກໍານົດເອງ
+custom_2	common	lo	ຫວ່າງ/ບໍ່ຫວ່າງ
+daily	calendar	lo	ປະຈໍາວັນ
+day	calendar	lo	ວັນ
+days	calendar	lo	ວັນ
+days of the week for a weekly repeated event	calendar	lo	ວັນຂອງອາທິດສໍາລັບເຫດການຊໍ້າທຸກອາທິດ
+days repeated	calendar	lo	ມື້ທີ່ເຮັດອີກ
+dayview	calendar	lo	ພາບລວມໃນມື້
+default appointment length (in minutes)	calendar	lo	ກໍານົດໄລຍະເວລາເລີ່ມຕົ້ນຂອງການນັດໝາຍ (ເປັນນາທີ)
+default calendar filter	calendar	lo	ຕົວກັ່ນຕອງປະຕິທິນທີ່ຕັ້ງໄວ້
+default calendar view	calendar	lo	ເລີ່ມຕົ້ນສະແດງປະຕິທິນທີ່ຕັ້ງໄວ້
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	lo	ຄ່າຄວາມຍາວເລີ່ມຕົ້ນຂອງເຫດການທີ່ສ້າງຂຶ້ນໃໝ່ ຄວາມຍາວເປັນນາທີ ເຊັ່ນ 60 ນາທີ ສໍາລັບ 1ຊົ່ວໂມງ
+default type of resources application selected in the calendar particpants research form.	calendar	lo	ການຕັ້ງຄ່າປະເພດຄັດເລືອກເອົາຂໍ້ມູນແບບຟອມປະຕິທິນວິໃຈຜູ້ເຂົ້າຮ່ວມ
+default type of resources selection	calendar	lo	ປະເພດຄ່າເລີ່ມຕົ້ນຂອງການເລືອກຂໍ້ມູນ
+default week view	calendar	lo	ການຕັ້ງຄ່າສະແດງເປັນອາທິດ
+delete selected events	calendar	lo	ລຶບເຫດການທີ່ໄດ້ເລືອກໄວ້
+delete series	calendar	lo	ການລຶບພາກສ່ວນນີ້
+delete this alarm	calendar	lo	ລຶບສັນຍານເຕືອນນີ້
+delete this event	calendar	lo	ລຶບເຫດການນີ້
+delete this exception	calendar	lo	ລຶບຂໍ້ຍົກເວັ້ນນີ້
+delete this series of recuring events	calendar	lo	ລຶບພາກສ່ວນເຫດການທິ່ເກີດຂຶ້ນເປັນປະຈໍາ
+deny ressources reservation for private events	calendar	lo	ປະຕິເສດການຈອງຊັບພະຍາກອນ/ຂໍ້ມູນສໍາລັບເຫດການສ່ວນຕົວ
+disinvited	calendar	lo	ບໍ່ໄດ້ຮັບເຊີນ
+display status of events	calendar	lo	ສະແດງສະຖານະຂອງເຫດການ
+displayed view	calendar	lo	ເບິ່ງການສະແດງ
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	lo	ສະແດງຄ່າມູມມອງປະຕິທິນຂອງທ່ານໃນໜ້າເລີ່ມຕົ້ນ/ທໍາອິດ (ໜ້່າເວບທີ່ທ່ານຈະໄດ້ຮັບ ເມື່ອເວລາທ່ານເຂົ້າໃຊ້ eGroupWare ຫຼື ກົດເອົາໄອຄອນທີ່ຢູ່ໜ້າຫຼັກ)
+do not include events of group members	calendar	lo	ບໍ່ລວມເຫດການຂອງສະມາຊິກໃນກຸ່ມ
+do you want a weekview with or without weekend?	calendar	lo	ທ່ານຕ້ອງການຮູບແບບປະຈໍາອາທິດ ທີ່ປະກອບດ້ວຍມື້ພັກທ້າຍອາທິດ ຫຼື ບໍ່?
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	lo	ທ່ານຕ້ອງການທີ່ຈະໄດ້ຮັບການແຈ້ງກ່ຽວກັບການນັດໝາຍໃໝ່ຫຼືທີ່ມີການປ່ຽນແປງບໍ່? ທ່ານຈະບໍ່ໄດ້ຮັບແຈ້ງ ກ່ຽວກັບການປ່ຽນແປງທີ່ເຮັດດ້ວຍຕົວເອງ <br> ທ່ານສາມາດຈໍາກັດການແຈ້ງເຕືອນການປ່ຽນແປງບາງຢ່າງເທົ່ານັ້ນ. ແຕ່ລະລາຍການຈະລວມມີການແຈ້ງເຕືອນທັງໝົດ ດັ່ງທີ່ກ່າວມາໃນເບື້ອງຕົ້ນ. ການປັບປ່ຽນທັງໝົດນັ້ນລວມໄປເຖິງການປ່ຽນແປງຂອງຊື່, ຄໍາອະທິບາຍ, ຜູ້ເຂົ້າຮ່ວມແຕ່ບໍ່ມີການຕອບສະໜອງຂອງຜູ້ມີສ່ວນຮ່ວມ. ຖ້າວ່າ ເຈົ້າຂອງເຫດການຮ້ອງຂໍການແຈ້ງເຕືອນໃດໆ, ລາວກໍ່ຈະໄດ້ຮັບການຕອບສະໜອງຜູ້ມີສ່ວນຮວມ ເຊັນວ່າ ການຍອມຮັບ ຫຼື ການປະຕິເສດ ເຊັ່ນກັນ.
+do you want to edit this event as an exception or the whole series?	calendar	lo	ທ່ານຕ້ອງການທີ່ຈະແກ້ໄຂເຫດການນີ້ເປັນຂໍ້ຍົກເວັ້ນ ຫຼື ແກ້ໄຂທັງໜົດ?
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	lo	ທ່ານຕ້ອງການທີ່ຈະໄດ້ຮັບບົດສະຫຼຸບການນັດໝາຍຂອງທ່ານແບບສະໝໍ່າສະເໝີ ຜ່ານທາງອີເມວບໍ່? <br>ບົດສະຫຼຸບຈະຖືກສົ່ງໄປທີ່ອິເມວທີ່ທ່ານມກຳນົດໄວ້ໃນຕອນເຊົ້າຂອງວັນນັ້ນ ຫຼື ໃນວັນຈັນຂອງການສະຫຼຸບທ້າຍອາທິດ <br> ມັນຈະຖືກສົ່ງກໍ່ຕໍ່ເມື່ອທ່ານມີການນັດໝາຍໃດໆໃນວັນນັ້ນ ຫຼືອາທິດນັ້ນ.
+do you wish to autoload calendar holidays files dynamically?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະໂຫຼດເອກະສານປະຕິທິນມື້ພັກບໍ່?
+download	calendar	lo	ດາວໂຫຼດ
+download this event as ical	calendar	lo	ດາວໂຫຼດເຫດການນີ້ເປັນ iCal
+duration	calendar	lo	ໄລຍະເວລາ
+duration of the meeting	calendar	lo	ໄລຍະເວລາຂອງການປະຊຸມ
+edit exception	calendar	lo	ແກ້ໄຂຂໍ້ຍົກເວັ້ນ
+edit series	calendar	lo	ແກ້ໄຂລໍາດັບ/ຊຸດ
+edit status or alarms for this particular day	calendar	lo	ແກ້ໄຂສະຖານະ ຫຼື ການແຈ້ງເຕືອນສໍາລັບວັນນີ້ໂດຍສະເພາະ
+edit this event	calendar	lo	ແກ້ໄຂເຫດການນີ້
+edit this series of recuring events	calendar	lo	ແກ້ໄຂລໍາດັບຂອງກິດຈະກໍາທີ່ເກີດຂຶ້ນເປັນປະຈໍານີ້
+empty for all	calendar	lo	ບ່ອນວ່າງສຳລັບທັງໝົດ
+end	calendar	lo	ສິ້ນສຸດ
+end date/time	calendar	lo	ສີ້ນສຸດ ວັນ/ເວລາ
+enddate	calendar	lo	ວັນສຸດທ້າຍ
+enddate / -time of the meeting, eg. for more then one day	calendar	lo	ສີ້ນສຸດ ວັນ/ເວລາຂອງການປະຊຸມ ຕົວຢ່າງຫຼາຍກວ່າ 1 ວັນ
+enddate of the export	calendar	lo	ວັນສີ້ນສຸດຂອງການສົ່ງອອກ
+ends	calendar	lo	ສີ້ນສຸດລົງ
+error adding the alarm	calendar	lo	ຂໍ້ຜິດພາດໃນການເພີ່ມການແຈ້ງເຕືອນ
+error: importing the ical	calendar	lo	ຂໍ້ຜິດພາດ: ການນໍາເຂົ້າ iCal
+error: no participants selected !!!	calendar	lo	ຂໍ້ຜິດພາດ: ບໍ່ມີການເລືອກຜູ້ເຂົ້າຮ່ວມ!!!
+error: ressources reservation in private events is not allowed!!!	calendar	lo	ຂໍ້ຜິດພາດ: ການຈອງຊັບພະຍາກອນໃນກິດຈະກໍາສ່ວນຕົວແມ່ນບໍ່ໄດ້ຮັບອະນຸຍາດ!!!
+error: saving the event !!!	calendar	lo	ຂໍ້ຜິດພາດ: ການບັນທຶກເຫດການ!!!
+error: starttime has to be before the endtime !!!	calendar	lo	ຂໍ້ຜິດພາດ: ເວລາເລີ້ມຕົ້ນຕ້ອງມີກອ່ນເວລາສີ້ນສຸດ!!!
+error: the entry has been updated since you opened it for editing!	calendar	lo	ຂໍ້ຜິດພາດ: ຂໍ້ມູນ/ລາຍການ ໄດ້ຮັບການປັບປຸງຕັ້ງແຕ່ຕອນທ່ານເປີດສໍາລັບການແກ້ໄຂ!!!
+event copied - the copy can now be edited	calendar	lo	ການສໍາເນົາເຫດການ – ການສໍາເນົາສາມາດແກ້ໄຂໄດ້ໃນຕອນນີ້
+event deleted	calendar	lo	ເຫດການໄດ້ຖືກລຶບ
+event details follow	calendar	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
+event saved	calendar	lo	ເຫດການໄດ້ຖືກບັນທຶກ
+event will occupy the whole day	calendar	lo	ເຫດການຈະໃຊ້ເວລາໝົດມື້
+every user can invite other users and groups	admin	lo	ຜູ້ໃຊ້ທຸກຄົນສາມາດເຊີນຜູ້ໃຊ້ອື່ນ ແລະ  ກຸ່ມອື່ນໆ
+exception	calendar	lo	ການຍົກເວັ້ນ
+exception created - you can now edit or delete it	calendar	lo	ການສ້າງການຍົກເວັ້ນຂຶ້ນ - ຕອນນີ້ທ່ານກໍ່ສາມາດແກ້ໄຂ ຫຼື ລຶບມັນໄດ້
+exceptions	calendar	lo	ການຍົກເວັ້ນ
+execute a further action for this entry	calendar	lo	ການຈັດການ/ການປະຕິບັດ ການດໍາເນີນການເພີ່ມເຕີມສໍາລັບລາຍການນີ້
+existing links	calendar	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
+exists	calendar	lo	ມີຢູ່ແລ້ວ
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	lo	ການຕໍ່/ການຂະຫຍາຍການປັບປຸງລ້ວນແຕ່ປະກອບດ້ວຍລາຍລະອຽດເຫດການທີ່ສໍາເລັດຮຽບຮ້ອຍແລ້ວ. iCal's ສາມາດນໍາເຂົ້າໂດຍຮູບແບບປະຕິທິນອື່ນ
+fieldseparator	calendar	lo	ການແຍກຟີລ
+filename	calendar	lo	ຊື່ຟາຍ
+filename of the download	calendar	lo	ຊື່ຟາຍຂອງການດາວໂຫຼດ
+find free timeslots where the selected participants are availible for the given timespan	calendar	lo	ຊອກຫາຊ່ວງເວລາວ່າງ ທີ່ຜູ້ເຂົ້າຮ່ວມທີ່ຖືກຄັດເລືອກນັ້ນ ມີຄວາມສະດວກໃນເວລາຕອນນັ້ນ.
+firstname of person to notify	calendar	lo	ຊື່ຂອງບຸກຄົນທີ່ຈະແຈ້ງ
+for	calendar	lo	ສໍາລັບ
+for which views should calendar show distinct lines with a fixed time interval.	calendar	lo	ມຸມມອງໃດທີ່ປະຕິທິນຄວນຈະສະແດງເສັ້ນທີ່ຊັດເຈນກັບເວລາພັກທີ່ແນ່ນອນ/ເວລາທີ່ກໍານົດໄວ້.
+format of event updates	calendar	lo	ຮູບແບບຂອງການປັບປຸງງານ
+forward half a month	calendar	lo	ເລື່ອນໄປເຄິ່ງເດືອນ
+forward one month	calendar	lo	1ເດືອນຕໍ່ໜ້າ
+forward one year	calendar	lo	1ປີຕໍ່ໜ້າ
+four days view	calendar	lo	ການສະແດງຮູບແບບສີ່ມື້
+freebusy	common	lo	ຫວ່າງ/ບໍ່ຫວ່າງ
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	lo	ຫວ່າງ/ບໍ່ຫວ່າງ: ບໍ່ຮູ້ຈັກຜູ້ໃຊ້'% 1', ລະຫັດຜ່ານຜິດ ຫຼື ໃຊ້ງານບໍ່ໄດ້ໃນການເຂົ້້າລະບົບຜູ້ໃຊ້!
+freetime search	calendar	lo	ຄົ້ນຫາເວລາຫວ່າງ
+fri	calendar	lo	ວັນສຸກ
+full description	calendar	lo	ລາຍລະອຽດ
+fullname of person to notify	calendar	lo	ຊື່ເຕັມຂອງບຸກຄົນທີ່ຈະແຈ້ງ
+global categories	calendar	lo	ໝວດໝູ່ ຫຼື ລໍາດັບທັງໝົດ
+global public and group public	calendar	lo	ທົ່ວໂລກ ແລະ ກຸ່ມຄົນທົ່ວໄປ
+global public only	calendar	lo	ສໍາລັບບຸກຄົນທົ່ວໄປ
+group invitation	calendar	lo	ເຊີນເປັນກຸ່ມ
+group planner	calendar	lo	ກຸ່ມຜູ້ວາງແຜນ
+group public only	calendar	lo	ກຸ່ມຄົນທົ່ວໄປ
+groupmember(s) %1 not included, because you have no access.	calendar	lo	ສະມາຊິກກຸ່ມ 1% ບໍ່ໄດ້ລວມ ຍ້ອນທ່ານບໍ່ສາມາດເຂົ້າເຖີງ.
+groups: other users can allways be invited, only groups require an invite grant	admin	lo	ກຸ່ມ: ຜູ້ໃຊ້ອື່ນສາມາດຖືກເຊີດເຊີນໄດ້ຕະຫຼອດເວລາ. ມີພຽງກຸ່ມເທົ່ານັ້ນທີ່ຖືກອະນຸຍາດໃຫ້ເຊີດເຊີນ.
+h	calendar	lo	ຊົ່ວໂມງ
+here is your requested alarm.	calendar	lo	ນີ້ຄືສັນຍານເຕືອນທີ່ທ່ານຂໍ
+hide private events	calendar	lo	ເຊື່ອງເຫດການສ່ວນຕົວ
+hide private infos	calendar	lo	ເຊື່ອງຂໍ້ມູນສ່ວນຕົວ
+high priority	calendar	lo	ຄວາມສໍາຄັນສູງ
+history	calendar	lo	ປະຫວັດສາດ
+holiday	calendar	lo	ມື້ພັກ
+holiday management	calendar	lo	ການບໍລິຫານມື້ພັກ
+holidays	calendar	lo	ມື້ພັກປະຈໍາປີ
+holidays only	calendar	lo	ສະເພາະມື້ພັກປະຈໍາປີ
+hours	calendar	lo	ຊົ່ວໂມງ
+how far to search (from startdate)	calendar	lo	ດົນປານໃດໃນການຄົ້ນຫາ(ຈາກມື້ເລີ່ມຕົ້ນ)
+how many minutes should each interval last?	calendar	lo	ຈັກນາທີຈິ່ງຈະສະແດງເວລາຄັ້ງສຸດທ້າຍ?
+how many weeks should the multiple week view show?	calendar	lo	ຈັກອາທິດທີ່ຮູບແບບຫຼາຍກວ່າໜຶ່ງອາທິດ ຈະສະແດງ?
+ical	calendar	lo	iCal
+ical / rfc2445	calendar	lo	iCal / rfc2445
+ical export	calendar	lo	ການສົ່ງອອກ iCal
+ical file	calendar	lo	ເອກະສານ iCal
+ical import	calendar	lo	ນຳເຂົ້າ iCal
+ical successful imported	calendar	lo	ການນໍາເຂົ້າ iCal ສໍາເລັດຜົນ
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	lo	ຖ້າກວດເຫັນວ່າມື້ພັກຕົກຖືກຊ່ວງວັນເສົາ ຫຼື ອາທິດ, ມັນຈະຖືກເລື່ອນໄປເປັນມື້ວັນຈັນ.
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	lo	ຖ້າວ່າທ່ານບໍ່ໄດ້ກໍານົດ/ຕັ້ງລະຫັດຜ່ານ ຂໍ້ມູນສາມາດໃຊ້ໄດ້ກັບທຸກຄົນທີ່ຮູ້URL!
+ignore conflict	calendar	lo	ການເມີນເສີຍຕໍ່ຂໍ້ຂັດແຍ່ງ
+import csv-file	common	lo	ນໍາເຂົ້າເອກະສານ CSV-File
+imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	lo	ນໍາເອົາເຫດການທີ່ຢູ່ໃນປະຕິທິນຂອງທ່ານ ທີ່ໄດ້ມາຈາກເອກະສານ CSV. CSV ໝາຍເຖິງ "Comma Separated Values" ເຖິງແນວໃດກໍ່ຕາມ, ຢູ່ໃນແທັບຕົວເລືອກ ທ່ານສາມາດເລືອກເອົາຕົວແຍກອື່ນ.
+interval	calendar	lo	ຊ່ວງເວລາລະຫວ່າງ
+invalid email-address "%1" for user %2	calendar	lo	ທີ່ຢູ່ອີເມລບໍ່ຖຶກຕ້ອງ "%1" ສໍາລັບຜູ້ນໍາໃຊ້ %2
+invitations	calendar	lo	ການເຊີນ
+invite	calendar	lo	ເຊີນຊວນ
+last	calendar	lo	ສຸດທ້າຍ
+lastname of person to notify	calendar	lo	ນາມສະກຸນຂອງຜູ້ທີ່ຈະແຈ້ງ
+length of the time interval	calendar	lo	ຊ່ວງເວລາພັກ
+link	calendar	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
+link to view the event	calendar	lo	ເຊື່ອມຕໍ່ເພື່ອເບິ່ງເຫດການ
+links	calendar	lo	ເຊື່ອມຕໍ່
+links, attachments	calendar	lo	ເຊື່ອມຕໍ່, ສິ່ງທີ່ຄັດຕິດ
+listview	calendar	lo	ສະແດງລາຍການ
+location	calendar	lo	ສະຖານທີ່
+location to autoload from	admin	lo	ສະຖາທີ່ຕັ້ງເພື່ອໂຫຼດອັດຕະໂນມັດຈາກ
+location, start- and endtimes, ...	calendar	lo	ສະຖາທີ, ເວລາເລີ້ມຕົ້ນ ແລະ ສີ້ນສຸດ,…
+mail all participants	calendar	lo	ສົ່ງຈົດໝາຍຫາຜູ້ເຂົ້າຮ່ວມທັງໝົດ
+make freebusy information available to not loged in persons?	calendar	lo	ໃຫ້ຂໍ້ມູນຫວ່າງ/ບໍ່ຫວ່າງ ພ້ອມໃຊ້ງານກັບບຸກຄົນທີ່ບໍ່ໄດ້ເຂົ້າສູ່ລະບົບ
+minutes	calendar	lo	ນາທີ
+modified	calendar	lo	ປັບປຸງ
+mon	calendar	lo	ວັນຈັນ
+month	calendar	lo	ເດືອນ
+monthly	calendar	lo	ລາຍເດືອນ
+monthly (by date)	calendar	lo	ລາຍເດືອນ -ຕາມວັນທີ່
+monthly (by day)	calendar	lo	ລາຍເດືອນ -ລາຍວັນ
+monthview	calendar	lo	ສະແດງເປັນເດືອນ
+multiple week view	calendar	lo	ສະແດງເປັນຮູບແບບສອງອາທິດ/ຫຼາຍອາທິດ
+needs action	calendar	lo	ຕ້ອງການການກະທໍາ
+new search with the above parameters	calendar	lo	ຄົ້ນຫາໃໝ່ຕໍ່ກັບຕົວປ່ຽນເບື້ອງຕົ້ນ
+no events found	calendar	lo	ບໍ່ພົບເຫດການ
+no filter	calendar	lo	ບໍ່ມີການຕຶກຕອງ
+no matches found	calendar	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ.
+no recurrence	calendar	lo	ບໍ່ມີການເກີດຂື້ນອີກ
+no response	calendar	lo	ບໍ່ມີການຕອບສະໜອງ/ຕອບຮັບ
+non blocking	calendar	lo	ບໍ່ປິດກັ້ນ
+not	calendar	lo	ບໍ່
+not rejected	calendar	lo	ບໍ່ໄດ້ປະຕິເສດ
+nothing to update, version is already %1.	calendar	lo	ບໍ່ມີຫຍັງປັບປຸງ, ຮູບແບບ ແມ່ນກຽມພ້ອມແລ້ວ %1.
+notification messages for added events	calendar	lo	ຂໍ້ຄວາມແຈ້ງເຕືອນສໍາລັບການເພີ່ມກິດຈະກໍາ
+notification messages for canceled events	calendar	lo	ຂໍ້ຄວາມແຈ້ງເຕືອນສໍາລັບຍົກເລີກກິດຈະກໍາ/ເຫດການ
+notification messages for disinvited participants	calendar	lo	ຂໍ້ຄວາມແຈ້ງສໍາລັບຜູ້ເຂົ້າຮ່ວມທີ່ບໍ່ໄດ້ຖືກເຊີນ
+notification messages for modified events	calendar	lo	ຂໍ້ຄວາມແຈ້ງສຳລັບການປັບປ່ຽນກິດຈະກໍາ
+notification messages for your alarms	calendar	lo	ຂໍ້ຄວາມແຈ້ງເຕືອນ ສຳລັບການເຕືອນໄພຂອງທ່ານ
+notification messages for your responses	calendar	lo	ຂໍ້ຄວາມແຈ້ງເຕືອນເພື່ອການຕອບຮັບຂອງທ່ານ
+number of records to read (%1)	calendar	lo	ຈໍານວນຂອງບັນທຶກທີ່ຈະອ່ານ (%1)
+number of weeks to show	calendar	lo	ຈໍານວນຂອງອາທິດທີ່ຈະສະແດງ
+observance rule	calendar	lo	ລະບຽບການປະຕິບັດຕາມ
+occurence	calendar	lo	ການເກີດຂື້ນ
+old startdate	calendar	lo	ວັນທີເລີ້ມຕົ້ນເກົ່າ
+olddate	calendar	lo	ວັນທີ່ດັ່ງເດີມ
+on %1 %2 %3 your meeting request for %4	calendar	lo	ໃນ%1 %2 %3 ການປະຊຸມຂອງທ່ານຮ້ອງຂໍ %4
+on all modification, but responses	calendar	lo	ຢູ່ໃນການປັບປ່ຽນທັງໝົດ ແຕ່ມີການຕອບຮັບ/ຕອບສະໜອງ
+on any time change too	calendar	lo	ການປ່ຽນແປງຕະຫຼອດເວລາເຊັ່ນກັນ
+on invitation / cancelation only	calendar	lo	ໃນການເຊີນຫຼືຍົກເລີກເທົ່ານັ້ນ
+on participant responses too	calendar	lo	ຜູ້ມີສ່ວນຮ່ວມ ມີການຕອບຮັບເຊັ່ນກັນ
+on time change of more than 4 hours too	calendar	lo	ໃນການປ່ຽນເວລາເກີນກວ່າ 4 ຊົ່ວໂມງ
+one month	calendar	lo	ໜື່ງເດືອນ
+one week	calendar	lo	ໜື່ງອາທິດ
+one year	calendar	lo	ໜື່ງປີ
+only group-events	calendar	lo	ສະເພາະກຸ່ມເຫດການ
+only the initial date of that recuring event is checked!	calendar	lo	ສະເພາະວັນເລີ່ມຕົ້ນຂອງເຫດການທີ່ເກີດຂຶ້ນປະຈໍາ ທີ່ຈະຖືກກວດ!
+open todo's:	calendar	lo	ເປີດ ສິ່ງທີ່ຕ້ອງເຮັດ:
+optional	calendar	lo	ຕົວເລືອກ
+overlap holiday	calendar	lo	ມື້ພັກຊ້ອນກັນ
+owner too	calendar	lo	ເຈົ້າຂອງເຊັ່ນດຽວ
+participants	calendar	lo	ຜູ້ເຂົ້າຮ່ວມ
+participants disinvited from an event	calendar	lo	ຜູ້ເຂົ້າຮ່ວມ ບໍ່ໄດ້ຖືກເຊີນຈາກການຈັດງານ
+participants, resources, ...	calendar	lo	ຜູ້ເຂົ້າຮວ່ມກິດຈະກໍາ, ຊັບພະຍາກອນ,…
+password for not loged in users to your freebusy information?	calendar	lo	ລະຫັດຜ່ານ ເພື່ອບໍ່ໃຫ້ຜູ້ໃຊ້ທີ່ບໍ່ສາມາດເຂົ້າສູ່ລະບົບໄດ້ ໄດ້ເຂົ້າໄປຫາຂໍ້ມູນຂອງທ່ານ
+people holiday	calendar	lo	ມື້ພັກຂອງປະຊາຊົນ
+permission denied	calendar	lo	ການອະນຸຍາດຖືກປະຕິເສດ.
+planner by category	calendar	lo	ວາງແຜນຕາມໝວດໝຸູ່
+planner by user	calendar	lo	ວາງແຜນໂດຍຜູ້ໃຊ້
+please note: you can configure the field assignments after you uploaded the file.	calendar	lo	ຂໍ້ສັງເກດ: ທ່ານສາມາດກໍານົດຂອບເຂດໜ້າທີ່ວຽກງານ ຫຼັງຈາກທ່ານອັບໂຫຼດຂໍ້ມູນ.
+preselected group for entering the planner	calendar	lo	ເລືອກກຸ່ມກ່ອນ ເພື່ອເຂົ້າໄປຫາການອອກແບບ/ວາງແຜນ
+previous	calendar	lo	ກ່ອນ
+private and global public	calendar	lo	ພາກເອກກະຊົນ ແລະ ປະຊາຊົນທົ່ວໂລກ
+private and group public	calendar	lo	ກຸ່ມປະຊາຊົນແລະພາກເອກກະຊົນ
+private only	calendar	lo	ສ່ວນຕົວເທົ່ານັ້ນ
+quantity	calendar	lo	ປະລິມານ
+re-edit event	calendar	lo	ແກ້ໄຂກິດຈະກໍາຄືນ
+receive email updates	calendar	lo	ຮັບອີເມລທີ່ໄດ້ຮັບການປ່ຽນແປງ/ປັບປຸງ
+receive summary of appointments	calendar	lo	ຮັບບົດສະຫຼຸບຂອງການນັດໝາຍ
+recurrence	calendar	lo	ການເກີດຂຶ້ນອີກ
+recurring event	calendar	lo	ເຫດການທີ່ເກີດຂຶ້ນປະຈໍາ
+reject	calendar	lo	ປະຕິເສດ
+rejected	calendar	lo	ຖືກປະຕິເສດ
+repeat days	calendar	lo	ວັນຊໍ້າ
+repeat the event until which date (empty means unlimited)	calendar	lo	ເຫດການຊໍ້າຈົ້ນກວ່າຈະຮອດວັນທີ່ນັ້ນ. ວ່າງເປົ່າ ໝາຍເຖິງ ບໍ່ຈໍ່ກັດ.
+repeat type	calendar	lo	ປະເພດຂອງການເຮັດຊໍ້າ
+repeating event information	calendar	lo	ຂໍ້ມູນເຫດການຊໍ້າ/ກັບຄືນມາໃໝ່
+repeating interval, eg. 2 to repeat every second week	calendar	lo	ຊ່ວງເວລາການເຮັດຊໍ້າ ເຊັ່ນ 2 ທີ່ຈະເຮັດຊໍ້າທຸກອາທິດທີ່ສອງ
+repetition	calendar	lo	ການເຮັດຊໍ້າ
+repetitiondetails (or empty)	calendar	lo	ລາຍລະອຽດການເຮັດຊໍ້າ (ຫຼື ຫວ່າງເປົ່າ)
+requested	calendar	lo	ຮ້ອງຂໍ
+require an acl grant to invite other users and groups	admin	lo	ຮ້ອງຂໍການຊ່ວຍເຫຼືອຈາກ ACL ເພື່ອເຊີນຜູ້ໃຊ້ອື່ນ ແລະ ກຸ່ມຄົນອື່ນ
+reset	calendar	lo	ຕັ້ງຄ່າຄືນໃໝ່
+resources	calendar	lo	ແຫຼ່ງຂໍ້ມູນ
+resources except conflicting ones	calendar	lo	ຊັບພະຍາກອນ/ຂໍ້ມູນ ຍົກເວັ້ນສິ່ງທີ່ຂັດແຍ່ງກັນ
+resources with conflict detection	calendar	lo	ຂໍ້ມູນພ້ອມກັບການປ້ອງກັນຂໍ້ຂັດແຍ່ງ
+restrict add category to	calendar	lo	ການຈໍາກັດເພີ່ມໝວດໝູ່ໃຫ້
+restrict set status to	calendar	lo	ສະຖານະການຕັ້ງຄ່າຈໍາກັດການ
+role	calendar	lo	ບົດບາດ
+rule	calendar	lo	ລະບຽບ
+sat	calendar	lo	ວັນເສົາ
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	lo	ບັນທຶກກິດຈະກໍາເປັນຂໍ້ຍົກເວັນ- ລຶບເຫດການທີ່ເກີດຂຶ້ນຄັ້ງດຽວ -  ແກ້ໄຂສະຖານະ ຫຼື ການເຕືອນສໍາລັບມື້ນີໂດຍສະເພາະ.
+saves the changes made	calendar	lo	ບັນທຶກການປ່ຽນແປງທີ່ໄດ້ເຮັດ.
+saves the event ignoring the conflict	calendar	lo	ບັນທຶກເຫດການ ເມີນເສີຍຕໍ່ຄວາມຂັດແຍ່ງ.
+scheduling conflict	calendar	lo	ກໍານົດຂໍ້ຂັດແຍ່ງ
+select a %1	calendar	lo	ເລືອກ %1
+select a time	calendar	lo	ເລືອກເວລາ
+select an action	calendar	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ
+select an action...	calendar	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ...
+select multiple contacts for a further action	calendar	lo	ເລືອກເອົາການຕິດຕໍ່ຫຼາຍຮູບແບບ ເພື່ອການດໍາເນີນການຕໍ່ໄປ
+select resources	calendar	lo	ເລືອກຊັບພະຍາກອນ
+select who should get the alarm	calendar	lo	ເລືອກວ່າໃຜຄວນຈະໄດ້ຮັບການແຈ້ງເຕືອນ
+selected range	calendar	lo	ເລືອກຊ່ວງໄລຍະ/ຂອບເຂດ
+set a year only for one-time / non-regular holidays.	calendar	lo	ຕັ້ງຄ່າປີໜຶ່ງເທົ່ານັ້ນສໍາລັບຄັ້ງດຽວລມື້ພັກທີ່ບໍ່ເປັນປົກກະຕິ.
+set new events to private	calendar	lo	ຕັ້ງກິດຈະກໍາໃໝ່ໃນພາກສ່ວນຕົວ
+setting lock time calender	admin	lo	ຕັ້ງຄ່າເວລາການລ໋ອກຂໍ້ມູນສໍາລັບປະຕິທິນ (ຄ່າເລີ່ມຕົ້ນເປັນ 1 ວິນາທີ.)
+should new events created as private by default ?	calendar	lo	ກິດຈະກໍາໃໝ່ທີ່ເປັນການສ່ວນໂຕຄວນຈະຖືກສ້າງຂຶ້ນບໍ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	lo	ບຸກຄົົນທີ່ບໍ່ໄດ້ເຂົ້າສູ່ລະບົົບສາມາດເບິ່ງຂໍ້ມູນທີ່ຫວ່າງ/ບໍ່ຫວ່າງຂອງທ່ານໄດ້ບໍ່? ທ່ານສາມາດຕັ້ງລະຫັດຜ່ານພິເສດທີ່ແຕກຕ່າງຈາກລະຫັດປົກກະຕິ ເພື່ອປ້ອງກັນຂໍ້ມູນນີ້ . ຂໍ້ມູນຫວ່າງ/ບໍ່ຫວ່າງຢູ່ໃນຮູບແບບ iCal ແລະ ຈະລວມເວລາທີ່ທ່ານບໍ່ຫວ່າງ ມັນຈະບໍ່ລວມເຖິງຊື່ເຫດການ, ຄໍາອະທິບາຍ ຫຼື ສະຖານທິ່.  URL ສຳລັບຫວ່າງ/ບໍ່ຫວ່າງ ຂໍ້ມູນຂອງທ່ານແມ່ນ
+should the planner display an empty row for users or categories without any appointment.	calendar	lo	ຜູ້ວາງແຜນ ຄວນຈະສະແດງແຖວທີ່ຫວ່າງສໍາລັບຜູ້ໃຊ້ ຫຼື ໝວດໝູ່ ໂດຍປາສະຈາກການນັດໝາຍໃດໆ.
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	lo	ສະຖານະຂອງຜູ້ເຂົ້າຮ່ວມງານ (ຍອມຮັບ, ປະຕິເສດ...) ຄວນຈະສະແດງໃນວົງເລັບ ຫຼັງຊື່ຂອງຜູ້ເຂົ້າຮ່ວມແຕ່ລະຄົນບໍ?
+show all events, as if they were private	calendar	lo	ສະແດງທຸກໆເຫດການ/ກໍລະນີ ຄືກັບວ່າພວກມັນເປັນຄວາມລັບ
+show all status incl. rejected events	calendar	lo	ສະແດງສະຖານະທັງໜົດລວມເຖິງ ການປະຕິເສດເຫດການ
+show all status, but rejected	calendar	lo	ສະແດງສະຖານະທັງໜົດ, ແຕ່ຖືກປະຕິເສດ
+show also events just owned by selected user	calendar	lo	ສະແດງເຫດການທີ່ຖືກນໍາໃຊ້ໂດຍຜູ້ໃຊ້ທີ່ຖືກເລືອກເຊັ່ນກັນ
+show birthdays from addressbook	admin	lo	ສະແດງວັນເກີດຈາກປື້ມທີ່ຢູ່
+show default view on main screen	calendar	lo	ສະແດງຄ່າເລີ້ມຕົ້ນເທິງໜ້າຈໍຫຼັກ
+show empty rows in planner	calendar	lo	ສະແດງແຖວທີ່ຫວ່າງໃນແຜນນີ້
+show list of upcoming events	calendar	lo	ສະແດງລາຍຊື່ຂອງກິດຈະກໍາທີ່ຈະມາເຖິງ
+show only accepted events	calendar	lo	ສະແດງສະເພາະກິດຈະກໍາທີ່ໄດ້ຮັບການຍອມຮັບ
+show only invitations, not yet accepted or rejected	calendar	lo	ສະແດງສະເພາະຄໍາເຊີນທີ່ຍັງບໍ່ທັນໄດ້ຕອບຮັບ ຫຼຼື ປະຕິເສດ
+show only rejected events	calendar	lo	ສະແດງສະເພາະເຫດການທີ່ຖືກປະຕິເສດ
+show only tentative accepted events	calendar	lo	ສະແດງສະເພາະໃນກໍລະນີ/ເຫດການ ທີ່ຍັງບໍ່ທັນໄດ້ຕົກລົງແນ່ນອນ
+show only the date, not the year	admin	lo	ສະແດງສະເພາະແຕ່ວັນທີ, ບໍ່ແມ່ນປີ
+show this month	calendar	lo	ສະແດງເດືອນນີ້
+show this week	calendar	lo	ສະແດງອາທິດນີ້
+single event	calendar	lo	ເຫດການດຽວ
+start	calendar	lo	ເລີ່ມ
+start date/time	calendar	lo	ເລີ່ມວັນທີ່/ເວລາ
+startdate	calendar	lo	ວັນທີ່ເລີ່ມ
+startdate / -time	calendar	lo	ເລີ່ມ ວັນທີ່/ເວລາ
+startdate and -time of the search	calendar	lo	ວັນທີ່ເລີ່ມຕົ້ນ ແລະ ເວລາຂອງການຄົ້ນຫາ
+startdate of the export	calendar	lo	ວັນທີ່ເລີ່ມຕົ້ນຂອງການສົ່ງອອກ
+startrecord	calendar	lo	ເລີ່ມບັນທຶກ
+status changed	calendar	lo	ສະຖານະຖືກປ່ຽນ
+status for all future scheduled days changed	calendar	lo	ສະຖານະຂອງຕາຕະລາງວັນໃນຂ້າງໜ້າຖືກປ່ຽນແປງ.
+status for this particular day changed	calendar	lo	ສະຖານະຂອງມື້ສະເພາະນີ້ຖືກປ່ຽນ.
+status of participants set to unknown because of missing category rights	calendar	lo	ສະຖານະຂອງຜູ້ເຂົ້າຮ່ວມໃຫ້ຕັ້ງຄ່າເປັນ ບໍ່ຮູ້ຈັກ ຍ້ອນຂາດການແບ່ງແຍກສິດໜ້າທີ່.
+submit to repository	calendar	lo	ສົ່ງເຂົ້າບ່ອນທີ່ຈັດເກັບໄວ້
+sun	calendar	lo	ວັນອາທິດ
+tentative	calendar	lo	ຊົວຄາວ(ບໍ່ແນ່ນອນ)
+test import (show importable records <u>only</u> in browser)	calendar	lo	ທົດສອບການນໍາເຂົ້າ, ສະແດງການບັນທຶກ ທີ່ສໍາຄັນ <u>ພຽງແຕ່</u> ໃນໜ້າຕ່າງ
+the resource you selected is already overbooked:	calendar	lo	ຂໍ້ມູນທີ່ທ່ານເລືອກ ແມ່ນຖືກຈອງຫຼາຍເກີນໄປ:
+this day is shown as first day in the week or month view.	calendar	lo	ມື້ນີ້ຖືກສະແດງເປັນມື້ທໍາອິດຂອງອາທິດ ຫຼື ຂອງເດືອນ.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	lo	ສິ່ງນີ້ກໍານົດຈຸດສິ້ນສຸດມຸມມອງລາຍວັນຂອງທ່ານ. ເຫດການຫຼັງຈາກເວລານີ້ ແມ່ນຈະຖືກສະແດງໃນມຸມມອງລາຍວັນຕໍ່ໄປນີ້/ແມ່ນຈະຖືກສະແດງໃນທ້າຍມື້.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	lo	ສິ່ງນີ້ກໍານົດ/ລະບຸຈຸດເລີ່ມຕົ້ນມຸມມອງຂອງມື້. ເຫດການກ່ອນເວລານີ້ ແມ່ນຈະຖືກສະແດງຢູ່ຂ້າງເທິງຂອງມື້. <br> ເວລານີ້ຍັງຖືກນໍາໃຊ້ເໝືອນກັບກໍານົດເວລາເລີ່ມຕົ້ນສໍາລັບເຫດການ/ກິດຈະກໍາໃໝ່.
+this entry is currently opened by %1!	calendar	lo	ລາຍການນີ້ປະຈຸບັນຖືກເປີດ %1!
+this entry is opened by user:	calendar	lo	ລາຍການນີ້ຖືກເປີດພາຍໃນຊ່ວງເວລາທີ່ກໍານົດໂດຍຜູ້ໃຊ້ງານ:
+this event is part of a series	calendar	lo	ເຫດການນີ້ເປັນສ່ວນໜຶ່ງຂອງຊຸດ
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	lo	ກຸ່ມນີ້ ແມ່ນຖືກເລືອກໄວ້ກ່ອນໜ້າ ເມື່ອເວລາທ່ານປ້ອນຜູ້ວາງແຜນ. ທ່ານສາມາດປ່ຽນແປງມັນຢູ່ໃນວາງແຜນໄດ້ທຸກເວລາທີ່ທ່ານຕ້ອງການ.
+this message is sent for canceled or deleted events.	calendar	lo	ຂໍ້ຄວາມນີ້ ແມ່ນ ຖືກສົ່່ງໄປເພື່ອເຫດການທີ່ຖືກຍົກເລີກ ຫຼື ຖືກລຶບອອກ.
+this message is sent for modified or moved events.	calendar	lo	ຂໍ້ມູນນີ້ ແມ່ນຖືກສົ່ງໄປເພື່ອການປັບປ່ຽນ ຫຼື ເຄື່ອນຍ້າຍເຫດການ.
+this message is sent to disinvited participants.	calendar	lo	ຂໍ້ຄວາມນີ້ໄດ້ຖືກສົ່ງໄປຫາຜູ້ທີ່ບໍ່ໄດ້ຖືກເຊີນເຂົ້າຮວ່ມ.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	lo	ຂໍ້ຄວາມນີ້ ແມ່ນຖືກສົ່ງໄປຫາຜູ້ເຂົ້າຮ່ວມຂອງກິດຈະກໍາ - ຜູ້ທີ່ຮ້ອງຂໍໃຫ້ມີການແຈ້ງກ່ຽວກັບເຫດການໃໝ່ໆ - ທີ່ທ່ານຮັບຜິດຊອບ.  <br> ທ່ານສາມາດໃຊ້ຕົວປ່ຽນບາງຢ່າງເຊິ່ງໄດ້ຮັບການທົດແທນກັບຂໍ້ມູນຂອງເຫດການ ແຖວທໍາອິດແມ່ນຫົວຂໍ້ຂອງອິເມລ.
+this message is sent when you accept, tentative accept or reject an event.	calendar	lo	ຂໍ້ຄວາມນີ້ຈະຖືກສົ່ງເມື່ອທ່ານຍອມຮັບ, ການຍອມຮັບທີ່ບໍ່ແນ່ນອນ ຫຼື ປະຕິເສດເຫດການ.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	lo	ຂໍ້ຄວາມນີ້ຈະຖືກສົ່ງເມື່ອທ່ານຕັ້ງຄ່າເຕືອນສໍາລັບເຫດການທີ່ແນ່ນອນ ລວມທັງຂໍ້ມູນທັງໝົດທີ່ທ່ານອາດຕ້ອງການ.
+this module displays a planner calendar.	calendar	lo	ຮູບແບບນີ້ ຈະສະແດງເດືອນປະຈຸບັນ.
+three month	calendar	lo	ສາມເດືອນ
+thu	calendar	lo	ວັນພະຫັດ
+til	calendar	lo	ຈົນກວ່າ
+timeframe	calendar	lo	ຂອບເວລາ
+timeframe to search	calendar	lo	ຊ່ວງເວລາໃນການຄົ້ນຫາ
+timezone	calendar	lo	ເຂດເວລາ
+timezone in which recurrences have identical time	calendar	lo	ເຂດເວລາທີ່ເກີດຂຶ້ນອີກຄັ້ງໃນເວລາຄືກັນ
+timezone of event exports	calendar	lo	ເຂດເວລາຂອງການສົ່ງອອກ
+timezones updated to version %1 (%2 records updated).	calendar	lo	ເຂດເວລາໄດ້ປັບປຸງເປັນ ເວີຊັນ %1, %2 ບັນທຶກໄດ້ປັບປຸງ.
+title of the event	calendar	lo	ຊື່ເລື່ອງຂອງເຫດການ
+to many might exceed your execution-time-limit	calendar	lo	ຫຼາຍເກີນໄປອາດຈະເກີນໄລຍະເວລາຈໍາກັດການປະຕິບັດແຜນການຂອງທ່ານ
+to-firstname	calendar	lo	ເຖິງຊື່ທໍາອິດ
+to-fullname	calendar	lo	ເຖິງຊື່ເຕັມ
+to-lastname	calendar	lo	ເຖິງນາມສະກຸນ
+tomorrow	calendar	lo	ມື້ອື່ນ
+tue	calendar	lo	ວັນອັງຄານ
+two weeks	calendar	lo	ສອງອາທິດ
+update timezones	common	lo	ປັບປຸງເຂດເວລາ
+updated	calendar	lo	ປັບປຸງ
+use end date	calendar	lo	ໃຊ້ວັນທີສຸດທ້າຍ
+use the selected time and close the popup	calendar	lo	ໃຊ້ເວລາທີ່ເລືອກໄວ້ ແລະ ປິດປອບອັບ
+use this timezone to export calendar data.	calendar	lo	ໃຊ້ເຂດເວລາດັ່ງກ່າວ ເພື່ອສົ່ງຂໍ້ມູນຂອງປະຕິທິນອອກ.
+user or group	calendar	lo	ຜູ້ໃຊ້ ຫຼື ກຸ່ມ
+users + groups: inviting both allways requires an invite grant	admin	lo	ຜູ້ໃຊ້ + ກຸ່ມ: ເຊີນທັງສອງກຸ່ມ. ຮຽກຮ້ອງການຕອບຮັບຄໍາເຊີນຢູ່ສະເໝີ
+view exception	calendar	lo	ເບິ່ງຂໍ້ຍົກເວັ້ນ
+view series	calendar	lo	ສະແດງຂັ້ນຕອນນີ້
+view this event	calendar	lo	ສະແດງເຫດການ/ກິດຈະກໍານີ້
+views with fixed time intervals	calendar	lo	ສະແດງດ້ວຍໄລຍະເວລາທີ່ກໍານົດ
+wed	calendar	lo	ວັນພຸດ
+week	calendar	lo	ອາທິດທີ
+weekday	calendar	lo	ວັນທໍາມະດາ
+weekday starts on	calendar	lo	ເລີ່ມຕົ້ນວັນປະຈໍາອາທິດທີ່
+weekdays	calendar	lo	ວັນທໍາມະດາ
+weekdays to use in search	calendar	lo	ວັນທໍາມະດາທີ່ຈະໃຊ້ໃນການຄົ້ນຫາ
+weekly	calendar	lo	ທຸກໆອາທິດ
+weeks in multiple week view	calendar	lo	ສະແດງຮູບແບບອາທິດໜຶ່ງ ເປັນຫຼາຍອາທິດ
+weekview	calendar	lo	ສະແດງເປັນອາທິດ
+weekview with weekend	calendar	lo	ສະແດງເປັນອາທິດ ລວມທັງວັນເສົາ ແລະ ວັນອາທິດ
+weekview without weekend	calendar	lo	ສະແດງເປັນອາທິດ ແຕ່ບໍ່ລວມວັນເສົາ ແລະ ວັນອາທິດ
+whole day	calendar	lo	ໝົດມື້
+wk	calendar	lo	ອາທິດໜຶ່ງ
+work day ends on	calendar	lo	ມື້ເຮັດວຽກສິ້ນສຸດໃນ
+work day starts on	calendar	lo	ມື້ເລີ່ມຕົ້ນເຮັດວຽກ
+workday	calendar	lo	ມື້ເຮັດວຽກ
+workdays	calendar	lo	ມື້ເຮັດວຽກ
+yearly	calendar	lo	ປະຈໍາປີ
+yearly planner	calendar	lo	ສະແດງເປັນປີ/ຮູບແບບປີ
+you are not allowed to book the resource selected:	calendar	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຈອງຂໍ້ມູນທີ່ຖືກເລືອກ
+you can either set a year or a occurence, not both !!!	calendar	lo	ທ່ານສາມາດຕັ້ງເປັນປີ ຫຼື ສິ່ງທີ່ເກີດຂຶ້ນເປັນປະຈໍາ, ບໍ່ແມ່ນທັງສອງ!
+you can only set a year or a occurence !!!	calendar	lo	ທ່ານສາມາດຕັ້ງຄ່າ ເປັນໜຶ່ງປີ ຫຼື ສິ່ງທີ່ເກີດຂຶ້ນເທົ່ານັ້ນ!
+you do not have permission to read this record!	calendar	lo	ທ່ານບໍ່ມີສິດໃນການອ່ານບັນທືກນີ້!
+you have a meeting scheduled for %1	calendar	lo	ທ່ານມີຕາຕະລາງປະຊຸມທີ່ %1
+you have been disinvited from the meeting at %1	calendar	lo	ທ່ານບໍ່ໄດ້ຮັບການເຊີນຈາກການປະຊຸມທີ່ %1
+you need to select an account, contact or resource first!	calendar	lo	ທ່ານຕ້ອງການເລືອກບັນຊີ, ຕິດຕໍ່ ຫຼື ຂໍ້ມູນກອ່ນ!
+you need to select an ical file first	calendar	lo	ທ່ານຕ້ອງເລືອກ ເອກະສານ iCal ກອ່ນ.
+you need to select some events first	calendar	lo	ທ່ານຕ້ອງເລືອກບາງເຫດການກອ່ນ.
+you need to set either a day or a occurence !!!	calendar	lo	ທ່ານຕ້ອງຕັ້ງຄ່າເປັນມື້ ຫຼື ເປັນເຫດການທີ່ເກີດຂຶ້ນເປັນປະຈໍາ!
+you requested more than available for the selected resource:	calendar	lo	ທ່ານຮຽກຮ້ອງຫຼາຍກວ່າທີ່ໄດ້ກໍານົດໄວ້ ສໍາລັບຂໍ້ມູນທີ່ຖືກເລືອກ:
+your meeting scheduled for %1 has been canceled	calendar	lo	ຕາຕະລາງປະຊຸມທີ່ %1 ໄດ້ຖືກຍົກເລີກ
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	lo	ການປະຊຸມຂອງທ່ານທີ່ໄດ້ກໍານົດໄວ້  %1 ໄດ້ຮັບການກໍານົດໃໝ່ໄປທີ່ %2
