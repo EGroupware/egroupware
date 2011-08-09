@@ -167,9 +167,16 @@
 					<xsl:choose>
 						<xsl:when test="starts-with(.,'color:')">
 							<xsl:variable name="hex">
-								<xsl:call-template name="rbga-to-hex">
-									<xsl:with-param name="rgba-val" select="substring-after(.,':')"/>
-								</xsl:call-template>
+								<xsl:choose>
+								<xsl:when test="contains(., 'rgb(')">
+									<xsl:call-template name="rbga-to-hex">
+										<xsl:with-param name="rgba-val" select="substring-after(.,':')"/>
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="substring-after(.,'#')"/>
+								</xsl:otherwise>
+								</xsl:choose>
 							</xsl:variable>
 							<style:text-properties fo:color="#{$hex}"/>
 						</xsl:when>

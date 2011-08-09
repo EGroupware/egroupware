@@ -150,12 +150,11 @@ Breakers
 				<xsl:choose>
 					<xsl:when test="contains(., 'rgb(')">
 						<xsl:call-template name="rbga-to-hex">
-							<xsl:with-param name="rgba-val" select="."/>
+							<xsl:with-param name="rgba-val" select="substring-after(.,':')"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<!-- This is not quite right -->
-						<xsl:variable name="hex" select="." />
+						<xsl:value-of select="substring-after(.,'#')" />
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
@@ -163,9 +162,16 @@ Breakers
 		</xsl:if>
 		<xsl:if test="starts-with(.,'background-color:')">
 			<xsl:variable name="hex">
-				<xsl:call-template name="rbga-to-hex">
-					<xsl:with-param name="rgba-val" select="."/>
-				</xsl:call-template>
+				<xsl:choose>
+					<xsl:when test="contains(., 'rgb(')">
+						<xsl:call-template name="rbga-to-hex">
+							<xsl:with-param name="rgba-val" select="substring-after(.,':')"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="substring-after(.,'#')" />
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:variable>
 			<w:shd w:fill="{$hex}"/>
 		</xsl:if>
