@@ -1,0 +1,100 @@
+accessories of	resources	lo	ອຸປະກອນເສີມ
+accessories:	resources	lo	ອຸປະກອນ
+actions	resources	lo	ປະຕິບັດ
+add accessory	resources	lo	ເພີ່ມອຸປະກອນເສີມ
+add resource	resources	lo	ເພີ່ມຊັບພະຍາກອນ
+add resources	resources	lo	ເພີ່ມຊັບພະຍາກອນ
+administrator	resources	lo	ຜູ້ບໍລິຫານ
+all categories	resources	lo	ໝວດໝູ່ທັງໝົດ
+book	resources	lo	ຈອງ
+book selected resources	resources	lo	ຈອງຊັບພະຍາກອນໄດ້ເລືອກແລ້ວ
+book this resource	resources	lo	ຈອງຊັບພະຍາກອນນີ້
+bookable	resources	lo	ໃຫ້ຈອງໄດ້
+buy this article	resources	lo	ຊື້ສິ່ງນີ້
+buy this resource	resources	lo	ຊື້ຊັບພະຍາກອນນີ້
+buyable	resources	lo	ໃຫ້ຊື້ໄດ້
+categories admin	resources	lo	ໝວດໝູ່ຜູ້ຄຸ້ມຄອງລະບົບ
+category:	resources	lo	ໝວດໝູ່
+check all	resources	lo	ເລືອກທັງໝົດ
+choose categories admin	resources	lo	ເລືອກໝວດໝູ່ຜູ້ຄຸ້ມຄອງລະບົບ
+clear selection	resources	lo	ລຶບລ້າງການເລືອກ
+configure access permissions	admin	lo	ກຳໜົດສິດໃນການເຂົ້າໃຊ້
+conflict	resources	lo	ຄວາມຂັດແຍ້ງ
+create new accessory for this resource	resources	lo	ສ້າງອຸປະກອນເສີມໃໝ່ສຳລັບຊັບພະຍາກອນນີ້
+create new links	resources	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+delete selected resources	resources	lo	ລຶບຊັບພະຍາກອນທີ່ໄດ້ເລືອກ
+delete this entry	resources	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
+description (short)	resources	lo	ລາຍລະອຽດ(ສັ້ນໆ)
+direct booking permissions	resources	lo	ສິດທິການຈອງໂດຍກົງ
+don't use vfs (this will need a symlink --> see readme)	resources	lo	ຫ້າມໃຊ້ vfs (ນີ້ຈະຕ້ອງການ  symlink--> ເບີ່ງທີ ເອກະສານກໍາກັບ )
+edit this entry	resources	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
+existing links	resources	lo	ທີ່ມີການເຊື່ອມຕໍ່
+general	resources	lo	ທົ່ວໄປ
+general informations about resource	resources	lo	ຂໍ້ມູນທົ່ວໄປກ່ຽວກັບຊັບພະຍາກອນ
+gernal resource	resources	lo	ຊັບພະຍາກອນທົ່ວໄປ
+how many of the resources are useable?	resources	lo	ຊັບພະຍາກອນ ທີ່ສາມາດໃຊ້ໄດ້ມີເທົ່າໃດ?
+how many of them are useable?	resources	lo	ຮູບແບບທີ່ສາມາດໃຊ້ໄດ້ມີເທົ່າໃດ?
+how many of this resource are usable	resources	lo	ຊັບພະຍາກອນ ທີ່ສາມາດໃຊ້ໄດ້ນີ້ມີເທົ່າໃດ?
+how many of this resource exists	resources	lo	ຊັບພະຍາກອນ ທີ່ມີຢູ່ນີ້ມີເທົ່າໃດ?
+implies booking permission	resources	lo	ສະແດງເຖິງສິດໃນການຈອງ
+implies read permission	resources	lo	ສະແດງເຖິງສິດໃນການອ່ານ
+inventory number	resources	lo	ຈຳນວນເຄື່ອງ
+inventory number:	resources	lo	ຈຳນວນເຄື່ອງ:
+is resource bookable?	resources	lo	ສາມາດຈອງຊັບພະຍາກອນໄດ້ບໍ ?
+is resource buyable?	resources	lo	ສາມາດຊື້ຊັບພະຍາກອນໄດ້ບໍ ?
+is this resource bookable?	resources	lo	ຊັບພະຍາກອນນີ້ຈອງໄດ້ບໍ ?
+is this resource buyable?	resources	lo	ຊັບພະຍາກອນນີ້ຊື້ໄດ້ບໍ ?
+links	resources	lo	ເຊື່ອມຕໍ່
+location	resources	lo	ສະຖານທີ່
+location of resource	resources	lo	ສະຖານທີ່ຂອງຊັບພະຍາກອນ
+location:	resources	lo	ສະຖານທີ່:
+long description	resources	lo	ຊື່ຂອງຊັບພະຍາກອນ
+name:	resources	lo	ຊື່:
+no description available	resources	lo	ບໍ່ມີລາຍລະອຽດທີ່ໃຊ້ໄດ້
+no resources selected	resources	lo	ບໍ່ມີຊັບພະຍາກອນທີ່ໄດ້ເລືອກ
+notify your administrator to correct this situation	resources	lo	ແຈ້ງຜູ້ເບິງແຍ່ງລະບົບຂອງເຈົ້າ ເພື່ອກວດສະພາບນີ້ໃຫ້ຖືກຕ້ອງ
+picture	resources	lo	ຮູບພາບ
+picture source	resources	lo	ບ່ອນເກັບຂອງຮູບພາບ
+picture type is not supported, sorry!	resources	lo	ປະເພດຂອງຮູບບໍ່ສະໜັບສະໜູນ, ຂໍອະໄພ
+pictures or resource	resources	lo	ຮູບແບບ ຫຼ້ ຊັບພະຍາກອນ
+planer	resources	lo	ຜູ້ວາງແຜນ
+prizeing information for booking or buying	resources	lo	ຂໍ້ມູນສໍາລັບການຈອງ ແລະ ການຊື້
+quantity	resources	lo	ຈໍານວນ
+quantity of resource	resources	lo	ຈໍານວນຂອງຊັບພະຍາກອນ
+quantity:	resources	lo	ຈໍານວນ:
+read calendar permissions	resources	lo	ສິດການອ່ານປະຕິທິນ
+read permissions	resources	lo	ສິດການອ່ານ
+related links	resources	lo	ເຊື່ອມຕໍ່ທີ່ກ່ຽວຂ້ອງ
+resources	common	lo	ແຫຼ່ງຊັບພະຍາກອນ
+resources list	resources	lo	ລາຍການຊັບພະຍາກອນ
+responsible:	resources	lo	ຮັບຜິດຊອບ:
+saves entry and exits	resources	lo	ບັນທຶກການເຂົ້າ ແລະ ການອອກ
+select a category	resources	lo	ເລືອກໝວດໝູ່
+select resource	resources	lo	ເລືອກຊັບພະຍາກອນ
+select resources	common	lo	ເລືອກຊັບແຫຼ່ງພະຍາກອນ
+select/deselect all	resources	lo	ເລືອກ/ຍົກເລີກການເລືອກທັງໝົດ
+short description	resources	lo	ຄຳອະທິບາຍໂດຍຫຍໍ້
+short description of resource	resources	lo	ຄຳອະທິບາຍໂດຍຫຍໍ້ຂອງຊັບພະຍາກອນ
+show calendar of resource	resources	lo	ສະແດງປະຕິທິນຂອງຊັບພະຍາກອນ
+something went wrong by deleting resource	resources	lo	ບາງສິ່ງຜິດປົກກະຕິໂດຍການລຶບຊັບພະຍາກອນ
+something went wrong by saving resource	resources	lo	ບາງສິ່ງຜິດປົກກະຕິໂດຍການປະຫຍັດຊັບພະຍາກອນ
+storage	resources	lo	ຂໍ້ມູນທີ່ເກັບໄວ້
+storage information	resources	lo	ຂໍ້ມູນທີ່ເກັບໄວ້:
+the calendar of this resource	resources	lo	ປະຕິທິນຂອງຊັບພະຍາກອນນີ້
+this module displays the resources app	resources	lo	ໂມດູນນີ້ສະແດງຊັບພະຍາກອນ ແອັບພຼິກເຄຊັນ
+use general resources icon	resources	lo	ໃຊ້ໄອຄ໋ອນຊັບພະຍາກອນທົ່ວໄປ
+use own picture	resources	lo	ໃຊ້ຮູບພາບຂອງຕົນເອງ
+use the category's icon	resources	lo	ໃຊ້ໄອຄ໋ອນຂອງໝວດໝູ່
+useable	resources	lo	ສາມາດໃຊ້
+useable:	resources	lo	ສາມາດໃຊ້:
+view accessories for this resource	resources	lo	ເບິ່ງອຸປະກອນເສີມຂ
+view this entry	resources	lo	ເບິ່ງລາຍການຂໍ້ມູນນີ້
+web-page of resource	resources	lo	ໜ້າເວບຂອງຊັບພະຍາກອນ
+web-site for this resource	resources	lo	ເວບໄຊລສຳຫຼັບຊັບພະຍາກອນນີ້
+where to find this resource?	resources	lo	ທີຢູ່
+which category does this resource belong to?	resources	lo	ໝວດໃດທີ່ຂຶ້ນກັບຊັບພະຍາກອນນີ້
+write permissions	resources	lo	ສິດການຂຽນ
+you are not permitted to delete this resource!	resources	lo	ເຈົ້າຍັງບໍ່ທັນໄດ້ຮັບການອະນຸຍາດໃຫ້ລຶບຊັບພະຍາກອນນີ້!
+you are not permitted to edit this resource!	resources	lo	ເຈົ້າຍັງບໍ່ທັນໄດ້ຮັບການອະນຸຍາດໃຫ້ແກ້ໄຂຊັບພະຍາກອນນີ້!
+you are not permitted to get information about this resource!	resources	lo	ເຈົ້າຍັງບໍ່ໄດ້ຮັບການອະນຸຍາດໃຫ້ໄດ້ຮັບຂໍ້ມູນກ່ຽວກັບຊັບພະຍາກອນນີ້!
+you chose more resources than available	resources	lo	ເຈົ້າເລືອກຊັບພະຍາກອນຫຼາຍຂຶ້ນກກວ່າໃຊ້ໄດ້
