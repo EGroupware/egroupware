@@ -1,0 +1,178 @@
+%1 already exists as a file	filemanager	lo	%1 ຟາຍນີ້ມີຢູ່ແລ້ວ
+%1 directories and %2 files copied.	filemanager	lo	%1 ໄດ້ສໍາເນົາໄດເລັກເທີລີ ແລະ %2 ຟາຍໄວ້ແລ້ວ
+%1 directories and %2 files deleted.	filemanager	lo	%1 ໄດ້ລຶບໄດເລັກເທີລີ ແລະ %2 ຟາຍແລ້ວ
+%1 elements linked.	filemanager	lo	%1 ອົງປະກອບໄດ້ຖືກເຊື່ອມຕໍ່.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	lo	%1 ການສໍາເນົາຜິດພາດ( %2 ໄດເລັກເທີລີ ແລະ %3 ຟາຍທີ່ໄດ້ສຳເນົາ)
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	lo	%1 ການລຶບຜິດພາດ( %2 ໄດເລັກເທີລີ ແລະ %3 ຟາຍທີ່ໄດ້ລຶບ)
+%1 errors linking (%2)!	filemanager	lo	%1ການເຊື່ອມຕໍ່ຜິດພາດ(%2)!
+%1 errors moving (%2 files moved)!	filemanager	lo	%1 ການຫຍ້າຍຜິດພາດ(%2 ຟາຍໄດ້ຖືກຫຍ້າຍ)!
+%1 failed, %2 succeded	filemanager	lo	%1 ລົ້ມເຫຼວ, %2 ສໍາເລັດ
+%1 files	common	lo	%1 ລົ້ມເຫຼວ
+%1 files copied.	filemanager	lo	%1ຟາຍທີໄດ້ສໍາເນົາ
+%1 files deleted.	filemanager	lo	%1ຟາຍທີໄດ້ຖືກລົບ
+%1 files moved.	filemanager	lo	%1ຟາຍທີ່ໄດ້ຖືກຫຍ້າຍ.
+%1 starts with '%2'	filemanager	lo	%1ເລີ່ມ '%2'
+%1 successful uploaded.	filemanager	lo	%1 ສໍາເລັດກັບການອັບໂຫຼດ.
+%1 the following files into current directory	filemanager	lo	%1 ຟາຍຕໍ່ໄປນີ້ເປັນໄດເລັກເທີລີີປັດຈຸບັນ
+%1 urls %2 to clipboard.	filemanager	lo	%1 URL %2 ໄປທີ່ຄຼິບບອດ.
+accessrights	filemanager	lo	ສິດການເຂົ້າ
+acl added.	filemanager	lo	ໄດ້ເພີ່ມ ACL.
+acl deleted.	filemanager	lo	ໄດ້ລຶບ ACL.
+actions	filemanager	lo	ປະຕິບັດ
+all files	common	lo	ຟາຍທັງໝົດ
+and all it's childeren	filemanager	lo	ແລະ ປີກຍ່ອຍທັງໝົດຂອງມັນ
+applications	common	lo	ແອບພຼິເຄຊັນ
+basedirectory	filemanager	lo	ໄດເລັກເທີລີພື້ນຖານ
+can't open directory %1!	filemanager	lo	ບໍ່ສາມາດເປີດໄດເລັກເທີລີ %1! 
+cancel editing %1 without saving	filemanager	lo	ການແກ້ໄຂຍົກເລີກ %1 ໂດຍບໍ່ບັນທຶກ
+cannot create directory because it begins or ends in a space	filemanager	lo	ບໍ່ສາມາດສ້າງໄດເລັກເທີລີເພາະມັນຈະເລີ້ມຕົ້ນຫຼືສີ້ນສຸດໃນພື້ນທີ່ວ່າງ
+check all	filemanager	lo	ເລືອກທັງໝົດ
+clear search	filemanager	lo	ລົບລ້າງການຄົ້ນຫາ
+comment	filemanager	lo	ຄວາມຄິດເຫັນ
+copied	filemanager	lo	ໄດ້ສໍາເນົາ
+copied %1 to %2	filemanager	lo	ໄດ້ສໍາເນົາ %1 ເຖິງ %2
+copy	filemanager	lo	ສໍາເນົາ
+copy to	filemanager	lo	ສໍາເນົາໄປທີ່
+copy to clipboard	filemanager	lo	ສໍາເນົາໄປທີ່ຄຼິບບອດ
+could not copy %1 to %2	filemanager	lo	ບໍ່ສາມາດສໍາເນົາ %1 ເຖິງ %2 
+could not create %1	filemanager	lo	ບໍ່ສາມາດສ້າງ %1
+could not delete %1	filemanager	lo	ບໍ່ສາມາດລຶບ %1
+could not move %1 to %2	filemanager	lo	ບໍ່ສາມາດຫຍ້າຍ %1 ເຖິງ %2 
+could not rename %1 to %2	filemanager	lo	ບໍ່ສາມາດປ່ຽນຊື່ %1 ເຖິງ %2
+create a link	filemanager	lo	ສ້າງການເຊື່ອມຕໍ່(Link)
+create directory	filemanager	lo	ສ້າງໄດເລັກເທີລີ
+create file	filemanager	lo	ສ້າງຟາຍ
+create folder	filemanager	lo	ສ້າງໂຟລເດີ
+created	filemanager	lo	ສ້າງແລ້ວ
+created %1,%2	filemanager	lo	ໄດ້ສ້າງ%1, %2
+created directory %1	filemanager	lo	ໄດ້ສ້າງໄດເລັກເທີລີ %1
+current directory	filemanager	lo	ໄດເລັກເທີລີປັດຈຸບັນ
+custom fields	filemanager	lo	ກຳນົດເຂດຂໍ້ມູນເອງ
+cut	filemanager	lo	ຕັດ
+cut to clipboard	filemanager	lo	ຕັດ ໄປທີ່ຄິບບອດ
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lo	ພຶດຕິກໍາເລີ່ມຕົ້ນເປັນ "ບໍ່ / No". ການເຊື່ອມຕໍ່ຈະບໍ່ສະແດງ, ແຕ່ວ່າທ່ານສາມາດຊີ້ໄປທີ່ຕໍາແໜ່ງ ຫຼື ກໍານົດສະເພາະຕໍາແໜ່ງທີ່ເປັນໂຟລເດີເລີ້ມຕົ້ນຫຼື ເຊືອມຕໍ່ຂອງໂຟນເດີ້
+delete this file or directory	filemanager	lo	ລຶບຟາຍ ຫຼື ໄດເລັກເທີລີນີ້
+deleted %1	filemanager	lo	ຖືກລຶບ %1
+directories sorted in	filemanager	lo	ໄດ້ລຽນລໍາດັບໄດເລັກເທີລີເຂົ້າ
+directory	filemanager	lo	ໄດເລັກເທີລີ
+directory %1 already exists	filemanager	lo	ມີໄດເລັກເທີລີ %1 ຢູ່ແລ້ວ
+directory %1 does not exist	filemanager	lo	ບໍ່ພົບຊື່ໄດເລັກເທີລີ %1
+directory not found or no permission to access it!	filemanager	lo	ບໍ່ພົບໄດເລັກເທີລີີ ຫຼື ບໍ່ມີສິດໃຫ້ເຂົ້າໃຊ້ງານໄດ້
+display and modification of content	filemanager	lo	ສະແດງຜົນ ແລະ ປັບປຽ່ນການສະແດງເນື້ອຫາ
+display of content	filemanager	lo	ສະແດງເນື້ອຫາ
+do you want to overwrite the existing file %1?	filemanager	lo	ທ່ານຕ້ອງການຂຽນທັບຟາຍ %1 ທີ່ມີຢູ່ແລ້ວບໍ່?
+download	filemanager	lo	ດາວໂຫຼດ
+edit comments	filemanager	lo	ແກ້ໄຂຄວາມຄິດເຫັນ
+edit settings	filemanager	lo	ແກ້ໄຂການຕັ້ງຄ່າ
+enter setup user and password	filemanager	lo	ປ້ອນການຕັ້ງຄ່າຜູ້ໃຊ້ ແລະ ລະຫັດຜ່ານ
+enter setup user and password to get root rights	filemanager	lo	ປອ້ນການຕັ້ງຄ່າປ້ອນຜູ້ໃຊ້ ແລະ ລະຫັດຜ່ານເພື່ອຈະໄດ້ຮັບສິດທິ
+enter the complete vfs path to specify a fast access link to a folder	filemanager	lo	ປ້ອນທີ່ຢູ່ VFS ໃຫ້ສົມບູນເພື່ອລະບຸການເຊື່ອມຕໍ່ການເຂົ້າເຖິງ ເຊືອມຕໍ່ຢ່າງໄວທີ່ໂຟລເດີ
+enter the complete vfs path to specify your desired start folder.	filemanager	lo	ປ້ອນທີ່ຢູ່ VFS ໃຫ້ສົມບູນເພື່ອລະບຸໂຟລເດີທີ່ທ່ານຕ້ອງການເລີ່ມຕົ້ນ
+error adding the acl!	filemanager	lo	ຂໍ້ຜິດພາດການເພີ່ມ ACL
+error creating symlink to target %1!	filemanager	lo	ຂໍ້ຜິດພາດໃນການສ້າງ symlink ເພື່ອເປົ້າໝາຍ %1!
+error deleting the acl entry!	filemanager	lo	ຂໍ້ຜິດພາດໃນການລຶບລາຍການ acl!
+executable	filemanager	lo	ປະຕິບັດການ
+extended access control list	filemanager	lo	ຂະຫຍາຍລາຍການຄວບຄຸມການເຂົ້າໃຊ້
+extended acl	filemanager	lo	ຂະຫຍາຍ ALC
+failed to change permissions of %1!	filemanager	lo	ລົ້ມເຫຼວໃນການປ່ຽນແປງສິດຂອງ % 1!
+failed to create directory!	filemanager	lo	ລົ້ມເຫຼວໃນການສ້າງໄດເລັກເທີລີ!
+favorites	filemanager	lo	ລາຍການທີ່ມັກ
+file	filemanager	lo	ຟາຍ
+file %1 could not be created.	filemanager	lo	ຟາຍ %1 ມີຢູ່ແລ້ວ. ກະລຸນາແກ້ໄຂຫຼືລຶບມັນກອ່ນ
+file %1 may be too big. contact your systemadministrator for further info	filemanager	lo	ຟາຍ %1 ອາດມີຂະໜາດໃຫ່ຍເກີນໄປ
+file deleted.	filemanager	lo	ຟາຍທີ່ຖືກລົບ
+file names cannot contain "%1"	filemanager	lo	ຊື່ຟາຍບໍ່ສາມາດມີ "%1"
+file or directory not found!	filemanager	lo	ບໍ່ພົບຟາຍຫຼືໄດເລັກເທີລີ!
+file successful uploaded.	filemanager	lo	ການອັບໂຫຼດຟາຍສໍາເລັດ
+filemanager	common	lo	ຕົວຈັດການຟາຍ
+filemanager configuration	admin	lo	ການກໍານົດຕົວຈັດການຟາຍ
+files from subdirectories	filemanager	lo	ຟາຍຈາກໄດເລັກເທີລີຍ່ອຍ
+files in this directory	filemanager	lo	ຟາຍຈາກໄດເລັກເທີລີນີ້
+folder up	filemanager	lo	ໃນໂຟລເດີ
+general	filemanager	lo	ທົ່ວໄປ
+go home	filemanager	lo	ກັບສູ່ໜ້າຫຼັກ
+go to	filemanager	lo	ໄປທີ່
+go to your home directory	filemanager	lo	ໄປຍັງໄດເລັກເທີລີີຫຼັກຂອງທ່ານ
+go up	filemanager	lo	ຂຶ້ນເທິງ
+id	filemanager	lo	ລະຫັດ
+inherited	filemanager	lo	ສືບທອດ
+link	filemanager	lo	ເຊື່ອມຕໍ່
+link %1: %2	filemanager	lo	ການເຊື່ອມຕໍ່ %1 : %2
+link target %1 not found!	filemanager	lo	ບໍ່ພົບເປົ້າໝາຍການເຊື່ອມຕໍ່ %1
+location	filemanager	lo	ຕໍາແໜ່ງທີ່ຕັ້ງ
+log out as superuser	filemanager	lo	ອອກຈາກການເປັນຜູ້ທີ່ມີສິດພິເສດ
+max folderlinks	admin	lo	ຄ່າສູງສຸດການເຊື່ອມຕໍ່ໂຟລເດີ
+mime type	filemanager	lo	ປະເພດ mime
+modified	filemanager	lo	ໄດ້ປ່ຽນແປງ
+modified between	filemanager	lo	ໄດ້ປ່ຽນແປງລະຫວ່າງ
+modify all subdirectories and their content	filemanager	lo	ປ່ຽນແປງໄດເລັກເທີລີຍ່ອຍທັງໝົດ ແລະ ເນື່ອຫາຂອງພວກເຂົາ
+move	filemanager	lo	ເຄື່ອນຫຍ້າຍ
+move to	filemanager	lo	ເຄື່ອນຫຍ້າຍໄປ
+moved %1 to %2	filemanager	lo	ໄດ້ຫຍ້າຍ %1 ເຖີງ 2% 
+no access	filemanager	lo	ບໍ່ສາມາດເຂົ້າເຖິງ
+no files in this directory.	filemanager	lo	ບໍ່ມີຟາຍທີ່ຢູ່ໄນໄດເລັກເທີລີນີ້
+no preview available	filemanager	lo	ບໍ່ມີຕົວຢ່າງທີ່ພ້ອມໃຊ້
+no version history for this file/directory	filemanager	lo	ບໍ່ມີປະຫວັດ ຟາຍ/ໄດເລັກເທີລີ ນີ້ມາກ່ອນ
+only owner can rename or delete the content	filemanager	lo	ປ່ຽນຊື່ຫຼືລຶບເນື່ອຫາໄດ້ພຽງແຕ່ເຈົ້າຂອງເທົ່ານັ້ນ
+open	filemanager	lo	ເປີດ
+operation	filemanager	lo	ການປະຕິບັດ
+permission denied!	filemanager	lo	ບໍ່ອະນຸຍາດໃຫ້ໃຊ້ໄດ້
+permissions	filemanager	lo	ສິດທິ
+permissions of %1 changed.	filemanager	lo	ສິດທິຂອງ %1 ໄດ້ຖືກປ່ຽນ
+please select a file to delete.	filemanager	lo	ກະລຸນາເລືອກຟາຍເພື່ອລຶບ
+preview	filemanager	lo	ເບິ່ງພາບຕົວຢ່າງ
+preview %1	filemanager	lo	ເບິ່ງພາບຕົວຢ່າງ %1
+preview of %1	filemanager	lo	ເບິ່ງພາບຕົວຢ່າງຂອງ %1
+projectmanager	filemanager	lo	ຜູ້ຈັດການໂຄງການ
+properties saved.	filemanager	lo	ຄຸນລັກສະນະໄດ້ຖືກບັນທຶກ
+quick jump to	filemanager	lo	ໂດດໄປທີ່
+read & write access	filemanager	lo	ເຂົ້າອ່ານ ແລະ ຂຽນໄດ້
+read access only	filemanager	lo	ເຂົ້າອ່ານໄດ້ຢ່າງດຽວ
+reload	filemanager	lo	ໂຫຼດໃໝ່
+rename of %1 to %2 failed!	filemanager	lo	ປ່ຽນຊື່ຂອງ%1 ເຖິງ %2 ໄດ້ລົ້ມເຫຼວ
+rename, change permissions or ownership	filemanager	lo	ປ່ຽນຊື່, ປ່ຽນແປງສິດ ຫຼື ການເປັນທ່ານຂອງ
+renamed %1 to %2	filemanager	lo	ປ່ຽນຊື່%1 ເຖິງ %2
+renamed %1 to %2.	filemanager	lo	ປ່ຽນຊື່%1 ເຖິງ %2.
+replaced %1	filemanager	lo	ປ່ຽນແທນ %1
+rights	filemanager	lo	ສິດທິ
+root	filemanager	lo	Root
+root access granted.	filemanager	lo	ອະນຸຍາດການເຂົ້າໃຊ້ Root
+root access stopped.	filemanager	lo	ຢຸດການເຂົ້າໃຊ້ Root
+save %1	filemanager	lo	ບັນທຶກ %1
+save %1, and go back to file listing	filemanager	lo	ບັນທຶກ %1, ແລະ ກັບຄືນສູ່ລາຍການຟາຍ
+save changes	filemanager	lo	ບັນທຶກການປ່ຽນແປງ
+saved %1	filemanager	lo	ໄດ້ບັນທຶກ %1
+saving properties failed!	filemanager	lo	ຄຸນສົມບັດການບັນທຶກໄດ້ລົ້ມເຫຼວ '% 1'
+search for '%1'	filemanager	lo	ຄົ້ນຫາ '% 1'
+searchstring	filemanager	lo	ຄົ້ນຫາແຖວ
+select action...	filemanager	lo	ຄົ້ນຫາປະຕິບັດ..
+select file to upload in current directory	filemanager	lo	ເລືອກຟາຍເພື່ອອັບໂຫຼດໃນໄດເລັກເທີລີປັດຈຸບັນ
+show	filemanager	lo	ສະແດງ
+show hidden files	filemanager	lo	ສະແດງຟາຍທີ່ເຊື່ອງໄວ້
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	lo	ສະແດງການເຊື່ອມຕໍ່ໄປທີ່ໄດເລັກເທີລີພື້ນຖານຂອງ ຕົວຈັດການຟາຍ (/) ໃນຊອງລາຍການ?
+size	filemanager	lo	ຂະໜາດ
+start search	filemanager	lo	ເລີ່ມຕົ້ນຄົ້ນຫາ
+startfolder	filemanager	lo	ການເລີ່ມ ໂຟລເດີ
+superuser	filemanager	lo	ຜູ້ທີ່ມີສິດນໍາໃຊ້ພິເສດ
+symlink to %1 created.	filemanager	lo	Symlink ເພື່ອ %1 ຖືກສ້າງ
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	lo	ຄ່າເດີມຂອງການເລີ້ມຕົ້ນໂຟລເດີເປັນໂຟລເດີສ່ວນຕົວຂອງທ່ານ, ເຊິ່ງຄ່າເດີມຈະໄດ້ຖືກໃຊ້ ຖ້າທ່ານປ່ອຍວ່າງນີ້ໄວ້. ເສັ້ນທາງບໍ່ມີຫຼືທ່ານບໍ່ມີສິດເຂົ້າໃຊ້
+the requested path %1 is not available.	filemanager	lo	ການຮ້ອງຂໍເສັ້ນທາງ %1 ບໍ່ສາມາດໃຊ້ໄດ້ແລ້ວ
+there's already a directory with that name!	filemanager	lo	ມີໄດເລັກເທີລີທີ່ມີຊື່ນັ້ນແລ້ວ
+there's already a file with that name!	filemanager	lo	ມີຟາຍທີ່ມີຊື່ນັ້ນແລ້ວ
+to overwrite the existing file store again.	filemanager	lo	ຂຽນທັບຟາຍທີ່ມີການເກັບຢູ່ແລ້ວ ຄືນອີກ
+total files	filemanager	lo	ລວມຟາຍທັງໝົດ
+unused space	filemanager	lo	ພື້ນທີ່ໃຊ້ບໍ່ໄດ້
+up	filemanager	lo	ຂຶ້ນ
+updated comment for %1	filemanager	lo	ໄດ້ປັບປຸງຄວາມຄິດເຫັນທີ %1
+used space	filemanager	lo	ພື້ນທີ່ໃຊ້ງານ
+users and groups	filemanager	lo	ຜູ້ໃຊ້ແລະກຸ່ມ
+wrong username or password!	filemanager	lo	ຊື່ຜູ້ໃຊ້ຫຼືລະຫັດຜ່ານ ຜິດພາດ!
+you are not allowed to upload a script!	filemanager	lo	ທ່ານຍັງບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ອັບໂຫຼດ script!
+you can only grant additional rights, you can not take rights away!	filemanager	lo	ທ່ານສາມາດໃຫ້ສິດເພີ່ມເຕີມ, ແຕ່ທ່ານບໍ່ສາມາດໃຊ້ສິດອອກໄປ
+you do not have access to %1	filemanager	lo	ທ່ານບໍ່ໄດ້ເຂົ້າສູ່ %1
+you need to select an owner!	filemanager	lo	ທ່ານຕ້ອງເລືອກເຈົ້າຂອງ!
+you need to select some files first!	filemanager	lo	ທ່ານຈະຕ້ອງເລືອກບາງຟາຍກ່ອນ!
+you will be redirected to your home directory.	filemanager	lo	ທ່ານກໍາລັງຖືກປ່ຽນເສັ້ນທາງໄປທີ່ໄດເລັກເທີລີີຫຼັກຂອງທ່ານ
+you will be redirected to your start folder.	filemanager	lo	ທ່ານກຳລັງຖືກປ່ຽນເສັ້ນທາງໄປທີ່ໂຟລເດີເລີ້ມຕົ້ນຂອງທ່ານ
+your home dir did not exist, egroupware created a new one.	filemanager	lo	ໄດເລັກເທີລີີຫຼັກຂອງທ່ານຍັງບໍ່ມີ  eGroupWare ຈະສ້າງໄດເລັກເທີລີຂຶ້ນໃໝ່
+your home directory	filemanager	lo	ໄດເລັກເທີລີຫຼັກຂອງທ່ານ
