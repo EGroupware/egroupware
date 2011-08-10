@@ -50,7 +50,7 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 			"name": "Value",
 			"description": "The value of the widget",
 			"type": "string",
-			"default": ""
+			"default": et2_no_init
 		}
 	},
 

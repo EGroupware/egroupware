@@ -58,7 +58,7 @@ var et2_widget = Class.extend({
 		"id": {
 			"name": "ID",
 			"type": "string",
-			"description": "Unique identifier of the widget"
+			"description": "Unique identifier of the widget",
 		},
 
 		/**
@@ -91,6 +91,8 @@ var et2_widget = Class.extend({
 		{
 			_type = "widget";
 		}
+
+		this.id = "";
 
 		// Copy the parent parameter and add this widget to its parent children
 		// list.
@@ -161,7 +163,6 @@ var et2_widget = Class.extend({
 	},
 
 	assign: function(_obj) {
-
 		// Create a clone of all child elements of the given object
 		for (var i = 0; i < _obj._children.length; i++)
 		{
@@ -171,7 +172,7 @@ var et2_widget = Class.extend({
 		// Copy all properties
 		for (var key in  _obj.attributes)
 		{
-			if (!_obj.attributes[key].ignore && key != "id")
+			if (!_obj.attributes[key].ignore)
 			{
 				this.setAttribute(key, _obj.getAttribute(key));
 			}
@@ -414,7 +415,7 @@ var et2_widget = Class.extend({
 		// corresponding setter function exists. If yes, it is called.
 		for (var key in  this.attributes)
 		{
-			if (!this.attributes[key].ignore && key != "id")
+			if (!this.attributes[key].ignore)
 			{
 				this.setAttribute(key, this.getAttribute(key));
 			}

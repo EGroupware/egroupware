@@ -150,31 +150,47 @@
 
 	function addAttributeFunctions(prototype, _super)
 	{
-		var attributes = prototype.attributes;
+		function _copyMerge(_new, _old)
+		{
+			var result = {};
+
+			// Copy the new object
+			if (typeof _new != "undefined")
+			{
+				for (var key in _new)
+				{
+					result[key] = _new[key];
+				}
+			}
+
+			// Merge the old object
+			for (var key in _old)
+			{
+				if (typeof result[key] == "undefined")
+				{
+					result[key] = _old[key];
+				}
+			}
+
+			return result;
+		}
+
+		var attributes = {};
+
+		// Copy the old attributes
+		for (var key in prototype.attributes)
+		{
+			attributes[key] = _copyMerge({}, prototype.attributes[key]);
+		}
 
 		// Add the old attributes to the new ones. If the attributes already
 		// exist, they are merged.
 		for (var key in _super.attributes)
 		{
-			var attrib = _super.attributes[key];
+			var _old = _super.attributes[key];
+			var _new = {};
 
-			if (typeof attributes[key] == "undefined")
-			{
-				// In the case that the old attribute has no equivalent in the
-				// new class, simply create a reference to the old one.
-				attributes[key] = attrib;
-			}
-			else
-			{
-				// Otherwise merge the two attribute descriptors.
-				for (var key2 in attrib)
-				{
-					if (typeof attributes[key][key2] == "undefined")
-					{
-						attributes[key][key2] = attrib[key2];
-					}
-				}
-			}
+			attributes[key] = _copyMerge(attributes[key], _old);
 		}
 
 		// Validate the attributes
@@ -182,6 +198,8 @@
 		{
 			et2_validateAttrib(key, attributes[key]);
 		}
+
+		prototype.attributes = attributes;
 
 		/**
 		 * The initAttributes function sets the attributes to their default
@@ -192,7 +210,7 @@
 		prototype.initAttributes = function() {
 			for (var key in this.attributes)
 			{
-				if (!this.attributes[key].ignore)
+				if (!this.attributes[key].ignore && this.attributes[key]["default"] !== et2_no_init)
 				{
 					this.setAttribute(key, this.attributes[key]["default"],
 						false);

@@ -35,6 +35,7 @@ var et2_textbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.input = null;
+		this.id = "";
 
 		this.createInputWidget();
 	},

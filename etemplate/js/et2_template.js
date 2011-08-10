@@ -115,9 +115,17 @@ var et2_template = et2_DOMWidget.extend({
 				// isProxied property to true
 				tmpl.makeProxied();
 
+				// Do not copy the id when cloning as this leads to infinit
+				// recursion
+				tmpl.attributes["id"].ignore = true;
+
 				// Create a clone of the template and add it as child of this
 				// template (done by passing "this" to the clone function)
 				this.proxiedTemplate = tmpl.clone(this);
+
+				// Reset the "ignore" flag and manually copy the id
+				tmpl.attributes["id"].ignore = false;
+				this.proxiedTemplate.id = tmpl.id;
 
 				// Disallow adding any new node to this template
 				this.supportedWidgetClasses = [];

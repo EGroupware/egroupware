@@ -29,7 +29,7 @@ if (typeof Array.prototype.indexOf == "undefined")
  * ET2_DEBUGLEVEL specifies which messages are printed to the console. Decrease
  * the value of ET2_DEBUGLEVEL to get less messages.
  */
-var ET2_DEBUGLEVEL = 0;
+var ET2_DEBUGLEVEL = 4;
 
 function et2_debug(_level, _msg)
 {
@@ -157,6 +157,12 @@ function et2_checkType(_val, _type)
 	// We should never come here
 	throw("Invalid type identifier supplied.");
 }
+
+/**
+ * If et2_no_init is set as default value, the initAttributes function will not
+ * try to initialize the attribute with the default value.
+ */
+var et2_no_init = new Object();
 
 /**
  * Validates the given attribute with the given id. The validation checks for
