@@ -1,0 +1,178 @@
+/**
+ * eGroupWare eTemplate2 - JS Tabs object
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @author Andreas Stöckel
+ * @copyright Stylite 2011
+ * @version $Id$
+ */
+
+"use strict";
+
+/*egw:uses
+	jquery.jquery;
+	et2_widget;
+*/
+
+/**
+ * Class which implements the tabbox-tag
+ */ 
+var et2_tabbox = et2_DOMWidget.extend({
+
+	init: function(_parent, _type) {
+		// Create the outer tabbox container
+		this.container = $j(document.createElement("div"))
+			.addClass("et2_tabbox");
+
+		// Create the upper container for the tab flags
+		var cntr = $j(document.createElement("div"))
+			.addClass("et2_flags")
+			.appendTo(this.container);
+
+		this.flagContainer = $j(document.createElement("span"))
+			.addClass("et2_tabflagcntr")
+			.appendTo(cntr);
+
+		$j(document.createElement("span"))
+			.addClass("et2_tabspacer")
+			.appendTo(cntr);
+
+		// Create the lower tab container
+		this.tabContainer = $j(document.createElement("div"))
+			.addClass("et2_tabs")
+			.appendTo(this.container);
+
+		this._super.apply(this, arguments);
+
+		this.tabData = [];
+	},
+
+	destroy: function(_parent, _type) {
+
+		this._super.apply(this, arguments);
+
+		this.container = null;
+		this.flagContainer = null;
+		this.tabData = [];
+	},
+
+	_readTabs: function(tabData, tabs) {
+		et2_filteredNodeIterator(tabs, function(node, nodeName) {
+			if (nodeName == "tab")
+			{
+				tabData.push({
+					"label": et2_readAttrWithDefault(node, "label", "Tab"),
+					"widget": null,
+					"contentDiv": null,
+					"flagDiv": null
+				});
+			}
+			else
+			{
+				throw("Error while parsing: Invalid tag '" + nodeName +
+					"' in tabs tag");
+			}
+		}, this);
+	},
+
+	_readTabPanels: function(tabData, tabpanels) {
+		var i = 0;
+		et2_filteredNodeIterator(tabpanels, function(node, nodeName) {
+			if (i < tabData.length)
+			{
+				// Create the widget corresponding to the given node
+				tabData[i].widget = this.createElementFromNode(node,
+					nodeName);
+			}
+			else
+			{
+				throw("Error while reading tabpanels tag, too many widgets!");
+			}
+			i++;
+		}, this);
+	},
+
+	loadFromXML: function(_node) {
+		// Get the tabs and tabpanels tags
+		var tabsElems = et2_directChildrenByTagName(_node, "tabs");
+		var tabpanelsElems = et2_directChildrenByTagName(_node, "tabpanels");
+
+		if (tabsElems.length == 1 && tabpanelsElems.length == 1)
+		{
+			var tabs = tabsElems[0];
+			var tabpanels = tabpanelsElems[0];
+
+			var tabData = [];
+
+			// Parse the "tabs" tag
+			this._readTabs(tabData, tabs);
+
+			// Read and create the widgets defined in the "tabpanels"
+			this._readTabPanels(tabData, tabpanels);
+
+			// Create the tab DOM-Nodes
+			this.createTabs(tabData)
+		}
+		else
+		{
+			throw("Error while parsing tabbox, none or multiple tabs or tabpanels tags!");
+		}
+	},
+
+	createTabs: function(tabData) {
+		this.tabData = tabData;
+
+		this.tabContainer.empty();
+		this.flagContainer.empty();
+
+		for (var i = 0; i < this.tabData.length; i++)
+		{
+			// Add a spacer to the flag container
+			$j(document.createElement("span"))
+				.addClass("et2_flagspacer")
+				.text("-")
+				.appendTo(this.flagContainer);
+
+			var entry = this.tabData[i];
+
+			entry.flagDiv = $j(document.createElement("span"))
+				.addClass("et2_tabflag")
+				.text(entry.label)
+				.appendTo(this.flagContainer);
+
+			entry.contentDiv = $j(document.createElement("div"))
+				.addClass("et2_tabcntr")
+				.hide()
+				.appendTo(this.tabContainer);
+
+			// Let the widget appear on its corresponding page
+			entry.widget.onSetParent();
+		}
+	},
+
+	getDOMNode: function(_sender) {
+		if (_sender == this)
+		{
+			return this.container[0];
+		}
+		else
+		{
+			for (var i = 0; i < this.tabData.length; i++)
+			{
+				if (this.tabData[i].widget == _sender)
+				{
+					return this.tabData[i].contentDiv[0];
+				}
+			}
+
+			return null;
+		}
+	}
+
+});
+
+et2_register_widget(et2_tabbox, ["tabbox"]);
+

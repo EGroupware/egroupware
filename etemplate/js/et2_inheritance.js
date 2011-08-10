@@ -12,6 +12,10 @@
 
 "use strict";
 
+/*egw:uses
+	et2_common;
+*/
+
 /**
  * Usage of the JS inheritance system
  * ----------------------------------
@@ -84,10 +88,10 @@
 	};
 
 	/**
-	 * The addInterfaceStuff function adds all interface functions the class has
+	 * The addInterfaceFunctions function adds all interface functions the class has
 	 * to implement to the class prototype.
 	 */
-	function addInterfaceStuff(prototype, interfaces)
+	function addInterfaceFunctions(prototype, interfaces)
 	{
 		// Remember all interface functions in the prototype
 		var ifaces = ((typeof prototype["_ifacefuncs"] == "undefined") ? [] :
@@ -107,7 +111,7 @@
 			}
 			else
 			{
-				throw("Interfaces must be instanceof Interface!");
+				throw("Interfaces must be instance of Interface!");
 			}
 		}
 
@@ -144,6 +148,118 @@
 		}
 	};
 
+	function addAttributeFunctions(prototype, _super)
+	{
+		var attributes = prototype.attributes;
+
+		// Add the old attributes to the new ones. If the attributes already
+		// exist, they are merged.
+		for (var key in _super.attributes)
+		{
+			var attrib = _super.attributes[key];
+
+			if (typeof attributes[key] == "undefined")
+			{
+				// In the case that the old attribute has no equivalent in the
+				// new class, simply create a reference to the old one.
+				attributes[key] = attrib;
+			}
+			else
+			{
+				// Otherwise merge the two attribute descriptors.
+				for (var key2 in attrib)
+				{
+					if (typeof attributes[key][key2] == "undefined")
+					{
+						attributes[key][key2] = attrib[key2];
+					}
+				}
+			}
+		}
+
+		// Validate the attributes
+		for (var key in attributes)
+		{
+			et2_validateAttrib(key, attributes[key]);
+		}
+
+		/**
+		 * The initAttributes function sets the attributes to their default
+		 * values. The attributes are not overwritten, which means, that the
+		 * default is only set, if either a setter exists or this[propName] does
+		 * not exist yet.
+		 */
+		prototype.initAttributes = function() {
+			for (var key in this.attributes)
+			{
+				if (!this.attributes[key].ignore)
+				{
+					this.setAttribute(key, this.attributes[key]["default"],
+						false);
+				}
+			}
+
+			this._attrsInitialized = true;
+		}
+
+		/**
+		 * The setAttribute function sets the attribute with the given name to
+		 * the given value. _override defines, whether this[_name] will be set,
+		 * if this key already exists. _override defaults to true. A warning
+		 * is issued if the attribute does not exist.
+		 */
+		prototype.setAttribute = function(_name, _value, _override) {
+			if (typeof this.attributes[_name] != "undefined")
+			{
+				if (!this.attributes[_name].ignore)
+				{
+					if (typeof _override == "undefined")
+					{
+						_override = true;
+					}
+
+					var val = et2_checkType(_value, this.attributes[_name].type);
+
+					if (typeof this["set_" + _name] == "function")
+					{
+						this["set_" + _name](val);
+					}
+					else if (_override || typeof this[_name] == "undefined")
+					{
+						this[_name] = val;
+					}
+				}
+			}
+			else
+			{
+				et2_debug("warn", "Attribute '" + _name + "' does not exist!");
+			}
+		}
+
+		/**
+		 * Returns the value of the given attribute. If the property does not
+		 * exist, an error message is issued.
+		 */
+		prototype.getAttribute = function(_name) {
+			if (typeof this.attributes[_name] != "undefined" &&
+			    !this.attributes[_name].ignore)
+			{
+				if (typeof this["get_" + _name] == "function")
+				{
+					return this["get_" + _name]();
+				}
+				else
+				{
+					return this[_name];
+				}
+			}
+			else
+			{
+				et2_error("error", "Attribute '" + _name  + "' does not exist!");
+			}
+		}
+	};
+
 	function classExtend(interfaces, prop) {
 
 		if (typeof prop == "undefined")
@@ -156,6 +272,11 @@
 		if (!(interfaces instanceof Array))
 		{
 			interfaces = [interfaces];
+		}
+
+		if (typeof prop.attributes == "undefined")
+		{
+			prop.attributes = {};
 		}
 
 		var _super = this.prototype;
@@ -199,7 +320,11 @@
 
 		// Add the interface functions and the "implements" function to the
 		// prototype
-		addInterfaceStuff(prototype, interfaces);
+		addInterfaceFunctions(prototype, interfaces);
+
+		// Merge the attributes and create the functions corresponding to the
+		// attributes
+		addAttributeFunctions(prototype, _super);
 
 		// The dummy class constructor
 		function Class() {
@@ -220,6 +345,12 @@
 				if (this.init)
 				{
 					this.init.apply(this, arguments);
+				}
+
+				// Initialize the attributes
+				if (typeof this._attrsInitialized == "undefined")
+				{
+					this.initAttributes();
 				}
 			}
 		}
@@ -243,5 +374,8 @@
 	// is an array which defines a set of interfaces the object has to
 	// implement. An interface is simply an object with named functions.
 	Class.extend = classExtend;
+
+	// The base class has no attributes
+	Class.attributes = {};
 }).call(window);
 

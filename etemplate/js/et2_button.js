@@ -14,20 +14,31 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_widget;
+	et2_baseWidget;
 */
 
 /**
  * Class which implements the "button" XET-Tag
  */ 
-var et2_button = et2_DOMWidget.extend({
+var et2_button = et2_baseWidget.extend({
+
+	attributes: {
+		"label": {
+			"name": "caption",
+			"type": "string",
+			"description": "Label of the button"
+		}
+	},
 
 	init: function(_parent) {
+		this._super.apply(this, arguments);
+
+		this.label = "";
+
 		this.btn = $j(document.createElement("button"))
 			.addClass("et2_button");
 
-		this._super.apply(this, arguments);
-		this.label = "";
+		this.setDOMNode(this.btn[0]);
 	},
 
 	set_label: function(_value) {
@@ -37,10 +48,6 @@ var et2_button = et2_DOMWidget.extend({
 
 			this.btn.text(_value);
 		}
-	},
-
-	getDOMNode: function() {
-		return this.btn[0];
 	}
 
 });

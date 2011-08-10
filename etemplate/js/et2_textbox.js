@@ -14,33 +14,56 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_widget;
+	et2_inputWidget;
 */
 
 /**
  * Class which implements the "textbox" XET-Tag
  */ 
-var et2_textbox = et2_DOMWidget.extend({
+var et2_textbox = et2_baseWidget.extend({
 
-	init: function(_parent) {
-		this.input = $j(document.createElement("input"))
-			.addClass("et2_input");
-
-		this._super.apply(this, arguments);
-		this.label = "";
-	},
-
-	set_value: function(_value) {
-		if (_value != this.value)
-		{
-			this.label = _value;
-
-			this.input.attr("value", _value);
+	attributes: {
+		"multiline": {
+			"name": "multiline",
+			"type": "boolean",
+			"default": false,
+			"description": "If true, the textbox is a multiline edit field."
 		}
 	},
 
-	getDOMNode: function() {
-		return this.input[0];
+	init: function(_parent) {
+		this._super.apply(this, arguments);
+
+		this.input = null;
+
+		this.createInputWidget();
+	},
+
+	createInputWidget: function() {
+		if (this.multiline)
+		{
+			this.input = $j(document.createElement("textarea"));
+		}
+		else
+		{
+			this.input = $j(document.createElement("input"));
+		}
+
+		this.input.addClass("et2_textbox");
+
+		this.setDOMNode(this.input[0]);
+	},
+
+	set_multiline: function(_value) {
+		if (_value != this.multiline)
+		{
+			this.multiline = _value;
+
+			this.createInputWidget();
+
+			// Write all settings again
+			this.update();
+		}
 	}
 
 });

@@ -26,6 +26,23 @@
  */ 
 var et2_template = et2_DOMWidget.extend({
 
+	attributes: {
+		"template": {
+		},
+		"group": {
+		},
+		"version": {
+			"name": "Version",
+			"type": "string",
+			"description": "Version of the template"
+		},
+		"lang": {
+			"name": "Language",
+			"type": "string",
+			"description": "Language the template is written in"
+		}
+	},
+
 	/**
 	 * Initializes this template widget as a simple container.
 	 */
@@ -34,6 +51,7 @@ var et2_template = et2_DOMWidget.extend({
 		this.isProxied = false;
 
 		this.div = document.createElement("div");
+		this.id = "";
 
 		this._super.apply(this, arguments);
 	},

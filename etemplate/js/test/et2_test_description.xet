@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<overlay>
+	<vbox>
+		<description value="This is only a test" options="bi" />
+		<description value="This is only a test" font_style="italic" statustext="This is only an italic label!"/>
+	</vbox>
+</overlay>
+

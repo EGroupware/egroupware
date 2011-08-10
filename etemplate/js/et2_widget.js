@@ -14,6 +14,7 @@
 
 /*egw:uses
 	jquery.jquery;
+	lib/tooltip.js;
 	et2_xml;
 	et2_common;
 	et2_inheritance;
@@ -53,6 +54,26 @@ function et2_register_widget(_constructor, _types)
  */
 var et2_widget = Class.extend({
 
+	attributes: {
+		"id": {
+			"name": "ID",
+			"type": "string",
+			"description": "Unique identifier of the widget"
+		},
+
+		/**
+		 * Ignore the "span" property by default - it is read by the grid and
+		 * other widgets.
+		 */
+		"span": {
+			"ignore": true
+		}
+	},
+
+	// Set the legacyOptions array to the names of the properties the "options"
+	// attribute defines.
+	legacyOptions: [],
+
 	/**
 	 * The init function is the constructor of the widget. When deriving new
 	 * classes from the widget base class, always call this constructor unless
@@ -82,7 +103,6 @@ var et2_widget = Class.extend({
 		}
 
 		this._children = [];
-		this.id = "";
 		this.type = _type;
 
 		// The supported widget classes array defines a whitelist for all widget
@@ -148,12 +168,12 @@ var et2_widget = Class.extend({
 			_obj._children[i].clone(this, _obj._children[i].type);
 		}
 
-		// Copy all properties for which a setter function exists
-		for (var key in _obj)
+		// Copy all properties
+		for (var key in  _obj.attributes)
 		{
-			if (key != "id" && typeof this["set_" + key] == "function")
+			if (!_obj.attributes[key].ignore && key != "id")
 			{
-				this["set_" + key](_obj[key]);
+				this.setAttribute(key, _obj.getAttribute(key));
 			}
 		}
 	},
@@ -265,6 +285,31 @@ var et2_widget = Class.extend({
 		return null;
 	},
 
+	/**
+	 * Function which allows iterating over the complete widget tree.
+	 *
+	 * @param _callback is the function which should be called for each widget
+	 * @param _context is the context in which the function should be executed
+	 * @param _type is an optional parameter which specifies a class/interface
+	 * 	the elements have to be instanceOf.
+	 */
+	iterateOver: function(_callback, _context, _type) {
+		if (typeof _type == "undefined")
+		{
+			_type = et2_widget;
+		}
+
+		if (this.instanceOf(_type))
+		{
+			_callback.call(_context, this);
+		}
+
+		for (var i = 0; i < this._children.length; i++)
+		{
+			this._children[i].iterateOver(_callback, _context, _type);
+		}
+	},
+
 	isOfSupportedWidgetClass: function(_obj)
 	{
 		for (var i = 0; i < this.supportedWidgetClasses.length; i++)
@@ -336,12 +381,19 @@ var et2_widget = Class.extend({
 	loadAttributes: function(_attrs) {
 		for (var i = 0; i < _attrs.length; i++)
 		{
-			var attr = _attrs[i];
-
-			// Check whether a setter exists for the given attribute
-			if (typeof this["set_" + attr.name] == "function" && attr.name.charAt(0) != "_")
+			if (_attrs[i].name == "options")
 			{
-				this["set_" + attr.name](attr.value);
+				// Parse the legacy options
+				var splitted = et2_csvSplit(_attrs[i].value);
+
+				for (var i = 0; i < splitted.length && i < this.legacyOptions.length; i++)
+				{
+					this.setAttribute(this.legacyOptions[i], splitted[i]);
+				}
+			}
+			else
+			{
+				this.setAttribute(_attrs[i].name, _attrs[i].value);
 			}
 		}
 	},
@@ -357,13 +409,14 @@ var et2_widget = Class.extend({
 	 * update function of all child nodes.
 	 */
 	update: function() {
+
 		// Go through every property of this object and check whether a
 		// corresponding setter function exists. If yes, it is called.
-		for (var key in this)
+		for (var key in  this.attributes)
 		{
-			if (typeof this["set_" + key] == "function" && key.charAt(0) != "_")
+			if (!this.attributes[key].ignore && key != "id")
 			{
-				this["set_" + key](this[key]);
+				this.setAttribute(key, this.getAttribute(key));
 			}
 		}
 
@@ -372,19 +425,8 @@ var et2_widget = Class.extend({
 		{
 			this._children[i].update();
 		}
-	},
-
-	get_id: function() {
-		return this.id;
-	},
-
-	set_id: function(_value) {
-		this.id = _value;
-	},
-
-	get_type: function() {
-		return this.type;
 	}
+
 });
 
 /**
@@ -392,7 +434,13 @@ var et2_widget = Class.extend({
  */
 var et2_IDOMNode = new Interface({
 	/**
-	 * Returns the DOM-Node of the current widget.
+	 * Returns the DOM-Node of the current widget. The return value has to be
+	 * a plain DOM node. If you want to return an jQuery object as you receive
+	 * it with
+	 * 
+	 * 	obj = $j(node);
+	 * 
+	 * simply return obj[0];
 	 * 
 	 * @param _sender The _sender parameter defines which widget is asking for
 	 * 	the DOMNode.depending on that, the widget may return different nodes.
@@ -417,19 +465,32 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	 */
 	init: function(_parent, _type) {
 		this.parentNode = null;
-		this.visible = true;
+
+		this._attachSet = {
+			"node": null,
+			"parent": null
+		};
 
 		// Call the inherited constructor
 		this._super.apply(this, arguments);
 	},
 
+	/**
+	 * Detatches the node from the DOM and clears all references to the parent
+	 * node or the dom node of this widget.
+	 */
 	destroy: function() {
 
 		this.detatchFromDOM();
+		this.parentNode = null;
+		this._attachSet = {};
 
 		this._super();
 	},
 
+	/**
+	 * Automatically tries to attach this node to the parent widget.
+	 */
 	onSetParent: function() {
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
@@ -438,16 +499,53 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		}
 	},
 
+	/**
+	 * Detaches the widget from the DOM tree, if it had been attached to the
+	 * DOM-Tree using the attachToDOM method.
+	 */
 	detatchFromDOM: function() {
-		if (this.parentNode)
+
+		if (this._attachSet.node && this._attachSet.parent)
 		{
-			var node = this.getDOMNode(this);
-			if (node)
-			{
-				this.parentNode.removeChild(node);
-				this.parentNode = null;
-			}
+			// Remove the current node from the parent node
+			this._attachSet.parent.removeChild(this._attachSet.node);
+
+			// Reset the "attachSet"
+			this._attachSet = {
+				"node": null,
+				"parent": null
+			};
+
+			return true;
 		}
+
+		return false;
+	},
+
+	/**
+	 * Attaches the widget to the DOM tree. Fails if the widget is already
+	 * attached to the tree or no parent node or no node for this widget is
+	 * defined.
+	 */
+	attachToDOM: function() {
+		// Attach the DOM node of this widget (if existing) to the new parent
+		var node = this.getDOMNode(this);
+		if (node && this.parentNode &&
+		    (node != this._attachSet.node ||
+		    this.parentNode != this._attachSet.parent))
+		{
+			this.parentNode.appendChild(node);
+
+			// Store the currently attached nodes
+			this._attachSet = {
+				"node": node,
+				"parent": this.parentNode
+			};
+
+			return true;
+		}
+
+		return false;
 	},
 
 	/**
@@ -462,51 +560,77 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 			this.parentNode = _node;
 
-			// Attach the DOM node of this widget (if existing) to the new parent
-			var node = this.getDOMNode(this);
-			if (node && this.parentNode)
-			{
-				this.parentNode.appendChild(node);
-			}
+			// And attatch the element to the DOM tree
+			this.attachToDOM();
 		}
 	},
 
+	/**
+	 * Returns the parent node.
+	 */
 	getParentDOMNode: function() {
 		return this.parentNode;
 	},
 
+	/**
+	 * Sets the id of the DOM-Node.
+	 */
 	set_id: function(_value) {
-		this._super(_value);
+
+		this.id = _value;
 
 		var node = this.getDOMNode(this);
 		if (node)
 		{
-			node.setAttribute("id", _value);
+			if (_value != "")
+			{
+				node.setAttribute("id", _value);
+			}
+			else
+			{
+				node.removeAttribute("id");
+			}
 		}
 	}
 
 });
 
 /**
- * Container object for not-yet supported widgets
+ * Common container object
  */
-var et2_placeholder = et2_DOMWidget.extend({
+var et2_container = et2_simpleWidget.extend({
 
 	init: function() {
-		// Create the placeholder div
-		this.placeDiv = $j(document.createElement("span"))
-			.addClass("et2_placeholder");
+		this._super.apply(this, arguments);
+
+		this.setDOMNode(document.createElement("div"));
+	}
+
+});
+
+
+/**
+ * Container object for not-yet supported widgets
+ */
+var et2_placeholder = et2_baseWidget.extend({
+
+	init: function() {
+		this._super.apply(this, arguments);
 
 		// The attrNodes object will hold the DOM nodes which represent the
 		// values of this object
 		this.attrNodes = {};
 
-		this._super.apply(this, arguments);
+		// Create the placeholder div
+		this.placeDiv = $j(document.createElement("span"))
+			.addClass("et2_placeholder");
 
 		var headerNode = $j(document.createElement("span"))
 			.text(this.type)
-			.addClass("et2_caption");
-		$j(this.placeDiv).append(headerNode);
+			.addClass("et2_caption")
+			.appendTo(this.placeDiv);
+
+		this.setDOMNode(this.placeDiv[0]);
 	},
 
 	loadAttributes: function(_attrs) {
@@ -523,37 +647,6 @@ var et2_placeholder = et2_DOMWidget.extend({
 
 			this.attrNodes[attr.name].text(attr.name + "=" + attr.value);
 		}
-	},
-
-	getDOMNode: function() {
-		return this.placeDiv[0];
 	}
-
 });
-
-/**
- * Common container object
- */
-var et2_container = et2_DOMWidget.extend({
-
-	init: function() {
-		this.div = document.createElement("div");
-
-		this._super.apply(this, arguments);
-	},
-
-	getDOMNode: function() {
-		return this.div;
-	}
-
-});
-
-/**
- * Interface for all widgets which support returning a value
- */
-
-var et2_IValue = new Interface({
-	getValue: function() {}
-});
-
 

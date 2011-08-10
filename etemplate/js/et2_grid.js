@@ -98,12 +98,6 @@ var et2_grid = et2_DOMWidget.extend({
 		};
 	},
 
-	_readAttrWithDefault: function(_node, _name, _default) {
-		var val = _node.getAttribute(_name);
-
-		return (val === null) ? _default : val;
-	},
-
 	_getCell: function(_cells, _x, _y) {
 		if ((0 <= _y) && (_y < _cells.length))
 		{
@@ -132,10 +126,10 @@ var et2_grid = et2_DOMWidget.extend({
 			var colDataEntry = this._getColDataEntry();
 			if (nodeName == "column")
 			{
-				colDataEntry["width"] = this._readAttrWithDefault(node, "width", "auto");
-				colDataEntry["class"] = this._readAttrWithDefault(node, "class", "");
-				colDataEntry["align"] = this._readAttrWithDefault(node, "align", "");
-				colDataEntry["span"] = this._readAttrWithDefault(node, "span", "1");
+				colDataEntry["width"] = et2_readAttrWithDefault(node, "width", "auto");
+				colDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
+				colDataEntry["align"] = et2_readAttrWithDefault(node, "align", "");
+				colDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
 			}
 			else
 			{
@@ -149,10 +143,10 @@ var et2_grid = et2_DOMWidget.extend({
 			var rowDataEntry = this._getRowDataEntry();
 			if (nodeName == "row")
 			{
-				rowDataEntry["height"] = this._readAttrWithDefault(node, "height", "auto");
-				rowDataEntry["class"] = this._readAttrWithDefault(node, "class", "");
-				rowDataEntry["valign"] = this._readAttrWithDefault(node, "valign", "");
-				rowDataEntry["span"] = this._readAttrWithDefault(node, "span", "1");
+				rowDataEntry["height"] = et2_readAttrWithDefault(node, "height", "auto");
+				rowDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
+				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
+				rowDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
 			}
 			else
 			{

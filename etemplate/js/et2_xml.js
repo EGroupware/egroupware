@@ -114,3 +114,11 @@ function et2_filteredNodeIterator(_node, _callback, _context)
 	}
 }
 
+function et2_readAttrWithDefault(_node, _name, _default)
+{
+		var val = _node.getAttribute(_name);
+
+		return (val === null) ? _default : val;
+}
+
+

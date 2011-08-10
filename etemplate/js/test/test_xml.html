@@ -11,7 +11,10 @@
 		<script src="../et2_description.js"></script>
 		<script src="../et2_grid.js"></script>
 		<script src="../et2_button.js"></script>
+		<script src="../et2_box.js"></script>
 		<script src="../et2_textbox.js"></script>
+		<!--<script src="../et2_tabs.js"></script>-->
+		<script src="../lib/tooltip.js"></script>
 		<style type="text/css">
 			body {
 				font-family: Lucida Grande, sans-serif;
@@ -75,6 +78,86 @@
 				color: #101050;
 				font-size: 10pt;
 			}
+
+			button.et2_button {
+				background-color: #E0E0E0;
+				background-image: url(gfx/gradient01.png);
+				background-position: center;
+				background-repeat: repeat-x;
+
+				border: 1px solid silver;
+				color: #101010;
+				cursor: pointer;
+				margin: 5px;
+				padding: 3px;
+				text-align: center;
+
+				font-size: 9pt;
+
+				text-shadow: 1px 1px #E0E0E0;
+			}
+
+			button.et2_button:hover {
+				color: #050505;
+				border: 1px solid gray;
+				background-color: #D0D0EE;
+			}
+
+			button.et2_button:active {
+				background-image: url(gfx/gradient02.png);
+				background-color: #D0D0E0;
+			}
+
+			button.et2_button:focus {
+				border: 1px solid #2c3d6f;
+				color: #202d52;
+				outline: none;
+			}
+
+			div.et2_hbox {
+				display: inline;
+			}
+
+			.et2_tabflag {
+				display: inline-block;
+				margin-right: 5px;
+				height: 20px;
+				padding: 5px;
+				cursor: pointer;
+				border-width: 1px 1px 0 1px;
+				border-style: solid;
+				border-color: silver;
+			}
+
+			.et2_tabflag.active {
+				border-bottom: 1px solid white;
+			}
+
+			.et2_textbox {
+				resize: none;
+			}
+
+			.et2_bold {
+				font-weight: bold;
+			}
+
+			.et2_italic {
+				font-style: italic;
+			}
+
+			.et2_vbox div, .et2_vbox span {
+				display: block;
+			}
+
+			.egw_tooltip
+			{
+				position: fixed;
+				border: 1px solid #897f51;
+				padding: 3px;
+				background-color: #FDF9DB;
+				max-width: 300px;
+				color: black;
+			}
 		</style>
 	</head>
 	<body>
@@ -84,6 +167,9 @@
 			<a href="#" onclick="open_xet('et2_test_timesheet_edit.xet');">Timesheet edit dialog</a>
 			<a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
 			<a href="#" onclick="open_xet('et2_test_grid.xet');">Grid test</a>
+			<a href="#" onclick="open_xet('et2_test_tabbox.xet');">Tabs test</a>
+			<a href="#" onclick="open_xet('et2_test_textbox.xet');">Textbox test</a>
+			<a href="#" onclick="open_xet('et2_test_description.xet');">Description test</a>
 		</div>
 		<div class="header">ETemplate2 container:</div>
 		<div id="container"></div>

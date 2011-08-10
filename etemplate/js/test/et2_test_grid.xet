@@ -25,14 +25,15 @@
 		<columns>
 			<column>
 				<label value="Northwest"/>
-				<label value="Northeast"/>
+				<label value="Southwest"/>
 			</column>
 			<label value="Equator"/>
 			<column>
+				<label value="Northeast"/>
 				<label value="Southwest"/>
-				<label value="Southeast"/>
 			</column>
 		</columns>
+
 
 		<rows>
 			<row/>
@@ -121,12 +122,12 @@
 			<columns>
 				<column>
 					<label value="Northwest"/>
-					<label value="Northeast"/>
+					<label value="Southwest"/>
 				</column>
 				<label value="Equator"/>
 				<column>
+					<label value="Northeast"/>
 					<label value="Southwest"/>
-					<label value="Southeast"/>
 				</column>
 			</columns>
 
