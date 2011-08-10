@@ -43,7 +43,7 @@ var et2_IInput = new Interface({
  * interface. When derriving from this class, call setDOMNode with an input
  * DOMNode.
  */
-var et2_inputWidget = et2_simpleWidget.extend(et2_IInput, {
+var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 
 	attributes: {
 		"value": {
