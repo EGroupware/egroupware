@@ -202,6 +202,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			}
 			if(count($more_categories) > 0) $record['cat_id'] = array_merge(is_array($record['cat_id']) ? $record['cat_id'] : explode(',',$record['cat_id']), $more_categories);
 
+			// Private set but missing causes hidden entries
+			if(array_key_exists('private', $record) && (!isset($record['private']) || $record['private'] == '')) unset($record['private']);
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					$contacts = array();
