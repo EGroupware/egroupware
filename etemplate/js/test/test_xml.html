@@ -15,8 +15,12 @@
 		<script src="../et2_button.js"></script>
 		<script src="../et2_box.js"></script>
 		<script src="../et2_textbox.js"></script>
+		<script src="../et2_contentArrayMgr.js"></script>
 		<!--<script src="../et2_tabs.js"></script>-->
 		<script src="../lib/tooltip.js"></script>
+
+		<script src="et2_test_timesheet_edit.json"></script>
+
 		<style type="text/css">
 			body {
 				font-family: Lucida Grande, sans-serif;
@@ -166,7 +170,7 @@
 		<h1>EGroupware ETemplate2 Test</h1>
 		<div class="header">Choose one of the following tests:</div>
 		<div id="linklist">
-			<a href="#" onclick="open_xet('et2_test_timesheet_edit.xet');">Timesheet edit dialog</a>
+			<a href="#" onclick="open_xet('et2_test_timesheet_edit.xet', timesheet_data.content);">Timesheet edit dialog</a>
 			<a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
 			<a href="#" onclick="open_xet('et2_test_grid.xet');">Grid test</a>
 			<a href="#" onclick="open_xet('et2_test_tabbox.xet');">Tabs test</a>
@@ -174,13 +178,21 @@
 			<a href="#" onclick="open_xet('et2_test_description.xet');">Description test</a>
 		</div>
 		<div class="header">ETemplate2 container:</div>
+		<div id="time"></div>
 		<div id="container"></div>
 		<script>
 			var container = null;
 
-			function open_xet(file) {
+			function open_xet(file, content) {
+				if (typeof content == "undefined")
+				{
+					content = {};
+				}
+
 				et2_loadXMLFromURL(file,
 					function(_xmldoc) {
+						var t1 = (new Date).getTime();
+
 						if (container != null)
 						{
 							container.destroy();
@@ -189,7 +201,11 @@
 
 						container = new et2_container(null);
 						container.setParentDOMNode(document.getElementById("container"));
+						container.setContentMgr(new et2_contentArrayMgr(content));
 						container.loadFromXML(_xmldoc);
+
+						var t2 = (new Date).getTime();
+						$j("#time").text("Building the template took " + (t2 - t1) + "ms");
 					});
 				}
 		</script>

@@ -69,6 +69,20 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 		}
 	},
 
+	set_id: function(_value) {
+		this._super.apply(this, arguments);
+
+		var mgr = this.getContentMgr();
+		if (_value != '' && mgr != null)
+		{
+			var val = mgr.getValueForID(this.id);
+			if (val !== null)
+			{
+				this.set_value(val);
+			}
+		}
+	},
+
 	get_value: function() {
 		return this.getValue();
 	},

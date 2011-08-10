@@ -58,7 +58,7 @@ var et2_widget = Class.extend({
 		"id": {
 			"name": "ID",
 			"type": "string",
-			"description": "Unique identifier of the widget",
+			"description": "Unique identifier of the widget"
 		},
 
 		/**
@@ -93,6 +93,7 @@ var et2_widget = Class.extend({
 		}
 
 		this.id = "";
+		this._mgr = null;
 
 		// Copy the parent parameter and add this widget to its parent children
 		// list.
@@ -426,6 +427,23 @@ var et2_widget = Class.extend({
 		{
 			this._children[i].update();
 		}
+	},
+
+	setContentMgr: function(_mgr) {
+		this._mgr = _mgr;
+	},
+
+	getContentMgr: function() {
+		if (this._mgr != null)
+		{
+			return this._mgr;
+		}
+		else if (this._parent)
+		{
+			return this._parent.getContentMgr();
+		}
+
+		return null;
 	}
 
 });
