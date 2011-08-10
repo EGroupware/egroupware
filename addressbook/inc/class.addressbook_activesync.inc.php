@@ -381,6 +381,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						$message->$key = ('"'.$emailname.'"'." <$contact[$attr]>");
 					}
 					break;
+				case 'n_fileas':
+					if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-force-fileas'])
+					{
+						$message->$key = $this->addressbook->fileas($contact,$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-force-fileas']);
+						break;
+					}
+					// fall through
 				default:
 					if (!empty($contact[$attr])) $message->$key = $contact[$attr];
 			}
@@ -530,6 +537,12 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						else
 						{
 							debugLog(__METHOD__. " Warning : php-imap not available");
+							$contact[$attr] = $message->$key;
+						}
+						break;
+					case 'n_fileas':	// only change fileas, if not forced on the client
+						if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-force-fileas'])
+						{
 							$contact[$attr] = $message->$key;
 						}
 						break;
@@ -740,6 +753,8 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
 			unset($addressbooks[$user]);	// personal addressbook is allways synced
 			unset($addressbooks[$user.'p']);// private addressbook uses ID self::PRIVATE_AB
+
+			$fileas_options = array('0' => lang('use addressbooks "own sorting" attribute'))+$addressbook_bo->fileas_options();
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
 		{
@@ -781,6 +796,17 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			'label'  => 'Sync all addressbooks as one',
 			'name'   => 'addressbook-all-in-one',
 			'help'   => 'Not all devices support multiple addressbooks, so you can choose to sync all above selected addressbooks as one.',
+			'xmlrpc' => true,
+			'admin'  => false,
+			'default' => '0',
+		);
+
+		$settings['addressbook-force-fileas'] = array(
+			'type'   => 'select',
+			'label'  => 'Force sorting on device to',
+			'name'   => 'addressbook-force-fileas',
+			'help'   => 'Some devices (eg. Windows Mobil, but not iOS) sort by addressbooks "own sorting" attribute, which might not be what you want on the device. With this setting you can force the device to use a different sorting for all contacts, without changing it in addressbook.',
+			'values' => $fileas_options,
 			'xmlrpc' => true,
 			'admin'  => false,
 			'default' => '0',
