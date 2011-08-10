@@ -44,9 +44,7 @@
 			</style:style>
 			<xsl:copy-of select="$custom-styles" />
 			<xsl:call-template name="extract-styles" />
-		</xsl:copy>
 <!-- Pre-made styles from http://fisheye.liip.ch/browse/PUB/fluxcms/branches/matrix/inc/bx/editors/ooo/html2odt.xsl?r=9331 -->
-		<office:styles>
 	<style:style style:name="Pol" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="LO">
            <style:text-properties style:text-position="0% 100%"/>
        </style:style>
@@ -140,7 +138,7 @@
                <style:text-properties style:font-name="StarSymbol"/>
            </text:list-level-style-bullet>
        </text:list-style>
-		</office:styles>
+		</xsl:copy>
 	</xsl:template>
 
 	<!-- Generate custom styles based on the span styles -->
@@ -199,7 +197,7 @@
 							<xsl:variable name="font-size" select="substring-after(text(),'font-size:')" />
 							<!-- Approximate conversion that seems to work -->
 							<xsl:variable name="size" select="ceiling(number(translate($font-size,translate($font-size,'0123456789',''),'')))"/>
-							<style:text-properties fo:font-size="{$size}pt" fo:font-size-asian="{$size}pt"/>
+							<style:text-properties fo:font-size="{$size}pt"/>
 						</xsl:when>
 						<xsl:when test="starts-with(.,'font-family:')">
 
@@ -223,13 +221,13 @@
 		<text:span text:style-name="Tunderline"><xsl:apply-templates/></text:span>
 	</xsl:template>
 
-	<xsl:template match="ul[parent::office:text]">
+	<xsl:template match="ul[ancestor::office:text]">
 		<text:list text:style-name="LU">
 			<xsl:apply-templates/>
 		</text:list>
 	</xsl:template>
 
-	<xsl:template match="ol[parent::office:text]">
+	<xsl:template match="ol[ancestor::office:text]">
 		<text:list text:style-name="LO">
 			<xsl:apply-templates/>
 		</text:list>
