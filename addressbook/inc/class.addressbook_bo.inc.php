@@ -879,7 +879,10 @@ class addressbook_bo extends addressbook_so
 		}
 
 		// Get old record for tracking changes
-		$old = $this->data2db($this->read($contact['id']));
+		if (!isset($old) && $isUpdate)
+		{
+			$old = $this->read($contact['id']);
+		}
 		// IF THE OLD ENTRY IS A ACCOUNT, dont allow to change the owner/location
 		// maybe we need that for id and account_id as well.
 		if (is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
@@ -912,7 +915,7 @@ class addressbook_bo extends addressbook_so
 			egw_link::notify_update('addressbook',  $contact['id'], $contact);
 
 			// Check for restore of deleted contact, restore held links
-			if($old['tid'] == addressbook_so::DELETED_TYPE && $contact['tid'] != addressbook_so::DELETED_TYPE)
+			if($old && $old['tid'] == addressbook_so::DELETED_TYPE && $contact['tid'] != addressbook_so::DELETED_TYPE)
 			{
 				egw_link::restore('addressbook', $contact['id']);
 			}
@@ -920,7 +923,7 @@ class addressbook_bo extends addressbook_so
 			// Record change history for sql - doesn't work for LDAP accounts
 			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql') {
 				$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
-				$this->tracking->track($to_write, $old, null, $deleted);
+				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
 			}
 		}
 
