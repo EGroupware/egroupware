@@ -20,7 +20,7 @@
 /**
  * Class which implements the "textbox" XET-Tag
  */ 
-var et2_textbox = et2_baseWidget.extend({
+var et2_textbox = et2_inputWidget.extend({
 
 	attributes: {
 		"multiline": {
