@@ -138,11 +138,13 @@ class importexport_wizard_basic_import_csv
 								# Copy already set, but allow new file to update
 								$content['field_mapping'][$index] = $content['plugin_options']['field_mapping'][$index];
 							}
+							$best_match = '';
+							$best_match_value = 0;
 							foreach($this->mapping_fields as $key => $field_name) {
 								if(is_array($field_name)) continue;
 								if(strcasecmp($field, $field_name) == 0 || strcasecmp($field,$key) == 0) {
 									$content['field_mapping'][$index] = $key;
-									continue;
+									continue 2;
 								}
 								// Check english also
 								if($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != 'en' && !isset($english[$field_name])) {
@@ -155,8 +157,22 @@ class importexport_wizard_basic_import_csv
 								}
 								if($english[$field_name] && strcasecmp($field, $english[$field_name]) == 0) {
 									$content['field_mapping'][$index] = $key;
-									continue;
+									continue 2;
 								}
+
+								// Check for similar but slightly different
+								$match = 0;
+								if(similar_text(strtolower($field), strtolower($field_name), $match) && 
+										$match > 85 &&
+										$match > $best_match_value
+								) {
+									$best_match = $key;
+									$best_match_value = $match;
+								}
+
+							}
+							if($best_match) {
+								$content['field_mapping'][$index] = $best_match;
 							}
 						}
 					} elseif($content['plugin_options']['csv_fields']) {
