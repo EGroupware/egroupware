@@ -43,7 +43,7 @@ class hooks
 	var $table = 'egw_hooks';
 	/**
 	 * Hooks by location and appname
-	 * 
+	 *
 	 * @var array $location => $app => $file
 	 */
 	var $locations;
@@ -78,7 +78,7 @@ class hooks
 
 	/**
 	 * Executes all the hooks (the user has rights to) for a given location
-	 * 
+	 *
 	 * If no $order given, hooks are executed in the order of the applications!
 	 *
 	 * @param string|array $args location-name as string or array with keys location and
@@ -103,7 +103,7 @@ class hooks
 		if (!$no_permission_check)
 		{
 			// on install of a new egroupware both hook-apps and user apps may be empty/not set
-			$apps = array_intersect((array)$apps,(array)array_keys($GLOBALS['egw_info']['user']['apps']));
+			$apps = array_intersect((array)$apps,array_keys((array)$GLOBALS['egw_info']['user']['apps']));
 		}
 		if ($order)
 		{
