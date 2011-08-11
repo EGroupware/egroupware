@@ -1,3 +1,11 @@
+egroupware (1.8.001.20110811) hardy; urgency=low
+
+  * Updating version to 1.8.002 to simpler recognice if an EGroupware instance contains the security fixes
+  * Loatian language translation Dr. from Vimontha KHIEOVONGPHACHANH <kvimontha-AT-yahoo.com>
+  * SiteMgr: implement login and search module via <jdoc::include type="module"
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 11 Aug 2011 21:05:35 +0200
+
 egroupware (1.8.001.20110805) hardy; urgency=low
 
   * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect  
