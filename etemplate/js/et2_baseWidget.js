@@ -15,7 +15,7 @@
 /*egw:uses
 	jquery.jquery;
 	lib/tooltip.js;
-	et2_widget;
+	et2_DOMWidget;
 */
 
 /**

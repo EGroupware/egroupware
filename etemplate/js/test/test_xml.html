@@ -7,6 +7,7 @@
 		<script src="../et2_inheritance.js"></script>
 		<script src="../et2_common.js"></script>
 		<script src="../et2_widget.js"></script>
+		<script src="../et2_DOMWidget.js"></script>
 		<script src="../et2_baseWidget.js"></script>
 		<script src="../et2_inputWidget.js"></script>
 		<script src="../et2_template.js"></script>
@@ -191,13 +192,13 @@
 
 				et2_loadXMLFromURL(file,
 					function(_xmldoc) {
-						var t1 = (new Date).getTime();
-
 						if (container != null)
 						{
 							container.destroy();
 							container = null;
 						}
+
+						var t1 = (new Date).getTime();
 
 						container = new et2_container(null);
 						container.setParentDOMNode(document.getElementById("container"));

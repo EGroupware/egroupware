@@ -63,9 +63,10 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 	set_value: function(_value) {
 		this._oldValue = _value;
 
-		if (this.node)
+		var node = this.getInputNode();
+		if (node)
 		{
-			$j(this.node).val(_value);
+			$j(node).val(_value);
 		}
 	},
 
@@ -87,10 +88,15 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 		return this.getValue();
 	},
 
+	getInputNode: function() {
+		return this.node;
+	},
+
 	getValue: function() {
-		if (this.node)
+		var node = this.getInputNode();
+		if (node)
 		{
-			return $j(this.node).val();
+			return $j(node).val();
 		}
 
 		return this._oldValue;

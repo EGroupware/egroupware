@@ -395,5 +395,6 @@
 
 	// The base class has no attributes
 	Class.attributes = {};
+
 }).call(window);
 
