@@ -852,7 +852,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// check if there's a group access and we have the right membership
 		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
 		{
-			if (in_array(-abs($stat['gid']), $GLOBALS['egw']->accounts->memberships(self::$user, true)))
+			if (($memberships = $GLOBALS['egw']->accounts->memberships(self::$user, true)) && in_array(-abs($stat['gid']), $memberships))
 			{
 				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
