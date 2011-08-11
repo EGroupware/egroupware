@@ -629,7 +629,7 @@ class calendar_ical extends calendar_boupdate
 							else
 							{
 								$length = ($event['end'] - $event['start']) / 2;
-								$rrule['UNTIL']->modify($length . ' second');
+								$rrule['UNTIL']->modify((int)$length . ' second');
 							}
 
 							if (!$tzid || $version != '1.0')
