@@ -28,6 +28,10 @@ function phpgwapi_upgrade1_8_001()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
 }
+function phpgwapi_upgrade1_8_002()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
+}
 
 /**
  * Add index to improve import of contacts using a custom field as primary key
