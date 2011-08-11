@@ -1,4 +1,4 @@
-egroupware (1.8.001.20110811) hardy; urgency=low
+egroupware (1.8.002.20110811) hardy; urgency=low
 
   * Updating version to 1.8.002 to simpler recognice if an EGroupware instance contains the security fixes
   * Loatian language translation Dr. from Vimontha KHIEOVONGPHACHANH <kvimontha-AT-yahoo.com>
