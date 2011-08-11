@@ -309,7 +309,7 @@ class calendar_uiforms extends calendar_ui
 							break;
 
 						case 'resource':
-							if (is_array($data) && isset($data['current']) )
+							if (is_array($data))	// if $data['current'] is NOT set --> $app==''
 							{
 								list($app,$id) = explode(':',$data['current']);
 							}
