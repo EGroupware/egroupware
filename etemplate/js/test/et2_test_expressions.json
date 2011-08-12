@@ -1,7 +1,9 @@
 var expression_test_data = {
 	"test": {
-		"display_text": "true"
+		"display_text": "true",
+		"textbox": "And this is the inner textbox."
 	},
-	"display_text": "false"
+	"display_text": "false",
+	"textbox": "This is the outer textbox."
 };
 

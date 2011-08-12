@@ -65,6 +65,32 @@ et2_contentArrayMgr.prototype.getValueForID = function(_id)
 }
 
 /**
+ * Returns the path to this content array manager perspective as an array
+ * containing the key values
+ * 
+ * @param _path is used internally, do not supply it manually.
+ */
+et2_contentArrayMgr.prototype.getPath = function(_path)
+{
+	if (typeof _path == "undefined")
+	{
+		_path = [];
+	}
+
+	if (this.perspectiveData.key != null)
+	{
+		_path.push(this.perspectiveData.key);
+	}
+
+	if (this.parentMgr != null)
+	{
+		this.parentMgr.getPath(_path);
+	}
+
+	return _path;
+}
+
+/**
  * Get array entry is the equivalent to the boetemplate get_array function.
  * It returns a reference to the (sub) array with the given key. This also works
  * for keys using the ETemplate referencing scheme like a[b][c]
@@ -201,7 +227,7 @@ et2_contentArrayMgr.prototype.openPerspective = function(_owner, _root, _col, _r
 	// Set the root key
 	if (typeof _root == "string")
 	{
-		mgr.perspectiveData.key == _root;
+		mgr.perspectiveData.key = _root;
 	}
 
 	// Set the _col and _row parameter

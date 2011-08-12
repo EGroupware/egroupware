@@ -40,5 +40,5 @@ var et2_box = et2_baseWidget.extend({
 
 });
 
-et2_register_widget(et2_box, ["hbox", "vbox"]);
+et2_register_widget(et2_box, ["hbox", "vbox", "box"]);
 

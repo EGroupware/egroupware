@@ -477,34 +477,52 @@ var et2_widget = Class.extend({
 	 * Fetches all input element values and returns them in an associative
 	 * array. Widgets which introduce namespacing can use the internal _target
 	 * parameter to add another layer.
-	 *
-	 * @param _target is used internally and should no be supplied.
 	 */
-	getValues: function(_target) {
-		if (typeof _target == "undefined")
-		{
-			_target = {};
-		}
+	getValues: function() {
+		var result = {};
 
-		// Add the value of this element to the result object
-		if (this.implements(et2_IInput))
-		{
-			if (typeof _target[this.id] != "undefined")
+		// Iterate over the widget tree
+		this.iterateOver(function(_widget) {
+
+			// Get the path to the node we have to store the value at
+			var path = _widget.getContentMgr().getPath();
+
+			// Set the _target variable to that node
+			var _target = result;
+			for (var i = 0; i < path.length; i++)
+			{
+				// Create a new object for not-existing path nodes
+				if (typeof _target[path[i]] == "undefined")
+				{
+					_target[path[i]] = {};
+				}
+
+				// Check whether the path node is really an object
+				if (_target[path[i]] instanceof Object)
+				{
+					_target = _target[path[i]];
+				}
+				else
+				{
+					et2_debug("error", "ID collision while writing at path " + 
+						"node '" + path[i] + "'");
+				}
+			}
+
+			// Check whether the entry is really undefined
+			if (typeof _target[_widget.id] != "undefined")
 			{
 				et2_debug("error", "Overwriting value of '" + this.id + 
 					"', id exists twice!");
 			}
 
-			_target[this.id] = this.getValue();
-		}
+			// Store the value of the widget and reset its dirty flag, 
+			_target[_widget.id] = _widget.getValue();
+			_widget.resetDirty();
 
-		// Store the values of the children in the target array
-		for (var i = 0; i < this._children.length; i++)
-		{
-			this._children[i].getValues(_target);
-		}
+		}, this, et2_IInput);
 
-		return _target;
+		return result;
 	},
 
 	/**
