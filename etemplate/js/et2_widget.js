@@ -381,6 +381,7 @@ var et2_widget = Class.extend({
 	loadAttributes: function(_attrs) {
 		for (var i = 0; i < _attrs.length; i++)
 		{
+			// Special handling for the legacy options
 			if (_attrs[i].name == "options")
 			{
 				// Parse the legacy options
@@ -393,7 +394,28 @@ var et2_widget = Class.extend({
 			}
 			else
 			{
-				this.setAttribute(_attrs[i].name, _attrs[i].value);
+				var attrName = _attrs[i].name;
+				var attrValue = _attrs[i].value;
+
+				if (typeof this.attributes[attrName] != "undefined")
+				{
+					var attr = this.attributes[attrName];
+
+					// If the attribute is marked as boolean, parse the
+					// expression as bool expression.
+					if (attr.type == "boolean")
+					{
+						attrValue = this.getContentMgr()
+							.parseBoolExpression(attrValue);
+					}
+					else
+					{
+						attrValue = this.getContentMgr().expandName(attrValue);
+					}
+				}
+
+				// Set the attribute
+				this.setAttribute(attrName, attrValue);
 			}
 		}
 	},

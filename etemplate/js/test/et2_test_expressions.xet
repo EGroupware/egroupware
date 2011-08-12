@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<overlay>
+	<template id="test">
+		<description disabled="!@display_text" value="Dies ist nur ein test!" />
+	</template>
+</overlay> 

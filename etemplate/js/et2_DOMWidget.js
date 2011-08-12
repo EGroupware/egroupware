@@ -46,6 +46,15 @@ var et2_IDOMNode = new Interface({
  */
 var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
+	attributes: {
+		"disabled": {
+			"name": "Visible",
+			"type": "boolean",
+			"description": "Defines whether this widget is visible.",
+			"default": false
+		}
+	},
+
 	/**
 	 * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
 	 * object (if available) and passes it to its own "createDOMNode" function
@@ -57,6 +66,8 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"node": null,
 			"parent": null
 		};
+
+		this.disabled = false;
 
 		// Call the inherited constructor
 		this._super.apply(this, arguments);
@@ -176,6 +187,22 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			else
 			{
 				node.removeAttribute("id");
+			}
+		}
+	},
+
+	set_disabled: function(_value) {
+		if (this.node)
+		{
+			this.diabled = _value;
+
+			if (_value)
+			{
+				$j(this.node).hide();
+			}
+			else
+			{
+				$j(this.node).show();
 			}
 		}
 	}

@@ -71,8 +71,23 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 	},
 
 	set_id: function(_value) {
-		this._super.apply(this, arguments);
+		this.id = _value;
 
+		// Set the id of the input node
+		var node = this.getInputNode();
+		if (node)
+		{
+			if (_value != "")
+			{
+				node.setAttribute("id", _value);
+			}
+			else
+			{
+				node.removeAttribute("id");
+			}
+		}
+
+		// Set the value for this element
 		var mgr = this.getContentMgr();
 		if (_value != '' && mgr != null)
 		{
