@@ -1,4 +1,7 @@
 var expression_test_data = {
-	"display_text": "true"
+	"test": {
+		"display_text": "true"
+	},
+	"display_text": "false"
 };
 

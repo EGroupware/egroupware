@@ -136,6 +136,9 @@ var et2_template = et2_DOMWidget.extend({
 			else
 			{
 				this._super(_value);
+
+				// Check whether a namespace exists for this element
+				this.checkCreateNamespace();
 			}
 		}
 	},

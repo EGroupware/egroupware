@@ -169,5 +169,3 @@ var et2_placeholder = et2_baseWidget.extend({
 	}
 });
 
-
-

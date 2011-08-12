@@ -29,6 +29,13 @@ var et2_box = et2_baseWidget.extend({
 			.addClass("et2_" + _type);
 
 		this.setDOMNode(this.div[0]);
+	},
+
+	set_id: function(_value) {
+		this._super.apply(this, arguments);
+
+		// Check whether a namespace exists for this element
+		this.checkCreateNamespace();
 	}
 
 });

@@ -34,6 +34,7 @@ function et2_contentArrayMgr(_data, _parentMgr)
 
 	// Holds information about the current perspective
 	this.perspectiveData = {
+		"owner": null,
 		"key": null,
 		"col": 0,
 		"row": 0
@@ -140,8 +141,10 @@ et2_contentArrayMgr.prototype.expandName = function(_ident)
 		{
 			_ident = this.getRoot().getEntry(_ident.substr(2));
 		}
-
-		_ident = this.getEntry(_ident.substr(1));
+		else
+		{
+			_ident = this.getEntry(_ident.substr(1));
+		}
 	}
 
 	return _ident;
@@ -183,7 +186,7 @@ et2_contentArrayMgr.prototype.parseBoolExpression = function(_expression)
 	return val != '' && (typeof val != "string" || val.toLowerCase() != "false");
 }
 
-et2_contentArrayMgr.prototype.openPerspective = function(_root, _col, _row)
+et2_contentArrayMgr.prototype.openPerspective = function(_owner, _root, _col, _row)
 {
 	// Get the root node
 	var root = typeof _root == "string" ? this.data[_root] :
@@ -191,6 +194,9 @@ et2_contentArrayMgr.prototype.openPerspective = function(_root, _col, _row)
 
 	// Create a new content array manager with the given root
 	var mgr = new et2_contentArrayMgr(root, this);
+
+	// Set the owner
+	mgr.perspectiveData.owner = _owner;
 
 	// Set the root key
 	if (typeof _root == "string")

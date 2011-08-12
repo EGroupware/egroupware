@@ -136,6 +136,7 @@ var et2_widget = Class.extend({
 		// Delete all references to other objects
 		this._children = [];
 		this._parent = null;
+		this._mgr = null;
 		this.onSetParent();
 	},
 
@@ -175,6 +176,12 @@ var et2_widget = Class.extend({
 			{
 				this.setAttribute(key, _obj.getAttribute(key));
 			}
+		}
+
+		// Copy a reference to the content array manager
+		if (_obj._mgr)
+		{
+			this._mgr = _obj._mgr;
 		}
 	},
 
@@ -498,8 +505,38 @@ var et2_widget = Class.extend({
 		}
 
 		return _target;
-	}
+	},
 
+	/**
+	 * Checks whether a namespace exists for this element in the content array.
+	 * If yes, an own perspective of the content array is created. If not, the
+	 * parent content manager is used.
+	 */
+	checkCreateNamespace: function() {
+		// Get the content manager
+		var mgr = this.getContentMgr();
+
+		// Get the original content manager if we have already created a
+		// perspective for this node
+		if (this._mgr != null && this._mgr.perspectiveData.owner == this)
+		{
+			mgr = mgr.parentMgr;
+		}
+
+		// Check whether the manager has a namespace for the id of this object
+		if (mgr.getEntry(this.id) instanceof Object)
+		{
+			// The content manager has a own node for this object, so create
+			// an own perspective.
+			this._mgr = mgr.openPerspective(this, this.id);
+		}
+		else
+		{
+			// The current content manager does not have an own namespace for
+			// this element, so use the content manager of the parent.
+			this._mgr = null;
+		}
+	}
 });
 
 

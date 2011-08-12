@@ -489,6 +489,12 @@ var et2_grid = et2_DOMWidget.extend({
 
 			// Create the table
 			this.createTableFromCells(cells);
+
+			// Copy a reference to the content array manager
+			if (_obj._mgr)
+			{
+				this._mgr = _obj._mgr;
+			}
 		}
 		else
 		{
@@ -514,6 +520,13 @@ var et2_grid = et2_DOMWidget.extend({
 		}
 
 		return null;
+	},
+
+	set_id: function(_value) {
+		this._super.apply(this, arguments);
+
+		// Check whether a namespace exists for this element
+		this.checkCreateNamespace();
 	}
 
 });
