@@ -119,33 +119,6 @@
 		{
 			prototype["_ifacefuncs"].push(ifaces[i]);
 		}
-
-		// The implements function can be used to check whether the object
-		// implements the given interface.
-		prototype["implements"] = function(_iface) {
-			for (var key in _iface)
-			{
-				if (this._ifacefuncs.indexOf(key) < 0)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-		// The instanceOf function can be used to check for both - classes and
-		// interfaces. Please don't change the case of this function as this
-		// affects IE and Opera support.
-		prototype["instanceOf"] = function(_obj) {
-			if (_obj instanceof Interface)
-			{
-				return this.implements(_obj);
-			}
-			else
-			{
-				return this instanceof _obj;
-			}
-		}
 	};
 
 	function addAttributeFunctions(prototype, _super)
@@ -200,82 +173,6 @@
 		}
 
 		prototype.attributes = attributes;
-
-		/**
-		 * The initAttributes function sets the attributes to their default
-		 * values. The attributes are not overwritten, which means, that the
-		 * default is only set, if either a setter exists or this[propName] does
-		 * not exist yet.
-		 */
-		prototype.initAttributes = function() {
-			for (var key in this.attributes)
-			{
-				if (!this.attributes[key].ignore && this.attributes[key]["default"] !== et2_no_init)
-				{
-					this.setAttribute(key, this.attributes[key]["default"],
-						false);
-				}
-			}
-
-			this._attrsInitialized = true;
-		}
-
-		/**
-		 * The setAttribute function sets the attribute with the given name to
-		 * the given value. _override defines, whether this[_name] will be set,
-		 * if this key already exists. _override defaults to true. A warning
-		 * is issued if the attribute does not exist.
-		 */
-		prototype.setAttribute = function(_name, _value, _override) {
-			if (typeof this.attributes[_name] != "undefined")
-			{
-				if (!this.attributes[_name].ignore)
-				{
-					if (typeof _override == "undefined")
-					{
-						_override = true;
-					}
-
-					var val = et2_checkType(_value, this.attributes[_name].type);
-
-					if (typeof this["set_" + _name] == "function")
-					{
-						this["set_" + _name](val);
-					}
-					else if (_override || typeof this[_name] == "undefined")
-					{
-						this[_name] = val;
-					}
-				}
-			}
-			else
-			{
-				et2_debug("warn", "Attribute '" + _name + "' does not exist!");
-			}
-		}
-
-		/**
-		 * Returns the value of the given attribute. If the property does not
-		 * exist, an error message is issued.
-		 */
-		prototype.getAttribute = function(_name) {
-			if (typeof this.attributes[_name] != "undefined" &&
-			    !this.attributes[_name].ignore)
-			{
-				if (typeof this["get_" + _name] == "function")
-				{
-					return this["get_" + _name]();
-				}
-				else
-				{
-					return this[_name];
-				}
-			}
-			else
-			{
-				et2_error("error", "Attribute '" + _name  + "' does not exist!");
-			}
-		}
 	};
 
 	function classExtend(interfaces, prop) {
@@ -394,7 +291,116 @@
 	Class.extend = classExtend;
 
 	// The base class has no attributes
-	Class.attributes = {};
+	Class.prototype.attributes = {};
+
+	// Add the basic functions
+
+	/**
+	 * Returns the value of the given attribute. If the property does not
+	 * exist, an error message is issued.
+	 */
+	Class.prototype.getAttribute = function(_name) {
+		if (typeof this.attributes[_name] != "undefined" &&
+		    !this.attributes[_name].ignore)
+		{
+			if (typeof this["get_" + _name] == "function")
+			{
+				return this["get_" + _name]();
+			}
+			else
+			{
+				return this[_name];
+			}
+		}
+		else
+		{
+			et2_error("error", "Attribute '" + _name  + "' does not exist!");
+		}
+	}
+
+	/**
+	 * The setAttribute function sets the attribute with the given name to
+	 * the given value. _override defines, whether this[_name] will be set,
+	 * if this key already exists. _override defaults to true. A warning
+	 * is issued if the attribute does not exist.
+	 */
+	Class.prototype.setAttribute = function(_name, _value, _override) {
+		if (typeof this.attributes[_name] != "undefined")
+		{
+			if (!this.attributes[_name].ignore)
+			{
+				if (typeof _override == "undefined")
+				{
+					_override = true;
+				}
+
+				var val = et2_checkType(_value, this.attributes[_name].type);
+
+				if (typeof this["set_" + _name] == "function")
+				{
+					this["set_" + _name](val);
+				}
+				else if (_override || typeof this[_name] == "undefined")
+				{
+					this[_name] = val;
+				}
+			}
+		}
+		else
+		{
+			et2_debug("warn", "Attribute '" + _name + "' does not exist!");
+		}
+	}
+
+	/**
+	 * The initAttributes function sets the attributes to their default
+	 * values. The attributes are not overwritten, which means, that the
+	 * default is only set, if either a setter exists or this[propName] does
+	 * not exist yet.
+	 */
+	Class.prototype.initAttributes = function() {
+		for (var key in this.attributes)
+		{
+			if (!this.attributes[key].ignore && this.attributes[key]["default"] !== et2_no_init)
+			{
+				this.setAttribute(key, this.attributes[key]["default"],
+					false);
+			}
+		}
+
+		this._attrsInitialized = true;
+	}
+
+	/**
+	 * The implements function can be used to check whether the object
+	 * implements the given interface.
+	 */
+	Class.prototype.implements = function(_iface) {
+			for (var key in _iface)
+			{
+				if (this._ifacefuncs.indexOf(key) < 0)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+	/**
+	 * The instanceOf function can be used to check for both - classes and
+	 * interfaces. Please don't change the case of this function as this
+	 * affects IE and Opera support.
+	 */
+	Class.prototype.instanceOf = function(_obj) {
+	if (_obj instanceof Interface)
+	{
+			return this.implements(_obj);
+		}
+		else
+		{
+			return this instanceof _obj;
+		}
+	}
 
 }).call(window);
 
