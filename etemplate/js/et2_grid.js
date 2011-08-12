@@ -440,6 +440,9 @@ var et2_grid = et2_DOMWidget.extend({
 	assign: function(_obj) {
 		if (_obj instanceof et2_grid)
 		{
+			// Remember all widgets which have already been instanciated
+			var instances = [];
+
 			// Copy the cells array of the other grid and clone the widgets
 			// inside of it
 			var cells = new Array(_obj.cells.length);
@@ -451,10 +454,32 @@ var et2_grid = et2_DOMWidget.extend({
 				for (var x = 0; x < _obj.cells[y].length; x++)
 				{
 					var srcCell = _obj.cells[y][x];
+
+					var widget = null;
+					if (srcCell.widget)
+					{
+						// Search for the widget inside the instances array
+						for (var i = 0; i < instances.length; i++)
+						{
+							if (instances[i].srcWidget == srcCell.widget)
+							{
+								widget = instances[i].widget;
+								break;
+							}
+						}
+
+						if (widget == null)
+						{
+							widget = srcCell.widget.clone(this, srcCell.widget.type);
+							instances.push({
+								"widget": widget,
+								"srcWidget": srcCell.widget
+							});
+						}
+					}
+
 					cells[y][x] = {
-						"widget": (srcCell.widget ?
-							srcCell.widget.clone(this, srcCell.widget.type) :
-							null),
+						"widget": widget,
 						"td": null,
 						"colSpan": srcCell.colSpan,
 						"rowSpan": srcCell.rowSpan
@@ -464,7 +489,6 @@ var et2_grid = et2_DOMWidget.extend({
 
 			// Create the table
 			this.createTableFromCells(cells);
-
 		}
 		else
 		{

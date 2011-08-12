@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <overlay>
-	<textbox value="This is a single line textbox." statustext="Write something here!"/>
-	<textbox multiline="true" value="This is a multi line textbox."/>
+	<textbox id="test1" value="This is a single line textbox." statustext="Write something here!"/>
+	<textbox id="test2" multiline="true" value="This is a multi line textbox."/>
 
 	<template id="testbox">
-		<textbox value="This is a single line textbox." statustext="And something else here!"/>
-		<textbox multiline="true" value="This is a multi line textbox."/>
+		<textbox id="test3" value="This is a single line textbox." statustext="And something else here!"/>
+		<textbox id="test4" multiline="true" value="This is a multi line textbox."/>
 	</template>
 
 	<template id="testbox"/>

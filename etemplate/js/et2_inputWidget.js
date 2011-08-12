@@ -96,7 +96,9 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 		var node = this.getInputNode();
 		if (node)
 		{
-			return $j(node).val();
+			var val = $j(node).val();
+
+			return val;
 		}
 
 		return this._oldValue;

@@ -142,6 +142,19 @@ var et2_template = et2_DOMWidget.extend({
 
 	getDOMNode: function(_fromProxy) {
 		return this.div;
+	},
+
+	getValues: function(_target) {
+		if (this.proxiedTemplate)
+		{
+			return this.proxiedTemplate.getValues(_target);
+		}
+		else if (!this.isProxied)
+		{
+			return this._super(_target);
+		}
+
+		return _target;
 	}
 
 });

@@ -442,6 +442,40 @@ var et2_widget = Class.extend({
 		}
 
 		return null;
+	},
+
+	/**
+	 * Fetches all input element values and returns them in an associative
+	 * array. Widgets which introduce namespacing can use the internal _target
+	 * parameter to add another layer.
+	 *
+	 * @param _target is used internally and should no be supplied.
+	 */
+	getValues: function(_target) {
+		if (typeof _target == "undefined")
+		{
+			_target = {};
+		}
+
+		// Add the value of this element to the result object
+		if (this.implements(et2_IInput))
+		{
+			if (typeof _target[this.id] != "undefined")
+			{
+				et2_debug("error", "Overwriting value of '" + this.id + 
+					"', id exists twice!");
+			}
+
+			_target[this.id] = this.getValue();
+		}
+
+		// Store the values of the children in the target array
+		for (var i = 0; i < this._children.length; i++)
+		{
+			this._children[i].getValues(_target);
+		}
+
+		return _target;
 	}
 
 });
