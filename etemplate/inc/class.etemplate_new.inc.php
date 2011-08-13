@@ -95,6 +95,15 @@ class etemplate_new
 			egw_framework::validate_file('.','et2_xml','etemplate');
 			egw_framework::validate_file('.','et2_baseWidget','etemplate');
 			egw_framework::validate_file('.','et2_contentArrayMgr','etemplate');
+
+			// it seems all widget have to be explicitly loaded, to be used ...
+			foreach(scandir(EGW_SERVER_ROOT.'/etemplate/js') as $file)
+			{
+				if (preg_match('/^(et2_.*)\.js$/',$file,$matches))
+				{
+					egw_framework::validate_file('.',$matches[1],'etemplate');
+				}
+			}
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
 			common::egw_header();
 			if ($output_mode != 2)
@@ -169,7 +178,7 @@ class etemplate_new
 			error_log(__METHOD__."('$name',...,'$load_via') returning FALSE");
 			return false;
 		}
-		error_log(__METHOD__."('$name',...,'$load_via') this->rel_path=$this->rel_path returning FALSE");
+		//error_log(__METHOD__."('$name',...,'$load_via') this->rel_path=$this->rel_path returning TRUE");
 		return true;
 	}
 
