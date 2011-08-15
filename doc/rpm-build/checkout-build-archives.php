@@ -19,7 +19,7 @@ $verbose = 0;
 $config = array(
 	'packagename' => 'eGroupware',
 	'version' => '1.8',
-	'packaging' => '001.'.date('Ymd'),
+	'packaging' => '002.'.date('Ymd'),
 	'svndir' => '/tmp/build_root/egw_1.8_buildroot-svn',
 	'egw_buildroot' => '/tmp/build_root/egw_1.8_buildroot',
 	'sourcedir' => '/srv/obs/staging/egroupware/egroupware-1.8',
@@ -300,7 +300,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
 	global $config,$verbose,$svn;
 
-	$cmd = $svn.' log --xml --limit 20 '.escapeshellarg($tags_url);
+	$cmd = $svn.' log --xml --limit 40 '.escapeshellarg($tags_url);
 	if (($v = $verbose))
 	{
 		echo "Querying SVN for last tags\n$cmd\n";
