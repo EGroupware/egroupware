@@ -353,4 +353,18 @@ function et2_csvSplit(_str, _num, _delimiter, _enclosure)
 	return parts;
 }
 
+/**
+ * Creates a copy of the given object (non recursive)
+ */
+function et2_cloneObject(_obj)
+{
+	var result = {};
+
+	for (var key in _obj)
+	{
+		result[key] = _obj[key];
+	}
+
+	return result;
+}
 

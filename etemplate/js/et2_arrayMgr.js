@@ -12,7 +12,7 @@
 
 "use strict";
 
-function et2_contentArrayMgr(_data, _parentMgr)
+function et2_arrayMgr(_data, _parentMgr)
 {
 	if (typeof _parentMgr == "undefined")
 	{
@@ -44,7 +44,7 @@ function et2_contentArrayMgr(_data, _parentMgr)
 /**
  * Returns the root content array manager object
  */
-et2_contentArrayMgr.prototype.getRoot = function()
+et2_arrayMgr.prototype.getRoot = function()
 {
 	if (this.parentMgr != null)
 	{
@@ -54,7 +54,7 @@ et2_contentArrayMgr.prototype.getRoot = function()
 	return this;
 }
 
-et2_contentArrayMgr.prototype.getValueForID = function(_id)
+et2_arrayMgr.prototype.getValueForID = function(_id)
 {
 	if (typeof this.data[_id] != "undefined")
 	{
@@ -70,7 +70,7 @@ et2_contentArrayMgr.prototype.getValueForID = function(_id)
  * 
  * @param _path is used internally, do not supply it manually.
  */
-et2_contentArrayMgr.prototype.getPath = function(_path)
+et2_arrayMgr.prototype.getPath = function(_path)
 {
 	if (typeof _path == "undefined")
 	{
@@ -101,7 +101,7 @@ et2_contentArrayMgr.prototype.getPath = function(_path)
  * @param _skipEmpty returns false if _key is not present in this content array.
  * 	Defaults to false.
  */
-et2_contentArrayMgr.prototype.getEntry = function(_key, _referenceInto,
+et2_arrayMgr.prototype.getEntry = function(_key, _referenceInto,
 	_skipEmpty)
 {
 	if (typeof _referenceInto == "undefined")
@@ -147,7 +147,7 @@ et2_contentArrayMgr.prototype.getEntry = function(_key, _referenceInto,
  * Expands variables inside the given identifier to their values inside the
  * content array.
  */
-et2_contentArrayMgr.prototype.expandName = function(_ident)
+et2_arrayMgr.prototype.expandName = function(_ident)
 {
 	// Check whether the identifier refers to an index in the content array
 	var is_index_in_content = _ident.charAt(0) == '@';
@@ -176,7 +176,7 @@ et2_contentArrayMgr.prototype.expandName = function(_ident)
 	return _ident;
 }
 
-et2_contentArrayMgr.prototype.parseBoolExpression = function(_expression)
+et2_arrayMgr.prototype.parseBoolExpression = function(_expression)
 {
 	// If the first char of the expression is a '!' this means, that the value
 	// is to be negated.
@@ -212,14 +212,14 @@ et2_contentArrayMgr.prototype.parseBoolExpression = function(_expression)
 	return val != '' && (typeof val != "string" || val.toLowerCase() != "false");
 }
 
-et2_contentArrayMgr.prototype.openPerspective = function(_owner, _root, _col, _row)
+et2_arrayMgr.prototype.openPerspective = function(_owner, _root, _col, _row)
 {
 	// Get the root node
 	var root = typeof _root == "string" ? this.data[_root] :
 		(_root == null ? this.data : _root);
 
 	// Create a new content array manager with the given root
-	var mgr = new et2_contentArrayMgr(root, this);
+	var mgr = new et2_arrayMgr(root, this);
 
 	// Set the owner
 	mgr.perspectiveData.owner = _owner;

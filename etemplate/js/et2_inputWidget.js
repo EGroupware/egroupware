@@ -88,7 +88,7 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 		}
 
 		// Set the value for this element
-		var mgr = this.getContentMgr();
+		var mgr = this.getArrayMgr("content");
 		if (_value != '' && mgr != null)
 		{
 			var val = mgr.getValueForID(this.id);

@@ -6,6 +6,7 @@
 		<script src="../et2_xml.js"></script>
 		<script src="../et2_inheritance.js"></script>
 		<script src="../et2_common.js"></script>
+		<script src="../et2_arrayMgr.js"></script>
 		<script src="../et2_widget.js"></script>
 		<script src="../et2_DOMWidget.js"></script>
 		<script src="../et2_baseWidget.js"></script>
@@ -16,7 +17,9 @@
 		<script src="../et2_button.js"></script>
 		<script src="../et2_box.js"></script>
 		<script src="../et2_textbox.js"></script>
-		<script src="../et2_contentArrayMgr.js"></script>
+
+		<script src="../etemplate2.js"></script>
+
 		<!--<script src="../et2_tabs.js"></script>-->
 		<script src="../lib/tooltip.js"></script>
 
@@ -28,7 +31,7 @@
 		<h1>EGroupware ETemplate2 Test</h1>
 		<div class="header">Choose one of the following tests:</div>
 		<div id="linklist">
-			<a href="#" onclick="open_xet('et2_test_timesheet_edit.xet', timesheet_data.content);">Timesheet edit dialog</a>
+			<a href="#" onclick="open_xet('et2_test_timesheet_edit.xet', timesheet_data);">Timesheet edit dialog</a>
 			<a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
 			<a href="#" onclick="open_xet('et2_test_grid.xet');">Grid test</a>
 			<a href="#" onclick="open_xet('et2_test_tabbox.xet');">Tabs test</a>
@@ -40,33 +43,11 @@
 		<div id="time"></div>
 		<div id="container"></div>
 		<script>
-			var container = null;
+			var et2 = new etemplate2(document.getElementById("container"), "");
 
 			function open_xet(file, content) {
-				if (typeof content == "undefined")
-				{
-					content = {};
-				}
-
-				et2_loadXMLFromURL(file,
-					function(_xmldoc) {
-						if (container != null)
-						{
-							container.destroy();
-							container = null;
-						}
-
-						var t1 = (new Date).getTime();
-
-						container = new et2_container(null);
-						container.setParentDOMNode(document.getElementById("container"));
-						container.setContentMgr(new et2_contentArrayMgr(content));
-						container.loadFromXML(_xmldoc);
-
-						var t2 = (new Date).getTime();
-						$j("#time").text("Building the template took " + (t2 - t1) + "ms");
-					});
-				}
+				et2.load(file, content);
+			}
 		</script>
 	</body>
 </html>

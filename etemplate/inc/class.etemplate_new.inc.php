@@ -92,7 +92,7 @@ class etemplate_new
 		}
 		else	// first call
 */		{
-			egw_framework::validate_file('.','et2_all','etemplate');
+			egw_framework::validate_file('.','etemplate2','etemplate');
 
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
 			common::egw_header();
@@ -103,24 +103,8 @@ class etemplate_new
 			echo '
 		<div id="container"></div>
 		<script>
-			var container = null;
-
-			function open_xet(file, content) {
-				et2_loadXMLFromURL(file,
-					function(_xmldoc) {
-						if (container != null)
-						{
-							container.destroy();
-							container = null;
-						}
-
-						container = new et2_container(null);
-						container.setParentDOMNode(document.getElementById("container"));
-						container.setContentMgr(new et2_contentArrayMgr(content));
-						container.loadFromXML(_xmldoc);
-					});
-			}
-			open_xet("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode(array(
+			var et2 = new etemplate2(document.getElementById("container"), "");
+			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode(array(
 				'content' => $content,
 				'sel_options' => $sel_options,
 				'readonlys' => $readonlys,

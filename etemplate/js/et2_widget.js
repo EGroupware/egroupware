@@ -16,7 +16,7 @@
 	et2_xml;
 	et2_common;
 	et2_inheritance;
-	et2_contentArrayMgr;
+	et2_arrayMgr;
 */
 
 /**
@@ -100,7 +100,7 @@ var et2_widget = Class.extend({
 		}
 
 		this.id = "";
-		this._mgr = null;
+		this._mgrs = {};
 
 		// Copy the parent parameter and add this widget to its parent children
 		// list.
@@ -145,7 +145,7 @@ var et2_widget = Class.extend({
 		// Delete all references to other objects
 		this._children = [];
 		this._parent = null;
-		this._mgr = null;
+		this._mgrs = {};
 		this.onSetParent();
 	},
 
@@ -188,10 +188,7 @@ var et2_widget = Class.extend({
 		}
 
 		// Copy a reference to the content array manager
-		if (_obj._mgr)
-		{
-			this._mgr = _obj._mgr;
-		}
+		this.setArrayMgrs(_obj.mgrs);
 	},
 
 	/**
@@ -453,12 +450,12 @@ var et2_widget = Class.extend({
 					// expression as bool expression.
 					if (attr.type == "boolean")
 					{
-						attrValue = this.getContentMgr()
+						attrValue = this.getArrayMgr("content")
 							.parseBoolExpression(attrValue);
 					}
 					else
 					{
-						attrValue = this.getContentMgr().expandName(attrValue);
+						attrValue = this.getArrayMgr("content").expandName(attrValue);
 					}
 				}
 
@@ -495,23 +492,6 @@ var et2_widget = Class.extend({
 		{
 			this._children[i].update();
 		}
-	},
-
-	setContentMgr: function(_mgr) {
-		this._mgr = _mgr;
-	},
-
-	getContentMgr: function() {
-		if (this._mgr != null)
-		{
-			return this._mgr;
-		}
-		else if (this._parent)
-		{
-			return this._parent.getContentMgr();
-		}
-
-		return null;
 	},
 
 	/**
@@ -567,33 +547,99 @@ var et2_widget = Class.extend({
 	},
 
 	/**
+	 * Sets all array manager objects - this function can be used to set the
+	 * root array managers of the container object.
+	 */
+	setArrayMgrs: function(_mgrs) {
+		this._mgrs = et2_cloneObject(_mgrs);
+	},
+
+	/**
+	 * Returns an associative array containing the top-most array managers.
+	 *
+	 * @param _mgrs is used internally and should not be supplied.
+	 */
+	getArrayMgrs: function(_mgrs) {
+		if (typeof _mgrs == "undefined")
+		{
+			_mgrs = {};
+		}
+
+		// Add all managers of this object to the result, if they have not already
+		// been set in the result
+		for (var key in this._mgrs)
+		{
+			if (typeof _mgrs[key] == "undefined")
+			{
+				_mgrs[key] = this._mgrs[key];
+			}
+		}
+
+		// Recursively applies this function to the parent widget
+		if (this._parent)
+		{
+			this._parent.getArrayMgrs(_mgrs);
+		}
+
+		return _mgrs;
+	},
+
+	/**
+	 * Sets the array manager for the given part
+	 */
+	setArrayMgr: function(_part, _mgr) {
+		this._mgrs[_part] = _mgr;
+	},
+
+	/**
+	 * Returns the array manager object for the given part
+	 */
+	getArrayMgr: function(_part) {
+		if (typeof this._mgrs[_part] != "undefined")
+		{
+			return this._mgrs[_part];
+		}
+		else if (this._parent)
+		{
+			return this._parent.getArrayMgr(_part);
+		}
+
+		return null;
+	},
+
+	/**
 	 * Checks whether a namespace exists for this element in the content array.
 	 * If yes, an own perspective of the content array is created. If not, the
 	 * parent content manager is used.
 	 */
 	checkCreateNamespace: function() {
 		// Get the content manager
-		var mgr = this.getContentMgr();
+		var mgrs = this.getArrayMgrs();
 
-		// Get the original content manager if we have already created a
-		// perspective for this node
-		if (this._mgr != null && this._mgr.perspectiveData.owner == this)
+		for (var key in mgrs)
 		{
-			mgr = mgr.parentMgr;
-		}
+			var mgr = mgrs[key];
 
-		// Check whether the manager has a namespace for the id of this object
-		if (mgr.getEntry(this.id) instanceof Object)
-		{
-			// The content manager has a own node for this object, so create
-			// an own perspective.
-			this._mgr = mgr.openPerspective(this, this.id);
-		}
-		else
-		{
-			// The current content manager does not have an own namespace for
-			// this element, so use the content manager of the parent.
-			this._mgr = null;
+			// Get the original content manager if we have already created a
+			// perspective for this node
+			if (typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this)
+			{
+				mgr = mgr.parentMgr;
+			}
+
+			// Check whether the manager has a namespace for the id of this object
+			if (mgr.getEntry(this.id) instanceof Object)
+			{
+				// The content manager has an own node for this object, so
+				// create an own perspective.
+				this._mgrs[key] = mgr.openPerspective(this, this.id);
+			}
+			else
+			{
+				// The current content manager does not have an own namespace for
+				// this element, so use the content manager of the parent.
+				delete(this._mgrs[key]);
+			}
 		}
 	}
 });
