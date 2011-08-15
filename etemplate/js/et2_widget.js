@@ -16,6 +16,7 @@
 	et2_xml;
 	et2_common;
 	et2_inheritance;
+	et2_contentArrayMgr;
 */
 
 /**
@@ -64,6 +65,14 @@ var et2_widget = Class.extend({
 		 * other widgets.
 		 */
 		"span": {
+			"ignore": true
+		},
+
+		/**
+		 * Ignore the "type" tag - it is read by the "createElementFromNode"
+		 * function and passed as second parameter of the widget constructor
+		 */
+		"type": {
 			"ignore": true
 		}
 	},
@@ -330,6 +339,14 @@ var et2_widget = Class.extend({
 	},
 
 	createElementFromNode: function(_node, _nodeName) {
+
+		// Check whether the type attribute exists - if yes pass it instead of
+		// the nodeName
+		if (_node.getAttribute("type"))
+		{
+			_nodeName = _node.getAttribute("type");
+		}
+
 		if (typeof _nodeName == "undefined")
 		{
 			_nodeName = _node.nodeName.toLowerCase();

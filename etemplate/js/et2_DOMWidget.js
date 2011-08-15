@@ -192,17 +192,18 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	},
 
 	set_disabled: function(_value) {
-		if (this.node)
+		var node = this.getDOMNode();
+		if (node)
 		{
 			this.diabled = _value;
 
 			if (_value)
 			{
-				$j(this.node).hide();
+				$j(node).hide();
 			}
 			else
 			{
-				$j(this.node).show();
+				$j(node).show();
 			}
 		}
 	}
