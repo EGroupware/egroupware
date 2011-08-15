@@ -9,6 +9,11 @@
  * @version $Id$
  */
 
+/*egw:uses
+	jsapi.jsapi; // Contains some helper functions
+	jquery.jquery; // Used for the ajax requests
+*/
+
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 
 function _egw_json_escape_string(input)
@@ -164,12 +169,19 @@ function egw_json_register_plugin(_callback, _context)
 /**
  * Function used internally to pass a response to all registered plugins
  */
-function _egw_json_plugin_handle(_type, _response) {
+function _egw_json_plugin_handle(_type, _response, _context) {
 	for (var i = 0; i < _egw_json_plugins.length; i++)
 	{
 		try {
 			var plugin = _egw_json_plugins[i];
-			if (plugin.callback.call(plugin.context, _type, _response)) {
+
+			var context = plugin.context;
+			if (!plugin.context && typeof _context != "undefined")
+			{
+				context = _context;
+			}
+
+			if (plugin.callback.call(context, _type, _response)) {
 				return true;
 			}
 		} catch (e) {
@@ -532,7 +544,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 				}
 
 				//Try to handle the json response with all registered plugins
-				hasResponse |= _egw_json_plugin_handle(data.response[i].type, res);
+				hasResponse |= _egw_json_plugin_handle(data.response[i].type, res, this.context);
 			} catch(e) {
 				this.jsonError('Internal JSON handler error', e);
 			}
