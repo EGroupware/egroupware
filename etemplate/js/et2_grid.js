@@ -43,6 +43,8 @@ var et2_grid = et2_DOMWidget.extend({
 	},
 
 	destroy: function() {
+		this._super.call(this, arguments);
+
 		// Delete all references to cells or widgets
 		this.cells = null;
 		this.managementArray = null;

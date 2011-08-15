@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <overlay>
-	<textbox id="test1" value="This is a single line textbox." statustext="Write something here!"/>
+	<textbox id="test1" value="This is a single line textbox."/>
 	<textbox id="test2" multiline="true" value="This is a multi line textbox."/>
 
 	<template id="testbox">
-		<textbox id="test3" value="This is a single line textbox." statustext="And something else here!"/>
+		<textbox id="test3" value="This is a single line textbox."/>
 		<textbox id="test4" multiline="true" value="This is a multi line textbox."/>
 	</template>
 
 	<template id="testbox"/>
+
+	<button label="test" onclick="open_xet('et2_test_textbox.xet');" statustext="button"/>
 </overlay>
 

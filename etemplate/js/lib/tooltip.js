@@ -70,6 +70,12 @@ egw_tooltip.prototype.bindToElement = function(_elem, _text)
 
 egw_tooltip.prototype.unbindFromElement = function(_elem)
 {
+	if (this.current_elem == _elem)
+	{
+		this.hide();
+		this.current_elem = null;
+	}
+
 	_elem.unbind('mouseenter.tooltip');
 	_elem.unbind('mouseleave.tooltip');
 	_elem.unbind('mousemove.tooltip');

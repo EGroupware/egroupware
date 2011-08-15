@@ -73,8 +73,16 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		}
 	},
 
+
+	/**
+	 * Implementation of the et2_IInput interface
+	 */
+
+	/**
+	 * Always return false as a button is never dirty
+	 */
 	isDirty: function() {
-		return true;
+		return false;
 	},
 
 	resetDirty: function() {
@@ -85,6 +93,9 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		{
 			return true;
 		}
+
+		// If "null" is returned, the result is not added to the submitted
+		// array.
 		return null;
 	}
 

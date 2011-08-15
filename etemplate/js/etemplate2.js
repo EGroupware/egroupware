@@ -76,7 +76,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	{
 		if (typeof _data[neededEntries[i]] == "undefined")
 		{
-			et2_debug("info", "Created not passed entry '" + neededEntries[i] + "' in data array.");
+			et2_debug("log", "Created not passed entry '" + neededEntries[i] + "' in data array.");
 			_data[neededEntries[i]] = {};
 		}
 	}

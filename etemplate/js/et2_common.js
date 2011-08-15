@@ -31,32 +31,39 @@ if (typeof Array.prototype.indexOf == "undefined")
  */
 var ET2_DEBUGLEVEL = 4;
 
-function et2_debug(_level, _msg)
+function et2_debug(_level)
 {
 	if (typeof console != "undefined")
 	{
+		// Get the passed parameters and remove the first entry
+		var args = [];
+		for (var i = 1; i < arguments.length; i++)
+		{
+			args.push(arguments[i]);
+		}
+
 		if (_level == "log" && ET2_DEBUGLEVEL >= 4 &&
 		    typeof console.log == "function")
 		{
-			console.log(_msg);
+			console.log.apply(console, args);
 		}
 
 		if (_level == "info" && ET2_DEBUGLEVEL >= 3 &&
 		    typeof console.info == "function")
 		{
-			console.info(_msg);
+			console.info.apply(console, args);
 		}
 
 		if (_level == "warn" && ET2_DEBUGLEVEL >= 2 &&
 		    typeof console.warn == "function")
 		{
-			console.warn(_msg);
+			console.warn.apply(console, args);
 		}
 
 		if (_level == "error" && ET2_DEBUGLEVEL >= 1 &&
 		    typeof console.error == "function")
 		{
-			console.error(_msg);
+			console.error.apply(console, args);
 		}
 	}
 }

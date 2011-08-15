@@ -545,7 +545,7 @@ var et2_widget = Class.extend({
 			// Check whether the entry is really undefined
 			if (typeof _target[_widget.id] != "undefined")
 			{
-				et2_debug("error", "Overwriting value of '" + _widget.id + 
+				et2_debug("error", _widget, "Overwriting value of '" + _widget.id + 
 					"', id exists twice!");
 			}
 
