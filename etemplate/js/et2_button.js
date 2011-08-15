@@ -14,13 +14,14 @@
 
 /*egw:uses
 	jquery.jquery;
+	et2_inputWidget;
 	et2_baseWidget;
 */
 
 /**
  * Class which implements the "button" XET-Tag
  */ 
-var et2_button = et2_baseWidget.extend({
+var et2_button = et2_baseWidget.extend(et2_IInput, {
 
 	attributes: {
 		"label": {
@@ -40,6 +41,7 @@ var et2_button = et2_baseWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.label = "";
+		this.clicked = false;
 
 		this.btn = $j(document.createElement("button"))
 			.addClass("et2_button")
@@ -56,11 +58,10 @@ var et2_button = et2_baseWidget.extend({
 				return false;
 		}
 
-		// Fetch the form data
-		var formData = this.getRoot().getValues();
-
-		// Submit it!
-		console.log(formData);
+		// Submit the form
+		this.clicked = true;
+		this.getInstanceManager().submit();
+		this.clicked = false;
 	},
 
 	set_label: function(_value) {
@@ -70,6 +71,21 @@ var et2_button = et2_baseWidget.extend({
 
 			this.btn.text(_value);
 		}
+	},
+
+	isDirty: function() {
+		return true;
+	},
+
+	resetDirty: function() {
+	},
+
+	getValue: function() {
+		if (this.clicked)
+		{
+			return true;
+		}
+		return null;
 	}
 
 });

@@ -101,6 +101,7 @@ var et2_widget = Class.extend({
 
 		this.id = "";
 		this._mgrs = {};
+		this._inst = null;
 
 		// Copy the parent parameter and add this widget to its parent children
 		// list.
@@ -506,7 +507,7 @@ var et2_widget = Class.extend({
 		this.iterateOver(function(_widget) {
 
 			// Get the path to the node we have to store the value at
-			var path = _widget.getContentMgr().getPath();
+			var path = _widget.getArrayMgr("content").getPath();
 
 			// Set the _target variable to that node
 			var _target = result;
@@ -537,8 +538,12 @@ var et2_widget = Class.extend({
 					"', id exists twice!");
 			}
 
-			// Store the value of the widget and reset its dirty flag, 
-			_target[_widget.id] = _widget.getValue();
+			// Store the value of the widget and reset its dirty flag
+			var value = _widget.getValue();
+			if (value !== null)
+			{
+				_target[_widget.id] = value;
+			}
 			_widget.resetDirty();
 
 		}, this, et2_IInput);
@@ -641,6 +646,29 @@ var et2_widget = Class.extend({
 				delete(this._mgrs[key]);
 			}
 		}
+	},
+
+	/**
+	 * Sets the instance manager object (of type etemplate2, see etemplate2.js)
+	 */
+	setInstanceManager: function(_inst) {
+		this._inst = _inst;
+	},
+
+	/**
+	 * Returns the instance manager
+	 */
+	getInstanceManager: function() {
+		if (this._inst != null)
+		{
+			return this._inst;
+		}
+		else if (this._parent)
+		{
+			return this._parent.getInstanceManager();
+		}
+
+		return null;
 	}
 });
 

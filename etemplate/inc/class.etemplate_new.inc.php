@@ -103,7 +103,7 @@ class etemplate_new
 			echo '
 		<div id="container"></div>
 		<script>
-			var et2 = new etemplate2(document.getElementById("container"), "");
+			var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
 			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode(array(
 				'content' => $content,
 				'sel_options' => $sel_options,
@@ -115,6 +115,25 @@ class etemplate_new
 ';
 			common::egw_footer();
 		}
+	}
+
+	/**
+	 * Process via Ajax submitted content
+	 */
+	static public function ajax_process_content(array $content)
+	{
+		error_log(__METHOD__."(".print_r($content, true).")");
+
+		$response = egw_json_response::get();
+		$response->generic("et2_load", array(
+			"url" => $GLOBALS['egw_info']['server']['webserver_url']."/etemplate/js/test/et2_test_expressions.xet",
+			"data" => array(
+				"content" => array(
+					"display_text" => "",
+					"textbox" => "Hello world!"
+				)
+			)
+		));
 	}
 
 	/**
