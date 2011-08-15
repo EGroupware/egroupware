@@ -60,6 +60,22 @@ etemplate2.prototype.clear = function()
  */
 etemplate2.prototype._createArrayManagers = function(_data)
 {
+	if (typeof _data == "undefined")
+	{
+		_data = {};
+	}
+
+	// Create all neccessary _data entries
+	var neededEntries = ["content", "readonlys", "validation_errors"];
+	for (var i = 0; i < neededEntries.length; i++)
+	{
+		if (typeof _data[neededEntries[i]] == "undefined")
+		{
+			et2_debug("info", "Created not passed entry '" + neededEntries[i] + "' in data array.");
+			_data[neededEntries[i]] = {};
+		}
+	}
+
 	var result = {};
 
 	// Create an array manager object for each part of the _data array.
