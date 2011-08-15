@@ -145,7 +145,7 @@
 					</grid>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description value="Unitprice" options=",,ts_unitprice"/>
+					<description value="Unitprice" options=",,,ts_unitprice"/>
 					<grid>
 						<columns>
 							<column disabled="@pm_integration=none"/>
