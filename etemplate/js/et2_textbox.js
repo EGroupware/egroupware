@@ -69,5 +69,5 @@ var et2_textbox = et2_inputWidget.extend({
 
 });
 
-et2_register_widget(et2_textbox, ["textbox"]);
+et2_register_widget(et2_textbox, ["textbox", "int", "float"]);
 

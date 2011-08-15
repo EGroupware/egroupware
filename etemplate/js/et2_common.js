@@ -64,7 +64,7 @@ function et2_debug(_level, _msg)
 /**
  * Array with all types supported by the et2_checkType function.
  */
-var et2_validTypes = ["boolean", "string", "float", "integer", "any"];
+var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js"];
 
 /**
  * Object whith default values for the above types. Do not specify array or
@@ -74,6 +74,7 @@ var et2_validTypes = ["boolean", "string", "float", "integer", "any"];
 var et2_typeDefaults = {
 	"boolean": false,
 	"string": "",
+	"js": null,
 	"float": 0.0,
 	"integer": 0,
 	"any": null
@@ -109,6 +110,29 @@ function et2_checkType(_val, _type)
 		if (lcv === "true" || lcv === "false" || lcv === "")
 		{
 			return _val === "true";
+		}
+
+		_err();
+	}
+
+	if (_type == "js")
+	{
+		// Handle the default case
+		if  (_val === null)
+		{
+			return null;
+		}
+
+		// Create a new function containing the code
+		if (typeof _val == "string")
+		{
+			if (_val !== "")
+			{
+				// TODO: Parse JS code properly
+				return new Function(_val); 
+			}
+
+			return null;
 		}
 
 		_err();

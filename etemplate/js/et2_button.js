@@ -27,6 +27,12 @@ var et2_button = et2_baseWidget.extend({
 			"name": "caption",
 			"type": "string",
 			"description": "Label of the button"
+		},
+
+		"onclick": {
+			"name": "onclick",
+			"type": "js",
+			"description": "JS code which gets executed when the button is clicked"
 		}
 	},
 
@@ -36,9 +42,25 @@ var et2_button = et2_baseWidget.extend({
 		this.label = "";
 
 		this.btn = $j(document.createElement("button"))
-			.addClass("et2_button");
+			.addClass("et2_button")
+			.click(this, function(e) {e.data.buttonClick()});
 
 		this.setDOMNode(this.btn[0]);
+	},
+
+	buttonClick: function() {
+		// Execute the JS code connected to the event handler
+		if (this.onclick != null)
+		{
+			if (!this.onclick())
+				return false;
+		}
+
+		// Fetch the form data
+		var formData = this.getRoot().getValues();
+
+		// Submit it!
+		console.log(formData);
 	},
 
 	set_label: function(_value) {
