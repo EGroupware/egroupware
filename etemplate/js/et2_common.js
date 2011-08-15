@@ -305,7 +305,7 @@ function et2_csvSplit(_str, _num, _delimiter, _enclosure)
 	// Default the parameters
 	if (typeof _num == "undefined")
 	{
-		_num == null;
+		_num = null;
 	}
 
 	if (typeof _delimiter == "undefined")
