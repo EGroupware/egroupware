@@ -383,6 +383,9 @@ var et2_widget = Class.extend({
 		var widget = new constructor(this, _nodeName)
 		widget.loadFromXML(_node);
 
+		// Call the "loadFinished" function of the widget
+		widget.loadingFinished();
+
 		return widget;
 	},
 
@@ -470,6 +473,14 @@ var et2_widget = Class.extend({
 	 * Called whenever textNodes are loaded from the XML tree
 	 */
 	loadContent: function(_content) {
+	},
+
+	/**
+	 * Called when loading of the widget from XML node is finished. This
+	 * function can be used to load the data from the data arrays (content,
+	 * readonlys, sel_options etc.)
+	 */
+	loadingFinished: function() {
 	},
 
 	/**

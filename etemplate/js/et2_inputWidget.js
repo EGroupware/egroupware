@@ -60,6 +60,21 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 		this._oldValue = "";
 	},
 
+	loadingFinished: function() {
+		this._super.call(this, arguments);
+
+		if (this.id != "")
+		{
+			// Set the value for this element
+			var contentMgr = this.getArrayMgr("content");
+			var val = contentMgr.getValueForID(this.id);
+			if (val !== null)
+			{
+				this.set_value(val);
+			}
+		}
+	},
+
 	set_value: function(_value) {
 		this._oldValue = _value;
 
@@ -73,7 +88,8 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 	set_id: function(_value) {
 		this.id = _value;
 
-		// Set the id of the input node
+		// Set the id of the _input_ node (in contrast to the default
+		// implementation, which sets the base node)
 		var node = this.getInputNode();
 		if (node)
 		{
@@ -84,17 +100,6 @@ var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
 			else
 			{
 				node.removeAttribute("id");
-			}
-		}
-
-		// Set the value for this element
-		var mgr = this.getArrayMgr("content");
-		if (_value != '' && mgr != null)
-		{
-			var val = mgr.getValueForID(this.id);
-			if (val !== null)
-			{
-				this.set_value(val);
 			}
 		}
 	},

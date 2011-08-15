@@ -71,7 +71,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	}
 
 	// Create all neccessary _data entries
-	var neededEntries = ["content", "readonlys", "validation_errors"];
+	var neededEntries = ["content", "sel_options", "readonlys", "modifications", "validation_errors"];
 	for (var i = 0; i < neededEntries.length; i++)
 	{
 		if (typeof _data[neededEntries[i]] == "undefined")

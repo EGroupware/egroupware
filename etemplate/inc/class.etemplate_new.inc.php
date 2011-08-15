@@ -109,7 +109,7 @@ class etemplate_new
 				'sel_options' => $sel_options,
 				'readonlys' => $readonlys,
 				'modifications' => $this->modifications,
-				'validation_errros' => self::$validation_errors,
+				'validation_errors' => self::$validation_errors,
 			)).');
 		</script>
 ';
