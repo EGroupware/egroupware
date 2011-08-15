@@ -471,9 +471,10 @@ class html
 	 * @param string $label label
 	 * @param mixed $selected value or array of values of options to mark as selected
 	 * @param boolean $no_lang NOT running the label through lang(), default false=use lang()
+	 * @param string $extra extra text, e.g.: style="", default: ''
 	 * @return string html
 	 */
-	static function select_option($value,$label,$selected,$no_lang=0,$title='')
+	static function select_option($value,$label,$selected,$no_lang=0,$title='',$extra='')
 	{
 		// the following compares strict as strings, to archive: '0' == 0 != ''
 		// the first non-strict search via array_search, is for performance reasons, to not always search the whole array with php
@@ -486,7 +487,8 @@ class html
 			}
 		}
 		return '<option value="'.self::htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
-			($title ? ' title="'.self::htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
+			($title ? ' title="'.self::htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') .
+			($extra ? ' ' . $extra : '') . '>'.
 			self::htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}
 
