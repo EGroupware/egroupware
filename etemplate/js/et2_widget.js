@@ -315,7 +315,7 @@ var et2_widget = Class.extend({
 			_type = et2_widget;
 		}
 
-		if (this.instanceOf(_type))
+		if (this.isInTree() && this.instanceOf(_type))
 		{
 			_callback.call(_context, this);
 		}
@@ -324,6 +324,30 @@ var et2_widget = Class.extend({
 		{
 			this._children[i].iterateOver(_callback, _context, _type);
 		}
+	},
+
+	/**
+	 * Returns true if the widget currently resides in the visible part of the
+	 * widget tree. E.g. Templates which have been cloned are not in the visible
+	 * part of the widget tree.
+	 * 
+	 * @param _vis can be used by widgets overwriting this function - simply
+	 * 	write
+	 * 		return this._super(inTree);
+	 *	when calling this function the _vis parameter does not have to be supplied.
+	 */
+	isInTree: function(_vis) {
+		if (typeof _vis == "undefined")
+		{
+			_vis = true;
+		}
+
+		if (this._parent)
+		{
+			return _vis && this._parent.isInTree();
+		}
+
+		return _vis;
 	},
 
 	isOfSupportedWidgetClass: function(_obj)
@@ -529,7 +553,7 @@ var et2_widget = Class.extend({
 			// Check whether the entry is really undefined
 			if (typeof _target[_widget.id] != "undefined")
 			{
-				et2_debug("error", "Overwriting value of '" + this.id + 
+				et2_debug("error", "Overwriting value of '" + _widget.id + 
 					"', id exists twice!");
 			}
 
