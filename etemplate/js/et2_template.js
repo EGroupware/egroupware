@@ -13,7 +13,8 @@
 "use strict";
 
 /*egw:uses
-	et2_widget;
+	et2_xml;
+	et2_DOMWidget;
 */
 
 /**
