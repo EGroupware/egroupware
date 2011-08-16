@@ -129,10 +129,13 @@ function et2_checkType(_val, _type, _attr)
 			return _val;
 		}
 
-		var lcv = _val.toLowerCase();
-		if (lcv === "true" || lcv === "false" || lcv === "")
+		if (typeof _val == "string")
 		{
-			return _val === "true";
+			var lcv = _val.toLowerCase();
+			if (lcv === "true" || lcv === "false" || lcv === "")
+			{
+				return _val === "true";
+			}
 		}
 
 		return _err();
