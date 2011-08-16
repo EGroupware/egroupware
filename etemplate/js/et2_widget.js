@@ -455,9 +455,9 @@ var et2_widget = Class.extend({
 				// Parse the legacy options
 				var splitted = et2_csvSplit(_attrs[i].value);
 
-				for (var i = 0; i < splitted.length && i < this.legacyOptions.length; i++)
+				for (var j = 0; j < splitted.length && j < this.legacyOptions.length; j++)
 				{
-					this.setAttribute(this.legacyOptions[i], splitted[i]);
+					this.setAttribute(this.legacyOptions[j], splitted[j]);
 				}
 			}
 			else
