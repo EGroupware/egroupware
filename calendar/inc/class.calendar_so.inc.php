@@ -394,10 +394,12 @@ class calendar_so
 			$where[] = '('.implode(' OR ',$to_or).')';
 
 			// Searching - restrict private to own or private grant
-			$private_grants = $GLOBALS['egw']->acl->get_ids_for_location($GLOBALS['egw_info']['user']['account_id'], EGW_ACL_PRIVATE, 'calendar');
-			$private_filter = '(cal_public=1 OR cal_owner = ' . $GLOBALS['egw_info']['user']['account_id'];
-			if($private_grants) $private_filter .= ' OR cal_public=0 AND cal_owner IN (' . implode(',',$private_grants) . ')';
-			$private_filter .= ')';
+			if (!isset($params['private_grants']))
+			{
+				$params['private_grants'] = $GLOBALS['egw']->acl->get_ids_for_location($GLOBALS['egw_info']['user']['account_id'], EGW_ACL_PRIVATE, 'calendar');
+				$params['private_grants'][] = $GLOBALS['egw_info']['user']['account_id'];	// db query does NOT return current user
+			}
+			$private_filter = '(cal_public=1 OR cal_public=0 AND '.$this->db->expression($this->cal_table, array('cal_owner' => $params['private_grants'])) . ')';
 			$where[] = $private_filter;
 		}
 		if (!empty($sql_filter) && is_string($sql_filter))
