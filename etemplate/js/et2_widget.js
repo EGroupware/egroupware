@@ -391,7 +391,6 @@ var et2_widget = Class.extend({
 		// readonly type (suffixed with "_ro") is registered
 		var readonly = this.getArrayMgr("readonlys").isReadOnly(
 			_node.getAttribute("id"), _node.getAttribute("readonly"), this.readonly);
-		et2_debug("log", _node.getAttribute("id"), readonly);
 		if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];

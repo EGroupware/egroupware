@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /*egw:uses
 	jquery.jquery;
 	et2_baseWidget;
