@@ -1,3 +1,15 @@
+egroupware-epl (11.1.20110816-1) hardy; urgency=low
+
+  * Calendar: not using freebusy rights for searching calendar, as it would allow to probe for event contents
+  * Loa language translation Dr. from Vimontha KHIEOVONGPHACHANH <kvimontha-AT-yahoo.com>
+  * eSync/Addressbook: added mapping of private cellphone to home2phone, other phone to business2phonenumber and changed role to title in mapping of jobtitle (role is no longer mapped, because no outlook equivalent, egw prefix is mapped to ol title!)
+  * eSync/Addressbook: new preference to force sorting on device, eg. for use with Windows Mobile, which use "own sorting" set in addressbook otherwise
+  * SiteMgr: implement login and search module via <jdoc::include type="module"
+  * email: fix for ->starting the search with enter with IE opens a compose window<-
+  * email: fix bug in MailMerge; Mail-Templates with text/html only were not processed as text/html but as text/plain; now this is handeled correctly/as expected 
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 16 Aug 2011 16:15:08 +0200
+
 egroupware-epl (11.1.20110805-1) hardy; urgency=low
 
   * API fix PHP fatal error wakeup2 is no method ..., when comming from setup
