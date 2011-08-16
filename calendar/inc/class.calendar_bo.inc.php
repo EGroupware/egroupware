@@ -313,9 +313,10 @@ class calendar_bo
 	 * @param int|array $_users
 	 * @param boolean $no_enum_groups=true
 	 * @param boolean $ignore_acl=false
+	 * @param boolean $use_freebusy=true should freebusy rights are taken into account, default true, can be set to false eg. for a search
 	 * @return array of user-ids
 	 */
-	private function resolve_users($_users, $no_enum_groups=true, $ignore_acl=false)
+	private function resolve_users($_users, $no_enum_groups=true, $ignore_acl=false, $use_freebusy=true)
 	{
 		if (!is_array($_users))
 		{
@@ -326,7 +327,7 @@ class calendar_bo
 		foreach($_users as $user)
 		{
 			$user = trim($user);
-			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
+			if ($ignore_acl || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
@@ -352,7 +353,7 @@ class calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member['account_id'],$users) &&
-							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id'])))
+							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$member['account_id'])))
 						{
 							$users[] = $member['account_id'];
 						}
@@ -428,7 +429,18 @@ class calendar_bo
 			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
 		}
 		// resolve users to add memberships for users and members for groups
-		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl']);
+		// for search, do NOT use freebusy rights, as it would allow to probe the content of event entries
+		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl'], empty($params['query']));
+
+		// supply so with private_grants, to not query them again from the database
+		if (!empty($params['query']))
+		{
+			$params['private_grants'] = array();
+			foreach($this->grants as $user => $rights)
+			{
+				if ($rights & EGW_ACL_PRIVATE) $params['private_grants'][] = $user;
+			}
+		}
 
 		// replace (by so not understood filter 'no-enum-groups' with 'default' filter
 		if ($params['filter'] == 'no-enum-groups')
