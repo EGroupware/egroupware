@@ -193,7 +193,13 @@ var et2_widget = Class.extend({
 		{
 			if (!_obj.attributes[key].ignore)
 			{
-				this.setAttribute(key, _obj.getAttribute(key));
+				var value = _obj.getAttribute(key);
+
+				// Check whether the attribute is undefined
+				if (typeof value != "undefined")
+				{
+					this.setAttribute(key, value);
+				}
 			}
 		}
 

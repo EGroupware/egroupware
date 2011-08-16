@@ -23,6 +23,7 @@
 	et2_selectbox;
 	et2_styles;
 	et2_html;
+	et2_tabs;
 
 	// Requirements for the etemplate2 object
 	et2_xml;
@@ -49,6 +50,9 @@ function etemplate2(_container, _menuaction)
 
 	// Preset the object variable
 	this.widgetContainer = null;
+
+	// Associative array with the event listeners
+	this.listeners = {};
 }
 
 /**
@@ -132,16 +136,86 @@ etemplate2.prototype.submit = function()
 	// Get the form values
 	var values = this.widgetContainer.getValues();
 
-	// Create the request object
-	if (typeof egw_json_request != "undefined")
+	// Trigger the submit event
+	if (this.fireEvent("submit", [values]))
 	{
-		var request = new egw_json_request(this.menuaction, [values], this);
-		request.sendRequest(true);
+		// Create the request object
+		if (typeof egw_json_request != "undefined")
+		{
+			var request = new egw_json_request(this.menuaction, [values], this);
+			request.sendRequest(true);
+		}
+		else
+		{
+			et2_debug("info", "Form got submitted with values: ", values);
+		}
 	}
-	else
+}
+
+/**
+ * Adds an callback function to the given event slot
+ * 
+ * @param _event is the name of the event
+ * @param _callback is the function which should be called once the event gets
+ * 	fired.
+ * @param _context is the context in which the function should be executed.
+ */
+etemplate2.prototype.addListener = function(_event, _callback, _context)
+{
+	// Add the event slot if it does not exist yet
+	if (typeof this.listeners[_event] == "undefined")
 	{
-		console.log(values);
+		this.listeners[_event] = [];
 	}
+
+	this.listeners[_event].push({
+		"callback": _callback,
+		"context": _context
+	});
+}
+
+/**
+ * Removes the given callback function from the given event slot.
+ */
+etemplate2.prototype.removeListener = function(_event, _callback)
+{
+	if (typeof this.listeners[_event] != "undefined")
+	{
+		var events = this.listeners[_event];
+
+		for (var i = events.length - 1; i >= 0; i--)
+		{
+			if (events[i].callback == _callback)
+			{
+				events.splice(i, 1);
+			}
+		}
+	}
+}
+
+/**
+ * Fires the given event. The return values are conected via AND
+ */
+etemplate2.prototype.fireEvent = function(_event, _args)
+{
+	if (typeof _args == "undefined")
+	{
+		_args = [];
+	}
+
+	var result = true;
+
+	if (typeof this.listeners[_event] != "undefined")
+	{
+		var events = this.listeners[_event];
+
+		for (var i = 0; i < events.length; i++)
+		{
+			result = result && events[i].callback.apply(events[i].context, _args);
+		}
+	}
+
+	return result;
 }
 
 /**
