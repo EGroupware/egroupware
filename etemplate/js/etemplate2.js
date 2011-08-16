@@ -19,6 +19,8 @@
 	et2_button;
 	et2_description;
 	et2_textbox;
+	et2_number;
+	et2_selectbox;
 	et2_styles;
 	et2_html;
 

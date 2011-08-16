@@ -29,6 +29,12 @@ var et2_textbox = et2_inputWidget.extend({
 			"type": "boolean",
 			"default": false,
 			"description": "If true, the textbox is a multiline edit field."
+		},
+		"size": {
+			"name": "Size",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Field width"
 		}
 	},
 
@@ -39,6 +45,7 @@ var et2_textbox = et2_inputWidget.extend({
 		this.id = "";
 
 		this.createInputWidget();
+
 	},
 
 	createInputWidget: function() {
@@ -49,6 +56,10 @@ var et2_textbox = et2_inputWidget.extend({
 		else
 		{
 			this.input = $j(document.createElement("input"));
+		}
+
+		if(this.size) {
+			this.set_size(this.size);
 		}
 
 		this.input.addClass("et2_textbox");
@@ -66,11 +77,22 @@ var et2_textbox = et2_inputWidget.extend({
 			// Write all settings again
 			this.update();
 		}
-	}
+	},
 
+	/**
+	 * Set input widget size
+	 * @param _size Rather arbitrary size units, approximately characters
+	 */
+	set_size: function(_size) {
+		if (typeof _size != 'undefined' && _size != this.input.attr("size"))
+		{
+			this.size = _size;
+			this.input.attr("size", this.size);
+		}
+	}
 });
 
-et2_register_widget(et2_textbox, ["textbox", "int", "float"]);
+et2_register_widget(et2_textbox, ["textbox"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.

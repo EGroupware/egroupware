@@ -79,6 +79,17 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			}
 		}
 	},
+	set_required: function(_value) {
+		var node = this.getInputNode();
+		if (node)
+		{
+			if(_value) {
+				$j(node).attr("required", "required");
+			} else {
+				node.removeAttribute("required");
+			}
+		}
+	},
 
 	get_value: function() {
 		return this.getValue();
