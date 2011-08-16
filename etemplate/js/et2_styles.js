@@ -32,13 +32,9 @@ var et2_styles = et2_widget.extend({
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 
-		// Create the textnode which will contain the style data
-		this.textNode = document.createTextNode();
-
 		// Create the style node and append it to the head node
 		this.styleNode = document.createElement("style");
 		this.styleNode.setAttribute("type", "text/css");
-		this.styleNode.appendChild(this.textNode);
 		
 		(document.getElementsByTagName("head")[0]).appendChild(this.styleNode);
 	},
@@ -52,8 +48,15 @@ var et2_styles = et2_widget.extend({
 	},
 
 	loadContent: function(_content) {
-		// Set the style data
-		this.textNode.data = _content;
+		if (this.styleNode.styleSheet)
+		{
+			// IE
+			this.styleNode.styleSheet.cssText += _content;
+		}
+		else
+		{
+			this.styleNode.appendChild(document.createTextNode(_content));
+		}
 	}
 
 });

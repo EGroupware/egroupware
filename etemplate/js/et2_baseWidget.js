@@ -19,21 +19,36 @@
 */
 
 /**
+ * Interface for widgets which have the align attribute
+ */
+var et2_IAligned = new Interface({
+	get_align: function() {}
+});
+
+/**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
  * function is provided, which attatches the given node to the DOM if possible.
  */
-var et2_baseWidget = et2_DOMWidget.extend({
+var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 
 	attributes: {
 		"statustext": {
 			"name": "Tooltip",
 			"type": "string",
 			"description": "Tooltip which is shown for this element"
+		},
+		"align": {
+			"name": "Align",
+			"type": "string",
+			"default": "left",
+			"description": "Position of this element in the parent hbox"
 		}
 	},
 
 	init: function() {
+		this.align = "left";
+
 		this._super.apply(this, arguments);
 
 		this.node = null;
@@ -81,7 +96,7 @@ var et2_baseWidget = et2_DOMWidget.extend({
 	},
 
 	getTooltipElement: function() {
-		return this.getDOMNode();
+		return this.getDOMNode(this);
 	},
 
 	set_statustext: function(_value) {
@@ -111,6 +126,22 @@ var et2_baseWidget = et2_DOMWidget.extend({
 				this._tooltipElem = elem;
 			}
 		}
+	},
+
+	// XXX I really don't like this - I think I'll move attaching the DOM-Nodes
+	// to the loadFinished function - this should also be faster...
+	set_align: function(_value) {
+		if (_value != this.align)
+		{
+			this.align = _value;
+
+			// Reattach this node to the DOM
+			this.onSetParent();
+		}
+	},
+
+	get_align: function(_value) {
+		return this.align;
 	}
 
 });

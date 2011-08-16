@@ -3,6 +3,9 @@
  *
  * @version: $Id$
  */
+
+/* Stuff for the standalone test webpage */
+
 body {
 	font-family: Lucida Grande, sans-serif;
 	font-size: 10pt;
@@ -31,6 +34,42 @@ body {
 	color: #111;
 	margin: 30px 0 5px 0;
 	border-bottom: 1px solid #111;
+}
+
+/**
+ * VBox widget
+ */
+div.et2_vbox>* {
+	display: block;
+}
+
+/**
+ * HBox widget
+ */
+
+div.et2_hbox div.et2_hbox {
+	display: inline;
+}
+
+div.et2_hbox>* {
+	text-align: left;
+}
+
+div.et2_hbox_left {
+	float: left;
+}
+
+div.et2_hbox_al_center {
+	text-align: center;
+}
+
+div.et2_hbox_al_right {
+	text-align: right;
+}
+
+div.et2_hbox_right {
+	float: right;
+	clear: right;
 }
 
 .et2_placeholder {
@@ -101,10 +140,6 @@ button.et2_button:focus {
 	outline: none;
 }
 
-div.et2_hbox {
-	display: inline;
-}
-
 .et2_tabflag {
 	display: inline-block;
 	margin-right: 5px;
@@ -132,10 +167,6 @@ div.et2_hbox {
 	font-style: italic;
 }
 
-.et2_vbox div, .et2_vbox span {
-	display: block;
-}
-
 .egw_tooltip
 {
 	position: fixed;
@@ -145,3 +176,6 @@ div.et2_hbox {
 	max-width: 300px;
 	color: black;
 }
+
+
+

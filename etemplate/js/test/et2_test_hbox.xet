@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<overlay>
+	<vbox>
+		<description value="Simple hbox behaviour" />
+		<hbox>
+			<button label="btn1" />
+			<button label="btn2" />
+			<button label="btn3" />
+			<button label="btn4" />
+		</hbox>
+
+		<description value="Float right" />
+		<hbox>
+			<hbox>
+				<button label="btn1" />
+				<button label="btn2" />
+				<button label="btn3" />
+			</hbox>
+			<button align="right" label="btn4" />
+			<button label="btn5" />
+		</hbox>
+
+		<description value="Float center" />
+		<hbox>
+			<hbox>
+				<button label="btn1" />
+				<button label="btn2" />
+				<button label="btn3" />
+			</hbox>
+			<button align="center" label="btn4" />
+			<button label="btn5" />
+		</hbox>
+
+
+		<description value="Only right" />
+		<hbox>
+			<button align="right" label="btn" />
+		</hbox>
+
+		<description value="Only center" />
+		<hbox>
+			<button align="center" label="btn" />
+		</hbox>
+	</vbox>
+</overlay>
+

@@ -536,6 +536,12 @@ var et2_widget = Class.extend({
 		// Iterate over the widget tree
 		this.iterateOver(function(_widget) {
 
+			// The widget must have an id to be included in the values array
+			if (_widget.id == "")
+			{
+				return;
+			}
+
 			// Get the path to the node we have to store the value at
 			var path = _widget.getArrayMgr("content").getPath();
 

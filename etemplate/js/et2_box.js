@@ -26,7 +26,8 @@ var et2_box = et2_baseWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.div = $j(document.createElement("div"))
-			.addClass("et2_" + _type);
+			.addClass("et2_" + _type)
+			.addClass("et2_box_widget");
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -40,5 +41,5 @@ var et2_box = et2_baseWidget.extend({
 
 });
 
-et2_register_widget(et2_box, ["hbox", "vbox", "box"]);
+et2_register_widget(et2_box, ["vbox", "box"]);
 

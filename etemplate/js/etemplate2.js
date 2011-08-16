@@ -15,6 +15,7 @@
 	et2_template;
 	et2_grid;
 	et2_box;
+	et2_hbox;
 	et2_button;
 	et2_description;
 	et2_textbox;
