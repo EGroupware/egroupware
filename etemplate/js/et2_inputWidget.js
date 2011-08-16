@@ -14,7 +14,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_baseWidget;
+	et2_valueWidget;
 */
 
 /**
@@ -43,36 +43,12 @@ var et2_IInput = new Interface({
  * interface. When derriving from this class, call setDOMNode with an input
  * DOMNode.
  */
-var et2_inputWidget = et2_baseWidget.extend(et2_IInput, {
-
-	attributes: {
-		"value": {
-			"name": "Value",
-			"description": "The value of the widget",
-			"type": "string",
-			"default": et2_no_init
-		}
-	},
+var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
 	init: function() {
 		this._super.apply(this, arguments);
 
 		this._oldValue = "";
-	},
-
-	loadingFinished: function() {
-		this._super.call(this, arguments);
-
-		if (this.id != "")
-		{
-			// Set the value for this element
-			var contentMgr = this.getArrayMgr("content");
-			var val = contentMgr.getValueForID(this.id);
-			if (val !== null)
-			{
-				this.set_value(val);
-			}
-		}
 	},
 
 	set_value: function(_value) {

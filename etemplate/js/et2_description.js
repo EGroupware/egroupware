@@ -88,23 +88,17 @@ var et2_description = et2_baseWidget.extend({
 		this.setDOMNode(this.span[0]);
 	},
 
-	set_value: function(_value, _force) {
-		if (_value != this.value || _force)
-		{
-			this.value = _value;
+	set_value: function(_value) {
+		this.value = _value;
 
-			this.span.text(_value);
-		}
+		this.span.text(_value);
 	},
 
 	set_font_style: function(_value) {
-		if (_value != this.font_style)
-		{
-			this.font_style = _value;
+		this.font_style = _value;
 
-			this.span.toggleClass("et2_bold", _value.indexOf("b") >= 0);
-			this.span.toggleClass("et2_italic", _value.indexOf("i") >= 0);
-		}
+		this.span.toggleClass("et2_bold", _value.indexOf("b") >= 0);
+		this.span.toggleClass("et2_italic", _value.indexOf("i") >= 0);
 	}
 
 });

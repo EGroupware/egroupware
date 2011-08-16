@@ -87,6 +87,11 @@ var et2_typeDefaults = {
 	"any": null
 };
 
+function et2_evalBool(_val)
+{
+	return _val ? true : false;
+}
+
 /**
  * Checks whether the given value is of the given type. Strings are converted
  * into the corresponding type. The (converted) value is returned. All supported

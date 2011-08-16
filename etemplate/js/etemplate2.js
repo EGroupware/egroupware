@@ -86,7 +86,13 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	// Create an array manager object for each part of the _data array.
 	for (var key in _data)
 	{
-		result[key] = new et2_arrayMgr(_data[key]);
+		switch (key) {
+			case "readonlys":
+				result[key] = new et2_readonlysArrayMgr(_data[key]);
+				break;
+			default:
+				result[key] = new et2_arrayMgr(_data[key]);
+		}
 	}
 
 	return result;

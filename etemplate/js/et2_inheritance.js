@@ -314,7 +314,7 @@
 		}
 		else
 		{
-			et2_error("error", this, "Attribute '" + _name  + "' does not exist!");
+			et2_debug("error", this, "Attribute '" + _name  + "' does not exist!");
 		}
 	}
 

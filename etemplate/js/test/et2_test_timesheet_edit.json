@@ -3,7 +3,7 @@ var timesheet_data = {
         "ts_id":"1",
         "ts_project":null,
         "ts_title":"Test geschrieben",
-        "ts_description":null,
+        "ts_description":"This is just a test description",
         "ts_start":1307030400,
         "ts_duration":"150",
         "ts_quantity":"2.5",
@@ -69,7 +69,8 @@ var timesheet_data = {
         "ts_owner":true,
         "tabs":{
             "customfields":true
-        }
+        },
+        "ts_description": true
     }
 }
 

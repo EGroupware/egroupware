@@ -3,7 +3,7 @@
 	<template id="test">
 		<vbox>
 			<description disabled="!@@display_text" value="Dies ist nur ein test!" />
-			<textbox id="textbox" />
+			<textbox id="textbox" value="Test"/>
 		</vbox>
 	</template>
 	<textbox id="textbox" />

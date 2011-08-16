@@ -74,6 +74,14 @@ var et2_widget = Class.extend({
 		 */
 		"type": {
 			"ignore": true
+		},
+
+		/**
+		 * Ignore the readonly tag by default - its also read by the
+		 * "createElementFromNode" function.
+		 */
+		"readonly": {
+			"ignore": true
 		}
 	},
 
@@ -92,7 +100,7 @@ var et2_widget = Class.extend({
 	 * @param _type is the node name with which the widget has been created. This
 	 * 	is usefull if a single widget class implements multiple XET-Node widgets.
 	 */
-	init: function(_parent, _type) {
+	init: function(_parent, _type, _readonly) {
 
 		if (typeof _type == "undefined")
 		{
@@ -115,6 +123,7 @@ var et2_widget = Class.extend({
 
 		this._children = [];
 		this.type = _type;
+		this.readonly = _readonly;
 
 		// The supported widget classes array defines a whitelist for all widget
 		// classes or interfaces child widgets have to support.
@@ -164,7 +173,7 @@ var et2_widget = Class.extend({
 		}
 
 		// Create the copy
-		var copy = new (this.constructor)(_parent, _type);
+		var copy = new (this.constructor)(_parent, _type, this.readonly);
 
 		// Assign this element to the copy
 		copy.assign(this);
@@ -374,13 +383,24 @@ var et2_widget = Class.extend({
 			_nodeName = _node.nodeName.toLowerCase();
 		}
 
-		// Check whether a widget with the given type is registered.
+		// Get the constructor for that widget
 		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
 			et2_placeholder : et2_registry[_nodeName];
 
+		// Check whether the widget is marked as readonly and whether a special
+		// readonly type (suffixed with "_ro") is registered
+		var readonly = this.getArrayMgr("readonlys").isReadOnly(
+			_node.getAttribute("id"), _node.getAttribute("readonly"), this.readonly);
+		et2_debug("log", _node.getAttribute("id"), readonly);
+		if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
+		{
+			constructor = et2_registry[_nodeName + "_ro"];
+		}
+
 		// Creates the new widget, passes this widget as an instance and
 		// passes the widgetType. Then it goes on loading the XML for it.
-		var widget = new constructor(this, _nodeName)
+		var widget = new constructor(this, _nodeName, readonly);
+
 		widget.loadFromXML(_node);
 
 		// Call the "loadFinished" function of the widget

@@ -6,6 +6,9 @@ var expression_test_data = {
 		},
 		"display_text": "false",
 		"textbox": "This is the outer textbox."
+	},
+	"readonlys": {
+		"__ALL__": true
 	}
 };
 

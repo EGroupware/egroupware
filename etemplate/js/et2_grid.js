@@ -48,6 +48,8 @@ var et2_grid = et2_DOMWidget.extend({
 		// Delete all references to cells or widgets
 		this.cells = null;
 		this.managementArray = null;
+		this.table = null;
+		this.tbody = null;
 	},
 
 	_initCells: function(_colData, _rowData) {

@@ -15,6 +15,7 @@
 /*egw:uses
 	jquery.jquery;
 	et2_inputWidget;
+	et2_valueWidget;
 */
 
 /**
@@ -70,4 +71,38 @@ var et2_textbox = et2_inputWidget.extend({
 });
 
 et2_register_widget(et2_textbox, ["textbox", "int", "float"]);
+
+/**
+ * et2_textbox_ro is the dummy readonly implementation of the textbox.
+ */
+var et2_textbox_ro = et2_valueWidget.extend({
+
+	/**
+	 * Ignore all more advanced attributes.
+	 */
+	attributes: {
+		"multiline": {
+			"ignore": true
+		}
+	},
+
+	init: function() {
+		this._super.apply(this, arguments);
+
+		this.value = "";
+		this.span = $j(document.createElement("span"))
+			.addClass("et2_textbox_ro");
+
+		this.setDOMNode(this.span[0]);
+	},
+
+	set_value: function(_value) {
+		this.value = _value;
+
+		this.span.text(_value);
+	}
+
+});
+
+et2_register_widget(et2_textbox_ro, ["textbox_ro", "int_ro", "float_ro"]);
 

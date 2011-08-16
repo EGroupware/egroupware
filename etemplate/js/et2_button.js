@@ -37,17 +37,21 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		}
 	},
 
-	init: function(_parent) {
+	init: function(_parent, _type, _readonly) {
 		this._super.apply(this, arguments);
 
 		this.label = "";
 		this.clicked = false;
+		this.btn = null;
 
-		this.btn = $j(document.createElement("button"))
-			.addClass("et2_button")
-			.click(this, function(e) {e.data.buttonClick()});
+		if (!_readonly)
+		{
+			this.btn = $j(document.createElement("button"))
+				.addClass("et2_button")
+				.click(this, function(e) {e.data.buttonClick()});
 
-		this.setDOMNode(this.btn[0]);
+			this.setDOMNode(this.btn[0]);
+		}
 	},
 
 	buttonClick: function() {
@@ -65,7 +69,7 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 	},
 
 	set_label: function(_value) {
-		if (_value != this.value)
+		if (this.btn)
 		{
 			this.label = _value;
 
