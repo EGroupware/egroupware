@@ -245,9 +245,9 @@ class etemplate_new
 	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
-	public static function validation_errors($ignore_validation='',$cname=null)
+	public static function validation_errors($ignore_validation='',$cname='')
 	{
-		if (is_null($cname)) $cname = self::$name_vars;
+//		if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
 		if (!$ignore_validation) return count(self::$validation_errors) > 0;
 
