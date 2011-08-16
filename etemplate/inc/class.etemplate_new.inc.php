@@ -28,6 +28,22 @@ class etemplate_new
 	public $sitemgr=false;
 
 	/**
+	 * Request object of the currecntly created request
+	 *
+	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
+	 *
+	 * @var etemplate_request
+	 */
+	static protected $request;
+
+	/**
+	 * JSON response object, if we run via a JSON request
+	 *
+	 * @var egw_json_response
+	 */
+	static protected $response;
+
+	/**
 	 * constructor of etemplate class, reads an eTemplate if $name is given
 	 *
 	 * @param string $name of etemplate or array with name and other keys
@@ -86,12 +102,38 @@ class etemplate_new
 	{
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
-/*		if (self::$response)	// call is within an ajax event / form submit
-		{
+		// generate new etemplate request object
+		self::$request = etemplate_request::read();
+		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
+		self::$request->readonlys = $readonlys;
+		self::$request->content = $content;
+		self::$request->changes = $changes;
+		self::$request->sel_options = $sel_options;
+		self::$request->preserv = $preserv;
+		self::$request->method = $method;
+		self::$request->ignore_validation = $ignore_validation;
+		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
+		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
+		self::$request->template = $this->rel_path;
 
+		$data = array(
+			'etemplate_exec_id' => self::$request->id(),
+			'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
+			'content' => $content,
+			'sel_options' => $sel_options,
+			'readonlys' => $readonlys,
+			'modifications' => $this->modifications,
+			'validation_errors' => self::$validation_errors,
+		);
+		if (self::$response)	// call is within an ajax event / form submit
+		{
+			self::$response->generic('et2_load', array(
+				'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path,
+				'data' => $data,
+			));
 		}
 		else	// first call
-*/		{
+		{
 			egw_framework::validate_file('.','etemplate2','etemplate');
 
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
@@ -104,13 +146,7 @@ class etemplate_new
 		<div id="container"></div>
 		<script>
 			var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
-			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode(array(
-				'content' => $content,
-				'sel_options' => $sel_options,
-				'readonlys' => $readonlys,
-				'modifications' => $this->modifications,
-				'validation_errors' => self::$validation_errors,
-			)).');
+			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
 		</script>
 ';
 			common::egw_footer();
@@ -120,20 +156,20 @@ class etemplate_new
 	/**
 	 * Process via Ajax submitted content
 	 */
-	static public function ajax_process_content(array $content)
+	static public function ajax_process_content($etemplate_exec_id, array $content)
 	{
-		error_log(__METHOD__."(".print_r($content, true).")");
+		error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($content).")");
 
-		$response = egw_json_response::get();
-		$response->generic("et2_load", array(
-			"url" => $GLOBALS['egw_info']['server']['webserver_url']."/etemplate/js/test/et2_test_expressions.xet",
-			"data" => array(
-				"content" => array(
-					"display_text" => "",
-					"textbox" => "Hello world!"
-				)
-			)
-		));
+		self::$request = etemplate_request::read($etemplate_exec_id);
+		error_log('request='.array2string(self::$request));
+
+		self::$response = egw_json_response::get();
+
+		// todo: validate content
+		// $content = self::validate($content);
+
+		// merge with preserve and call our callback
+		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $content));
 	}
 
 	/**
@@ -189,7 +225,7 @@ class etemplate_new
 	 * @param string $error error-message already translated
 	 * @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	 */
-	static function set_validation_error($name,$error,$cname=null)
+	public static function set_validation_error($name,$error,$cname=null)
 	{
 		if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
@@ -209,7 +245,7 @@ class etemplate_new
 	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
-	function validation_errors($ignore_validation='',$cname=null)
+	public static function validation_errors($ignore_validation='',$cname=null)
 	{
 		if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
@@ -248,7 +284,7 @@ class etemplate_new
 	 * @param string $attr attribute-name
 	 * @return mixed reference to attribute, usually NULL
 	 */
-	function &get_cell_attribute($name,$attr)
+	public function &get_cell_attribute($name,$attr)
 	{
 		error_log(__METHOD__."('$name', '$attr')");
 
@@ -263,7 +299,7 @@ class etemplate_new
 	 * @param mixed $val if not NULL sets attribute else returns it
 	 * @return mixed number of changed cells or False, if none changed
 	 */
-	function &set_cell_attribute($name,$attr,$val)
+	public function &set_cell_attribute($name,$attr,$val)
 	{
 		error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
 
@@ -280,7 +316,7 @@ class etemplate_new
 	 * @param boolean $disabled=true disable or enable a cell, default true=disable
 	 * @return mixed number of changed cells or False, if none changed
 	 */
-	function disable_cells($name,$disabled=True)
+	public function disable_cells($name,$disabled=True)
 	{
 		return $this->set_cell_attribute($name,'disabled',$disabled);
 	}
@@ -296,7 +332,7 @@ class etemplate_new
 	 * @param string $path='/0' default is the first widget in the tree of children
 	 * @return false if $path is no grid or array(height,class,valign,disabled) otherwise
 	 */
-	function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0,$path='/0')
+	public function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0,$path='/0')
 	{
 		throw new egw_exception_assertion_failed('Not yet implemented!');
 
@@ -325,7 +361,7 @@ class etemplate_new
 	 * @param boolean $enable=false can be used to re-enable a row if set to True
 	 * @param string $path='/0' default is the first widget in the tree of children
 	 */
-	function disable_row($n,$enable=False,$path='/0')
+	public function disable_row($n,$enable=False,$path='/0')
 	{
 		$this->set_row_attributes($n,0,0,0,!$enable,$path);
 	}
@@ -339,7 +375,7 @@ class etemplate_new
 	 * @param string $path='/0' default is the first widget in the tree of children
 	 * @return false if $path specifies no grid or array(width,disabled) otherwise
 	 */
-	function set_column_attributes($c,$width=0,$disabled=0,$path='/0')
+	public function set_column_attributes($c,$width=0,$disabled=0,$path='/0')
 	{
 		throw new egw_exception_assertion_failed('Not yet implemented!');
 
@@ -367,8 +403,41 @@ class etemplate_new
 	 * @param boolean $enable can be used to re-enable a column if set to True
 	 * @param string $path='/0' default is the first widget in the tree of children
 	 */
-	function disable_column($c,$enable=False,$path='/0')
+	public function disable_column($c,$enable=False,$path='/0')
 	{
 		$this->set_column_attributes($c,0,!$enable,$path);
+	}
+
+	/**
+	 * merges $old and $new, content of $new has precedence over $old
+	 *
+	 * THIS IS NOT THE SAME AS PHP's functions:
+	 * - array_merge, as it calls itself recursive for values which are arrays.
+	 * - array_merge_recursive accumulates values with the same index and $new does NOT overwrite $old
+	 *
+	 * @param array $old
+	 * @param array $new
+	 * @return array the merged array
+	 */
+	public static function complete_array_merge($old,$new)
+	{
+		if (is_array($new))
+		{
+			if (!is_array($old)) $old = (array) $old;
+
+			foreach($new as $k => $v)
+			{
+				if (!is_array($v) || !isset($old[$k]) || 	// no array or a new array
+					isset($v[0]) && !is_array($v[0]) && isset($v[count($v)-1]))	// or no associative array, eg. selecting multiple accounts
+				{
+					$old[$k] = $v;
+				}
+				else
+				{
+					$old[$k] = self::complete_array_merge($old[$k],$v);
+				}
+			}
+		}
+		return $old;
 	}
 }

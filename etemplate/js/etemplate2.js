@@ -97,6 +97,9 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	for (var key in _data)
 	{
 		switch (key) {
+			case "etemplate_exec_id":	// already processed
+			case "app_header":
+				break;
 			case "readonlys":
 				result[key] = new et2_readonlysArrayMgr(_data[key]);
 				break;
@@ -127,6 +130,16 @@ etemplate2.prototype.load = function(_url, _data)
 	this.widgetContainer.setInstanceManager(this);
 	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
+	// store the id to submit it back to server
+	this.etemplate_exec_id = _data.etemplate_exec_id;
+	
+	// set app_header
+	if (window.opener) {	// popup
+		document.title = _data.app_header;
+	} else {
+		// todo for idots or jdots framework
+	}
+
 	// Split the given data into array manager objects and pass those to the
 	// widget container
 	this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
@@ -143,7 +156,7 @@ etemplate2.prototype.submit = function()
 		// Create the request object
 		if (typeof egw_json_request != "undefined")
 		{
-			var request = new egw_json_request(this.menuaction, [values], this);
+			var request = new egw_json_request(this.menuaction, [this.etemplate_exec_id,values], this);
 			request.sendRequest(true);
 		}
 		else
