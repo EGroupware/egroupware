@@ -82,14 +82,32 @@ var et2_selectbox = et2_inputWidget.extend({
 	set_id: function(_id) {
 		this._super.apply(this,arguments);
 
-		// Get select options from the manager
+		// Get select options from the manager(s)
+		var options = null;
+
+		// Check the sel_options
 		var mgr = this.getArrayMgr('sel_options');
-		var options = mgr.getValueForID(this.id);
+		if(mgr) {
+			options = mgr.getValueForID(this.id);
+		}
+		if(options != null) {
+			this.set_select_options(options);
+		} else {
+			// Check in the content
+			var mgr = this.getArrayMgr('content');
+			if(mgr) {
+				options = mgr.getValueForID('options-'+this.id);
+			}
+		}
 		this.set_select_options(options);
 	},
 
 	set_select_options: function(_options) {
 		this.input.children().remove();
+		if(this.empty_label) {
+			this.input.append("<option value=''" + ("" == this.getValue() ? "selected":"") +">"+this.empty_label+"</option>");
+		}
+		if(_options == null) return;
 		for(var key in _options) {
 			this.input.append("<option value='"+key+"'" + (key == this.getValue() ? "selected":"") +">"+_options[key]+"</option>");
 		}
