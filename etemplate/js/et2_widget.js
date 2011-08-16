@@ -550,6 +550,15 @@ var et2_widget = Class.extend({
 
 			// Get the path to the node we have to store the value at
 			var path = _widget.getArrayMgr("content").getPath();
+			
+			// check if id contains a hierachical name, eg. "button[save]"
+			var id = _widget.id;
+			if (_widget.id.indexOf('[') != -1)
+			{
+				var parts = _widget.id.replace(/]/g,'').split('[');
+				id = parts.pop();
+				path = path.concat(parts);
+			}
 
 			// Set the _target variable to that node
 			var _target = result;
@@ -574,7 +583,7 @@ var et2_widget = Class.extend({
 			}
 
 			// Check whether the entry is really undefined
-			if (typeof _target[_widget.id] != "undefined")
+			if (typeof _target[id] != "undefined")
 			{
 				et2_debug("error", _widget, "Overwriting value of '" + _widget.id + 
 					"', id exists twice!");
@@ -584,7 +593,7 @@ var et2_widget = Class.extend({
 			var value = _widget.getValue();
 			if (value !== null)
 			{
-				_target[_widget.id] = value;
+				_target[id] = value;
 			}
 			_widget.resetDirty();
 
