@@ -538,8 +538,7 @@ abstract class bo_merge
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
-					// todo OO writer files
-					break;
+					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
