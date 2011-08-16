@@ -40,10 +40,12 @@ var et2_valueWidget = et2_baseWidget.extend({
 		{
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
-			var val = contentMgr.getValueForID(this.id);
-			if (val !== null)
-			{
-				this.setAttribute("value", val)
+			if(contentMgr != null) {
+				var val = contentMgr.getValueForID(this.id);
+				if (val !== null)
+				{
+					this.setAttribute("value", val)
+				}
 			}
 		}
 	}

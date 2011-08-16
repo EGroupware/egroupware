@@ -131,7 +131,9 @@ etemplate2.prototype.load = function(_url, _data)
 	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
 	// store the id to submit it back to server
-	this.etemplate_exec_id = _data.etemplate_exec_id;
+	if(_data) {
+		this.etemplate_exec_id = _data.etemplate_exec_id;
+	}
 	
 	// set app_header
 	if (window.opener) {	// popup

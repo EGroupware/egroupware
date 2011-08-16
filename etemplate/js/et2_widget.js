@@ -395,8 +395,12 @@ var et2_widget = Class.extend({
 
 		// Check whether the widget is marked as readonly and whether a special
 		// readonly type (suffixed with "_ro") is registered
-		var readonly = this.getArrayMgr("readonlys").isReadOnly(
-			_node.getAttribute("id"), _node.getAttribute("readonly"), this.readonly);
+		var mgr = this.getArrayMgr("readonlys");
+		var readonly = false;
+		if(mgr != null) {
+			readonly = mgr.isReadOnly(
+				_node.getAttribute("id"), _node.getAttribute("readonly"), this.readonly);
+		}
 		if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];
@@ -471,7 +475,8 @@ var et2_widget = Class.extend({
 				var attrName = _attrs[i].name;
 				var attrValue = _attrs[i].value;
 
-				if (typeof this.attributes[attrName] != "undefined")
+				var mgr = this.getArrayMgr("content");
+				if (mgr != null && typeof this.attributes[attrName] != "undefined")
 				{
 					var attr = this.attributes[attrName];
 
@@ -479,12 +484,11 @@ var et2_widget = Class.extend({
 					// expression as bool expression.
 					if (attr.type == "boolean")
 					{
-						attrValue = this.getArrayMgr("content")
-							.parseBoolExpression(attrValue);
+						attrValue = mgr.parseBoolExpression(attrValue);
 					}
 					else
 					{
-						attrValue = this.getArrayMgr("content").expandName(attrValue);
+						attrValue = mgr.expandName(attrValue);
 					}
 				}
 

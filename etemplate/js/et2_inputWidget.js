@@ -45,6 +45,14 @@ var et2_IInput = new Interface({
  */
 var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
+	attributes: {
+		"required": {
+			"name":	"Required",
+			"default": false,
+			"type": "boolean",
+			"description": "If required, the user must enter a value before the form can be submitted"
+		}
+	},
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -89,6 +97,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 				node.removeAttribute("required");
 			}
 		}
+
 	},
 
 	get_value: function() {
