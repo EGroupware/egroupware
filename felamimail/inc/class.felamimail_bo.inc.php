@@ -4282,8 +4282,19 @@ class felamimail_bo
 							$mailObject->ClearCustomHeaders();
 							$mailObject->AddAddress($email,$mailObject->EncodeHeader($nfn));
 							$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain');
-							if (!empty($AltBody)) $mailObject->IsHTML(true);
-							else $mailObject->IsHTML(false);
+							if (!empty($AltBody))
+							{
+								$mailObject->IsHTML(true);
+							} 
+							elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
+							{
+								$mailObject->IsHTML(true);
+								$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+							}
+							else 
+							{
+								$mailObject->IsHTML(false);
+							}
 							//error_log(__METHOD__.__LINE__.' ContentType:'.$mailObject->BodyContentType);
 							if (!empty($Body)) $mailObject->Body = $bo_merge->merge_string($Body, $val, $e, $mailObject->BodyContentType);
 							//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
@@ -4342,8 +4353,19 @@ class felamimail_bo
 								$mailObject->AddAddress($email,$mailObject->EncodeHeader($nfn));
 							}
 							$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain');
-							if (!empty($AltBody)) $mailObject->IsHTML(true);
-							else $mailObject->IsHTML(false);
+							if (!empty($AltBody))
+							{
+								$mailObject->IsHTML(true);
+							} 
+							elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
+							{
+								$mailObject->IsHTML(true);
+								$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+							}
+							else 
+							{
+								$mailObject->IsHTML(false);
+							}
 							//error_log(__METHOD__.__LINE__.' ContentType:'.$mailObject->BodyContentType);
 							if (!empty($Body)) $mailObject->Body = $bo_merge->merge_string($Body, $val, $e, $mailObject->BodyContentType);
 							//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
