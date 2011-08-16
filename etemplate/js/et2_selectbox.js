@@ -79,6 +79,22 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.setDOMNode(this.input[0]);
 	},
 
+	set_id: function(_id) {
+		this._super.apply(this,arguments);
+
+		// Get select options from the manager
+		var mgr = this.getArrayMgr('sel_options');
+		var options = mgr.getValueForID(this.id);
+		this.set_select_options(options);
+	},
+
+	set_select_options: function(_options) {
+		this.input.children().remove();
+		for(var key in _options) {
+			this.input.append("<option value='"+key+"'" + (key == this.getValue() ? "selected":"") +">"+_options[key]+"</option>");
+		}
+	},
+
 	set_multiselect: function(_value) {
 		if (_value != this.multiselect)
 		{
