@@ -334,7 +334,8 @@
 					_override = true;
 				}
 
-				var val = et2_checkType(_value, this.attributes[_name].type);
+				var val = et2_checkType(_value, this.attributes[_name].type,
+					_name);
 
 				if (typeof this["set_" + _name] == "function")
 				{

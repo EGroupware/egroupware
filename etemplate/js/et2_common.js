@@ -97,10 +97,21 @@ function et2_evalBool(_val)
  * into the corresponding type. The (converted) value is returned. All supported
  * types are listed in the et2_validTypes array.
  */
-function et2_checkType(_val, _type)
+function et2_checkType(_val, _type, _attr)
 {
+	if (typeof _attr == "undefined")
+	{
+		_attr = null;
+	}
+
 	function _err() {
-		throw("'" + _val + "' is not of specified _type '" +  _type + "'");
+		var res = et2_typeDefaults[_type];
+
+		et2_debug("warn", "'" + _val + "' was not of specified _type '" + 
+			_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
+			"and is now '" + res + "'");
+
+		return res;
 	}
 
 	// If the type is "any" simply return the value again
@@ -124,7 +135,7 @@ function et2_checkType(_val, _type)
 			return _val === "true";
 		}
 
-		_err();
+		return _err();
 	}
 
 	if (_type == "js")
@@ -147,7 +158,7 @@ function et2_checkType(_val, _type)
 			return null;
 		}
 
-		_err();
+		return _err();
 	}
 
 	// Check whether the given value is of the type "string"
@@ -158,7 +169,7 @@ function et2_checkType(_val, _type)
 			return _val;
 		}
 
-		_err();
+		return _err();
 	}
 
 	// Check whether the value is already a number, otherwise try to convert it
@@ -175,7 +186,7 @@ function et2_checkType(_val, _type)
 			return parseFloat(_val);
 		}
 
-		_err();
+		return _err();
 	}
 
 	// Check whether the value is an integer by comparing the result of
@@ -187,7 +198,7 @@ function et2_checkType(_val, _type)
 			return parseInt(_val);
 		}
 
-		_err();
+		return _err();
 	}
 
 	// We should never come here
