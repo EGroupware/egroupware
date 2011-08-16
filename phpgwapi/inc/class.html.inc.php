@@ -1095,7 +1095,7 @@ class html
 			$url = self::link($url,$vars);
 		}
 		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".self::link($url,$vars)."</p>";
-		return '<a href="'.$url.'" '.$options.'>'.$content.'</a>';
+		return '<a href="'.htmlspecialchars($url).'" '.$options.'>'.$content.'</a>';
 	}
 
 	/**
