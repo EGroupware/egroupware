@@ -7,7 +7,7 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @copyright Stylite 2011
- * @version $Id: et2_widget.js 36021 2011-08-07 13:43:46Z igel457 $
+ * @version $Id$
  */
 
 "use strict";

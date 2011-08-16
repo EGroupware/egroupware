@@ -19,6 +19,7 @@
 	et2_description;
 	et2_textbox;
 	et2_styles;
+	et2_html;
 
 	// Requirements for the etemplate2 object
 	et2_xml;
