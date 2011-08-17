@@ -51,6 +51,12 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"default": false,
 			"type": "boolean",
 			"description": "If required, the user must enter a value before the form can be submitted"
+		},
+		"label": {
+			"name": "Label",
+			"default": "",
+			"type": "string",
+			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables)."
 		}
 	},
 	init: function() {
@@ -102,6 +108,16 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			}
 		}
 	},
+
+	set_label: function(_label) {
+		if(_label != this.label)
+		{
+			label = et2_csvSplit(_label, 2, '%s');
+			if(label[0]) this.input.before("<span class='et2_label'>"+label[0]+"</span>");
+			if(label[1]) this.input.after("<span class='et2_label'>"+label[1]+"</span>");
+		}
+	},
+
 	set_required: function(_value) {
 		var node = this.getInputNode();
 		if (node)

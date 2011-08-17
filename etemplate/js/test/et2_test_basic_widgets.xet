@@ -6,8 +6,8 @@
 	<textbox label="This is required text" id="text_value" required="true"/>
 	<int label="This is an integer" id="integer_value" min="5"/>
 	<textbox type="float" label="This is a float" id="float_value"/>
-	<textbox multiline="true" label="This is a text area" id="text_area_value"/>
-	<checkbox label="Checkbox" id="checkbox_value"/>
+	<textbox multiline="true" label="This is a text area" id="text_area_value" rows="3" cols="3"/>
+	<checkbox label="Checkbox %s here" id="checkbox_value"/>
 	<radio label="Radio" id="radio_value"/>
 	<buttononly label="Button" id="button_value"/>
 	<hrule label="HR"/>
@@ -22,10 +22,11 @@
 	<template id="test.basic_widget_test">
 		<description value="This is a label" id="label_value"/>
 		<textbox label="This is a text" id="text_value"/>
+		<textbox label="This is required text" id="text_value" required="true"/>
 		<int label="This is an integer" id="integer_value" min="5"/>
 		<textbox type="float" label="This is a float" id="float_value"/>
-		<textbox multiline="true" label="This is a text area" id="text_area_value"/>
-		<checkbox label="Checkbox" id="checkbox_value"/>
+		<textbox multiline="true" label="This is a text area" id="text_area_value" rows="3" cols="3"/>
+		<checkbox label="Checkbox %s here" id="checkbox_value"/>
 		<radio label="Radio" id="radio_value"/>
 		<buttononly label="Button" id="button_value"/>
 		<hrule label="HR"/>

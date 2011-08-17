@@ -35,7 +35,21 @@ var et2_textbox = et2_inputWidget.extend({
 			"type": "integer",
 			"default": et2_no_init,
 			"description": "Field width"
-		}
+		},
+
+		// These for multi-line
+		"rows": {
+			"name": "Rows",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Multiline field height - better to use CSS"
+		},
+		"cols": {
+			"name": "Size",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Multiline field width - better to use CSS"
+		},
 	},
 
 	init: function(_parent) {
@@ -61,7 +75,6 @@ var et2_textbox = et2_inputWidget.extend({
 		if(this.size) {
 			this.set_size(this.size);
 		}
-
 		this.input.addClass("et2_textbox");
 
 		this.setDOMNode(this.input[0]);
@@ -76,6 +89,33 @@ var et2_textbox = et2_inputWidget.extend({
 
 			// Write all settings again
 			this.update();
+		}
+	},
+
+	set_rows: function(_value) {
+		if (_value != this.rows)
+		{
+			this.rows = _value;
+			if(this.rows > 1)
+			{
+				this.set_multiline(true);
+				this.input.attr("rows", this.rows);
+			} else {
+				this.set_multiline(false);
+			}
+		}
+	},
+	set_cols: function(_value) {
+		if (_value != this.cols)
+		{
+			this.cols = _value;
+			if(this.cols > 1)
+			{
+				this.set_multiline(true);
+				this.input.attr("cols", this.cols);
+			} else {
+				this.set_multiline(false);
+			}
 		}
 	},
 

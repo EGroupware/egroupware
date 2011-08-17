@@ -61,7 +61,7 @@ var et2_checkbox = et2_inputWidget.extend({
 	set_value: function(_value) {
 		if(_value != this.value) {
 			if(_value == this.set_value) {
-				this.input.attr("checked", true);
+				this.input.attr("checked", "checked");
 			} else {
 				this.input.removeAttr("checked");
 			}
