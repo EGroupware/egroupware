@@ -195,7 +195,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		var node = this.getDOMNode();
 		if (node)
 		{
-			this.diabled = _value;
+			this.disabled = _value;
 
 			if (_value)
 			{
