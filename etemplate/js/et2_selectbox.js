@@ -103,13 +103,13 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(_options == null) {
 			var mgr = this.getArrayMgr('sel_options');
 			if(mgr) {
-				options = mgr.getValueForID(this.id);
+				_options = mgr.getValueForID(this.id);
 			}
-			if(options == null) {
+			if(_options == null) {
 				// Check in the content
 				var mgr = this.getArrayMgr('content');
 				if(mgr) {
-					options = mgr.getValueForID('options-'+this.id);
+					_options = mgr.getValueForID('options-'+this.id);
 				}
 			}
 		}
