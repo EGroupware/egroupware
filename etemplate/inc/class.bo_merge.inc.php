@@ -77,6 +77,19 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Hook returning options for export_limit_excepted groups
+	 *
+	 * @param array $config
+	 */
+	public static function hook_export_limit_excepted($config)
+	{
+		error_log(__METHOD__.'('.array2string($config).')');
+		$accountsel = new uiaccountsel();
+
+		return $accountsel->selection('newsettings[export_limit_excepted]','export_limit_excepted',$config['export_limit_excepted'],'both',4);
+	}
+
+	/**
 	 * Get all replacements, must be implemented in extending class
 	 *
 	 * Can use eg. the following high level methods:
@@ -322,7 +335,7 @@ abstract class bo_merge
 		}
 		return $content;
 	}
-	
+
 	protected function apply_styles (&$content, $mimetype) {
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
@@ -336,7 +349,7 @@ abstract class bo_merge
 					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
 					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
@@ -356,7 +369,7 @@ abstract class bo_merge
 					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
 					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 //echo $content;die();
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
