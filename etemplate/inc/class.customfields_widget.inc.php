@@ -58,6 +58,7 @@ class customfields_widget
 		'url'      => 'Url',
 		'url-email'=> 'EMail',
 		'url-phone'=> 'Phone number',
+		'htmlarea' => 'Formatted Text (HTML)',
 		'link-entry' => 'Select entry',		// should be last type, as the individual apps get added behind
 	);
 
@@ -433,6 +434,12 @@ class customfields_widget
 						$field['len']=implode(',',array( $shown, $max, $validation_type));
 						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
 							 'size' => $field['len']
+						));
+						break;
+					case 'htmlarea':	// defaults: len: width=100%,mode=simple,tooldbar=false; rows: 5
+						list($width,$mode,$toolbar) = explode(',',$field['len']);
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$lname,array(
+							'size' => $mode.','.(($field['rows'] ? $field['rows'] : 5)*16).'px,'.$width.','.($toolbar=='true'?'true':'false'),
 						));
 						break;
 					// other etemplate types, which are used just as is
