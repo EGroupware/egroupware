@@ -1,0 +1,17 @@
+<overlay>
+	<grid>
+		<columns>
+			<column/>
+		</columns>
+
+		<rows>
+			<row><textbox id="textbox" required="false" /></row>
+			<row><box><description value="Must be checked" /><checkbox id="checkbox" label="Must be checked" required="true" /></box></row>
+<!-- Not working yet
+			<row><int id="int_min" min="5" label="Must be at least 5" /></row>
+			<row><listbox id="select" options="Select one" required="true" /></row>
+-->
+			<row><button label="Check" /></row>
+		</rows>
+	</grid>
+</overlay>

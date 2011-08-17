@@ -1,0 +1,13 @@
+var validation_data = {
+	"content": {
+		"textbox": "Always"
+	},
+	"sel_options": {
+		"select": {
+			one:	"One",
+			two:	"Two",
+			three:	"Three"
+		}
+	},
+};
+
