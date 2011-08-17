@@ -112,9 +112,10 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 	set_label: function(_label) {
 		if(_label != this.label)
 		{
-			label = et2_csvSplit(_label, 2, '%s');
-			if(label[0]) this.input.before("<span class='et2_label'>"+label[0]+"</span>");
-			if(label[1]) this.input.after("<span class='et2_label'>"+label[1]+"</span>");
+			this.label = (typeof _label == 'undefined' ? "" : _label);
+			var label = et2_csvSplit(_label, 2, '%s');
+			if(label[0]) $j(this.getInputNode()).before("<span class='et2_label'>"+label[0]+"</span>");
+			if(label[1]) $j(this.getInputNode()).after("<span class='et2_label'>"+label[1]+"</span>");
 		}
 	},
 
