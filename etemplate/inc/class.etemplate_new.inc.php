@@ -166,10 +166,25 @@ class etemplate_new
 		self::$response = egw_json_response::get();
 
 		// todo: validate content
-		// $content = self::validate($content);
+		$content = self::validate($content);
 
 		// merge with preserve and call our callback
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $content));
+	}
+
+	/**
+	 * Validate the content
+	 *
+	 * ** Test stub! ** First field always fails.
+	 * @todo Fix this for proper server side validation
+	 */
+	static public function validate($content) {
+		self::$response->generic('et2_validation_error', array(
+			// Validation errors are field_name: message
+			key($content)=> "First field fails serverside. '".current($content)."'")
+		);
+
+		return $content;
 	}
 
 	/**

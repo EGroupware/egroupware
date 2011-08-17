@@ -214,3 +214,27 @@ button.et2_button:focus {
 }
 
 
+/**
+* Validation
+*/
+input[required] {
+	background-color: #ffffd0;
+}
+input.invalid {
+	border-style: dotted;
+	border-color: red;
+}
+.error {
+	-moz-border-radius: 0 4px 4px 0;
+	-moz-box-shadow: 0 0 6px #DDDDDD;
+	background-color: #FFFE36;
+	border: 1px solid #E1E16D;
+	color: #000000;
+	display: none;
+	font-size: 11px;
+	height: 15px;
+	padding: 4px 10px;
+}
+.error p {
+	margin: 0;
+}

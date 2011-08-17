@@ -59,6 +59,19 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		this._oldValue = "";
 	},
 
+	attachToDOM: function() {
+		this._super.apply(this,arguments);
+		
+		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
+		$j(this.getInputNode()).validator();
+	},
+	detatchFromDOM: function() {
+		if(this.getInputNode()) {
+			$j(this.getInputNode()).data("validator").destroy();
+		}
+		this._super.apply(this,arguments);
+	},
+
 	set_value: function(_value) {
 		this._oldValue = _value;
 
@@ -80,10 +93,12 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			if (_value != "")
 			{
 				node.setAttribute("id", _value);
+				node.setAttribute("name", _value);
 			}
 			else
 			{
 				node.removeAttribute("id");
+				node.removeAttribute("name");
 			}
 		}
 	},
