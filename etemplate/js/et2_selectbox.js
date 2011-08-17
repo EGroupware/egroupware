@@ -79,7 +79,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.setDOMNode(this.input[0]);
 	},
 
-	set_id: function(_id) {
+	loadingFinished: function() {
 		this._super.apply(this,arguments);
 
 		// Get select options from the manager(s)

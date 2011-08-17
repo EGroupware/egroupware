@@ -28,17 +28,9 @@ var et2_tabbox = et2_DOMWidget.extend({
 			.addClass("et2_tabbox");
 
 		// Create the upper container for the tab flags
-		var cntr = $j(document.createElement("div"))
-			.addClass("et2_flags")
+		this.flagContainer = $j(document.createElement("div"))
+			.addClass("et2_tabheader")
 			.appendTo(this.container);
-
-		this.flagContainer = $j(document.createElement("span"))
-			.addClass("et2_tabflagcntr")
-			.appendTo(cntr);
-
-		$j(document.createElement("span"))
-			.addClass("et2_tabspacer")
-			.appendTo(cntr);
 
 		// Create the lower tab container
 		this.tabContainer = $j(document.createElement("div"))
@@ -130,18 +122,15 @@ var et2_tabbox = et2_DOMWidget.extend({
 
 		for (var i = 0; i < this.tabData.length; i++)
 		{
-			// Add a spacer to the flag container
-			$j(document.createElement("span"))
-				.addClass("et2_flagspacer")
-				.text("-")
-				.appendTo(this.flagContainer);
-
 			var entry = this.tabData[i];
 
 			entry.flagDiv = $j(document.createElement("span"))
 				.addClass("et2_tabflag")
 				.text(entry.label)
-				.appendTo(this.flagContainer);
+				.appendTo(this.flagContainer)
+				.click({"tabs": this, "idx": i}, function(e) {
+					e.data.tabs.setActiveTab(e.data.idx);
+				});
 
 			entry.contentDiv = $j(document.createElement("div"))
 				.addClass("et2_tabcntr")
@@ -151,6 +140,22 @@ var et2_tabbox = et2_DOMWidget.extend({
 			// Let the widget appear on its corresponding page
 			entry.widget.onSetParent();
 		}
+
+		this.setActiveTab(0);
+	},
+
+	setActiveTab: function(_idx) {
+		console.log(_idx);
+		// Remove the "active" flag from all tabs-flags
+		$j(".et2_tabflag", this.flagContainer).removeClass("active");
+
+		// Hide all tab containers
+		this.tabContainer.children().hide();
+
+		// Set the tab flag with the given index active and show the corresponding
+		// container
+		this.flagContainer.children(":eq(" + _idx + ")").addClass("active");
+		this.tabContainer.children(":eq(" + _idx + ")").show();
 	},
 
 	getDOMNode: function(_sender) {

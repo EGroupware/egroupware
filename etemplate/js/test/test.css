@@ -6,7 +6,7 @@
 
 /* Stuff for the standalone test webpage */
 
-body {
+body, table, td {
 	font-family: Lucida Grande, sans-serif;
 	font-size: 10pt;
 }
@@ -140,21 +140,6 @@ button.et2_button:focus {
 	outline: none;
 }
 
-.et2_tabflag {
-	display: inline-block;
-	margin-right: 5px;
-	height: 20px;
-	padding: 5px;
-	cursor: pointer;
-	border-width: 1px 1px 0 1px;
-	border-style: solid;
-	border-color: silver;
-}
-
-.et2_tabflag.active {
-	border-bottom: 1px solid white;
-}
-
 .et2_textbox {
 	resize: none;
 }
@@ -177,5 +162,55 @@ button.et2_button:focus {
 	color: black;
 }
 
+/**
+ * Tabs widget
+ */
+
+.et2_tabflag {
+	display: inline-block;
+	margin-right: 5px;
+	padding: 5px;
+	cursor: pointer;
+	border: 1px solid silver;
+
+	background-color: #E0E0E0;
+	background-image: url(gfx/gradient01.png);
+	background-position: center;
+	background-repeat: repeat-x;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.et2_tabflag:hover {
+	color: #050505;
+	border: 1px solid gray;
+	background-color: #D0D0EE;
+}
+
+.et2_tabflag:active {
+	background-image: url(gfx/gradient02.png);
+	background-color: #D0D0E0;
+}
+
+.et2_tabs {
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: silver;
+	padding: 5px;
+}
+
+.et2_tabflag.active {
+	border-bottom: 1px solid white;
+	background-color: white;
+	background-image: none;
+}
+
+.et2_tabheader {
+	background-image: url(gfx/tab_header_bg.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
 
 
