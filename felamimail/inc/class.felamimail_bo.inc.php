@@ -1240,7 +1240,7 @@ class felamimail_bo
 				//              colspan has minval of   2       and maxval of 5
 				//              rowspan has minval of   3       and maxval of 6
 				//              class   has minlen of   1 char  and maxlen of   10 chars
-				//              style   has minlen of  10 chars and maxlen of 100 chars
+				//              style   has minlen of   5 chars and maxlen of 100 chars
 				//              width   has maxval of 100
 				//              nowrap  is valueless
 				$kses->AddHTML(
@@ -1250,7 +1250,7 @@ class felamimail_bo
 						"cellpadding"   => array("minlen" =>   0, 'maxlen' =>  10),
 						"cellspacing"   => array("minlen" =>   0, 'maxlen' =>  10),
 						"width"   => array("maxlen" => 5),
-						"style"   => array('minlen' =>  10, 'maxlen' => 100),
+						"style"   => array('minlen' =>  5, 'maxlen' => 100),
 						"bgcolor"   => array('maxlen' =>  10),
 						"align"   => array('maxlen' =>  10),
 						"valign"   => array('maxlen' =>  10),
@@ -1263,7 +1263,7 @@ class felamimail_bo
 						"rowspan"	=> array('minval' =>   3, 'maxval' =>   6),
 						"class"		=> array("minlen" =>   1, 'maxlen' =>  20),
 						"width"		=> array("maxlen" => 5),
-						"style"		=> array('minlen' =>  10, 'maxlen' => 100),
+						"style"		=> array('minlen' =>  5, 'maxlen' => 100),
 						"align"		=> array('maxlen' =>  10),
 						'bgcolor'	=> array('maxlen' => 10),
 						"valign"	=> array('maxlen' =>  10),
@@ -1276,7 +1276,7 @@ class felamimail_bo
 						"rowspan" => array('minval' =>   3, 'maxval' =>   6),
 						"class"   => array("minlen" =>   1, 'maxlen' =>  20),
 						"width"   => array("maxlen" => 5),
-						"style"   => array('minlen' =>  10, 'maxlen' => 100),
+						"style"   => array('minlen' =>  5, 'maxlen' => 100),
 						"align"   => array('maxlen' =>  10),
 						'bgcolor' => array('maxlen' => 10),
 						"valign"   => array('maxlen' =>  10),
@@ -1289,7 +1289,7 @@ class felamimail_bo
 						"rowspan" => array('minval' =>   3, 'maxval' =>   6),
 						"class"   => array("minlen" =>   1, 'maxlen' =>  20),
 						"width"   => array("maxlen" => 5),
-						"style"   => array('minlen' =>  10, 'maxlen' => 100),
+						"style"   => array('minlen' =>  5, 'maxlen' => 100),
 						"align"   => array('maxlen' =>  10),
 						"valign"   => array('maxlen' =>  10),
 						"nowrap"  => array('valueless' => 'y')
