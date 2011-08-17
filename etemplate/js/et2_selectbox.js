@@ -51,7 +51,6 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.input = null;
 		this.id = "";
 
-		if(this.rows > 1) this.multiselect=true;
 		this.createInputWidget();
 	},
 
@@ -65,6 +64,13 @@ var et2_selectbox = et2_inputWidget.extend({
 		} else {
 			this._super.apply(this,arguments);
 		}
+
+		// Legacy options could have row count or empty label in first slot
+		if(typeof this.rows == "string" && isNaN(this.rows)) {
+			this.set_empty_label(this.rows);
+			this.set_rows(1);
+		}
+		if(this.rows > 1) this.set_multiselect(true);
 	},
 
 	createInputWidget: function() {
@@ -79,30 +85,34 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.setDOMNode(this.input[0]);
 	},
 
-	loadingFinished: function() {
+	/**
+	 * Override parent to get the select options.
+	 * Can't get them before this, because the ID is not set when createInputWidget() is called.
+	 */
+	set_id: function() {
 		this._super.apply(this,arguments);
 
 		// Get select options from the manager(s)
 		var options = null;
 
-		// Check the sel_options
-		var mgr = this.getArrayMgr('sel_options');
-		if(mgr) {
-			options = mgr.getValueForID(this.id);
-		}
-		if(options != null) {
-			this.set_select_options(options);
-		} else {
-			// Check in the content
-			var mgr = this.getArrayMgr('content');
-			if(mgr) {
-				options = mgr.getValueForID('options-'+this.id);
-			}
-		}
-		this.set_select_options(options);
+		// Check the sel_options (from managers)
+		this.set_select_options(null);
 	},
 
 	set_select_options: function(_options) {
+		if(_options == null) {
+			var mgr = this.getArrayMgr('sel_options');
+			if(mgr) {
+				options = mgr.getValueForID(this.id);
+			}
+			if(options == null) {
+				// Check in the content
+				var mgr = this.getArrayMgr('content');
+				if(mgr) {
+					options = mgr.getValueForID('options-'+this.id);
+				}
+			}
+		}
 		this.input.children().remove();
 		if(this.empty_label) {
 			this.input.append("<option value=''" + ("" == this.getValue() ? "selected":"") +">"+this.empty_label+"</option>");
@@ -129,6 +139,12 @@ var et2_selectbox = et2_inputWidget.extend({
 		{
 			this.rows = _rows;
 			this.input.attr("size",this.rows);
+		}
+	},
+	set_empty_label: function(_label) {
+		if(_label != this.empty_label) {
+			this.empty_label = _label;
+			this.set_select_options(null);
 		}
 	}
 });
