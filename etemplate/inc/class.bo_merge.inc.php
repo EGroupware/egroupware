@@ -360,6 +360,7 @@ abstract class bo_merge
 				break;
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/xml':
 				$replace_tags = array(
 					'b','strong','i','em','u','span'
 				);
@@ -639,6 +640,7 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/xml':
 					$replace_tags = array(
 						'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
 						'<table>','<tr>','<td>',
