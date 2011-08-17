@@ -101,7 +101,8 @@ class importexport_export_csv implements importexport_iface_export_record
 			$this->csv_options = array_merge( $this->csv_options, $_options );
 		}
 
-		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		if(!($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception)) {
 			$config = config::read('phpgwapi');
 			if($config['export_limit'] == 'no') throw new egw_exception_no_permission_admin('Export disabled');
 			$this->export_limit = (int)$config['export_limit'];
