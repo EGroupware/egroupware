@@ -164,6 +164,7 @@ class customfields_widget
 		$cell['type'] = 'grid';
 		$cell['data'] = array(array());
 		$cell['rows'] = $cell['cols'] = 0;
+		$cell['size'] = '';
 
 		$n = 1;
 		foreach($fields as $lname => $field)
