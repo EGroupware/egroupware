@@ -22,6 +22,7 @@
 	et2_number;
 	et2_selectbox;
 	et2_checkbox;
+	et2_radiobox;
 	et2_styles;
 	et2_html;
 	et2_tabs;

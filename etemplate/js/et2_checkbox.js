@@ -15,6 +15,7 @@
 /*egw:uses
 	jquery.jquery;
 	et2_inputWidget;
+	et2_valueWidget;
 */
 
 /**
@@ -23,17 +24,29 @@
 var et2_checkbox = et2_inputWidget.extend({
 
 	attributes: {
-		"set_value": {
+		"selected_value": {
 			"name": "Set value",
 			"type": "string",
 			"default": "true",
 			"description": "Value when checked"
 		},
-		"unset_value": {
+		"unselected_value": {
 			"name": "Unset value",
 			"type": "string",
 			"default": "false",
 			"description": "Value when not checked"
+		},
+		"ro_true": {
+			"name": "Read only selected",
+			"type": "string",
+			"default": "x",
+			"description": "What should be displayed when readonly and selected"
+		},
+		"ro_false": {
+			"name": "Read only unselected",
+			"type": "string",
+			"default": "",
+			"description": "What should be displayed when readonly and not selected"
 		}
 	},
 
@@ -60,7 +73,7 @@ var et2_checkbox = et2_inputWidget.extend({
 	 */
 	set_value: function(_value) {
 		if(_value != this.value) {
-			if(_value == this.set_value) {
+			if(_value == this.selected_value) {
 				this.input.attr("checked", "checked");
 			} else {
 				this.input.removeAttr("checked");
@@ -73,11 +86,51 @@ var et2_checkbox = et2_inputWidget.extend({
 	 */
 	getValue: function() {
 		if(this.input.attr("checked")) {
-			return this.set_value;
+			return this.selected_value;
 		} else {
-			return this.unset_value;
+			return this.unselected_value;
 		}
 	}
 });
 
 et2_register_widget(et2_checkbox, ["checkbox"]);
+
+/**
+ * et2_checkbox_ro is the dummy readonly implementation of the checkbox and radio.
+ */
+var et2_checkbox_ro = et2_checkbox.extend({
+
+	/**
+	 * Ignore unset value
+	 */
+	attributes: {
+		"unselected_value": {
+			"ignore": true
+		}
+	},
+
+	init: function(_parent) {
+	},
+
+	init: function() {
+		this._super.apply(this, arguments);
+
+		this.value = "";
+		this.span = $j(document.createElement("span"))
+			.addClass("et2_checkbox_ro");
+
+		this.setDOMNode(this.span[0]);
+	},
+
+	set_value: function(_value) {
+		if(_value == this.selected_value) {
+			this.span.text(this.ro_true);
+			this.value = _value;
+		} else {
+			this.span.text(this.ro_false);
+		}
+	}
+
+});
+
+et2_register_widget(et2_checkbox_ro, ["checkbox_ro", "radio_ro"]);
