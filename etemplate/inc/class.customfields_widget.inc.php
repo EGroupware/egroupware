@@ -474,6 +474,7 @@ class customfields_widget
 				unset($label);
 			}
 		}
+		$cell['size'] = '';
 		if ($type != 'customfields-list')
 		{
 			$cell['data'][0]['A'] = '100';
