@@ -1027,6 +1027,11 @@ class translation
 				if ($element->charset != 'x-unknown')
 				{
 					if( strtoupper($element->charset) != 'UTF-8') $element->text = preg_replace($sar,$rar,$element->text);
+					if(preg_match('/\?=.+=\?/', $element->text)) 
+					{
+						$element->text = self::decodeMailHeader($element->text, $element->charset);
+						$element->charset = $displayCharset;
+					}
 					$newString .= self::convert($element->text,$element->charset);
 				}
 				else
