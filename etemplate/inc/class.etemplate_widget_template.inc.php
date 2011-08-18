@@ -11,21 +11,21 @@
  * @version $Id$
  */
 
-/* testwise to have autoloading
+// allow to call direct for tests (see end of class)
 if (!isset($GLOBALS['egw_info']))
 {
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'currentapp' => 'login',
-		),
+		)
 	);
 	include_once '../../header.inc.php';
 }
-*/
+
 /**
  * eTemplate widget baseclass
  */
-class etemplate_template_widget extends etemplate_widget
+class etemplate_widget_template extends etemplate_widget
 {
 	/**
 	 * Cache of already read templates
@@ -35,23 +35,23 @@ class etemplate_template_widget extends etemplate_widget
 	protected static $cache = array();
 
 	/**
-	 * Read a templates specified by name, template(-set) and version
+	 * Get instance of template specified by name, template(-set) and version
 	 *
 	 * @param string $name
 	 * @param string $template_set='default'
 	 * @param string $version=''
 	 * @param string $load_via='' use given template to load $name
 	 * @todo Reading customized templates from database
-	 * @return etemplate_template_widget|boolean false if not found
+	 * @return etemplate_widget_template|boolean false if not found
 	 */
-	public static function read($name, $template_set='default', $version='', $load_via='')
+	public static function instance($name, $template_set='default', $version='', $load_via='')
 	{
 		$start = microtime(true);
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
 		{
 			if ((!$path || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
 			{
-				error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read from cache");
+				//error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read from cache");
 				return self::$cache[$name];
 			}
 			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
@@ -64,14 +64,14 @@ class etemplate_template_widget extends etemplate_widget
 		{
 			if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'template')
 			{
-				$template = new etemplate_template_widget($reader);
+				$template = new etemplate_widget_template($reader);
 				//echo $template->id; _debug_array($template);
 
 				self::$cache[$template->id] = $template;
 
 				if ($template->id == $name)
 				{
-					error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read in ".round(1000.0*(microtime(true)-$start),2)." ms");
+					//error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read in ".round(1000.0*(microtime(true)-$start),2)." ms");
 					return $template;
 				}
 			}
@@ -104,9 +104,28 @@ class etemplate_template_widget extends etemplate_widget
 		}
 		return false;
 	}
+
+	/**
+	 * Validate input
+	 *
+	 * Reimplemented because templates can have an own namespace specified in options, NOT id!
+	 *
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 * @param string $cname='' current namespace
+	 * @return boolean true if no validation error, false otherwise
+	 */
+	public function validate(array $content, &$validated=array(), $cname = '')
+	{
+		if ($this->attrs['options']) $cname = self::form_name($cname, $this->attrs['options']);
+
+		return parent::validate($content, $validated, $cname);
+	}
 }
-/*
-header('Content-Type: text/xml');
-$template = etemplate_template_widget::read('timesheet.edit');
-$template->toXml();
-*/
+
+if ($GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+{
+	$template = etemplate_widget_template::instance('timesheet.edit');
+	header('Content-Type: text/xml');
+	echo $template->toXml();
+}

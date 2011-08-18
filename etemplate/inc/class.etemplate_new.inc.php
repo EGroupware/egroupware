@@ -18,7 +18,7 @@
  *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
-class etemplate_new
+class etemplate_new extends etemplate_widget_template
 {
 	/**
 	 * Are we running as sitemgr module or not
@@ -26,22 +26,6 @@ class etemplate_new
 	 * @public boolean
 	 */
 	public $sitemgr=false;
-
-	/**
-	 * Request object of the currecntly created request
-	 *
-	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
-	 *
-	 * @var etemplate_request
-	 */
-	static protected $request;
-
-	/**
-	 * JSON response object, if we run via a JSON request
-	 *
-	 * @var egw_json_response
-	 */
-	static protected $response;
 
 	/**
 	 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -114,7 +98,7 @@ class etemplate_new
 		self::$request->ignore_validation = $ignore_validation;
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
-		self::$request->template = $this->rel_path;
+		self::$request->template = $this->as_array();
 
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
@@ -134,6 +118,8 @@ class etemplate_new
 		}
 		else	// first call
 		{
+			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
+			egw_framework::validate_file('jquery','jquery.tools.min');
 			egw_framework::validate_file('.','etemplate2','etemplate');
 
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
@@ -165,26 +151,22 @@ class etemplate_new
 
 		self::$response = egw_json_response::get();
 
-		// todo: validate content
-		$content = self::validate($content);
+		if (!($template = self::instance(self::$request->template['name'], self::$request->template['template_set'],
+			self::$request->template['version'], self::$request->template['load_via'])))
+		{
+			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
+		}
+		$validated = array();
+		$template->validate($content, $validated);
+		if (self::validation_errors(self::$request->ignore_validation))
+		{
+			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));
+			self::$response->generic('et2_validation_error', self::$validation_errors);
+			exit;
+		}
+		error_log(__METHOD__."(,".array2string($content).') validated='.array2string($validated));
 
-		// merge with preserve and call our callback
-		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $content));
-	}
-
-	/**
-	 * Validate the content
-	 *
-	 * ** Test stub! ** First field always fails.
-	 * @todo Fix this for proper server side validation
-	 */
-	static public function validate($content) {
-		self::$response->generic('et2_validation_error', array(
-			// Validation errors are field_name: message
-			key($content)=> "First field fails serverside. '".current($content)."'")
-		);
-
-		return $content;
+		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}
 
 	/**
@@ -194,11 +176,16 @@ class etemplate_new
 	 */
 	public $rel_path;
 
+	public $name;
+	public $template_set;
+	public $version;
+	public $laod_via;
+
 	/**
 	 * Reads an eTemplate from filesystem or DB (not yet supported)
 	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
-	 * @param string $template template-set, '' loads the prefered template of the user, 'default' loads the  default one '' in the db
+	 * @param string $template_set template-set, '' loads the prefered template of the user, 'default' loads the  default one '' in the db
 	 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
 	 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
 	 * @param string $version version of the eTemplate
@@ -207,79 +194,27 @@ class etemplate_new
 	 *
 	 * @ToDo supported customized templates stored in DB
 	 */
-	public function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
+	public function read($name,$template_set='default',$lang='default',$group=0,$version='',$load_via='')
 	{
-		list($app, $tpl_name) = explode('.', $name, 2);
+		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
+			$this->version=$version, $this->laod_via = $load_via);
 
-		$this->rel_path = '/'.$app.'/templates/'.$template.'/'.$tpl_name.'.xet';
-		if (!file_exists(EGW_SERVER_ROOT.$this->rel_path) && $template !== 'default')
-		{
-			$this->rel_path = '/'.$app.'/templates/default/'.$tpl_name.'.xet';
-		}
-		if (!file_exists(EGW_SERVER_ROOT.$this->rel_path))
-		{
-			$this->rel_path = null;
-			error_log(__METHOD__."('$name',...,'$load_via') returning FALSE");
-			return false;
-		}
-		//error_log(__METHOD__."('$name',...,'$load_via') this->rel_path=$this->rel_path returning TRUE");
-		return true;
+		return (boolean)$this->real_path;
 	}
 
 	/**
-	 * Validation errors from process_show and the extensions, should be set via etemplate::set_validation_error
+	 * Get template data as array
 	 *
-	 * @public array form_name => message pairs
+	 * @return array
 	 */
-	static protected $validation_errors = array();
-
-	/**
-	 * Sets a validation error, to be displayed in the next exec
-	 *
-	 * @param string $name (complete) name of the widget causing the error
-	 * @param string $error error-message already translated
-	 * @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
-	 */
-	public static function set_validation_error($name,$error,$cname=null)
+	public function as_array()
 	{
-		if (is_null($cname)) $cname = self::$name_vars;
-		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
-		if ($cname) $name = self::form_name($cname,$name);
-
-		if (self::$validation_errors[$name])
-		{
-			self::$validation_errors[$name] .= ', ';
-		}
-		self::$validation_errors[$name] .= $error;
-	}
-
-	/**
-	* Check if we have not ignored validation errors
-	*
-	* @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
-	* @return boolean true if there are not ignored validation errors, false otherwise
-	*/
-	public static function validation_errors($ignore_validation='',$cname='')
-	{
-//		if (is_null($cname)) $cname = self::$name_vars;
-		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
-		if (!$ignore_validation) return count(self::$validation_errors) > 0;
-
-		foreach(self::$validation_errors as $name => $error)
-		{
-			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
-
-			// treat $ignoare_validation only as regular expression, if it starts with a slash
-			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) ||
-				$ignore_validation[0] != '/' && $ignore_validation != $name)
-			{
-				//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
-				return true;
-			}
-			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
-		}
-		return false;
+		return array(
+			'name' => $this->name,
+			'template_set' => $this->template_set,
+			'version' => $this->version,
+			'load_via' => $this->load_via,
+		);
 	}
 
 	/**

@@ -11,8 +11,13 @@
  * @version $Id$
  */
 
+// include only widgets which can't be autoloaded (or contain sub-widgets which cant)
+require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc.php';
+
 /**
  * eTemplate widget baseclass
+ *
+ * @todo text content, eg. the styles of a template are not parsed, thought they are not used here either
  */
 class etemplate_widget
 {
@@ -43,6 +48,22 @@ class etemplate_widget
 	 * @var array
 	 */
 	protected $children = array();
+
+	/**
+	 * Request object of the currently created request
+	 *
+	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
+	 *
+	 * @var etemplate_request
+	 */
+	static protected $request;
+
+	/**
+	 * JSON response object, if we run via a JSON request
+	 *
+	 * @var egw_json_response
+	 */
+	static protected $response;
 
 	/**
 	 * Constructor
@@ -90,6 +111,30 @@ class etemplate_widget
 	}
 
 	/**
+	 * Registry of classes implementing widgets
+	 *
+	 * @var array
+	 */
+	static protected $widget_registry = array();
+
+	/**
+	 * Register a given class for certain widgets
+	 *
+	 * Registration is only needed if widget (base-)name is not autoloadable,
+	 * eg. class etemplate_widget_template does NOT need to be registered.
+	 *
+	 * @param string $class
+	 * @param string|array $widgets
+	 */
+	public static function registerWidget($class, $widgets)
+	{
+		foreach((array)$widgets as $widget)
+		{
+			self::$widget_registry[$widget] = $class;
+		}
+	}
+
+	/**
 	 * Factory method to construct all widgets
 	 *
 	 * @param string $type
@@ -98,22 +143,20 @@ class etemplate_widget
 	 */
 	public static function factory($type, $xml, $id=null)
 	{
-		static $type2class_name = array();
-
-		$class_name =& $type2class_name[$type];
+		$class_name =& self::$widget_registry[$type];
 
 		if (!isset($class_name))
 		{
 			list($basetype) = explode('-',$type);
-			if (!class_exists($class_name = 'etemplate_'.str_replace('-','_',$type).'_widget') &&
-				!class_exists($class_name = 'etemplate_'.str_replace('-','_',$basetype).'_widget'))
+			if (!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
+				!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)))
 			{
 				// default to widget class, we can not ignore it, as the widget may contain other widgets
 				$class_name = 'etemplate_widget';
 			}
 		}
 		// currently only overlays can contain templates, other widgets can only reference to templates via id
-		if ($type == 'template' && $id && ($template = etemplate_template_widget::read($id)))
+		if ($type == 'template' && $id && ($template = etemplate_widget_template::instance($id)))
 		{
 			return $template;
 		}
@@ -144,15 +187,23 @@ class etemplate_widget
 	}
 
 	/**
-	 * Validate input of a widget
+	 * Validate input
+	 *
+	 * Default implementation only calls validate on it's children
 	 *
 	 * @param array $content
+	 * @param array &$validated=array() validated content
 	 * @param string $cname='' current namespace
-	 * @return mixed
+	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate(array $content, $cname = '')
+	public function validate(array $content, &$validated=array(), $cname = '')
 	{
-
+		$ok = true;
+		foreach($this->children as $child)
+		{
+			$ok = $child->validate($content, $validated, $cname) && $ok;
+		}
+		return $ok;
 	}
 
 	/**
@@ -179,6 +230,8 @@ class etemplate_widget
 		{
 			echo ' '.$name.'="'.htmlspecialchars($value).'"';
 		}
+		echo ' php-class="'.get_class($this).'"';
+
 		if ($this->children)
 		{
 			echo ">\n";
@@ -193,4 +246,163 @@ class etemplate_widget
 			echo " />\n";
 		}
 	}
+
+	/**
+	 * build the name of a form-element from a basename and name
+	 *
+	 * name and basename can contain sub-indices in square bracets, eg. basename="base[basesub1][basesub2]"
+	 * and name = "name[sub]" gives "base[basesub1][basesub2][name][sub]"
+	 *
+	 * @param string $cname basename
+	 * @param string $name name
+	 * @return string complete form-name
+	 */
+	static function form_name($cname,$name)
+	{
+		$name_parts = explode('[',str_replace(']','',$name));
+		if (!empty($cname))
+		{
+			array_unshift($name_parts,$cname);
+		}
+		$form_name = array_shift($name_parts);
+		if (count($name_parts))
+		{
+			$form_name .= '['.implode('][',$name_parts).']';
+		}
+		return $form_name;
+	}
+
+	/**
+	 * return a reference to $arr[$idx]
+	 *
+	 * This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
+	 * $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
+	 *
+	 * @param array $arr the array to search, referenz as a referenz gets returned
+	 * @param string $idx the index, may contain sub-indices like a[b], see example below
+	 * @param boolean $reference_into default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
+	 * @param bool $skip_empty returns false if $idx is not present in $arr
+	 * @return mixed reference to $arr[$idx] or false if $idx is not set and not $reference_into
+	 */
+	static function &get_array(&$arr,$idx,$reference_into=False,$skip_empty=False)
+	{
+		if (!is_array($arr))
+		{
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx',$reference_into,$skip_empty) \$arr is no array!");
+		}
+		if (is_object($idx)) return false;	// given an error in php5.2
+
+		$idxs = explode('[',str_replace(']','',$idx));
+		$pos = &$arr;
+		foreach($idxs as $idx)
+		{
+			if (!is_array($pos) && !$reference_into)
+			{
+				return False;
+			}
+			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return false;
+			$pos = &$pos[$idx];
+		}
+		return $pos;
+	}
+
+	/**
+	 * Checks if a widget is readonly:
+	 * - readonly attribute set
+	 * - $readonlys[__ALL__] set and $readonlys[$form_name] !== false
+	 * - $readonlys[$form_name] evaluates to true
+	 *
+	 * @return boolean
+	 */
+	public function is_readonly($cname='')
+	{
+		$form_name = self::form_name($cname, $this->id);
+
+		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
+			isset(self::$request->readonlys['__ALL__']) && self::$request->readonlys[$form_name] !== false;
+
+		error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name' returning ".array2string($readonly));
+
+		return $readonly;
+	}
+	/**
+	 * Validation errors from process_show and the extensions, should be set via etemplate::set_validation_error
+	 *
+	 * @public array form_name => message pairs
+	 */
+	static protected $validation_errors = array();
+
+	/**
+	 * Sets a validation error, to be displayed in the next exec
+	 *
+	 * @param string $name (complete) name of the widget causing the error
+	 * @param string $error error-message already translated
+	 * @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
+	 */
+	public static function set_validation_error($name,$error,$cname=null)
+	{
+		if (is_null($cname)) $cname = self::$name_vars;
+		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
+		if ($cname) $name = self::form_name($cname,$name);
+
+		if (self::$validation_errors[$name])
+		{
+			self::$validation_errors[$name] .= ', ';
+		}
+		self::$validation_errors[$name] .= $error;
+	}
+
+	/**
+	* Check if we have not ignored validation errors
+	*
+	* @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
+	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	* @return boolean true if there are not ignored validation errors, false otherwise
+	*/
+	public static function validation_errors($ignore_validation='',$cname='')
+	{
+//		if (is_null($cname)) $cname = self::$name_vars;
+		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
+		if (!$ignore_validation) return count(self::$validation_errors) > 0;
+
+		foreach(self::$validation_errors as $name => $error)
+		{
+			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
+
+			// treat $ignoare_validation only as regular expression, if it starts with a slash
+			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) ||
+				$ignore_validation[0] != '/' && $ignore_validation != $name)
+			{
+				//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
+				return true;
+			}
+			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
+		}
+		return false;
+	}
 }
+
+/**
+ * Named widget having an own namespace: grid, *box
+ */
+class etemplate_widget_named extends etemplate_widget
+{
+	/**
+	 * Validate input
+	 *
+	 * Reimplemented because grids can have an own namespace
+	 *
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 * @param string $cname='' current namespace
+	 * @return boolean true if no validation error, false otherwise
+	 */
+	public function validate(array $content, &$validated=array(), $cname = '')
+	{
+		if ($this->id) $cname = self::form_name($cname, $this->id);
+
+		return parent::validate($content, $validated, $cname);
+	}
+}
+// register class for layout widgets, which can have an own namespace
+etemplate_widget::registerWidget('etemplate_widget_named', array('grid', 'box', 'hbox', 'vbox', 'groupbox'));
