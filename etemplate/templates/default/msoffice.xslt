@@ -207,7 +207,7 @@ Breakers
 							<w:numId w:val="1"/>
 							<w:numFmt w:val="bullet"/>
 							<w:lvlJc w:val="left"/>
-							<w:lvlText w:val=""/>
+							<w:lvlText w:val="&#xB7;"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</w:numPr>
@@ -220,7 +220,9 @@ Breakers
 			<w:r>
 			<xsl:choose>
 				<xsl:when test="name(..)='ol'">
+<!--	This line gives numbers when opened in OO.o, but when the file is opened in MSWord, the numbers are doubled.
 				<w:t><xsl:number value="position()" format="1" />.	</w:t>
+-->
 				</xsl:when>
 				<xsl:otherwise>
 				<w:rPr>
