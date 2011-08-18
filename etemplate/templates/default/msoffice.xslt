@@ -97,11 +97,11 @@ Breakers
 							<w:rPr>
 								<xsl:apply-templates select=".|child::*" />
 							</w:rPr>
-							<w:t><xsl:value-of select="." /></w:t>
+							<w:t xml:space="preserve"><xsl:value-of select="." /></w:t>
 						</w:r>
 					</xsl:when>
 					<xsl:otherwise>
-						<w:r><w:t><xsl:copy-of select="." /></w:t></w:r>
+						<w:r><w:t xml:space="preserve"><xsl:copy-of select="." /></w:t></w:r>
 					</xsl:otherwise>
 					</xsl:choose>
 				</xsl:for-each>
