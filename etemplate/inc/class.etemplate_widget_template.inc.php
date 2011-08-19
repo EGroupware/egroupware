@@ -108,7 +108,7 @@ class etemplate_widget_template extends etemplate_widget
 	/**
 	 * Validate input
 	 *
-	 * Reimplemented because templates can have an own namespace specified in options, NOT id!
+	 * Reimplemented because templates can have an own namespace specified in attrs[content], NOT id!
 	 *
 	 * @param array $content
 	 * @param array &$validated=array() validated content
@@ -117,7 +117,7 @@ class etemplate_widget_template extends etemplate_widget
 	 */
 	public function validate(array $content, &$validated=array(), $cname = '')
 	{
-		if ($this->attrs['options']) $cname = self::form_name($cname, $this->attrs['options']);
+		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content']);
 
 		return parent::validate($content, $validated, $cname);
 	}

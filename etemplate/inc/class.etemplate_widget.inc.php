@@ -18,6 +18,10 @@ require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc
  * eTemplate widget baseclass
  *
  * @todo text content, eg. the styles of a template are not parsed, thought they are not used here either
+ * @todo validation: disabled attribute
+ * - widget
+ * - grid row
+ * - grid column
  */
 class etemplate_widget
 {
@@ -73,6 +77,32 @@ class etemplate_widget
 	 */
 	public function __construct($xml)
 	{
+		$reader = self::get_reader($xml);
+		$this->type = $reader->name;
+		$depth = $reader->depth;
+
+		$this->id = $reader->getAttribute('id');
+
+		// read all attributes
+		$this->set_attrs($reader);
+
+		while($reader->read() && $reader->depth > $depth)
+		{
+			if ($reader->nodeType == XMLReader::ELEMENT && $reader->depth > $depth)
+			{
+				$this->children[] = self::factory($reader->name, $reader, $reader->getAttribute('id'));
+			}
+		}
+	}
+
+	/**
+	 * Get XMLReader for given xml string
+	 *
+	 * @param string|XMLReader $xml string with xml or XMLReader positioned on an element
+	 * @throws egw_exception_wrong_parameter
+	 */
+	protected static function get_reader($xml)
+	{
 		if (is_a($xml, 'XMLReader'))
 		{
 			$reader = $xml;
@@ -85,29 +115,34 @@ class etemplate_widget
 				throw new egw_exception_wrong_parameter("Can't parse xml:\n$xml");
 			}
 		}
-		$this->type = $reader->name;
-		$depth = $reader->depth;
+		return $reader;
+	}
 
-		// read all attributes
+	/**
+	 * Parse and set extra attributes from xml in template object
+	 *
+	 * Returns a cloned template object, if any attribute needs to be set.
+	 * This is necessary as templates can be used multiple time, so we can not alter the cached template!
+	 *
+	 * @param string|XMLReader $xml
+	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @return etemplate_widget_template current object or clone, if any attribute was set
+	 */
+	public function set_attrs($xml, $cloned=true)
+	{
+		$reader = self::get_reader($xml);
+
+		// read and set all attributes
+		$template = $this;
 		while($reader->moveToNextAttribute())
 		{
-			if ($reader->name == 'id')
+			if ($reader->name != 'id' && $template->attr[$reader->name] != $reader->value)
 			{
-				$this->id = $reader->value;
-			}
-			else
-			{
-				$this->attrs[$reader->name] = $reader->value;
+				if (!$cloned) $template = clone($this);
+				$template->attrs[$reader->name] = $reader->value;
 			}
 		}
-
-		while($reader->read() && $reader->depth > $depth)
-		{
-			if ($reader->nodeType == XMLReader::ELEMENT && $reader->depth > $depth)
-			{
-				$this->children[] = self::factory($reader->name, $reader, $reader->getAttribute('id'));
-			}
-		}
+		return $template;
 	}
 
 	/**
@@ -158,7 +193,8 @@ class etemplate_widget
 		// currently only overlays can contain templates, other widgets can only reference to templates via id
 		if ($type == 'template' && $id && ($template = etemplate_widget_template::instance($id)))
 		{
-			return $template;
+			// references can set different attributes like: class, span, content (namespace)
+			return $template->set_attrs($xml, false);	// false = need to clone template, if attributs are set!
 		}
 		return new $class_name($xml);
 	}
@@ -336,20 +372,28 @@ class etemplate_widget
 	 * Sets a validation error, to be displayed in the next exec
 	 *
 	 * @param string $name (complete) name of the widget causing the error
-	 * @param string $error error-message already translated
+	 * @param string|boolean $error error-message already translated or false to reset all existing error for given name
 	 * @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	 */
 	public static function set_validation_error($name,$error,$cname=null)
 	{
-		if (is_null($cname)) $cname = self::$name_vars;
-		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
+		// not yet used: if (is_null($cname)) $cname = self::$name_vars;
+		error_log(__METHOD__."('$name','$error','$cname')");
+
 		if ($cname) $name = self::form_name($cname,$name);
 
-		if (self::$validation_errors[$name])
+		if ($error === false)
 		{
-			self::$validation_errors[$name] .= ', ';
+			unset(self::$validation_errors[$name]);
 		}
-		self::$validation_errors[$name] .= $error;
+		else
+		{
+			if (self::$validation_errors[$name])
+			{
+				self::$validation_errors[$name] .= ', ';
+			}
+			self::$validation_errors[$name] .= $error;
+		}
 	}
 
 	/**
@@ -361,7 +405,7 @@ class etemplate_widget
 	*/
 	public static function validation_errors($ignore_validation='',$cname='')
 	{
-//		if (is_null($cname)) $cname = self::$name_vars;
+		// not yet used: if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
 		if (!$ignore_validation) return count(self::$validation_errors) > 0;
 
