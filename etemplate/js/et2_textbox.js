@@ -41,13 +41,13 @@ var et2_textbox = et2_inputWidget.extend({
 		"rows": {
 			"name": "Rows",
 			"type": "integer",
-			"default": 1,
+			"default": -1,
 			"description": "Multiline field height - better to use CSS"
 		},
 		"cols": {
 			"name": "Size",
 			"type": "integer",
-			"default": 1,
+			"default": -1,
 			"description": "Multiline field width - better to use CSS"
 		},
 	},
@@ -63,9 +63,17 @@ var et2_textbox = et2_inputWidget.extend({
 	createInputWidget: function() {
 		if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1)
 		{
-			this.input = $j(document.createElement("textarea"))
-				.attr("rows", this.options.rows)
-				.attr("cols", this.options.cols);
+			this.input = $j(document.createElement("textarea"));
+
+			if (this.options.rows > 0)
+			{
+				this.input.attr("rows", this.options.rows);
+			}
+
+			if (this.options.cols > 0)
+			{
+				this.input.attr("cols", this.options.cols);
+			}
 		}
 		else
 		{
