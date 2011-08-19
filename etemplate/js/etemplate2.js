@@ -20,7 +20,7 @@
 	et2_description;
 	et2_textbox;
 	et2_number;
-	et2_selectbox;
+//	et2_selectbox;
 	et2_checkbox;
 	et2_radiobox;
 	et2_styles;
@@ -64,7 +64,7 @@ etemplate2.prototype.clear = function()
 {
 	if (this.widgetContainer != null)
 	{
-		$j(':input',this.DOMContainer).validator().data("validator").destroy();
+//		$j(':input',this.DOMContainer).validator().data("validator").destroy();
 		this.widgetContainer.destroy();
 		this.widgetContainer = null;
 	}
@@ -121,7 +121,10 @@ etemplate2.prototype.load = function(_url, _data)
 	// Asynchronously load the XET file (code below is executed ahead of the
 	// code in the callback function)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
+		// Read the XML structure
 		this.widgetContainer.loadFromXML(_xmldoc);
+		// Inform the widget tree that it has been successfully loaded.
+		this.widgetContainer.loadingFinished();
 	}, this);
 
 	// Clear any existing instance
@@ -152,13 +155,13 @@ etemplate2.prototype.load = function(_url, _data)
 etemplate2.prototype.submit = function()
 {
 	// Validator
-	var valid = true;
+	/*var valid = true;
 	var inputs = $j(':input',this.DOMContainer).each(function() {
 		if(typeof $j(this).data("validator") == "undefined") return true;
 		valid = valid && $j(this).data("validator").checkValidity();
 		return true;
 	});
-	if(!valid) return false;
+	if(!valid) return false;*/
 
 	// Get the form values
 	var values = this.widgetContainer.getValues();
@@ -263,7 +266,7 @@ function etemplate2_handle_response(_type, _response)
 		throw("Error while parsing et2_load response");
 	} else if (_type == "et2_validation_error") {
 		// Display validation errors
-		$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
+//		$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
 	}
 
 	return false;

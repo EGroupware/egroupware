@@ -402,9 +402,6 @@ var et2_grid = et2_DOMWidget.extend({
 						"widget": cell.widget
 					});
 
-					// Trigger the "onSetParent" event of the widget
-					cell.widget.onSetParent();
-
 					// Set the span values of the cell
 					var cs = (x == w - 1) ? w - x : Math.min(w - x, cell.colSpan);
 					var rs = (y == h - 1) ? h - y : Math.min(h - y, cell.rowSpan);

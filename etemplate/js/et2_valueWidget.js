@@ -33,18 +33,18 @@ var et2_valueWidget = et2_baseWidget.extend({
 		}
 	},
 
-	loadingFinished: function() {
+	parseArrayMgrAttrs: function(_attrs) {
 		this._super.call(this, arguments);
 
 		if (this.id != "")
 		{
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
-			if(contentMgr != null) {
+			if (contentMgr != null) {
 				var val = contentMgr.getValueForID(this.id);
 				if (val !== null)
 				{
-					this.setAttribute("value", val)
+					_attrs["value"] = val;
 				}
 			}
 		}

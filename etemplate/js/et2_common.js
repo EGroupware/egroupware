@@ -71,7 +71,7 @@ function et2_debug(_level)
 /**
  * Array with all types supported by the et2_checkType function.
  */
-var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js"];
+var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js", "dimension"];
 
 /**
  * Object whith default values for the above types. Do not specify array or
@@ -84,7 +84,8 @@ var et2_typeDefaults = {
 	"js": null,
 	"float": 0.0,
 	"integer": 0,
-	"any": null
+	"any": null,
+	"dimension": "auto"
 };
 
 function et2_evalBool(_val)
@@ -144,7 +145,7 @@ function et2_checkType(_val, _type, _attr)
 	if (_type == "js")
 	{
 		// Handle the default case
-		if  (_val === null)
+		if  (_val === null || _val instanceof Function)
 		{
 			return null;
 		}
@@ -199,6 +200,32 @@ function et2_checkType(_val, _type, _attr)
 		if (parseInt(_val) == _val)
 		{
 			return parseInt(_val);
+		}
+
+		return _err();
+	}
+
+	// Parse the given dimension value
+	if (_type == "dimension")
+	{
+		// Case 1: The value is "auto"
+		if (_val == "auto")
+		{
+			return _val;
+		}
+
+		// Case 2: The value is simply a number, attach "px"
+		if (!isNaN(_val))
+		{
+			return parseFloat(_val) + "px";
+		}
+
+		// Case 3: The value is already a valid css pixel value or a percentage
+		if (typeof _val == "string" && 
+		   ((_val.indexOf("px") == _val.length - 2 && !isNaN(_val.split("px")[0])) ||
+		   (_val.indexOf("%") == _val.length - 1 && !isNaN(_val.split("%")[0]))))
+		{
+			return _val;
 		}
 
 		return _err();

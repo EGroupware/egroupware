@@ -128,16 +128,8 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		}
 	},
 
-	// XXX I really don't like this - I think I'll move attaching the DOM-Nodes
-	// to the loadFinished function - this should also be faster...
 	set_align: function(_value) {
-		if (_value != this.align)
-		{
-			this.align = _value;
-
-			// Reattach this node to the DOM
-			this.onSetParent();
-		}
+		this.align = _value;
 	},
 
 	get_align: function(_value) {
@@ -171,32 +163,49 @@ var et2_placeholder = et2_baseWidget.extend({
 		// values of this object
 		this.attrNodes = {};
 
+		this.visible = false;
+
 		// Create the placeholder div
 		this.placeDiv = $j(document.createElement("span"))
 			.addClass("et2_placeholder");
 
 		var headerNode = $j(document.createElement("span"))
-			.text(this.type)
+			.text(this._type)
 			.addClass("et2_caption")
 			.appendTo(this.placeDiv);
 
-		this.setDOMNode(this.placeDiv[0]);
-	},
+		var attrsCntr = $j(document.createElement("span"))
+			.appendTo(this.placeDiv)
+			.hide();
 
-	loadAttributes: function(_attrs) {
-		for (var i = 0; i < _attrs.length; i++)
-		{
-			var attr = _attrs[i];
-
-			if (typeof this.attrNodes[attr.name] == "undefined")
+		headerNode.click(this, function(e) {
+			e.data.visible = !e.data.visible;
+			if (e.data.visible)
 			{
-				this.attrNodes[attr.name] = $j(document.createElement("span"))
-					.addClass("et2_attr");
-				this.placeDiv.append(this.attrNodes[attr.name]);
+				attrsCntr.show();
 			}
+			else
+			{
+				attrsCntr.hide();
+			}
+		});
 
-			this.attrNodes[attr.name].text(attr.name + "=" + attr.value);
+		for (var key in this.options)
+		{
+			if (typeof this.options[key] != "undefined")
+			{
+				if (typeof this.attrNodes[key] == "undefined")
+				{
+					this.attrNodes[key] = $j(document.createElement("span"))
+						.addClass("et2_attr");
+					attrsCntr.append(this.attrNodes[key]);
+				}
+
+				this.attrNodes[key].text(key + "=" + this.options[key]);
+			}
 		}
+
+		this.setDOMNode(this.placeDiv[0]);
 	}
 });
 

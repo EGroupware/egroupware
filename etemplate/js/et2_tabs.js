@@ -134,18 +134,13 @@ var et2_tabbox = et2_DOMWidget.extend({
 
 			entry.contentDiv = $j(document.createElement("div"))
 				.addClass("et2_tabcntr")
-				.hide()
 				.appendTo(this.tabContainer);
-
-			// Let the widget appear on its corresponding page
-			entry.widget.onSetParent();
 		}
 
 		this.setActiveTab(0);
 	},
 
 	setActiveTab: function(_idx) {
-		console.log(_idx);
 		// Remove the "active" flag from all tabs-flags
 		$j(".et2_tabflag", this.flagContainer).removeClass("active");
 
@@ -175,6 +170,12 @@ var et2_tabbox = et2_DOMWidget.extend({
 
 			return null;
 		}
+	},
+
+	set_height: function(_value) {
+		this.height = _value;
+
+		this.tabContainer.css("height", _value);
 	}
 
 });

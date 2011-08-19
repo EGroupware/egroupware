@@ -90,6 +90,11 @@ var et2_widget = Class.extend({
 	legacyOptions: [],
 
 	/**
+	 * Set this variable to true if this widget can have namespaces
+	 */
+	createNamespace: false,
+
+	/**
 	 * The init function is the constructor of the widget. When deriving new
 	 * classes from the widget base class, always call this constructor unless
 	 * you know what you're doing.
@@ -97,37 +102,54 @@ var et2_widget = Class.extend({
 	 * @param _parent is the parent object from the XML tree which contains this
 	 * 	object. The default constructor always adds the new instance to the
 	 * 	children list of the given parent object. _parent may be NULL.
-	 * @param _type is the node name with which the widget has been created. This
-	 * 	is usefull if a single widget class implements multiple XET-Node widgets.
+	 * @param _attrs is an associative array of attributes.
 	 */
-	init: function(_parent, _type, _readonly) {
+	init: function(_parent, _attrs) {
 
-		if (typeof _type == "undefined")
+		// Check whether all attributes are available
+		if (typeof _parent == "undefined")
 		{
-			_type = "widget";
+			_parent = null;
 		}
 
-		this.id = "";
+		if (typeof _attrs == "undefined")
+		{
+			_attrs = {};
+		}
+
+		// Initialize all important parameters
 		this._mgrs = {};
 		this._inst = null;
+		this._children = [];
+		this._type = _attrs["type"];
+		this.id = _attrs["id"];
 
-		// Copy the parent parameter and add this widget to its parent children
-		// list.
+		// Add this widget to the given parent widget
 		this._parent = _parent;
-		this.onSetParent();
-
 		if (_parent != null)
 		{
 			this._parent.addChild(this);
 		}
 
-		this._children = [];
-		this.type = _type;
-		this.readonly = _readonly;
-
 		// The supported widget classes array defines a whitelist for all widget
 		// classes or interfaces child widgets have to support.
 		this.supportedWidgetClasses = [et2_widget];
+
+		if (_attrs["id"])
+		{
+			// Create a namespace for this object
+			if (this.createNamespace)
+			{
+				this.checkCreateNamespace();
+			}
+
+			// Add all attributes hidden in the content arrays to the attributes
+			// parameter
+			this.parseArrayMgrAttrs(_attrs);
+		}
+
+		// Create a local copy of the options object
+		this.options = et2_cloneObject(_attrs);
 	},
 
 	/**
@@ -156,7 +178,6 @@ var et2_widget = Class.extend({
 		this._children = [];
 		this._parent = null;
 		this._mgrs = {};
-		this.onSetParent();
 	},
 
 	/**
@@ -164,7 +185,7 @@ var et2_widget = Class.extend({
 	 * constructor of the copied object. If the parameters are omitted, _parent
 	 * is defaulted to null
 	 */
-	clone: function(_parent, _type) {
+	clone: function(_parent) {
 
 		// Default _parent to null
 		if (typeof _parent == "undefined")
@@ -173,7 +194,7 @@ var et2_widget = Class.extend({
 		}
 
 		// Create the copy
-		var copy = new (this.constructor)(_parent, _type, this.readonly);
+		var copy = new (this.constructor)(_parent, this.options);
 
 		// Assign this element to the copy
 		copy.assign(this);
@@ -185,22 +206,7 @@ var et2_widget = Class.extend({
 		// Create a clone of all child elements of the given object
 		for (var i = 0; i < _obj._children.length; i++)
 		{
-			_obj._children[i].clone(this, _obj._children[i].type);
-		}
-
-		// Copy all properties
-		for (var key in  _obj.attributes)
-		{
-			if (!_obj.attributes[key].ignore)
-			{
-				var value = _obj.getAttribute(key);
-
-				// Check whether the attribute is undefined
-				if (typeof value != "undefined")
-				{
-					this.setAttribute(key, value);
-				}
-			}
+			_obj._children[i].clone(this);
 		}
 
 		// Copy a reference to the content array manager
@@ -212,14 +218,6 @@ var et2_widget = Class.extend({
 	 */
 	getParent: function() {
 		return this._parent;
-	},
-
-	/**
-	 * The set parent event is called, whenever the parent of the widget is set.
-	 * Child classes can overwrite this function. Whe onSetParent is called,
-	 * the change of the parent has already taken place.
-	 */
-	onSetParent: function() {
 	},
 
 	/**
@@ -269,7 +267,7 @@ var et2_widget = Class.extend({
 		}
 		else
 		{
-			throw("_node is not supported by this widget class!");
+			throw(_node, " is not supported by this widget class!");
 		}
 	},
 
@@ -284,7 +282,6 @@ var et2_widget = Class.extend({
 		{
 			// This element is no longer parent of the child
 			_node._parent = null;
-			_node.onSetParent();
 
 			this._children.splice(idx, 1);
 		}
@@ -375,45 +372,102 @@ var et2_widget = Class.extend({
 		return false;
 	},
 
-	createElementFromNode: function(_node, _nodeName) {
+	/**
+	 * The parseXMLAttrs function takes an XML DOM attributes object
+	 * and adds the given attributes to the _target associative array. This
+	 * function also parses the legacyOptions.
+	 *
+	 * @param _attrsObj is the XML DOM attributes object
+	 * @param _target is the object to which the attributes should be written.
+	 */
+	parseXMLAttrs: function(_attrsObj, _target, _proto) {
 
-		// Check whether the type attribute exists - if yes pass it instead of
-		// the nodeName
-		if (_node.getAttribute("type"))
+		// Check whether the attributes object is really existing, if not abort
+		if (typeof _attrsObj == "undefined")
 		{
-			_nodeName = _node.getAttribute("type");
+			return;
 		}
 
-		if (typeof _nodeName == "undefined")
+		// Iterate over the given attributes and parse them
+		for (var i = 0; i < _attrsObj.length; i++)
 		{
-			_nodeName = _node.nodeName.toLowerCase();
-		}
+			var attrName = _attrsObj[i].name;
+			var attrValue = _attrsObj[i].value;
 
-		// Get the constructor for that widget
+			// Special handling for the legacy options
+			if (attrName == "options")
+			{
+				// Parse the legacy options
+				var splitted = et2_csvSplit(attrValue);
+
+				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
+				{
+					_target[_proto.legacyOptions[j]] = splitted[j];
+				}
+			}
+			else
+			{
+				var mgr = this.getArrayMgr("content");
+				if (mgr != null && typeof _proto.attributes[attrName] != "undefined")
+				{
+					var attr = _proto.attributes[attrName];
+
+					// If the attribute is marked as boolean, parse the
+					// expression as bool expression.
+					if (attr.type == "boolean")
+					{
+						attrValue = mgr.parseBoolExpression(attrValue);
+					}
+					else
+					{
+						attrValue = mgr.expandName(attrValue);
+					}
+				}
+
+				// Set the attribute
+				_target[attrName] = attrValue;
+			}
+		}
+	},
+
+	parseArrayMgrAttrs: function() {
+	},
+
+	createElementFromNode: function(_node) {
+
+		// Fetch all attributes for this element from the XML node
+		var attributes = {};
+
+		// Parse the "readonly" and "type" flag for this element here, as they
+		// determine which constructor is used
+		var _nodeName = attributes["type"] = _node.getAttribute("type") ?
+			_node.getAttribute("type") : _node.nodeName.toLowerCase();
+		var readonly = attributes["readonly"] =
+			this.getArrayMgr("readonlys").isReadOnly(
+				_node.getAttribute("id"), _node.getAttribute("readonly"),
+				this.readonly);
+
+		// Get the constructor - if the widget is readonly, use the special "_ro"
+		// constructor if it is available
 		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
 			et2_placeholder : et2_registry[_nodeName];
-
-		// Check whether the widget is marked as readonly and whether a special
-		// readonly type (suffixed with "_ro") is registered
-		var mgr = this.getArrayMgr("readonlys");
-		var readonly = false;
-		if(mgr != null) {
-			readonly = mgr.isReadOnly(
-				_node.getAttribute("id"), _node.getAttribute("readonly"), this.readonly);
-		}
 		if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
 
+		// Parse the attributes from the given XML attributes object
+		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
+
+		// Do an sanity check for the attributes
+		constructor.prototype.generateAttributeSet(attributes);
+
 		// Creates the new widget, passes this widget as an instance and
 		// passes the widgetType. Then it goes on loading the XML for it.
-		var widget = new constructor(this, _nodeName, readonly);
+		var widget = new constructor(this, attributes);
 
+		// Load the widget itself from XML
 		widget.loadFromXML(_node);
-
-		// Call the "loadFinished" function of the widget
-		widget.loadingFinished();
 
 		return widget;
 	},
@@ -422,12 +476,6 @@ var et2_widget = Class.extend({
 	 * Loads the widget tree from an XML node
 	 */
 	loadFromXML: function(_node) {
-		// Try to load the attributes of the current node
-		if (_node.attributes)
-		{
-			this.loadAttributes(_node.attributes);
-		}
-
 		// Load the child nodes.
 		for (var i = 0; i < _node.childNodes.length; i++)
 		{
@@ -454,85 +502,34 @@ var et2_widget = Class.extend({
 	},
 
 	/**
-	 * Loads the widget attributes from the passed DOM attributes array.
-	 */
-	loadAttributes: function(_attrs) {
-		for (var i = 0; i < _attrs.length; i++)
-		{
-			// Special handling for the legacy options
-			if (_attrs[i].name == "options")
-			{
-				// Parse the legacy options
-				var splitted = et2_csvSplit(_attrs[i].value);
-
-				for (var j = 0; j < splitted.length && j < this.legacyOptions.length; j++)
-				{
-					this.setAttribute(this.legacyOptions[j], splitted[j]);
-				}
-			}
-			else
-			{
-				var attrName = _attrs[i].name;
-				var attrValue = _attrs[i].value;
-
-				var mgr = this.getArrayMgr("content");
-				if (mgr != null && typeof this.attributes[attrName] != "undefined")
-				{
-					var attr = this.attributes[attrName];
-
-					// If the attribute is marked as boolean, parse the
-					// expression as bool expression.
-					if (attr.type == "boolean")
-					{
-						attrValue = mgr.parseBoolExpression(attrValue);
-					}
-					else
-					{
-						attrValue = mgr.expandName(attrValue);
-					}
-				}
-
-				// Set the attribute
-				this.setAttribute(attrName, attrValue);
-			}
-		}
-	},
-
-	/**
 	 * Called whenever textNodes are loaded from the XML tree
 	 */
 	loadContent: function(_content) {
 	},
 
 	/**
-	 * Called when loading of the widget from XML node is finished. This
-	 * function can be used to load the data from the data arrays (content,
-	 * readonlys, sel_options etc.)
+	 * Called when loading the widget (sub-tree) is finished. First when this
+	 * function is called, the DOM-Tree is created. loadingFinished is
+	 * recursively called for all child elements. Do not directly override this
+	 * function but the doLoadingFinished function which is executed before
+	 * descending deeper into the DOM-Tree
 	 */
 	loadingFinished: function() {
-	},
+		// Call all availble setters
+		this.initAttributes(this.options);
 
-	/**
-	 * Calls the setter of each property with its current value, calls the
-	 * update function of all child nodes.
-	 */
-	update: function() {
-
-		// Go through every property of this object and check whether a
-		// corresponding setter function exists. If yes, it is called.
-		for (var key in  this.attributes)
+		if (this.doLoadingFinished())
 		{
-			if (!this.attributes[key].ignore)
+			// Descend recursively into the tree
+			for (var i = 0; i < this._children.length; i++)
 			{
-				this.setAttribute(key, this.getAttribute(key));
+				this._children[i].loadingFinished();
 			}
 		}
+	},
 
-		// Call the update function of all children.
-		for (var i = 0; i < this._children.length; i++)
-		{
-			this._children[i].update();
-		}
+	doLoadingFinished: function() {
+		return true;
 	},
 
 	/**

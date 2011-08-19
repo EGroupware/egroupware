@@ -109,9 +109,6 @@ var et2_checkbox_ro = et2_checkbox.extend({
 		}
 	},
 
-	init: function(_parent) {
-	},
-
 	init: function() {
 		this._super.apply(this, arguments);
 

@@ -44,26 +44,60 @@ var et2_template = et2_DOMWidget.extend({
 		}
 	},
 
+	createNamespace: true,
+
 	/**
 	 * Initializes this template widget as a simple container.
 	 */
 	init: function(_parent) {
+		this._super.apply(this, arguments);
+
 		this.proxiedTemplate = null;
 		this.isProxied = false;
 
 		this.div = document.createElement("div");
-		this.id = "";
 
-		this._super.apply(this, arguments);
+		if (this.id != "")
+		{
+			this.createProxy();
+		}
+	},
+
+	createProxy: function() {
+		// Check whether a template with the given name already exists and
+		// is not a proxy.
+		var tmpl = this.getRoot().getWidgetById(this.id);
+		if (tmpl instanceof et2_template && tmpl.proxiedTemplate == null &&
+		    tmpl != this)
+		{
+			// Detatch the proxied template from the DOM to and set its
+			// isProxied property to true
+			tmpl.makeProxied();
+
+			// Do not copy the id when cloning as this leads to infinit
+			// recursion
+			tmpl.options.id = "";
+
+			// Create a clone of the template and add it as child of this
+			// template (done by passing "this" to the clone function)
+			this.proxiedTemplate = tmpl.clone(this);
+
+			// Reset the "ignore" flag and manually copy the id
+			tmpl.options.id = this.id;
+			this.proxiedTemplate.id = tmpl.id;
+			this.proxiedTemplate.isProxied = true;
+
+			// Disallow adding any new node to this template
+			this.supportedWidgetClasses = [];
+		}
 	},
 
 	/**
 	 * If the parent node is changed, either the DOM-Node of the proxied template
 	 * or the DOM-Node of this template is connected to the parent DOM-Node.
 	 */
-	onSetParent: function() {
-		// Check whether the parent implements the et2_IDOMNode interface. If
-		// yes, grab the DOM node and create our own.
+	doLoadingFinished: function() {
+		// Check whether the parent implements the et2_IDOMNode interface.
 		if (this._parent && this._parent.implements(et2_IDOMNode)) {
 			var parentNode = this._parent.getDOMNode(this);
 
@@ -72,6 +106,8 @@ var et2_template = et2_DOMWidget.extend({
 				if (this.proxiedTemplate)
 				{
 					this.proxiedTemplate.setParentDOMNode(parentNode);
+					this.proxiedTemplate.loadingFinished();
+					return false;
 				}
 				else if (!this.isProxied)
 				{
@@ -79,6 +115,8 @@ var et2_template = et2_DOMWidget.extend({
 				}
 			}
 		}
+
+		return true;
 	},
 
 	makeProxied: function() {
@@ -92,59 +130,7 @@ var et2_template = et2_DOMWidget.extend({
 		this.isProxied = true;
 	},
 
-	set_id: function(_value) {
-		if (_value != this.id)
-		{
-			// Check whether a template with the given name already exists and
-			// is not a proxy.
-			var tmpl = this.getRoot().getWidgetById(_value);
-			if (tmpl instanceof et2_template && tmpl.proxiedTemplate == null &&
-			    tmpl != this)
-			{
-				// Check whether we still have a proxied template, if yes,
-				// destroy it
-				if (this.proxiedTemplate != null)
-				{
-					this.proxiedTemplate.destroy();
-					this.proxiedTemplate = null;
-				}
-
-				// This element does not have a node in the tree
-				this.detatchFromDOM();
-
-				// Detatch the proxied template from the DOM to and set its
-				// isProxied property to true
-				tmpl.makeProxied();
-
-				// Do not copy the id when cloning as this leads to infinit
-				// recursion
-				tmpl.attributes["id"].ignore = true;
-
-				// Create a clone of the template and add it as child of this
-				// template (done by passing "this" to the clone function)
-				this.proxiedTemplate = tmpl.clone(this);
-
-				// Reset the "ignore" flag and manually copy the id
-				tmpl.attributes["id"].ignore = false;
-				this.proxiedTemplate.id = tmpl.id;
-
-				// Disallow adding any new node to this template
-				this.supportedWidgetClasses = [];
-
-				// Call the parent change event function
-				this.onSetParent();
-			}
-			else
-			{
-				this._super(_value);
-
-				// Check whether a namespace exists for this element
-				this.checkCreateNamespace();
-			}
-		}
-	},
-
-	getDOMNode: function(_fromProxy) {
+	getDOMNode: function() {
 		return this.div;
 	},
 

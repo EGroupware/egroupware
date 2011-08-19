@@ -52,6 +52,18 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"type": "boolean",
 			"description": "Defines whether this widget is visible.",
 			"default": false
+		},
+		"width": {
+			"name": "Width",
+			"type": "dimension",
+			"default": et2_no_init,
+			"description": "Width of the element in pixels, percentage or 'auto'"
+		},
+		"height": {
+			"name": "Height",
+			"type": "dimension",
+			"default": et2_no_init,
+			"description": "Height of the element in pixels, percentage or 'auto'"
 		}
 	},
 
@@ -59,7 +71,10 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	 * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
 	 * object (if available) and passes it to its own "createDOMNode" function
 	 */
-	init: function(_parent, _type) {
+	init: function() {
+		// Call the inherited constructor
+		this._super.apply(this, arguments);
+
 		this.parentNode = null;
 
 		this._attachSet = {
@@ -67,10 +82,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"parent": null
 		};
 
-		this.disabled = false;
-
-		// Call the inherited constructor
-		this._super.apply(this, arguments);
+		this._disabled = false;
 	},
 
 	/**
@@ -87,14 +99,16 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	},
 
 	/**
-	 * Automatically tries to attach this node to the parent widget.
+	 * Attaches the container node of this widget to the DOM-Tree
 	 */
-	onSetParent: function() {
+	doLoadingFinished: function() {
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
 		if (this._parent && this._parent.implements(et2_IDOMNode)) {
 			this.setParentDOMNode(this._parent.getDOMNode(this));
 		}
+
+		return true;
 	},
 
 	/**
@@ -192,7 +206,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	},
 
 	set_disabled: function(_value) {
-		var node = this.getDOMNode();
+		var node = this.getDOMNode(this);
 		if (node)
 		{
 			this.disabled = _value;
@@ -206,8 +220,27 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 				$j(node).show();
 			}
 		}
-	}
+	},
 
+	set_width: function(_value) {
+		this.width = _value;
+
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			$j(node).css("width", _value);
+		}
+	},
+
+	set_height: function(_value) {
+		this.height = _value;
+
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			$j(node).css("height", _value);
+		}
+	}
 });
 
 

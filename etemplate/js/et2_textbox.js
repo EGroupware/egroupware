@@ -41,13 +41,13 @@ var et2_textbox = et2_inputWidget.extend({
 		"rows": {
 			"name": "Rows",
 			"type": "integer",
-			"default": et2_no_init,
+			"default": 1,
 			"description": "Multiline field height - better to use CSS"
 		},
 		"cols": {
 			"name": "Size",
 			"type": "integer",
-			"default": et2_no_init,
+			"default": 1,
 			"description": "Multiline field width - better to use CSS"
 		},
 	},
@@ -56,16 +56,16 @@ var et2_textbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.input = null;
-		this.id = "";
 
 		this.createInputWidget();
-
 	},
 
 	createInputWidget: function() {
-		if (this.multiline)
+		if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1)
 		{
-			this.input = $j(document.createElement("textarea"));
+			this.input = $j(document.createElement("textarea"))
+				.attr("rows", this.options.rows)
+				.attr("cols", this.options.cols);
 		}
 		else
 		{
@@ -80,44 +80,6 @@ var et2_textbox = et2_inputWidget.extend({
 		this.setDOMNode(this.input[0]);
 	},
 
-	set_multiline: function(_value) {
-		if (_value != this.multiline)
-		{
-			this.multiline = _value;
-
-			this.createInputWidget();
-
-			// Write all settings again
-			this.update();
-		}
-	},
-
-	set_rows: function(_value) {
-		if (_value != this.rows)
-		{
-			this.rows = _value;
-			if(this.rows > 1)
-			{
-				this.set_multiline(true);
-				this.input.attr("rows", this.rows);
-			} else {
-				this.set_multiline(false);
-			}
-		}
-	},
-	set_cols: function(_value) {
-		if (_value != this.cols)
-		{
-			this.cols = _value;
-			if(this.cols > 1)
-			{
-				this.set_multiline(true);
-				this.input.attr("cols", this.cols);
-			} else {
-				this.set_multiline(false);
-			}
-		}
-	},
 
 	/**
 	 * Set input widget size

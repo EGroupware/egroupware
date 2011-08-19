@@ -22,21 +22,16 @@
  */ 
 var et2_box = et2_baseWidget.extend({
 
-	init: function(_parent, _type) {
+	createNamespace: true,
+
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.div = $j(document.createElement("div"))
-			.addClass("et2_" + _type)
+			.addClass("et2_" + this._type)
 			.addClass("et2_box_widget");
 
 		this.setDOMNode(this.div[0]);
-	},
-
-	set_id: function(_value) {
-		this._super.apply(this, arguments);
-
-		// Check whether a namespace exists for this element
-		this.checkCreateNamespace();
 	}
 
 });

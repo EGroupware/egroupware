@@ -71,6 +71,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
 		$j(this.getInputNode()).validator();
 	},
+
 	detatchFromDOM: function() {
 		if(this.getInputNode()) {
 			$j(this.getInputNode()).data("validator").destroy();

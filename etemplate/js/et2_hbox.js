@@ -22,7 +22,11 @@
  */ 
 var et2_hbox = et2_baseWidget.extend({
 
-	init: function(_parent, _type) {
+	createNamespace: true,
+
+	init: function(_parent) {
+		this._super.apply(this, arguments);
+
 		this.alignData = {
 			"hasAlign": false,
 			"hasLeft": false,
@@ -34,10 +38,8 @@ var et2_hbox = et2_baseWidget.extend({
 		this.leftDiv = null;
 		this.rightDiv = null;
 
-		this._super.apply(this, arguments);
-
 		this.div = $j(document.createElement("div"))
-			.addClass("et2_" + _type)
+			.addClass("et2_" + this._type)
 			.addClass("et2_box_widget");
 
 		this.setDOMNode(this.div[0]);
@@ -159,15 +161,7 @@ var et2_hbox = et2_baseWidget.extend({
 
 		// Normally simply return the hbox-div
 		return this._super.apply(this, arguments);
-	},
-
-	set_id: function(_value) {
-		this._super.apply(this, arguments);
-
-		// Check whether a namespace exists for this element
-		this.checkCreateNamespace();
 	}
-
 });
 
 et2_register_widget(et2_hbox, ["hbox"]);

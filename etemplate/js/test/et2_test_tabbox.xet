@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <overlay>
-	<tabbox>
+	<tabbox width="100%">
 		<tabs>
 			<tab label="Test1" />
 			<tab label="Test2" />
@@ -8,10 +8,18 @@
 			<tab label="Test4" />
 		</tabs>
 		<tabpanels>
-			<label value="This is the content of tab 1"/>
 			<label value="This is the content of tab 2"/>
 			<label value="This is the content of tab 3"/>
 			<label value="This is the content of tab 4"/>
+			<vbox>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+				<label value="This is the content of tab 1"/>
+			</vbox>
 		</tabpanels>
 	</tabbox>
 </overlay>

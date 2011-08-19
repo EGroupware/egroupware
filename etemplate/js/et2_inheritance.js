@@ -261,12 +261,6 @@
 				{
 					this.init.apply(this, arguments);
 				}
-
-				// Initialize the attributes
-				if (typeof this._attrsInitialized == "undefined")
-				{
-					this.initAttributes();
-				}
 			}
 		}
 
@@ -354,22 +348,66 @@
 	}
 
 	/**
+	 * generateAttributeSet sanitizes the given associative array of attributes
+	 * (by passing each entry to "et2_checkType" and checking for existance of
+	 * the attribute) and adds the default values to the associative array.
+	 *
+	 * @param _attrs is the associative array containing the attributes.
+	 */
+	Class.prototype.generateAttributeSet = function(_attrs) {
+
+		// Sanity check and validation
+		for (var key in _attrs)
+		{
+			if (typeof this.attributes[key] != "undefined")
+			{
+				if (!this.attributes[key].ignore)
+				{
+					_attrs[key] = et2_checkType(_attrs[key], this.attributes[key].type,
+						key);
+				}
+			}
+			else
+			{
+				// Key does not exist - delete it and issue a warning
+				delete(_attrs[key]);
+				et2_debug("warn", this, "Attribute '" + key +
+					"' does not exist!");
+			}
+		}
+
+		// Include default values or already set values for this attribute
+		for (var key in this.attributes)
+		{
+			if (typeof _attrs[key] == "undefined")
+			{
+				var _default = this.attributes[key]["default"];
+				if (_default == et2_no_init)
+				{
+					_default = undefined;
+				}
+
+				_attrs[key] = _default;
+			}
+		}
+
+		return _attrs;
+	}
+
+	/**
 	 * The initAttributes function sets the attributes to their default
 	 * values. The attributes are not overwritten, which means, that the
 	 * default is only set, if either a setter exists or this[propName] does
 	 * not exist yet.
 	 */
-	Class.prototype.initAttributes = function() {
-		for (var key in this.attributes)
+	Class.prototype.initAttributes = function(_attrs) {
+		for (var key in _attrs)
 		{
-			if (!this.attributes[key].ignore && this.attributes[key]["default"] !== et2_no_init)
+			if (!this.attributes[key].ignore && !(_attrs[key] == undefined))
 			{
-				this.setAttribute(key, this.attributes[key]["default"],
-					false);
+				this.setAttribute(key, _attrs[key], false);
 			}
 		}
-
-		this._attrsInitialized = true;
 	}
 
 	/**
