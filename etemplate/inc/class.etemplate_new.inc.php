@@ -11,6 +11,19 @@
  * @version $Id$
  */
 
+// allow to call direct for tests (see end of class)
+if (!isset($GLOBALS['egw_info']))
+{
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'login',
+			'nonavbar' => true,
+			'debug' => 'etemplate_new',
+		)
+	);
+	include_once '../../header.inc.php';
+}
+
 /**
  * New eTemplate serverside contains:
  * - main server methods like read, exec
@@ -198,8 +211,9 @@ class etemplate_new extends etemplate_widget_template
 	{
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);
+		error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
 
-		return (boolean)$this->real_path;
+		return (boolean)$this->rel_path;
 	}
 
 	/**
@@ -390,4 +404,30 @@ class etemplate_new extends etemplate_widget_template
 		}
 		return $old;
 	}
+
+	/**
+	 * Debug callback just outputting content
+	 *
+	 * @param array $content=null
+	 */
+	public function debug(array $content=null)
+	{
+		common::egw_header();
+		_debug_array($content);
+		common::egw_footer();
+	}
+}
+
+if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_new')
+{
+	$name = isset($_GET['name']) ? $_GET['name'] : 'timesheet.edit';
+	$template = new etemplate_new();
+	if (!$template->read($name))
+	{
+		header('HTTP-Status: 404 Not Found');
+		echo "<html><head><title>Not Found</title><body><h1>Not Found</h1><p>The requested eTemplate '$name' was not found!</p></body></html>\n";
+		exit;
+	}
+	$GLOBALS['egw_info']['flags']['app_header'] = $name;
+	$template->exec('etemplate.etemplate.debug', array(), array(), array(), array(), 2);
 }

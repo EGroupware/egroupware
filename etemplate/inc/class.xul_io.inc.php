@@ -51,7 +51,7 @@ class xul_io
 	var $widget2xul = array(
 		'label' => array(
 			'.name' => 'description',
-			'label' => 'value'
+			'label' => 'value',
 		),
 		'text' => array(
 			'.name' => 'textbox',
@@ -65,12 +65,17 @@ class xul_io
 		'integer' => array(
 			'.name' => 'textbox',
 			'.set' => 'type=integer',
-			'size' => 'min,max,size'
+			'size' => 'min,max,size,precision,step'
+		),
+		'int' => array(
+			'.name' => 'textbox',
+			'.set' => 'type=integer',
+			'size' => 'min,max,size,precision,step'
 		),
 		'float' => array(
 			'.name' => 'textbox',
 			'.set' => 'type=float',
-			'size' => 'min,max,size,precision'
+			'size' => 'min,max,size,precision,step'
 		),
 		'select' => array(
 			'.name' => 'menulist,menupopup',

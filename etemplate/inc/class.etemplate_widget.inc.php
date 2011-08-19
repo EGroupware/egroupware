@@ -54,6 +54,13 @@ class etemplate_widget
 	protected $children = array();
 
 	/**
+	 * (Array of) comma-separated list of legacy options to automatically replace when parsing with set_attrs
+	 *
+	 * @var string|array
+	 */
+	protected $legacy_options;
+
+	/**
 	 * Request object of the currently created request
 	 *
 	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
@@ -132,6 +139,17 @@ class etemplate_widget
 	{
 		$reader = self::get_reader($xml);
 
+		// check if we have to split legacy options (can be by type)
+		$legacy_options = $this->legacy_options;
+		if (is_array($legacy_options))
+		{
+			if (!($type = $reader->getAttribute('type')))
+			{
+				$type = $this->type;
+			}
+			$legacy_options = $legacy_options[$type];
+		}
+
 		// read and set all attributes
 		$template = $this;
 		while($reader->moveToNextAttribute())
@@ -140,9 +158,64 @@ class etemplate_widget
 			{
 				if (!$cloned) $template = clone($this);
 				$template->attrs[$reader->name] = $reader->value;
+
+				// split legacy options
+				if ($legacy_options && $reader->name == 'options')
+				{
+					$legacy_options = explode(',', $legacy_options);
+					foreach(self::csv_split($reader->value, count($legacy_options)) as $n => $val)
+					{
+						if ($legacy_options[$n] && (string)$val !== '') $template->attrs[$legacy_options[$n]] = $val;
+					}
+				}
 			}
 		}
 		return $template;
+	}
+
+	/**
+	 * Split a $delimiter-separated options string, which can contain parts with delimiters enclosed in $enclosure
+	 *
+	 * Examples:
+	 * - csv_split('"1,2,3",2,3') === array('1,2,3','2','3')
+	 * - csv_split('1,2,3',2) === array('1','2,3')
+	 * - csv_split('"1,2,3",2,3',2) === array('1,2,3','2,3')
+	 * - csv_split('"a""b,c",d') === array('a"b,c','d')	// to escape enclosures double them!
+	 *
+	 * @param string $str
+	 * @param int $num=null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
+	 * @param string $delimiter=','
+	 * @param string $enclosure='"'
+	 * @return array
+	 */
+	public static function csv_split($str,$num=null,$delimiter=',',$enclosure='"')
+	{
+		if (strpos($str,$enclosure) === false)
+		{
+			return is_null($num) ? explode($delimiter,$str) : explode($delimiter,$str,$num);	// no need to run this more expensive code
+		}
+		$parts = explode($delimiter,$str);
+		for($n = 0; isset($parts[$n]); ++$n)
+		{
+			$part =& $parts[$n];
+			if ($part[0] === $enclosure)
+			{
+				while (isset($parts[$n+1]) && substr($part,-1) !== $enclosure)
+				{
+					$part .= $delimiter.$parts[++$n];
+					unset($parts[$n]);
+				}
+				$part = substr(str_replace($enclosure.$enclosure,$enclosure,$part),1,-1);
+			}
+		}
+		$parts = array_values($parts);	// renumber the parts (in case we had to concat them)
+
+		if ($num > 0 && count($parts) > $num)
+		{
+			$parts[$num-1] = implode($delimiter,array_slice($parts,$num-1,count($parts)-$num+1));
+			$parts = array_slice($parts,0,$num);
+		}
+		return $parts;
 	}
 
 	/**
@@ -249,7 +322,7 @@ class etemplate_widget
 	 */
 	public function __toString()
 	{
-		return $this->type.'#'.$this->id;
+		return $this->type.($this->attrs['type'] && $this->attrs['type'] != $this->type ? '('.$this->attrs['type'].')' : '').'#'.$this->id;
 	}
 
 	/**
@@ -264,6 +337,11 @@ class etemplate_widget
 		if ($this->id) echo ' id="'.htmlspecialchars($this->id).'"';
 		foreach($this->attrs as $name => $value)
 		{
+			if ($name == 'options' && $this->legacy_options && (!is_array($this->legacy_options) ||
+				isset($this->legacy_options[$this->attrs['type'] ? $this->attrs['type'] : $this->type])))
+			{
+				continue;	// do NOT output already converted legacy options
+			}
 			echo ' '.$name.'="'.htmlspecialchars($value).'"';
 		}
 		echo ' php-class="'.get_class($this).'"';
@@ -432,6 +510,19 @@ class etemplate_widget
 class etemplate_widget_named extends etemplate_widget
 {
 	/**
+	 * (Array of) comma-separated list of legacy options to automatically replace when parsing with set_attrs
+	 *
+	 * @var string|array
+	 */
+	protected $legacy_options = array(
+		'box' => ',cellpadding,cellspacing,keep',
+		'hbox' => 'cellpadding,cellspacing,keep',
+		'vbox' => 'cellpadding,cellspacing,keep',
+		'groupbox' => 'cellpadding,cellspacing,keep',
+		'grid' => null,	// not used
+	);
+
+	/**
 	 * Validate input
 	 *
 	 * Reimplemented because grids can have an own namespace
@@ -450,3 +541,18 @@ class etemplate_widget_named extends etemplate_widget
 }
 // register class for layout widgets, which can have an own namespace
 etemplate_widget::registerWidget('etemplate_widget_named', array('grid', 'box', 'hbox', 'vbox', 'groupbox'));
+
+/**
+ * Describtion widget
+ *
+ * Reimplemented to set legacy options
+ */
+class etemplate_widget_description extends etemplate_widget
+{
+	/**
+	 * (Array of) comma-separated list of legacy options to automatically replace when parsing with set_attrs
+	 *
+	 * @var string|array
+	 */
+	protected $legacy_options = 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title';
+}

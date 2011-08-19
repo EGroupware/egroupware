@@ -13,8 +13,8 @@
 
 /**
  * eTemplate textbox widget with following sub-types:
- * - textbox optional multiline="true" and rows="123"
- * - int
+ * - textbox with optional multiline="true" and rows="123"
+ * - integer or int
  * - float
  * - hidden
  * - colorpicker
@@ -22,6 +22,26 @@
  */
 class etemplate_widget_textbox extends etemplate_widget
 {
+	/**
+	 * Constructor
+	 *
+	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @throws egw_exception_wrong_parameter
+	 */
+	public function __construct($xml)
+	{
+		parent::__construct($xml);
+
+		// normalize types
+		if ($this->type !== 'textbox')
+		{
+			if ($this->type == 'int') $this->type = 'integer';
+
+			$this->attrs['type'] = $this->type;
+			$this->type = 'textbox';
+		}
+	}
+
 	/**
 	 * Validate input
 	 *
@@ -40,14 +60,13 @@ class etemplate_widget_textbox extends etemplate_widget
 	public function validate(array $content, &$validated=array(), $cname = '')
 	{
 		$ok = true;
-		$type = isset($this->attrs['type']) ? $this->attrs['type'] : $this->type;
 		if (!$this->is_readonly($cname))
 		{
 			if (!isset($this->attrs['preg']))
 			{
-				switch($type)
+				switch($this->type)
 				{
-					case 'int':
+					case 'integer':
 						$this->attrs['preg'] = '/^-?[0-9]*$/';
 						break;
 					case 'float':
@@ -74,9 +93,9 @@ class etemplate_widget_textbox extends etemplate_widget
 			}
 			if ($this->attrs['preg'] && !preg_match($this->attrs['preg'],$value))
 			{
-				switch($type)
+				switch($this->type)
 				{
-					case 'int':
+					case 'integer':
 						self::set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
 						break;
 					case 'float':
@@ -88,22 +107,22 @@ class etemplate_widget_textbox extends etemplate_widget
 				}
 				$ok = false;
 			}
-			elseif ($type == 'int' || $type == 'float')	// cast int and float and check range
+			elseif ($this->type == 'integer' || $this->type == 'float')	// cast int and float and check range
 			{
 				if ((string)$value !== '' || $this->attrs['needed'])	// empty values are Ok if needed is not set
 				{
-					$value = $type == 'int' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
+					$value = $this->type == 'integer' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 
 					if (!empty($this->attrs['min']) && $value < $this->attrs['min'])
 					{
 						self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$this->attrs['min']),'');
-						$value = $type == 'int' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
+						$value = $this->type == 'integer' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
 						$ok = false;
 					}
 					if (!empty($this->attrs['max']) && $value > $this->attrs['max'])
 					{
 						self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$this->attrs['max']),'');
-						$value = $type == 'int' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
+						$value = $this->type == 'integer' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
 						$ok = false;
 					}
 				}
@@ -113,4 +132,4 @@ class etemplate_widget_textbox extends etemplate_widget
 		return parent::validate($content, $validated, $cname) && $ok;
 	}
 }
-etemplate_widget::registerWidget('etemplate_widget_textbox', array('textbox','int','float','passwd','hidden','colorpicker'));
+etemplate_widget::registerWidget('etemplate_widget_textbox', array('textbox','int','integer','float','passwd','hidden','colorpicker'));

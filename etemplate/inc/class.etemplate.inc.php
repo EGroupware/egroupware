@@ -1698,7 +1698,7 @@ class etemplate extends boetemplate
 			case 'vbox':
 			case 'hbox':
 			case 'groupbox':
-			case 'box':
+			case 'box':	// size: num,orient,cellpadding,cellspacing,keep
 				$rows = array();
 				$box_row = 1;
 				$box_col = 'A';

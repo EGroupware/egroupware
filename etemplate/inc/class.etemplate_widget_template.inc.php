@@ -17,6 +17,7 @@ if (!isset($GLOBALS['egw_info']))
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'currentapp' => 'login',
+			'debug' => 'etemplate_widget_template',
 		)
 	);
 	include_once '../../header.inc.php';
@@ -114,6 +115,7 @@ class etemplate_widget_template extends etemplate_widget
 	 * @param array &$validated=array() validated content
 	 * @param string $cname='' current namespace
 	 * @return boolean true if no validation error, false otherwise
+	 * @todo handle template references containing content in id, eg. id="edit.$cont[something]"
 	 */
 	public function validate(array $content, &$validated=array(), $cname = '')
 	{
@@ -123,9 +125,15 @@ class etemplate_widget_template extends etemplate_widget
 	}
 }
 
-if ($GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_widget_template')
 {
-	$template = etemplate_widget_template::instance('timesheet.edit');
+	$name = isset($_GET['name']) ? $_GET['name'] : 'timesheet.edit';
+	if (!($template = etemplate_widget_template::instance($name)))
+	{
+		header('HTTP-Status: 404 Not Found');
+		echo "<html><head><title>Not Found</title><body><h1>Not Found</h1><p>The requested eTemplate '$name' was not found!</p></body></html>\n";
+		exit;
+	}
 	header('Content-Type: text/xml');
 	echo $template->toXml();
 }

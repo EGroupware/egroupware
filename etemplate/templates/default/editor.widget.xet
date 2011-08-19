@@ -13,44 +13,44 @@
 			</columns>
 			<rows>
 				<row class="row">
-					<description options=",,,type" value="Type"/>
+					<description value="Type" options=",,,type"/>
 					<menulist>
-						<menupopup id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"/>
+						<menupopup statustext="type of the field (select Label if field should be empty)" id="type" onchange="1"/>
 					</menulist>
-					<description options=",,,size" value="Options" align="center"/>
-					<textbox size="10" id="size" statustext="Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']"/>
-					<description options=",,,span" value="Span, Class" align="center"/>
-					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+					<description align="center" value="Options" options=",,,size"/>
+					<textbox statustext="Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']" id="size" size="10"/>
+					<description align="center" value="Span, Class" options=",,,span"/>
+					<textbox statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)" id="span" size="10"/>
 				</row>
 				<row class="row">
-					<description options=",,,label" value="Label"/>
-					<textbox id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"/>
-					<checkbox span="2" label="%s NoTranslation" align="center" id="no_lang" statustext="select if content of field should not be translated (label gets always translated)"/>
-					<description value="Align" align="center"/>
+					<description value="Label" options=",,,label"/>
+					<textbox statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)" id="label"/>
+					<checkbox align="center" statustext="select if content of field should not be translated (label gets always translated)" label="%s NoTranslation" id="no_lang" span="2"/>
+					<description align="center" value="Align"/>
 					<menulist>
-						<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
+						<menupopup statustext="alignment of label and input-field in table-cell" id="align"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,name" value="Name"/>
-					<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
+					<description value="Name" options=",,,name"/>
+					<textbox statustext="index/name of returned content (name of the Template, Link / Method for Image)" id="name"/>
 					<hbox span="4">
-						<checkbox label="%s needed" align="center" id="needed" statustext="check if field has to be filled by user"/>
-						<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
-						<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
+						<checkbox align="center" statustext="check if field has to be filled by user" label="%s needed" id="needed"/>
+						<checkbox align="center" statustext="check if content should only be displayed but not altered (the content is not send back then!)" label="%s readonly" id="readonly"/>
+						<checkbox align="center" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell" label="%s disabled" id="disabled"/>
 					</hbox>
 				</row>
 				<row class="row" disabled="@type=label">
-					<description options=",,,blur" value="blurText"/>
-					<textbox id="blur" statustext="this text gets displayed if the input-field is empty and has no focus (blur)"/>
+					<description value="blurText" options=",,,blur"/>
+					<textbox statustext="this text gets displayed if the input-field is empty and has no focus (blur)" id="blur"/>
 					<hbox span="4">
-						<int label="Tabindex" span="2" id="tabindex" statustext="Order to navigating by tab key through the form"/>
-						<textbox size="1" maxlength="1" id="accesskey" statustext="Accesskeys can also be specified with an &amp; in the label (eg. &amp;Name)" label="Accesskey"/>
+						<textbox type="integer" statustext="Order to navigating by tab key through the form" label="Tabindex" id="tabindex" span="2"/>
+						<textbox statustext="Accesskeys can also be specified with an &amp; in the label (eg. &amp;Name)" label="Accesskey" id="accesskey" size="1" maxlength="1"/>
 					</hbox>
 				</row>
 				<row class="row">
-					<description options=",,,help" value="Help"/>
-					<textbox size="71" span="all" class="inputFullWidth" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+					<description value="Help" options=",,,help"/>
+					<textbox statustext="displayed in statusline of browser if input-field gets focus" id="help" size="71" span="all" class="inputFullWidth"/>
 					<description/>
 					<description/>
 					<description/>
@@ -60,18 +60,18 @@
 					<description value="onChange"/>
 					<hbox options="0,0" span="all">
 						<menulist>
-							<menupopup id="onchange_type" statustext="Should the form be submitted or any custom javascript be executed"/>
+							<menupopup statustext="Should the form be submitted or any custom javascript be executed" id="onchange_type"/>
 						</menulist>
-						<textbox size="50" span="all" class="leftPad5 inputFullWidth" id="onchange" statustext="custom javascript for onChange" align="right"/>
+						<textbox align="right" statustext="custom javascript for onChange" id="onchange" size="50" span="all" class="leftPad5 inputFullWidth"/>
 					</hbox>
 				</row>
 				<row class="row">
-					<description options="onclick" value="onClick"/>
+					<description value="onClick" options="onclick"/>
 					<hbox options="0,0" span="all">
 						<menulist>
-							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
+							<menupopup statustext="confirmation necesary or custom java-script" id="onclick_type"/>
 						</menulist>
-						<textbox size="53" span="all" class="leftPad5 inputFullWidth" id="onclick" statustext="confirmation message or custom javascript (returning true or false)" align="right"/>
+						<textbox align="right" statustext="confirmation message or custom javascript (returning true or false)" id="onclick" size="53" span="all" class="leftPad5 inputFullWidth"/>
 					</hbox>
 				</row>
 			</rows>
@@ -87,21 +87,21 @@
 				<row class="th">
 					<hbox span="all">
 						<menulist>
-							<menupopup options="Edit..." id="edit_menu" onchange="1" statustext="delete and cut save the template!"/>
+							<menupopup statustext="delete and cut save the template!" id="edit_menu" onchange="1" options="Edit..."/>
 						</menulist>
 						<menulist>
-							<menupopup options="Box..." id="box_menu" onchange="1" statustext="all operations save the template!"/>
+							<menupopup statustext="all operations save the template!" id="box_menu" onchange="1" options="Box..."/>
 						</menulist>
 						<menulist>
-							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!"/>
+							<menupopup statustext="all operations save the template!" id="row_menu" onchange="1" options="Row..."/>
 						</menulist>
 						<menulist>
-							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!"/>
+							<menupopup statustext="all operations save the template!" id="column_menu" onchange="1" options="Column..."/>
 						</menulist>
 					</hbox>
 				</row>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" no_lang="1" id="msg"/>
+					<description id="msg" no_lang="1" span="all" class="redItalic"/>
 				</row>
 				<row>
 					<html label="Name" id="java_script"/>
@@ -109,46 +109,46 @@
 						<textbox id="name" readonly="true"/>
 						<textbox id="template" readonly="true"/>
 						<textbox id="lang" readonly="true"/>
-						<textbox size="20" label="Version" id="version" statustext="increment version to not overwrite the existing template"/>
-						<description class="gray" value="Path" no_lang="1" id="path"/>
+						<textbox statustext="increment version to not overwrite the existing template" label="Version" id="version" size="20"/>
+						<description value="Path" id="path" no_lang="1" class="gray"/>
 					</hbox>
 				</row>
 				<row>
-					<description options=",,,goto" value="Path"/>
+					<description value="Path" options=",,,goto"/>
 					<hbox>
-						<path no_lang="1" id="goto" statustext="switch to a parent widget"/>
-						<path options=" " label=" " no_lang="1" id="goto2" statustext="switch to an other widgets of that container"/>
+						<path statustext="switch to a parent widget" id="goto" no_lang="1"/>
+						<path statustext="switch to an other widgets of that container" label=" " id="goto2" no_lang="1" options=" "/>
 					</hbox>
 				</row>
 				<row>
-					<template content="cell" span="all" id="etemplate.editor.widget.generic"/>
+					<template id="etemplate.editor.widget.generic" content="cell" span="all"/>
 				</row>
 				<row disabled="!@grid_row">
 					<groupbox span="all" orient="horizontal">
 						<caption label="Grid row attributes"/>
-						<textbox size="5" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
-						<textbox size="10" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
-						<textbox size="10" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
+						<textbox statustext="height of row (in % or pixel)" label="Height" id="grid_row[height]" size="5"/>
+						<textbox statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty" label="Disabled" id="grid_row[disabled]" size="10"/>
+						<textbox statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows" label="Class" id="grid_row[class]" size="10"/>
 						<menulist>
-							<menupopup label="Valign" id="grid_row[valign]" statustext="vertical alignment of row"/>
+							<menupopup statustext="vertical alignment of row" label="Valign" id="grid_row[valign]"/>
 						</menulist>
 						<menulist>
-							<menupopup label="Part" id="grid_row[part]" statustext="part of the table (header and footer have to be before body!)"/>
+							<menupopup statustext="part of the table (header and footer have to be before body!)" label="Part" id="grid_row[part]"/>
 						</menulist>
 					</groupbox>
 				</row>
 				<row disabled="!@grid_column">
 					<groupbox span="all" orient="horizontal">
 						<caption label="Grid column attributes"/>
-						<textbox size="5" label="Width" id="grid_column[width]" statustext="width of column (in % or pixel)"/>
-						<textbox size="10" label="Disabled" id="grid_column[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
+						<textbox statustext="width of column (in % or pixel)" label="Width" id="grid_column[width]" size="5"/>
+						<textbox statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty" label="Disabled" id="grid_column[disabled]" size="10"/>
 					</groupbox>
 				</row>
 				<row>
 					<hbox span="all">
-						<button label="Save" id="save" statustext="saves the template with given version number and closes the window"/>
-						<button label="Apply" id="apply" statustext="applies the changes to the given version of the template"/>
-						<button label="Cancel" id="cancel" statustext="closes the window without saving the changes" onclick="window.close();"/>
+						<button statustext="saves the template with given version number and closes the window" label="Save" id="save"/>
+						<button statustext="applies the changes to the given version of the template" label="Apply" id="apply"/>
+						<button statustext="closes the window without saving the changes" label="Cancel" id="cancel" onclick="window.close();"/>
 					</hbox>
 				</row>
 			</rows>
