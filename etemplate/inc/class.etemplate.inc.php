@@ -2384,7 +2384,7 @@ class etemplate extends boetemplate
 	* Sets a validation error, to be displayed in the next exec
 	*
 	* @param string $name (complete) name of the widget causing the error
-	* @param string $error error-message already translated
+	* @param string|boolean $error error-message already translated or false to reset all existing error for given name
 	* @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	*/
 	static function set_validation_error($name,$error,$cname=null)
@@ -2393,11 +2393,18 @@ class etemplate extends boetemplate
 		//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
 		if ($cname) $name = self::form_name($cname,$name);
 
-		if (self::$validation_errors[$name])
+		if ($error === false)
 		{
-			self::$validation_errors[$name] .= ', ';
+			unset(self::$validation_errors[$name]);
 		}
-		self::$validation_errors[$name] .= $error;
+		else
+		{
+			if (self::$validation_errors[$name])
+			{
+				self::$validation_errors[$name] .= ', ';
+			}
+			self::$validation_errors[$name] .= $error;
+		}
 	}
 
 	/**
