@@ -16,7 +16,7 @@ if (!isset($GLOBALS['egw_info']))
 {
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
-			'currentapp' => 'login',
+			'currentapp' => $_REQUEST['sessionid'] ? 'etemplate' : 'login',
 			'nonavbar' => true,
 			'debug' => 'etemplate_new',
 		)
@@ -113,11 +113,16 @@ class etemplate_new extends etemplate_widget_template
 		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
 		self::$request->template = $this->as_array();
 
+		// instanciate template to fill self::$request->sel_options for select-* widgets
+		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
+		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
+		$template->run('fillTypeOptions');
+
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
 			'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
 			'content' => $content,
-			'sel_options' => $sel_options,
+			'sel_options' => self::$request->sel_options,
 			'readonlys' => $readonlys,
 			'modifications' => $this->modifications,
 			'validation_errors' => self::$validation_errors,
@@ -170,7 +175,7 @@ class etemplate_new extends etemplate_widget_template
 			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
 		}
 		$validated = array();
-		$template->validate($content, $validated);
+		$template->run('validate', array('', $content, &$validated));
 		if (self::validation_errors(self::$request->ignore_validation))
 		{
 			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));

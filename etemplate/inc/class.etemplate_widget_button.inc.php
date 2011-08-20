@@ -21,12 +21,12 @@ class etemplate_widget_button extends etemplate_widget
 	 *
 	 * Readonly buttons can NOT be pressed
 	 *
+	 * @param string $cname current namespace
 	 * @param array $content
 	 * @param array &$validated=array() validated content
-	 * @param string $cname='' current namespace
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate(array $content, &$validated=array(), $cname = '')
+	public function validate($cname, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id);
 
@@ -45,6 +45,5 @@ class etemplate_widget_button extends etemplate_widget
 				self::$request->button_pressed = true;
 			}
 		}
-		return parent::validate($content, $validated, $cname);
 	}
 }

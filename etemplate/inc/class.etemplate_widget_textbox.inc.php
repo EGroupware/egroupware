@@ -52,14 +52,12 @@ class etemplate_widget_textbox extends etemplate_widget
 	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
 	 * - int and float get casted to their type
 	 *
+	 * @param string $cname current namespace
 	 * @param array $content
 	 * @param array &$validated=array() validated content
-	 * @param string $cname='' current namespace
-	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate(array $content, &$validated=array(), $cname = '')
+	public function validate($cname, array $content, &$validated=array())
 	{
-		$ok = true;
 		if (!$this->is_readonly($cname))
 		{
 			if (!isset($this->attrs['preg']))
@@ -79,13 +77,12 @@ class etemplate_widget_textbox extends etemplate_widget
 			}
 			$form_name = self::form_name($cname, $this->id);
 
-			$value = self::get_array($content, $form_name);
+			$value = $value_in = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
-				$ok = false;
 			}
 			if ((int) $this->attrs['maxlength'] > 0 && strlen($value) > (int) $this->attrs['maxlength'])
 			{
@@ -105,7 +102,6 @@ class etemplate_widget_textbox extends etemplate_widget
 						self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value)/*." !preg_match('$this->attrs[preg]', '$value')"*/,'');
 						break;
 				}
-				$ok = false;
 			}
 			elseif ($this->type == 'integer' || $this->type == 'float')	// cast int and float and check range
 			{
@@ -117,19 +113,17 @@ class etemplate_widget_textbox extends etemplate_widget
 					{
 						self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$this->attrs['min']),'');
 						$value = $this->type == 'integer' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
-						$ok = false;
 					}
 					if (!empty($this->attrs['max']) && $value > $this->attrs['max'])
 					{
 						self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$this->attrs['max']),'');
 						$value = $this->type == 'integer' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
-						$ok = false;
 					}
 				}
 			}
 			$valid = $value;
+			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
 		}
-		return parent::validate($content, $validated, $cname) && $ok;
 	}
 }
 etemplate_widget::registerWidget('etemplate_widget_textbox', array('textbox','int','integer','float','passwd','hidden','colorpicker'));

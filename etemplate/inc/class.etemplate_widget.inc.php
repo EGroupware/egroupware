@@ -263,6 +263,8 @@ class etemplate_widget
 				$class_name = 'etemplate_widget';
 			}
 		}
+		//error_log(__METHOD__."('$type', ..., '$id') using $class_name");
+
 		// currently only overlays can contain templates, other widgets can only reference to templates via id
 		if ($type == 'template' && $id && ($template = etemplate_widget_template::instance($id)))
 		{
@@ -296,23 +298,23 @@ class etemplate_widget
 	}
 
 	/**
-	 * Validate input
+	 * Run a given method on all children
 	 *
-	 * Default implementation only calls validate on it's children
+	 * Default implementation only calls method on itself and run on all children
 	 *
-	 * @param array $content
-	 * @param array &$validated=array() validated content
-	 * @param string $cname='' current namespace
-	 * @return boolean true if no validation error, false otherwise
+	 * @param string $method_name
+	 * @param array $params=array('') parameter(s) first parameter has to be the cname!
 	 */
-	public function validate(array $content, &$validated=array(), $cname = '')
+	public function run($method_name, $params=array(''))
 	{
-		$ok = true;
+		if (method_exists($this, $method_name))
+		{
+			call_user_func_array(array($this, $method_name), $params);
+		}
 		foreach($this->children as $child)
 		{
-			$ok = $child->validate($content, $validated, $cname) && $ok;
+			$child->run($method_name, $params);
 		}
-		return $ok;
 	}
 
 	/**
@@ -435,8 +437,7 @@ class etemplate_widget
 		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
 			isset(self::$request->readonlys['__ALL__']) && self::$request->readonlys[$form_name] !== false;
 
-		error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name' returning ".array2string($readonly));
-
+		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name' returning ".array2string($readonly));
 		return $readonly;
 	}
 	/**
@@ -523,20 +524,19 @@ class etemplate_widget_named extends etemplate_widget
 	);
 
 	/**
-	 * Validate input
+	 * Run a given method on all children
 	 *
-	 * Reimplemented because grids can have an own namespace
+	 * Reimplemented because grids and boxes can have an own namespace
 	 *
-	 * @param array $content
-	 * @param array &$validated=array() validated content
-	 * @param string $cname='' current namespace
-	 * @return boolean true if no validation error, false otherwise
+	 * @param string $method_name
+	 * @param array $params=array('') parameter(s) first parameter has to be cname!
 	 */
-	public function validate(array $content, &$validated=array(), $cname = '')
+	public function run($method_name, $params=array(''))
 	{
+		$cname =& $params[0];
 		if ($this->id) $cname = self::form_name($cname, $this->id);
 
-		return parent::validate($content, $validated, $cname);
+		parent::run($method_name, $params);
 	}
 }
 // register class for layout widgets, which can have an own namespace

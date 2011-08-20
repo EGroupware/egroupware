@@ -107,7 +107,7 @@ class etemplate_widget_template extends etemplate_widget
 	}
 
 	/**
-	 * Validate input
+	 * Run method on all children
 	 *
 	 * Reimplemented because templates can have an own namespace specified in attrs[content], NOT id!
 	 *
@@ -117,11 +117,12 @@ class etemplate_widget_template extends etemplate_widget
 	 * @return boolean true if no validation error, false otherwise
 	 * @todo handle template references containing content in id, eg. id="edit.$cont[something]"
 	 */
-	public function validate(array $content, &$validated=array(), $cname = '')
+	public function run($method_name, $params=array(''))
 	{
+		$cname =& $params[0];
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content']);
 
-		return parent::validate($content, $validated, $cname);
+		parent::run($method_name, $params);
 	}
 }
 
