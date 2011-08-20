@@ -20,7 +20,7 @@
 	et2_description;
 	et2_textbox;
 	et2_number;
-//	et2_selectbox;
+	et2_selectbox;
 	et2_checkbox;
 	et2_radiobox;
 	et2_styles;

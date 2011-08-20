@@ -17,9 +17,6 @@
 	et2_inputWidget;
 */
 
-/**
- * Class which implements the "menulist" XET-Tag
- */ 
 var et2_selectbox = et2_inputWidget.extend({
 
 	attributes: {
@@ -52,25 +49,6 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.id = "";
 
 		this.createInputWidget();
-	},
-
-	/**
-	 * Override load to be able to handle menupopup tag inside of menulist
-	 */
-	loadFromXML: function(_node) {
-		var menupopupElems = et2_directChildrenByTagName(_node, "menupopup");
-		if(menupopupElems.length == 1) {
-			this.loadAttributes(menupopupElems[0].attributes);
-		} else {
-			this._super.apply(this,arguments);
-		}
-
-		// Legacy options could have row count or empty label in first slot
-		if(typeof this.rows == "string" && isNaN(this.rows)) {
-			this.set_empty_label(this.rows);
-			this.set_rows(1);
-		}
-		if(this.rows > 1) this.set_multiselect(true);
 	},
 
 	createInputWidget: function() {
@@ -134,6 +112,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			}
 		}
 	},
+
 	set_rows: function(_rows) {
 		if (_rows != this.rows)
 		{
@@ -141,6 +120,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			this.input.attr("size",this.rows);
 		}
 	},
+
 	set_empty_label: function(_label) {
 		if(_label != this.empty_label) {
 			this.empty_label = _label;
@@ -149,5 +129,34 @@ var et2_selectbox = et2_inputWidget.extend({
 	}
 });
 
-et2_register_widget(et2_selectbox, ["menulist","listbox"]);
+et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat", "select-account"]);
+
+
+/**
+ * Class which just implements the menulist container
+ */ 
+var et2_menulist = et2_DOMWidget.extend({
+
+	createNamespace: true,
+
+	init: function() {
+		this._super.apply(this, arguments);
+
+		this.supportedWidgetClasses = [et2_selectbox];
+	},
+
+	// Just pass the parent DOM node through
+	getDOMNode: function(_sender) {
+		if (_sender != this._parent && _sender != this)
+		{
+			return this._parent.getDOMNode(this);
+		}
+
+		return null;
+	}
+
+});
+
+et2_register_widget(et2_menulist, ["menulist"]);
+
 

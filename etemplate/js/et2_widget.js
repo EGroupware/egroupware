@@ -497,7 +497,7 @@ var et2_widget = Class.extend({
 			}
 
 			// Create the new element
-			this.createElementFromNode(node, widgetType);
+			this.createElementFromNode(node);
 		}
 	},
 
