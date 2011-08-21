@@ -13,6 +13,7 @@
 
 // include only widgets which can't be autoloaded (or contain sub-widgets which cant)
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc.php';
+require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_grid.inc.php';
 
 /**
  * eTemplate widget baseclass
