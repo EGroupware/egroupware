@@ -29,6 +29,10 @@ if (!isset($GLOBALS['egw_info']))
  * - main server methods like read, exec
  * -
  *
+ * Not longer available methods:
+ * - set_(row|column)_attributes modifies template on run-time, was only used internally by etemplate itself
+ * - disable_(row|column) dto.
+ *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
 class etemplate_new extends etemplate_widget_template
@@ -288,93 +292,6 @@ class etemplate_new extends etemplate_widget_template
 	public function disable_cells($name,$disabled=True)
 	{
 		return $this->set_cell_attribute($name,'disabled',$disabled);
-	}
-
-	/**
-	 * set one or more attibutes for row $n
-	 *
-	 * @param int $n numerical row-number starting with 1 (!)
-	 * @param string $height percent or pixel or '' for no height
-	 * @param string $class name of css class (without the leading '.') or '' for no class
-	 * @param string $valign alignment (top,middle,bottom) or '' for none
-	 * @param boolean $disabled True or expression or False to disable or enable the row (Only the number 0 means dont change the attribute !!!)
-	 * @param string $path='/0' default is the first widget in the tree of children
-	 * @return false if $path is no grid or array(height,class,valign,disabled) otherwise
-	 */
-	public function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0,$path='/0')
-	{
-		throw new egw_exception_assertion_failed('Not yet implemented!');
-
-		$grid =& $this->get_widget_by_path($path);
-		if (is_null($grid) || $grid['type'] != 'grid') return false;
-		$grid_attr =& $grid['data'][0];
-
-		list($old_height,$old_disabled) = explode(',',$grid_attr["h$n"]);
-		$disabled = $disabled !== 0 ? $disabled : $old_disabled;
-		$grid_attr["h$n"] = ($height !== 0 ? $height : $old_height).
-			($disabled ? ','.$disabled : '');
-		list($old_class,$old_valign) = explode(',',$grid_attr["c$n"]);
-		$valign = $valign !== 0 ? $valign : $old_valign;
-		$grid_attr["c$n"] = ($class !== 0 ? $class : $old_class).
-			($valign ? ','.$valign : '');
-
-		list($height,$disabled) = explode(',',$grid_attr["h$n"]);
-		list($class,$valign) = explode(',',$grid_attr["c$n"]);
-		return array($height,$class,$valign,$disabled);
-	}
-
-	/**
-	 * disables row $n
-	 *
-	 * @param int $n numerical row-number starting with 1 (!)
-	 * @param boolean $enable=false can be used to re-enable a row if set to True
-	 * @param string $path='/0' default is the first widget in the tree of children
-	 */
-	public function disable_row($n,$enable=False,$path='/0')
-	{
-		$this->set_row_attributes($n,0,0,0,!$enable,$path);
-	}
-
-	/**
-	 * set one or more attibutes for column $c
-	 *
-	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
-	 * @param string $width percent or pixel or '' for no height
-	 * @param mixed $disabled=0 True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
-	 * @param string $path='/0' default is the first widget in the tree of children
-	 * @return false if $path specifies no grid or array(width,disabled) otherwise
-	 */
-	public function set_column_attributes($c,$width=0,$disabled=0,$path='/0')
-	{
-		throw new egw_exception_assertion_failed('Not yet implemented!');
-
-		if (is_numeric($c))
-		{
-			$c = $this->num2chrs($c);
-		}
-		$grid =& $this->get_widget_by_path($path);
-		if (is_null($grid) || $grid['type'] != 'grid') return false;
-		$grid_attr =& $grid['data'][0];
-
-		list($old_width,$old_disabled) = explode(',',$grid_attr[$c]);
-		$disabled = $disabled !== 0 ? $disabled : $old_disabled;
-		$grid_attr[$c] = ($width !== 0 ? $width : $old_width).
-			($disabled ? ','.$disabled : '');
-
-		//echo "set_column_attributes('$c',,'$path'): ".$grid_attr[$c]."</p>\n"; _debug_array($grid_attr);
-		return explode(',',$grid_attr[$c]);
-	}
-
-	/**
-	 * disables column $c
-	 *
-	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
-	 * @param boolean $enable can be used to re-enable a column if set to True
-	 * @param string $path='/0' default is the first widget in the tree of children
-	 */
-	public function disable_column($c,$enable=False,$path='/0')
-	{
-		$this->set_column_attributes($c,0,!$enable,$path);
 	}
 
 	/**
