@@ -46,8 +46,8 @@ if (!count(translation::$lang_arr))
 
 
 echo '
-if (typeof egw_lang == "undefined") egw_lang = {};
-egw_lang.'.$_GET['app'].' = '.json_encode(translation::$lang_arr);
+if (typeof window.egw_lang == "undefined") window.egw_lang = {};
+$j.extend(window.egw_lang, '.json_encode(translation::$lang_arr).');';
 
 // Content-Lenght header is important, otherwise browsers dont cache!
 Header('Content-Length: '.ob_get_length());
