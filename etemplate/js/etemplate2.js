@@ -26,6 +26,7 @@
 	et2_styles;
 	et2_html;
 	et2_tabs;
+	et2_hrule;
 
 	// Requirements for the etemplate2 object
 	et2_xml;

@@ -14,7 +14,9 @@
 "use strict";
 
 /*egw:uses
+	lib/tooltip;
 	jquery.jquery;
+	et2_DOMWidget;
 	et2_inputWidget;
 */
 
@@ -40,7 +42,10 @@ var et2_selectbox = et2_inputWidget.extend({
 			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''"
 		},
 		"select_options": {
-			"ignore": true // Just include "select_options" here to have it copied from the parseArrayMgrAttrs to the options-object
+			"type": "any",
+			"name": "Select options",
+			"default": {},
+			"description": "Internaly used to hold the select options."
 		}
 	},
 
@@ -49,10 +54,16 @@ var et2_selectbox = et2_inputWidget.extend({
 	init: function(_parent) {
 		this._super.apply(this, arguments);
 
-		// This widget allows no other widgets inside of it
-		this.supportedWidgetClasses = [];
+		// Only allow options inside this element
+		this.supportedWidgetClasses = [et2_option];
 
 		this.createInputWidget();
+	},
+
+	destroy: function() {
+		this._super.apply(this, arguments);
+
+		this.input = null;
 	},
 
 	parseArrayMgrAttrs: function(_attrs) {
@@ -96,16 +107,22 @@ var et2_selectbox = et2_inputWidget.extend({
 				this.empty_label);
 		}
 
-		// Add the select_options
-		for(var key in this.options.select_options)
-		{
-			this._appendOptionElement(key, this.options.select_options[key]);
-		}
-
 		// Set multiselect
 		if(this.options.multiselect)
 		{
 			this.input.attr("multiple", "multiple");
+		}
+	},
+
+	/**
+	 * The set_select_optons function is added, as the select options have to be
+	 * added after the "option"-widgets were added to selectbox.
+	 */
+	set_select_options: function(_options) {
+		// Add the select_options
+		for (var key in _options)
+		{
+			this._appendOptionElement(key, _options[key]);
 		}
 	}
 
@@ -113,6 +130,55 @@ var et2_selectbox = et2_inputWidget.extend({
 
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
 	"select-account"]);
+
+/**
+ * Widget class which represents a single option inside a selectbox
+ */
+var et2_option = et2_baseWidget.extend({
+
+	attributes: {
+		"value": {
+			"name": "Value",
+			"type": "string",
+			"description": "Value which is sent back to the server when this entry is selected."
+		},
+		"width": {
+			"ignore": true
+		},
+		"height": {
+			"ignore": true
+		},
+		"align": {
+			"ignore": true
+		}
+	},
+
+	init: function() {
+		this._super.apply(this, arguments);
+
+		// Allow no other widgets inside of this one.
+		this.supportedWidgetClasses = [];
+
+		this.option = $j(document.createElement("option"))
+			.attr("value", this.options.value);
+
+		this.setDOMNode(this.option[0]);
+	},
+
+	destroy: function() {
+		this._super.apply(this, arguments);
+
+		this.option = null;
+	},
+
+	loadContent: function(_data) {
+		this.option.text(_data);
+	}
+
+});
+
+et2_register_widget(et2_option, ["option"]);
+
 
 /**
  * Class which just implements the menulist container

@@ -63,9 +63,12 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		}
 
 		// Submit the form
-		this.clicked = true;
-		this.getInstanceManager().submit();
-		this.clicked = false;
+		if (this._type != "buttononly")
+		{
+			this.clicked = true;
+			this.getInstanceManager().submit();
+			this.clicked = false;
+		}
 	},
 
 	set_label: function(_value) {
@@ -105,5 +108,5 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 
 });
 
-et2_register_widget(et2_button, ["button"]);
+et2_register_widget(et2_button, ["button", "buttononly"]);
 
