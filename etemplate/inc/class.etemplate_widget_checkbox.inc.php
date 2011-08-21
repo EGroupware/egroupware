@@ -23,12 +23,16 @@ class etemplate_widget_button extends etemplate_widget
 	 *
 	 * @var string|array
 	 */
-	protected $legacy_options = 'set_val,unset_val,ro_true,ro_false';
+	protected $legacy_options = array(
+		'checkbox' => 'set_val,unset_val,ro_true,ro_false',
+		'radio' => 'set_val,ro_true,ro_false',
+	);
 
 	/**
 	 * Validate input
 	 *
 	 * In case of multiple checkboxes using the same name ending in [], each widget only validates it's own value!
+	 * Same is true for the radio buttons of a radio-group sharing the same name.
 	 *
 	 * @param string $cname current namespace
 	 * @param array $content
@@ -39,7 +43,7 @@ class etemplate_widget_button extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (($multiple = substr($form_name, -2) == '[]'))
+		if (($multiple = substr($form_name, -2) == '[]') && $this->type == 'checkbox')
 		{
 			$form_name = substr($form_name, 0, -2);
 		}
@@ -56,8 +60,8 @@ class etemplate_widget_button extends etemplate_widget
 			// defaults for set and unset values
 			if (!$this->attrs['set_val'] && !$this->attrs['unset_val'])
 			{
-				$this->attrs['set_val'] = true;
-				$this->attrs['unset_val'] = false;
+				$this->attrs['set_val'] = 1;
+				$this->attrs['unset_val'] = 0;
 			}
 			if (in_array((string)$this->attrs['set_value'], (array)$value))
 			{
@@ -70,6 +74,10 @@ class etemplate_widget_button extends etemplate_widget
 				{
 					$valid = $this->attrs['set_val'];
 				}
+			}
+			elseif ($this->type == 'radio')
+			{
+				if (!isset($valid)) $valid = '';	// do not overwrite value of an other radio-button of the same group (identical name)!
 			}
 			else	// if checkbox is not checked, html returns nothing: eTemplate returns unset_val (default false)
 			{
@@ -86,3 +94,4 @@ class etemplate_widget_button extends etemplate_widget
 		}
 	}
 }
+etemplate_widget::registerWidget('etemplate_widget_checkbox', array('checkbox', 'radio'));
