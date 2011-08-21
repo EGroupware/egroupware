@@ -161,10 +161,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		}
 		if (!$no_lang)
 		{
-			foreach($options as $value => &$label)
-			{
-				$label = lang($label);
-			}
+			$options = self::translateOptions($options);
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
 		return $options;
@@ -567,20 +564,32 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 		if (!$no_lang)
 		{
-			foreach($options as $value => &$label)
-			{
-				if (!is_array($label))
-				{
-					$label = lang($label);
-				}
-				else
-				{
-					$label['label'] = lang($label['label']);
-					if (isset($label['title'])) $label['title'] = lang($label['title']);
-				}
-			}
+			$options = self::translateOptions($options);
 		}
 		//error_log(__METHOD__."('$widget_type', '$legacy_options', ...) returning ".array2string($options));
+		return $options;
+	}
+
+	/**
+	 * Translate options incl. optional title (label is an array with values for keys 'label' and optionally 'title'
+	 *
+	 * @param array $options
+	 * @return $options
+	 */
+	public static function translateOptions(array $options)
+	{
+		foreach($options as $value => &$label)
+		{
+			if (!is_array($label))
+			{
+				$label = lang($label);
+			}
+			else
+			{
+				$label['label'] = lang($label['label']);
+				if (isset($label['title'])) $label['title'] = lang($label['title']);
+			}
+		}
 		return $options;
 	}
 
