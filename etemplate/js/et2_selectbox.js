@@ -49,6 +49,9 @@ var et2_selectbox = et2_inputWidget.extend({
 	init: function(_parent) {
 		this._super.apply(this, arguments);
 
+		// This widget allows no other widgets inside of it
+		this.supportedWidgetClasses = [];
+
 		this.createInputWidget();
 	},
 
