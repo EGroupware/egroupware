@@ -114,15 +114,15 @@ class etemplate_widget_template extends etemplate_widget
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 * @param string $cname='' current namespace
-	 * @return boolean true if no validation error, false otherwise
+	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 * @todo handle template references containing content in id, eg. id="edit.$cont[something]"
 	 */
-	public function run($method_name, $params=array(''))
+	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content']);
 
-		parent::run($method_name, $params);
+		parent::run($method_name, $params, $respect_disabled);
 	}
 }
 

@@ -179,7 +179,7 @@ class etemplate_new extends etemplate_widget_template
 			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
 		}
 		$validated = array();
-		$template->run('validate', array('', $content, &$validated));
+		$template->run('validate', array('', $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
 		if (self::validation_errors(self::$request->ignore_validation))
 		{
 			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));

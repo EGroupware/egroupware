@@ -304,17 +304,165 @@ class etemplate_widget
 	 *
 	 * @param string $method_name
 	 * @param array $params=array('') parameter(s) first parameter has to be the cname!
+	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
-	public function run($method_name, $params=array(''))
+	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
+		if ($respect_disabled && ($disabled = $this->attrs['disabled']))
+		{
+			// check if disabled contains @ or !
+			$cname = $params[0];
+			$disabled = self::check_disabled($disabled, $cname ? self::get_array(self::$request->content, $cname) : self::$request->content);
+			if ($disabled)
+			{
+				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
+				return;
+			}
+		}
 		if (method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
 		}
 		foreach($this->children as $child)
 		{
-			$child->run($method_name, $params);
+			$child->run($method_name, $params, $respect_disabled);
 		}
+	}
+
+	/**
+	 * Checks if a grid row or column is disabled
+	 *
+	 * Expression: [!][@]val[=[@]check]
+	 * Parts in square brackets are optional, a ! negates the expression, @val evaluates to $content['val']
+	 * if no =check is given all set non-empty and non-zero strings are true (standard php behavior)
+	 *
+	 * @param string $disabled expression to check, eg. "!@var" for !$content['var']
+	 * @param array $content the content-array in the context of the grid
+	 * @param int $row=null to be able to use $row or $row_content in value of checks
+	 * @param int $c=null to be able to use $row or $row_content in value of checks
+	 * @return boolean true if the row/col is disabled or false if not
+	 */
+	protected static function check_disabled($disabled,$content,$row=null,$c=null)
+	{
+		if ($not = $disabled[0] == '!')
+		{
+			$disabled = substr($disabled,1);
+		}
+		list($val,$check_val) = $vals = explode('=',$disabled);
+
+		// use expand_name to be able to use @ or $
+		$val = self::expand_name($val,$c,$row,'','',$content);
+		$check_val = self::expand_name($check_val,$c,$row,'','',$content);
+		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
+		if ($not) $result = !$result;
+
+		//error_log(__METHOD__."('".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False'));
+		return $result;
+	}
+
+	/**
+	 * Regular expression matching a PHP variable in a string, eg.
+	 *
+	 *	"replies[$row][reply_message]" should only match $row
+	 *	"delete[$row_cont[path]]" should match $row_cont[path]
+	 */
+	const PHP_VAR_PREG = '\$[A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*';
+
+	/**
+	 * allows a few variables (eg. row-number) to be used in field-names
+	 *
+	 * This is mainly used for autorepeat, but other use is possible.
+	 * You need to be aware of the rules PHP uses to expand vars in strings, a name
+	 * of "Row$row[length]" will expand to 'Row' as $row is scalar, you need to use
+	 * "Row${row}[length]" instead. Only one indirection is allowd in a string by php !!!
+	 * Out of that reason we have now the variable $row_cont, which is $cont[$row] too.
+	 * Attention !!!
+	 * Using only number as index in field-names causes a lot trouble, as depending
+	 * on the variable type (which php determines itself) you used filling and later
+	 * accessing the array it can by the index or the key of an array element.
+	 * To make it short and clear, use "Row$row" or "$col$row" not "$row" or "$row$col" !!!
+	 *
+	 * @param string $name the name to expand
+	 * @param int $c is the column index starting with 0 (if you have row-headers, data-cells start at 1)
+	 * @param int $row is the row number starting with 0 (if you have col-headers, data-cells start at 1)
+	 * @param int $c_ is the value of the previous template-inclusion,
+	 * 	eg. the column-headers in the eTemplate-editor are templates itself,
+	 * 	to show the column-name in the header you can not use $col as it will
+	 * 	be constant as it is always the same col in the header-template,
+	 * 	what you want is the value of the previous template-inclusion.
+	 * @param int $row_ is the value of the previous template-inclusion,
+	 * @param array $cont content of the template, you might use it to generate button-names with id values in it:
+	 * 	"del[$cont[id]]" expands to "del[123]" if $cont = array('id' => 123)
+	 * @return string the expanded name
+	 */
+	protected static function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
+	{
+		$is_index_in_content = $name[0] == '@';
+		if (($pos_var=strpos($name,'$')) !== false)
+		{
+			if (!$cont)
+			{
+				$cont = array();
+			}
+			if (!is_numeric($c)) $c = boetemplate::chrs2num($c);
+			$col = boetemplate::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+			$col_ = boetemplate::num2chrs($c_-1);
+			$row_cont = $cont[$row];
+			$col_row_cont = $cont[$col.$row];
+
+			// check if name is enclosed in single quotes as argument eg. to an event handler or
+			// variable name is contained in quotes and curly brackets, eg. "'{$cont[nm][path]}'" or
+			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
+			if (in_array($name[$pos_var-1],array('[',"'",'{')) && preg_match('/[\'\[]{?('.self::PHP_VAR_PREG.')}?[\'\]]+/',$name,$matches))
+			{
+				eval('$value = '.$matches[1].';');
+				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
+				{
+					foreach($value as &$val)
+					{
+						$val = "'".str_replace(array("'",'"'),array('\\\'','&quot;'),$val)."'";
+					}
+					$value = '[ '.implode(', ',$value).' ]';
+					$name = str_replace("'".$matches[1]."'",$value,$name);
+				}
+				else
+				{
+					$value = str_replace(array("'",'"'),array('\\\'','&quot;'),$value);
+					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
+				}
+			}
+			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
+			if ($name[$pos_var-1] == '=' && preg_match('/[&?]([A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*)=('.self::PHP_VAR_PREG.')/',$name,$matches))
+			{
+				eval('$value = '.$matches[3].';');
+				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
+				{
+					foreach($value as &$val)
+					{
+						$val = str_replace('&',urlencode('&'),$val);
+					}
+					$name = str_replace($matches[3],implode('&'.$matches[1].'=',$value),$name);
+				}
+				else
+				{
+					$value = str_replace('&',urlencode('&'),$value);
+					$name = str_replace($matches[3],$value,$name);
+				}
+			}
+			eval('$name = "'.str_replace('"','\\"',$name).'";');
+		}
+		if ($is_index_in_content)
+		{
+			if ($name[1] == '@')
+			{
+				$name = self::get_array(self::$request->content,substr($name,2));
+			}
+			else
+			{
+				$name = self::get_array($cont,substr($name,1));
+			}
+		}
+		return $name;
 	}
 
 	/**
@@ -506,9 +654,9 @@ class etemplate_widget
 }
 
 /**
- * Named widget having an own namespace: grid, *box
+ * *box widgets having an own namespace
  */
-class etemplate_widget_named extends etemplate_widget
+class etemplate_widget_box extends etemplate_widget
 {
 	/**
 	 * (Array of) comma-separated list of legacy options to automatically replace when parsing with set_attrs
@@ -520,7 +668,6 @@ class etemplate_widget_named extends etemplate_widget
 		'hbox' => 'cellpadding,cellspacing,keep',
 		'vbox' => 'cellpadding,cellspacing,keep',
 		'groupbox' => 'cellpadding,cellspacing,keep',
-		'grid' => null,	// not used
 	);
 
 	/**
@@ -530,17 +677,18 @@ class etemplate_widget_named extends etemplate_widget
 	 *
 	 * @param string $method_name
 	 * @param array $params=array('') parameter(s) first parameter has to be cname!
+	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
-	public function run($method_name, $params=array(''))
+	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
 		if ($this->id) $cname = self::form_name($cname, $this->id);
 
-		parent::run($method_name, $params);
+		parent::run($method_name, $params, $respect_disabled);
 	}
 }
 // register class for layout widgets, which can have an own namespace
-etemplate_widget::registerWidget('etemplate_widget_named', array('grid', 'box', 'hbox', 'vbox', 'groupbox'));
+etemplate_widget::registerWidget('etemplate_widget_box', array('box', 'hbox', 'vbox', 'groupbox'));
 
 /**
  * Describtion widget
