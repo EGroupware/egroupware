@@ -15,11 +15,11 @@
 /**
  * Syntax for including JS files form others
  * -----------------------------------------
- * 
+ *
  * Write a comment starting with "/*egw:uses". A linebreak has to follow.
  * Then write all files which have to be included seperated by ";". A JS file
  * include may have the following syntax:
- * 
+ *
  * 1) File in the same directory as the current file. Simply write the filename
  *    without ".js". Example:
  *    	egw_action;
@@ -30,9 +30,9 @@
  *    	stylite.filemanager.filemanager; // Loads /stylite/filemanager/filemanager.js
  * 3) Absolute file paths starting with "/". Example:
  *    	/phpgwapi/js/jquery/jquery-ui.js;
-* 
+*
  * Comments can be started with "//".
- * 
+ *
  * Complete example of such an uses-clause:
  * 	/*egw:uses
  * 		egw_action_common;
@@ -263,7 +263,7 @@ class egw_include_mgr
 	 */
 	private function translate_params($package, $file, $app)
 	{
-		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
+		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.(parse_url($path = $package, PHP_URL_PATH))) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
