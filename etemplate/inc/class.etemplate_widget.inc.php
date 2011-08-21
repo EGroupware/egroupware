@@ -19,10 +19,6 @@ require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_grid.inc.ph
  * eTemplate widget baseclass
  *
  * @todo text content, eg. the styles of a template are not parsed, thought they are not used here either
- * @todo validation: disabled attribute
- * - widget
- * - grid row
- * - grid column
  */
 class etemplate_widget
 {
@@ -692,7 +688,7 @@ class etemplate_widget_box extends etemplate_widget
 etemplate_widget::registerWidget('etemplate_widget_box', array('box', 'hbox', 'vbox', 'groupbox'));
 
 /**
- * Describtion widget
+ * Description widget
  *
  * Reimplemented to set legacy options
  */
