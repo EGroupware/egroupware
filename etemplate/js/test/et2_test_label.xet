@@ -1,0 +1,8 @@
+<overlay>
+	<vbox>
+		<textbox label="Blub" />
+		<textbox label="This %s is a textbox" />
+	</vbox>
+</overlay>
+
+
