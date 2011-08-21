@@ -6,6 +6,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Nathan Gray
+ * @author Andreas Stöckel
  * @copyright Nathan Gray 2011
  * @version $Id$
  */
@@ -37,6 +38,9 @@ var et2_selectbox = et2_inputWidget.extend({
 			"type": "string",
 			"default": "",
 			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''"
+		},
+		"select_options": {
+			"ignore": true // Just include "select_options" here to have it copied from the parseArrayMgrAttrs to the options-object
 		}
 	},
 
@@ -45,99 +49,72 @@ var et2_selectbox = et2_inputWidget.extend({
 	init: function(_parent) {
 		this._super.apply(this, arguments);
 
-		this.input = null;
-		this.id = "";
-
 		this.createInputWidget();
 	},
 
-	createInputWidget: function() {
-		if(this.type == "menupopup") {
-			return;
-		} else {
-			this.input = $j(document.createElement("select"));
+	parseArrayMgrAttrs: function(_attrs) {
+		// Try to find the options inside the "sel-options" array
+		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
 
-			this.input.addClass("et2_selectbox");
+		// Check whether the options entry was found, if not read it from the
+		// content array.
+		if (_attrs["select_options"] == null)
+		{
+			_attrs["select_options"] = this.getArrayMgr('content')
+				.getValueForID("options-" + this.id)
 		}
+
+		// Default to an empty object
+		if (_attrs["select_options"] == null)
+		{
+			_attrs["select_options"] = {};
+		}
+	},
+
+	_appendOptionElement: function(_value, _label) {
+		$j(document.createElement("option"))
+			.attr("value", _value)
+			.text(_label)
+			.appendTo(this.input);
+	},
+
+	createInputWidget: function() {
+		// Create the base input widget
+		this.input = $j(document.createElement("select"))
+			.addClass("et2_selectbox")
+			.attr("size", this.options.rows);
 
 		this.setDOMNode(this.input[0]);
-	},
 
-	/**
-	 * Override parent to get the select options.
-	 * Can't get them before this, because the ID is not set when createInputWidget() is called.
-	 */
-	set_id: function() {
-		this._super.apply(this,arguments);
-
-		// Get select options from the manager(s)
-		var options = null;
-
-		// Check the sel_options (from managers)
-		this.set_select_options(null);
-	},
-
-	set_select_options: function(_options) {
-		if(_options == null) {
-			var mgr = this.getArrayMgr('sel_options');
-			if(mgr) {
-				_options = mgr.getValueForID(this.id);
-			}
-			if(_options == null) {
-				// Check in the content
-				var mgr = this.getArrayMgr('content');
-				if(mgr) {
-					_options = mgr.getValueForID('options-'+this.id);
-				}
-			}
-		}
-		this.input.children().remove();
-		if(this.empty_label) {
-			this.input.append("<option value=''" + ("" == this.getValue() ? "selected":"") +">"+this.empty_label+"</option>");
-		}
-		if(_options == null) return;
-		for(var key in _options) {
-			this.input.append("<option value='"+key+"'" + (key == this.getValue() ? "selected":"") +">"+_options[key]+"</option>");
-		}
-	},
-
-	set_multiselect: function(_value) {
-		if (_value != this.multiselect)
+		// Add the empty label
+		if(this.options.empty_label)
 		{
-			this.multiselect = _value;
-			if(this.multiselect) {
-				this.input.attr("multiple","multiple");
-			} else {
-				this.input.removeAttr("multiple");
-			}
+			this._appendOptionElement("" == this.getValue() ? "selected" : "",
+				this.empty_label);
 		}
-	},
 
-	set_rows: function(_rows) {
-		if (_rows != this.rows)
+		// Add the select_options
+		for(var key in this.options.select_options)
 		{
-			this.rows = _rows;
-			this.input.attr("size",this.rows);
+			this._appendOptionElement(key, this.options.select_options[key]);
 		}
-	},
 
-	set_empty_label: function(_label) {
-		if(_label != this.empty_label) {
-			this.empty_label = _label;
-			this.set_select_options(null);
+		// Set multiselect
+		if(this.options.multiselect)
+		{
+			this.input.attr("multiple", "multiple");
 		}
 	}
+
 });
 
-et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat", "select-account"]);
-
+et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
+	"select-account"]);
 
 /**
  * Class which just implements the menulist container
  */ 
 var et2_menulist = et2_DOMWidget.extend({
-
-	createNamespace: true,
 
 	init: function() {
 		this._super.apply(this, arguments);
