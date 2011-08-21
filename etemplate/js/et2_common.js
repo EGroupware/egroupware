@@ -145,9 +145,14 @@ function et2_checkType(_val, _type, _attr)
 	if (_type == "js")
 	{
 		// Handle the default case
-		if  (_val === null || _val instanceof Function)
+		if  (_val === null)
 		{
 			return null;
+		}
+
+		if (_val instanceof Function)
+		{
+			return _val;
 		}
 
 		// Create a new function containing the code
