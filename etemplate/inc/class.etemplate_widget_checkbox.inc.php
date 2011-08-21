@@ -16,7 +16,7 @@
  *
  * Multiple checkbox widgets can have the same name ending in [], in which case an array with the set_val's of the checked boxes get returned.
  */
-class etemplate_widget_button extends etemplate_widget
+class etemplate_widget_checkbox extends etemplate_widget
 {
 	/**
 	 * (Array of) comma-separated list of legacy options to automatically replace when parsing with set_attrs
