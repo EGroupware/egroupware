@@ -1,33 +1,35 @@
 <?xml version="1.0"?>
 <overlay>
 	<!-- Test without template -->
-	<description value="This is a label" id="label_value"/>
-	<textbox label="This is a text" id="text_value"/>
-	<textbox label="This is required text" id="text_value" required="true"/>
-	<int label="This is an integer" id="integer_value" min="5"/>
-	<textbox type="float" label="This is a float" id="float_value"/>
-	<textbox multiline="true" label="This is a text area" id="text_area_value" rows="3" cols="3"/>
-	<checkbox label="Checkbox %s here" id="checkbox_value"/>
-	<radio label="Radio" id="radio_value"/>
-	<buttononly label="Button" id="button_value"/>
-	<hrule label="HR"/>
-	<image label="Image" src="image_value"/>
-	<menulist>
-		<menupopup label="Selectbox" id="selectbox_value" options="No value">
-			<option value="1">Test 1</option>
-			<option value="2">Test 2</option>
-			<option value="3">Test 3</option>
-			<option value="4">Test 4</option>
-			<option value="5">Test 5</option>
-			<option value="6">Test 6</option>
-		</menupopup>
-	</menulist>
-	<listbox label="Multiselect" id="multiselect" rows="5">
-			<option value="1">Test 1</option>
-			<option value="2">Test 2</option>
-			<option value="3">Test 3</option>
-			<option value="4">Test 4</option>
-			<option value="5">Test 5</option>
-			<option value="6" statustext="This is the sixth option">Test 6</option>
-	</listbox>
+	<vbox>
+		<description value="This is a label" id="label_value"/>
+		<textbox label="This is a text" id="text_value"/>
+		<textbox label="This is required text" id="text_value" required="true"/>
+		<int label="This is an integer" id="integer_value" min="5"/>
+		<textbox type="float" label="This is a float" id="float_value"/>
+		<textbox multiline="true" label="This is a text area" id="text_area_value" rows="3" cols="3"/>
+		<checkbox label="Checkbox %s here" id="checkbox_value"/>
+		<radio label="Radio" id="radio_value"/>
+		<buttononly label="Button" id="button_value"/>
+		<hrule label="HR"/>
+		<image label="Image" src="image_value"/>
+		<menulist>
+			<menupopup label="Selectbox" id="selectbox_value" options="No value">
+				<option value="1">Test 1</option>
+				<option value="2">Test 2</option>
+				<option value="3">Test 3</option>
+				<option value="4">Test 4</option>
+				<option value="5">Test 5</option>
+				<option value="6">Test 6</option>
+			</menupopup>
+		</menulist>
+		<listbox label="Multiselect" id="multiselect" rows="5">
+				<option value="1">Test 1</option>
+				<option value="2">Test 2</option>
+				<option value="3">Test 3</option>
+				<option value="4">Test 4</option>
+				<option value="5">Test 5</option>
+				<option value="6" statustext="This is the sixth option">Test 6</option>
+		</listbox>
+	</vbox>
 </overlay>

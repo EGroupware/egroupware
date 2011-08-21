@@ -54,7 +54,16 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		this.node = null;
 		this.statustext = "";
 
+		this._labelContainer = null;
+		this._widgetPlaceholder = null;
+
 		this._tooltipElem = null;
+	},
+
+	destroy: function() {
+		this._super.apply(this, arguments);
+
+		this.node = null;
 	},
 
 	detatchFromDOM: function() {
@@ -69,7 +78,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 	},
 
 	attachToDOM: function() {
-		this._super.apply(this,arguments);
+		this._super.apply(this, arguments);
 
 		// Update the statustext
 		this.set_statustext(this.statustext);

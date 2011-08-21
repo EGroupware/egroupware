@@ -66,7 +66,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.input = null;
 	},
 
-	parseArrayMgrAttrs: function(_attrs) {
+	transformAttributes: function(_attrs) {
 		// Try to find the options inside the "sel-options" array
 		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
 
@@ -193,7 +193,7 @@ var et2_menulist = et2_DOMWidget.extend({
 
 	// Just pass the parent DOM node through
 	getDOMNode: function(_sender) {
-		if (_sender != this._parent && _sender != this)
+		if (_sender != this)
 		{
 			return this._parent.getDOMNode(this);
 		}

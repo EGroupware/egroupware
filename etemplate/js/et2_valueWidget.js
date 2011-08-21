@@ -33,7 +33,7 @@ var et2_valueWidget = et2_baseWidget.extend({
 		}
 	},
 
-	parseArrayMgrAttrs: function(_attrs) {
+	transformAttributes: function(_attrs) {
 		this._super.call(this, arguments);
 
 		if (this.id != "")

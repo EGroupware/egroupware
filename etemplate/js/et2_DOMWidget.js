@@ -160,6 +160,10 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		return false;
 	},
 
+	isAttached: function() {
+		return this.parentNode != null;
+	},
+
 	/**
 	 * Set the parent DOM node of this element. If another parent node is already
 	 * set, this widget removes itself from the DOM tree

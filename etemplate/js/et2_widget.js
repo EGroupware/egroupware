@@ -145,7 +145,7 @@ var et2_widget = Class.extend({
 
 			// Add all attributes hidden in the content arrays to the attributes
 			// parameter
-			this.parseArrayMgrAttrs(_attrs);
+			this.transformAttributes(_attrs);
 		}
 
 		// Create a local copy of the options object
@@ -430,7 +430,7 @@ var et2_widget = Class.extend({
 		}
 	},
 
-	parseArrayMgrAttrs: function() {
+	transformAttributes: function() {
 	},
 
 	createElementFromNode: function(_node) {

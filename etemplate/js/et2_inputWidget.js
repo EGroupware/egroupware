@@ -59,13 +59,47 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables)."
 		}
 	},
+
 	init: function() {
 		this._super.apply(this, arguments);
 
 		this._oldValue = "";
+		this._labelContainer = null;
+		this._widgetPlaceholder = null;
+	},
+
+	destroy: function() {
+		this._super.apply(this, arguments);
+
+		this._labelContainer = null;
+		this._widgetPlaceholder = null;
 	},
 
 	attachToDOM: function() {
+		if (this._labelContainer)
+		{
+			// Get the DOM Node without the labelContainer - that's why null is
+			// passed here.
+			var node = this.getDOMNode(null);
+
+			if (node)
+			{
+				// Recreate the widget placeholder and return, as the set_label
+				// function will call attachToDOM again
+				if (!this._widgetPlaceholder)
+				{
+					this.set_label(this.label);
+					return;
+				}
+
+				// Insert the widget at the position of the placeholder
+				this._labelContainer.replaceChild(node, this._widgetPlaceholder);
+
+				// Set the widgetPlaceholder to null
+				this._widgetPlaceholder = null;
+			}
+		}
+
 		this._super.apply(this,arguments);
 		
 		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
@@ -110,13 +144,60 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		}
 	},
 
-	set_label: function(_label) {
-		if(_label != this.label)
+	set_label: function(_value) {
+		// Copy the given value
+		this.label = _value;
+
+		// Detach the current element from the DOM
+		var attached = this.isAttached();
+		if (attached)
 		{
-			this.label = (typeof _label == 'undefined' ? "" : _label);
-			var label = et2_csvSplit(_label, 2, '%s');
-			if(label[0]) $j(this.getInputNode()).before("<span class='et2_label'>"+label[0]+"</span>");
-			if(label[1]) $j(this.getInputNode()).after("<span class='et2_label'>"+label[1]+"</span>");
+			this.detatchFromDOM();
+		}
+
+		if (_value)
+		{
+			// Create the label container if it didn't exist yet
+			if (this._labelContainer == null)
+			{
+				this._labelContainer = document.createElement("span");
+			}
+
+			// Clear the label container.
+			for (;this._labelContainer.childNodes.length > 0;)
+			{
+				this._labelContainer.removeChild(this._labelContainer.childNodes[0]);
+			}
+
+			// Create the placeholder element
+			this._widgetPlaceholder = document.createElement("span");
+
+			// Split the label at the "%s"
+			var parts = et2_csvSplit(_value, 2, "%s");
+
+			// Create the content of the label container
+			for (var i = 0; i < parts.length; i++)
+			{
+				if (parts[i])
+				{
+					this._labelContainer.appendChild(document.createTextNode(parts[i]));
+				}
+				if (i == 0)
+				{
+					this._labelContainer.appendChild(this._widgetPlaceholder);
+				}
+			}
+		}
+		else
+		{
+			this._labelContainer = null;
+			this._widgetPlaceholder = null;
+		}
+
+		// Attach the current element to the DOM again
+		if (attached)
+		{
+			this.attachToDOM();
 		}
 	},
 
@@ -133,12 +214,21 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
 	},
 
-	get_value: function() {
-		return this.getValue();
+	getDOMNode: function(_sender) {
+		if (_sender == this && this._labelContainer)
+		{
+			return this._labelContainer;
+		}
+
+		return this._super.apply(this, arguments);
 	},
 
 	getInputNode: function() {
 		return this.node;
+	},
+
+	get_value: function() {
+		return this.getValue();
 	},
 
 	getValue: function() {
