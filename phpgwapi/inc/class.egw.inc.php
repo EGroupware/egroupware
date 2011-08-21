@@ -234,7 +234,7 @@ class egw extends egw_minimal
 			$this->template->set_root(EGW_APP_TPL);
 		}
 		// init the translation class, necessary as own wakeup would run before our's
-		translation::init();
+		translation::init(isset($GLOBALS['egw_info']['flags']['load_translations']) ? $GLOBALS['egw_info']['flags']['load_translations'] : true);
 
 		$this->unset_datetime();
 

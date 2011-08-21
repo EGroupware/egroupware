@@ -103,6 +103,15 @@ class etemplate_new extends etemplate_widget_template
 	{
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
+		// load translations
+		translation::add_app('etemplate');
+		foreach(translation::$loaded_apps as $app => $lang)
+		{
+			egw_framework::validate_file('/phpgwapi/lang.php', array(
+				'app' => $app,
+				'lang' => $lang,
+			));
+		}
 		// generate new etemplate request object
 		self::$request = etemplate_request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
