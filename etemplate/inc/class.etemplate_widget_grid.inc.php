@@ -64,7 +64,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 		}
 		foreach($this->children as $n => $child)
 		{
-			if ($type == 'row')
+			if ($this->type == 'row')
 			{
 				if (in_array($n, $columns_disabled))
 				{
