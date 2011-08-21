@@ -30,8 +30,9 @@ class etemplate_widget_htmlarea extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (self::get_array($content, $form_name) && !$this->is_readonly($cname))
+		if (!$this->is_readonly($cname))
 		{
+			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
 			$valid = html::purify($value);
