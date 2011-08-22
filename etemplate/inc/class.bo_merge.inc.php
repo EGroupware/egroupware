@@ -314,7 +314,7 @@ abstract class bo_merge
 		}
 
 		// check export-limit and fail if user tries to export more entries then allowed
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		if ($this->export_limit && !($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception) &&
 			count($ids) > (int)$this->export_limit)
 		{
@@ -337,10 +337,21 @@ abstract class bo_merge
 		return $content;
 	}
 
-	protected function apply_styles (&$content, $mimetype) {
+	protected function apply_styles (&$content, $mimetype)
+	{
+		if ($mimetype == 'application/xml' &&
+			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
+		{
+			$mso_application_progid = $matches[1];
+		}
+		else
+		{
+			$mso_application_progid = '';
+		}
+
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
-		switch($mimetype)
+		switch($mimetype.$mso_application_progid)
 		{
 			case 'application/vnd.oasis.opendocument.text':		// open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
@@ -370,12 +381,17 @@ abstract class bo_merge
 					'/<(ol|ul|table)(.*?)>/' => '</w:t></w:r></w:p><$1$2>',
 					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
 					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+/*
+					'/<(span)(.*?)>/' => "\n".'</w:t></w:r><$1$2>',
+					'/<\/(span)>/' => '</$1><w:r><w:t>'."\n",
+*/
 				);
 				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 //echo $content;die();
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
-				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/msoffice.xslt');
+				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
+				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/'.$xslt_file);
 				$xslt->importStyleSheet($doc);
 				break;
 		}
@@ -630,7 +646,7 @@ abstract class bo_merge
 
 			// Tags we can replace with the target document's version
 			$replace_tags = array();
-			switch($mimetype)
+			switch($mimetype.$mso_application_progid)
 			{
 				case 'application/vnd.oasis.opendocument.text':		// open office
 				case 'application/vnd.oasis.opendocument.spreadsheet':

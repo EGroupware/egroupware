@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+	xmlns:w="http://schemas.microsoft.com/office/word/2003/wordml" 
 	xmlns:str="http://exslt.org/strings"
 	extension-element-prefixes="str"
 >
+<!--	xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" -->
 	<xsl:output method="xml" omit-xml-declaration="yes"/>
 	<xsl:template name="rbga-to-hex">
 		<xsl:param name="rgba-val"/>
@@ -203,7 +204,7 @@ Breakers
 							<w:numId w:val="1"/>
 							<w:numFmt w:val="bullet"/>
 							<w:lvlJc w:val="left"/>
-							<w:lvlText w:val="·"/>
+							<w:lvlText w:val="&#xB7;"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</w:numPr>
@@ -224,10 +225,7 @@ Breakers
 				<w:rPr>
 					<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hAnsi="Symbol" w:hint="default"/>
 				</w:rPr>
-<!--
 				<w:t>&#xB7;	</w:t>
--->
-				<w:t>&#xB7;</w:t>
 				</xsl:otherwise>
 			</xsl:choose>
 			</w:r>
