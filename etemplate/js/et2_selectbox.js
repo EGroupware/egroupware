@@ -149,7 +149,10 @@ var et2_selectbox = et2_inputWidget.extend({
 });
 
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
-	"select-account", "select-percent"]);
+	"select-account", "select-percent", 'select-priority', 'select-access',
+	'select-country', 'select-state', 'select-year', 'select-month',
+	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
+	'select-lang', 'select-bool', 'select-timezone' ]);
 
 /**
  * Widget class which represents a single option inside a selectbox
