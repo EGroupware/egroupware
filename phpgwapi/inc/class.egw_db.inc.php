@@ -239,7 +239,7 @@ class egw_db
 		self::CAPABILITY_NAME_CASE        => 'upper',
 		self::CAPABILITY_CLIENT_ENCODING  => false,
 		self::CAPABILITY_CASE_INSENSITIV_LIKE => 'LIKE',
-		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => false,
+		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => true,
 	);
 
 	var $prepared_sql = array();	// sql is the index
