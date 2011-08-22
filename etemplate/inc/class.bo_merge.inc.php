@@ -556,7 +556,7 @@ abstract class bo_merge
 					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
+					return $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
 				case 'text/plain':
 					return $contentstart.implode("\r\n",$contentrep).$contentend;
 			}
@@ -1156,7 +1156,7 @@ abstract class bo_merge
 				}
 			}
 		}
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,

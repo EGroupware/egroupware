@@ -568,7 +568,7 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
-		$exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
 		{
 			$actions['export'] = array(

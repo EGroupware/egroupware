@@ -276,7 +276,7 @@ class nextmatch_widget
 		unset($value['rows']);
 		$extension_data += $value;
 
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
 			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']) &&
 			!(isset($GLOBALS['egw_info']['user']['apps']['admin']) || $limit_exception);
