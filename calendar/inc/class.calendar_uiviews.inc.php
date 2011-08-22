@@ -1497,9 +1497,8 @@ function open_edit(series)
 		static $tpl = False;
 		if (!$tpl)
 		{
-			$tpl = $GLOBALS['egw']->template;
+			$tpl = new Template(common::get_tpl_dir('calendar'));
 
-			$tpl->set_root($GLOBALS['egw']->common->get_tpl_dir('calendar'));
 			$tpl->set_file('event_widget_t','event_widget.tpl');
 			$tpl->set_block('event_widget_t','event_widget');
 			$tpl->set_block('event_widget_t','event_widget_wholeday_on_top');
@@ -1716,7 +1715,7 @@ function open_edit(series)
 		}
 
 		$prefix_icon = isset($event['prepend_icon']) ? $event['prepend_icon'] : '';
-		
+
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
 		// ATM we do not support whole day events or recurring events for dragdrop
