@@ -247,7 +247,7 @@ class egw_db
 		self::CAPABILITY_NAME_CASE        => 'upper',
 		self::CAPABILITY_CLIENT_ENCODING  => false,
 		self::CAPABILITY_CASE_INSENSITIV_LIKE => 'LIKE',
-		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => false,
+		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => true,
 		self::CAPABILITY_CAST_AS_VARCHAR   => 'CAST(%s AS varchar)',
 	);
 
