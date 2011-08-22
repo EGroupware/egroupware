@@ -47,16 +47,15 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		if (!_readonly)
 		{
 			this.btn = $j(document.createElement("button"))
-				.addClass("et2_button")
-				.click(this, function(e) {e.data.buttonClick()});
+				.addClass("et2_button");
 
 			this.setDOMNode(this.btn[0]);
 		}
 	},
 
-	buttonClick: function() {
+	click: function() {
 		// Execute the JS code connected to the event handler
-		if (this.onclick != null)
+		if (this.onclick)
 		{
 			if (!this.onclick())
 				return false;

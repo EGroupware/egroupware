@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <overlay>
-	<textbox id="test1" value="This is a single line textbox."/>
+	<textbox id="test1" value="This is a single line textbox." onchange="console.log('Buh!');"/>
 	<textbox id="test2" multiline="true" value="This is a multi line textbox."/>
 
 	<template id="testbox">

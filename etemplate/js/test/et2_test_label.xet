@@ -3,6 +3,7 @@
 		<textbox label="Blub" />
 		<textbox label="This %s is a textbox" />
 		<hbox><description label_for="testbox" value="This is a description tag for the textbox next to it."/><textbox id="testbox"/></hbox>
+		<description onclick="alert('You\'ve punched me!');" value="Click me!"/>
 	</vbox>
 </overlay>
 

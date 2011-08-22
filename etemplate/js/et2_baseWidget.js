@@ -43,6 +43,11 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 			"type": "string",
 			"default": "left",
 			"description": "Position of this element in the parent hbox"
+		},
+		"onclick": {
+			"name": "onclick",
+			"type": "js",
+			"description": "JS code which is executed when the element is clicked."
 		}
 	},
 
@@ -74,11 +79,25 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 			this._tooltipElem = null;
 		}
 
+		// Remove the binding to the click handler
+		if (this.node)
+		{
+			$j(this.node).unbind("click.et2_baseWidget");
+		}
+
 		this._super.apply(this, arguments);
 	},
 
 	attachToDOM: function() {
 		this._super.apply(this, arguments);
+
+		// Add the binding for the click handler
+		if (this.node)
+		{
+			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
+				return e.data.click(this);
+			});
+		}
 
 		// Update the statustext
 		this.set_statustext(this.statustext);
@@ -135,6 +154,15 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 				this._tooltipElem = elem;
 			}
 		}
+	},
+
+	click: function(_node) {
+		if (this.onclick)
+		{
+			return this.onclick.call(_node);
+		}
+
+		return true;
 	},
 
 	set_align: function(_value) {

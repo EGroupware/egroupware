@@ -57,6 +57,11 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"default": "",
 			"type": "string",
 			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables)."
+		},
+		"onchange": {
+			"name": "onchange",
+			"type": "js",
+			"description": "JS code which is executed when the value changes."
 		}
 	},
 
@@ -69,6 +74,12 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 	},
 
 	destroy: function() {
+		var node = this.getInputNode();
+		if (node)
+		{
+			$j(node).unbind("change.et2_inputWidget");
+		}
+
 		this._super.apply(this, arguments);
 
 		this._labelContainer = null;
@@ -100,6 +111,14 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			}
 		}
 
+		var node = this.getInputNode();
+		if (node)
+		{
+			$j(node).bind("change.et2_inputWidget", this, function(e) {
+				e.data.change(this);
+			});
+		}
+
 		this._super.apply(this,arguments);
 		
 		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
@@ -111,6 +130,13 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			$j(this.getInputNode()).data("validator").destroy();
 		}
 		this._super.apply(this,arguments);
+	},
+
+	change: function(_node) {
+		if (this.onchange)
+		{
+			return this.onchange.apply(_node);
+		}
 	},
 
 	set_value: function(_value) {
