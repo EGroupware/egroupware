@@ -23,8 +23,8 @@
 var et2_selectbox = et2_inputWidget.extend({
 
 	attributes: {
-		"multiselect": {
-			"name": "multiselect",
+		"multiple": {
+			"name": "multiple",
 			"type": "boolean",
 			"default": false,
 			"description": "Allow selecting multiple options"
@@ -107,8 +107,8 @@ var et2_selectbox = et2_inputWidget.extend({
 				this.empty_label);
 		}
 
-		// Set multiselect
-		if(this.options.multiselect)
+		// Set multiple
+		if(this.options.multiple)
 		{
 			this.input.attr("multiple", "multiple");
 		}
@@ -119,10 +119,30 @@ var et2_selectbox = et2_inputWidget.extend({
 	 * added after the "option"-widgets were added to selectbox.
 	 */
 	set_select_options: function(_options) {
+
+		var root = this;
+
 		// Add the select_options
 		for (var key in _options)
 		{
-			this._appendOptionElement(key, _options[key]);
+			var attrs = {
+				"value": key
+			};
+
+			if (_options[key] instanceof Object)
+			{
+				attrs["label"] = _options[key]["label"] ? _options[key]["label"] : "";
+				attrs["statustext"] = _options[key]["title"] ? _options[key]["title"] : "";
+			}
+			else
+			{
+				attrs["label"] = _options[key]
+			}
+
+			// Add all other important options to the attributes
+			et2_option.prototype.generateAttributeSet(attrs);
+
+			new et2_option(root, attrs);
 		}
 	}
 
@@ -142,6 +162,11 @@ var et2_option = et2_baseWidget.extend({
 			"type": "string",
 			"description": "Value which is sent back to the server when this entry is selected."
 		},
+		"label": {
+			"name": "Label",
+			"type": "string",
+			"description": "Caption of the option element"
+		},
 		"width": {
 			"ignore": true
 		},
@@ -156,11 +181,16 @@ var et2_option = et2_baseWidget.extend({
 	init: function() {
 		this._super.apply(this, arguments);
 
-		// Allow no other widgets inside of this one.
-		this.supportedWidgetClasses = [];
+		// Only allow other options inside of this element
+		this.supportedWidgetClasses = [et2_option];
 
 		this.option = $j(document.createElement("option"))
 			.attr("value", this.options.value);
+
+		if (this.options.label)
+		{
+			this.option.text(this.options.label);
+		}
 
 		this.setDOMNode(this.option[0]);
 	},
@@ -173,7 +203,13 @@ var et2_option = et2_baseWidget.extend({
 
 	loadContent: function(_data) {
 		this.option.text(_data);
-	}
+	},
+
+/*	Doesn't work either with selectboxes
+	set_statustext: function(_value) {
+		this.statustext = _value;
+		this.option.attr("title", _value);
+	}*/
 
 });
 

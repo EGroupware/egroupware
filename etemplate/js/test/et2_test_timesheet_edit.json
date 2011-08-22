@@ -56,7 +56,11 @@ var timesheet_data = {
             "customfields":"Custom fields"
         },
         "ts_owner":{
-            "5":"User, admin"
+            "5":"User, admin",
+			"6": {
+				"label": "User, andreas",
+				"title": "This is the local user of Andreas Stöckel"
+			}
         },
         "ts_status":[]
     },

@@ -82,8 +82,14 @@ var et2_description = et2_baseWidget.extend({
 		this.value = "";
 		this.font_style = "";
 
-		this.span = $j(document.createElement("span"))
+		this.span = $j(document.createElement(this.options.label_for ? "label" : "span"))
 			.addClass("et2_label");
+
+		if (this.options.label_for)
+		{
+			// TODO: Get the real id of the widget in the doLoadingFinished method.
+			this.span.attr("for", this.options.label_for);
+		}
 
 		this.setDOMNode(this.span[0]);
 	},

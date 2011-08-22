@@ -160,7 +160,8 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = document.createElement("span");
+				this._labelContainer = document.createElement("label");
+				this._labelContainer.setAttribute("class", "et2_label");
 			}
 
 			// Clear the label container.
