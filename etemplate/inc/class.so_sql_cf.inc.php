@@ -518,6 +518,7 @@ class so_sql_cf extends so_sql
 		// check if we filter by a custom field
 		if (is_array($filter))
 		{
+			$_cfnames = array_keys($this->customfields);
 			foreach($filter as $name => $val)
 			{
 				// replace ambiguous auto-id with (an exact match of) table_name.autoid
@@ -587,7 +588,19 @@ class so_sql_cf extends so_sql
 				}
 				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
 				{
-					list($cf) = explode(' ',$val);
+					$_cf = explode(' ',$val);
+					foreach($_cf as $ci => $cf_np) 
+					{
+						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
+						$tcf_name = ($tcf_name?$tcf_name.' ':'').$cf_np;
+						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of 
+						// simply splitting by " " and using the first part
+						if ($this->is_cf($tcf_name) && ($cfn = $this->get_cf_name($tcf_name)) && array_search($cfn,(array)$_cfnames,true)!==false )
+						{
+							$cf = $tcf_name;
+							break;
+						}
+					}
 					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
 						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($cf)).
 						' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
