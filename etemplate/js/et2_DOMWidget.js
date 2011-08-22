@@ -70,6 +70,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"type": "string",
 			"default": et2_no_init,
 			"description": "CSS Class which is applied to the dom element of this node"
+		},
+		"overflow": {
+			"name": "Overflow",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "If set, the css-overflow attribute is set to that value"
 		}
 	},
 
@@ -264,6 +270,16 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		}
 
 		this["class"] = _value;
+	},
+
+	set_overflow: function(_value) {
+		this.overflow = _value;
+
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			$j(node).css("overflow", _value);
+		}
 	}
 });
 

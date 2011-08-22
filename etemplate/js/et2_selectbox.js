@@ -149,7 +149,7 @@ var et2_selectbox = et2_inputWidget.extend({
 });
 
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
-	"select-account"]);
+	"select-account", "select-percent"]);
 
 /**
  * Widget class which represents a single option inside a selectbox

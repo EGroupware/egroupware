@@ -137,7 +137,7 @@ var et2_hbox = et2_baseWidget.extend({
 		this._buildAlignCells();
 
 		// Call the inherited assign function
-		this._super.call(this, arguments);
+		this._super.apply(this, arguments);
 	},
 
 	getDOMNode: function(_sender) {

@@ -214,10 +214,7 @@ var et2_arrayMgr = Class.extend({
 			return val == checkVal;
 		}
 
-		et2_debug("log", "Parse bool expression: ", _expression, val);
-
 		return et2_evalBool(val);
-//		return val != '' && (typeof val != "string" || val.toLowerCase() != "false");
 	},
 
 	openPerspective: function(_owner, _root, _col, _row)

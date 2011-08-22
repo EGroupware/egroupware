@@ -25,9 +25,10 @@ body, table, td {
 }
 
 #container {
-	margin: 10px;
-	border: 1px solid gray;
+	/*margin: 10px;
+	border: 1px solid gray;*/
 	padding: 10px;
+	background-color: white;
 }
 
 .header {
@@ -95,10 +96,6 @@ div.et2_hbox_right {
 	font-size: 8pt;
 	color: #3030A0;
 	margin: 2px 0 2px 0;
-}
-
-.et2_grid td {
-	border: 1px dashed silver;
 }
 
 .et2_label {
@@ -257,5 +254,9 @@ hr {
 
 table.et2_grid {
 	border-collapse: collapse;
+}
+
+.et2_grid td {
+/*	border: 1px dashed silver;*/
 }
 

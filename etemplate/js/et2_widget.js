@@ -203,6 +203,11 @@ var et2_widget = Class.extend({
 	},
 
 	assign: function(_obj) {
+		if (typeof _obj._children == "undefined")
+		{
+			et2_debug("log", "Foo!");
+		}
+
 		// Create a clone of all child elements of the given object
 		for (var i = 0; i < _obj._children.length; i++)
 		{
@@ -267,7 +272,8 @@ var et2_widget = Class.extend({
 		}
 		else
 		{
-			throw(_node, " is not supported by this widget class!");
+			et2_debug("error", this, "Widget is not supported by this widget class", _node);
+//			throw("Widget is not supported by this widget class!");
 		}
 	},
 

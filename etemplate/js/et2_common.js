@@ -169,7 +169,14 @@ function et2_checkType(_val, _type, _attr)
 			if (_val !== "")
 			{
 				// TODO: Parse JS code properly
-				return new Function(_val); 
+				try
+				{
+					return new Function(_val); 
+				}
+				catch(e)
+				{
+					et2_debug("error", "Error while parsing JS event handler code", e);
+				}
 			}
 
 			return null;
