@@ -346,7 +346,7 @@ var et2_widget = Class.extend({
 	 * 		return this._super(inTree);
 	 *	when calling this function the _vis parameter does not have to be supplied.
 	 */
-	isInTree: function(_vis) {
+	isInTree: function(_sender, _vis) {
 		if (typeof _vis == "undefined")
 		{
 			_vis = true;
@@ -354,7 +354,7 @@ var et2_widget = Class.extend({
 
 		if (this._parent)
 		{
-			return _vis && this._parent.isInTree();
+			return _vis && this._parent.isInTree(this);
 		}
 
 		return _vis;

@@ -90,6 +90,14 @@ var et2_typeDefaults = {
 
 function et2_evalBool(_val)
 {
+	if (typeof _val == "string")
+	{
+		if (_val == "false")
+		{
+			return false;
+		}
+	}
+
 	return _val ? true : false;
 }
 

@@ -54,6 +54,7 @@ var et2_template = et2_DOMWidget.extend({
 
 		this.proxiedTemplate = null;
 		this.isProxied = false;
+		this.isProxy = false;
 
 		this.div = document.createElement("div");
 
@@ -85,7 +86,7 @@ var et2_template = et2_DOMWidget.extend({
 			// Reset the "ignore" flag and manually copy the id
 			tmpl.options.id = this.id;
 			this.proxiedTemplate.id = tmpl.id;
-			this.proxiedTemplate.isProxied = true;
+			this.proxiedTemplate.isProxy = true;
 
 			// Disallow adding any new node to this template
 			this.supportedWidgetClasses = [];
@@ -109,7 +110,7 @@ var et2_template = et2_DOMWidget.extend({
 					this.proxiedTemplate.loadingFinished();
 					return false;
 				}
-				else if (!this.isProxied)
+				else if (!this.isProxied && !this.isProxy)
 				{
 					this.setParentDOMNode(parentNode);
 				}
@@ -134,8 +135,8 @@ var et2_template = et2_DOMWidget.extend({
 		return this.div;
 	},
 
-	isInTree: function() {
-		return this._super(!this.isProxied);
+	isInTree: function(_sender) {
+		return this._super(this, !this.isProxied);
 	}
 
 });

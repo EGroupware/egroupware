@@ -71,6 +71,7 @@ var et2_grid = et2_DOMWidget.extend({
 					"widget": null,
 					"colData": _colData[x],
 					"rowData": _rowData[y],
+					"disabled": _colData[x].disabled || _rowData[y].disabled,
 					"colSpan": 1,
 					"autoColSpan": false,
 					"rowSpan": 1,
@@ -89,7 +90,8 @@ var et2_grid = et2_DOMWidget.extend({
 			"width": "auto",
 			"class": "",
 			"align": "",
-			"span": "1"
+			"span": "1",
+			"disabled": false
 		};
 	},
 
@@ -98,7 +100,8 @@ var et2_grid = et2_DOMWidget.extend({
 			"height": "auto",
 			"class": "",
 			"valign": "",
-			"span": "1"
+			"span": "1",
+			"disabled": false
 		};
 	},
 
@@ -128,6 +131,8 @@ var et2_grid = et2_DOMWidget.extend({
 		// Parse the columns tag
 		et2_filteredNodeIterator(columns, function(node, nodeName) {
 			var colDataEntry = this._getColDataEntry();
+			colDataEntry["disabled"] = this.getArrayMgr("content")
+					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
 			if (nodeName == "column")
 			{
 				colDataEntry["width"] = et2_readAttrWithDefault(node, "width", "auto");
@@ -145,6 +150,8 @@ var et2_grid = et2_DOMWidget.extend({
 		// Parse the rows tag
 		et2_filteredNodeIterator(rows, function(node, nodeName) {
 			var rowDataEntry = this._getRowDataEntry();
+			rowDataEntry["disabled"] = this.getArrayMgr("content")
+					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
 			if (nodeName == "row")
 			{
 				rowDataEntry["height"] = et2_readAttrWithDefault(node, "height", "auto");
@@ -383,6 +390,7 @@ var et2_grid = et2_DOMWidget.extend({
 		{
 			var row = _cells[y];
 			var tr = $j(document.createElement("tr")).appendTo(this.tbody);
+			var row_hidden = true;
 
 			// Create the cells. x is incremented by the colSpan value of the
 			// cell.
@@ -396,10 +404,21 @@ var et2_grid = et2_DOMWidget.extend({
 					// Create the cell
 					var td = $j(document.createElement("td")).appendTo(tr);
 
+					if (cell.disabled)
+					{
+						td.hide();
+						//td.css("border", "2px solid red");
+					}
+					else
+					{
+						row_hidden = false;
+					}
+
 					// Add the entry for the widget to the management array
 					this.managementArray.push({
 						"cell": td[0],
-						"widget": cell.widget
+						"widget": cell.widget,
+						"disabled": cell.disabled
 					});
 
 					// Set the span values of the cell
@@ -430,6 +449,11 @@ var et2_grid = et2_DOMWidget.extend({
 				{
 					x++;
 				}
+			}
+
+			if (row_hidden)
+			{
+				tr.hide();
 			}
 		}
 	},
@@ -483,7 +507,8 @@ var et2_grid = et2_DOMWidget.extend({
 						"widget": widget,
 						"td": null,
 						"colSpan": srcCell.colSpan,
-						"rowSpan": srcCell.rowSpan
+						"rowSpan": srcCell.rowSpan,
+						"disabled": srcCell.disabled
 					}
 				}
 			}
@@ -523,11 +548,25 @@ var et2_grid = et2_DOMWidget.extend({
 		return null;
 	},
 
-	set_id: function(_value) {
-		this._super.apply(this, arguments);
+	isInTree: function(_sender) {
+		var vis = true;
 
-		// Check whether a namespace exists for this element
-		this.checkCreateNamespace();
+		if (typeof _sender != "undefined" && _sender != this)
+		{
+			vis = false;
+
+			// Check whether the _sender object exists inside the management array
+			for (var i = 0; i < this.managementArray.length; i++)
+			{
+				if (this.managementArray[i].widget == _sender)
+				{
+					vis = !(this.managementArray[i].disabled);
+					break;
+				}
+			}
+		}
+
+		return this._super(this, vis);
 	}
 
 });

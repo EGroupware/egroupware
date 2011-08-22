@@ -251,3 +251,11 @@ hr {
 	margin: 10px 0px 10px 0px;
 }
 
+/**
+ * grid widget
+ */
+
+table.et2_grid {
+	border-collapse: collapse;
+}
+

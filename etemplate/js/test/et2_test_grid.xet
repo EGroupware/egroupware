@@ -204,6 +204,54 @@
 		</rows>
 	</grid>
 
+	<grid>
+		<columns>
+			<column disabled="true" />
+			<column />
+			<column />
+			<column />
+			<column />
+		</columns>
+
+		<rows>
+			<row>
+				<description value="1,1" />
+				<description value="1,2" />
+				<description value="1,3" />
+				<description value="1,4" />
+				<description value="1,5" />
+			</row>
+			<row disabled="true">
+				<description value="2,1" />
+				<description value="2,2" />
+				<description value="2,3" />
+				<description value="2,4" />
+				<description value="2,5" />
+			</row>
+			<row>
+				<description value="3,1" />
+				<description value="3,2" />
+				<description value="3,3" />
+				<description value="3,4" />
+				<description value="3,5" />
+			</row>
+			<row>
+				<description value="4,1" />
+				<description value="4,2" />
+				<description disabled="true" value="4,3" />
+				<description value="4,4" />
+				<description value="4,5" />
+			</row>
+			<row disabled="true">
+				<description value="5,1" />
+				<description value="5,2" />
+				<description value="5,3" />
+				<description value="5,4" />
+				<description value="5,5" />
+			</row>
+		</rows>
+	</grid>
+
 
 </overlay>
 

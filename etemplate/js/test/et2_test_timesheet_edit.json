@@ -73,8 +73,7 @@ var timesheet_data = {
         "ts_owner":true,
         "tabs":{
             "customfields":true
-        },
-        "ts_description": true
+        }
     }
 }
 
