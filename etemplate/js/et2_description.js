@@ -82,6 +82,7 @@ var et2_description = et2_baseWidget.extend({
 		this.value = "";
 		this.font_style = "";
 
+		// Create the span/label tag which contains the label text
 		this.span = $j(document.createElement(this.options.label_for ? "label" : "span"))
 			.addClass("et2_label");
 
@@ -91,13 +92,29 @@ var et2_description = et2_baseWidget.extend({
 			this.span.attr("for", this.options.label_for);
 		}
 
+		// Create an array which contains the parts of the text with links around
+		// it
+		et2_insertLinkText(this._parseText(), this.span[0], this.options.extra_link_target);
+
 		this.setDOMNode(this.span[0]);
 	},
 
-	set_value: function(_value) {
-		this.value = _value;
-
-		this.span.text(_value);
+	_parseText: function() {
+		if (this.options.href)
+		{
+			return [{
+				"href": this.options.href,
+				"text": this.options.value
+			}];
+		}
+		else if (this.options.activate_links)
+		{
+			return et2_activateLinks(this.options.value);
+		}
+		else
+		{
+			return [this.options.value];
+		}
 	},
 
 	set_font_style: function(_value) {

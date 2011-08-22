@@ -3,6 +3,8 @@
 	<vbox>
 		<description value="This is only a test" options="bi" />
 		<description value="This is only a test" font_style="italic" statustext="This is only an italic label!"/>
+		<description value="Welcome to http://www.egroupware.org/, if you have any question feel free to write a mail to mailto:info@egroupware.org" activate_links="true" />
+		<description value="Go to the EGroupware homepage" href="http://www.egroupware.org/" extra_link_target="_popup"/>
 	</vbox>
 </overlay>
 
