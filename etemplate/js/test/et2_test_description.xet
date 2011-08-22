@@ -5,6 +5,23 @@
 		<description value="This is only a test" font_style="italic" statustext="This is only an italic label!"/>
 		<description value="Welcome to http://www.egroupware.org/, if you have any question feel free to write a mail to mailto:info@egroupware.org" activate_links="true" />
 		<description value="Go to the EGroupware homepage" href="http://www.egroupware.org/" extra_link_target="_popup"/>
+		<description class="eyecancer" value="Amazing!"/>
 	</vbox>
+	<styles>
+		.eyecancer {
+			font-size: 18pt;
+			color: red;
+			text-shadow: 0 0 10px red; 
+			text-decoration: blink;
+			border: 5px groove red;
+			padding: 10px;
+			width: 120px;
+			text-align: center;
+			display: inline-block;
+			border-radius: 25px;
+			-moz-border-radius: 25px;
+			margin: 30px;
+		}
+	</styles>
 </overlay>
 

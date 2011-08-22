@@ -64,6 +64,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"type": "dimension",
 			"default": et2_no_init,
 			"description": "Height of the element in pixels, percentage or 'auto'"
+		},
+		"class": {
+			"name": "CSS Class",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "CSS Class which is applied to the dom element of this node"
 		}
 	},
 
@@ -244,6 +250,20 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		{
 			$j(node).css("height", _value);
 		}
+	},
+
+	set_class: function(_value) {
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			if (this["class"])
+			{
+				$j(node).removeClass(this["class"]);
+			}
+			$j(node).addClass(_value);
+		}
+
+		this["class"] = _value;
 	}
 });
 

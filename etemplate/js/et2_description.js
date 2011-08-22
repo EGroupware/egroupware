@@ -92,8 +92,6 @@ var et2_description = et2_baseWidget.extend({
 			this.span.attr("for", this.options.label_for);
 		}
 
-		// Create an array which contains the parts of the text with links around
-		// it
 		et2_insertLinkText(this._parseText(), this.span[0], this.options.extra_link_target);
 
 		this.setDOMNode(this.span[0]);
