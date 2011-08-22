@@ -20,6 +20,6 @@
 			$this->properties = array();
 			$this->title = lang('Resources');
 			$this->description = lang('This module displays the resources app');
-			$this->etemplate_method = 'resources.ui_resources.index';
+			$this->etemplate_method = 'resources.resources_ui.index';
 		}
 	}
