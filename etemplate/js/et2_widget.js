@@ -493,7 +493,10 @@ var et2_widget = Class.extend({
 		{
 			for (var key in data)
 			{
-				_attrs[key] = data[key];
+				if (!(data[key] instanceof Object))
+				{
+					_attrs[key] = data[key];
+				}
 			}
 		}
 	},
