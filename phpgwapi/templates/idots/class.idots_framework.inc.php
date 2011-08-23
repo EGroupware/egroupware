@@ -87,7 +87,7 @@ class idots_framework extends egw_framework
 		// make sure header is output only once
 		if (self::$header_done) return '';
 		self::$header_done = true;
-error_log(__METHOD__."() this->tpl=".array2string($this->tpl).' '.function_backtrace());
+
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.translation::charset());
 
@@ -173,12 +173,6 @@ egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['c
 			$content .= $this->topmenu($vars,$apps);
 			$vars['current_users'] = $vars['quick_add'] = $vars['user_info']='';
 		}
-
-		// add the name of the current application as global js variable - the
-		// name of the current application can be obtained by using the
-		// jsapi egw_getAppName() function
-		$content .= '<script type="text/javascript">window.egw_appName = "'.
-			$GLOBALS['egw_info']['flags']['currentapp'].'";</script>'."\n";
 
 		$this->tpl->set_var($vars);
 		$content .= $this->tpl->fp('out','navbar_header');

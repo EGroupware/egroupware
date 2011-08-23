@@ -22,6 +22,10 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
+// just to be sure, noone tries something nasty ...
+if (!preg_match('/^[a-z0-9_]+$/i', $_GET['app'])) die('No valid application-name given!');
+if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/i', $_GET['lang'])) die('No valid lang-name given!');
+
 // use an etag with app, lang and a hash over the creation-times of all lang-files
 $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5($GLOBALS['egw_info']['server']['lang_ctimes']).'"';
 
@@ -44,10 +48,7 @@ if (!count(translation::$lang_arr))
 	translation::add_app($_GET['app'], 'en');
 }
 
-
-echo '
-if (typeof window.egw_lang == "undefined") window.egw_lang = {};
-$j.extend(window.egw_lang, '.json_encode(translation::$lang_arr).');';
+echo 'egw.set_lang_arr("'.$_GET['app'].'", '.json_encode(translation::$lang_arr).');';
 
 // Content-Lenght header is important, otherwise browsers dont cache!
 Header('Content-Length: '.ob_get_length());

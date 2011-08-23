@@ -768,9 +768,10 @@ abstract class egw_framework
 		$java_script .= self::get_script_links();
 
 		// set webserver_url for json
-		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = '".
+		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = egw.webserverUrl = '".
 			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
 			$GLOBALS['egw_info']['server']['webserver_url']."';\n";
+		$java_script .= 'window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
 
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])

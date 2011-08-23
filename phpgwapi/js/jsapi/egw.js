@@ -16,9 +16,9 @@ var egw;
 
 /**
  * Central object providing all kinds of api services on clientside:
- * - preferences
- * - configuration
- * - link registry
+ * - preferences:   egw.preferences("dateformat")
+ * - translation:   egw.lang("%1 entries deleted", 5)
+ * - link registry: egw.open(123, "infolog")
  */
 if (window.opener && typeof window.opener.egw == 'object')
 {
@@ -33,6 +33,8 @@ else
 	egw = {
 		/**
 		 * Object holding the prefences as 2-dim. associative array, use egw.preference(name[,app]) to access it
+		 * 
+		 * @access: private, use egw.preferences() or egw.set_perferences()
 		 */
 		prefs: {
 			common: { 
@@ -41,6 +43,13 @@ else
 				lang: "en"
 			}
 		},
+		
+		/**
+		 * base-URL of the EGroupware installation
+		 * 
+		 * get set via egw_framework::header()
+		 */
+		webserverUrl: "/egroupware",
 	
 		/**
 		 * Setting prefs for an app or 'common'
@@ -69,7 +78,7 @@ else
 		 */
 		preference: function(_name, _app) 
 		{
-			if (typeof app == 'undefined') _app = 'common';
+			if (typeof _app == 'undefined') _app = 'common';
 			
 			if (typeof this.prefs[_app] == 'undefined')
 			{
@@ -80,6 +89,8 @@ else
 		
 		/**
 		 * Translations
+		 * 
+		 * @access: private, use egw.lang() or egw.set_lang_arr()
 		 */
 		lang_arr: {},
 		
@@ -102,7 +113,31 @@ else
 		 */
 		lang: function(_msg, _arg1)
 		{
-			return _msg;
+			var translation = _msg;
+			_msg = _msg.toLowerCase();
+			
+			// search apps in given order for a replacement
+			var apps = [window.egw_appName, 'etemplate', 'common'];
+			for(var i = 0; i < apps.length; ++i)
+			{
+				if (typeof this.lang_arr[apps[i]][_msg] != 'undefined')
+				{
+					translation = this.lang_arr[apps[i]][_msg];
+					break;
+				}
+			}
+			if (arguments.length == 1) return translation;
+			
+			if (arguments.length == 2) return translation.replace('%1', arguments[1]);
+			
+			// to cope with arguments containing '%2' (eg. an urlencoded path like a referer),
+			// we first replace all placeholders '%N' with '|%N|' and then we replace all '|%N|' with arguments[N]
+			translation = translation.replace(/%([0-9]+)/g, '|%$1|');
+			for(var i = 1; i < arguments.length; ++i)
+			{
+				translation = translation.replace('|%'+i+'|', arguments[i]);
+			}
+			return translation;
 		},
 		
 		/**
@@ -146,7 +181,7 @@ else
 				alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
 				return;	
 			}
-			var url = egw_webserverUrl+'/index.php';
+			var url = this.webserverUrl+'/index.php';
 			var delimiter = '?';
 			var params = app_registry[type];
 			if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
@@ -196,6 +231,8 @@ else
 		
 		/**
 		 * Link registry
+		 * 
+		 * @access: private, use egw.open() or egw.set_link_registry()
 		 */
 		link_registry: null,
 		
