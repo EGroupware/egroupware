@@ -519,9 +519,11 @@ class felamimail_bo
 
 		function createIMAPFilter($_folder, $_criterias)
 		{
+			$all = 'ALL UNDELETED'; //'ALL'
 			//_debug_array($_criterias);
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
 			if(!is_array($_criterias)) {
-				return 'ALL';
+				return $all;
 			}
 			#error_log(print_r($_criterias, true));
 			$imapFilter = '';
@@ -555,8 +557,8 @@ class felamimail_bo
 				}
 			}
 
-			#foreach($_criterias as $criteria => $parameter) {
-				$criteria = strtoupper($_criterias['status']);
+			foreach((array)$_criterias['status'] as $k => $criteria) {
+				$criteria = strtoupper($criteria);
 				switch ($criteria) {
 					case 'ANSWERED':
 					case 'DELETED':
@@ -572,14 +574,15 @@ class felamimail_bo
 						$imapFilter .= $criteria .' ';
 						break;
 				}
-			#}
+			}
 			if (isset($_criterias['range']) && !empty($_criterias['range']))
 			{
 				$imapFilter .= $_criterias['range'].' ';
 			}
-			//error_log("Filter: $imapFilter");
+			if (self::$debug) error_log(__METHOD__.__LINE__." Filter: ".($imapFilter?$imapFilter:$all));
 			if($imapFilter == '') {
-				return 'ALL';
+				return $all;
+
 			} else {
 				return trim($imapFilter);
 				#return 'CHARSET '. strtoupper(self::$displayCharset) .' '. trim($imapFilter);
@@ -1654,7 +1657,7 @@ class felamimail_bo
 					isset($this->mailPreferences->preferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
 					$this->mailPreferences->preferences['trustServersUnseenInfo']==false)
 				{
-					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>'UNSEEN'),$byUid=true,false);
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('UNSEEN')),$byUid=true,false);
 					$retValue['unseen'] = count($sortResult);
 				}
 			}
@@ -2301,6 +2304,9 @@ class felamimail_bo
 		* @param integer $_sort the primary sort key
 		* @param bool $_reverse sort the messages ascending or descending
 		* @param array $_filter the search filter
+		* @param bool $resultByUid if set to true, the result is to be returned by uid, if the server does not reply
+		* 			on a query for uids, the result may be returned by IDs only, this will be indicated by this param
+		* @param bool $setSession if set to true the session will be populated with the result of the query
 		* @return bool
 		*/
 		function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
@@ -2309,19 +2315,40 @@ class felamimail_bo
 			if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
 				return false;
 			}
-			if(is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
+			//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
+			$try2useCache = true;
+			static $eMailListContainsDeletedMessages;
+			if (is_null($eMailListContainsDeletedMessages)) $eMailListContainsDeletedMessages =& egw_cache::getSession('felamimail','email_eMailListContainsDeletedMessages');
+			// this indicates, that there is no Filter set, and the returned set/subset should not contain DELETED Messages, nor filtered for UNDELETED
+			if ($setSession==true && ((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
+			{
+				//$starttime = microtime(true);
+				//$deletedMessages = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('DELETED')),$byUid=true,false);
+				$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
+				//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
+				$eMailListContainsDeletedMessages[$this->profileID][$_folderName] = count($deletedMessages);
+				//$endtime = microtime(true);
+				//$r = ($endtime-$starttime);
+				//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']);
+				//error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
+			}
+
+			if($try2useCache && (is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
-				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	=== $folderStatus['EXISTS'] &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] && 
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']	== $eMailListContainsDeletedMessages[$this->profileID][$_folderName] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['filter']	=== $_filter &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['sort']	=== $_sort &&
 				//$this->sessionData['folderStatus'][0][$_folderName]['reverse'] === $_reverse &&
-				!empty($this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'])
+				!empty($this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult']))
 			) {
-				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName);
+				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
 				$sortResult = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'];
 
 			} else {
+				$try2useCache = false;
+				//error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
 				if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName." Filter:".array2string($_filter).function_backtrace());
 				$filter = $this->createIMAPFilter($_folderName, $_filter);
 				//_debug_array($filter);
@@ -2387,10 +2414,14 @@ class felamimail_bo
 			}
 			if ($setSession)
 			{
+				// this indicates, that there should be no UNDELETED Messages in the returned set/subset
+				if (((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
+				{
+					if ($try2useCache == false) $this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted'] = $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
+				}
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['reverse'] 	= $_reverse;
 				$this->saveSessionData();
 			}
-
 			return $sortResult;
 		}
 
@@ -2546,8 +2577,8 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					//$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
-					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
+					$retValue['header'][$sortOrder[$uid]]['internaldate']= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
@@ -3580,8 +3611,8 @@ class felamimail_bo
 					break;
 				case 0:
 				default:
-					//$retValue = 'DATE';
-					$retValue = 'ARRIVAL';
+					$retValue = 'DATE';
+					//$retValue = 'ARRIVAL';
 					break;
 			}
 
@@ -4255,6 +4286,7 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' Subject:'.$Subject);
 					$Body = $mailObject->Body;
 					//error_log(__METHOD__.__LINE__.' Body:'.$Body);
+					//error_log(__METHOD__.__LINE__.' BodyContentType:'.$mailObject->BodyContentType);
 					$AltBody = $mailObject->AltBody;
 					//error_log(__METHOD__.__LINE__.' AltBody:'.$AltBody);
 					foreach ($SendAndMergeTocontacts as $k => $val)
