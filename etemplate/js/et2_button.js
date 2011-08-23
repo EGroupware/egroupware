@@ -37,14 +37,14 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		}
 	},
 
-	init: function(_parent, _type, _readonly) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.label = "";
 		this.clicked = false;
 		this.btn = null;
 
-		if (!_readonly)
+		if (!this.options.readonly)
 		{
 			this.btn = $j(document.createElement("button"))
 				.addClass("et2_button");
