@@ -23,6 +23,10 @@
  */ 
 var et2_tabbox = et2_DOMWidget.extend({
 
+	/**
+	 * Currently selected tab
+	 */
+	selected_index: 0,
 	init: function(_parent, _type) {
 		// Create the outer tabbox container
 		this.container = $j(document.createElement("div"))
@@ -53,14 +57,47 @@ var et2_tabbox = et2_DOMWidget.extend({
 	},
 
 	_readTabs: function(tabData, tabs) {
+		var selected = "";
+		this.selected_index = 0;
+		var hidden = {};
+		if (this.id)
+		{
+			// Set the value for this element
+			var contentMgr = this.getArrayMgr("content");
+			if (contentMgr != null) {
+				var val = contentMgr.getValueForID(this.id);
+				if (val !== null)
+				{
+					selected = val;
+				}
+			}
+			contentMgr = this.getArrayMgr("readonlys");
+			if (contentMgr != null) {
+				var val = contentMgr.getValueForID(this.id);
+				if (val !== null)
+				{
+					hidden = val;
+				}
+			}
+		}
+		var i = 0;
 		et2_filteredNodeIterator(tabs, function(node, nodeName) {
 			if (nodeName == "tab")
 			{
+				var index_name = et2_readAttrWithDefault(node, "label");
+				var hide = false;
+				if(index_name) {
+					if(selected == index_name) this.selected_index = i;
+					if(hidden[index_name]) {
+						hide = true;
+					}
+				}
 				tabData.push({
 					"label": egw.lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"contentDiv": null,
-					"flagDiv": null
+					"flagDiv": null,
+					"hidden": hide
 				});
 			}
 			else
@@ -68,6 +105,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 				throw("Error while parsing: Invalid tag '" + nodeName +
 					"' in tabs tag");
 			}
+			i++;
 		}, this);
 	},
 
@@ -124,24 +162,31 @@ var et2_tabbox = et2_DOMWidget.extend({
 		for (var i = 0; i < this.tabData.length; i++)
 		{
 			var entry = this.tabData[i];
-
 			entry.flagDiv = $j(document.createElement("span"))
 				.addClass("et2_tabflag")
 				.text(entry.label)
-				.appendTo(this.flagContainer)
-				.click({"tabs": this, "idx": i}, function(e) {
+				.appendTo(this.flagContainer);
+			if(entry.hidden)
+			{
+				entry.flagDiv.hide();
+			}
+			else
+			{
+				entry.flagDiv.click({"tabs": this, "idx": i}, function(e) {
 					e.data.tabs.setActiveTab(e.data.idx);
 				});
-
+			}
 			entry.contentDiv = $j(document.createElement("div"))
 				.addClass("et2_tabcntr")
 				.appendTo(this.tabContainer);
 		}
 
-		this.setActiveTab(0);
+		this.setActiveTab(this.selected_index);
 	},
 
 	setActiveTab: function(_idx) {
+		this.selected_index = _idx;
+
 		// Remove the "active" flag from all tabs-flags
 		$j(".et2_tabflag", this.flagContainer).removeClass("active");
 

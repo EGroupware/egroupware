@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <overlay>
-	<tabbox width="100%">
+	<tabbox width="100%" id="tab_1">
 		<tabs>
 			<tab label="Test1" />
 			<tab label="Test2" />
+			<tab label="Disabled" />
 			<tab label="Test3" />
 			<tab label="Test4" />
 		</tabs>
 		<tabpanels>
-			<label value="This is the content of tab 2"/>
-			<label value="This is the content of tab 3"/>
-			<label value="This is the content of tab 4"/>
 			<vbox>
 				<label value="This is the content of tab 1"/>
 				<label value="This is the content of tab 1"/>
@@ -20,6 +18,10 @@
 				<label value="This is the content of tab 1"/>
 				<label value="This is the content of tab 1"/>
 			</vbox>
+			<label value="This is the content of tab 2"/>
+			<label value="This tab should be hidden"/>
+			<label value="This is the content of tab 3"/>
+			<label value="This is the content of tab 4 - it should be displayed"/>
 		</tabpanels>
 	</tabbox>
 </overlay>

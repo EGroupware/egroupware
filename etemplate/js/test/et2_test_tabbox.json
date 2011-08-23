@@ -1,0 +1,10 @@
+var tabbox_data = {
+	"content":	{
+		"tab_1": "Test4"
+	},
+	"readonlys":	{
+		"tab_1": {
+			"Disabled": true
+		}
+	}
+}
