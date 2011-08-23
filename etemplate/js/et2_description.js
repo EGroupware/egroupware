@@ -26,7 +26,8 @@ var et2_description = et2_baseWidget.extend({
 		"value": {
 			"name": "Caption",
 			"type": "string",
-			"description": "Displayed text"
+			"description": "Displayed text",
+			"translate": true
 		},
 
 		/**
@@ -50,7 +51,7 @@ var et2_description = et2_baseWidget.extend({
 			"description": "If set, URLs in the text are automatically replaced " + 
 				"by links"
 		},
-		"label_for": {
+		"for": {
 			"name": "Label for widget",
 			"type": "string",
 			"description": "Marks the text as label for the given widget."
@@ -73,7 +74,7 @@ var et2_description = et2_baseWidget.extend({
 		}
 	},
 
-	legacyOptions: ["font_style", "href", "activate_links", "label_for", 
+	legacyOptions: ["font_style", "href", "activate_links", "for", 
 		"extra_link_target", "extra_link_popup", "extra_link_title"],
 
 	init: function(_parent) {
@@ -83,13 +84,13 @@ var et2_description = et2_baseWidget.extend({
 		this.font_style = "";
 
 		// Create the span/label tag which contains the label text
-		this.span = $j(document.createElement(this.options.label_for ? "label" : "span"))
+		this.span = $j(document.createElement(this.options["for"] ? "label" : "span"))
 			.addClass("et2_label");
 
-		if (this.options.label_for)
+		if (this.options["for"])
 		{
 			// TODO: Get the real id of the widget in the doLoadingFinished method.
-			this.span.attr("for", this.options.label_for);
+			this.span.attr("for", this.options["for"]);
 		}
 
 		et2_insertLinkText(this._parseText(), this.span[0], this.options.extra_link_target);

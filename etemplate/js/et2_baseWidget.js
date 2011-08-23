@@ -36,7 +36,8 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		"statustext": {
 			"name": "Tooltip",
 			"type": "string",
-			"description": "Tooltip which is shown for this element"
+			"description": "Tooltip which is shown for this element",
+			"translate": true
 		},
 		"align": {
 			"name": "Align",

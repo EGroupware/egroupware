@@ -36,7 +36,7 @@ var et2_valueWidget = et2_baseWidget.extend({
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 
-		if (this.id != "")
+		if (this.id)
 		{
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");

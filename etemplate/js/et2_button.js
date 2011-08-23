@@ -27,7 +27,8 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 		"label": {
 			"name": "caption",
 			"type": "string",
-			"description": "Label of the button"
+			"description": "Label of the button",
+			"translate": true
 		},
 
 		"onclick": {

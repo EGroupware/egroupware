@@ -13,6 +13,7 @@
 "use strict";
 
 /*egw:uses
+	jsapi/egw;
 	et2_xml;
 	et2_common;
 	et2_inheritance;
@@ -107,6 +108,13 @@ var et2_widget = Class.extend({
 			"description": "Unique identifier of the widget"
 		},
 
+		"no_lang": {
+			"name": "No translation",
+			"type": "boolean",
+			"default": false,
+			"description": "If true, no translations are made for this widget"
+		},
+
 		/**
 		 * Ignore the "span" property by default - it is read by the grid and
 		 * other widgets.
@@ -189,11 +197,11 @@ var et2_widget = Class.extend({
 			{
 				this.checkCreateNamespace();
 			}
-
-			// Add all attributes hidden in the content arrays to the attributes
-			// parameter
-			this.transformAttributes(_attrs);
 		}
+
+		// Add all attributes hidden in the content arrays to the attributes
+		// parameter
+		this.transformAttributes(_attrs);
 
 		// Create a local copy of the options object
 		this.options = et2_cloneObject(_attrs);
@@ -484,18 +492,35 @@ var et2_widget = Class.extend({
 	},
 
 	/**
-	 * Apply the "modifications" to the element
+	 * Apply the "modifications" to the element and translate attributes marked
+	 * with "translate: true"
 	 */
 	transformAttributes: function(_attrs) {
-		var data = this.getArrayMgr("modifications").getValueForID(this.id);
 
-		if (data instanceof Object)
+		// Apply the content of the modifications array
+		if (this.id)
 		{
-			for (var key in data)
+			var data = this.getArrayMgr("modifications").getValueForID(this.id);
+			if (data instanceof Object)
 			{
-				if (!(data[key] instanceof Object))
+				for (var key in data)
 				{
-					_attrs[key] = data[key];
+					if (!(data[key] instanceof Object))
+					{
+						_attrs[key] = data[key];
+					}
+				}
+			}
+		}
+
+		// Translate the attributes
+		if (!_attrs["no_lang"])
+		{
+			for (var key in _attrs)
+			{
+				if (typeof this.attributes[key] != "undefined" && this.attributes[key].translate)
+				{
+					_attrs[key] = egw.lang(_attrs[key]);
 				}
 			}
 		}

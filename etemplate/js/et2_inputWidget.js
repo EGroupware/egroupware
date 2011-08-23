@@ -56,7 +56,8 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"name": "Label",
 			"default": "",
 			"type": "string",
-			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables)."
+			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+			"translate": true
 		},
 		"onchange": {
 			"name": "onchange",
@@ -97,10 +98,13 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		this._super.apply(this, arguments);
 
 		// Check whether an validation error entry exists
-		var val = this.getArrayMgr("validation_errors").getValueForID(this.id);
-		if (val)
+		if (this.id)
 		{
-			_attrs["validation_error"] = val;
+			var val = this.getArrayMgr("validation_errors").getValueForID(this.id);
+			if (val)
+			{
+				_attrs["validation_error"] = val;
+			}
 		}
 	},
 

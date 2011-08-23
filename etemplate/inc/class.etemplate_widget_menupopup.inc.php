@@ -120,8 +120,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$form_name = self::form_name($cname, $this->id);
 			// += to keep further options set by app code
-			if (!isset(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options']);
+			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
+			self::$request->sel_options[$form_name] += (array)self::typeOptions($this->attrs['type'], $this->attrs['options']);
 		}
 	}
 
