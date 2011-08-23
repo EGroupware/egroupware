@@ -74,6 +74,9 @@ var timesheet_data = {
         "tabs":{
             "customfields":true
         }
-    }
+    },
+	"validation_errors": {
+		"ts_title": "Please enter some meaningful title here!"
+	}
 }
 

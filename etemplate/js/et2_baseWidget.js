@@ -58,10 +58,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 
 		this.node = null;
 		this.statustext = "";
-
-		this._labelContainer = null;
-		this._widgetPlaceholder = null;
-
+		this._messageDiv = null;
 		this._tooltipElem = null;
 	},
 
@@ -69,6 +66,113 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		this._super.apply(this, arguments);
 
 		this.node = null;
+		this._messageDiv = null;
+	},
+
+	/**
+	 * The setMessage function can be used to attach a small message box to the
+	 * widget. This is e.g. used to display validation errors or success messages
+	 *
+	 * @param _text is the text which should be displayed as a message
+	 * @param _type is an css class which is attached to the message box.
+	 * 	Currently available are "hint", "success" and "validation_error", defaults
+	 * 	to "hint"
+	 * @param _floating if true, the object will be in one row with the element,
+	 * 	defaults to true
+	 * @param _prepend if set, the message is displayed behind the widget node
+	 * 	instead of before. Defaults to false.
+	 */
+	showMessage: function(_text, _type, _floating, _prepend) {
+
+		// Preset the parameters
+		if (typeof _type == "undefined")
+		{
+			_type = "hint"
+		}
+
+		if (typeof _floating == "undefined")
+		{
+			_floating = true;
+		}
+
+		if (typeof _prepend == "undefined")
+		{
+			_prepend = false;
+		}
+
+		var surr = this.getSurroundings();
+
+		// Remove the message div from the surroundings before creating a new
+		// one
+		this.hideMessgae(false, true);
+
+		// Create the message div and add it to the "surroundings" manager
+		this._messageDiv = $j(document.createElement("div"))
+			.addClass("message")
+			.addClass(_type)
+			.addClass(_floating ? "floating" : "")
+			.text(_text);
+
+		// Decide whether to prepend or append the div
+		if (_prepend)
+		{
+			surr.prependDOMNode(this._messageDiv[0]);
+		}
+		else
+		{
+			surr.appendDOMNode(this._messageDiv[0]);
+		}
+
+		surr.update();
+	},
+
+	/**
+	 * The hideMessgae function can be used to hide a previously shown message.
+	 *
+	 * @param _fade if true, the message div will fade out, otherwise the message
+	 * 	div is removed immediately. Defaults to true.
+	 * @param _noUpdate is used internally to prevent an update of the surroundings
+	 * 	manager.
+	 */
+	hideMessgae: function(_fade, _noUpdate) {
+		if (typeof _fade == "undefined")
+		{
+			_fade = true;
+		}
+
+		if (typeof _noUpdate == "undefined")
+		{
+			_noUpdate = false;
+		}
+
+		// Remove the message from the surroundings manager and remove the
+		// reference to it
+		if (this._messageDiv != null)
+		{
+			var surr = this.getSurroundings();
+			var self = this;
+
+			var _done = function() {
+				surr.removeDOMNode(self._messageDiv[0]);
+				self._messageDiv = null;
+
+				// Update the surroundings manager
+				if (!_noUpdate)
+				{
+					surr.update();
+				}
+			}
+
+			// Either fade out or directly call the function which removes the div
+			if (_fade)
+			{
+				this._messageDiv.fadeOut("fast", _done);
+			}
+			else
+			{
+				_done();
+			}
+		}
 	},
 
 	detatchFromDOM: function() {
@@ -127,6 +231,15 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		return this.getDOMNode(this);
 	},
 
+	click: function(_node) {
+		if (this.onclick)
+		{
+			return this.onclick.call(_node);
+		}
+
+		return true;
+	},
+
 	set_statustext: function(_value) {
 		// Don't execute the code below, if no tooltip will be attached/detached
 		if (_value == "" && !this._tooltipElem)
@@ -154,15 +267,6 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 				this._tooltipElem = elem;
 			}
 		}
-	},
-
-	click: function(_node) {
-		if (this.onclick)
-		{
-			return this.onclick.call(_node);
-		}
-
-		return true;
 	},
 
 	set_align: function(_value) {

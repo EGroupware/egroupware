@@ -62,6 +62,12 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"name": "onchange",
 			"type": "js",
 			"description": "JS code which is executed when the value changes."
+		},
+		"validation_error": {
+			"name": "Validation Error",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "Used internally to store the validation error that came from the server."
 		}
 	},
 
@@ -70,7 +76,6 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
 		this._oldValue = "";
 		this._labelContainer = null;
-		this._widgetPlaceholder = null;
 	},
 
 	destroy: function() {
@@ -83,34 +88,23 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		this._super.apply(this, arguments);
 
 		this._labelContainer = null;
-		this._widgetPlaceholder = null;
+	},
+
+	/**
+	 * Load the validation errors from the server
+	 */
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		// Check whether an validation error entry exists
+		var val = this.getArrayMgr("validation_errors").getValueForID(this.id);
+		if (val)
+		{
+			_attrs["validation_error"] = val;
+		}
 	},
 
 	attachToDOM: function() {
-		if (this._labelContainer)
-		{
-			// Get the DOM Node without the labelContainer - that's why null is
-			// passed here.
-			var node = this.getDOMNode(null);
-
-			if (node)
-			{
-				// Recreate the widget placeholder and return, as the set_label
-				// function will call attachToDOM again
-				if (!this._widgetPlaceholder)
-				{
-					this.set_label(this.label);
-					return;
-				}
-
-				// Insert the widget at the position of the placeholder
-				this._labelContainer.replaceChild(node, this._widgetPlaceholder);
-
-				// Set the widgetPlaceholder to null
-				this._widgetPlaceholder = null;
-			}
-		}
-
 		var node = this.getInputNode();
 		if (node)
 		{
@@ -121,14 +115,14 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
 		this._super.apply(this,arguments);
 		
-		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
-		$j(this.getInputNode()).validator();
+//		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
+//		$j(this.getInputNode()).validator();
 	},
 
 	detatchFromDOM: function() {
-		if(this.getInputNode()) {
-			$j(this.getInputNode()).data("validator").destroy();
-		}
+//		if(this.getInputNode()) {
+//			$j(this.getInputNode()).data("validator").destroy();
+//		}
 		this._super.apply(this,arguments);
 	},
 
@@ -171,14 +165,10 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 	},
 
 	set_label: function(_value) {
-		// Copy the given value
-		this.label = _value;
-
-		// Detach the current element from the DOM
-		var attached = this.isAttached();
-		if (attached)
+		// Abort if ther was no change in the label
+		if (_value == this.label)
 		{
-			this.detatchFromDOM();
+			return;
 		}
 
 		if (_value)
@@ -186,46 +176,49 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = document.createElement("label");
-				this._labelContainer.setAttribute("class", "et2_label");
+				this._labelContainer = $j(document.createElement("label"))
+					.addClass("et2_label");
+				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}
 
 			// Clear the label container.
-			for (;this._labelContainer.childNodes.length > 0;)
-			{
-				this._labelContainer.removeChild(this._labelContainer.childNodes[0]);
-			}
+			this._labelContainer.empty();
 
-			// Create the placeholder element
-			this._widgetPlaceholder = document.createElement("span");
+			// Create the placeholder element and set it
+			var ph = document.createElement("span");
+			this.getSurroundings().setWidgetPlaceholder(ph);
 
 			// Split the label at the "%s"
 			var parts = et2_csvSplit(_value, 2, "%s");
 
-			// Create the content of the label container
+			// Update the content of the label container
 			for (var i = 0; i < parts.length; i++)
 			{
 				if (parts[i])
 				{
-					this._labelContainer.appendChild(document.createTextNode(parts[i]));
+					this._labelContainer.append(document.createTextNode(parts[i]));
 				}
 				if (i == 0)
 				{
-					this._labelContainer.appendChild(this._widgetPlaceholder);
+					this._labelContainer.append(ph);
 				}
 			}
 		}
 		else
 		{
+			// Delete the labelContainer from the surroundings object
+			if (this._labelContainer)
+			{
+				this.getSurroundings().deleteDOMNode(this._labelContainer[0]);
+			}
 			this._labelContainer = null;
-			this._widgetPlaceholder = null;
 		}
 
-		// Attach the current element to the DOM again
-		if (attached)
-		{
-			this.attachToDOM();
-		}
+		// Update the surroundings in order to reflect the change in the label
+		this.getSurroundings().update();
+
+		// Copy the given value
+		this.label = _value;
 	},
 
 	set_required: function(_value) {
@@ -241,13 +234,21 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 
 	},
 
-	getDOMNode: function(_sender) {
-		if (_sender == this && this._labelContainer)
+	set_validation_error: function(_value) {
+		var node = this.getInputNode();
+		if (node)
 		{
-			return this._labelContainer;
+			if (_value === false)
+			{
+				this.hideMessage();
+				$j(node).removeClass("invalid");
+			}
+			else
+			{
+				this.showMessage(_value, "validation_error");
+				$j(node).addClass("invalid");
+			}
 		}
-
-		return this._super.apply(this, arguments);
 	},
 
 	getInputNode: function() {

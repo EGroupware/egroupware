@@ -95,6 +95,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		};
 
 		this._disabled = false;
+		this._surroundingsMgr = null;
 	},
 
 	/**
@@ -106,6 +107,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		this.detatchFromDOM();
 		this.parentNode = null;
 		this._attachSet = {};
+
+		if (this._surroundingsMgr)
+		{
+			this._surroundingsMgr.destroy();
+			this._surroundingsMgr = null;
+		}
 
 		this._super();
 	},
@@ -158,6 +165,13 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		    (node != this._attachSet.node ||
 		    this.parentNode != this._attachSet.parent))
 		{
+			// If the surroundings manager exists, surround the DOM-Node of this
+			// widget with the DOM-Nodes inside the surroundings manager.
+			if (this._surroundingsMgr)
+			{
+				node = this._surroundingsMgr.getDOMNode(node);
+			}
+
 			this.parentNode.appendChild(node);
 
 			// Store the currently attached nodes
@@ -174,6 +188,15 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 	isAttached: function() {
 		return this.parentNode != null;
+	},
+
+	getSurroundings: function() {
+		if (!this._surroundingsMgr)
+		{
+			this._surroundingsMgr = new et2_surroundingsMgr(this);
+		}
+
+		return this._surroundingsMgr;
 	},
 
 	/**
@@ -281,6 +304,212 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			$j(node).css("overflow", _value);
 		}
 	}
+});
+
+/**
+ * The surroundings manager class allows to append or prepend elements around
+ * an widget node.
+ */
+var et2_surroundingsMgr = Class.extend({
+
+	init: function(_widget) {
+		this.widget = _widget;
+
+		this._widgetContainer = null;
+		this._widgetSurroundings = [];
+		this._widgetPlaceholder = null;
+		this._widgetNode = null;
+		this._ownPlaceholder = true;
+	},
+
+	destroy: function() {
+		this._widgetContainer = null;
+		this._widgetSurroundings = null;
+		this._widgetPlaceholder = null;
+		this._widgetNode = null;
+	},
+
+	prependDOMNode: function(_node) {
+		this._widgetSurroundings.unshift(_node);
+		this._surroundingsUpdated = true;
+	},
+
+	appendDOMNode: function(_node) {
+		// Append an placeholder first if none is existing yet
+		if (this._ownPlaceholder && this._widgetPlaceholder == null)
+		{
+			this._widgetPlaceholder = document.createElement("span");
+			this._widgetSurroundings.push(this._widgetPlaceholder);
+		}
+
+		// Append the given node
+		this._widgetSurroundings.push(_node);
+		this._surroundingsUpdated = true;
+	},
+
+	insertDOMNode: function(_node) {
+		if (!this._ownPlaceholder || this._widgetPlaceholder == null)
+		{
+			this.appendDOMNode(_node);
+			return;
+		}
+
+		// Get the index of the widget placeholder and delete it, insert the
+		// given node instead
+		var idx = this._widgetSurroundings.indexOf(this._widgetPlaceholder);
+		this._widgetSurroundings.splice(idx, 1, _node);
+
+		// Delete the reference to the own placeholder
+		this._widgetPlaceholder = null;
+		this._ownPlaceholder = false;
+	},
+
+	removeDOMNode: function(_node) {
+		for (var i = 0; i < this._widgetSurroundings.length; i++)
+		{
+			if (this._widgetSurroundings[i] == _node)
+			{
+				this._widgetSurroundings.splice(i, 1);
+				this._surroundingsUpdated = true;
+				break;
+			}
+		}
+	},
+
+	setWidgetPlaceholder: function(_node) {
+		if (_node != this._widgetPlaceholder)
+		{
+			if (_node != null && this._ownPlaceholder && this._widgetPlaceholder != null)
+			{
+				// Delete the current placeholder which was created by the
+				// widget itself
+				var idx = this._widgetSurroundings.indexOf(this._widgetPlaceholder);
+				this._widgetSurroundings.splice(idx, 1);
+
+				// Delete any reference to the own placeholder and set the
+				// _ownPlaceholder flag to false
+				this._widgetPlaceholder = null;
+				this._ownPlaceholder = false;
+			}
+			
+			this._ownPlaceholder = (_node == null);
+			this._widgetPlaceholder = _node;
+			this._surroundingsUpdated = true;
+		}
+	},
+
+	_rebuildContainer: function() {
+		// Return if there has been no change in the "surroundings-data"
+		if (!this._surroundingsUpdated)
+		{
+			return false;
+		}
+
+		// Build the widget container
+		if (this._widgetSurroundings.length > 0)
+		{
+			// Check whether the widgetPlaceholder is really inside the DOM-Tree
+			var hasPlaceholder = et2_hasChild(this._widgetSurroundings,
+				this._widgetPlaceholder);
+
+			// If not, append another widget placeholder
+			if (!hasPlaceholder)
+			{
+				this._widgetPlaceholder = document.createElement("span");
+				this._widgetSurroundings.push(this._widgetPlaceholder);
+
+				this._ownPlaceholder = true;
+			}
+
+			// If the surroundings array only contains one element, set this one
+			// as the widget container
+			if (this._widgetSurroundings.length == 1)
+			{
+				if (this._widgetSurroundings[0] == this._widgetPlaceholder)
+				{
+					this._widgetContainer = null;
+				}
+				else
+				{
+					this._widgetContainer = this._widgetSurroundings[0];
+				}
+			}
+			else
+			{
+				// Create an outer "span" as widgetContainer
+				this._widgetContainer = document.createElement("span");
+
+				// Append the children inside the widgetSurroundings array to
+				// the widget container
+				for (var i = 0; i < this._widgetSurroundings.length; i++)
+				{
+					this._widgetContainer.appendChild(this._widgetSurroundings[i]);
+				}
+			}
+		}
+		else
+		{
+			this._widgetContainer = null;
+			this._widgetPlaceholder = null;
+		}
+
+		this._surroundingsUpdated = false;
+
+		return true;
+	},
+
+	update: function() {
+		if (this._surroundingsUpdated)
+		{
+			var attached = this.widget ? this.widget.isAttached() : false;
+
+			// Reattach the widget - this will call the "getDOMNode" function
+			// and trigger the _rebuildContainer function.
+			if (attached && this.widget)
+			{
+				this.widget.detatchFromDOM();
+				this.widget.attachToDOM();
+			}
+		}
+	},
+
+	getDOMNode: function(_widgetNode) {
+		// Update the whole widgetContainer if this is not the first time this
+		// function has been called but the widget node has changed.
+		if (this._widgetNode != null && this._widgetNode != _widgetNode)
+		{
+			this._surroundingsUpdated = true;
+		}
+
+		// Copy a reference to the given node
+		this._widgetNode = _widgetNode;
+
+		// Build the container if it didn't exist yet.
+		var updated = this._rebuildContainer(true);
+
+		// Return the widget node itself if there are no surroundings arround
+		// it
+		if (this._widgetContainer == null)
+		{
+			return _widgetNode;
+		}
+
+		// Replace the widgetPlaceholder with the given widget node if the
+		// widgetContainer has been updated
+		if (updated)
+		{
+			this._widgetPlaceholder.parentNode.replaceChild(_widgetNode,
+				this._widgetPlaceholder);
+			if (!this._ownPlaceholder)
+			{
+				this._widgetPlaceholder = _widgetNode;
+			}
+		}
+
+		// Return the widget container
+		return this._widgetContainer;
+	}
+
 });
 
 

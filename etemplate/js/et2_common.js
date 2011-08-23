@@ -566,3 +566,29 @@ function et2_cloneObject(_obj)
 	return result;
 }
 
+/**
+ * Returns true if the given array of nodes or their children contains the given
+ * child node.
+ */
+function et2_hasChild(_nodes, _child)
+{
+	for (var i = 0; i < _nodes.length; i++)
+	{
+		if (_nodes[i] == _child)
+		{
+			return true;
+		}
+		else if (_nodes[i].childNodes)
+		{
+			var res = et2_hasChild(_nodes[i].childNodes, _child);
+
+			if (res)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+

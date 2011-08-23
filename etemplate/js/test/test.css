@@ -219,8 +219,8 @@ input[required] {
 	background-color: #ffffd0;
 }
 input.invalid {
-	border-style: dotted;
-	border-color: red;
+	border: 1px solid #a6261d;
+	background-color: #faecec;
 }
 .error {
 	-moz-border-radius: 0 4px 4px 0;
@@ -267,4 +267,53 @@ label input, label span, label div, label select, label textarea {
 	margin-left: 1ex;
 	margin-right: 1ex;
 }
+
+/**
+ * Message styles
+ */
+
+/* Style used for a generic message (such as success messages or validation errors) */
+.message {
+	display: block;
+	border: 1px solid gray;
+	padding: 3px 3px 3px 22px;
+	margin: 5px 0px 5px 0px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	clear: left;
+	max-width: 500px;
+}
+
+.message.floating {
+	display: inline;
+	margin: 0px 5px 0px 5px;
+}
+
+.message.validation_error {
+	color: #a93030;
+	font-style: italic;
+	background-color: #f3d4d0;
+	border-color: #a93030;
+	background-image:url(gfx/error.png);
+}
+
+.message.success {
+	font-style: normal;
+	background-color: #e5f3d0;
+	color: #98a930;
+	border-color: #9ea930;
+	background-image:url(gfx/tick.png);
+}
+
+.message.hint {
+	font-style: normal;
+	background-color: #d9e2ed;
+	border-color: #56729a;
+	color: #56729a;
+	background-image:url(gfx/hint.png);
+}
+
 
