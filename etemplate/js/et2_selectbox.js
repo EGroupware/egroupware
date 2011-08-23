@@ -16,6 +16,7 @@
 /*egw:uses
 	lib/tooltip;
 	jquery.jquery;
+	et2_xml;
 	et2_DOMWidget;
 	et2_inputWidget;
 */
@@ -71,7 +72,10 @@ var et2_selectbox = et2_inputWidget.extend({
 
 		this.input = null;
 	},
+
 	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
 		// Try to find the options inside the "sel-options" array
 		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
 
@@ -144,10 +148,8 @@ var et2_selectbox = et2_inputWidget.extend({
 				attrs["label"] = _options[key]
 			}
 
-			// Add all other important options to the attributes
-			et2_option.prototype.generateAttributeSet(attrs);
-
-			new et2_option(root, attrs);
+			// Create the widget and add it as a child
+			this.addChild(et2_createWidget("option", attrs));
 		}
 	}
 });
@@ -167,6 +169,7 @@ var et2_selectbox_ro = et2_selectbox.extend({
 		this._super.apply(this, arguments);
 
 		this.supportedWidgetClasses = [];
+		this.optionValues = {};
 	},
 
 	createInputWidget: function() {
@@ -176,13 +179,40 @@ var et2_selectbox_ro = et2_selectbox.extend({
 
 		this.setDOMNode(this.span[0]);
 	},
+
+	loadFromXML: function(_node) {
+		// Read the option-tags
+		var options = et2_directChildrenByTagName(_node, "options");
+		for (var i = 0; i < options.length; i++)
+		{
+			this.optionValues[et2_readAttrWithDefault(options[i], "value", 0)] =
+				{
+					"label": options[i].textContent,
+					"title": et2_readAttrWithDefault(options[i], "title", "")
+				}
+		}
+	},
+
 	set_select_options: function(_options) {
-		this.select_options = _options;
+		for (var key in _options)
+		{
+			this.optionValues[key] = _options[key];
+		}
 	},
 
 	set_value: function(_value) {
 		this.value = _value;
-		this.span.text(this.select_options[_value]);
+
+		var option = this.optionValues[_value];
+		if (option instanceof Object)
+		{
+			this.span.text(option.label);
+			this.set_statustext(option.title);
+		}
+		else
+		{
+			this.span.text(option);
+		}
 	}
 });
 

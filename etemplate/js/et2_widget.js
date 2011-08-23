@@ -49,6 +49,53 @@ function et2_register_widget(_constructor, _types)
 }
 
 /**
+ * Creates a widget registered for the given tag-name. If "readonly" is listed
+ * inside the attributes, et2_createWidget will try to use the "_ro" type of the
+ * widget.
+ *
+ * @param _name is the name of the widget with which it is registered. If the
+ * 	widget is not found, an et2_placeholder will be created.
+ * @param _attrs is an associative array with attributes. If not passed, it will
+ * 	default to true.
+ * @param _parent is the parent to which the element will be attached. If _parent
+ * 	is not passed, it will default to null. Then you have to attach the element
+ * 	to a parent using the addChild or insertChild method.
+ */
+function et2_createWidget(_name, _attrs, _parent)
+{
+	if (typeof _attrs == "undefined")
+	{
+		_attrs = {};
+	}
+
+	if (typeof _parent == "undefined")
+	{
+		_parent = null;
+	}
+
+	// Parse the "readonly" and "type" flag for this element here, as they
+	// determine which constructor is used
+	var nodeName = _attrs["type"] = _name;
+	var readonly = _attrs["readonly"] = 
+		typeof _attrs["readonly"] == "undefined" ? false : _attrs["readonly"];
+
+	// Get the constructor - if the widget is readonly, use the special "_ro"
+	// constructor if it is available
+	var constructor = typeof et2_registry[nodeName] == "undefined" ?
+		et2_placeholder : et2_registry[nodeName];
+	if (readonly && typeof et2_registry[nodeName + "_ro"] != "undefined")
+	{
+		constructor = et2_registry[nodeName + "_ro"];
+	}
+
+	// Do an sanity check for the attributes
+	constructor.prototype.generateAttributeSet(_attrs);
+
+	// Create the new widget and return it
+	return new constructor(_parent, _attrs);
+}
+
+/**
  * The et2 widget base class.
  */
 var et2_widget = Class.extend({

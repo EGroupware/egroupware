@@ -9,7 +9,7 @@ var timesheet_data = {
         "ts_quantity":"2.5",
         "ts_unitprice":null,
         "cat_id":null,
-        "ts_owner":"5",
+        "ts_owner":"6",
         "ts_modified":1307039479,
         "ts_modifier":"5",
         "pl_id":null,

@@ -260,3 +260,11 @@ table.et2_grid {
 /*	border: 1px dashed silver;*/
 }
 
+/**
+ * Create some spacing for widgets inside labels
+ */
+label input, label span, label div, label select, label textarea {
+	margin-left: 1ex;
+	margin-right: 1ex;
+}
+
