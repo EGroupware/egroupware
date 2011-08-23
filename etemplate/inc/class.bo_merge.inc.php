@@ -754,7 +754,7 @@ abstract class bo_merge
 					$break = '&#10;';
 					break;
 				case 'application/xmlWord.Document':	// Word 2003*/
-					$break = '<w:br/>';
+					$break = '</w:t><w:br/><w:t>';
 					break;
 				case 'text/html':
 					$break = '<br/>';
