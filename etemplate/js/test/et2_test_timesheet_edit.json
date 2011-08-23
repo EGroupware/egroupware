@@ -77,6 +77,12 @@ var timesheet_data = {
     },
 	"validation_errors": {
 		"ts_title": "Please enter some meaningful title here!"
+	},
+	"modifications": {
+		"ts_quantity": {
+			"width": "200px",
+			"class": "blue"
+		}
 	}
 }
 

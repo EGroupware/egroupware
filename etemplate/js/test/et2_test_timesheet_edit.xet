@@ -205,6 +205,9 @@
 			.fullWidth select { widht: 100%; }
 .fullWidth input { widht: 100%; }
 .fullWidth textarea { widht: 100%; }
+			.blue {
+				background-color: #f0f0ff;
+			}
 		</styles>
 	</template>
 </overlay>

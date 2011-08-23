@@ -34,7 +34,7 @@ var et2_valueWidget = et2_baseWidget.extend({
 	},
 
 	transformAttributes: function(_attrs) {
-		this._super.call(this, arguments);
+		this._super.apply(this, arguments);
 
 		if (this.id != "")
 		{

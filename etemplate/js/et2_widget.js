@@ -483,12 +483,22 @@ var et2_widget = Class.extend({
 		}
 	},
 
-	transformAttributes: function() {
+	/**
+	 * Apply the "modifications" to the element
+	 */
+	transformAttributes: function(_attrs) {
+		var data = this.getArrayMgr("modifications").getValueForID(this.id);
+
+		if (data instanceof Object)
+		{
+			for (var key in data)
+			{
+				_attrs[key] = data[key];
+			}
+		}
 	},
 
 	createElementFromNode: function(_node) {
-
-		// Fetch all attributes for this element from the XML node
 		var attributes = {};
 
 		// Parse the "readonly" and "type" flag for this element here, as they
