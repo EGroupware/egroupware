@@ -118,7 +118,7 @@ Breakers
 
 	<!-- Fix any bad breaks -->
 	<xsl:template match="w:t[child::w:br]">
-		<w:t>
+		<w:t xml:space="preserve">
 		<xsl:copy-of select="text()"/>
 		</w:t>
 		<w:br/>
@@ -165,10 +165,7 @@ Breakers
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-<!--			
 			<w:shd w:fill="{$hex}"/>
--->
-			<w:highlight w:val="FF950E"/>
 		</xsl:if>
 		<xsl:if test="starts-with(.,'font-size')">
 			<xsl:variable name="font-size" select="substring-after(text(),'font-size:')" />
@@ -194,20 +191,6 @@ Breakers
 		<xsl:for-each select="./li">
 			<w:p>
 			<w:pPr>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<xsl:choose>
-						<xsl:when test="name(..)='ol'">
-							<w:numId w:val="2"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<w:numId w:val="1"/>
-							<w:numFmt w:val="bullet"/>
-							<w:lvlJc w:val="left"/>
-							<w:lvlText w:val="&#xB7;"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</w:numPr>
 				<w:tabs>
 					<w:tab w:leader="none" w:pos="707" w:val="left"/>
 				</w:tabs>
@@ -217,19 +200,16 @@ Breakers
 			<w:r>
 			<xsl:choose>
 				<xsl:when test="name(..)='ol'">
-<!--	This line gives numbers when opened in OO.o, but when the file is opened in MSWord, the numbers are doubled.
-				<w:t><xsl:number value="position()" format="1" />.	</w:t>
--->
+				<w:t><xsl:number value="position()" format="1" />.</w:t><w:tab/>
 				</xsl:when>
 				<xsl:otherwise>
 				<w:rPr>
 					<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hAnsi="Symbol" w:hint="default"/>
 				</w:rPr>
-				<w:t>&#xB7;	</w:t>
+				<w:t>&#xB7;</w:t><w:tab/>
 				</xsl:otherwise>
 			</xsl:choose>
-			</w:r>
-			<w:r>
+			</w:r><w:r>
 				<w:t><xsl:value-of select="normalize-space(text())" /></w:t>
 			</w:r>
 			</w:p>

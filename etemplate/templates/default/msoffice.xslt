@@ -164,15 +164,12 @@ Breakers
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-<!--			
 			<w:shd w:fill="{$hex}"/>
--->
-			<w:highlight w:val="FF950E"/>
 		</xsl:if>
 		<xsl:if test="starts-with(.,'font-size')">
 			<xsl:variable name="font-size" select="substring-after(text(),'font-size:')" />
 			<!-- Approximate conversion that seems to work -->
-			<xsl:variable name="size" select="ceiling(number(translate($font-size,translate($font-size,'0123456789',''),''))*1.5)"/>
+			<xsl:variable name="size" select="ceiling(number(translate($font-size,translate($font-size,'0123456789',''),''))*2)"/>
 				<w:sz w:val="{$size}"/>
 				<w:szCs w:val="{$size}"/>
 		</xsl:if>
@@ -185,28 +182,13 @@ Breakers
 	</xsl:template>
 
 	<!-- 
-	Unordered (bullet) list
-	
-	Numbers determined by examining a docx file from OpenOffice.org
+	Unordered (bullet) & ordered (number) list
+	Faked using text.
 	 -->
 	<xsl:template match="ul[child::li]|ol[child::li]">
 		<xsl:for-each select="./li">
 			<w:p>
 			<w:pPr>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<xsl:choose>
-						<xsl:when test="name(..)='ol'">
-							<w:numId w:val="2"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<w:numId w:val="1"/>
-							<w:numFmt w:val="bullet"/>
-							<w:lvlJc w:val="left"/>
-							<w:lvlText w:val="·"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</w:numPr>
 				<w:tabs>
 					<w:tab w:leader="none" w:pos="707" w:val="left"/>
 				</w:tabs>
@@ -216,22 +198,19 @@ Breakers
 			<w:r>
 			<xsl:choose>
 				<xsl:when test="name(..)='ol'">
-<!--	This line gives numbers when opened in OO.o, but when the file is opened in MSWord, the numbers are doubled.
-				<w:t><xsl:number value="position()" format="1" />.	</w:t>
--->
+					<w:rPr>
+						<w:rFonts w:hint="default"/>
+					</w:rPr>
+					<w:t><xsl:number value="position()" format="1" />.</w:t><w:tab />
 				</xsl:when>
 				<xsl:otherwise>
-				<w:rPr>
-					<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hAnsi="Symbol" w:hint="default"/>
-				</w:rPr>
-<!--
-				<w:t>&#xB7;	</w:t>
--->
-				<w:t>&#xB7;</w:t>
+					<w:rPr>
+						<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+					</w:rPr>
+					<w:t>&#xB7;</w:t><w:tab/>
 				</xsl:otherwise>
 			</xsl:choose>
-			</w:r>
-			<w:r>
+			</w:r><w:r>
 				<w:t><xsl:value-of select="normalize-space(text())" /></w:t>
 			</w:r>
 			</w:p>
