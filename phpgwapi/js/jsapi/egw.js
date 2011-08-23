@@ -120,7 +120,8 @@ else
 			var apps = [window.egw_appName, 'etemplate', 'common'];
 			for(var i = 0; i < apps.length; ++i)
 			{
-				if (typeof this.lang_arr[apps[i]][_msg] != 'undefined')
+				if (typeof this.lang_arr[apps[i]] != "undefined" &&
+					typeof this.lang_arr[apps[i]][_msg] != 'undefined')
 				{
 					translation = this.lang_arr[apps[i]][_msg];
 					break;
