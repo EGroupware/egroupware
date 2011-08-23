@@ -51,12 +51,18 @@ var et2_selectbox = et2_inputWidget.extend({
 
 	legacyOptions: ["rows"],
 
-	init: function(_parent) {
+	init: function(_parent, _attrs) {
 		this._super.apply(this, arguments);
 
 		// Only allow options inside this element
 		this.supportedWidgetClasses = [et2_option];
 
+		// Legacy options could have row count or empty label in first slot	 
+		if(typeof _attrs.rows == "string" && isNaN(_attrs.rows)) {	 
+			this.options.empty_label = _attrs.rows;	 
+			this.options.rows = 1;	 
+		}	 
+		if(this.options.rows > 1) this.options.multiple = true;
 		this.createInputWidget();
 	},
 
@@ -65,7 +71,6 @@ var et2_selectbox = et2_inputWidget.extend({
 
 		this.input = null;
 	},
-
 	transformAttributes: function(_attrs) {
 		// Try to find the options inside the "sel-options" array
 		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
@@ -104,7 +109,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(this.options.empty_label)
 		{
 			this._appendOptionElement("" == this.getValue() ? "selected" : "",
-				this.empty_label);
+				this.options.empty_label);
 		}
 
 		// Set multiple
@@ -145,7 +150,6 @@ var et2_selectbox = et2_inputWidget.extend({
 			new et2_option(root, attrs);
 		}
 	}
-
 });
 
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
@@ -153,6 +157,40 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
 	'select-country', 'select-state', 'select-year', 'select-month',
 	'select-day', 'select-dow', 'select-hour', 'date-houronly', 'select-number', 'select-app',
 	'select-lang', 'select-bool', 'select-timezone' ]);
+
+/**
+ * et2_selectbox_ro is the readonly implementation of the selectbox.
+ */
+var et2_selectbox_ro = et2_selectbox.extend({
+
+	init: function(_parent, _attrs) {
+		this._super.apply(this, arguments);
+
+		this.supportedWidgetClasses = [];
+	},
+
+	createInputWidget: function() {
+		this.span = $j(document.createElement("span"))
+			.addClass("et2_selectbox readonly")
+			.text(this.options.empty_label);
+
+		this.setDOMNode(this.span[0]);
+	},
+	set_select_options: function(_options) {
+		this.select_options = _options;
+	},
+
+	set_value: function(_value) {
+		this.value = _value;
+		this.span.text(this.select_options[_value]);
+	}
+});
+
+et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select-cat_ro",
+	"select-account_ro", "select-percent_ro", 'select-priority_ro', 'select-access_ro',
+	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
+	'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'date-houronly_ro', 'select-number_ro', 'select-app_ro',
+	'select-lang_ro', 'select-bool_ro', 'select-timezone_ro' ]);
 
 /**
  * Widget class which represents a single option inside a selectbox
@@ -227,7 +265,7 @@ var et2_menulist = et2_DOMWidget.extend({
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.supportedWidgetClasses = [et2_selectbox];
+		this.supportedWidgetClasses = [et2_selectbox, et2_selectbox_ro];
 	},
 
 	// Just pass the parent DOM node through
