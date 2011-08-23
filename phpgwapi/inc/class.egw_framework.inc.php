@@ -94,6 +94,7 @@ abstract class egw_framework
 			'/phpgwapi/js/./egw_json.js',
 			// always include javascript helper functions
 			'/phpgwapi/js/jsapi/jsapi.js',
+			'/phpgwapi/js/jsapi/egw.js',
 		));
 	}
 
@@ -757,18 +758,6 @@ abstract class egw_framework
 			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
 		}
 
-		// set webserver_url for json
-		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = '".
-			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url']."';\n";
-
-		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
-		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
-		{
-			$java_script .= 'window.egw_link_registry='.egw_link::json_registry().';';
-		}
-		$java_script .= "</script>\n";
-
 		/* this flag is for all javascript code that has to be put before other jscode.
 		Think of conf vars etc...  (pim@lingewoud.nl) */
 		if (isset($GLOBALS['egw_info']['flags']['java_script_thirst']))
@@ -777,6 +766,19 @@ abstract class egw_framework
 		}
 
 		$java_script .= self::get_script_links();
+
+		// set webserver_url for json
+		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = '".
+			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
+			$GLOBALS['egw_info']['server']['webserver_url']."';\n";
+
+		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
+		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
+		{
+			$java_script .= 'egw.set_link_registry('.egw_link::json_registry().");\n";
+			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");';
+		}
+		$java_script .= "</script>\n";
 
 		if(@isset($_GET['menuaction']))
 		{

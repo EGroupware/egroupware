@@ -261,80 +261,11 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
  * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
  * @param object|string extra extra url parameters to append as object or string
  * @param string target target of window to open
+ * @deprecated use egw.open()
  */
 function egw_open(id, app, type, extra, target)
 {
-	var registry = egw_topWindow().egw_link_registry;
-	if (typeof registry != 'object')
-	{
-		alert('egw_open() link registry is NOT defined!');
-		return;
-	}
-	if (!app)
-	{
-		var app_id = id.split(':',2);
-		app = app_id[0];
-		id = app_id[1];
-	}
-	if (!app || typeof registry[app] != 'object')
-	{
-		alert('egw_open() app "'+app+'" NOT defined in link registry!');
-		return;	
-	}
-	var app_registry = registry[app];
-	if (typeof type == 'undefined') type = 'edit';
-	if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
-	if (typeof app_registry[type] == 'undefined')
-	{
-		alert('egw_open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
-		return;	
-	}
-	var url = egw_webserverUrl+'/index.php';
-	var delimiter = '?';
-	var params = app_registry[type];
-	if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
-	{
-		params[app_registry[type+'_id']] = id;
-	}
-	else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
-	{
-		var app_id = id.split(':',2);
-		params[app_registry.add_app] = app_id[0];
-		params[app_registry.add_id] = app_id[1];
-	}
-	for(var attr in params)
-	{
-		url += delimiter+attr+'='+encodeURIComponent(params[attr]);
-		delimiter = '&';
-	}
-	if (typeof extra == 'object')
-	{
-		for(var attr in extra)
-		{
-			url += delimiter+attr+'='+encodeURIComponent(extra[attr]);			
-		}
-	}
-	else if (typeof extra == 'string')
-	{
-		url += delimiter + extra;
-	}
-	if (typeof app_registry[type+'_popup'] == 'undefined')
-	{
-		if (target)
-		{
-			window.open(url, target);
-		}
-		else
-		{
-			egw_appWindowOpen(app, url);
-		}
-	}
-	else
-	{
-		var w_h = app_registry[type+'_popup'].split('x');
-		if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-		egw_openWindowCentered2(url, target, w_h[0], w_h[1], 'yes', app, false);
-	}
+	window.egw.open();
 }
 
 window.egw_getFramework = function()

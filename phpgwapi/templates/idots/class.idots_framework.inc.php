@@ -87,7 +87,7 @@ class idots_framework extends egw_framework
 		// make sure header is output only once
 		if (self::$header_done) return '';
 		self::$header_done = true;
-
+error_log(__METHOD__."() this->tpl=".array2string($this->tpl).' '.function_backtrace());
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.translation::charset());
 
@@ -97,7 +97,8 @@ class idots_framework extends egw_framework
 
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
-		if (!is_object($this->tpl)) $this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
+		if (!is_object($this->tpl)) ;
+		$this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 
@@ -162,7 +163,10 @@ class idots_framework extends egw_framework
 		// add link registry to non-popup windows
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
-			$content .= '<script type="text/javascript">'."\nwindow.egw_link_registry=".egw_link::json_registry().";\n</script>\n";
+			$content .= '<script type="text/javascript">
+egw.set_link_registry('.egw_link::json_registry().');
+egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");
+</script>'."\n";
 		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox' && !html::$ua_mobile)
 		{
