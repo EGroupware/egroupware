@@ -13,6 +13,7 @@
 "use strict";
 
 /*egw:uses
+	jsapi.egw;
 	jquery.jquery;
 	et2_widget;
 */
@@ -56,7 +57,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 			if (nodeName == "tab")
 			{
 				tabData.push({
-					"label": et2_readAttrWithDefault(node, "label", "Tab"),
+					"label": egw.lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"contentDiv": null,
 					"flagDiv": null

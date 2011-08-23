@@ -13,7 +13,7 @@
 "use strict";
 
 /*egw:uses
-	jsapi/egw;
+	jsapi.egw;
 	et2_xml;
 	et2_common;
 	et2_inheritance;
