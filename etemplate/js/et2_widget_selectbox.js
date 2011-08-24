@@ -18,7 +18,7 @@
 	jquery.jquery;
 	et2_core_xml;
 	et2_core_DOMWidget;
-	et2_widget_inputWidget;
+	et2_core_inputWidget;
 */
 
 var et2_selectbox = et2_inputWidget.extend({
