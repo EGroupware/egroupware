@@ -98,11 +98,11 @@ Breakers
 							<w:rPr>
 								<xsl:apply-templates select=".|child::*" />
 							</w:rPr>
-							<w:t xml:space="preserve"><xsl:value-of select="." /></w:t>
+							<w:t><xsl:value-of select="." /></w:t>
 						</w:r>
 					</xsl:when>
 					<xsl:otherwise>
-						<w:r><w:t xml:space="preserve"><xsl:copy-of select="." /></w:t></w:r>
+						<w:r><w:t><xsl:copy-of select="." /></w:t></w:r>
 					</xsl:otherwise>
 					</xsl:choose>
 				</xsl:for-each>
@@ -118,7 +118,7 @@ Breakers
 
 	<!-- Fix any bad breaks -->
 	<xsl:template match="w:t[child::w:br]">
-		<w:t xml:space="preserve">
+		<w:t>
 		<xsl:copy-of select="text()"/>
 		</w:t>
 		<w:br/>
@@ -165,18 +165,17 @@ Breakers
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<w:shd w:fill="{$hex}"/>
+			<w:shd w:fill="{$hex}" w:val="solid"/>
 		</xsl:if>
 		<xsl:if test="starts-with(.,'font-size')">
 			<xsl:variable name="font-size" select="substring-after(text(),'font-size:')" />
 			<!-- Approximate conversion that seems to work -->
 			<xsl:variable name="size" select="ceiling(number(translate($font-size,translate($font-size,'0123456789',''),''))*1.5)"/>
 				<w:sz w:val="{$size}"/>
-				<w:szCs w:val="{$size}"/>
 		</xsl:if>
 		<xsl:if test="starts-with(., 'font-family:')">
 			<xsl:variable name="font-name" select="translate(substring-before(substring-after(.,'font-family:'),','),&quot;&#39;&quot;,'')" />
-			<w:rFonts w:ascii="{$font-name}" w:hAnsi="{$font-name}"/>
+			<w:rFonts w:ascii="{$font-name}" />
 		</xsl:if>
 		</xsl:for-each>
 		<xsl:apply-templates select="./span"/>
@@ -195,7 +194,6 @@ Breakers
 					<w:tab w:leader="none" w:pos="707" w:val="left"/>
 				</w:tabs>
 				<w:ind w:hanging="283" w:left="707" w:right="0"/>
-				<w:spacing w:after="0" w:before="0"/>
 			</w:pPr>
 			<w:r>
 			<xsl:choose>
@@ -204,7 +202,7 @@ Breakers
 				</xsl:when>
 				<xsl:otherwise>
 				<w:rPr>
-					<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+					<w:rFonts w:ascii="Symbol" w:cs="Symbol" w:hint="default"/>
 				</w:rPr>
 				<w:t>&#xB7;</w:t><w:tab/>
 				</xsl:otherwise>
@@ -221,7 +219,7 @@ Breakers
 		<w:tbl>
 			<w:tblPr>
 				<w:tblW w:type="dxa" w:w="9972"/>
-				<w:jc w:value="left"/>
+				<w:jc w:val="left"/>
 			</w:tblPr>
 			<w:tblGrid>
 				<xsl:for-each select="./tr[1]/td">
