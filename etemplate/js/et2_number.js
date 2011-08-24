@@ -40,7 +40,7 @@ var et2_number = et2_textbox.extend({
 		}
 	},
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 	},
 

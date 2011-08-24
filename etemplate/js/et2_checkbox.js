@@ -50,7 +50,7 @@ var et2_checkbox = et2_inputWidget.extend({
 		}
 	},
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.input = null;

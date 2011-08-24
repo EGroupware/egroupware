@@ -129,7 +129,7 @@
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Project" options=",,,ts_project"/>
+					<description no_lang="true" value="Project" options=",,,ts_project"/>
 					<grid spacing="1" padding="1">
 						<columns>
 							<column/>

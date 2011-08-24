@@ -49,7 +49,7 @@ var et2_template = et2_DOMWidget.extend({
 	/**
 	 * Initializes this template widget as a simple container.
 	 */
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.proxiedTemplate = null;

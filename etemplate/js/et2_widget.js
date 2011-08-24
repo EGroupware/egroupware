@@ -514,14 +514,13 @@ var et2_widget = Class.extend({
 		}
 
 		// Translate the attributes
-		if (!_attrs["no_lang"])
+		for (var key in _attrs)
 		{
-			for (var key in _attrs)
+			if (_attrs[key] && typeof this.attributes[key] != "undefined")
 			{
-				if (typeof this.attributes[key] != "undefined" && this.attributes[key].translate)
-				{
-					_attrs[key] = egw.lang(_attrs[key]);
-				}
+				if (this.attributes[key].translate === true || 
+				   (this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"]))
+				_attrs[key] = egw.lang(_attrs[key]);
 			}
 		}
 	},

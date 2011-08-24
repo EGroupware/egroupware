@@ -70,7 +70,7 @@ var timesheet_data = {
         "button[save]":false,
         "button[save_new]":false,
         "button[apply]":false,
-        "ts_owner":true,
+/*        "ts_owner":true,*/
         "tabs":{
             "customfields":true
         }

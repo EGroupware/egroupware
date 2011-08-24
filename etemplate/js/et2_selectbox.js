@@ -52,17 +52,17 @@ var et2_selectbox = et2_inputWidget.extend({
 
 	legacyOptions: ["rows"],
 
-	init: function(_parent, _attrs) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		// Only allow options inside this element
 		this.supportedWidgetClasses = [et2_option];
 
 		// Legacy options could have row count or empty label in first slot	 
-		if(typeof _attrs.rows == "string" && isNaN(_attrs.rows)) {	 
-			this.options.empty_label = _attrs.rows;	 
-			this.options.rows = 1;	 
-		}	 
+		if(typeof this.options.rows == "string" && isNaN(this.options.rows)) {
+			this.options.empty_label = this.options.rows;
+			this.options.rows = 1;
+		}
 		if(this.options.rows > 1) this.options.multiple = true;
 		this.createInputWidget();
 	},
@@ -149,7 +149,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			}
 
 			// Create the widget and add it as a child
-			this.addChild(et2_createWidget("option", attrs));
+			et2_createWidget("option", attrs, this);
 		}
 	}
 });
@@ -165,7 +165,7 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
  */
 var et2_selectbox_ro = et2_selectbox.extend({
 
-	init: function(_parent, _attrs) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.supportedWidgetClasses = [];

@@ -37,7 +37,7 @@ var et2_date = et2_inputWidget.extend({
 	 */
 	date: new Date(),
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.input = null;

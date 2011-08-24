@@ -27,7 +27,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 	 * Currently selected tab
 	 */
 	selected_index: 0,
-	init: function(_parent, _type) {
+	init: function() {
 		// Create the outer tabbox container
 		this.container = $j(document.createElement("div"))
 			.addClass("et2_tabbox");
@@ -47,8 +47,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 		this.tabData = [];
 	},
 
-	destroy: function(_parent, _type) {
-
+	destroy: function() {
 		this._super.apply(this, arguments);
 
 		this.container = null;

@@ -23,7 +23,7 @@
  */ 
 var et2_grid = et2_DOMWidget.extend({
 
-	init: function(_parent) {
+	init: function() {
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
 		this.table = $j(document.createElement("table"))

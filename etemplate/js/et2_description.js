@@ -27,7 +27,7 @@ var et2_description = et2_baseWidget.extend({
 			"name": "Caption",
 			"type": "string",
 			"description": "Displayed text",
-			"translate": true
+			"translate": "!no_lang"
 		},
 
 		/**
@@ -78,7 +78,7 @@ var et2_description = et2_baseWidget.extend({
 	legacyOptions: ["font_style", "href", "activate_links", "for", 
 		"extra_link_target", "extra_link_popup", "extra_link_title"],
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.value = "";

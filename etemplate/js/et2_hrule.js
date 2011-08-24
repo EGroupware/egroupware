@@ -21,7 +21,7 @@
  */ 
 var et2_hrule = et2_baseWidget.extend({
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.setDOMNode(document.createElement("hr"));

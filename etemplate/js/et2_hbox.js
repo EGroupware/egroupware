@@ -24,7 +24,7 @@ var et2_hbox = et2_baseWidget.extend({
 
 	createNamespace: true,
 
-	init: function(_parent) {
+	init: function() {
 		this._super.apply(this, arguments);
 
 		this.alignData = {
