@@ -357,7 +357,7 @@ abstract class bo_merge
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
-					'/<(ol|ul|table)>/' => '</text:p><$1>',
+					'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
 					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
 					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 				);
@@ -378,7 +378,7 @@ abstract class bo_merge
 				);
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
-					'/<(ol|ul|table)(.*?)>/' => '</w:t></w:r></w:p><$1$2>',
+					'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
 					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
 					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 /*

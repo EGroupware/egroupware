@@ -223,6 +223,15 @@ Breakers
 			<w:tblPr>
 				<w:tblW w:type="dxa" w:w="9972"/>
 				<w:jc w:value="left"/>
+				<xsl:if test="@border &gt; 0">
+					<w:tblBorders>
+						<xsl:variable name="width" select="number(@border)*2"/>
+						<w:top w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:left w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:bottom w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:right w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+					</w:tblBorders>
+				</xsl:if>
 			</w:tblPr>
 			<w:tblGrid>
 				<xsl:for-each select="./tr[1]/td">
@@ -232,7 +241,18 @@ Breakers
 		<xsl:for-each select="./tr">
 			<w:tr>
 			<xsl:for-each select="./td">
-				<w:tc><w:p><w:r><w:t><xsl:apply-templates select="child::node()" /></w:t></w:r></w:p></w:tc>
+				<w:tc>
+				<xsl:if test="../../@border &gt; 0">
+					<w:tcPr><w:tcBorders>
+						<xsl:variable name="width" select="number(../../@border)*2"/>
+						<w:top w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:left w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:bottom w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+						<w:right w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
+					</w:tcBorders></w:tcPr>
+				</xsl:if>
+				<w:p><w:r><w:t><xsl:apply-templates select="child::node()" /></w:t></w:r></w:p>
+				</w:tc>
 			</xsl:for-each>
 			</w:tr>
 		</xsl:for-each>
