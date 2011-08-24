@@ -54,8 +54,7 @@ class timesheet_ui extends timesheet_bo
 
 	function edit($content = null,$view = false)
 	{
-error_log(__METHOD__.'('.array2string($content).')');
-		$etpl = new etemplate_new('timesheet.edit');
+		$etpl = new etemplate('timesheet.edit');
 		if (!is_array($content))
 		{
 			if ($_GET['msg']) $msg = strip_tags($_GET['msg']);
