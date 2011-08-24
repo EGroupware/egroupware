@@ -2,11 +2,11 @@
 <overlay>
 	<tabbox width="100%" id="tab_1">
 		<tabs>
-			<tab label="Test1" />
-			<tab label="Test2" />
-			<tab label="Disabled" />
-			<tab label="Test3" />
-			<tab label="Test4" />
+			<tab id="test1" label="Test1" />
+			<tab id="test2" label="Test2" />
+			<tab id="to_disable" label="Disabled" />
+			<tab id="test3" label="Test3" />
+			<tab id="test4" label="Test4" />
 		</tabs>
 		<tabpanels>
 			<vbox>

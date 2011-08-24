@@ -52,6 +52,7 @@ class xul_io
 		'label' => array(
 			'.name' => 'description',
 			'label' => 'value',
+			'size' => 'font_style,href,activate_links,for,extra_link_target,extra_link_popup,extra_link_title',
 		),
 		'text' => array(
 			'.name' => 'textbox',
@@ -218,8 +219,9 @@ class xul_io
 			for ($n = 0; $n < count($labels); ++$n)
 			{
 				$tab = new xmlnode('tab');
+				$tab->set_attribute('id',$names[$n]);
 				$tab->set_attribute('label',$labels[$n]);
-				$tab->set_attribute('statustext',$helps[$n]);
+				if ($helps[$n]) $tab->set_attribute('statustext',$helps[$n]);
 				$child->add_node($tab);
 
 				$embeded = new etemplate($names[$n],$this->load_via);

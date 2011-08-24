@@ -11,7 +11,7 @@
 			</columns>
 			<rows>
 				<row class="row" disabled="@ts_viewtype">
-					<description value="Title" options=",,,ts_title"/>
+					<description value="Title" for="ts_title"/>
 					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth"/>
 					<description/>
 					<description/>
@@ -23,25 +23,25 @@
 					<description/>
 				</row>
 				<row class="row">
-					<description value="Category" options=",,,cat_id"/>
+					<description value="Category" for="cat_id"/>
 					<menulist span="all">
 						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Date" options=",,,ts_start"/>
+					<description value="Date" for="ts_start"/>
 					<date id="ts_start" needed="1" options=",8"/>
 					<description value="Starttime"/>
 					<date-timeonly id="start_time" options="H:i"/>
 				</row>
 				<row class="row">
-					<description value="Duration" options=",,,ts_duration"/>
+					<description value="Duration" for="ts_duration"/>
 					<date-duration id="ts_duration" options=",hm"/>
 					<description value="or endtime" class="noWrap"/>
 					<date-timeonly id="end_time" options="H:i"/>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description value="Quantity" options=",,,ts_quantity"/>
+					<description value="Quantity" for="ts_quantity"/>
 					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" span="all"/>
 				</row>
 				<row class="row" disabled="@no_ts_status">
@@ -123,13 +123,13 @@
 					<description/>
 				</row>
 				<row class="th" height="28">
-					<description value="User" options=",,,ts_owner"/>
+					<description value="User" for="ts_owner"/>
 					<menulist span="all">
 						<menupopup id="ts_owner" no_lang="1"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Project" options=",,,ts_project"/>
+					<description value="Project" for="ts_project"/>
 					<grid spacing="1" padding="1">
 						<columns>
 							<column/>
@@ -145,7 +145,7 @@
 					</grid>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description value="Unitprice" options=",,,ts_unitprice"/>
+					<description value="Unitprice" for="ts_unitprice"/>
 					<grid>
 						<columns>
 							<column disabled="@pm_integration=none"/>
@@ -162,11 +162,11 @@
 				<row>
 					<tabbox id="tabs" span="all">
 						<tabs>
-							<tab label="General" statustext=""/>
-							<tab label="Notes" statustext=""/>
-							<tab label="Links" statustext=""/>
-							<tab label="Custom Fields" statustext=""/>
-							<tab label="History" statustext=""/>
+							<tab id="general" label="General"/>
+							<tab id="notes" label="Notes"/>
+							<tab id="links" label="Links"/>
+							<tab id="customfields" label="Custom Fields"/>
+							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="timesheet.edit.general"/>

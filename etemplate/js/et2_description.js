@@ -70,7 +70,8 @@ var et2_description = et2_baseWidget.extend({
 		"extra_link_title": {
 			"name": "Link Title",
 			"type": "string",
-			"description": "Link title which is displayed on mouse over."
+			"description": "Link title which is displayed on mouse over.",
+			"translate": true
 		}
 	},
 

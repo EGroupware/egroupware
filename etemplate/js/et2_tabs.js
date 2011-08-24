@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Tabs object
+ * EGroupware eTemplate2 - JS Tabs object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -84,7 +84,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 		et2_filteredNodeIterator(tabs, function(node, nodeName) {
 			if (nodeName == "tab")
 			{
-				var index_name = et2_readAttrWithDefault(node, "label");
+				var index_name = et2_readAttrWithDefault(node, "id");
 				var hide = false;
 				if(index_name) {
 					if(selected == index_name) this.selected_index = i;
@@ -227,4 +227,3 @@ var et2_tabbox = et2_DOMWidget.extend({
 });
 
 et2_register_widget(et2_tabbox, ["tabbox"]);
-
