@@ -649,6 +649,51 @@ class etemplate_widget
 		}
 		return false;
 	}
+
+	/**
+	 * Returns reference to an attribute in a named cell
+	 *
+	 * Currently we always return a reference to an not set value, unless it was set before.
+	 * We do not return a reference to the actual cell, as it get's contructed on client-side!
+	 *
+	 * @param string $name cell-name
+	 * @param string $attr attribute-name
+	 * @return mixed reference to attribute, usually NULL
+	 */
+	public function &getElementAttribute($name, $attr)
+	{
+		error_log(__METHOD__."('$name', '$attr')");
+		return self::$request->modifications[$name][$attr];
+	}
+
+	/**
+	 * Set an attribute in a named cell if val is not NULL else return the attribute
+	 *
+	 * @param string $name cell-name
+	 * @param string $attr attribute-name
+	 * @param mixed $val if not NULL sets attribute else returns it
+	 * @return reference to attribute
+	 */
+	public function &setElementAttribute($name,$attr,$val)
+	{
+		$attr =& self::$request->modifications[$name][$attr];
+		if (!is_null($val)) $attr = $val;
+
+		error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
+		return $attr;
+	}
+
+	/**
+	 *  disables all cells with name == $name
+	 *
+	 * @param sting $name cell-name
+	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @return reference to attribute
+	 */
+	public function disableElement($name,$disabled=True)
+	{
+		return self::setElementAttribute($name, 'disabled', $disabled);
+	}
 }
 
 /**

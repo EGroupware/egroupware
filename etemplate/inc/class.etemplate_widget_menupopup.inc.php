@@ -87,7 +87,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 			else*/
 			{
-				$allowed += self::selOptions($form_name, $this->attrs['no_lang']);
+				$allowed += self::selOptions($form_name);
 			}
 			foreach((array) $value as $val)
 			{
@@ -121,7 +121,14 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$form_name = self::form_name($cname, $this->id);
 			// += to keep further options set by app code
 			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-			self::$request->sel_options[$form_name] += (array)self::typeOptions($this->attrs['type'], $this->attrs['options']);
+			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
+				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+
+			// if no_lang was modified, forward modification to the client
+			if ($no_lang != $this->attr['no_lang'])
+			{
+				self::setElementAttribute($form_name, 'no_lang', $no_lang);
+			}
 		}
 	}
 
@@ -132,7 +139,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * @param boolean $no_lang=false value of no_lang attribute
 	 * @return array
 	 */
-	public static function selOptions($name, $no_lang=false)
+	public static function selOptions($name)
 	{
 		$options = array();
 		if (isset(self::$request->sel_options[$name]) && is_array(self::$request->sel_options[$name]))
@@ -159,10 +166,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$options += self::$request->content['options-'.$name];
 		}
-		if (!$no_lang)
-		{
-			$options = self::translateOptions($options);
-		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
 		return $options;
 	}
@@ -177,11 +180,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * @param mixed $value=null value for readonly
 	 * @return array with value => label pairs
 	 */
-	public static function typeOptions($widget_type, $legacy_options, $no_lang=false, $readonly=false, $value=null)
+	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null)
 	{
 		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = explode(',',$legacy_options);
 
 		$no_lang = false;
+		$options = array();
 		switch ($widget_type)
 		{
 			case 'select-percent':	// options: #row,decrement(default=10)
@@ -318,12 +322,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 				//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
-				if($type == 'owngroups')
-				{
-					$type = 'groups';
-					$owngroups = true;
-					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
-				}
 				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 				if ($readonly)
 				{
@@ -335,6 +333,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 							self::accountInfo($id,$acc,$type2,$type=='both');
 					}
 					break;
+				}
+				if($type == 'owngroups')
+				{
+					$type = 'groups';
+					$owngroups = true;
+					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
 				}
 				/* account-selection for hughe number of accounts
 				if ($this->ui == 'html' && $type != 'groups')	// use eGW's new account-selection (html only)
@@ -568,34 +572,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			unset($options['']);
 		}
 
-		if (!$no_lang)
-		{
-			$options = self::translateOptions($options);
-		}
-		//error_log(__METHOD__."('$widget_type', '$legacy_options', ...) returning ".array2string($options));
-		return $options;
-	}
-
-	/**
-	 * Translate options incl. optional title (label is an array with values for keys 'label' and optionally 'title'
-	 *
-	 * @param array $options
-	 * @return $options
-	 */
-	public static function translateOptions(array $options)
-	{
-		foreach($options as $value => &$label)
-		{
-			if (!is_array($label))
-			{
-				$label = lang($label);
-			}
-			else
-			{
-				$label['label'] = lang($label['label']);
-				if (isset($label['title'])) $label['title'] = lang($label['title']);
-			}
-		}
+		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
 	}
 

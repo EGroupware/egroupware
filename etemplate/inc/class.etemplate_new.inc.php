@@ -133,11 +133,11 @@ class etemplate_new extends etemplate_widget_template
 
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
-			'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
-			'content' => $content,
+			'app_header' => self::$request->app_header,
+			'content' => self::$request->content,
 			'sel_options' => self::$request->sel_options,
-			'readonlys' => $readonlys,
-			'modifications' => $this->modifications,
+			'readonlys' => self::$request->readonlys,
+			'modifications' => self::$request->modifications,
 			'validation_errors' => self::$validation_errors,
 		);
 		if (self::$response)	// call is within an ajax event / form submit
@@ -250,13 +250,6 @@ class etemplate_new extends etemplate_widget_template
 	}
 
 	/**
-	 * Modifications on the instancated template
-	 *
-	 * Get collected here to be send to the server
-	 */
-	protected $modifications = array();
-
-	/**
 	 * Returns reference to an attribute in a named cell
 	 *
 	 * Currently we always return a reference to an not set value, unless it was set before.
@@ -265,12 +258,11 @@ class etemplate_new extends etemplate_widget_template
 	 * @param string $name cell-name
 	 * @param string $attr attribute-name
 	 * @return mixed reference to attribute, usually NULL
+	 * @deprecated use getElementAttribute($name, $attr)
 	 */
 	public function &get_cell_attribute($name,$attr)
 	{
-		error_log(__METHOD__."('$name', '$attr')");
-
-		return $this->modifications[$name][$attr];
+		return self::getElementAttribute($name, $attr);
 	}
 
 	/**
@@ -279,16 +271,12 @@ class etemplate_new extends etemplate_widget_template
 	 * @param string $name cell-name
 	 * @param string $attr attribute-name
 	 * @param mixed $val if not NULL sets attribute else returns it
-	 * @return mixed number of changed cells or False, if none changed
+	 * @return reference to attribute
+	 * @deprecated use setElementAttribute($name, $attr, $val)
 	 */
 	public function &set_cell_attribute($name,$attr,$val)
 	{
-		error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
-
-		$attr =& $this->get_cell_attribute($name, $attr);
-		if (!is_null($val)) $attr = $val;
-
-		return $attr;
+		return self::setElementAttribute($name, $attr, $val);
 	}
 
 	/**
@@ -296,11 +284,12 @@ class etemplate_new extends etemplate_widget_template
 	 *
 	 * @param sting $name cell-name
 	 * @param boolean $disabled=true disable or enable a cell, default true=disable
-	 * @return mixed number of changed cells or False, if none changed
+	 * @return reference to attribute
+	 * @deprecated use disableElement($name, $disabled=true)
 	 */
 	public function disable_cells($name,$disabled=True)
 	{
-		return $this->set_cell_attribute($name,'disabled',$disabled);
+		return self::disableElement($name, $disabled);
 	}
 
 	/**
