@@ -14,7 +14,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_inputWidget;
+	et2_core_inputWidget;
 */
 
 /**

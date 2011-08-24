@@ -13,7 +13,7 @@
 "use strict";
 
 /*egw:uses
-	et2_common;
+	et2_core_common;
 */
 
 /**

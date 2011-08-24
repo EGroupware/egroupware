@@ -15,7 +15,7 @@
 /*egw:uses
 	jsapi.egw;
 	jquery.jquery;
-	et2_widget;
+	et2_core_widget;
 */
 
 /**

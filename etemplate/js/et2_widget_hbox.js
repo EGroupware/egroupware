@@ -14,7 +14,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_baseWidget;
+	et2_core_baseWidget;
 */
 
 /**

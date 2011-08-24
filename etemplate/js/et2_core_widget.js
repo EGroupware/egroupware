@@ -14,10 +14,10 @@
 
 /*egw:uses
 	jsapi.egw;
-	et2_xml;
-	et2_common;
-	et2_inheritance;
-	et2_arrayMgr;
+	et2_core_xml;
+	et2_core_common;
+	et2_core_inheritance;
+	et2_core_arrayMgr;
 */
 
 /**

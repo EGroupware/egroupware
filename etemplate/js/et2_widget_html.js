@@ -15,7 +15,7 @@
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
 	jquery.jquery;
-	et2_baseWidget;
+	et2_core_baseWidget;
 */
 
 var et2_html = et2_baseWidget.extend({

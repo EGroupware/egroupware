@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+"use strict";
+
 /**
  * IE Fix for array.indexOf
  */

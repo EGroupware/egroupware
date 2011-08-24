@@ -14,8 +14,8 @@
 
 /*egw:uses
 	jquery.jquery;
-	et2_DOMWidget;
-	et2_xml;
+	et2_core_DOMWidget;
+	et2_core_xml;
 */
 
 /**

@@ -13,7 +13,7 @@
 "use strict";
 
 /*egw:uses
-	et2_baseWidget;
+	et2_core_baseWidget;
 */
 
 /**

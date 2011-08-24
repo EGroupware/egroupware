@@ -16,9 +16,9 @@
 /*egw:uses
 	lib/tooltip;
 	jquery.jquery;
-	et2_xml;
-	et2_DOMWidget;
-	et2_inputWidget;
+	et2_core_xml;
+	et2_core_DOMWidget;
+	et2_widget_inputWidget;
 */
 
 var et2_selectbox = et2_inputWidget.extend({

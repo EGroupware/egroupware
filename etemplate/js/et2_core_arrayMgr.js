@@ -10,11 +10,11 @@
  * @version $Id$
  */
 
-/*egw:uses
-	et2_inheritance;
-*/
-
 "use strict";
+
+/*egw:uses
+	et2_core_inheritance;
+*/
 
 var et2_arrayMgr = Class.extend({
 

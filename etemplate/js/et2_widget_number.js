@@ -13,7 +13,7 @@
 "use strict";
 
 /*egw:uses
-	et2_textbox;
+	et2_widget_textbox;
 */
 
 /**

@@ -12,26 +12,26 @@
 
 /*egw:uses
 	// Include all widget classes here
-	et2_template;
-	et2_grid;
-	et2_box;
-	et2_hbox;
-	et2_button;
-	et2_description;
-	et2_textbox;
-	et2_number;
-	et2_selectbox;
-	et2_checkbox;
-	et2_radiobox;
-	et2_date;
-	et2_styles;
-	et2_html;
-	et2_tabs;
-	et2_hrule;
+	et2_widget_template;
+	et2_widget_grid;
+	et2_widget_box;
+	et2_widget_hbox;
+	et2_widget_button;
+	et2_widget_description;
+	et2_widget_textbox;
+	et2_widget_number;
+	et2_widget_selectbox;
+	et2_widget_checkbox;
+	et2_widget_radiobox;
+	et2_widget_date;
+	et2_widget_styles;
+	et2_widget_html;
+	et2_widget_tabs;
+	et2_widget_hrule;
 
 	// Requirements for the etemplate2 object
-	et2_xml;
-	et2_arrayMgr;
+	et2_core_xml;
+	et2_core_arrayMgr;
 */
 
 /**
