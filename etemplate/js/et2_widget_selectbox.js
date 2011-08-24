@@ -256,7 +256,9 @@ var et2_option = et2_baseWidget.extend({
 		this.supportedWidgetClasses = [et2_option];
 
 		this.option = $j(document.createElement("option"))
-			.attr("value", this.options.value);
+			.attr("value", this.options.value)
+			.attr("selected", this._parent.options.value == this.options.value ?
+				"selected" : "");
 
 		if (this.options.label)
 		{
