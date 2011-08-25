@@ -348,7 +348,6 @@ abstract class bo_merge
 		{
 			$mso_application_progid = '';
 		}
-
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
 		switch($mimetype.$mso_application_progid)
@@ -402,6 +401,15 @@ abstract class bo_merge
 			{
 				$element = new SimpleXMLelement($content);
 				$content = $xslt->transformToXml($element);
+
+				// Word 2003 needs invalid XML, add back in
+				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document') {
+					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
+				}
+				// Validate
+				$doc = new DOMDocument();
+//				$doc->loadXML($content);
+//				$doc->schemaValidate('/home/nathan/Downloads/WordprocessingML Schemas/wordnet.xsd');
 //echo $content;die();
 			}
 			catch (Exception $e)
