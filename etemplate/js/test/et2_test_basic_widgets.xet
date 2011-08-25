@@ -3,9 +3,9 @@
 	<!-- Test without template -->
 	<vbox>
 		<description value="This is a label" id="label_value"/>
-		<textbox label="This is a text" id="text_value"/>
+		<textbox label="This is a text" id="text_value" blur="Textbox"/>
 		<textbox label="This is required text" id="text_value" required="true"/>
-		<int label="This is an integer" id="integer_value" min="5"/>
+		<int label="This is an integer" id="integer_value" min="5" blur="Min 5"/>
 		<textbox type="float" label="This is a float" id="float_value"/>
 		<textbox multiline="true" label="This is a text area" id="text_area_value" rows="3" cols="3"/>
 		<checkbox label="Checkbox %s here" id="checkbox_value"/>

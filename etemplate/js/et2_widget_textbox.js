@@ -36,7 +36,12 @@ var et2_textbox = et2_inputWidget.extend({
 			"default": et2_no_init,
 			"description": "Field width"
 		},
-
+		"blur": {
+			"name": "Placeholder",
+			"type": "string",
+			"default": "",
+			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+		},
 		// These for multi-line
 		"rows": {
 			"name": "Rows",
@@ -83,6 +88,9 @@ var et2_textbox = et2_inputWidget.extend({
 		if(this.size) {
 			this.set_size(this.size);
 		}
+		if(this.blur) {
+			this.set_blur(this.blur);
+		}
 		this.input.addClass("et2_textbox");
 
 		this.setDOMNode(this.input[0]);
@@ -98,6 +106,23 @@ var et2_textbox = et2_inputWidget.extend({
 		{
 			this.size = _size;
 			this.input.attr("size", this.size);
+		}
+	},
+
+	set_blur: function(_value) {
+		if(_value) {
+			this.input.attr("placeholder", _value + "!");	// HTML5
+			if(!this.input[0].placeholder) {
+				// Not HTML5
+				if(this.input.val() == "") this.input.val(this.options.blur);
+				this.input.focus(this,function(e) {
+					if(e.data.input.val() == e.data.options.blur) e.data.input.val("");
+				}).blur(this, function(e) {
+					if(e.data.input.val() == "") e.data.input.val(e.data.options.blur);
+				});
+			}
+		} else {
+			this.input.removeAttr("placeholder");
 		}
 	}
 });
