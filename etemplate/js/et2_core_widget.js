@@ -220,7 +220,7 @@ var et2_widget = Class.extend({
 		// Call the destructor of all children
 		for (var i = this._children.length - 1; i >= 0; i--)
 		{
-			this._children[i].destroy();
+			this._children[i].free();
 		}
 
 		// Remove this element from the parent
@@ -322,7 +322,13 @@ var et2_widget = Class.extend({
 		// Check whether the node is one of the supported widget classes.
 		if (this.isOfSupportedWidgetClass(_node))
 		{
-			_node.parent = this;
+			// Remove the node from its original parent
+			if (_node._parent)
+			{
+				_node._parent.removeChild(_node);
+			}
+
+			_node._parent = this;
 			this._children.splice(_idx, 0, _node);
 		}
 		else

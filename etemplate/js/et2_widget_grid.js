@@ -39,17 +39,12 @@ var et2_grid = et2_DOMWidget.extend({
 
 		// 2D-Array which holds references to the DOM td tags
 		this.cells = [];
+		this.rowData = [];
 		this.managementArray = [];
 	},
 
 	destroy: function() {
 		this._super.call(this, arguments);
-
-		// Delete all references to cells or widgets
-		this.cells = null;
-		this.managementArray = null;
-		this.table = null;
-		this.tbody = null;
 	},
 
 	_initCells: function(_colData, _rowData) {
@@ -72,6 +67,7 @@ var et2_grid = et2_DOMWidget.extend({
 					"colData": _colData[x],
 					"rowData": _rowData[y],
 					"disabled": _colData[x].disabled || _rowData[y].disabled,
+					"class": _colData[x]["class"],
 					"colSpan": 1,
 					"autoColSpan": false,
 					"rowSpan": 1,
@@ -369,7 +365,7 @@ var et2_grid = et2_DOMWidget.extend({
 			this._expandLastCells(cells);
 
 			// Create the table rows
-			this.createTableFromCells(cells);
+			this.createTableFromCells(cells, rowData);
 		}
 		else
 		{
@@ -377,20 +373,26 @@ var et2_grid = et2_DOMWidget.extend({
 		}
 	},
 
-	createTableFromCells: function(_cells) {
+	createTableFromCells: function(_cells, _rowData) {
 		// Set the rowCount and columnCount variables
 		var h = this.rowCount = _cells.length;
 		var w = this.columnCount = (h > 0) ? _cells[0].length : 0;
 
 		this.managementArray = [];
 		this.cells = _cells;
+		this.rowData = _rowData;
 
 		// Create the table rows.
 		for (var y = 0; y < h; y++)
 		{
 			var row = _cells[y];
-			var tr = $j(document.createElement("tr")).appendTo(this.tbody);
-			var row_hidden = true;
+			var tr = $j(document.createElement("tr")).appendTo(this.tbody)
+				.addClass(this.rowData[y]["class"]);
+
+			if (this.rowData[y].disabled)
+			{
+				tr.hide();
+			}
 
 			// Create the cells. x is incremented by the colSpan value of the
 			// cell.
@@ -402,16 +404,12 @@ var et2_grid = et2_DOMWidget.extend({
 				if (cell.td == null && cell.widget != null)
 				{
 					// Create the cell
-					var td = $j(document.createElement("td")).appendTo(tr);
+					var td = $j(document.createElement("td")).appendTo(tr)
+						.addClass(cell["class"]);
 
 					if (cell.disabled)
 					{
 						td.hide();
-						//td.css("border", "2px solid red");
-					}
-					else
-					{
-						row_hidden = false;
 					}
 
 					// Add the entry for the widget to the management array
@@ -450,11 +448,6 @@ var et2_grid = et2_DOMWidget.extend({
 					x++;
 				}
 			}
-
-			if (row_hidden)
-			{
-				tr.hide();
-			}
 		}
 	},
 
@@ -467,6 +460,16 @@ var et2_grid = et2_DOMWidget.extend({
 		{
 			// Remember all widgets which have already been instanciated
 			var instances = [];
+
+			// Copy the some data from the rowData array
+			var rowData = new Array(_obj.rowData.length);
+			for (var y = 0; y < _obj.rowData.length; y++)
+			{
+				rowData[y] = {
+					"disabled": _obj.rowData[y].disabled,
+					"class": _obj.rowData[y]["class"]
+				}
+			}
 
 			// Copy the cells array of the other grid and clone the widgets
 			// inside of it
@@ -508,13 +511,14 @@ var et2_grid = et2_DOMWidget.extend({
 						"td": null,
 						"colSpan": srcCell.colSpan,
 						"rowSpan": srcCell.rowSpan,
-						"disabled": srcCell.disabled
+						"disabled": srcCell.disabled,
+						"class": srcCell["class"]
 					}
 				}
 			}
 
 			// Create the table
-			this.createTableFromCells(cells);
+			this.createTableFromCells(cells, rowData);
 
 			// Copy a reference to the content array manager
 			if (_obj._mgr)

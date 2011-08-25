@@ -14,29 +14,9 @@
 
 /*egw:uses
 	jquery.jquery;
+	et2_core_interfaces;
 	et2_core_valueWidget;
 */
-
-/**
- * Interface for all widgets which support returning a value
- */
-var et2_IInput = new Interface({
-	/**
-	 * getValue has to return the value of the input widget
-	 */
-	getValue: function() {},
-
-	/**
-	 * Is dirty returns true if the value of the widget has changed since it
-	 * was loaded.
-	 */
-	isDirty: function() {},
-
-	/**
-	 * Causes the dirty flag to be reseted.
-	 */
-	resetDirty: function() {}
-});
 
 /**
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput

@@ -316,4 +316,35 @@ label input, label span, label div, label select, label textarea {
 	background-image:url(gfx/hint.png);
 }
 
+/**
+ * Nextmatch widget
+ */
+
+.et2_nextmatch {
+	background-color: silver;
+}
+
+.nextmatch_sortheader {
+	color: #003075;
+	cursor: pointer;
+	padding-right: 18px;
+	margin-right: 10px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.nextmatch_sortheader:hover {
+	text-decoration: underline;
+}
+
+.nextmatch_sortheader.asc {
+	font-weight: bold;
+	background-image: url(gfx/up.png);
+}
+
+.nextmatch_sortheader.desc {
+	font-weight: bold;
+	background-image: url(gfx/down.png);
+}
+
 

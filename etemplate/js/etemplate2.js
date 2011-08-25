@@ -29,6 +29,8 @@
 	et2_widget_tabs;
 	et2_widget_hrule;
 
+	et2_extension_nextmatch;
+
 	// Requirements for the etemplate2 object
 	et2_core_xml;
 	et2_core_arrayMgr;
@@ -67,7 +69,7 @@ etemplate2.prototype.clear = function()
 	if (this.widgetContainer != null)
 	{
 //		$j(':input',this.DOMContainer).validator().data("validator").destroy();
-		this.widgetContainer.destroy();
+		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
 }

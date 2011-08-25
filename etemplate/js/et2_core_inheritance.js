@@ -72,7 +72,14 @@
  */
 // Inspired by base2 and Prototype
 (function(){
-	var initializing = false
+	var initializing = false;
+
+	/**
+	 * Turn this to "true" to track creation and destruction of elements
+	 */
+	var getMem_freeMem_trace = false;
+
+	var tracedObjects = {};
 
 	// Check whether "function decompilation" works - fnTest is normally used to
 	// check whether a 
@@ -257,6 +264,18 @@
 					}
 				}
 
+				// Do some tracing of the getMem_freeMem_trace is activated
+				if (getMem_freeMem_trace)
+				{
+					this.__OBJ_UID = "obj_" + et2_uniqueId();
+					var className = this.className();
+					tracedObjects[this.__OBJ_UID] = {
+						"created": new Date().getTime(),
+						"class": className
+					}
+					et2_debug("log", "*" + this.__OBJ_UID + " (" + className + ")");
+				}
+
 				if (this.init)
 				{
 					this.init.apply(this, arguments);
@@ -290,6 +309,61 @@
 	// Add the basic functions
 
 	/**
+	 * Destructor function - it calls "destroy" if it has been defined and then
+	 * deletes all keys of this element, so that any access to this element will
+	 * eventually throw an exception, making it easier to hunt down memory leaks.
+	 */
+	Class.prototype.free = function() {
+		if (this.destroy)
+		{
+			this.destroy();
+		}
+
+		// Trace the freeing of the object
+		if (getMem_freeMem_trace)
+		{
+			delete(tracedObjects[this.__OBJ_UID]);
+			et2_debug("log", "-" + this.__OBJ_UID);
+		}
+
+		// Delete every object entry
+		for (var key in this)
+		{
+			delete(this[key]);
+		}
+
+		// Don't raise an exception when attempting to free an element multiple
+		// times.
+		this.free = function() {};
+	};
+
+	// Some debug functions for memory leak hunting
+	if (getMem_freeMem_trace)
+	{
+		/**
+		 * Prints a list of all objects UIDs which have not been freed yet.
+		 */
+		Class.prototype.showTrace = function() {
+			console.log(tracedObjects);
+		},
+
+		/**
+		 * VERY slow - for debugging only!
+		 */
+		Class.prototype.className = function() {
+			for (var key in window)
+			{
+				if (key.substr(0, 3) == "et2" && this.constructor == window[key])
+				{
+					return key;
+				}
+			}
+
+			return "?";
+		}
+	}
+
+	/**
 	 * Returns the value of the given attribute. If the property does not
 	 * exist, an error message is issued.
 	 */
@@ -310,7 +384,7 @@
 		{
 			et2_debug("error", this, "Attribute '" + _name  + "' does not exist!");
 		}
-	}
+	};
 
 	/**
 	 * The setAttribute function sets the attribute with the given name to
@@ -345,7 +419,7 @@
 		{
 			et2_debug("warn", this, "Attribute '" + _name + "' does not exist!");
 		}
-	}
+	};
 
 	/**
 	 * generateAttributeSet sanitizes the given associative array of attributes
@@ -392,7 +466,7 @@
 		}
 
 		return _attrs;
-	}
+	};
 
 	/**
 	 * The initAttributes function sets the attributes to their default
@@ -408,22 +482,22 @@
 				this.setAttribute(key, _attrs[key], false);
 			}
 		}
-	}
+	};
 
 	/**
 	 * The implements function can be used to check whether the object
 	 * implements the given interface.
 	 */
 	Class.prototype.implements = function(_iface) {
-			for (var key in _iface)
+		for (var key in _iface)
+		{
+			if (this._ifacefuncs.indexOf(key) < 0)
 			{
-				if (this._ifacefuncs.indexOf(key) < 0)
-				{
-					return false;
-				}
+				return false;
 			}
-			return true;
 		}
+		return true;
+	};
 
 	/**
 	 * The instanceOf function can be used to check for both - classes and
@@ -431,15 +505,15 @@
 	 * affects IE and Opera support.
 	 */
 	Class.prototype.instanceOf = function(_obj) {
-	if (_obj instanceof Interface)
-	{
+		if (_obj instanceof Interface)
+		{
 			return this.implements(_obj);
 		}
 		else
 		{
 			return this instanceof _obj;
 		}
-	}
+	};
 
 }).call(window);
 

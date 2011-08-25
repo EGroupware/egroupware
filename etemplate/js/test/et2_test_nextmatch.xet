@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<overlay>
+	<template id="grid_defn">
+		<grid>
+			<columns>
+				<column width="2%"/>
+				<column/>
+				<column disabled="@no_customfields"/>
+				<column/>
+				<column width="120"/>
+				<column/>
+				<column/>
+				<column width="8%" disabled="@no_info_owner_info_responsible"/>
+				<column width="12%"/>
+				<column width="3%" disabled="@no_actions"/>
+				<column width="3%" disabled="@no_actions"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox options="0,0">
+						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
+						<nextmatch-filterheader align="center" id="info_status" options="Status"/>
+						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
+					</vbox>
+					<grid width="100%" spacing="0" padding="0">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<nextmatch-customfilter id="linked" onchange="1" options="link-entry"/>
+								<nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Subject" id="info_subject"/>
+								<nextmatch-sortheader align="right" label="Creation" id="info_id" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Description" id="info_des"/>
+								<nextmatch-sortheader align="right" label="last changed" id="info_datemodified" options="DESC" class="noPrint"/>
+							</row>
+						</rows>
+					</grid>
+					<nextmatch-customfields id="customfields"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<vbox options="0,0">
+						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
+						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
+						<nextmatch-sortheader label="Date completed" id="info_datecompleted"/>
+					</vbox>
+					<vbox cols="1" rows="2">
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
+					</vbox>
+					<vbox cols="1" rows="2" options="0,0">
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
+						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
+					</vbox>
+					<vbox options="0,0">
+						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner" class="user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
+					</vbox>
+					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
+					<description value="Sub" class="noPrint"/>
+					<nextmatch-header label="Action" id="actions" class="noPrint"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+
+	<nextmatch options="grid_defn" />
+</overlay>
+

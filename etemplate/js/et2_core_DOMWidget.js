@@ -13,31 +13,9 @@
 "use strict";
 
 /*egw:uses
+	et2_core_interfaces;
 	et2_core_widget;
 */
-
-/**
- * Interface for all widget classes, which are based on a DOM node.
- */
-var et2_IDOMNode = new Interface({
-	/**
-	 * Returns the DOM-Node of the current widget. The return value has to be
-	 * a plain DOM node. If you want to return an jQuery object as you receive
-	 * it with
-	 * 
-	 * 	obj = $j(node);
-	 * 
-	 * simply return obj[0];
-	 * 
-	 * @param _sender The _sender parameter defines which widget is asking for
-	 * 	the DOMNode. Depending on that, the widget may return different nodes.
-	 * 	This is used in the grid. Normally the _sender parameter can be omitted
-	 * 	in most implementations of the getDOMNode function.
-	 * 	However, you should always define the _sender parameter when calling
-	 * 	getDOMNode!
-	 */
-	getDOMNode: function(_sender) {}
-});
 
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
@@ -110,7 +88,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 		if (this._surroundingsMgr)
 		{
-			this._surroundingsMgr.destroy();
+			this._surroundingsMgr.free();
 			this._surroundingsMgr = null;
 		}
 

@@ -1,0 +1,220 @@
+
+.egwGridView_grid {
+	table-layout: fixed;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.egwGridView_outer div.innerContainer.queued {
+	background-image: url(gfx/ajax-loader.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 19px;
+}
+
+.egwGridView_grid tr.focused td {
+	background-image: url(gfx/focused_hatching.png);
+	background-repeat: repeat;
+}
+
+.egwGridView_grid tr.selected td {
+	background-color: #b7c3ff;
+}
+
+.egwGridView_grid tr.draggedOver td {
+	background-color: #ffd09c !important;
+}
+
+/*.egwGridView_grid tr.selected.odd td {
+	background-color: #9dadff;
+}*/
+
+.egwGridView_scrollarea {
+	width: 100%;
+	overflow: auto;
+}
+
+.egwGridView_spacer {
+	background-image: url(gfx/non_loaded_bg.png);
+	background-position: top left;
+}
+
+.egwGridView_outer {
+	table-layout: fixed;
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+}
+
+.egwGridView_outer td, .egwGridView_outer tr {
+	padding: 0;
+	margin: 0;
+}
+
+.egwGridView_grid td {
+	border-right: 1px solid silver;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 2px 3px 2px 4px;
+	margin: 0;
+}
+
+.egwGridView_outer th div.innerContainer,
+.egwGridView_grid td div.innerContainer {
+	margin: 0;
+	padding: 0;
+	display: block;
+	overflow: hidden;
+}
+
+.egwGridView_grid tr.fullRow {
+	font-style: italic;
+}
+
+.egwGridView_grid tr.row:hover {
+	background-color: #f0f0ff;
+}
+
+.egwGridView_grid tr {
+	padding: 2px 3px 2px 4px;
+	margin: 0;
+}
+
+.egwGridView_grid tr.hidden {
+	display: none;
+}
+
+/*.egwGridView_grid tr.odd {
+	background-color: #F1F1F1;
+}*/
+
+.egwGridView_grid span.indentation {
+	display: inline-block;
+}
+
+.egwGridView_grid span {
+	vertical-align: middle;
+}
+
+.egwGridView_grid img.icon {
+	vertical-align: middle;
+	margin: 2px 5px 2px 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.egwGridView_grid span.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	width: 8px;
+	height: 8px;
+	background-repeat: no-repeat;
+	margin-right: 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.egwGridView_grid span.arrow.opened {
+	cursor: pointer;
+	background-image: url(gfx/arrows.png);
+	background-position: -8px 0;
+}
+
+.egwGridView_grid span.arrow.closed {
+	cursor: pointer;
+	background-image: url(gfx/arrows.png);
+	background-position: 0 0;
+}
+
+.egwGridView_grid span.arrow.loading {
+	cursor: pointer;
+	background-image: url(gfx/ajax-loader.gif);
+	background-position: 0 0;
+}
+
+.egwGridView_grid span.iconContainer {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.egwGridView_grid span.caption {
+	cursor: default;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.egwGridView_outer thead th {
+	background-color: #E0E0E0;
+	font-weight: normal;
+	padding: 5px;
+	text-align: left;
+	border-left: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-image: url(gfx/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+.egwGridView_outer thead th:hover {
+	background-color: #F0F0F0;
+}
+
+.egwGridView_outer thead th.optcol {
+	padding: 0;
+	text-align: center;
+}
+
+.egwGridView_outer thead th.optcol:active {
+	background-color: #D0D0D0;
+	border-left: 1px solid gray;
+	border-top: 1px solid gray;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
+}
+
+.selectcols {
+	display: inline-block;
+	width: 10px;
+	height: 9px;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+	background-image: url(gfx/selectcols.png);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.egwGridView_grid td.frame,
+.egwGridView_outer td.frame,
+.egwGridView_grid td.egwGridView_spacer {
+	padding: 0 !important;
+	border-right: 0 none silver !important;
+	border-bottom: 0 none silver !important;
+}
+
+.egwGridView_outer span.sort {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 2px;
+	vertical-align: middle;
+}
+
+.egwGridView_outer span.sort.asc {
+	background-image: url(gfx/up.png);
+}
+
+.egwGridView_outer span.sort.desc {
+	background-image: url(gfx/down.png);
+}
+
