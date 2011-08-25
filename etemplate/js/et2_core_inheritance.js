@@ -477,7 +477,7 @@
 	Class.prototype.initAttributes = function(_attrs) {
 		for (var key in _attrs)
 		{
-			if (!this.attributes[key].ignore && !(_attrs[key] == undefined))
+			if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined))
 			{
 				this.setAttribute(key, _attrs[key], false);
 			}
