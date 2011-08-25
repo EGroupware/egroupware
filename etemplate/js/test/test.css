@@ -104,6 +104,26 @@ div.et2_hbox_right {
 	font-size: 10pt;
 }
 
+a.et2_url {
+	background-position: center;
+	background-repeat: no-repeat;
+
+	cursor: pointer;
+	margin: -4px;
+	padding: 2px;
+	padding-left: 16px;
+}
+
+a.et2_url.email {
+	background-image: url(gfx/email.png);
+}
+a.et2_url.phone {
+	background-image: url(gfx/phone.png);
+}
+a.et2_url.url {
+	background-image: url(gfx/url.png);
+}
+
 button.et2_button {
 	background-color: #E0E0E0;
 	background-image: url(gfx/gradient01.png);

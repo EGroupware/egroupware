@@ -29,6 +29,7 @@ Testing from inside framework, so JS includes work
                         <a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
                         <a href="#" onclick="open_xet('et2_test_grid.xet');">Grid test</a>
                         <a href="#" onclick="open_xet('et2_test_tabbox.xet');">Tabs test</a>
+                        <a href="#" onclick="open_xet('et2_test_text.xet');">Text/URL test</a>
                         <a href="#" onclick="open_xet('et2_test_basic_widgets.xet');">Basic widgits</a>
                         <a href="#" onclick="open_xet('et2_test_input_validator.xet', validation_data);">Validation</a>
                 </div>

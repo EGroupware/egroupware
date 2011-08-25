@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<vbox cols="1" rows="3">
+		<textbox label="Plain text" id="text"/>
+		<url label="URL" id="url"/>
+		<url-email label="Email" id="email"/>
+		<url-phone label="Phone" id="phone"/>
+		<url label="URL" id="url" readonly="true"/>
+		<url-email label="Email" id="email" readonly="true"/>
+		<url-phone label="Phone" id="phone" readonly="true"/>
+		<button label="test" onclick="" statustext="button"/>
+	</vbox>
+</overlay>

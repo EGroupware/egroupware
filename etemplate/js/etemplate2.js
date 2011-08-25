@@ -20,6 +20,7 @@
 	et2_widget_description;
 	et2_widget_textbox;
 	et2_widget_number;
+	et2_widget_url;
 	et2_widget_selectbox;
 	et2_widget_checkbox;
 	et2_widget_radiobox;
