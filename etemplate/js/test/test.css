@@ -9,6 +9,7 @@
 body, table, td {
 	font-family: Lucida Grande, sans-serif;
 	font-size: 10pt;
+/*	overflow: hidden;*/
 }
 
 #linklist a {

@@ -20,6 +20,7 @@
 	et2_widget_template;
 	et2_widget_grid;
 	et2_widget_selectbox;
+	et2_extension_nextmatch_dynheight;
 */
 
 /**
@@ -44,7 +45,7 @@ var et2_INextmatchSortable = new Interface({
 /**
  * Class which implements the "nextmatch" XET-Tag
  */ 
-var et2_nextmatch = et2_DOMWidget.extend({
+var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 	attributes: {
 		"template": {
@@ -62,6 +63,10 @@ var et2_nextmatch = et2_DOMWidget.extend({
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
 
+		// Create the dynheight component which dynamically scales the inner
+		// container.
+		this.dynheight = new et2_dynheight(null, this.div, 150);
+
 		// Create the outer grid container
 		this.dataviewContainer = new et2_dataview_gridContainer(this.div);
 
@@ -70,10 +75,14 @@ var et2_nextmatch = et2_DOMWidget.extend({
 	},
 
 	destroy: function() {
-		// Destroy the dataview objects
 		this.dataviewContainer.free();
+		this.dynheight.free();
 
 		this._super.apply(this, arguments);
+	},
+
+	resize: function() {
+		this.dynheight.update();
 	},
 
 	/**
@@ -297,7 +306,7 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
 });
 
 et2_register_widget(et2_nextmatch_header, ['nextmatch-header',
-	'nextmatch-accountfilter', 'nextmatch-customfilter', 'nextmatch-customfields']);
+	'nextmatch-customfilter', 'nextmatch-customfields']);
 
 var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, {
 
@@ -347,5 +356,6 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 
 });
 
-et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
+et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader',
+	'nextmatch-accountfilter']);
 

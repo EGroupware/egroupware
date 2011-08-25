@@ -34,6 +34,7 @@
 	// Requirements for the etemplate2 object
 	et2_core_xml;
 	et2_core_arrayMgr;
+	et2_core_interfaces;
 */
 
 /**
@@ -57,8 +58,26 @@ function etemplate2(_container, _menuaction)
 	// Preset the object variable
 	this.widgetContainer = null;
 
+	// Connect to the window resize event
+	$j(window).resize(this, function(e) {e.data.resize()});
+
 	// Associative array with the event listeners
 	this.listeners = {};
+}
+
+/**
+ * Calls the resize event of all widgets
+ */
+etemplate2.prototype.resize = function()
+{
+	if (this.widgetContainer)
+	{
+		// Call the "resize" event of all functions which implement the
+		// "IResizeable" interface
+		this.widgetContainer.iterateOver(function(_widget) {
+			_widget.resize();
+		}, this, et2_IResizeable);
+	}
 }
 
 /**
@@ -129,8 +148,12 @@ etemplate2.prototype.load = function(_url, _data)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
 		// Read the XML structure
 		this.widgetContainer.loadFromXML(_xmldoc);
+
 		// Inform the widget tree that it has been successfully loaded.
 		this.widgetContainer.loadingFinished();
+
+		// Trigger the "resize" event
+		this.resize();
 	}, this);
 
 	// Clear any existing instance
