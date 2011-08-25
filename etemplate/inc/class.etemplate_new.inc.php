@@ -129,7 +129,7 @@ class etemplate_new extends etemplate_widget_template
 		// instanciate template to fill self::$request->sel_options for select-* widgets
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
-		$template->run('fillTypeOptions');
+		$template->run('beforeSendToClient');
 
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),

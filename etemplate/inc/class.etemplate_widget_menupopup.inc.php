@@ -78,7 +78,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$value = $value_in = self::get_array($content, $form_name);
 
 			$allowed = $this->attrs['multiple'] ? array() : array('' => $this->attrs['options']);
-			/* if fillTypeOptions is used, we dont need to call it again here
+			/* if beforeSendToClient is used, we dont need to call it again here
 			if ($this->attrs['type'])
 			{
 				$allowed += self::typeOptions($form_name, $this->attrs['type'], $this->attrs['no_lang']);
@@ -114,7 +114,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 *
 	 * @param string $cname
 	 */
-	public function fillTypeOptions($cname)
+	public function beforeSendToClient($cname)
 	{
 		if ($this->attrs['type'])
 		{

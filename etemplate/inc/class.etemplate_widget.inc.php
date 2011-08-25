@@ -15,6 +15,7 @@
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc.php';
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_grid.inc.php';
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_checkbox.inc.php';
+require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.contact_widget.inc.php';
 
 /**
  * eTemplate widget baseclass
@@ -234,6 +235,10 @@ class etemplate_widget
 	 */
 	public static function registerWidget($class, $widgets)
 	{
+		if (!is_subclass_of($class, __CLASS__))
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__."('$class', ".array2string($widgets).") $class is no subclass or ".__CLASS__.'!');
+		}
 		foreach((array)$widgets as $widget)
 		{
 			self::$widget_registry[$widget] = $class;
@@ -676,11 +681,11 @@ class etemplate_widget
 	 */
 	public function &setElementAttribute($name,$attr,$val)
 	{
-		$attr =& self::$request->modifications[$name][$attr];
-		if (!is_null($val)) $attr = $val;
+		$ref =& self::$request->modifications[$name][$attr];
+		if (!is_null($val)) $ref = $val;
 
 		error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
-		return $attr;
+		return $ref;
 	}
 
 	/**

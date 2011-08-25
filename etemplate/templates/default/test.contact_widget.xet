@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.test.contact_widget" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<contact-fields id="fields"/>
+				</row>
+				<row>
+					<contact-account label="Benutzer" id="account:" options="n_fn"/>
+				</row>
+				<row>
+					<contact-account label="Telefon" id="account:" options="tel_work"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -1122,11 +1122,27 @@ class etemplate extends boetemplate
 			{
 				$readonlys[$name] = true;
 			}
+			$cell_name = $cell['name'];
 			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name]);
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension
-
+//echo "<p>set_array(\$content, '$name', ".array2string($value).")</p>\n";
 			self::set_array($content,$name,$value);
+
+			// if widget changes the name (eg. by new widget-transformer), reevaluate name, form_name and value
+			if ($cell['name'] && $cell['name'] != $cell_name)
+			{
+				$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+				// allow names like "tabs=one|two|three", which will be equal to just "tabs"
+				// eg. for tabs to use a name independent of the tabs contained
+				if (is_string($name) && strpos($name,'=') !== false)
+				{
+					list($name) = explode('=',$name);
+				}
+				$form_name = self::form_name($cname,$name);
+
+				$value = $this->get_array($content,$name);
+			}
 
 			if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
 
