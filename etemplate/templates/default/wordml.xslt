@@ -87,7 +87,7 @@ Breakers
 	</xsl:template>
 -->
 
-	<xsl:template match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
+	<xsl:template match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]" name="apply-styles">
 		<xsl:for-each select="node()|@*[not(w:rPr)]">
 			<xsl:choose>
 			<xsl:when test="descendant::strong|descendant::em|descendant::u|descendant::span" >
@@ -123,6 +123,7 @@ Breakers
 		</w:t>
 		<w:br/>
 	</xsl:template>
+
 	<xsl:template match="i|em">
 		<w:i />
 	</xsl:template>
@@ -165,7 +166,7 @@ Breakers
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<w:shd w:fill="{$hex}" w:val="solid"/>
+			<w:shd w:fill="{$hex}" w:val="clear"/>
 		</xsl:if>
 		<xsl:if test="starts-with(.,'font-size')">
 			<xsl:variable name="font-size" select="substring-after(text(),'font-size:')" />
@@ -218,8 +219,8 @@ Breakers
 	<xsl:template match="table">
 		<w:tbl>
 			<w:tblPr>
-				<w:tblW w:type="dxa" w:w="9972"/>
 				<w:jc w:val="left"/>
+				<w:tblW w:w="5000" w:type="pct"/>
 			</w:tblPr>
 			<w:tblGrid>
 				<xsl:for-each select="./tr[1]/td">
@@ -229,7 +230,15 @@ Breakers
 		<xsl:for-each select="./tr">
 			<w:tr>
 			<xsl:for-each select="./td">
-				<w:tc><w:p><w:r><w:t><xsl:apply-templates select="child::node()" /></w:t></w:r></w:p></w:tc>
+				<w:tc>
+				<w:p>
+				<xsl:call-template name="apply-styles">
+				<w:r>
+<xsl:copy-of select="node()|@*"/>
+				</w:r>
+				</xsl:call-template>
+				</w:p>
+				</w:tc>
 			</xsl:for-each>
 			</w:tr>
 		</xsl:for-each>

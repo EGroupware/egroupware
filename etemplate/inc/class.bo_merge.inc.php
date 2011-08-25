@@ -377,13 +377,14 @@ abstract class bo_merge
 				);
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
+					// Tables, lists don't go inside <w:p>
 					'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
 					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
+					// Fix for things other than text (newlines) inside table row
+					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
 					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
-/*
-					'/<(span)(.*?)>/' => "\n".'</w:t></w:r><$1$2>',
-					'/<\/(span)>/' => '</$1><w:r><w:t>'."\n",
-*/
+					// Remove extra whitespace
+					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>'
 				);
 				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 //echo $content;die();
@@ -400,17 +401,18 @@ abstract class bo_merge
 			try
 			{
 				$element = new SimpleXMLelement($content);
-				$content = $xslt->transformToXml($element);
+				$content = @$xslt->transformToXml($element);
 
-				// Word 2003 needs invalid XML, add back in
-				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document') {
+				// Word 2003 needs two declarations, add extra declaration back in
+				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
 					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
 				}
 				// Validate
+				/*
 				$doc = new DOMDocument();
-//				$doc->loadXML($content);
-//				$doc->schemaValidate('/home/nathan/Downloads/WordprocessingML Schemas/wordnet.xsd');
-//echo $content;die();
+				$doc->loadXML($content);
+				$doc->schemaValidate(*Schema (xsd) file*);
+				*/
 			}
 			catch (Exception $e)
 			{

@@ -86,7 +86,7 @@ Breakers
 	</xsl:template>
 -->
 
-	<xsl:template match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
+	<xsl:template name="apply-styles" match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
 		<xsl:for-each select="node()|@*[not(w:rPr)]">
 			<xsl:choose>
 			<xsl:when test="descendant::strong|descendant::em|descendant::u|descendant::span" >
@@ -221,7 +221,7 @@ Breakers
 	<xsl:template match="table">
 		<w:tbl>
 			<w:tblPr>
-				<w:tblW w:type="dxa" w:w="9972"/>
+				<w:tblW w:type="pct" w:w="4500"/>
 				<w:jc w:value="left"/>
 				<xsl:if test="@border &gt; 0">
 					<w:tblBorders>
@@ -251,7 +251,13 @@ Breakers
 						<w:right w:color="000000" w:space="0" w:sz="{$width}" w:val="single"/>
 					</w:tcBorders></w:tcPr>
 				</xsl:if>
-				<w:p><w:r><w:t><xsl:apply-templates select="child::node()" /></w:t></w:r></w:p>
+				<w:p>
+				<xsl:call-template name="apply-styles">
+				<w:r>
+				<xsl:copy-of select="node()|@*"/>
+				</w:r>
+				</xsl:call-template>
+				</w:p>
 				</w:tc>
 			</xsl:for-each>
 			</w:tr>
