@@ -112,7 +112,8 @@ var et2_url = et2_textbox.extend({
 		}
 		else
 		{
-			if(this._button)
+			if(this._button) this._button.hide();
+			if(this._button && this.getSurroundings && this.getSurroundings().deleteDOMNode)
 			{
 				this.getSurroundings().deleteDOMNode(this._button[0]);
 			}
