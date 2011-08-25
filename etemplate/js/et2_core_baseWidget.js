@@ -105,7 +105,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 
 		// Remove the message div from the surroundings before creating a new
 		// one
-		this.hideMessgae(false, true);
+		this.hideMessage(false, true);
 
 		// Create the message div and add it to the "surroundings" manager
 		this._messageDiv = $j(document.createElement("div"))
@@ -128,14 +128,14 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 	},
 
 	/**
-	 * The hideMessgae function can be used to hide a previously shown message.
+	 * The hideMessage function can be used to hide a previously shown message.
 	 *
 	 * @param _fade if true, the message div will fade out, otherwise the message
 	 * 	div is removed immediately. Defaults to true.
 	 * @param _noUpdate is used internally to prevent an update of the surroundings
 	 * 	manager.
 	 */
-	hideMessgae: function(_fade, _noUpdate) {
+	hideMessage: function(_fade, _noUpdate) {
 		if (typeof _fade == "undefined")
 		{
 			_fade = true;
