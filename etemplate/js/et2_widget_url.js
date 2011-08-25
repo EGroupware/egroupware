@@ -173,7 +173,7 @@ var et2_url_ro = et2_valueWidget.extend({
 				if(navigator.userAgent.indexOf('AppleWebKit') !== -1 && (
 						navigator.userAgent.indexOf("iPhone") !== -1 ||
 						navigator.userAgent.indexOf("Android") !== -1 
-				) {
+				)) {
 					if(_value.indexOf("tel:") == -1) _value = "tel:"+_value;
 					this.span.attr("href", _value);
 				} else {
