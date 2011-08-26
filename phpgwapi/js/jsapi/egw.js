@@ -24,7 +24,7 @@ if (window.opener && typeof window.opener.egw == 'object')
 {
 	egw = window.opener.egw;
 }
-else if (window.top == 'object' && window.top.egw == 'object')
+else if (window.top && typeof window.top.egw == 'object')
 {
 	egw = window.top.egw;
 }

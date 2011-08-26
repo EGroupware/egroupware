@@ -265,7 +265,7 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
  */
 function egw_open(id, app, type, extra, target)
 {
-	window.egw.open();
+	window.egw.open(id, app, type, extra, target);
 }
 
 window.egw_getFramework = function()
