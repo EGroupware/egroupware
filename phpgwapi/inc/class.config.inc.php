@@ -280,6 +280,48 @@ class config
 	}
 
 	/**
+	 * Return configuration for all apps, save to be transmitted to browser
+	 *
+	 * You can add further values to the white-list, but keep in mind they are publicly visible (eg. via anon user of sitemgr)!!!
+	 *
+	 * @return array
+	 */
+	static public function clientConfigs()
+	{
+		static $white_list = array(
+			'all' => array('customfields', 'types'),
+			'phpgwapi' => array('webserver_url','server_timezone','enforce_ssl','system_charset',
+				'checkfornewversion','checkappversions','email_address_format',	// admin >> site config
+				'site_title','login_logo_file','login_logo_url','login_logo_title','favicon_file',
+				'markuntranslated','link_list_thumbnail','enabled_spellcheck',
+				'call_link','call_popup',	// addressbook
+				'hide_birthdays'),	// calendar
+			'projectmanager' => array('hours_per_workday', 'duration_units'),
+			'manual' => array('manual_remote_egw_url'),
+			'infolog' => array('status'),
+			'timesheet' => array('status_labels'),
+		);
+		if (!isset(self::$configs))
+		{
+			self::init_static();
+		}
+		$client_config = array();
+		foreach(self::$configs as $app => $config)
+		{
+			foreach($config as $name => $value)
+			{
+				if (strpos($name, 'pass') !== false) continue;
+
+				if (in_array($name, $white_list['all']) || isset($white_list[$app]) && in_array($name, $white_list[$app]))
+				{
+					$client_config[$app][$name] = $value;
+				}
+			}
+		}
+		return $client_config;
+	}
+
+	/**
 	 * Initialise our db
 	 *
 	 * We use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!

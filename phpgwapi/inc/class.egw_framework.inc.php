@@ -764,7 +764,11 @@ abstract class egw_framework
 		{
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
 		}
-
+		// add configuration and link-registry for non-popup windows
+		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
+		{
+			self::validate_file('/phpgwapi/config.php');
+		}
 		$java_script .= self::get_script_links();
 
 		// set webserver_url for json
@@ -776,7 +780,6 @@ abstract class egw_framework
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			$java_script .= 'egw.set_link_registry('.egw_link::json_registry().");\n";
 			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");';
 		}
 		$java_script .= "</script>\n";

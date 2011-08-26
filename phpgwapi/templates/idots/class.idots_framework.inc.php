@@ -163,8 +163,8 @@ class idots_framework extends egw_framework
 		// add link registry to non-popup windows
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
+			self::validate_file('/phpgwapi/config.php');
 			$content .= '<script type="text/javascript">
-egw.set_link_registry('.egw_link::json_registry().');
 egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");
 </script>'."\n";
 		}
