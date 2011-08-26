@@ -31,7 +31,7 @@ class config
 	 *
 	 * @var array
 	 */
-	static private $configs = array();
+	static private $configs;
 
 	/**
 	 * app the particular config class is instanciated for
@@ -82,16 +82,12 @@ class config
 	 */
 	function save_repository()
 	{
-		if (!is_object(self::$db))
-		{
-			self::init_db();
-		}
 		if (is_array($this->config_data))
 		{
 			self::$db->lock(array(config::TABLE));
 			foreach($this->config_data as $name => $value)
 			{
-				$this->save_value($name,$value);
+				$this->save_value($name,$value,null,false);
 			}
 			foreach(self::$configs[$this->appname] as $name => $value)
 			{
@@ -107,6 +103,8 @@ class config
 				$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
 			}
 			self::$configs[$this->appname] = $this->config_data;
+
+			egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
 		}
 	}
 
@@ -119,7 +117,7 @@ class config
 	 * @param mixed $value content, empty or null values are not saved, but deleted
 	 * @param string $app=null app-name, defaults to $this->appname set via the constructor
 	 */
-	/* static */ function save_value($name,$value,$app=null)
+	/* static */ function save_value($name,$value,$app=null,$update_cache=true)
 	{
 		if (!$app && (!isset($this) || !is_a($this,__CLASS__)))
 		{
@@ -130,6 +128,10 @@ class config
 		{
 			$app = $this->appname;
 			$this->config_data[$name] = $value;
+		}
+		if (!isset(self::$configs))
+		{
+			self::init_static();
 		}
 		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
 		if (isset(self::$configs[$app][$name]) && self::$configs[$app][$name] === $value)
@@ -145,16 +147,18 @@ class config
 		{
 			$value = serialize($value);
 		}
-		if (!is_object(self::$db))
-		{
-			self::init_db();
-		}
 		if (!isset($value) || $value === '')
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
-			return self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+			$ok = self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
-		return self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+		else
+		{
+			$ok = self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+		}
+		if ($update_cache) egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
+
+		return $ok;
 	}
 
 	/**
@@ -163,13 +167,14 @@ class config
 	 */
 	function delete_repository()
 	{
-		if (!is_object(self::$db))
+		if (!isset(self::$configs))
 		{
-			self::init_db();
+			self::init_static();
 		}
 		self::$db->delete(config::TABLE,array('config_app' => $this->appname),__LINE__,__FILE__);
 
 		unset(self::$configs[$this->appname]);
+		egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
 	}
 
 	/**
@@ -203,31 +208,11 @@ class config
 	 */
 	static function read($app)
 	{
-		$config =& self::$configs[$app];
-
-		if (!isset($config))
+		if (!isset(self::$configs))
 		{
-			if (!is_object(self::$db))
-			{
-				self::init_db();
-			}
-			$config = array();
-			foreach(self::$db->select(config::TABLE,'*',array('config_app' => $app),__LINE__,__FILE__) as $row)
-			{
-				$name = $row['config_name'];
-				$value = $row['config_value'];
-
-				$test = @unserialize($value);
-				if($test === false)
-				{
-					// manually retrieve the string lengths of the serialized array if unserialize failed
-					$test = @unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $value));
-				}
- 
-				$config[$name] = is_array($test) ? $test : $value;
-			}
+			self::init_static();
 		}
-		return $config;
+		return self::$configs[$app];
 	}
 
 	/**
@@ -300,7 +285,7 @@ class config
 	 * We use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
 	 *
 	 */
-	private static function init_db()
+	private static function init_static()
 	{
 		if (is_object($GLOBALS['egw']->db))
 		{
@@ -309,6 +294,25 @@ class config
 		else
 		{
 			config::$db = $GLOBALS['egw_setup']->db;
+		}
+		if (!(self::$configs = egw_cache::getInstance(__CLASS__, 'configs')))
+		{
+			self::$configs = array();
+			foreach(self::$db->select(config::TABLE,'*',false,__LINE__,__FILE__) as $row)
+			{
+				$app = $row['config_app'];
+				$name = $row['config_name'];
+				$value = $row['config_value'];
+
+				$test = @unserialize($value);
+				if($test === false)
+				{
+					// manually retrieve the string lengths of the serialized array if unserialize failed
+					$test = @unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $value));
+				}
+				self::$configs[$app][$name] = is_array($test) ? $test : $value;
+			}
+			egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
 		}
 	}
 }

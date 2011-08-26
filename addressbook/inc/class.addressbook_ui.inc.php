@@ -93,7 +93,8 @@ class addressbook_ui extends addressbook_bo
 		{
 			$this->config['contact_export_limit'] = $this->config['export_limit'];
 		}
-		if ($this->config['copy_fields'] && ($fields = unserialize($this->config['copy_fields'])))
+		if ($this->config['copy_fields'] && ($fields = is_array($this->config['copy_fields']) ?
+			$this->config['copy_fields'] : unserialize($this->config['copy_fields'])))
 		{
 			// Set country code if country name is selected
 			$supported_fields = $this->get_fields('supported',null,0);

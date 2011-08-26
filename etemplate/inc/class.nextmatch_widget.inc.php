@@ -276,10 +276,9 @@ class nextmatch_widget
 		unset($value['rows']);
 		$extension_data += $value;
 
-		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
 			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']) &&
-			!(isset($GLOBALS['egw_info']['user']['apps']['admin']) || $limit_exception);
+			!bo_merge::is_export_limit_excepted();
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
@@ -1448,8 +1447,7 @@ class nextmatch_widget
 	 */
 	static public function csv_export(&$value,$separator=';')
 	{
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
-		if (!(isset($GLOBALS['egw_info']['user']['apps']['admin']) || $limit_exception))
+		if (!bo_merge::is_export_limit_excepted())
 		{
 			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
 			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];

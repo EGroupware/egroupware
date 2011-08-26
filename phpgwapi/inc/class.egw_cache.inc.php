@@ -456,9 +456,11 @@ class egw_cache
 	{
 		if(!isset($GLOBALS['egw_info']['server'][$name]))
 		{
-			if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
+			if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db) || $GLOBALS['egw']->db)
 			{
-				$GLOBALS['egw_info']['server'][$name] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
+				$db = $GLOBALS['egw']->db ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
+
+				$GLOBALS['egw_info']['server'][$name] = $db->select(config::TABLE,'config_value',array(
 					'config_app'	=> 'phpgwapi',
 					'config_name'	=> $name,
 				),__LINE__,__FILE__)->fetchColumn();

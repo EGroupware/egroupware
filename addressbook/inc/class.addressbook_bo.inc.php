@@ -291,7 +291,8 @@ class addressbook_bo extends addressbook_so
 		}
 		if ($GLOBALS['egw_info']['server']['org_fileds_to_update'])
 		{
-			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
+			$this->org_fields =  $GLOBALS['egw_info']['server']['org_fileds_to_update'];
+			if (!is_array($this->org_fields)) $this->org_fields = unserialize($this->org_fields);
 
 			// Set country code if country name is selected
 			$supported_fields = $this->get_fields('supported',null,0);
@@ -308,8 +309,7 @@ class addressbook_bo extends addressbook_so
 
 		$this->tracking = new addressbook_tracking($this);
 
-		$config = config::read('phpgwapi');
-		$this->delete_history = $config['history'];
+		$this->delete_history = $GLOBALS['egw_info']['server']['history'];
 	}
 
 	/**

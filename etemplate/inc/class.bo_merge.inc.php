@@ -83,7 +83,6 @@ abstract class bo_merge
 	 */
 	public static function hook_export_limit_excepted($config)
 	{
-		error_log(__METHOD__.'('.array2string($config).')');
 		$accountsel = new uiaccountsel();
 
 		return $accountsel->selection('newsettings[export_limit_excepted]','export_limit_excepted',$config['export_limit_excepted'],'both',4);
@@ -296,6 +295,33 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Checks if current user is excepted from the export-limit:
+	 * a) access to admin application
+	 * b) he or one of his memberships is named in export_limit_excepted config var
+	 *
+	 * @return boolean
+	 */
+	public static function is_export_limit_excepted()
+	{
+		static $is_excepted;
+
+		if (is_null($is_excepted))
+		{
+			$is_excepted = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+
+			// check export-limit and fail if user tries to export more entries then allowed
+			if (!$is_excepted && (is_array($export_limit_excepted = $GLOBALS['egw_info']['server']['export_limit_excepted']) ||
+				is_array($export_limit_excepted = unserialize($export_limit_excepted))))
+			{
+				$id_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+				$id_and_memberships[] = $GLOBALS['egw_info']['user']['account_id'];
+				$is_excepted = (bool) array_intersect($id_and_memberships, $export_limit_excepted);
+			}
+		}
+		return $is_excepted;
+	}
+
+	/**
 	 * Merges a given document with contact data
 	 *
 	 * @param string $document path/url of document
@@ -313,10 +339,7 @@ abstract class bo_merge
 			return false;
 		}
 
-		// check export-limit and fail if user tries to export more entries then allowed
-		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
-		if ($this->export_limit && !($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception) &&
-			count($ids) > (int)$this->export_limit)
+		if ($this->export_limit && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
 			return false;
@@ -1182,14 +1205,12 @@ abstract class bo_merge
 				}
 			}
 		}
-		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,
 			'children' => $documents,
 			// disable action if no document or export completly forbidden for non-admins
-			'enabled' => (boolean)$documents && (empty($export_limit) ||
-				(int)$export_limit > 0 || $GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception),
+			'enabled' => (boolean)$documents && (empty($export_limit) || (int)$export_limit > 0 || self::is_export_limit_excepted()),
 			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
 			'group' => $group,
 		);

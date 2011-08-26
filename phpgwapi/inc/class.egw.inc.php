@@ -118,7 +118,7 @@ class egw extends egw_minimal
 			exit;
 		}
 		// Set the DB's client charset if a system-charset is set
-		$system_charset = $this->db->select(config::TABLE,'config_value',array(
+		$system_charset = $GLOBALS['egw_info']['server']['system_charset'] = $this->db->select(config::TABLE,'config_value',array(
 			'config_app'  => 'phpgwapi',
 			'config_name' => 'system_charset',
 		),__LINE__,__FILE__)->fetchColumn();
@@ -127,11 +127,7 @@ class egw extends egw_minimal
 			$this->db->Link_ID->SetCharSet($system_charset);
 		}
 		// load up the $GLOBALS['egw_info']['server'] array
-		foreach($this->db->select(config::TABLE,'*',array('config_app'  => 'phpgwapi'),__LINE__,__FILE__) as $row)
-		{
-			$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
-		}
-		//$GLOBALS['egw_info']['server'] = config::read('phpgwapi'); would unserialize arrays
+		$GLOBALS['egw_info']['server'] += config::read('phpgwapi');
 
 		// if no server timezone set, use date_default_timezone_get() to determine it once
 		// it fills to log with deprecated warnings under 5.3 otherwise
