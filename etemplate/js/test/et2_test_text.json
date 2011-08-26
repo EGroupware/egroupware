@@ -3,5 +3,5 @@ var text_data = {
 		"url":	"www.egroupware.org",
 		"email": "",
 		"phone": "(866) 789-RACE"
-	},
+	}
 }

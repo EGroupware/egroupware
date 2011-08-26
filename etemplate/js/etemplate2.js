@@ -61,9 +61,6 @@ function etemplate2(_container, _menuaction)
 
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize()});
-
-	// Associative array with the event listeners
-	this.listeners = {};
 }
 
 /**
@@ -197,7 +194,15 @@ etemplate2.prototype.submit = function()
 	var values = this.getValues(this.widgetContainer);
 
 	// Trigger the submit event
-	if (this.fireEvent("submit", [values]))
+	var canSubmit = true;
+	this.widgetContainer.iterateOver(function(_widget) {
+		if (_widget.submit(values) === false)
+		{
+			canSubmit = false;
+		}
+	}, this, et2_ISubmitListener);
+
+	if (canSubmit)
 	{
 		// Create the request object
 		if (typeof egw_json_request != "undefined")
@@ -280,72 +285,6 @@ etemplate2.prototype.getValues = function(_root)
 		_widget.resetDirty();
 
 	}, this, et2_IInput);
-
-	return result;
-}
-
-/**
- * Adds an callback function to the given event slot
- * 
- * @param _event is the name of the event
- * @param _callback is the function which should be called once the event gets
- * 	fired.
- * @param _context is the context in which the function should be executed.
- */
-etemplate2.prototype.addListener = function(_event, _callback, _context)
-{
-	// Add the event slot if it does not exist yet
-	if (typeof this.listeners[_event] == "undefined")
-	{
-		this.listeners[_event] = [];
-	}
-
-	this.listeners[_event].push({
-		"callback": _callback,
-		"context": _context
-	});
-}
-
-/**
- * Removes the given callback function from the given event slot.
- */
-etemplate2.prototype.removeListener = function(_event, _callback)
-{
-	if (typeof this.listeners[_event] != "undefined")
-	{
-		var events = this.listeners[_event];
-
-		for (var i = events.length - 1; i >= 0; i--)
-		{
-			if (events[i].callback == _callback)
-			{
-				events.splice(i, 1);
-			}
-		}
-	}
-}
-
-/**
- * Fires the given event. The return values are conected via AND
- */
-etemplate2.prototype.fireEvent = function(_event, _args)
-{
-	if (typeof _args == "undefined")
-	{
-		_args = [];
-	}
-
-	var result = true;
-
-	if (typeof this.listeners[_event] != "undefined")
-	{
-		var events = this.listeners[_event];
-
-		for (var i = 0; i < events.length; i++)
-		{
-			result = result && events[i].callback.apply(events[i].context, _args);
-		}
-	}
 
 	return result;
 }

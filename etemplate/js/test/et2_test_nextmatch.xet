@@ -12,8 +12,6 @@
 				<column/>
 				<column width="8%" disabled="@no_info_owner_info_responsible"/>
 				<column width="12%"/>
-				<column width="3%" disabled="@no_actions"/>
-				<column width="3%" disabled="@no_actions"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -63,8 +61,6 @@
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<description value="Sub" class="noPrint"/>
-					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 			</rows>
 		</grid>

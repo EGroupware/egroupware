@@ -276,7 +276,7 @@ var et2_option = et2_baseWidget.extend({
 
 	loadContent: function(_data) {
 		this.option.text(_data);
-	},
+	}
 
 /*	Doesn't work either with selectboxes
 	set_statustext: function(_value) {

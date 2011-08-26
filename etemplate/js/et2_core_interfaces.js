@@ -70,5 +70,19 @@ var et2_IResizeable = new Interface({
 	resize: function() {}
 });
 
+/**
+ * Interface for widgets which want to e.g. perform clientside validation before
+ * the form is submitted.
+ */
+var et2_ISubmitListener = new Interface({
+	/**
+	 * Called whenever the template gets submitted. Return false if you want to
+	 * stop submission.
+	 * 
+	 * @param _values contains the values which will be sent to the server.
+	 * 	Listeners may change these values before they get submitted.
+	 */
+	submit: function(_values) {}
+});
 
 

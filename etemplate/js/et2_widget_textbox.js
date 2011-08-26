@@ -54,7 +54,7 @@ var et2_textbox = et2_inputWidget.extend({
 			"type": "integer",
 			"default": -1,
 			"description": "Multiline field width - better to use CSS"
-		},
+		}
 	},
 
 	init: function() {

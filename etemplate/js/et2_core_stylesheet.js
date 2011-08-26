@@ -17,7 +17,7 @@
  * rules - updating a single stylesheet rule is way more efficient than updating
  * the element style of many objects.
  */
-var EGW_DYNAMIC_STYLESHEET = null;
+var ET2_DYNAMIC_STYLESHEET = null;
 
 /**
  * Main egwDynStyleSheet class - all egwDynStyleSheets share the same stylesheet
@@ -26,8 +26,8 @@ var EGW_DYNAMIC_STYLESHEET = null;
  */
 function et2_dynStyleSheet()
 {
-	// Check whether the EGW_DYNAMIC_STYLESHEET has already be created
-	if (!EGW_DYNAMIC_STYLESHEET)
+	// Check whether the ET2_DYNAMIC_STYLESHEET has already be created
+	if (!ET2_DYNAMIC_STYLESHEET)
 	{
 		var style = document.createElement("style");
 		document.getElementsByTagName("head")[0].appendChild(style);
@@ -36,13 +36,13 @@ function et2_dynStyleSheet()
 		this.selectors = {};
 		this.selectorCount = 0;
 
-		EGW_DYNAMIC_STYLESHEET = this;
+		ET2_DYNAMIC_STYLESHEET = this;
 
 		return this;
 	}
 	else
 	{
-		return EGW_DYNAMIC_STYLESHEET;
+		return ET2_DYNAMIC_STYLESHEET;
 	}
 }
 

@@ -70,10 +70,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Create the outer grid container
 		this.dataviewContainer = new et2_dataview_gridContainer(this.div);
 
-		this.columns = [];
 		this.activeFilters = {};
 	},
 
+	/**
+	 * Destroys all 
+	 */
 	destroy: function() {
 		this.dataviewContainer.free();
 		this.dynheight.free();
@@ -81,8 +83,14 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		this._super.apply(this, arguments);
 	},
 
+	/**
+	 * Implements the et2_IResizeable interface - lets the dynheight manager
+	 * update the width and height and then update the dataview container.
+	 */
 	resize: function() {
-		this.dynheight.update();
+		this.dynheight.update(function(_w, _h) {
+			this.dataviewContainer.resize(_w, _h);
+		}, this);
 	},
 
 	/**
@@ -128,6 +136,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			(_asc ? "asc" : "desc") + "'");
 	},
 
+	/**
+	 * Removes the sort entry from the active filters object and thus returns to
+	 * the natural sort order.
+	 */
 	resetSort: function() {
 		// Check whether the nextmatch widget is currently sorted
 		if (typeof this.activeFilters["sort"] != "undefined")
@@ -137,7 +149,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				_widget.setSortmode("none");
 			}, this, et2_INextmatchSortable);
 
-			// If yes, delete the "sort" filter
+			// Delete the "sort" filter entry
 			delete(this.activeFilters["sort"]);
 			this.applyFilters();
 		}
@@ -150,7 +162,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	/**
 	 * Generates the column name for the given column widget
 	 */
-	_genColumnName: function(_widget) {
+	_genColumnCaption: function(_widget) {
 		var result = null;
 
 		_widget.iterateOver(function(_widget) {
@@ -167,24 +179,31 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		return result;
 	},
 
-	_parseHeaderRow: function(_row) {
+	_parseHeaderRow: function(_row, _colData) {
 		// Go over the header row and create the column entries
 		this.columns = new Array(_row.length);
+		var columnData = new Array(_row.length);
 		for (var x = 0; x < _row.length; x++)
 		{
 			this.columns[x] = {
-				"widget": _row[x].widget,
-				"name": this._genColumnName(_row[x].widget),
-				"disabled": false,
-				"canDisable": true,
-				"width": "auto"
-			}
+				"widget": _row[x].widget
+			};
+
+			columnData[x] = {
+				"id": "col_" + x,
+				"caption": this._genColumnCaption(_row[x].widget),
+				"visibility": _colData[x].disabled ?
+					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
+				"width": _colData[x].width
+			};
 
 			// Append the widget to this container
 			this.addChild(_row[x].widget);
 		}
 
-		this.dataviewContainer.setColumns(this.columns);
+		// Create the column manager and update the grid container
+		this.dataviewContainer.setColumns(columnData);
+
 	},
 
 	_parseGrid: function(_grid) {
@@ -193,7 +212,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		{
 			if (_grid.rowData[y]["class"] == "th")
 			{
-				this._parseHeaderRow(_grid.cells[y]);
+				this._parseHeaderRow(_grid.cells[y], _grid.colData);
 			}
 		}
 	},

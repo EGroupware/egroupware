@@ -53,6 +53,8 @@ var et2_dataview_gridContainer = Class.extend({
 		this.width = 0;
 		this.height = 0;
 
+		this.uniqueId = "gridCont_" + et2_uniqueId();
+
 		// Build the base nodes
 		this._createElements();
 
@@ -91,11 +93,13 @@ var et2_dataview_gridContainer = Class.extend({
 	 */
 	setColumns: function(_columnData) {
 		// Free all column objects which have been created till this moment
-		this.headTr.empty();
+		this._clearHeader();
 
-		// Create the column manager and pass the _columnData to it
-		this.columns = _columnData; //XXX
-		//this.columnMgr = new et2_dataview_columnsMgr(_columnData);
+		// Copy the given column data
+		this.columnMgr = new et2_dataview_columns(_columnData);
+
+		// Create the stylesheets
+		this._updateColumns();
 
 		// Build the header row
 		this._buildHeader();
@@ -110,13 +114,34 @@ var et2_dataview_gridContainer = Class.extend({
 			this.width = _w;
 
 			// Rebuild the column stylesheets
+			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
 			this._updateColumns();
 		}
 
 		if (this.height != _h)
 		{
+			this.height = _h;
 			// Set the height of the grid.
 			// TODO
+		}
+	},
+
+	/**
+	 * Returns the column manager object. You can use it to set the visibility
+	 * of columns etc. Call "updateHeader" if you did any changes.
+	 */
+	getColumnMgr: function() {
+		return this.columnMgr;
+	},
+
+	/**
+	 * Recalculates the stylesheets which determine the column visibility and
+	 * width.
+	 */
+	updateColumns: function() {
+		if (this.columnMgr)
+		{
+			this._updateColumns();
 		}
 	},
 
@@ -162,7 +187,6 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Clears the header row
 	 */
 	_clearHeader: function() {
-		// Destroy the column manager if it had been created
 		if (this.columnMgr)
 		{
 			this.columnMgr.free();
@@ -171,7 +195,102 @@ var et2_dataview_gridContainer = Class.extend({
 
 		// Reset the headerColumns array and empty the table row
 		this.columnNodes = [];
+		this.columns = [];
 		this.headTr.empty();
+	},
+
+	/**
+	 * Sets the column data which is retrieved by calling egwGridColumns.getColumnData.
+	 * The columns will be updated.
+	 */
+	_updateColumns: function() {
+		// Get the stylesheet singleton
+		var styleSheet = new et2_dynStyleSheet();
+
+		// Copy the columns data
+		this.columns = this.columnMgr.getColumnData();
+
+		// Count the visible rows
+		var total_cnt = 0;
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			if (this.columns[i].visible)
+			{
+				total_cnt++;
+			}
+		}
+
+		// Set the grid column styles
+		var first = true;
+		var vis_col = this.visibleColumnCount = 0;
+		var totalWidth = 0;
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			var col = this.columns[i];
+
+			col.tdClass = this.uniqueId + "_td_" + col.id;
+			col.divClass = this.uniqueId + "_div_" + col.id;
+
+			if (col.visible)
+			{
+				vis_col++;
+				this.visibleColumnCount++;
+
+				styleSheet.updateRule("." + col.tdClass, 
+					"display: " + (col.visible ? "table-cell" : "none") + "; " + 
+					((vis_col == total_cnt) ? "border-right-width: 0 " : "border-right-width: 1px ") +
+					"!important;");
+
+				styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
+					"width: " + (col.width - this.headerBorderWidth) + "px;");
+
+				// Ugly browser dependant code - each browser seems to treat the 
+				// right (collapsed) border of the row differently
+				var addBorder = 0;
+				if ($j.browser.mozilla)
+				{
+					var maj = $j.browser.version.split(".")[0];
+					if (maj < 2) {
+						addBorder = 1; // Versions <= FF 3.6
+					}
+				}
+				if ($j.browser.webkit && !first)
+				{
+					addBorder = 1;
+				}
+				if (($j.browser.msie || $j.browser.opera) && first)
+				{
+					addBorder = -1;
+				}
+
+				// Make the last columns one pixel smaller, to prevent a horizontal
+				// scrollbar from showing up
+				if (vis_col == total_cnt)
+				{
+					addBorder += 1;
+				}
+
+				var width = Math.max(0, (col.width - this.columnBorderWidth - addBorder));
+
+				styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
+					"width: " + width + "px;");
+
+				totalWidth += col.width;
+
+				first = false;
+			}
+			else
+			{
+				styleSheet.updateRule("." + col.tdClass, 
+					"display: " + (col.visible ? "table-cell" : "none") + ";");
+			}
+		}
+
+		// Add the full row and spacer class
+		styleSheet.updateRule(".egwGridView_grid ." + this.uniqueId + "_div_fullRow",
+			"width: " + (totalWidth - this.columnBorderWidth - 1) + "px; border-right-width: 0 !important;");
+		styleSheet.updateRule(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow",
+			"width: " + (totalWidth - 1) + "px; border-right-width: 0 !important;");
 	},
 
 	/**
@@ -327,113 +446,3 @@ var et2_dataview_gridContainer = Class.extend({
 });
 
 
-
-
-/*
- * Sets the column data which is retrieved by calling egwGridColumns.getColumnData.
- * The columns will be updated.
- */
-/*egwGridViewOuter.prototype.updateColumns = function(_columns)
-{
-	// Copy the columns data
-	this.columns = _columns;
-
-	var first = true;
-
-	// Count the visible rows
-	var total_cnt = 0;
-	for (var i = 0; i < this.columns.length; i++)
-	{
-		if (this.columns[i].visible)
-		{
-			total_cnt++;
-		}
-	}
-
-	var vis_col = this.visibleColumnCount = 0;
-	var totalWidth = 0;
-
-	// Set the grid column styles
-	for (var i = 0; i < this.columns.length; i++)
-	{
-		var col = this.columns[i];
-
-		col.tdClass = this.uniqueId + "_td_" + col.id;
-		col.divClass = this.uniqueId + "_div_" + col.id;
-
-		if (col.visible)
-		{
-			vis_col++;
-			this.visibleColumnCount++;
-
-			this.styleSheet.updateRule("." + col.tdClass, 
-				"display: " + (col.visible ? "table-cell" : "none") + "; " + 
-				((vis_col == total_cnt) ? "border-right-width: 0 " : "border-right-width: 1px ") +
-				"!important;");
-
-			this.styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
-				"width: " + (col.width - this.headerBorderWidth) + "px;");
-
-			// Ugly browser dependant code - each browser seems to treat the 
-			// right (collapsed) border of the row differently
-			addBorder = 0;
-			if ($j.browser.mozilla)
-			{
-				var maj = $j.browser.version.split(".")[0];
-				if (maj < 2) {
-					addBorder = 1; // Versions <= FF 3.6
-				}
-			}
-			if ($j.browser.webkit && !first)
-			{
-				addBorder = 1;
-			}
-			if (($j.browser.msie || $j.browser.opera) && first)
-			{
-				addBorder = -1;
-			}
-
-			// Make the last columns one pixel smaller, to prevent a horizontal
-			// scrollbar from showing up
-			if (vis_col == total_cnt)
-			{
-				addBorder += 1;
-			}
-
-			var width = (col.width - this.columnBorderWidth - addBorder);
-
-			this.styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
-				"width: " + width + "px;");
-
-			totalWidth += col.width;
-
-			first = false;
-		}
-		else
-		{
-			this.styleSheet.updateRule("." + col.tdClass, 
-				"display: " + (col.visible ? "table-cell" : "none") + ";");
-		}
-	}
-
-	// Add the full row and spacer class
-	this.styleSheet.updateRule(".egwGridView_grid ." + this.uniqueId + "_div_fullRow",
-		"width: " + (totalWidth - this.columnBorderWidth - 1) + "px; border-right-width: 0 !important;");
-	this.styleSheet.updateRule(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow",
-		"width: " + (totalWidth - 1) + "px; border-right-width: 0 !important;");
-
-	// Build the header if this hasn't been done yet
-	this.buildBaseHeader();
-
-	// Update the grid
-	this.grid.updateColumns(this.columns);
-}
-
-
-
-egwGridViewOuter.prototype.setHeight = function(_h)
-{
-	this.grid.setScrollHeight(_h - this.outer_thead.outerHeight());
-}
-
-});*/

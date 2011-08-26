@@ -97,7 +97,7 @@ var et2_dynheight = Class.extend({
 			// Call the callback function
 			if (typeof _callback != "undefined")
 			{
-				_callback.call(_context, _w, _h);
+				_callback.call(_context, w, h);
 			}
 		}
 	},

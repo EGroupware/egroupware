@@ -9,7 +9,7 @@
 body, table, td {
 	font-family: Lucida Grande, sans-serif;
 	font-size: 10pt;
-/*	overflow: hidden;*/
+	overflow: hidden;
 }
 
 #linklist a {
@@ -348,7 +348,7 @@ label input, label span, label div, label select, label textarea {
 .nextmatch_sortheader {
 	color: #003075;
 	cursor: pointer;
-	padding-right: 18px;
+	padding-right: 10px;
 	margin-right: 10px;
 	background-repeat: no-repeat;
 	background-position: right center;
