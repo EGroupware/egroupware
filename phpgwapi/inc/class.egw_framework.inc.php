@@ -1233,6 +1233,40 @@ abstract class egw_framework
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 	}
+
+	/**
+	 * Set a preference via ajax
+	 *
+	 * User either need run rights for preference app, or setting of preference will be silently ignored!
+	 *
+	 * @param string $app
+	 * @param string $name
+	 * @param string $value
+	 */
+	public static function ajax_set_preference($app, $name, $value)
+	{
+		//error_log(__METHOD__."('$app', '$name', '$value')");
+		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
+		{
+			$GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw']->preferences->change($app, $name, $value);
+			$GLOBALS['egw']->preferences->save_repository(True);
+		}
+	}
+
+	/**
+	 * Get preferences of a certain application via ajax
+	 *
+	 * @param string $app
+	 */
+	public static function ajax_get_preference($app)
+	{
+		if (preg_match('/^[a-z0-9_]+$/i', $app))
+		{
+			$response = egw_json_response::get();
+			$response->script('window.egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences'][$app]).', "'.$app.'");');
+		}
+	}
 }
 
 // Init all static variables

@@ -17,7 +17,7 @@ class egw_json_request
 {
 
 	private static $_hadJSONRequest = false;
-	
+
 	public static function isJSONRequest()
 	{
 		return self::$_hadJSONRequest;
@@ -34,7 +34,7 @@ class egw_json_request
 	{
 		// Remember that we currently are in a JSON request - e.g. used in the redirect code
 		self::$_hadJSONRequest = true;
-		
+
 		if (empty($input_data))
 		{
 			$this->handleRequest($menuaction, array());
@@ -109,6 +109,13 @@ class egw_json_request
 			case 'template':
 				$menuaction = $appName.'.'.$className.'.'.$functionName;
 				list($template) = explode('_', $className);
+				if ($className == 'egw_framework')	// allow to use egw_framework to call framework / template used by user
+				{
+					$template = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+					if (empty($template)) $template = 'idots';
+					$className = $template.'_framework';
+					//error_log(__METHOD__."('$menuaction', ".array($parameters).") --> template='$template', className='$className'");
+				}
 				break;
 		}
 
@@ -133,7 +140,7 @@ class egw_json_request
 			$ajaxClass = CreateObject($appName.'.'.$className);
 		}
 
-		// for Ajax: no need to load the "standard" javascript files, 
+		// for Ajax: no need to load the "standard" javascript files,
 		// they are already loaded, in fact jquery has a problem if loaded twice
 		egw_framework::js_files(array());
 
@@ -189,7 +196,7 @@ class egw_json_response
 		}
 		return self::$response;
 	}
-	
+
 	public static function isJSONResponse()
 	{
 		return isset(self::$response);
@@ -449,7 +456,7 @@ class egw_json_response
 			'params' => $params
 		);
 	}
-	
+
 	/**
 	 * Destructor
 	 */

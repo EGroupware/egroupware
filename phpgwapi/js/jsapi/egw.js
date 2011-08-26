@@ -72,9 +72,12 @@ else
 		/**
 		 * Query an EGroupware user preference
 		 * 
+		 * If a prefernce is not already loaded (only done for "common" by default), it is synchroniosly queryed from the server!
+		 * 
 		 * @param string _name name of the preference, eg. 'dateformat'
 		 * @param string _app='common'
 		 * @return string preference value
+		 * @todo add a callback to query it asynchron
 		 */
 		preference: function(_name, _app) 
 		{
@@ -82,9 +85,28 @@ else
 			
 			if (typeof this.prefs[_app] == 'undefined')
 			{
-				throw 'Prefs for application "'+_app+'" are NOT loaded!';
+				xajax_doXMLHTTPsync('home.egw_framework.ajax_get_preference.template', _app);
+				
+				if (typeof this.prefs[_app] == 'undefined') this.prefs[_app] = {};
 			}
 			return this.prefs[_app][_name];
+		},
+		
+		/**
+		 * Set a preference and sends it to the server
+		 * 
+		 * Server will silently ignore setting preferences, if user has no right to do so!
+		 * 
+		 * @param string _app application name or "common"
+		 * @param string _name name of the pref
+		 * @param string _val value of the pref
+		 */
+		set_preference: function(_app, _name, _val)
+		{
+			xajax_doXMLHTTP('home.egw_framework.ajax_set_preference.template', _app, _name, _val);
+			
+			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
+			if (typeof this.prefs[_app] != 'undefined') this.prefs[_app][_name] = _val;
 		},
 		
 		/**
