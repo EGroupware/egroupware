@@ -150,7 +150,16 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 				node = this._surroundingsMgr.getDOMNode(node);
 			}
 
-			this.parentNode.appendChild(node);
+			// Append this node at its index
+			var idx = this._parent ? this._parent.getChildren().indexOf(this) : -1;
+			if (idx < 0 || idx >= this.parentNode.childNodes.length - 1)
+			{
+				this.parentNode.appendChild(node);
+			}
+			else
+			{
+				this.parentNode.insertBefore(node, this.parentNode.childNodes[idx]);
+			}
 
 			// Store the currently attached nodes
 			this._attachSet = {
