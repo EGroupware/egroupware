@@ -690,4 +690,11 @@ abstract class bo_merge
 		}
 		common::egw_exit();
 	}
+
+	/**
+	 * Get a list of supported extentions
+	 */
+	public static function get_file_extensions() {
+		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml');
+	}
 }
