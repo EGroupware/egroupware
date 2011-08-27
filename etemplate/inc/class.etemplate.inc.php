@@ -1177,7 +1177,11 @@ class etemplate extends boetemplate
 				{
 					$help = lang($help);
 				}
-				if (($use_tooltip_for_help = strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
+				if (substr($help,0,5) == 'call:')
+				{
+					$options .= ' onMouseOver="'.html::htmlspecialchars(substr($help,5)).'"';
+				}
+				elseif (($use_tooltip_for_help = strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
 				{
 					$options .= html::tooltip($help);
 				}
