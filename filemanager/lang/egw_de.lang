@@ -19,7 +19,7 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
-add to current clipboard	filemanager	de	Zur aktuellen Zwischenablage hinzufügen
+add to clipboard	filemanager	de	Anhängen an Zwischenablage
 all files	common	de	Alle Dateien
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinder

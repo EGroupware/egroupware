@@ -23,7 +23,7 @@ accessrights	filemanager	en	Access rights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
-add to current clipboard	filemanager	en	Add to current clipboard
+add to clipboard	filemanager	en	Add to clipboard
 all files	common	en	All files
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Maximum number of folder links to be configured in preferences.
 and all it's childeren	filemanager	en	and all it's children

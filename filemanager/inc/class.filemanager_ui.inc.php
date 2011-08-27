@@ -131,10 +131,18 @@ class filemanager_ui
 			'copy' => array(
 				'caption' => lang('Copy'),
 				'group' => ++$group,
+				'onExecute' => 'javaScript:do_clipboard',
+			),
+			'add' => array(
+				'caption' => lang('Add to clipboard'),
+				'group' => $group,
+				'icon' => 'copy',
+				'onExecute' => 'javaScript:do_clipboard',
 			),
 			'cut' => array(
 				'caption' => lang('Cut'),
 				'group' => $group,
+				'onExecute' => 'javaScript:do_clipboard',
 			),
 			'delete' => array(
 				'caption' => lang('Delete'),
@@ -148,7 +156,6 @@ class filemanager_ui
 		}
 		return $actions;
 	}
-
 
 	/**
 	 * Main filemanager page
@@ -390,18 +397,12 @@ class filemanager_ui
 		{
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
-		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>' : '';
-		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			lang('link')).':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>' : '';
-		$content['mailpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('Mail files').
-			':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>' : '';
 		$content['mailpaste_files'] = $clipboard_files;
 		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
-		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$clipboard_files || !$dir_is_writable;
-		$readonlys['button[mailpaste]'] = !$clipboard_files || !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
+		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$dir_is_writable;
+		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
 		$readonlys['button[createdir]'] = !$dir_is_writable;
 		$readonlys['button[symlink]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
@@ -418,6 +419,8 @@ class filemanager_ui
 			$GLOBALS['egw_info']['flags']['java_script'] .= "<script type=\"text/javascript\">
 	function open_mail(attachments)
 	{
+		if (typeof attachments == 'undefined') attachments = clipboard_files;
+
 		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 
@@ -439,6 +442,8 @@ class filemanager_ui
 </script>\n";
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
+var clipboard_files = [];
+
 function check_files(upload)
 {
 	var files = [];
@@ -456,6 +461,26 @@ function check_files(upload)
 	var path = document.getElementById(upload.id.replace(/upload\]\[/,"nm][path"));
 
 	xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);
+}
+
+function clipboard_tooltip(link)
+{
+	xajax_doXMLHTTP("filemanager_ui::ajax_clipboard_tooltip", link.id);
+
+	window.setTimeout(UnTip, 3000);
+}
+
+function do_clipboard(_action, _elems)
+{
+	if (_action.id != "cut") clipboard_files = [];
+
+	var ids = [];
+	for (var i = 0; i < _elems.length; i++)
+	{
+		clipboard_files.push(_elems[i].id);
+		ids.push(_elems[i].id);
+	}
+	xajax_doXMLHTTP("filemanager_ui::ajax_clipboard", _action.id, ids);
 }
 </script>'."\n";
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
@@ -1183,6 +1208,59 @@ function check_files(upload)
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.egw_vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+
+	/**
+	 * Get tooltip for paste icons containing files currently in clipboard
+	 *
+	 * @param string $id id of button/icon
+	 */
+	public static function ajax_clipboard_tooltip($id)
+	{
+		$response = egw_json_response::get();
+
+		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
+		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
+
+		if (!$clipboard_files)
+		{
+			$tooltip = '<p><b>'.lang('Clipboard is empty!').'</b></p>';
+			$clipboard_files = array();
+		}
+		elseif (preg_match('/\[([a-z]+)\]$/',$id,$matches))
+		{
+			switch($matches[1])
+			{
+				case 'paste':
+					$tooltip = lang('%1 the following files into current directory',$clipboard_type=='copy'?lang('Copy'):lang('Move'));
+					break;
+				case 'linkpaste':
+					$tooltip = lang('%1 the following files into current directory',lang('Link'));
+					break;
+				case 'mailpaste':
+					$tooltip = lang('Mail files');
+					break;
+			}
+			$tooltip = '<p><b>'.$tooltip.':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>';
+		}
+		$response->script('clipboard_files = '.json_encode($clipboard_files).';');
+		$response->script('Tip.call(document.getElementById("'.$id.'"),"'.$tooltip.'");');
+	}
+
+	/**
+	 * Copy, add or cut files to clipboard
+	 *
+	 * @param string $action 'copy', 'cut' or 'add'
+	 * @param array $selected files
+	 */
+	public static function ajax_clipboard($action, $selected)
+	{
+		$response = egw_json_response::get();
+
+		$msg = self::action($action, $selected);
+
+		$response->script('$j(document.getElementById("nm[msg]")).text("'.$msg.'");');	// ->jquery('#nm[msg]','text' does not work!
+		$response->script('clipboard_files = '.json_encode($clipboard_files).';');
 	}
 
 	/**
