@@ -120,11 +120,11 @@ class contact_widget extends etemplate_widget_transformer
 	/**
 	 * Constructor of the extension
 	 *
-	 * @param string $ui '' for html
+	 * @param string $xml or 'html' for old etemplate
 	 */
 	function __construct($xml)
 	{
-		if (is_a($xml, 'XMLReader') || $xml != '')
+		if (is_a($xml, 'XMLReader') || $xml != '' && $xml != 'html')
 		{
 			parent::__construct($xml);
 		}
