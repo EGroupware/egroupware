@@ -2426,7 +2426,8 @@ class HTTP_WebDAV_Server
     {
     	// cadaver (and probably all neon using agents) need a more complete url encoding
     	// otherwise special chars like "$,()'" in filenames do NOT work
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false)
+    	// netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false || !isset($_SERVER['HTTP_USER_AGENT']))
 		{
 			return strtr(rawurlencode($url),array(
 				'%2F' => '/',
