@@ -1594,7 +1594,7 @@ class HTTP_WebDAV_Server
                     }
 
                     if (!isset($options['ranges'])) {
-                        $options['ranges'] = array(); 
+                        $options['ranges'] = array();
                     }
 
                     $options["ranges"][] = $range;
@@ -1637,7 +1637,7 @@ class HTTP_WebDAV_Server
                     // TODO multipart support is missing (see also above)
                     if (0 == fseek($stream, $options['ranges'][0]["start"], SEEK_SET)) {
                         $length = $options['ranges'][0]["end"] - $options['ranges'][0]["start"]+1;
-                        
+
                         while (!feof($options['stream'])) {
                             if ($length <= 0) {
                                break;
@@ -1672,7 +1672,7 @@ class HTTP_WebDAV_Server
                 }
 
                 fclose($stream);
-            } 
+            }
 
             $this->http_status($stat);
         } else {
@@ -2490,7 +2490,8 @@ class HTTP_WebDAV_Server
     {
     	// cadaver (and probably all neon using agents) need a more complete url encoding
     	// otherwise special chars like "$,()'" in filenames do NOT work
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false)
+    	// netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false || !isset($_SERVER['HTTP_USER_AGENT']))
 		{
 			return strtr(rawurlencode($url),array(
 				'%2F' => '/',
