@@ -275,6 +275,39 @@ else
 			{
 				this.link_registry[_app] = _registry;
 			}
+		},
+		
+		/**
+		 * Clientside config
+		 * 
+		 * @access: private, use egw.config(_name, _app="phpgwapi")
+		 */
+		configs: null,
+		
+		/**
+		 * Query clientside config
+		 * 
+		 * @param string _name name of config variable
+		 * @param string _app default "phpgwapi"
+		 * @return mixed
+		 */
+		config: function (_name, _app)
+		{
+			if (typeof _app == 'undefined') _app = 'phpgwapi';
+
+			if (typeof this.configs[_app] == 'undefined') return null;
+			
+			return this.configs[_app][_name];
+		},
+		
+		/**
+		 * Set clientside configuration for all apps
+		 * 
+		 * @param array/object
+		 */
+		set_configs: function(_configs)
+		{
+			this.configs = _configs;
 		}
 	};
 }
