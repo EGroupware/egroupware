@@ -27,7 +27,7 @@ if (!preg_match('/^[a-z0-9_]+$/i', $_GET['app'])) die('No valid application-name
 if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/i', $_GET['lang'])) die('No valid lang-name given!');
 
 // use an etag with app, lang and a hash over the creation-times of all lang-files
-$etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5($GLOBALS['egw_info']['server']['lang_ctimes']).'"';
+$etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5(serialize($GLOBALS['egw_info']['server']['lang_ctimes'])).'"';
 
 // headers to allow caching of one month
 Header('Content-Type: text/javascript; charset=utf-8');
