@@ -15,6 +15,7 @@
 /*egw:uses
 	et2_textbox;
 	et2_valueWidget;
+	phpgwapi.jquery.jquery.base64;
 */
 
 /**
@@ -71,40 +72,35 @@ var et2_url = et2_textbox.extend({
 				this.getSurroundings().update();
 			}
 			this._button.removeClass("url phone email").removeAttr("href");
+			_value = this.get_link(this._type, _value);
 			switch(this._type)
 			{
 				case "url":
 					// Silently use http if no protocol
-					if(_value.indexOf("://") == -1) _value = "http://"+_value;
 					this._button.attr("href", _value).attr("target", "_blank").addClass("url");
 					break;
 				case "url-phone":
-					if(navigator.userAgent.indexOf('AppleWebKit') !== -1 && (
-							navigator.userAgent.indexOf("iPhone") !== -1 ||
-							navigator.userAgent.indexOf("Android") !== -1 
-						) &&
-						 _value.indexOf("tel:") == -1)
-					{
-						 _value = "tel:"+_value;
-						this._button.attr("href", _value).addClass("phone").show();
-					} else if (false) {
-						// TODO: Check for telephony config, use link from server
-						//this._button.attr("href", _value).addClass("phone").show();
-					} else {
+					if(_value) {
+						if(typeof _value == 'function')
+						{
+							this._button.click(this, _value).addClass("phone").show();
+						}
+						else 
+						{
+							this._button.attr("href", _value).addClass("phone").show();
+						}
+					} else if (_value === false) {
 						// Can't make a good handler, hide button
 						this._button.hide();
 					}
 					break;
 				case "url-email":
-					if(egw.link_registry && egw.link_registry.felamimail)
+					if(typeof _value == 'function')
 					{
-						this._button.click(this, function() {
-							egw.open("","felamimail","add","send_to="+_value);
-						}).addClass("email");
+						this._button.click(this, _value).addClass("email");
 					}
-					else if(_value.indexOf("mailto:") == -1)
+					else
 					{
-						_value = "mailto:"+_value;
 						this._button.attr("href", _value).addClass("email");
 					}
 					break;
@@ -119,6 +115,64 @@ var et2_url = et2_textbox.extend({
 			}
 			this._button = null;
 		}
+	},
+
+	get_link: function(type, value) {
+		if(!value) return false;
+		switch(type)
+		{
+			case "url":
+				// Silently use http if no protocol
+				if(value.indexOf("://") == -1) value = "http://"+value;
+				break;
+			case "url-phone":
+				// Clean number
+				value = value.replace('&#9829;','').replace('(0)','');
+				value = value.replace(/[abc]/gi,2).replace(/[def]/gi,3).replace(/[ghi]/gi,4).replace(/[jkl]/gi,5).replace(/[mno]/gi,6);
+				value = value.replace(/[pqrs]/gi,7).replace(/[tuv]/gi,8).replace(/[wxyz]/gi,9);
+
+				if (egw.config("call_link")) {
+					var link = egw.config("call_link");
+					var size = [300,200];
+					var user_id = "";
+					var user_phone = "";
+					if(link.indexOf("%t") !== -1)
+					{
+						//TODO: get user ID & phone number
+					}
+					if(egw.config("call_popup"))
+					{
+ 						size = egw.config("call_popup").split("x");
+					}
+					link = link.replace("%1", value).replace("%u",user_id).replace("%t",user_phone);
+					value = function() {egw_openWindowCentered(link, false,size[0],size[1]);};
+				}
+				else if(navigator.userAgent.indexOf('AppleWebKit') !== -1 && (
+						navigator.userAgent.indexOf("iPhone") !== -1 ||
+						navigator.userAgent.indexOf("Android") !== -1 
+					) &&
+					 value.indexOf("tel:") == -1)
+				{
+					 value = "tel:"+value;
+					
+				} else {
+					// Can't make a good handler
+					return false;
+				}
+				break;
+			case "url-email":
+				if(egw.link_registry && egw.link_registry.felamimail)
+				{
+					return function() {egw.open("","felamimail","add","send_to="+jQuery.base64Encode(value));};
+				}
+				else if(value.indexOf("mailto:") == -1)
+				{
+					value = "mailto:"+value;
+				}
+				break;
+		}
+
+		return value;
 	},
 
 	validate: function(e) {
@@ -156,34 +210,52 @@ var et2_url_ro = et2_valueWidget.extend({
 		this.value = "";
 		this.span = $j(document.createElement("a"))
 			.addClass("et2_textbox readonly");
-
 		this.setDOMNode(this.span[0]);
 	},
 
 	set_value: function(_value) {
 		this.value = _value;
 
+		var link = et2_url.prototype.get_link(this._type, _value);
+
+		if(link == false && this.getDOMNode().nodeName == "A") 
+		{
+			this.span = $j(document.createElement("span"));
+			this.span.text(_value);
+			this.setDOMNode(this.span[0]);
+			return;
+		}
+		else if (this.getDOMNode().nodeName != "A")
+		{
+			this.span = $j(document.createElement("a"));
+			this.setDOMNode(this.span[0]);
+		}
 		this.span.text(_value);
 		switch(this._type) {
 			case "url":
-				// Silently use http if no protocol
-				if(_value.indexOf("://") == -1) _value = "http://"+_value;
-				this.span.attr("href", _value).attr("target", "_blank");
+				this.span.attr("href", link).attr("target", "_blank");
 				break;
 			case "url-phone":
-				if(navigator.userAgent.indexOf('AppleWebKit') !== -1 && (
-						navigator.userAgent.indexOf("iPhone") !== -1 ||
-						navigator.userAgent.indexOf("Android") !== -1 
-				)) {
-					if(_value.indexOf("tel:") == -1) _value = "tel:"+_value;
-					this.span.attr("href", _value);
-				} else {
-					//TODO: Check for telephony integration, use link from server
+				if(typeof link == 'function')
+				{
+					this.span.click(this, link);
+					this.span.attr("href", "javascript:void(0)");
+				}
+				else
+				{
+					this.span.attr("href", link);
 				}
 				break;
 			case "url-email":
-				if(_value.indexOf("mailto:") == -1) _value = "mailto:"+_value;
-				this.span.attr("href", _value);
+				if(typeof link == 'function')
+				{
+					this.span.click(this, link);
+					this.span.attr("href", "javascript:void(0)");
+				}
+				else
+				{
+					this.span.attr("href", link);
+				}
 				break;
 		}
 	}

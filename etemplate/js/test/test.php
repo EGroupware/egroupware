@@ -8,7 +8,8 @@ $GLOBALS['egw_info'] = array(
 		'currentapp'    => 'etemplate',
 		'noheader'              => True,
 		'nonavbar'              => True,
-		'app_header'	=> 'eT2 Test'
+		'app_header'	=> 'eT2 Test',
+		'js_link_registry'	=> True,
 	)
 );
 include('../../../header.inc.php');
@@ -22,6 +23,7 @@ include('../../../header.inc.php');
 ?>
 		<script src="et2_test_timesheet_edit.json"></script>
 		<script src="et2_test_input_validator.json"></script>
+		<script src="et2_test_text.json"></script>
 Testing from inside framework, so JS includes work
 <div class="header">Choose one of the following tests:</div>
                 <div id="linklist">
@@ -29,8 +31,9 @@ Testing from inside framework, so JS includes work
                         <a href="#" onclick="open_xet('et2_test_template.xet');">Template proxy test</a>
                         <a href="#" onclick="open_xet('et2_test_grid.xet');">Grid test</a>
                         <a href="#" onclick="open_xet('et2_test_tabbox.xet');">Tabs test</a>
-                        <a href="#" onclick="open_xet('et2_test_text.xet');">Text/URL test</a>
+                        <a href="#" onclick="open_xet('et2_test_text.xet',text_data);">Text/URL test</a>
                         <a href="#" onclick="open_xet('et2_test_basic_widgets.xet');">Basic widgits</a>
+			<a href="#" onclick="open_xet('et2_test_date.xet');">Date/time widgits</a>
                         <a href="#" onclick="open_xet('et2_test_input_validator.xet', validation_data);">Validation</a>
                 </div>
                 <div class="header">ETemplate2 container:</div>

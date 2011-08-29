@@ -2,6 +2,9 @@ var text_data = {
 	content: {
 		"url":	"www.egroupware.org",
 		"email": "",
-		"phone": "(866) 789-RACE"
+		"phone": "(866) 789-RACE",
+		"url_ro": "www.egroupware.org",
+		"email_ro": "info@egroupware.org",
+		"phone_ro": "(866) 789-RACE"
 	}
 }

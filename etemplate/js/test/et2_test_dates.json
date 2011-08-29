@@ -1,11 +1,11 @@
 var d = new Date();
-var date = Math.round(d.valueOf() / 1000);
+var _date = Math.round(d.valueOf() / 1000);
 var date_test_data = {
 	content: {
-		"date":	date,
-		"date_time":date,
-		"time":date,
-		"ro_date": date,
-		"ro_date_time": date
+		"date":	_date,
+		"date_time":_date,
+		"time":_date,
+		"ro_date": _date,
+		"ro_date_time": _date
 	}
 }
