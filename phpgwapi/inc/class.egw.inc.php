@@ -117,14 +117,17 @@ class egw extends egw_minimal
 			}
 			exit;
 		}
-		// Set the DB's client charset if a system-charset is set
-		$system_charset = $GLOBALS['egw_info']['server']['system_charset'] = $this->db->select(config::TABLE,'config_value',array(
+		// Set the DB's client charset if a system-charset is set and some other values needed by egw_cache (used in config::read)
+		foreach($GLOBALS['egw_info']['server']['system_charset'] = $this->db->select(config::TABLE,'config_name,config_value',array(
 			'config_app'  => 'phpgwapi',
-			'config_name' => 'system_charset',
-		),__LINE__,__FILE__)->fetchColumn();
-		if ($system_charset)
+			'config_name' => array('system_charset','install_id','temp_dir'),
+		),__LINE__,__FILE__) as $row)
 		{
-			$this->db->Link_ID->SetCharSet($system_charset);
+			$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
+		}
+		if ($GLOBALS['egw_info']['server']['system_charset'])
+		{
+			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
 		}
 		// load up the $GLOBALS['egw_info']['server'] array
 		$GLOBALS['egw_info']['server'] += config::read('phpgwapi');

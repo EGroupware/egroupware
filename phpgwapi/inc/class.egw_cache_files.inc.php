@@ -45,21 +45,7 @@ class egw_cache_files implements egw_cache_provider
 		}
 		else
 		{
-			if(!isset($GLOBALS['egw_info']['server']['temp_dir']))
-			{
-				if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
-				{
-					$GLOBALS['egw_info']['server']['temp_dir'] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
-						'config_app'	=> 'phpgwapi',
-						'config_name'	=> 'temp_dir',
-					),__LINE__,__FILE__)->fetchColumn();
-				}
-				if (!$GLOBALS['egw_info']['server']['temp_dir'])
-				{
-					throw new Exception (__METHOD__."() server/temp_dir is NOT set!");
-				}
-			}
-			$this->base_path = $GLOBALS['egw_info']['server']['temp_dir'].'/egw_cache';
+			$this->base_path = egw_cache::get_system_config('temp_dir').'/egw_cache';
 		}
 		if (!isset($this->base_path) || !file_exists($this->base_path) && !mkdir($this->base_path,0700,true))
 		{

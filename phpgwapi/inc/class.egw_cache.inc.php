@@ -452,7 +452,7 @@ class egw_cache
 	 * @param boolean $throw=true throw an exception, if we can't retriev the value
 	 * @return string|boolean string with config or false if not found and !$throw
 	 */
-	static protected function get_system_config($name,$throw=true)
+	static public function get_system_config($name,$throw=true)
 	{
 		if(!isset($GLOBALS['egw_info']['server'][$name]))
 		{
