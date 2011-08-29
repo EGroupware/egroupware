@@ -19,7 +19,7 @@ class importexport_export_ui {
 
 	public $public_functions = array(
 		'export_dialog' =>	true,
-		'download' 		=>	true,
+		'download' 	=>	true,
 	);
 
 	private $js;
@@ -49,8 +49,7 @@ class importexport_export_ui {
 		$preserv = array();
 
 		// Check global setting
-		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
-		if(!($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception)) {
+		if(!($GLOBALS['egw_info']['user']['apps']['admin'] || bo_merge::is_export_limit_excepted())) {
 			$config = config::read('phpgwapi');
 			if($config['export_limit'] == 'no') {
 				die(lang('Admin disabled exporting'));

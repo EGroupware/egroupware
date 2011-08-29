@@ -38,8 +38,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),
 			);
 			$config = config::read('phpgwapi');
-			$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
-			if($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception || $config['export_limit'] !== 'no')
+			if($GLOBALS['egw_info']['user']['apps']['admin'] || bo_merge::is_export_limit_excepted() || $config['export_limit'] !== 'no')
 			{
 				$file[] = array(
 					'text' => 'Export',
@@ -123,8 +122,7 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 		}
 		$config = config::read('phpgwapi');
-		$limit_exception = count(@array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
-		if (($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
+		if (($GLOBALS['egw_info']['user']['apps']['admin'] || bo_merge::is_export_limit_excepted() || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(

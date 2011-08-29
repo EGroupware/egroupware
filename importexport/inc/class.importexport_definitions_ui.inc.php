@@ -85,10 +85,9 @@ class importexport_definitions_ui
 			$filter[] = '(owner=0 OR owner IS NULL OR allowed_users IS NOT NULL OR owner = ' . $GLOBALS['egw_info']['user']['account_id'] . ')';
 		} else {
 			// Filter private definitions
-			$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no' && !$limit_exception) {
+			if($config['export_limit'] == 'no' && !bo_merge::is_export_limit_excepted()) {
 				$filter['type'] = 'import';
 			}
 		}
