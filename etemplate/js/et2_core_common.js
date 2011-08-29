@@ -604,3 +604,58 @@ function et2_uniqueId()
 	return _et2_uniqueId++;
 }
 
+/**
+ * Functions to work with ranges and range intersection (used in the dataview)
+ */
+
+/**
+ * Common functions used in most view classes
+ */
+
+/**
+ * Returns an "range" object with the given top position and height
+ */
+function et2_range(_top, _height)
+{
+	return {
+		"top": _top,
+		"bottom": _top + _height
+	}
+}
+
+/**
+ * Returns an "area" object with the given top- and bottom position
+ */
+function et2_bounds(_top, _bottom)
+{
+	return {
+		"top": _top,
+		"bottom": _bottom
+	}
+}
+
+/**
+ * Returns whether two range objects intersect each other
+ */
+function et2_rangeIntersect(_ar1, _ar2)
+{
+	return ! (_ar1.bottom < _ar2.top || _ar1.top > _ar2.bottom);
+}
+
+/**
+ * Returns whether two ranges intersect (result = 0) or their relative position
+ * to each other (used to do a binary search inside a list of sorted range objects).
+ */
+function et2_rangeIntersectDir(_ar1, _ar2)
+{
+	if (_ar1.bottom < _ar2.top)
+	{
+		return -1;
+	}
+	if (_ar1.top > _ar2.bottom)
+	{
+		return 1;
+	}
+	return 0;
+}
+
