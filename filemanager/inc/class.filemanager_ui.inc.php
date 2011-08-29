@@ -109,11 +109,19 @@ class filemanager_ui
 		$actions = array(
 			'open' => array(
 				'caption' => lang('Open'),
-				'icon' => 'filemanager/folder',
+				'icon' => '',
 				'group' => $group=1,
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:nm_activate_link',
 				'default' => true
+			),
+			'saveas' => array(
+				'caption' => lang('Save as'),
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'icon' => 'filesave',
+				'onExecute' => 'javaScript:force_download',
+				'disableClass' => 'isDir',
 			),
 			'edit' => array(
 				'caption' => lang('Edit settings'),
@@ -482,6 +490,13 @@ function do_clipboard(_action, _elems)
 	}
 	xajax_doXMLHTTP("filemanager_ui::ajax_clipboard", _action.id, ids);
 }
+
+function force_download(_action, _senders)
+{
+	var a_href = $j(_senders[0].iface.getDOMNode()).find("a:first").attr("href");
+
+	window.location = a_href+"?download";
+}
 </script>'."\n";
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
@@ -822,8 +837,6 @@ function do_clipboard(_action, _elems)
 		),true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
-			$rows[++$n] = $row;
-			$path2n[$path] = $n;
 
 			$dir = dirname($path);
 			if (!isset($dir_is_writable[$dir]))
@@ -835,11 +848,18 @@ function do_clipboard(_action, _elems)
 			{
 				$readonlys["delete[$path_quoted]"] = true;	// no rights to delete the file
 			}
-			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path) ||
+			if (egw_vfs::is_dir($path))
+			{
+				$readonlys["mail[$path_quoted]"] = true;
+				$row['class'] = 'isDir';
+			}
+			elseif (!egw_vfs::is_readable($path) ||
 				!$GLOBALS['egw_info']['user']['apps']['felamimail'])
 			{
 				$readonlys["mail[$path_quoted]"] = true;
 			}
+			$rows[++$n] = $row;
+			$path2n[$path] = $n;
 		}
 		// query comments and cf's for the displayed rows
 		$cols_to_show = explode(',',$GLOBALS['egw_info']['user']['preferences']['filemanager']['nextmatch-filemanager.index.rows']);

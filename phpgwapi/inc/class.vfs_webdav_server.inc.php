@@ -522,4 +522,45 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 		parent::GetDir($fspath, $options);
     }
+
+	private $force_download = false;
+
+	/**
+	 * Constructor
+	 *
+	 * Reimplement to add a Content-Disposition header, if ?download is appended to the REQUEST_URI
+	 */
+	function __construct()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = substr($_SERVER['REQUEST_URI'],-9) == '?download'))
+		{
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,-9);
+		}
+		parent::HTTP_WebDAV_Server();
+	}
+
+	/**
+	 * GET method handler
+	 *
+	 * Reimplement to add a Content-Disposition header, if ?download is appended to the REQUEST_URI
+	 *
+	 * @param  array  parameter passing array
+	 * @return bool   true on success
+	 */
+	function GET(&$options)
+	{
+		if (($ok = parent::GET($options)) && $this->force_download)
+		{
+			if(html::$user_agent == 'msie') // && self::$ua_version == '5.5')
+			{
+				$attachment = '';
+			}
+			else
+			{
+				$attachment = ' attachment;';
+			}
+			header('Content-disposition:'.$attachment.' filename="'.egw_vfs::basename($options['path']).'"');
+		}
+		return $ok;
+	}
 }
