@@ -800,7 +800,7 @@ class addressbook_ui extends addressbook_bo
 			$action = substr($action,0,7);
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
-		$exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), (array)unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
 		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] &&
 			!(isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception) &&
 			(!is_numeric($this->config['contact_export_limit']) || count($checked) > $this->config['contact_export_limit']))
@@ -888,7 +888,7 @@ class addressbook_ui extends addressbook_bo
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 		}
-		foreach($checked as $id)
+		foreach((array)$checked as $id)
 		{
 			switch($action)
 			{
