@@ -1272,7 +1272,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		// we do NOT need to encode % itself, as our path are already url encoded, with the exception of ' ' and '+'
 		// we urlencode double quotes '"', as that fixes many problems in html markup
-		return '/webdav.php'.strtr($path,array('+' => '%2B',' ' => '%20','"' => '%22'));
+		return '/webdav.php'.strtr($path,array('+' => '%2B',' ' => '%20','"' => '%22')).($force_download ? '?download' : '');
 	}
 
 	/**
