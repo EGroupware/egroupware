@@ -191,6 +191,7 @@ function deleteTableRow(_imageObject)
 		tableBody.removeChild(tableRow);
 
 		singleRowHeight = tableRows[0].clientHeight;
+		if (singleRowHeight == 0) singleRowHeight = 20;
 		if(tableRows.length > 4) {
 			neededHeight = singleRowHeight*4;
 		} else {
