@@ -7,10 +7,11 @@
 			<date-time label="Date+Time" id="date_time"/>
 			<date-timeonly label="Time" id="time"/>
 			<date-houronly label="Hour" id="hour"/>
-			<date-duration label="Duration" id="duration"/>
+			<date-duration label="Duration" id="duration" options="h,dh,5,false,false"/>
 			<date-since label="Time since" id="time_since"/>
 			<date label="Read only date" id="ro_date" readonly="true"/>
 			<date-time label="Read only date+time" id="ro_date_time" readonly="true"/>
+			<button label="Submit"/>
 		</vbox>
 	</template>
 </overlay>

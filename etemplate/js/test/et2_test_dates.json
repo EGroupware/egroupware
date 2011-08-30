@@ -5,6 +5,8 @@ var date_test_data = {
 		"date":	_date,
 		"date_time":_date,
 		"time":_date,
+		"duration": 61,
+		"time_since": (_date - 2628000 -86400 -3600), // 1 month, 1 day, 1 hour
 		"ro_date": _date,
 		"ro_date_time": _date
 	}
