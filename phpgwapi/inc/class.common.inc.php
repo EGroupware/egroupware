@@ -635,6 +635,8 @@ class common
 	 *
 	 * this is just a workaround for idots, better to use find_image, which has a fallback \
 	 * 	on a per image basis to the default dir
+	 *
+	 * @deprecated
 	 */
 	static function is_image_dir($dir)
 	{
@@ -662,6 +664,7 @@ class common
 	 * get image dir of an application
 	 *
 	 * @param $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @deprecated
 	 */
 	static function get_image_dir($appname = '')
 	{
@@ -701,6 +704,7 @@ class common
 	 * get image path of an application
 	 *
 	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @deprecated
 	 */
 	static function get_image_path($appname = '')
 	{
@@ -734,205 +738,157 @@ class common
 	}
 
 	/**
-	 * Searches and image by a given search order (it maintains a cache of the existing images):
-	 * - image dir of the application for the given template
-	 * - image dir of the application for the default template
-	 * - image dir of the API for the given template
-	 * - image dir of the API for the default template
+	 * Searches a appname, template and maybe language and type-specific image
 	 *
 	 * @param string $appname
-	 * @param string $image
-	 * @return string url of the image
+	 * @param string|array $image one or more image-name in order of precedence
+	 * @return string url of image or null if not found
 	 */
-	static function find_image($appname,$image)
+	static function image($app,$image)
 	{
-		if ($appname == 'phpgwapi')
-		{
-			$imagedir = $GLOBALS['egw']->framework->template_dir.'/images';
-		}
-		else
-		{
-			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
-		}
-		$vfs_imagedir = $GLOBALS['egw_info']['server']['vfs_image_dir'];
+		static $image_map;
+		if (is_null($image_map)) $image_map = self::image_map();
 
-		if (!isset(self::$found_files[$appname]))
+		// array of images in descending precedence
+		if (is_array($image))
 		{
-			$imagedir_olddefault = '/'.$appname.'/templates/default/images';
-			$imagedir_default    = '/'.$appname.'/templates/idots/images';
+			foreach($image as $img)
+			{
+				if (($url = self::image($app, $img)))
+				{
+					return $url;
+				}
+			}
+			//error_log(__METHOD__."('$app', ".array2string($image).") NONE found!");
+			return null;
+		}
 
-			if (file_exists(EGW_INCLUDE_ROOT.$imagedir_olddefault) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir_olddefault)))
-			{
-				while (($entry = $d->read()))
-				{
-					if ($entry[0] != '.')
-					{
-						self::$found_files[$appname][$entry] = $imagedir_olddefault;
-					}
-				}
-				$d->close();
-			}
-			if (file_exists(EGW_INCLUDE_ROOT.$imagedir_default) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir_default)))
-			{
-				while (($entry = $d->read()))
-				{
-					if ($entry[0] != '.')
-					{
-						self::$found_files[$appname][$entry] = $imagedir_default;
-					}
-				}
-				$d->close();
-			}
-			if (file_exists(EGW_INCLUDE_ROOT.$imagedir) && ($d = dir(EGW_INCLUDE_ROOT.$imagedir)))
-			{
-				while (($entry = $d->read()))
-				{
-					if ($entry[0] != '.')
-					{
-						self::$found_files[$appname][$entry] = $imagedir;
-					}
-				}
-				$d->close();
-			}
-			//echo $appname; _debug_array(self::$found_files[$appname]);
-		}
-		if (!isset(self::$found_files['vfs']))
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+
+		// instance specific images have highest precedence
+		if (isset($image_map['vfs'][$image]))
 		{
-			self::$found_files['vfs'] = array();	// so it get's scaned only once
-			if (egw_vfs::file_exists($vfs_imagedir) &&
-				egw_vfs::is_dir($vfs_imagedir) && ($d = egw_vfs::opendir($vfs_imagedir)))
-			{
-				while (($entry = readdir($d)) !== false)
-				{
-					if (!egw_vfs::is_dir($vfs_imagedir.'/'.$entry))
-					{
-						list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry));
-						if ($type == 'image')
-						{
-							self::$found_files['vfs'][$entry] = $vfs_imagedir;
-						}
-					}
-				}
-				closedir($d);
-				//echo 'vfs'; _debug_array(self::$found_files['vfs']);
-			}
+			return $webserver_url.$image_map['vfs'][$image];
 		}
+		// then app specific ones
+		if(isset($image_map[$app][$image]))
+		{
+			return $webserver_url.$image_map[$app][$image];
+		}
+		// then api
+		if(isset($image_map['phpgwapi'][$image]))
+		{
+			return $webserver_url.$image_map['phpgwapi'][$image];
+		}
+
+		// if image not found, check if it has an extension and try withoug
+		if (strpos($image, '.') !== false)
+		{
+			self::get_extension($image, $name);
+			return self::image($app, $name);
+		}
+		//error_log(__METHOD__."('$app', '$image') image NOT found!");
+		return null;
+	}
+
+	/**
+	 * Scan filesystem for images of all apps
+	 *
+	 * For each application and image-name (without extension) one full path is returned.
+	 * The path takes template-set and image-type-priority ($GLOBALS['egw_info']['server']['image_type']) into account.
+	 *
+	 * VFS image directory is treated like an application named 'vfs'.
+	 *
+	 * @param string $template_set=null 'default', 'idots', 'jerryr', default is template-set from user prefs
+	 * @return array of application => image-name => full path
+	 */
+	static function image_map($template_set=null)
+	{
+		if (is_null($image_map))
+		{
+			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
+		if (($map = egw_cache::getInstance(__CLASS__, 'image_map_'.$template_set)))
+		{
+			return $map;
+		}
+		$starttime = microtime(true);
+
 		if (!$GLOBALS['egw_info']['server']['image_type'])
 		{
 			// priority: GIF->JPG->PNG
-			$img_type = array('.gif','.jpg','.png','');
+			$img_types = array('gif','jpg','png','ico');
 		}
 		else
 		{
 			// priority: : PNG->JPG->GIF
-			$img_type = array('.png','.jpg','.gif','');
+			$img_types = array('png','jpg','gif','ico');
 		}
-		$imgfile = '';
-		// first look in the instance specific image dir in vfs
-		foreach($img_type as $type)
+		$map = array();
+		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 		{
-			// first look in the instance specific image dir in vfs
-			if(isset(self::$found_files['vfs'][$image.$type]))
+			$app_map =& $map[$app];
+			$app_map = array();
+			$imagedirs = array();
+			if ($app == 'phpgwapi')
 			{
-				$imgfile = egw::link(egw_vfs::download_url(self::$found_files['vfs'][$image.$type].'/'.$image.$type));
-				break;
+				$imagedir = $GLOBALS['egw']->framework->template_dir.'/images';
 			}
-			// then look in the selected template dir
-			if(self::$found_files[$appname][$image.$type] == $imagedir)
+			else
 			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
-				break;
+				$imagedir = '/'.$app.'/templates/'.$template_set.'/images';
 			}
-			//then look everywhere else
-			if (isset(self::$found_files[$appname][$image.$type]))
-			{
-				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
-				break;
-			}
-		}
+			if ($template_set != 'idots') $imagedirs[] = '/'.$app.'/templates/idots/images';
+			$imagedirs[] = '/'.$app.'/templates/default/images';
 
-		if (empty($imgfile))
-		{
-			// searching the image in the api-dirs
-			if (!isset(self::$found_files['phpgwapi']))
+			foreach($imagedirs as $imagedir)
 			{
-				self::find_image('phpgwapi','');
-			}
-			foreach($img_type as $type)
-			{
-				if(isset(self::$found_files['phpgwapi'][$image.$type]))
+				if (!file_exists($dir = EGW_SERVER_ROOT.$imagedir) || !is_readable($dir)) continue;
+
+				foreach(scandir($dir) as $img)
 				{
-					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$type].'/'.$image.$type;
-					break;
+					if ($img[0] == '.' || !in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
+
+					if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
+					{
+						$app_map[$name] = $imagedir.'/'.$img;
+					}
 				}
 			}
 		}
-		//echo "<p>".__METHOD__."($appname,$image) = $imgfile</p>\n";
-		return $imgfile;
+		$app_map =& $map['vfs'];
+		$app_map = array();
+		if (($dir = $GLOBALS['egw_info']['server']['vfs_image_dir']) && egw_vfs::file_exists($dir) && egw_vfs::is_readable($dir))
+		{
+			foreach(egw_vfs::find($dir) as $img)
+			{
+				if ($img[0] == '.' || !in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
+
+				if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
+				{
+					$app_map[$name] = egw_vfs::download_url($dir.'/'.$img);
+				}
+			}
+		}
+		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
+		egw_cache::setInstance(__CLASS__, 'image_map_'.$template_set, $map, 86400);	// cache for one day
+
+		return $map;
 	}
 
 	/**
-	 * Searches a appname, template and maybe language and type-specific image
+	 * Get extension (and optional basename without extension) of a given path
 	 *
-	 * @param string $appname
-	 * @param string $image
-	 * @param string $ext
-	 * @param boolean $use_lang
-	 * @return string url of the image
+	 * @param string $path
+	 * @param string &$name on return basename without extension
+	 * @return string extension without dot, eg. 'php'
 	 */
-	static function image($appname,$image='',$ext='',$use_lang=True)
+	public static function get_extension($path, &$name=null)
 	{
-		static $cache;	// do some caching in the request
-
-		$image_found =& $cache[$appname.implode('-',(array)$image).$ext.$use_lang];
-
-		if (!isset($image_found))
-		{
-			if (!is_array($image))
-			{
-				if (empty($image))
-				{
-					return '';
-				}
-			}
-			if ($use_lang)
-			{
-				foreach((array)$image as $img)
-				{
-					$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-					$lang_images[] = $img;
-				}
-				$image = $lang_images;
-			}
-			foreach((array)$image as $img)
-			{
-				if (($image_found = self::find_image($appname,$img.$ext))) break;
-			}
-		}
-		//else $cache_hit = ' *** CACHE ***';
-		//echo '<p>'.__METHOD__."($appname,".array2string($image).",$ext,$use_lang) = ".array2string($image_found)." $cache_hit</p>\n";
-		return $image_found;
-	}
-
-	/**
-	 * Searches an image of a given type, if not found also without type/extension
-	 *
-	 * @param string $appname
-	 * @param string $image
-	 * @param string $extension
-	 * @return string url of the image
-	 */
-	static function image_on($appname,$image,$extension='_on')
-	{
-		if (($with_extension = self::image($appname,$image,$extension)))
-		{
-			return $with_extension;
-		}
-		if(($without_extension = self::image($appname,$image)))
-		{
-			return $without_extension;
-		}
-		return '';
+		$parts = explode('.', basename($path));
+		$ext = array_pop($parts);
+		$name = implode('.', $parts);
+		return $ext;
 	}
 
 	/**
