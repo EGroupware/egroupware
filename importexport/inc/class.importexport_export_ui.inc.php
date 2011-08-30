@@ -49,7 +49,7 @@ class importexport_export_ui {
 		$preserv = array();
 
 		// Check global setting
-		if(!($GLOBALS['egw_info']['user']['apps']['admin'] || bo_merge::is_export_limit_excepted())) {
+		if(!bo_merge::is_export_limit_excepted()) {
 			$config = config::read('phpgwapi');
 			if($config['export_limit'] == 'no') {
 				die(lang('Admin disabled exporting'));
