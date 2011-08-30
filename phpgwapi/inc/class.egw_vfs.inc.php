@@ -1201,7 +1201,8 @@ class egw_vfs extends vfs_stream_wrapper
 	static function lock($path,&$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
 	{
 		// we require write rights to lock/unlock a resource
-		if (!$path || $update && !$token || $check_writable && !egw_vfs::is_writable($path))
+		if (!$path || $update && !$token || $check_writable &&
+			!(egw_vfs::is_writable($path) || !egw_vfs::file_exists($path) && egw_vfs::is_writable(egw_vfs::dirname($path))))
 		{
 			return false;
 		}
