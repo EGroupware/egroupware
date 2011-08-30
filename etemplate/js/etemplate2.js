@@ -29,10 +29,12 @@
 	et2_widget_html;
 	et2_widget_tabs;
 	et2_widget_hrule;
+	et2_widget_image;
 
 	et2_extension_nextmatch;
 
 	// Requirements for the etemplate2 object
+	et2_core_common;
 	et2_core_xml;
 	et2_core_arrayMgr;
 	et2_core_interfaces;
@@ -205,7 +207,7 @@ etemplate2.prototype.submit = function()
 	if (canSubmit)
 	{
 		// Create the request object
-		if (typeof egw_json_request != "undefined")
+		if (typeof egw_json_request != "undefined" && this.menuaction)
 		{
 			var request = new egw_json_request(this.menuaction, [this.etemplate_exec_id,values], this);
 			request.sendRequest(true);
