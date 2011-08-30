@@ -282,7 +282,7 @@ else
 		 * 
 		 * @access: private, use egw.config(_name, _app="phpgwapi")
 		 */
-		configs: null,
+		configs: {},
 		
 		/**
 		 * Query clientside config
