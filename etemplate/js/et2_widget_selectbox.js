@@ -157,7 +157,7 @@ var et2_selectbox = et2_inputWidget.extend({
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
 	"select-account", "select-percent", 'select-priority', 'select-access',
 	'select-country', 'select-state', 'select-year', 'select-month',
-	'select-day', 'select-dow', 'select-hour', 'date-houronly', 'select-number', 'select-app',
+	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
 	'select-lang', 'select-bool', 'select-timezone' ]);
 
 /**
@@ -219,7 +219,7 @@ var et2_selectbox_ro = et2_selectbox.extend({
 et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select-cat_ro",
 	"select-account_ro", "select-percent_ro", 'select-priority_ro', 'select-access_ro',
 	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
-	'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'date-houronly_ro', 'select-number_ro', 'select-app_ro',
+	'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'select-number_ro', 'select-app_ro',
 	'select-lang_ro', 'select-bool_ro', 'select-timezone_ro' ]);
 
 /**

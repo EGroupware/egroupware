@@ -36,8 +36,6 @@ var et2_url = et2_textbox.extend({
 
 		this._button = null;
 
-		console.log(this);
-
 		if(this.size) {
 			this.set_size(this.size);
 		}
