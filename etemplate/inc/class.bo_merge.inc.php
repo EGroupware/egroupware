@@ -85,7 +85,8 @@ abstract class bo_merge
 	{
 		$accountsel = new uiaccountsel();
 
-		return $accountsel->selection('newsettings[export_limit_excepted]','export_limit_excepted',$config['export_limit_excepted'],'both',4);
+		return '<input type="hidden" value="" name="newsettings[export_limit_excepted]" />'.
+			$accountsel->selection('newsettings[export_limit_excepted]','export_limit_excepted',$config['export_limit_excepted'],'both',4);
 	}
 
 	/**
