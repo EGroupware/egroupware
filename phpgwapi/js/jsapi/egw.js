@@ -308,6 +308,49 @@ else
 		set_configs: function(_configs)
 		{
 			this.configs = _configs;
+		},
+		
+		/**
+		 * Map to serverside available images for users template-set
+		 */
+		images: {},
+		
+		/**
+		 * Set imagemap, called from /phpgwapi/images.php
+		 * 
+		 * @param array/object _images
+		 */
+		set_images: function (_images)
+		{
+			this.images = _images;
+		},
+		
+		/**
+		 * Get image URL for a given image-name and application
+		 * 
+		 * @param string _name image-name without extension
+		 * @param string _app application name, default phpgwapi
+		 * @return string with URL of image
+		 */
+		image: function (_name, _app)
+		{
+			if (typeof _app == 'undefined') _app = 'phpgwapi';
+			
+			// own instance specific images in vfs have highest precedence
+			if (typeof this.images['vfs'] != 'undefined' && typeof this.images['vfs'][_name] != 'undefined')
+			{
+				return this.webserverUrl+this.images['vfs'][_name];
+			}
+			if (typeof this.images[_app] != 'undefined' && typeof this.images[_app][_name] != 'undefined')
+			{
+				return this.webserverUrl+this.images[_app][_name];
+			}
+			if (typeof this.images['phpgwapi'] != 'undefined' && typeof this.images['phpgwapi'][_name] != 'undefined')
+			{
+				return this.webserverUrl+this.images['vfs'][_name];
+			}
+			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!');
+			return null;
 		}
 	};
 }

@@ -164,6 +164,7 @@ class idots_framework extends egw_framework
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
 			self::validate_file('/phpgwapi/config.php');
+			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
 			$content .= '<script type="text/javascript">
 egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");
 </script>'."\n";

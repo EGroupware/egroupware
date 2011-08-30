@@ -768,6 +768,7 @@ abstract class egw_framework
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
 			self::validate_file('/phpgwapi/config.php');
+			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
 		}
 		$java_script .= self::get_script_links();
 
