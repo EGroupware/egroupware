@@ -207,7 +207,7 @@ var et2_arrayMgr = Class.extend({
 			if (checkVal.charAt(0) == '/')
 			{
 				return (new RegExp(checkVal.substr(1, checkVal.length - 2)))
-					.match(val) ? true : false;
+					.test(val) ? true : false;
 			}
 
 			// Otherwise check for simple equality
