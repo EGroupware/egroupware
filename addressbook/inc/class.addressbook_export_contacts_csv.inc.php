@@ -39,7 +39,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$selection = array();
 
 		// Addressbook defines its own export imits
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = bo_merge::is_export_limit_excepted();
 		if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no' && !($GLOBALS['egw_info']['user']['apps']['admin'] || $limit_exception)) {
 			return;
 		}
