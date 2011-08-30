@@ -738,6 +738,22 @@ class common
 	}
 
 	/**
+	 * @deprecated use image($app,$image)
+	 */
+	static function find_image($app,$image)
+	{
+		return self::image($app,$image);
+	}
+
+	/**
+	 * @deprecated use image($app,$image)
+	 */
+	static function image_on($app,$image)
+	{
+		return self::image($app,$image);
+	}
+
+	/**
 	 * Searches a appname, template and maybe language and type-specific image
 	 *
 	 * @param string $appname
