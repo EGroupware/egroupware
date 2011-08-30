@@ -313,11 +313,98 @@ abstract class bo_merge
 		{
 			$mimetype = 'application/rtf';
 		}
+
 		try {
-			return $this->merge_string($content,$ids,$err,$mimetype,$fix);
+			$content = $this->merge_string($content,$ids,$err,$mimetype,$fix);
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 			return false;
+		}
+		return $content;
+	}
+	
+	protected function apply_styles (&$content, $mimetype)
+	{
+		if ($mimetype == 'application/xml' &&
+			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
+		{
+			$mso_application_progid = $matches[1];
+		}
+		else
+		{
+			$mso_application_progid = '';
+		}
+		// Tags we can replace with the target document's version
+		$replace_tags = array();
+		switch($mimetype.$mso_application_progid)
+		{
+			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+				// It seems easier to split the parent tags here
+				$replace_tags = array(
+					'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
+					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
+					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+				);
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+
+				$doc = new DOMDocument();
+				$xslt = new XSLTProcessor();
+				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
+				$xslt->importStyleSheet($doc);
+
+//echo $content;die();
+				break;
+			case 'application/xmlWord.Document':	// Word 2003*/
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$replace_tags = array(
+					'b','strong','i','em','u','span'
+				);
+				// It seems easier to split the parent tags here
+				$replace_tags = array(
+					// Tables, lists don't go inside <w:p>
+					'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
+					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
+					// Fix for things other than text (newlines) inside table row
+					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
+					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+					// Remove extra whitespace
+					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>'
+				);
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+//echo $content;die();
+				$doc = new DOMDocument();
+				$xslt = new XSLTProcessor();
+				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
+				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/'.$xslt_file);
+				$xslt->importStyleSheet($doc);
+				break;
+		}
+		// XSLT transform known tags
+		if($xslt)
+		{
+			try
+			{
+				$element = new SimpleXMLelement($content);
+				$content = @$xslt->transformToXml($element);
+
+				// Word 2003 needs two declarations, add extra declaration back in
+				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
+					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
+				}
+				// Validate
+				/*
+				$doc = new DOMDocument();
+				$doc->loadXML($content);
+				$doc->schemaValidate(*Schema (xsd) file*);
+				*/
+			}
+			catch (Exception $e)
+			{
+				error_log($e);
+				// Failed...
+			}
 		}
 	}
 
@@ -478,8 +565,7 @@ abstract class bo_merge
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
-					// todo OO writer files
-					break;
+					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
@@ -543,6 +629,7 @@ abstract class bo_merge
 				break;
 		}
 		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".translation::charset().', export='.$this->contacts->prefs['csv_charset'].')');
+
 		// do we need to convert charset
 		if ($charset && $charset != translation::charset())
 		{
@@ -553,6 +640,26 @@ abstract class bo_merge
 			// Numeric fields
 			$names = array();
 
+			// Tags we can replace with the target document's version
+			$replace_tags = array();
+			switch($mimetype.$mso_application_progid)
+			{
+				case 'application/vnd.oasis.opendocument.text':		// open office
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+					$replace_tags = array(
+						'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+						'<table>','<tr>','<td>',
+					);
+					break;
+				case 'application/xmlWord.Document':	// Word 2003*/
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					$replace_tags = array(
+						'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+						'<table>','<tr>','<td>',
+					);
+					break;
+			}
 			// clean replacements from array values and html or html-entities, which mess up xml
 			foreach($replacements as $name => &$value)
 			{
@@ -578,7 +685,7 @@ abstract class bo_merge
 				{
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
-					$value = strip_tags($value);
+					$value = strip_tags($value,implode('',$replace_tags));
 				}
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
@@ -637,13 +744,13 @@ abstract class bo_merge
 					$break = '<text:line-break/>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
-					$break = '<w:br/>';
+					$break = '</w:t><w:br/><w:t>';
 					break;
 				case 'application/xmlExcel.Sheet':	// Excel 2003
 					$break = '&#10;';
 					break;
 				case 'application/xmlWord.Document':	// Word 2003*/
-					$break = '<w:br/>';
+					$break = '</w:t><w:br/><w:t>';
 					break;
 				case 'text/html':
 					$break = '<br/>';
@@ -654,7 +761,7 @@ abstract class bo_merge
 					break;
 			}
 			// now decode &, < and >, which need to be encoded as entities in xml
-			$replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$break),$replacements);
+			$replacements = str_replace(array('&',"\r","\n"),array('&amp;','',$break),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
@@ -859,6 +966,10 @@ abstract class bo_merge
 			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
+
+		// Apply HTML formatting to target document, if possible
+		$this->apply_styles($merged, $mimetype);
+
 		if(!empty($name))
 		{
 			if(empty($ext))
