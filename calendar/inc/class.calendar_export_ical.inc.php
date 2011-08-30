@@ -32,7 +32,7 @@ class calendar_export_ical extends calendar_export_csv {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = bo_merge::is_export_limit_excepted();
 
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(

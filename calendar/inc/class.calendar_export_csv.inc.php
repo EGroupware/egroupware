@@ -26,7 +26,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$this->bo = new calendar_bo();
 		$config = config::read('phpgwapi');
 
-		$limit_exception = count(array_intersect(array($GLOBALS['egw_info']['user']['account_id']) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true), unserialize($GLOBALS['egw_info']['server']['export_limit_excepted']))) > 0;
+		$limit_exception = bo_merge::is_export_limit_excepted(); 
 
 		// Custom fields need to be specifically requested
 		$cfs = array();
