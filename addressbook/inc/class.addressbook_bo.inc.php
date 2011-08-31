@@ -134,14 +134,14 @@ class addressbook_bo extends addressbook_so
 	/**
 	 * Categories object
 	 *
-	 * @var object
+	 * @var categories
 	 */
 	var $categories;
 
 	/**
 	* Tracking changes
 	*
-	* @var object
+	* @var addressbook_tracking
 	*/
 	protected $tracking;
 
