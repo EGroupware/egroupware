@@ -34,7 +34,7 @@ $setup_info['admin']['hooks'] = array(
 	'acl_manager',
 	'add_def_pref',
 	'after_navbar',
-	'config',
+	'config_validate',
 	'deleteaccount',
 	'view_user' => 'admin.uiaccounts.edit_view_user_hook',
 	'edit_user' => 'admin.uiaccounts.edit_view_user_hook',

@@ -142,6 +142,8 @@ class admin_prefs_sidebox_hooks
 		}
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
+		common::delete_image_map();
+
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
 			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session

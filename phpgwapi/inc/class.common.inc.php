@@ -847,8 +847,10 @@ class common
 			$img_types = array('png','jpg','gif','ico');
 		}
 		$map = array();
-		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
+		foreach(scandir(EGW_SERVER_ROOT) as $app)
 		{
+			if ($app[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) || !file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates')) continue;
+
 			$app_map =& $map[$app];
 			$app_map = array();
 			$imagedirs = array();
@@ -884,18 +886,35 @@ class common
 		{
 			foreach(egw_vfs::find($dir) as $img)
 			{
-				if ($img[0] == '.' || !in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
+				if (!in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
 
 				if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
 				{
-					$app_map[$name] = egw_vfs::download_url($dir.'/'.$img);
+					$app_map[$name] = egw_vfs::download_url($img);
 				}
 			}
 		}
 		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
 		egw_cache::setInstance(__CLASS__, 'image_map_'.$template_set, $map, 86400);	// cache for one day
-
+		//echo "<p>template_set=".array2string($template_set)."</p>\n"; _debug_array($map);
 		return $map;
+	}
+
+	/**
+	 * Delete image map cache for ALL template sets
+	 */
+	public static function delete_image_map()
+	{
+		$templates = array('idots', 'jerryr', 'jdots');
+		if (($template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set']) && !in_array($template_set, $templates))
+		{
+			$templates[] = $template_set;
+		}
+		error_log(__METHOD__."() for templates ".array2string($templates));
+		foreach($templates as $template_set)
+		{
+			egw_cache::unsetInstance(__CLASS__, 'image_map_'.$template_set);
+		}
 	}
 
 	/**

@@ -60,6 +60,9 @@ class setup_process
 	function init_process()
 	{
 		$GLOBALS['egw_setup']->oProc = new schema_proc();
+
+		// delete image-map, in case new apps get installed, or existing ones updated
+		common::delete_image_map();
 	}
 
 	/**
