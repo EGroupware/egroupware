@@ -781,7 +781,7 @@ class common
 					return $url;
 				}
 			}
-			error_log(__METHOD__."('$app', ".array2string($image).", '$extension') NONE found!");
+			//error_log(__METHOD__."('$app', ".array2string($image).", '$extension') NONE found!");
 			return null;
 		}
 
@@ -809,7 +809,7 @@ class common
 			self::get_extension($image, $name);
 			return self::image($app, $name, $extension);
 		}
-		error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
+		//error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
 		return null;
 	}
 
