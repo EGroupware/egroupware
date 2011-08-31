@@ -129,31 +129,29 @@ var et2_url = et2_textbox.extend({
 				value = value.replace(/[abc]/gi,2).replace(/[def]/gi,3).replace(/[ghi]/gi,4).replace(/[jkl]/gi,5).replace(/[mno]/gi,6);
 				value = value.replace(/[pqrs]/gi,7).replace(/[tuv]/gi,8).replace(/[wxyz]/gi,9);
 
-				if (egw.config("call_link")) {
-					var link = egw.config("call_link");
-					var size = [300,200];
-					var user_id = "";
-					var user_phone = "";
-					if(link.indexOf("%t") !== -1)
-					{
-						//TODO: get user ID & phone number
-					}
+				// movile Webkit (iPhone, Android) have precedence over server configuration!
+				if (navigator.userAgent.indexOf('AppleWebKit') !== -1 &&
+					(navigator.userAgent.indexOf("iPhone") !== -1 || navigator.userAgent.indexOf("Android") !== -1) &&
+					value.indexOf("tel:") == -1)
+				{
+					 value = "tel:"+value;	
+				} 
+				else if (egw.config("call_link")) 
+				{
+					var link = egw.config("call_link").replace("%1", value).
+						replace("%u",egw.user('account_id')).replace("%t",egw.user('account_phone'));
+
 					if(egw.config("call_popup"))
 					{
- 						size = egw.config("call_popup").split("x");
+ 						var size = egw.config("call_popup").split("x");
+ 						value = function() { egw_openWindowCentered(link, false,size[0],size[1]); };
 					}
-					link = link.replace("%1", value).replace("%u",user_id).replace("%t",user_phone);
-					value = function() {egw_openWindowCentered(link, false,size[0],size[1]);};
+					else	// no popup
+					{
+						value = function() { window.open(link, false); };
+					}
 				}
-				else if(navigator.userAgent.indexOf('AppleWebKit') !== -1 && (
-						navigator.userAgent.indexOf("iPhone") !== -1 ||
-						navigator.userAgent.indexOf("Android") !== -1 
-					) &&
-					 value.indexOf("tel:") == -1)
-				{
-					 value = "tel:"+value;
-					
-				} else {
+				else {
 					// Can't make a good handler
 					return false;
 				}
