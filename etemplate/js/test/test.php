@@ -35,6 +35,7 @@ Testing from inside framework, so JS includes work
                         <a href="#" onclick="open_xet('et2_test_basic_widgets.xet');">Basic widgits</a>
 			<a href="#" onclick="open_xet('et2_test_date.xet');">Date/time widgits</a>
                         <a href="#" onclick="open_xet('et2_test_input_validator.xet', validation_data);">Validation</a>
+                        <a href="#" onclick="open_xet('et2_test_file_upload.xet');">Upload</a>
                 </div>
                 <div class="header">ETemplate2 container:</div>
                 <div id="time"></div>

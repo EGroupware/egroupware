@@ -30,6 +30,8 @@
 	et2_widget_tabs;
 	et2_widget_hrule;
 	et2_widget_image;
+	et2_widget_upload;
+	et2_widget_file;
 
 	et2_extension_nextmatch;
 

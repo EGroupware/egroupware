@@ -37,6 +37,14 @@ var et2_number = et2_textbox.extend({
 			"type": "integer",
 			"default": et2_no_init,
 			"description": "Maximum allowed value"
+		},
+		"precision": {
+			// TODO: Implement this in some nice way other than HTML5's step attribute
+			"name": "Precision",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Allowed precision - # of decimal places",
+			"ignore": true 
 		}
 	},
 
@@ -58,6 +66,14 @@ var et2_number = et2_textbox.extend({
 			this.input.removeAttr("min");
 		} else {
 			this.input.attr("min",this.min);
+		}
+	},
+	set_max: function(_value) {
+		this.max = _value;
+		if(this.max == null) {
+			this.input.removeAttr("max");
+		} else {
+			this.input.attr("max",this.max);
 		}
 	}
 });

@@ -77,11 +77,17 @@ var et2_date = et2_inputWidget.extend({
 			node.addClass("et2_date");
 
 			var _this = this;
+			var dateformat = egw.preference("dateformat");
+			if (!dateformat) dateformat = "Y-m-d";
+			dateformat = dateformat.replace("Y","%Y").replace("d","%d").replace("m","%m").replace("M", "%b");
+
 			var setup = {
 				inputField: this.options.id,
 				button: this.button.attr("id"),
 				showsTime: false,
-				onUpdate: function(_value) {_this.set_value(_value)}
+				onUpdate: function(_value) {_this.set_value(_value)},
+				daFormat: dateformat,
+				firstDay: egw.preference("weekdaystarts","calendar")
 			};
 			window.setTimeout(function() {
 				Calendar.setup(setup);

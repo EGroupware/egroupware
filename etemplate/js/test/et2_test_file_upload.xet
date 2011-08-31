@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="test.file_upload" template="" lang="" group="0" version="">
+		<vbox cols="1" rows="1">
+			<file blur="Just one" label="Select a file" id="single"/>
+			<file blur="More than one" label="Select files" id="multiple" multiple="true"/>
+		</vbox>
+	</template>
+</overlay>
