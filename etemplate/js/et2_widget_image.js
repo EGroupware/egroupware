@@ -68,7 +68,6 @@ var et2_image = et2_baseWidget.extend({
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
-			console.warn(this.image[0], " not in tree");
 			return;
 		}
 		this.options.src = _value;
