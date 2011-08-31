@@ -52,8 +52,6 @@ var et2_date = et2_inputWidget.extend({
 	createInputWidget: function() {
 
 		this.input = $j(document.createElement("input"));
-		this.button = $j(document.createElement("img"));
-		this.button.attr("id", this.options.id + "_button");
 
 		var type="text";
 		switch(this.type) {
@@ -63,26 +61,33 @@ var et2_date = et2_inputWidget.extend({
 		}
 		this.input.addClass("et2_date").attr("type", type);
 
-		this.setDOMNode(this.input[0]);
+		var node = this.input;
 
-		var this_id = this.options.id;
-		var this_button_id = this.button.attr("id");
-		var this_showsTime = this.type == "date-time";
-		
-
+		// Add a button
 		if(this.type == "date" || this.type == "date-time") {
-			this.getSurroundings().insertDOMNode(this.button[0]);
-			this.getSurroundings().update();
+			this.span = $j(document.createElement("span"));
+			this.button = $j(document.createElement("button"));
+			this.button.attr("id", this.options.id + "_button");
+			this.span.append(this.input).append(this.button);
+			node = this.span;
 
+			node.addClass("et2_date");
+
+			var this_id = this.options.id;
+			var this_button_id = this.button.attr("id");
+			var this_showsTime = this.type == "date-time";
+			
 			window.setTimeout(function() {
 				Calendar.setup({
 					inputField: this_id,
 					button: this_button_id,
 					showsTime: this_showsTime,
-					timeFormat: egw.preference("timeformat")
+					timeFormat: egw.preference("timeformat"),
+					onUpdate: this.set_value
 				});
 			}, 500);
 		}
+		this.setDOMNode(node[0]);
 	},
 
 	set_type: function(_type) {
@@ -119,7 +124,11 @@ var et2_date = et2_inputWidget.extend({
 					(egw.preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
 				break;
 		}
-		this._super.apply(this, [display]);
+		this.input.val(display);
+	},
+
+	getValue: function() {
+		return this.value;
 	}
 });
 
@@ -292,7 +301,7 @@ var et2_date_duration = et2_date.extend({
 	 * Change displayed value into storage value and return
 	 */
 	getValue: function() {
-		value = this.duration.val();
+		var value = this.duration.val();
 		if(value === '')
 		{
 			return this.options.empty_not_0 ? null : '';
