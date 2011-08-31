@@ -26,8 +26,7 @@ var et2_image = et2_baseWidget.extend({
 		"src": {
 			"name": "Image",
 			"type": "string",
-			"description": "Displayed image",
-			"translate": "!no_lang"
+			"description": "Displayed image"
 		},
 		"link": {
 		},
@@ -57,13 +56,14 @@ var et2_image = et2_baseWidget.extend({
 	set_label: function(_value) {
 		if(_value == this.options.label) return;
 		this.options.label = _value;
+		// label is NOT the alt attribute in eTemplate, but the title/tooltip
 		this.image.attr("alt", _value);
 	},
 
 	set_src: function(_value) {
-		console.log("IMAGE ", _value);
 		this.options.src = _value;
-		this.image.attr("src", _value);
+		// using current app (default) is not exactly right, it should be the app of the template, eg. "addressbook" for "addressbook.edit"
+		this.image.attr("src", egw.image(_value, egw_appName) || _value);
 	}
 });
 
