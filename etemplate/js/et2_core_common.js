@@ -177,7 +177,7 @@ function et2_checkType(_val, _type, _attr)
 				}
 				catch(e)
 				{
-					et2_debug("error", "Error while parsing JS event handler code", e);
+					et2_debug("error", "Error while parsing JS event handler code", e,_val);
 				}
 			}
 
