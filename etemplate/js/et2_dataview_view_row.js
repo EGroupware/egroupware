@@ -16,29 +16,31 @@
 	et2_dataview_interfaces;
 */
 
-var et2_dataview_row = et2_dataview_container.extend({
+var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 
-	init: function(_dataProvider, _rowProvider, _idx) {
-		this._dataProvider = _dataProvider;
-		this._rowProvider = _rowProvider;
-		this._idx = _idx;
-		this._node = null;
-		this._rowImpl = null;
+	init: function(_dataProvider, _rowProvider, _invalidationElem, _idx) {
+
+		this._super(_dataProvider, _rowProvider, _invalidationElem);
+
+		this.tr = this.rowProvider.getPrototype("default");
+		$j("div", this.tr).text("Blub");
+		this.appendNode(this.tr);
 
 		// Register this row in the dataprovider - if data is available for this
 		// row the "updateData" function will be called immediately.
-		this._dataProvider.registerDataRow(_idx, this);
+		//this.dataProvider.registerDataRow(_idx, this);
 
-		if (this._node == null)
-		{
-		}
+//		if (this.tr == null)
+//		{
+//		}
 	},
 
 	destroy: function() {
-		this._dataProvider.unregisterDataRow(_idx);
+		//this.dataProvider.unregisterDataRow(_idx);
 	},
 
 	updateData: function(_data) {
 	}
 
 });
+

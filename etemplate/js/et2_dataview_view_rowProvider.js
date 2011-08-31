@@ -21,16 +21,16 @@
  */
 var et2_dataview_rowProvider = Class.extend({
 
-	init: function(_gridId, _columnIds) {
+	init: function(_outerId, _columnIds) {
 		// Copy the given parameters
-		this._dataProvider = _dataProvider;
-		this._gridId = _gridId;
+		this._outerId = _outerId;
 		this._columnIds = _columnIds;
 		this._prototypes = {};
 
 		// Create the default row "prototypes"
 		this._createFullRowPrototype();
 		this._createDefaultPrototype();
+		this._createEmptyPrototype();
 	},
 
 	/**
@@ -43,8 +43,8 @@ var et2_dataview_rowProvider = Class.extend({
 		{
 			if (typeof _generator != "undefined")
 			{
-				this._prototypes[_name] = _generator.call(_context, _gridId,
-					_columnIds);
+				this._prototypes[_name] = _generator.call(_context, this._outerId,
+					this._columnIds);
 			}
 			else
 			{
@@ -63,7 +63,7 @@ var et2_dataview_rowProvider = Class.extend({
 			.attr("span", this._columnIds.length)
 			.appendTo(tr);
 		var div = $j(document.createElement("div"))
-			.addClass(this._gridId + "_div_fullRow")
+			.addClass(this._outerId + "_div_fullRow")
 			.appendTo(td);
 
 		this._prototypes["fullRow"] = tr;
@@ -76,14 +76,18 @@ var et2_dataview_rowProvider = Class.extend({
 		for (var i = 0; i < this._columnIds.length; i++)
 		{
 			var td = $j(document.createElement("td"))
-				.addClass(this._gridId + "_td_" + this._columnIds[i])
+				.addClass(this._outerId + "_td_" + this._columnIds[i])
 				.appendTo(tr);
 			var div = $j(document.createElement("div"))
-				.addClass(this._gridId + "_div_" + this._columnIds[i])
+				.addClass(this._outerId + "_div_" + this._columnIds[i])
 				.appendTo(td);
 		}
 
 		this._prototypes["default"] = tr;
+	},
+
+	_createEmptyPrototype: function() {
+		this._prototypes["empty"] = $j(document.createElement("tr"));
 	}
 
 });

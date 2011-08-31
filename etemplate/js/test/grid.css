@@ -32,6 +32,8 @@
 .egwGridView_scrollarea {
 	width: 100%;
 	overflow: auto;
+
+	background-color: white;
 }
 
 .egwGridView_spacer {

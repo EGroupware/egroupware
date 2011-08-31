@@ -49,8 +49,9 @@ var et2_dataview_IPartitionHeight = new Interface({
 var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 	et2_dataview_IInvalidatable], {
 
-	init: function() {
+	init: function(_root) {
 
+		this._root = _root;
 		this._parent = null;
 		this._pidx = 0;
 
@@ -126,12 +127,7 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 	 * Returns the root node of the partition tree
 	 */
 	getRoot: function() {
-		if (this.parent != null)
-		{
-			return this.parent.getRoot();
-		}
-
-		return this;
+		return this._root;
 	},
 
 	/**
@@ -293,6 +289,18 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 		_data.height += this.getHeight();
 	},
 
+	getNodeIdx: function(_idx, _create) {
+		return null;
+	},
+
+	getRowProvider: function() {
+		return this.getRoot().getRowProvider();
+	},
+
+	getDataProvider: function() {
+		return this.getRoot().getDataProvider();
+	},
+
 	/* ---- PRIVATE FUNCTIONS ---- */
 
 	_accumulateValue: function(_f1, _f2) {
@@ -314,7 +322,7 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 });
 
 /*var et2_dataview_IIndexOperations = new Interface({
-	getIdxNode: function(_idx),
+	getIdxNode: function(_idx, _create),
 	removeIdxNode: function(_idx),
 	insertNodes: function(_idx, _nodes)
 });*/
@@ -326,7 +334,7 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	/*et2_dataview_IIndexOperations, */{
 
-	init: function(_parent, _pidx) {
+	init: function(_root, _parent, _pidx) {
 
 		if (typeof _parent == "undefined")
 		{
@@ -339,7 +347,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 		}
 
 		// Call the parent constructor
-		this._super();
+		this._super(_root);
 
 		this._children =  [];
 
@@ -351,7 +359,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 
 	destroy: function() {
 		// Free all child nodes
-		for (var i = this._children.length - 1; i >= 0; i++)
+		for (var i = this._children.length - 1; i >= 0; i--)
 		{
 			this._children[i].free();
 		}
@@ -367,6 +375,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 
 		this._count = false;
 		this._depth = false;
+		this._avgHeightData = false;
 	},
 
 	/**
@@ -451,7 +460,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	 * Removes the child with the given overall index
 	 */
 	removeIdxNode: function(_idx) {
-		this._iterateToIndx(_idx, function(ei, bi, child) {
+		return this._iterateToIndex(_idx, function(ei, bi, child) {
 			if (child.implements(et2_dataview_IIndexOperations))
 			{
 				return child.removeIdxNode(_idx);
@@ -465,7 +474,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	 * Returns the node with the given overall index and null if it is not found
 	 */
 	getIdxNode: function(_idx) {
-		this._iterateToIndx(_idx, function(ei, bi, child) {
+		return this._iterateToIndex(_idx, function(ei, bi, child) {
 			if (child.implements(et2_dataview_IIndexOperations))
 			{
 				return child.getIdxNode()
@@ -475,6 +484,15 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 			{
 				return child;
 			}
+		}, null);
+	},
+
+	/**
+	 * getNodeAt returns the DOM node at the given index
+	 */
+	getNodeAt: function(_idx) {
+		return this._iterateToIndex(_idx, function(ei, bi, child) {
+			return child.getNodeAt(_idx);
 		}, null);
 	},
 
@@ -574,14 +592,14 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	},
 
 	/**
-	 * Reduces the given range to a placeholder
+	 * Reduces the given range to a spacer
 	 */
 	reduceRange: function(_range) {
 		this._reduce(this.getRangeNodes(_range, false))
 	},
 
 	/**
-	 * Reduces the given index range to a placeholder
+	 * Reduces the given index range to a spacer
 	 */
 	reduceIdxRange: function(_range) {
 		this._reduce(this.getIdxRangeNodes(_range, false));
@@ -747,6 +765,25 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 		this.insertNodes(0, children);
 	},
 
+	/**
+	 * Accumulates the "average height" data
+	 */
+	getAvgHeightData: function(_data) {
+		if (this._avgHeightData == false)
+		{
+			this._avgHeightData = {"count": 0, "height": 0};
+
+			for (var i = 0; i < this._children.length; i++)
+			{
+				this._children[i].getAvgHeightData(_data);
+			}
+		}
+
+		// Increment the data object entries by the buffered avg height data
+		_data.count += this._avgHeightData.count;
+		_data.height += this._avgHeightData.height;
+	},
+
 	/* ---- PRIVATE FUNCTIONS ---- */
 
 	_copyChildren: function() {
@@ -760,7 +797,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 		return children;
 	},
 
-	_iterateToIndx: function(_idx, _func, _res) {
+	_iterateToIndex: function(_idx, _func, _res) {
 		for (var i = 0; i < this._children.length; i++)
 		{
 			var child = this._children[i];
@@ -783,7 +820,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	},
 
 	/**
-	 * Reduces the given nodes to a single placeholder
+	 * Reduces the given nodes to a single spacer
 	 */
 	_reduce: function(_nodes) {
 		if (_nodes.length == 0)
@@ -791,26 +828,26 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 			return;
 		}
 
-		// Check whether the first or last node is a placeholder, if not create
+		// Check whether the first or last node is a spacer, if not create
 		// a new one
 		var ph;
-		if (_nodes[0] instanceof et2_dataview_partitionPlaceholderNode)
+		if (_nodes[0] instanceof et2_dataview_partitionSpacerNode)
 		{
 			ph = _nodes[0]
 		}
-		else if (_nodes[_nodes.length - 1] instanceof et2_dataview_partitionPlaceholderNode)
+		else if (_nodes[_nodes.length - 1] instanceof et2_dataview_partitionSpacerNode)
 		{
 			ph = _nodes[_nodes.length - 1];
 		}
 		else
 		{
-			// Create a new placeholder node an insert it at the place of the
+			// Create a new spacer node an insert it at the place of the
 			// first node of the range
-			ph = new et2_dataview_partitionPlaceholderNode();
+			ph = new et2_dataview_partitionSpacerNode(this.getRoot());
 			this.getRoot().insertNodes(_nodes[0].getStartIndex(), [ph]);
 		}
 
-		// Get the height of the resulting placeholder
+		// Get the height of the resulting spacer
 		var height = _nodes[_nodes.length - 1].getBottom() - _nodes[0].getTop();
 
 		// Get the count of actual elements in the nodes
@@ -820,11 +857,11 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 			count += _nodes[i].getCount();
 		}
 
-		// Update the placeholder parameters
+		// Update the spacer parameters
 		ph.setAvgHeight(height / count);
 		ph.setCount(count);
 
-		// Free all elements (except for the placeholder)
+		// Free all elements (except for the spacer)
 		for (var i = _nodes.length - 1; i >= 0; i--)
 		{
 			if (_nodes[i] != ph)
@@ -862,22 +899,112 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 
 		this._children = [];
 	}
+});
+
+/**
+ * The partition container node base class implements most functionality for
+ * nodes which have a container.
+ */
+var et2_dataview_partitionContainerNode = et2_dataview_partitionNode.extend({
+
+	/**
+	 * Copies the given container object and inserts the container into the tree
+	 * - if it is not already in there.
+	 */
+	init: function(_root, _container, _args) {
+		this._super(_root);
+
+		// Copy the container parameter and set its "invalidationElement" to
+		// this node
+		this.container = _container;
+		this.container.setInvalidationElement(this);
+	},
+
+	/**
+	 * Inserts the container into the tree if it is not already inserted.
+	 */
+	initializeContainer: function() {
+		// Obtain the node index and insert the container nodes at the node
+		// returned by getNodeAt. If idx is zero, the returned node will be
+		// the outer container, so the container nodes have to be prepended
+		// to it.
+		var idx = this.getStartIndex();
+		this.container.insertIntoTree(this.getRoot().getNodeAt(idx - 1),
+			idx == 0);
+
+		this.invalidate();
+	},
+
+	/**
+	 * Destroys the container if it is still set - e.g. the spacer node
+	 * sets the container to null before "free" ist called in some cases, in
+	 * order to pass the container object to another spacer node.
+	 */
+	destroy: function() {
+		if (this.container)
+		{
+			this.container.free();
+		}
+
+		this._super();
+	},
+
+	/**
+	 * Returns the height of the container
+	 */
+	calculateHeight: function() {
+		return this.container.getHeight();
+	},
+
+	/**
+	 * Calls the "insertNodeAfter" function of the container to insert the node.
+	 */
+	insertNodeAfter: function(_node) {
+		this.container.insertNodeAfter(_node);
+	},
+
+	/**
+	 * Returns the "lastNode" of the container
+	 */
+	getNodeAt: function(_idx) {
+		if (_idx >= this.getStartIndex() && _idx < this.getStopIndex())
+		{
+			return this.container.getLastNode();
+		}
+
+		return null;
+	}
 
 });
 
 /**
- * Node which represents a placeholder. Complete parts of the tree can be
- * transformed into placeholder nodes.
+ * Node which represents a spacer. Complete parts of the tree can be
+ * transformed into spacer nodes.
  */
-var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
+var et2_dataview_partitionSpacerNode = et2_dataview_partitionContainerNode.extend({
 
-	init: function(_count, _avgHeight) {
+	init: function(_root, _count, _avgHeight, _container) {
+
+		// Create the container if it has not been passed as a third parameter
+		var container;
+		if (typeof _container != "undefined")
+		{
+			container = _container;
+		}
+		else
+		{
+			container = new et2_dataview_spacer(_root.getDataProvider(),
+				_root.getRowProvider(), this);
+		}
 
 		// Call the inherited constructor
-		this._super();
+		this._super(_root, container);
 
+		// Copy the count and average height parameters and update the height
+		// of the container
 		this._count = _count;
 		this._avgHeight = _avgHeight;
+		this.container.setHeight(_count * _avgHeight);
 	},
 
 	getCount: function() {
@@ -889,6 +1016,7 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
 		{
 			this._count = _count;
 			this.invalidate();
+			this.container.setHeight(_count * _avgHeight);
 		}
 	},
 
@@ -897,6 +1025,7 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
 		{
 			this._avgHeight = _height;
 			this.invalidate();
+			this.container.setHeight(_count * _avgHeight);
 		}
 	},
 
@@ -927,23 +1056,29 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
 
 		if (startIdx > 0 && startIdx < this._count)
 		{
-			// Create a placeholder which contains the elements until startIdx
-			insertNodes.push(new et2_dataview_partitionPlaceholderNode(startIdx, ah));
+			// Create a spacer which contains the elements until startIdx
+			insertNodes.push(new et2_dataview_partitionSpacerNode(this.getRoot(),
+				startIdx, ah, this.container));
+			this.container = null;
 		}
+
+		// Calculate the current average height
+		ah = this.getRoot().getAverageHeight();
 
 		// Create the elements from start to stop index
 		for (var i = startIdx; i < stopIdx; i++)
 		{
-			var rowNode = new et2_dataview_partitionRowNode(ah);
+			var rowNode = new et2_dataview_partitionRowNode(this.getRoot(), ah);
 			insertNodes.push(rowNode);
 		}
 
 		if (stopIdx < this._count - 1 && stopIdx > 0)
 		{
-			// Create a placeholder which contains the elements starting from
+			// Create a spacer which contains the elements starting from
 			// stop index
 			var l = this._count - stopIdx;
-			insertNodes.push(new et2_dataview_partitionPlaceholderNode(l, ah));
+			insertNodes.push(new et2_dataview_partitionSpacerNode(this.getRoot(),
+				l, ah));
 		}
 
 		// Check whether insertNodes really has entrys - this is not the case
@@ -956,6 +1091,12 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
 			// Insert the newly created nodes at the original place of this node
 			parent.insertNodes(pidx, insertNodes);
 
+			// Insert the newly created elements into the DOM-Tree
+			for (var i = 0; i < insertNodes.length; i++)
+			{
+				insertNodes[i].initializeContainer();
+			}
+
 			return false;
 		}
 
@@ -963,7 +1104,7 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
 	},
 
 	getAvgHeightData: function(_data) {
-		// Do nothing here, as the placeholders should not be inside the average
+		// Do nothing here, as the spacers should not be inside the average
 		// height statistic.
 	},
 
@@ -974,33 +1115,95 @@ var et2_dataview_partitionPlaceholderNode = et2_dataview_partitionNode.extend({
  */
 var et2_dataview_partitionTree = et2_dataview_partitionOrganizationNode.extend({
 
-	init: function(_count, _avgHeight) {
-		this._super();
+	init: function(_dataProvider, _rowProvider, _avgHeight, _node) {
+		this._super(this);
 
-		// Append a placeholder node to the children
-		var ph = new et2_dataview_partitionPlaceholderNode(_count, _avgHeight);
+		this._avgHeight = _avgHeight;
+		this._node = _node;
+		this._count = _dataProvider.getCount();
+
+		this._dataProvider = _dataProvider;
+		this._rowProvider = _rowProvider;
+
+		et2_debug("Creating partition tree with ", this._count,
+			" elements of avgHeight ", this._avgHeight);
+
+		// Append a spacer node to the children
+		var ph = new et2_dataview_partitionSpacerNode(this, this._count,
+			this._avgHeight);
 		ph.setParent(this);
+		ph.initializeContainer();
 
 		this._children = [ph];
+	},
+
+	getAverageHeight: function() {
+		var data = {"count": 0, "height": 0};
+
+		this.getAvgHeightData(data);
+
+		if (data.count == 0)
+		{
+			return this._avgHeight;
+		}
+
+		return data.height / data.count;
+	},
+
+	/**
+	 * Returns the actual count of managed objects inside of the tree - getCount
+	 * in contrast returns the count of "virtual" objects including the
+	 * spacers.
+	 */
+	getManagedCount: function() {
+		var data = {"count": 0, "height": 0};
+		this.getAvgHeightData(data);
+
+		return data.count;
+	},
+
+	/**
+	 * Returns the node after which new nodes have to be inserted for the given
+	 * index.
+	 */
+	getNodeAt: function(_idx) {
+
+		// Insert the given node to the top of the parent container
+		if (_idx < 0)
+		{
+			return this._node;
+		}
+
+		// Otherwise search for the tree node with that index
+		return this._super(_idx);
+	},
+
+	getRowProvider: function() {
+		return this._rowProvider;
+	},
+
+	getDataProvider: function() {
+		return this._dataProvider;
 	}
 
 });
 
-var et2_dataview_partitionRowNode = et2_dataview_partitionNode.extend({
+var et2_dataview_partitionRowNode = et2_dataview_partitionContainerNode.extend({
 
-	init: function(_avgHeight) {
+	init: function(_root, _avgHeight) {
+
+		var container = new et2_dataview_row(_root.getDataProvider(),
+			_root.getRowProvider(), this, 0);
+
+		this._super(_root, container);
+
 		this._avgHeight = _avgHeight;
 	},
 
-	calculateHeight: function() {
-		return this._avgHeight;
+	getIdxNode: function(_node, _create) {
+		return this.node;
 	}
 
 });
 
-/*
-var tree = new et2_dataview_partitionTree(1000, 20);
-tree.getRangeNodes(et2_range(0, 100));
-//tree.getRangeNodes(et2_range(0, 1000));
-*/
 

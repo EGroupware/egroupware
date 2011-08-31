@@ -21,6 +21,8 @@
 	et2_widget_grid;
 	et2_widget_selectbox;
 	et2_extension_nextmatch_dynheight;
+	et2_dataview_gridContainer;
+	et2_dataview_dataProvider;
 */
 
 /**
@@ -67,8 +69,13 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// container.
 		this.dynheight = new et2_dynheight(null, this.div, 150);
 
+		// Create the data provider which cares about streaming the row data
+		// efficiently to the rows
+		this.dataProvider = new et2_dataview_dataProvider();
+
 		// Create the outer grid container
-		this.dataviewContainer = new et2_dataview_gridContainer(this.div);
+		this.dataviewContainer = new et2_dataview_gridContainer(this.div,
+			this.dataProvider);
 
 		this.activeFilters = {};
 	},
@@ -78,6 +85,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 */
 	destroy: function() {
 		this.dataviewContainer.free();
+		this.dataProvider.free();
 		this.dynheight.free();
 
 		this._super.apply(this, arguments);

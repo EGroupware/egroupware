@@ -40,15 +40,18 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Constructor for the grid container
 	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
 	 */
-	init: function(_parentNode) {
+	init: function(_parentNode, _dataProvider) {
 
-		// Copy the parent node parameter
+		// Copy the arguments
 		this.parentNode = $j(_parentNode);
+		this.dataProvider = _dataProvider;
 
 		// Initialize some variables
 		this.columnNodes = []; // Array with the header containers
 		this.columns = [];
 		this.columnMgr = null;
+
+		this.grid = null;
 
 		this.width = 0;
 		this.height = 0;
@@ -68,6 +71,12 @@ var et2_dataview_gridContainer = Class.extend({
 	destroy: function() {
 		// Clear the columns
 		this._clearHeader();
+
+		// Free the grid
+		if (this.grid)
+		{
+			this.grid.free();
+		}
 
 		// Detatch the outer element
 		this.table.remove();
@@ -99,10 +108,13 @@ var et2_dataview_gridContainer = Class.extend({
 		this.columnMgr = new et2_dataview_columns(_columnData);
 
 		// Create the stylesheets
-		this._updateColumns();
+		this.updateColumns();
 
 		// Build the header row
 		this._buildHeader();
+
+		// Build the grid
+		this._buildGrid();
 	},
 
 	/**
@@ -115,14 +127,20 @@ var et2_dataview_gridContainer = Class.extend({
 
 			// Rebuild the column stylesheets
 			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
+			et2_debug("log", _w - this.scrollbarWidth);
 			this._updateColumns();
 		}
 
 		if (this.height != _h)
 		{
 			this.height = _h;
+
 			// Set the height of the grid.
-			// TODO
+			if (this.grid)
+			{
+				this.grid.setScrollHeight(this.height -
+					this.headTr.outerHeight(true));
+			}
 		}
 	},
 
@@ -236,13 +254,11 @@ var et2_dataview_gridContainer = Class.extend({
 				vis_col++;
 				this.visibleColumnCount++;
 
+				// Update the visibility of the column
 				styleSheet.updateRule("." + col.tdClass, 
-					"display: " + (col.visible ? "table-cell" : "none") + "; " + 
+					"display: table-cell; " + 
 					((vis_col == total_cnt) ? "border-right-width: 0 " : "border-right-width: 1px ") +
 					"!important;");
-
-				styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
-					"width: " + (col.width - this.headerBorderWidth) + "px;");
 
 				// Ugly browser dependant code - each browser seems to treat the 
 				// right (collapsed) border of the row differently
@@ -270,10 +286,15 @@ var et2_dataview_gridContainer = Class.extend({
 					addBorder += 1;
 				}
 
-				var width = Math.max(0, (col.width - this.columnBorderWidth - addBorder));
-
+				// Write the width of the body-columns
+				var columnWidth = Math.max(0, (col.width - this.columnBorderWidth - addBorder));
 				styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
-					"width: " + width + "px;");
+					"width: " + columnWidth + "px;");
+
+				// Write the width of the header columns
+				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth));
+				styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
+					"width: " + headerWidth + "px;");
 
 				totalWidth += col.width;
 
@@ -281,8 +302,7 @@ var et2_dataview_gridContainer = Class.extend({
 			}
 			else
 			{
-				styleSheet.updateRule("." + col.tdClass, 
-					"display: " + (col.visible ? "table-cell" : "none") + ";");
+				styleSheet.updateRule("." + col.tdClass, "display: none;");
 			}
 		}
 
@@ -338,6 +358,24 @@ var et2_dataview_gridContainer = Class.extend({
 				+ this.selectCol.width() + 1);
 	},
 
+	/**
+	 * Builds the inner grid class
+	 */
+	_buildGrid: function() {
+		// Create the collection of column ids
+		var colIds = new Array(this.columns.length);
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			colIds[i] = this.columns[i].id;
+		}
+
+		// Create the grid class and pass "19" as the starting average row height
+		this.grid = new et2_dataview_grid(null, this.uniqueId, colIds,
+			this.dataProvider, 19);
+
+		// Insert the grid into the DOM-Tree
+		this.containerTr.append(this.grid.getJNode());
+	},
 
 	/* --- Code for calculating the browser/css depending widths --- */
 

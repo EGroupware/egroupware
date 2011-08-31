@@ -10,14 +10,26 @@
  * @version $Id$
  */
 
+"use strict"
+
+/*egw:uses
+	et2_core_inheritance;
+*/
+
 var et2_dataview_IInvalidatable = new Interface({
 
-	invalidate: function();
+	invalidate: function() {}
 
 });
 
 var et2_dataview_IDataRow = new Interface({
 
-	updateData: function(_data);
+	updateData: function(_data) {}
+
+});
+
+var et2_dataview_IViewRange = new Interface({
+
+	setViewRange: function(_range) {}
 
 });
