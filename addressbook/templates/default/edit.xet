@@ -110,7 +110,7 @@
 					<textbox id="org_unit" size="45" maxlength="64"/>
 				</row>
 				<row>
-					<image src="gohome"/>
+					<image/>
 					<description value="street" for="adr_one_street"/>
 					<textbox id="adr_one_street" size="45" maxlength="64"/>
 				</row>
