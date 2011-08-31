@@ -114,8 +114,9 @@ class accounts_sql
 				$this->contacts_table.'.n_fn AS account_fullname,'.
 				$this->contacts_table.'.contact_id AS person_id,'.
 				$this->contacts_table.'.contact_created AS account_created,'.
-				$this->contacts_table.'.contact_modified AS account_modified,';
-			$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
+				$this->contacts_table.'.contact_modified AS account_modified,'.
+				$this->contacts_table.'.tel_work AS account_phone,';
+				$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
 		if (!($data = $this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
 			__LINE__,__FILE__,false,'',false,0,$join)->fetch()))
@@ -176,7 +177,7 @@ class accounts_sql
 			if (!isset($to_write['account_pwd'])) $to_write['account_pwd'] = '';	// is NOT NULL!
 			if (!isset($to_write['account_status'])) $to_write['account_status'] = '';	// is NOT NULL!
 
-			// postgres requires the auto-id field to be unset!	
+			// postgres requires the auto-id field to be unset!
 			if (isset($to_write['account_id']) && !$to_write['account_id']) unset($to_write['account_id']);
 
 			if (!in_array($to_write['account_type'],array('u','g')) ||

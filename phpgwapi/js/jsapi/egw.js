@@ -312,6 +312,8 @@ else
 		
 		/**
 		 * Map to serverside available images for users template-set
+		 * 
+		 * @access: private, use egw.image(_name, _app)
 		 */
 		images: {},
 		
@@ -373,6 +375,36 @@ else
 			{
 				return egw_appName;
 			}
+		},
+		
+		/**
+		 * Data about current user
+		 * 
+		 * @access: private, use egw.user(_field)
+		 */
+		userData: {},
+		
+		/**
+		 * Set data of current user
+		 * 
+		 * @param object _data
+		 */
+		set_user: function(_data)
+		{
+			this.userData = _data;
+		},
+		
+		/**
+		 * Get data about current user
+		 *
+		 * @param string _field
+		 * - 'account_id','account_lid','person_id','account_status',
+		 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
+		 * @return string|null
+		 */
+		user: function (_field)
+		{
+			return this.userData[_field];
 		}
 	};
 }

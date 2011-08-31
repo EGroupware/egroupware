@@ -476,7 +476,7 @@ class accounts_ldap
 	protected function _read_user($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
-			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
+			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword','telephonenumber',
 				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
 
 		$data = ldap_get_entries($this->ds, $sri);
@@ -498,6 +498,7 @@ class accounts_ldap
 			'account_email'     => $data['mail'][0],
 			'account_fullname'  => $data['cn'][0],
 			'account_pwd'       => $data['userpassword'][0],
+			'account_phone'     => $data['telephonenumber'][0],
 			// both status and expires are encoded in the single shadowexpire value in LDAP
 			// - if it's unset an account is enabled AND does never expire
 			// - if it's set to 0, the account is disabled

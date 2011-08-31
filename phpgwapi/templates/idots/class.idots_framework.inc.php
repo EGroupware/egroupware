@@ -166,6 +166,7 @@ class idots_framework extends egw_framework
 			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
 			$content .= '<script type="text/javascript">
 egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");
+egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');
 </script>'."\n";
 		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox' && !html::$ua_mobile)

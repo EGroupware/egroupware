@@ -781,7 +781,8 @@ abstract class egw_framework
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");';
+			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");'."\n";
+			$java_script .= 'egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');'."\n";
 		}
 		$java_script .= "</script>\n";
 

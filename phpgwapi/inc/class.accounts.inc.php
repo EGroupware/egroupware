@@ -382,6 +382,27 @@ class accounts
 	}
 
 	/**
+	 * Get an account as json, returns only whitelisted fields:
+	 * - 'account_id','account_lid','person_id','account_status',
+	 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
+	 *
+	 * @param int|string $id
+	 * @return string|boolean json or false if not found
+	 */
+	function json($id)
+	{
+		static $keys = array(
+			'account_id','account_lid','person_id','account_status',
+			'account_firstname','account_lastname','account_email','account_fullname','account_phone',
+		);
+		if (($account = $this->read($id)))
+		{
+			$account = array_intersect_key($account, array_flip($keys));
+		}
+		return json_encode($account);
+	}
+
+	/**
 	 * Saves / adds the data of one account
 	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
