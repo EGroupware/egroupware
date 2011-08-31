@@ -184,11 +184,9 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, {
 			// Increment the height value for each visible container node
 			var self = this;
 			$j(this._nodes, ":visible").each(function() {
-				height += self._nodeHeight(this);
+				height += self._nodeHeight(this[0]);
 			});
 		}
-
-		console.log(height);
 
 		return height;
 	},
@@ -237,7 +235,7 @@ else
 {
 	et2_dataview_container.prototype._nodeHeight = function(_node)
 	{
-		return $j(_node).outerHeight(true);
+		return _node.offsetHeight;
 	}
 }
 

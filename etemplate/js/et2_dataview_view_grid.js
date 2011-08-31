@@ -20,6 +20,16 @@
 	et2_dataview_view_partitionTree;
 */
 
+/**
+ * Determines how many pixels the view range of the gridview is extended.
+ */
+var ET2_GRID_VIEW_EXT = 25;
+
+/**
+ * Determines the timeout after which the scroll-event is processed.
+ */
+var ET2_GRID_SCROLL_TIMEOUT = 25;
+
 var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 	/**
@@ -226,10 +236,10 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 						// function
 						e.data._scrollTimeout = window.setTimeout(function() {
 							e.data.setViewRange(et2_range(
-								e.data.scrollarea.scrollTop(),
-								e.data._height
+								e.data.scrollarea.scrollTop() - ET2_GRID_VIEW_EXT,
+								e.data._height + ET2_GRID_VIEW_EXT * 2
 							));
-						}, 25);
+						}, ET2_GRID_SCROLL_TIMEOUT);
 					})
 				.height(this._scrollHeight)
 				.appendTo(this.outerCell);

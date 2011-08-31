@@ -127,7 +127,6 @@ var et2_dataview_gridContainer = Class.extend({
 
 			// Rebuild the column stylesheets
 			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
-			et2_debug("log", _w - this.scrollbarWidth);
 			this._updateColumns();
 		}
 
