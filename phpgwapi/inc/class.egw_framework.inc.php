@@ -1,6 +1,6 @@
 <?php
 /**
- * eGW API - framework
+ * EGroupware API - framework baseclass
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> rewrite in 12/2006

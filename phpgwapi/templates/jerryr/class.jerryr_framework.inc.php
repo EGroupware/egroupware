@@ -1,8 +1,9 @@
 <?php
 /**
- * eGW jerryr template
- * 
+ * EGroupware jerryr template set
+ *
  * @link http://www.egroupware.org
+ * @author Jerry Ruhe <jerry.ruhe@dilawri-group.ca>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> rewrite in 12/2006
  * @author Pim Snel <pim@lingewoud.nl> author of the idots template set
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -25,9 +26,9 @@ class jerryr_framework extends idots_framework
 	 * @param string $template='jerryr'
 	 * @return jerryr_framework
 	 */
-	function jerryr_framework($template='jerryr')
+	function __construct($template='jerryr')
 	{
-		$this->idots_framework($template);
+		parent::__construct($template);
 	}
 
 	function topmenu(array &$vars,array &$apps)

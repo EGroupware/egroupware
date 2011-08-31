@@ -1,6 +1,6 @@
 <?php
 /**
- * eGW idots template
+ * EGroupware idots template set
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> rewrite in 12/2006
@@ -62,8 +62,7 @@ class idots_framework extends egw_framework
 	*/
 	function __construct($template='idots')
 	{
-		$GLOBALS['egw_info']['flags']['include_xajax'] = True;
-		$this->egw_framework($template);		// call the constructor of the extended class
+		parent::__construct($template);		// call the constructor of the extended class
 
 		$this->tplsav2 = new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
