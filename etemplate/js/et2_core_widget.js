@@ -746,6 +746,26 @@ var et2_widget = Class.extend({
 		}
 
 		return null;
+	},
+
+	/**
+	 * Returns the application for the template the widget is in.
+	 * If a sub-template is used, this may be different from the current app.
+	 */
+	getTemplateApp: function() {
+		if(this._template_application) 
+		{
+			return this._template_application;
+		}
+		else if(this._type == 'template' && this.id)
+		{
+			var parts = this.id.split(".",2);
+			return parts[0];
+		} else if (this.getParent()) {
+			this._template_application = this.getParent().getTemplateApp();
+			return this._template_application;
+		}
+		return null;
 	}
 });
 

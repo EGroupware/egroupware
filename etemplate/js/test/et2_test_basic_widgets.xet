@@ -12,7 +12,7 @@
 		<radio label="Radio" id="radio_value"/>
 		<buttononly label="Button" id="button_value"/>
 		<hrule label="HR"/>
-		<image label="Image" src="phpgwapi/templates/default/images/edit.png"/>
+		<image label="Image" src="edit"/>
 		<menulist>
 			<menupopup label="Selectbox" id="selectbox_value" options="No value">
 				<option value="1">Test 1</option>

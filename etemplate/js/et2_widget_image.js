@@ -50,6 +50,10 @@ var et2_image = et2_baseWidget.extend({
 			this.node = $j(document.createElement("a"));
 			this.image.appendTo(this.node);
 		}
+		if(this.options.class)
+		{
+			this.node.addClass(this.options.class);
+		}
 		this.setDOMNode(this.node[0]);
 	},
 
@@ -58,12 +62,27 @@ var et2_image = et2_baseWidget.extend({
 		this.options.label = _value;
 		// label is NOT the alt attribute in eTemplate, but the title/tooltip
 		this.image.attr("alt", _value);
+		this.image.set_statustext(_value);
 	},
 
 	set_src: function(_value) {
+		if(!this.isInTree())
+		{
+			console.warn(this.image[0], " not in tree");
+			return;
+		}
 		this.options.src = _value;
-		// using current app (default) is not exactly right, it should be the app of the template, eg. "addressbook" for "addressbook.edit"
-		this.image.attr("src", egw.image(_value, egw_appName) || _value);
+		// Get application to use from template ID
+		var appname = this.getTemplateApp();
+		var src = egw.image(_value,appname || "phpgwapi");
+		if(src )
+		{
+			this.image.attr("src", src).show();
+		}
+		else
+		{
+			this.image.css("display","none");
+		}
 	}
 });
 
