@@ -51,80 +51,192 @@ var et2_date = et2_inputWidget.extend({
 
 	createInputWidget: function() {
 
-		this.input = $j(document.createElement("input"));
+		this.input_date = $j(document.createElement("input"));
 
-		var type="text";
-		switch(this.type) {
-			case "date-timeonly":
-				type = "time";
-				break;
-		}
-		this.input.addClass("et2_date").attr("type", type);
+		var type=(this.type == "date-timeonly" ? "time" : "text");
+		this.input_date.addClass("et2_date").attr("type", type).attr("size", 5);
 
-		var node = this.input;
+		var node = this.input_date;
 
 		// Add a button
 		if(this.type == "date" || this.type == "date-time") {
 			this.span = $j(document.createElement("span"));
-			this.button = $j(document.createElement("button"));
-			this.button.attr("id", this.options.id + "_button");
-			this.span.append(this.input).append(this.button);
+			this.button = $j(document.createElement("span"));
+			this.button.attr("id", this.options.id + "-trigger");
+			this.span.append(this.input_date).append(this.button);
+
+			// Icon could be done in CSS file
+			var button_image = egw.image('datepopup','phpgwapi');
+			if(button_image) 
+			{
+				this.button.css("background-image","url("+button_image+")");
+			}
+
 			node = this.span;
 
 			node.addClass("et2_date");
 
-			var this_id = this.options.id;
-			var this_button_id = this.button.attr("id");
-			var this_showsTime = this.type == "date-time";
-			
+			var _this = this;
+			var setup = {
+				inputField: this.options.id,
+				button: this.button.attr("id"),
+				showsTime: false,
+				onUpdate: function(_value) {_this.set_value(_value)}
+			};
 			window.setTimeout(function() {
-				Calendar.setup({
-					inputField: this_id,
-					button: this_button_id,
-					showsTime: this_showsTime,
-					timeFormat: egw.preference("timeformat"),
-					onUpdate: this.set_value
-				});
+				Calendar.setup(setup);
 			}, 500);
+		}
+
+		// If date also has a time, or browser doesn't support HTML5 time type 
+		if(this.type == "date-time" || this.type == "date-timeonly" && this.input_date.attr("type") == 'text')
+		{
+			if(!this.span)
+			{
+				this.span = $j(document.createElement("span"));
+				node = this.span;
+			}
+			switch(this.type)
+			{
+				case "date-time":
+					var input_time = $j(document.createElement("input")).attr("type", "time");
+					if(input_time.attr("type") == "time")
+					{
+						this.input_time = input_time;
+						this.input_time.appendTo(this.span).attr("size", 5);
+						break;
+					}
+					// Fall through
+				default:
+					this._make_time_selects(this.span);
+					break;
+			}
+		}
+		else if (this.type =="date-timeonly")
+		{
+			// Update internal value if control changes
+			this.input_date.change(this,function(e){e.data.set_value($j(e.target).val());});
 		}
 		this.setDOMNode(node[0]);
 	},
 
+	_make_time_selects: function (node) {
+		var timeformat = egw.preference("timeformat");
+		this.input_hours = $j(document.createElement("select"));
+		for(var i = 0; i < 24; i++)
+		{
+			var time = i;
+			if(timeformat == 12)
+			{
+				time = i % 12 + " " + (i < 12 ? "am" : "pm");
+			}
+			else if (time < 10) 
+			{
+				time = "0" + time;
+			}
+			var option = $j(document.createElement("option")).attr("value", i).text(time);
+			option.appendTo(this.input_hours);
+		}
+		this.input_hours.appendTo(node).change(this, function(e) {
+			if(e.data.type == "date-timeonly")
+			{
+				e.data.set_value(e.target.options[e.target.selectedIndex].value + ":" + $j('option:selected',e.data.input_minutes).text());
+			}
+			else
+			{
+				e.data.date.setHours(e.target.options[e.target.selectedIndex].value);
+				e.data.set_value(e.data.date.valueOf());
+			}
+		});
+		node.append(":");
+		this.input_minutes = $j(document.createElement("select"));
+		for(var i = 0; i < 60; i+=5)
+		{
+			var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i);
+			option.appendTo(this.input_minutes);
+		}
+		this.input_minutes.appendTo(node).change(this, function(e) {
+			if(e.data.type == "date-timeonly")
+			{
+				e.data.set_value($j('option:selected',e.data.input_hours).val() + ":" + e.target.options[e.target.selectedIndex].text);
+			}
+			else
+			{
+				e.data.date.setMinutes(e.target.options[e.target.selectedIndex].value);
+				e.data.set_value(e.data.date.valueOf());
+			}
+		});
+	},
 	set_type: function(_type) {
 		this.type = _type;
 		this.createInputWidget();
 	},
 
 	set_value: function(_value) {
+		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value)) {
 			if(_value.indexOf(":") > 0 && this.type == "date-timeonly") {
-				return this._super.apply(this, [_value]);
+				this.value = _value;
+				// HTML5
+				if(!this.input_hours)
+				{
+					return this._super.apply(this, [_value]);
+				}
+				else
+				{
+					var parts = _value.split(":");
+					$j("option[value='"+parts[0]+"']",this.input_hours).attr("selected","selected");
+					if($j("option[value='"+parseInt(parts[1])+"']",this.input_minutes).length == 0)
+					{
+						// Selected an option that isn't in the list
+						var i = parts[1];
+						var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i).attr("selected","selected");
+						option.appendTo(this.input_minutes);
+					}
+					else
+					{
+						$j("option[value='"+parts[1]+"']",this.input_minutes).attr("selected","selected");
+					}
+					return;
+				}
 			} else {
 				_value = Date.parse(_value);
 				// JS dates use milliseconds
 				this.date.setTime(parseInt(_value)*1000);
 			}
-		} else {
+		} else if (typeof _value == 'integer') {
 			// JS dates use milliseconds
 			this.date.setTime(parseInt(_value)*1000);
+		} else if (typeof _value == 'object' && _value.date) {
+			this.date = _value.date;
+			_value = this.date.valueOf();
 		}
 		this.value = _value;
 
-		var display = this.date.toString();
-
-		switch(this.type) {
-			case "date":
-				display = date(egw.preference('dateformat'), this.date);
-				break;
-			case "date-timeonly":
-				display = date(egw.preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
-				break;
-			case "date-time":
-				display = date(egw.preference('dateformat') + " " + 
-					(egw.preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
-				break;
+		if(this.input_date)
+		{
+			this.input_date.val(date(egw.preference('dateformat'), this.date));
 		}
-		this.input.val(display);
+		if(this.input_time)
+		{
+			this.input_time.val(date("H:i", this.date));
+		}
+		if(this.input_hours)
+		{
+			$j("option[value='"+date("H",this.date)+"']",this.input_hours).attr("selected","selected");
+		}
+		if(this.input_minutes)
+		{
+			if($j("option[value='"+parseInt(date("i",this.date))+"']",this.input_minutes).length == 0)
+			{
+				// Selected an option that isn't in the list
+				var i = date("i",this.date);
+				var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i).attr("selected","selected");
+				option.appendTo(this.input_minutes);
+			} else {
+				$j("option[value='"+date("i",this.date)+"']",this.input_minutes).attr("selected","selected");
+			}
+		}
 	},
 
 	getValue: function() {
@@ -193,7 +305,7 @@ var et2_date_duration = et2_date.extend({
 	createInputWidget: function() {
 		// Create nodes
 		this.node = $j(document.createElement("span"));
-		this.duration = $j(document.createElement("input")).attr("size", "5");
+		this.duration = $j(document.createElement("input")).attr("size", "2");
 		this.node.append(this.duration);
 
 		// Time format labels

@@ -171,6 +171,26 @@ button.et2_button:focus {
 	font-style: italic;
 }
 
+span.et2_date {
+	min-width: 130px;
+}
+span.et2_date input.et2_date {
+	min-width: 10ex;
+}
+span.et2_date span {
+	background-image: url(gfx/gradient01.png);
+	background-position: center;
+	background-repeat: no-repeat;
+
+	color: #101010;
+	cursor: pointer;
+	padding-top: 3px;
+	padding-left: 22px;
+	text-align: center;
+
+	font-size: 9pt;
+}
+
 .egw_tooltip
 {
 	position: fixed;
