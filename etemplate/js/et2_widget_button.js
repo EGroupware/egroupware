@@ -56,9 +56,9 @@ var et2_button = et2_baseWidget.extend(et2_IInput, {
 
 	click: function() {
 		// Execute the JS code connected to the event handler
-		if (this.onclick)
+		if (this.options.onclick)
 		{
-			if (!this.onclick())
+			if (!this.options.onclick())
 				return false;
 		}
 
