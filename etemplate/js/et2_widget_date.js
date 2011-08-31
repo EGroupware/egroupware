@@ -128,7 +128,16 @@ var et2_date = et2_inputWidget.extend({
 			var time = i;
 			if(timeformat == 12)
 			{
-				time = i % 12 + " " + (i < 12 ? "am" : "pm");
+				switch(i)
+				{
+					case 0:
+						time = "12 am";
+						break;
+					case 12: time = "12 pm";
+						break;
+					default: 
+						time = i % 12 + " " + (i < 12 ? "am" : "pm");
+				}
 			}
 			else if (time < 10) 
 			{
@@ -152,7 +161,12 @@ var et2_date = et2_inputWidget.extend({
 		this.input_minutes = $j(document.createElement("select"));
 		for(var i = 0; i < 60; i+=5)
 		{
-			var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i);
+			var time = i;
+			if(time < 10)
+			{
+				time = "0"+time;
+			}
+			var option = $j(document.createElement("option")).attr("value", time).text(time);
 			option.appendTo(this.input_minutes);
 		}
 		this.input_minutes.appendTo(node).change(this, function(e) {
@@ -189,7 +203,7 @@ var et2_date = et2_inputWidget.extend({
 					if($j("option[value='"+parseInt(parts[1])+"']",this.input_minutes).length == 0)
 					{
 						// Selected an option that isn't in the list
-						var i = parts[1];
+						var i = parseInt(parts[1]);
 						var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i).attr("selected","selected");
 						option.appendTo(this.input_minutes);
 					}
@@ -231,7 +245,7 @@ var et2_date = et2_inputWidget.extend({
 			{
 				// Selected an option that isn't in the list
 				var i = date("i",this.date);
-				var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i).attr("selected","selected");
+				var option = $j(document.createElement("option")).attr("value", i).text(i).attr("selected","selected");
 				option.appendTo(this.input_minutes);
 			} else {
 				$j("option[value='"+date("i",this.date)+"']",this.input_minutes).attr("selected","selected");
@@ -443,7 +457,7 @@ var et2_date_duration = et2_date.extend({
 et2_register_widget(et2_date_duration, ["date-duration"]);
 
 /**
- * et2_date_ro is the dummy readonly implementation of the date widget.
+ * et2_date_ro is the readonly implementation of some date widget.
  */
 var et2_date_ro = et2_valueWidget.extend({
 
@@ -477,9 +491,6 @@ var et2_date_ro = et2_valueWidget.extend({
 	set_value: function(_value) {
 		this.value = _value;
 		// JS dates use milliseconds
-		if(isNaN(_value) && _value.indexOf(":") > 0 && this.type == "date-timeonly") {
-			this.span.text(_value);
-		}
 		this.date.setTime(parseInt(_value)*1000);
 		var display = this.date.toString();
 
@@ -535,3 +546,28 @@ var et2_date_ro = et2_valueWidget.extend({
 et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since"]);
 
 
+var et2_date_timeonly_ro = et2_date_ro.extend({
+
+	attributes: {
+		"value": {
+			"type": "string"
+		}
+	},
+	set_value: function(_value) {
+		if(egw.preference("timeformat") == "12" && _value.indexOf(":") > 0) {
+			var parts = _value.split(":");
+			if(parts[0] >= 12) {
+				this.span.text((parts[0] == "12" ? "12" : parseInt(parts[0])-12)+":"+parts[1]+" pm");
+			}
+			else
+			{
+				this.span.text(_value + " am");
+			}
+		}
+		else
+		{
+			this.span.text(_value);
+		}
+	}
+});
+et2_register_widget(et2_date_timeonly_ro, ["date-timeonly_ro"]);
