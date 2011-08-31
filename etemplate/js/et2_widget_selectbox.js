@@ -55,8 +55,8 @@ var et2_selectbox = et2_inputWidget.extend({
 	init: function() {
 		this._super.apply(this, arguments);
 
-		// Only allow options inside this element
-		this.supportedWidgetClasses = [et2_option];
+		// Allow no other widgets inside this one
+		this.supportedWidgetClasses = [];
 
 		// Legacy options could have row count or empty label in first slot	 
 		if(typeof this.options.rows == "string" && isNaN(this.options.rows)) {
@@ -94,11 +94,17 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 	},
 
-	_appendOptionElement: function(_value, _label) {
-		$j(document.createElement("option"))
+	_appendOptionElement: function(_value, _label, _title) {
+		var option = $j(document.createElement("option"))
 			.attr("value", _value)
-			.text(_label)
-			.appendTo(this.input);
+			.text(_label);
+
+		if (typeof _title != "undefined" && _title)
+		{
+			option.attr("title", _title);
+		}
+
+		option.appendTo(this.input);
 	},
 
 	createInputWidget: function() {
@@ -123,6 +129,19 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 	},
 
+	loadFromXML: function(_node) {
+		// Read the option-tags
+		var options = et2_directChildrenByTagName(_node, "options");
+		for (var i = 0; i < options.length; i++)
+		{
+			this._appendOptionElement(
+				et2_readAttrWithDefault(options[i], "value", options[i].textContent),
+				options[i].textContent,
+				et2_readAttrWithDefault(options[i], "title", "")
+			);
+		}
+	},
+
 	/**
 	 * The set_select_optons function is added, as the select options have to be
 	 * added after the "option"-widgets were added to selectbox.
@@ -140,16 +159,14 @@ var et2_selectbox = et2_inputWidget.extend({
 
 			if (_options[key] instanceof Object)
 			{
-				attrs["label"] = _options[key]["label"] ? _options[key]["label"] : "";
-				attrs["statustext"] = _options[key]["title"] ? _options[key]["title"] : "";
+				this._appendOptionElement(key, 
+					_options[key]["label"] ? _options[key]["label"] : "",
+					_options[key]["title"] ? _options[key]["title"] : "");
 			}
 			else
 			{
-				attrs["label"] = _options[key]
+				this._appendOptionElement(key, _options[key]);
 			}
-
-			// Create the widget and add it as a child
-			et2_createWidget("option", attrs, this);
 		}
 	}
 });
@@ -225,7 +242,7 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select-cat
 /**
  * Widget class which represents a single option inside a selectbox
  */
-var et2_option = et2_baseWidget.extend({
+/*var et2_option = et2_baseWidget.extend({
 
 	attributes: {
 		"value": {
@@ -284,9 +301,9 @@ var et2_option = et2_baseWidget.extend({
 		this.option.attr("title", _value);
 	}*/
 
-});
+//});*/
 
-et2_register_widget(et2_option, ["option"]);
+//et2_register_widget(et2_option, ["option"]);
 
 
 /**
