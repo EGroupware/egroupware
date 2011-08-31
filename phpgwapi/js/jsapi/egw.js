@@ -329,12 +329,12 @@ else
 		 * Get image URL for a given image-name and application
 		 * 
 		 * @param string _name image-name without extension
-		 * @param string _app application name, default phpgwapi
+		 * @param string _app application name, default current app of window
 		 * @return string with URL of image
 		 */
 		image: function (_name, _app)
 		{
-			if (typeof _app == 'undefined') _app = 'phpgwapi';
+			if (typeof _app == 'undefined') _app = this.getAppName();
 			
 			// own instance specific images in vfs have highest precedence
 			if (typeof this.images['vfs'] != 'undefined' && typeof this.images['vfs'][_name] != 'undefined')
@@ -349,8 +349,30 @@ else
 			{
 				return this.webserverUrl+this.images['vfs'][_name];
 			}
+			// if no match, check if it might contain an extension
+			if (_name.match(/\.(png|gif|jpg)$/i))
+			{
+				return this.image(_name.replace(/.(png|gif|jpg)$/i,''), _app);
+			}
 			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!');
 			return null;
+		},
+		
+		/**
+		 * Returns the name of the currently active application
+		 * 
+		 * @ToDo: fixme: does not work, as egw object runs in framework for jdots
+		 */
+		getAppName: function ()
+		{
+			if (typeof egw_appName == 'undefined')
+			{
+				return 'egroupware';
+			}
+			else
+			{
+				return egw_appName;
+			}
 		}
 	};
 }
