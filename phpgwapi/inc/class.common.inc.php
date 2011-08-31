@@ -738,7 +738,7 @@ class common
 	}
 
 	/**
-	 * @deprecated use image($app,$image)
+	 * @deprecated use image($app,$image) they are identical now
 	 */
 	static function find_image($app,$image)
 	{
@@ -746,11 +746,16 @@ class common
 	}
 
 	/**
-	 * @deprecated use image($app,$image)
+	 * Searches an image of a given type, if not found also without extension
+	 *
+	 * @param string $appname
+	 * @param string|array $image one or more image-name in order of precedence
+	 * @param string $extension='' extension to $image, makes sense only with an array
+	 * @return string url of image or null if not found
 	 */
-	static function image_on($app,$image)
+	static function image_on($app,$image,$extension='_on')
 	{
-		return self::image($app,$image);
+		return ($img = self::image($app,$image,$extension)) ? $img : self::image($app,$image);
 	}
 
 	/**
@@ -758,9 +763,10 @@ class common
 	 *
 	 * @param string $appname
 	 * @param string|array $image one or more image-name in order of precedence
+	 * @param string $extension='' extension to $image, makes sense only with an array
 	 * @return string url of image or null if not found
 	 */
-	static function image($app,$image)
+	static function image($app,$image,$extension='')
 	{
 		static $image_map;
 		if (is_null($image_map)) $image_map = self::image_map();
@@ -770,40 +776,40 @@ class common
 		{
 			foreach($image as $img)
 			{
-				if (($url = self::image($app, $img)))
+				if (($url = self::image($app, $img, $extension)))
 				{
 					return $url;
 				}
 			}
-			//error_log(__METHOD__."('$app', ".array2string($image).") NONE found!");
+			error_log(__METHOD__."('$app', ".array2string($image).", '$extension') NONE found!");
 			return null;
 		}
 
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 
 		// instance specific images have highest precedence
-		if (isset($image_map['vfs'][$image]))
+		if (isset($image_map['vfs'][$image.$extension]))
 		{
-			return $webserver_url.$image_map['vfs'][$image];
+			return $webserver_url.$image_map['vfs'][$image.$extension];
 		}
 		// then app specific ones
-		if(isset($image_map[$app][$image]))
+		if(isset($image_map[$app][$image.$extension]))
 		{
-			return $webserver_url.$image_map[$app][$image];
+			return $webserver_url.$image_map[$app][$image.$extension];
 		}
 		// then api
-		if(isset($image_map['phpgwapi'][$image]))
+		if(isset($image_map['phpgwapi'][$image.$extension]))
 		{
-			return $webserver_url.$image_map['phpgwapi'][$image];
+			return $webserver_url.$image_map['phpgwapi'][$image.$extension];
 		}
 
 		// if image not found, check if it has an extension and try withoug
 		if (strpos($image, '.') !== false)
 		{
 			self::get_extension($image, $name);
-			return self::image($app, $name);
+			return self::image($app, $name, $extension);
 		}
-		//error_log(__METHOD__."('$app', '$image') image NOT found!");
+		error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
 		return null;
 	}
 
@@ -820,7 +826,7 @@ class common
 	 */
 	static function image_map($template_set=null)
 	{
-		if (is_null($image_map))
+		if (is_null($template_set))
 		{
 			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 		}
@@ -848,11 +854,11 @@ class common
 			$imagedirs = array();
 			if ($app == 'phpgwapi')
 			{
-				$imagedir = $GLOBALS['egw']->framework->template_dir.'/images';
+				$imagedirs[] = $GLOBALS['egw']->framework->template_dir.'/images';
 			}
 			else
 			{
-				$imagedir = '/'.$app.'/templates/'.$template_set.'/images';
+				$imagedirs[] = '/'.$app.'/templates/'.$template_set.'/images';
 			}
 			if ($template_set != 'idots') $imagedirs[] = '/'.$app.'/templates/idots/images';
 			$imagedirs[] = '/'.$app.'/templates/default/images';
