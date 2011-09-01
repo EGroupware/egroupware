@@ -38,7 +38,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),
 			);
 			$config = config::read('phpgwapi');
-			if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['export_limit'] !== 'no')
+			if(bo_merge::is_export_limit_excepted() || $config['export_limit'] !== 'no')
 			{
 				$file[] = array(
 					'text' => 'Export',
@@ -122,7 +122,7 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 		}
 		$config = config::read('phpgwapi');
-		if (($GLOBALS['egw_info']['user']['apps']['admin'] || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
+		if ((bo_merge::is_export_limit_excepted() || !$config['export_limit'] || $config['export_limit'] > 0) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
 				egw::link('/index.php',array(

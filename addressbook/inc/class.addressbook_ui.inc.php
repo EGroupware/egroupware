@@ -568,7 +568,7 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
-		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
+		if (bo_merge::is_export_limit_excepted()  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
 		{
 			$actions['export'] = array(
 				'caption' => 'Export',
@@ -798,8 +798,7 @@ class addressbook_ui extends addressbook_bo
 			$action = substr($action,0,7);
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
-		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] &&
-			!isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
+		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] && !bo_merge::is_export_limit_excepted() &&
 			(!is_numeric($this->config['contact_export_limit']) || count($checked) > $this->config['contact_export_limit']))
 		{
 			$action_msg = lang('exported');

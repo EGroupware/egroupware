@@ -26,6 +26,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$this->bo = new calendar_bo();
 		$config = config::read('phpgwapi');
 
+		$limit_exception = bo_merge::is_export_limit_excepted();
+
 		// Custom fields need to be specifically requested
 		$cfs = array();
 		foreach($options['mapping'] as $key => $label) {
@@ -42,7 +44,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				'users'         => $options['selection']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 			);
-			if($config['export_limit']) {
+			if($config['export_limit'] && !$limit_exception) {
 				$query['offset'] = 0;
 				$query['num_rows'] = (int)$config['export_limit'];
 			}
@@ -55,7 +57,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
-				if($config['export_limit']) {
+				if($config['export_limit'] && !$limit_exception) {
 					$query['num_rows'] = (int)$config['export_limit'];
 				}
 				$ui = new calendar_uilist();
@@ -64,7 +66,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if($config['export_limit']) {
+				if($config['export_limit'] && !$limit_exception) {
 					$query['num_rows'] = (int)$config['export_limit'];
 				}
 

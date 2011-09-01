@@ -32,6 +32,8 @@ class calendar_export_ical extends calendar_export_csv {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
+		$limit_exception = bo_merge::is_export_limit_excepted();
+
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(
 				'start' => $options['selection']['start'],
@@ -42,7 +44,7 @@ class calendar_export_ical extends calendar_export_csv {
 				'users'         => $options['selection']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 			);
-			if($config['export_limit']) {
+			if($config['export_limit'] && !$limit_exception) {
 				$query['offset'] = 0;
 				$query['num_rows'] = (int)$config['export_limit'];
 			}
@@ -55,7 +57,7 @@ class calendar_export_ical extends calendar_export_csv {
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
-				if($config['export_limit']) {
+				if($config['export_limit'] && !$limit_exception) {
 					$query['num_rows'] = (int)$config['export_limit'];
 				}
 				$ui = new calendar_uilist();
@@ -64,7 +66,7 @@ class calendar_export_ical extends calendar_export_csv {
 				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if($config['export_limit']) {
+				if($config['export_limit'] && !$limit_exception) {
 					$query['num_rows'] = (int)$config['export_limit'];
 				}
 

@@ -87,7 +87,7 @@ class importexport_definitions_ui
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no') {
+			if($config['export_limit'] == 'no' && !bo_merge::is_export_limit_excepted()) {
 				$filter['type'] = 'import';
 			}
 		}

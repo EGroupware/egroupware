@@ -38,8 +38,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$uicontacts = new addressbook_ui();
 		$selection = array();
 
-		// Addressbook defines its own export limits
-		if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no' && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+		// Addressbook defines its own export imits
+		$limit_exception = bo_merge::is_export_limit_excepted();
+		if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no' && !$limit_exception) {
 			return;
 		}
 
@@ -64,7 +65,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if($GLOBALS['egw_info']['server']['contact_export_limit'] && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+		if($GLOBALS['egw_info']['server']['contact_export_limit'] && !$limit_exception) {
 			$selection = array_slice($selection, 0, $GLOBALS['egw_info']['server']['contact_export_limit']);
 		}
 		if($options['explode_multiselects']) {

@@ -25,7 +25,7 @@
     <td>{lang_Timeout_for_application_session_data_in_seconds_(default_86400_=_1_day)}:</td>
     <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
    </tr>
-   
+
    <tr class="row_on">
     <td>{lang_Would_you_like_to_show_each_application's_upgrade_status_?}:</td><td>
      <select name="newsettings[checkappversions]">
@@ -294,12 +294,15 @@
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:<br />{lang_This_controls_exports_and_merging.}</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
-   </tr>
    <tr class="row_on">
+    <td>{lang_Group_excepted_from_above_export_limit_(admins_are_always_excepted)}:</td>
+    <td>{call_bo_merge::hook_export_limit_excepted}</td>
+   </tr>
+   <tr class="row_off">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
     <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Should_exceptions_contain_a_trace_(including_function_arguments)}:</td>
     <td>
       <select name="newsettings[exception_show_trace]">
