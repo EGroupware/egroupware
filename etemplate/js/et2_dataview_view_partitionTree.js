@@ -1052,7 +1052,7 @@ var et2_dataview_partitionSpacerNode = et2_dataview_partitionContainerNode.exten
 		// created.
 		var ah = this._avgHeight;
 		var startIdx = Math.max(0, Math.floor((_range.top - t) / ah));
-		var stopIdx = Math.min(this._count - 1, Math.ceil((_range.bottom - t) / ah));
+		var stopIdx = Math.min(this._count, Math.ceil((_range.bottom - t) / ah));
 
 		if (startIdx > 0 && startIdx < this._count)
 		{

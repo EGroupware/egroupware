@@ -80,6 +80,7 @@ var et2_dataview_rowProvider = Class.extend({
 				.appendTo(tr);
 			var div = $j(document.createElement("div"))
 				.addClass(this._outerId + "_div_" + this._columnIds[i])
+				.addClass("innerContainer")
 				.appendTo(td);
 		}
 

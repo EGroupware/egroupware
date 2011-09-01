@@ -127,6 +127,7 @@ var et2_dataview_gridContainer = Class.extend({
 
 			// Rebuild the column stylesheets
 			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
+			et2_debug("log", _w - this.scrollbarWidth);
 			this._updateColumns();
 		}
 
@@ -261,41 +262,49 @@ var et2_dataview_gridContainer = Class.extend({
 
 				// Ugly browser dependant code - each browser seems to treat the 
 				// right (collapsed) border of the row differently
-				var addBorder = 0;
+				var subBorder = 0;
+				var subHBorder = 0;
 				if ($j.browser.mozilla)
 				{
 					var maj = $j.browser.version.split(".")[0];
 					if (maj < 2) {
-						addBorder = 1; // Versions <= FF 3.6
+						subBorder = 1; // Versions <= FF 3.6
 					}
 				}
-				if ($j.browser.webkit && !first)
+				if ($j.browser.webkit)
 				{
-					addBorder = 1;
+					if (!first)
+					{
+						subBorder = 1;
+					}
+					subHBorder = 1;
 				}
 				if (($j.browser.msie || $j.browser.opera) && first)
 				{
-					addBorder = -1;
+					subBorder = -1;
 				}
 
 				// Make the last columns one pixel smaller, to prevent a horizontal
 				// scrollbar from showing up
 				if (vis_col == total_cnt)
 				{
-					addBorder += 1;
+					subBorder += 1;
 				}
 
-				// Write the width of the body-columns
-				var columnWidth = Math.max(0, (col.width - this.columnBorderWidth - addBorder));
-				styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
-					"width: " + columnWidth + "px;");
-
 				// Write the width of the header columns
-				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth));
+				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth - subHBorder));
 				styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
 					"width: " + headerWidth + "px;");
 
+				// Write the width of the body-columns
+				var columnWidth = Math.max(0, (col.width  - this.columnBorderWidth - subBorder));
+				styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
+					"width: " + columnWidth + "px;");
+
 				totalWidth += col.width;
+
+				et2_debug("log", col.divClass, " cw: ", columnWidth, " hw: ",
+					headerWidth, " tw: ", totalWidth);
 
 				first = false;
 			}
@@ -400,6 +409,10 @@ var et2_dataview_gridContainer = Class.extend({
 			// Read the column border width
 			this.columnBorderWidth = this.constructor.prototype.columnBorderWidth =
 				this._getColumnBorderWidth(clone);
+
+			et2_debug("log", "Scrollbar width: ", this.scrollbarWidth);
+			et2_debug("log", "Header border width: ", this.headerBorderWidth);
+			et2_debug("log", "Column border width: ", this.columnBorderWidth);
 
 			// Remove the cloned DOM-Node again from the outer body
 			clone.remove();

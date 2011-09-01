@@ -7,8 +7,8 @@
 /* Stuff for the standalone test webpage */
 
 body, table, td {
-	font-family: Lucida Grande, sans-serif;
-	font-size: 10pt;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 /*	overflow: hidden;*/
 }
 

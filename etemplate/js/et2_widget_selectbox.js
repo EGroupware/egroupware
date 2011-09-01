@@ -147,9 +147,6 @@ var et2_selectbox = et2_inputWidget.extend({
 	 * added after the "option"-widgets were added to selectbox.
 	 */
 	set_select_options: function(_options) {
-
-		var root = this;
-
 		// Add the select_options
 		for (var key in _options)
 		{
