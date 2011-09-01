@@ -14,6 +14,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
+	phpgwapi.jquery.jquery.html5_upload;
 */
 
 /**
@@ -48,11 +49,27 @@ var et2_file = et2_inputWidget.extend({
 		}
 	},
 
+	asyncOptions: {},
+
 	init: function() {
 		this._super.apply(this, arguments)
 
 		this.node = null;
 
+		// Set up the URL to have the request ID & the widget ID
+		var instance = this.getInstanceManager();
+		
+		var self = this;
+		this.asyncOptions = {
+			// Callbacks
+			onStartOne: function(event, file_name) { return self.createStatus(event,file_name);},
+			onFinishOne: function(event, response, name, number, total) { return self.finishUpload(event,response,name,number,total);},
+
+			sendBoundary: window.FormData || jQuery.browser.mozilla,
+			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload") + 
+				"&request_id="+ instance.etemplate_exec_id
+		};
+		this.asyncOptions.fieldName = this.options.id;
 		this.createInputWidget();
 	},
 	
@@ -60,8 +77,13 @@ var et2_file = et2_inputWidget.extend({
 		this.node = $j(document.createElement("div")).addClass("et2_file");
 		this.input = $j(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)
-			.appendTo(this.node)
-			.change(this, this.change);
+			.appendTo(this.node);
+
+		// Check for File interface, should fall back to normal form submit if missing
+		if(typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined")
+		{
+			this.input.html5_upload(this.asyncOptions);
+		}
 		this.progress = this.options.progress ? 
 			$j(document.getElementById(this.options.progress)) : 
 			$j(document.createElement("div")).appendTo(this.node);
@@ -78,52 +100,26 @@ var et2_file = et2_inputWidget.extend({
 	},
 
 	/**
-	 * User has selected some files file, send them off
+	 * Creates the elements used for displaying the file, and it's upload status, and
+	 * attaches them to the DOM
 	 */
-	change: function(e) {
-console.log(e);		
-		if(!e.target.files || e.target.files.length == 0) return;
-
-		for(var i = 0; i < e.target.files.length; i++) {
-			var file = e.target.files[i];
-
-			// Add to list
-			var status = this.createStatus(file);
-			this.progress.append(status);
-
-			// Check if OK
-			if(file.size > this.options.max_file_size) {
-				// TODO: Try to slice into acceptable pieces
-				status.addClass("ui-state-error");
-				this.showMessage(egw.lang("File is too large."), "validation_error");
-				var self = this;
-				window.setTimeout(function() {self.hideMessage(true); status.remove();}, 5000);
-			}
+	createStatus: function(event, file_name) {
+		if(this.progress)
+		{
+			$j("<li file='"+file_name+"'>"+file_name+"<div class='progressBar'><p/></div></li>").appendTo(this.progress);
 		}
-
-		// Reset field
-		e.data.input.attr("type", "input").attr("type","file");
+		return true;
 	},
 
 	/**
-	 * Upload a single file asyncronously
+	 * A file upload is finished, update the UI
 	 */
-	_upload_file: function(file) {
-		// Start upload
-	console.log(this, file);
-		
-	},
-
-	/**
-	 * Creates the elements used for displaying the file, and it's upload status
-	 *
-	 * @param file A JS File object
-	 * @return a jQuery object with the elements
-	 */
-	createStatus: function(file) {
-		return $j("<li>"+file.name+"<div class='progressBar'><p/></div></li>");
+	finishUpload: function(event, response, name, number, total) {
+		if(this.progress)
+		{
+			$j("[file='"+name+"']",this.progress).addClass("upload_finished");
+		}
 	}
-	
 });
 
 et2_register_widget(et2_file, ["file"]);

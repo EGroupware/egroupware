@@ -190,6 +190,30 @@ span.et2_date span {
 	font-size: 9pt;
 }
 
+/**
+ * File upload
+ */
+.et2_file .progress {
+	max-height: 6em;
+	overflow: auto;
+	margin-left: 20px;
+
+	-moz-column-count: 4;
+	-moz-column-gap: 20px;
+	-webkit-column-count: 4;
+	-webkit-column-gap: 20px;
+	column-count: 4;
+	column-gap: 20px;
+
+}
+
+.et2_file .progress li {
+	color: blue;
+}
+.et2_file .progress li.upload_finished {
+	color: green;
+}
+
 .egw_tooltip
 {
 	position: fixed;

@@ -16,8 +16,18 @@ include('../../../header.inc.php');
 
 	egw_framework::validate_file('.','etemplate2','etemplate');
 	egw_framework::validate_file('jquery','jquery.tools.min','phpgwapi'); // Not needed once JS require works for files like this
+	egw_framework::validate_file('jquery','jquery.html5_upload','phpgwapi'); // Not needed once JS require works for files like this
 	egw_framework::includeCSS('/etemplate/js/test/test.css');
 
+/*
+* Test using any actual template
+*/
+//	$template = 'etemplate.et2_test_file_upload';
+	if($template) {
+		$etemplate = new etemplate_new('etemplate.et2_test_file_upload');
+		$etemplate->exec('',array());
+		return;
+	}
 	common::egw_header();
 //	parse_navbar();
 ?>
