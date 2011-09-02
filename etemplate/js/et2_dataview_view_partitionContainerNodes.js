@@ -227,7 +227,7 @@ var et2_dataview_partitionSpacerNode = et2_dataview_partitionContainerNode.exten
 	getAvgHeightData: function(_data) {
 		// Do nothing here, as the spacers should not be inside the average
 		// height statistic.
-	},
+	}
 
 });
 

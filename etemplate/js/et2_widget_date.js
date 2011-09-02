@@ -519,7 +519,7 @@ var et2_date_ro = et2_valueWidget.extend({
 					'd': 'days',
 					'H': 'hours',
 					'i': 'minutes',
-					's': 'seconds',
+					's': 'seconds'
 				};
 				var unit2s = {
 					'Y': 31536000,
@@ -527,7 +527,7 @@ var et2_date_ro = et2_valueWidget.extend({
 					'd': 86400,
 					'H': 3600,
 					'i': 60,
-					's': 1,
+					's': 1
 				};
 				var d = new Date();
 				var diff = Math.round(d.valueOf() / 1000) - Math.round(this.date.valueOf()/1000);

@@ -50,9 +50,9 @@ var et2_image = et2_baseWidget.extend({
 			this.node = $j(document.createElement("a"));
 			this.image.appendTo(this.node);
 		}
-		if(this.options.class)
+		if(this.options["class"])
 		{
-			this.node.addClass(this.options.class);
+			this.node.addClass(this.options["class"]);
 		}
 		this.setDOMNode(this.node[0]);
 	},
