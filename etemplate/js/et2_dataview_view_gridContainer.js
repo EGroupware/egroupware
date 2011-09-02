@@ -16,6 +16,8 @@
 	jquery.jquery;
 	et2_core_common;
 	et2_core_stylesheet;
+
+	et2_dataview_view_grid;
 */
 
 /**

@@ -15,8 +15,8 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_common;
+
 	et2_dataview_interfaces;
-	et2_dataview_view_row;
 	et2_dataview_view_partitionTree;
 */
 
@@ -28,7 +28,9 @@ var ET2_GRID_VIEW_EXT = 25;
 /**
  * Determines the timeout after which the scroll-event is processed.
  */
-var ET2_GRID_SCROLL_TIMEOUT = 25;
+var ET2_GRID_SCROLL_TIMEOUT = 100;
+
+var partitionTree = null;
 
 var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
@@ -88,7 +90,7 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 		// Create the partition tree object which is used to organize the tree
 		// items.
-		this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
+		partitionTree = this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
 			this._rowProvider, this._avgHeight, this.innerTbody);
 
 		// Setup the "rebuild" timer - it rebuilds the complete partition tree
@@ -138,7 +140,7 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 		// Deactivated the code below for testing purposes
 
 		// Calculate the range of the actually shown elements
-		/*var displayTop = _range.top;
+		var displayTop = _range.top;
 		var displayBottom = _range.bottom;
 
 		if (nodes.length > 0)
@@ -149,18 +151,21 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 		// Hide everything except for _holdCount elements at the top and bottom
 		// of the viewrange
-		var reduceHeight = this._partitionTree.getAverageHeight() * this._holdCount;
+		var ah = this._partitionTree.getAverageHeight();
+		var reduceHeight = ah * this._holdCount;
 
 		if (displayTop > reduceHeight)
 		{
-			this._partitionTree.reduce(et2_bounds(0, displayTop - reduceHeight));
+			console.log("/\\");
+			this._partitionTree.reduceRange(et2_bounds(0, displayTop - reduceHeight));
 		}
 
 		if (displayBottom + reduceHeight < this._partitionTree.getHeight())
 		{
-			this._partitionTree.reduce(et2_bounds(displayBottom + reduceHeight,
+			console.log("\\/");
+			this._partitionTree.reduceRange(et2_bounds(displayBottom + reduceHeight,
 				this._partitionTree.getHeight()));
-		}*/
+		}
 	},
 
 	/**
@@ -202,7 +207,9 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 			// regarding to the count of elements managed in it
 			if (count < Math.pow(ET2_PARTITION_TREE_WIDTH, depth - 1))
 			{
+				et2_debug("info", "Rebuilding dataview partition tree");
 				this._partitionTree.rebuild();
+				et2_debug("info", "Done.");
 			}
 
 			// Reset the "treeChanged" function.
@@ -235,6 +242,9 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 						// Set a new timeout which calls the setViewArea
 						// function
 						e.data._scrollTimeout = window.setTimeout(function() {
+							if (typeof ET2_GRID_PAUSE != "undefined")
+								return;
+
 							e.data.setViewRange(et2_range(
 								e.data.scrollarea.scrollTop() - ET2_GRID_VIEW_EXT,
 								e.data._height + ET2_GRID_VIEW_EXT * 2

@@ -20,7 +20,7 @@
 var et2_dataview_dataProvider = Class.extend({
 
 	getCount: function() {
-		return 10;
+		return 10000;
 	},
 
 	registerDataRow: function(_idx, _dataRow) {

@@ -21,8 +21,8 @@
 	et2_widget_grid;
 	et2_widget_selectbox;
 	et2_extension_nextmatch_dynheight;
-	et2_dataview_gridContainer;
-	et2_dataview_dataProvider;
+	et2_dataview_view_gridContainer;
+	et2_dataview_model_dataProvider;
 */
 
 /**
