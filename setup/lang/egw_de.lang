@@ -568,7 +568,7 @@ successful connected to ldap server on %1 using dn %2.	setup	de	Erfolgreich zu L
 supported node types:	setup	de	Unterstützte Node Types:
 table change messages	setup	de	Tabellenänderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
-tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, außer oben sind Fehlermelungen zu sehen
+tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, außer oben sind Fehlermeldungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
 tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
