@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare admin - site configuration
+ * EGgroupware admin - site configuration
  *
  * @link http://www.egroupware.org
  * @author Miles Lott <milos@groupwhere.org>
@@ -62,14 +62,14 @@ class uiconfig
 				$config_appname = $appname;
 				break;
 		}
-		$t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($appname));
+		$t = new Template(common::get_tpl_dir($appname));
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
 		$t->set_block('config','header','header');
 		$t->set_block('config','body','body');
 		$t->set_block('config','footer','footer');
 
-		$c =& CreateObject('phpgwapi.config',$config_appname);
+		$c = new config($config_appname);
 		$c->read_repository();
 
 		if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
@@ -134,11 +134,6 @@ class uiconfig
 			$t->set_var('error','');
 			$t->set_var('th_err',$GLOBALS['egw_info']['theme']['th_bg']);
 		}
-		// set currentapp to our calling app, to show the right sidebox-menu
-		$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
-		$GLOBALS['egw']->common->egw_header();
-		echo parse_navbar();
-
 		$t->set_var('title',lang('Site Configuration'));
 		$t->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
 		$t->set_var('th_bg',     $GLOBALS['egw_info']['theme']['th_bg']);
@@ -146,7 +141,6 @@ class uiconfig
 		$t->set_var('row_on',    $GLOBALS['egw_info']['theme']['row_on']);
 		$t->set_var('row_off',   $GLOBALS['egw_info']['theme']['row_off']);
 		$t->set_var('hidden_vars','<input type="hidden" name="referer" value="'.$referer.'">');
-		$t->pparse('out','header');
 
 		$vars = $t->get_undefined('body');
 
@@ -230,11 +224,17 @@ class uiconfig
 					break;
 			}
 		}
-
-		$t->pfp('out','body');
-
 		$t->set_var('lang_submit', $GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
 		$t->set_var('lang_cancel', lang('Cancel'));
-		$t->pfp('out','footer');
+
+		// set currentapp to our calling app, to show the right sidebox-menu
+		$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
+
+		// render the page
+		$GLOBALS['egw']->framework->render(
+			$t->parse('out','header').
+			$t->fp('out','body').
+			$t->fp('out','footer')
+		);
 	}
 }
