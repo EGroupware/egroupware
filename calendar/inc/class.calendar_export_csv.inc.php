@@ -49,7 +49,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query['num_rows'] = (int)$config['export_limit'];
 			}
 			$events =& $this->bo->search($query);
-		} elseif ($options['selection']['select'] = 'search_results') {
+		} elseif ($options['selection']['select'] == 'search_results') {
 			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
 			if($states['view'] == 'listview') {
 				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
@@ -61,7 +61,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 					$query['num_rows'] = (int)$config['export_limit'];
 				}
 				$ui = new calendar_uilist();
-				$ui->get_rows($query, $events);
+				$ui->get_rows($query, $events, $unused);
 			} else {
 				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 				$query['users'] = explode(',', $query['owner']);
