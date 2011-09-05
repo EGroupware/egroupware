@@ -56,6 +56,16 @@ abstract class bo_merge
 	 */
 	public $export_limit;
 
+
+	/**
+	 * Configuration for HTML Tidy to clean up any HTML content that is kept
+	 */
+	public static $tidy_config = array(
+		'clean'	=> true,
+		'output-xhtml'	=> true,
+		'show-body-only'	=> true,
+	);
+
 	/**
 	 * Constructor
 	 *
@@ -723,6 +733,10 @@ abstract class bo_merge
 				// remove all html tags, evtl. included
 				if (is_string($value) && (strpos($value,'<') !== false))
 				{
+					// Clean HTML, if it's being kept
+					if($replace_tags && extension_loaded('tidy')) {
+						$value = tidy_repair_string($value, self::$tidy_config);
+					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
 					$value = strip_tags($value,implode('',$replace_tags));
