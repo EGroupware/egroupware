@@ -31,7 +31,9 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 	setIdx: function(_idx) {
 		this._idx = _idx;
 
-		$j("div:first", this.tr).text(_idx + ":");
+		$j("div:first", this.tr)
+			.text(_idx + ":")
+			.height((_idx % 10) * 10 + 20);
 	},
 
 	updateData: function(_data) {

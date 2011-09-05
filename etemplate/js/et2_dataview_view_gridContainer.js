@@ -129,7 +129,6 @@ var et2_dataview_gridContainer = Class.extend({
 
 			// Rebuild the column stylesheets
 			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
-			et2_debug("log", _w - this.scrollbarWidth);
 			this._updateColumns();
 		}
 
@@ -305,9 +304,6 @@ var et2_dataview_gridContainer = Class.extend({
 
 				totalWidth += col.width;
 
-				et2_debug("log", col.divClass, " cw: ", columnWidth, " hw: ",
-					headerWidth, " tw: ", totalWidth);
-
 				first = false;
 			}
 			else
@@ -411,10 +407,6 @@ var et2_dataview_gridContainer = Class.extend({
 			// Read the column border width
 			this.columnBorderWidth = this.constructor.prototype.columnBorderWidth =
 				this._getColumnBorderWidth(clone);
-
-			et2_debug("log", "Scrollbar width: ", this.scrollbarWidth);
-			et2_debug("log", "Header border width: ", this.headerBorderWidth);
-			et2_debug("log", "Column border width: ", this.columnBorderWidth);
 
 			// Remove the cloned DOM-Node again from the outer body
 			clone.remove();

@@ -28,7 +28,7 @@ var ET2_GRID_VIEW_EXT = 25;
 /**
  * Determines the timeout after which the scroll-event is processed.
  */
-var ET2_GRID_SCROLL_TIMEOUT = 100;
+var ET2_GRID_SCROLL_TIMEOUT = 25;
 
 var partitionTree = null;
 
@@ -156,13 +156,11 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 		if (displayTop > reduceHeight)
 		{
-			console.log("/\\");
 			this._partitionTree.reduceRange(et2_bounds(0, displayTop - reduceHeight));
 		}
 
 		if (displayBottom + reduceHeight < this._partitionTree.getHeight())
 		{
-			console.log("\\/");
 			this._partitionTree.reduceRange(et2_bounds(displayBottom + reduceHeight,
 				this._partitionTree.getHeight()));
 		}

@@ -561,7 +561,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 	 * Reduces the given nodes to a single spacer
 	 */
 	_reduce: function(_nodes) {
-/*		if (_nodes.length == 0)
+		if (_nodes.length == 0)
 		{
 			return;
 		}
@@ -582,7 +582,10 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 			// Create a new spacer node and insert it at the place of the
 			// first node of the range
 			ph = new et2_dataview_partitionSpacerNode(this.getRoot(), 0, 0);
-			this.getRoot().insertNodes(_nodes[0].getStartIndex(), [ph]);
+			_nodes[0]._parent.insertNodes(_nodes[0]._pidx, [ph]);
+
+			// Initialize the new placeholder
+			ph.initializeContainer();
 		}
 
 		// Get the height of the resulting spacer
@@ -596,9 +599,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 		}
 
 		// Update the spacer parameters
-		et2_debug("log", "Spacer new height, count: ", height, count);
-		ph.setAvgHeight(height / count);
-		ph.setCount(count);
+		ph.setParameters(count, height / count);
 
 		// Free all elements (except for the spacer)
 		for (var i = _nodes.length - 1; i >= 0; i--)
@@ -607,7 +608,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 			{
 				_nodes[i].free();
 			}
-		}*/
+		}
 	},
 
 	/**
