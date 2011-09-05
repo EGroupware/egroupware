@@ -1,3 +1,20 @@
+egroupware-epl (10.1.20110905-1) hardy; urgency=low
+
+  * tracker: mailhandling, fixing a problem with -> not correctly extracting mailadresses <- when adresses contained UpperCase Letters
+  * email: fix for missing style color:red in notification messages
+  * tracker: mailhandling - prevent to use rsh or ssh to establish connection
+  * API: decodeMailHeader handle nested encoding for imap_mime_header_decode
+  * API: take care of INNODB and STRICT_TRANS_TABLES for recent mysql installations
+  * calendar/holidays: fix charset for japanese holidays
+  * API: taking care of sorting AND filtering by customfields with names containing whitespace; (best way to deal with this issue, is not using whitespace in your customfield names at all)
+  * sitemanager: fix PostgreSQL error reported on org-tracker (#2956)
+  * WebDAV: fix for Netdrive to work correct with non-ascii chars like German umlauts
+  * WebDAV: allow locking of not (yet) existing files to create them
+  * Tracker: fixed not working file write rights for assignee
+  * Filemanager/WebDAV: #?+ and chinese characters working now in filenames
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 05 Sep 2011 15:58:25 +0200
+
 egroupware-epl (10.1.20110816-1) hardy; urgency=low
 
   * Calendar: not using freebusy rights for searching calendar, as it would allow to probe for event contents
