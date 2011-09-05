@@ -408,7 +408,9 @@ abstract class bo_merge
 					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
 					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 					// Remove extra whitespace
-					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>'
+					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>',
+					// Remove spans with no attributes, linebreaks inside them cause problems
+					'/<span>(.*?)<\/span>/' => '$1'
 				);
 				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 //echo $content;die();
