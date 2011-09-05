@@ -43,7 +43,6 @@ var et2_arrayMgr = Class.extend({
 		this.perspectiveData = {
 			"owner": null,
 			"key": null,
-			"col": 0,
 			"row": 0
 		}
 	},
@@ -217,7 +216,7 @@ var et2_arrayMgr = Class.extend({
 		return et2_evalBool(val);
 	},
 
-	openPerspective: function(_owner, _root, _col, _row)
+	openPerspective: function(_owner, _root, _row)
 	{
 		// Get the root node
 		var root = typeof _root == "string" ? this.data[_root] :
@@ -235,10 +234,9 @@ var et2_arrayMgr = Class.extend({
 			mgr.perspectiveData.key = _root;
 		}
 
-		// Set the _col and _row parameter
-		if (typeof _col != "undefined" && typeof _row != "undefined")
+		// Set _row parameter
+		if (typeof _row != "undefined")
 		{
-			mgr.perspectiveData.col = _col;
 			mgr.perspectiveData.row = _row;
 		}
 
@@ -283,4 +281,26 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 
 });
 
+/**
+ * Creates a new set of array managers 
+ */
+function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row)
+{
+	// Create a copy of the given _mgrs associative array
+	var result = {};
+
+	// Merge the given data associative array into the existing array managers
+	for (var key in _data)
+	{
+		if (typeof _mgrs[key] != "undefined")
+		{
+			// Open a perspective for the given data row
+			result[key] = _mgrs[key].openPerspective(_owner,
+				_data[key], _row);
+		}
+	}
+
+	// Return the resulting managers object
+	return result;
+}
 

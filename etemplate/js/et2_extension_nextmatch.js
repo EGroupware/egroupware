@@ -214,6 +214,27 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 	},
 
+	_parseDataRow: function(_row, _colData) {
+		var columnWidgets = new Array(this.columns.length);
+
+		for (var x = 0; x < columnWidgets.length; x++)
+		{
+			if (typeof _row[x] != "undefined" && _row[x].widget)
+			{
+				columnWidgets[x] = _row[x].widget;
+
+				// Append the widget to this container
+				this.addChild(_row[x].widget);
+			}
+			else
+			{
+				columnWidgets[x] = _row[x].widget;
+			}
+		}
+
+		this.dataviewContainer.rowProvider.setDataRowTemplate(columnWidgets, this);
+	},
+
 	_parseGrid: function(_grid) {
 		// Search the rows for a header-row - if one is found, parse it
 		for (var y = 0; y < _grid.rowData.length; y++)
@@ -221,6 +242,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			if (_grid.rowData[y]["class"] == "th")
 			{
 				this._parseHeaderRow(_grid.cells[y], _grid.colData);
+			}
+			else
+			{
+				this._parseDataRow(_grid.cells[y], _grid.colData);
 			}
 		}
 	},

@@ -28,7 +28,7 @@ var ET2_GRID_VIEW_EXT = 25;
 /**
  * Determines the timeout after which the scroll-event is processed.
  */
-var ET2_GRID_SCROLL_TIMEOUT = 25;
+var ET2_GRID_SCROLL_TIMEOUT = 100;
 
 var partitionTree = null;
 
@@ -46,7 +46,8 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 	 * 	classes.
 	 * @param _avgHeight is the starting average height of the column rows.
 	 */
-	init: function(_parent, _outerId, _columnIds, _dataProvider, _avgHeight) {
+	init: function(_parent, _outerId, _columnIds, _dataProvider, _rowProvider, 
+		_avgHeight) {
 
 		// If the parent is given, copy all other parameters from it
 		if (_parent != null)
@@ -63,11 +64,8 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 			this._outerId = _outerId;
 			this._columnIds = _columnIds;
 			this._dataProvider = _dataProvider;
+			this._rowProvider = _rowProvider;
 			this._avgHeight = _avgHeight;
-
-			// Create the row provider
-			this._rowProvider = new et2_dataview_rowProvider(_outerId,
-				_columnIds);
 
 			this._scrollHeight = 0;
 			this._scrollTimeout = null;
@@ -112,9 +110,8 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 		// Stop the rebuild timer
 		window.clearInterval(this._rebuildTimer);
 
-		// Free the partition tree and the row provider
+		// Free the partition tree
 		this._partitionTree.free();
-		this._rowProvider.free();
 	},
 
 	/**

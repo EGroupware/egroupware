@@ -52,6 +52,7 @@ var et2_dataview_gridContainer = Class.extend({
 		this.columnNodes = []; // Array with the header containers
 		this.columns = [];
 		this.columnMgr = null;
+		this.rowProvider = null;
 
 		this.grid = null;
 
@@ -78,6 +79,12 @@ var et2_dataview_gridContainer = Class.extend({
 		if (this.grid)
 		{
 			this.grid.free();
+		}
+
+		// Free the row provider
+		if (this.rowProvider)
+		{
+			this.rowProvider.free();
 		}
 
 		// Detatch the outer element
@@ -375,9 +382,17 @@ var et2_dataview_gridContainer = Class.extend({
 			colIds[i] = this.columns[i].id;
 		}
 
+		// Create the row provider
+		if (this.rowProvider)
+		{
+			this.rowProvider.free();
+		}
+
+		this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
+
 		// Create the grid class and pass "19" as the starting average row height
 		this.grid = new et2_dataview_grid(null, this.uniqueId, colIds,
-			this.dataProvider, 19);
+			this.dataProvider, this.rowProvider, 19);
 
 		// Insert the grid into the DOM-Tree
 		this.containerTr.append(this.grid.getJNode());

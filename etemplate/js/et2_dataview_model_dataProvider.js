@@ -19,12 +19,16 @@
 
 var et2_dataview_dataProvider = Class.extend({
 
+	init: function() {
+		this.updateQueue = 0;
+	},
+
 	getCount: function() {
 		return 10000;
 	},
 
-	registerDataRow: function(_idx, _dataRow) {
-		var row = {
+	registerDataRow: function(_dataRow, _idx) {
+/*		var row = {
 			"type": "dataRow",
 			"data": {
 				"ts_title": "Row " + _idx
@@ -41,7 +45,12 @@ var et2_dataview_dataProvider = Class.extend({
 		}
 
 		window.setTimeout(function() {_dataRow.updateData(row); },
-			Math.round(rnd / 2));
+			Math.round(rnd / 2));*/
+
+
+		// All data rows are updated independently of all others - this allows
+		// user input between generation of the widgets.
+		window.setTimeout(function() {_dataRow.updateData({"readonlys": {"__ALL__": true}});}, 0);
 	},
 
 	unregisterDataRow: function(_dataRow) {

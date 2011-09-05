@@ -151,7 +151,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			}
 
 			// Append this node at its index
-			var idx = this._parent ? this._parent.getChildren().indexOf(this) : -1;
+			var idx = this.getDOMIndex();
 			if (idx < 0 || idx >= this.parentNode.childNodes.length - 1)
 			{
 				this.parentNode.appendChild(node);
@@ -208,6 +208,31 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	 */
 	getParentDOMNode: function() {
 		return this.parentNode;
+	},
+
+	/**
+	 * Returns the index of this element in the DOM tree
+	 */
+	getDOMIndex: function() {
+		if (this._parent)
+		{
+			var idx = 0;
+			var children = this._parent.getChildren();
+
+			for (var i = 0; i < children.length; i++)
+			{
+				if (children[i] == this)
+				{
+					return idx;
+				}
+				else if (children[i].isInTree())
+				{
+					idx++;
+				}
+			}
+		}
+
+		return -1;
 	},
 
 	/**

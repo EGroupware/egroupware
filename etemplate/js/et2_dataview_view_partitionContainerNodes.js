@@ -236,11 +236,9 @@ var et2_dataview_partitionRowNode = et2_dataview_partitionContainerNode.extend({
 	init: function(_root, _avgHeight) {
 
 		var container = new et2_dataview_row(_root.getDataProvider(),
-			_root.getRowProvider(), this);
+			_root.getRowProvider(), this, _avgHeight);
 
 		this._super(_root, container);
-
-		this._avgHeight = _avgHeight;
 	},
 
 	initializeContainer: function() {

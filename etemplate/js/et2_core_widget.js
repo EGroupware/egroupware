@@ -229,10 +229,14 @@ var et2_widget = Class.extend({
 			this._parent.removeChild(this);
 		}
 
-		// Delete all references to other objects
-		this._children = [];
-		this._parent = null;
-		this._mgrs = {};
+		// Free the array managers if they belong to this widget
+		for (var key in this._mgrs)
+		{
+			if (this._mgrs[key] && this._mgrs[key].owner == this)
+			{
+				this._mgrs[key].free();
+			}
+		}
 	},
 
 	/**
