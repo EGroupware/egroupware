@@ -251,6 +251,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	*/
 	function fileinfo($path)
 	{
+		// internally we require some url-encoding, as vfs_stream_wrapper uses URL's internally
+		$path = str_replace(array('#','?'),array('%23','%3F'),$path);
+
 		//error_log(__METHOD__."($path)");
 		// map URI path to filesystem path
 		$fspath = $this->base . $path;
@@ -259,10 +262,15 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$info = array();
 		// TODO remove slash append code when base class is able to do it itself
 		$info['path']  = is_dir($fspath) ? $this->_slashify($path) : $path;
+
+		// remove all urlencoding we need internally in EGw, HTTP_WebDAV_Server will add it's own!
+		// rawurldecode does NOT touch +
+		$info['path'] = rawurldecode($info['path']);
+
 		$info['props'] = array();
 
 		// no special beautified displayname here ...
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($path)));
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($info['path'])));
 
 		// creation and modification time
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
@@ -304,7 +312,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 */
 		// ToDo: etag from inode and modification time
 
-		//error_log(__METHOD__."($path) info=".print_r($info,true));
+		//error_log(__METHOD__."($path) info=".array2string($info));
 		return $info;
 	}
 
