@@ -1,3 +1,30 @@
+egroupware-epl (11.1.20110905-1) hardy; urgency=low
+
+  * tracker: mailhandling, fixing a problem with -> not correctly extracting mailadresses <- when adresses contained UpperCase Letters
+  * email: fix for missing style color:red in notification messages
+  * tracker: mailhandling - prevent to use rsh or ssh to establish connection
+  * API: decodeMailHeader handle nested encoding for imap_mime_header_decode
+  * API: take care of INNODB and STRICT_TRANS_TABLES for recent mysql installations
+  * resources/sitemanager integration: fixed broken resources sitemanager integration
+  * API: taking care of sorting AND filtering by customfields with names containing whitespace; (best way to deal with this issue, is not using whitespace in your customfield names at all)
+  * calendar/holidays: fix charset for japanese holidays
+  * eMail: search for attachments in multipart/alternative (as it is used this way by clients now) to indicate attachments; switch back to DATE for sorting and display (instead of INTERNALDATE and ARRIVAL); using UNDELETED as standard filter instead of ALL on search; search for UNDELETED and UNSEEN on notifications and UNDELETED for eSync;
+  * sitemanager: fix PostgreSQL error reported on org-tracker (#2956)
+  * WebDAV: fix for Netdrive to work correct with non-ascii chars like German umlauts
+  * Filemanager: handle clipboard via ajax to copy with multiple open tabs and cuting and pasting between them
+  * Filemanager: "Save as" option for files to force download and not open in browser
+  * Translate basic HTML formatting (bold, underline, cursive, text & background color, bullets & lists, fonts, size) into target document's formatting when merging into a template.  Works for odt, docx and some xml.
+  * WebDAV: allow locking of not (yet) existing files to create them
+  * Tracker: fixed not working file write rights for assignee
+  * richtext custom-fields
+  * impportexport/document merge: better control of exportlimits, you are now able to exempt groups or users from any exportlimits set (backport of nathans work, with enhancements from ralf)
+  * Filemanager/WebDAV: #?+ and chinese characters working now in filenames
+  * Filemanager: (re)added add to clipboard action
+  * Filemanager: "Save as" option for files to force download and not open in browser
+  * Eventmgr: added context menu
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 05 Sep 2011 14:11:32 +0200
+
 egroupware-epl (11.1.20110816-1) hardy; urgency=low
 
   * Calendar: not using freebusy rights for searching calendar, as it would allow to probe for event contents
