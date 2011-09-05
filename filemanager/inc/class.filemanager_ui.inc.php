@@ -915,15 +915,18 @@ function force_download(_action, _senders)
 			{
 				$msg .= $_GET['msg'];
 			}
-			if (!($path = $_GET['path']) || !($stat = egw_vfs::lstat($path)))
+			if (!($path = str_replace(array('#','?'),array('%23','%3F'),$_GET['path'])) ||	// ?, # need to stay encoded!
+				// actions enclose pathes containing comma with "
+				($path[0] == '"' && substr($path,-1) == '"' && !($path = substr(str_replace('""','"',$path),1,-1))) ||
+				!($stat = egw_vfs::lstat($path)))
 			{
-				$msg .= lang('File or directory not found!');
+				$msg .= lang('File or directory not found!')." path='$path', stat=".array2string($stat);
 			}
 			else
 			{
 				$content = $stat;
 				$content['name'] = egw_vfs::basename($path);
-				$content['dir'] = dirname($path);
+				$content['dir'] = egw_vfs::decodePath(egw_vfs::dirname($path));
 				$content['path'] = $path;
 				$content['hsize'] = egw_vfs::hsize($stat['size']);
 				$content['mime'] = egw_vfs::mime_content_type($path);
