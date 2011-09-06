@@ -540,9 +540,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function __construct()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = substr($_SERVER['REQUEST_URI'],-9) == '?download'))
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = strpos($_SERVER['REQUEST_URI'],'?download')))
 		{
-			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,-9);
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
 		}
 		parent::HTTP_WebDAV_Server();
 	}
