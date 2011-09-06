@@ -62,9 +62,12 @@ var et2_file = et2_inputWidget.extend({
 		var self = this;
 		this.asyncOptions = {
 			// Callbacks
-			onStartOne: function(event, file_name) { return self.createStatus(event,file_name);},
+			onStart: function(event, file_count) { return self.onStart(event, file_count); },
+			onFinish: function(event, file_count) { return self.onFinish(event, file_count); },
+			onStartOne: function(event, file_name, index, file_count) { return self.createStatus(event,file_name, index,file_count);},
 			onFinishOne: function(event, response, name, number, total) { return self.finishUpload(event,response,name,number,total);},
-
+			onProgress: function(event, progress, name, number, total) { return self.onProgress(event,progress,name,number,total);},
+			onError: function(event, name, error) { return self.onError(event,name,error);},
 			sendBoundary: window.FormData || jQuery.browser.mozilla,
 			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload") + 
 				"&request_id="+ instance.etemplate_exec_id
@@ -84,6 +87,10 @@ var et2_file = et2_inputWidget.extend({
 		{
 			this.input.html5_upload(this.asyncOptions);
 		}
+		else
+		{
+			// This may be a problem submitting via ajax
+		}
 		this.progress = this.options.progress ? 
 			$j(document.getElementById(this.options.progress)) : 
 			$j(document.createElement("div")).appendTo(this.node);
@@ -94,31 +101,111 @@ var et2_file = et2_inputWidget.extend({
 		}
 		this.setDOMNode(this.node[0]);
 	},
+	getValue: function() {
+		var value = this.options.value ? this.options.value : this.input.val();
+		return value;
+	},
 	
 	getInputNode: function() {
 		return this.input[0];
 	},
 
 	/**
+	 * Disables submit buttons while uploading
+	 */
+	onStart: function(event, file_count) {
+		this.disabled_buttons = $j("input[type='submit'], button").not("[disabled]").attr("disabled", true);
+		return true;
+	},
+
+	/**
+	 * Re-enables submit buttons when done
+	 */
+	onFinish: function(event, file_count) {
+		this.disabled_buttons.attr("disabled", false);
+	},
+
+	
+	/**
 	 * Creates the elements used for displaying the file, and it's upload status, and
 	 * attaches them to the DOM
 	 */
-	createStatus: function(event, file_name) {
+	createStatus: function(event, file_name, index, file_count) {
+		var error = ""
+		if(this.input[0].files[index]) {
+			var file = this.input[0].files[index];
+			if(file.size > this.options.max_file_size) {
+				error = egw.lang("File too large");
+			}
+		}
 		if(this.progress)
 		{
-			$j("<li file='"+file_name+"'>"+file_name+"<div class='progressBar'><p/></div></li>").appendTo(this.progress);
+			var status = $j("<li file='"+file_name+"'>"+file_name
+					+"<div class='remove'/><span class='progressBar'><p/></span></li>")
+				.appendTo(this.progress)
+				.click(this, this.cancel);
+			if(error != "")
+			{
+				status.addClass("message validation_error");
+				status.append("<div>"+error+"</diff>");
+				$j(".progressBar",status).css("display", "none");
+			}
+		}
+		return error == "";
+	},
+
+	onProgress: function(event, percent, name, number, total) {
+		if(this.progress)
+		{
+			$j("li[file='"+name+"'] > span.progressBar > p").css("width", Math.ceil(percent*100)+"%");
+
 		}
 		return true;
+	},
+
+	onError: function(event, name, error) {
+console.warn(event,name,error);
 	},
 
 	/**
 	 * A file upload is finished, update the UI
 	 */
 	finishUpload: function(event, response, name, number, total) {
-		if(this.progress)
-		{
-			$j("[file='"+name+"']",this.progress).addClass("upload_finished");
+		if(typeof response == 'string') response = jQuery.parseJSON(response);
+		if(response.response[0].data && typeof response.response[0].data.length == 'undefined') {
+			if(typeof this.options.value != 'object') this.options.value = {};
+			for(var key in response.response[0].data) {
+				this.options.value[key] = response.response[0].data[key];
+			}
+			if(this.progress)
+			{
+				$j("[file='"+name+"']",this.progress).addClass("message success");
+			}
 		}
+		else if (this.progress)
+		{
+			$j("[file='"+name+"']",this.progress).addClass("error").css("display", "block");
+		}
+		return true;
+	},
+
+	/**
+	 * Cancel a file
+	 */
+	cancel: function(e) {
+		e.preventDefault();
+		// Look for file name in list
+		var target = $j(e.target);
+		for(var key in e.data.options.value) {
+			if(e.data.options.value[key].name == target.attr("file"))
+			{
+				delete e.data.options.value[key];
+				$j(e.target).remove();
+				return;
+			}
+		}
+		// In case it didn't make it to the list (error)
+		$j(e.target).remove();
 	}
 });
 

@@ -40,8 +40,17 @@ class etemplate_widget_file extends etemplate_widget
 			$response->error("Could not read session");
 			return;
 		}
-		foreach ($_FILES as $field => $file) {
-			if ($file['error'] == UPLOAD_ERR_OK) {
+
+		if (!($template = etemplate_widget_template::instance(self::$request->template['name'], self::$request->template['template_set'],
+                        self::$request->template['version'], self::$request->template['load_via'])))
+                {
+			// Can't use callback
+			error_log("Could not get template for file upload, callback skipped");
+                }
+
+		$file_data = array();
+		foreach ($_FILES as $field => &$file) {
+			if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0) {
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
@@ -50,19 +59,30 @@ class etemplate_widget_file extends etemplate_widget
 				{
 					$new_file = $value['file']['tmp_name'].'+';
 				}
-				// Files come from ajax Base64 encoded
+				if(move_uploaded_file($file['tmp_name'], $new_file)) {
+					$file['tmp_name'] = $new_file;
 
-				$handle = fopen($new_file, 'w');
-				list($prefix, $data) = explode(',', file_get_contents($file['tmp_name']));
-				$file['tmp_name'] = $new_file;
-				fwrite($handle, base64_decode($data));
-				fclose($handle);
+					// Data to send back to client
+					$temp_name = basename($file['tmp_name']);
+					$file_data[$temp_name] = array(
+						'name' => $file['name'],
+						'type' => $file['type']
+					);
+				}
+			}
+		}
+		$response->data($file_data);
 
-				// Store info for future submit
-				$data = egw_session::appsession($request_id.'_files');
-				$form_name = self::form_name($cname, $field);
-				$data[$form_name][] = $file;
-				egw_session::appsession($request_id.'_files','',$data);
+		// Check for a callback, call it if there is one
+		foreach($_FILES as $field => $file) {
+			if($element = $template->getElementById($field))
+			{
+				$callback = $element->attrs['callback'];
+				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
+				if($callback)
+				{
+					ExecMethod($callback, $_FILES[$field]);
+				}
 			}
 		}
 	}
@@ -81,8 +101,29 @@ class etemplate_widget_file extends etemplate_widget
 		$value = $value_in = self::get_array($content, $form_name);
 		$valid =& self::get_array($validated, $form_name, true);
 
-		$files = egw_session::appsession(self::$request->id().'_files');
-		$valid = $files[$form_name];
+		if(!is_array($value)) $value = array();
+		foreach($value as $tmp => $file)
+		{
+			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+			{
+				$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
+			}
+			else
+			{
+				$path = $tmp.'+';
+			}
+			$stat = stat($path);
+			$valid[] = array(
+				'name'	=> $file['name'],
+				'type'	=> $file['type'],
+				'tmp_name'	=> $path,
+				'error'	=> UPLOAD_ERR_OK, // Always OK if we get this far
+				'size'	=> $stat['size'],
+				'ip'	=> $_SERVER['REMOTE_ADDR'], // Assume it's the same as for when it was uploaded...
+			);
+		}
+
+		if($valid && !$this->attrs['multiple']) $valid = $valid[0];
 	}
 }
 etemplate_widget::registerWidget('etemplate_widget_file', array('file'));

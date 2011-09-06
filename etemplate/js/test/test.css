@@ -194,26 +194,49 @@ span.et2_date span {
  * File upload
  */
 .et2_file .progress {
+	width: 300px;
 	max-height: 6em;
 	overflow: auto;
 	margin-left: 20px;
+}
 
-	-moz-column-count: 4;
-	-moz-column-gap: 20px;
-	-webkit-column-count: 4;
-	-webkit-column-gap: 20px;
-	column-count: 4;
-	column-gap: 20px;
+.et2_file .progress span.progressBar {
+	height: 5px;
+	width: 150px;
+	max-width: 150px;
+	display: inline;
+}
 
+/* Remove icon displayed when hovering */
+.et2_file .progress li div.remove {
+	display: none;
+}
+
+.et2_file .progress li:hover div.remove {
+	width: 16px;
+	height: 16px;
+	float: right;
+	display: block;
+	background-image: url("gfx/close.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.et2_file .progress p {
+	background-color: green;
+	height:5px;
+	margin: 0px;
 }
 
 .et2_file .progress li {
 	color: blue;
+	margin: .5ex;
+	cursor: pointer;
 }
-.et2_file .progress li.upload_finished {
-	color: green;
+/* Hide progress bar when completed */
+.et2_file .progress li.success > span.progressBar {
+	display: none;
 }
-
 .egw_tooltip
 {
 	position: fixed;

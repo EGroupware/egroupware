@@ -22,7 +22,7 @@ include('../../../header.inc.php');
 /*
 * Test using any actual template
 */
-//	$template = 'etemplate.et2_test_file_upload';
+	$template = 'etemplate.et2_test_file_upload';
 	if($template) {
 		$etemplate = new etemplate_new('etemplate.et2_test_file_upload');
 		$etemplate->exec('',array());
