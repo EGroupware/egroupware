@@ -61,9 +61,12 @@ abstract class bo_merge
 	 * Configuration for HTML Tidy to clean up any HTML content that is kept
 	 */
 	public static $tidy_config = array(
-		'clean'	=> true,
-		'output-xhtml'	=> true,
+		'output-xml'		=> true,	// Entity encoding
 		'show-body-only'	=> true,
+		'output-encoding'	=> 'utf8',
+		'quote-ampersand'	=> false,	// Prevent double encoding
+		'quote-nbsp'		=> true,	// XSLT can handle spaces easier
+		'preserve-entities'	=> true,
 	);
 
 	/**
@@ -416,8 +419,8 @@ abstract class bo_merge
 					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
 					// Fix for things other than text (newlines) inside table row
 					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
-					'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 					// Remove extra whitespace
+					'/<li([^>]*?)>[^:print:]*?(.*?)<\/li>/' => '<li$1>$2</li>', // This doesn't get it all
 					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>',
 					// Remove spans with no attributes, linebreaks inside them cause problems
 					'/<span>(.*?)<\/span>/' => '$1'
@@ -431,6 +434,7 @@ abstract class bo_merge
 				$xslt->importStyleSheet($doc);
 				break;
 		}
+
 		// XSLT transform known tags
 		if($xslt)
 		{
@@ -439,6 +443,7 @@ abstract class bo_merge
 				$element = new SimpleXMLelement($content);
 				$content = @$xslt->transformToXml($element);
 
+//echo $content;die();
 				// Word 2003 needs two declarations, add extra declaration back in
 				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
 					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
@@ -734,9 +739,11 @@ abstract class bo_merge
 				if (is_string($value) && (strpos($value,'<') !== false))
 				{
 					// Clean HTML, if it's being kept
-					if($replace_tags && extension_loaded('tidy'))
-					{
-						$value = tidy_repair_string($value, self::$tidy_config, 'utf8');
+					if($replace_tags && extension_loaded('tidy')) {
+						$value = tidy_repair_string($value, self::$tidy_config + 
+							// Need to detect encoding to get special chars right
+							array('input-encoding'=>mb_detect_encoding($value))
+						);
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);

@@ -86,11 +86,7 @@ Breakers
 	</xsl:template>
 -->
 
-	<xsl:template match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
-		<xsl:call-template name="apply-styles"/>
-	</xsl:template>
-
-	<xsl:template name="apply-styles">
+	<xsl:template name="apply-styles" match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
 		<xsl:for-each select="node()|@*[not(w:rPr)]">
 			<xsl:choose>
 			<xsl:when test="descendant::strong|descendant::em|descendant::u|descendant::span" >
@@ -218,7 +214,17 @@ Breakers
 			<xsl:choose>
 				<xsl:when test="count(child::*)=0">
 					<xsl:variable name="text">
-						<xsl:value-of select="substring-after(text(),' ')"/>
+						<xsl:choose>
+							<xsl:when test="starts-with(text(), ' ')">
+								<xsl:value-of select="substring-after(text(),' ')"/>
+							</xsl:when>
+							<xsl:when test="starts-with(text(),'&#160;')">
+								<xsl:value-of select="substring-after(text(),'&#160;')"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="text()"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
 					<w:r><w:t>
 <xsl:value-of select="normalize-space($text)"/>

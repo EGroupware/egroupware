@@ -212,7 +212,17 @@ Breakers
 			<xsl:choose>
 				<xsl:when test="count(child::*)=0">
 					<xsl:variable name="text">
-						<xsl:value-of select="substring-after(text(),' ')"/>
+						<xsl:choose>
+							<xsl:when test="starts-with(text(), ' ')">
+								<xsl:value-of select="substring-after(text(),' ')"/>
+							</xsl:when>
+							<xsl:when test="starts-with(text(),'&#160;')">
+								<xsl:value-of select="substring-after(text(),'&#160;')"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="text()"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
 					<w:r><w:t>
 <xsl:value-of select="normalize-space($text)"/>
