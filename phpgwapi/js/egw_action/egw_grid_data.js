@@ -148,9 +148,15 @@ egwGridDataElement.prototype.set_group = function(_value)
 	this.group = _value;
 
 	var root = this.getRootElement();
-	if (typeof root.actionLinkGroups[_value] != "undefined")
+
+	var groups = _value.split(",");
+	for (var key in groups)
 	{
-		this.actionObject.updateActionLinks(root.actionLinkGroups[_value]);
+		var val = groups[key];
+		if (typeof root.actionLinkGroups[val] != "undefined")
+		{
+			this.actionObject.updateActionLinks(root.actionLinkGroups[val]);
+		}
 	}
 }
 
