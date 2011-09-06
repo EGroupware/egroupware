@@ -150,7 +150,7 @@ function nm_action(_action, _senders)
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
 	{
-		url = _action.data.url.replace(/(\$|%24)id/,ids);
+		url = _action.data.url.replace(/(\$|%24)id/,encodeURIComponent(ids));
 	}
 
 	var target = null;
