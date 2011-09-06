@@ -221,6 +221,14 @@ $checks = array(
 		'func' => 'extension_check',
 		'error' => lang('The json extension is required by EGroupware for AJAX.'),
 	),
+	'tidy' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The tidy extension is need in merge-print to clean up html before inserting it in office documents.'),
+	),
+	'xmlreader' => array(
+		'func' => 'extension_check',
+		'error' => lang('The xmlreader extension is required by EGroupware in several applications.'),
+	),
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = realpath(session_save_path())))
 {
