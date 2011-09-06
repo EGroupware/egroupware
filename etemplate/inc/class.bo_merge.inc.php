@@ -734,8 +734,9 @@ abstract class bo_merge
 				if (is_string($value) && (strpos($value,'<') !== false))
 				{
 					// Clean HTML, if it's being kept
-					if($replace_tags && extension_loaded('tidy')) {
-						$value = tidy_repair_string($value, self::$tidy_config);
+					if($replace_tags && extension_loaded('tidy'))
+					{
+						$value = tidy_repair_string($value, self::$tidy_config, 'utf8');
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
