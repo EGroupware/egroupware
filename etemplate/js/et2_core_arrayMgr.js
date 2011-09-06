@@ -43,7 +43,7 @@ var et2_arrayMgr = Class.extend({
 		this.perspectiveData = {
 			"owner": null,
 			"key": null,
-			"row": 0
+			"row": null
 		}
 	},
 
@@ -161,7 +161,12 @@ var et2_arrayMgr = Class.extend({
 		var pos_var = _ident.indexOf('$');
 		if (pos_var >= 0)
 		{
-			// TODO
+			console.log("blub", _ident, this.perspectiveData);
+			if (this.perspectiveData.row !== null)
+			{
+				_ident.replace(/\$\{row\}/, this.perspectiveData.row);
+				console.log(_ident);
+			}
 		}
 
 		if (is_index_in_content)
@@ -266,6 +271,7 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 		// If the attribute is set, return that
 		if (typeof _attr != "undefined" && _attr !== null)
 		{
+			console.log(_attr, et2_evalBool(_attr));
 			return et2_evalBool(_attr);
 		}
 
@@ -295,8 +301,11 @@ function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row)
 		if (typeof _mgrs[key] != "undefined")
 		{
 			// Open a perspective for the given data row
+			var rowData = {};
+			rowData[_row] = _data[key];
+
 			result[key] = _mgrs[key].openPerspective(_owner,
-				_data[key], _row);
+				_data[key], rowData);
 		}
 	}
 

@@ -28,7 +28,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 		this.hasAvgHeight = false;
 
 		// Get the default row object and scale the row to the average height
-		this.tr = this.rowProvider.getPrototype("default");
+		this.tr = this.rowProvider.getPrototype("dataRow");
 
 		// Append the row
 		this.appendNode(this.tr);

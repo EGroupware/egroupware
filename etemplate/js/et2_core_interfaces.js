@@ -85,4 +85,38 @@ var et2_ISubmitListener = new Interface({
 	submit: function(_values) {}
 });
 
+/**
+ * Interface all widgets must support which can operate on given DOM-Nodes. This
+ * is used in grid lists, when only a single row gets really stored in the widget
+ * tree and this instance has to work on multiple copies of the DOM-Tree elements.
+ */
+var et2_IDetachedDOM = new Interface({
+
+	/**
+	 * Returns a list of attributes which can be set when working in the
+	 * "detached" mode. The result is stored in the _attrs array which is provided
+	 * by the calling code.
+	 */
+	getDetachedAttributes: function(_attrs) {},
+
+	/**
+	 * Returns an array of DOM nodes. The (relativly) same DOM-Nodes have to be
+	 * passed to the "setDetachedAttributes" function in the same order.
+	 */
+	getDetachedNodes: function() {},
+
+	/**
+	 * Sets the given associative attribute->value array and applies the
+	 * attributes to the given DOM-Node.
+	 *
+	 * @param _nodes is an array of nodes which has to be in the same order as
+	 * 	the nodes returned by "getDetachedNodes"
+	 * @param _values is an associative array which contains a subset of attributes
+	 * 	returned by the "getDetachedAttributes" function and sets them to the
+	 * 	given values.
+	 */
+	setDetachedAttributes: function(_nodes, _values) {}
+
+});
+
 

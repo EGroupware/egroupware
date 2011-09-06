@@ -63,69 +63,19 @@
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
-					<hbox align="center" options="5">
-						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]"/>
-						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_percent]"/>
-						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-					</hbox>
-					<vbox options="0,0" class="fullWidth">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
-						<hbox options="0,0">
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
-							<description align="right" id="{$row}[info_number]" no_lang="1" class="infoId"/>
-						</hbox>
-						<box class="infoDes">
-							<description id="${row}[info_des]" no_lang="1" options=",,1"/>
-						</box>
-						<link-string id="${row}[filelinks]"/>
+					<vbox>
+						<description value="Dynamic description tag:" />
+						<description value="${row}" />
+						<button label="This is a button" />
 					</vbox>
-					<customfields-list id="$row" class="customfields"/>
-					<menulist>
-						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
-					</menulist>
-					<vbox cols="1" rows="3" options="0,0,1">
-						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="fixedHeight"/>
-						<date id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class] fixedHeight"/>
-						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
-					</vbox>
-					<vbox cols="1" rows="3" options="0,0">
-						<hbox readonly="true">
-							<hbox readonly="true" options="1,0">
-								<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
-							</hbox>
-							<description/>
-						</hbox>
-						<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
-					</vbox>
-					<vbox cols="1" rows="3" options="0,0">
-						<hbox id="r_used_time" options="1,0">
-							<image label="Times" src="timesheet"/>
-							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
-						</hbox>
-						<hbox id="planified" options="1,0">
-							<image label="planned time" src="k_alarm.png"/>
-							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
-						</hbox>
-						<hbox id="replanified" options="1,0">
-							<image label="Re-planned time" src="agt_reload.png"/>
-							<date-duration id="${row}[info_replanned_time]" readonly="true" options="@duration_format" span="all" class="replanned"/>
-						</hbox>
-					</vbox>
-					<vbox options="0,0">
-						<menulist>
-							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
-						</menulist>
-						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
-					</vbox>
-					<vbox options="0" orient="0">
-						<date-time id="${row}[info_datemodified]" readonly="true"/>
-						<menulist>
-							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
-						</menulist>
-					</vbox>
+					<description value="test" />
+					<description value="test" />
+					<description value="test" />
+					<description value="test" />
+					<description value="test" />
+					<description value="test" />
+					<description value="test" />
+					<description value="test2" />
 				</row>
 			</rows>
 		</grid>

@@ -529,6 +529,12 @@ function et2_activateLinks(_content)
  */
 function et2_insertLinkText(_text, _node, _target)
 {
+	// Clear the node
+	for (var i = _node.childNodes.length - 1; i >= 0; i--)
+	{
+		_node.removeChild(_node.childNodes[i]);
+	}
+
 	for (var i = 0; i < _text.length; i++)
 	{
 		var s = _text[i];

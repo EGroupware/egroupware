@@ -20,7 +20,7 @@
 /**
  * Class which implements the "description" XET-Tag
  */ 
-var et2_description = et2_baseWidget.extend({
+var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	attributes: {
 		"value": {
@@ -94,26 +94,27 @@ var et2_description = et2_baseWidget.extend({
 			this.span.attr("for", this.options["for"]);
 		}
 
-		et2_insertLinkText(this._parseText(), this.span[0], this.options.extra_link_target);
+		et2_insertLinkText(this._parseText(this.options.value), this.span[0],
+			this.options.extra_link_target);
 
 		this.setDOMNode(this.span[0]);
 	},
 
-	_parseText: function() {
+	_parseText: function(_value) {
 		if (this.options.href)
 		{
 			return [{
 				"href": this.options.href,
-				"text": this.options.value
+				"text": _value
 			}];
 		}
 		else if (this.options.activate_links)
 		{
-			return et2_activateLinks(this.options.value);
+			return et2_activateLinks(_value);
 		}
 		else
 		{
-			return [this.options.value];
+			return [_value];
 		}
 	},
 
@@ -122,8 +123,30 @@ var et2_description = et2_baseWidget.extend({
 
 		this.span.toggleClass("et2_bold", _value.indexOf("b") >= 0);
 		this.span.toggleClass("et2_italic", _value.indexOf("i") >= 0);
-	}
+	},
 
+	/**
+	 * Code for implementing et2_IDetachedDOM
+	 */
+
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value");
+	},
+
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values)
+	{
+		if (typeof _values["value"] != "undefined")
+		{
+			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],
+				this.options.extra_link_target);
+		}
+	}
 });
 
 et2_register_widget(et2_description, ["description", "label"]);

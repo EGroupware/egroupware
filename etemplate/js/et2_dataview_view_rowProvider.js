@@ -30,7 +30,7 @@ var et2_dataview_rowProvider = Class.extend({
 		this._columnIds = _columnIds;
 		this._prototypes = {};
 
-		this._dataRowTemplate = null;
+		this._template = null;
 		this._mgrs = null;
 		this._rootWidget = null;
 
@@ -62,21 +62,330 @@ var et2_dataview_rowProvider = Class.extend({
 		return this._prototypes[_name].clone();
 	},
 
-	setDataRowTemplate: function(_template, _rootWidget) {
-		this._dataRowTemplate = _template;
+	/**
+	 * Returns an array containing objects which have variable attributes
+	 */
+	_getVariableAttributeSet: function(_widget) {
+		var variableAttributes = [];
+
+		_widget.iterateOver(function(_widget) {
+			// Create the attribtues
+			var hasAttr = false;
+			var widgetData = {
+				"widget": _widget,
+				"data": []
+			};
+
+			// Include the "value" attribute if the widget is derrived from
+			// et2_valueWidget
+			if (_widget instanceof et2_valueWidget)
+			{
+				hasAttr = true;
+				widgetData.data.push({
+					"attribute": "value",
+					"expression": "@${row}"
+				});
+			}
+
+			// Get all attribute values
+			for (var key in _widget.attributes)
+			{
+				if (!_widget.attributes[key].ignore &&
+				    typeof _widget.options[key] != "undefined")
+				{
+					var val = _widget.options[key];
+
+					// TODO: Improve detection
+					if (typeof val == "string" && val.indexOf("$") >= 0)
+					{
+						hasAttr = true;
+						widgetData.data.push({
+							"attribute": key,
+							"expression": val
+						});
+					}
+				}
+			}
+
+			// Add the entry if there is any data in it
+			if (hasAttr)
+			{
+				variableAttributes.push(widgetData);
+			}
+
+		}, this);
+
+		return variableAttributes;
+	},
+
+	_seperateWidgets: function(_varAttrs) {
+		// The detachable array contains all widgets which implement the
+		// et2_IDetachedDOM interface for all needed attributes
+		var detachable = [];
+
+		// The remaining array creates all widgets which have to be completely
+		// cloned when the widget tree is created
+		var remaining = [];
+
+		// Iterate over the widgets
+		for (var i = 0; i < _varAttrs.length; i++)
+		{
+			var widget = _varAttrs[i].widget;
+
+			// Check whether the widget parents are not allready in the "remaining"
+			// slot -  if this is the case do not include the widget at all.
+			var insertWidget = true;
+			var checkWidget = function (_widget) {
+				if (_widget.parent != null)
+				{
+					for (var i = 0; i < remaining.length; i++)
+					{
+						if (remaining[i].widget == _widget.parent)
+						{
+							insertWidget = false;
+							return;
+						}
+					}
+
+					checkWidget(_widget.parent);
+				}
+			};
+			checkWidget(widget);
+
+			// Handle the next widget if this one should not be included.
+			if (!insertWidget)
+			{
+				continue;
+			}
+
+			// Check whether the widget implements the et2_IDetachedDOM interface
+			var isDetachable = false;
+			if (widget.implements(et2_IDetachedDOM))
+			{
+				// Get all attributes the widgets supports to be set in the
+				// "detached" mode
+				var supportedAttrs = [];
+				widget.getDetachedAttributes(supportedAttrs);
+				isDetachable = true;
+
+				for (var j = 0; j < _varAttrs[i].data.length && isDetachable; j++)
+				{
+					var data = _varAttrs[i].data[j];
+
+					isDetachable &= supportedAttrs.indexOf(data.attribute) != -1;
+				}
+			}
+
+			// Insert the widget into the correct slot
+			if (isDetachable)
+			{
+				detachable.push(_varAttrs[i]);
+			}
+			else
+			{
+				remaining.push(_varAttrs[i]);
+			}
+		}
+
+		return {
+			"detachable": detachable,
+			"remaining": remaining
+		};
+	},
+
+	/**
+	 * Removes to DOM code for all widgets in the "remaining" slot
+	 */
+	_stripTemplateRow: function(_rowTemplate) {
+		_rowTemplate.placeholders = [];
+
+		for (var i = 0; i < _rowTemplate.seperated.remaining.length; i++)
+		{
+			var entry = _rowTemplate.seperated.remaining[i];
+
+			// Issue a warning - widgets which do not implement et2_IDOMNode
+			// are very slow
+			et2_debug("warn", "Non-clonable widget in dataview row - this " + 
+				"might be slow", entry);
+
+			// Set the placeholder for the entry to null
+			entry.placeholder = null;
+
+			// Get the outer DOM-Node of the widget
+			if (entry.widget.implements(et2_IDOMNode))
+			{
+				var node = entry.widget.getDOMNode(entry.widget);
+
+				if (node.parentNode)
+				{
+					// Get the parent node and replace the node with a placeholder
+					entry.placeholder = document.createElement("span");
+					node.parentNode.replaceChild(entry.placeholder, node);
+					_rowTemplate.placeholders.push({
+						"widget": entry.widget,
+						"func": this._compileDOMAccessFunc(_rowTemplate.row,
+							entry.placeholder)
+					});
+				}
+			}
+		}
+	},
+
+	_nodeIndex: function(_node) {
+		for (var i = 0; i < _node.parentNode.childNodes.length; i++)
+		{
+			if (_node.parentNode.childNodes[i] == _node)
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	},
+
+	/**
+	 * Returns a function which does a relative access on the given DOM-Node
+	 */
+	_compileDOMAccessFunc: function(_root, _target) {
+		function recordPath(_root, _target, _path)
+		{
+			if (typeof _path == "undefined")
+			{
+				_path = [];
+			}
+
+			if (_root != _target)
+			{
+				// Get the index of _target in its parent node
+				var idx = this._nodeIndex(_target);
+				if (idx >= 0)
+				{
+					// Add the access selector
+					_path.unshift("childNodes[" + idx + "]");
+
+					// Record the remaining path
+					return recordPath.call(this, _root, _target.parentNode, _path);
+				}
+
+				throw("Internal error while compiling DOM access function.");
+			}
+			else
+			{
+				_path.unshift("_node");
+				return "return " + _path.join(".") + ";";
+			}
+		}
+
+		return new Function("_node", recordPath.call(this, _root, _target));
+	},
+
+	/**
+	 * Builds relative paths to the DOM-Nodes and compiles fast-access functions
+	 */
+	_buildNodeAccessFuncs: function(_rowTemplate) {
+		for (var i = 0; i < _rowTemplate.seperated.detachable.length; i++)
+		{
+			var entry = _rowTemplate.seperated.detachable[i];
+
+			// Get all needed nodes from the widget
+			var nodes = entry.widget.getDetachedNodes();
+			var nodeFuncs = entry.nodeFuncs = new Array(nodes.length);
+
+			// Record the path to each DOM-Node
+			for (var j = 0; j < nodes.length; j++)
+			{
+				nodeFuncs[i] = this._compileDOMAccessFunc(_rowTemplate.row,
+					nodes[j]);
+			}
+		}
+	},
+
+	/**
+	 * Creates the data row prototype
+	 */
+	setDataRowTemplate: function(_widgets, _rootWidget) {
+		// Copy the root widget
 		this._rootWidget = _rootWidget;
+
+		// Create the base row
+		var row = this.getPrototype("default");
+
+		// Copy the row template
+		var rowTemplate = {
+			"row": row[0],
+			"widgets": _widgets,
+			"root": _rootWidget,
+			"seperated": null
+		};
+
+		// Create the row widget and insert the given widgets into the row
+		var rowWidget = new et2_dataview_rowWidget(row[0]);
+		rowWidget.createWidgets(_widgets);
+
+		// Get the set containing all variable attributes
+		var variableAttributes = this._getVariableAttributeSet(rowWidget);
+
+		// Filter out all widgets which do not implement the et2_IDetachedDOM
+		// interface or do not support all attributes listed in the et2_IDetachedDOM
+		// interface. A warning is issued for all those widgets as they heavily
+		// degrade the performance of the widgets
+		var seperated = rowTemplate.seperated = 
+			this._seperateWidgets(variableAttributes);
+
+		// Remove all DOM-Nodes of all widgets inside the "remaining" slot from
+		// the row-template, then build the access functions for the detachable
+		// widgets
+		this._stripTemplateRow(rowTemplate);
+		this._buildNodeAccessFuncs(rowTemplate);
+
+		this._prototypes["dataRow"] = row;
+		this._template = rowTemplate;
 	},
 
 	getDataRow: function(_data, _row, _idx) {
-		// Create the row widget
-		var rowWidget = new et2_dataview_rowWidget(this._rootWidget, _row[0]);
 
-		// Create array managers with the given data merged in
-		var mgrs = et2_arrayMgrs_expand(rowWidget, this._rootWidget.getArrayMgrs(),
-			_data, _idx);
+		// Insert the widgets into the row which do not provide the functions
+		// to set the _data directly
+		var rowWidget = null;
+		if (this._template.seperated.remaining.length > 0)
+		{
+			// Create the row widget
+			var rowWidget = new et2_dataview_rowTemplateWidget(this._rootWidget,
+				_row[0]);
 
-		// Let the row widget create the widgets
-		rowWidget.createWidgets(mgrs, this._dataRowTemplate);
+			// Create array managers with the given data merged in
+			var mgrs = et2_arrayMgrs_expand(rowWidget, this._rootWidget.getArrayMgrs(),
+				_data, _idx);
+
+			// Let the row widget create the widgets
+			rowWidget.createWidgets(mgrs, this._template.placeholders);
+		}
+
+		// Update the content of all other widgets
+		for (var i = 0; i < this._template.seperated.detachable.length; i++)
+		{
+			var entry = this._template.seperated.detachable[i];
+
+			// Parse the attribute expressions
+			var data = {};
+			for (var j = 0; j < entry.data.length; j++)
+			{
+				var set = entry.data[i];
+				data[set.attribute] = set.expression + " for " + _idx; // TODO: Parsing of the expression
+			}
+
+			// Retrieve all DOM-Nodes
+			var nodes = new Array(entry.nodeFuncs.length);
+			for (var j = 0; j < nodes.length; j++)
+			{
+				// Use the previously compiled node function to get the node
+				// from the entry
+				nodes[j] = entry.nodeFuncs[j](_row[0]);
+			}
+
+			// Call the setDetachedAttributes function
+			entry.widget.setDetachedAttributes(nodes, data);
+		}
 
 		return rowWidget;
 	},
@@ -121,9 +430,9 @@ var et2_dataview_rowProvider = Class.extend({
 
 var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 
-	init: function(_parent, _row) {
+	init: function(_row) {
 		// Call the parent constructor with some dummy attributes
-		this._super(_parent, {"id": "", "type": "rowWidget"});
+		this._super(null, {"id": "", "type": "rowWidget"});
 
 		// Initialize some variables
 		this._widgets = [];
@@ -136,11 +445,7 @@ var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 	 * Copies the given array manager and clones the given widgets and inserts
 	 * them into the row which has been passed in the constructor.
 	 */
-	createWidgets: function(_mgrs, _widgets) {
-		// Set the array managers - don't use setArrayMgrs here as this creates
-		// an unnecessary copy of the object
-		this._mgrs = _mgrs;
-
+	createWidgets: function(_widgets) {
 		// Clone the given the widgets with this element as parent
 		this._widgets = new Array(_widgets.length);
 		for (var i = 0; i < _widgets.length; i++)
@@ -154,19 +459,65 @@ var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 	 * Returns the column node for the given sender
 	 */
 	getDOMNode: function(_sender) {
-
-		if (typeof _sender == "undefined" || !_sender)
-		{
-			return this.row;
-		}
-
 		for (var i = 0; i < this._widgets.length; i++)
 		{
 			if (this._widgets[i] == _sender)
 			{
-				return this._row.childNodes[i]; // Return the i-th td tag
+				return this._row.childNodes[i].childNodes[0]; // Return the i-th td tag
 			}
 		}
+
+		return null;
+	}
+
+});
+
+var et2_dataview_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, {
+
+	init: function(_mgrs, _row) {
+		// Call the parent constructor with some dummy attributes
+		this._super(null, {"id": "", "type": "rowTemplateWidget"});
+
+		// Copy the managers - do not use "setArrayMgrs" here
+		this._mgrs = _mgrs;
+		this._row = _row;
+
+		// Clone the widgets inside the placeholders array
+		this._widgets = [];
+	},
+
+	createWidgets: function(_mgrs, _widgets) {
+		// Set the array managers - don't use setArrayMgrs here as this creates
+		// an unnecessary copy of the object
+		this._mgrs = _mgrs;
+
+		this._widgets = new Array(_widgets.length);
+		for (var i = 0; i < _widgets.length; i++)
+		{
+			this._row.childNodes[0].childNodes[0];
+
+			this._widgets[i] = {
+				"widget": _widgets[i].widget.clone(this),
+				"node": _widgets[i].func(this._row)
+			};
+			this._widgets[i].widget.loadingFinished();
+		}
+	},
+
+	/**
+	 * Returns the column node for the given sender
+	 */
+	getDOMNode: function(_sender) {
+
+		for (var i = 0; i < this._widgets.length; i++)
+		{
+			if (this._widgets[i].widget == _sender)
+			{
+				return this._widgets[i].node;
+			}
+		}
+
+		return null;
 	}
 
 });
