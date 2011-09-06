@@ -65,10 +65,27 @@ var et2_image = et2_baseWidget.extend({
 		this.image.set_statustext(_value);
 	},
 
+	setValue: function(_value) {
+		// Value is src, images don't get IDs
+		this.set_src(_value);
+	},
+
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
 			return;
+		}
+
+		// Check to expand name
+		if(_value.indexOf("$") != -1 || _value.indexOf("@") != -1) {
+			var contentMgr = this.getArrayMgr("content");
+			if (contentMgr != null) {
+				var val = contentMgr.getValueForID(_value);
+				if (val !== null)
+				{
+					_value = val;
+				}
+			}
 		}
 		this.options.src = _value;
 		// Get application to use from template ID
