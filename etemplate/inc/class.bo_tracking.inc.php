@@ -915,7 +915,7 @@ abstract class bo_tracking
 			if ($type == 'link')
 			{
 				// the link is often too long for html boxes chunk-split allows to break lines if needed
-				$content .= html::a_href(chunk_split($data,40,'&#8203'),$data,'','target="_blank"');
+				$content .= html::a_href(chunk_split(rawurldecode($data),40,'&#8203;'),$data,'','target="_blank"');
 			}
 			elseif ($this->html_content_allow)
 			{
