@@ -63,7 +63,8 @@ abstract class bo_merge
 	public static $tidy_config = array(
 		'output-xml'		=> true,	// Entity encoding
 		'show-body-only'	=> true,
-		'output-encoding'	=> 'utf8',
+		'output-encoding'	=> 'utf-8',
+		'input-encoding'	=> 'utf-8',
 		'quote-ampersand'	=> false,	// Prevent double encoding
 		'quote-nbsp'		=> true,	// XSLT can handle spaces easier
 		'preserve-entities'	=> true,
@@ -740,10 +741,7 @@ abstract class bo_merge
 				{
 					// Clean HTML, if it's being kept
 					if($replace_tags && extension_loaded('tidy')) {
-						$value = tidy_repair_string($value, self::$tidy_config + 
-							// Need to detect encoding to get special chars right
-							array('input-encoding'=>mb_detect_encoding($value))
-						);
+						$value = tidy_repair_string($value, self::$tidy_config);
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
