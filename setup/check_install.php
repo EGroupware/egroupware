@@ -217,6 +217,10 @@ $checks = array(
 		'func' => 'extension_check',
 		'warning' => lang('The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.'),
 	),
+	'xmlreader' => array(
+		'func' => 'extension_check',
+		'error' => lang('The xmlreader extension is required by EGroupware in several applications.'),
+	),
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = realpath(session_save_path())))
 {
