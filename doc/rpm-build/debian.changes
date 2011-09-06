@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20110906-1) hardy; urgency=low
+
+  * Mergeprint uses tidy, if available, before atempting to convert html to office documents, requires now php-tidy
+  * Filemanager: fixed not working context menu in treeview
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 06 Sep 2011 11:54:43 +0200
+
 egroupware-epl (11.1.20110905-1) hardy; urgency=low
 
   * tracker: mailhandling, fixing a problem with -> not correctly extracting mailadresses <- when adresses contained UpperCase Letters
