@@ -237,6 +237,10 @@ class calendar_bo
 				'info' => __CLASS__.'::email_info',
 				'app'  => 'email',
 			);
+			$this->resources[''] = array(
+				'type' => '',
+				'app' => 'home-accounts',
+			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
 		}
 		//echo "registered resources="; _debug_array($this->resources);

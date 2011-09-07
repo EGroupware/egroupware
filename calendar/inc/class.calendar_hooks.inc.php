@@ -235,7 +235,8 @@ class calendar_hooks
 			'resources_conflict'    => lang('resources with conflict detection'),
 			'resources_without_conflict'    => lang('resources except conflicting ones'),
 			'resources'     => lang('resources'),
-			'addressbook'   => lang('addressbook')
+			'addressbook'   => lang('addressbook'),
+			'home-accounts' => lang('Accounts'),
 		);
 		$reset_stati_on_shifts = array(
 			'no'		=> lang('Never'),

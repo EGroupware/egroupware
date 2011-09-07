@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2008 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2011 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -61,6 +61,8 @@
  *			),
  *			'edit_id' => 'app_id',
  *			'edit_popup' => '400x300',
+ *			'name' => 'Some name',					// Name to use instead of app-name
+ *			'icon' => 'app/icon',					// Optional icon to use instead of app-icon
  *			'additional' => array(					// allow one app to register sub-types,
  *				'app-sub' => array(					// different from 'types' approach above
  *					// every value defined above
@@ -105,6 +107,12 @@ class egw_link extends solink
 				'menuaction' => 'felamimail.uicompose.compose',
 			),
 			'add_popup' => '700x750',
+		),
+		'home-accounts' => array(	// user need run-rights for home
+			'name' => 'Accounts',
+			'icon' => 'addressbook/accounts',
+			'query' => 'accounts::link_query',
+			'title' => 'common::grab_owner_name',
 		),
 	);
 	/**
@@ -161,6 +169,12 @@ class egw_link extends solink
 					self::$app_register[$app] = $data;
 				}
 			}
+		}
+		// disable ability to link to accounts for non-admins, if account-selection is disabled
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			unset(self::$app_register['home-accounts']);
 		}
 		if (!(self::$title_cache = $GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi')))
 		{
@@ -547,13 +561,14 @@ class egw_link extends solink
 	static function app_list($must_support='')
 	{
 		$apps = array();
-		foreach(self::$app_register as $app => $reg)
+		foreach(self::$app_register as $type => $reg)
 		{
 			if ($must_support && !isset($reg[$must_support])) continue;
 
+			list($app) = explode('-', $type);
 			if ($GLOBALS['egw_info']['user']['apps'][$app])
 			{
-				$apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'];
+				$apps[$type] = lang(self::get_registry($type, 'name'));
 			}
 		}
 		return $apps;
@@ -848,6 +863,29 @@ class egw_link extends solink
 	static function get_registry($app,$name)
 	{
 		$reg = self::$app_register[$app];
+
+		if (!isset($reg)) return false;
+
+		if (!isset($reg[$name]))	// some defaults
+		{
+			switch($name)
+			{
+				case 'name':
+					$reg[$name] = $app;
+					break;
+				case 'icon':
+					if (isset($GLOBALS['egw_info']['apps'][$app]['icon']))
+					{
+						$reg[$name] = ($GLOBALS['egw_info']['apps'][$app]['icon_app'] ? $GLOBALS['egw_info']['apps'][$app]['icon_app'] : $app).
+							'/'.$GLOBALS['egw_info']['apps'][$app]['icon'];
+					}
+					else
+					{
+						$reg[$name] = $app.'/navbar';
+					}
+					break;
+			}
+		}
 
 		return isset($reg) ? $reg[$name] : false;
 	}
