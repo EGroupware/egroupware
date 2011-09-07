@@ -350,7 +350,7 @@
 			if (typeof part == "string")
 			{
 				// Escape all "'" and "\" chars and add the string to the parts array
-				parts.push("'" + part.replace(/'/g, "\\'").replace(/\\/g, "\\\\") + "'");
+				parts.push("'" + part.replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'");
 			}
 			else
 			{

@@ -13,7 +13,9 @@
 "use strict";
 
 /*egw:uses
+	et2_core_common;
 	et2_core_inheritance;
+	et2_core_phpExpressionCompiler;
 */
 
 var et2_arrayMgr = Class.extend({
@@ -147,6 +149,8 @@ var et2_arrayMgr = Class.extend({
 		return entry;
 	},
 
+	compiledExpressions: {},
+
 	/**
 	 * Equivaltent to the boetemplate::expand_name function.
 	 *
@@ -159,13 +163,44 @@ var et2_arrayMgr = Class.extend({
 
 		// Check whether "$" occurs in the given identifier
 		var pos_var = _ident.indexOf('$');
-		if (pos_var >= 0)
+		if (pos_var >= 0 && this.perspectiveData.row != null)
 		{
-			console.log("blub", _ident, this.perspectiveData);
-			if (this.perspectiveData.row !== null)
+			// Get the content array for the current row
+			var row = this.perspectiveData.row;
+			var cont = this.data;
+			var row_cont = cont[row];
+
+			// Check whether the expression has already been compiled - if not,
+			// try to compile it first. If an error occurs, the identifier
+			// function is set to null
+			var proto = this.constructor.prototype;
+			if (typeof proto.compiledExpressions[_ident] == "undefined")
 			{
-				_ident.replace(/\$\{row\}/, this.perspectiveData.row);
-				console.log(_ident);
+				try
+				{
+					proto.compiledExpressions[_ident] = et2_compilePHPExpression(
+						_ident, ["row", "cont", "row_cont"]);
+				}
+				catch(e)
+				{
+					proto.compiledExpressions[_ident] = null;
+					et2_debug("error", "Error while compiling PHP->JS ", e);
+				}
+			}
+
+			// Execute the previously compiled expression, if it is not "null"
+			// because compilation failed. The parameters have to be in the same
+			// order as defined during compilation.
+			if (proto.compiledExpressions[_ident])
+			{
+				try
+				{
+					_ident = proto.compiledExpressions[_ident](row, cont, row_cont);
+				}
+				catch(e)
+				{
+					et2_debug("error", e);
+				}
 			}
 		}
 
@@ -288,7 +323,15 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 });
 
 /**
- * Creates a new set of array managers 
+ * Creates a new set of array managers
+ *
+ * @param _owner is the owner object of the array managers - this object (a widget)
+ * 	will free the array manager
+ * @param _mgrs is the original set of array managers, the array managers are
+ * 	inside an associative array as recived from et2_widget::getArrayMgrs()
+ * @param _data is an associative array of new data which will be merged into the
+ * 	existing array managers.
+ * @param _row is the row for which the array managers will be opened.
  */
 function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row)
 {
@@ -296,16 +339,17 @@ function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row)
 	var result = {};
 
 	// Merge the given data associative array into the existing array managers
-	for (var key in _data)
+	for (var key in _mgrs)
 	{
-		if (typeof _mgrs[key] != "undefined")
+		result[key] = _mgrs[key];
+
+		if (typeof _data[key] != "undefined")
 		{
 			// Open a perspective for the given data row
 			var rowData = {};
 			rowData[_row] = _data[key];
 
-			result[key] = _mgrs[key].openPerspective(_owner,
-				_data[key], rowData);
+			result[key] = _mgrs[key].openPerspective(_owner, rowData, _row);
 		}
 	}
 

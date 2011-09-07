@@ -315,7 +315,8 @@ var et2_dataview_rowProvider = Class.extend({
 			"row": row[0],
 			"widgets": _widgets,
 			"root": _rootWidget,
-			"seperated": null
+			"seperated": null,
+			"mgrs": _rootWidget.getArrayMgrs()
 		};
 
 		// Create the row widget and insert the given widgets into the row
@@ -328,7 +329,7 @@ var et2_dataview_rowProvider = Class.extend({
 		// Filter out all widgets which do not implement the et2_IDetachedDOM
 		// interface or do not support all attributes listed in the et2_IDetachedDOM
 		// interface. A warning is issued for all those widgets as they heavily
-		// degrade the performance of the widgets
+		// degrade the performance of the dataview
 		var seperated = rowTemplate.seperated = 
 			this._seperateWidgets(variableAttributes);
 
@@ -344,6 +345,10 @@ var et2_dataview_rowProvider = Class.extend({
 
 	getDataRow: function(_data, _row, _idx) {
 
+		// Create array managers with the given data merged in
+		var mgrs = et2_arrayMgrs_expand(rowWidget, this._template.mgrs,
+			_data, _idx);
+
 		// Insert the widgets into the row which do not provide the functions
 		// to set the _data directly
 		var rowWidget = null;
@@ -352,10 +357,6 @@ var et2_dataview_rowProvider = Class.extend({
 			// Create the row widget
 			var rowWidget = new et2_dataview_rowTemplateWidget(this._rootWidget,
 				_row[0]);
-
-			// Create array managers with the given data merged in
-			var mgrs = et2_arrayMgrs_expand(rowWidget, this._rootWidget.getArrayMgrs(),
-				_data, _idx);
 
 			// Let the row widget create the widgets
 			rowWidget.createWidgets(mgrs, this._template.placeholders);
@@ -371,7 +372,7 @@ var et2_dataview_rowProvider = Class.extend({
 			for (var j = 0; j < entry.data.length; j++)
 			{
 				var set = entry.data[i];
-				data[set.attribute] = set.expression + " for " + _idx; // TODO: Parsing of the expression
+				data[set.attribute] = mgrs["content"].expandName(set.expression);
 			}
 
 			// Retrieve all DOM-Nodes

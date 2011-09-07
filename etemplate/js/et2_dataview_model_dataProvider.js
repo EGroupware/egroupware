@@ -51,7 +51,7 @@ var et2_dataview_dataProvider = Class.extend({
 		// All data rows are updated independently of all others - this allows
 		// user input between generation of the widgets.
 		//window.setTimeout(function() {_dataRow.updateData({"readonlys": {"__ALL__": true}});}, 0);
-		_dataRow.updateData({});
+		_dataRow.updateData({"content": {"ts_title": "Idx: " + _idx}});
 	},
 
 	unregisterDataRow: function(_dataRow) {

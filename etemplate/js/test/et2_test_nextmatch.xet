@@ -65,7 +65,7 @@
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<vbox>
 						<description value="Dynamic description tag:" />
-						<description value="${row}" />
+						<description value="$cont[$row][ts_title]" />
 						<button label="This is a button" />
 					</vbox>
 					<description value="test" />
