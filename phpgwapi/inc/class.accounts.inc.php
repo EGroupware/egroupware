@@ -340,6 +340,32 @@ class accounts
 	}
 
 	/**
+	 * Query for accounts
+	 *
+	 * @param string|array $pattern
+	 * @param array $options
+	 * @return array with id - title pairs of the matching entries
+	 */
+	public static function link_query($pattern, array &$options = array())
+	{
+		if (isset($options['filter']) && !is_array($options['filter']))
+		{
+			$options['filter'] = (array)$options['filter'];
+		}
+		$accounts = array();
+		foreach(self::getInstance()->search(array(
+			'type' => 'both',
+			'query' => $pattern,
+			'query_type' => 'all',
+		)) as $account)
+		{
+			$accounts[$account['account_id']] = common::display_fullname($account['account_lid'],
+				$account['account_firstname'],$account['account_lastname'],$account['account_id']);
+		}
+		return $accounts;
+	}
+
+	/**
 	 * Reads the data of one account
 	 *
 	 * It's depricated to use read with out parameter to read the internal data of this class!!!
