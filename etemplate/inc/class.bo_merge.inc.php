@@ -68,6 +68,7 @@ abstract class bo_merge
 		'quote-ampersand'	=> false,	// Prevent double encoding
 		'quote-nbsp'		=> true,	// XSLT can handle spaces easier
 		'preserve-entities'	=> true,
+		'wrap'			=> 0,		// Wrapping can break output
 	);
 
 	/**
@@ -741,7 +742,18 @@ abstract class bo_merge
 				{
 					// Clean HTML, if it's being kept
 					if($replace_tags && extension_loaded('tidy')) {
-						$value = tidy_repair_string($value, self::$tidy_config);
+						$tidy = new tidy();
+						$cleaned = $tidy->repairString($value, self::$tidy_config);
+						// Found errors. Strip it all so there's some output
+						if($tidy->getStatus() == 2)
+						{
+							error_log($tidy->errorBuffer);
+							$value = strip_tags($value);
+						}
+						else
+						{
+							$value = $cleaned;
+						}
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
