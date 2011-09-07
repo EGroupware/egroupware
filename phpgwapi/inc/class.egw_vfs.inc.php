@@ -1355,7 +1355,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @var array
 	 */
 	static public $encode = array(
-		'%' => '%25',
+		//'%' => '%25',	// % should be encoded, but easily leads to double encoding, therefore better NOT encodig it
 		'#' => '%23',
 		'?' => '%3F',
 		'/' => '',	// better remove it completly
