@@ -352,13 +352,18 @@
 
 			if (typeof part == "string")
 			{
-				// Escape all "'" chars and add the string to the parts array
-				parts.push("'" + part.replace(/'/g, "\\'") + "'");
+				// Escape all "'" and "\" chars and add the string to the parts array
+				parts.push("'" + part.replace(/'/g, "\\'").replace(/\\/g, "\\\\") + "'");
 			}
 			else
 			{
 				parts.push(_php_compileVariable(_vars, part));
 			}
+		}
+
+		if (parts.length == 0)
+		{
+			parts.push('""');
 		}
 
 		return parts.join(" + ");
@@ -399,7 +404,7 @@
 		var js = _php_compileJSCode(_vars, syntaxTree);
 
 		// Log the successfull compiling
-		et2_debug("log", "Compiled PHP '" + _expr + "' --> '" + js + "'");
+		et2_debug("log", "Compiled PHP " + _expr + " --> " + js);
 
 		// Prepate the attributes for the function constuctor
 		var attrs = [];
@@ -414,4 +419,26 @@
 	}
 
 }).call(window);
+
+
+
+// Include this code in in order to test the above code
+/*(function () {
+	var row = 10;
+	var row_cont = {"title": "Hello World!"};
+	var cont = {10: row_cont};
+
+	function test(_php, _res)
+	{
+		console.log(
+			et2_compilePHPExpression(_php, ["row", "row_cont", "cont"])
+				(row, row_cont, cont) === _res);
+	}
+
+	test("${row}[title]", "10[title]");
+	test("{$row_cont[title]}", "Hello World!");
+	test('{$cont["$row"][\'title\']}', "Hello World!");
+	test("\\\\", "\\");
+	test("", "");
+})();*/
 
