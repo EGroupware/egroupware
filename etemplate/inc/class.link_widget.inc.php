@@ -321,7 +321,7 @@ class link_widget
 				}
 				else
 				{
-					$value[$row]['icon'] = 'egw/'.$value[$row]['app'];
+					$value[$row]['icon'] = egw_link::get_registry($value[$row]['app'], 'icon');
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
 				}

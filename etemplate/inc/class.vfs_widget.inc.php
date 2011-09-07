@@ -309,10 +309,10 @@ class vfs_widget
 				$cell['label'] = mime_magic::mime2label($mime);
 
 				list($mime_main,$mime_sub) = explode('/',$mime);
-				if ($mime_main == 'egw')
+				if ($mime_main == 'egw' || isset($GLOBALS['egw_info']['apps'][$mime_main]))
 				{
-					$value = $mime_sub.'/navbar';	// egw-applications for link-widget
-					$cell['label'] = lang($mime_sub);
+					$value = $mime_main == 'egw' ? $mime_sub.'/navbar' : $mime;	// egw-applications for link-widget
+					$cell['label'] = lang($mime_main == 'egw' ? $mime_sub : $mime_main);
 					list($span,$class) = explode(',',$cell['span'],2);
 					$class .= ($class ? ' ' : '') . 'vfsMimeIcon';
 					$cell['span'] = $span.','.$class;
