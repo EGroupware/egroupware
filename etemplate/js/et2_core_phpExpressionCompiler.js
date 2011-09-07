@@ -173,9 +173,6 @@
 							state = STATE_EXPECT_RECT_BRACE_CLOSE;
 							break;
 
-						case " ": case "\n": case "\r": case "\t":
-							break;
-
 						default:
 							_p.pos--;
 							return variable;
@@ -419,8 +416,6 @@
 	}
 
 }).call(window);
-
-
 
 // Include this code in in order to test the above code
 /*(function () {
