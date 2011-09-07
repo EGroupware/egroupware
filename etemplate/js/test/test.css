@@ -190,6 +190,13 @@ span.et2_date span {
 	font-size: 9pt;
 }
 
+/** Display a loading icon **/
+.loading {
+	background-position: center right;
+	background-repeat: no-repeat;
+	background-image: url('gfx/ajax-loader.gif');
+}
+
 /**
  * File upload
  */
@@ -237,6 +244,19 @@ span.et2_date span {
 .et2_file .progress li.success > span.progressBar {
 	display: none;
 }
+
+
+/**
+ * Autocomplete - used in link widget
+ * Restricting result size
+ */
+.ui-autocomplete {
+	max-height: 20ex;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+}
+
 .egw_tooltip
 {
 	position: fixed;
