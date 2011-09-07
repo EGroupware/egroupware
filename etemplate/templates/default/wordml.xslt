@@ -208,9 +208,23 @@ Breakers
 				<w:t>&#xB7;</w:t><w:tab/>
 				</xsl:otherwise>
 			</xsl:choose>
-			</w:r><w:r>
-				<w:t><xsl:value-of select="normalize-space(text())" /></w:t>
 			</w:r>
+			<xsl:choose>
+				<xsl:when test="count(child::*)=0">
+					<xsl:variable name="text">
+						<xsl:value-of select="substring-after(text(),' ')"/>
+					</xsl:variable>
+					<w:r><w:t>
+<xsl:value-of select="normalize-space($text)"/>
+					</w:t></w:r>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- Strip out styles, they would need to be processed-->
+					<w:r><w:t>
+						<xsl:value-of select = "normalize-space(child::*)"/>
+					</w:t></w:r>
+				</xsl:otherwise>
+			</xsl:choose>
 			</w:p>
 		</xsl:for-each>
 	</xsl:template>

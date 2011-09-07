@@ -64,6 +64,12 @@ abstract class bo_merge
 		'clean'	=> true,
 		'output-xhtml'	=> true,
 		'show-body-only'	=> true,
+		'output-encoding'	=> 'utf-8',
+		'input-encoding'	=> 'utf-8',
+		'quote-ampersand'	=> false,	// Prevent double encoding
+		'quote-nbsp'		=> true,	// XSLT can handle spaces easier
+		'preserve-entities'	=> true,
+		'wrap'			=> 0,		// Wrapping can break output
 	);
 
 	/**
@@ -734,9 +740,19 @@ abstract class bo_merge
 				if (is_string($value) && (strpos($value,'<') !== false))
 				{
 					// Clean HTML, if it's being kept
-					if($replace_tags && extension_loaded('tidy'))
-					{
-						$value = tidy_repair_string($value, self::$tidy_config, 'utf8');
+					if($replace_tags && extension_loaded('tidy')) {
+						$tidy = new tidy();
+						$cleaned = $tidy->repairString($value, self::$tidy_config);
+						// Found errors. Strip it all so there's some output
+						if($tidy->getStatus() == 2)
+						{
+							error_log($tidy->errorBuffer);
+							$value = strip_tags($value);
+						}
+						else
+						{
+							$value = $cleaned;
+						}
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
