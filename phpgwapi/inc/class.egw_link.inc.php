@@ -185,6 +185,12 @@ class egw_link extends solink
 				}
 			}
 		}
+		// disable ability to link to accounts for non-admins, if account-selection is disabled
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			unset(self::$app_register['home-accounts']);
+		}
 		if (!(self::$title_cache = $GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi')))
 		{
 			self::$title_cache = array();
