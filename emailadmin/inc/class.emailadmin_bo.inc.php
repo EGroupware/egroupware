@@ -337,7 +337,7 @@ class emailadmin_bo extends so_sql
 					'ea_imap_login_type' => 'mail_login_type',
 					'ea_default_domain' => 'mail_suffix',
 					'ea_smtp_server'    => 'smtp_server',
-					'ea_smtp_port'      => 'smpt_port',
+					'ea_smtp_port'      => 'smtp_port',
 				)+($this->data['ea_smtp_auth']=='yes' ? array( //ToDo: if no, we may have to reset config values for that too?
 					'ea_smtp_auth_username' => 'smtp_auth_user',
 					'ea_smtp_auth_password' => 'smtp_auth_passwd',
