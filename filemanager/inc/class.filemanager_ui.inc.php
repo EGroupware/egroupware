@@ -726,7 +726,7 @@ class filemanager_ui
 					{
 						if ($name == 'name')
 						{
-							$to = egw_vfs::concat($content['dir'],$content['name']);
+							$to = egw_vfs::concat(egw_vfs::dirname($path),$content['name']);
 							if (file_exists(egw_vfs::PREFIX.$to) && $content['confirm_overwrite'] !== $to)
 							{
 								$tpl->set_validation_error('name',lang("There's already a file with that name!").'<br />'.
@@ -867,7 +867,7 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
-		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable($content['dir']);
+		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable(egw_vfs::dirname($path));
 		$readonlys['comment'] = !egw_vfs::is_writable($path);
 		$readonlys['tabs']['preview'] = $readonlys['tabs']['perms'] = $content['is_link'];
 
