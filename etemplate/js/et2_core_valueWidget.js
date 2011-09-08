@@ -41,7 +41,7 @@ var et2_valueWidget = et2_baseWidget.extend({
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
 			if (contentMgr != null) {
-				var val = contentMgr.getValueForID(this.id);
+				var val = contentMgr.getEntry(this.id);
 				if (val !== null)
 				{
 					_attrs["value"] = val;

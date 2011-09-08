@@ -14,13 +14,14 @@
 
 /*egw:uses
 	jquery.jquery;
+	et2_core_interfaces;
 	et2_core_baseWidget;
 */
 
 /**
  * Class which implements the "image" XET-Tag
  */ 
-var et2_image = et2_baseWidget.extend({
+var et2_image = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 
 	attributes: {
 		"src": {
@@ -44,17 +45,31 @@ var et2_image = et2_baseWidget.extend({
 		this._super.apply(this, arguments);
 
 		// Create the image or a/image tag
-		this.image = this.node = $j(document.createElement("img"));
+		var node = this.image = $j(document.createElement("img"));
 		if(this.options.link)
 		{
-			this.node = $j(document.createElement("a"));
-			this.image.appendTo(this.node);
+			this._node = $j(document.createElement("a"));
+			this.image.appendTo(node);
 		}
 		if(this.options["class"])
 		{
-			this.node.addClass(this.options["class"]);
+			node.addClass(this.options["class"]);
 		}
-		this.setDOMNode(this.node[0]);
+		this.setDOMNode(node[0]);
+	},
+
+	transformAttributes: function(_attrs) {
+		this._super.apply(arguments);
+
+		// Check to expand name
+		if (typeof _attrs["src"] != "undefined")
+		{
+			var src = this.getArrayMgr("content").getEntry(_attrs["src"]);
+			if (src)
+			{
+				_attrs["src"] = src;
+			}
+		}
 	},
 
 	set_label: function(_value) {
@@ -62,7 +77,7 @@ var et2_image = et2_baseWidget.extend({
 		this.options.label = _value;
 		// label is NOT the alt attribute in eTemplate, but the title/tooltip
 		this.image.attr("alt", _value);
-		this.image.set_statustext(_value);
+		this.set_statustext(_value);
 	},
 
 	setValue: function(_value) {
@@ -70,36 +85,69 @@ var et2_image = et2_baseWidget.extend({
 		this.set_src(_value);
 	},
 
+	percentagePreg: /^[0-9]+%$/,
+
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
 			return;
 		}
 
-		// Check to expand name
-		if(_value.indexOf("$") != -1 || _value.indexOf("@") != -1) {
-			var contentMgr = this.getArrayMgr("content");
-			if (contentMgr != null) {
-				var val = contentMgr.getValueForID(_value);
-				if (val !== null)
-				{
-					_value = val;
-				}
-			}
-		}
 		this.options.src = _value;
-		// Get application to use from template ID
-		var appname = this.getTemplateApp();
-		var src = egw.image(_value,appname || "phpgwapi");
-		if(src )
+
+		// Check whether "src" is a percentage
+		if (this.percentagePreg.test(_value))
 		{
-			this.image.attr("src", src).show();
+			this.getSurroundings().prependDOMNode(document.createTextNode(_value));
 		}
 		else
 		{
-			this.image.css("display","none");
+			// Get application to use from template ID
+			var src = egw.image(_value, this.getTemplateApp());
+			if(src)
+			{
+				this.image.attr("src", src).show();
+			}
+			else
+			{
+				this.image.css("display","none");
+			}
 		}
-	}
+	},
+
+	/**
+	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
+	 */
+
+	// Does currently not work for percentages, as the surroundings manager
+	// cannot opperate on other DOM-Nodes.
+
+/*	getDetachedAttributes: function(_attrs) {
+		_attrs.push("src", "label");
+	},
+
+	getDetachedNodes: function() {
+		return [this.node, this.image[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values) {
+		// Set the given DOM-Nodes
+		this.node = _nodes[0];
+		this.image = $j(_nodes[1]);
+
+		this.transformAttributes(_values);
+
+		// Set the attributes
+		if (_values["src"])
+		{
+			this.set_src(_values["src"]);
+		}
+
+		if (_values["label"])
+		{
+			this.set_label(_values["label"]);
+		}
+	}*/
 });
 
 et2_register_widget(et2_image, ["image"]);

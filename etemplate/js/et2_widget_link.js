@@ -118,7 +118,7 @@ var et2_link_to = et2_inputWidget.extend({
 		if (_attrs["select_options"] == null)
 		{
 			_attrs["select_options"] = this.getArrayMgr('content')
-				.getValueForID("options-" + this.id)
+				.getEntry("options-" + this.id)
 		}
 
 		// Default to an empty object

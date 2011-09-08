@@ -343,12 +343,14 @@
 		}
 
 		var parts = [];
+		var hasString = false;
 		for (var i = 0; i < _string.length; i++)
 		{
 			var part = _string[i];
 
 			if (typeof part == "string")
 			{
+				hasString = true;
 				// Escape all "'" and "\" chars and add the string to the parts array
 				parts.push("'" + part.replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'");
 			}
@@ -358,7 +360,7 @@
 			}
 		}
 
-		if (parts.length == 0)
+		if (!hasString) // Force the result to be of the type string
 		{
 			parts.push('""');
 		}
@@ -433,6 +435,7 @@
 	test("${row}[title]", "10[title]");
 	test("{$row_cont[title]}", "Hello World!");
 	test('{$cont["$row"][\'title\']}', "Hello World!");
+	test("$row_cont[${row}[title]]");
 	test("\\\\", "\\");
 	test("", "");
 })();*/

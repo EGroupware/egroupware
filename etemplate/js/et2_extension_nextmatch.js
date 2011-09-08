@@ -71,7 +71,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Create the data provider which cares about streaming the row data
 		// efficiently to the rows
-		this.dataProvider = new et2_dataview_dataProvider();
+		this.dataProvider = new et2_dataview_dataProvider(this, 100);
 
 		// Create the outer grid container
 		this.dataviewContainer = new et2_dataview_gridContainer(this.div,
@@ -99,6 +99,26 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		this.dynheight.update(function(_w, _h) {
 			this.dataviewContainer.resize(_w, _h);
 		}, this);
+	},
+
+	/**
+	 * Get Rows callback
+	 */
+	getRows: function(_fetchList, _callback, _context) {
+		console.log("Nextmatch will fetch ", _fetchList);
+		// Create the entries:
+		var entries = {};
+		for (var i = 0; i < _fetchList.length; i++)
+		{
+			var start = _fetchList[i].startIdx;
+			for (var j = 0; j < _fetchList[i].count; j++)
+			{
+				entries[start + j] =
+{"info_id":"5","info_type":"email","info_from":"tracker","info_addr":"tracker","info_subject":"InfoLog grid view: problem with Opera; 'permission denied' while saving","info_des":"<snip>","info_owner":"5","info_responsible":[],"info_access":"public","info_cat":"0","info_datemodified":1307112528,"info_startdate":1306503000,"info_enddate":"0", "info_id_parent":"0","info_planned_time":"0","info_replanned_time":"0","info_used_time":"0","info_status":"done", "info_confirm":"not","info_modifier":"5","info_link_id":0,"info_priority":"1","pl_id":"0","info_price":null, "info_percent":"100%","info_datecompleted":1307112528,"info_location":"","info_custom_from":1, "info_uid":"infolog-5-18d12c7bf195f6b9d602e1fa5cde28f1","info_cc":"","caldav_name":"5.ics","info_etag":"0", "info_created":1307112528,"info_creator":"5","links":[],"info_anz_subs":0,"sub_class":"normal_done","info_link":{"title":"tracker"},"class":"rowNoClose rowNoCloseAll ","info_type_label":"E-Mail","info_status_label":"done","info_number":"5"}
+			}
+		}
+
+		_callback.call(_context, entries);
 	},
 
 	/**
@@ -253,7 +273,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	/**
 	 * When the template attribute is set, the nextmatch widget tries to load
 	 * that template and to fetch the grid which is inside of it. It then calls
-	 * _parseGrid in order to get the information for the column headers etc.
 	 */
 	set_template: function(_value) {
 		if (!this.template)

@@ -23,6 +23,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 		this._super(_dataProvider, _rowProvider, _invalidationElem);
 
 		this._avgHeight = _avgHeight;
+		this._idx = null;
 
 		this.rowWidget = null;
 		this.hasAvgHeight = false;
@@ -37,7 +38,10 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 	destroy: function() {
 
 		// Unregister the row from the data provider
-		this.dataProvider.unregisterDataRow(this);
+		if (this._idx !== null)
+		{
+			this.dataProvider.unregisterDataRow(this._idx);
+		}
 
 		// Free the row widget first, if it has been set
 		if (this.rowWidget)

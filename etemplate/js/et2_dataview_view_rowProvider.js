@@ -76,17 +76,6 @@ var et2_dataview_rowProvider = Class.extend({
 				"data": []
 			};
 
-			// Include the "value" attribute if the widget is derrived from
-			// et2_valueWidget
-			if (_widget instanceof et2_valueWidget)
-			{
-				hasAttr = true;
-				widgetData.data.push({
-					"attribute": "value",
-					"expression": "@${row}"
-				});
-			}
-
 			// Get all attribute values
 			for (var key in _widget.attributes)
 			{
@@ -166,13 +155,22 @@ var et2_dataview_rowProvider = Class.extend({
 				// "detached" mode
 				var supportedAttrs = [];
 				widget.getDetachedAttributes(supportedAttrs);
+				supportedAttrs.push("id");
 				isDetachable = true;
 
-				for (var j = 0; j < _varAttrs[i].data.length && isDetachable; j++)
+				for (var j = 0; j < _varAttrs[i].data.length/* && isDetachable*/; j++)
 				{
 					var data = _varAttrs[i].data[j];
 
-					isDetachable &= supportedAttrs.indexOf(data.attribute) != -1;
+					var supportsAttr = supportedAttrs.indexOf(data.attribute) != -1;
+
+					if (!supportsAttr)
+					{
+						et2_debug("warn", "et2_IDetachedDOM widget " +
+							widget._type + " does not support " + data.attribute);
+					}
+
+					isDetachable &= supportsAttr;
 				}
 			}
 
@@ -294,7 +292,7 @@ var et2_dataview_rowProvider = Class.extend({
 			// Record the path to each DOM-Node
 			for (var j = 0; j < nodes.length; j++)
 			{
-				nodeFuncs[i] = this._compileDOMAccessFunc(_rowTemplate.row,
+				nodeFuncs[j] = this._compileDOMAccessFunc(_rowTemplate.row,
 					nodes[j]);
 			}
 		}
@@ -320,7 +318,7 @@ var et2_dataview_rowProvider = Class.extend({
 		};
 
 		// Create the row widget and insert the given widgets into the row
-		var rowWidget = new et2_dataview_rowWidget(row[0]);
+		var rowWidget = new et2_dataview_rowWidget(_rootWidget, row[0]);
 		rowWidget.createWidgets(_widgets);
 
 		// Get the set containing all variable attributes
@@ -354,6 +352,18 @@ var et2_dataview_rowProvider = Class.extend({
 		var rowWidget = null;
 		if (this._template.seperated.remaining.length > 0)
 		{
+			// Transform the variable attributes
+			for (var i = 0; i < this._template.seperated.remaining.length; i++)
+			{
+				var entry = this._template.seperated.remaining[i];
+
+				for (var j = 0; j < entry.data.length; j++)
+				{
+					var set = entry.data[j];
+					entry.widget.options[set.attribute] = mgrs["content"].expandName(set.expression);
+				}
+			}
+
 			// Create the row widget
 			var rowWidget = new et2_dataview_rowTemplateWidget(this._rootWidget,
 				_row[0]);
@@ -371,7 +381,7 @@ var et2_dataview_rowProvider = Class.extend({
 			var data = {};
 			for (var j = 0; j < entry.data.length; j++)
 			{
-				var set = entry.data[i];
+				var set = entry.data[j];
 				data[set.attribute] = mgrs["content"].expandName(set.expression);
 			}
 
@@ -382,6 +392,13 @@ var et2_dataview_rowProvider = Class.extend({
 				// Use the previously compiled node function to get the node
 				// from the entry
 				nodes[j] = entry.nodeFuncs[j](_row[0]);
+			}
+
+			// Set the array managers first
+			entry.widget._mgrs = mgrs;
+			if (typeof data.id != "undefined")
+			{
+				entry.widget.id = data.id;
 			}
 
 			// Call the setDetachedAttributes function
@@ -431,9 +448,9 @@ var et2_dataview_rowProvider = Class.extend({
 
 var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 
-	init: function(_row) {
+	init: function(_parent, _row) {
 		// Call the parent constructor with some dummy attributes
-		this._super(null, {"id": "", "type": "rowWidget"});
+		this._super(_parent, {"id": "", "type": "rowWidget"});
 
 		// Initialize some variables
 		this._widgets = [];

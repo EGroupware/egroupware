@@ -64,7 +64,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
 			if (contentMgr != null) {
-				var val = contentMgr.getValueForID(this.id);
+				var val = contentMgr.getEntry(this.id);
 				if (val !== null)
 				{
 					selected = val;
@@ -72,7 +72,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 			}
 			contentMgr = this.getArrayMgr("readonlys");
 			if (contentMgr != null) {
-				var val = contentMgr.getValueForID(this.id);
+				var val = contentMgr.getEntry(this.id);
 				if (val !== null)
 				{
 					hidden = val;

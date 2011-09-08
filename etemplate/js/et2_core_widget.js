@@ -510,7 +510,12 @@ var et2_widget = Class.extend({
 		// Apply the content of the modifications array
 		if (this.id)
 		{
-			var data = this.getArrayMgr("modifications").getValueForID(this.id);
+			if (typeof this.id != "string")
+			{
+				console.log(this.id);
+			}
+
+			var data = this.getArrayMgr("modifications").getEntry(this.id);
 			if (data instanceof Object)
 			{
 				for (var key in data)
@@ -769,7 +774,7 @@ var et2_widget = Class.extend({
 			this._template_application = this.getParent().getTemplateApp();
 			return this._template_application;
 		}
-		return null;
+		return "phpgwapi";
 	}
 });
 

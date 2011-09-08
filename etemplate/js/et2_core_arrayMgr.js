@@ -61,14 +61,14 @@ var et2_arrayMgr = Class.extend({
 		return this;
 	},
 
-	getValueForID : function(_id) {
+/*	getValueForID : function(_id) {
 		if (typeof this.data[_id] != "undefined")
 		{
 			return this.data[_id];
 		}
 
 		return null;
-	},
+	},*/
 
 	/**
 	 * Returns the path to this content array manager perspective as an array
@@ -306,7 +306,6 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 		// If the attribute is set, return that
 		if (typeof _attr != "undefined" && _attr !== null)
 		{
-			console.log(_attr, et2_evalBool(_attr));
 			return et2_evalBool(_attr);
 		}
 

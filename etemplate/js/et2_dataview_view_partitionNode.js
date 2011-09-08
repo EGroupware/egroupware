@@ -101,6 +101,12 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 			// Invalidate the parent node
 			if (this._parent)
 			{
+				// Invalidate the neighbor node
+				if (this._pidx < this._parent._children.length - 1)
+				{
+					this._parent._children[this._pidx + 1].invalidate();
+				}
+
 				this._parent.invalidate(origin ? this : _sender);
 			}
 		}

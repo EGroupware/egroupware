@@ -77,14 +77,14 @@ var et2_selectbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		// Try to find the options inside the "sel-options" array
-		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
+		_attrs["select_options"] = this.getArrayMgr("sel_options").getEntry(this.id);
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.
 		if (_attrs["select_options"] == null)
 		{
 			_attrs["select_options"] = this.getArrayMgr('content')
-				.getValueForID("options-" + this.id)
+				.getEntry("options-" + this.id)
 		}
 
 		// Default to an empty object

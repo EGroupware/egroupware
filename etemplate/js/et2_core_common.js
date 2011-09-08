@@ -336,6 +336,32 @@ function et2_arrayValues(_arr)
 }
 
 /**
+ * Equivalent to the PHP array_keys function
+ */
+function et2_arrayKeys(_arr)
+{
+	var result = [];
+	for (var key in _arr)
+	{
+		result.push(key);
+	}
+
+	return result;
+}
+
+function et2_arrayIntKeys(_arr)
+{
+	var result = [];
+	for (var key in _arr)
+	{
+		result.push(parseInt(key));
+	}
+
+	return result;
+}
+
+
+/**
  * Equivalent to the PHP substr function, partly take from phpjs, licensed under
  * the GPL.
  */

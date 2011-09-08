@@ -81,9 +81,6 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.value = "";
-		this.font_style = "";
-
 		// Create the span/label tag which contains the label text
 		this.span = $j(document.createElement(this.options["for"] ? "label" : "span"))
 			.addClass("et2_label");
@@ -98,6 +95,20 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 			this.options.extra_link_target);
 
 		this.setDOMNode(this.span[0]);
+	},
+
+	transformAttributes: function(_attrs) {
+		this._super.apply(arguments);
+
+		if (this.id)
+		{
+			var val = this.getArrayMgr("content").getEntry(this.id);
+
+			if (val)
+			{
+				_attrs["value"] = val;
+			}
+		}
 	},
 
 	_parseText: function(_value) {
@@ -131,7 +142,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value");
+		_attrs.push("value", "class");
 	},
 
 	getDetachedNodes: function()
@@ -141,10 +152,17 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
+		this.transformAttributes(_values);
+
 		if (typeof _values["value"] != "undefined")
 		{
 			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],
 				this.options.extra_link_target);
+		}
+
+		if (typeof _values["class"] != "undefined")
+		{
+			this.set_class(_values["class"]);
 		}
 	}
 });
