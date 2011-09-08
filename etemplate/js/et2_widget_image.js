@@ -21,7 +21,7 @@
 /**
  * Class which implements the "image" XET-Tag
  */ 
-var et2_image = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
+var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 
 	attributes: {
 		"src": {
@@ -95,23 +95,15 @@ var et2_image = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 
 		this.options.src = _value;
 
-		// Check whether "src" is a percentage
-		if (this.percentagePreg.test(_value))
+		// Get application to use from template ID
+		var src = egw.image(_value, this.getTemplateApp());
+		if(src)
 		{
-			this.getSurroundings().prependDOMNode(document.createTextNode(_value));
+			this.image.attr("src", src).show();
 		}
 		else
 		{
-			// Get application to use from template ID
-			var src = egw.image(_value, this.getTemplateApp());
-			if(src)
-			{
-				this.image.attr("src", src).show();
-			}
-			else
-			{
-				this.image.css("display","none");
-			}
+			this.image.css("display","none");
 		}
 	},
 
@@ -119,21 +111,17 @@ var et2_image = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
 	 */
 
-	// Does currently not work for percentages, as the surroundings manager
-	// cannot opperate on other DOM-Nodes.
-
-/*	getDetachedAttributes: function(_attrs) {
+	getDetachedAttributes: function(_attrs) {
 		_attrs.push("src", "label");
 	},
 
 	getDetachedNodes: function() {
-		return [this.node, this.image[0]];
+		return [this.image[0]];
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
 		// Set the given DOM-Nodes
-		this.node = _nodes[0];
-		this.image = $j(_nodes[1]);
+		this.image = $j(_nodes[0]);
 
 		this.transformAttributes(_values);
 
@@ -147,7 +135,7 @@ var et2_image = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 		{
 			this.set_label(_values["label"]);
 		}
-	}*/
+	}
 });
 
 et2_register_widget(et2_image, ["image"]);
