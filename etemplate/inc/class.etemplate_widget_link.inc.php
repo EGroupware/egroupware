@@ -48,7 +48,7 @@ class etemplate_widget_link extends etemplate_widget
 
 	/**
 	 * Set up what we know on the server side.
-	 * 
+	 *
 	 * Set the options for the application select.
 	 *
 	 * @param string $cname
@@ -63,18 +63,12 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. " + array2string($value));
 		}
-		
+
 		$app = $value['to_app'];
 		$id  = $value['to_id'];
 
 		$help = $attrs['help'] ? ($value['help'] ? $value['help'] : $attrs['help']) : lang('view this linked entry in its application');
 		self::setElementAttribute($cname, 'help', $help);
-		if($this->type == 'link-to') {
-			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-			$apps = egw_link::app_list($cell['size'] ? $cell['size'] : 'query');
-			asort($apps);
-			self::$request->sel_options[$form_name] += $apps;
-		}
 
 		if($attrs['type'] == 'link-list') {
 			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
@@ -92,13 +86,13 @@ class etemplate_widget_link extends etemplate_widget
 		$options['type'] = $type ? $type : $options['type'];
 error_log("$app, $pattern, $options");
 		$links = egw_link::query($app, $pattern, $options);
-		
+
 		$response = egw_json_response::get();
 		$response->data($links);
 	}
 
 	public function get_links($value) {
-		
+
 		$app = $value['to_app'];
 		$id  = $value['to_id'];
 

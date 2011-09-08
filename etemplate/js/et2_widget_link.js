@@ -111,8 +111,7 @@ var et2_link_to = et2_inputWidget.extend({
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 
-		// Try to find the options inside the "sel-options" array
-		_attrs["select_options"] = this.getArrayMgr("sel_options").getValueForID(this.id);
+		_attrs["select_options"] = egw.link_app_list('query');
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.

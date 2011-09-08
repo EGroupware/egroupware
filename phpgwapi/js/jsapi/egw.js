@@ -16,9 +16,13 @@ var egw;
 
 /**
  * Central object providing all kinds of api services on clientside:
- * - preferences:   egw.preferences("dateformat")
+ * - preferences:   egw.preferences(_name, _app)
  * - translation:   egw.lang("%1 entries deleted", 5)
- * - link registry: egw.open(123, "infolog")
+ * - link registry: egw.open(_id, _app), egw.link_get_registry(_app, _name), egw.link_app_list(_must_support)
+ * - configuration: egw.config(_name[, _app='phpgwapi'])
+ * - image urls:    egw.image(_name[, _app='phpgwapi'])
+ * - user data:     egw.user(_field)
+ * - user app data: egw.app(_app[, _name])
  */
 if (window.opener && typeof window.opener.egw == 'object')
 {
@@ -253,6 +257,81 @@ else
 		},
 		
 		/**
+		 * Check if $app is in the registry and has an entry for $name
+		 *
+		 * @param string $app app-name
+		 * @param string $name name / key in the registry, eg. 'view'
+		 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
+		 */
+		link_get_registry: function(_app, _name)
+		{
+			if (typeof this.link_registry[_app] == 'undefined')
+			{
+				return false;
+			}
+			var reg = this.link_registry[_app];
+			
+			// some defaults (we set them directly in the registry, to do this only once)
+			if (typeof reg[_name] == 'undefined')
+			{
+				switch(_name)
+				{
+					case 'name':
+						reg.name = _app;
+						break;
+					case 'icon':
+						var app_data = this.app(_app);
+						if (typeof app_data != 'undefined' && typeof app_data.icon != 'undefined')
+						{
+							reg.icon = (typeof app_data.icon_app != 'undefined' ? app_data.icon_app : _app)+'/'+app_data.icon;
+						}
+						else
+						{
+							reg.icon = _app+'/navbar';
+						}
+						break;
+				}
+			}
+			return typeof reg[_name] == 'undefined' ? false : reg[_name];
+		},
+		
+		/**
+		 * Get list of link-aware apps the user has rights to use
+		 *
+		 * @param string $must_support capability the apps need to support, eg. 'add', default ''=list all apps
+		 * @return array with app => title pairs
+		 */
+		link_app_list: function(_must_support)
+		{
+			var apps = [];
+			for (var type in this.link_registry)
+			{
+				var reg = this.link_registry[type];
+				
+				if (typeof _must_support != 'undefined' && _must_support && typeof reg[_must_support] == 'undefined') continue;
+				
+				var app_sub = type.split('-');
+				if (this.app(app_sub[0]))
+				{
+					apps.push({"type": type, "label": this.lang(this.link_get_registry(type,'name'))});
+				}
+			}
+			// sort labels (caseinsensitive) alphabetic
+			apps = apps.sort(function(_a,_b) { 
+				var al = _a.label.toUpperCase(); 
+				var bl = _b.label.toUpperCase(); 
+				return al == bl ? 0 : (al > bl ? 1 : -1);
+			});
+			// create sorted associative array / object
+			var sorted = {};
+			for(var i = 0; i < apps.length; ++i)
+			{
+				sorted[apps[i].type] = apps[i].label;
+			}
+			return sorted;
+		},
+		
+		/**
 		 * Link registry
 		 * 
 		 * @access: private, use egw.open() or egw.set_link_registry()
@@ -380,7 +459,7 @@ else
 		/**
 		 * Data about current user
 		 * 
-		 * @access: private, use egw.user(_field)
+		 * @access: private, use egw.user(_field) or egw.app(_app)
 		 */
 		userData: {},
 		
@@ -400,11 +479,27 @@ else
 		 * @param string _field
 		 * - 'account_id','account_lid','person_id','account_status',
 		 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
-		 * @return string|null
+		 * - 'apps': object with app => data pairs the user has run-rights for
+		 * @return string|array|null
 		 */
 		user: function (_field)
 		{
 			return this.userData[_field];
+		},
+
+		/**
+		 * Return data of apps the user has rights to run
+		 * 
+		 * Can be used the check of run rights like: if (egw.app('addressbook')) { do something if user has addressbook rights }
+		 * 
+		 * @param string _app
+		 * @param string _name attribute to return, default return whole app-data-object
+		 * @return object|string|null null if not found
+		 */
+		app: function(_app, _name)
+		{
+			return typeof _name == 'undefined' || typeof this.userData.apps[_app] == 'undefined' ? 
+				this.userData.apps[_app] : this.userData.apps[_app][_name];
 		}
 	};
 }

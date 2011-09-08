@@ -452,6 +452,11 @@ class accounts
 		{
 			$account = array_intersect_key($account, array_flip($keys));
 		}
+		// for current user, add the apps available to him
+		if ($id == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$account['apps'] = $GLOBALS['egw_info']['user']['apps'];
+		}
 		return json_encode($account);
 	}
 
