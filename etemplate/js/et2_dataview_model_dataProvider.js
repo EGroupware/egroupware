@@ -53,6 +53,8 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		{
 			window.clearTimeout(this._queueFlushTimeout);
 		}
+
+		this._super();
 	},
 
 	/**
@@ -65,8 +67,6 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 	registerDataRow: function(_dataRow, _idx) {
 		// Make sure _idx is a int
 		_idx = parseInt(_idx);
-
-		et2_debug("log", "--> registering row", _idx);
 
 		if (typeof this._registeredRows[_idx] != "undefined")
 		{
@@ -91,8 +91,6 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 	unregisterDataRow: function(_idx) {
 		// Make sure _idx is a int
 		_idx = parseInt(_idx);
-
-		et2_debug("log", "<-- unregistering row", _idx);
 
 		delete(this._registeredRows[_idx]);
 	},
