@@ -55,10 +55,17 @@ var et2_file = et2_inputWidget.extend({
 		this._super.apply(this, arguments)
 
 		this.node = null;
+		this.input = null;
+		this.progress = null;
+
+		if(!this.options.id) {
+			console.warn("File widget needs an ID.  Used 'file_widget'.");
+			this.options.id = "file_widget";
+		}
 
 		// Set up the URL to have the request ID & the widget ID
 		var instance = this.getInstanceManager();
-		
+	
 		var self = this;
 		this.asyncOptions = {
 			// Callbacks
@@ -69,11 +76,17 @@ var et2_file = et2_inputWidget.extend({
 			onProgress: function(event, progress, name, number, total) { return self.onProgress(event,progress,name,number,total);},
 			onError: function(event, name, error) { return self.onError(event,name,error);},
 			sendBoundary: window.FormData || jQuery.browser.mozilla,
-			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload") + 
-				"&request_id="+ instance.etemplate_exec_id
+			beforeSend: function(form) { return self.beforeSend(form);},
+			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload::etemplate")
 		};
 		this.asyncOptions.fieldName = this.options.id;
 		this.createInputWidget();
+	},
+
+	destroy: function() {
+		this.node = null;
+		this.input = null;
+		this.progress = null;
 	},
 	
 	createInputWidget: function() {
@@ -108,6 +121,20 @@ var et2_file = et2_inputWidget.extend({
 	
 	getInputNode: function() {
 		return this.input[0];
+	},
+
+	/**
+	 * Add in the request id
+	 */
+	beforeSend: function(form) {
+		var instance = this.getInstanceManager();
+		// Form object available, mess with it directly
+		if(form) {
+			return form.append("request_id", instance.etemplate_exec_id);
+		}
+
+		// No Form object, add in as string
+		return 'Content-Disposition: form-data; name="request_id"\r\n\r\n'+instance.etemplate_exec_id+'\r\n';
 	},
 
 	/**
