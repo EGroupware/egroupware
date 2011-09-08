@@ -573,9 +573,10 @@ class etemplate extends boetemplate
 	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
 	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
 	 *
+	 * @param int &$max_upload=null on return max. upload size in byte
 	 * @return string
 	 */
-	static function max_upload_size_message()
+	static function max_upload_size_message(&$max_upload=null)
 	{
 		$upload_max_filesize = ini_get('upload_max_filesize');
 		$post_max_size = ini_get('post_max_size');
@@ -1087,7 +1088,7 @@ class etemplate extends boetemplate
 		{
 			$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
-		if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && in_array($cell['type'],array('button','buttononly','image')) && strpos($cell['size'],',') === false)
+		if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && in_array($cell['type'],array('button','buttononly','image','progress')) && strpos($cell['size'],',') === false)
 		{
 			if ($this->rows == 1)
 			{
@@ -1655,6 +1656,7 @@ class etemplate extends boetemplate
 				}
 				break;
 			case 'image':	// size: [link],[link_target],[imagemap],[link_popup],[id]
+			case 'progress':
 				$image = $value != '' ? $value : $name;
 				if (is_string($image)) list($app,$img) = explode('/',$image,2);
 				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)

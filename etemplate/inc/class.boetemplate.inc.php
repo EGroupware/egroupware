@@ -35,6 +35,7 @@ class boetemplate extends soetemplate
 		'hrule'	=> 'Horizontal Rule',
 		'template' => 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
 		'image'	=> 'Image',			// label = url, name=link or method, help=alt or title
+		'progress' => 'Progressbar',// for BC, identical to image with percent value
 		'date'	=> '', 				// Datefield, size='' timestamp or size=format like 'm/d/Y'
 		'select'=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
 									// if size > 1 then multiple selections, size lines showed
