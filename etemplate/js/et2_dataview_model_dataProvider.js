@@ -94,7 +94,7 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 
 		et2_debug("log", "<-- unregistering row", _idx);
 
-		delete(this._data[_idx]);
+		delete(this._registeredRows[_idx]);
 	},
 
 	/* ---- PRIVATE FUNCTIONS ---- */
