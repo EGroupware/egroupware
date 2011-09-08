@@ -447,6 +447,10 @@ class filemanager_ui
 		}
 		open_mail(ids);
 	}
+	function egw_fileman_setMsg(_msg)
+	{
+		\$j(document.getElementById('nm[msg]')).text(_msg);
+	}
 </script>\n";
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
@@ -1282,7 +1286,7 @@ function force_download(_action, _senders)
 
 		$msg = self::action($action, $selected);
 
-		$response->script('$j(document.getElementById("nm[msg]")).text("'.$msg.'");');	// ->jquery('#nm[msg]','text' does not work!
+		$response->script('egw_fileman_setMsg("'.$msg.'");');
 		$response->script('clipboard_files = '.json_encode($clipboard_files).';');
 	}
 
