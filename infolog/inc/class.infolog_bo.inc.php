@@ -28,8 +28,6 @@ class infolog_bo
 	var $so;
 	var $vfs;
 	var $vfs_basedir='/infolog';
-	var $link_pathes = array();
-	var $send_file_ips = array();
 	/**
 	 * Set Logging
 	 *
@@ -184,9 +182,6 @@ class infolog_bo
 		);
 		if (($config_data = config::read('infolog')))
 		{
-			$this->link_pathes   = $config_data['link_pathes'];
-			$this->send_file_ips = $config_data['send_file_ips'];
-
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
 				foreach($config_data['status'] as $key => $data)
