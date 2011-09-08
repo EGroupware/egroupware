@@ -454,4 +454,6 @@ label input, label span, label div, label select, label textarea {
 	background-image: url(gfx/down.png);
 }
 
-
+.et2_clickable {
+	cursor: pointer;
+}

@@ -29,33 +29,55 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 			"type": "string",
 			"description": "Displayed image"
 		},
-		"link": {
+		"href": {
+			"name": "Link Target",
+			"type": "string",
+			"description": "Link URL, empty if you don't wan't to display a link."
 		},
-		"link_target":{
+		"extra_link_target": {
+			"name": "Link target",
+			"type": "string",
+			"default": "_self",
+			"description": "Link target descriptor"
+		},
+		"extra_link_popup": {
+			"name": "Popup",
+			"type": "string",
+			"description": "widthxheight, if popup should be used, eg. 640x480"
 		},
 		"imagemap":{
 		},
-		"link_size":{
+		"label": {
 		}
 	},
-
-	legacyOptions: ["link", "link_target", "imagemap", "link_size"],
+	legacyOptions: ["href", "link_target", "imagemap", "extra_link_popup", "id"],
 
 	init: function() {
 		this._super.apply(this, arguments);
 
 		// Create the image or a/image tag
 		var node = this.image = $j(document.createElement("img"));
-		if(this.options.link)
+		if (this.options.label)
 		{
-			this._node = $j(document.createElement("a"));
-			this.image.appendTo(node);
+			this.image.attr("alt", this.options.label).attr("title", this.options.label);
+		}
+		if (this.options.href) 
+		{
+			this.image.addClass('et2_clickable');
 		}
 		if(this.options["class"])
 		{
 			node.addClass(this.options["class"]);
 		}
 		this.setDOMNode(node[0]);
+	},
+	
+	click: function()
+	{
+		if(this.options.href)
+		{
+			egw.call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
+		}		
 	},
 
 	transformAttributes: function(_attrs) {
@@ -76,16 +98,13 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		if(_value == this.options.label) return;
 		this.options.label = _value;
 		// label is NOT the alt attribute in eTemplate, but the title/tooltip
-		this.image.attr("alt", _value);
-		this.set_statustext(_value);
+		this.image.attr("alt", _value).attr("title", _value);
 	},
 
 	setValue: function(_value) {
 		// Value is src, images don't get IDs
 		this.set_src(_value);
 	},
-
-	percentagePreg: /^[0-9]+%$/,
 
 	set_src: function(_value) {
 		if(!this.isInTree())
@@ -100,6 +119,11 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		if(src)
 		{
 			this.image.attr("src", src).show();
+		}
+		// allow url's too
+		else if (_value[0] == '/' || _value.substr(0,4) == 'http')
+		{
+			this.image.attr('src', _value).show();
 		}
 		else
 		{

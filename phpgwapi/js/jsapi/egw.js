@@ -500,6 +500,46 @@ else
 		{
 			return typeof _name == 'undefined' || typeof this.userData.apps[_app] == 'undefined' ? 
 				this.userData.apps[_app] : this.userData.apps[_app][_name];
+		},
+		
+		/**
+		 * Call a link, which can be either a menuaction, a EGroupware relative url or a full url
+		 * 
+		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+		 * @param string _target optional target
+		 * @param string _popup widthxheight, if a popup should be used
+		 */
+		call_link: function(_link, _target, _popup)
+		{
+			var url = _link;
+			if (url.indexOf('javascript:') == 0)
+			{
+				eval(url.substr(11));
+				return;
+			}
+			// link is not necessary an url, it can also be a menuaction!
+			if (url.indexOf('/') == -1 &&
+				url.split('.').length >= 3 &&
+				url.indexOf('mailto:') == -1 ||
+				url.indexOf('://') == -1)
+			{
+				url = "/index.php?menuaction="+url;
+			}
+			if (url[0] == '/')		// link relative to eGW
+			{
+				url = egw.webserverUrl + url;
+			}
+			if (_popup)
+			{
+				var w_h = _popup.split('x');
+				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
+				egw_openWindowCentered2(url, _target, w_h[0], w_h[1]);
+			}
+			else
+			{
+				window.open(url, _target);
+			}
+			
 		}
 	};
 }

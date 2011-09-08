@@ -31,5 +31,8 @@
 				<option value="5">Test 5</option>
 				<option value="6" statustext="This is the sixth option">Test 6</option>
 		</listbox>
+		<progress label="Completition" id="progress" value="50%" />
+		<image label="Image" src="/egroupware/phpgwapi/templates/default/images/logo.png" href="http://www.egroupware.org/" extra_link_target="_blank" />
+		<description value="www.egroupware.org" href="http://www.egroupware.org/" extra_link_target="_blank" />
 	</vbox>
 </overlay>

@@ -91,7 +91,12 @@ class xul_io
 		),
 		'image'   => array(
 			'.name' => 'image',
-			'name' => 'src'
+			'name' => 'src',
+			'size' => 'href,extra_link_target,imagemap,extra_link_popup,id',
+		),
+		'progres'   => array(
+			'.name' => 'progress',
+			'size' => 'href,extra_link_target,,extra_link_popup',
 		),
 		'tab' => array(
 			'.name' => 'tabbox,tabs,tabpanels'

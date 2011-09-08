@@ -65,7 +65,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 		"extra_link_popup": {
 			"name": "Popup",
 			"type": "string",
-			"description": "???"
+			"description": "widthxheight, if popup should be used, eg. 640x480"
 		},
 		"extra_link_title": {
 			"name": "Link Title",
