@@ -308,6 +308,8 @@ var et2_date_duration = et2_date.extend({
 
 	legacyOptions: ["data_format","display_format", "hours_per_day", "empty_not_0", "short_labels"],
 
+	time_formats: {"d":"d","h":"h","m":"m"},
+
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -319,6 +321,13 @@ var et2_date_duration = et2_date.extend({
 			this.options.percent_allowed = true;
 			this.options.display_format = this.options.display_format.replace("%","");
 		}
+
+		// Get translations
+		this.time_formats = {
+			"d": this.options.short_labels ? egw.lang("m") : egw.lang("Days"),
+			"h": this.options.short_labels ? egw.lang("h") : egw.lang("Hours"),
+			"m": this.options.short_labels ? egw.lang("m") : egw.lang("Minutes")
+		},
 		this.createInputWidget();
 	},
 	
@@ -328,22 +337,16 @@ var et2_date_duration = et2_date.extend({
 		this.duration = $j(document.createElement("input")).attr("size", "2");
 		this.node.append(this.duration);
 
-		// Time format labels
-		var time_formats = {
-			"d": this.options.short_labels ? egw.lang("m") : egw.lang("Days"),
-			"h": this.options.short_labels ? egw.lang("h") : egw.lang("Hours"),
-			"m": this.options.short_labels ? egw.lang("m") : egw.lang("Minutes")
-		};
 		if(this.options.display_format.length > 1)
 		{
 			this.format = $j(document.createElement("select"));
 			this.node.append(this.format);
 
 			for(var i = 0; i < this.options.display_format.length; i++) {
-				this.format.append("<option value='"+this.options.display_format[i]+"'>"+time_formats[this.options.display_format[i]]+"</option>");
+				this.format.append("<option value='"+this.options.display_format[i]+"'>"+this.time_formats[this.options.display_format[i]]+"</option>");
 			}
 		} else {
-			this.node.append(time_formats[this.options.display_format]);
+			this.format = $j(document.createElement("<span>"+this.time_formats[this.options.display_format])+"</span>").appendTo(this.node);
 		}
 	},
 	attachToDOM: function() {
@@ -384,6 +387,40 @@ var et2_date_duration = et2_date.extend({
 	},
 	set_value: function(_value) {
 		this.options.value = _value;
+
+		var display = this._convert_to_display(_value);
+
+		// Set display
+		if(this.duration[0].nodeName == "INPUT")
+		{
+			this.duration.val(display.value);
+		}
+		else
+		{
+			this.duration.text(display.value + " ");
+		}
+
+		// Set unit as figured for display
+		if(display.unit != this.options.display_format)
+		{
+			if(this.format.children().length > 1) {
+				$j("option[value='"+display.unit+"']",this.format).attr('selected','selected');
+			}
+			else
+			{
+				this.format.text(this.time_formats[display.unit]);
+			}
+		}
+	},
+
+	/**
+	 * Converts the value in data format into value in display format.
+	 *
+	 * @param _value int/float Data in data format
+	 *
+	 * @return Object {value: Value in display format, unit: unit for display}
+	 */
+	_convert_to_display: function(_value) {
 		if (_value)
                 {
 			// Put value into minutes for further processing
@@ -419,14 +456,7 @@ var et2_date_duration = et2_date.extend({
                         _value = _value.replace('.',sep);
                 }
 
-		// Set unit as figured above
-		if(_unit != this.options.display_format && this.format)
-		{
-			$j("option[value='"+_unit+"']",this.format).attr('selected','selected');
-		}
-
-		// Set display
-		this.duration.val(_value);
+		return {value: _value, unit:_unit};
 	},
 	
 	/**
@@ -461,6 +491,64 @@ var et2_date_duration = et2_date.extend({
 	}
 });
 et2_register_widget(et2_date_duration, ["date-duration"]);
+
+
+var et2_date_duration_ro = et2_date_duration.extend({
+	createInputWidget: function() {
+
+		this.node = $j(document.createElement("span"));
+		var display = this._convert_to_display(this.options.value);
+		this.duration = $j(document.createElement("span")).appendTo(this.node);
+		this.format = $j(document.createElement("span")).appendTo(this.node);
+	},
+
+	/**
+	 * Code for implementing et2_IDetachedDOM 
+	 * Fast-clonable read-only widget that only deals with DOM nodes, not the widget tree
+	 */
+
+	/**
+	 * Build a list of attributes which can be set when working in the
+	 * "detached" mode in the _attrs array which is provided
+	 * by the calling code.
+	 */
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("value");
+	},
+
+	/**
+	 * Returns an array of DOM nodes. The (relativly) same DOM-Nodes have to be
+	 * passed to the "setDetachedAttributes" function in the same order.
+	 */
+	getDetachedNodes: function() {
+		return [this.duration[0], this.format[0]];
+	},
+
+	/**
+	 * Sets the given associative attribute->value array and applies the
+	 * attributes to the given DOM-Node.
+	 *
+	 * @param _nodes is an array of nodes which has to be in the same order as
+	 *      the nodes returned by "getDetachedNodes"
+	 * @param _values is an associative array which contains a subset of attributes
+	 *      returned by the "getDetachedAttributes" function and sets them to the
+	 *      given values.
+	 */
+	setDetachedAttributes: function(_nodes, _values) {
+		for(var i = 0; i < _nodes.length; i++) {
+			// Clear the node
+			for (var i = _node.childNodes.length - 1; i >= 0; i--)
+			{
+				_node.removeChild(_node.childNodes[i]);
+			}
+		}
+		var display = this._convert_to_display(_values.value);
+		_nodes[0].appendChild(document.createTextNode(display.value));
+		_nodes[1].appendChild(document.createTextNode(display.unit));
+	}
+
+});
+et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 
 /**
  * et2_date_ro is the readonly implementation of some date widget.
