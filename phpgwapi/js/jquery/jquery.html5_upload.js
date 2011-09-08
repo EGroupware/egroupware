@@ -141,6 +141,7 @@
                                         if (window.FormData) {//Many thanks to scottt.tw
                                                 var f = new FormData();
                                                 f.append(typeof(options.fieldName) == "function" ? options.fieldName() : options.fieldName, file);
+                                                if(typeof(options.beforeSend) == "function") { options.beforeSend(f);} // Give eGW a chance to interfere
                                                 xhr.send(f);
                                         }
                                         else if (file.getAsBinary) {//Thanks to jm.schelcher
@@ -170,6 +171,16 @@
                                                 /* Append binary data. */
                                                 builder += file.getAsBinary();
                                                 builder += crlf;
+
+						// Give eGW a chance to interfere
+						if(typeof(options.beforeSend) == "function") { 
+							builder += dashdash;
+							builder += boundary;
+							builder += crlf;
+
+							builder+=options.beforeSend();
+							builder += crlf;
+						}
 
                                                 /* Write boundary. */
                                                 builder += dashdash;
