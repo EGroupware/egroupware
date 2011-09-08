@@ -318,7 +318,7 @@ var et2_dataview_rowProvider = Class.extend({
 		};
 
 		// Create the row widget and insert the given widgets into the row
-		var rowWidget = new et2_dataview_rowWidget(_rootWidget, row[0]);
+		var rowWidget = new et2_dataview_rowWidget(rowTemplate.mgrs, row[0]);
 		rowWidget.createWidgets(_widgets);
 
 		// Get the set containing all variable attributes
@@ -448,14 +448,15 @@ var et2_dataview_rowProvider = Class.extend({
 
 var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 
-	init: function(_parent, _row) {
+	init: function(_mgrs, _row) {
 		// Call the parent constructor with some dummy attributes
-		this._super(_parent, {"id": "", "type": "rowWidget"});
+		this._super(null, {"id": "", "type": "rowWidget"});
 
 		// Initialize some variables
 		this._widgets = [];
 
-		// Copy the given DOM node
+		// Copy the given DOM node and the content arrays
+		this._mgrs = _mgrs;
 		this._row = _row;
 	},
 

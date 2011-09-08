@@ -53,8 +53,6 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		{
 			window.clearTimeout(this._queueFlushTimeout);
 		}
-
-		this._super();
 	},
 
 	/**
