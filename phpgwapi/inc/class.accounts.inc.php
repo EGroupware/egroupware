@@ -271,7 +271,7 @@ class accounts
 
 			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
 			{
-				$members = $this->members($group,true);
+				$members = $this->members($param['type'],true);
 				$param['type'] = 'accounts';
 			}
 			elseif ($param['type'] == 'owngroups')
