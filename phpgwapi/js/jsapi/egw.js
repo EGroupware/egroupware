@@ -527,7 +527,7 @@ else
 			}
 			if (url[0] == '/')		// link relative to eGW
 			{
-				url = egw.webserverUrl + url;
+				url = this.webserverUrl + url;
 			}
 			if (_popup)
 			{
@@ -539,7 +539,106 @@ else
 			{
 				window.open(url, _target);
 			}
-			
+		},
+		
+		/**
+		 * Generate a url which supports url or cookies based sessions
+		 *
+		 * Please note, the values of the query get url encoded!
+		 *
+		 * @param string _url a url relative to the egroupware install root, it can contain a query too
+		 * @param array|string _extravars query string arguements as string or array (prefered)
+		 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
+		 * @return string generated url
+		 */
+		link: function(_url, _extravars)
+		{
+			if (_url[0] != '/')
+			{
+				var app = window.egw_appName;
+				if (app != 'login' && app != 'logout') _url = app+'/'+_url;
+			}
+			// append the url to the webserver url, but avoid more then one slash between the parts of the url
+			var webserver_url = this.webserverUrl;
+			// patch inspired by vladimir kolobkov -> we should not try to match the webserver url against the url without '/' as delimiter,
+			// as webserver_url may be part of _url (as /egw is part of phpgwapi/js/egw_instant_load.html)
+			if ((_url[0] != '/' || webserver_url != '/') && (!webserver_url || _url.indexOf(webserver_url+'/') == -1))
+			{
+				if(_url[0] != '/' && webserver_url.lastIndexOf('/') != webserver_url.length-1)
+				{
+					_url = webserver_url +'/'+ _url;
+				}
+				else
+				{
+					_url = webserver_url + _url;
+				}
+			}
+	
+			var vars = {};
+			/* not sure we still need to support that
+			// add session params if not using cookies
+			if (!$GLOBALS['egw_info']['server']['usecookies'])
+			{
+				$vars['sessionid'] = $GLOBALS['egw']->session->sessionid;
+				$vars['kp3'] = $GLOBALS['egw']->session->kp3;
+				$vars['domain'] = $GLOBALS['egw']->session->account_domain;
+			}*/
+	
+			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
+			var url_othervars = _url.split('?',2);
+			_url = url_othervars[0];
+			var othervars = url_othervars[1];
+			if (_extravars && typeof _extravars == 'object')
+			{
+				$j.extend(vars, _extravars);
+				_extravars = othervars;
+			}
+			else
+			{
+				if (othervars) _extravars += (_extravars?'&':'').othervars;
+			}
+	
+			// parse extravars string into the vars array
+			if (_extravars)
+			{
+				_extravars = _extravars.split('&');
+				for(var i=0; i < _extravars.length; ++i)
+				{
+					var name_val = _extravars[i].split('=',2);
+					var name = name_val[0];
+					var val = name_val[1];
+					if (val.indexOf('%26') != -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
+					if (name.lastIndexOf('[]') == name.length-2)
+					{
+						name = name.substr(0,name.length-2);
+						if (typeof vars[name] == 'undefined') vars[name] = [];
+						vars[name].push(val);
+					}
+					else
+					{
+						vars[name] = val;
+					}
+				}
+			}
+	
+			// if there are vars, we add them urlencoded to the url
+			var query = [];
+			for(var name in vars)
+			{
+				var val = vars[name];
+				if (typeof val == 'object')
+				{
+					for(var i=0; i < val.length; ++i)
+					{
+						query.push(name+'[]='+encodeURIComponent(val[i]));
+					}
+				}
+				else
+				{
+					query.push(name+'='+encodeURIComponent(val));
+				}
+			}
+			return query.length ? _url+'?'+query.join('&') : _url;
 		}
 	};
 }

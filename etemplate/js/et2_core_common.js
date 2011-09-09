@@ -171,6 +171,7 @@ function et2_checkType(_val, _type, _attr)
 			if (_val !== "")
 			{
 				// TODO: Parse JS code properly
+				_val = _val.replace(/egw::link\(/g,'egw.link(');
 				try
 				{
 					return new Function(_val); 
