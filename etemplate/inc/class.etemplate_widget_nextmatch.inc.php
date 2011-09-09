@@ -214,6 +214,15 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		*/
 		// otherwise we get stoped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
+
+		// remove empty rows required by old etemplate to compensate for header rows
+		foreach($rows as $n => $row)
+		{
+			if (is_array($row)) break;
+			unset($rows[$n]);
+		}
+		$rows = array_values($rows);	// renumber keys to be 0 based
+
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
 	}
