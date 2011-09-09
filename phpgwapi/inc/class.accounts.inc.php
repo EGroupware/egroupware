@@ -455,7 +455,11 @@ class accounts
 		// for current user, add the apps available to him
 		if ($id == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$account['apps'] = $GLOBALS['egw_info']['user']['apps'];
+			foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+			{
+				unset($data['table_defs']);	// no need for that on the client
+				$account['apps'][$app] = $data;
+			}
 		}
 		return json_encode($account);
 	}
