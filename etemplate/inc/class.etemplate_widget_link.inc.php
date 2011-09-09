@@ -61,14 +61,14 @@ class etemplate_widget_link extends etemplate_widget
 
 		if(!is_array($value))
 		{
-			throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. " + array2string($value));
+			throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
 		}
 
 		$app = $value['to_app'];
 		$id  = $value['to_id'];
 
-		$help = $attrs['help'] ? ($value['help'] ? $value['help'] : $attrs['help']) : lang('view this linked entry in its application');
-		self::setElementAttribute($cname, 'help', $help);
+		// ToDo: implement on client-side
+		if (!$attrs['help']) self::setElementAttribute($form_name, 'help', 'view this linked entry in its application');
 
 		if($attrs['type'] == 'link-list') {
 			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
@@ -111,7 +111,7 @@ error_log("$app, $pattern, $options");
 			}
 		}
 		$result = egw_link::link($app, $id, $links);
-		
+
 		$response = egw_json_response::get();
 		$response->data($result !== false);
 	}
