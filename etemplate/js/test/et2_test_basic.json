@@ -1,0 +1,5 @@
+var basic_data = {
+	content: {
+		"progress":	"50%",
+	}
+}

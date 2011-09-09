@@ -497,3 +497,15 @@ label input, label span, label div, label select, label textarea {
 .et2_clickable {
 	cursor: pointer;
 }
+
+div.et2_progress {
+	border: 1px solid black;
+	background-color: white;
+	width: 30px;
+	padding: 1px; 
+	text-align: left;
+}
+div.et2_progress > div {
+	background-color: #D00000;
+	height: 5px;
+}
