@@ -667,7 +667,7 @@ class etemplate_widget
 	 */
 	public function &getElementAttribute($name, $attr)
 	{
-		error_log(__METHOD__."('$name', '$attr')");
+		//error_log(__METHOD__."('$name', '$attr')");
 		return self::$request->modifications[$name][$attr];
 	}
 
@@ -684,7 +684,7 @@ class etemplate_widget
 		$ref =& self::$request->modifications[$name][$attr];
 		if (!is_null($val)) $ref = $val;
 
-		error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
+		//error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
 		return $ref;
 	}
 
