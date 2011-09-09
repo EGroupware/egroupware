@@ -879,7 +879,10 @@ egwActionObject.prototype.remove = function() {
 	{
 		var idx = this.parent.children.indexOf(this);
 
-		this.parent.children.splice(idx, 1);
+		if (idx >= 0)
+		{
+			this.parent.children.splice(idx, 1);
+		}
 	}
 }
 

@@ -11,6 +11,9 @@
 
 /*egw:uses
 	egw_menu;
+	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/dhtmlxmenu.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/dhtmlxcommon.js;
 */
 
 function egwMenuImpl(_structure)

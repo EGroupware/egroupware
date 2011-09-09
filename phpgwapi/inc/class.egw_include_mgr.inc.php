@@ -189,19 +189,26 @@ class egw_include_mgr
 			// base file
 			if (count($entry) == 1)
 			{
-				// Assemble a filename
-				$filename = dirname($path).'/'.$entry[0].'.js';
-
-				if (is_readable(EGW_SERVER_ROOT.($filename)))
+				if ($entry[0][0] == "/")
 				{
-					if (!$this->file_processed($filename))
-					{
-						$uses_path = $filename;
-					}
+					$uses_path = $this->translate_params($entry[0], null, '');
 				}
 				else
 				{
-					$uses_path = $this->translate_params($entry[0], null, 'phpgwapi');
+					// Assemble a filename
+					$filename = dirname($path).'/'.$entry[0].'.js';
+
+					if (is_readable(EGW_SERVER_ROOT.($filename)))
+					{
+						if (!$this->file_processed($filename))
+						{
+							$uses_path = $filename;
+						}
+					}
+					else
+					{
+						$uses_path = $this->translate_params($entry[0], null, 'phpgwapi');
+					}
 				}
 			}
 			else if (count($entry) == 2)
@@ -267,7 +274,8 @@ class egw_include_mgr
 	 */
 	private function translate_params($package, $file, $app)
 	{
-		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.(parse_url($path = $package, PHP_URL_PATH))) ||
+		if ($package[0] == '/' && (is_readable(EGW_SERVER_ROOT.(parse_url($path = $package, PHP_URL_PATH))) ||
+				is_readable(EGW_SERVER_ROOT.($path = $package))) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
