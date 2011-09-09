@@ -59,9 +59,13 @@ class etemplate_widget_link extends etemplate_widget
 		$form_name = self::form_name($cname, $this->id);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
-		if(!is_array($value))
+		if($value && !is_array($value))
 		{
 			throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
+		}
+		elseif (!$value)
+		{
+			return;
 		}
 
 		$app = $value['to_app'];
