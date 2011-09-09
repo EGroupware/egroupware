@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS file which contains the complete et2 module
+ * EGroupware eTemplate2 - JS file which contains the complete et2 module
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -32,6 +32,7 @@
 	et2_widget_image;
 	et2_widget_file;
 	et2_widget_link;
+	et2_widget_progress;
 
 	et2_extension_nextmatch;
 
