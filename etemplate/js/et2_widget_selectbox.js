@@ -95,6 +95,10 @@ var et2_selectbox = et2_inputWidget.extend({
 	},
 
 	_appendOptionElement: function(_value, _label, _title) {
+		if(_value == "" && (_label == null || _label == "")) {
+			_label = this.options.empty_label;
+		}
+
 		var option = $j(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label);
@@ -103,7 +107,6 @@ var et2_selectbox = et2_inputWidget.extend({
 		{
 			option.attr("title", _title);
 		}
-
 		option.appendTo(this.input);
 	},
 
