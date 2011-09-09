@@ -229,7 +229,7 @@ class etemplate_new extends etemplate_widget_template
 	{
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);
-		error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
+		//error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
 
 		return (boolean)$this->rel_path;
 	}
@@ -335,6 +335,48 @@ class etemplate_new extends etemplate_widget_template
 		common::egw_header();
 		_debug_array($content);
 		common::egw_footer();
+	}
+
+	/**
+	 * Message containing the max Upload size from the current php.ini settings
+	 *
+	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
+	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
+	 *
+	 * @param int &$max_upload=null on return max. upload size in byte
+	 * @return string
+	 */
+	static function max_upload_size_message(&$max_upload=null)
+	{
+		$upload_max_filesize = ini_get('upload_max_filesize');
+		$post_max_size = ini_get('post_max_size');
+		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
+
+		return lang('Maximum size for uploads').': '.egw_vfs::hsize($max_upload).
+			" (php.ini: upload_max_filesize=$upload_max_filesize, post_max_size=$post_max_size)";
+	}
+
+	/**
+	 * Convert numbers like '32M' or '512k' to integers
+	 *
+	 * @param string $size
+	 * @return int
+	 */
+	private static function km2int($size)
+	{
+		if (!is_numeric($size))
+		{
+			switch(strtolower(substr($size,-1)))
+			{
+				case 'm':
+					$size = 1024*1024*(int)$size;
+					break;
+				case 'k':
+					$size = 1024*(int)$size;
+					break;
+			}
+		}
+		return (int)$size;
 	}
 }
 
