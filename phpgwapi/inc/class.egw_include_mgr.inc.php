@@ -136,7 +136,11 @@ class egw_include_mgr
 					// an absolute path (initialized by "/").
 					if ($mod[0] != '/')
 					{
-						$mod = explode(".", $mod);
+						$mod = explode(".", $mod, 3);
+					}
+					else
+					{
+						$mod = array($mod);
 					}
 					$empty = false;
 
