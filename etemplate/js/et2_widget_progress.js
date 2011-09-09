@@ -14,14 +14,14 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_interfaces;
-	et2_core_baseWidget;
+	et2_core_valueWidget;
 */
 
 /**
  * Class which implements the "image" XET-Tag
  */ 
-var et2_progress = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
-
+var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM, 
+{
 	attributes: {
 		"href": {
 			"name": "Link Target",
@@ -48,50 +48,53 @@ var et2_progress = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 	{
 		this._super.apply(this, arguments);
 
-		var outer = $j(document.createElement("div")).addClass("et2_progress");
-		this.node = $j(document.createElement("div")).width(0).appendTo(outer);
+		var outer = document.createElement("div");
+		outer.className = "et2_progress";
+		this.progress = document.createElement("div");
+		this.progress.style.width = "0";
+		outer.appendChild(this.progress);
 
 		if (this.options.href) 
 		{
-			outer.addClass('et2_clickable');
+			outer.className += ' et2_clickable';
 		}
 		if(this.options["class"])
 		{
-			outer.addClass(this.options["class"]);
+			outer.className += ' '+this.options["class"];
 		}
-		this.setDOMNode(outer[0]);
-// gives error "this.node has no method width"
-// this.set_value(50);
+		this.setDOMNode(outer);	// set's this.node = outer
 	},
 	
 	click: function()
 	{
+		this._super.apply(this, arguments);
+
 		if(this.options.href)
 		{
 			egw.call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
-		}		
+		}
 	},
 
-	// tried set_value and setValue, both get never called :-(
+	// setting the value as width of the progress-bar
 	set_value: function(_value) 
 	{
-		if (_value != "") _value = parseInt(_value)+"%";	// make sure we have percent attached
-		this.node.width(_value);
+		_value = parseInt(_value)+"%";	// make sure we have percent attached
+		this.progress.style.width = _value;
 		if (!this.options.label) this.set_label(_value);
 	},
 	
 	// set's label as title of this.node
 	set_label: function(_value) 
 	{
-		this.node.attr("title", _value);
-	}
+		this.node.title = _value;
+	},
 
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
 	 */
-/*
+
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("src", "label");
+		_attrs.push("value", "label");
 	},
 
 	getDetachedNodes: function() {
@@ -100,21 +103,20 @@ var et2_progress = et2_baseWidget.extend(/*et2_IDetachedDOM,*/ {
 
 	setDetachedAttributes: function(_nodes, _values) {
 		// Set the given DOM-Nodes
-		this.node = $j(_nodes[0]);
+		this.node = _nodes[0];
 
 		this.transformAttributes(_values);
 
 		// Set the attributes
-		if (_values["src"])
-		{
-			this.set_value(_values["value"]);
-		}
-
 		if (_values["label"])
 		{
 			this.set_label(_values["label"]);
 		}
-	}*/
+		if (_values["value"])
+		{
+			this.set_value(_values["value"]);
+		}
+	}
 });
 
 et2_register_widget(et2_progress, ["progress"]);
