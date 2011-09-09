@@ -815,9 +815,10 @@ class addressbook_bo extends addressbook_so
 
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
-		if (!$contact['owner'])
+		// ensure accounts and group addressbooks are never private!
+		if ($contact['owner'] <= 0)
 		{
-			$contact['private'] = 0;	// accounts are never private!
+			$contact['private'] = 0;
 		}
 		if(!$ignore_acl && !$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
 		{
