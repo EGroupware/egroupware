@@ -1466,7 +1466,7 @@ class so_sql
 				{
 					$data = $row[current($cols)];
 				}
-				$ret[$row[$key_col]] = $data;
+				if ($data) $ret[$row[$key_col]] = $data;
 			}
 		}
 		return $cache[$cache_key] =& $ret;
