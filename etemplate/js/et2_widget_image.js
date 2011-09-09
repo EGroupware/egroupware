@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Description object
+ * EGroupware eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -50,7 +50,7 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		"label": {
 		}
 	},
-	legacyOptions: ["href", "link_target", "imagemap", "extra_link_popup", "id"],
+	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],
 
 	init: function() {
 		this._super.apply(this, arguments);
