@@ -1435,7 +1435,7 @@ class so_sql
 		}
 		if (!is_array($value_col)) $value_col = array($value_col);
 
-		$cols = array();
+		$cols = $ret = array();
 		foreach($value_col as $key => $col)
 		{
 			$cols[$key] = preg_match('/AS ([a-z_0-9]+)$/i',$col,$matches) ? $matches[1] : $col;
