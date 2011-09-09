@@ -222,7 +222,7 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 {
 	if (!file_exists($config[$name])) bail_out(1,$config[$name].' not found!');
 }
-$setup_cli = $config['php'].' -d memory_limit=64M '.$config['setup-cli'];
+$setup_cli = $config['php'].' -d memory_limit=265M '.$config['setup-cli'];
 
 if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
 {
