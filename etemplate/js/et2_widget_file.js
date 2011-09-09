@@ -46,6 +46,18 @@ var et2_file = et2_inputWidget.extend({
 			"type": "string",
 			"default": et2_no_init,
 			"description": "The ID of an alternate node (div) to display progress and results."
+		},
+		"onStart": {
+			"name": "Start event handler",
+			"type": "any",
+			"default": et2_no_init,
+			"description": "A (js) function called when an upload starts.  Return true to continue with upload, false to cancel."
+		},
+		"onFinish": {
+			"name": "Finish event handler",
+			"type": "any",
+			"default": et2_no_init,
+			"description": "A (js) function called when all files to be uploaded are finished."
 		}
 	},
 
@@ -142,6 +154,9 @@ var et2_file = et2_inputWidget.extend({
 	 */
 	onStart: function(event, file_count) {
 		this.disabled_buttons = $j("input[type='submit'], button").not("[disabled]").attr("disabled", true);
+
+		event.data = this;
+		if(this.options.onStart && typeof this.options.onStart == 'function') return this.options.onStart(event,file_count);
 		return true;
 	},
 
@@ -150,6 +165,8 @@ var et2_file = et2_inputWidget.extend({
 	 */
 	onFinish: function(event, file_count) {
 		this.disabled_buttons.attr("disabled", false);
+		event.data = this;
+		if(this.options.onFinish && typeof this.options.onFinish == 'function') return this.options.onFinish(event,file_count);
 	},
 
 	
@@ -169,8 +186,8 @@ var et2_file = et2_inputWidget.extend({
 		{
 			var status = $j("<li file='"+file_name+"'>"+file_name
 					+"<div class='remove'/><span class='progressBar'><p/></span></li>")
-				.appendTo(this.progress)
-				.click(this, this.cancel);
+				.appendTo(this.progress);
+			$j("div.remove",status).click(this, this.cancel);
 			if(error != "")
 			{
 				status.addClass("message validation_error");
@@ -222,16 +239,18 @@ console.warn(event,name,error);
 	cancel: function(e) {
 		e.preventDefault();
 		// Look for file name in list
-		var target = $j(e.target);
+		var target = $j(e.target).parents("li.message");
+console.info(target);
 		for(var key in e.data.options.value) {
 			if(e.data.options.value[key].name == target.attr("file"))
 			{
 				delete e.data.options.value[key];
-				$j(e.target).remove();
+				target.remove();
 				return;
 			}
 		}
 		// In case it didn't make it to the list (error)
+		target.remove();
 		$j(e.target).remove();
 	}
 });
