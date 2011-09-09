@@ -119,6 +119,7 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 	clear: function() {
 		// Free the partition tree and recreate it
+		this._avgHeight = this._partitionTree.getAverageHeight();
 		this._partitionTree.free();
 		this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
 			this._rowProvider, this._avgHeight, this.innerTbody);
