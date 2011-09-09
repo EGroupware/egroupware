@@ -18,6 +18,9 @@
 
 	et2_dataview_interfaces;
 	et2_dataview_view_partitionTree;
+	et2_dataview_view_row;
+	et2_dataview_view_spacer;
+	et2_dataview_view_rowProvider;
 */
 
 /**

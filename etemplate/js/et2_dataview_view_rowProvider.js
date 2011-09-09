@@ -214,7 +214,7 @@ var et2_dataview_rowProvider = Class.extend({
 			{
 				var node = entry.widget.getDOMNode(entry.widget);
 
-				if (node.parentNode)
+				if (node && node.parentNode)
 				{
 					// Get the parent node and replace the node with a placeholder
 					entry.placeholder = document.createElement("span");

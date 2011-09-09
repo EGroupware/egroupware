@@ -14,6 +14,7 @@
 
 /*egw:uses
 	et2_dataview_interfaces;
+	et2_dataview_view_container;
 */
 
 var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
