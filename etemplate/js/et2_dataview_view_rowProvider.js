@@ -252,7 +252,7 @@ var et2_dataview_rowProvider = Class.extend({
 				_path = [];
 			}
 
-			if (_root != _target)
+			if (_root != _target && _target)
 			{
 				// Get the index of _target in its parent node
 				var idx = this._nodeIndex(_target);
