@@ -112,7 +112,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 		"validation_errors"];
 	for (var i = 0; i < neededEntries.length; i++)
 	{
-		if (typeof _data[neededEntries[i]] == "undefined")
+		if (typeof _data[neededEntries[i]] == "undefined" || !_data[neededEntries[i]])
 		{
 			et2_debug("log", "Created not passed entry '" + neededEntries[i] +
 				"' in data array.");
