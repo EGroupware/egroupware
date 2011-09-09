@@ -13,18 +13,33 @@
 "use strict";
 
 /*egw:uses
+	// Force some base libraries to be loaded
 	jquery.jquery;
 	/phpgwapi/egw_json.js;
-	et2_widget;
+
+	// Include the action system
+	egw_action.egw_action;
+	egw_action.egw_action_popup;
+	egw_action.egw_menu_dhtmlx;
+
+	// Include some core classes
+	et2_core_widget;
 	et2_core_interfaces;
 	et2_core_DOMWidget;
+
+	// Include all widgets the nextmatch extension will create
 	et2_widget_template;
 	et2_widget_grid;
 	et2_widget_selectbox;
+
+	// Include the dynheight manager
 	et2_extension_nextmatch_dynheight;
+
+	// Include the grid classes
 	et2_dataview_view_gridContainer;
 	et2_dataview_model_dataProvider;
 	et2_dataview_model_columns;
+
 */
 
 /**
@@ -56,6 +71,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			"name": "Template",
 			"type": "string",
 			"description": "The id of the template which contains the grid layout."
+		},
+		"settings": {
+			"name": "Settings",
+			"type": "any",
+			"description": "The nextmatch settings"
 		}
 	},
 
@@ -71,9 +91,21 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// container.
 		this.dynheight = new et2_dynheight(null, this.div, 150);
 
+		// Create the action manager
+		this.actionManager = new egwActionManager();
+
 		// Create the data provider which cares about streaming the row data
-		// efficiently to the rows
-		this.dataProvider = new et2_dataview_dataProvider(this, 100);
+		// efficiently to the rows.
+		var total = typeof this.options.settings.total != "undefined" ?
+			this.options.settings.total : 0;
+		this.dataProvider = new et2_dataview_dataProvider(this, total,
+			this.actionManager);
+
+		// Load the first data into the dataProvider
+		if (this.options.settings.rows)
+		{
+			this.dataProvider.loadData({"rows": this.options.rows});
+		}
 
 		// Create the outer grid container
 		this.dataviewContainer = new et2_dataview_gridContainer(this.div,
@@ -86,11 +118,29 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 * Destroys all 
 	 */
 	destroy: function() {
+		// Free the grid components
 		this.dataviewContainer.free();
 		this.dataProvider.free();
 		this.dynheight.free();
 
 		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Loads the nextmatch settings
+	 */
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		if (this.id)
+		{
+			var entry = this.getArrayMgr("content").getEntry(this.id);
+
+			if (entry)
+			{
+				_attrs["settings"] = entry;
+			}
+		}
 	},
 
 	/**
@@ -109,8 +159,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	getRows: function(_fetchList, _callback, _context) {
 		// Create an ajax-request
 		var request = new egw_json_request(
-			"etemplate_widget_nextmatch::ajax_get_rows::etemplate", [_fetchList],
-			this);
+			"etemplate_widget_nextmatch::ajax_get_rows::etemplate", [
+					this.getInstanceManager().etemplate_exec_id,
+					_fetchList
+				], this);
 
 		// Send the request
 		request.sendRequest(true, function(_data) {
@@ -126,7 +178,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 * 	descending. If not set, the sort direction will be determined
 	 * 	automatically.
 	 */
-	sortBy: function(_id, _asc) {
+	sortBy: function(_id, _asc, _update) {
+		if (typeof _update == "undefined")
+		{
+			_update = true;
+		}
+
 		// Create the "sort" entry in the active filters if it did not exist
 		// yet.
 		if (typeof this.activeFilters["sort"] == "undefined")
@@ -157,8 +214,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			_widget.setSortmode((_widget.id == _id) ? (_asc ? "asc": "desc") : "none");
 		}, this, et2_INextmatchSortable);
 
-		et2_debug("info", "Sorting nextmatch by '" + _id + "' in direction '" + 
-			(_asc ? "asc" : "desc") + "'");
+		if (_update)
+		{
+			this.applyFilters();
+		}
 	},
 
 	/**
@@ -182,6 +241,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 	applyFilters: function() {
 		et2_debug("info", "Changing nextmatch filters to ", this.activeFilters);
+
+		// Clear the dataprovider and the dataview container - this will cause
+		// the grid to reload.
+		this.dataProvider.clear();
+		this.dataviewContainer.clear();
 	},
 
 	/**
@@ -305,6 +369,43 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			this.iterateOver(function (_node) {
 				_node.setNextmatch(this);
 			}, this, et2_INextmatchHeader);
+
+			// Load the default sort order
+			if (this.options.settings.order && this.options.settings.sort)
+			{
+				this.sortBy(this.options.settings.order,
+					this.options.settings.sort == "ASC", false);
+			}
+		}
+	},
+
+	/**
+	 * Activates the actions
+	 */
+	set_settings: function(_settings) {
+		if (_settings.actions)
+		{
+			// Read the actions from the settings array
+			// this.actionManager.updateActions(_settings.actions);
+			this.actionManager.updateActions(
+				[
+					{
+						"id": "view",
+						"iconUrl": "imgs/view.png",
+						"caption": "View",
+						"allowOnMultiple": false,
+						"type": "popup",
+						"default": true
+					},
+					{
+						"id": "edit",
+						"iconUrl": "imgs/edit.png",
+						"caption": "Edit file",
+						"allowOnMultiple": false,
+						"type": "popup"
+					}
+				]
+			);
 		}
 	},
 

@@ -13,6 +13,8 @@
 "use strict"
 
 /*egw:uses
+	egw_action.egw_action;
+
 	et2_core_inheritance;
 	et2_core_common;
 	et2_dataview_interfaces;
@@ -23,7 +25,7 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 	/**
 	 * Creates this instance of the data provider. 
 	 */
-	init: function(_source, _total) {
+	init: function(_source, _total, _actionMgr) {
 		this._source = _source;
 		this._total = _total;
 
@@ -38,6 +40,9 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		this._stepSize = 25; // Count of elements which is loaded at once
 		this._maxCount = 1000; // Maximum count before the elements are cleaned up
 
+		// Create an action object manager
+		this.actionObjectManager = new egwActionObjectManager("", _actionMgr);
+
 		var self = this;
 		this._cleanupInterval = window.setInterval(function() {self._cleanup()},
 			10 * 1000);
@@ -49,10 +54,33 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		window.clearInterval(this._cleanupInterval);
 
 		// Destroy the _queueFlushTimeout
-		if (this._queueFlushTimeout !== null)
-		{
-			window.clearTimeout(this._queueFlushTimeout);
-		}
+		this._stopFlushTimer();
+
+		// Destroy the actionObject manager
+		this.actionObjectManager.clear();
+	},
+
+	/**
+	 * Resets the stored data and aborts any queue request
+	 */
+	clear: function() {
+		this._data = {};
+		this._dataCount = 0;
+
+		this._queue = {};
+		this._queueSize = 0;
+
+		this._stopFlushTimer();
+
+		// Clear all elements in the action object manager
+		this.actionObjectManager.clear();
+	},
+
+	/**
+	 * Data is an object containing an "rows" and "readonlys" array.
+	 */
+	loadData: function(_data) {
+		this._receiveData(_data);
 	},
 
 	/**
@@ -91,6 +119,10 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		_idx = parseInt(_idx);
 
 		delete(this._registeredRows[_idx]);
+	},
+
+	getActionObjectManager: function() {
+		return this.actionObjectManager;
 	},
 
 	/* ---- PRIVATE FUNCTIONS ---- */
@@ -188,7 +220,7 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 	_receiveData: function(_data) {
 		var time = (new Date).getTime();
 
-		for (var key in _data)
+		for (var key in _data.rows)
 		{
 			if (!isNaN(key))
 			{
@@ -197,7 +229,7 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 
 				// Copy the data for the given index
 				this._data[key] = {
-					"data": _data[key],
+					"data": _data.rows[key],
 					"timestamp": time
 				};
 
@@ -218,7 +250,6 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 	_callUpdateData: function(_idx) {
 		if (typeof this._registeredRows[_idx] != "undefined")
 		{
-//			this._data[idx].timestamp = (new Date).getTime();
 			this._registeredRows[_idx].updateData({
 				"content": this._data[_idx].data
 			});

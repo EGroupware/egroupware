@@ -91,7 +91,7 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 
 		// Create the partition tree object which is used to organize the tree
 		// items.
-		partitionTree = this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
+		this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
 			this._rowProvider, this._avgHeight, this.innerTbody);
 
 		// Setup the "rebuild" timer - it rebuilds the complete partition tree
@@ -117,6 +117,16 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 		this._partitionTree.free();
 	},
 
+	clear: function() {
+		// Free the partition tree and recreate it
+		this._partitionTree.free();
+		this._partitionTree = new et2_dataview_partitionTree(this._dataProvider, 
+			this._rowProvider, this._avgHeight, this.innerTbody);
+
+		// Set the viewrange again
+		this.setViewRange(this._currentRange);
+	},
+
 	/**
 	 * The setViewRange function updates the range in which columns are shown.
 	 */
@@ -136,8 +146,6 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 				nodes[i].setViewRange(_range);
 			}
 		}
-
-		// Deactivated the code below for testing purposes
 
 		// Calculate the range of the actually shown elements
 		var displayTop = _range.top;

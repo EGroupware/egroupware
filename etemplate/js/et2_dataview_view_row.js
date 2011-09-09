@@ -13,8 +13,11 @@
 "use strict";
 
 /*egw:uses
+	egw_action.egw_action;
+
 	et2_dataview_interfaces;
 	et2_dataview_view_container;
+	et2_dataview_view_rowAOI;
 */
 
 var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
@@ -27,6 +30,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 		this._idx = null;
 
 		this.rowWidget = null;
+		this.actionObject = null;
 		this.hasAvgHeight = false;
 
 		// Get the default row object and scale the row to the average height
@@ -50,6 +54,13 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 			this.rowWidget.free();
 		}
 
+		// Free the action object and remove it from the action object manager
+		if (this.actionObject)
+		{
+			// Delete the action object from the surrounding manager
+			this.actionObject.remove();
+		}
+
 		this._super();
 	},
 
@@ -69,6 +80,23 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 	},
 
 	updateData: function(_data) {
+		// Free all old data in the action object
+		if (this.actionObject)
+		{
+			this.actionObject.clear();
+		}
+
+		// Create an action object interface for the row
+		var aom = this.dataProvider.getActionObjectManager();
+		if (aom)
+		{
+			this.actionObject = aom.addObject("row" + this._idx,
+				new et2_dataview_rowAOI(this.tr[0]));
+
+			// TODO: The action links should be inside the data and not inside
+			// the row classes...
+			this.actionObject.updateActionLinks(["view","edit"]);
+		}
 
 		// Reset the height
 		if (this.hasAvgHeight)

@@ -74,7 +74,12 @@ var et2_IDataProvider = new Interface({
 	 * Stops calling _dataRow.updateData for the dataRow registered for the given
 	 * index.
 	 */
-	unregisterDataRow: function(_idx) {}
+	unregisterDataRow: function(_idx) {},
+
+	/**
+	 * Returns the action object manager (if one exists, otherwise null)
+	 */
+	getActionObjectManager: function() {}
 
 });
 

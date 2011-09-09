@@ -92,6 +92,16 @@ var et2_dataview_gridContainer = Class.extend({
 	},
 
 	/**
+	 * Clears all data rows and reloads them
+	 */
+	clear: function() {
+		if (this.grid)
+		{
+			this.grid.clear();
+		}
+	},
+
+	/**
 	 * Returns the column container node for the given column index
 	 *
 	 * @param _columnIdx the integer column index
