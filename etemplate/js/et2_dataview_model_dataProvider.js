@@ -131,10 +131,15 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 			key = parseInt(key);
 
 			var b = Math.max(0, key - r);
-			var t = Math.min(key + r, this._total - 1);
-			for (var i = b; i <= t; i ++)
+			var t = Math.min(key + this._stepSize, this._total - 1);
+			var c = 0;
+			for (var i = b; i <= t && c < this._stepSize; i ++)
 			{
-				marked[i] = true;
+				if (typeof this._data[i] == "undefined")
+				{
+					marked[i] = true;
+					c++;
+				}
 			}
 		}
 
@@ -185,17 +190,20 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 
 		for (var key in _data)
 		{
-			// Make sure the key is a int
-			key = parseInt(key);
+			if (!isNaN(key))
+			{
+				// Make sure the key is a int
+				key = parseInt(key);
 
-			// Copy the data for the given index
-			this._data[key] = {
-				"data": _data[key],
-				"timestamp": time
-			};
+				// Copy the data for the given index
+				this._data[key] = {
+					"data": _data[key],
+					"timestamp": time
+				};
 
-			// Update the row associated to the index
-			this._callUpdateData(key);
+				// Update the row associated to the index
+				this._callUpdateData(key);
+			}
 		}
 	},
 

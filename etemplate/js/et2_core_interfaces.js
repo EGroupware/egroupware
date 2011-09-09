@@ -93,14 +93,14 @@ var et2_ISubmitListener = new Interface({
 var et2_IDetachedDOM = new Interface({
 
 	/**
-	 * Returns a list of attributes which can be set when working in the
+	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
 	 */
 	getDetachedAttributes: function(_attrs) {},
 
 	/**
-	 * Returns an array of DOM nodes. The (relativly) same DOM-Nodes have to be
+	 * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {},
@@ -109,7 +109,7 @@ var et2_IDetachedDOM = new Interface({
 	 * Sets the given associative attribute->value array and applies the
 	 * attributes to the given DOM-Node.
 	 *
-	 * @param _nodes is an array of nodes which has to be in the same order as
+	 * @param _nodes is an array of nodes which have to be in the same order as
 	 * 	the nodes returned by "getDetachedNodes"
 	 * @param _values is an associative array which contains a subset of attributes
 	 * 	returned by the "getDetachedAttributes" function and sets them to the
