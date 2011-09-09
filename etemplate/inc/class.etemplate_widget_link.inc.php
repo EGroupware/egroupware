@@ -91,6 +91,31 @@ error_log("$app, $pattern, $options");
 		$response->data($links);
 	}
 
+	/**
+	 * Create links
+	 */
+	public static function ajax_link($app, $id, Array $links) {
+		// Files need to know full path in tmp directory
+		foreach($links as &$link) {
+			if($link['app'] == egw_link::VFS_APPNAME) {
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+                                {
+                                        $path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . $link['id'];
+                                }
+                                else
+                                {
+                                        $path = $link['id'].'+';
+                                }
+				$link['tmp_name'] = $path;
+				$link['id'] = $link;
+			}
+		}
+		$result = egw_link::link($app, $id, $links);
+		
+		$response = egw_json_response::get();
+		$response->data($result !== false);
+	}
+
 	public function get_links($value) {
 
 		$app = $value['to_app'];

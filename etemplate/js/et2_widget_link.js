@@ -48,6 +48,10 @@ var et2_link_to = et2_inputWidget.extend({
 		this.div = null;
 		this.search = null;
 		this.app_select = null;
+		this.link_button = null;
+		this.status_span = null;
+		this.comment = null;
+		this.file_upload = null;
 
 		this.cache = {};
 
@@ -61,20 +65,35 @@ var et2_link_to = et2_inputWidget.extend({
 		this.search.autocomplete("destroy");
 		this.search = null;
 		this.app_select = null;
+		this.link_button = null;
+		this.status_span = null;
+		this.comment = null;
+		this.file_upload.destroy();
+		this.file_upload = null;
+	},
 
-		this.createInputWidget();
+	/**
+	 * Override to provide proper node for file widget to go in
+	 */
+	getDOMNode: function(_sender) {
+		if(_sender == this) {
+			return this.div[0];
+		} else {
+			return this.file_div[0];
+		}
 	},
 
 	createInputWidget: function() {
 		var self = this;
-		this.div = $j(document.createElement("div"));
+		this.div = $j(document.createElement("div")).addClass("et2_link_to");
 
 		// Application selection
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
 				self.cache = {}; // Clear cache when app changes
-				self.options.value.app = this.val();
-			});
+				self.options.value.app = self.app_select.val();
+			})
+			.css("width","39%");
 		for(var key in this.options.select_options) {
 			var option = $j(document.createElement("option"))
 				.attr("value", key)
@@ -84,7 +103,9 @@ var et2_link_to = et2_inputWidget.extend({
 		self.options.value.app = this.app_select.val();
 
 		// Search input
-		this.search = $j(document.createElement("input")).attr("type", "search").appendTo(this.div);
+		this.search = $j(document.createElement("input")).attr("type", "search")
+			.css("width","50%")
+			.appendTo(this.div);
 
 		// Link button
 		this.link_button = $j(document.createElement("button"))
@@ -92,8 +113,19 @@ var et2_link_to = et2_inputWidget.extend({
 			.appendTo(this.div).hide()
 			.click(this, this.createLink);
 
-		this.set_blur(this.blur ? this.blur : egw.lang("search"));
+		this.set_blur(this.options.blur ? this.options.blur : egw.lang("search"), this.search);
+		
+		// Span for indicating status
+		this.status_span = $j(document.createElement("span"))
+			.appendTo(this.div).addClass("status").hide();
 
+		// Link comment field
+		this.comment = $j(document.createElement("input"))
+			.css("display", "block").css("width","89%")
+			.appendTo(this.div).hide();
+		this.set_blur(egw.lang("Comment..."),this.comment);
+
+		// Autocomplete
 		this.search.autocomplete({
 			source: function(request, response) { return self.query(request, response);},
 			select: function(event, item) { event.data = self; self.select(event,item); return false;},
@@ -105,7 +137,29 @@ var et2_link_to = et2_inputWidget.extend({
 			minLength: self.minimum_characters,
 			disabled: self.options.disabled
 		});
+
+		// Need a div for file upload widget
+		this.file_div = $j(document.createElement("div")).appendTo(this.div);
+
 		this.setDOMNode(this.div[0]);
+	},
+
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+
+		var self = this;
+
+		// File upload
+		var file_attrs = {
+			multiple: true,
+			id: this.id + '_file',
+			onFinish: function(event, file_count) {
+				self.filesUploaded(event);
+			}
+		};
+		this.file_upload = et2_createWidget("file", file_attrs,this);
+
+		return true;
 	},
 
 	transformAttributes: function(_attrs) {
@@ -132,17 +186,22 @@ var et2_link_to = et2_inputWidget.extend({
 		return this.options.value;
 	},
 
-	set_blur: function(_value) {
+	set_blur: function(_value, input) {
+		if(typeof input == 'undefined') input = this.search;
+
 		if(_value) {
-			this.search.attr("placeholder", _value);	// HTML5
-			if(!this.search[0].placeholder) {
+			input.attr("placeholder", _value);	// HTML5
+			if(!input[0].placeholder) {
 				// Not HTML5
-				if(this.search.val() == "") this.search.val(this.options.blur);
-				this.search.focus(this,function(e) {
-					if(e.data.search.val() == e.data.options.blur) e.data.search.val("");
-				}).blur(this, function(e) {
-					if(e.data.search.val() == "") e.data.search.val(e.data.options.blur);
+				if(input.val() == "") input.val(this.options.blur);
+				input.focus(input,function(e) {
+					var placeholder = _value;
+					if(e.data.val() == placeholder) e.data.val("");
+				}).blur(input, function(e) {
+					var placeholder = _value;
+					if(e.data.val() == "") e.data.val(placeholder);
 				});
+				if(input.val() == "") input.val(_value);
 			}
 		} else {
 			this.search.removeAttr("placeholder");
@@ -173,6 +232,7 @@ var et2_link_to = et2_inputWidget.extend({
 		event.data.options.value.id = selected.item.value;
 		event.data.search.val(selected.item.label);
 		event.data.link_button.show();
+		event.data.comment.show();
 	},
 
 	/**
@@ -189,11 +249,85 @@ var et2_link_to = et2_inputWidget.extend({
 	},
 
 	/**
+	 * User uploaded some files, and they're done
+	 */
+	filesUploaded: function(event) {
+		var self = this;
+
+		this.link_button.show();
+		this.comment.hide();
+
+		// Add some comment fields
+		this.file_upload.progress.children().each(function() {
+			var comment = jQuery(document.createElement("input"))
+				.appendTo(this).hide();
+			self.set_blur(egw.lang("Comment..."),comment);
+
+			var comment_icon = jQuery(document.createElement("span"))
+				.appendTo(this)
+				.addClass("ui-icon ui-icon-comment")
+				.click(function() {comment_icon.hide(); comment.toggle();})
+		});
+	},
+
+	/**
 	 * Create a link using the current internal values
 	 */
 	createLink: function(event) {
-		console.info("Link: ",event.data.options.value);
-		event.data.link_button.hide();
+		// Hide extra controls
+		event.data.link_button.attr("disabled", true);
+
+		var values = event.data.options.value;
+		var self = event.data;
+
+		var links = [];
+
+		// Links to other entries
+		if(values.id) {
+			links.push({
+				app: values.app,
+				id: values.id,
+				remark: self.comment.val()
+			});
+			self.comment.val("");
+			self.search.val("");
+		}
+		
+		// Files
+		for(var file in self.file_upload.options.value) {
+			
+			links.push({
+				app: 'file',
+				id: file,
+				name: self.file_upload.options.value[file].name,
+				type: self.file_upload.options.value[file].type,
+				remark: jQuery("li[file='"+self.file_upload.options.value[file].name+"'] > input", self.file_upload.progress)
+					.filter(function() { return jQuery(this).attr("placeholder") != jQuery(this).val();}).val()
+			});
+		}
+		
+		var request = new egw_json_request("etemplate_widget_link::ajax_link::etemplate", 
+			[values.to_app, values.to_id, links],
+			this
+		);
+		request.sendRequest(true, self._link_result, self);
+	},
+
+	/**
+	 * Sent some links, server has a result
+	 */
+	_link_result: function(success) {
+		if(success) {
+			this.comment.hide();
+			this.link_button.hide().attr("disabled", false);
+			this.status_span.fadeIn().delay(1000).fadeOut();
+			delete this.options.value.app;
+			delete this.options.value.id;
+			for(var file in this.file_upload.options.value) {
+				delete this.file_upload.options.value[file];
+			}
+			this.file_upload.progress.empty();
+		}
 	}
 });
 

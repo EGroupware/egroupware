@@ -217,6 +217,7 @@ span.et2_date span {
 /* Remove icon displayed when hovering */
 .et2_file .progress li div.remove {
 	display: none;
+	cursor: pointer;
 }
 
 .et2_file .progress li:hover div.remove {
@@ -238,7 +239,6 @@ span.et2_date span {
 .et2_file .progress li {
 	color: blue;
 	margin: .5ex;
-	cursor: pointer;
 }
 /* Hide progress bar when completed */
 .et2_file .progress li.success > span.progressBar {
@@ -255,6 +255,46 @@ span.et2_date span {
 	overflow-y: auto;
 	/* prevent horizontal scrollbar */
 	overflow-x: hidden;
+}
+
+/**
+ * Link wiget(s)
+ */
+
+/* Link to */
+.et2_link_to {
+	width: 350px;
+	overflow-x: show;
+}
+.et2_link_to button {
+	display: inline;
+	float: right;
+	height: 5ex;
+}
+.et2_link_to span.status {
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	background-image:url(gfx/tick.png);
+	width: 22px;
+	height: 22px;
+	display: block;
+	float: right;
+}
+.et2_link_to .progress {
+	max-height: 12em;
+}
+.et2_link_to .progress > .success input {
+	width: 100%;
+	margin-right: -20px; /* Leave room for remove icon */
+}
+.et2_link_to .progress li.success span.ui-icon-comment {
+	display: none;
+	float: right;
+	cursor: pointer;
+	margin-right: 5px;
+}
+.et2_link_to .progress li:hover.success span.ui-icon-comment {
+	display: inline;
 }
 
 .egw_tooltip
