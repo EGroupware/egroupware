@@ -1,5 +1,9 @@
 var basic_data = {
 	content: {
 		"progress":	"50%",
+		"namespace": {
+			"test": "namespace[test]"
+		},
+		"test": "test"
 	}
 }

@@ -104,11 +104,91 @@ function et2_evalBool(_val)
 }
 
 /**
+ * Concat et2 name together, eg. et2_concat("namespace","test[something]") == "namespace[test][something]"
+ * @param variable number of arguments to contact
+ * @returns string
+ */
+function et2_form_name(_cname,_name)
+{
+	var parts = [];
+	for(var i=0; i < arguments.length; ++i)
+	{
+		var name = arguments[i];
+		if (typeof name == 'string' && name.length > 0)	// et2_namespace("","test") === "test" === et2_namespace(null,"test")
+		{
+			parts = parts.concat(name.replace(/]/g,'').split('['));
+		}
+	}
+	var name = parts.shift();
+	return parts.length ? name + '['+parts.join('][')+']' : name;
+}
+
+/**
+* Resolve javascript pseudo functions in onclick or onchange:
+* - egw::link('$l','$p') calls egw.link($l,$p)
+* - form::name('name') returns expanded name/id taking into account the name at that point of the template hierarchy
+* - egw::lang('Message ...') translate the message, calls egw.lang()
+* - confirm('message') translates 'message' and adds a '?' if not present
+* - window.open() replaces it with egw_openWindowCentered2()
+* - xajax_doXMLHTTP('etemplate. replace ajax calls in widgets with special handler not requiring etemplate run rights
+*
+* @param string _val onclick, onchange, ... action
+* @param string _cname name-prefix / name-space
+* @return string
+*/
+function et2_js_pseudo_funcs(_val, _cname)
+{
+	if (_val.indexOf('egw::link(') != -1)
+	{
+		_val = _val.replace(/egw::link\(/g,'egw.link(');
+	}
+
+	if (_val.indexOf('form::name(') != -1)
+	{
+		_val = _val.replace(/form::name\(/g,_cname ? "et2_form_name('"+_cname+"'," : '(');
+	}
+	
+	if (_val.indexOf('egw::lang(') != -1)
+	{
+		_val = _val.replace('/egw::lang\(/g','egw.lang(');
+	}
+
+	// ToDo: inserts the styles of a named template
+	/*if (preg_match('/template::styles\(["\']{1}(.*)["\']{1}\)/U',$on,$matches))
+	{
+		$tpl = $matches[1] == $this->name ? $this : new etemplate($matches[1]);
+		$on = str_replace($matches[0],"'<style>".str_replace(array("\n","\r"),'',$tpl->style)."</style>'",$on);
+	}*/
+
+	// translate messages in confirm()
+	if (_val.indexOf('confirm(') != -1)
+	{
+		_val = _val.replace(/confirm\((['"])(.*?)(\?)?['"]\)/,"confirm(egw.lang($1$2$1)+'$3')"); // add ? if not there, saves extra phrase
+	}
+
+	// replace window.open() with EGw's egw_openWindowCentered2()
+	if (_val.indexOf('window.open(') != -1)
+	{
+		_val = _val.replace(/window.open\('(.*)','(.*)','dependent=yes,width=([^,]*),height=([^,]*),scrollbars=yes,status=(.*)'\)/,
+			"egw_openWindowCentered2('$1', '$2', $3, $4, '$5')");
+	}
+
+	// replace xajax calls to code in widgets, with the "etemplate" handler,
+	// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
+	if (_val.indexOf("xajax_doXMLHTTP('etemplate.") != -1)
+	{
+		_val = _val.replace(/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/,
+			"xajax_doXMLHTTP('"+egw.getAppName()+".$1.etemplate'");
+	}
+	return _val;
+}
+
+/**
  * Checks whether the given value is of the given type. Strings are converted
  * into the corresponding type. The (converted) value is returned. All supported
  * types are listed in the et2_validTypes array.
  */
-function et2_checkType(_val, _type, _attr)
+function et2_checkType(_val, _type, _attr, _cname)
 {
 	if (typeof _attr == "undefined")
 	{
@@ -170,10 +250,11 @@ function et2_checkType(_val, _type, _attr)
 		{
 			if (_val !== "")
 			{
-				// TODO: Parse JS code properly
-				_val = _val.replace(/egw::link\(/g,'egw.link(');
 				try
 				{
+					// Parse JS code properly
+					_val = et2_js_pseudo_funcs(_val, _cname);
+
 					return new Function(_val); 
 				}
 				catch(e)

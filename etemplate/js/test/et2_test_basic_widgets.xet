@@ -34,5 +34,8 @@
 		<progress id="progress" href="http://www.egroupware.org/" extra_link_target="_blank" />
 		<image label="Image" src="/egroupware/phpgwapi/templates/default/images/logo.png" href="http://www.egroupware.org/" extra_link_target="_blank" />
 		<description value="www.egroupware.org" href="http://www.egroupware.org/" extra_link_target="_blank" />
+		<box id="namespace">
+			<textbox label="namespace[test]" id="test" onchange="alert(form::name('test')+'='+this.value)"/>
+		</box>
 	</vbox>
 </overlay>
