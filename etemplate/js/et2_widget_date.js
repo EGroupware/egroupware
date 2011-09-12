@@ -553,7 +553,7 @@ et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 /**
  * et2_date_ro is the readonly implementation of some date widget.
  */
-var et2_date_ro = et2_valueWidget.extend({
+var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	/**
 	 * Ignore all more advanced attributes.
@@ -583,7 +583,16 @@ var et2_date_ro = et2_valueWidget.extend({
 	},
 
 	set_value: function(_value) {
+		if(typeof _value == 'undefined') _value = 0;
+
 		this.value = _value;
+
+		if(_value == 0)
+		{
+			this.span.attr("datetime", "");
+			return;
+		}
+
 		// JS dates use milliseconds
 		this.date.setTime(parseInt(_value)*1000);
 		var display = this.date.toString();
@@ -633,7 +642,40 @@ var et2_date_ro = et2_valueWidget.extend({
 				break
 		}
 		this.span.attr("datetime", date("Y-m-d H:i:s",this.date)).text(display);
+	},
+
+	/**
+	 * Creates a list of attributes which can be set when working in the
+	 * "detached" mode. The result is stored in the _attrs array which is provided
+	 * by the calling code.
+	 */
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("value");
+	},
+
+	/**
+	 * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
+	 * passed to the "setDetachedAttributes" function in the same order.
+	 */
+	getDetachedNodes: function() {
+		return [this.span[0]];
+	},
+
+	/**
+	 * Sets the given associative attribute->value array and applies the
+	 * attributes to the given DOM-Node.
+	 *
+	 * @param _nodes is an array of nodes which have to be in the same order as
+	 *      the nodes returned by "getDetachedNodes"
+	 * @param _values is an associative array which contains a subset of attributes
+	 *      returned by the "getDetachedAttributes" function and sets them to the
+	 *      given values.
+	 */
+	setDetachedAttributes: function(_nodes, _values) {
+		this.span = jQuery(_nodes[0]);
+		this.set_value(_values["value"]);
 	}
+
 
 });
 
