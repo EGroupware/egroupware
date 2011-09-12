@@ -297,6 +297,21 @@ span.et2_date span {
 	display: inline;
 }
 
+.et2_link {
+	cursor: pointer;
+}
+ul.et2_link_string {
+	list-style-type: none;
+	display: inline;
+	padding: 0px;
+}
+.et2_link_string li {
+	display: inline;
+}
+.et2_link_string li:not(:last-child):after {
+    content:           ', ';
+}
+
 .egw_tooltip
 {
 	position: fixed;
