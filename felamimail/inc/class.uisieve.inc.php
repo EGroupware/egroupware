@@ -87,9 +87,9 @@
 
 			$icServer =& $this->bofelamimail->icServer;
 
-			if(is_a($icServer,'defaultimap') && $icServer->enableSieve) {
+			if(($icServer instanceof defaultimap) && $icServer->enableSieve) {
 				$this->bosieve		=& $icServer;
-				$this->timed_vacation = is_a($icServer,'cyrusimap') && $icServer->enableCyrusAdmin &&
+				$this->timed_vacation = ($icServer instanceof cyrusimap) && $icServer->enableCyrusAdmin &&
 					$icServer->adminUsername && $icServer->adminPassword;
 			} else {
 				die('Sieve not activated');
@@ -572,7 +572,7 @@
 				$newVacation['status']		= get_var('vacationStatus',array('POST'));
 				if (empty($preferences->preferences['prefpreventforwarding']) ||
 					$preferences->preferences['prefpreventforwarding'] == 0 ) # ||
-					#is_a($ogServer, 'defaultsmtp') || $ogServer->editForwardingAddress)
+					#($ogServer instanceof defaultsmtp) || $ogServer->editForwardingAddress)
 				{
 					$newVacation['forwards']    = get_var('vacation_forwards',array('POST'));
 				}

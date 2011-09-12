@@ -404,7 +404,7 @@ class felamimail_bo
 		{
 			if ($this->mailPreferences) {
 				$icServer = $this->mailPreferences->getIncomingServer($this->profileID);
-				if(is_a($icServer,'defaultimap')) {
+				if(($icServer instanceof defaultimap)) {
 					// if not connected, try opening an admin connection
 					if (!$icServer->_connected) $this->openConnection($this->profileID,true);
 					$icServer->addAccount($_hookValues);
@@ -412,7 +412,7 @@ class felamimail_bo
 				}
 
 				$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-				if(is_a($ogServer,'defaultsmtp')) {
+				if(($ogServer instanceof defaultsmtp)) {
 					$ogServer->addAccount($_hookValues);
 				}
 			}
@@ -725,7 +725,7 @@ class felamimail_bo
 		{
 			if ($this->mailPreferences) {
 				$icServer = $this->mailPreferences->getIncomingServer($this->profileID);
-				if(is_a($icServer,'defaultimap')) {
+				if(($icServer instanceof defaultimap)) {
 					//try to connect with admin rights, when not connected
 					if (!$icServer->_connected) $this->openConnection($this->profileID,true);
 					$icServer->deleteAccount($_hookValues);
@@ -733,7 +733,7 @@ class felamimail_bo
 				}
 
 				$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-				if(is_a($ogServer,'defaultsmtp')) {
+				if(($ogServer instanceof defaultsmtp)) {
 					$ogServer->deleteAccount($_hookValues);
 				}
 			}
@@ -1608,7 +1608,7 @@ class felamimail_bo
 
 			// does the folder exist???
 			$folderInfo = $this->icServer->getMailboxes('', $_folderName, true);
-			if(is_a($folderInfo, 'PEAR_Error') || !is_array($folderInfo[0])) {
+			if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
 				if (self::$debug) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 				return false;
 			}
@@ -2287,7 +2287,7 @@ class felamimail_bo
 		function getHierarchyDelimiter()
 		{
 			$HierarchyDelimiter = '/';
-			if(is_a($this->icServer,'defaultimap'))
+			if(($this->icServer instanceof defaultimap))
 			{
 				$HierarchyDelimiter = $this->icServer->getHierarchyDelimiter();
 				if (PEAR::isError($HierarchyDelimiter)) $HierarchyDelimiter = '/';
@@ -2574,6 +2574,7 @@ class felamimail_bo
 					if(substr($headerObject['INTERNALDATE'],-2) === 'UT') {
 						$headerObject['INTERNALDATE'] .= 'C';
 					}
+					//error_log(__METHOD__.__LINE__.' '.$headerObject['SUBJECT'].'->'.$headerObject['DATE']);
 					//error_log(__METHOD__.__LINE__.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
@@ -3274,10 +3275,10 @@ class felamimail_bo
 				//try to connect
 				if (!$this->icServer->_connected) $this->openConnection($this->profileID,false);
 			}
-			if(is_a($this->icServer,'defaultimap')) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
+			if(($this->icServer instanceof defaultimap)) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
 			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$_folder].function_backtrace());
 
-			if(is_a($folderInfo[$_folder], 'PEAR_Error') || $folderInfo[$_folder] !== true)
+			if(($folderInfo[$_folder] instanceof PEAR_Error) || $folderInfo[$_folder] !== true)
 			{
 				return false;
 			} else {
@@ -3488,12 +3489,12 @@ class felamimail_bo
 		function updateAccount($_hookValues)
 		{
 			if (is_object($this->mailPreferences)) $icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
+			if(($icServer instanceof defaultimap)) {
 				$icServer->updateAccount($_hookValues);
 			}
 
 			if (is_object($this->mailPreferences)) $ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogServer->updateAccount($_hookValues);
 			}
 		}

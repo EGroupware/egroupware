@@ -830,7 +830,7 @@ class felamimail_hooks
 			}
 
 			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
-			if(is_a($icServer, 'defaultimap')) {
+			if(($icServer instanceof defaultimap)) {
 				if($icServer->enableSieve)
 				{
 					$linkData = array
@@ -859,7 +859,7 @@ class felamimail_hooks
 			}
 
 			if (is_object($preferences)) $ogServer = $preferences->getOutgoingServer(0);
-			if(is_a($ogServer, 'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				if($ogServer->editForwardingAddress)
 				{
 					$linkData = array
