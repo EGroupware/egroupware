@@ -42,7 +42,7 @@
 				self::saveSessionData();
 			}
 			//error_log(__METHOD__.print_r($this->sessionData,true));
-			if (isset($this->sessionData['profileData']) && is_a($this->sessionData['profileData'],'ea_preferences')) {
+			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences)) {
 				$this->profileData = $this->sessionData['profileData'];
 			}
 		}
@@ -86,7 +86,7 @@
 		function getAccountData(&$_profileData, $_accountID=NULL)
 		{
 			#echo "<p>backtrace: ".function_backtrace()."</p>\n";
-			if(!is_a($_profileData, 'ea_preferences'))
+			if(!($_profileData instanceof ea_preferences))
 				die(__FILE__.': '.__LINE__);
 			$accountData = parent::getAccountData($GLOBALS['egw_info']['user']['account_id'],$_accountID);
 
@@ -136,7 +136,7 @@
 
 		function getAllAccountData(&$_profileData)
 		{
-			if(!is_a($_profileData, 'ea_preferences'))
+			if(!($_profileData instanceof ea_preferences))
 				die(__FILE__.': '.__LINE__);
 			$AllAccountData = parent::getAccountData($GLOBALS['egw_info']['user']['account_id'],'all');
 			#_debug_array($accountData);
@@ -185,7 +185,7 @@
 		function getUserDefinedIdentities()
 		{
 			$profileData        = $this->boemailadmin->getUserProfile('felamimail');
-			if(!is_a($profileData, 'ea_preferences') || !is_a($profileData->ic_server[0], 'defaultimap')) {
+			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
 				return false;
 			}
 			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities) {
@@ -204,14 +204,14 @@
 
 		function getPreferences($getUserDefinedProfiles=true)
 		{
-			if (isset($this->sessionData['profileData']) && is_a($this->sessionData['profileData'],'ea_preferences')) {
+			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences)) {
 				$this->profileData = $this->sessionData['profileData'];
 			}
-			if(!is_a($this->profileData,'ea_preferences')) {
+			if(!($this->profileData instanceof ea_preferences)) {
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
 				$profileData		= $this->boemailadmin->getUserProfile('felamimail');
 
-				if(!is_a($profileData, 'ea_preferences') || !is_a($profileData->ic_server[0], 'defaultimap')) {
+				if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
 					return false;
 				}
 				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles) {
@@ -221,15 +221,15 @@
 					if($accountData['active']) {
 
 						// replace the global defined IMAP Server
-						if(is_a($accountData['icServer'],'defaultimap'))
+						if(($accountData['icServer'] instanceof defaultimap))
 							$profileData->setIncomingServer($accountData['icServer'],0);
 
 						// replace the global defined SMTP Server
-						if(is_a($accountData['ogServer'],'defaultsmtp'))
+						if(($accountData['ogServer'] instanceof defaultsmtp))
 							$profileData->setOutgoingServer($accountData['ogServer'],0);
 
 						// replace the global defined identity
-						if(is_a($accountData['identity'],'ea_identity')) {
+						if(($accountData['identity'] instanceof ea_identity)) {
 							//_debug_array($profileData);
 							$rememberIdentities = $profileData->identities;
 							$profileData->setIdentity($accountData['identity'],0);
