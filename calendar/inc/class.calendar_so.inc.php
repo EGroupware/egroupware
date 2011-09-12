@@ -195,9 +195,15 @@ class calendar_so
 				sort($event['recur_exception']);
 				if ($event['recur_exception'][0] < $event['start'])
 				{
-					// leading exceptions => move start and end
-					$event['end'] -= $event['start'] - $event['recur_exception'][0];
-					$event['start'] = $event['recur_exception'][0];
+					/* Do NOT move start- and end-date, to the earliest exception, as they will NOT be found in CalDAV or ActiveSync, because
+					 * we only recognice recuring events which start before or in the current timerange and end in or after it or have no end-date.
+					 * --> give an error message, as it is a debuging/support nightmare, if this get's silently fixed when reading events.
+					 * No idea how this situation (exceptions before startdate) can be created anyway.
+					 *
+					 * $event['end'] -= $event['start'] - $event['recur_exception'][0];
+					 * $event['start'] = $event['recur_exception'][0];
+					 */
+					error_log(__METHOD__."() recuring event #$event[id]: $event[title] has exceptions before it's startdate ".date('Y-m-d H:i:s',$event['start']));
 				}
 			}
 		}
