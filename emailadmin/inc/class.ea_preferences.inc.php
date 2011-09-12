@@ -93,7 +93,7 @@
 		function setIdentity($_identityObject, $_id = -1)
 		{
 			//error_log(__METHOD__.__LINE__.' called with ID '.$_id.' ->'.array2string($_identityObject).function_backtrace());
-			if(is_a($_identityObject, 'ea_identity'))
+			if(($_identityObject instanceof ea_identity))
 			{
 				if($_id != -1)
 				{
@@ -119,7 +119,7 @@
 		
 		function setIncomingServer($_serverObject, $_id = -1)
 		{
-			if(is_a($_serverObject, 'defaultimap'))
+			if(($_serverObject instanceof defaultimap))
 			{
 				if($_id != -1)
 				{
@@ -138,7 +138,7 @@
 
 		function setOutgoingServer($_serverObject, $_id = -1)
 		{
-			if(is_a($_serverObject, 'defaultsmtp'))
+			if(($_serverObject instanceof defaultsmtp))
 			{
 				if($_id != -1)
 				{

@@ -68,7 +68,7 @@ class emailadmin_sieve extends Net_Sieve
 	function _connect($_icServer,$euser='')
 	{
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($euser));
-		if(is_a($_icServer,'defaultimap') && $_icServer->enableSieve) {
+		if(($_icServer instanceof defaultimap) && $_icServer->enableSieve) {
 			if (!empty($_icServer->sieveHost))
 			{
 				$sieveHost = $_icServer->sieveHost;

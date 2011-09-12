@@ -752,12 +752,12 @@ class emailadmin_bo extends so_sql
 
 		if($userProfile = $this->getUserProfile('felamimail')) {
 			$icServer = $userProfile->getIncomingServer(0);
-			if(is_a($icServer, 'defaultimap') && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
+			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 				$icUserData = $icServer->getUserData($username);
 			}
 
 			$ogServer = $userProfile->getOutgoingServer(0);
-			if(is_a($ogServer, 'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogUserData = $ogServer->getUserData($_accountID);
 			}
 
@@ -898,7 +898,7 @@ class emailadmin_bo extends so_sql
 
 		if($userProfile = $this->getUserProfile('felamimail')) {
 			$ogServer = $userProfile->getOutgoingServer(0);
-			if(is_a($ogServer, 'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogServer->setUserData($_accountID,
 					(array)$_formData['mailAlternateAddress'],
 					(array)$_formData['mailForwardingAddress'],
@@ -909,7 +909,7 @@ class emailadmin_bo extends so_sql
 			}
 
 			$icServer = $userProfile->getIncomingServer(0);
-			if(is_a($icServer, 'defaultimap') && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
+			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 				$icServer->setUserData($username, $_formData['quotaLimit']);
 			}
 

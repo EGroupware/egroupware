@@ -224,6 +224,7 @@ class emailadmin_ui extends emailadmin_bo
 		$applications = array(
 			'calendar'	=> $GLOBALS['egw_info']['apps']['calendar']['title'],
 			'felamimail' 	=> $GLOBALS['egw_info']['apps']['felamimail']['title'],
+		//	'notifications'	=> $GLOBALS['egw_info']['apps']['notifications']['title'],
 		);
 		asort($applications);
 		return $applications = array_merge(array('' => lang('any application')),$applications);
