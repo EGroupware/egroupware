@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 11.1.20110617
+Version: 11.1.20110906
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -16,7 +16,12 @@ Prefix: /usr/share
 	%define php php5
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
+%if 0%{?sles_version}
+        # sle 10 and 11 does NOT contain libtidy
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite
+%else
+	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite php5-tidy
+%endif
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
@@ -34,12 +39,12 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-tidy
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
 	%define distribution Mandriva %{?mandriva_version}
-	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite
+	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite php-tidy
 # try to keep build from searching (for wrong) dependencys
 	%undefine __find_provides
 	%undefine __find_requires
@@ -47,12 +52,12 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-tidy
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml
+	%define extra_requires httpd php-mysql php-xml php-tidy
 %endif
 
 Distribution: %{distribution}
@@ -169,7 +174,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.2.1
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip %{php}-json
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
