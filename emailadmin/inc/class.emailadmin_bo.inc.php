@@ -724,14 +724,14 @@ class emailadmin_bo extends so_sql
 			$icServerKeys = array_keys((array)$userProfile->ic_server); 
 			$profileID = array_shift($icServerKeys);
 			$icServer = $userProfile->getIncomingServer($profileID);
-			if(is_a($icServer, 'defaultimap') && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
+			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 				$icUserData = $icServer->getUserData($username);
 			}
 
 			$ogServerKeys = array_keys((array)$userProfile->og_server); 
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
-			if(is_a($ogServer, 'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogUserData = $ogServer->getUserData($_accountID);
 			}
 
@@ -875,7 +875,7 @@ class emailadmin_bo extends so_sql
 			$ogServerKeys = array_keys((array)$userProfile->og_server); 
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
-			if(is_a($ogServer, 'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogServer->setUserData($_accountID,
 					(array)$_formData['mailAlternateAddress'],
 					(array)$_formData['mailForwardingAddress'],
@@ -888,7 +888,7 @@ class emailadmin_bo extends so_sql
 			$icServerKeys = array_keys((array)$userProfile->ic_server); 
 			$profileID = array_shift($icServerKeys);
 			$icServer = $userProfile->getIncomingServer($profileID);
-			if(is_a($icServer, 'defaultimap') && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
+			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 				$icServer->setUserData($username, $_formData['quotaLimit']);
 			}
 
