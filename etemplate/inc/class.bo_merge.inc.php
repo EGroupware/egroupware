@@ -389,52 +389,53 @@ abstract class bo_merge
 		}
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
-		switch($mimetype.$mso_application_progid)
+		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
+		if (class_exists(XSLTProcessor) && class_exists(DOMDocument))
 		{
-			case 'application/vnd.oasis.opendocument.text':		// open office
-			case 'application/vnd.oasis.opendocument.spreadsheet':
-				// It seems easier to split the parent tags here
-				$replace_tags = array(
-					'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
-					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
-					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
-				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
+			switch($mimetype.$mso_application_progid)
+			{
+				case 'application/vnd.oasis.opendocument.text':		// open office
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+					// It seems easier to split the parent tags here
+					$replace_tags = array(
+						'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
+						'/<\/(ol|ul|table)>/' => '</$1><text:p>',
+						//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
+					);
+					$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 
-				$doc = new DOMDocument();
-				$xslt = new XSLTProcessor();
-				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
-				$xslt->importStyleSheet($doc);
-
-//echo $content;die();
-				break;
-			case 'application/xmlWord.Document':	// Word 2003*/
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				$replace_tags = array(
-					'b','strong','i','em','u','span'
-				);
-				// It seems easier to split the parent tags here
-				$replace_tags = array(
-					// Tables, lists don't go inside <w:p>
-					'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
-					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
-					// Fix for things other than text (newlines) inside table row
-					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
-					// Remove extra whitespace
-					'/<li([^>]*?)>[^:print:]*?(.*?)<\/li>/' => '<li$1>$2</li>', // This doesn't get it all
-					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>',
-					// Remove spans with no attributes, linebreaks inside them cause problems
-					'/<span>(.*?)<\/span>/' => '$1'
-				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
-//echo $content;die();
-				$doc = new DOMDocument();
-				$xslt = new XSLTProcessor();
-				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
-				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/'.$xslt_file);
-				$xslt->importStyleSheet($doc);
-				break;
+					$doc = new DOMDocument();
+					$xslt = new XSLTProcessor();
+					$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
+					$xslt->importStyleSheet($doc);
+					break;
+				case 'application/xmlWord.Document':	// Word 2003*/
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					$replace_tags = array(
+						'b','strong','i','em','u','span'
+					);
+					// It seems easier to split the parent tags here
+					$replace_tags = array(
+						// Tables, lists don't go inside <w:p>
+						'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
+						'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
+						// Fix for things other than text (newlines) inside table row
+						'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
+						// Remove extra whitespace
+						'/<li([^>]*?)>[^:print:]*?(.*?)<\/li>/' => '<li$1>$2</li>', // This doesn't get it all
+						'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>',
+						// Remove spans with no attributes, linebreaks inside them cause problems
+						'/<span>(.*?)<\/span>/' => '$1'
+					);
+					$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
+					$doc = new DOMDocument();
+					$xslt = new XSLTProcessor();
+					$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
+					$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/'.$xslt_file);
+					$xslt->importStyleSheet($doc);
+					break;
+			}
 		}
 
 		// XSLT transform known tags
@@ -444,8 +445,6 @@ abstract class bo_merge
 			{
 				$element = new SimpleXMLelement($content);
 				$content = @$xslt->transformToXml($element);
-
-//echo $content;die();
 				// Word 2003 needs two declarations, add extra declaration back in
 				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
 					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
