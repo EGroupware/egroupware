@@ -528,7 +528,7 @@
 			$refreshURL = $GLOBALS['egw']->link('/index.php',$linkData);
 			$this->t->set_var('reloadView',$refreshURL);
 			// display a warning if vacation notice is active
-			if(is_a($imapServer,'defaultimap') && $imapServer->enableSieve) {
+			if(($imapServer instanceof defaultimap) && $imapServer->enableSieve) {
 				$this->bosieve		= CreateObject('felamimail.bosieve',$imapServer);
 				$this->bosieve->retrieveRules($this->bosieve->scriptName);
 				$vacation = $this->bosieve->getVacation($this->bosieve->scriptName);

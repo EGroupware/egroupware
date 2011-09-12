@@ -108,7 +108,7 @@
 			$mailPrefs	= $this->bofelamimail->getMailPreferences();
 			$ogServer	= $mailPrefs->getOutgoingServer(0);
 			
-			if(!is_a($ogServer, 'defaultsmtp') || !$ogServer->editForwardingAddress) {
+			if(!($ogServer instanceof defaultsmtp) || !$ogServer->editForwardingAddress) {
 				die('You should not be here!');
 			}
 			

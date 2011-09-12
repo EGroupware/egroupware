@@ -224,12 +224,12 @@
 		{
 			if ($this->mailPreferences) {
 				$icServer = $this->mailPreferences->getIncomingServer(0);
-				if(is_a($icServer,'defaultimap')) {
+				if(($icServer instanceof defaultimap)) {
 					$icServer->addAccount($_hookValues);
 				}
 
 				$ogServer = $this->mailPreferences->getOutgoingServer(0);
-				if(is_a($ogServer,'defaultsmtp')) {
+				if(($ogServer instanceof defaultsmtp)) {
 					$ogServer->addAccount($_hookValues);
 				}
 			}
@@ -534,12 +534,12 @@
 		{
 			if ($this->mailPreferences) {
 				$icServer = $this->mailPreferences->getIncomingServer(0);
-				if(is_a($icServer,'defaultimap')) {
+				if(($icServer instanceof defaultimap)) {
 					$icServer->deleteAccount($_hookValues);
 				}
 
 				$ogServer = $this->mailPreferences->getOutgoingServer(0);
-				if(is_a($ogServer,'defaultsmtp')) {
+				if(($ogServer instanceof defaultsmtp)) {
 					$ogServer->deleteAccount($_hookValues);
 				}
 			}
@@ -1315,7 +1315,7 @@
 
 			// does the folder exist???
 			$folderInfo = $this->icServer->getMailboxes('', $_folderName, true);
-			if(is_a($folderInfo, 'PEAR_Error') || !is_array($folderInfo[0])) {
+			if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
 				if (self::$debug) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 				return false;
 			}
@@ -1896,7 +1896,7 @@
 		function getHierarchyDelimiter()
 		{
 			$HierarchyDelimiter = '/';
-			if(is_a($this->icServer,'defaultimap')) 
+			if(($this->icServer instanceof defaultimap)) 
 			{
 				$HierarchyDelimiter = $this->icServer->getHierarchyDelimiter();
 				if (PEAR::isError($HierarchyDelimiter)) $HierarchyDelimiter = '/';
@@ -2642,10 +2642,10 @@
 				//try to connect
 				if (!$this->icServer->_connected) $this->openConnection();
 			}
-			if(is_a($this->icServer,'defaultimap')) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
+			if(($this->icServer instanceof defaultimap)) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
 			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$_folder]);
 
-			if(is_a($folderInfo[$_folder], 'PEAR_Error') || $folderInfo[$_folder] !== true)
+			if(($folderInfo[$_folder] instanceof PEAR_Error) || $folderInfo[$_folder] !== true)
 			{
 				return false;
 			} else {
@@ -2826,12 +2826,12 @@
 		function updateAccount($_hookValues)
 		{
 			if (is_object($this->mailPreferences)) $icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
+			if(($icServer instanceof defaultimap)) {
 				$icServer->updateAccount($_hookValues);
 			}
 
 			if (is_object($this->mailPreferences)) $ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
+			if(($ogServer instanceof defaultsmtp)) {
 				$ogServer->updateAccount($_hookValues);
 			}
 		}
