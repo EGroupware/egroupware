@@ -698,23 +698,27 @@ abstract class bo_merge
 
 			// Tags we can replace with the target document's version
 			$replace_tags = array();
-			switch($mimetype.$mso_application_progid)
+			// only keep tags, if we have xsl extension available
+			if (class_exists(XSLTProcessor) && class_exists(DOMDocument))
 			{
-				case 'application/vnd.oasis.opendocument.text':		// open office
-				case 'application/vnd.oasis.opendocument.spreadsheet':
-					$replace_tags = array(
-						'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-						'<table>','<tr>','<td>',
-					);
-					break;
-				case 'application/xmlWord.Document':	// Word 2003*/
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					$replace_tags = array(
-						'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-						'<table>','<tr>','<td>',
-					);
-					break;
+				switch($mimetype.$mso_application_progid)
+				{
+					case 'application/vnd.oasis.opendocument.text':		// open office
+					case 'application/vnd.oasis.opendocument.spreadsheet':
+						$replace_tags = array(
+							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+							'<table>','<tr>','<td>',
+						);
+						break;
+					case 'application/xmlWord.Document':	// Word 2003*/
+					case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+						$replace_tags = array(
+							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+							'<table>','<tr>','<td>',
+						);
+						break;
+				}
 			}
 			// clean replacements from array values and html or html-entities, which mess up xml
 			foreach($replacements as $name => &$value)
@@ -1039,8 +1043,11 @@ abstract class bo_merge
 		}
 
 		// Apply HTML formatting to target document, if possible
-		$this->apply_styles($merged, $mimetype);
-
+		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
+		if (class_exists(XSLTProcessor) && class_exists(DOMDocument))
+		{
+			$this->apply_styles($merged, $mimetype);
+		}
 		if(!empty($name))
 		{
 			if(empty($ext))
