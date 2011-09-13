@@ -68,6 +68,7 @@ class module_addressbook_contactform extends sitemgr_module
 			'sep5'                 => '----------------------------',
 			'captcha'              => lang('Verification'),
 		);
+		$this->i18n = True;
 		$this->arguments = array(
 			'arg1' => array(
 				'type' => 'select',
@@ -86,6 +87,7 @@ class module_addressbook_contactform extends sitemgr_module
 				'label' => lang('Subject for email'),
 				'params' => array('size' => 80),
 				'default' => lang('Contactform'),
+				'i18n' => True,
 			),
 			'arg2' => array(
 				'type' => 'select',
@@ -100,6 +102,7 @@ class module_addressbook_contactform extends sitemgr_module
 				'label' => lang('Message after submitting the form'),
 				'params' => array('size' => 80),
 				'default' => lang('Thank you for contacting us.'),
+				'i18n' => True,
 			),
 			'arg5' => array(
 				'type' => 'textfield',
