@@ -750,6 +750,24 @@ else
 
 				delete this.jsonq_queue[uid];
 			}
+		},
+
+		/**
+		 * Query a title of _app/_id
+		 * 
+		 * @param string _app
+		 * @param string|int _id
+		 * @param function _callback optinal callback, required if for responses from the server
+		 * @param object _context context for the callback
+		 * @return string|boolean|null string with title if it exist in local cache or null if not
+		 */
+		link_title: function(_app, _id, _callback, _context)
+		{
+			if (typeof _callback == 'function')
+			{
+				this.jsonq(_app+'.etemplate_widget_link.ajax_link_title', [_app, _id], _callback, _context);
+			}
+			return null;
 		}
 	};
 }

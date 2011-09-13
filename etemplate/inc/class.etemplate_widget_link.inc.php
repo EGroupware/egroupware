@@ -96,6 +96,20 @@ error_log("$app, $pattern, $options");
 	}
 
 	/**
+	 * Return title for a given app/id pair
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 * @return string|boolean string with title, boolean false of permission denied or null if not found
+	 */
+	public static function ajax_link_title($app,$id)
+	{
+		$title = egw_link::title($app, $id);
+		error_log(__METHOD__."('$app', '$id') = ".array2string($title));
+		egw_json_response::get()->data($title);
+	}
+
+	/**
 	 * Create links
 	 */
 	public static function ajax_link($app, $id, Array $links) {
@@ -103,13 +117,13 @@ error_log("$app, $pattern, $options");
 		foreach($links as &$link) {
 			if($link['app'] == egw_link::VFS_APPNAME) {
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
-                                {
-                                        $path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . $link['id'];
-                                }
-                                else
-                                {
-                                        $path = $link['id'].'+';
-                                }
+				{
+					$path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . $link['id'];
+				}
+				else
+				{
+					$path = $link['id'].'+';
+				}
 				$link['tmp_name'] = $path;
 				$link['id'] = $link;
 			}
