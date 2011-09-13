@@ -601,12 +601,22 @@ abstract class bo_merge
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
 			if ($lableprint) $content = $Labelrepeat;
 
-			// generate replacements
-			if(!($replacements = $this->get_replacements($id,$content)))
+			// generate replacements; if exeption is thrown, catch it set error message and return false
+			try
 			{
-				$err = lang('Entry not found!');
+				if(!($replacements = $this->get_replacements($id,$content)))
+				{
+					$err = lang('Entry not found!');
+					return false;
+				}
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				// if this returns with an exeption, something failed big time
+				$err = $e->getMessage();
 				return false;
 			}
+
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
