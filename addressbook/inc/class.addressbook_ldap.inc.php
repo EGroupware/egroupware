@@ -137,7 +137,7 @@ class addressbook_ldap
 		// similar to the newer mozillaAbPerson, but uses mozillaPostalAddress2 instead of mozillaStreet2
 		'mozillaorgperson' => array(
 			'adr_one_street2'	=> 'mozillapostaladdress2',
-			'adr_one_countryname'	=> 'c',	// 2 letter country code
+			'adr_one_countrycode'	=> 'c',	// 2 letter country code
 			'adr_one_countryname'	=> 'co',	// human readable country name, must be after 'c' to take precedence on read!
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomepostaladdress2',
@@ -1144,10 +1144,7 @@ class addressbook_ldap
 	 */
 	function _mozillaorgperson2egw(&$contact,$data)
 	{
-		if ($data['c'] && strlen($contact['adr_one_countryname']) <= 2)	// dont overwrite a set human readable name
-		{
-			$contact['adr_one_countryname'] = ExecMethod('phpgwapi.country.get_full_name',$data['c'][0]);
-		}
+		// no special handling necessary, as it supports two distinct attributes: c, cn
 	}
 
 	/**
@@ -1162,14 +1159,24 @@ class addressbook_ldap
 	 */
 	function _egw2mozillaorgperson(&$ldapContact,$data,$isUpdate)
 	{
-		if ($data['adr_one_countryname'])
+		if ($data['adr_one_countrycode'])
+		{
+			$ldapContact['c'] = $data['adr_one_countrycode'];
+			if ($isUpdate) $ldapContact['co'] = array();
+		}
+		elseif ($data['adr_one_countryname'])
 		{
 			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
+			{
+				$ldapContact['c'] = array(); // should return error...
+			}
 		}
 		elseif ($isUpdate)
 		{
-			$ldapContact['c'] = array();
+			$ldapContact['c'] = $ldapContact['co'] = array();
 		}
+		//error_log(__METHOD__."() adr_one_countrycode='{$data['adr_one_countrycode']}', adr_one_countryname='{$data['adr_one_countryname']}' --> c=".array2string($ldapContact['c']).', co='.array2string($ldapContact['co']));
 	}
 
 	/**
