@@ -810,7 +810,8 @@ class felamimail_bo
 							return false;
 						}
 						// delete the messages finaly
-						$this->icServer->expunge();
+						$rv = $this->icServer->expunge();
+						if ( PEAR::isError($rv)) error_log(__METHOD__." failed to expunge Message(s) from Folder: ".$_folder.' due to:'.$rv->message);
 					}
 					break;
 
