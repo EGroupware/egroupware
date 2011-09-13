@@ -105,7 +105,6 @@ class importexport_export_csv implements importexport_iface_export_record
 			$this->export_limit = bo_merge::getExportLimit();
 			if($this->export_limit == 'no') throw new egw_exception_no_permission_admin('Export disabled');
 		}
-error_log(__METHOD__.__LINE__.'#'.$this->export_limit.'#');
 	}
 	
 	/**

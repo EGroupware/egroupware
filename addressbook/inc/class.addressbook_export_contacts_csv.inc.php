@@ -40,10 +40,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		// Addressbook defines its own export imits
 		$limit_exception = bo_merge::is_export_limit_excepted();
-error_log(__METHOD__.__LINE__.'#'.$GLOBALS['egw_info']['server']['contact_export_limit'].'#');
-error_log(__METHOD__.__LINE__.'#'.bo_merge::getExportLimit().'#');
 		$export_limit = $export_object->export_limit = bo_merge::getExportLimit($GLOBALS['egw_info']['server']['contact_export_limit']);
-error_log(__METHOD__.__LINE__.'#'.$export_limit.'#');
 		if($export_limit == 'no' && !$limit_exception) {
 			return;
 		}
