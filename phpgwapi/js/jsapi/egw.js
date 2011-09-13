@@ -665,13 +665,15 @@ else
 		 *   which handles the actual request. If the menuaction is a full featured
 		 *   url, this one will be used instead.
 		 * @param array _parameters which should be passed to the menuaction function.
-		 * @param _callback callback function which should be called upon a "data" response is received
-		 * @param _sender is the reference object the callback function should get
-		 * @param _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+		 * @param function _callback callback function which should be called upon a "data" response is received
+		 * @param object _sender is the reference object the callback function should get
+		 * @param function _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+		 * @return string uid of the queued request
 		 */
 		jsonq: function(_menuaction, _parameters, _callback, _sender, _callbeforesend)
 		{
-			this.jsonq_queue['u'+(this.jsonq_uid++)] = {
+			var uid = 'u'+(this.jsonq_uid++);
+			this.jsonq_queue[uid] = {
 				menuaction: _menuaction,
 				parameters: _parameters,
 				callback: _callback,
@@ -685,6 +687,7 @@ else
 				var self = this;
 				this.jsonq_timer = window.setInterval(function(){ self.jsonq_send();}, 100);
 			}
+			return uid;
 		},
 		
 		/**
@@ -705,7 +708,7 @@ else
 					// if job has a callbeforesend callback, call it to allow it to modify pararmeters
 					if (typeof job.callbeforesend == 'function')
 					{
-						job.callbeforesend.apply(job.context, job.parameters);
+						job.callbeforesend.call(job.sender, job.parameters);
 					}
 					jobs_to_send[uid] = {
 						menuaction: job.menuaction,
@@ -751,7 +754,27 @@ else
 				delete this.jsonq_queue[uid];
 			}
 		},
-
+		
+		/**
+		 * Local cache for link-titles
+		 * 
+		 * @access private, use egw.link_title(_app, _id[, _callback, _context])
+		 */
+		title_cache: {},
+		/**
+		 * Queue for link_title requests
+		 * 
+		 * @access private, use egw.link_title(_app, _id[, _callback, _context])
+		 * @var object _app._id.[{callback: _callback, context: _context}[, ...]]
+		 */
+		title_queue: {},
+		/**
+		 * Uid of active jsonq request, to not start an other one, as we get notified
+		 * before it's actually send to the server via our link_title_before_send callback.
+		 * @access private
+		 */
+		title_uid: null,
+		
 		/**
 		 * Query a title of _app/_id
 		 * 
@@ -763,11 +786,90 @@ else
 		 */
 		link_title: function(_app, _id, _callback, _context)
 		{
-			if (typeof _callback == 'function')
+			// check if we have a cached title --> return it direct
+			if (typeof this.title_cache[_app] != 'undefined' && typeof this.title_cache[_app][_id] != 'undefined')
 			{
-				this.jsonq(_app+'.etemplate_widget_link.ajax_link_title', [_app, _id], _callback, _context);
+				if (typeof _callback == 'function')
+				{
+					_callback.call(_context, this.title_cache[_app][_id]);
+				}
+				return this.title_cache[_app][_id];
 			}
-			return null;
+			// no callback --> return null
+			if (typeof _callback != 'function')
+			{
+				return null;	// not found in local cache and cant do a synchronious request
+			}
+			// queue the request
+			if (typeof this.title_queue[_app] == 'undefined')
+			{
+				this.title_queue[_app] = {};
+			}
+			if (typeof this.title_queue[_app][_id] == 'undefined')
+			{
+				this.title_queue[_app][_id] = [];
+			}
+			this.title_queue[_app][_id].push({callback: _callback, context: _context});
+			// if there's no active jsonq request, start a new one
+			if (this.title_uid == null)
+			{
+				this.title_uid = this.jsonq(_app+'.etemplate_widget_link.ajax_link_titles.etemplate',[{}], this.link_title_callback, this, this.link_title_before_send);
+			}
+		},
+		
+		/**
+		 * Callback to add all current title requests
+		 * 
+		 * @param array of parameters, only first parameter is used
+		 */
+		link_title_before_send: function(_params)
+		{
+			// add all current title-requests
+			for(var app in this.title_queue)
+			{
+				if (typeof _params[0][app] == 'undefined')
+				{
+					_params[0][app] = [];
+				}
+				for(var id in this.title_queue[app])
+				{
+					_params[0][app].push(id);
+				}
+			}
+			this.title_uid = null;	// allow next request to jsonq
+		},
+		
+		/**
+		 * Callback for server response
+		 * 
+		 * @param object _response _app => _id => title
+		 */
+		link_title_callback: function(_response)
+		{
+			if (typeof _response != 'object')
+			{
+				throw "Wrong parameter for egw.link_title_callback!";
+			}
+			for(var app in _response)
+			{
+				if (typeof this.title_cache[app] != 'object') 
+				{
+					this.title_cache[app] = {};
+				}
+				for (var id in _response[app])
+				{
+					var title = _response[app][id];
+					// cache locally
+					this.title_cache[app][id] = title;
+					// call callbacks waiting for title of app/id
+					for(var i=0; i < this.title_queue[app][id].length; ++i)
+					{
+						var callback = this.title_queue[app][id][i];
+						callback.callback.call(callback.context, title);
+					}
+					delete this.title_queue[app][id];
+				}
+			}
 		}
 	};
 }

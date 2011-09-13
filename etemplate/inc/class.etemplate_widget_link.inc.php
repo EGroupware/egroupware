@@ -105,8 +105,24 @@ error_log("$app, $pattern, $options");
 	public static function ajax_link_title($app,$id)
 	{
 		$title = egw_link::title($app, $id);
-		error_log(__METHOD__."('$app', '$id') = ".array2string($title));
+		//error_log(__METHOD__."('$app', '$id') = ".array2string($title));
 		egw_json_response::get()->data($title);
+	}
+
+	/**
+	 * Return titles for all given app and id's
+	 *
+	 * @param array $app_ids array with app => array(id, ...) pairs
+	 * @return array with app => id => title
+	 */
+	public static function ajax_link_titles(array $app_ids)
+	{
+		$response = array();
+		foreach($app_ids as $app => $ids)
+		{
+			$response[$app] = egw_link::titles($app, $ids);
+		}
+		egw_json_response::get()->data($response);
 	}
 
 	/**
