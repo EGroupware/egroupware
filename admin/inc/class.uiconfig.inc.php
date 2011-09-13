@@ -234,7 +234,8 @@ class uiconfig
 		$GLOBALS['egw']->framework->render(
 			$t->parse('out','header').
 			$t->fp('out','body').
-			$t->fp('out','footer')
+			$t->fp('out','footer'),
+			null,true
 		);
 	}
 }
