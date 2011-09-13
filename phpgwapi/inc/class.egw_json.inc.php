@@ -27,6 +27,8 @@ class egw_json_request
 	 * Parses the raw input data supplied with the input_data parameter and calls the menuaction
 	 * passing all parameters supplied in the request to it.
 	 *
+	 * Also handle queued requests (menuaction == 'home.queue') containing multiple requests
+	 *
 	 * @param string menuaction to call
 	 * @param string $input_data is the RAW input data as it was received from the client
 	 */
@@ -35,36 +37,34 @@ class egw_json_request
 		// Remember that we currently are in a JSON request - e.g. used in the redirect code
 		self::$_hadJSONRequest = true;
 
-		if (empty($input_data))
+		if (get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
+
+		$json_data = json_decode($input_data,true);
+		if (is_array($json_data) && isset($json_data['request']) && isset($json_data['request']['parameters']))
 		{
-			$this->handleRequest($menuaction, array());
- 		}
+			$parameters =& $json_data['request']['parameters'];
+		}
 		else
 		{
-			if (get_magic_quotes_gpc())
+			$parameters = array();
+		}
+		// do we have a single request or an array of queued requests
+		if ($menuaction == 'home.queue')
+		{
+			$responses = array();
+			$response = egw_json_response::get();
+			foreach($parameters as $uid => $data)
 			{
-				$input_data[0] = stripslashes($input_data[0]);
+				//error_log("$uid: menuaction=$data[menuaction], parameters=".array2string($data['parameters']));
+				$this->handleRequest($data['menuaction'], $data['parameters']);
+				$responses[$uid] = $response->initResponseArray();
+				//error_log("responses[$uid]=".array2string($responses[$uid]));
 			}
-
-			//Decode the JSON input data into associative arrays
-			if (($json = json_decode($input_data[0], true)) !== false)
-			{
-				$parameters = array();
-
-				//Get the request array
-				if (isset($json['request']))
-				{
-					$request = $json['request'];
-
-					//Check whether any parameters were supplied along with the request
-					if (isset($request['parameters']))
-					{
-						$parameters = $request['parameters'];
-					}
-				}
-				//Call the supplied callback function along with the menuaction and the passed parameters
-				$this->handleRequest($menuaction, $parameters);
-			}
+			$response->data($responses);	// send all responses as data
+		}
+		else
+		{
+			$this->handleRequest($menuaction, $parameters);
 		}
 	}
 
@@ -247,6 +247,20 @@ class egw_json_response
 	}
 
 	/**
+	 * Init responseArray
+	 *
+	 * @param array $arr
+	 * @return array previous content
+	 */
+	public function initResponseArray()
+	{
+		$return = $this->responseArray;
+		$this->responseArray = array();
+		$this->hasData = false;
+		return $return;
+	}
+
+	/**
 	 * Adds a "data" response to the json response.
 	 *
 	 * This function may only be called once for a single JSON response object.
@@ -309,9 +323,56 @@ class egw_json_response
 	}
 
 	/**
-	 * Allows to add a global javascript function with giben parameters
+	 * Allows to call a global javascript function with given parameters: window[$func].apply(window, $parameters)
 	 *
-	 * @param string $script the script code which should be executed upon receiving
+	 * @param string $func name of the global (window) javascript function to call
+	 * @param array $parameters=array()
+	 */
+	public function apply($function,array $parameters=array())
+	{
+		if (is_string($function))
+		{
+			$this->addGeneric('apply', array(
+				'func'  => $function,
+				'parms' => $parameters,
+			));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
+	 * Allows to call a global javascript function with given parameters: window[$func].call(window[, $param1[, ...]])
+	 *
+	 * @param string $func name of the global (window) javascript function to call
+	 * @param mixed $parameters variable number of parameters
+	 */
+	public function call($function)
+	{
+		$parameters = func_get_args();
+		array_shift($parameters);	// shift off $function
+
+		if (is_string($function))
+		{
+			$this->addGeneric('apply', array(
+				'func'  => $function,
+				'parms' => $parameters,
+			));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
+	 * Allows to call a jquery function on a selector with given parameters: $j($selector).$func($parmeters)
+	 *
+	 * @param string $selector jquery selector
+	 * @param string $method name of the jquery to call
+	 * @param array $parameters=array()
 	 */
 	public function jquery($selector,$method,array $parameters=array())
 	{
@@ -498,7 +559,7 @@ class xajaxResponse extends egw_json_response
 		$args = func_get_args();
 		$func = array_shift($args);
 
-		$this->script("try{window['".$func."'].apply(window, ".json_encode($args).");} catch(e) {_egw_json_debug_log(e);}");
+		$this->apply($func, $args);
 	}
 
 	public function addIncludeCSS($url)

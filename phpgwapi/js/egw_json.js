@@ -223,7 +223,7 @@ function egw_json_request(_menuaction, _parameters, _context)
 	if (_menuaction.match(/json.php\?menuaction=[a-z_0-9]*\.[a-z_0-9]*\.[a-z_0-9]*/i))
 	{
 		// Menuaction is a full featured url
-		this.url = _menuaction
+		this.url = _menuaction;
 	}
 	else
 	{
@@ -401,12 +401,28 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						{
 							try
 							{
-								var func = function() {eval(res.data);};
+								var func = new Function(res.data);
 								func.call(window);
 							}
 							catch (e)
 							{
 								e.code = res.data;
+								_egw_json_debug_log(e);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'apply':
+						if (typeof res.data.func == 'string' && typeof window[res.data.func] == 'function')
+						{
+							try
+							{
+								window[res.data.func].apply(window, res.data.parameters);
+							}
+							catch (e)
+							{
+								e.code = res.data.func;
 								_egw_json_debug_log(e);
 							}
 							hasResponse = true;

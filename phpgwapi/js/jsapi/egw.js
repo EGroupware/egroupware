@@ -639,6 +639,117 @@ else
 				}
 			}
 			return query.length ? _url+'?'+query.join('&') : _url;
+		},
+		
+		/**
+		 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
+		 * 
+		 * @access private, use jsonq method to queue requests
+		 */
+		jsonq_queue: {},
+		
+		/**
+		 * Next uid (index) in queue
+		 */
+		jsonq_uid: 0,
+		
+		/**
+		 * Running timer for next send of queued items
+		 */
+		jsonq_timer: null,
+		
+		/**
+		 * Send a queued JSON call to the server
+		 * 
+		 * @param string _menuaction the menuaction function which should be called and
+		 *   which handles the actual request. If the menuaction is a full featured
+		 *   url, this one will be used instead.
+		 * @param array _parameters which should be passed to the menuaction function.
+		 * @param _callback callback function which should be called upon a "data" response is received
+		 * @param _sender is the reference object the callback function should get
+		 * @param _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+		 */
+		jsonq: function(_menuaction, _parameters, _callback, _sender, _callbeforesend)
+		{
+			this.jsonq_queue['u'+(this.jsonq_uid++)] = {
+				menuaction: _menuaction,
+				parameters: _parameters,
+				callback: _callback,
+				sender: _sender,
+				callbeforesend: _callbeforesend
+			};
+			
+			if (this.jsonq_time == null)
+			{
+				// check / send queue every N ms
+				var self = this;
+				this.jsonq_timer = window.setInterval(function(){ self.jsonq_send();}, 100);
+			}
+		},
+		
+		/**
+		 * Send the whole job-queue to the server in a single json request with menuaction=queue
+		 */
+		jsonq_send: function()
+		{
+			if (this.jsonq_uid > 0 && typeof this.jsonq_queue['u'+(this.jsonq_uid-1)] == 'object')
+			{
+				var jobs_to_send = {};
+				var something_to_send = false;
+				for(var uid in this.jsonq_queue)
+				{
+					var job = this.jsonq_queue[uid];
+
+					if (job.menuaction == 'send') continue;	// already send to server
+
+					// if job has a callbeforesend callback, call it to allow it to modify pararmeters
+					if (typeof job.callbeforesend == 'function')
+					{
+						job.callbeforesend.apply(job.context, job.parameters);
+					}
+					jobs_to_send[uid] = {
+						menuaction: job.menuaction,
+						parameters: job.parameters
+					};
+					job.menuaction = 'send';
+					job.parameters = null;
+					something_to_send = true;
+				}
+				if (something_to_send)
+				{
+					new egw_json_request('home.queue', jobs_to_send, this).sendRequest(true, this.jsonq_callback, this);
+				}
+			}
+		},
+		
+		/**
+		 * Dispatch responses received
+		 * 
+		 * @param object _data uid => response pairs
+		 */
+		jsonq_callback: function(_data)
+		{
+			if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
+
+			var json = new egw_json_request('none');
+			for(var uid in _data)
+			{
+				if (typeof this.jsonq_queue[uid] == 'undefined')
+				{
+					console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
+					console.log(_data[uid]);
+					continue;
+				}
+				var job = this.jsonq_queue[uid];
+				var response = _data[uid];
+				
+				// fake egw_json_request object, to call it with the current response
+				json.callback = job.callback;
+				json.sender = job.sender;
+				json.handleResponse({response: response});
+
+				delete this.jsonq_queue[uid];
+			}
 		}
 	};
 }
