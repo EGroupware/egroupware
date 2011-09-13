@@ -493,7 +493,7 @@ var et2_date_duration = et2_date.extend({
 et2_register_widget(et2_date_duration, ["date-duration"]);
 
 
-var et2_date_duration_ro = et2_date_duration.extend({
+var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],{
 	createInputWidget: function() {
 
 		this.node = $j(document.createElement("span"));
@@ -537,11 +537,12 @@ var et2_date_duration_ro = et2_date_duration.extend({
 	setDetachedAttributes: function(_nodes, _values) {
 		for(var i = 0; i < _nodes.length; i++) {
 			// Clear the node
-			for (var i = _node.childNodes.length - 1; i >= 0; i--)
+			for (var j = _nodes[i].childNodes.length - 1; j >= 0; j--)
 			{
-				_node.removeChild(_node.childNodes[i]);
+				_nodes[i].removeChild(_nodes[i].childNodes[j]);
 			}
 		}
+		this.transformAttributes(_values);
 		var display = this._convert_to_display(_values.value);
 		_nodes[0].appendChild(document.createTextNode(display.value));
 		_nodes[1].appendChild(document.createTextNode(display.unit));
@@ -673,6 +674,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.span = jQuery(_nodes[0]);
+		this.transformAttributes(_values);
 		this.set_value(_values["value"]);
 	}
 
