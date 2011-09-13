@@ -203,7 +203,7 @@ var et2_dataview_rowProvider = Class.extend({
 
 			// Issue a warning - widgets which do not implement et2_IDOMNode
 			// are very slow
-			et2_debug("warn", "Non-clonable widget in dataview row - this " + 
+			et2_debug("warn", "Non-clonable widget '"+ entry.widget._type + "' in dataview row - this " + 
 				"might be slow", entry);
 
 			// Set the placeholder for the entry to null
