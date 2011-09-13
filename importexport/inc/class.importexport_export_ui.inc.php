@@ -50,8 +50,8 @@ class importexport_export_ui {
 
 		// Check global setting
 		if(!bo_merge::is_export_limit_excepted()) {
-			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no') {
+			$export_limit = bo_merge::getExportLimit();
+			if($export_limit == 'no') {
 				die(lang('Admin disabled exporting'));
 			}
 		}

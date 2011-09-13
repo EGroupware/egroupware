@@ -33,6 +33,7 @@ class calendar_export_ical extends calendar_export_csv {
 		}
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
+		if (!$limit_exception) $export_limit = bo_merge::getExportLimit($GLOBALS['egw_info']['server']['calendar_export_limit']);
 
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(
@@ -44,9 +45,9 @@ class calendar_export_ical extends calendar_export_csv {
 				'users'         => $options['selection']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 			);
-			if($config['export_limit'] && !$limit_exception) {
+			if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
 				$query['offset'] = 0;
-				$query['num_rows'] = (int)$config['export_limit'];
+				$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 			}
 			$events =& $this->bo->search($query);
 		} elseif ($options['selection']['select'] == 'search_results') {
@@ -57,8 +58,8 @@ class calendar_export_ical extends calendar_export_csv {
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
-				if($config['export_limit'] && !$limit_exception) {
-					$query['num_rows'] = (int)$config['export_limit'];
+				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
 				$ui = new calendar_uilist();
 				$ui->get_rows($query, $events, $unused);
@@ -66,8 +67,8 @@ class calendar_export_ical extends calendar_export_csv {
 				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if($config['export_limit'] && !$limit_exception) {
-					$query['num_rows'] = (int)$config['export_limit'];
+				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 				}
 
 				$events = array();
@@ -89,8 +90,8 @@ class calendar_export_ical extends calendar_export_csv {
 						);
 
 				}
-				$bo = new calendar_boupdate();
-				$events = $bo->search($query + array(
+				$boupdate = new calendar_boupdate();
+				$events = $boupdate->search($query + array(
 					'offset' => 0,
 					'order' => 'cal_start',
 				));

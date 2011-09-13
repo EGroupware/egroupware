@@ -88,7 +88,7 @@ abstract class bo_merge
 		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
 			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12 ? 'h:i a' : 'H:i');
 
-		$this->export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+		$this->export_limit = self::getExportLimit();
 	}
 
 	/**
@@ -338,6 +338,57 @@ abstract class bo_merge
 	}
 
 	/**
+	 * getExportLimit
+	 * checks if there is an exportlimit set, and returns 
+	 * @param mixed $app_limit checks and validates app_limit, if not set returns the global limit
+	 *
+	 * @return mixed - no if no export is allowed, false if there is no restriction and int as there is a valid restriction
+	 *		you may have to cast the returned value to int, if you want to use it as number
+	 */
+	public static function getExportLimit($app_limit='')
+	{
+		//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
+		$exportLimit = $GLOBALS['egw_info']['server']['export_limit'];
+		if (!empty($app_limit)) 
+		{
+			$exportLimit = $app_limit;
+		}
+		//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
+		if (empty($exportLimit))
+		{
+			return false;
+		}
+	
+		if (is_numeric($exportLimit))
+		{
+			$exportLimit = (int)$exportLimit;
+		}
+		else
+		{
+			$exportLimit = $limit = 'no';
+		}
+		//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
+		return $exportLimit;
+	}
+
+	/**
+	 * hasExportLimit
+	 * checks wether there is an exportlimit set, and returns true or false
+	 * @param mixed $app_limit app_limit, if not set checks the global limit
+	 * @param string $checkas [AND|ISALLOWED], AND default; if set to ISALLOWED it is checked if Export is allowed
+	 *
+	 * @return bool - true if no export is allowed or a limit is set, false if there is no restriction
+	 */
+	public static function hasExportLimit($app_limit='',$checkas='AND')
+	{
+		$app_limit = self::getExportLimit($app_limit);
+		if (strtoupper($checkas) == 'ISALLOWED') return (empty($app_limit) || ($app_limit !='no' && $app_limit > 0) );
+		if (empty($app_limit)) return false;
+		if ($app_limit == 'no') return true;
+		if ($app_limit > 0) return true;
+	}
+
+	/**
 	 * Merges a given document with contact data
 	 *
 	 * @param string $document path/url of document
@@ -355,7 +406,7 @@ abstract class bo_merge
 			return false;
 		}
 
-		if ($this->export_limit && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
+		if (self::hasExportLimit() && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
 			return false;
@@ -1168,7 +1219,7 @@ abstract class bo_merge
 	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
 		$export_limit=null)
 	{
-		if (is_null($export_limit)) $export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+		$export_limit = self::getExportLimit($export_limit);
 
 		$documents = array();
 
@@ -1252,7 +1303,7 @@ abstract class bo_merge
 			'caption' => $caption,
 			'children' => $documents,
 			// disable action if no document or export completly forbidden for non-admins
-			'enabled' => (boolean)$documents && (empty($export_limit) || (int)$export_limit > 0 || self::is_export_limit_excepted()),
+			'enabled' => (boolean)$documents && (self::hasExportLimit($export_limit,'ISALLOWED') || self::is_export_limit_excepted()),
 			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
 			'group' => $group,
 		);
