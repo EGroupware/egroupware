@@ -104,6 +104,8 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 	if(!$GLOBALS['error'])
 	{
 		$GLOBALS['egw_setup']->db->transaction_commit();
+		// unset cached config, as this is the primary source for configuration now
+		egw_cache::unsetInstance('config', 'configs');
 
 		Header('Location: index.php');
 		exit;

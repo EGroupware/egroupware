@@ -460,10 +460,17 @@ class egw_cache
 			{
 				$db = $GLOBALS['egw']->db ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 
-				$GLOBALS['egw_info']['server'][$name] = $db->select(config::TABLE,'config_value',array(
+				if (($rs = $db->select(config::TABLE,'config_value',array(
 					'config_app'	=> 'phpgwapi',
 					'config_name'	=> $name,
-				),__LINE__,__FILE__)->fetchColumn();
+				),__LINE__,__FILE__)))
+				{
+					$GLOBALS['egw_info']['server'][$name] = $rs->fetchColumn();
+				}
+				else
+				{
+					error_log(__METHOD__."('name', $throw) cound NOT query value!");
+				}
 			}
 			if (!$GLOBALS['egw_info']['server'][$name] && $throw)
 			{

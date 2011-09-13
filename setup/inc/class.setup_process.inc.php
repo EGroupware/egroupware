@@ -62,7 +62,12 @@ class setup_process
 		$GLOBALS['egw_setup']->oProc = new schema_proc();
 
 		// delete image-map, in case new apps get installed, or existing ones updated
-		common::delete_image_map();
+		try {
+			common::delete_image_map();
+		}
+		catch(Exception $e) {
+			// ignore exception, as during a new install, there's no cache configured and therefore no need to unset
+		}
 	}
 
 	/**

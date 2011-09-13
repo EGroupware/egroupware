@@ -93,7 +93,8 @@ class config
 			{
 				if (!isset($this->config_data[$name]))	// has been deleted
 				{
-					self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
+					$this->save_value($name,null,null,false);
+					//self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 				}
 			}
 			self::$db->unlock();
