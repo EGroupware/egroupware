@@ -88,7 +88,7 @@ class customfields_widget
 	var $advanced_search;
 
 
-	function __construct($ui,$appname=null)
+	function __construct($ui=null,$appname=null)
 	{
 		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
 		$this->customfields = config::get_customfields($this->appname);
