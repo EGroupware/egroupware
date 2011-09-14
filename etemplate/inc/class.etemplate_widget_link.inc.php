@@ -61,7 +61,10 @@ class etemplate_widget_link extends etemplate_widget
 
 		if($value && !is_array($value))
 		{
-			throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
+			// Try to explode
+			if(!is_array(explode(':',$value))) {
+				throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
+			}
 		}
 		elseif (!$value)
 		{
@@ -150,13 +153,41 @@ error_log("$app, $pattern, $options");
 		$response->data($result !== false);
 	}
 
-	public function get_links($value) {
+	public function ajax_link_list($value) {
 
 		$app = $value['to_app'];
 		$id  = $value['to_id'];
 
-		$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
-_debug_array($links);
-		return $links;
+		$links = egw_link::get_links($app,$id,$value['only_app'],'link_lastmod DESC',true, $value['show_deleted']);
+		foreach($links as &$link)
+		{
+			$link['title'] = egw_link::title($link['app'],$link['id'],$link);
+			if ($link['app'] == egw_link::VFS_APPNAME)
+			{
+				$link['target'] = '_blank';
+				$link['label'] = 'Delete';
+				$link['help'] = lang('Delete this file');
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] != 'text')
+				{
+					$link['title'] = preg_replace('/: ([^ ]+) /',': ',$link['title']);        // remove mime-type, it's alread in the icon
+				}
+				$link['icon'] = egw_link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
+			}
+			else
+			{
+				$link['icon'] = egw_link::get_registry($link['app'], 'icon');
+				$link['label'] = 'Unlink';
+				$link['help'] = lang('Remove this link (not the entry itself)');
+			}
+		}
+		
+		$response = egw_json_response::get();
+		// Strip keys, unneeded and cause index problems on the client side
+		$response->data(array_values($links));
+	}
+
+	public function ajax_delete($value) {
+		$response = egw_json_response::get();
+		$response->data(egw_link::unlink($value));
 	}
 }

@@ -37,6 +37,24 @@ var et2_link_to = et2_inputWidget.extend({
 			"default": "",
 			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
 		},
+ 		"no_files": {
+			"name": "No files",
+			"type": "boolean",
+			"default": false,
+			"description": "Suppress attach-files"
+		},
+ 		"search_label": {
+			"name": "Search label",
+			"type": "string",
+			"default": "",
+			"description": "Label to use for search"
+		},
+		"link_label": {
+			"name": "Link label",
+			"type": "string",
+			"default": "Link",	
+			"description": "Label for the link button"
+		}
 	},
 
 	search_timeout: 200, //ms after change to send query
@@ -90,7 +108,7 @@ var et2_link_to = et2_inputWidget.extend({
 
 		// One common link button
 		this.link_button = $j(document.createElement("button"))
-			.text(egw.lang("link"))
+			.text(egw.lang(this.options.link_label))
 			.appendTo(this.div).hide()
 			.click(this, this.createLink);
 		
@@ -121,6 +139,7 @@ var et2_link_to = et2_inputWidget.extend({
 		// Link-to
 		var link_entry_attrs = {
 			id: this.id + '_link_entry',
+			blur: this.options.search_label ? this.options.search_label : egw.lang('Search...'),
 			query: function() { self.link_button.hide(); self.comment.hide(); return true;},
 			select: function() {self.link_button.show(); self.comment.show(); return true;}
 		}
@@ -178,13 +197,13 @@ var et2_link_to = et2_inputWidget.extend({
 		event.data = self.link_entry;
 		self.link_entry.createLink(event,links);
 		// Add comment
-		if(links.length > 0 && self.comment.val())
+		if(links.length > 0 && self.comment.val() && self.comment.val() != self.comment.attr("placeholder"))
 		{
 			for(var i = 0; i < links.length; i++)
 			{
 				links[i].remark = self.comment.val();
 			}
-			self.comment.val("");
+			self.comment.val(self.comment.attr("placeholder"));
 		}
 		
 		// Files
@@ -221,6 +240,17 @@ var et2_link_to = et2_inputWidget.extend({
 				delete this.file_upload.options.value[file];
 			}
 			this.file_upload.progress.empty();
+
+			// Look for a link-list with the same ID, refresh it
+			var self = this;
+			this.getRoot().iterateOver(
+				function(widget) {
+					if(widget.id == self.id) {
+						widget._get_links();
+					}
+				},
+				this, et2_link_list
+			);
 		}
 	}
 });
@@ -434,7 +464,9 @@ var et2_link_entry = et2_valueWidget.extend({
 		if(typeof _links == 'undefined')
 		{
 			links = [];
-		} else {
+		}
+		else
+		{
 			links = _links;
 		}
 
@@ -513,7 +545,19 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
 			return;
 		}
-		this.node.text(_value.title)
+		if(!_value.title) {
+			var title = egw.link_title(_value.id, _value.app, this.set_value, this);
+			if(title != null) {
+				_value.title = title;
+			}
+			else
+			{
+				// Title will be fetched from server and then set
+				return;
+			}
+		}
+
+		this.node.text(_value.title).unbind()
 			.click( function(){egw.open(_value.id, _value.app, "edit", _value.extra);});
 	},
 
@@ -565,18 +609,30 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			"description": "Use the given application, so you can pass just the ID for value"
 		},
 		"value": {
-			description: "Either an array of link information (see link) or array with keys to_app and to_id",
-			type: "any"
+			"description": "Either an array of link information (see egw_link::link()) or array with keys to_app and to_id",
+			"type": "any"
+		},
+		"only_app": {
+			"name": "Application filter",
+			"type": "string",
+			"default": "",
+			"description": "Appname, eg. 'projectmananager' to list only linked projects"
+		},
+		"link_type": {
+			"name": "Type filter",
+			"type": "string",
+			"default":"",
+			"description": "Sub-type key to list only entries of that type"
 		}
 	},
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.node = $j(document.createElement("ul"))
+		this.list = $j(document.createElement("ul"))
 			.addClass("et2_link_string");
 
 		if(this.options.class) this.node.addClass(this.options.class);
-		this.setDOMNode(this.node[0]);
+		this.setDOMNode(this.list[0]);
 	},
 
 	destroy: function() {
@@ -586,31 +642,60 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	set_value: function(_value) {
 		// Get data
-		if(!_value) return;
-		if(typeof _value == 'object' && _value.to_app && _value.to_id) {
-			// TODO: Fetch data from server via caching queue
-_value = [
-	{'id': '1','app': 'infolog','title': 'Fake entry #1'},
-	{'id': '2','app': 'infolog','title': 'Fake entry #2'}
-];
+		if(!_value || _value == null) return;
+		if(!_value.to_app && this.options.application) _value.to_app = this.options.application;
+
+		if(typeof _value == 'object' && _value.to_app && _value.to_id)
+		{
+			this.value = _value;
+			this._get_links();
+			return;
 		}
-		if(typeof _value == 'object' && _value.length > 0) {
-			this.node.empty();
+		if(_value.length > 0) {
+			// Have full info
+			// Don't store new value, just update display
+
+			this.list.empty();
 
 			// Make new links
-			for(var i = 0; i < _value.length; i++) {
-				this._add_link(_value[i]);
+			for(var i = 0; i < _value.length; i++)
+			{
+				if(!this.options.only_app || this.options.only_app && _value[i].app == this.options.only_app)
+				{
+					this._add_link(_value[i]);
+				}
 			}
 		}
 	},
 
+	_get_links: function() {
+		var _value = this.value;
+		// Just IDs - get from server
+		if(this.options.only_app)
+		{
+			_value.only_app = this.options.only_app;
+		}
+		egw.jsonq('etemplate.etemplate_widget_link.ajax_link_list', [_value], this.set_value, this);
+		return;
+	},
+
 	_add_link: function(_link_data) {
-		var link = jQuery(document.createElement("li"))
+		if(!_link_data.title) {
+			// No callback yet, need something to do with it
+			var title = egw.link_title(_link_data.app, _link_data.id);
+			// Need to set it to something, or call to text() will return current value
+			if(title == null || title == false) _link_data.title = "";
+		}
+		var link = $j(document.createElement("li"))
+			.appendTo(this.list)
 			.text(_link_data.title)
 			.addClass("et2_link")
-			.appendTo(this.node)
-			//.bind( 'click', jQuery.proxy( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra)}, egw));
 			.click( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+
+		// Now that link is created, get title from server & update
+		if(!_link_data.title) {
+			egw.link_title(_link_data.app, _link_data.id, function(title) {this.text(title);}, link);
+		}
 	},
 
 	/**
@@ -627,7 +712,7 @@ _value = [
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {
-		return [this.node];
+		return [this.list[0]];
 	},
 
 	/**
@@ -641,8 +726,80 @@ _value = [
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
-		this.node = $j(_nodes[0]);
+		this.list = $j(_nodes[0]);
+		if(!_values.value) this.transformAttributes(_values);
 		this.set_value(_values["value"]);
 	}
 });
 et2_register_widget(et2_link_string, ["link-string"]);
+
+/**
+ * UI widget for one or more links in a list (table)
+ */ 
+var et2_link_list = et2_link_string.extend({
+	attributes: {
+		"show_deleted": {
+			"name": "Show deleted",
+			"type": "boolean",
+			"default": false,
+			"description": "Show links that are marked as deleted, being held for purge"
+		}
+	},
+	init: function() {
+		this._super.apply(this, arguments);
+
+		this.list = $j(document.createElement("table"))
+			.addClass("et2_link_list");
+		if(this.options.class) this.node.addClass(this.options.class);
+		this.setDOMNode(this.list[0]);
+	},
+
+	_add_link: function(_link_data) {
+		var row = $j(document.createElement("tr"))
+			.appendTo(this.list)
+
+		// Icon
+		//TODO: Needs vfs widget
+		var icon = $j(document.createElement("td"))
+			.appendTo(row)
+			.addClass("icon");
+		if(_link_data.icon)
+		{
+			var icon_widget = et2_createWidget("image");
+			icon_widget.set_src(_link_data.icon);
+			icon.append(icon_widget.getDOMNode());
+		}
+		
+		var columns = ['app','title','remark'];
+		for(var i = 0; i < columns.length; i++) {
+			$j(document.createElement("td"))
+				.appendTo(row)
+				.addClass(columns[i])
+				.text(_link_data[columns[i]])
+				.click( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+		}
+
+		// Date
+		/*
+		var date_row = $j(document.createElement("td"))
+			.appendTo(row);
+		if(_link_data.lastmod)
+		{
+			var date_widget = et2_createWidget("date-since");
+			date_widget.set_value(_link_data.lastmod);
+			date_row.append(date_widget.getDOMNode());
+		}
+		*/
+
+		// Delete
+		var delete_button = $j(document.createElement("td"))
+			.appendTo(row)
+			.addClass("delete icon")
+			.bind( 'click', function(){
+				delete_button.addClass("loading").removeClass("delete");
+				new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [_link_data.link_id])
+					.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
+			});
+	}
+});
+et2_register_widget(et2_link_list, ["link-list"]);

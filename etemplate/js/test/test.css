@@ -312,6 +312,28 @@ ul.et2_link_string {
     content:           ', ';
 }
 
+.et2_link_list td.remark {
+	font-style: italic;
+}
+.et2_link_list td.delete {
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	float: right;
+	display: none;
+	background-image: url("gfx/close.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 0px;
+}
+.et2_link_list .icon img, .et2_link_list td.icon {
+	width: 16px;
+	height: 16px;
+}
+.et2_link_list tr:hover td.delete {
+	display: inline;
+}
+
 .egw_tooltip
 {
 	position: fixed;
