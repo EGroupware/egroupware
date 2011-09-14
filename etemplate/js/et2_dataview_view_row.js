@@ -90,12 +90,13 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IDataRow, {
 		var aom = this.dataProvider.getActionObjectManager();
 		if (aom)
 		{
-			this.actionObject = aom.addObject("row" + this._idx,
+			// this is rather hackisch, but I have no idea how to get action_links & row_id here otherwise
+			this.actionObject = aom.addObject(_data.content[aom.manager.row_id],
 				new et2_dataview_rowAOI(this.tr[0]));
 
 			// TODO: The action links should be inside the data and not inside
 			// the row classes...
-			this.actionObject.updateActionLinks(["view","edit"]);
+			this.actionObject.updateActionLinks(aom.manager.action_links);
 		}
 
 		// Reset the height

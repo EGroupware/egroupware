@@ -104,7 +104,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Load the first data into the dataProvider
 		if (this.options.settings.rows)
 		{
-			this.dataProvider.loadData({"rows": this.options.rows});
+			this.dataProvider.loadData({"rows": this.options.settings.rows});
 		}
 
 		// Create the outer grid container
@@ -386,26 +386,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		if (_settings.actions)
 		{
 			// Read the actions from the settings array
-			// this.actionManager.updateActions(_settings.actions);
-			this.actionManager.updateActions(
-				[
-					{
-						"id": "view",
-						"iconUrl": "imgs/view.png",
-						"caption": "View",
-						"allowOnMultiple": false,
-						"type": "popup",
-						"default": true
-					},
-					{
-						"id": "edit",
-						"iconUrl": "imgs/edit.png",
-						"caption": "Edit file",
-						"allowOnMultiple": false,
-						"type": "popup"
-					}
-				]
-			);
+			this.actionManager.updateActions(_settings.actions);
+			this.actionManager.setDefaultExecute("javaScript:nm_action");
+			// this is rather hackisch, but I have no idea how to get the action_link & row_id to the actionObject of the row otherwise
+			this.actionManager.action_links = _settings.action_links;
+			this.actionManager.row_id = _settings.row_id;
 		}
 	},
 
