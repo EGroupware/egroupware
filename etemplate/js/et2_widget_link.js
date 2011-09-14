@@ -589,7 +589,6 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
-		this.transformAttributes(_values);
 		this.node = $j(_nodes[0]);
 		this.set_value(_values["value"]);
 	}
@@ -727,7 +726,6 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.list = $j(_nodes[0]);
-		if(!_values.value) this.transformAttributes(_values);
 		this.set_value(_values["value"]);
 	}
 });

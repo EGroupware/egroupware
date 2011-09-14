@@ -152,8 +152,6 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		this.transformAttributes(_values);
-
 		if (typeof _values["value"] != "undefined")
 		{
 			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],

@@ -401,6 +401,9 @@ var et2_dataview_rowProvider = Class.extend({
 				entry.widget.id = data.id;
 			}
 
+			// Adjust data for that row
+			entry.widget.transformAttributes(data);
+
 			// Call the setDetachedAttributes function
 			entry.widget.setDetachedAttributes(nodes, data);
 		}

@@ -542,7 +542,6 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],{
 				_nodes[i].removeChild(_nodes[i].childNodes[j]);
 			}
 		}
-		this.transformAttributes(_values);
 		var display = this._convert_to_display(_values.value);
 		_nodes[0].appendChild(document.createTextNode(display.value));
 		_nodes[1].appendChild(document.createTextNode(display.unit));
@@ -673,7 +672,6 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.span = jQuery(_nodes[0]);
-		this.transformAttributes(_values);
 		this.set_value(_values["value"]);
 	}
 

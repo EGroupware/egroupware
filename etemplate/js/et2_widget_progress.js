@@ -105,8 +105,6 @@ var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM,
 		// Set the given DOM-Nodes
 		this.node = _nodes[0];
 
-		this.transformAttributes(_values);
-
 		// Set the attributes
 		if (_values["label"])
 		{

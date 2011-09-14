@@ -157,8 +157,6 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		// Set the given DOM-Nodes
 		this.image = $j(_nodes[0]);
 
-		this.transformAttributes(_values);
-
 		// Set the attributes
 		if (_values["src"])
 		{
