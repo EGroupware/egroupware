@@ -56,7 +56,7 @@ class egw_json_request
 			foreach($parameters as $uid => $data)
 			{
 				//error_log("$uid: menuaction=$data[menuaction], parameters=".array2string($data['parameters']));
-				$this->handleRequest($data['menuaction'], $data['parameters']);
+				$this->handleRequest($data['menuaction'], (array)$data['parameters']);
 				$responses[$uid] = $response->initResponseArray();
 				//error_log("responses[$uid]=".array2string($responses[$uid]));
 			}
