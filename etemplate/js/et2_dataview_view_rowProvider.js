@@ -230,6 +230,10 @@ var et2_dataview_rowProvider = Class.extend({
 	},
 
 	_nodeIndex: function(_node) {
+		if(_node.parentNode == null) 
+		{
+			return 0;
+		}
 		for (var i = 0; i < _node.parentNode.childNodes.length; i++)
 		{
 			if (_node.parentNode.childNodes[i] == _node)
@@ -402,7 +406,7 @@ var et2_dataview_rowProvider = Class.extend({
 			}
 
 			// Adjust data for that row
-			entry.widget.transformAttributes(data);
+			entry.widget.transformAttributes.call(entry.widget,data);
 
 			// Call the setDetachedAttributes function
 			entry.widget.setDetachedAttributes(nodes, data);

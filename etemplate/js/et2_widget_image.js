@@ -129,15 +129,18 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		if(src)
 		{
 			this.image.attr("src", src).show();
+			return true;
 		}
 		// allow url's too
 		else if (_value[0] == '/' || _value.substr(0,4) == 'http')
 		{
 			this.image.attr('src', _value).show();
+			return true;
 		}
 		else
 		{
 			this.image.css("display","none");
+			return false;
 		}
 	},
 
