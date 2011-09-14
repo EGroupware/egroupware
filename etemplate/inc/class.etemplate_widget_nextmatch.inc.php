@@ -96,11 +96,20 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$value['start'] = 0;
 		$value['num_rows'] = self::INITIAL_ROWS;
+		$value['rows'] = array();
 		$value['total'] = self::call_get_rows($value, $value['rows'], self::$request->readonlys);
 		// todo: no need to store rows in request, it's enought to send them to client
 
 		error_log(__METHOD__."() $this: total=$value[total]");
-		foreach($value['rows'] as $n => $row) error_log("$n: ".array2string($row));
+		//foreach($value['rows'] as $n => $row) error_log("$n: ".array2string($row));
+
+		// set up actions, but only if they are defined AND not already set up (run throught self::egw_actions())
+		if (isset($value['actions']) && !isset($value['actions'][0]))
+		{
+			$template_name = isset($value['template']) ? $value['template'] : $this->attrs['options'];
+			if (!is_array($value['action_links'])) $value['action_links'] = array();
+			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
+		}
 	}
 
 	/**
@@ -113,9 +122,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	static public function ajax_get_rows($exec_id, $fetchList, $form_name='nm')
 	{
-		error_log(__METHOD__."($exec_id,".array2string($fetchList).",$form_name)");
+		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($fetchList).",'$form_name')");
 
-		// Force the array to be associative
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
 		$result = array('rows' => array());
@@ -124,18 +132,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$value['start'] = $entry['startIdx'];
 			$value['num_rows'] = $entry['count'];
-			$rows = array();
 
-			$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
-
-			foreach($rows as $n => $row)
-			{
-				$result['rows'][$entry['startIdx']+$n] = $row;
-			}
+			$result['total'] = self::call_get_rows($value, $result['rows'], $result['readonlys']);
 		}
 
-		$response = egw_json_response::get();
-		$response->data($result);
+		egw_json_response::get()->data($result);
 	}
 
 	/**
@@ -148,13 +149,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * If get_rows is called static (and php >= 5.2.3), it is always b) independent on how it's defined!
 	 *
 	 * @param array &$value
-	 * @param array &$rows=null
+	 * @param array &$rows on return: rows are indexed by their row-number: $value[start], ..., $value[start]+$value[num_rows]-1
 	 * @param array &$readonlys=null
 	 * @param object $obj=null (internal)
 	 * @param string|array $method=null (internal)
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
-	private static function call_get_rows(array &$value,array &$rows=null,array &$readonlys=null,$obj=null,$method=null)
+	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null)
 	{
 		if (is_null($method)) $method = $value['get_rows'];
 
@@ -192,14 +193,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}
 		}
+		if (!is_array($readonlys)) $readonlys = array();
 		if(is_callable($method))	// php5.2.3+ static call (value is always a var param!)
 		{
-			$total = call_user_func_array($method,array(&$value,&$rows,&$readonlys));
+			$total = call_user_func_array($method,array(&$value,&$raw_rows,&$readonlys));
 		}
 		elseif(is_object($obj) && method_exists($obj,$method))
 		{
-			if (!is_array($readonlys)) $readonlys = array();
-			$total = $obj->$method($value,$rows,$readonlys);
+			$total = $obj->$method($value,$raw_rows,$readonlys);
 		}
 		else
 		{
@@ -212,19 +213,338 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$total = self::call_get_rows($value,$rows,$readonlys,$obj,$method);
 		}
 		*/
-		// otherwise we get stoped by max_excutiontime
+		// otherwise we might get stoped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
 
 		// remove empty rows required by old etemplate to compensate for header rows
-		foreach($rows as $n => $row)
+		$first = null;
+		foreach($raw_rows as $n => $row)
 		{
-			if (is_array($row)) break;
-			unset($rows[$n]);
+			// skip empty rows inserted for each header-line in old etemplate
+			if (is_int($n) && is_array($rows))
+			{
+				if (is_null($first)) $first = $n;
+				$rows[$n-$first+$value['start']] = $row;
+			}
+			elseif(!is_null($first))	// rows with string-keys, after numeric rows
+			{
+				$rows[$n] = $row;
+			}
 		}
-		$rows = array_values($rows);	// renumber keys to be 0 based
 
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
+	}
+	/**
+	 * Default maximum lenght for context submenus, longer menus are put as a "More" submenu
+	 */
+	const DEFAULT_MAX_MENU_LENGTH = 14;
+
+	/**
+	 * Return egw_actions
+	 *
+	 * The following attributes are understood for actions on eTemplate/PHP side:
+	 * - string 'id' id of the action (set as key not attribute!)
+	 * - string 'caption' name/label or action, get's automatic translated
+	 * - boolean 'no_lang' do NOT translate caption, default false
+	 * - string 'icon' icon, eg. 'edit' or 'infolog/task', if no app given app of template or API is used
+	 * - string 'iconUrl' full url of icon, better use 'icon'
+	 * - boolean|string 'allowOnMultiple' should action be shown if multiple lines are marked, or string 'only', default true!
+	 * - boolean|string 'enabled' is action available, or string with javascript function to call, default true!
+	 * - string 'disableClass' class name to use with enabled='javaScript:nm_not_disableClass'
+	 *   (add that css class in get_rows(), if row lacks rights for an action)
+	 * - boolena 'hideOnDisabled' hide disabled actions, default false
+	 * - string 'type' type of action, default 'popup' for contenxt menus, 'drag' or 'drop'
+	 * - boolean 'default' is that action the default action, default false
+	 * - array  'children' array with actions of submenu
+	 * - int    'group' to group items, default all actions are in one group
+	 * - string 'onExecute' javascript to run, default 'javaScript:nm_action',
+	 *   which runs action specified in nm_action attribute:
+	 * - string 'nm_action'
+	 *   + 'alert'  debug action, shows alert with action caption, id and id's of selected rows
+	 *   + 'submit' default action, sets nm[action], nm[selected] and nm[select_all]
+	 *   + 'location' redirects / set location.href to 'url' attribute
+	 *   + 'popup'  opens popup with url given in 'url' attribute
+	 * - string 'url' url for location or popup
+	 * - string 'target' target for location or popup
+	 * - string 'width' for popup
+	 * - string 'height' for popup
+	 * - string 'confirm' confirmation message
+	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
+	 *
+	 * That's what we should return looks JSON encoded like
+	 * [
+	 * 		{
+	 *			"id": "folder_open",
+	 *			"iconUrl": "imgs/folder.png",
+	 *			"caption": "Open folder",
+	 *			"onExecute": "javaScript:nm_action",
+	 *			"allowOnMultiple": false,
+	 *			"type": "popup",
+	 *			"default": true
+	 *		},
+	 * ]
+	 *
+	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
+	 * @param string $template_name='' name of the template, used as default for app name of images
+	 * @param string $prefix='' prefix for ids
+	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
+	 * @param int $max_length=self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
+	 * @param array $default_attrs=null default attributes
+	 * @return array
+	 */
+	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
+		$max_length=self::DEFAULT_MAX_MENU_LENGTH, array $default_attrs=null)
+	{
+		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
+		// default icons for some common actions
+		static $default_icons = array(
+			'view' => 'view',
+			'edit' => 'edit',
+			'open' => 'edit',	// does edit if possible, otherwise view
+			'add'  => 'new',
+			'new'  => 'new',
+			'delete' => 'delete',
+			'cat'  => 'attach',		// add as category icon to api
+			'document' => 'etemplate/merge',
+			'print'=> 'print',
+			'copy' => 'copy',
+			'move' => 'move',
+			'cut'  => 'cut',
+			'paste'=> 'editpaste',
+		);
+
+		$first_level = !$action_links;	// add all first level actions
+
+		//echo "actions="; _debug_array($actions);
+		$egw_actions = array();
+		$n = 1;
+		foreach((array)$actions as $id => $action)
+		{
+			// in case it's only selectbox  id => label pairs
+			if (!is_array($action)) $action = array('caption' => $action);
+			if ($default_attrs) $action += $default_attrs;
+
+			if (!$first_level && $n == $max_length && count($actions) > $max_length)
+			{
+				$id = 'more_'.count($actions);	// we need a new unique id
+				$action = array(
+					'caption' => 'More',
+					'prefix' => $prefix,
+					// display rest of actions incl. current one as children
+					'children' => array_slice($actions, $max_length-1, count($actions)-$max_length+1, true),
+				);
+				//echo "*** Inserting id=$prefix$id"; _debug_array($action);
+				// we break at end of foreach loop, as rest of actions is already dealt with
+				// by putting them as children
+			}
+			$action['id'] = $prefix.$id;
+
+			// set certain enable functions
+			foreach(array(
+				'enableClass'  => 'javaScript:nm_enableClass',
+				'disableClass' => 'javaScript:nm_not_disableClass',
+				'enableId'     => 'javaScript:nm_enableId',
+			) as $attr => $check)
+			{
+				if (isset($action[$attr]) && !isset($action['enabled']))
+				{
+					$action['enabled'] = $check;
+				}
+			}
+
+			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
+			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag'))) &&	// popup is the default
+				($first_level || substr($action['enabled'],0,11) == 'javaScript:'))
+			{
+				$action_links[] = $action['id'];
+			}
+
+			// set default icon, if no other is specified
+			if (!isset($action['icon']) && isset($default_icons[$id]))
+			{
+				$action['icon'] = $default_icons[$id];
+			}
+			// use common eTemplate image semantics
+			if (!isset($action['iconUrl']) && !empty($action['icon']))
+			{
+				list($app,$img) = explode('/',$action['icon'],2);
+				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
+				{
+					$img = $action['icon'];
+					list($app) = explode('.', $template_name);
+				}
+				$action['iconUrl'] = common::find_image($app, $img);
+				unset($action['icon']);	// no need to submit it
+			}
+			// translate labels
+			if (!$action['no_lang'])
+			{
+				$action['caption'] = lang($action['caption']);
+				if ($action['hint']) $action['hint'] = lang($action['hint']);
+			}
+			unset($action['no_lang']);
+
+			foreach(array('confirm','confirm_multiple') as $confirm)
+			{
+				if (isset($action[$confirm]))
+				{
+					$action[$confirm] = lang($action[$confirm]).(substr($action[$confirm],-1) != '?' ? '?' : '');
+				}
+			}
+
+			// add sub-menues
+			if ($action['children'])
+			{
+				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open','allowOnMultiple','confirm','confirm_multiple');
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length,
+					array_intersect_key($action, array_flip($inherit_attrs)));
+
+				unset($action['prefix']);
+				$action = array_diff_key($action, array_flip($inherit_attrs));
+			}
+
+			// link or popup action
+			if ($action['url'])
+			{
+				$action['url'] = egw::link('/index.php',str_replace('$action',$id,$action['url']));
+				if ($action['popup'])
+				{
+					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);
+					unset($action['popup']);
+					$action['data']['nm_action'] = 'popup';
+				}
+				else
+				{
+					$action['data']['nm_action'] = 'location';
+				}
+			}
+			if ($action['egw_open'])
+			{
+				$action['data']['nm_action'] = 'egw_open';
+			}
+
+			// give all delete actions a delete shortcut
+			if ($id === 'delete' && !isset($action['shortcut']))
+			{
+				$action['shortcut'] = egw_keymanager::shortcut(egw_keymanager::DELETE);
+			}
+
+			static $egw_action_supported = array(	// attributes supported by egw_action
+				'id','caption','iconUrl','type','default','onExecute','group',
+				'enabled','allowOnMultiple','hideOnDisabled','data','children',
+				'hint','checkbox','checked','radioGroup','acceptedTypes','dragType',
+				'shortcut'
+			);
+			// add all not egw_action supported attributes to data
+			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
+			if (!$action['data']) unset($action['data']);
+			// only add egw_action attributes
+			$egw_actions[] = array_intersect_key($action, array_flip($egw_action_supported));
+
+			if (!$first_level && $n++ == $max_length) break;
+		}
+		//echo "egw_actions="; _debug_array($egw_actions);
+		return $egw_actions;
+	}
+
+	/**
+	 * Action with submenu for categories
+	 *
+	 * Automatic switch to hierarchical display, if more then $max_cats_flat=14 cats found.
+	 *
+	 * @param string $app
+	 * @param int $group=0 see self::egw_actions
+	 * @param string $caption='Change category'
+	 * @param string $prefix='cat_' prefix category id to get action id
+	 * @param boolean $globals=true application global categories too
+	 * @param int $parent_id=0 only returns cats of a certain parent
+	 * @param int $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
+	 * @return array like self::egw_actions
+	 */
+	public static function category_action($app, $group=0, $caption='Change category',
+		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
+	{
+		$cat = new categories(null,$app);
+		$cats = $cat->return_sorted_array($start=0, $limit=false, $query='', $sort='ASC', $order='cat_name', $globals, $parent_id, $unserialize_data=true);
+
+		// if more then max_length cats, switch automatically to hierarchical display
+		if (count($cats) > $max_cats_flat)
+		{
+			$cat_actions = self::category_hierarchy($cats, $prefix, $parent_id);
+		}
+		else	// flat, indented categories
+		{
+			$cat_actions = array();
+			foreach((array)$cats as $cat)
+			{
+				$name = str_repeat('&nbsp;',2*$cat['level']) . stripslashes($cat['name']);
+				if (categories::is_global($cat)) $name .= ' &#9830;';
+
+				$cat_actions[$cat['id']] = array(
+					'caption' => $name,
+					'no_lang' => true,
+				);
+				// add category icon
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				{
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+				}
+			}
+		}
+		return array(
+			'caption' => $caption,
+			'children' => $cat_actions,
+			'enabled' => (boolean)$cat_actions,
+			'group' => $group,
+			'prefix' => $prefix,
+		);
+	}
+
+	/**
+	 * Return one level of the category hierarchy
+	 *
+	 * @param array $cats=null all cats if already read
+	 * @param string $prefix='cat_' prefix category id to get action id
+	 * @param int $parent_id=0 only returns cats of a certain parent
+	 * @return array
+	 */
+	private static function category_hierarchy(array $cats, $prefix, $parent_id=0)
+	{
+		$cat_actions = array();
+		foreach($cats as $key => $cat)
+		{
+			// current hierarchy level
+			if ($cat['parent'] == $parent_id)
+			{
+				$name = stripslashes($cat['name']);
+				if (categories::is_global($cat)) $name .= ' &#9830;';
+
+				$cat_actions[$cat['id']] = array(
+					'caption' => $name,
+					'no_lang' => true,
+					'prefix' => $prefix,
+				);
+				// add category icon
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				{
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+				}
+				unset($cats[$key]);
+			}
+			// direct children
+			elseif(isset($cat_actions[$cat['parent']]))
+			{
+				$cat_actions['sub_'.$cat['parent']] = $cat_actions[$cat['parent']];
+				// have to add category itself to children, to be able to select it!
+				$cat_actions[$cat['parent']]['group'] = -1;	// own group on top
+				$cat_actions['sub_'.$cat['parent']]['children'] = array(
+					$cat['parent'] => $cat_actions[$cat['parent']],
+				)+self::category_hierarchy($cats, $prefix, $cat['parent']);
+				unset($cat_actions[$cat['parent']]);
+			}
+		}
+		return $cat_actions;
 	}
 }
 
