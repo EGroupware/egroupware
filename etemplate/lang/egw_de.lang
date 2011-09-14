@@ -187,7 +187,7 @@ file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
-for more then one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
+for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
 general fields:	preferences	de	General fields:
@@ -281,7 +281,7 @@ no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 no matches found	etemplate	de	Keine Treffer gefunden
-no rights to export more then %1 entries!	etemplate	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
+no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
 not null	etemplate	de	NOT NULL
 nothing	etemplate	de	nichts
@@ -443,7 +443,7 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr
-you are not allowed to export more then %1 entries!	etemplate	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
+you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
 you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:
 you need to select a file first!	etemplate	de	Sie müssen zuerst eine Datei auswählen!
 your code is incorrect !!!	etemplate	de	Ihr Code ist nicht richtig!!!

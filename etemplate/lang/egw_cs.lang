@@ -420,6 +420,6 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	cs	XML soubor pro import
 xslt template	etemplate	cs	XSLT šablona
 year	etemplate	cs	Rok
-you are not allowed to export more then %1 entries!	etemplate	cs	Nemáte oprávnění exportovat více než %1 záznamů!
+you are not allowed to export more than %1 entries!	common	cs	Nemáte oprávnění exportovat více než %1 záznamů!
 you can respond by visiting:	etemplate	cs	Můžete odpovědět navštívením:
 you need to select a file first!	etemplate	cs	Nejprve musíte vybrat soubor!

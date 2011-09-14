@@ -232,6 +232,7 @@ holidays	calendar	en	Holidays
 holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
+how many appointments should non-admins be able to export	admin	en	How many appointments should non-admins be able to export.
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?

@@ -138,7 +138,7 @@ class calendar_merge extends bo_merge
 		// as this function allows to pass query- parameters, we need to check the result of the query against export_limit restrictions
 		if (bo_merge::hasExportLimit($this->export_limit) && !bo_merge::is_export_limit_excepted() && count($events) > (int)$this->export_limit)
 		{
-			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
+			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
 			throw new egw_exception_wrong_userinput($err);
 		}
 		$replacements = array();

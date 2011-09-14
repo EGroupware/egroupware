@@ -410,7 +410,7 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	pt-br	Importar arquivo xml
 xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano
-you are not allowed to export more then %1 entries!	etemplate	pt-br	Você não tem permissão para exportar mais de %1 registros!
+you are not allowed to export more than %1 entries!	common	pt-br	Você não tem permissão para exportar mais de %1 registros!
 you can respond by visiting:	etemplate	pt-br	Você pode responder acessando:
 error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads

@@ -408,7 +408,7 @@ abstract class bo_merge
 
 		if (self::hasExportLimit() && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
-			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
+			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
 			return false;
 		}
 
@@ -593,7 +593,7 @@ abstract class bo_merge
 		if ($countlables > 1) $lableprint = true;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
-			$err = lang('for more then one contact in a document use the tag pagerepeat!');
+			$err = lang('for more than one contact in a document use the tag pagerepeat!');
 			return false;
 		}
 		foreach ((array)$ids as $id)
@@ -1216,7 +1216,7 @@ abstract class bo_merge
 	/**
 	 * Get insert-in-document action with optional default document on top
 	 *
-	 * If more then SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
+	 * If more than SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
 	 *
 	 * @param string $dirs Directory(s comma or space separated) to search
 	 * @param int $group see nextmatch_widget::egw_actions
