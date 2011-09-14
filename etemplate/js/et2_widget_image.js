@@ -86,10 +86,13 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		// Check to expand name
 		if (typeof _attrs["src"] != "undefined")
 		{
-			var src = this.getArrayMgr("content").getEntry(_attrs["src"]);
-			if (src)
-			{
-				_attrs["src"] = src;
+			var manager = this.getArrayMgr("content");
+			if(manager) {
+				var src = manager.getEntry(_attrs["src"]);
+				if (src)
+				{
+					_attrs["src"] = src;
+				}
 			}
 		}
 	},
@@ -113,9 +116,16 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		}
 
 		this.options.src = _value;
+		var app = this.getTemplateApp();
 
+		// Handle app/image
+		if(_value.indexOf("/") > 0) {
+			var split = et2_csvSplit(_value, 2,"/");
+			var app = split[0];
+			_value = split[1];
+		}
 		// Get application to use from template ID
-		var src = egw.image(_value, this.getTemplateApp());
+		var src = egw.image(_value, app);
 		if(src)
 		{
 			this.image.attr("src", src).show();
