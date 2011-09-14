@@ -163,6 +163,11 @@ class calendar_ui
 
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+
+		$this->config =& $GLOBALS['egw_info']['server'];
+
+		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
+		$this->config['export_limit'] = $this->config['calendar_export_limit'] = bo_merge::getExportLimit($this->config['calendar_export_limit']);
 	}
 
 	/**

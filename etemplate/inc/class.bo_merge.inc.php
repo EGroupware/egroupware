@@ -1172,7 +1172,7 @@ abstract class bo_merge
 	 */
 	public static function get_documents($dirs, $prefix='document_', $mime_filter=null)
 	{
-		if (!$dirs) return array();
+		if (!$dirs || (!self::hasExportLimit('','ISALLOWED') && !self::is_export_limit_excepted())) return array();
 
 		// split multiple comma or whitespace separated directories
 		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
