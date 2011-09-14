@@ -649,7 +649,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 * by the calling code.
 	 */
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value");
+		_attrs.push("value", "class");
 	},
 
 	/**
@@ -673,6 +673,12 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	setDetachedAttributes: function(_nodes, _values) {
 		this.span = jQuery(_nodes[0]);
 		this.set_value(_values["value"]);
+
+		this._super.apply(this, arguments);
+		if(_values["class"]) 
+		{
+			this.span.addClass(_values["class"]);
+		}
 	}
 
 

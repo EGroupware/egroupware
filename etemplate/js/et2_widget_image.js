@@ -149,7 +149,7 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 	 */
 
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("src", "label");
+		_attrs.push("src", "label", "href");
 	},
 
 	getDetachedNodes: function() {
@@ -170,9 +170,12 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		{
 			this.set_label(_values["label"]);
 		}
+		if(_values["href"])
+		{
+			this.image.addClass('et2_clickable');
+		}
 	}
 });
 
 et2_register_widget(et2_image, ["image"]);
-
 

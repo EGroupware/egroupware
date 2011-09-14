@@ -296,7 +296,7 @@ var et2_container = et2_baseWidget.extend({
 /**
  * Container object for not-yet supported widgets
  */
-var et2_placeholder = et2_baseWidget.extend({
+var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],{
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -348,6 +348,18 @@ var et2_placeholder = et2_baseWidget.extend({
 		}
 
 		this.setDOMNode(this.placeDiv[0]);
+	},
+
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("value");
+	},
+
+	getDetachedNodes: function() {
+		return [this.placeDiv[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values) {
+		this.placeDiv = jQuery(_nodes[0]);
 	}
 });
 
