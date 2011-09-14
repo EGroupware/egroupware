@@ -28,7 +28,7 @@ var et2_link_to = et2_inputWidget.extend({
 		"application": {
 			"name": "Application",
 			"type": "string",
-			"default": egw_getAppName(),
+			"default": "",
 			"description": "Limit to the listed application or applications (comma seperated)"
 		},
 		"blur": {
@@ -256,13 +256,53 @@ var et2_link_to = et2_inputWidget.extend({
 });
 et2_register_widget(et2_link_to, ["link-to"]);
 
+var et2_link_apps = et2_selectbox.extend({
+	attributes: {
+		"application": {
+			"name": "Application",
+			"type": "string",
+			"default": "",
+			"description": "Limit to the listed application or applications (comma seperated)"
+		}
+	},
+
+	init: function() {
+		this._super.apply(this, arguments);
+
+		var select_options = {};
+
+		// Limit to one app
+		if(this.options.application) {
+			select_options[_attrs.application] = egw.lang(_attrs.application);
+		} else {
+			select_options = egw.link_app_list('query');
+
+			// Check whether the options entry was found, if not read it from the
+			// content array.
+			if (select_options == null)
+			{
+				select_options = this.getArrayMgr('content')
+					.getEntry("options-" + this.id)
+			}
+
+			// Default to an empty object
+			if (select_options == null)
+			{
+				select_options = {};
+			}
+		}
+		this.set_select_options(select_options);
+	}
+});
+et2_register_widget(et2_link_apps, ["link-apps"]);
+
 var et2_link_entry = et2_valueWidget.extend({
 
 	attributes: {
 		"application": {
 			"name": "Application",
 			"type": "string",
-			"default": egw_getAppName(),
+			"default": "",
 			"description": "Limit to the listed application or applications (comma seperated)"
 		},
 		"blur": {
@@ -294,7 +334,6 @@ var et2_link_entry = et2_valueWidget.extend({
 		this.div = null;
 		this.search = null;
 		this.app_select = null;
-		this.comment = null;
 
 		if(typeof this.options.value == 'undefined') this.options.value = {};
 		this.cache = {};
@@ -333,6 +372,7 @@ var et2_link_entry = et2_valueWidget.extend({
 		// Search input
 		this.search = $j(document.createElement("input")).attr("type", "search")
 			.css("width","50%")
+			.focus(function(){self.app_select.show();})
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : egw.lang("search"), this.search);
@@ -380,6 +420,55 @@ var et2_link_entry = et2_valueWidget.extend({
 
 	getValue: function() {
 		return this.options.value;
+	},
+
+	set_value: function(_value) {
+		if(!_value || _value.length == 0)
+		{
+			this.search.text("");
+			this.value = {};
+			return;
+		}
+		if(typeof _value == 'string')
+		{
+			if(_value.indexOf(":") >= 0)
+			{
+				var split = et2_csvSplit(_value, 2,":");
+
+				_value = {
+					app: split[0],
+					id: split[1]
+				};
+			}
+			else if(_value && this.options.application)
+			{
+				_value = {
+					app: this.options.application,
+					id: _value
+				};
+			}
+		}
+		if(!_value.app) _value.app = this.options.application;
+		if(typeof _value != 'object' || !(_value.app && _value.id))
+		{
+			console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
+			return;
+		}
+		if(!_value.title) {
+			var title = egw.link_title(_value.app, _value.id);
+			if(title != null) {
+				_value.title = title;
+			}
+			else
+			{
+				// Title will be fetched from server and then set
+				var title = egw.link_title(_value.app, _value.id, function(title) {this.val(title+"");}, this.search);
+			}
+		}
+		this.value = _value;
+		this.search.val(_value.title+"");
+		jQuery("option[value='"+_value.app+"']",this.app_select).attr("selected",true);
+		this.app_select.hide();
 	},
 
 	set_blur: function(_value, input) {
@@ -495,7 +584,6 @@ var et2_link_entry = et2_valueWidget.extend({
 	 */
 	_link_result: function(success) {
 		if(success) {
-			this.comment.hide();
 			this.link_button.hide().attr("disabled", false);
 			this.status_span.fadeIn().delay(1000).fadeOut();
 			delete this.options.value.app;
@@ -546,7 +634,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			return;
 		}
 		if(!_value.title) {
-			var title = egw.link_title(_value.id, _value.app, this.set_value, this);
+			var title = egw.link_title(_value.app, _value.id, this.set_value, this);
 			if(title != null) {
 				_value.title = title;
 			}
@@ -801,3 +889,38 @@ var et2_link_list = et2_link_string.extend({
 	}
 });
 et2_register_widget(et2_link_list, ["link-list"]);
+
+
+/**
+ * UI widget for one or more links in a list (table)
+ */ 
+var et2_link_add = et2_inputWidget.extend({
+
+	attributes: {
+		"application": {
+			"name": "Application",
+			"type": "string",
+			"default": "",
+			"description": "Limit to the listed application or applications (comma seperated)"
+		}
+	},
+	init: function() {
+		this._super.apply(this, arguments);
+
+		this.div = jQuery(document.createElement("div")).text(egw.lang("Add new"));
+		this.setDOMNode(this.div[0]);
+	},
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+		this.app_select = et2_createWidget("link-apps", this.options ,this);
+		this.div.append(this.app_select.getDOMNode());
+		this.button = et2_createWidget("button", {label: egw.lang("add")}, this);
+		this.button.set_label(egw.lang("add"));
+		var self = this;
+		this.button.click = function() {
+			egw.open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
+		};
+		this.div.append(this.button.getDOMNode());
+	}
+});
+et2_register_widget(et2_link_add, ["link-add"]);

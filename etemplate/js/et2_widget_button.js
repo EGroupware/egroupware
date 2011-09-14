@@ -79,7 +79,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	},
 
 	getDOMNode: function() {
-		return this.btn[0];
+		return this.btn ? this.btn[0] : null;
 	},
 
 	// TODO: What's going on here?  It doesn't get called, but something happens if you double click.
