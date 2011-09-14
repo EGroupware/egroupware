@@ -598,8 +598,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.date.setTime(parseInt(_value)*1000);
 		var display = this.date.toString();
 
-		// TODO: Use user's preference, not browser's locale
-		switch(this.type) {
+		switch(this._type) {
 			case "date":
 				display = date(egw.preference('dateformat'), this.date);
 				break;
