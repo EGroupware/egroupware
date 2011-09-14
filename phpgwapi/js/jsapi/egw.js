@@ -753,6 +753,12 @@ else
 
 				delete this.jsonq_queue[uid];
 			}
+			// if nothing left in queue, stop interval-timer to give browser a rest
+			if (this.jsonq_timer && typeof this.jsonq_queue['u'+(this.jsonq_uid-1)] != 'object')
+			{
+				window.clearInterval(this.jsonq_timer);
+				this.jsonq_timer = null;
+			}
 		},
 		
 		/**
