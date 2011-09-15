@@ -207,6 +207,11 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 			if (isset($action[$attrs[$attr]]) || !isset($action[$attrs[$attr]]) && isset($action['__default__']))
 			{
 				$actions = isset($action[$attrs[$attr]]) ? $action[$attrs[$attr]] : $action['__default__'];
+				if(!is_array($actions))
+				{
+					$attrs[$attr] = $actions;
+					$actions = array($attr => $actions);
+				}
 				if (self::DEBUG) error_log(__METHOD__."(attr='$attr', action=".array2string($action).") attrs['$attr']=='{$attrs[$attr]}' --> running actions");
 				foreach($actions as $attr => $action)
 				{
