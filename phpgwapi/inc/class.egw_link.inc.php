@@ -697,7 +697,14 @@ class egw_link extends solink
 
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
-			self::unlink(0,$app,$id);
+			static $unlinking = array();
+			// check if we are already trying to unlink the entry, to avoid an infinit recursion
+			if (!isset($unlinking[$app]) || !isset($unlinking[$app][$id]))
+			{
+				$unlinking[$app][$id] = true;
+				self::unlink(0,$app,$id);
+				unset($unlinking[$app][$id]);
+			}
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id') unlinked, as $method returned null</p>\n";
 			return False;
 		}
