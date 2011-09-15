@@ -647,7 +647,7 @@ function et2_insertLinkText(_text, _node, _target)
 	{
 		var s = _text[i];
 
-		if (typeof s == "string")
+		if (typeof s == "string" || typeof s == "number")
 		{
 			_node.appendChild(document.createTextNode(s));
 		}
