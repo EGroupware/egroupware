@@ -446,7 +446,7 @@
 				// Key does not exist - delete it and issue a warning
 				delete(_attrs[key]);
 				et2_debug("warn", this, "Attribute '" + key +
-					"' does not exist!");
+					"' does not exist in " + _attrs.type+"!");
 			}
 		}
 
