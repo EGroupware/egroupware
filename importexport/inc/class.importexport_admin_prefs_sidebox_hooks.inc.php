@@ -121,7 +121,8 @@ class importexport_admin_prefs_sidebox_hooks
 				$file['Import CSV']['link'] = '';
 			}
 		}
-		$export_limit = bo_merge::getExportLimit();
+		$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$appname);
+		//error_log(__METHOD__.__LINE__.$appname.$export_limit);
 		if ((bo_merge::is_export_limit_excepted() || bo_merge::hasExportLimit($export_limit,'ISALLOWED')) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
@@ -140,7 +141,7 @@ class importexport_admin_prefs_sidebox_hooks
 		if(($file_list = bo_merge::get_documents($GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'], '', array(
 			'application/vnd.oasis.opendocument.spreadsheet',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-		))))
+		),$appname)))
 		{
 			$prefix = 'document_';
 

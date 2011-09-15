@@ -84,7 +84,7 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		// make sure the hook for export_limit is registered
-		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','addressbook')) $GLOBALS['egw']->hooks->register_all_hooks();//register_hooks('addressbook');
+		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','addressbook')) $GLOBALS['egw']->hooks->register_single_app_hook('addressbook','export_limit');
 
 		$this->config =& $GLOBALS['egw_info']['server'];
 
