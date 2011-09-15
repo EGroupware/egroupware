@@ -189,6 +189,19 @@ class hooks
 	}
 
 	/**
+	 * check if a given hook for an  application is registered
+	 *
+	 * @param string $location location-name
+	 * @param string $app appname
+	 * @return int the number of found hooks
+	 */
+	function hook_exists($location, $app)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($this->locations[$location]));
+		return count($this->locations[$location][$app]);
+	}
+
+	/**
 	 * Register and/or de-register an application's hooks
 	 *
 	 * First all existing hooks of $appname get deleted in the db and then the given ones get registered.

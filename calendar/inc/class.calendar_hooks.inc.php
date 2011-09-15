@@ -44,6 +44,17 @@ class calendar_hooks
 	}
 
 	/**
+	 * Hook called to retrieve a app specific exportLimit
+	 *
+	 * @param array/string $location location and other parameters (not used)
+	 * @return the export_limit to be applied for the app, may be empty, int or string
+	 */
+	static function getAppExportLimit($location)
+	{
+		return bo_merge::getExportLimit($GLOBALS['egw_info']['server']['calendar_export_limit']);
+	}
+
+	/**
 	 * Draw calendar part of home
 	 */
 	static function home()

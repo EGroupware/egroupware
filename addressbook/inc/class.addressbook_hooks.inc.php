@@ -375,6 +375,17 @@ class addressbook_hooks
 	}
 
 	/**
+	 * Hook called to retrieve a app specific exportLimit
+	 *
+	 * @param array/string $location location and other parameters (not used)
+	 * @return the export_limit to be applied for the app, may be empty, int or string
+	 */
+	static function getAppExportLimit($location)
+	{
+		return bo_merge::getExportLimit($GLOBALS['egw_info']['server']['contact_export_limit']);
+	}
+
+	/**
 	 * Register contacts as calendar resources (items which can be sheduled by the calendar)
 	 *
 	 * @param array $args hook-params (not used)

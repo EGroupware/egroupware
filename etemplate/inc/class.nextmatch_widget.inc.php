@@ -275,9 +275,11 @@ class nextmatch_widget
 		// save values in persistent extension_data to be able use it in post_process
 		unset($value['rows']);
 		$extension_data += $value;
-
+		$tname = is_object($value['template']) ? $value['template']->name : $value['template'];
+		list($app) = explode('.',$tname);
+		$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
-			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']) &&
+			!bo_merge::hasExportLimit($export_limit,'ISALLOWED') &&
 			!bo_merge::is_export_limit_excepted();
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
@@ -1447,9 +1449,12 @@ class nextmatch_widget
 	 */
 	static public function csv_export(&$value,$separator=';')
 	{
-		if (!bo_merge::is_export_limit_excepted())
+		$exportLimitExempted = bo_merge::is_export_limit_excepted();
+		if (!$exportLimitExempted)
 		{
-			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+			$name = is_object($value['template']) ? $value['template']->name : $value['template'];
+			list($app) = explode('.',$name);
+			$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
 			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];
 		}
 		$charset = $charset_out = translation::charset();
@@ -1473,9 +1478,9 @@ class nextmatch_widget
 			{
 				break;	// nothing to export
 			}
-			if ($export_limit && (!is_numeric($export_limit) || $export_limit < $total))
+			if (!$exportLimitExempted && (!bo_merge::hasExportLimit($export_limit,'ISALLOWED') || (int)$export_limit < $total))
 			{
-				etemplate::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',$export_limit));
+				etemplate::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',(int)$export_limit));
 				return false;
 			}
 			if (!isset($value['no_csv_support'])) $value['no_csv_support'] = !is_array($value['csv_fields']);

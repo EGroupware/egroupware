@@ -164,10 +164,8 @@ class calendar_ui
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
-		$this->config =& $GLOBALS['egw_info']['server'];
-
-		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		$this->config['export_limit'] = $this->config['calendar_export_limit'] = bo_merge::getExportLimit($this->config['calendar_export_limit']);
+		// make sure the hook for export_limit is registered
+		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','calendar')) $GLOBALS['egw']->hooks->register_hooks('calendar');
 	}
 
 	/**
@@ -825,7 +823,7 @@ function load_cal(url,id) {
 					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 				);
 			}
-			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter);
+			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter,'calendar');
 			foreach($documents as $key => $value)
 			{
 				$options .= '<option value="'.html::htmlspecialchars($key).'">'.html::htmlspecialchars($value)."</option>\n";

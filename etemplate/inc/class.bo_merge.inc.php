@@ -1170,9 +1170,11 @@ abstract class bo_merge
 	 * @param array|string $mime_filter=null allowed mime type(s), default all, negative filter if $mime_filter[0] === '!'
 	 * @return array List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dirs, $prefix='document_', $mime_filter=null)
+	public static function get_documents($dirs, $prefix='document_', $mime_filter=null, $app='')
 	{
-		if (!$dirs || (!self::hasExportLimit('','ISALLOWED') && !self::is_export_limit_excepted())) return array();
+		$export_limit = null;
+		if (!empty($app)) $export_limit=$GLOBALS['egw']->hooks->single('export_limit',$app);
+		if (!$dirs || (!self::hasExportLimit($export_limit,'ISALLOWED') && !self::is_export_limit_excepted())) return array();
 
 		// split multiple comma or whitespace separated directories
 		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split

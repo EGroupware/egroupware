@@ -33,7 +33,7 @@ class calendar_export_ical extends calendar_export_csv {
 		}
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
-		if (!$limit_exception) $export_limit = bo_merge::getExportLimit($GLOBALS['egw_info']['server']['calendar_export_limit']);
+		if (!$limit_exception) $export_limit = calendar_hooks::getAppExportLimit($location='calendar');
 
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(
