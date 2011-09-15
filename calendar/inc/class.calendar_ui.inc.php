@@ -165,7 +165,7 @@ class calendar_ui
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 		// make sure the hook for export_limit is registered
-		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','calendar')) $GLOBALS['egw']->hooks->register_hooks('calendar');
+		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','calendar')) $GLOBALS['egw']->hooks->register_all_hooks(); //register_hooks('calendar');
 	}
 
 	/**
