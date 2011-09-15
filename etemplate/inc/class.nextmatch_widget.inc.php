@@ -275,9 +275,9 @@ class nextmatch_widget
 		// save values in persistent extension_data to be able use it in post_process
 		unset($value['rows']);
 		$extension_data += $value;
-		$tname = is_object($value['template']) ? $value['template']->name : $value['template'];
-		list($app) = explode('.',$tname);
-		$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+		list($app) = explode('.',$tmpl->name);
+		$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+		if (empty($app)) $export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
 			!bo_merge::hasExportLimit($export_limit,'ISALLOWED') &&
 			!bo_merge::is_export_limit_excepted();
@@ -1454,7 +1454,8 @@ class nextmatch_widget
 		{
 			$name = is_object($value['template']) ? $value['template']->name : $value['template'];
 			list($app) = explode('.',$name);
-			$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+			if (!empty($app)) $export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
 			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];
 		}
 		$charset = $charset_out = translation::charset();
