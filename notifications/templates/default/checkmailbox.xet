@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="notifications.checkmailbox" template="" lang="" group="0" version="1.7.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox options="0,0">
+						<description value="Folder" readonly="true"/>
+					</vbox>
+					<vbox options="0,0">
+						<description value="Subject" readonly="true"/>
+					</vbox>
+					<vbox options="0,0">
+						<description value="From" readonly="true"/>
+					</vbox>
+					<vbox options="0,0">
+						<description value="Received" readonly="true"/>
+					</vbox>
+				</row>
+				<row class="row" valign="top">
+					<vbox options="0,0">
+						<description id="${row}[mail_folder]"/>
+					</vbox>
+					<vbox options="0,0">
+						<description id="${row}[mail_subject]" no_lang="1" font_style="b" href="felamimail.uidisplay.display&amp;uid=$row_cont[mail_uid]&amp;mailbox=$row_cont[mail_folder_base64]" extra_link_popup="750x500"/>
+					</vbox>
+					<vbox options="0,0">
+						<description id="${row}[mail_from]" no_lang="1"/>
+					</vbox>
+					<vbox options="0,0">
+						<date-time id="${row}[mail_received]" readonly="true" options=",8"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

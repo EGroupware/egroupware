@@ -443,7 +443,7 @@ final class notifications {
 				}*/
 			}
 			catch (Exception $exception_user) {
-				//error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
+				error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
 			}
 		}
 		return true;
