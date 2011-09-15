@@ -49,5 +49,11 @@ $setup_info['importexport']['check_install'] = array(
 	'dom' => array(
 		'func' => 'extension_check',
 	),
+	'' => array(
+		'func' => 'pear_check',
+	),
+	'Console_Getopt' => array(
+		'func' => 'pear_check',
+	),
 );
 
