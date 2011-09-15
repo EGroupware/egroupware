@@ -317,6 +317,26 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	}
 
 	/**
+	 * Which regular properties should be copied to different namespaces and names,
+	 * because PROPPATCH stores them not as properties under their namespace and name,
+	 * but simply sets the standard stat values instead.
+	 *
+	 * @var array stat-attr => array(array('ns'=>namespace, 'name'=>attribute-name)[, ...])
+	 */
+	public static $auto_props = array(
+		'mtime' => array(
+			array('ns' => 'urn:schemas-microsoft-com:', 'name' => 'Win32LastModifiedTime'),
+			array('ns' => 'http://www.southrivertech.com/', 'name' => 'srt_modifiedtime'),
+			array('ns' => 'http://www.southrivertech.com/', 'name' => 'getlastmodified'),
+		),
+		'ctime' => array(
+			// no streamwrapper interface / php function to set the ctime currently
+			//array('ns' => 'urn:schemas-microsoft-com:', 'name' => 'Win32CreationTime'),
+			//array('ns' => 'http://www.southrivertech.com/', 'name' => 'srt_creationtime'),
+		),
+	);
+
+	/**
 	 * PROPFIND method handler
 	 *
 	 * Reimplemented to fetch all extra property of a PROPFIND request in one go.
@@ -334,13 +354,33 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$path2n = array();
 		foreach($files['files'] as $n => $info)
 		{
-			if (!$n && substr($info['path'],-1) == '/')
+			$path = $info['path'];
+			if (!$n && substr($info['path'],-1) == '/') $path = substr($info['path'],0,-1);
+			$path2n[$path] = $n;
+
+			// adding some properties used instead of regular DAV times
+			if (($stat = egw_vfs::stat($path)))
 			{
-				$path2n[substr($info['path'],0,-1)] = $n;
-			}
-			else
-			{
-				$path2n[$info['path']] = $n;
+				$fileprops =& $files['files'][$path2n[$path]]['props'];
+				foreach(self::$auto_props as $attr => $props)
+				{
+					switch($attr)
+					{
+						case 'ctime':
+						case 'mtime':
+						case 'atime':
+							$value = gmdate('D, d M Y H:i:s T',$stat[$attr]);
+							break;
+
+						default:
+							continue 2;
+					}
+					foreach($props as $prop)
+					{
+						$prop['val'] = $value;
+						$fileprops[] = $prop;
+					}
+				}
 			}
 		}
 		if ($path2n && ($path2props = egw_vfs::propfind(array_keys($path2n),null)))
@@ -359,6 +399,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				}
 			}
 		}
+		if ($this->debug) error_log(__METHOD__."() props=".array2string($files['files']));
 		return true;
 	}
 
@@ -403,13 +444,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 * They are not stored as (arbitrary) WebDAV properties with their own namespace and name,
 	 * but in the regular vfs attributes.
 	 *
-	 * @todo Store a properties in the DB and retrieve them in PROPFIND again.
 	 * @param  array  general parameter passing array
 	 * @return bool   true on success
 	 */
 	function PROPPATCH(&$options)
 	{
-		$path = $GLOBALS['egw']->translation->convert($options['path'],'utf-8');
+		$path = translation::convert($options['path'],'utf-8');
 
 		foreach ($options['props'] as $key => $prop) {
 			$attributes = array();
@@ -424,7 +464,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 							egw_vfs::touch($path,strtotime($prop['val']));
 							break;
 						//case 'srt_creationtime':
-							// not supported via the streamwrapper interface atm.
+							// no streamwrapper interface / php function to set the ctime currently
 							//$attributes['created'] = strtotime($prop['val']);
 							//break;
 						default:
@@ -443,6 +483,21 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 						// not sure why, the filesystem example of the WebDAV class does it ...
 						default:
 							$options['props'][$key]['status'] = '403 Forbidden';
+							break;
+					}
+					break;
+
+				case 'urn:schemas-microsoft-com:':
+					switch($prop['name'])
+					{
+						case 'Win32LastModifiedTime':
+							egw_vfs::touch($path,strtotime($prop['val']));
+							break;
+						case 'Win32CreationTime':	// eg. "Wed, 14 Sep 2011 15:48:26 GMT"
+						case 'Win32LastAccessTime':
+						case 'Win32FileAttributes':	// not sure what that is, it was always "00000000"
+						default:
+							if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
 					break;
