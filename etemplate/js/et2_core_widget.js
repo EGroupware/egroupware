@@ -552,6 +552,17 @@ var et2_widget = Class.extend({
 				_node.getAttribute("id"), _node.getAttribute("readonly"),
 				this.readonly);
 
+		// Check to see if modifications change type
+		var modifications = this.getArrayMgr("modifications");
+		if(modifications && _node.getAttribute("id")) {
+			var entry = modifications.getEntry(_node.getAttribute("id"));
+			if(entry && entry.type)
+			{
+				_nodeName = attributes["type"] = entry.type
+			}
+			entry = null;
+		}
+
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
 		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
