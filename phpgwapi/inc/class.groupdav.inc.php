@@ -210,7 +210,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$dav[] = 'access-control';
 				$dav[] = 'calendar-access';
 				//$dav[] = 'calendar-schedule';
-				//$dav[] = 'calendar-proxy';
+				$dav[] = 'calendar-proxy';
 				//$dav[] = 'calendar-avialibility';
 				//$dav[] = 'calendarserver-private-events';
 				break;
