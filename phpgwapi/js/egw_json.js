@@ -418,12 +418,11 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						{
 							try
 							{
-								window[res.data.func].apply(window, res.data.parameters);
+								window[res.data.func].apply(window, res.data.parms);
 							}
 							catch (e)
 							{
-								e.code = res.data.func;
-								_egw_json_debug_log(e);
+								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.parms});
 							}
 							hasResponse = true;
 						} else
@@ -440,7 +439,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							catch (e)
 							{
-								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.params});
+								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.parms});
 							}
 							hasResponse = true;
 						} else
