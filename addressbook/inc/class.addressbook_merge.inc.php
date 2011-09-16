@@ -32,10 +32,7 @@ class addressbook_merge extends bo_merge
 		parent::__construct();
 
 		// overwrite global export-limit, if an addressbook one is set
-		if ($GLOBALS['egw_info']['server']['contact_export_limit'])
-		{
-			$this->export_limit = $GLOBALS['egw_info']['server']['contact_export_limit'];
-		}
+		$this->export_limit = bo_merge::getExportLimit('addressbook');
 	}
 
 	/**

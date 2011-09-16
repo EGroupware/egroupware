@@ -410,7 +410,7 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	nl	XML-bestand om te importeren
 xslt template	etemplate	nl	XSLT Template
 year	etemplate	nl	Jaar
-you are not allowed to export more then %1 entries!	etemplate	nl	Je mag niet meer dan %1 items exporteren!
+you are not allowed to export more than %1 entries!	common	nl	Je mag niet meer dan %1 items exporteren!
 you can respond by visiting:	etemplate	nl	Ju kunt reageren via:
 error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
 maximum size for uploads	filemanager	nl	Maximum grootte voor uploads

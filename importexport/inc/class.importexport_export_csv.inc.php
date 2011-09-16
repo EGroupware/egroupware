@@ -52,7 +52,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	/**
 	 * @var int holds max. number of records allowed to be exported
 	 */
-	protected $export_limit = 0;
+	public $export_limit = 0;
 
 	/**
 	 * @var stream stream resource of csv file
@@ -100,11 +100,11 @@ class importexport_export_csv implements importexport_iface_export_record
 		if ( !empty( $_options ) ) {
 			$this->csv_options = array_merge( $this->csv_options, $_options );
 		}
-
+		//error_log(__METHOD__.__LINE__.array2string($_options['appname']));
 		if(!bo_merge::is_export_limit_excepted()) {
-			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no') throw new egw_exception_no_permission_admin('Export disabled');
-			$this->export_limit = (int)$config['export_limit'];
+			$this->export_limit = bo_merge::getExportLimit($_options['appname']);
+			//error_log(__METHOD__.__LINE__.' app:'.$_options['appname'].' limit:'.$this->export_limit);
+			if($this->export_limit == 'no') throw new egw_exception_no_permission_admin('Export disabled');
 		}
 	}
 	

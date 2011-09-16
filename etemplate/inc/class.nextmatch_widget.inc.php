@@ -275,9 +275,10 @@ class nextmatch_widget
 		// save values in persistent extension_data to be able use it in post_process
 		unset($value['rows']);
 		$extension_data += $value;
-
+		list($app) = explode('.',$tmpl->name);
+		$export_limit = bo_merge::getExportLimit($app);
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
-			$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']) &&
+			!bo_merge::hasExportLimit($export_limit,'ISALLOWED') &&
 			!bo_merge::is_export_limit_excepted();
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
@@ -760,7 +761,7 @@ class nextmatch_widget
 	/**
 	 * Action with submenu for categories
 	 *
-	 * Automatic switch to hierarchical display, if more then $max_cats_flat=14 cats found.
+	 * Automatic switch to hierarchical display, if more than $max_cats_flat=14 cats found.
 	 *
 	 * @param string $app
 	 * @param int $group=0 see self::egw_actions
@@ -777,7 +778,7 @@ class nextmatch_widget
 		$cat = new categories(null,$app);
 		$cats = $cat->return_sorted_array($start=0, $limit=false, $query='', $sort='ASC', $order='cat_name', $globals, $parent_id, $unserialize_data=true);
 
-		// if more then max_length cats, switch automatically to hierarchical display
+		// if more than max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
 		{
 			$cat_actions = self::category_hierarchy($cats, $prefix, $parent_id);
@@ -1069,7 +1070,7 @@ class nextmatch_widget
 				unset($header);
 			}
 		}
-		// do we have more then 5 cf's to display --> limit header height to 5 lines plus vertical scrollbar
+		// do we have more than 5 cf's to display --> limit header height to 5 lines plus vertical scrollbar
 		$num = !$allowed ? count($this->cfs) : count($allowed);
 		if ($num > 5)
 		{
@@ -1447,9 +1448,12 @@ class nextmatch_widget
 	 */
 	static public function csv_export(&$value,$separator=';')
 	{
-		if (!bo_merge::is_export_limit_excepted())
+		$exportLimitExempted = bo_merge::is_export_limit_excepted();
+		if (!$exportLimitExempted)
 		{
-			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+			$name = is_object($value['template']) ? $value['template']->name : $value['template'];
+			list($app) = explode('.',$name);
+			$export_limit = bo_merge::getExportLimit($app);
 			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];
 		}
 		$charset = $charset_out = translation::charset();
@@ -1473,9 +1477,9 @@ class nextmatch_widget
 			{
 				break;	// nothing to export
 			}
-			if ($export_limit && (!is_numeric($export_limit) || $export_limit < $total))
+			if (!$exportLimitExempted && (!bo_merge::hasExportLimit($export_limit,'ISALLOWED') || (int)$export_limit < $total))
 			{
-				etemplate::set_validation_error($name,lang('You are not allowed to export more then %1 entries!',$export_limit));
+				etemplate::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',(int)$export_limit));
 				return false;
 			}
 			if (!isset($value['no_csv_support'])) $value['no_csv_support'] = !is_array($value['csv_fields']);

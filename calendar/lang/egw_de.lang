@@ -237,6 +237,7 @@ holidays	calendar	de	Feiertage
 holidays only	calendar	de	Nur Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
+how many appointments should non-admins be able to export	admin	de	Wieviele Termine sollen Nicht-Adminstratoren exportieren können?
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	de	Wieviele Zeilen der Beschreibung sollen direkt sichtbar sein (Rest über die Scrollbar)?
 how many minutes should each interval last?	calendar	de	Wie viele Minuten soll jedes Intervall dauern?
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?

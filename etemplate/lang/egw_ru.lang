@@ -410,5 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	ru	файл xml для импорта
 xslt template	etemplate	ru	Шаблон XLST
 year	etemplate	ru	Год
-you are not allowed to export more then %1 entries!	etemplate	ru	Вам не разрешено экспортировать более чем %1 записей!
+you are not allowed to export more than %1 entries!	common	ru	Вам не разрешено экспортировать более чем %1 записей!
 you can respond by visiting:	etemplate	ru	Вы можете отозваться посетив:

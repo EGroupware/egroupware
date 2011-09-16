@@ -12,10 +12,10 @@
    </tr>
 
    <tr class="row_off">
-    <td colspan="2"><b>{lang_Calendar} {lang_site_configuration}</b></td>
+    <td colspan="2">&nbsp;<b>{lang_Calendar} {lang_site_configuration}</b></td>
    </tr>
    <tr class="row_on">
-    <td>{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
+    <td>&nbsp;{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
     <td>
      <select name="newsettings[auto_load_holidays]">
       <option value=""{selected_auto_load_holidays_False}>{lang_No}</option>
@@ -24,7 +24,7 @@
     </td>
    </tr>
    <tr class="row_off">
-    <td>{lang_Location_to_autoload_from}:</td>
+    <td>&nbsp;{lang_Location_to_autoload_from}:</td>
     <td>
      <select name="newsettings[holidays_url_path]">
       <option value="localhost"{selected_holidays_url_path_localhost}>localhost</option>
@@ -34,11 +34,11 @@
    </tr>
    <!-- lock setting -->
    <tr class="row_on">
-    <td>{lang_setting_lock_time_calender}:</td>
+    <td>&nbsp;{lang_setting_lock_time_calender}:</td>
     <td><input name="newsettings[Lock_Time_Calender]" value="{value_Lock_Time_Calender}" size="40"></td>
    </tr>
    <tr class="row_off">
-    <td>{lang_Deny_Ressources_reservation_for_private_events}:</td>
+    <td>&nbsp;{lang_Deny_Ressources_reservation_for_private_events}:</td>
     <td>
      <select name="newsettings[no_ressources_private]">
       <option value="">{lang_No}</option>
@@ -47,7 +47,7 @@
     </td>
    </tr>
    <tr class="row_on">
-    <td>{lang_Require_an_ACL_grant_to_invite_other_users_and_groups}:</td>
+    <td>&nbsp;{lang_Require_an_ACL_grant_to_invite_other_users_and_groups}:</td>
     <td>
      <select name="newsettings[require_acl_invite]">
       <option value="">{lang_No}: {lang_Every_user_can_invite_other_users_and_groups}</option>
@@ -57,17 +57,22 @@
     </td>
    </tr>
    <tr class="row_off">
-    <td>{lang_While_selecting_up_to_X_users_day-_and_weekview_is_not_consolidated_(5_is_used_when_not_set)}:</td>
+    <td>&nbsp;{lang_While_selecting_up_to_X_users_day-_and_weekview_is_not_consolidated_(5_is_used_when_not_set)}:</td>
     <td><input name="newsettings[calview_no_consolidate]" value="{value_calview_no_consolidate}" size="10"></td>
    </tr>
    <tr class="row_on">
-    <td>{lang_Allow_users_to_prevent_change_notifications_('Do_not_notify')}:</td>
+    <td>&nbsp;{lang_Allow_users_to_prevent_change_notifications_('Do_not_notify')}:</td>
     <td>
      <select name="newsettings[calendar_allow_no_notification]">
       <option value=""{selected_calendar_allow_no_notification_False}>{lang_No}</option>
       <option value="True"{selected_calendar_allow_no_notification_True}>{lang_Yes}</option>
      </select>
     </td>
+   </tr>
+   <tr class="row_off">
+    <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_appointments_should_non-admins_be_able_to_export}
+    {lang_(empty_=_use_global_limit,_no_=_no_export_at_all)}:</td>
+    <td><input name="newsettings[calendar_export_limit]" value="{value_calendar_export_limit}" size="5"></td>
    </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>
@@ -98,10 +103,10 @@
     </td>
    </tr>
    <tr class="th">
-    <td colspan="2"><b>{lang_Birthdays}</b></td>
+    <td colspan="2">&nbsp;<b>{lang_Birthdays}</b></td>
    </tr>
    <tr class="row_off">
-    <td>{lang_Show_birthdays_from_addressbook}:</td>
+    <td>&nbsp;{lang_Show_birthdays_from_addressbook}:</td>
     <td>
      <select name="newsettings[hide_birthdays]">
       <option value="">{lang_Yes}</option>
@@ -111,7 +116,7 @@
     </td>
    </tr>
    <tr class="row_on">
-    <td>{lang_Calendar_recurrence_horizont_in_days_(default_1000)}:</td>
+    <td>&nbsp;{lang_Calendar_recurrence_horizont_in_days_(default_1000)}:</td>
     <td><input size="5" name="newsettings[calendar_horizont]" value="{value_calendar_horizont}"></td>
    </tr>
 

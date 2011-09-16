@@ -82,17 +82,15 @@ class addressbook_ui extends addressbook_bo
 		{
 			$GLOBALS['egw_info']['flags']['java_script'].= $this->js();
 		}
+
+		// make sure the hook for export_limit is registered
+		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','addressbook')) $GLOBALS['egw']->hooks->register_single_app_hook('addressbook','export_limit');
+
 		$this->config =& $GLOBALS['egw_info']['server'];
 
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		if ($this->config['contact_export_limit'])
-		{
-			$this->config['export_limit'] = $this->config['contact_export_limit'];
-		}
-		else	// if not use the global one
-		{
-			$this->config['contact_export_limit'] = $this->config['export_limit'];
-		}
+		$this->config['export_limit'] = $this->config['contact_export_limit'] = bo_merge::getExportLimit($app='addressbook');
+
 		if ($this->config['copy_fields'] && ($fields = unserialize($this->config['copy_fields'])))
 		{
 			// Set country code if country name is selected

@@ -174,7 +174,7 @@ file writen	etemplate	sk	Súbor zapísaný
 fileupload	etemplate	sk	Nahrať Súbor
 first	etemplate	sk	Prvé
 floating point	etemplate	sk	Pohyblivá desatinná čiarka
-for more then one contact in a document use the tag pagerepeat!	etemplate	sk	Ak chcete mať v dokumente viac než jeden kontakt, použite značku opakovania strany!
+for more than one contact in a document use the tag pagerepeat!	etemplate	sk	Ak chcete mať v dokumente viac než jeden kontakt, použite značku opakovania strany!
 foreign key	etemplate	sk	Cudzí kľúč
 formatted text (html)	etemplate	sk	Formátovaný text (HTML)
 go to the first entry	etemplate	sk	choď na prvý záznam
@@ -403,7 +403,7 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	sk	xml súbor pre import
 xslt template	etemplate	sk	XSLT šablóna
 year	etemplate	sk	Rok
-you are not allowed to export more then %1 entries!	etemplate	sk	Nie je vám dovolené, exportovať viac než %1 záznamov!
+you are not allowed to export more than %1 entries!	common	sk	Nie je vám dovolené, exportovať viac než %1 záznamov!
 you can respond by visiting:	etemplate	sk	Odpovedať môžete na tejto adrese:
 you need to select a file first!	etemplate	sk	Je potrebné najprv vybrať súbor!
 your code is incorrect !!!	etemplate	sk	Váš kód je chybný!!!

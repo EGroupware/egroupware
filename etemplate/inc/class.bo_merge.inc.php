@@ -89,7 +89,7 @@ abstract class bo_merge
 		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
 			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12 ? 'h:i a' : 'H:i');
 
-		$this->export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+		$this->export_limit = self::getExportLimit();
 	}
 
 	/**
@@ -339,6 +339,66 @@ abstract class bo_merge
 	}
 
 	/**
+	 * getExportLimit
+	 * checks if there is an exportlimit set, and returns 
+	 * @param mixed $app_limit checks and validates app_limit, if not set returns the global limit
+	 *
+	 * @return mixed - no if no export is allowed, false if there is no restriction and int as there is a valid restriction
+	 *		you may have to cast the returned value to int, if you want to use it as number
+	 */
+	public static function getExportLimit($app='common')
+	{
+		static $exportLimitStore;
+		if (is_null($exportLimitStore)) $exportLimitStore=array();
+		if (empty($app)) $app='common';
+		//error_log(__METHOD__.__LINE__.' called with app:'.$app);
+		if (!array_key_exists($app,$exportLimitStore))
+		{
+			//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
+			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
+			if ($app !='common') 
+			{
+				$app_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+				if ($app_limit) $exportLimitStore[$app] = $app_limit;
+			}
+			//error_log(__METHOD__.__LINE__.' building cache for app:'.$app.' -> '.$exportLimitStore[$app]);
+			if (empty($exportLimitStore[$app]))
+			{
+				$exportLimitStore[$app] = false;
+				return false;
+			}
+	
+			if (is_numeric($exportLimitStore[$app]))
+			{
+				$exportLimitStore[$app] = (int)$exportLimitStore[$app];
+			}
+			else
+			{
+				$exportLimitStore[$app] = 'no';
+			}
+			//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
+		}
+		//error_log(__METHOD__.__LINE__.' app:'.$app.' -> '.$exportLimitStore[$app]);
+		return $exportLimitStore[$app];
+	}
+
+	/**
+	 * hasExportLimit
+	 * checks wether there is an exportlimit set, and returns true or false
+	 * @param mixed $app_limit app_limit, if not set checks the global limit
+	 * @param string $checkas [AND|ISALLOWED], AND default; if set to ISALLOWED it is checked if Export is allowed
+	 *
+	 * @return bool - true if no export is allowed or a limit is set, false if there is no restriction
+	 */
+	public static function hasExportLimit($app_limit,$checkas='AND')
+	{
+		if (strtoupper($checkas) == 'ISALLOWED') return (empty($app_limit) || ($app_limit !='no' && $app_limit > 0) );
+		if (empty($app_limit)) return false;
+		if ($app_limit == 'no') return true;
+		if ($app_limit > 0) return true;
+	}
+
+	/**
 	 * Merges a given document with contact data
 	 *
 	 * @param string $document path/url of document
@@ -356,9 +416,9 @@ abstract class bo_merge
 			return false;
 		}
 
-		if ($this->export_limit && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
+		if (self::hasExportLimit($this->export_limit) && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
-			$err = lang('No rights to export more then %1 entries!',(int)$this->export_limit);
+			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
 			return false;
 		}
 
@@ -541,7 +601,7 @@ abstract class bo_merge
 		if ($countlables > 1) $lableprint = true;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
-			$err = lang('for more then one contact in a document use the tag pagerepeat!');
+			$err = lang('for more than one contact in a document use the tag pagerepeat!');
 			return false;
 		}
 		foreach ((array)$ids as $id)
@@ -549,12 +609,22 @@ abstract class bo_merge
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
 			if ($lableprint) $content = $Labelrepeat;
 
-			// generate replacements
-			if(!($replacements = $this->get_replacements($id,$content)))
+			// generate replacements; if exeption is thrown, catch it set error message and return false
+			try
 			{
-				$err = lang('Entry not found!');
+				if(!($replacements = $this->get_replacements($id,$content)))
+				{
+					$err = lang('Entry not found!');
+					return false;
+				}
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				// if this returns with an exeption, something failed big time
+				$err = $e->getMessage();
 				return false;
 			}
+
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
@@ -1107,9 +1177,10 @@ abstract class bo_merge
 	 * @param array|string $mime_filter=null allowed mime type(s), default all, negative filter if $mime_filter[0] === '!'
 	 * @return array List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dirs, $prefix='document_', $mime_filter=null)
+	public static function get_documents($dirs, $prefix='document_', $mime_filter=null, $app='')
 	{
-		if (!$dirs) return array();
+		$export_limit=self::getExportLimit($app);
+		if (!$dirs || (!self::hasExportLimit($export_limit,'ISALLOWED') && !self::is_export_limit_excepted())) return array();
 
 		// split multiple comma or whitespace separated directories
 		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
@@ -1153,7 +1224,7 @@ abstract class bo_merge
 	/**
 	 * Get insert-in-document action with optional default document on top
 	 *
-	 * If more then SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
+	 * If more than SHOW_DOCS_BY_MIME_LIMIT=10 documents found, they are displayed in submenus by mime type.
 	 *
 	 * @param string $dirs Directory(s comma or space separated) to search
 	 * @param int $group see nextmatch_widget::egw_actions
@@ -1166,10 +1237,8 @@ abstract class bo_merge
 	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
 		$export_limit=null)
 	{
-		if (is_null($export_limit)) $export_limit = $GLOBALS['egw_info']['server']['export_limit'];
-
 		$documents = array();
-
+		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
 		if ($default_doc && ($file = egw_vfs::stat($default_doc)))	// put default document on top
 		{
 			$documents['document'] = array(
@@ -1250,7 +1319,7 @@ abstract class bo_merge
 			'caption' => $caption,
 			'children' => $documents,
 			// disable action if no document or export completly forbidden for non-admins
-			'enabled' => (boolean)$documents && (empty($export_limit) || (int)$export_limit > 0 || self::is_export_limit_excepted()),
+			'enabled' => (boolean)$documents && (self::hasExportLimit($export_limit,'ISALLOWED') || self::is_export_limit_excepted()),
 			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
 			'group' => $group,
 		);

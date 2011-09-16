@@ -43,6 +43,7 @@ $setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.calendar_ui.sidebox
 $setup_info['calendar']['hooks']['search_link'] = 'calendar_hooks::search_link';
 $setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_validate';
 $setup_info['calendar']['hooks']['timesheet_set'] = 'calendar.calendar_bo.timesheet_set';
+$setup_info['calendar']['hooks']['export_limit'] = 'calendar_hooks::getAppExportLimit';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

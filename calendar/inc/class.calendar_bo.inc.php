@@ -1491,7 +1491,7 @@ class calendar_bo
 	{
 		//_debug_array($event);
 		$names = array();
-		foreach($event['participants'] as $id => $status)
+		foreach((array)$event['participants'] as $id => $status)
 		{
 			calendar_so::split_status($status,$quantity,$role);
 

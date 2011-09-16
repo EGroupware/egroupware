@@ -163,6 +163,9 @@ class calendar_ui
 
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+
+		// make sure the hook for export_limit is registered
+		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','calendar')) $GLOBALS['egw']->hooks->register_single_app_hook('calendar','export_limit');
 	}
 
 	/**
@@ -820,7 +823,7 @@ function load_cal(url,id) {
 					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 				);
 			}
-			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter);
+			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter,'calendar');
 			foreach($documents as $key => $value)
 			{
 				$options .= '<option value="'.html::htmlspecialchars($key).'">'.html::htmlspecialchars($value)."</option>\n";

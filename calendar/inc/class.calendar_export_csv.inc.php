@@ -24,10 +24,9 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 		$this->bo = new calendar_bo();
-		$config = config::read('phpgwapi');
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
-
+		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
 		// Custom fields need to be specifically requested
 		$cfs = array();
 		foreach($options['mapping'] as $key => $label) {
@@ -39,14 +38,14 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				'start' => $options['selection']['start'],
 				'end'   => $options['selection']['end'],
 				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
-				'enum_recuring' => false,
+				//'enum_recuring' => false, // we want the recurring events enumerated for csv export
 				'daywise'       => false,
 				'users'         => $options['selection']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 			);
-			if($config['export_limit'] && !$limit_exception) {
+			if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
 				$query['offset'] = 0;
-				$query['num_rows'] = (int)$config['export_limit'];
+				$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 			}
 			$events =& $this->bo->search($query);
 		} elseif ($options['selection']['select'] == 'search_results') {
@@ -57,8 +56,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
-				if($config['export_limit'] && !$limit_exception) {
-					$query['num_rows'] = (int)$config['export_limit'];
+				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
 				$ui = new calendar_uilist();
 				$ui->get_rows($query, $events, $unused);
@@ -66,8 +65,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if($config['export_limit'] && !$limit_exception) {
-					$query['num_rows'] = (int)$config['export_limit'];
+				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 				}
 
 				$events = array();
@@ -89,8 +88,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 						);
 
 				}
-				$bo = new calendar_boupdate();
-				$events = $bo->search($query + array(
+				$boupdate = new calendar_boupdate();
+				$events = $boupdate->search($query + array(
 					'offset' => 0,
 					'order' => 'cal_start',
 				));
@@ -98,6 +97,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		}
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
+		if (!$limit_exception) $export_object->export_limit = $export_limit;
 		$export_object->set_mapping($options['mapping']);
 		$convert_fields = calendar_egw_record::$types;
 
@@ -111,33 +111,34 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				3 => lang('High')
 			),
 		);
-
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
-			// Get rid of yearly recurring events that don't belong
-			if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
-
+			// the condition below (2 lines) may only work on enum_recuring=false and using the iterator to test an recurring event on the given timerange
+			// Get rid of yearly recurring events that don't belong 
+			//if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
 			// Add in participants
 			if($options['mapping']['participants']) {
 				$event['participants'] = implode(", ",$this->bo->participants($event,true));
 			}
-
-			$record->set_record($event);
-			if($options['mapping']['recurrence']) {
-				$record->recurrence = $recurrence[$record->recur_type];
-				if($record->recur_type != MCAL_RECUR_NONE) $record->recurrence .= ' / '. $record->recur_interval;
-			}
-
-			// Standard stuff
-			if($options['convert']) {
-				importexport_export_csv::convert($record, $convert_fields, 'calendar', $lookups);
-			} else {
-				// Implode arrays, so they don't say 'Array'
-				foreach($record->get_record_array() as $key => $value) {
-					if(is_array($value)) $record->$key = implode(',', $value);
+			if (is_array($event))
+			{
+				$record->set_record($event);
+				if($options['mapping']['recurrence']) {
+					$record->recurrence = $recurrence[$record->recur_type];
+					if($record->recur_type != MCAL_RECUR_NONE) $record->recurrence .= ' / '. $record->recur_interval;
 				}
- 			}
-			$export_object->export_record($record);
+
+				// Standard stuff
+				if($options['convert']) {
+					importexport_export_csv::convert($record, $convert_fields, 'calendar', $lookups);
+				} else {
+					// Implode arrays, so they don't say 'Array'
+					foreach($record->get_record_array() as $key => $value) {
+						if(is_array($value)) $record->$key = implode(',', $value);
+					}
+	 			}
+				$export_object->export_record($record);
+			}
 		}
 		unset($record);
 	}

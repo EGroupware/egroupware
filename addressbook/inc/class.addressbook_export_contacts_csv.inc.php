@@ -40,7 +40,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		// Addressbook defines its own export imits
 		$limit_exception = bo_merge::is_export_limit_excepted();
-		if($GLOBALS['egw_info']['server']['contact_export_limit'] == 'no' && !$limit_exception) {
+		$export_limit = $export_object->export_limit = bo_merge::getExportLimit($app='addressbook');
+		if($export_limit == 'no' && !$limit_exception) {
 			return;
 		}
 
@@ -65,8 +66,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if($GLOBALS['egw_info']['server']['contact_export_limit'] && !$limit_exception) {
-			$selection = array_slice($selection, 0, $GLOBALS['egw_info']['server']['contact_export_limit']);
+		if(bo_merge::hasExportLimit($export_limit,'ISALLOWED') && !$limit_exception) {
+			$selection = array_slice($selection, 0, $export_limit);
 		}
 		if($options['explode_multiselects']) {
 			$customfields = config::get_customfields('addressbook');

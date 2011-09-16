@@ -178,7 +178,7 @@ file writen	etemplate	fi	Tiedostoa kirjoitetaan
 fileupload	etemplate	fi	Tiedostoa ladataan
 first	etemplate	fi	Ensimmäinen
 floating point	etemplate	fi	Liukuva pilkku
-for more then one contact in a document use the tag pagerepeat!	etemplate	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
+for more than one contact in a document use the tag pagerepeat!	etemplate	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
 foreign key	etemplate	fi	Viiteavain
 formatted text (html)	etemplate	fi	Muotoiltu teksti (HTML)
 go to the first entry	etemplate	fi	Mene ensimmäiseen merkintään
@@ -403,7 +403,7 @@ write tables	etemplate	fi	Kirjoita taulukko
 xml-file to import	etemplate	fi	tuotava xml-tiedosto
 xslt template	etemplate	fi	XSLT -mallipohja
 year	etemplate	fi	Vuosi
-you are not allowed to export more then %1 entries!	etemplate	fi	Sinulla ei ole riittäviä oikeuksia viedä enemmän kuin %1 tietuetta!!!
+you are not allowed to export more than %1 entries!	common	fi	Sinulla ei ole riittäviä oikeuksia viedä enemmän kuin %1 tietuetta!!!
 you can respond by visiting:	etemplate	fi	Voit vastata vierailemalla:
 you need to select a file first!	etemplate	fi	Valitse tiedosto!
 your code is incorrect !!!	etemplate	fi	Virheellinen koodi!
