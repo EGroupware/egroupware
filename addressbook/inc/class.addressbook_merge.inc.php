@@ -32,7 +32,7 @@ class addressbook_merge extends bo_merge
 		parent::__construct();
 
 		// overwrite global export-limit, if an addressbook one is set
-		$this->export_limit = addressbook_hooks::getAppExportLimit($location='addressbook');
+		$this->export_limit = bo_merge::getExportLimit('addressbook');
 	}
 
 	/**

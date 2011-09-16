@@ -37,7 +37,8 @@ class importexport_admin_prefs_sidebox_hooks
 					'icon' => 'import'
 				),
 			);
-			$export_limit = bo_merge::getExportLimit();
+			$export_limit = bo_merge::getExportLimit($appname);
+			//error_log(__METHOD__.__LINE__.' app:'.$appname.' limit:'.$export_limit);
 			if(bo_merge::is_export_limit_excepted() || $export_limit !== 'no')
 			{
 				$file[] = array(
@@ -121,8 +122,8 @@ class importexport_admin_prefs_sidebox_hooks
 				$file['Import CSV']['link'] = '';
 			}
 		}
-		$export_limit = $GLOBALS['egw']->hooks->single('export_limit',$appname);
-		//error_log(__METHOD__.__LINE__.$appname.$export_limit);
+		$export_limit = bo_merge::getExportLimit($appname);
+		//error_log(__METHOD__.__LINE__.' app:'.$appname.' limit:'.$export_limit);
 		if ((bo_merge::is_export_limit_excepted() || bo_merge::hasExportLimit($export_limit,'ISALLOWED')) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".

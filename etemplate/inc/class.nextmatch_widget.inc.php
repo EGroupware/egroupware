@@ -276,8 +276,7 @@ class nextmatch_widget
 		unset($value['rows']);
 		$extension_data += $value;
 		list($app) = explode('.',$tmpl->name);
-		$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
-		if (empty($app)) $export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+		$export_limit = bo_merge::getExportLimit($app);
 		$value['no_csv_export'] = $value['csv_fields'] === false ||
 			!bo_merge::hasExportLimit($export_limit,'ISALLOWED') &&
 			!bo_merge::is_export_limit_excepted();
@@ -1454,8 +1453,7 @@ class nextmatch_widget
 		{
 			$name = is_object($value['template']) ? $value['template']->name : $value['template'];
 			list($app) = explode('.',$name);
-			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
-			if (!empty($app)) $export_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+			$export_limit = bo_merge::getExportLimit($app);
 			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];
 		}
 		$charset = $charset_out = translation::charset();

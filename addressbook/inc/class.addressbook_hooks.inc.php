@@ -382,7 +382,7 @@ class addressbook_hooks
 	 */
 	static function getAppExportLimit($location)
 	{
-		return bo_merge::getExportLimit($GLOBALS['egw_info']['server']['contact_export_limit']);
+		return $GLOBALS['egw_info']['server']['contact_export_limit'];
 	}
 
 	/**

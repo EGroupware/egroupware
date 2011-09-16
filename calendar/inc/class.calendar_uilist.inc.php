@@ -799,9 +799,9 @@ class calendar_uilist extends calendar_ui
 			'hint' => 'Download this event as iCal',
 			'disableClass' => 'rowNoView',
 		);
-		$actions['documents'] = addressbook_merge::document_action(
+		$actions['documents'] = calendar_merge::document_action(
 			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',
-			$this->bo->cal_prefs['default_document']
+			$this->bo->cal_prefs['default_document'],bo_merge::getExportLimit('calendar')
 		);
 		++$group;
 		$actions['delete'] = array(

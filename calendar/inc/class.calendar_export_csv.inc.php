@@ -26,7 +26,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$this->bo = new calendar_bo();
 
 		$limit_exception = bo_merge::is_export_limit_excepted(); 
-		if (!$limit_exception) $export_limit = calendar_hooks::getAppExportLimit($location='calendar'); 
+		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
 		// Custom fields need to be specifically requested
 		$cfs = array();
 		foreach($options['mapping'] as $key => $label) {

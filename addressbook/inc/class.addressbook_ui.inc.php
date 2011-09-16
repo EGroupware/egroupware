@@ -89,7 +89,7 @@ class addressbook_ui extends addressbook_bo
 		$this->config =& $GLOBALS['egw_info']['server'];
 
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		$this->config['export_limit'] = $this->config['contact_export_limit'] = addressbook_hooks::getAppExportLimit($location='addressbook'); 
+		$this->config['export_limit'] = $this->config['contact_export_limit'] = bo_merge::getExportLimit($app='addressbook');
 
 		if ($this->config['copy_fields'] && ($fields = is_array($this->config['copy_fields']) ?
 			$this->config['copy_fields'] : unserialize($this->config['copy_fields'])))

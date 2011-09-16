@@ -345,30 +345,40 @@ abstract class bo_merge
 	 * @return mixed - no if no export is allowed, false if there is no restriction and int as there is a valid restriction
 	 *		you may have to cast the returned value to int, if you want to use it as number
 	 */
-	public static function getExportLimit($app_limit='')
+	public static function getExportLimit($app='common')
 	{
-		//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
-		$exportLimit = $GLOBALS['egw_info']['server']['export_limit'];
-		if (!empty($app_limit)) 
+		static $exportLimitStore;
+		if (is_null($exportLimitStore)) $exportLimitStore=array();
+		if (empty($app)) $app='common';
+		//error_log(__METHOD__.__LINE__.' called with app:'.$app);
+		if (!array_key_exists($app,$exportLimitStore))
 		{
-			$exportLimit = $app_limit;
-		}
-		//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
-		if (empty($exportLimit))
-		{
-			return false;
-		}
+			//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
+			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
+			if ($app !='common') 
+			{
+				$app_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+				if ($app_limit) $exportLimitStore[$app] = $app_limit;
+			}
+			//error_log(__METHOD__.__LINE__.' building cache for app:'.$app.' -> '.$exportLimitStore[$app]);
+			if (empty($exportLimitStore[$app]))
+			{
+				$exportLimitStore[$app] = false;
+				return false;
+			}
 	
-		if (is_numeric($exportLimit))
-		{
-			$exportLimit = (int)$exportLimit;
+			if (is_numeric($exportLimitStore[$app]))
+			{
+				$exportLimitStore[$app] = (int)$exportLimitStore[$app];
+			}
+			else
+			{
+				$exportLimitStore[$app] = 'no';
+			}
+			//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
 		}
-		else
-		{
-			$exportLimit = $limit = 'no';
-		}
-		//error_log(__METHOD__.__LINE__.' -> '.$exportLimit);
-		return $exportLimit;
+		//error_log(__METHOD__.__LINE__.' app:'.$app.' -> '.$exportLimitStore[$app]);
+		return $exportLimitStore[$app];
 	}
 
 	/**
@@ -379,9 +389,8 @@ abstract class bo_merge
 	 *
 	 * @return bool - true if no export is allowed or a limit is set, false if there is no restriction
 	 */
-	public static function hasExportLimit($app_limit='',$checkas='AND')
+	public static function hasExportLimit($app_limit,$checkas='AND')
 	{
-		$app_limit = self::getExportLimit($app_limit);
 		if (strtoupper($checkas) == 'ISALLOWED') return (empty($app_limit) || ($app_limit !='no' && $app_limit > 0) );
 		if (empty($app_limit)) return false;
 		if ($app_limit == 'no') return true;
@@ -406,7 +415,7 @@ abstract class bo_merge
 			return false;
 		}
 
-		if (self::hasExportLimit() && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
+		if (self::hasExportLimit($this->export_limit) && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
 			return false;
@@ -1172,8 +1181,7 @@ abstract class bo_merge
 	 */
 	public static function get_documents($dirs, $prefix='document_', $mime_filter=null, $app='')
 	{
-		$export_limit = null;
-		if (!empty($app)) $export_limit=$GLOBALS['egw']->hooks->single('export_limit',$app);
+		$export_limit=self::getExportLimit($app);
 		if (!$dirs || (!self::hasExportLimit($export_limit,'ISALLOWED') && !self::is_export_limit_excepted())) return array();
 
 		// split multiple comma or whitespace separated directories
@@ -1231,10 +1239,8 @@ abstract class bo_merge
 	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
 		$export_limit=null)
 	{
-		$export_limit = self::getExportLimit($export_limit);
-
 		$documents = array();
-
+		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
 		if ($default_doc && ($file = egw_vfs::stat($default_doc)))	// put default document on top
 		{
 			$documents['document'] = array(

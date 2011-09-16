@@ -48,20 +48,19 @@ class importexport_export_ui {
 		$readonlys = array();
 		$preserv = array();
 
-		// Check global setting
-		if(!bo_merge::is_export_limit_excepted()) {
-			$export_limit = bo_merge::getExportLimit();
-			if($export_limit == 'no') {
-				die(lang('Admin disabled exporting'));
-			}
-		}
-
 		$et = new etemplate(self::_appname. '.export_dialog');
 		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
 		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
 		$_selection = $_content['selection'] ? $_content['selection'] : $_GET['selection'];
 
+		// Check global setting
+		if(!bo_merge::is_export_limit_excepted()) {
+			$export_limit = bo_merge::getExportLimit($_appname);
+			if($export_limit == 'no') {
+				die(lang('Admin disabled exporting'));
+			}
+		}
 			//error_log(__FILE__.__FUNCTION__. '::$_GET[\'appname\']='. $_appname. ',$_GET[\'definition\']='. $_definition. ',$_GET[\'plugin\']='.$_plugin. ',$_GET[\'selection\']='.$_selection);
 		// if appname is given and valid, list available definitions (if no definition is given)
 		$readonlys['appname'] = (!empty($_appname) && $GLOBALS['egw']->acl->check('run',1,$_appname));

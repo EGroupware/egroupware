@@ -69,7 +69,7 @@ class calendar_merge extends bo_merge
 		parent::__construct();
 
 		// overwrite global export-limit, if one is set for calendar/appointments
-		$this->export_limit = bo_merge::getExportLimit($GLOBALS['egw_info']['server']['calendar_export_limit']);
+		$this->export_limit = bo_merge::getExportLimit('calendar');
 
 		$this->bo = new calendar_boupdate();
 
