@@ -54,9 +54,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	const CARDDAV = 'urn:ietf:params:xml:ns:carddav';
 	/**
-	 * Calendarserver namespace (eg. for ctag)
+	 * Apple Calendarserver namespace (eg. for ctag)
 	 */
 	const CALENDARSERVER = 'http://calendarserver.org/ns/';
+	/**
+	 * Apple Addressbookserver namespace (eg. for ctag)
+	 */
+	const ADDRESSBOOKSERVER = 'http://addressbookserver.org/ns/';
 	/**
 	 * Apple iCal namespace (eg. for calendar color)
 	 */
@@ -571,7 +575,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			return $ret;	// no collection
 		}
-		header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
+		header('Content-type: text/html; charset='.translation::charset());
 		echo "<html>\n<head>\n\t<title>".'EGroupware (Cal|Card|Group)DAV server '.htmlspecialchars($options['path'])."</title>\n";
 		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
 		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; }\n".
@@ -637,7 +641,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$ns = explode(':',$name);
 			$name = array_pop($ns);
 			$ns = implode(':',$ns);
-			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td>".htmlspecialchars($name)."</td>\n";
+			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td style='white-space: nowrap'>".htmlspecialchars($name)."</td>\n";
 			echo "\t\t<td>".self::prop_value($value)."</td>\n\t</tr>\n";
 		}
 		echo "</table>\n";
@@ -704,8 +708,14 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			$ns_defs = '';
 			$ns_hash = array($prop['ns'] => $ns, 'DAV:' => 'D');
-			$arr[$ns.':'.$prop['name']] = is_array($prop['val']) ?
-				$this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash) : $prop['val'];
+			if (is_array($prop['val']))
+			{
+				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash);
+				// hack to show real namespaces instead of not (visibly) defined shortcuts
+				unset($ns_hash['DAV:']);
+				$prop['val'] = strtr($prop['val'],array_flip($ns_hash));
+			}
+			$arr[$ns.':'.$prop['name']] = $prop['val'];
 		}
 		return $arr;
 	}
