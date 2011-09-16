@@ -189,6 +189,19 @@ class hooks
 	}
 
 	/**
+	 * check if a given hook for an  application is registered
+	 *
+	 * @param string $location location-name
+	 * @param string $app appname
+	 * @return int the number of found hooks
+	 */
+	function hook_exists($location, $app)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($this->locations[$location]));
+		return count($this->locations[$location][$app]);
+	}
+
+	/**
 	 * Register and/or de-register an application's hooks
 	 *
 	 * First all existing hooks of $appname get deleted in the db and then the given ones get registered.
@@ -228,10 +241,67 @@ class hooks
 				'hook_appname'  => $appname,
 				'hook_location' => $location,
 			),__LINE__,__FILE__);
+			$this->locations[$location][$appname] = $filename;
 		}
 		return True;
 	}
 
+	/**
+	 * Add or/update a single application hook
+	 *
+ 	 * setup file of app will be included and the hook required will be added/or updated
+	 *
+	 * @param string $appname Application 'name'
+	 * @param string $location is required, the hook itself
+	 * @return boolean|int false on error, true if new hooks are supplied and registed or number of removed hooks
+	 */
+	function register_single_app_hook($appname, $location)
+	{
+		if(!$appname || empty($location))
+		{
+			return False;
+		}
+		$SEP = filesystem_separator();
+		// now register the rest again
+		$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
+		$setup_info = array($appname => array());
+		if(@file_exists($f)) include($f);
+		// some apps have setup_info for more then themselfs (eg. phpgwapi for groupdav)
+		foreach($setup_info as $appname => $data)
+		{
+			if ($data['hooks'])
+			{
+				if ($hdata[$appname])
+				{
+					$hdata[$appname]['hooks'] = array_merge($hdata[$appname]['hooks'],$data['hooks']);
+				}
+				else
+				{
+					$hdata[$appname]['hooks'] = $data['hooks'];
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.array2string($hdata));
+		foreach((array)$hdata as $appname => $data)
+		{
+			if (array_key_exists($location,$data['hooks'])) $method = $data['hooks'][$location];
+		}
+		if (!empty($method))
+		{
+			//echo "<p>ADDING hooks for: $appname</p>";
+			$this->db->insert($this->table,array(
+				'hook_appname'  => $appname,
+				'hook_filename' => $method,
+				'hook_location' => $location,
+			),array(
+				'hook_appname'  => $appname,
+				'hook_location' => $location,
+			),__LINE__,__FILE__);
+			$this->locations[$location][$appname] = $method;
+			return True;
+		}
+		return false;
+	}
 
 	/**
 	 * Register the hooks of all applications (used by admin)
