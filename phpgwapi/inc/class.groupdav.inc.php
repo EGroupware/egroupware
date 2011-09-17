@@ -322,8 +322,9 @@ class groupdav extends HTTP_WebDAV_Server
 		            	'path'  => '/principals/',
 		            	'props' => array(
 			            	self::mkprop('displayname',lang('Accounts')),
-							self::mkprop('resourcetype',array(self::mkprop('principals',''))),
+							self::mkprop('resourcetype',array(self::mkprop('principals',''),self::mkprop('collection',''))),
 							self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
+							self::mkprop('principal-collection-set',self::mkprop('href', $this->base_uri.'/principals/')),
 							//self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
 							//	self::mkprop('href',$this->base_uri.$user_prefix))),
 							//self::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
