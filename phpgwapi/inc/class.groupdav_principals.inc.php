@@ -14,6 +14,11 @@
 /**
  * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
  *
+ * First-level properties used in this class should have the property name as their key,
+ * to allow to check if required properties are set!
+ * groupdav_principals::add_principal() converts simple associative props (name => value pairs)
+ * to name => HTTP_WebDAV_Server(name, value) pairs.
+ *
  * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  */
 class groupdav_principals extends groupdav_handler
@@ -24,6 +29,13 @@ class groupdav_principals extends groupdav_handler
 	 * @var accounts
 	 */
 	var $accounts;
+
+	/**
+	 * Reference to the ACL class
+	 *
+	 * @var acl
+	 */
+	var $acl;
 
 	/**
 	 * Constructor
@@ -38,6 +50,46 @@ class groupdav_principals extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
+		$this->acl = $GLOBALS['egw']->acl;
+	}
+
+	/**
+	 * Supported reports and methods implementing them or what to return eg. "501 Not Implemented"
+	 *
+	 * @var array
+	 */
+	public $supported_reports = array(
+		'acl-principal-prop-set' => array(
+			// not sure why we return that report, if we not implement it ...
+		),
+		'addressbook-findshared' => array(
+			'ns' => groupdav::ADDRESSBOOKSERVER,
+			'method' => 'addressbook_findshared_report',
+		),
+	);
+
+	/**
+	 * Generate supported-report-set property
+	 *
+	 * Currently we return all reports independed of path
+	 *
+	 * @param string $path eg. '/principals/'
+	 * @param array $reports=null
+	 * @return array HTTP_WebDAV_Server::mkprop('supported-report-set', ...)
+	 */
+	protected function supported_report_set($path, array $reports=null)
+	{
+		if (is_null($reports)) $reports = $this->supported_reports;
+
+		$supported = array();
+		foreach($reports as $name => $data)
+		{
+			$supported[] = HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					!$data['ns'] ? HTTP_WebDAV_Server::mkprop($name) :
+						HTTP_WebDAV_Server::mkprop($data['ns'], $name, '')))));
+		}
+		return $supported;
 	}
 
 	/**
@@ -51,10 +103,14 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user)
 	{
-		// we do NOT support REPORTS on pricipals yet
-		// required for Apple Addressbook on Mac (addressbook-findshared REPORT)
-		if ($options['root']['name'] && $options['root']['name'] != 'propfind')
+		if (($report = isset($_GET['report']) ? $_GET['report'] : $options['root']['name']) && $report != 'propfind')
 		{
+			$report_data = $this->supported_reports[$report];
+			if (isset($report_data) && ($method = $report_data['method']) && method_exists($this, $method))
+			{
+				return $this->$method($path, $options, $files, $user);
+			}
+			error_log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
 			return '501 Not Implemented';
 		}
 		list(,$principals,$type,$name,$rest) = explode('/',$path,5);
@@ -93,6 +149,32 @@ class groupdav_principals extends groupdav_handler
 	}
 
 	/**
+	 * Handle addressbook-findshared Addressbookserver report
+	 *
+	 * Required for Apple Addressbook on Mac (addressbook-findshared REPORT)
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function addressbook_findshared_report($path,$options,&$files,$user)
+	{
+		error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
+		$files['files'] = array();
+		$files['files'][] = $this->add_collection($path);	// will be removed for reports
+		foreach($this->get_shared_addressbooks() as $path)
+		{
+			$files['files'][] = $f = $this->add_collection($path.'addressbook/', array(
+				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook','')),
+			));
+			error_log(__METHOD__."() ".array2string($f));
+		}
+		return true;
+	}
+
+	/**
 	 * Do propfind in /pricipals/users
 	 *
 	 * @param string $name name of account or empty
@@ -102,7 +184,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function propfind_users($name,$rest,array $options)
 	{
-		error_log(__METHOD__."($name,$rest,".array2string($options).')');
+		//error_log(__METHOD__."($name,$rest,".array2string($options).')');
 		if (empty($name))
 		{
 			$files = array();
@@ -205,6 +287,44 @@ class groupdav_principals extends groupdav_handler
 	}
 
 	/**
+	 * Get shared addressbooks of current user
+	 *
+	 * @return array with path relative to base URI (without addressbook postfix!)
+	 */
+	protected function get_shared_addressbooks()
+	{
+		$addressbooks = array();
+		$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+		if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+		$addressbook_home_set = explode(',',$addressbook_home_set);
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'P' => $GLOBALS['egw_info']['user']['account_id'],
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+			'U' => '0',
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $addressbook_home_set)) !== false)
+			{
+				$addressbook_home_set[$key] = $id;
+			}
+		}
+		if (in_array('O',$addressbook_home_set))	// "all in one" from groupdav.php/addressbook/
+		{
+			$addressbooks[] = '/';
+		}
+		foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
+		{
+			if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
+			{
+				$addressbooks[] = '/'.urlencode($owner).'/';
+			}
+		}
+		return $addressbooks;
+	}
+
+	/**
 	 * Add collection of a single account to a collection
 	 *
 	 * @param array $account
@@ -215,34 +335,11 @@ class groupdav_principals extends groupdav_handler
 		$addressbooks = $calendars = array();
 		if ($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$prefs = $GLOBALS['egw_info']['user']['preferences']['groupdav'];
-			$addressbook_home_set = $prefs['addressbook-home-set'];
-			if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
-			$addressbook_home_set = explode(',',$addressbook_home_set);
-			// replace symbolic id's with real nummeric id's
-			foreach(array(
-				'P' => $GLOBALS['egw_info']['user']['account_id'],
-				'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
-				'U' => '0',
-			) as $sym => $id)
+			foreach($this->get_shared_addressbooks() as $path)
 			{
-				if (($key = array_search($sym, $addressbook_home_set)) !== false)
-				{
-					$addressbook_home_set[$key] = $id;
-				}
+				$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.$path);
 			}
-			if (in_array('O',$addressbook_home_set))	// "all in one" from groupdav.php/addressbook/
-			{
-				$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/');
-			}
-			foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
-			{
-				if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
-					is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
-				{
-					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.urlencode($owner).'/');
-				}
-			}
+
 			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 				$this->base_uri.'/'.$account['account_lid'].'/');
 
@@ -251,7 +348,7 @@ class groupdav_principals extends groupdav_handler
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
 				$id = $entry['grantor'];
-				$owner = $GLOBALS['egw']->accounts->id2name($id);
+				$owner = $this->accounts->id2name($id);
 				$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 					$this->base_uri.'/'.$owner.'/');
 			}
@@ -267,30 +364,27 @@ class groupdav_principals extends groupdav_handler
 		$displayname = translation::convert($account['account_fullname'], translation::charset(),'utf-8');
 
 		return $this->add_principal('users/'.$account['account_lid'], array(
-			HTTP_WebDAV_Server::mkprop('displayname',$displayname),
-			HTTP_WebDAV_Server::mkprop('alternate-URI-set',array(
-				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$calendars),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+			'getetag' => $this->get_etag($account),
+			'displayname' => $displayname,
+			'alternate-URI-set' => array(
+				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email'])),
+			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$calendars),
+			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$account['account_lid']))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
-				HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$this->base_uri.'/calendar/'))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address',$account['account_email']))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'last-name',$account['account_lastname']),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','user'),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
-			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
-			$this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
+			'schedule-outbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/calendar/'))),
+			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
+				HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address',$account['account_email']))),
+			'last-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'last-name',$account['account_lastname']),
+			'first-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','user'),
+			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
+			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
+			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				'calendar', $account['account_id']),	// add proxy-rights
-			HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop('acl-principal-prop-set'))))))),
-		), array(), $this->get_etag($account));
+		));
 	}
 
 	/**
@@ -304,47 +398,56 @@ class groupdav_principals extends groupdav_handler
 		$displayname = translation::convert(lang('Group').' '.$account['account_lid'],	translation::charset(), 'utf-8');
 
 		return $this->add_principal('groups/'.$account['account_lid'], array(
-			HTTP_WebDAV_Server::mkprop('displayname',$displayname),
-			HTTP_WebDAV_Server::mkprop('alternate-URI-set',''),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+			'getetag' => $this->get_etag($account),
+			'displayname' => $displayname,
+			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
+			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','group'),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
-			$this->principal_set('group-member-set', $this->accounts->members($account['account_id'])),
-		), array(), $this->get_etag($account));
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','group'),
+			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
+			'group-member-set' => $this->principal_set('group-member-set', $this->accounts->members($account['account_id'])),
+		));
 	}
 
 	/**
 	 * Add a collection
 	 *
 	 * @param string $path
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway
+	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
 	 * @param array $additional_resource_types=array() additional resource-types, collection and principal are always added
-	 * @param string $etag=''
 	 * @return array with values for keys 'path' and 'props'
 	 */
-	protected function add_collection($path, array $props = array(), array $additional_resource_types=array(), $etag='')
+	protected function add_collection($path, array $props = array())
 	{
 		// resourcetype: collection + $additional_resource_types
-		$props[] = HTTP_WebDAV_Server::mkprop('resourcetype',array_merge(array(
-			HTTP_WebDAV_Server::mkprop('collection',''),
-		),$additional_resource_types));
+		$props['resourcetype'][] = HTTP_WebDAV_Server::mkprop('collection','');
 
 		// props for all collections: current-user-principal and principal-collection-set
-		$props[] = HTTP_WebDAV_Server::mkprop('current-user-principal',array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/')));
-		$props[] = HTTP_WebDAV_Server::mkprop('principal-collection-set',array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/')));
+		$props['current-user-principal'] = array(
+			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'));
+		$props['principal-collection-set'] = array(
+			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'));
+		$props['supported-report-set'] = $this->supported_report_set($path);
 
-		// required per WebDAV standard
-		$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');
-		$props[] = HTTP_WebDAV_Server::mkprop('getlastmodified', '');
-		$props[] = HTTP_WebDAV_Server::mkprop('getcontenttype', '');
-		$props[] = HTTP_WebDAV_Server::mkprop('getetag', $etag);
+		// required props per WebDAV standard
+		if (!isset($props['displayname'])) $props['displayname'] = basename($path);
+		if (!isset($props['getetag'])) $props['getetag'] = 'EGw-no-etag-wGE';
+		foreach(array('getcontentlength','getlastmodified','getlastmodified','getlastmodified') as $name)
+		{
+			if (!isset($props[$name])) $props[$name] = '';
+		}
 
 		if ($this->debug > 1) error_log(__METHOD__."(path='$path', props=".array2string($props).')');
+
+		// convert simple associative properties to HTTP_WebDAV_Server ones
+		foreach($props as $name => &$prop)
+		{
+			if (!is_array($prop) || !isset($prop['name']))
+			{
+				$prop = HTTP_WebDAV_Server::mkprop($name, $prop);
+			}
+		}
 
 		return array(
 			'path' => $path,
@@ -357,21 +460,24 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $principal relative to principal-collection-set, eg. "users/username"
 	 * @param array $props=array() extra properties 'resourcetype' is added anyway
-	 * @param array $additional_resource_types=array() additional resource-types, collection and principal are always added
-	 * @param string $principal_url=null include given principal url, relative to principal-collection-set
-	 * @param string $etag=''
+	 * @param string $principal_url=null include given principal url, relative to principal-collection-set, default $principal
 	 * @return array with values for keys 'path' and 'props'
 	 */
-	protected function add_principal($principal, array $props = array(), array $additional_resource_types=array(), $etag='')
+	protected function add_principal($principal, array $props = array(), $principal_url=null)
 	{
-		$additional_resource_types[] = HTTP_WebDAV_Server::mkprop('principal', '');
+		$props['resourcetype'][] = HTTP_WebDAV_Server::mkprop('principal', '');
 
+		// required props per WebDAV ACL
+		foreach(array('alternate-URI-set', 'group-membership') as $name)
+		{
+			if (!isset($props[$name])) $props[$name] = HTTP_WebDAV_Server::mkprop($name,'');
+		}
 		if (!$principal_url) $principal_url = $principal;
 
-		$props[] = HTTP_WebDAV_Server::mkprop('principal-URL',array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$principal.'/')));
+		$props['principal-URL'] = array(
+			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$principal.'/'));
 
-		return $this->add_collection('/principals/'.$principal.'/', $props, $additional_resource_types, $etag);
+		return $this->add_collection('/principals/'.$principal.'/', $props);
 	}
 
 	/**
@@ -392,19 +498,19 @@ class groupdav_principals extends groupdav_handler
 		//echo "<p>type=$type --> app=$app, what=$what --> right=$right, mask=$mask</p>\n";
 
 		list($account_type,$account) = explode('/', $principal);
-		$account = $GLOBALS['egw']->accounts->name2id($account, 'account_lid', $account_type[0]);
+		$account = $this->accounts->name2id($account, 'account_lid', $account_type[0]);
 
 		$proxys = array();
-		foreach($GLOBALS['egw']->acl->get_all_location_rights($account, $app, $app != 'addressbook') as $account_id => $rights)
+		foreach($this->acl->get_all_location_rights($account, $app, $app != 'addressbook') as $account_id => $rights)
 		{
 			if ($account_id !== 'run' && $account_id != $account && ($rights & $mask) == $right &&
-				($account_lid = $GLOBALS['egw']->accounts->id2name($account_id)))
+				($account_lid = $this->accounts->id2name($account_id)))
 			{
 				$proxys[$account_id] = $account_lid;
 				// for groups add members too, if app is not addressbook
 				if ($account_id < 0 && $app != 'addressbook')
 				{
-					foreach($GLOBALS['egw']->accounts->members($account_id) as $account_id => $account_lid)
+					foreach($this->accounts->members($account_id) as $account_id => $account_lid)
 					{
 						$proxys[$account_id] = $account_lid;
 					}
@@ -413,10 +519,11 @@ class groupdav_principals extends groupdav_handler
 			//echo "<p>$account_id ($account_lid): (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
 		}
 		return $this->add_principal($principal.'/'.$type, array(
-				$this->principal_set('group-member-set', $proxys),
-			), array(
-				HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, $type, ''),
-			),'EGw-'.md5(serialize($proxys)).'-wGE');
+				'displayname' => $app.' '.$what.' proxy of '.basename($principal),
+				'group-member-set' => $this->principal_set('group-member-set', $proxys),
+				'getetag' => 'EGw-'.md5(serialize($proxys)).'-wGE',
+				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, $type, '')),
+			));
 	}
 
 	/**
@@ -426,6 +533,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param array $accounts=array() account_id => account_lid pairs
 	 * @param string|array $app_proxys=null applications for which proxys should be added
 	 * @param int $account who is the proxy
+	 * @param array with href props
 	 */
 	protected function principal_set($prop, array $accounts=array(), $add_proxys=null, $account=null)
 	{
@@ -438,10 +546,10 @@ class groupdav_principals extends groupdav_handler
 		{
 			foreach((array)$add_proxys as $app)
 			{
-				foreach($GLOBALS['egw']->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
+				foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
 				{
 					if ($account_id != $account && ($rights & EGW_ACL_READ) &&
-						($account_lid = $GLOBALS['egw']->accounts->id2name($account_id)))
+						($account_lid = $this->accounts->id2name($account_id)))
 					{
 						$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
 							($account_id < 0 ? 'groups/' : 'users/').
@@ -450,7 +558,7 @@ class groupdav_principals extends groupdav_handler
 				}
 			}
 		}
-		return HTTP_WebDAV_Server::mkprop($prop, $set);
+		return $set;
 	}
 
 	/**
@@ -488,22 +596,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function get(&$options,$id,$user=null)
 	{
-		if (!is_array($account = $this->_common_get_put_delete('GET',$options,$id)))
-		{
-			return $account;
-		}
-		$name = $GLOBALS['egw']->translation->convert(
-			trim($account['account_firstname'].' '.$account['account_lastname']),
-			$GLOBALS['egw']->translation->charset(),'utf-8');
-		$options['data'] = 'Principal: '.$account['account_lid'].
-			"\nURL: ".$this->base_uri.$options['path'].
-			"\nName: ".$name.
-			"\nEmail: ".$account['account_email'].
-			"\nMemberships: ".implode(', ',$this->accounts->memberships($id))."\n";
-		$options['mimetype'] = 'text/plain; charset=utf-8';
-		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($account));
-		return true;
+		return false;
 	}
 
 	/**
@@ -577,7 +670,7 @@ class groupdav_principals extends groupdav_handler
 		}
 		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).
 			// add md5 from calendar grants, as they are listed as memberships
-			':'.md5(serialize($GLOBALS['egw']->acl->get_grants('calendar', true, $account['account_id']))).
+			':'.md5(serialize($this->acl->get_grants('calendar', true, $account['account_id']))).
 			// as the principal of current user is influenced by GroupDAV prefs, we have to include them in the etag
 			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ?
 				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
