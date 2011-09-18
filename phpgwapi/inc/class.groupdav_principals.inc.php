@@ -41,13 +41,11 @@ class groupdav_principals extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null principal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
-		parent::__construct($app,$debug,$base_uri,$principalURL);
+		parent::__construct($app, $groupdav);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 		$this->acl = $GLOBALS['egw']->acl;
@@ -415,44 +413,11 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $path
 	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
-	 * @param array $additional_resource_types=array() additional resource-types, collection and principal are always added
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_collection($path, array $props = array())
 	{
-		// resourcetype: collection + $additional_resource_types
-		$props['resourcetype'][] = HTTP_WebDAV_Server::mkprop('collection','');
-
-		// props for all collections: current-user-principal and principal-collection-set
-		$props['current-user-principal'] = array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'));
-		$props['principal-collection-set'] = array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'));
-		$props['supported-report-set'] = $this->supported_report_set($path);
-
-		// required props per WebDAV standard
-		if (!isset($props['displayname'])) $props['displayname'] = basename($path);
-		if (!isset($props['getetag'])) $props['getetag'] = 'EGw-no-etag-wGE';
-		foreach(array('getcontentlength','getlastmodified','getlastmodified','getlastmodified') as $name)
-		{
-			if (!isset($props[$name])) $props[$name] = '';
-		}
-
-		if ($this->debug > 1) error_log(__METHOD__."(path='$path', props=".array2string($props).')');
-
-		// convert simple associative properties to HTTP_WebDAV_Server ones
-		foreach($props as $name => &$prop)
-		{
-			if (!is_array($prop) || !isset($prop['name']))
-			{
-				$prop = HTTP_WebDAV_Server::mkprop($name, $prop);
-			}
-		}
-
-		return array(
-			'path' => $path,
-			'props' => $props,
-		);
+		return $this->groupdav->add_collection($path, $props);
 	}
 
 	/**

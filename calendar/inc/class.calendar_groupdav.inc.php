@@ -67,13 +67,11 @@ class calendar_groupdav extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null principal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null, $base_uri=null, $principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
-		parent::__construct($app,$debug,$base_uri,$principalURL);
+		parent::__construct($app, $groupdav);
 
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_iCalendar;
@@ -574,7 +572,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset, $id)))
+			self::etag2value($this->http_if_match), false, 0, $this->groupdav->current_user_principal, $user, $charset, $id)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned false");
 			if ($eventId && $cal_id === false)
@@ -643,7 +641,7 @@ class calendar_groupdav extends groupdav_handler
 				list($eventId) = explode(':', $eventId);
 
 				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
-					false, 0, $this->principalURL, $user, $charset)))
+					false, 0, $this->groupdav->current_user_principal, $user, $charset)))
 				{
 					if ($this->debug) error_log(__METHOD__."() importVCal($eventId) returned false");
 				}

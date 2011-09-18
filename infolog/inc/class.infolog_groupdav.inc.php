@@ -55,13 +55,11 @@ class infolog_groupdav extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
-		parent::__construct($app,$debug,$base_uri,$principalURL);
+		parent::__construct($app, $groupdav);
 
 		$this->bo = new infolog_bo();
 		$this->vCalendar = new Horde_iCalendar;

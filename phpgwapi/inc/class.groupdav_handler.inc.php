@@ -54,17 +54,17 @@ abstract class groupdav_handler
 	 */
 	var $app;
 	/**
+	 * Calling groupdav object
+	 *
+	 * @var groupdav
+	 */
+	var $groupdav;
+	/**
 	 * Base url of handler, need to prefix all pathes not automatic handled by HTTP_WebDAV_Server
 	 *
 	 * @var string
 	 */
 	var $base_uri;
-	/**
-	 * principal URL
-	 *
-	 * @var string
-	 */
-	var $principalURL;
 	/**
 	 * HTTP_IF_MATCH / etag of current request / last call to _common_get_put_delete() method
 	 *
@@ -89,25 +89,14 @@ abstract class groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
 		$this->app = $app;
-		if (!is_null($debug)) $this->debug = $debug;
-		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
-		if (is_null($principalURL))
-		{
-			$this->principalURL = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:") .
-				'//'.$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
-		}
-		else
-		{
-			$this->principalURL = $principalURL.'principals/users/'.
-				$GLOBALS['egw_info']['user']['account_lid'].'/';
-		}
+		if (!is_null($parent->debug)) $this->debug = $groupdav->debug;
+		$this->base_uri = $groupdav->base_uri;
+		$this->groupdav = $groupdav;
 
 		$this->agent = self::get_agent();
 
@@ -302,13 +291,10 @@ abstract class groupdav_handler
 	 *
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $user=null owner of the collection, default current user
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 * @return groupdav_handler
 	 */
-	static function &app_handler($app,$debug=null,$base_uri=null,$principalURL=null)
+	static function app_handler($app, $groupdav)
 	{
 		static $handler_cache = array();
 
@@ -317,13 +303,10 @@ abstract class groupdav_handler
 			$class = $app.'_groupdav';
 			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
 
-			$handler_cache[$app] = new $class($app,$debug,$base_uri,$principalURL);
+			$handler_cache[$app] = new $class($app, $groupdav);
 		}
-		$handler_cache[$app]->$debug = $debug;
-		$handler_cache[$app]->$base_uri = $base_uri;
-		$handler_cache[$app]->$principalURL = $principalURL;
 
-		if ($debug) error_log(__METHOD__."('$app', '$base_uri', '$principalURL')");
+		if ($debug) error_log(__METHOD__."('$app')");
 
 		return $handler_cache[$app];
 	}
