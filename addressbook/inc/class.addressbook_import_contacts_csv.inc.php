@@ -212,12 +212,16 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 						// exists
 						case 'exists' :
 							if($record[$condition['string']]) {
+								$searchcondition = array( $condition['string'] => $record[$condition['string']]);
+								// if we use account_id for the condition, we need to set the owner for filtering, as this
+								// enables addressbook_so to decide what backend is to be used
+								if ($condition['string']=='account_id') $searchcondition['owner']=0;
 								$contacts = $this->bocontacts->search(
 									//array( $condition['string'] => $record[$condition['string']],),
 									'', 
 									$_definition->plugin_options['update_cats'] == 'add' ? false : true,
 									'', '', '', false, 'AND', false,
-									array( $condition['string'] => $record[$condition['string']])
+									$searchcondition
 								);
 							}
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) ) >= 1 ) {
