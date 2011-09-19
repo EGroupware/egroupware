@@ -335,7 +335,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		foreach($files['files'] as $n => $info)
 		{
 			$path = $info['path'];
-			if (!$n && substr($info['path'],-1) == '/') $path = substr($info['path'],0,-1);
+			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $path = substr($info['path'],0,-1);
 			$path2n[$path] = $n;
 
 			// adding some properties used instead of regular DAV times
