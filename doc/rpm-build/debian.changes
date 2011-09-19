@@ -1,3 +1,16 @@
+egroupware-epl (11.1.20110919-1) hardy; urgency=low
+
+  * Filemanager: fixed not working rename of file, if path contains a # or ?
+  * API/Calendar: allow to link to accounts and allow to select accounts as participants by searching them like contacts
+  * ProjectManager: added timesheet to context menu of element list, to book time on arbitray project-elements: infologs, projects, ...
+  * Addressbook/LDAP: fixed country handling for mozillaOrgPerson schema, which has two distinct attributes for 2-letter code and arbitrary name
+  * Filemanager/WebDAV: understand Windows7 modification time attribute and setting and returning is as vfs modification time
+  * calendar/addressbook/importexport/merge-print: introduction of a static function to fetch the export limit, and normalize the possible output: bo_merge::getExportLimit; apply new function to bo_mergen, nextmatch_widget, addressbook, calendar and importexport; introduction of an calendar export limit; introduction of hook to provide appspecific export_limit
+  * Filemanager: treeview fixed creating of dirs containing # or ? and not working open/save as of files in dirs containing # or ?
+  * API/Linking: check if we are already trying to unlink an entry, to avoid an infinit recursion, causing a segfault
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 19 Sep 2011 11:57:05 +0200
+
 egroupware-epl (11.1.20110906-1) hardy; urgency=low
 
   * Mergeprint uses tidy, if available, before atempting to convert html to office documents, requires now php-tidy
