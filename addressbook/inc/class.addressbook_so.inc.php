@@ -122,7 +122,7 @@ class addressbook_so
 	var $ldap_search_attributes = array(
 		'n_family','n_middle','n_given','org_name','org_unit',
 		'adr_one_location','adr_two_location','note',
-		'email','mozillasecondemail',
+		'email','mozillasecondemail','uidnumber',
 	);
 	/**
 	 * In SQL we can search all columns, though a view make on real sense
