@@ -191,17 +191,31 @@ class groupdav_principals extends groupdav_handler
 
 			if ($options['depth'])
 			{
-				// add all users
-				foreach($this->accounts->search(array('type' => 'accounts')) as $account)
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none')
 				{
-					$files[] = $this->add_account($account);
+					$files[] = $this->add_account($this->accounts->read($GLOBALS['egw_info']['user']['account_id']));
+				}
+				else
+				{
+					// add all users (account_selection == groupmembers is handled by accounts->search())
+					foreach($this->accounts->search(array('type' => 'accounts')) as $account)
+					{
+						$files[] = $this->add_account($account);
+					}
 				}
 			}
 		}
 		else
 		{
 			if (!($id = $this->accounts->name2id($name,'account_lid','u')) ||
-				!($account = $this->accounts->read($id)))
+				!($account = $this->accounts->read($id)) ||
+				// do NOT allow other user, if account-selection is none
+				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+					$name != $GLOBALS['egw_info']['user']['account_lid'] ||
+				// only allow group-members for account-selection is groupmembers
+				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+					!array_intersect($this->accounts->memberships($account['account_id'],true),
+						$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true)))
 			{
 				return '404 Not Found';
 			}
@@ -247,8 +261,12 @@ class groupdav_principals extends groupdav_handler
 
 			if ($options['depth'])
 			{
-				// add all users
-				foreach($this->accounts->search(array('type' => 'groups')) as $account)
+				// only show own groups, if account-selection is groupmembers or none
+				$type = in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], array('groupmembers','none')) ?
+					'owngroups' : 'groups';
+
+				// add all groups or only membergroups
+				foreach($this->accounts->search(array('type' => $type)) as $account)
 				{
 					$files[] = $this->add_group($account);
 				}
@@ -257,7 +275,10 @@ class groupdav_principals extends groupdav_handler
 		else
 		{
 			if (!($id = $this->accounts->name2id($name,'account_lid','g')) ||
-				!($account = $this->accounts->read($id)))
+				!($account = $this->accounts->read($id)) ||
+				// do NOT allow other groups, if account-selection is groupmembers or none
+				in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], array('groupmembers','none')) &&
+				!in_array($account['account_id'], $this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true)))
 			{
 				return '404 Not Found';
 			}
@@ -395,6 +416,16 @@ class groupdav_principals extends groupdav_handler
 	{
 		$displayname = translation::convert(lang('Group').' '.$account['account_lid'],	translation::charset(), 'utf-8');
 
+		// only return current user, if account-selection == 'none'
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none')
+		{
+			$groupmembers = array($GLOBALS['egw_info']['user']['account_id'] => $GLOBALS['egw_info']['user']['account_lid']);
+		}
+		else
+		{
+			$groupmembers = $this->accounts->members($account['account_id']);
+		}
+
 		return $this->add_principal('groups/'.$account['account_lid'], array(
 			'getetag' => $this->get_etag($account),
 			'displayname' => $displayname,
@@ -404,7 +435,7 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','group'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
-			'group-member-set' => $this->principal_set('group-member-set', $this->accounts->members($account['account_id'])),
+			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
 		));
 	}
 
@@ -505,7 +536,7 @@ class groupdav_principals extends groupdav_handler
 		$set = array();
 		foreach($accounts as $account_id => $account_lid)
 		{
-			$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid);
+			$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
 		}
 		if ($add_proxys)
 		{
@@ -518,7 +549,7 @@ class groupdav_principals extends groupdav_handler
 					{
 						$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
 							($account_id < 0 ? 'groups/' : 'users/').
-							$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read'));
+							$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read').'/');
 					}
 				}
 			}
