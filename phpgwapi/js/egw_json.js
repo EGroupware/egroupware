@@ -92,7 +92,7 @@ function egw_json_encode(input)
 	{
 		switch (input.constructor)
 		{
-			case Array:		
+			case Array:
 				var buf = [];
 				for (var k in input)
 				{
@@ -111,6 +111,27 @@ function egw_json_encode(input)
 				return '{' + buf.join(',') + '}';
 
 			default:
+				switch(typeof input)
+				{
+					case 'array':
+						var buf = [];
+						for (var k in input)
+						{
+							//Filter non numeric entries
+							if (!isNaN(k))
+								buf.push(egw_json_encode(input[k]));
+						}
+						return '[' + buf.join(',') + ']';
+
+					case 'object':
+						var buf = [];
+						for (var k in input)
+						{
+							buf.push(_egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
+						}
+						return '{' + buf.join(',') + '}';
+
+				}
 				return 'null';
 		}
 	}
