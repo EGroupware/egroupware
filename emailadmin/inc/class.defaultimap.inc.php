@@ -324,7 +324,7 @@
 					}
 				}
 			}
-			return $_username;
+			return strtolower($_username);
 		}
 
 		/**
