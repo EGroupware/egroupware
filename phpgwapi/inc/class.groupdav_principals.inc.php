@@ -403,6 +403,8 @@ class groupdav_principals extends groupdav_handler
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				'calendar', $account['account_id']),	// add proxy-rights
+			'directory-gateway' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV, 'directory-gateway',array(
+				HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/addressbook/'))),
 		));
 	}
 
