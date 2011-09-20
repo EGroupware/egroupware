@@ -365,7 +365,7 @@ class defaultimap extends Net_IMAP
 				$_username = 'u'.$GLOBALS['egw']->accounts->name2id($_username);
 				break;
 		}
-		return $_username;
+		return strtolower($_username);
 	}
 
 	/**
