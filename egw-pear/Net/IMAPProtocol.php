@@ -180,9 +180,15 @@ class Net_IMAPProtocol {
         if (PEAR::isError($error = $this->_socket->connect($host, $port, null, $this->_timeout, $this->_streamContextOptions))) {
             return $error;
         }
-        if ( PEAR::isError( $this->_getRawResponse() ) ) {
+        $rv = $this->_getRawResponse();
+        if ( PEAR::isError( $rv )) {
             return new PEAR_Error( 'unable to open socket' );
         }
+        $rv = trim($rv);
+        //error_log(__METHOD__.__LINE__.'#'.$rv.'#');
+        // if we do not use the standard ports, we expect to see imap with the server greeting
+        if (empty($rv) || (!($port==143 || $port==993) && stripos($rv,'imap')===false)) return new PEAR_Error( "No IMAP response from $host at port $port. Response was:".$rv );
+
         $this->_connected = true;
         return true;
     }
@@ -1068,6 +1074,7 @@ class Net_IMAPProtocol {
 				}
 			}
             $ret["PARSED"]=$subrv;
+            if (stripos(array2string($ret['PARSED']),'imap')===false) return new PEAR_Error( "No IMAP response for CAPABILITY" );
             //fill the $this->_serverAuthMethods and $this->_serverSupportedCapabilities arrays
             foreach( (array)$ret["PARSED"]["CAPABILITIES"] as $auth_method ){
                 if( strtoupper( substr( $auth_method , 0 ,5 ) ) == "AUTH=" )
@@ -3277,13 +3284,14 @@ class Net_IMAPProtocol {
         $cmdid = $this->_getCmdId();
         $this->_putCMD( $cmdid , $command , $params );
         $args=$this->_getRawResponse( $cmdid );
-		#error_log("egw-pear::NET::IMAPProtocoll:_genericCommand:".$command." result:".print_r($args,TRUE));
+        //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand:".$command.' '.$params);
+        //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand: ->result:".print_r($args,TRUE));
         return $this->_genericImapResponseParser( $args , $cmdid );
     }
 
 
 
-     function utf_7_encode($str)
+    function utf_7_encode($str)
     {
         if($this->_useUTF_7 == false ){
             return $str;

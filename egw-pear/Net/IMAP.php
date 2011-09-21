@@ -64,17 +64,21 @@ class Net_IMAP extends Net_IMAPProtocol {
     function connect($host, $port, $enableSTARTTLS = true)
     {
         $ret = $this->cmdConnect($host, $port);
+
         if($ret === true ){
             // Determine server capabilities
             $res = $this->cmdCapability();
-
+            if(PEAR::isError($res) )
+            {
+                return $res;
+            }
             // check if we can enable TLS via STARTTLS (requires PHP 5 >= 5.1.0RC1 for stream_socket_enable_crypto)
             if ($this->hasCapability('STARTTLS') === true && $enableSTARTTLS === true && function_exists('stream_socket_enable_crypto') === true) {
                 if (PEAR::isError($res = $this->cmdStartTLS())) {
                     return $res;
                 }
             }
-            return $ret;
+            //return $ret;
         }
         if(empty($ret)){
             return new PEAR_Error("Unexpected response on connection");
@@ -82,7 +86,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(PEAR::isError($ret) ){
             return $ret;
         }
-        if(isset(    $ret["RESPONSE"]["CODE"] ) ){
+        if(isset( $ret["RESPONSE"]["CODE"] ) ){
             if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
                 return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
             }
