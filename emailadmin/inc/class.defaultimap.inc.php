@@ -401,6 +401,10 @@ class defaultimap extends Net_IMAP
 		if(!$this->_connected) {
 			return false;
 		}
+		static $nameSpace;
+		if (is_null($nameSpace)) $nameSpace =& egw_cache::getSession('emailadmin','defaultimap_nameSpace');
+		if (isset($nameSpace[$this->ImapServerId])) return $nameSpace[$this->ImapServerId];
+
 		$retrieveDefault = false;
 		if($this->hasCapability('NAMESPACE')) {
 			$nameSpace = $this->getNamespace();
@@ -433,7 +437,7 @@ class defaultimap extends Net_IMAP
 				)
 			);
 		}
-				
+		$nameSpace[$this->ImapServerId] = $result;
 		return $result;
 	}
 	
