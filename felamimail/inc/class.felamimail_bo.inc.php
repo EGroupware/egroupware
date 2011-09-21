@@ -3370,7 +3370,7 @@ class felamimail_bo
 			//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
 			if (!is_object($this->mailPreferences))
 			{
-				error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
+				if (self::$debug) error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
 				$this->errorMessage .= lang('No valid data to create MailProfile!!');
 				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
 				return false;
@@ -3405,7 +3405,11 @@ class felamimail_bo
 				if ( PEAR::isError($tretval) || $tretval===false)
 				{
 					$isError[$_icServerID] = $this->icServer->_connectionErrorObject;
-					error_log(__METHOD__." failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$this->icServer->_connectionErrorObject->message.' called from '.function_backtrace());
+					if (self::$debug)
+					{
+						error_log(__METHOD__.__LINE__." # failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$this->icServer->_connectionErrorObject->message.' called from '.function_backtrace());
+						error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
+					}
 				}
 			}
 			//error_log(print_r($this->icServer->_connected,true));
@@ -3413,14 +3417,14 @@ class felamimail_bo
 		}
 
 		/**
-		* rename a folder
-		*
-		* @param string _oldFolderName the old foldername
-		* @param string _parent the parent foldername
-		* @param string _folderName the new foldername
-		*
-		* @return mixed name of the newly created folder or false on error
-		*/
+		 * rename a folder
+		 *
+		 * @param string _oldFolderName the old foldername
+		 * @param string _parent the parent foldername
+		 * @param string _folderName the new foldername
+		 *
+		 * @return mixed name of the newly created folder or false on error
+		 */
 		function renameFolder($_oldFolderName, $_parent, $_folderName)
 		{
 			$oldFolderName	= $this->_encodeFolderName($_oldFolderName);
