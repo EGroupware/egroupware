@@ -82,8 +82,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		return this.btn ? this.btn[0] : null;
 	},
 
-	// TODO: What's going on here?  It doesn't get called, but something happens if you double click.
-	click: function() {
+	onclick: function(e) {
 		// Execute the JS code connected to the event handler
 		if (this.options.onclick)
 		{
@@ -140,7 +139,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value", "class", "image");
+		_attrs.push("value", "class", "image", "onclick");
 	},
 
 	getDetachedNodes: function()
@@ -150,7 +149,9 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		this.btn = _nodes[0];
+		this.btn = jQuery(_nodes[0]);
+
+
 		this.image = _nodes[1];
 
 		if (typeof _values["id"] != "undefined")
@@ -165,6 +166,19 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.set_class(_values["class"]);
 		}
+
+		if (typeof _values["onclick"] == "string")
+		{
+			_values["onclick"] = new Function(_values["onclick"]);
+		}
+		if (typeof _values["onclick"] == "function")
+		{
+			this.options.onclick = _values["onclick"];
+			this.btn.bind("click.et2_baseWidget", this, function(e) {
+				return e.data.click.call(e.data,e);
+			});
+		}
+
 	}
 });
 

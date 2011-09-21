@@ -254,7 +254,14 @@ function et2_checkType(_val, _type, _attr, _cname)
 				{
 					// Parse JS code properly
 					_val = et2_js_pseudo_funcs(_val, _cname);
+					if(_val == "1") return function() {return true;};
 
+					// Check for remaining row data
+					if(_val.indexOf("$") >= 0 || _val.indexOf("@") >= 0) 
+					{
+						// Still needs parsing
+						return _val;
+					}
 					return new Function(_val); 
 				}
 				catch(e)

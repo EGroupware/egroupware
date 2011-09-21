@@ -200,7 +200,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		if (this.node)
 		{
 			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
-				return e.data.click(this);
+				return e.data.click.call(e.data,e);
 			});
 		}
 
@@ -232,10 +232,10 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		return this.getDOMNode(this);
 	},
 
-	click: function(_node) {
+	click: function(event) {
 		if (this.onclick)
 		{
-			return this.onclick.call(_node);
+			return this.onclick.call(this, event);
 		}
 
 		return true;
