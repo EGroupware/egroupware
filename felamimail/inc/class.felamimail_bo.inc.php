@@ -980,6 +980,31 @@ class felamimail_bo
 			return true; // as we do not catch/examine setFlags returnValue
 		}
 
+		function _getStatus($folderName)
+		{
+			static $folderStatus;
+			if (isset($folderStatus[$this->icServer->ImapServerId][$folderName]))
+			{
+				//error_log(__METHOD__.__LINE__.' Using cache for status on Server:'.$this->icServer->ImapServerId.' for folder:'.$folderName);
+				return $folderStatus[$this->icServer->ImapServerId][$folderName];
+			}
+			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName);
+			return $folderStatus[$this->icServer->ImapServerId][$folderName];
+		}
+
+		function _getStructure($_uid, $byUid=true)
+		{
+			static $structure;
+			if (is_null($structure)) $structure =& egw_cache::getSession('felamimail','structureCache');
+			if (isset($structure[$this->icServer->ImapServerId][$_uid]))
+			{
+				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid);
+				return $structure[$this->icServer->ImapServerId][$_uid];
+			}
+			$structure[$this->icServer->ImapServerId][$_uid] = $this->icServer->getStructure($_uid, $byUid);
+			return $structure[$this->icServer->ImapServerId][$_uid];
+		}
+
 		function _getSubStructure($_structure, $_partID)
 		{
 			$tempID = '';
@@ -1367,7 +1392,7 @@ class felamimail_bo
 		function getAttachment($_uid, $_partID, $_winmail_nr=0)
 		{
 			// parse message structure
-			$structure = $this->icServer->getStructure($_uid, true);
+			$structure = $this->_getStructure($_uid, true);
 			if($_partID != '') {
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
@@ -1438,7 +1463,7 @@ class felamimail_bo
 		 */
 		function getAttachmentByCID($_uid, $_cid, $_part)
 		{
-			// some static variables to avoid fetching the same mail multible times
+			// some static variables to avoid fetching the same mail multiple times
 			static $uid,$part,$attachments,$structure;
 			//error_log("getAttachmentByCID:$_uid, $_cid, $_part");
 
@@ -1492,7 +1517,7 @@ class felamimail_bo
 			// parse message structure
 			if (is_null($structure))
 			{
-				$structure = $this->icServer->getStructure($_uid, true);
+				$structure = $this->_getStructure($_uid, true);
 			}
 			$part_structure = $this->_getSubStructure($structure, $partID);
 			$filename = $this->getFileNameFromStructure($part_structure, $_uid, $_uid, $part_structure->partID);
@@ -1638,7 +1663,7 @@ class felamimail_bo
 				$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 			}
 
-			if ( PEAR::isError($folderStatus = $this->icServer->getStatus($_folderName)) ) {
+			if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName)) ) {
 			/*if ($folderStatus = $this->bofelamimail->getMailBoxCounters($_folderName)) {
 				$retValue['messages']	=	$folderStatus->messages;
 				$retValue['recent']		=	$folderStatus->recent;
@@ -1694,7 +1719,7 @@ class felamimail_bo
 			$inboxData->subscribed = true;
 			if($_getCounters == true) {
 				/*
-				$folderStatus = $this->icServer->getStatus('INBOX');
+				$folderStatus = $this->_getStatus('INBOX');
 
 				$status =  new stdClass;
 				$status->messages	= $folderStatus['MESSAGES'];
@@ -1900,7 +1925,7 @@ class felamimail_bo
 
 						if($_getCounters == true) {
 							/*
-							$folderStatus = $this->icServer->getStatus($folderName);
+							$folderStatus = $this->_getStatus($folderName);
 							#echo "<br> FolderStatus:";_debug_array($folderStatus);
 							if(is_array($folderStatus)) {
 								$status =  new stdClass;
@@ -1967,7 +1992,7 @@ class felamimail_bo
 
 		function getMailBoxCounters($folderName)
 		{
-			$folderStatus = $this->icServer->getStatus($folderName);
+			$folderStatus = $this->_getStatus($folderName);
 			#echo "<br> FolderStatus:";_debug_array($folderStatus);
 			if ( PEAR::isError($folderStatus)) {
 				if (self::$debug) error_log(__METHOD__." returned FolderStatus for Folder $folderName:".print_r($folderStatus->message,true));
@@ -2280,20 +2305,18 @@ class felamimail_bo
 			return $bodyPart;
 		}
 
-		function getNameSpace($_icServer)
-		{
-			$this->icServer->getNameSpaces();
-		}
-
 		function getHierarchyDelimiter()
 		{
-			$HierarchyDelimiter = '/';
+			static $HierarchyDelimiter;
+			if (is_null($HierarchyDelimiter)) $HierarchyDelimiter =& egw_cache::getSession('felamimail','HierarchyDelimiter');
+			if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])) return $HierarchyDelimiter[$this->icServer->ImapServerId];
+			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 			if(($this->icServer instanceof defaultimap))
 			{
-				$HierarchyDelimiter = $this->icServer->getHierarchyDelimiter();
-				if (PEAR::isError($HierarchyDelimiter)) $HierarchyDelimiter = '/';
+				$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getHierarchyDelimiter();
+				if (PEAR::isError($HierarchyDelimiter[$this->icServer->ImapServerId])) $HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 			}
-			return $HierarchyDelimiter;
+			return $HierarchyDelimiter[$this->icServer->ImapServerId];
 		}
 
 		/**
@@ -2755,7 +2778,7 @@ class felamimail_bo
 			if(is_object($_structure)) {
 				$structure = $_structure;
 			} else {
-				$structure = $this->icServer->getStructure($_uid, true);
+				$structure = $this->_getStructure($_uid, true);
 
 				if($_partID != '' && $_partID !=0) {
 					$structure = $this->_getSubStructure($structure, $_partID);
@@ -2952,7 +2975,7 @@ class felamimail_bo
 			if(is_object($_structure)) {
 				$structure = $_structure;
 			} else {
-				$structure = $this->icServer->getStructure($_uid, true);
+				$structure = $this->_getStructure($_uid, true);
 				if($_partID != '') {
 					$structure = $this->_getSubStructure($structure, $_partID);
 				}
