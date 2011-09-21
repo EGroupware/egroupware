@@ -220,28 +220,17 @@ class calendar_groupdav extends groupdav_handler
 				$event['max_user_modified'] = $max_user_modified[$event['id']];
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
-					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', $this->agent != 'kde' ?
-	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
-					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
-					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
+					'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', $this->agent != 'kde' ?
+	            		'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 				);
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
 					$content = $this->iCal($event,$filter['users']);
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
-				else
-				{
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
-				}
-				$files[] = array(
-	            	'path'  => $path.$this->get_path($event),
-	            	'props' => $props,
-				);
+				$files[] = $this->add_resource($path, $event, $props);
 			}
 		}
 		if ($this->debug)
@@ -921,4 +910,3 @@ class calendar_groupdav extends groupdav_handler
 		return $handler;
 	}
 }
-

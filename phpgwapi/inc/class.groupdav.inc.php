@@ -78,15 +78,30 @@ class groupdav extends HTTP_WebDAV_Server
 	var $dav_powered_by = self::REALM;
 	var $http_auth_realm = self::REALM;
 
+	/**
+	 * Folders in root or user home
+	 *
+	 * @var array
+	 */
 	var $root = array(
-		'calendar' => array(
-			'resourcetype' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
-			'component-set' => array(self::GROUPDAV => 'VEVENT'),
-		),
 		'addressbook' => array(
 			'resourcetype' => array(self::GROUPDAV => 'vcard-collection', self::CARDDAV => 'addressbook'),
 			'component-set' => array(self::GROUPDAV => 'VCARD'),
 		),
+		'calendar' => array(
+			'resourcetype' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
+			'component-set' => array(self::GROUPDAV => 'VEVENT'),
+		),
+		/*'inbox' => array(
+			'resourcetype' => array(self::CALDAV => 'schedule-inbox'),
+			'app' => 'calendar',
+			'no-root' => true,
+		),
+		'outbox' => array(
+			'resourcetype' => array(self::CALDAV => 'schedule-outbox'),
+			'app' => 'calendar',
+			'no-root' => true,
+		),*/
 		'infolog' => array(
 			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VTODO'),
@@ -127,6 +142,36 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @var accounts
 	 */
 	var $accounts;
+	/**
+	 * Supported privileges with name and description
+	 *
+	 * privileges are hierarchical
+	 *
+	 * @var array
+	 */
+	var $supported_privileges = array(
+		'all' => array(
+			'*description*' => 'all privileges',
+			'read' => 'read resource',
+			'write' => array(
+				'*description*' => 'write resource',
+				'write-properties' => 'write resource properties',
+				'write-content' => 'write resource content',
+				'bind' => 'add child resource',
+				'unbind' => 'remove child resource',
+			),
+			'unlock' => 'unlock resource without ownership of lock',
+			'read-acl' => 'read resource access control list',
+			'write-acl' => 'write resource access control list',
+			'read-current-user-privilege-set' => 'read privileges for current principal',
+		),
+	);
+	/**
+	 * $options parameter to PROPFIND request, eg. to check what props are requested
+	 *
+	 * @var array
+	 */
+	var $propfind_options;
 
 	function __construct()
 	{
@@ -199,6 +244,8 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function app_handler($app)
 	{
+		if (isset($this->root[$app]['app'])) $app = $this->root[$app]['app'];
+
 		return groupdav_handler::app_handler($app,$this);
 	}
 
@@ -218,9 +265,9 @@ class groupdav extends HTTP_WebDAV_Server
 				if (!in_array(2,$dav)) $dav[] = 2;
 				$dav[] = 'access-control';
 				$dav[] = 'calendar-access';
-				//$dav[] = 'calendar-schedule';
+				//$dav[] = 'calendar-auto-schedule';
 				$dav[] = 'calendar-proxy';
-				//$dav[] = 'calendar-avialibility';
+				//$dav[] = 'calendar-availibility';
 				//$dav[] = 'calendarserver-private-events';
 				break;
 			case 'addressbook':
@@ -239,53 +286,6 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Add a collection to a PROPFIND request
-	 *
-	 * @param string $path
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
-	 * @return array with values for keys 'path' and 'props'
-	 */
-	public function add_collection($path, array $props = array())
-	{
-		// resourcetype: collection
-		$props['resourcetype'][] = self::mkprop('collection','');
-
-		// props for all collections: current-user-principal and principal-collection-set
-		$props['current-user-principal'] = array(
-			self::mkprop('href',$this->current_user_principal));
-		$props['principal-collection-set'] = array(
-			self::mkprop('href',$this->base_uri.'/principals/'));
-
-		// required props per WebDAV standard
-		foreach(array(
-			'displayname'      => basename($path),
-			'getetag'          => 'EGw-no-etag-wGE',
-			'getcontentlength' => '',
-			'getlastmodified'  => '',
-			'getcontenttype'   => 'httpd/unix-directory',
-		) as $name => $default)
-		{
-			if (!isset($props[$name])) $props[$name] = $default;
-		}
-
-		if ($this->debug > 1) error_log(__METHOD__."(path='$path', props=".array2string($props).')');
-
-		// convert simple associative properties to HTTP_WebDAV_Server ones
-		foreach($props as $name => &$prop)
-		{
-			if (!is_array($prop) || !isset($prop['name']))
-			{
-				$prop = self::mkprop($name, $prop);
-			}
-		}
-
-		return array(
-			'path' => $path,
-			'props' => $props,
-		);
-	}
-
-	/**
 	 * PROPFIND and REPORT method handler
 	 *
 	 * @param  array  general parameter passing array
@@ -295,6 +295,9 @@ class groupdav extends HTTP_WebDAV_Server
 	function PROPFIND(&$options, &$files, $method='PROPFIND')
 	{
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
+
+		// make options (readonly) available to all class methods, eg. prop_requested
+		$this->propfind_options = $options;
 
 		// parse path in form [/account_lid]/app[/more]
 		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user)
@@ -327,7 +330,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			return true;
 		}
-		if ($app != 'principals' && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
+		if ($app != 'principals' && !isset($GLOBALS['egw_info']['user']['apps'][$this->root[$app]['app'] ? $this->root[$app]['app'] : $app]))
 		{
 			if ($this->debug) error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
 			return "403 Forbidden: no app rights for '$app'";	// no rights for the given app
@@ -336,21 +339,151 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
-				$files['files'][0] = $this->add_collection($path.$app.'/',
-					// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-		        	$this->_properties($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path));
+				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
+				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path);
 
-				// add ctag if handler implements it (only for depth 0)
-				if (method_exists($handler,'getctag'))
-				{
-					$files['files'][0]['props']['getctag'] = self::mkprop(
-						groupdav::CALENDARSERVER,'getctag',$handler->getctag($options['path'],$user));
-				}
 				if (!$options['depth']) return true;	// depth 0 --> show only the self url
 			}
 			return $handler->propfind($this->_slashify($options['path']),$options,$files,$user,$id);
 		}
 		return '501 Not Implemented';
+	}
+
+	/**
+	 * Add a collection to a PROPFIND request
+	 *
+	 * @param string $path
+	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $privileges=array('read') values for current-user-privilege-set
+	 * @param array $supported_privileges=null default $this->supported_privileges
+	 * @return array with values for keys 'path' and 'props'
+	 */
+	public function add_collection($path, array $props = array(), array $privileges=array('read','read-current-user-privilege-set'), array $supported_privileges=null)
+	{
+		// resourcetype: collection
+		$props['resourcetype'][] = self::mkprop('collection','');
+
+		if (!isset($props['getcontenttype'])) $props['getcontenttype'] = 'httpd/unix-directory';
+
+		return $this->add_resource($path, $props, $privileges, $supported_privileges);
+	}
+
+	/**
+	 * Add a collection to a PROPFIND request
+	 *
+	 * @param string $path
+	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $privileges=array('read') values for current-user-privilege-set
+	 * @param array $supported_privileges=null default $this->supported_privileges
+	 * @return array with values for keys 'path' and 'props'
+	 */
+	public function add_resource($path, array $props = array(), array $privileges=array('read','read-current-user-privilege-set'), array $supported_privileges=null)
+	{
+		// props for all collections: current-user-principal and principal-collection-set
+		$props['current-user-principal'] = array(
+			self::mkprop('href',$this->current_user_principal));
+		$props['principal-collection-set'] = array(
+			self::mkprop('href',$this->base_uri.'/principals/'));
+
+		// required props per WebDAV standard
+		foreach(array(
+			'displayname'      => basename($path),
+			'getetag'          => 'EGw-no-etag-wGE',
+			'getcontentlength' => '',
+			'getlastmodified'  => '',
+			'getcontenttype'   => '',
+			'resourcetype'     => '',
+		) as $name => $default)
+		{
+			if (!isset($props[$name])) $props[$name] = $default;
+		}
+
+		// if requested add privileges
+		if (is_null($supported_privileges)) $supported_privileges = $this->supported_privileges;
+		if ($this->prop_requested('current-user-privilege-set') === true)
+		{
+			foreach($privileges as $name)
+			{
+				$props['current-user-privilege-set'][] = self::mkprop('privilege', array(
+					is_array($name) ? self::mkprop($name['ns'], $name['name'], '') : self::mkprop($name, '')));
+			}
+		}
+		if ($this->prop_requested('supported-privilege-set') === true)
+		{
+			foreach($supported_privileges as $name => $data)
+			{
+				$props['supported-privilege-set'][] = $this->supported_privilege($name, $data);
+			}
+		}
+		if (!isset($props['owner']) && $this->prop_requested('owner') === true)
+		{
+			$props['owner'] = '';
+		}
+
+		if ($this->debug > 1) error_log(__METHOD__."(path='$path', props=".array2string($props).')');
+
+		// convert simple associative properties to HTTP_WebDAV_Server ones
+		foreach($props as $name => &$prop)
+		{
+			if (!is_array($prop) || !isset($prop['name']))
+			{
+				$prop = self::mkprop($name, $prop);
+			}
+		}
+
+		return array(
+			'path' => $path,
+			'props' => $props,
+		);
+	}
+
+	/**
+	 * Generate (hierachical) supported-privilege property
+	 *
+	 * @param string $name name of privilege
+	 * @param string|array $data string with describtion or array with agregated privileges plus value for key '*description*'
+	 * @return array of self::mkprop() arrays
+	 */
+	protected function supported_privilege($name, $data)
+	{
+		$props = array();
+		$props[] = self::mkprop('privilege', array(self::mkprop($name, '')));
+		$props[] = self::mkprop('description', is_array($data) ? $data['*description*'] : $data);
+		if (is_array($data))
+		{
+			unset($data['*description*']);
+			foreach($data as $name => $data)
+			{
+				$props[] = $this->supported_privilege($name, $data);
+			}
+		}
+		return self::mkprop('supported-privilege', $props);
+	}
+
+	/**
+	 * Checks if a given property was requested in propfind request
+	 *
+	 * @param string $name property name
+	 * @param string $ns=null namespace, if that is to be checked too
+	 * @return boolean|string true: $name explicitly requested (or autoindex), 'allprop' requested, false: $name was not requested
+	 */
+	function prop_requested($name, $ns=null)
+	{
+		if (!is_array($this->propfind_options) || !isset($this->propfind_options['props']))
+		{
+			return true;	// no props set, should happen only in autoindex, we return true to show all available props
+		}
+		$ret = false;
+		foreach($this->propfind_options['props'] as $prop)
+		{
+			if ($prop['name'] == $name && (is_null($ns) || $prop['ns'] == $ns))
+			{
+				$ret = true;
+				break;
+			}
+			if ($prop['name'] == 'allprop') $ret = 'allprop';
+		}
+		return $ret;
 	}
 
 	/**
@@ -399,7 +532,7 @@ class groupdav extends HTTP_WebDAV_Server
 		// self url
 		$files['files'][] = $this->add_collection($path, array(
 			'displayname' => $displayname,
-			'owner' => array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
+			'owner' => $path == '/' ? '' : array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
 			'calendar-user-address-set' => self::mkprop(groupdav::CALDAV,'calendar-user-address-set',$calendar_user_address_set),
 			'email-address-set' => self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
 				self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),
@@ -412,31 +545,25 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			foreach($this->root as $app => $data)
 			{
-				if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
-				$props = $this->_properties($app,false,$user,$path);
-				// add ctag if handler implements it
-				if (($handler = self::app_handler($app)) && method_exists($handler,'getctag'))
-				{
-					$props['getctag'] = self::mkprop(
-						groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
-				}
-				$props['getetag'] = 'EGw-'.$app.'-wGE';
-				$files['files'][] = $this->add_collection($path.$app.'/',$props);
+				if (!$GLOBALS['egw_info']['user']['apps'][$data['app'] ? $data['app'] : $app]) continue;	// no rights for the given app
+				if ($path == '/' && !empty($data['no-root'])) continue;
+
+				$files['files'][] = $this->add_app($app,false,$user,$path);
 			}
 		}
 		return true;
 	}
 
 	/**
-	 * Get properties of an application collection
+	 * Add an application collection to a user home or the root
 	 *
 	 * @param string $app
 	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
 	 * @param int $user=null owner of the collection, default current user
 	 * @param string $path='/'
-	 * @return array of DAV properties
+	 * @return array with values for keys 'path' and 'props'
 	 */
-	function _properties($app,$no_extra_types=false,$user=null,$path='/')
+	protected function add_app($app,$no_extra_types=false,$user=null,$path='/')
 	{
 		if ($this->debug) error_log(__METHOD__."(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
 		$user_preferences = $GLOBALS['egw_info']['user']['preferences'];
@@ -497,6 +624,12 @@ class groupdav extends HTTP_WebDAV_Server
 				break;
 			case 'infolog':
 				break;
+			case 'inbox':
+				$displayname = lang('Scheduling inbox').' '.common::grab_owner_name($user);
+				break;
+			case 'outbox':
+				$displayname = lang('Scheduling outbox').' '.common::grab_owner_name($user);
+				break;
 			default:
 				$displayname = translation::convert(lang($app).' '.
 					common::grab_owner_name($user),$this->egw_charset,'utf-8');
@@ -505,27 +638,38 @@ class groupdav extends HTTP_WebDAV_Server
 
 		foreach((array)$this->root[$app] as $prop => $values)
 		{
-			if ($prop == 'resourcetype')
+			switch($prop)
 			{
-				if (!$no_extra_types)
-				{
-					foreach($this->root[$app]['resourcetype'] as $ns => $type)
+				case 'resourcetype';
+					if (!$no_extra_types)
 					{
-						$props['resourcetype'][] = self::mkprop($ns,$type,'');
+						foreach($this->root[$app]['resourcetype'] as $ns => $type)
+						{
+							$props['resourcetype'][] = self::mkprop($ns,$type,'');
+						}
+						// add /addressbook/ as directory gateway
+						if ($app == 'addressbook' && $path == '/')
+						{
+							$props['resourcetype'][] = self::mkprop(self::CARDDAV, 'directory', '');
+						}
 					}
-					// add /addressbook/ as directory gateway
-					if ($app == 'addressbook' && $path == '/')
+					break;
+				case 'app':
+				case 'no-root':
+					break;	// no props, already handled
+				default:
+					if (is_array($values))
 					{
-						$props['resourcetype'][] = self::mkprop(self::CARDDAV, 'directory', '');
+						foreach($values as $ns => $value)
+						{
+							$props[$prop] = self::mkprop($ns,$prop,$value);
+						}
 					}
-				}
-			}
-			else
-			{
-				foreach($values as $ns => $value)
-				{
-					$props[$prop] = self::mkprop($ns,$prop,$value);
-				}
+					else
+					{
+						$props[$prop] = $values;
+					}
+					break;
 			}
 		}
 		if (method_exists($app.'_groupdav','extra_properties'))
@@ -535,7 +679,20 @@ class groupdav extends HTTP_WebDAV_Server
 				translation::charset(),'utf-8');
 			$props = ExecMethod2($app.'_groupdav::extra_properties',$props,$displayname,$this->base_uri);
 		}
-		return $props;
+		// add ctag if handler implements it
+		if (($handler = self::app_handler($app)))
+		{
+			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
+			{
+				$props['getctag'] = self::mkprop(
+					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
+			}
+		}
+		$props['getetag'] = 'EGw-'.$app.'-wGE';
+
+		if ($handler) $privileges = $handler->current_user_privileges($user) ;
+
+		return $this->add_collection($path.$app.'/', $props, $privileges);
 	}
 
 	/**
@@ -608,8 +765,8 @@ class groupdav extends HTTP_WebDAV_Server
 		header('Content-type: text/html; charset='.translation::charset());
 		echo "<html>\n<head>\n\t<title>".'EGroupware (Cal|Card|Group)DAV server '.htmlspecialchars($options['path'])."</title>\n";
 		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
-		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; }\n".
-			".row_off { background-color: #ffffff; }\ntd { padding-left: 5px; }\nth { padding-left: 5px; text-align: left; }\n\t</style>\n";
+		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; vertical-align: top; }\n".
+			".row_off { background-color: #ffffff; vertical-align: top; }\ntd { padding-left: 5px; }\nth { padding-left: 5px; text-align: left; }\n\t</style>\n";
 		echo "</head>\n<body>\n";
 
 		echo '<h1>(Cal|Card|Group)DAV ';
@@ -652,8 +809,8 @@ class groupdav extends HTTP_WebDAV_Server
 			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
 			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
 			echo "\t\t<td>".$props['DAV:getetag']."</td>\n";
-			echo "\t\t<td>".htmlspecialchars($props['DAV:getcontenttype'])."</td>\n";
-			echo "\t\t<td>".self::prop_value($props['DAV:resourcetype'])."</td>\n\t</tr>\n";
+			echo "\t\t<td>".$props['DAV:getcontenttype']."</td>\n";
+			echo "\t\t<td>".$props['DAV:resourcetype']."</td>\n\t</tr>\n";
 		}
 		if (!$n)
 		{
@@ -672,7 +829,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$name = array_pop($ns);
 			$ns = implode(':',$ns);
 			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td style='white-space: nowrap'>".htmlspecialchars($name)."</td>\n";
-			echo "\t\t<td>".self::prop_value($value)."</td>\n\t</tr>\n";
+			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
 		}
 		echo "</table>\n";
 
@@ -695,15 +852,27 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$value = $this->_hierarchical_prop_encode($value);
 			}
-			$value = htmlspecialchars(array2string($value));
+			$value = array2string($value);
 		}
-		elseif (preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value))
+		if ($value[0] == '<' && function_exists('tidy_repair_string'))
 		{
-			$value = preg_replace('/\<(D:)?href\>([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2">\\2</a>&lt;/\\3href&gt;<br />',$value);
+			$value = tidy_repair_string($value, array(
+				'indent'          => true,
+				'show-body-only'  => true,
+				'output-encoding' => 'utf-8',
+				'input-encoding'  => 'utf-8',
+				'input-xml'       => true,
+				'output-xml'      => true,
+				'wrap'            => 0,
+			));
+		}
+		if (preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value))
+		{
+			$value = '<pre>'.preg_replace('/\<(D:)?href\>([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2">\\2</a>&lt;/\\3href&gt;',$value).'</pre>';
 		}
 		else
 		{
-			$value = htmlspecialchars($value);
+			$value = $value[0] == '<' ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
 		}
 		return $value;
 	}
@@ -743,9 +912,13 @@ class groupdav extends HTTP_WebDAV_Server
 				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash);
 				// hack to show real namespaces instead of not (visibly) defined shortcuts
 				unset($ns_hash['DAV:']);
-				$prop['val'] = strtr($prop['val'],array_flip($ns_hash));
+				$value = strtr($this->prop_value($prop['val']),array_flip($ns_hash));
 			}
-			$arr[$ns.':'.$prop['name']] = $prop['val'];
+			else
+			{
+				$value = $this->prop_value($prop['val']);
+			}
+			$arr[$ns.':'.$prop['name']] = $value;
 		}
 		return $arr;
 	}

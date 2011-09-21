@@ -38,6 +38,12 @@ abstract class groupdav_handler
 	 */
 	var $accounts;
 	/**
+	 * Reference to the ACL class
+	 *
+	 * @var acl
+	 */
+	var $acl;
+	/**
 	 * Translates method names into ACL bits
 	 *
 	 * @var array
@@ -86,6 +92,13 @@ abstract class groupdav_handler
 	static $path_extension = '.ics';
 
 	/**
+	 * Which attribute to use to contruct name part of url/path
+	 *
+	 * @var string
+	 */
+	static $path_attr = 'id';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -101,6 +114,9 @@ abstract class groupdav_handler
 		$this->agent = self::get_agent();
 
 		$this->egw_charset = translation::charset();
+
+		$this->accounts = $GLOBALS['egw']->accounts;
+		$this->acl = $GLOBALS['egw']->acl;
 	}
 
 	/**
@@ -368,6 +384,90 @@ abstract class groupdav_handler
 		if ($debug) error_log(__METHOD__."GroupDAV client: $agent");
 
 		return $agent;
+	}
+
+	/**
+	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 *
+	 * Priviledges are for the collection, not the resources / entries!
+	 *
+	 * @param int $user=null owner of the collection, default current user
+	 * @return array with privileges
+	 */
+	public function current_user_privileges($user=null)
+	{
+		static $grants;
+		if (is_null($grants))
+		{
+			$grants = $this->acl->get_grants($this->app, $this->app != 'addressbook');
+		}
+		$priviledes = array('read-current-user-privilege-set');
+
+		if (!$user || $grants[$user] & EGW_ACL_READ)
+		{
+			$priviledes[] = 'read';
+		}
+		if (!$user || $grants[$user] & EGW_ACL_ADD)
+		{
+			$priviledes[] = 'bind';	// PUT for new resources
+		}
+		if (!$user || $grants[$user] & EGW_ACL_EDIT)
+		{
+			$priviledes[] = 'unbind';	// DELETE
+		}
+		// copy/move of existing resources might require write-properties, thought we do not support an explicit PROPATCH
+		return $priviledes;
+	}
+
+	/**
+	 * Create the path/name for an entry
+	 *
+	 * @param array $entry
+	 * @return string
+	 */
+	function get_path($entry)
+	{
+		return $entry[self::$path_attr].self::$path_extension;
+	}
+
+	/**
+	 * Add a resource
+	 *
+	 * @param string $path path of collection, NOT entry!
+	 * @param array $entry
+	 * @param array $props
+	 * @return array with values for keys 'path' and 'props'
+	 */
+	public function add_resource($path, array $entry, array $props)
+	{
+		foreach(array(
+			'getetag' => $this->get_etag($entry),
+			'getcontenttype' => 'text/calendar',
+			'getlastmodified' => $entry['modified'],
+			'displayname' => $entry['title'],
+		) as $name => $value)
+		{
+			if (!isset($props[$name]))
+			{
+				$props[$name] = $value;
+			}
+		}
+		// if requested add privileges
+		$privileges = array('read', 'read-current-user-privilege-set');
+		if ($this->groupdav->prop_requested('current-user-privilege-set') === true && !isset($props['current-user-privilege-set']))
+		{
+			if ($this->check_access(EGW_ACL_EDIT, $entry))
+			{
+				$privileges[] = 'write-content';
+			}
+		}
+		if ($this->groupdav->prop_requested('owner') === true && !isset($props['owner']) &&
+			($account_lid = $this->accounts->name2id($entry['owner'])))
+		{
+			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
+			$props['owner'] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
+		}
+		return $this->groupdav->add_resource($path.$this->get_path($entry), $props, $privileges);
 	}
 }
 

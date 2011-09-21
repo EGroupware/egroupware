@@ -77,13 +77,6 @@ class addressbook_groupdav extends groupdav_handler
 	var $charset = 'utf-8';
 
 	/**
-	 * Which attribute to use to contruct name part of url/path
-	 *
-	 * @var string
-	 */
-	static $path_attr = 'id';
-
-	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -99,24 +92,13 @@ class addressbook_groupdav extends groupdav_handler
 		if ($this->bo->account_repository != 'ldap' &&
 			version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
 		{
-			self::$path_attr = 'carddav_name';
+			groupdav_handler::$path_attr = 'carddav_name';
 			groupdav_handler::$path_extension = '';
 		}
 		else
 		{
 			groupdav_handler::$path_extension = '.vcf';
 		}
-	}
-
-	/**
-	 * Create the path for a contact
-	 *
-	 * @param array $contact
-	 * @return string
-	 */
-	static function get_path($contact)
-	{
-		return $contact[self::$path_attr].groupdav_handler::$path_extension;
 	}
 
 	/**
@@ -188,25 +170,15 @@ class addressbook_groupdav extends groupdav_handler
 			foreach($contacts as &$contact)
 			{
 				$props = array(
-					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
-					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-					HTTP_WebDAV_Server::mkprop('getlastmodified', $contact['modified']),
+					'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
 				);
 				if ($address_data)
 				{
 					$content = $handler->getVCard($contact['id'],$this->charset,false);
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
 				}
-				else
-				{
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
-				}
-				$files[] = array(
-	            	'path'  => $path.self::get_path($contact),
-	            	'props' => $props,
-				);
+				$files[] = $this->add_resource($path, $contact, $props);
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
@@ -512,7 +484,6 @@ class addressbook_groupdav extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget',''))))),
 		));
-		//$props = self::current_user_privilege_set($props);
 		return $props;
 	}
 

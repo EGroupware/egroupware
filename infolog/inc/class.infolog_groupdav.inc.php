@@ -78,7 +78,7 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array|int $info
 	 * @return string
 	 */
-	static function get_path($info)
+	function get_path($info)
 	{
 		if (is_numeric($info) && self::$path_attr == 'info_id')
 		{
@@ -208,27 +208,16 @@ class infolog_groupdav extends groupdav_handler
 			foreach($tasks as $task)
 			{
 				$props = array(
-					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
-							'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
-					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-					HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
-					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
+					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',	// Konqueror (3.5) dont understand it otherwise
+					'getlastmodified' => $task['info_datemodified'],
 				);
 				if ($calendar_data)
 				{
 					$content = $handler->exportVTODO($task,'2.0','PUBLISH');
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
-				else
-				{
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', ''); // expensive to calculate and no CalDAV client uses it
-				}
-				$files[] = array(
-	            	'path'  => $path.self::get_path($task),
-	            	'props' => $props,
-				);
+				$files[] = $this->add_resource($path, $task, $props);
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');

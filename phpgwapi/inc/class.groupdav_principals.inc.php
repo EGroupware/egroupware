@@ -24,20 +24,6 @@
 class groupdav_principals extends groupdav_handler
 {
 	/**
-	 * Reference to the accounts class
-	 *
-	 * @var accounts
-	 */
-	var $accounts;
-
-	/**
-	 * Reference to the ACL class
-	 *
-	 * @var acl
-	 */
-	var $acl;
-
-	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -46,9 +32,6 @@ class groupdav_principals extends groupdav_handler
 	function __construct($app, groupdav $groupdav)
 	{
 		parent::__construct($app, $groupdav);
-
-		$this->accounts = $GLOBALS['egw']->accounts;
-		$this->acl = $GLOBALS['egw']->acl;
 	}
 
 	/**
@@ -672,5 +655,18 @@ class groupdav_principals extends groupdav_handler
 			// as the principal of current user is influenced by GroupDAV prefs, we have to include them in the etag
 			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ?
 				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
+	}
+
+	/**
+	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 *
+	 * Priviledges are for the collection, not the resources / entries!
+	 *
+	 * @param int $user=null owner of the collection, default current user
+	 * @return array with privileges
+	 */
+	public function current_user_privileges($user=null)
+	{
+		return array('read', 'read-current-user-privilege-set');
 	}
 }
