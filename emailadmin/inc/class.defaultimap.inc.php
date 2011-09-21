@@ -394,6 +394,9 @@ class defaultimap extends Net_IMAP
 		if(!$this->_connected) {
 			return false;
 		}
+		static $nameSpace;
+		if (isset($nameSpace)) return $nameSpace;
+
 		$retrieveDefault = false;
 		if($this->hasCapability('NAMESPACE')) {
 			$nameSpace = $this->getNamespace();
@@ -425,7 +428,7 @@ class defaultimap extends Net_IMAP
 				)
 			);
 		}
-				
+		$nameSpace = $result;
 		return $result;
 	}
 	
