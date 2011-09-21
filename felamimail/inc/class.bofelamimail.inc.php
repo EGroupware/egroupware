@@ -2933,16 +2933,22 @@
 
 		function openConnection($_icServerID=0, $_adminConnection=false)
 		{
-			if (!is_object($this->mailPreferences)) 
+			static $isError;
+			if ( PEAR::isError($isError[$_icServerID]) ) return false;			
+			//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
+			if (!is_object($this->mailPreferences))
 			{
 				error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
 				$this->errorMessage .= lang('No valid data to create MailProfile!!');
+				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
 				return false;
 			}
 			if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
 				$this->errorMessage .= lang('No active IMAP server found!!');
+				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
 				return false;
 			}
+			//error_log(__METHOD__.__LINE__.'->'.array2string($this->icServer->ImapServerId));
 			if ($this->icServer && empty($this->icServer->host)) {
 				$errormessage = lang('No IMAP server host configured!!');
 				if ($GLOBALS['egw_info']['user']['apps']['emailadmin']) {
@@ -2951,18 +2957,26 @@
 					$errormessage .= "<br>".lang('Please ask the administrator to correct the emailadmin IMAP Server Settings for you.');
 				}
 				$this->icServer->_connectionErrorObject->message .= $this->errorMessage .= $errormessage;
+				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
 				return false;
 			}
-			#error_log( "---------------------------open connection <br>");
-			#error_log(print_r($this->icServer,true));
+			//error_log( "-------------------------->open connection ".function_backtrace());
+			//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
 			if ($this->icServer->_connected == 1) {
 				$tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
-				#error_log(__METHOD__." using existing Connection ".print_r($this->icServer->_connected,true));
+				if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval;
+				//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 			} else {
+				//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
+				$this->icServer->_timeout = 5;
 				$tretval = $this->icServer->openConnection($_adminConnection);
-				#error_log(__METHOD__." open new Connection ".print_r($this->icServer->_connected,true));
+				if ( PEAR::isError($tretval) || $tretval===false)
+				{
+					$isError[$_icServerID] = $this->icServer->_connectionErrorObject;
+					error_log(__METHOD__." failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$this->icServer->_connectionErrorObject->message.' called from '.function_backtrace());
+				}
 			}
-			#error_log(print_r($this->icServer->_connected,true));
+			//error_log(print_r($this->icServer->_connected,true));
 			return $tretval;
 		}
 
