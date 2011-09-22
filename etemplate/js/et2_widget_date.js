@@ -448,6 +448,9 @@ var et2_date_duration = et2_date.extend({
                 }
 		_value = this.options.empty_not_0 && _value === '' || !this.options.empty_not_0 && !_value ? '' :
                         (_unit == 'm' ? parseInt( _value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.options.hours_per_day : 1))*100)/100));
+
+		if(_value === '') _unit = '';
+
                 // use decimal separator from user prefs
 		var sep = '.';
 		var format = egw.preference('number_format');
