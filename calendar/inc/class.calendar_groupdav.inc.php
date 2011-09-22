@@ -752,6 +752,35 @@ class calendar_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 *
+	 * Reimplemented to add read-free-busy and schedule-deliver privilege
+	 *
+	 * @param string $path path of collection
+	 * @param int $user=null owner of the collection, default current user
+	 * @return array with privileges
+	 */
+	public function current_user_privileges($path, $user=null)
+	{
+		$priviledes = parent::current_user_privileges($user);
+
+		if ($this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		{
+			$priviledes['read-free-busy'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'read-free-busy', '');
+
+			if (substr($path, -8) == '/outbox/' && $this->bo->check_acl_invite($user))
+			{
+				$priviledes['schedule-send'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-send', '');
+			}
+		}
+		if (substr($path, -7) == '/inbox/' && $this->bo->check_acl_invite($user))
+		{
+			$priviledes['schedule-deliver'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-deliver', '');
+		}
+		return $priviledes;
+	}
+
+	/**
 	 * Fix event series with exceptions, called by calendar_ical::importVCal():
 	 *	a) only series master = first event got cal_id from URL
 	 *	b) exceptions need to be checked if they are already in DB or new
@@ -761,9 +790,6 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	static function fix_series(array &$events)
 	{
-		//foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
-		//$master =& $events[0];
-
 		$bo = new calendar_boupdate();
 
 		// get array with orginal recurrences indexed by recurrence-id

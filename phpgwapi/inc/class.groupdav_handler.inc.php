@@ -391,33 +391,34 @@ abstract class groupdav_handler
 	 *
 	 * Priviledges are for the collection, not the resources / entries!
 	 *
+	 * @param string $path path of collection
 	 * @param int $user=null owner of the collection, default current user
 	 * @return array with privileges
 	 */
-	public function current_user_privileges($user=null)
+	public function current_user_privileges($path, $user=null)
 	{
 		static $grants;
 		if (is_null($grants))
 		{
 			$grants = $this->acl->get_grants($this->app, $this->app != 'addressbook');
 		}
-		$priviledes = array('read-current-user-privilege-set');
+		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
 
 		if (!$user || $grants[$user] & EGW_ACL_READ)
 		{
-			$priviledes[] = 'read';
+			$priviledes['read'] = 'read';
 		}
 		if (!$user || $grants[$user] & EGW_ACL_ADD)
 		{
-			$priviledes[] = 'bind';	// PUT for new resources
+			$priviledes['bind'] = 'bind';	// PUT for new resources
 		}
 		if (!$user || $grants[$user] & EGW_ACL_EDIT)
 		{
-			$priviledes[] = 'write-content';	// otherwise iOS calendar does not allow to add events
+			$priviledes['write-content'] = 'write-content';	// otherwise iOS calendar does not allow to add events
 		}
 		if (!$user || $grants[$user] & EGW_ACL_DELETE)
 		{
-			$priviledes[] = 'unbind';	// DELETE
+			$priviledes['unbind'] = 'unbind';	// DELETE
 		}
 		// copy/move of existing resources might require write-properties, thought we do not support an explicit PROPATCH
 		return $priviledes;

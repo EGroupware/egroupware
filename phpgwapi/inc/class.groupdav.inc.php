@@ -27,6 +27,8 @@ require_once('HTTP/WebDAV/Server.php');
  * - /<username>/             users home-set with
  * - /<username>/addressbook/ addressbook of user or group <username> given the user has rights to view it
  * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
+ * - /<username>/inbox/       scheduling inbox of user <username>
+ * - /<username>/outbox/      scheduling outbox of user <username>
  * - /<username>/infolog/     InfoLog's of user <username> given the user has rights to view it
  * - /addressbook/ all addressbooks current user has rights to, announced as directory-gateway now
  * - /calendar/    calendar of current user
@@ -152,7 +154,14 @@ class groupdav extends HTTP_WebDAV_Server
 	var $supported_privileges = array(
 		'all' => array(
 			'*description*' => 'all privileges',
-			'read' => 'read resource',
+			'read' => array(
+				'*description*' => 'read resource',
+				'read-free-busy' => array(
+					'*ns*' => self::CALDAV,
+					'*description*' => 'allow free busy report query',
+					'*only*' => '/calendar/',
+				),
+			),
 			'write' => array(
 				'*description*' => 'write resource',
 				'write-properties' => 'write resource properties',
@@ -164,6 +173,16 @@ class groupdav extends HTTP_WebDAV_Server
 			'read-acl' => 'read resource access control list',
 			'write-acl' => 'write resource access control list',
 			'read-current-user-privilege-set' => 'read privileges for current principal',
+			'schedule-deliver' => array(
+				'*ns*' => self::CALDAV,
+				'*description*' => 'schedule privileges for current principal',
+				'*only*' => '/inbox/',
+			),
+			'schedule-send' => array(
+				'*ns*' => self::CALDAV,
+				'*description*' => 'schedule privileges for current principal',
+				'*only*' => '/outbox/',
+			),
 		),
 	);
 	/**
@@ -412,7 +431,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			foreach($supported_privileges as $name => $data)
 			{
-				$props['supported-privilege-set'][] = $this->supported_privilege($name, $data);
+				$props['supported-privilege-set'][] = $this->supported_privilege($name, $data, $path);
 			}
 		}
 		if (!isset($props['owner']) && $this->prop_requested('owner') === true)
@@ -441,20 +460,26 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Generate (hierachical) supported-privilege property
 	 *
 	 * @param string $name name of privilege
-	 * @param string|array $data string with describtion or array with agregated privileges plus value for key '*description*'
+	 * @param string|array $data string with describtion or array with agregated privileges plus value for key '*description*', '*ns*', '*only*'
+	 * @param string $path=null path to match with $data['*only*']
 	 * @return array of self::mkprop() arrays
 	 */
-	protected function supported_privilege($name, $data)
+	protected function supported_privilege($name, $data, $path=null)
 	{
 		$props = array();
-		$props[] = self::mkprop('privilege', array(self::mkprop($name, '')));
+		$props[] = self::mkprop('privilege', array(is_array($data) && $data['*ns*'] ?
+			self::mkprop($data['*ns*'], $name, '') : self::mkprop($name, '')));
 		$props[] = self::mkprop('description', is_array($data) ? $data['*description*'] : $data);
 		if (is_array($data))
 		{
-			unset($data['*description*']);
 			foreach($data as $name => $data)
 			{
-				$props[] = $this->supported_privilege($name, $data);
+				if ($name[0] == '*') continue;
+				if (is_array($data) && $data['*only*'] && strpos($path, $data['*only*']) === false)
+				{
+					continue;	// wrong path
+				}
+				$props[] = $this->supported_privilege($name, $data, $path);
 			}
 		}
 		return self::mkprop('supported-privilege', $props);
@@ -689,7 +714,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$props['getetag'] = 'EGw-'.$app.'-wGE';
 
-		if ($handler) $privileges = $handler->current_user_privileges($user) ;
+		if ($handler) $privileges = $handler->current_user_privileges($path.$app.'/', $user) ;
 
 		return $this->add_collection($path.$app.'/', $props, $privileges);
 	}
