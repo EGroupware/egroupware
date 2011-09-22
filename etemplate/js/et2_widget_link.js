@@ -775,9 +775,9 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
-			.text(_link_data.title)
 			.addClass("et2_link")
 			.click( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+		if(_link_data.title) link.text(_link_data.title);
 
 		// Now that link is created, get title from server & update
 		if(!_link_data.title) {
