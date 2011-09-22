@@ -785,7 +785,7 @@ var et2_widget = Class.extend({
 			this._template_application = this.getParent().getTemplateApp();
 			return this._template_application;
 		}
-		app = egw.getAppName() == 'egroupware' ? 'phpgwapi' : egw.getAppName();
+		var app = egw.getAppName() == 'egroupware' ? 'phpgwapi' : egw.getAppName();
 		//console.warn("Unable to find template application, using %s", app);
 		return app;
 	}
