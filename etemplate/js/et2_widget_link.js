@@ -861,8 +861,8 @@ var et2_link_list = et2_link_string.extend({
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.text(_link_data[columns[i]])
-				.click( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+				.click( function(){egw.open(_link_data.id, _link_data.app, "edit", _link_data.extra);})
+				.text(_link_data[columns[i]]);
 		}
 
 		// Date
