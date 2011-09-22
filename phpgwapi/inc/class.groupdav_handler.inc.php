@@ -413,6 +413,10 @@ abstract class groupdav_handler
 		}
 		if (!$user || $grants[$user] & EGW_ACL_EDIT)
 		{
+			$priviledes[] = 'write-content';	// otherwise iOS calendar does not allow to add events
+		}
+		if (!$user || $grants[$user] & EGW_ACL_DELETE)
+		{
 			$priviledes[] = 'unbind';	// DELETE
 		}
 		// copy/move of existing resources might require write-properties, thought we do not support an explicit PROPATCH

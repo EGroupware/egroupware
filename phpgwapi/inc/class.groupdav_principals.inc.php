@@ -368,24 +368,32 @@ class groupdav_principals extends groupdav_handler
 		return $this->add_principal('users/'.$account['account_lid'], array(
 			'getetag' => $this->get_etag($account),
 			'displayname' => $displayname,
-			'alternate-URI-set' => array(
-				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email'])),
+			// CalDAV
 			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$calendars),
+			// CalDAV scheduling
+			'schedule-outbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/outbox/'))),
+			'schedule-inbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-inbox-URL',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$account['account_lid']))),
-			'schedule-outbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/calendar/'))),
+			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
+			// Calendarserver
 			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
 				HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address',$account['account_email']))),
 			'last-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'last-name',$account['account_lastname']),
 			'first-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','user'),
-			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
-			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
+			// WebDAV ACL and CalDAV proxy
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				'calendar', $account['account_id']),	// add proxy-rights
+			'alternate-URI-set' => array(
+				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email'])),
+			// CardDAV
+			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
+			// CardDAV directory
 			'directory-gateway' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV, 'directory-gateway',array(
 				HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/addressbook/'))),
 		));

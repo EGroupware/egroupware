@@ -92,16 +92,16 @@ class groupdav extends HTTP_WebDAV_Server
 			'resourcetype' => array(self::GROUPDAV => 'vevent-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VEVENT'),
 		),
-		/*'inbox' => array(
+		'inbox' => array(
 			'resourcetype' => array(self::CALDAV => 'schedule-inbox'),
 			'app' => 'calendar',
-			'no-root' => true,
+			'user-only' => true,	// display just in user home
 		),
 		'outbox' => array(
 			'resourcetype' => array(self::CALDAV => 'schedule-outbox'),
 			'app' => 'calendar',
-			'no-root' => true,
-		),*/
+			'user-only' => true,	// display just in user home
+		),
 		'infolog' => array(
 			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VTODO'),
@@ -265,7 +265,7 @@ class groupdav extends HTTP_WebDAV_Server
 				if (!in_array(2,$dav)) $dav[] = 2;
 				$dav[] = 'access-control';
 				$dav[] = 'calendar-access';
-				//$dav[] = 'calendar-auto-schedule';
+				$dav[] = 'calendar-auto-schedule';
 				$dav[] = 'calendar-proxy';
 				//$dav[] = 'calendar-availibility';
 				//$dav[] = 'calendarserver-private-events';
@@ -546,7 +546,7 @@ class groupdav extends HTTP_WebDAV_Server
 			foreach($this->root as $app => $data)
 			{
 				if (!$GLOBALS['egw_info']['user']['apps'][$data['app'] ? $data['app'] : $app]) continue;	// no rights for the given app
-				if ($path == '/' && !empty($data['no-root'])) continue;
+				if (!empty($data['user-only']) && ($path == '/' || $user < 0)) continue;
 
 				$files['files'][] = $this->add_app($app,false,$user,$path);
 			}
@@ -593,8 +593,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 
 		$account = $this->accounts->read($account_lid);
-		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
-				$GLOBALS['egw']->translation->charset(),'utf-8');
+		$displayname = translation::convert($account['account_fullname'],translation::charset(),'utf-8');
 
 		if ($user < 0)
 		{
@@ -655,7 +654,7 @@ class groupdav extends HTTP_WebDAV_Server
 					}
 					break;
 				case 'app':
-				case 'no-root':
+				case 'user-only':
 					break;	// no props, already handled
 				default:
 					if (is_array($values))
@@ -888,31 +887,30 @@ class groupdav extends HTTP_WebDAV_Server
 		$arr = array();
 		foreach($props as $prop)
 		{
+			$ns_hash = array('DAV:' => 'D');
 			switch($prop['ns'])
 			{
 				case 'DAV:';
 					$ns = 'DAV';
 					break;
 				case self::CALDAV:
-					$ns = 'CalDAV';
+					$ns = $ns_hash[$prop['ns']] = 'CalDAV';
 					break;
 				case self::CARDDAV:
-					$ns = 'CardDAV';
+					$ns = $ns_hash[$prop['ns']] = 'CardDAV';
 					break;
 				case self::GROUPDAV:
-					$ns = 'GroupDAV';
+					$ns = $ns_hash[$prop['ns']] = 'GroupDAV';
 					break;
 				default:
 					$ns = $prop['ns'];
 			}
-			$ns_defs = '';
-			$ns_hash = array($prop['ns'] => $ns, 'DAV:' => 'D');
 			if (is_array($prop['val']))
 			{
-				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash);
+				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs='', $ns_hash);
 				// hack to show real namespaces instead of not (visibly) defined shortcuts
 				unset($ns_hash['DAV:']);
-				$value = strtr($this->prop_value($prop['val']),array_flip($ns_hash));
+				$value = strtr($v=$this->prop_value($prop['val']),array_flip($ns_hash));
 			}
 			else
 			{

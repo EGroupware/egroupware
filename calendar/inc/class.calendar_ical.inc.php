@@ -966,12 +966,12 @@ class calendar_ical extends calendar_boupdate
 			{
 				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
-					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),$charset);
-                    $paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ?
+					$valueData = translation::convert($valueData,translation::charset(),$charset);
+                    $paramData = (array) translation::convert(is_array($value) ?
                     		$parameters[$key][$valueID] : $parameters[$key],
-                            $GLOBALS['egw']->translation->charset(),$charset);
-                    $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
-                    		$GLOBALS['egw']->translation->charset(),$charset);
+                            translation::charset(),$charset);
+                    $valuesData = (array) translation::convert($values[$key],
+                    		translation::charset(),$charset);
                     $content = $valueData . implode(';', $valuesData);
 
 					if (preg_match('/[^\x20-\x7F]/', $content) ||
@@ -2233,12 +2233,13 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
 	 * @param string $principalURL=''	Used for CalDAV imports
+	 * @param string $check_component='Horde_iCalendar_vevent'
 	 *
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields, $principalURL='')
+	function vevent2egw(&$component, $version, $supportedFields, $principalURL='', $check_component='Horde_iCalendar_vevent')
 	{
-		if (!is_a($component, 'Horde_iCalendar_vevent'))
+		if ($check_component && !is_a($component, $check_component))
 		{
 			if ($this->log)
 			{
@@ -3034,52 +3035,47 @@ class calendar_ical extends calendar_boupdate
 	 * @param mixed $end=null end-date, default now+1 month
 	 * @param boolean $utc=true if false, use severtime for dates
 	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
-	 * @return string
+	 * @param mixed $start=null default now
+	 * @param string $method='PUBLISH' or eg. 'REPLY'
+	 * @param array $extra=null extra attributes to add
+	 * 	X-CALENDARSERVER-MASK-UID can be used to not include an event specified by this uid as busy
 	 */
-	function freebusy($user,$end=null,$utc=true, $charset='UTF-8')
+	function freebusy($user,$end=null,$utc=true, $charset='UTF-8', $start=null, $method='PUBLISH', array $extra=null)
 	{
-		if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
+		if (!$start) $start = time();	// default now
+		if (!$end) $end = time() + 100*DAY_s;	// default next 100 days
 
 		$vcal = new Horde_iCalendar;
-		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION','2.0');
+		$vcal->setAttribute('METHOD',$method);
 
 		$vfreebusy = Horde_iCalendar::newComponent('VFREEBUSY',$vcal);
-		$parameters = array(
-			'ORGANIZER' => $GLOBALS['egw']->translation->convert(
-				$GLOBALS['egw']->accounts->id2name($user,'account_firstname').' '.
-				$GLOBALS['egw']->accounts->id2name($user,'account_lastname'),
-				$GLOBALS['egw']->translation->charset(),$charset),
+		if ($uid) $vfreebusy->setAttribute('UID', $uid);
+
+		$attributes = array(
+			'DTSTAMP' => time(),
+			'DTSTART' => $this->date2ts($start,true),	// true = server-time
+			'DTEND' => $this->date2ts($end,true),	// true = server-time
 		);
-		if ($utc)
+		if (!$utc)
 		{
-			foreach (array(
-				'URL' => $this->freebusy_url($user),
-				'DTSTART' => $this->date2ts($this->now_su,true),	// true = server-time
-				'DTEND' => $this->date2ts($end,true),	// true = server-time
-		  		'ORGANIZER' => $GLOBALS['egw']->accounts->id2name($user,'account_email'),
-				'DTSTAMP' => time(),
-			) as $attr => $value)
+			foreach ($attributes as $attr => $value)
 			{
-				$vfreebusy->setAttribute($attr, $value);
+				$attributes[$attr] = date('Ymd\THis', $value);
 			}
 		}
-		else
+		if (is_null($extra)) $extra = array(
+			'URL' => $this->freebusy_url($user),
+			'ORGANIZER' => 'mailto:'.$GLOBALS['egw']->accounts->id2name($user,'account_email'),
+		);
+		foreach($attributes+$extra as $attr => $value)
 		{
-			foreach (array(
-				'URL' => $this->freebusy_url($user),
-				'DTSTART' => date('Ymd\THis',$this->date2ts($this->now_su,true)),	// true = server-time
-				'DTEND' => date('Ymd\THis',$this->date2ts($end,true)),	// true = server-time
-		  		'ORGANIZER' => $GLOBALS['egw']->accounts->id2name($user,'account_email'),
-				'DTSTAMP' => date('Ymd\THis',time()),
-			) as $attr => $value)
-			{
-				$vfreebusy->setAttribute($attr, $value);
-			}
+			$vfreebusy->setAttribute($attr, $value);
 		}
 		$fbdata = parent::search(array(
-			'start' => $this->now_su,
+			'start' => $start,
 			'end'   => $end,
 			'users' => $user,
 			'date_format' => 'server',
@@ -3090,6 +3086,7 @@ class calendar_ical extends calendar_boupdate
 			foreach ($fbdata as $event)
 			{
 				if ($event['non_blocking']) continue;
+				if ($event['uid'] === $extra['X-CALENDARSERVER-MASK-UID']) continue;
 
 				if ($utc)
 				{
