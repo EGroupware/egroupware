@@ -59,6 +59,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 
 	set_image: function(_image) {
 		if(!this.isInTree()) return;
+
 		this.options.image = _image;
 
 		var found_image = false;
@@ -69,13 +70,16 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 				this.image = et2_createWidget("image",{label: this.options.label});
 			}
 			found_image = this.image.set_src(this.options.image);
+			if(found_image) {
+				// No label if there's an image
+				this.set_label("");
+				this.btn.removeClass("et2_button_text").addClass("et2_button_icon");
+			}
 			jQuery(this.image.getDOMNode()).appendTo(this.btn);
 		}
-		if(found_image)
+		if(!found_image)
 		{
-			// No label if there's an image
-			this.options.label = "";
-			this.btn.removeClass("et2_button_text").addClass("et2_button_icon");
+			this.set_label(this.options.label);
 		}
 	},
 

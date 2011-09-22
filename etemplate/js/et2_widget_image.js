@@ -112,7 +112,7 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
-			return;
+			return false;
 		}
 
 		this.options.src = _value;

@@ -415,27 +415,47 @@ else
 		 */
 		image: function (_name, _app)
 		{
-			if (typeof _app == 'undefined') _app = this.getAppName();
+			// For logging all paths tried
+			var tries = {};
+
+			if (typeof _app == 'undefined')
+			{
+				if(_name.indexOf('/') > 0)
+				{
+					var split = et2_csvSplit(_value, 2,"/");
+					var _app = split[0];
+					_name = split[1];
+				}
+				else
+				{
+					_app = this.getAppName();
+				}
+			}
 			
 			// own instance specific images in vfs have highest precedence
+			tries['vfs']=_name;
 			if (typeof this.images['vfs'] != 'undefined' && typeof this.images['vfs'][_name] != 'undefined')
 			{
 				return this.webserverUrl+this.images['vfs'][_name];
 			}
+			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
 			if (typeof this.images[_app] != 'undefined' && typeof this.images[_app][_name] != 'undefined')
 			{
 				return this.webserverUrl+this.images[_app][_name];
 			}
+			tries['phpgwapi'] = _name;
 			if (typeof this.images['phpgwapi'] != 'undefined' && typeof this.images['phpgwapi'][_name] != 'undefined')
 			{
-				return this.webserverUrl+this.images['vfs'][_name];
+				return this.webserverUrl+this.images['phpgwapi'][_name];
 			}
 			// if no match, check if it might contain an extension
-			if (_name.match(/\.(png|gif|jpg)$/i))
+			var matches = [];
+			if (matches = _name.match(/\.(png|gif|jpg)$/i))
 			{
 				return this.image(_name.replace(/.(png|gif|jpg)$/i,''), _app);
 			}
-			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!');
+			if(matches != null) tries[_app + " (matched)"]= matches;
+			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
 			return null;
 		},
 		
