@@ -69,14 +69,39 @@ class auth
 	{
 		// dont check anything for anonymous sessions/ users that are flagged as anonymous
 		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A') return true;
+		// some statics (and initialisation to make information and timecalculation a) more readable in conditions b) persistent per request
+		// if user has to be warned about an upcomming passwordchange, remember for the session, that he was informed
 		static $UserKnowsAboutPwdChange;
 		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange =& egw_cache::getSession('phpgwapi','auth_UserKnowsAboutPwdChange');
-		// some statics to make information and timecalculation a) more readable in conditions b) persistent per  request
+		// retrieve the timestamp regarding the last change of the password from auth system and store it with the session
 		static $alpwchange_val;
+		static $pwdTsChecked;
+		if (is_null($pwdTsChecked) && is_null($alpwchange_val))
+		{
+			$alpwchange_val =& egw_cache::getSession('phpgwapi','auth_alpwchange_val'); // set that one with the session stored value
+			// initalize statics - better readability of conditions
+			if (is_null($alpwchange_val))
+			{
+				$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
+				$backend = new $backend_class;
+				// this may change behavior, as it should detect forced PasswordChanges from your Authentication System too.
+				// on the other side, if your auth system does not require an forcedPasswordChange, you will not be asked.
+				if (method_exists($backend,'getLastPwdChange'))
+				{
+					$alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
+					$pwdTsChecked = true;
+				}
+				// if your authsystem does not provide that information, its likely, that you cannot change your password there, 
+				// thus checking for expiration, is not needed
+				if ($alpwchange_val === false)
+				{
+					$alpwchange_val = null;
+				}
+				//error_log(__METHOD__.__LINE__.'#'.$alpwchange_val.'# is null:'.is_null($alpwchange_val).'# is empty:'.empty($alpwchange_val).'# is set:'.isset($alpwchange_val));
+			}
+		}
 		static $passwordAgeBorder;
 		static $daysLeftUntilChangeReq;
-		// current style name for account last password change timestamp
-		$alpwchange='account_lastpwd_change';
 		// some debug output and develop options to move the horizons and warn levels around
 		//$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] =35;
 		//$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']=5;
@@ -84,28 +109,12 @@ class auth
 		//echo "User changed password at:".egw_time::to($GLOBALS['egw_info']['user'][$alpwchange]).'<br>';
 		//echo "User password is ".((egw_time::to('now','ts')-$GLOBALS['egw_info']['user'][$alpwchange])/86400)." days old<br>";
 		//echo "Users must change passwords every ".$GLOBALS['egw_info']['server']['change_pwd_every_x_days'].' days ('.($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).') seconds.<br>';
+		//error_log(__METHOD__.__LINE__.'#'.$alpwchange_val.'# is null:'.is_null($alpwchange_val).'# is empty:'.empty($alpwchange_val).'# is set:'.isset($alpwchange_val));
 		//echo egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
-
 		// if neither timestamp isset return true, nothing to do (exept this means the password is too old)
-		if (!isset($GLOBALS['egw_info']['user']['account_lastpasswd_change']) &&
-			!isset($GLOBALS['egw_info']['user'][$alpwchange]) &&
+		if (is_null($alpwchange_val) &&
 			empty($GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
 		) return true;
-		if ($GLOBALS['egw_info']['user']['account_lastpasswd_change'] && !$GLOBALS['egw_info']['user'][$alpwchange])
-		{
-			// use old style names, as the current one seems not to be set.
-			$alpwchange = 'account_lastpasswd_change';
-		}
-		// initalize statics - better readability of conditions
-		if (is_null($alpwchange_val))
-		{
-			$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
-			$backend = new $backend_class;
-			// this may change behavior, as it should detect forced PasswordChanges from your Authentication System too.
-			// on the other side, if your auth system does not require an forcedPasswordChange, you will not be asked.
-			if (method_exists($backend,'getLastPwdChange')) $alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
-			if (is_null($alpwchange_val) || $alpwchange_val === false) $alpwchange_val = $GLOBALS['egw_info']['user'][$alpwchange];
-		}
 		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
 		{
 			$passwordAgeBorder = (egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400));
@@ -113,7 +122,7 @@ class auth
 		if (is_null($daysLeftUntilChangeReq) && $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'])
 		{
 			// maxage - passwordage = days left until change is required
-			$daysLeftUntilChangeReq = ($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - ((egw_time::to('now','ts')-$alpwchange_val)/86400));
+			$daysLeftUntilChangeReq = ($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - ((egw_time::to('now','ts')-($alpwchange_val?$alpwchange_val:0))/86400));
 		}
 		//echo "Warn about the upcomming change ".$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'].' days before that time is reached<br>';
 		//$result = $GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - $daysLeftUntilChangeReq;
@@ -135,30 +144,33 @@ class auth
 		{
 			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences')) return true; // user has no rights to change password
 			if ($UserKnowsAboutPwdChange === true && !($passwordAgeBorder > $alpwchange_val || $alpwchange_val==0)) return true; // user has already been informed about the upcomming password expiration
-			if ($alpwchange_val == 0)
+			if (!is_null($alpwchange_val))
 			{
-				$message = lang('an admin required that you must change your password upon login.');
+				if ($alpwchange_val == 0)
+				{
+					$message = lang('an admin required that you must change your password upon login.');
+				}
+				elseif (($passwordAgeBorder < $alpwchange_val) ||
+						(
+						 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] &&
+						 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq &&
+						 $daysLeftUntilChangeReq > 0
+						)
+					   )
+				{
+					$UserKnowsAboutPwdChange = true;
+					$message = lang('your password is about to expire in %1 days, you may change your password now',round($daysLeftUntilChangeReq));
+				}
+				elseif ($passwordAgeBorder > $alpwchange_val && $alpwchange_val > 0)
+				{
+					error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
+						'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
+						'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
+					$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
+				}
+				if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
+				egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
 			}
-			elseif (($passwordAgeBorder < $alpwchange_val) ||
-					(
-					 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] &&
-					 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq &&
-					 $daysLeftUntilChangeReq > 0
-					)
-				   )
-			{
-				$UserKnowsAboutPwdChange = true;
-				$message = lang('your password is about to expire in %1 days, you may change your password now',round($daysLeftUntilChangeReq));
-			}
-			elseif ($passwordAgeBorder > $alpwchange_val && $alpwchange_val > 0)
-			{
-				error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
-					'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
-					'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
-				$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
-			}
-			if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
-			egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
 		}
 		return true;
 	}
