@@ -612,20 +612,20 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.node = $j(document.createElement("span"))
+		this.link = $j(document.createElement("span"))
 			.addClass("et2_link");
 
-		if(this.options.class) this.node.addClass(this.options.class);
-		this.setDOMNode(this.node[0]);
+		if(this.options.class) this.link.addClass(this.options.class);
+		this.setDOMNode(this.link[0]);
 	},
 	destroy: function() {
-		this.node.unbind();
-		this.node = null;
+		this.link.unbind();
+		this.link = null;
 	},
 
 	set_value: function(_value) {
 		if(!_value || !_value.title) {
-			this.node.text("").unbind();
+			this.link.text("").unbind();
 			return;
 		}
 		if(typeof _value != 'object' && !this.options.application)
@@ -645,7 +645,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			}
 		}
 
-		this.node.text(_value.title).unbind()
+		this.link.text(_value.title).unbind()
 			.click( function(){egw.open(_value.id, _value.app, "edit", _value.extra);});
 	},
 
@@ -677,7 +677,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
-		this.node = $j(_nodes[0]);
+		this.link = $j(_nodes[0]);
 		this.set_value(_values["value"]);
 	}
 
