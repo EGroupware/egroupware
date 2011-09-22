@@ -174,10 +174,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		if (typeof _values["onclick"] == "function")
 		{
 			this.options.onclick = _values["onclick"];
-			this.btn.bind("click.et2_baseWidget", this, function(e) {
-				return e.data.click.call(e.data,e);
-			});
 		}
+		this.btn.bind("click.et2_baseWidget", this, function(e) {
+			return e.data.click.call(e.data,e);
+		});
 
 	}
 });

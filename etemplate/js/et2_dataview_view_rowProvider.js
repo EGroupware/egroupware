@@ -323,6 +323,7 @@ var et2_dataview_rowProvider = Class.extend({
 
 		// Create the row widget and insert the given widgets into the row
 		var rowWidget = new et2_dataview_rowWidget(rowTemplate.mgrs, row[0]);
+		rowWidget._parent = _rootWidget;
 		rowWidget.createWidgets(_widgets);
 
 		// Get the set containing all variable attributes
@@ -500,12 +501,12 @@ var et2_dataview_rowWidget = et2_widget.extend(et2_IDOMNode, {
 
 var et2_dataview_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, {
 
-	init: function(_mgrs, _row) {
+	init: function(_root, _row) {
 		// Call the parent constructor with some dummy attributes
 		this._super(null, {"id": "", "type": "rowTemplateWidget"});
 
-		// Copy the managers - do not use "setArrayMgrs" here
-		this._mgrs = _mgrs;
+		this._root = _root;
+		this._mgrs = {};
 		this._row = _row;
 
 		// Clone the widgets inside the placeholders array
