@@ -3088,19 +3088,21 @@ class calendar_ical extends calendar_boupdate
 				if ($event['non_blocking']) continue;
 				if ($event['uid'] === $extra['X-CALENDARSERVER-MASK-UID']) continue;
 
+				$fbtype = $event['participants'][$user] == 'T' ? 'BUSY-TENTATIVE' : 'BUSY';
+
 				if ($utc)
 				{
 					$vfreebusy->setAttribute('FREEBUSY',array(array(
 						'start' => $event['start'],
 						'end' => $event['end'],
-					)));
+					)), array('FBTYPE' => $fbtype));
 				}
 				else
 				{
 					$vfreebusy->setAttribute('FREEBUSY',array(array(
 						'start' => date('Ymd\THis',$event['start']),
 						'end' => date('Ymd\THis',$event['end']),
-					)));
+					)), array('FBTYPE' => $fbtype));
 				}
 			}
 		}

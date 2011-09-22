@@ -123,6 +123,11 @@ class calendar_groupdav extends groupdav_handler
 			error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
 		}
 
+		if ($options['root']['name'] == 'free-busy-query')
+		{
+			return $this->free_busy_report($path, $options, $user);
+		}
+
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
@@ -710,7 +715,7 @@ class calendar_groupdav extends groupdav_handler
 		$organizer = $component->getAttribute('ORGANIZER');
 		$attendees = $component->getAttribute('ATTENDEE');
 		// X-CALENDARSERVER-MASK-UID specifies to exclude given event from busy-time
-		$mask_uid = $component->getAttribte('X-CALENDARSERVER-MASK-UID');
+		$mask_uid = $component->getAttribute('X-CALENDARSERVER-MASK-UID');
 
 		header('Content-type: text/xml; charset=UTF-8');
 
@@ -749,6 +754,35 @@ class calendar_groupdav extends groupdav_handler
 		echo $xml->outputMemory();
 
 		return true;
+	}
+
+	/**
+	 * Handle free-busy-query report
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function free_busy_report($path,$options,$user)
+	{
+		if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		{
+			return '403 Forbidden';
+		}
+		foreach($options['other'] as $filter)
+		{
+			if ($filter['name'] == 'time-range')
+			{
+				$start = $this->vCalendar->_parseDateTime($filter['attrs']['start']);
+				$end = $this->vCalendar->_parseDateTime($filter['attrs']['end']);
+			}
+		}
+		$handler = $this->_get_handler();
+		header('Content-Type: text/calendar');
+		echo $handler->freebusy($user, $end, true, 'utf-8', $start, 'REPLY', array());
+
+		common::egw_exit();	// otherwise we get a 207 multistatus, not 200 Ok
 	}
 
 	/**
@@ -982,7 +1016,10 @@ class calendar_groupdav extends groupdav_handler
 		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))),
+		))));
 		$props['supported-calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
