@@ -52,7 +52,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		if (!this.options.readonly)
 		{
 			this.btn = $j(document.createElement("button"))
-				.addClass("et2_button");
+				.addClass("et2_button et2_button_text");
 			this.setDOMNode(this.btn[0]);
 		}
 	},
@@ -75,6 +75,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			// No label if there's an image
 			this.options.label = "";
+			this.btn.removeClass("et2_button_text").addClass("et2_button_icon");
 		}
 	},
 

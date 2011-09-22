@@ -125,35 +125,39 @@ a.et2_url.url {
 }
 
 button.et2_button {
-	background-color: #E0E0E0;
-	background-image: url(gfx/gradient01.png);
-	background-position: center;
-	background-repeat: repeat-x;
-
-	border: 1px solid silver;
-	color: #101010;
 	cursor: pointer;
-	margin: 5px;
-	padding: 3px;
 	text-align: center;
 
 	font-size: 9pt;
 
 	text-shadow: 1px 1px #E0E0E0;
 }
+button.et2_button_text {
+	background-color: #E0E0E0;
+	background-image: url(gfx/gradient01.png);
+	background-position: center;
+	background-repeat: repeat-x;
 
-button.et2_button:hover {
+	margin: 5px;
+	padding: 3px;
+
+	border: 1px solid silver;
+	color: #101010;
+}
+button.et2_button_icon {
+	border: none;
+	background: transparent;
+}
+button.et2_button_text:hover {
 	color: #050505;
 	border: 1px solid gray;
 	background-color: #D0D0EE;
 }
-
-button.et2_button:active {
+button.et2_button_text:active {
 	background-image: url(gfx/gradient02.png);
 	background-color: #D0D0E0;
 }
-
-button.et2_button:focus {
+button.et2_button_text:focus {
 	border: 1px solid #2c3d6f;
 	color: #202d52;
 	outline: none;
