@@ -119,7 +119,7 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		var app = this.getTemplateApp();
 
 		// Handle app/image
-		if(_value.indexOf("/") > 0) {
+		if(_value.indexOf("/") > 0 && _value.indexOf("/") == _value.lastIndexOf("/")) {
 			var split = et2_csvSplit(_value, 2,"/");
 			var app = split[0];
 			_value = split[1];
