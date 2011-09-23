@@ -399,21 +399,21 @@ class defaultimap extends Net_IMAP
 
 		$retrieveDefault = false;
 		if($this->hasCapability('NAMESPACE')) {
-			$nameSpace = $this->getNamespace();
-			if( PEAR::isError($nameSpace)) {
-				if ($this->debug) error_log("emailadmin::defaultimap->getNameSpaces:".print_r($nameSpace,true));
+			$lNameSpace = $this->getNamespace();
+			if( PEAR::isError($lNameSpace)) {
+				if ($this->debug) error_log("emailadmin::defaultimap->getNameSpaces:".print_r($lNameSpace,true));
 				$retrieveDefault = true;
 			} else {
 				$result = array();
 
-				$result['personal']	= $nameSpace['personal'];
+				$result['personal']	= $lNameSpace['personal'];
 
-				if(is_array($nameSpace['others'])) {
-					$result['others']	= $nameSpace['others'];
+				if(is_array($lNameSpace['others'])) {
+					$result['others']	= $lNameSpace['others'];
 				}
 		
-				if(is_array($nameSpace['shared'])) {
-					$result['shared']	= $nameSpace['shared'];
+				if(is_array($lNameSpace['shared'])) {
+					$result['shared']	= $lNameSpace['shared'];
 				}
 			}
 		} 
