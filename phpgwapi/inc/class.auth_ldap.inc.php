@@ -245,6 +245,7 @@ class auth_ldap implements auth_backend
 		{
 			return false;
 		}
+		egw_cache::setSession('phpgwapi','auth_alpwchange_val',$entry['shadowlastchange']);
 		return true;
 	}
 
