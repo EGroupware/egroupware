@@ -43,6 +43,9 @@ class groupdav_principals extends groupdav_handler
 		'acl-principal-prop-set' => array(
 			// not sure why we return that report, if we not implement it ...
 		),
+		'principal-property-search' => array(
+			'method' => 'principal_property_search_report',
+		),
 		'addressbook-findshared' => array(
 			'ns' => groupdav::ADDRESSBOOKSERVER,
 			'method' => 'addressbook_findshared_report',
@@ -153,6 +156,135 @@ class groupdav_principals extends groupdav_handler
 			error_log(__METHOD__."() ".array2string($f));
 		}
 		return true;
+	}
+
+	/**
+	 * Handle principal-property-search report
+	 *
+	 * Current implementation runs a full infinity propfind and filters out not matching resources.
+	 *
+	 * Eg. from Lightning on the principal collection /principals/:
+	 * <D:principal-property-search xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
+	 *   <D:property-search>
+	 *     <D:prop>
+	 *       <C:calendar-home-set/>
+	 *     </D:prop>
+	 *     <D:match>/egroupware/groupdav.php</D:match>
+	 *   </D:property-search>
+	 *   <D:prop>
+	 *     <C:calendar-home-set/>
+	 *     <C:calendar-user-address-set/>
+	 *     <C:schedule-inbox-URL/>
+	 *     <C:schedule-outbox-URL/>
+	 *   </D:prop>
+	 * </D:principal-property-search>
+	 *
+	 * Hack for Lightning: it requests calendar-home-set matching our root (/egroupware/groupdav.php),
+	 * but interprets returning all principals (all have a matching calendar-home-set) as NOT supporting CalDAV scheduling
+	 * --> search only current user's principal, when Lightning searches for calendar-home-set
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function principal_property_search_report($path,&$options,&$files,$user)
+	{
+		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
+
+		// parse property-search prop(s) contained in $options['other']
+		foreach($options['other'] as $n => $prop)
+		{
+			switch($prop['name'])
+			{
+				case 'apply-to-principal-collection-set':	// optinal prop to apply search on principal-collection-set == '/principals/'
+					$path = '/principals/';
+					break;
+				case 'property-search':
+					$property_search = $n;	// should be 1
+					break;
+				case 'prop':
+					if (isset($property_search))
+					{
+						$search_props[$property_search] = array();
+					}
+					break;
+				case 'match':
+					if (isset($property_search) && is_array($search_props[$property_search]))
+					{
+						$search_props[$property_search]['match'] = $prop['data'];
+					}
+					break;
+				default:
+					if (isset($property_search) && $search_props[$property_search] === array())
+					{
+						$search_props[$property_search] = $prop;
+					}
+					break;
+			}
+		}
+		if (!isset($property_search) || !$search_props || !isset($search_props[$property_search]['match']))
+		{
+			error_log(__METHOD__."('$path',...) Could not parse options[other]=".array2string($options['other']));
+			return '400 Bad Request';
+		}
+		// make sure search property is included in toplevel props (can be missing and defaults to property-search/prop's)
+		foreach($search_props as $prop)
+		{
+			if (!$this->groupdav->prop_requested($prop['name'], $prop['xmlns']))
+			{
+				$options['props'][] = array(
+					'name' => $prop['name'],
+					'xmlns' => $prop['xmlns'],
+				);
+			}
+			// Hack for Lightning: it requests calendar-home-set matching our root (/egroupware/groupdav.php),
+			// but interprets returning all principals (all have a matching calendar-home-set) as NOT supporting CalDAV scheduling
+			// --> search only current user's principal
+			if ($prop['name'] == 'calendar-home-set' && stripos($_SERVER['HTTP_USER_AGENT'], 'Lightning') !== false)
+			{
+				$path = '/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
+			}
+		}
+		// run "regular" propfind
+		$options['other'] = array();
+		$options['root']['name'] = 'propfind';
+		if (($ret = $this->propfind($path, $options, $files, $user)) !== true)
+		{
+			return $ret;
+		}
+		// now filter out not matching "files"
+		foreach($files['files'] as $n => $resource)
+		{
+			if (count(explode('/', $resource['path'])) < 4)	// hack to only return principals, not the collections itself
+			{
+				unset($files['files'][$n]);
+				continue;
+			}
+			// search with all $search_props
+			foreach($search_props as $search_prop)
+			{
+				// search resource for $search_prop
+				foreach($resource['props'] as $prop) if ($prop['name'] === $search_prop['name']) break;
+				if ($prop['name'] === $search_prop['name'])	// search_prop NOT found
+				{
+					foreach((array)$prop['val'] as $value)
+					{
+						if (is_array($value)) $value = $value['val'];	// eg. href prop
+						if (stripos($value, $search_prop['match']) !== false)	// prop does match
+						{
+							//error_log("$resource[path]: $search_prop[name]=".array2string($prop['name'] !== $search_prop['name'] ? null : $prop['val'])." does match '$search_prop[match]'");
+							continue 2;	// search next search_prop
+						}
+					}
+				}
+				//error_log("$resource[path]: $search_prop[name]=".array2string($prop['name'] !== $search_prop['name'] ? null : $prop['val'])." does NOT match '$search_prop[match]' --> remove from result");
+				unset($files['files'][$n]);
+				continue 2;
+			}
+		}
+		return $ret;
 	}
 
 	/**
@@ -566,7 +698,7 @@ class groupdav_principals extends groupdav_handler
 
 		if ($options['depth'])
 		{
-			$options['depth'] = 0;
+			if (is_numeric($options['depth'])) --$options['depth'];
 			$files = array_merge($files,$this->propfind_users('','',$options));
 			$files = array_merge($files,$this->propfind_groups('','',$options));
 			//$files = array_merge($this->propfind_resources('','',$options));

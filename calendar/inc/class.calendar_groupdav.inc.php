@@ -713,7 +713,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 		//print_r($event);
 		$organizer = $component->getAttribute('ORGANIZER');
-		$attendees = $component->getAttribute('ATTENDEE');
+		$attendees = (array)$component->getAttribute('ATTENDEE');
 		// X-CALENDARSERVER-MASK-UID specifies to exclude given event from busy-time
 		$mask_uid = $component->getAttribute('X-CALENDARSERVER-MASK-UID');
 
@@ -735,11 +735,12 @@ class calendar_groupdav extends groupdav_handler
 			if (is_numeric($uid))
 			{
 				$xml->writeElementNs('C', 'request-status', null, '2.0;Success');
-				$xml->writeElementNs('C', 'calendar-data', null, str_replace("\r", '',	// CalDAV rfc example has no encoded "\r"
+				$xml->writeElementNs('C', 'calendar-data', null,
 					$handler->freebusy($uid, $event['end'], true, 'utf-8', $event['start'], 'REPLY', array(
 						'UID' => $event['uid'],
 						'ORGANIZER' => $organizer,
 						'ATTENDEE' => $attendee,
+					)+(empty($mask_uid) || !is_string($mask_uid) ? array() : array(
 						'X-CALENDARSERVER-MASK-UID' => $mask_uid,
 					))));
 			}

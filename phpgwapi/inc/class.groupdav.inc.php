@@ -295,13 +295,14 @@ class groupdav extends HTTP_WebDAV_Server
 				$dav[] = 'access-control';
 				$dav[] = 'addressbook';	// CardDAV uses "addressbook" NOT "addressbook-access"
 				break;
-			default:
+			default:	// used eg. for root, and needs all above settings, as some clients only use these!
 				if (!in_array(2,$dav)) $dav[] = 2;
 				$dav[] = 'access-control';
 				$dav[] = 'calendar-access';
+				$dav[] = 'calendar-auto-schedule';
+				$dav[] = 'calendar-proxy';
 				$dav[] = 'addressbook';
 		}
-		// not yet implemented: $dav[] = 'access-control';
 	}
 
 	/**
