@@ -87,6 +87,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
 
+		this.header = new et2_nextmatch_header_bar(this, this.div);
+
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.dynheight = new et2_dynheight(null, this.div, 150);
@@ -161,12 +163,16 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		var request = new egw_json_request(
 			"etemplate_widget_nextmatch::ajax_get_rows::etemplate", [
 					this.getInstanceManager().etemplate_exec_id,
-					_fetchList
+					_fetchList,
+					this.activeFilters
 				], this);
 
+		var nextmatch = this;
 		// Send the request
 		request.sendRequest(true, function(_data) {
 			_callback.call(_context, _data);
+			// Let anything else know
+			nextmatch.div.trigger({type:'nm_data', nm_data: _data, 'nextmatch': nextmatch});
 		}, null);
 	},
 
@@ -415,6 +421,133 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
+/**
+ * Standard nextmatch header bar, containing filters, search, record count, letter filters, etc.
+ */
+var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
+	attributes: {
+		"filter_label": {
+			"name": "Filter label",
+			"type": "string",
+			"description": "Label for filter",
+			"default": "",
+			"translate": true
+		},
+		"filter_help": {
+			"name": "Filter help",
+			"type": "string",
+			"description": "Help message for filter",
+			"default": "",
+			"translate": true
+		},
+		"filter": {
+			"name": "Filter value",
+			"type": "any",
+			"description": "Current value for filter",
+			"default": ""
+		},
+		"no_filter": {
+			"name": "No filter",
+			"type": "boolean",
+			"description": "Remove filter",
+			"default": false
+		}
+	},
+
+	init: function(nextmatch, nm_div) {
+		this.nextmatch = nextmatch;
+		
+		this.div = jQuery(document.createElement("div"))
+			.addClass("et2_nm_header_bar");
+		if(this.nextmatch) this._createHeader();
+	},
+
+	destroy: function() {
+		this.nextmatch = null;
+		this.div = null;
+	},
+
+	setNextmatch: function(nextmatch) {
+		if(this.div) this.div.remove();
+		this.nextmatch = nextmatch;
+		this._createHeader();
+	},
+
+	_createHeader: function() {
+
+		var self = this;
+		var nm_div = this.nextmatch.div;
+
+		this.div.prependTo(nm_div);
+
+		// Left
+
+		// Record count
+		this.count = jQuery(document.createElement("span"))
+			.addClass("header_count")
+			.appendTo(this.div);
+
+		this.count.append("? - ? ").append(egw.lang("of")).append(" ");
+		this.count_total = jQuery(document.createElement("span"))
+			.appendTo(this.count)
+			.text(this.nextmatch.options.settings.total + "");
+
+		// Set up so if row count changes, display is updated
+		nm_div.bind('nm_data', function(e) { // Have to bind to DOM node, not et2 widget
+			self.count_total.text(e.nm_data.total);
+		});
+
+		// Right
+
+		// Add category
+
+		// Filter 1
+
+		// Filter 2
+
+		// Search
+		
+		// Export
+
+		// Letter search
+		var current_letter = this.nextmatch.options.settings.searchletter ? 
+			this.nextmatch.options.settings.searchletter : 
+			(this.nextmatch.activeFilters ? this.nextmatch.activeFilters.searchletter : false);
+		if(this.nextmatch.options.settings.lettersearch || current_letter)
+		{
+			this.lettersearch = jQuery(document.createElement("table"))
+				.css("width", "100%")
+				.appendTo(this.div);
+			var tbody = jQuery(document.createElement("tbody")).appendTo(this.lettersearch);
+			var row = jQuery(document.createElement("tr")).appendTo(tbody);
+
+			for(var i = 65; i <= 90; i++) {
+				var button = jQuery(document.createElement("td"))
+					.addClass("lettersearch")
+					.appendTo(row)
+					.attr("id", String.fromCharCode(i))
+					.text(String.fromCharCode(i));
+				if(String.fromCharCode(i) == current_letter) button.addClass("lettersearch_active");
+			}
+			button = jQuery(document.createElement("td"))
+				.addClass("lettersearch")
+				.appendTo(row)
+				.attr("id", "")
+				.text(egw.lang("all"));
+			if(!current_letter) button.addClass("lettersearch_active");
+
+			this.lettersearch.click(this.nextmatch, function(event) {
+				// this is the lettersearch table
+				jQuery("td",this).removeClass("lettersearch_active");
+				jQuery(event.target).addClass("lettersearch_active");
+				var letter = event.target.id;
+				event.data.activeFilters.searchletter = (letter == "" ? false : letter);
+				event.data.applyFilters();
+			});
+		}
+	}
+});
+et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 
 /**
  * Classes for the nextmatch sortheaders etc.
