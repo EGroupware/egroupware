@@ -282,7 +282,10 @@ class auth_ldap implements auth_backend
 		$allValues = ldap_get_entries($ds, $sri);
 
 		$entry['userpassword'] = auth::encrypt_password($new_passwd);
-		if ($update_lastchange) $entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		if ($update_lastchange)
+		{
+			$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		}
 
 		$dn = $allValues[0]['dn'];
 
@@ -297,6 +300,7 @@ class auth_ldap implements auth_backend
 		if($old_passwd)	// if old password given (not called by admin) update the password in the session
 		{
 			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
+			egw_cache::setSession('phpgwapi','auth_alpwchange_val',$entry['shadowlastchange']);
 		}
 		return $entry['userpassword'];
 	}
