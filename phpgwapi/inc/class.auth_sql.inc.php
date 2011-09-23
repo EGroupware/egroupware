@@ -184,7 +184,7 @@ class auth_sql implements auth_backend
 		),__LINE__,__FILE__);
 
 		if(!$this->db->affected_rows()) return false;
-		egw_cache::setSession('phpgwapi','auth_alpwchange_val',$lastpwdchange);
+		if (!$admin) egw_cache::setSession('phpgwapi','auth_alpwchange_val',$lastpwdchange);
 		return true;
 	}
 
