@@ -164,8 +164,8 @@ class auth
 				elseif ($passwordAgeBorder > $alpwchange_val && $alpwchange_val > 0)
 				{
 					error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
-						'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
-						'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
+						'ts'=> $alpwchange_val,
+						'date'=>egw_time::to($alpwchange_val))));
 					$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
 				}
 				if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
