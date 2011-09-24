@@ -30,35 +30,46 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
 	    } else {
 		    $this->_command = $command;
 	    }
-	    
+
 	    $attrs = array();
-	    $strict_xml = strtolower($this->_contentFormat) == 'strictxml';
+	    $contentFormat = isset($this->_contentFormat) ? strtolower($this->_contentFormat) : '';
 	    $output->startElement($state->getURI(), $command, $attrs);
-	    
+
 	    $output->startElement($state->getURI(), 'CmdID', $attrs);
 	    $output->characters($currentCmdID);
 	    $output->endElement($state->getURI(), 'CmdID');
-	    
+	     
 	    if (isset($this->_content) && !$this->_moreData) {
-		    //$this->_content = trim($this->_content);
 		    $this->_contentSize = strlen($this->_content);
-		    if (strtolower($this->_contentFormat) == 'b64') {
-			    $this->_content = base64_encode($this->_content);
-		    }
 	    } else {
 		    $this->_contentSize = 0;
+	    }
+		switch ($contentFormat) {
+			case 'strictxml':
+				break;
+			case 'htmlenc':
+	    		if ($this->_contentSize) {
+	    			$this->_content = htmlspecialchars($this->_content, ENT_COMPAT, 'UTF-8');
+	    		}
+	    		break;
+	    	case 'b64':
+	    		if ($this->_contentSize) {
+	    			$this->_content = base64_encode($this->_content);
+	    		}
+	    	default:
+	    		$contentFormat = '';
 	    }
 	    
 	    // <command><Meta>
 	    if ($this->_contentSize || isset($this->_contentType) ||
-	    	(!$strict_xml && isset($this->_contentFormat))) {
+	    	(!$contentFormat && isset($this->_contentFormat))) {
 		    $output->startElement($state->getURI(), 'Meta', $attrs);
 		    if (isset($this->_contentType)) {
 			    $output->startElement($state->getURIMeta(), 'Type', $attrs);
 			    $output->characters($this->_contentType);
 			    $output->endElement($state->getURIMeta(), 'Type');
 		    }
-		    if (!$strict_xml && isset($this->_contentFormat)) {
+		    if (!$contentFormat && isset($this->_contentFormat)) {
 			    $output->startElement($state->getURIMeta(), 'Format', $attrs);
 			    $output->characters($this->_contentFormat);
 			    $output->endElement($state->getURIMeta(), 'Format');
@@ -97,6 +108,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
 		    
 		    // <command><Item><Data>
 		    if (isset($this->_content)) {
+		    	$this->_contentSize = strlen($this->_content);
 			    $output->startElement($state->getURI(), 'Data', $attrs);
 			    $currentSize = $output->getOutputSize();
 			    Horde::logMessage("SyncML: $command: current = $currentSize, max = $maxMsgSize", __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -124,8 +136,10 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
 						. $chars, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				    $this->_moreData = true;
 			    }
-			    if ($strict_xml) {
-				    $chars = '<![CDATA['. $chars. ']]>';
+			    switch ($contentFormat) {
+			    	case 'strictxml':
+				    	$chars = '<![CDATA['. $chars. ']]>';
+				    	break;
 			    }
 			    $output->characters($chars);
 			    $output->endElement($state->getURI(), 'Data');

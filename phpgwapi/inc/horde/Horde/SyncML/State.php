@@ -856,8 +856,8 @@ class Horde_SyncML_State {
 				}
 				break;
 			case 'patrick ohly':
-				// SyncEvolution requires well-formed XML, too
-				$res['ContentFormat'] = 'strictxml';
+				// SyncEvolution requires HTML Encoding
+				$res['ContentFormat'] = 'htmlenc';
 			default:
 				$res['mayFragment'] = 1;
 				break;
