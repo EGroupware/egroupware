@@ -43,9 +43,15 @@ class groupdav_principals extends groupdav_handler
 		'acl-principal-prop-set' => array(
 			// not sure why we return that report, if we not implement it ...
 		),
+		/*'principal-match' => array(
+			// an other report calendarserver announces
+		),*/
 		'principal-property-search' => array(
 			'method' => 'principal_property_search_report',
 		),
+		/*'expand-property' => array(
+			// an other report calendarserver announces
+		),*/
 		'addressbook-findshared' => array(
 			'ns' => groupdav::ADDRESSBOOKSERVER,
 			'method' => 'addressbook_findshared_report',
@@ -68,9 +74,9 @@ class groupdav_principals extends groupdav_handler
 		$supported = array();
 		foreach($reports as $name => $data)
 		{
-			$supported[] = HTTP_WebDAV_Server::mkprop('supported-report',array(
+			$supported[$name] = HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					!$data['ns'] ? HTTP_WebDAV_Server::mkprop($name) :
+					!$data['ns'] ? HTTP_WebDAV_Server::mkprop($name, '') :
 						HTTP_WebDAV_Server::mkprop($data['ns'], $name, '')))));
 		}
 		return $supported;
@@ -193,6 +199,9 @@ class groupdav_principals extends groupdav_handler
 	{
 		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
 
+		// cant find the test attribute to root principal-property-search element in WebDAV rfc, but iPhones use it ...
+		$anyof = !empty($options['root']['attrs']['test']) && $options['root']['attrs']['test'] == 'anyof';	// "allof" (default) or "anyof"
+
 		// parse property-search prop(s) contained in $options['other']
 		foreach($options['other'] as $n => $prop)
 		{
@@ -214,6 +223,8 @@ class groupdav_principals extends groupdav_handler
 					if (isset($property_search) && is_array($search_props[$property_search]))
 					{
 						$search_props[$property_search]['match'] = $prop['data'];
+						// optional match-type: "contains" (default), "starts-with"
+						$search_props[$property_search]['match-type'] = $prop['attrs']['match-type'];
 					}
 					break;
 				default:
@@ -250,6 +261,9 @@ class groupdav_principals extends groupdav_handler
 		// run "regular" propfind
 		$options['other'] = array();
 		$options['root']['name'] = 'propfind';
+		// search all principals, but not the proxys, rfc requires depth=0, but to search all principals
+		$options['depth'] = 5 - count(explode('/', $path)); // /principals/ --> 3
+
 		if (($ret = $this->propfind($path, $options, $files, $user)) !== true)
 		{
 			return $ret;
@@ -257,12 +271,13 @@ class groupdav_principals extends groupdav_handler
 		// now filter out not matching "files"
 		foreach($files['files'] as $n => $resource)
 		{
-			if (count(explode('/', $resource['path'])) < 4)	// hack to only return principals, not the collections itself
+			if (count(explode('/', $resource['path'])) < 5)	// hack to only return principals, not the collections itself
 			{
 				unset($files['files'][$n]);
 				continue;
 			}
-			// search with all $search_props
+			// match with $search_props
+			$matches = 0;
 			foreach($search_props as $search_prop)
 			{
 				// search resource for $search_prop
@@ -272,19 +287,44 @@ class groupdav_principals extends groupdav_handler
 					foreach((array)$prop['val'] as $value)
 					{
 						if (is_array($value)) $value = $value['val'];	// eg. href prop
-						if (stripos($value, $search_prop['match']) !== false)	// prop does match
+						if (self::match($value, $search_prop['match'], $search_prop['match-type']) !== false)	// prop does match
 						{
-							//error_log("$resource[path]: $search_prop[name]=".array2string($prop['name'] !== $search_prop['name'] ? null : $prop['val'])." does match '$search_prop[match]'");
-							continue 2;	// search next search_prop
+							++$matches;
+							//error_log("$matches: $resource[path]: $search_prop[name]=".array2string($prop['name'] !== $search_prop['name'] ? null : $prop['val'])." does match '$search_prop[match]'");
+							break;
 						}
 					}
 				}
-				//error_log("$resource[path]: $search_prop[name]=".array2string($prop['name'] !== $search_prop['name'] ? null : $prop['val'])." does NOT match '$search_prop[match]' --> remove from result");
-				unset($files['files'][$n]);
-				continue 2;
+				if ($anyof && $matches || $matches == count($search_props))
+				{
+					//error_log("$resource[path]: anyof=$anyof, $matches matches --> keep");
+					continue 2;	// enough matches --> keep
+				}
 			}
+			//error_log("$resource[path]: anyof=$anyof, $matches matches --> skip");
+			unset($files['files'][$n]);
 		}
 		return $ret;
+	}
+
+	/**
+	 * Match using $match_type
+	 *
+	 * @param string $value value to test
+	 * @param string $match criteria/sub-string
+	 * @param string $match_type='contains' or 'starts-with'
+	 */
+	private static function match($value, $match, $match_type='contains')
+	{
+		switch($match_type)
+		{
+			case 'starts-with':
+				return stripos($value, $match) === 0;
+
+			case 'contains':
+			default:
+				return stripos($value, $match) !== false;
+		}
 	}
 
 	/**
@@ -573,6 +613,10 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function add_collection($path, array $props = array())
 	{
+		if ($this->groupdav->prop_requested('supported-report-set'))
+		{
+			$props['supported-report-set'] = $this->supported_report_set($path);
+		}
 		return $this->groupdav->add_collection($path, $props);
 	}
 
