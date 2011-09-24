@@ -310,6 +310,8 @@ class groupdav_principals extends groupdav_handler
 	/**
 	 * Match using $match_type
 	 *
+	 * It's not defined in WebDAV ACL, but CardDAV:text-match seems similar
+	 *
 	 * @param string $value value to test
 	 * @param string $match criteria/sub-string
 	 * @param string $match_type='contains' or 'starts-with'
@@ -318,8 +320,14 @@ class groupdav_principals extends groupdav_handler
 	{
 		switch($match_type)
 		{
+			case 'equals':
+				return $value === $match;
+
 			case 'starts-with':
 				return stripos($value, $match) === 0;
+
+			case 'ends-with':
+				return stripos($value, $match) === strlen($value) - strlen($match);
 
 			case 'contains':
 			default:
