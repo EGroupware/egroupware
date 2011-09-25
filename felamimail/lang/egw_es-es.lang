@@ -52,6 +52,7 @@ cc	felamimail	es-es	CC
 change folder	felamimail	es-es	Cambiar carpeta
 check message against next rule also	felamimail	es-es	comprobar el mensaje también con la regla siguiente
 checkbox	felamimail	es-es	Casilla
+choose from vfs	felamimail	es-es	elegir desde VFS
 clear search	felamimail	es-es	Limpiar búsqueda
 click here to log back in.	felamimail	es-es	Pulse aquí para volver a iniciar sesión
 click here to return to %1	felamimail	es-es	Pulse aquí para volver a %1
@@ -98,6 +99,7 @@ delete folder	felamimail	es-es	Borrar carpeta
 delete script	felamimail	es-es	borrar script
 delete selected	felamimail	es-es	Borrar la selección
 delete selected messages	felamimail	es-es	Borrar mensajes seleccionados
+delete this folder irreversible?	felamimail	es-es	¿Borrar esta carpeta de forma irreversible?
 deleted	felamimail	es-es	Borrado
 deleted folder successfully!	felamimail	es-es	Carpeta borrada correctamente
 deleting messages	felamimail	es-es	borrando mensajes
@@ -210,7 +212,6 @@ forward to	felamimail	es-es	reenviar a
 forward to address	felamimail	es-es	reenviar a la dirección
 forwarding	felamimail	es-es	Reenviando
 found	felamimail	es-es	Encontrado
-fri	felamimail	es-es	Vie
 from	felamimail	es-es	De
 from(a->z)	felamimail	es-es	De (A-> Z)
 from(z->a)	felamimail	es-es	De (Z-> A)
@@ -292,7 +293,6 @@ max uploadsize	felamimail	es-es	tamaño máximo de subida
 message highlighting	felamimail	es-es	Resaltado del mensaje
 message list	felamimail	es-es	Lista de mensajes
 messages	felamimail	es-es	mensajes
-mon	felamimail	es-es	Lun
 move	felamimail	es-es	mover
 move folder	felamimail	es-es	mover carpeta
 move messages	felamimail	es-es	mover mensajes
@@ -357,6 +357,7 @@ please select the number of days to wait between responses	felamimail	es-es	Por 
 please supply the message to send with auto-responses	felamimail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
 port	felamimail	es-es	puerto
 posting	felamimail	es-es	enviar
+preview disabled for folder:	felamimail	es-es	Vista previa desactivada para la carpeta:
 previous	felamimail	es-es	Anterior
 previous message	felamimail	es-es	Mensaje anterior
 print it	felamimail	es-es	Imprimirlo
@@ -387,7 +388,6 @@ return to options page	felamimail	es-es	Volver a la página de opciones
 right	felamimail	es-es	Derecha
 row order style	felamimail	es-es	estilo de ordenar filas
 rule	felamimail	es-es	Regla
-sat	felamimail	es-es	Sab
 save	felamimail	es-es	Guardar
 save all	felamimail	es-es	Guardar todo
 save as draft	felamimail	es-es	guardar como borrador
@@ -399,6 +399,7 @@ script status	felamimail	es-es	estado del script
 search	felamimail	es-es	Buscar
 search for	felamimail	es-es	Buscar
 select	felamimail	es-es	Seleccionar
+select a message to switch on its preview (click on subject)	felamimail	es-es	Seleccione un mensaje para ir a su vista previa (pulse en el asunto)
 select all	felamimail	es-es	Seleccionar todo
 select emailprofile	felamimail	es-es	Seleccionar perfil de correo
 select folder	felamimail	es-es	seleccionar carpeta
@@ -434,14 +435,13 @@ submit	felamimail	es-es	Enviar
 subscribe	felamimail	es-es	Suscribirse
 subscribed	felamimail	es-es	Suscrito
 subscribed successfully!	felamimail	es-es	Suscripción correcta
-sun	felamimail	es-es	Dom
 system signature	felamimail	es-es	firma del sistema
 table of contents	felamimail	es-es	Tabla de contenidos
 template folder	felamimail	es-es	Carpeta de plantillas
 templates	felamimail	es-es	Plantillas
 text only	felamimail	es-es	Sólo texto
 text/plain	felamimail	es-es	text/plain
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	es-es	La acción se aplicará a todos los mensajes de la carpeta actual. ¿Desea proceder?
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	es-es	La acción se aplicará a todos los mensajes de la carpeta actual.\n¿Desea proceder?
 the connection to the imap server failed!!	felamimail	es-es	¡Ha fallado la conexión con el servidor IMAP!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	es-es	El servidor IMAP no parece que soporte el método de identificación seleccionado. Por favor, póngase en contacto con su administrador del sistema.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
@@ -450,7 +450,6 @@ then	felamimail	es-es	ENTONCES
 there is no imap server configured.	felamimail	es-es	No se ha configurado un servidor IMAP.
 this folder is empty	felamimail	es-es	ESTA CARPETA ESTA VACIA
 this php has no imap support compiled in!!	felamimail	es-es	¡Esta instalación de PHP no tiene soporte IMAP!
-thu	felamimail	es-es	Jue
 to	felamimail	es-es	Para
 to mail sent to	felamimail	es-es	al correo enviado a
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	es-es	Para usar una conexión TLS, debe estar ejecutando una versión de PHP 5.1.0 o superior.
@@ -459,7 +458,6 @@ translation server	felamimail	es-es	Servidor de traducciones
 trash	felamimail	es-es	Papelera
 trash fold	felamimail	es-es	Carpeta Papelera
 trash folder	felamimail	es-es	Carpeta Papelera
-tue	felamimail	es-es	Mar
 type	felamimail	es-es	tipo
 unexpected response from server to authenticate command.	felamimail	es-es	Respuesta inesperada del servidor al comando AUTHENTICATE.
 unexpected response from server to digest-md5 response.	felamimail	es-es	Respuesta inesperada del servidor a la respuesta Digest-MD5.
@@ -498,7 +496,6 @@ view message	felamimail	es-es	Ver mensaje
 viewing full header	felamimail	es-es	Viendo la cabecera completa
 viewing message	felamimail	es-es	Viendo mensaje
 viewing messages	felamimail	es-es	Viendo mensajes
-wed	felamimail	es-es	Mié
 when deleting messages	felamimail	es-es	Al borrar mensajes
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	felamimail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
