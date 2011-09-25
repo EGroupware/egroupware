@@ -277,32 +277,40 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function OPTIONS($path, &$dav, &$allow)
 	{
-		list(,$app) = explode('/',$path);
-		switch($app)
+		if (preg_match('#/(calendar|inbox|outbox)/#', $path))
 		{
-			case 'calendar':
-				if (!in_array(2,$dav)) $dav[] = 2;
-				$dav[] = 'access-control';
-				$dav[] = 'calendar-access';
-				$dav[] = 'calendar-auto-schedule';
-				$dav[] = 'calendar-proxy';
-				//$dav[] = 'calendar-availibility';
-				//$dav[] = 'calendarserver-private-events';
-				break;
-			case 'addressbook':
-				if (!in_array(2,$dav)) $dav[] = 2;
-				//$dav[] = 3;	// revision aka versioning support not implemented
-				$dav[] = 'access-control';
-				$dav[] = 'addressbook';	// CardDAV uses "addressbook" NOT "addressbook-access"
-				break;
-			default:	// used eg. for root, and needs all above settings, as some clients only use these!
-				if (!in_array(2,$dav)) $dav[] = 2;
-				$dav[] = 'access-control';
-				$dav[] = 'calendar-access';
-				$dav[] = 'calendar-auto-schedule';
-				$dav[] = 'calendar-proxy';
-				$dav[] = 'addressbook';
+			$app = 'calendar';
 		}
+		elseif (strpos($path, '/addressbook/') !== false)
+		{
+			$app = 'addressbook';
+		}
+		// CalDAV and CardDAV
+		if (!in_array(2,$dav)) $dav[] = 2;
+		$dav[] = 'access-control';
+
+		if ($app !== 'addressbook')	// CalDAV
+		{
+			$dav[] = 'calendar-access';
+			$dav[] = 'calendar-auto-schedule';
+			$dav[] = 'calendar-proxy';
+			// required by iOS iCal to use principal-property-search to autocomplete participants (and locations)
+			$dav[] = 'calendarserver-principal-property-search';
+			// other capabilities calendarserver announces
+			//$dav[] = 'calendar-schedule';
+			//$dav[] = 'calendar-availability';
+			//$dav[] = 'inbox-availability';
+			//$dav[] = 'calendarserver-private-events';
+			//$dav[] = 'calendarserver-private-comments';
+			//$dav[] = 'calendarserver-sharing';
+			//$dav[] = 'calendarserver-sharing-no-scheduling';
+
+		}
+		elseif ($app !== 'calendar')	// CardDAV
+		{
+			$dav[] = 'addressbook';	// CardDAV uses "addressbook" NOT "addressbook-access"
+		}
+		//error_log(__METHOD__."('$path') --> app='$app' --> DAV: ".implode(', ', $dav));
 	}
 
 	/**
@@ -502,7 +510,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$ret = false;
 		foreach($this->propfind_options['props'] as $prop)
 		{
-			if ($prop['name'] == $name && (is_null($ns) || $prop['ns'] == $ns))
+			if ($prop['name'] == $name && (is_null($ns) || $prop['xmlns'] == $ns))
 			{
 				$ret = true;
 				break;
@@ -857,6 +865,11 @@ class groupdav extends HTTP_WebDAV_Server
 			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
 		}
 		echo "</table>\n";
+
+		$dav = array(1);
+		$allow = false;
+		$this->OPTIONS($options['path'], $dav, $allow);
+		echo "<p>DAV: ".implode(', ', $dav)."</p>\n";
 
 		echo "</body>\n</html>\n";
 

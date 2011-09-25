@@ -44,4 +44,4 @@ $headertime = microtime(true);
 
 $groupdav = new groupdav();
 $groupdav->ServeRequest();
-//error_log(sprintf("GroupDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
+error_log(sprintf('GroupDAV %s request: status "%s", took %5.3f s'.($headertime?' (header include took %5.3f s)':''),$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$groupdav->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$groupdav->_http_status,microtime(true)-$starttime,$headertime-$starttime));

@@ -49,6 +49,9 @@ class groupdav_principals extends groupdav_handler
 		'principal-property-search' => array(
 			'method' => 'principal_property_search_report',
 		),
+		'principal-search-property-set' => array(
+			'method' => 'principal_search_property_set_report',
+		),
 		/*'expand-property' => array(
 			// an other report calendarserver announces
 		),*/
@@ -189,6 +192,43 @@ class groupdav_principals extends groupdav_handler
 	 * but interprets returning all principals (all have a matching calendar-home-set) as NOT supporting CalDAV scheduling
 	 * --> search only current user's principal, when Lightning searches for calendar-home-set
 	 *
+	 * Example from iOS iCal autocompleting invitees using calendarserver-principal-property-search WebDAV extension
+	 * <x0:principal-property-search xmlns:x2="urn:ietf:params:xml:ns:caldav" xmlns:x1="http://calendarserver.org/ns/" xmlns:x0="DAV:" test="anyof">
+	 *   <x0:property-search>
+	 *     <x0:prop>
+	 *       <x0:displayname/>
+	 *     </x0:prop>
+	 *     <x0:match match-type="contains">beck</x0:match>
+	 *   </x0:property-search>
+	 *   <x0:property-search>
+	 *     <x0:prop>
+	 *       <x1:email-address-set/>
+	 *     </x0:prop>
+	 *     <x0:match match-type="starts-with">beck</x0:match>
+	 *   </x0:property-search>
+	 *   <x0:property-search>
+	 *     <x0:prop>
+	 *       <x1:first-name/>
+	 *     </x0:prop>
+	 *     <x0:match match-type="starts-with">beck</x0:match>
+	 *   </x0:property-search>
+	 *   <x0:property-search>
+	 *     <x0:prop>
+	 *       <x1:last-name/>
+	 *     </x0:prop>
+	 *     <x0:match match-type="starts-with">beck</x0:match>
+	 *   </x0:property-search>
+	 *   <x0:prop>
+	 *     <x1:first-name/>
+	 *     <x1:last-name/>
+	 *     <x0:displayname/>
+	 *     <x1:email-address-set/>
+	 *     <x2:calendar-user-address-set/>
+	 *     <x1:record-type/>
+	 *     <x0:principal-URL/>
+	 *   </x0:prop>
+	 * </x0:principal-property-search>
+	 *
 	 * @param string $path
 	 * @param array $options
 	 * @param array &$files
@@ -223,7 +263,7 @@ class groupdav_principals extends groupdav_handler
 					if (isset($property_search) && is_array($search_props[$property_search]))
 					{
 						$search_props[$property_search]['match'] = $prop['data'];
-						// optional match-type: "contains" (default), "starts-with"
+						// optional match-type: "contains" (default), "starts-with", "ends-with", "equals"
 						$search_props[$property_search]['match-type'] = $prop['attrs']['match-type'];
 					}
 					break;
@@ -314,7 +354,7 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $value value to test
 	 * @param string $match criteria/sub-string
-	 * @param string $match_type='contains' or 'starts-with'
+	 * @param string $match_type='contains' 'starts-with', 'ends-with' or 'equals'
 	 */
 	private static function match($value, $match, $match_type='contains')
 	{
@@ -333,6 +373,109 @@ class groupdav_principals extends groupdav_handler
 			default:
 				return stripos($value, $match) !== false;
 		}
+	}
+
+	/**
+	 * Handle principal-search-property-set report
+	 *
+	 * REPORT /principals/ HTTP/1.1
+	 * <?xml version="1.0" encoding="utf-8" ?>
+	 * <x0:principal-search-property-set xmlns:x0="DAV:"/>
+	 *
+	 * <?xml version='1.0' encoding='UTF-8'?>
+	 * <principal-search-property-set xmlns='DAV:'>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <displayname/>
+	 *     </prop>
+	 *     <description xml:lang='en'>Display Name</description>
+	 *   </principal-search-property>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <email-address-set xmlns='http://calendarserver.org/ns/'/>
+	 *     </prop>
+	 *     <description xml:lang='en'>Email Addresses</description>
+	 *   </principal-search-property>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <last-name xmlns='http://calendarserver.org/ns/'/>
+	 *     </prop>
+	 *     <description xml:lang='en'>Last Name</description>
+	 *   </principal-search-property>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <calendar-user-type xmlns='urn:ietf:params:xml:ns:caldav'/>
+	 *     </prop>
+	 *     <description xml:lang='en'>Calendar User Type</description>
+	 *   </principal-search-property>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <first-name xmlns='http://calendarserver.org/ns/'/>
+	 *     </prop>
+	 *     <description xml:lang='en'>First Name</description>
+	 *   </principal-search-property>
+	 *   <principal-search-property>
+	 *     <prop>
+	 *       <calendar-user-address-set xmlns='urn:ietf:params:xml:ns:caldav'/>
+	 *     </prop>
+	 *     <description xml:lang='en'>Calendar User Address Set</description>
+	 *   </principal-search-property>
+	 * </principal-search-property-set>
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function principal_search_property_set_report($path,&$options,&$files,$user)
+	{
+		static $search_props = array(
+			// from iOS iCal
+			'displayname' => 'Display Name',
+			'email-address-set' => array('description' => 'Email Addresses', 'ns' => groupdav::CALENDARSERVER),
+			'last-name' => array('description' => 'Last Name', 'ns' => groupdav::CALENDARSERVER),
+			'calendar-user-type' => array('description' => 'Calendar User Type', 'ns' => groupdav::CALENDARSERVER),
+			'first-name' => array('description' => 'First Name', 'ns' => groupdav::CALENDARSERVER),
+			'calendar-user-address-set' => array('description' => 'Calendar User Address Set', 'ns' => groupdav::CALENDARSERVER),
+			// Lightning
+			'calendar-home-set' => array('description' => 'Calendar Home Set', 'ns' => groupdav::CALENDARSERVER),
+			// others, we generally support all properties of the principal
+		);
+		header('Content-type: text/xml; charset=UTF-8');
+
+		$xml = new XMLWriter;
+		$xml->openMemory();
+		$xml->setIndent(true);
+		$xml->startDocument('1.0', 'UTF-8');
+		$xml->startElementNs(null, 'principal-search-property-set', 'DAV:');
+
+		foreach($search_props as $name => $data)
+		{
+			$xml->startElement('principal-search-property');
+			$xml->startElement('prop');
+			if (is_array($data) && !empty($data['ns']))
+			{
+				$xml->writeElementNs(null, $name, $data['ns']);
+			}
+			else
+			{
+				$xml->writeElement($name);
+			}
+			$xml->endElement();	// prop
+
+			$xml->startElement('description');
+			$xml->writeAttribute('xml:lang', 'en');
+			$xml->text(is_array($data) ? $data['description'] : $data);
+			$xml->endElement();	// description
+
+			$xml->endElement();	// principal-search-property
+		}
+		$xml->endElement();	// principal-search-property-set
+		$xml->endDocument();
+		echo $xml->outputMemory();
+
+		common::egw_exit();
 	}
 
 	/**
