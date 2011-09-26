@@ -648,10 +648,9 @@
 				// ToDO set default
 
 			} else {
-				$this->t->set_var('selected_'.$vacation['days'], 'selected="selected"');
+				$this->t->set_var('selected_'.($vacation['days']?$vacation['days']:'7'), 'selected="selected"');
 			}
-			if (empty($preferences->preferences['prefpreventforwarding']) ||
-                    $preferences->preferences['prefpreventforwarding'] == 0 )
+			if (empty($preferences->preferences['prefpreventforwarding']) || $preferences->preferences['prefpreventforwarding'] == 0 )
 			{
 				$this->t->set_var('vacation_forwards','<input class="input_text" name="vacation_forwards" size="80" value="'.htmlspecialchars($vacation['forwards']).'" />');
 			}
