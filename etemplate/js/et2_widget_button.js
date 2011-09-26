@@ -158,7 +158,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value", "class", "image", "onclick");
+		_attrs.push("value", "class", "image" );
 	},
 
 	getDetachedNodes: function()
