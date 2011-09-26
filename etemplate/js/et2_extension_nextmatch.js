@@ -423,6 +423,9 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
 /**
  * Standard nextmatch header bar, containing filters, search, record count, letter filters, etc.
+ *
+ * Unable to use an existing template for this because parent (nm) doesn't, and template widget doesn't
+ * actually load templates from the server.
  */
 var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 	attributes: {
@@ -579,6 +582,9 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			"id": this.nextmatch.id + "_"+name, 
 		},this.nextmatch);
 		select.set_value(value);
+		var mgr = this.nextmatch.getArrayMgr("content").openPerspective(this.nextmatch, this.nextmatch.id);
+		var options = mgr.getEntry("options-" + name);
+		if(options) select.set_select_options(options);
 		return select;
 	}
 
