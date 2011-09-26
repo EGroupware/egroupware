@@ -306,7 +306,7 @@ class groupdav extends HTTP_WebDAV_Server
 			//$dav[] = 'calendarserver-sharing-no-scheduling';
 
 		}
-		elseif ($app !== 'calendar')	// CardDAV
+		if ($app !== 'calendar')	// CardDAV
 		{
 			$dav[] = 'addressbook';	// CardDAV uses "addressbook" NOT "addressbook-access"
 		}
