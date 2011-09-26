@@ -477,20 +477,21 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		var self = this;
 		var nm_div = this.nextmatch.div;
+		var settings = this.nextmatch.options.settings;
 
 		this.div.prependTo(nm_div);
 
 		// Left
 
 		// Record count
-		this.count = jQuery(document.createElement("span"))
+		this.count = jQuery(document.createElement("div"))
 			.addClass("header_count")
 			.appendTo(this.div);
 
 		this.count.append("? - ? ").append(egw.lang("of")).append(" ");
 		this.count_total = jQuery(document.createElement("span"))
 			.appendTo(this.count)
-			.text(this.nextmatch.options.settings.total + "");
+			.text(settings.total + "");
 
 		// Set up so if row count changes, display is updated
 		nm_div.bind('nm_data', function(e) { // Have to bind to DOM node, not et2 widget
@@ -499,13 +500,39 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		// Right
 
+		var filters = jQuery(document.createElement("div")).appendTo(this.div);
+		
+
 		// Add category
+		if(!settings.no_cat) {
+			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
+			filters.append(this.category.getDOMNode());
+		}
 
 		// Filter 1
+		if(!settings.no_filter) {
+			this.filter = this._build_select('filter', 'select', settings.filter, settings.filter_no_lang);
+			filters.append(this.filter.getDOMNode());
+		}
 
 		// Filter 2
+		if(!settings.no_filter2) {
+			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
+			filters.append(this.filter2.getDOMNode());
+		}
 
 		// Search
+		this.search = et2_createWidget("textbox", {}, this.nextmatch);
+		this.search.input.attr("type", "search");
+		filters.append(this.search.getDOMNode());
+		
+		jQuery(document.createElement("button"))
+			.appendTo(filters)
+			.text(">")
+			.click(this.nextmatch, function(event) {
+				event.data.activeFilters.search = self.search.getValue()
+				event.data.applyFilters();
+			});
 		
 		// Export
 
@@ -545,7 +572,16 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 				event.data.applyFilters();
 			});
 		}
+	},
+	
+	_build_select: function(name, type, value, lang) {
+		var select = et2_createWidget(type, {
+			"id": this.nextmatch.id + "_"+name, 
+		},this.nextmatch);
+		select.set_value(value);
+		return select;
 	}
+
 });
 et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 

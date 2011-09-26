@@ -515,14 +515,17 @@ var et2_widget = Class.extend({
 				console.log(this.id);
 			}
 
-			var data = this.getArrayMgr("modifications").getEntry(this.id);
-			if (data instanceof Object)
+			if(this.getArrayMgr("modifications"))
 			{
-				for (var key in data)
+				var data = this.getArrayMgr("modifications").getEntry(this.id);
+				if (data instanceof Object)
 				{
-					if (!(data[key] instanceof Object))
+					for (var key in data)
 					{
-						_attrs[key] = data[key];
+						if (!(data[key] instanceof Object))
+						{
+							_attrs[key] = data[key];
+						}
 					}
 				}
 			}

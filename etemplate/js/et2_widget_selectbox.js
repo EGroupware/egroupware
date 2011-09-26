@@ -77,7 +77,10 @@ var et2_selectbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		// Try to find the options inside the "sel-options" array
-		_attrs["select_options"] = this.getArrayMgr("sel_options").getEntry(this.id);
+		if(this.getArrayMgr("sel_options"))
+		{
+			_attrs["select_options"] = this.getArrayMgr("sel_options").getEntry(this.id);
+		}
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.
@@ -145,6 +148,15 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 	},
 
+	set_value: function(_value) {
+		jQuery("option",this.input).attr("selected", false);
+		this.value = null;
+		if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length > 0)
+		{
+			this.value = _value;
+		}
+	},
+
 	/**
 	 * The set_select_options function is added, as the select options have to be
 	 * added after the "option"-widgets were added to selectbox.
@@ -171,7 +183,7 @@ var et2_selectbox = et2_inputWidget.extend({
 	}
 });
 
-et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select-cat",
+et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
 	"select-account", "select-percent", 'select-priority', 'select-access',
 	'select-country', 'select-state', 'select-year', 'select-month',
 	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',

@@ -78,7 +78,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		this._super.apply(this, arguments);
 
 		// Check whether an validation error entry exists
-		if (this.id)
+		if (this.id && this.getArrayMgr("validation_errors"))
 		{
 			var val = this.getArrayMgr("validation_errors").getEntry(this.id);
 			if (val)
