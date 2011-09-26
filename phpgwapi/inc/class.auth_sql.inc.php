@@ -171,14 +171,15 @@ class auth_sql implements auth_backend
 		{
 			return false;
 		}
+		$lastpwdchange = (is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange);
 		$this->db->update($this->table,array(
-			'account_lastpwd_change' => (is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange),
+			'account_lastpwd_change' => $lastpwdchange,
 		),array(
 			'account_id' => $account_id,
 		),__LINE__,__FILE__);
 
 		if(!$this->db->affected_rows()) return false;
-
+		if (!$admin) egw_cache::setSession('phpgwapi','auth_alpwchange_val',$lastpwdchange);
 		return true;
 	}
 
@@ -246,6 +247,7 @@ class auth_sql implements auth_backend
 
 		if(!$admin)
 		{
+			egw_cache::setSession('phpgwapi','auth_alpwchange_val',$update['account_lastpwd_change']);
 			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 		}
 		return $encrypted_passwd;
