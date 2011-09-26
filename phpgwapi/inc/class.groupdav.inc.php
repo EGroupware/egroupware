@@ -131,9 +131,12 @@ class groupdav extends HTTP_WebDAV_Server
 		// identify clients, which do NOT support path AND full url in <D:href> of PROPFIND request
 		switch(groupdav_handler::get_agent())
 		{
+			case 'akonadi':
+				$this->cnrnd = true; // Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
+				break;
 			case 'kde':	// KAddressbook (at least in 3.5 can NOT subscribe / does NOT find addressbook)
 				$this->client_require_href_as_url = true;
-				$this->cnrnd = true; // Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
+				$this->cnrnd = false;	// KDE before Akonadi seems NOT to work with cnrnd (redundant namespaces)
 				break;
 			case 'cfnetwork':	// Apple addressbook app
 			case 'dataaccess':	// iPhone addressbook

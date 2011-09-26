@@ -352,6 +352,7 @@ abstract class groupdav_handler
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
 				'webkit'			=> 'webkit',	// Webkit Browser (also reports KHTML!)
+				'akonadi'			=> 'akonadi',	// new KDE PIM framework (also reports KHTML!)
 				'khtml'             => 'kde',		// KDE clients
 				'neon'              => 'neon',
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
@@ -376,6 +377,15 @@ abstract class groupdav_handler
 						if (preg_match('/address%20book\/([0-9.]+)/', $user_agent, $matches))
 						{
 							if ((int)$matches[1] < 868) $agent .= '_old';
+						}
+						break;
+					case 'kde':
+						// Akonadi (new KDE Pim framework) unfortunately has same user-agent as old kde
+						// we can only assume KDE 4.7+ uses Akonadi native resource, while below this was not available
+						// Unfortunately the old pre-Akonadi GroupDAV resource can still be used, but we have no way of detecting it
+						if (preg_match('/KHTML\/([0-9.]+)/', $_SERVER['HTTP_USER_AGENT'], $matches) && (float)$matches[1] >= 4.7)
+						{
+							$agent = 'akonadi';
 						}
 						break;
 				}
