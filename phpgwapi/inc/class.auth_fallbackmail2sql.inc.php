@@ -52,12 +52,12 @@ class auth_fallbackmail2sql implements auth_backend
 	{
 		if ($this->primary_backend->authenticate($username, $passwd, $passwd_type))
 		{
-			egw_cache::setSession(__CLASS__,'backend_used','primary');
+			egw_cache::setInstance(__CLASS__,'backend_used-'.$username,'primary');
 			return true;
 		}
 		if ($this->fallback_backend->authenticate($username,$passwd, $passwd_type))
 		{
-			egw_cache::setSession(__CLASS__,'backend_used','fallback');
+			egw_cache::setInstance(__CLASS__,'backend_used-'.$username,'fallback');
 			return true;
 		}
 		return false;
@@ -76,10 +76,62 @@ class auth_fallbackmail2sql implements auth_backend
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if (egw_cache::getSession(__CLASS__,'backend_used') == 'primary')
+		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		{
+			$admin = False;
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		else
+		{
+			$username = $GLOBALS['egw']->accounts->id2name($account_id);
+		}
+		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
 			return false;
 		}
 		return $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+	}
+
+	/**
+	 * fetch the last pwd change for the user
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false or account_lastpwd_change
+	 */
+	function getLastPwdChange($username)
+	{
+		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
+		{
+			return false;
+		}
+		return $this->fallback_backend->getLastPwdChange($username);
+	}
+
+	/**
+	 * changes account_lastpwd_change in sql datababse
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
+	 */
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	{
+		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		{
+			$admin = False;
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		else
+		{
+			$username = $GLOBALS['egw']->accounts->id2name($account_id);
+		}
+		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
+		{
+			return false;
+		}
+		return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
 	}
 }

@@ -245,6 +245,8 @@ class auth_ldap implements auth_backend
 		{
 			return false;
 		}
+		// using time() is sufficient to represent the current time, we do not need the timestamp written to the storage
+		if (!$admin) egw_cache::setSession('phpgwapi','auth_alpwchange_val',(is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange));
 		return true;
 	}
 
@@ -281,7 +283,10 @@ class auth_ldap implements auth_backend
 		$allValues = ldap_get_entries($ds, $sri);
 
 		$entry['userpassword'] = auth::encrypt_password($new_passwd);
-		if ($update_lastchange) $entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		if ($update_lastchange)
+		{
+			$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		}
 
 		$dn = $allValues[0]['dn'];
 
@@ -296,6 +301,8 @@ class auth_ldap implements auth_backend
 		if($old_passwd)	// if old password given (not called by admin) update the password in the session
 		{
 			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
+			// using time() is sufficient to represent the current time, we do not need the timestamp written to the storage
+			egw_cache::setSession('phpgwapi','auth_alpwchange_val',time());
 		}
 		return $entry['userpassword'];
 	}
