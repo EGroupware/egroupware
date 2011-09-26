@@ -105,7 +105,8 @@ class auth_fallback implements auth_backend
 		{
 			return false;
 		}
-		return $this->fallback_backend->getLastPwdChange($username);
+		if (method_exists($this->fallback_backend,'getLastPwdChange')) return $this->fallback_backend->getLastPwdChange($username);
+		return false;
 	}
 
 	/**
@@ -132,6 +133,7 @@ class auth_fallback implements auth_backend
 		{
 			return false;
 		}
-		return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		if (method_exists($this->fallback_backend,'setLastPwdChange')) return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		return false;
 	}
 }
