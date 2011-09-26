@@ -49,7 +49,7 @@ class auth
 
 		$this->backend = new $backend_class;
 
-		if (!is_a($this->backend,'auth_backend'))
+		if (!($this->backend instanceof auth_backend))
 		{
 			throw new egw_exception_assertion_failed("Auth backend class $backend_class is NO auth_backend!");
 		}
