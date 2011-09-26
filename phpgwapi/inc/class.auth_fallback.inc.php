@@ -103,7 +103,7 @@ class auth_fallback implements auth_backend
 	{
 		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
-			return false;
+			if (method_exists($this->primary_backend,'getLastPwdChange')) return $this->primary_backend->getLastPwdChange($username);
 		}
 		if (method_exists($this->fallback_backend,'getLastPwdChange')) return $this->fallback_backend->getLastPwdChange($username);
 		return false;
@@ -131,7 +131,7 @@ class auth_fallback implements auth_backend
 		}
 		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
-			return false;
+			if (method_exists($this->primary_backend,'setLastPwdChange')) return $this->primary_backend->setLastPwdChange($username);
 		}
 		if (method_exists($this->fallback_backend,'setLastPwdChange')) return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
 		return false;
