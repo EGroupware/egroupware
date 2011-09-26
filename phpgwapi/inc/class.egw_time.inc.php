@@ -149,7 +149,7 @@ class egw_time extends DateTime
 				break;
 
 			case 'object':
-				if (is_a($time,'DateTime'))
+				if ($time instanceof DateTime)
 				{
 					parent::__construct($time->format('Y-m-d H:i:s'),$time->getTimezone());
 					$this->setTimezone($tz);
@@ -269,7 +269,8 @@ class egw_time extends DateTime
 	 */
 	public static function server2user($time,$type=null)
 	{
-		if (!is_a($time,$typeof='egw_time'))
+		$typeof='egw_time';
+		if (!($time instanceof egw_time))
 		{
 			try
 			{
@@ -297,7 +298,8 @@ class egw_time extends DateTime
 	 */
 	public static function user2server($time,$type=null)
 	{
-		if (!is_a($time,$typeof='egw_time'))
+		$typeof='egw_time';
+		if (!($time instanceof egw_time))
 		{
 			try
 			{
@@ -327,7 +329,7 @@ class egw_time extends DateTime
 	 */
 	public static function to($time='now',$type='')
 	{
-		if (!is_a($time,'egw_time'))
+		if (!($time instanceof egw_time))
 		{
 			try
 			{
@@ -390,7 +392,7 @@ class egw_time extends DateTime
 	 */
 	public static function tz_offset_s($time='now')
 	{
-		if (!is_a($time,'DateTime')) $time = new egw_time($time);
+		if (!($time instanceof DateTime)) $time = new egw_time($time);
 
 		return egw_time::$user_timezone->getOffset($time) - egw_time::$server_timezone->getOffset($time);
 	}
