@@ -312,6 +312,7 @@ class preferences
 					$this->forced[$app] = $value;
 					break;
 				case self::DEFAULT_ID:
+					//if ($app=='common') error_log(__METHOD__.__LINE__.array2string($value));
 					$this->default[$app] = $value;
 					break;
 				case $this->account_id:	// user
@@ -354,6 +355,7 @@ class preferences
 			{
 				if (!isset($this->data[$app][$var]) || $this->data[$app][$var] === '')
 				{
+					//if ($var=='remote_application_url') error_log(__METHOD__.__LINE__.' default for '.$var.' with '.$value);
 					$this->data[$app][$var] = $value;
 				}
 			}
@@ -384,6 +386,10 @@ class preferences
 			echo 'group<pre>';    print_r($this->group); echo "</pre>\n";
 			echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n";
 		}
+//error_log(__METHOD__.__LINE__.'->user: remote_application_url:'.array2string($this->user['common']['remote_application_url']));
+//error_log(__METHOD__.__LINE__.'->default: remote_application_url:'.array2string($this->default['common']['remote_application_url']));
+//error_log(__METHOD__.__LINE__.'->forced: remote_application_url:'.array2string($this->forced['common']['remote_application_url']));
+//error_log(__METHOD__.__LINE__.'->effective: remote_application_url:'.array2string($this->data['common']['remote_application_url']));
 		$this->check_set_tz_offset();
 
 		return $this->data;
@@ -405,7 +411,7 @@ class preferences
 			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset={$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']}</p>\n";
 
 			// ToDo: get rid of that
-			if (isset($GLOBALS['egw']) && is_a($GLOBALS['egw'],'egw'))
+			if (isset($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof egw))
 			{
 				$GLOBALS['egw']->unset_datetime();	// to force an update
 			}

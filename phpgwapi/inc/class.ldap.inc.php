@@ -46,7 +46,7 @@ class ldap
 	 */
 	function getLDAPServerInfo($_host)
 	{
-		if(is_a($this->ldapServerInfo[$_host], 'ldapserverinfo'))
+		if($this->ldapServerInfo[$_host] instanceof ldapserverinfo)
 		{
 			return $this->ldapServerInfo[$_host];
 		}
