@@ -708,7 +708,7 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address',$account['account_email']))),
 			'last-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'last-name',$account['account_lastname']),
 			'first-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','user'),
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','users'),
 			// WebDAV ACL and CalDAV proxy
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				'calendar', $account['account_id']),	// add proxy-rights
