@@ -85,15 +85,21 @@ var et2_textbox = et2_inputWidget.extend({
 			this.input = $j(document.createElement("input"));
 		}
 
-		if(this.size) {
-			this.set_size(this.size);
+		if(this.options.size) {
+			this.set_size(this.options.size);
 		}
-		if(this.blur) {
-			this.set_blur(this.blur);
+		if(this.options.blur) {
+			this.set_blur(this.options.blur);
 		}
 		this.input.addClass("et2_textbox");
 
 		this.setDOMNode(this.input[0]);
+	},
+
+	getValue: function()
+	{
+		if(this.options.blur && this.input.val() == this.options.blur) return "";
+		return this._super.apply(this, arguments);
 	},
 
 

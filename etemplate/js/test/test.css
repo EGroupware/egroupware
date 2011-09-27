@@ -512,6 +512,15 @@ label input, label span, label div, label select, label textarea {
 /*	background-color: silver;*/
 }
 
+.nextmatch_header > .header_count {
+	text-align: center
+}
+.nextmatch_header  .et2_button_icon {
+	vertical-align: middle;
+}
+.nextmatch_header select {
+	position: relative;
+}
 .nextmatch_sortheader {
 	color: #003075;
 	cursor: pointer;

@@ -509,6 +509,9 @@ var et2_dataview_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, {
 		this._mgrs = {};
 		this._row = _row;
 
+		// Set parent to root widget, so sub-widget calls still work
+		this._parent = _root;
+
 		// Clone the widgets inside the placeholders array
 		this._widgets = [];
 	},

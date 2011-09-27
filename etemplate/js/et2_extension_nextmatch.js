@@ -461,7 +461,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		this.nextmatch = nextmatch;
 		
 		this.div = jQuery(document.createElement("div"))
-			.addClass("et2_nm_header_bar");
+			.addClass("nextmatch_header");
 		if(this.nextmatch) this._createHeader();
 	},
 
@@ -508,6 +508,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		// Add category
 		if(!settings.no_cat) {
+			settings.cat_id_label = egw.lang("Category");
 			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
 			filters.append(this.category.getDOMNode());
 		}
@@ -525,12 +526,15 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		}
 
 		// Search
-		this.search = et2_createWidget("textbox", {}, this.nextmatch);
-		this.search.input.attr("type", "search");
+		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this.nextmatch);
+		this.search.input.attr("type", "search")
+			.css("left", "40%").css("position", "relative");
+		this.search.input.val(settings.search);
 		filters.append(this.search.getDOMNode());
 		
 		jQuery(document.createElement("button"))
 			.appendTo(filters)
+			.css("left", "40%").css("position", "relative")
 			.text(">")
 			.click(this.nextmatch, function(event) {
 				event.data.activeFilters.search = self.search.getValue()
@@ -538,6 +542,23 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			});
 		
 		// Export
+		if(!settings.no_csv_export)
+		{
+			var definition = settings.csv_fields;
+			if(settings.csv_fields === true)
+			{
+				definition = egw.preference('nextmatch-export-definition', this.nextmatch.getTemplateApp());
+			}
+			var button = et2_createWidget("buttononly", {"label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
+			jQuery(button.getDOMNode()).appendTo(filters).css("float", "right")
+				.click(this.nextmatch, function(event) {
+					egw_openWindowCentered2( egw.link('/index.php', {
+						'menuaction':	'importexport.importexport_export_ui.export_dialog',
+						'appname':	event.data.getTemplateApp(),
+						'definition':	definition
+					}), '_blank', 850, 440, 'yes');
+				});
+		}
 
 		// Letter search
 		var current_letter = this.nextmatch.options.settings.searchletter ? 
@@ -577,14 +598,46 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		}
 	},
 	
+	/**
+	 * Build the selectbox filters in the header bar
+	 * Sets value, options, labels, and change handlers
+	 */
 	_build_select: function(name, type, value, lang) {
 		var select = et2_createWidget(type, {
 			"id": this.nextmatch.id + "_"+name, 
+			"label": this.nextmatch.options.settings[name+"_label"]
 		},this.nextmatch);
 		select.set_value(value);
 		var mgr = this.nextmatch.getArrayMgr("content").openPerspective(this.nextmatch, this.nextmatch.id);
 		var options = mgr.getEntry("options-" + name);
 		if(options) select.set_select_options(options);
+		select.set_value(this.nextmatch.options.settings[name]);
+		var input = select.input;
+		if(this.nextmatch.options.settings[name+"_onchange"])
+		{
+			var onchange = this.nextmatch.options.settings[name+"_onchange"];
+			// onchange needs to get current values
+			if(typeof onchange == "string") {
+				// Don't change original so we can do this again
+				onchange = et2_js_pseudo_funcs(onchange, this.nextmatch.id);
+				if(onchange.indexOf("$") >= 0 || onchange.indexOf("@") >= 0) {
+					var mgr = this.nextmatch.getArrayMgr("content");
+					if(mgr) onchange = mgr.expandName(onchange);
+				}
+				onchange = new Function(onchange);
+			}
+			input.change(this.nextmatch, function(event) {
+				onchange(event);
+			});
+		}
+		else
+		{
+			input.change(this.nextmatch, function(event) {
+				event.data.activeFilters[name] = input.val()
+				event.data.applyFilters();
+			});
+		}
+			
 		return select;
 	}
 
