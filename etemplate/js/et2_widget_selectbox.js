@@ -150,10 +150,11 @@ var et2_selectbox = et2_inputWidget.extend({
 
 	set_value: function(_value) {
 		jQuery("option",this.input).attr("selected", false);
-		this.value = null;
-		if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length > 0)
+		this.value = _value;
+		if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
 		{
-			this.value = _value;
+			et2_debug("warning", "Tried to set value that isn't an option", this, _value);
+//console.trace();
 		}
 	},
 
@@ -180,6 +181,8 @@ var et2_selectbox = et2_inputWidget.extend({
 				this._appendOptionElement(key, _options[key]);
 			}
 		}
+		// Sometimes value gets set before options
+		if(this.value) this.set_value(this.value);
 	}
 });
 

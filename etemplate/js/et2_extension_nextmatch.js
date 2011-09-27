@@ -749,6 +749,12 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 	 */
 	setNextmatch: function(_nextmatch) {
 		this.nextmatch = _nextmatch;
+
+		// Set current filter value from nextmatch settings
+		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
+		{
+			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+		}
 	}
 
 });
