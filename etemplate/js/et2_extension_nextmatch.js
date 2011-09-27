@@ -491,7 +491,8 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			.addClass("header_count")
 			.appendTo(this.div);
 
-		this.count.append("? - ? ").append(egw.lang("of")).append(" ");
+		// Need to figure out how to update this as grid scrolls
+		//this.count.append("? - ? ").append(egw.lang("of")).append(" ");
 		this.count_total = jQuery(document.createElement("span"))
 			.appendTo(this.count)
 			.text(settings.total + "");
@@ -597,7 +598,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			});
 		}
 	},
-	
+
 	/**
 	 * Build the selectbox filters in the header bar
 	 * Sets value, options, labels, and change handlers
@@ -727,6 +728,20 @@ et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
 
 var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
+
+	/**
+	 * Override to add change handler
+	 */
+	createInputWidget: function() {
+		this._super.apply(this, arguments);
+
+		this.input.change(this, function(event) {
+			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
+				event.data.nextmatch.activeFilters.col_filter = {};
+			event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+			event.data.nextmatch.applyFilters();
+		});
+	},
 
 	/**
 	 * Set nextmatch is the function which has to be implemented for the

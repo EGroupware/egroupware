@@ -117,16 +117,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 *
 	 * @param string $exec_id identifys the etemplate request
 	 * @param array $fetchList array of array with values for keys "startIdx" and "count"
+	 * @param array $filters Search and filter parameters, passed to data source
 	 * @param string full id of widget incl. all namespaces
 	 * @return array with values for keys 'total', 'rows', 'readonlys'
 	 */
 	static public function ajax_get_rows($exec_id, $fetchList, $filters = array(), $form_name='nm')
 	{
-		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($fetchList).",'$form_name')");
+		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($fetchList).','.array2string($filters).",'$form_name')");
 
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
-		$value += $filters;
+		$value = array_merge($value, $filters);
 		$result = array('rows' => array());
 
 		foreach ($fetchList as $entry)
