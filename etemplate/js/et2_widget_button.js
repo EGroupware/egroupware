@@ -158,7 +158,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value", "class", "image" );
+		_attrs.push("label", "value", "class", "image", "onclick" );
 	},
 
 	getDetachedNodes: function()
@@ -177,6 +177,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.set_id(_values["id"]);
 		}
+		if (typeof _values["label"] != "undefined")
+		{
+			this.set_label(_values["label"]);
+		}
 		if (typeof _values["value"] != "undefined")
 		{
 		}
@@ -186,11 +190,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			this.set_class(_values["class"]);
 		}
 
-		if (typeof _values["onclick"] == "string")
-		{
-			_values["onclick"] = new Function(_values["onclick"]);
-		}
-		if (typeof _values["onclick"] == "function")
+		if (typeof _values["onclick"] != "undefined")
 		{
 			this.options.onclick = _values["onclick"];
 		}

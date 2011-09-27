@@ -46,8 +46,14 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 			"description": "widthxheight, if popup should be used, eg. 640x480"
 		},
 		"imagemap":{
+			// TODO: Do something with this
+			"name": "Image map",
+			"description": "Currently not implemented"
 		},
 		"label": {
+			"name": "Label",
+			"type": "string",
+			"description": "Label for image"
 		}
 	},
 	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],

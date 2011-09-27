@@ -128,7 +128,10 @@ var et2_widget = Class.extend({
 		 * function and passed as second parameter of the widget constructor
 		 */
 		"type": {
-			"ignore": true
+			"name": "Widget type",
+			"type": "string",
+			"ignore": true,
+			"description": "What kind of widget this is"
 		},
 
 		/**

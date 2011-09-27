@@ -378,6 +378,7 @@ function et2_validateAttrib(_id, _attrib)
 		_attrib["name"] = _id;
 		et2_debug("log", "Human name ('name'-Field) for attribute '" +
 			_id + "' has not been supplied, set to '" + _id + "'");
+console.debug(_attrib);
 	}
 
 	if (typeof _attrib["description"] == "undefined")

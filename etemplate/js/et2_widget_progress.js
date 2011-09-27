@@ -40,6 +40,16 @@ var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM,
 			"description": "widthxheight, if popup should be used, eg. 640x480"
 		},
 		"label": {
+			"name": "Label",
+			"default": "",
+			"type": "string",
+			"description": "The label is displayed as the title.  The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+			"translate": true
+		},
+		"onchange": {
+			"name": "onchange",
+			"type": "js",
+			"description": "JS code which is executed when the value changes."
 		}
 	},
 	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],

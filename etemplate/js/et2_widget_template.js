@@ -29,8 +29,15 @@ var et2_template = et2_DOMWidget.extend({
 
 	attributes: {
 		"template": {
+			"name": "Template",
+			"type": "string",
+			"description": "Name / ID of template"
 		},
 		"group": {
+			// TODO: Not implemented
+			"name": "Group",
+			"description":"Not implemented",
+			"default": 0
 		},
 		"version": {
 			"name": "Version",
