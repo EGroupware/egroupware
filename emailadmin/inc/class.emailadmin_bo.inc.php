@@ -300,7 +300,6 @@ class emailadmin_bo extends so_sql
 			(!isset($this->data['ea_user']) || empty($this->data['ea_user']) ) &&
 			(isset($this->data['ea_active']) && !empty($this->data['ea_active']) && $this->data['ea_active'] ))
 		{
-			//error_log(__METHOD__.__LINE__.' Content to save:'.array2string($this->data));
 			$new_config = array();
 			foreach(array(
 					'ea_imap_server'    => 'mail_server',
@@ -336,6 +335,8 @@ class emailadmin_bo extends so_sql
 				//echo "<p>eGW configuration update: ".print_r($new_config,true)."</p>\n";
 			}
 		}
+		//error_log(__METHOD__.__LINE__.' Content to save:'.array2string($this->data));
+		if (is_numeric($this->data['ea_profile_id'])) self::unsetCachedObjects($this->data['ea_profile_id']*-1);
 		if (!($result = parent::save()))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $this->data['ea_profile_id'], $old === false ? 'add' : 'modify', time());
@@ -568,6 +569,45 @@ class emailadmin_bo extends so_sql
 			if ($data) $retData += $data;
 		}
 		return $retData;
+	}
+
+	/**
+	 * unset certain CachedObjects for the given profile id, unsets the profile for default ID=0 as well
+	 *
+	 * 1) icServerIMAP_connectionError
+	 * 2) icServerSIEVE_connectionError
+	 * 3) defaultimap_nameSpace
+	 * 4) INSTANCE OF FELAMIMAIL_BO
+	 *
+	 * @param int $_profileID
+	 * @return void
+	 */
+	static function unsetCachedObjects($_profileID)
+	{
+		if (!is_array($_profileID) && is_numeric($_profileID))
+		{
+			//error_log(__METHOD__.__LINE__.' for Profile:'.$_profileID);
+			$buff = egw_cache::getSession('email','icServerIMAP_connectionError');
+			if (isset($buff[$_profileID]))
+			{
+				unset($buff[$_profileID]);
+				egw_cache::setSession('email','icServerIMAP_connectionError',$buff);
+			}
+			$isConError = egw_cache::getSession('email','icServerSIEVE_connectionError');
+			if (isset($isConError[$_profileID]))
+			{
+				unset($isConError[$_profileID]);
+				egw_cache::setSession('email','icServerSIEVE_connectionError');
+			}
+			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
+			if (isset($nameSpace[$_profileID]))
+			{
+				unset($nameSpace[$_profileID]);
+				egw_cache::setSession('email','defaultimap_nameSpace',$nameSpace);
+			}
+			felamimail_bo::unsetInstance($_profileID);
+			if ($_profileID != 0) self::unsetCachedObjects(0); // reset the default ServerID as well
+		}
 	}
 
 	/**

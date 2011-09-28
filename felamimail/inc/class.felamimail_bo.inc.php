@@ -30,6 +30,13 @@ class felamimail_bo
 		// message types
 		var $type = array("text", "multipart", "message", "application", "audio", "image", "video", "other");
 
+		/**
+		 * errorMessage
+		 *
+		 * @var string $errorMessage
+		 */
+		var $errorMessage;
+
 		// message encodings
 		var $encoding = array("7bit", "8bit", "binary", "base64", "quoted-printable", "other");
 		static $displayCharset;
@@ -102,7 +109,7 @@ class felamimail_bo
 		 *
 		 * @param boolean $_restoreSession=true
 		 * @param int $_profileID=0
-		 * @param boolean $_validate=true - flag wether the profileid should be validatet or not, if validation is true, you may receive a profile
+		 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 		 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 		 * @return object instance of felamimail_bo
 		 */
@@ -143,6 +150,17 @@ class felamimail_bo
 			self::$instances[$_profileID]->profileID = $_profileID;
 			//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
 			return self::$instances[$_profileID];
+		}
+
+		/**
+		 * unset the private static instances by profileID
+		 *
+		 * @param int $_profileID=0
+		 * @return void
+		 */
+		public static function unsetInstance($_profileID=0)
+		{
+			if (isset(self::$instances[$_profileID])) unset(self::$instances[$_profileID]);
 		}
 
 		/**
@@ -985,7 +1003,7 @@ class felamimail_bo
 			static $folderStatus;
 			if (isset($folderStatus[$this->icServer->ImapServerId][$folderName]))
 			{
-				//error_log(__METHOD__.__LINE__.' Using cache for status on Server:'.$this->icServer->ImapServerId.' for folder:'.$folderName);
+				//error_log(__METHOD__.__LINE__.' Using cache for status on Server:'.$this->icServer->ImapServerId.' for folder:'.$folderName.'->'.array2string($folderStatus[$this->icServer->ImapServerId][$folderName]));
 				return $folderStatus[$this->icServer->ImapServerId][$folderName];
 			}
 			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName);
@@ -1610,7 +1628,9 @@ class felamimail_bo
 
 		function getErrorMessage()
 		{
-			return $this->icServer->_connectionErrorObject->message;
+			$rv =$this->icServer->_connectionErrorObject->message;
+			if (empty($rv)) $rv =$this->errorMessage;
+			return $rv;
 		}
 
 		/**
@@ -2090,7 +2110,7 @@ class felamimail_bo
 				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'RELATED' && is_array($mimePart->subParts)) {
 					// in a multipart alternative we treat the multipart/related as html part
 					#$partHTML = array($mimePart);
-					error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
+					if (self::$debug) error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
 					$partHTML = $mimePart;
 				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'ALTERNATIVE' && is_array($mimePart->subParts)) {
 					//cascading multipartAlternative structure, assuming only the first one is to be used
@@ -3366,8 +3386,14 @@ class felamimail_bo
 		function openConnection($_icServerID=0, $_adminConnection=false)
 		{
 			static $isError;
-			if ( PEAR::isError($isError[$_icServerID]) ) return false;			
 			//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
+			if (is_null($isError)) $isError =& egw_cache::getSession('email','icServerIMAP_connectionError');
+			if ( isset($isError[$_icServerID]) || PEAR::isError($this->icServer->_connectionErrorObject)) 
+			{
+				//error_log(__METHOD__.__LINE__.' failed for Reason:'.$isError[$_icServerID]);
+				$this->errorMessage = ($isError[$_icServerID]?$isError[$_icServerID]:$this->icServer->_connectionErrorObject->message);
+				return false;			
+			}
 			if (!is_object($this->mailPreferences))
 			{
 				if (self::$debug) error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
@@ -3377,7 +3403,7 @@ class felamimail_bo
 			}
 			if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
 				$this->errorMessage .= lang('No active IMAP server found!!');
-				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
+				$isError[$_icServerID] = $this->errorMessage;
 				return false;
 			}
 			//error_log(__METHOD__.__LINE__.'->'.array2string($this->icServer->ImapServerId));
@@ -3389,22 +3415,21 @@ class felamimail_bo
 					$errormessage .= "<br>".lang('Please ask the administrator to correct the emailadmin IMAP Server Settings for you.');
 				}
 				$this->icServer->_connectionErrorObject->message .= $this->errorMessage .= $errormessage;
-				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
+				$isError[$_icServerID] = $this->errorMessage;
 				return false;
 			}
 			//error_log( "-------------------------->open connection ".function_backtrace());
 			//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
 			if ($this->icServer->_connected == 1) {
 				$tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
-				if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval;
+				if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
 				//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 			} else {
 				//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
-				$this->icServer->_timeout = 5;
-				$tretval = $this->icServer->openConnection($_adminConnection);
+				$tretval = $this->icServer->openConnection($_adminConnection,5);
 				if ( PEAR::isError($tretval) || $tretval===false)
 				{
-					$isError[$_icServerID] = $this->icServer->_connectionErrorObject;
+					$isError[$_icServerID] = ($tretval?$tretval->message:$this->icServer->_connectionErrorObject->message);
 					if (self::$debug)
 					{
 						error_log(__METHOD__.__LINE__." # failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$this->icServer->_connectionErrorObject->message.' called from '.function_backtrace());

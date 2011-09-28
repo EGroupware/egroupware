@@ -377,8 +377,12 @@
 			if(isset($_icServer->host)) {
 				$_icServer->sieveHost = $_icServer->host;
 			}
+			// unset the session data
 			$this->sessionData = array();
 			$this->saveSessionData();
+			//error_log(__METHOD__.__LINE__.array2string($_icServer));
+			emailadmin_bo::unsetCachedObjects($_identity->id);
+
 			return parent::saveAccountData($GLOBALS['egw_info']['user']['account_id'], $_icServer, $_ogServer, $_identity);
 		}
 

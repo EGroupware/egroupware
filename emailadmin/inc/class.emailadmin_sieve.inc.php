@@ -67,6 +67,15 @@ class emailadmin_sieve extends Net_Sieve
 	 */
 	function _connect($_icServer,$euser='')
 	{
+		static $isConError;
+		if (is_null($isConError)) $isConError =& egw_cache::getSession('email','icServerSIEVE_connectionError');
+		if ( isset($isConError[$_icServerID]) ) 
+		{
+			error_log(__METHOD__.__LINE__.' failed for Reason:'.$isConError[$_icServerID]);
+			//$this->errorMessage = $isConError[$_icServerID];
+			return false;			
+		}
+
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($euser));
 		if(($_icServer instanceof defaultimap) && $_icServer->enableSieve) {
 			if (!empty($_icServer->sieveHost))
@@ -94,11 +103,13 @@ class emailadmin_sieve extends Net_Sieve
 
 		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, null, $useTLS) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in connect($sieveHost,$sievePort): ".$this->error->getMessage());
+			$isConError[$_icServerID] = "SIEVE: error in connect($sieveHost,$sievePort): ".$this->error->getMessage();
 			return false;
 		}
 		if(PEAR::isError($this->error = $this->login($username, $password, null, $euser) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($this->icServer));
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in login($username,$password,null,$euser): ".$this->error->getMessage());
+			$isConError[$_icServerID] = "SIEVE: error in login($username,$password,null,$euser): ".$this->error->getMessage();
 			return false;
 		}
 		return true;

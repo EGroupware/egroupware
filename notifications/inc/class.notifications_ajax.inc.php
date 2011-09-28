@@ -146,7 +146,8 @@ class notifications_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function check_mailbox() {
+	private function check_mailbox() 
+	{
 		//error_log(__METHOD__.__LINE__.array2string($this->preferences[self::_mailappname]['notify_folders']));
 		if(!isset($this->preferences[self::_mailappname]['notify_folders'])||$this->preferences[self::_mailappname]['notify_folders']=='none') {
 			return true; //no pref set for notifying - exit
@@ -162,9 +163,10 @@ class notifications_ajax {
 		$activeProfile = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
  		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
  		$bufferFMailSession = $bofelamimail->sessionData;
-		if(!$bofelamimail->openConnection($activeProfile)) {
+		if( !$bofelamimail->openConnection($activeProfile) ) {
 			// TODO: This is ugly. Log a bit nicer!
-			error_log(__METHOD__.__LINE__.' #'.self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
+			error_log(__METHOD__.__LINE__.' # '.$bofelamimail->getErrorMessage());
+			error_log(__METHOD__.__LINE__.' # '.self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 			return false; // cannot connect to mailbox
 		}

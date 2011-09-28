@@ -43,9 +43,9 @@
 		{
 			$this->t = $GLOBALS['egw']->template;
 			$this->charset = translation::charset();
+
 			$this->bofelamimail	= felamimail_bo::getInstance();
 			$this->bopreferences	= $this->bofelamimail->bopreferences;
-
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 
 			if (is_object($this->bofelamimail->mailPreferences))
@@ -221,6 +221,7 @@
 			if (!isset($this->bofelamimail)) $this->bofelamimail    = felamimail_bo::getInstance();
 			if (!isset($this->bopreferences)) $this->bopreferences	= $this->bofelamimail->bopreferences;
 			$preferences =& $this->bopreferences->getPreferences();
+
 			$referer = '../index.php?menuaction=felamimail.uipreferences.listAccountData';
 			if(!($preferences->userDefinedAccounts || $preferences->userDefinedIdentities)) {
 				die('you are not allowed to be here');
@@ -287,24 +288,14 @@
 				$GLOBALS['egw']->redirect_link($referer,array('msg' => lang('aborted')));
 				return;
 			}
-
-			$folderList = array();
-			if (!isset($this->bofelamimail) || (int)$_POST['active']) $this->bofelamimail = felamimail_bo::getInstance();
-			if($this->bofelamimail->openConnection()) {
-				$folderObjects = $this->bofelamimail->getFolderObjects();
-				foreach($folderObjects as $folderName => $folderInfo) {
-					//_debug_array($folderInfo);
-					$folderList[$folderName] = $folderInfo->displayName;
-				}
-				$this->bofelamimail->closeConnection();
-			}
-
 			$this->display_app_header(TRUE);
 
 			$this->t->set_file(array("body" => "edit_account_data.tpl"));
 			$this->t->set_block('body','main');
 			if ($msg) $this->t->set_var("message", $msg); else $this->t->set_var("message", '');
 			$this->translate();
+			// initalize the folderList array
+			$folderList = array();
 
 			// if there is no accountID with the call of the edit method, retrieve an active account
 			if ((int)$_GET['accountID']) {
@@ -319,6 +310,15 @@
 				$ogServer =& $accountData['ogServer'];
 				$identity =& $accountData['identity'];
 				//_debug_array($identity);
+				if (!isset($this->bofelamimail) || ((int)$_POST['active'] && !empty($icServer->host))) $this->bofelamimail = felamimail_bo::getInstance(false,$icServer->ImapServerId);
+				if((int)$_POST['active'] && !empty($icServer->host) && $this->bofelamimail->openConnection(($icServer->ImapServerId?$icServer->ImapServerId:0))) {
+					$folderObjects = $this->bofelamimail->getFolderObjects();
+					foreach($folderObjects as $folderName => $folderInfo) {
+						//_debug_array($folderInfo);
+						$folderList[$folderName] = $folderInfo->displayName;
+					}
+					$this->bofelamimail->closeConnection();
+				}
 			}
 			else
 			{
