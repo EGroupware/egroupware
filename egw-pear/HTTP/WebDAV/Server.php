@@ -824,7 +824,7 @@ class HTTP_WebDAV_Server
             /* TODO right now the user implementation has to make sure
              collections end in a slash, this should be done in here
              by checking the resource attribute */
-            $href = $this->_mergePaths($this->_SERVER['SCRIPT_NAME'], $path);
+            $href = $this->_mergePaths($this->base_uri, $path);
 
             /* minimal urlencoding is needed for the resource path */
             $href = $this->_urlencode($href);
