@@ -193,6 +193,7 @@ date	common	de	Datum
 date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
+debug level for apache/php error-log	common	de	Debug Stufe für Apache/PHP Fehlerprotokol
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
@@ -346,6 +347,7 @@ image directory relative to document root (use / !), example:	common	de	Bildverz
 image url	common	de	Bild URL
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
+infolog types to sync	common	de	InfoLog Typen zum synchronisieren
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
 insert column after	common	de	Spalte danach einfügen
 insert column before	common	de	Spalte davor einfügen
@@ -776,6 +778,7 @@ what style would you like the image to have?	common	de	Welchen Stil soll das Bil
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
+which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog Typen sollen synchronisiert werden, Vorabe nur Aufgaben.
 whole query	common	de	Gesamte Abfrage
 width	common	de	Breite
 wk	jscalendar	de	KW

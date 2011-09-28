@@ -93,6 +93,27 @@ class groupdav_hooks
 			'default' => 'P',
 		);
 
+		translation::add_app('infolog');
+		$infolog = new infolog_bo();
+
+		if (!($types = $infolog->enums['type']))
+		{
+			$types = array(
+				'task' => 'Tasks',
+			);
+		}
+
+		$settings['infolog-types'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'InfoLog types to sync',
+			'name'   => 'infolog-types',
+			'help'   => 'Which InfoLog types should be synced with the device, default only tasks.',
+			'values' => $types,
+			'default' => 'task',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+
 		$settings['debug_level'] = array(
 			'type'   => 'select',
 			'label'  => 'Debug level for Apache/PHP error-log',

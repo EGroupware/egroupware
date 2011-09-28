@@ -191,6 +191,7 @@ date	common	en	Date
 date due	common	en	Due date
 date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
+debug level for apache/php error-log	common	en	Debug level for Apache/PHP error-log
 december	common	en	December
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
@@ -343,6 +344,7 @@ image directory relative to document root (use / !), example:	common	en	Image di
 image url	common	en	Image URL
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
+infolog types to sync	common	en	InfoLog types to sync
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
 insert column after	common	en	Insert column after
 insert column before	common	en	Insert column before
@@ -769,6 +771,7 @@ what style would you like the image to have?	common	en	Image style
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	en	Which groups
+which infolog types should be synced with the device, default only tasks.	common	en	Which InfoLog types should be synced with the device, default only tasks.
 whole query	common	en	Whole query
 width	common	en	Width
 wk	jscalendar	en	wk

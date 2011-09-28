@@ -93,16 +93,19 @@ class infolog_groupdav extends groupdav_handler
 	}
 
 	/**
-	 * Handle propfind in the infolog folder
+	 * Get filter-array for infolog_bo::search used by getctag and propfind
 	 *
 	 * @param string $path
-	 * @param array $options
-	 * @param array &$files
 	 * @param int $user account_id
-	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 * @return array
 	 */
-	function propfind($path,$options,&$files,$user,$id='')
+	private function get_infolog_filter($path, $user)
 	{
+		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['activesync']['infolog-types']))
+		{
+			$infolog_types = 'task';
+		}
+
 		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
 
 		if ($path == '/infolog/')
@@ -121,11 +124,25 @@ class infolog_groupdav extends groupdav_handler
 			}
 		}
 
-		// todo add a filter to limit how far back entries from the past get synced
-		$filter = array(
-			'info_type'	=> 'task',
+		return array(
 			'filter'	=> $task_filter,
+			'info_type' => explode(',', $infolog_types),
 		);
+	}
+
+	/**
+	 * Handle propfind in the infolog folder
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function propfind($path,$options,&$files,$user,$id='')
+	{
+		// todo add a filter to limit how far back entries from the past get synced
+		$filter = $this->get_infolog_filter($path, $user);
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
@@ -466,41 +483,7 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	public function getctag($path,$user)
 	{
-		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
-
-		if ($path == '/infolog/')
-		{
-			$task_filter= 'own';
-		}
-		else
-		{
-			if ($myself)
-			{
-				$task_filter = 'open';
-			}
-			else
-			{
-				$task_filter = 'open-user' . $user;
-			}
-		}
-
-		$query = array(
-			'order'			=> 'info_datemodified',
-			'sort'			=> 'DESC',
-			'filter'    	=> $task_filter,
-			'date_format'	=> 'server',
-			'col_filter'	=> array('info_type' => 'task'),
-			'start'			=> 0,
-			'num_rows'		=> 1,
-		);
-
-		$result =& $this->bo->search($query);
-
-		if (empty($result)) return 'EGw-0-wGE';
-
-		$entry = array_shift($result);
-
-		return $this->get_etag($entry);
+		return $this->bo->getctag($this->get_infolog_filter($path, $user));
 	}
 
 	/**
