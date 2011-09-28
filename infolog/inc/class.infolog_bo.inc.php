@@ -1053,6 +1053,32 @@ class infolog_bo
 	}
 
 	/**
+	 * Query ctag for infolog
+	 *
+	 * @param string $filter='own'
+	 * @param string|array $types='task'
+	 * @return string
+	 */
+	public function getctag(array $filter)
+	{
+		$filter += array(
+			'order'			=> 'info_datemodified',
+			'sort'			=> 'DESC',
+			'date_format'	=> 'server',
+			'start'			=> 0,
+			'num_rows'		=> 1,
+		);
+
+		$result =& $this->search($filter);
+
+		if (empty($result)) return 'EGw-empty-wGE';
+
+		$entry = array_shift($result);
+
+		return 'EGw-'.$entry['info_datemodified'].'-wGE';
+	}
+
+	/**
 	 * imports a mail identified by uid as infolog
 	 *
 	 * @author Cornelius Weiss <nelius@cwtech.de>
