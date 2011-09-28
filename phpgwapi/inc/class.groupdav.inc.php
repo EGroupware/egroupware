@@ -400,7 +400,7 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Add a collection to a PROPFIND request
+	 * Add a resource to a PROPFIND request
 	 *
 	 * @param string $path
 	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
