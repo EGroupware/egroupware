@@ -656,7 +656,7 @@ class addressbook_sql extends so_sql_cf
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
 		}
 		// set carddav_name, if not given by caller
-		if (empty($this->data['carddav_name']) && version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
+		if (empty($this->data['carddav_name']))
 		{
 			$update['carddav_name'] = $this->data['id'].'.vcf';
 		}
