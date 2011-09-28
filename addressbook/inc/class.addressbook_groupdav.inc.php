@@ -16,6 +16,8 @@
  *
  * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
  * without getting into problems with memory_limit.
+ *
+ * @todo create extra addressbook eg. "/accounts/" which shows accounts, even if they are in LDAP (no carddav_name column!)
  */
 class addressbook_groupdav extends groupdav_handler
 {
@@ -474,9 +476,9 @@ class addressbook_groupdav extends groupdav_handler
 		// addressbook description
 		$displayname = translation::convert(lang('Addressbook of') . ' ' .
 			$displayname,translation::charset(),'utf-8');
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
+		$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
 		// supported reports (required property for CardDAV)
-		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+		$props['supported-report-set'] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query',''))))),
