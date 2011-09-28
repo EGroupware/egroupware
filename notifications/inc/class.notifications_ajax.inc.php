@@ -165,8 +165,9 @@ class notifications_ajax {
  		$bufferFMailSession = $bofelamimail->sessionData;
 		if( !$bofelamimail->openConnection($activeProfile) ) {
 			// TODO: This is ugly. Log a bit nicer!
-			error_log(__METHOD__.__LINE__.' # '.$bofelamimail->getErrorMessage());
+			$error = $bofelamimail->getErrorMessage();
 			error_log(__METHOD__.__LINE__.' # '.self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
+			if (!empty($error)) error_log(__METHOD__.__LINE__.' # '.$error);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 			return false; // cannot connect to mailbox
 		}
