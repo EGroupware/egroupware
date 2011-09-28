@@ -97,8 +97,7 @@ class infolog_activesync implements activesync_plugin_write
 				'parent'=>	'0',
 			);
 		}
-		debugLog(__METHOD__."() returning ".array2string($folderlist));
-		//error_log(__METHOD__."() returning ".array2string($folderlist));
+		//debugLog(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -133,7 +132,7 @@ class infolog_activesync implements activesync_plugin_write
 			debugLog(__METHOD__."($id) returning ".array2string($folderObj));
 		}
 */
-		//error_log(__METHOD__."('$id') returning ".array2string($folderObj));
+		//debugLog(__METHOD__."('$id') returning ".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -279,7 +278,7 @@ class infolog_activesync implements activesync_plugin_write
 					if (!empty($infolog[$attr])) $message->$key = $infolog[$attr];
 			}
 		}
-		//error_log(__METHOD__."(folder='$folderid',$id,...) returning ".array2string($message));
+		//debugLog(__METHOD__."(folder='$folderid',$id,...) returning ".array2string($message));
 		return $message;
 	}
 
@@ -308,7 +307,7 @@ class infolog_activesync implements activesync_plugin_write
 		else
 		{
 			$stat = array(
-				'mod' => $infolog['etag'],
+				'mod' => $infolog['info_datemodified'],
 				'id' => $infolog['info_id'],
 				'flags' => 1,
 			);
@@ -367,10 +366,10 @@ class infolog_activesync implements activesync_plugin_write
 	 */
 	public function ChangeMessage($folderid, $id, $message)
 	{
-		if (!isset($this->infolog)) $this->infolog = new infolog();
+		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		$this->backend->splitID($folderid, $type, $account);
-		// error_log(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
+		//debugLog(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'infolog') // || !($infolog = $this->addressbook->read($id)))
 		{
 			debugLog(__METHOD__." Folder wrong or infolog not existing");
@@ -415,9 +414,10 @@ class infolog_activesync implements activesync_plugin_write
 						break;
 				}
 			}
+			// $infolog['info_owner'] = $account;
 			if (!empty($id)) $infolog['info_id'] = $id;
 			$newid = $this->infolog->write($infolog);
-			// error_log(__METHOD__."($folderid,$id) addressbook(".array2string($infolog).") returning ".array2string($newid));
+			//debugLog(__METHOD__."($folderid,$id) addressbook(".array2string($infolog).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
@@ -517,8 +517,8 @@ class infolog_activesync implements activesync_plugin_write
 			$infolog_types = 'task';
 		}
 
-		$ctag = $this->infolog->get_ctag($owner == $GLOBALS['egw_info']['user']['account_id'] ? 'own' : 'user'.$owner,
-			explode(',', $infolog_types));
+		$ctag = $this->infolog->getctag(array($owner == $GLOBALS['egw_info']['user']['account_id'] ? 'own' : 'user'.$owner,
+			explode(',', $infolog_types)));
 
 		$changes = array();	// no change
 		$syncstate_was = $syncstate;
@@ -528,7 +528,7 @@ class infolog_activesync implements activesync_plugin_write
 			$syncstate = $ctag;
 			$changes = array(array('type' => 'fakeChange'));
 		}
-		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		//debugLog(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
 		return $changes;
 	}
 
