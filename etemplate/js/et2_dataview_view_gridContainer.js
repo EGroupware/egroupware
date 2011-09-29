@@ -351,6 +351,9 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Builds the containers for the header row
 	 */
 	_buildHeader: function() {
+		var self = this;
+		var handler = function(event) {
+		}
 		for (var i = 0; i < this.columns.length; i++)
 		{
 			var col = this.columns[i];
@@ -359,10 +362,32 @@ var et2_dataview_gridContainer = Class.extend({
 			var cont = $j(document.createElement("div"))
 				.addClass("innerContainer")
 				.addClass(col.divClass);
+
 			var column = $j(document.createElement("th"))
 				.addClass(col.tdClass)
 				.append(cont)
 				.appendTo(this.headTr);
+
+			// Every column but last can be resized
+			if(i < this.columns.length-1) {
+				var enc_column = self.columnMgr.getColumnById(col.id);
+				 column.resizable({
+					handles:"e",
+					helper: "nextmatch_resize_helper",
+					stop: (function(columnIdx, enc_column) { return function(event, ui) {
+						var original = self.columnMgr.columnWidths[columnIdx];
+						var newWidth = original + (ui.size.width - ui.originalSize.width);
+
+						// Using full height helper stretches the header - reset it
+						// TODO: Get rid of magic -5
+						if(jQuery(this).height() > ui.originalSize.height) jQuery(this).height(ui.originalSize.height-5);
+						enc_column.set_width(newWidth+ "px");
+						self.columnMgr.updated = true;
+						self.updateColumns();
+
+					};})(i, enc_column)
+				});
+			}
 
 			// Store both nodes in the columnNodes array
 			this.columnNodes.push({

@@ -544,6 +544,13 @@ label input, label span, label div, label select, label textarea {
 	background-image: url(gfx/down.png);
 }
 
+.nextmatch_resize_helper {
+	border-right: 1px dotted gray;
+	min-height: 100%;
+	background-color: gray;
+	opacity: 0.5;
+}
+
 .et2_clickable {
 	cursor: pointer;
 }

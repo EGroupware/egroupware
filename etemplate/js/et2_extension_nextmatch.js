@@ -287,7 +287,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		for(var i = 0; i < children.length; i++) {
 			if(children[i].id) child_names.push(children[i].id);
 		}
-		return name + (name != "" && child_names.length > 0 ? "_" : "") + child_names.join("_");
+
+		var colName =  name + (name != "" && child_names.length > 0 ? "_" : "") + child_names.join("_");
+		if(colName == "") {
+			et2_debug("info", "Unable to generate nm column name for ", _widget);
+		}
+		return colName;
 	},
 
 
@@ -300,6 +305,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		var columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
 		if(this.options.settings.columnselection_pref) {
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+			var app = list[0];
 			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
 			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
 			if(pref) 
@@ -310,6 +316,14 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		}
 		var columnDisplay = et2_csvSplit(columnPreference,null,",");
 
+		// Adjusted column sizes
+		var size = {};
+		if(this.options.settings.columnselection_pref && app)
+		{
+			size = egw.preference("nextmatch-"+this.options.settings.columnselection_pref+"-size", app);
+		}
+		if(!size) size = {};
+
 		// Add in display preferences
 		if(columnDisplay && columnDisplay.length > 0)
 		{
@@ -318,7 +332,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			{
 				var colName = this._getColumnName(_row[i].widget);
 				if(!colName) continue;
-				_colData[i].preferenceName = colName;
+
+				if(size[colName]) _colData[i].width = size[colName];
 				for(var j = 0; j < columnDisplay.length; j++) {
 					if(columnDisplay[j] == colName)
 					{
@@ -329,7 +344,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				_colData[i].disabled = !negated;
 			}
 		}
-		// TODO: Adjusted column sizes
 	},
 
 	/**
@@ -341,14 +355,19 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		if(this.options.settings.columnselection_pref) {
 			var visibility = colMgr.getColumnVisibilitySet();
 			var colDisplay = [];
-			var colSize = [];
+			var colSize = {};
 
 			// visibility is indexed by internal ID, widget is referenced by position, preference needs name
 			for(var i = 0; i < colMgr.columns.length; i++)
 			{
 				var widget = this.columns[i].widget;
 				var colName = this._getColumnName(widget);
-				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
+				if(colName) {
+					if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
+					if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
+				} else if (colMgr.columns[i].fixedWidth) {
+					et2_debug("info", "Could not save column width - no name", colMgr.columns[i].id);
+				}
 			}
 				
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
@@ -358,7 +377,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
 			egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
 
-			// TODO: Save adjusted column sizes
+			// Save adjusted column sizes
+			egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
 		}
 	},
 
