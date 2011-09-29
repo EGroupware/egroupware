@@ -377,7 +377,7 @@ class infolog_activesync implements activesync_plugin_write
 		}
 		$infolog = array();
 		if (empty($id) && $this->infolog->check_access(0, EGW_ACL_EDIT, $account) ||
-			($infolog = $this->infolog->read($id) && $this->infolog->check_access($infolog, EGW_ACL_EDIT)))
+			($infolog = $this->infolog->read($id)) && $this->infolog->check_access($infolog, EGW_ACL_EDIT))
 		{
 			if (!$infolog) $infolog = array();
 			foreach (self::$mapping as $key => $attr)
