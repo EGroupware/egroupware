@@ -151,10 +151,27 @@ var et2_selectbox = et2_inputWidget.extend({
 	set_value: function(_value) {
 		jQuery("option",this.input).attr("selected", false);
 		this.value = _value;
-		if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
+		if(typeof _value == "array")
 		{
-			et2_debug("warning", "Tried to set value that isn't an option", this, _value);
-//console.trace();
+			for(var i = 0; i < _value.length; i++)
+			{
+				jQuery("option[value='"+_value[i]+"']", this.input).attr("selected", true);
+			}
+		}
+		else if (typeof _value == "object")
+		{
+			for(var i in _value)
+			{
+				jQuery("option[value='"+_value[i]+"']", this.input).attr("selected", true);
+			}
+		}
+		else
+		{
+			if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
+			{
+				et2_debug("warning", "Tried to set value that isn't an option", this, _value);
+	//console.trace();
+			}
 		}
 	},
 
