@@ -101,8 +101,29 @@ var et2_dataview_column = Class.extend({
 		{
 			this.fixedWidth = parseInt(w.substr(0, w.length - 2));
 		}
-	}
+	},
 
+	set_visibility: function(_value) {
+		// If visibility is always, don't turn it off
+		if(this.visibility == ET2_COL_VISIBILITY_ALWAYS || this.visibility == ET2_COL_VISIBILITY_ALWAYS_NOSELECT) return;
+		 
+		if(_value === true)
+		{
+			this.visibility = ET2_COL_VISIBILITY_VISIBLE;
+		}
+		else if (_value === false)
+		{
+			this.visibility = ET2_COL_VISIBILITY_INVISIBLE;
+		}
+		else if (typeof _value == "number")
+		{
+			this.visibility = _value;
+		}
+		else
+		{
+			et2_debug("warn", "Invalid visibility option for column: ", _value);
+		}
+	}
 });
 
 /**
