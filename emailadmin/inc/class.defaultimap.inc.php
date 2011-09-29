@@ -497,7 +497,7 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @return resource the imap connection
 	 */
-	function openConnection($_adminConnection=false) 
+	function openConnection($_adminConnection=false,$_timeout=20) 
 	{
 		//error_log(__METHOD__.function_backtrace());
 		unset($this->_connectionErrorObject);
@@ -515,7 +515,7 @@ class defaultimap extends Net_IMAP
 		}
 		
 		$this->setStreamContextOptions($this->_getTransportOptions());
-		$this->setTimeout(20);
+		$this->setTimeout($_timeout);
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
 			if ($this->debug) error_log(__METHOD__."Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption);
 			if ($this->debug) error_log(__METHOD__."Status connect:".$status->message);

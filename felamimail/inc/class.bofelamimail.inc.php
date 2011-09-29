@@ -2968,7 +2968,6 @@
 				//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 			} else {
 				//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
-				$this->icServer->_timeout = 5;
 				$tretval = $this->icServer->openConnection($_adminConnection);
 				if ( PEAR::isError($tretval) || $tretval===false)
 				{
