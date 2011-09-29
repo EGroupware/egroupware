@@ -255,7 +255,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	},
 
 	/**
-	 * Generates the column name for the given column widget
+	 * Generates the column caption for the given column widget
 	 */
 	_genColumnCaption: function(_widget) {
 		var result = null;
@@ -274,7 +274,98 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		return result;
 	},
 
+	/**
+	 * Generates the column name (internal) for the given column widget
+	 * Used in preferences to refer to the columns by name instead of position
+	 *
+	 * See _getColumnCaption() for human fiendly captions
+	 */
+	_getColumnName: function(_widget) {
+		var name = _widget.id;
+		var child_names = [];
+		var children = _widget.getChildren();
+		for(var i = 0; i < children.length; i++) {
+			if(children[i].id) child_names.push(children[i].id);
+		}
+		return name + (name != "" && child_names.length > 0 ? "_" : "") + child_names.join("_");
+	},
+
+
+	/**
+	 * Apply stored user preferences to discovered columns
+	 */
+	_applyUserPreferences: function(_row, _colData) {
+		// Read preference or default for column visibility
+		var negated = this.options.settings.default_cols[0] == "!";
+		var columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
+		if(this.options.settings.columnselection_pref) {
+			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
+			if(pref) 
+			{
+				negated = (pref[0] == "!");
+				columnPreference = negated ? pref.substring(1) : pref;
+			}
+		}
+		var columnDisplay = et2_csvSplit(columnPreference,null,",");
+
+		// Add in display preferences
+		if(columnDisplay && columnDisplay.length > 0)
+		{
+			RowLoop:
+			for(var i = 0; i < _row.length; i++)
+			{
+				var colName = this._getColumnName(_row[i].widget);
+				if(!colName) continue;
+				_colData[i].preferenceName = colName;
+				for(var j = 0; j < columnDisplay.length; j++) {
+					if(columnDisplay[j] == colName)
+					{
+						_colData[i].disabled = negated;
+						continue RowLoop;
+					}
+				}
+				_colData[i].disabled = !negated;
+			}
+		}
+		// TODO: Adjusted column sizes
+	},
+
+	/**
+	 * Take current column display settings and store them in egw.preferences
+	 * for next time
+	 */
+	_updateUserPreferences: function() {
+		var colMgr = this.dataviewContainer.getColumnMgr()
+		if(this.options.settings.columnselection_pref) {
+			var visibility = colMgr.getColumnVisibilitySet();
+			var colDisplay = [];
+			var colSize = [];
+
+			// visibility is indexed by internal ID, widget is referenced by position, preference needs name
+			for(var i = 0; i < colMgr.columns.length; i++)
+			{
+				var widget = this.columns[i].widget;
+				var colName = this._getColumnName(widget);
+				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
+			}
+				
+			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+			var app = list[0];
+
+			// Save visible columns
+			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+			egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
+
+			// TODO: Save adjusted column sizes
+		}
+	},
+
 	_parseHeaderRow: function(_row, _colData) {
+		// Get column display preference
+		this._applyUserPreferences(_row, _colData);
+
 		// Go over the header row and create the column entries
 		this.columns = new Array(_row.length);
 		var columnData = new Array(_row.length);
@@ -283,6 +374,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			this.columns[x] = {
 				"widget": _row[x].widget
 			};
+
 
 			columnData[x] = {
 				"id": "col_" + x,
@@ -299,6 +391,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Create the column manager and update the grid container
 		this.dataviewContainer.setColumns(columnData);
 
+		// Register handler to update preferences when column properties are changed
+		var self = this;
+		this.dataviewContainer.onUpdateColumns = function() { self._updateUserPreferences();};
 	},
 
 	_parseDataRow: function(_row, _colData) {

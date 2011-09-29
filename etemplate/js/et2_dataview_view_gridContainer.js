@@ -39,6 +39,11 @@ var et2_dataview_gridContainer = Class.extend({
 	columnBorderWidth: false,
 
 	/**
+	 * Hooks to allow parent to keep up to date if things change
+	 */
+	onUpdateColumns: false,
+
+	/**
 	 * Constructor for the grid container
 	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
 	 */
@@ -178,6 +183,12 @@ var et2_dataview_gridContainer = Class.extend({
 		if (this.columnMgr)
 		{
 			this._updateColumns();
+		}
+
+		// Ability to notify parent / someone else
+		if (this.onUpdateColumns)
+		{
+			this.onUpdateColumns();
 		}
 	},
 
@@ -369,13 +380,71 @@ var et2_dataview_gridContainer = Class.extend({
 	_buildSelectCol: function() {
 		// Build the "select columns" icon
 		this.selectColIcon = $j(document.createElement("span"))
-			.addClass("selectcols");
+			.addClass("selectcols")
+			// Toggle display of option popup
+			.click(this, function(e) {e.data.selectPopup.toggle();});
 
 		// Build the option column
 		this.selectCol = $j(document.createElement("th"))
 			.addClass("optcol")
 			.append(this.selectColIcon)
 			.appendTo(this.headTr);
+
+		// Build the popup
+		var self = this;
+		var columns = {};
+		var columns_selected = [];
+		for (var i = 0; i < this.columnMgr.columns.length; i++)
+		{
+			var col = this.columnMgr.columns[i];
+			if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+			{
+				columns[col.id] = col.caption;
+				if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
+			}
+		}
+
+		var select = et2_createWidget("select", {multiple: true, rows: 8});
+		select.set_select_options(columns);
+		select.set_value(columns_selected);
+
+		var okButton = et2_createWidget("buttononly", {label: egw.lang("ok")});
+		okButton.set_label(egw.lang("ok"));
+		okButton.onclick = function() {
+			// Update visibility
+			var visibility = {};
+			for (var i = 0; i < self.columnMgr.columns.length; i++)
+			{
+				var col = self.columnMgr.columns[i];
+				if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
+				{
+					visibility[col.id] = {visible: false};
+				}
+			}
+			var value = select.getValue();
+			for(var i = 0; i < value.length; i++)
+			{
+				visibility[value[i]].visible = true;
+			}
+			self.columnMgr.setColumnVisibilitySet(visibility);
+			self.selectPopup.toggle();
+			self.updateColumns();
+		};
+
+		var cancelButton = et2_createWidget("buttononly");
+		cancelButton.set_label(egw.lang("cancel"));
+		cancelButton.onclick = function() {
+			self.selectPopup.toggle();
+		}
+
+		var popup = this.selectPopup = $j(document.createElement("fieldset"))
+			.addClass("colselection")
+			.css("display", "none")
+			.append("<legend>"+egw.lang("Select columns")+"</legend>")
+			.append(select.getDOMNode())
+			.append(okButton.getDOMNode())
+			.append(cancelButton.getDOMNode())
+			.appendTo(this.selectCol);
 
 		this.selectCol.css("width", this.scrollbarWidth - this.selectCol.outerWidth()
 				+ this.selectCol.width() + 1);
