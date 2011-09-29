@@ -517,8 +517,10 @@ class infolog_activesync implements activesync_plugin_write
 			$infolog_types = 'task';
 		}
 
-		$ctag = $this->infolog->getctag(array($owner == $GLOBALS['egw_info']['user']['account_id'] ? 'own' : 'user'.$owner,
-			explode(',', $infolog_types)));
+		$ctag = $this->infolog->getctag(array(
+			'filter' => $owner == $GLOBALS['egw_info']['user']['account_id'] ? 'own' : 'user'.$owner,
+			'info_type' => explode(',', $infolog_types),
+		));
 
 		$changes = array();	// no change
 		$syncstate_was = $syncstate;

@@ -1055,11 +1055,10 @@ class infolog_bo
 	/**
 	 * Query ctag for infolog
 	 *
-	 * @param string $filter='own'
-	 * @param string|array $types='task'
+	 * @param array $filter=array('filter'=>'own','info_type'=>'task')
 	 * @return string
 	 */
-	public function getctag(array $filter)
+	public function getctag(array $filter=array('filter'=>'own','info_type'=>'task'))
 	{
 		$filter += array(
 			'order'			=> 'info_datemodified',

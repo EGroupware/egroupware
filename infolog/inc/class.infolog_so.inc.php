@@ -639,8 +639,8 @@ class infolog_so
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
 		// update the index
-		egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
-			array('info_uid','info_type','info_status','info_confirm','info_access'));
+		//egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
+		//	array('info_uid','info_type','info_status','info_confirm','info_access'));
 
 		return $this->data['info_id'];
 	}
