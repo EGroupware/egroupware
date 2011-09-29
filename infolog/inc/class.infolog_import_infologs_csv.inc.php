@@ -180,7 +180,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			} else {
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
-
+			if (!isset($record['info_owner'])) $record['info_owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
                         {
@@ -207,7 +207,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 								// apply action to all records matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$results as $contact ) {
-									$record['id'] = $contact['id'];
+									$record['info_id'] = $contact['info_id'];
+									$record['info_owner'] = $contact['info_owner'];
 									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
 										if ( !is_array( $contact['cat_id'] ) ) $contact['cat_id'] = explode( ',', $contact['cat_id'] );
 										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
