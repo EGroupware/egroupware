@@ -549,6 +549,7 @@ var et2_link_entry = et2_valueWidget.extend({
 
 		var values = event.data.options.value;
 		var self = event.data;
+		var links = [];
 
 		if(typeof _links == 'undefined')
 		{
