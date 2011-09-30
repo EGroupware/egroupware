@@ -36,7 +36,7 @@ class infolog_activesync implements activesync_plugin_write
 		'body'	=> 'info_des',
 		'categories' => 'info_cat',	// infolog supports only a single category
 		'complete' => 'info_status', 	// 0 or 1 <--> 'done', ....
-		'datecompleted' => 'info_datecomplated',
+		'datecompleted' => 'info_datecompleted',
 		'duedate' => 'info_enddate',
 		'importance' => 'info_priority',	// 0=Low, 1=Normal, 2=High (EGW additional 3=Urgent)
 		'sensitivity' => 'info_access',	// 0=Normal, 1=Personal, 2=Private, 3=Confiential <--> 'public', 'private'
@@ -417,7 +417,7 @@ class infolog_activesync implements activesync_plugin_write
 			// $infolog['info_owner'] = $account;
 			if (!empty($id)) $infolog['info_id'] = $id;
 			$newid = $this->infolog->write($infolog);
-			//debugLog(__METHOD__."($folderid,$id) addressbook(".array2string($infolog).") returning ".array2string($newid));
+			debugLog(__METHOD__."($folderid,$id) infolog(".array2string($infolog).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
