@@ -141,7 +141,9 @@ class calendar_groupdav extends groupdav_handler
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
 		{
-			return false;
+			// return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
+			// when trying to request not supported components, eg. VTODO on a calendar collection
+			return true;
 		}
 		if ($this->debug > 1)
 		{
