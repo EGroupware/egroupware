@@ -400,14 +400,15 @@ class infolog_activesync implements activesync_plugin_write
 						break;
 
 					case 'info_status':	// 0 or 1 in AS --> do NOT change infolog status, if it maps to identical completed boolean value
-						if (in_array($infolog[$attr], self::$done_status) !== (boolean)$message->key)
+						if (in_array($infolog[$attr], self::$done_status) !== (boolean)$message->$key)
 						{
-							$infolog[$attr] = $message->key ? 'done' : 'not-started';
+							$infolog[$attr] = $message->$key ? 'done' : 'not-started';
+							if (!(boolean)$message->$key) $infolog['info_percent'] = 0;
 						}
 						break;
 
 					case 'info_priority':	// AS does not know 3=Urgent (only 0=Low, 1=Normal, 2=High)
-						if ($infolog[$attr] == 3 && $message->key == 2) break;	// --> do NOT change Urgent, if AS reports High
+						if ($infolog[$attr] == 3 && $message->$key == 2) break;	// --> do NOT change Urgent, if AS reports High
 						// fall through
 					default:
 						$infolog[$attr] = $message->$key;
