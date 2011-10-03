@@ -1382,11 +1382,15 @@ class calendar_ical extends calendar_boupdate
 
 				if (!$event['participants']
 					|| !is_array($event['participants'])
-					|| !count($event['participants']))
+					|| !count($event['participants'])
+					// for new events, allways add owner as participant. Users expect to participate too, if they invite further participants.
+					// They can now only remove themselfs, if that is desired, after storing the event first.
+					|| !isset($event['participants'][$event['owner']]))
 				{
 					$status = $event['owner'] == $this->user ? 'A' : 'U';
 					$status = calendar_so::combine_status($status, 1, 'CHAIR');
-					$event['participants'] = array($event['owner'] => $status);
+					if (!is_array($event['participants'])) $event['participants'] = array();
+					$event['participants'][$event['owner']] = $status;
 				}
 				else
 				{
@@ -2343,6 +2347,16 @@ class calendar_ical extends calendar_boupdate
 		{
 			switch ($attributes['name'])
 			{
+				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
+					if (!isset($vcardData['end']))
+					{
+						$vcardData['end'] = $vcardData['start'] + $attributes['value'];
+					}
+					else
+					{
+						error_log(__METHOD__."() find DTEND AND DURATION --> ignoring DURATION");
+					}
+					break;
 				case 'AALARM':
 				case 'DALARM':
 					$alarmTime = $attributes['value'];
