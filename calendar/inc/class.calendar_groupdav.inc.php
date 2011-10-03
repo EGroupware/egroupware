@@ -595,7 +595,8 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 
-		header('ETag: '.$this->get_etag($cal_id));
+		// we should not return an etag here, as we never store the PUT ical byte-by-byte
+		//header('ETag: '.$this->get_etag($cal_id));
 
 		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
 		if ($retval !== true && self::$path_attr != 'caldav_name')

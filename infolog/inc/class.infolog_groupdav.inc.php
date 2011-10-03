@@ -292,6 +292,8 @@ class infolog_groupdav extends groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
+						// ToDo: CalDAV time-range for VTODO checks DTSTART, DTEND, DUE and allways includes tasks if none given
+						// see http://tools.ietf.org/html/rfc4791#section-9.9
 				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
 				 		if (!empty($filter['attrs']['start']))
 				 		{
@@ -427,7 +429,8 @@ class infolog_groupdav extends groupdav_handler
 			$retval = '201 Created';
 		}
 
-		header('ETag: '.$this->get_etag($infoId));
+		// we should not return an etag here, as we never store the PUT ical byte-by-byte
+		//header('ETag: '.$this->get_etag($infoId));
 
 		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
 		if ($retval !== true && self::$path_attr != 'caldav_name')
