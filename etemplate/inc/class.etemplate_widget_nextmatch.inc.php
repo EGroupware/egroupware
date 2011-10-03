@@ -102,8 +102,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Send categories
 		if(!$value['no_cat'] && !$value['cat_is_select'])
 		{
-			$cat_app = $value['cat_app'] ? $value['cat_app'] : '';
-			$value['options-cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
+			$cat_app = $value['cat_app'] ? $value['cat_app'] : $GLOBALS['egw_info']['flags']['current_app'];
+			$value['options-cat_id'] = array('' => lang('all')) + etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
 		}
 		// todo: no need to store rows in request, it's enought to send them to client
 
