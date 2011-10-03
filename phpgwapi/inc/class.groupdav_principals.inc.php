@@ -435,9 +435,9 @@ class groupdav_principals extends groupdav_handler
 			'displayname' => 'Display Name',
 			'email-address-set' => array('description' => 'Email Addresses', 'ns' => groupdav::CALENDARSERVER),
 			'last-name' => array('description' => 'Last Name', 'ns' => groupdav::CALENDARSERVER),
-			'calendar-user-type' => array('description' => 'Calendar User Type', 'ns' => groupdav::CALENDARSERVER),
+			'calendar-user-type' => array('description' => 'Calendar User Type', 'ns' => groupdav::CALDAV),
 			'first-name' => array('description' => 'First Name', 'ns' => groupdav::CALENDARSERVER),
-			'calendar-user-address-set' => array('description' => 'Calendar User Address Set', 'ns' => groupdav::CALENDARSERVER),
+			'calendar-user-address-set' => array('description' => 'Calendar User Address Set', 'ns' => groupdav::CALDAV),
 			// Lightning
 			'calendar-home-set' => array('description' => 'Calendar Home Set', 'ns' => groupdav::CALENDARSERVER),
 			// others, we generally support all properties of the principal
