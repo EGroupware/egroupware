@@ -352,33 +352,54 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 */
 	_updateUserPreferences: function() {
 		var colMgr = this.dataviewContainer.getColumnMgr()
-		if(this.options.settings.columnselection_pref) {
-			var visibility = colMgr.getColumnVisibilitySet();
-			var colDisplay = [];
-			var colSize = {};
+		if(!this.options.settings.columnselection_pref) {
+			this.options.settings.columnselection_pref = this.options.template;
+		}
 
-			// visibility is indexed by internal ID, widget is referenced by position, preference needs name
-			for(var i = 0; i < colMgr.columns.length; i++)
-			{
-				var widget = this.columns[i].widget;
-				var colName = this._getColumnName(widget);
-				if(colName) {
-					if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
-					if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
-				} else if (colMgr.columns[i].fixedWidth) {
-					et2_debug("info", "Could not save column width - no name", colMgr.columns[i].id);
-				}
+		var visibility = colMgr.getColumnVisibilitySet();
+		var colDisplay = [];
+		var colSize = {};
+
+		// visibility is indexed by internal ID, widget is referenced by position, preference needs name
+		for(var i = 0; i < colMgr.columns.length; i++)
+		{
+			var widget = this.columns[i].widget;
+			var colName = this._getColumnName(widget);
+			if(colName) {
+				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
+				if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
+			} else if (colMgr.columns[i].fixedWidth) {
+				et2_debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
-				
-			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
-			var app = list[0];
+		}
+			
+		var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+		var app = list[0];
 
-			// Save visible columns
-			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-			egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
+		// Save visible columns
+		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
 
-			// Save adjusted column sizes
-			egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+		// Save adjusted column sizes
+		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+
+		// Update query value, so data source can use visible columns to exclude expensive sub-queries
+		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
+		this.activeFilters.selectcols = colDisplay;
+
+		// We don't need to re-query if they've removed a column
+		var changed = [];
+		ColLoop:
+		for(var i = 0; i < colDisplay.length; i++)
+		{
+			for(var j = 0; j < oldCols.length; j++) {
+				 if(colDisplay[i] == oldCols[j]) continue ColLoop;
+			}
+			changed.push(colDisplay[i]);
+		}
+		if(changed.length)
+		{
+			this.applyFilters();
 		}
 	},
 
