@@ -470,7 +470,8 @@ class Horde_iCalendar {
     {
         // Default values.
         $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library' . (defined('HORDE_VERSION') ? ', Horde ' . constant('HORDE_VERSION') : '') . '//EN';
-        $requiredAttributes['METHOD'] = 'PUBLISH';
+        // METHOD is only required for iTip, but not for CalDAV, therefore removing it here calendar_ical sets it anyway by default
+        //$requiredAttributes['METHOD'] = 'PUBLISH';
 
         foreach ($requiredAttributes as $name => $default_value) {
             if (is_a($this->getattribute($name), 'PEAR_Error')) {

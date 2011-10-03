@@ -233,7 +233,7 @@ class infolog_groupdav extends groupdav_handler
 				);
 				if ($calendar_data)
 				{
-					$content = $handler->exportVTODO($task,'2.0','PUBLISH');
+					$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
 					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -354,7 +354,7 @@ class infolog_groupdav extends groupdav_handler
 			return $task;
 		}
 		$handler = $this->_get_handler();
-		$options['data'] = $handler->exportVTODO($task,'2.0','PUBLISH');
+		$options['data'] = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($task));

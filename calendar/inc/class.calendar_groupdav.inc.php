@@ -243,7 +243,7 @@ class calendar_groupdav extends groupdav_handler
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event,$filter['users']);
+					$content = $this->iCal($event, $filter['users'], strpos($path, '/inbox/') !== false ? 'PUBLISH' : null);
 					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -386,7 +386,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
-		$options['data'] = $this->iCal($event,$user);
+		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'PUBLISH' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($event));
@@ -400,9 +400,10 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @param array $event
 	 * @param int $user=null account_id of calendar to display
+	 * @param string $method=null eg. 'PUBLISH' for inbox, nothing anywhere else
 	 * @return string
 	 */
-	private function iCal(array $event,$user=null)
+	private function iCal(array $event,$user=null, $method=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -427,7 +428,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
 		}
-		return $handler->exportVCal($events,'2.0','PUBLISH');
+		return $handler->exportVCal($events, '2.0', $method);
 	}
 
 	/**

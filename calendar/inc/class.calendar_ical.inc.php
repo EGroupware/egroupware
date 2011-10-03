@@ -231,7 +231,7 @@ class calendar_ical extends calendar_boupdate
 		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
-		$vcal->setAttribute('METHOD', $method);
+		if ($method) $vcal->setAttribute('METHOD', $method);
 		$events_exported = false;
 
 		if (!is_array($events)) $events = array($events);

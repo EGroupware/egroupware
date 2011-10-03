@@ -168,7 +168,7 @@ class infolog_ical extends infolog_bo
 
 		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
-		$vcal->setAttribute('METHOD',$_method);
+		if ($_method) $vcal->setAttribute('METHOD',$_method);
 
 		$tzid = $this->tzid;
 
