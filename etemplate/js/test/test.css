@@ -101,7 +101,6 @@ div.et2_hbox_right {
 
 .et2_label {
 	color: #101050;
-	font-size: 10pt;
 }
 
 a.et2_url {
@@ -566,3 +565,23 @@ div.et2_progress > div {
 	background-color: #D00000;
 	height: 5px;
 }
+
+.egwResizeOverlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 99999;
+	cursor: ew-resize;
+}
+
+.egwResizeHelper {
+	position: absolute;
+	display: block;
+	z-index: 99998;
+	opacity: 0.5;
+	background-color: #829cbc;
+	cursor: ew-resize;
+}
+
