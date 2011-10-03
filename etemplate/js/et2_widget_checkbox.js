@@ -73,7 +73,7 @@ var et2_checkbox = et2_inputWidget.extend({
 	 */
 	set_value: function(_value) {
 		if(_value != this.value) {
-			if(_value == this.selected_value) {
+			if(_value == this.options.selected_value) {
 				this.input.attr("checked", "checked");
 			} else {
 				this.input.removeAttr("checked");
@@ -86,9 +86,9 @@ var et2_checkbox = et2_inputWidget.extend({
 	 */
 	getValue: function() {
 		if(this.input.attr("checked")) {
-			return this.selected_value;
+			return this.options.selected_value;
 		} else {
-			return this.unselected_value;
+			return this.options.unselected_value;
 		}
 	}
 });
@@ -120,11 +120,11 @@ var et2_checkbox_ro = et2_checkbox.extend({
 	},
 
 	set_value: function(_value) {
-		if(_value == this.selected_value) {
-			this.span.text(this.ro_true);
+		if(_value == this.options.selected_value) {
+			this.span.text(this.options.ro_true);
 			this.value = _value;
 		} else {
-			this.span.text(this.ro_false);
+			this.span.text(this.options.ro_false);
 		}
 	}
 
