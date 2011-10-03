@@ -497,7 +497,8 @@ class groupdav_principals extends groupdav_handler
 
 			if ($options['depth'])
 			{
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none')
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+					!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					$files[] = $this->add_account($this->accounts->read($GLOBALS['egw_info']['user']['account_id']));
 				}
@@ -515,13 +516,14 @@ class groupdav_principals extends groupdav_handler
 		{
 			if (!($id = $this->accounts->name2id($name,'account_lid','u')) ||
 				!($account = $this->accounts->read($id)) ||
+				!isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
 				// do NOT allow other user, if account-selection is none
-				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+				($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 					$name != $GLOBALS['egw_info']['user']['account_lid'] ||
 				// only allow group-members for account-selection is groupmembers
 				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
 					!array_intersect($this->accounts->memberships($account['account_id'],true),
-						$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true)))
+						$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true))))
 			{
 				return '404 Not Found';
 			}
