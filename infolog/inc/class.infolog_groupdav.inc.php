@@ -151,6 +151,8 @@ class infolog_groupdav extends groupdav_handler
 			// when trying to request not supported components, eg. VTODO on a calendar collection
 			return true;
 		}
+		if ($id) $path = dirname($path).'/';	// caldav_name get's added anyway in the callback
+
 		if ($this->debug > 1)
 		{
 			error_log(__METHOD__."($path,,,$user,$id) filter=".

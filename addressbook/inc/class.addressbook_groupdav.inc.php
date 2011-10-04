@@ -126,6 +126,8 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return false;
 		}
+		if ($id) $path = dirname($path).'/';	// carddav_name get's added anyway in the callback
+
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
 		// check if we have to return the full contact data or just the etag's
