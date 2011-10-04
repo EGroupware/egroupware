@@ -559,5 +559,43 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		return $cat_actions;
 	}
+
+	/**
+	 * Validate input
+	 *
+	 * Following attributes get checked:
+	 * - needed: value must NOT be empty
+	 * - min, max: int and float widget only
+	 * - maxlength: maximum length of string (longer strings get truncated to allowed size)
+	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
+	 * - int and float get casted to their type
+	 *
+	 * @param string $cname current namespace
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $content, &$validated=array())
+	{
+		$form_name = self::form_name($cname, $this->id);
+		$value = self::get_array($content, $form_name);
+error_log("nextmatch value: " . array2string($value));
+
+		// Save current column settings as default (admins only)
+		if($value['as_default'])
+		{
+			unset($value['as_default']);
+			if($GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				list($app) = explode('.',$this->template);
+				$pref_name = 'nextmatch-' . (isset($this->columnselection_pref) ? $this->columnselection_pref : $this->template);
+				// Columns already saved to user's preferences
+				$cols = $GLOBALS['egw']->preferences->read();
+				$cols = $cols[$pref_name];
+				$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols,'default');
+				$GLOBALS['egw']->preferences->save_repository(false,'default');
+			}
+		}
+		$validated = $value;
+	}
 }
 

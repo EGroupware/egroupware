@@ -349,8 +349,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	/**
 	 * Take current column display settings and store them in egw.preferences
 	 * for next time
+	 *
+	 * @param setDefault boolean From checkbox, for admins to set default settings
 	 */
-	_updateUserPreferences: function() {
+	_updateUserPreferences: function(setDefault) {
 		var colMgr = this.dataviewContainer.getColumnMgr()
 		if(!this.options.settings.columnselection_pref) {
 			this.options.settings.columnselection_pref = this.options.template;
@@ -382,6 +384,13 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Save adjusted column sizes
 		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+
+		// Save as default, if set
+		if(setDefault)
+		{
+			this.getInstanceManager().submit();
+			return false;
+		}
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
@@ -432,9 +441,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Create the column manager and update the grid container
 		this.dataviewContainer.setColumns(columnData);
 
-		// Register handler to update preferences when column properties are changed
 		var self = this;
-		this.dataviewContainer.onUpdateColumns = function() { self._updateUserPreferences();};
+		// Register handler to update preferences when column properties are changed
+		this.dataviewContainer.onUpdateColumns = function(setDefault) { self._updateUserPreferences(setDefault);};
+		
+		// Register handler for column selection popup
+		this.dataviewContainer.selectColumnsClick = function(event) { self._selectColumnsClick(event);};
 	},
 
 	_parseDataRow: function(_row, _colData) {
@@ -471,6 +483,93 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				this._parseDataRow(_grid.cells[y], _grid.colData);
 			}
 		}
+	},
+
+	_selectColumnsClick: function(e) {
+		if(!this.selectPopup)
+		{
+			// Build the popup
+			var self = this;
+			var columnMgr = this.dataviewContainer.columnMgr;
+			var columns = {};
+			var columns_selected = [];
+			for (var i = 0; i < columnMgr.columns.length; i++)
+			{
+				var col = columnMgr.columns[i];
+				if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				{
+					columns[col.id] = col.caption;
+					if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
+				}
+			}
+
+			var select = et2_createWidget("select", {multiple: true, rows: 8}, this);
+			select.set_select_options(columns);
+			select.set_value(columns_selected);
+
+			var defaultCheck = et2_createWidget("checkbox", {}, this);
+			defaultCheck.set_id('as_default');
+			defaultCheck.set_label(egw.lang("As default"));
+
+			var okButton = et2_createWidget("buttononly", {}, this);
+			okButton.set_label(egw.lang("ok"));
+			okButton.onclick = function() {
+				// Update visibility
+				var visibility = {};
+				for (var i = 0; i < columnMgr.columns.length; i++)
+				{
+					var col = columnMgr.columns[i];
+					if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
+					{
+						visibility[col.id] = {visible: false};
+					}
+				}
+				var value = select.getValue();
+				for(var i = 0; i < value.length; i++)
+				{
+					visibility[value[i]].visible = true;
+				}
+				columnMgr.setColumnVisibilitySet(visibility);
+				self.selectPopup.toggle();
+
+				self.dataviewContainer.updateColumns();
+
+				// Set default?
+				if(defaultCheck.get_value() == "true")
+				{
+					self.getInstanceManager().submit();
+				}
+			};
+
+			var cancelButton = et2_createWidget("buttononly", {}, this);
+			cancelButton.set_label(egw.lang("cancel"));
+			cancelButton.onclick = function() {
+				self.selectPopup.toggle();
+			}
+
+			this.selectPopup = jQuery(document.createElement("fieldset"))
+				.addClass("colselection ui-dialog")
+				.append("<legend>"+egw.lang("Select columns")+"</legend>")
+				.append(select.getDOMNode())
+				.append(okButton.getDOMNode())
+				.append(cancelButton.getDOMNode())
+				.appendTo(this.div);
+
+			// Add default checkbox for admins
+			var apps = egw.user('apps');
+			if(apps['admin'])
+			{
+				this.selectPopup.append(defaultCheck.getDOMNode())
+			}
+		}
+		else	
+		{
+			this.selectPopup.toggle();
+		}
+		var t_position = jQuery(e.target).position();
+		var s_position = this.div.position();
+		this.selectPopup.css("top", t_position.top)
+			.css("left", s_position.left + this.div.width() - this.selectPopup.width());
 	},
 
 	/**
@@ -734,6 +833,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			});
 		}
 	},
+
 
 	/**
 	 * Build the selectbox filters in the header bar

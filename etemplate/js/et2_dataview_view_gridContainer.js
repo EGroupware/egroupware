@@ -43,6 +43,8 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Hooks to allow parent to keep up to date if things change
 	 */
 	onUpdateColumns: false,
+	selectColumnsClick: false,
+
 
 	/**
 	 * Constructor for the grid container
@@ -179,8 +181,10 @@ var et2_dataview_gridContainer = Class.extend({
 	/**
 	 * Recalculates the stylesheets which determine the column visibility and
 	 * width.
+	 * 
+	 * @param setDefault boolean Allow admins to save current settings as default for all users
 	 */
-	updateColumns: function() {
+	updateColumns: function(setDefault) {
 		if (this.columnMgr)
 		{
 			this._updateColumns();
@@ -189,7 +193,7 @@ var et2_dataview_gridContainer = Class.extend({
 		// Ability to notify parent / someone else
 		if (this.onUpdateColumns)
 		{
-			this.onUpdateColumns();
+			this.onUpdateColumns(setDefault);
 		}
 	},
 
@@ -396,70 +400,14 @@ var et2_dataview_gridContainer = Class.extend({
 		// Build the "select columns" icon
 		this.selectColIcon = $j(document.createElement("span"))
 			.addClass("selectcols")
-			// Toggle display of option popup
-			.click(this, function(e) {e.data.selectPopup.toggle();});
 
 		// Build the option column
 		this.selectCol = $j(document.createElement("th"))
 			.addClass("optcol")
 			.append(this.selectColIcon)
+			// Toggle display of option popup
+			.click(this, function(e) {if(e.data.selectColumnsClick) e.data.selectColumnsClick(e)})
 			.appendTo(this.headTr);
-
-		// Build the popup
-		var self = this;
-		var columns = {};
-		var columns_selected = [];
-		for (var i = 0; i < this.columnMgr.columns.length; i++)
-		{
-			var col = this.columnMgr.columns[i];
-			if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
-			{
-				columns[col.id] = col.caption;
-				if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
-			}
-		}
-
-		var select = et2_createWidget("select", {multiple: true, rows: 8});
-		select.set_select_options(columns);
-		select.set_value(columns_selected);
-
-		var okButton = et2_createWidget("buttononly", {label: egw.lang("ok")});
-		okButton.set_label(egw.lang("ok"));
-		okButton.onclick = function() {
-			// Update visibility
-			var visibility = {};
-			for (var i = 0; i < self.columnMgr.columns.length; i++)
-			{
-				var col = self.columnMgr.columns[i];
-				if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
-				{
-					visibility[col.id] = {visible: false};
-				}
-			}
-			var value = select.getValue();
-			for(var i = 0; i < value.length; i++)
-			{
-				visibility[value[i]].visible = true;
-			}
-			self.columnMgr.setColumnVisibilitySet(visibility);
-			self.selectPopup.toggle();
-			self.updateColumns();
-		};
-
-		var cancelButton = et2_createWidget("buttononly");
-		cancelButton.set_label(egw.lang("cancel"));
-		cancelButton.onclick = function() {
-			self.selectPopup.toggle();
-		}
-
-		var popup = this.selectPopup = $j(document.createElement("fieldset"))
-			.addClass("colselection")
-			.css("display", "none")
-			.append("<legend>"+egw.lang("Select columns")+"</legend>")
-			.append(select.getDOMNode())
-			.append(okButton.getDOMNode())
-			.append(cancelButton.getDOMNode())
-			.appendTo(this.selectCol);
 
 		this.selectCol.css("width", this.scrollbarWidth - this.selectCol.outerWidth()
 				+ this.selectCol.width() + 1);
