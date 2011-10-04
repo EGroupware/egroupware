@@ -18,8 +18,6 @@
  * to allow to check if required properties are set!
  * groupdav_principals::add_principal() converts simple associative props (name => value pairs)
  * to name => HTTP_WebDAV_Server(name, value) pairs.
- *
- * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  */
 class groupdav_principals extends groupdav_handler
 {
@@ -645,7 +643,7 @@ class groupdav_principals extends groupdav_handler
 			if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
 			{
-				$addressbooks[] = '/'.urlencode($owner).'/';
+				$addressbooks[] = '/'.$owner.'/';
 			}
 		}
 		return $addressbooks;
