@@ -547,7 +547,7 @@ class infolog_bo
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
 		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
-		if (is_scalar($info_id) || isset($info_id[0]))
+		if (is_scalar($info_id) || isset($info_id[count($info_id)-1]))
 		{
 			if (is_scalar($info_id) && !is_numeric($info_id))
 			{

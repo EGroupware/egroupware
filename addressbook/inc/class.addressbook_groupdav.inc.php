@@ -534,12 +534,22 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Read a contact
 	 *
+	 * We have to make sure to not return or even consider in read deleted contacts, as the might have
+	 * the same UID and/or carddav_name as not deleted contacts and would block access to valid entries
+	 *
 	 * @param string|id $id
 	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		$contact = $this->bo->read(array(self::$path_attr => $id));
+		static $non_deleted_tids;
+		if (is_null($non_deleted_tids))
+		{
+			$non_deleted_tids = $this->bo->content_types;
+			unset($non_deleted_tids[addressbook_so::DELETED_TYPE]);
+			$non_deleted_tids = array_keys($non_deleted_tids);
+		}
+		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
 
 		if ($contact && $contact['tid'] == addressbook_so::DELETED_TYPE)
 		{

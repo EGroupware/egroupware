@@ -462,12 +462,15 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * Read an entry
 	 *
+	 * We have to make sure to not return or even consider in read deleted infologs, as the might have
+	 * the same UID and/or caldav_name as not deleted ones and would block access to valid entries
+	 *
 	 * @param string|id $id
 	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		return $this->bo->read(array(self::$path_attr => $id),false,'server');
+		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,'server');
 	}
 
 	/**
