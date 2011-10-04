@@ -48,7 +48,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
 			case 'strictxml':
 				break;
 			case 'htmlenc':
-	    		if ($this->_contentSize) {
+	    		if (!$state->isWBXML() && $this->_contentSize) {
 	    			$this->_content = htmlspecialchars($this->_content, ENT_COMPAT, 'UTF-8');
 	    		}
 	    		break;
@@ -138,7 +138,9 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
 			    }
 			    switch ($contentFormat) {
 			    	case 'strictxml':
-				    	$chars = '<![CDATA['. $chars. ']]>';
+			    		if (!$state->isWBXML()) {
+				    		$chars = '<![CDATA['. $chars. ']]>';
+			    		}
 				    	break;
 			    }
 			    $output->characters($chars);

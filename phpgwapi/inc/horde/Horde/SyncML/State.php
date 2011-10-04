@@ -860,6 +860,7 @@ class Horde_SyncML_State {
 				$res['ContentFormat'] = 'htmlenc';
 			default:
 				$res['mayFragment'] = 1;
+				$res['ContentFormat'] = 'strictxml';
 				break;
 		}
 
