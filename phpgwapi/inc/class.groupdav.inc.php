@@ -570,13 +570,6 @@ class groupdav extends HTTP_WebDAV_Server
 		$files['files'][] = $this->add_collection($path, array(
 			'displayname' => $displayname,
 			'owner' => $path == '/' ? '' : array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
-			'calendar-user-address-set' => self::mkprop(groupdav::CALDAV,'calendar-user-address-set',$calendar_user_address_set),
-			'email-address-set' => self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
-				self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),
-			// OUTBOX URLs of the current user
-			'schedule-outbox-URL' => self::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
-				self::mkprop(groupdav::DAV,'href',$this->base_uri.'/calendar/'))),
-			//'current-user-privilege-set' => self::current_user_privilege_set(),
 		));
 		if ($depth)
 		{
@@ -643,12 +636,6 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$props = array(
 			'owner' => array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
-			'calendar-user-address-set' => self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']),
-				self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
-				self::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid']))),
-			'email-address-set' => self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
-				self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),
 		);
 
 		$displayname = translation::convert(lang($app).' '.
