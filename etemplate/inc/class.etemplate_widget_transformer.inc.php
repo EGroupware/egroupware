@@ -200,6 +200,11 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 		{
 			// nothing to do here
 		}
+		// TODO: Might be a better way to handle when value to be set is an array
+		elseif(is_array($action) && $attr == 'sel_options')
+		{
+			$attrs[$attr] = $action;
+		}
 		// action is a switch --> check cases
 		elseif(is_array($action))
 		{
