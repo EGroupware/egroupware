@@ -276,15 +276,17 @@ abstract class groupdav_handler
 			// of the calendar --> on failure we return 412 Precondition failed, to not overwrite the modifications
 			if (isset($_SERVER['HTTP_IF_MATCH']))
 			{
-				if (strstr($_SERVER['HTTP_IF_MATCH'], $etag) === false)
+				$this->http_if_match = $_SERVER['HTTP_IF_MATCH'];
+				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+				if ($this->http_if_match[0] == '"') $this->http_if_match = substr($this->http_if_match, 1, -1);
+
+				if ($this->http_if_match !== $etag)
 				{
-					$this->http_if_match = $_SERVER['HTTP_IF_MATCH'];
 					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed");
 					return '412 Precondition Failed';
 				}
 				else
 				{
-					$this->http_if_match = $etag;
 					// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
 					if ($method == 'GET' &&	isset($_SERVER['HTTP_IF_NONE_MATCH']))
 					{

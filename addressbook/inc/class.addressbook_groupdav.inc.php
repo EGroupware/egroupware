@@ -387,7 +387,7 @@ class addressbook_groupdav extends groupdav_handler
 		// e.g. Evolution does not understand 'text/vcard'
 		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
 		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($contact));
+		header('ETag: "'.$this->get_etag($contact).'"');
 		return true;
 	}
 
@@ -499,7 +499,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 
 		// we should not return an etag here, as we never store the PUT vcard byte-by-byte
-		//header('ETag: '.$this->get_etag($contact));
+		//header('ETag: "'.$this->get_etag($contact).'"');
 
 		// send GroupDAV Location header only if we dont use carddav_name as path-attribute
 		if ($retval !== true && self::$path_attr == 'id')

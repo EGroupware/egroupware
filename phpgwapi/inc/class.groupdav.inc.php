@@ -460,6 +460,11 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$prop = self::mkprop($name, $prop);
 			}
+			// add quotes around etag, if they are not already there
+			if ($prop['name'] == 'getetag' && $prop['val'][0] != '"')
+			{
+				$prop['val'] = '"'.$prop['val'].'"';
+			}
 		}
 
 		return array(

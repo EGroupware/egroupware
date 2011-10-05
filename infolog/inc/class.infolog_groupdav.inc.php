@@ -361,7 +361,7 @@ class infolog_groupdav extends groupdav_handler
 		$options['data'] = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($task));
+		header('ETag: "'.$this->get_etag($task).'"');
 		return true;
 	}
 
@@ -432,7 +432,7 @@ class infolog_groupdav extends groupdav_handler
 		}
 
 		// we should not return an etag here, as we never store the PUT ical byte-by-byte
-		//header('ETag: '.$this->get_etag($infoId));
+		//header('ETag: "'.$this->get_etag($infoId).'"');
 
 		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
 		if ($retval !== true && self::$path_attr != 'caldav_name')

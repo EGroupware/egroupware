@@ -391,7 +391,7 @@ class calendar_groupdav extends groupdav_handler
 		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'PUBLISH' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($event));
+		header('ETag: "'.$this->get_etag($event).'"');
 		return true;
 	}
 
@@ -598,7 +598,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		// we should not return an etag here, as we never store the PUT ical byte-by-byte
-		//header('ETag: '.$this->get_etag($cal_id));
+		//header('ETag: "'.$this->get_etag($cal_id).'"');
 
 		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
 		if ($retval !== true && self::$path_attr != 'caldav_name')
@@ -677,7 +677,8 @@ class calendar_groupdav extends groupdav_handler
 				{
 					if ($this->debug) error_log(__METHOD__."() importVCal($eventId) returned false");
 				}
-				header('ETag: '.$this->get_etag($eventId));
+				// we should not return an etag here, as we never store the ical byte-by-byte
+				//header('ETag: "'.$this->get_etag($eventId).'"');
 			}
 		}
 		return true;
