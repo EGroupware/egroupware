@@ -349,10 +349,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	/**
 	 * Take current column display settings and store them in egw.preferences
 	 * for next time
-	 *
-	 * @param setDefault boolean From checkbox, for admins to set default settings
 	 */
-	_updateUserPreferences: function(setDefault) {
+	_updateUserPreferences: function() {
 		var colMgr = this.dataviewContainer.getColumnMgr()
 		if(!this.options.settings.columnselection_pref) {
 			this.options.settings.columnselection_pref = this.options.template;
@@ -384,13 +382,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Save adjusted column sizes
 		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
-
-		// Save as default, if set
-		if(setDefault)
-		{
-			this.getInstanceManager().submit();
-			return false;
-		}
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
@@ -443,7 +434,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		var self = this;
 		// Register handler to update preferences when column properties are changed
-		this.dataviewContainer.onUpdateColumns = function(setDefault) { self._updateUserPreferences(setDefault);};
+		this.dataviewContainer.onUpdateColumns = function() { self._updateUserPreferences();};
 		
 		// Register handler for column selection popup
 		this.dataviewContainer.selectColumnsClick = function(event) { self._selectColumnsClick(event);};
@@ -559,7 +550,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			var apps = egw.user('apps');
 			if(apps['admin'])
 			{
-				this.selectPopup.append(defaultCheck.getDOMNode())
+				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()))
 			}
 		}
 		else	

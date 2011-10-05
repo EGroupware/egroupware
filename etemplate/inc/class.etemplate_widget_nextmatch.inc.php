@@ -77,6 +77,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	}
 
 	/**
+	 * Legacy options
+	 */
+	protected $legacy_options = 'template';
+		
+	/**
 	 * Number of rows to send initially
 	 */
 	const INITIAL_ROWS = 25;
@@ -578,20 +583,20 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 		$value = self::get_array($content, $form_name);
-error_log("nextmatch value: " . array2string($value));
 
 		// Save current column settings as default (admins only)
 		if($value['as_default'])
 		{
 			unset($value['as_default']);
-			if($GLOBALS['egw_info']['user']['apps']['admin'])
+			list($app) = explode('.',$this->attrs['template']);
+			if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
 			{
-				list($app) = explode('.',$this->template);
-				$pref_name = 'nextmatch-' . (isset($this->columnselection_pref) ? $this->columnselection_pref : $this->template);
-				// Columns already saved to user's preferences
+				$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template'].'-details');
+				// Columns already saved to user's preferences, use from there
 				$cols = $GLOBALS['egw']->preferences->read();
-				$cols = $cols[$pref_name];
+				$cols = $cols[$app][$pref_name];
 				$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols,'default');
+				
 				$GLOBALS['egw']->preferences->save_repository(false,'default');
 			}
 		}
