@@ -167,6 +167,8 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vcal = new Horde_iCalendar;
+		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION',$_version);
 		if ($_method) $vcal->setAttribute('METHOD',$_method);
 
@@ -573,7 +575,7 @@ class infolog_ical extends infolog_bo
 			{
 				$taskData['info_id'] = $_taskID;
 			}
-			foreach ($component->_attributes as $attribute)
+			foreach ($component->getAllAttributes() as $attribute)
 			{
 				//$attribute['value'] = trim($attribute['value']);
 				if (!strlen($attribute['value'])) continue;
@@ -611,6 +613,13 @@ class infolog_ical extends infolog_bo
 						$taskData['info_location'] = str_replace("\r\n", "\n", $attribute['value']);
 						break;
 
+					case 'DURATION':
+						if (!isset($taskData['info_startdate']))
+						{
+							$taskData['info_startdate']	= $component->getAttribute('DTSTART');
+						}
+						$attribute['value'] += $taskData['info_startdate'];
+						// fall throught
 					case 'DUE':
 						// eGroupWare uses date only
 						$parts = @getdate($attribute['value']);
@@ -724,7 +733,9 @@ class infolog_ical extends infolog_bo
 						translation::charset(), $charset);
 				}
 				$vnote = new Horde_iCalendar_vnote();
-				$vNote->setAttribute('VERSION', '1.1');
+				$vnote->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
+					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+				$vnote->setAttribute('VERSION', '1.1');
 				foreach (array(	'SUMMARY'		=> $note['info_subject'],
 								'BODY'			=> $note['info_des'],
 								'CATEGORIES'	=> $note['info_cat'],
