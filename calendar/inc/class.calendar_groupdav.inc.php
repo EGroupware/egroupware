@@ -910,16 +910,31 @@ class calendar_groupdav extends groupdav_handler
 		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
 		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access)
 		{
-			if (!$return_no_access)
+ 			if (!$return_no_access)
 			{
-				$ret = isset($event['participants'][$this->bo->user]) &&
-					$this->bo->set_status($event,$this->bo->user,'R') ? true : '403 Forbidden';
-				if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string($event['participants']).", user={$this->bo->user} --> return $ret");
-				return $ret;
+				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
+				$ret = '403 Forbidden';
+				$memberships = $GLOBALS['egw']->accounts->memberships($this->bo->user, true);
+				foreach($event['participants'] as $uid => $status)
+				{
+					if ($this->bo->user == $uid || in_array($uid, $memberships))
+					{
+						if ($this->bo->set_status($event,$this->bo->user, 'R')) $ret = true;
+						break;
+					}
+				}
 			}
-			return $event;
+			else
+			{
+				$ret = $event;
+			}
 		}
-		return $this->bo->delete($event['id']);
+		else
+		{
+			$ret = $this->bo->delete($event['id']);
+		}
+		if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string(is_array($event)?$event['participants']:null).", user={$this->bo->user} --> return ".array2string($ret));
+		return $ret;
 	}
 
 	/**
