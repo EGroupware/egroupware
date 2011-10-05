@@ -1189,7 +1189,7 @@ return array();	// temporary disabling meeting requests from calendar
 				'flags' => 1,
 			);
 		}
-		debugLog (__METHOD__."('$folderid',".array2string(is_array($id) ? $id['id'] : $id).") returning ".array2string($stat));
+		//debugLog (__METHOD__."('$folderid',".array2string(is_array($id) ? $id['id'] : $id).") returning ".array2string($stat));
 
 		return $stat;
 	}
