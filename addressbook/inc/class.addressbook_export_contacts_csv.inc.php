@@ -66,7 +66,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if(bo_merge::hasExportLimit($export_limit,'ISALLOWED') && !$limit_exception) {
+		if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
 			$selection = array_slice($selection, 0, $export_limit);
 		}
 		if($options['explode_multiselects']) {
