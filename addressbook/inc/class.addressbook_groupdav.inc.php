@@ -33,6 +33,7 @@ class addressbook_groupdav extends groupdav_handler
 		//'NICKNAME',
 		'EMAIL' => 'email',
 		'FN' => 'n_fn',
+		'ORG' => 'org_name',
 	);
 
 	var $supportedFields = array(
@@ -122,7 +123,7 @@ class addressbook_groupdav extends groupdav_handler
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
 		// process REPORT filters or multiget href's
-		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
+		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id, $nresults))
 		{
 			return false;
 		}
@@ -143,8 +144,15 @@ class addressbook_groupdav extends groupdav_handler
 				}
 			}
 		}
-		// return iterator, calling ourself to return result in chunks
-		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		if (isset($nresults))
+		{
+			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+		}
+		else
+		{
+			// return iterator, calling ourself to return result in chunks
+			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		}
 		return true;
 	}
 
@@ -165,11 +173,20 @@ class addressbook_groupdav extends groupdav_handler
 			$handler = self::_get_handler();
 		}
 		unset($filter['address_data']);
+		if (isset($filter['order']))
+		{
+			$order = $filter['order'];
+			unset($filter['order']);
+		}
+		else
+		{
+			$order = 'egw_addressbook.contact_id';
+		}
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		$cols = array('id','uid','etag','modified');
 		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
-		if (($contacts =& $this->bo->search(array(),$cols,'egw_addressbook.contact_id','','',False,'AND',$start,$filter)))
+		if (($contacts =& $this->bo->search(array(),$cols,$order,'','',False,'AND',$start,$filter)))
 		{
 			foreach($contacts as &$contact)
 			{
@@ -195,48 +212,135 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array $options
 	 * @param array &$cal_filters
 	 * @param string $id
-	 * @return boolean true if filter could be processed, false for requesting not here supported VTODO items
+	 * @param int &$nresult on return limit for number or results or unchanged/null
+	 * @return boolean true if filter could be processed
 	 */
-	function _report_filters($options,&$filters,$id)
+	function _report_filters($options,&$filters,$id, &$nresults)
 	{
 		if ($options['filters'])
 		{
-			foreach($options['filters'] as $filter)
+			/* Example of a complex filter used by Mac Addressbook
+			  <B:filter test="anyof">
+			    <B:prop-filter name="FN" test="allof">
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">becker</B:text-match>
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">ralf</B:text-match>
+			    </B:prop-filter>
+			    <B:prop-filter name="EMAIL" test="allof">
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">becker</B:text-match>
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">ralf</B:text-match>
+			    </B:prop-filter>
+			    <B:prop-filter name="NICKNAME" test="allof">
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">becker</B:text-match>
+			      <B:text-match collation="i;unicode-casemap" match-type="contains">ralf</B:text-match>
+			    </B:prop-filter>
+			  </B:filter>
+			*/
+			$filter_test = isset($options['filters']['attrs']) && isset($options['filters']['attrs']['test']) ?
+				$options['filters']['attrs']['test'] : 'anyof';
+			$prop_filters = array();
+
+			foreach($options['filters'] as $n => $filter)
 			{
-				switch($filter['name'])
+				if (!is_int($n)) continue;	// eg. attributes of filter xml element
+
+				switch((string)$filter['name'])
 				{
-					case 'prop-filter':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) prop-filter='{$filter['attrs']['name']}'");
-						$prop_filter = $filter['attrs']['name'];
+					case 'param-filter':
+						error_log(__METHOD__."(...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
-					case 'text-match':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) text-match: $prop_filter='{$filter['data']}'");
-						if (!isset($this->filter_prop2cal[strtoupper($prop_filter)]))
+					case 'prop-filter':	// can be multiple prop-filter, see example
+						if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
+						$matches = array();
+						$prop_filter = strtoupper($filter['attrs']['name']);
+						$prop_test = isset($filter['attrs']['test']) ? $filter['attrs']['test'] : 'anyof';
+						if ($this->debug > 1) error_log(__METHOD__."(...) prop-filter='$prop_filter', test='$prop_test'");
+						break;
+					case 'is-not-defined':
+						$matches[] = '('.$column."='' OR ".$column.' IS NULL)';
+						break;
+					case 'text-match':	// prop-filter can have multiple text-match, see example
+						if (!isset($this->filter_prop2cal[$prop_filter]))	// eg. not existing NICKNAME in EGroupware
 						{
-							if ($this->debug) error_log(__METHOD__."($path,".str_replace(array("\n",'    '),'',print_r($options,true)).",,$user) unknown property '$prop_filter' --> ignored");
+							if ($this->debug || $prop_filter != 'NICKNAME') error_log(__METHOD__."(...) text-match: $prop_filter {$filter['attrs']['match-type']} '{$filter['data']}' unknown property '$prop_filter' --> ignored");
+							$column = false;	// to ignore following data too
 						}
 						else
 						{
-							switch($filter['attrs']['match-type'])
+							switch($filter['attrs']['collation'])	// todo: which other collations allowed, we are allways unicode
 							{
+								case 'i;unicode-casemap':
 								default:
-								case 'equals':
-									$filters[$this->filter_prop2cal[strtoupper($prop_filter)]] = $filter['data'];
-									break;
-								case 'substr':	// ToDo: check RFC4790
-									$filters[] = $this->filter_prop2cal[strtoupper($prop_filter)].' LIKE '.$GLOBALS['egw']->db->quote($filter['data']);
+									$comp = ' '.$GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' ';
 									break;
 							}
+							$column = $this->filter_prop2cal[strtoupper($prop_filter)];
+							if (strpos($column, '_') === false) $column = 'contact_'.$column;
+							if (!isset($filters['order'])) $filters['order'] = $column;
+							$match_type = $filter['attrs']['match-type'];
+							$negate_condition = isset($filter['attrs']['negate-condition']) && $filter['attrs']['negate-condition'] == 'yes';
 						}
-						unset($prop_filter);
 						break;
-					case 'param-filter':
-						if ($this->debug) error_log(__METHOD__."($path,...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
-						break;
+					case '':	// data of text-match element
+						if (isset($filter['data']) && isset($column))
+						{
+							if ($column)	// false for properties not known to EGroupware
+							{
+								$value = str_replace(array('%', '_'), array('\\%', '\\_'), $filter['data']);
+								switch($match_type)
+								{
+									case 'equals':
+										$sql_filter = $column . $comp . $GLOBALS['egw']->db->quote($value);
+										break;
+									default:
+									case 'contains':
+										$sql_filter = $column . $comp . $GLOBALS['egw']->db->quote('%'.$value.'%');
+										break;
+									case 'starts-with':
+										$sql_filter = $column . $comp . $GLOBALS['egw']->db->quote($value.'%');
+										break;
+									case 'ends-with':
+										$sql_filter = $column . $comp . $GLOBALS['egw']->db->quote('%'.$value);
+										break;
+								}
+								$matches[] = ($negate_condition ? 'NOT ' : '').$sql_filter;
+
+								if ($this->debug > 1) error_log(__METHOD__."(...) text-match: $prop_filter $match_type' '{$filter['data']}'");
+							}
+							unset($column);
+							break;
+						}
+						// fall through
 					default:
-						if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user) unknown filter --> ignored");
+						error_log(__METHOD__."(".array2string($options).",,$id) unknown filter=".array2string($filter).' --> ignored');
 						break;
 				}
+			}
+			if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
+			if ($prop_filters)
+			{
+				$filters[] = $filter = '(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))';
+				if ($this->debug) error_log(__METHOD__."($path,...) sql-filter: $filter");
+			}
+		}
+		// parse limit from $options['other']
+		/* Example limit
+		  <B:limit>
+		    <B:nresults>10</B:nresults>
+		  </B:limit>
+		*/
+		foreach($options['other'] as $option)
+		{
+			switch($option['name'])
+			{
+				case 'nresults':
+					$nresults = (int)$option['data'];
+					//error_log(__METHOD__."(...) options[other]=".array2string($options['other'])." --> nresults=$nresults");
+					break;
+				case 'limit':
+					break;
+				default:
+					error_log(__METHOD__."(...) unknown xml: options[other]=".array2string($options['other']));
+					break;
 			}
 		}
 		// multiget --> fetch the url's
@@ -255,7 +359,7 @@ class addressbook_groupdav extends groupdav_handler
 				}
 			}
 			if ($ids) $filters[self::$path_attr] = $ids;
-			if ($this->debug) error_log(__METHOD__."($path,,,$user) addressbook-multiget: ids=".implode(',',$ids));
+			if ($this->debug) error_log(__METHOD__."(...) addressbook-multiget: ids=".implode(',',$ids));
 		}
 		elseif ($id)
 		{
@@ -288,7 +392,7 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
-	 * Handle put request for an event
+	 * Handle put request for a contact
 	 *
 	 * @param array &$options
 	 * @param int $id
