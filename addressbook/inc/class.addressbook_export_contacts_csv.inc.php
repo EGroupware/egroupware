@@ -40,7 +40,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		// Addressbook defines its own export imits
 		$limit_exception = bo_merge::is_export_limit_excepted();
-		$export_limit = $export_object->export_limit = bo_merge::getExportLimit($app='addressbook');
+		$export_limit = bo_merge::getExportLimit($app='addressbook');
+		if (!$limit_exception) $export_object->export_limit = $export_limit; // we may not need that after all
 		if($export_limit == 'no' && !$limit_exception) {
 			return;
 		}
@@ -69,6 +70,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
 			$selection = array_slice($selection, 0, $export_limit);
 		}
+
 		if($options['explode_multiselects']) {
 			$customfields = config::get_customfields('addressbook');
 			$additional_fields = array();
@@ -202,11 +204,11 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			if($options['convert']) {
 				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook');
 			} else {
-                                // Implode arrays, so they don't say 'Array'
-                                foreach($contact->get_record_array() as $key => $value) {
-                                        if(is_array($value)) $contact->$key = implode(',', $value);
-                                }
-                        }
+				// Implode arrays, so they don't say 'Array'
+				foreach($contact->get_record_array() as $key => $value) {
+					if(is_array($value)) $contact->$key = implode(',', $value);
+				}
+			}
 
 			$export_object->export_record($contact);
 			unset($contact);
