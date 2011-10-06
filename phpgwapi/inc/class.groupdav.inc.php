@@ -351,7 +351,7 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				// principals collection
 				$files['files'][] = $this->add_collection('/principals/', array(
-	            	'displayname' => lang('Accounts'),
+	    			'displayname' => lang('Accounts'),
 				));
 				// todo: account_selection owngroups and none!!!
 				foreach($this->accounts->search(array('type' => 'both')) as $account)
@@ -833,7 +833,12 @@ class groupdav extends HTTP_WebDAV_Server
 				$name = basename($file['path']);
 			}
 
-			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
+			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".
+				html::a_href(htmlspecialchars($name),'/groupdav.php'.strtr($file['path'], array(
+					'%' => '%25',
+					'#' => '%23',
+					'?' => '%3F',
+				)))."</td>\n";
 			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
 			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
 			echo "\t\t<td>".$props['DAV:getetag']."</td>\n";

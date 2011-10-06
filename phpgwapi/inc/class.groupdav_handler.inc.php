@@ -484,7 +484,8 @@ abstract class groupdav_handler
 			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
 			$props['owner'] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
 		}
-		return $this->groupdav->add_resource($path.$this->get_path($entry), $props, $privileges);
+		// we urldecode here, as HTTP_WebDAV_Server uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
+		return $this->groupdav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
 	}
 }
 
