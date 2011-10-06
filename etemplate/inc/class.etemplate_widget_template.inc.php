@@ -55,6 +55,16 @@ class etemplate_widget_template extends etemplate_widget
 				//error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read from cache");
 				return self::$cache[$name];
 			}
+			// Template not found, try again as if $name were a partial name
+			else if(!$path && strpos('.',$name) === false)
+			{
+				foreach(self::$cache as $c_name => $c_template)
+				{
+					list($c_app, $c_main, $c_sub) = explode('.',$c_name, 3);
+					if($name == $c_sub) return $c_template;
+				}
+			}
+
 			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
 			return false;
 		}
@@ -77,6 +87,7 @@ class etemplate_widget_template extends etemplate_widget
 				}
 			}
 		}
+
 		// template not found in file, should never happen
 		error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
 		return false;
