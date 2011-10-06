@@ -641,6 +641,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		}
 
 		return null;
+	},
+
+	getPath: function() {
+		var path = this._super.apply(this,arguments);
+		if(this.id) path.push(this.id);
+		return path;
 	}
 
 });
