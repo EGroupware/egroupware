@@ -95,7 +95,7 @@
 
 			// currently we use only the first profile available
 			$accountData = array_shift($accountData);
-			#_debug_array($accountData);
+			//_debug_array($accountData);
 
 			$icServer = CreateObject('emailadmin.defaultimap');
 			$icServer->ImapServerId	= $accountData['id'];

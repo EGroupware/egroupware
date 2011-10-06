@@ -311,7 +311,7 @@
 				$identity =& $accountData['identity'];
 				//_debug_array($identity);
 				if (!isset($this->bofelamimail) || ((int)$_POST['active'] && !empty($icServer->host))) $this->bofelamimail = felamimail_bo::getInstance(false,$icServer->ImapServerId);
-				if((int)$_POST['active'] && !empty($icServer->host) && $this->bofelamimail->openConnection(($icServer->ImapServerId?$icServer->ImapServerId:0))) {
+				if(((int)$_POST['active'] || $accountData['active']) && !empty($icServer->host) && $this->bofelamimail->openConnection(($icServer->ImapServerId?$icServer->ImapServerId:0))) {
 					$folderObjects = $this->bofelamimail->getFolderObjects();
 					foreach($folderObjects as $folderName => $folderInfo) {
 						//_debug_array($folderInfo);
