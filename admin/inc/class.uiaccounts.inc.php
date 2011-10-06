@@ -1377,7 +1377,7 @@
 					$userData['status'] = 'A';
 					$userGroups = Array();
 					$userData['anonymous'] = False;
-					$userData['changepassword'] = True;
+					$userData['changepassword'] = (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'];
 					$userData['mustchangepassword'] = false;
 				}
 				$allGroups = $account->get_list('groups');
