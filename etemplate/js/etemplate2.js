@@ -35,6 +35,7 @@
 	et2_widget_progress;
 
 	et2_extension_nextmatch;
+	et2_extension_customfields;
 
 	// Requirements for the etemplate2 object
 	et2_core_common;
@@ -241,7 +242,7 @@ etemplate2.prototype.getValues = function(_root)
 		}
 
 		// Get the path to the node we have to store the value at
-		var path = _widget.getArrayMgr("content").getPath();
+		var path = _widget.getPath();
 		
 		// check if id contains a hierachical name, eg. "button[save]"
 		var id = _widget.id;

@@ -562,6 +562,13 @@ var et2_widget = Class.extend({
 		var modifications = this.getArrayMgr("modifications");
 		if(modifications && _node.getAttribute("id")) {
 			var entry = modifications.getEntry(_node.getAttribute("id"));
+			if(entry == null)
+			{
+				// Try again, but skip the fancy stuff
+				// TODO: Figure out why the getEntry() call doesn't always work
+				var entry = modifications.data[_node.getAttribute("id")];
+				if(entry) et2_debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
+			}
 			if(entry && entry.type)
 			{
 				_nodeName = attributes["type"] = entry.type
@@ -794,6 +801,14 @@ var et2_widget = Class.extend({
 		var app = egw.getAppName() == 'egroupware' ? 'phpgwapi' : egw.getAppName();
 		//console.warn("Unable to find template application, using %s", app);
 		return app;
+	},
+
+	/**
+	 * Returns the path into the data array.  By default, array manager takes care of
+	 * this, but some extensions need to override this
+	 */
+	getPath: function() {
+		return this.getArrayManager("content").getPath();
 	}
 });
 
