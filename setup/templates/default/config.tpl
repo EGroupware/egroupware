@@ -184,7 +184,7 @@
      </select>
     </td>
    </tr>
-   <tr class="row_on"">
+   <tr class="row_on">
     <td>{lang_Mail_server_login_type}:</td>
     <td>
      <select name="newsettings[mail_login_type]">{hook_mail_login_type}</select>
@@ -203,14 +203,18 @@
     <td><input name="newsettings[smtp_port]" value="{value_smtp_port}"></td>
    </tr>
    <tr class="row_on">
+    <td>{lang_SMTP-authentication_required}:</td>
+    <td><select name="newsettings[smtpAuth]"> {hook_auth_type_smtp}</select></td>
+   </tr>
+   <tr class="row_off">
     <td>{lang_User_for_SMTP-authentication_(leave_it_empty_if_no_auth_required)}:</td>
     <td><input name="newsettings[smtp_auth_user]" value="{value_smtp_auth_user}"></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Password_for_SMTP-authentication}:</td>
     <td><input type="password" name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 

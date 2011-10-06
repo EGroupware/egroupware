@@ -235,6 +235,10 @@ function auth_type_activesync($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_activesync']);
 }
+function auth_type_smtp($config)
+{
+    return _options_from(emailadmin_ui::getSMTPAuthConfig(),$config['smtpAuth']);
+}
 
 /**
  * Returns options string
