@@ -80,6 +80,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	},
 
 	legacyOptions: ["template"],
+	createNamespace: true,
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -136,7 +137,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		if (this.id)
 		{
-			var entry = this.getArrayMgr("content").getEntry(this.id);
+			var entry = this.getArrayMgr("content").data;
 
 			if (entry)
 			{
@@ -842,7 +843,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			"label": this.nextmatch.options.settings[name+"_label"]
 		},this.nextmatch);
 		select.set_value(value);
-		var mgr = this.nextmatch.getArrayMgr("content").openPerspective(this.nextmatch, this.nextmatch.id);
+		var mgr = this.nextmatch.getArrayMgr("content");
 		var options = mgr.getEntry("options-" + name);
 		if(options) select.set_select_options(options);
 		select.set_value(this.nextmatch.options.settings[name]);
