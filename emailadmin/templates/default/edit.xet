@@ -1,0 +1,458 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.edit.global" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox>
+						<caption label="Organisation"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="enter your default mail domain (from: user@domain)"/>
+									<textbox id="ea_default_domain"/>
+								</row>
+								<row>
+									<description value="name of organisation"/>
+									<textbox id="ea_organisation_name"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="profile access rights"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="can be used by application"/>
+									<menulist>
+										<menupopup id="ea_appname" options="any application"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="can be used by group"/>
+									<menulist>
+										<menupopup type="select-account" id="ea_group" options="any group,groups"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="can be used by user"/>
+									<menulist>
+										<menupopup type="select-account" id="ea_user" options="any user,accounts"/>
+									</menulist>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="global options"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="profile is active"/>
+									<checkbox id="ea_active"/>
+								</row>
+								<row>
+									<description value="users can define their own identities"/>
+									<checkbox id="ea_user_defined_identities" options="yes,no"/>
+								</row>
+								<row>
+									<description value="users can define their own emailaccounts"/>
+									<checkbox id="ea_user_defined_accounts" options="yes,no"/>
+								</row>
+								<row>
+									<description value="order"/>
+									<textbox type="integer" id="ea_order"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit.SMTP" template="" lang="" group="0" version="1.7.004">
+		<grid width="100%" height="400" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<hbox>
+						<description value="Select type of SMTP Server"/>
+						<menulist>
+							<menupopup align="right" id="ea_smtp_type" onchange="1"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="SMTP settings"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="SMTP-Server hostname or IP address"/>
+									<textbox id="ea_smtp_server"/>
+								</row>
+								<row>
+									<description value="SMTP-Server Port"/>
+									<textbox type="integer" id="ea_smtp_port"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="smtp authentication"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="Use SMTP auth"/>
+									<menulist>
+										<menupopup id="ea_smtp_auth"/>
+									</menulist>
+								</row>
+								<row>
+									<description value="send using this eMail-Address"/>
+									<textbox id="smtp_senders_email"/>
+								</row>
+								<row>
+									<description value="username"/>
+									<textbox id="ea_smtp_auth_username"/>
+								</row>
+								<row>
+									<description value="password"/>
+									<passwd id="ea_smtp_auth_password"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row disabled="!@smtpcapabilities=/forward/">
+					<groupbox>
+						<caption label="smtp options"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="user can edit forwarding address"/>
+									<checkbox id="ea_editforwardingaddress" options="yes,no"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit.IMAP" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="400" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<hbox>
+						<description value="select type of IMAP server"/>
+						<menulist>
+							<menupopup align="right" id="ea_imap_type" onchange="1"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="server settings"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="IMAP server hostname or ip address"/>
+									<textbox id="ea_imap_server"/>
+								</row>
+								<row>
+									<description value="IMAP server port"/>
+									<textbox type="integer" id="ea_imap_port"/>
+								</row>
+								<row>
+									<description value="imap server logintyp"/>
+									<menulist>
+										<menupopup id="ea_imap_login_type" onchange="1"/>
+									</menulist>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row disabled="!@ea_imap_login_type=admin">
+					<groupbox>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="Use predefined username and password below" span="2"/>
+								</row>
+								<row>
+									<description value="username"/>
+									<textbox id="ea_imap_auth_username"/>
+								</row>
+								<row>
+									<description value="password"/>
+									<passwd id="ea_imap_auth_password"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="encryption settings"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="encrypted connection"/>
+									<hbox>
+										<radio label="STARTTLS" id="ea_imap_tsl_encryption" options="1"/>
+										<radio label="TLS" id="ea_imap_tsl_encryption" options="2"/>
+										<radio label="SSL" id="ea_imap_tsl_encryption" options="3"/>
+										<radio label="no encryption" id="ea_imap_tsl_encryption" options="0"/>
+									</hbox>
+								</row>
+								<row>
+									<description value="do not validate certificate"/>
+									<checkbox id="ea_imap_tsl_auth" options="yes,no"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row disabled="!@imapcapabilities=/sieve/">
+					<groupbox>
+						<caption label="sieve settings"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="enable Sieve"/>
+									<checkbox id="ea_imap_enable_sieve" onchange="1" options="yes,no"/>
+								</row>
+								<row disabled="!@ea_imap_enable_sieve=yes">
+									<description value="Sieve server or ip address"/>
+									<textbox id="ea_imap_sieve_server"/>
+								</row>
+								<row disabled="!@ea_imap_enable_sieve=yes">
+									<description value="Sieve server port"/>
+									<textbox type="integer" id="ea_imap_sieve_port"/>
+								</row>
+								<row>
+									<description value="Vacation messages with start-  and end-date require an admin account to be set" span="2"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row disabled="!@imapcapabilities=/admin/">
+					<groupbox>
+						<caption label="Cyrus IMAP server administration"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="enable Cyrus IMAP server administration"/>
+									<checkbox id="ea_imap_enable_cyrus" onchange="1" options="yes,no"/>
+								</row>
+								<row disabled="!@ea_imap_enable_cyrus=yes">
+									<description value="admin username"/>
+									<textbox id="ea_imap_admin_user"/>
+								</row>
+								<row disabled="!@ea_imap_enable_cyrus=yes">
+									<description value="admin password"/>
+									<passwd id="ea_imap_admin_pw"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit.signature" template="" lang="" group="0" version="1.7.004">
+		<grid width="100%" height="400" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="users can define their own signatures"/>
+									<checkbox id="ea_user_defined_signatures" options="yes,no"/>
+								</row>
+								<row>
+									<htmlarea id="ea_default_signature" mode="advanced" width="700" toolbar="180" span="2"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit.stationery" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%" height="400" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox>
+						<caption label="active templates"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description value="users can utilize these stationery templates"/>
+									<listbox id="ea_stationery_active_templates" rows="5"/>
+								</row>
+								<row>
+									<html align="right" statustext="manage stationery templates" id="manage_stationery_templates" readonly="true" span="2"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit.history" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="400" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<historylog id="history"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.edit" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description align="center" id="msg" class="redItalic"/>
+				</row>
+				<row>
+					<grid width="98%">
+						<columns>
+							<column/>
+							<column width="40%"/>
+							<column width="50%"/>
+							<column width="5%"/>
+						</columns>
+						<rows>
+							<row>
+								<textbox label="ID" id="ea_profile_id" readonly="true"/>
+								<description value="Profile Name"/>
+								<textbox align="right" id="ea_description"/>
+								<description align="right"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<tabbox id="tabs">
+						<tabs>
+							<tab id="global" label="Global"/>
+							<tab id="SMTP" label="SMTP"/>
+							<tab id="IMAP" label="IMAP"/>
+							<tab id="signature" label="Signature"/>
+							<tab id="stationery" label="Stationery"/>
+							<tab id="history" label="History"/>
+						</tabs>
+						<tabpanels>
+							<template id="emailadmin.edit.global"/>
+							<template id="emailadmin.edit.SMTP"/>
+							<template id="emailadmin.edit.IMAP"/>
+							<template id="emailadmin.edit.signature"/>
+							<template id="emailadmin.edit.stationery"/>
+							<template id="emailadmin.edit.history"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row>
+					<hbox>
+						<hbox>
+							<button label="Save" id="save"/>
+							<button label="Apply" id="apply"/>
+							<button label="Cancel" id="cancel"/>
+						</hbox>
+						<button align="right" label="Delete" id="delete" onclick="return confirm('Do you really want to delete this Profile');"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.redItalic { color: red; font-style: italics; }
+		</styles>
+	</template>
+</overlay>

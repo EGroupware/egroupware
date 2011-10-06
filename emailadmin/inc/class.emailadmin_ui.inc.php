@@ -14,7 +14,7 @@
  * User interface
  */
 class emailadmin_ui extends emailadmin_bo
-{	
+{
 	var $public_functions = array
 	(
 		'index'			=> True,
@@ -24,7 +24,7 @@ class emailadmin_ui extends emailadmin_bo
 		'save'			=> True,
 		'listProfiles'	=> True,
 	);
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -56,7 +56,7 @@ class emailadmin_ui extends emailadmin_bo
 		}
 		if ($rowsfound)
 		{
-			if (($accountID || !empty($groupID)) && $rowsfound == 1) 
+			if (($accountID || !empty($groupID)) && $rowsfound == 1)
 			{
 				$linkData = array
 				(
@@ -189,7 +189,7 @@ class emailadmin_ui extends emailadmin_bo
 		if (!empty($filter)) foreach ($filter as $fk => $fv) $content['nm']['col_filter'][$fk] = $fv;
 		// seTting the Title of the app
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('emailadmin');
-		$tpl->exec('emailadmin.emailadmin_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));		
+		$tpl->exec('emailadmin.emailadmin_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
 	/**
@@ -249,6 +249,20 @@ class emailadmin_ui extends emailadmin_bo
 			$returnval['email']	= lang('use Users eMail-Address (as seen in Useraccount)');
 		}
 		return $returnval;
+	}
+
+	/**
+	 * Get a list of supported SMTP Auth Config options
+	 * 
+	 * @return array value => label pairs
+	 */
+	static public function getSMTPAuthConfig() 
+	{
+		return array(
+			'no' => 'No',
+			'yes' => 'Yes, use credentials of current user or if given credentials below',
+			'ann' => 'Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user',
+		);
 	}
 
 	function edit($content=null)
@@ -334,7 +348,7 @@ class emailadmin_ui extends emailadmin_bo
 					$js .= 'window.close();';
 					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 					$GLOBALS['egw']->common->egw_exit();
-					break;				
+					break;
 				case 'cancel':
 					$js .= 'window.close();';
 					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
@@ -368,9 +382,9 @@ class emailadmin_ui extends emailadmin_bo
 			}
 		}
 		if ($rowfound) $content = array_merge($this->data,array());
-		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] = 
+		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] =
 			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'defaultsmtp').'::CAPABILITIES');
-		$preserv['imapcapabilities'] = $content['imapcapabilities'] = 
+		$preserv['imapcapabilities'] = $content['imapcapabilities'] =
 			constant((!empty($content['ea_imap_type'])?$content['ea_imap_type']:'defaultimap').'::CAPABILITIES');
 		if (!empty($msg)) $content['msg'] = $msg;
 		list($content['ea_smtp_auth_username'],$content['smtp_senders_email']) = explode(';',$content['ea_smtp_auth_username']);
@@ -392,7 +406,9 @@ class emailadmin_ui extends emailadmin_bo
 		foreach($this->tracking->field2label as $field => $label) {
 			$sel_options['status'][$field] = lang($label);
 		}
-		/*			
+
+		$sel_options['ea_smtp_auth'] = self::getSMTPAuthConfig();
+		/*
 		$content['stored_templates'] = html::checkbox_multiselect(
 			'ea_stationery_active_templates',$content['ea_stationery_active_templates']
 			,$bostationery->get_stored_templates(),true,'',3,true,'width: 100%;');

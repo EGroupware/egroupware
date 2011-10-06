@@ -148,4 +148,6 @@ users can define their own signatures	emailadmin	en	Users can define their own s
 users can utilize these stationery templates	emailadmin	en	Users can utilize these stationery templates
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	en	Vacation messages with start and end date require an admin account to be set!
 virtual mail manager	emailadmin	en	Virtual MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	en	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
+yes, use credentials of current user or if given credentials below	emailadmin	en	Yes, use credentials of current user or if given credentials below
 you have received a new message on the	emailadmin	en	You have received a new message on the

@@ -148,4 +148,6 @@ users can define their own signatures	emailadmin	de	Anwender können ihre eigene
 users can utilize these stationery templates	emailadmin	de	Benutzer können diese Briefpapiervorlagen verwenden
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	de	Urlaubsbenachrichtigungen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 virtual mail manager	emailadmin	de	Virtual MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers
+yes, use credentials of current user or if given credentials below	emailadmin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter
 you have received a new message on the	emailadmin	de	Sie haben eine neue Nachricht erhalten

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.index.rows" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column width="1%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="ID" id="ea_profile_id"/>
+					<nextmatch-sortheader label="Description" id="ea_description"/>
+					<nextmatch-sortheader label="domainname" id="ea_default_domain"/>
+					<nextmatch-sortheader label="SMTP Server Name" id="ea_smtp_server"/>
+					<nextmatch-header label="SMTP Server Type" id="ea_smtp_type"/>
+					<nextmatch-sortheader label="SMTP Server Port" id="ea_smtp_port"/>
+					<nextmatch-sortheader label="IMAP Server Name" id="ea_imap_server"/>
+					<nextmatch-header label="IMAP Server Type" id="ea_imap_type"/>
+					<nextmatch-sortheader label="IMAP Server Port" id="ea_imap_port"/>
+					<nextmatch-header label="IMAP Server Login Type" id="ea_imap_login_type"/>
+					<nextmatch-header label="Application" id="ea_appname"/>
+					<nextmatch-header label="Group" id="ea_group"/>
+					<nextmatch-header label="User" id="ea_user"/>
+					<nextmatch-sortheader label="order" id="ea_order"/>
+					<nextmatch-sortheader label="Active" id="ea_active"/>
+					<hbox>
+						<description value="Action"/>
+						<buttononly label="Select All" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="check"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description id="${row}[ea_profile_id]"/>
+					<description id="${row}[ea_description]"/>
+					<description id="${row}[ea_default_domain]"/>
+					<description id="${row}[ea_smtp_server]"/>
+					<menulist>
+						<menupopup id="${row}[ea_smtp_type]" readonly="true"/>
+					</menulist>
+					<description id="${row}[ea_smtp_port]"/>
+					<description id="${row}[ea_imap_server]"/>
+					<menulist>
+						<menupopup id="${row}[ea_imap_type]" readonly="true"/>
+					</menulist>
+					<description id="${row}[ea_imap_port]"/>
+					<description id="${row}[ea_imap_login_type]"/>
+					<menulist>
+						<menupopup id="${row}[ea_appname]" readonly="true"/>
+					</menulist>
+					<menulist>
+						<menupopup type="select-account" id="${row}[ea_group]" readonly="true" options=",groups"/>
+					</menulist>
+					<menulist>
+						<menupopup type="select-account" id="${row}[ea_user]" readonly="true" options=",accounts"/>
+					</menulist>
+					<description id="${row}[ea_order]" no_lang="1"/>
+					<description id="${row}[ea_active]"/>
+					<hbox>
+						<button statustext="Edit this Profile" label="Edit" id="edit[$row_cont[ea_profile_id]]" onclick="window.open(egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.edit&amp;profileid=$row_cont[ea_profile_id]'),'ea_profile','dependent=yes,width=850,height=540,scrollbars=yes,status=yes'); return false;" image="edit"/>
+						<button statustext="Delete this Profile" label="Delete" id="delete[$row_cont[ea_profile_id]]" onclick="return confirm('Do you really want to delete this Profile');" image="delete"/>
+						<checkbox id="selected[]" options="$row_cont[ea_profile_id]"/>
+						<description/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="emailadmin.index" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@subtitle">
+					<hbox align="center" readonly="true">
+						<html align="center" id="subtitle" readonly="true"/>
+						<html id="addJavaScript" readonly="true"/>
+					</hbox>
+				</row>
+				<row disabled="!@msg">
+					<description align="center" id="msg" class="redItalic"/>
+				</row>
+				<row>
+					<button align="right" label="Add" id="AddProfile" onclick="window.open(egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.add'),'_blank','dependent=yes,width=850,height=540,scrollbars=yes,status=yes'); return false;"/>
+				</row>
+				<row>
+					<nextmatch id="nm" options="emailadmin.index.rows" span="all"/>
+				</row>
+				<row>
+					<hbox align="right">
+						<button label="Delete" id="delete" onclick="return confirm('Delete Profiles');" image="delete"/>
+						<buttononly onclick="toggle_all(this.form,form::name('nm[rows][selected][]')); return false;" options="arrow_ltr" class="selectAllArrow"/>
+						<description/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.redItalic { color: red; font-style: italics; }
+		</styles>
+	</template>
+</overlay>
