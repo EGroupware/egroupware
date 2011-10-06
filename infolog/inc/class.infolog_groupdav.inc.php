@@ -42,6 +42,7 @@ class infolog_groupdav extends groupdav_handler
 		'PRIORITY'	=> 'info_priority',
 		'LOCATION'	=> 'info_location',
 		'COMPLETED'	=> 'info_datecompleted',
+		'CREATED'   => 'info_created',
 	);
 
 	/**
@@ -151,6 +152,9 @@ class infolog_groupdav extends groupdav_handler
 			// when trying to request not supported components, eg. VTODO on a calendar collection
 			return true;
 		}
+		// enable time-range filter for tests via propfind / autoindex
+		//$filter[] = $sql = $this->_time_range_filter(array('end' => '20001231T000000Z'));
+
 		if ($id) $path = dirname($path).'/';	// caldav_name get's added anyway in the callback
 
 		if ($this->debug > 1)
@@ -294,17 +298,7 @@ class infolog_groupdav extends groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-						// ToDo: CalDAV time-range for VTODO checks DTSTART, DTEND, DUE and allways includes tasks if none given
-						// see http://tools.ietf.org/html/rfc4791#section-9.9
-				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
-				 		if (!empty($filter['attrs']['start']))
-				 		{
-					 		$cal_filters[] = 'info_startdate >= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['start']);
-				 		}
-				 		if (!empty($filter['attrs']['end']))
-				 		{
-					 		$cal_filters[]   = 'info_startdate <= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['end']);
-				 		}
+						$cal_filters[] = $sql = $this->_time_range_filter($filter['attrs']);
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
@@ -342,6 +336,65 @@ class infolog_groupdav extends groupdav_handler
 		return true;
 	}
 
+	/**
+	 * Create SQL filter from time-range filter attributes
+	 *
+	 * CalDAV time-range for VTODO checks DTSTART, DTEND, DUE, CREATED and allways includes tasks if none given
+	 * @see http://tools.ietf.org/html/rfc4791#section-9.9
+	 *
+	 * @param array $attrs values for keys 'start' and/or 'end', at least one is required by CalDAV rfc!
+	 * @return string with sql
+	 */
+	private function _time_range_filter(array $attrs)
+	{
+		$to_or = $to_and = array();
+ 		if (!empty($attrs['start']))
+ 		{
+ 			$start = (int)$this->vCalendar->_parseDateTime($attrs['start']);
+		}
+ 		if (!empty($attrs['end']))
+ 		{
+ 			$end = (int)$this->vCalendar->_parseDateTime($attrs['end']);
+		}
+		elseif (empty($attrs['start']))
+		{
+			error_log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
+			return '1';	// to not give sql error, but simply not filter out anything
+		}
+		// we dont need to care for DURATION line in rfc4791#section-9.9, as we always put that in DUE/info_enddate
+
+		// we have start- and/or enddate
+		if (isset($start))
+		{
+			$to_and[] = "($start < info_enddate OR $start <= info_startdate)";
+		}
+		if (isset($end))
+		{
+			$to_and[] = "(info_startdate < $end OR info_enddate <= $end)";
+		}
+		$to_or[] = '('.implode(' AND ', $to_and).')';
+
+		/* either start or enddate is already included in the above, because of OR!
+		// only a startdate, no enddate
+		$to_or[] = "NOT info_enddate > 0".($start ? " AND $start <= info_startdate" : '').
+			($end ? " AND info_startdate < $end" : '');
+
+		// only an enddate, no startdate
+		$to_or[] = "NOT info_startdate > 0".($start ? " AND $start < info_enddate" : '').
+			($end ? " AND info_enddate <= $end" : '');*/
+
+		// no startdate AND no enddate (2. half of rfc4791#section-9.9) --> use created and due dates instead
+		$to_or[] = 'NOT info_startdate > 0 AND NOT info_enddate > 0 AND ('.
+			// we have a completed date
+			"info_datecompleted > 0".(isset($start) ? " AND ($start <= info_datecompleted OR $start <= info_created)" : '').
+				(isset($end) ? " AND (info_datecompleted <= $end OR info_created <= $end)" : '').' OR '.
+			// we have no completed date, but always a created date
+ 			"NOT info_datecompleted > 0". (isset($end) ? " AND info_created < $end" : '').
+		')';
+		$sql = '('.implode(' OR ', $to_or).')';
+		if ($this->debug > 1) error_log(__FILE__ . __METHOD__.'('.array2string($attrs).") time-range={$filter['attrs']['start']}-{$filter['attrs']['end']} --> $sql");
+		return $sql;
+	}
 
 	/**
 	 * Handle get request for a task / infolog entry
