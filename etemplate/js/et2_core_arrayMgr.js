@@ -39,6 +39,26 @@ var et2_arrayMgr = Class.extend({
 			_data = {};
 		}
 
+		// Expand sub-arrays that have been shmushed together, so further perspectives work
+		if (this.splitIds)
+		{
+			for(var key in _data) {
+				var indexes = key.replace(/]/g,'').split('[');
+				if(indexes.length > 1)
+				{
+					var value = _data[key];
+					var target = _data;
+					for(var i = 0; i < indexes.length; i++) {
+						if(typeof target[indexes[i]] == "undefined") {
+							target[indexes[i]] = i == indexes.length-1 ? value : {};
+						}
+						target = target[indexes[i]];
+					}
+					delete _data[key];
+				}
+			}
+		}
+
 		this.data = _data;
 
 		// Holds information about the current perspective
