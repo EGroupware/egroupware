@@ -74,13 +74,17 @@ class send extends egw_mailer
 						}
 						$this->Username = $username;
 						$this->Password = $ogServer->password;
+						// if we have NO password, eg. because we run by async service outside a regular user session
+						// --> fall back to the default profile / mail config from setup
+						if (empty($this->Password)) $bopreferences = false;
 					}
 					if ($this->debug) error_log(__METHOD__." using Host ".print_r($this->Host,true)." to be send");
 					if ($this->debug) error_log(__METHOD__." using User ".print_r($this->Username,true)." to be send");
 					if ($this->debug) error_log(__METHOD__." using Sender ".print_r($this->Sender,true)." to be send");
 				}
 			}
-		} else {
+		}
+		if (!$bopreferences) {
 			if ($this->debug) error_log(__METHOD__." using global config to send");
 			$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
 			$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
