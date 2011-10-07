@@ -170,6 +170,8 @@ class calendar_timezones
 			{
 				$msg = self::import_sqlite($updated);
 				if ($updated) error_log($msg);	// log that timezones have been updated
+				$msg = self::import_tz_aliases($updated);
+				if ($updated) error_log($msg);	// log that timezone aliases have been updated
 			}
 			catch (Exception $e)
 			{
@@ -182,7 +184,7 @@ class calendar_timezones
 	/**
 	 * Import timezones from sqlite file
 	 *
-	 * @param boolean $updated=null on return true if update was neccessary, false if tz's were already up to date
+	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
 	 * @param boolean $check_version=true true: check version and only act, if it's different
 	 * @return string message about update
@@ -217,12 +219,12 @@ class calendar_timezones
 			throw new egw_exception_wrong_parameter(__METHOD__."('$file') only schema version 1 supported!");
 		}
 		$tz_version = $pdo->query('SELECT version FROM tz_version')->fetchColumn();
-		$tz_db_version = $GLOBALS['egw']->db->query("SELECT config_value FROM egw_config WHERE config_name='tz_version' AND config_app='phpgwapi'",__LINE__,__FILE__)->fetchColumn();
-		//echo "<p>tz_version($path)=$tz_version, tz_db_version=$tz_db_version</p>\n";
-		if ($tz_version === $tz_db_version)
+		$config = config::read('phpgwapi');
+		//echo "<p>tz_version($path)=$tz_version, tz_db_version=$config[tz_version]</p>\n";
+		if ($tz_version === $config['tz_version'])
 		{
 			$updated = false;
-			return lang('Nothing to update, version is already %1.',$tz_db_version);	// we already have the right
+			return lang('Nothing to update, version is already %1.',$config['tz_version']);	// we already have the right
 		}
 		$tz2id = array();
 		foreach($pdo->query('SELECT * FROM tz_data ORDER BY alias') as $data)
@@ -249,14 +251,57 @@ class calendar_timezones
 			// only query last insert id, if not already in database (gives warning for PostgreSQL)
 			if (!$tz2id[$data['tzid']]) $tz2id[$data['tzid']] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id');
 		}
-		$GLOBALS['egw']->db->insert('egw_config',array('config_value' => $tz_version),array(
-			'config_name' => 'tz_version',
-			'config_app' => 'phpgwapi',
-		),__LINE__,__FILE__,'phpgwapi');
+		config::save_value('tz_version', $tz_version, 'phpgwapi');
 
 		//_debug_array($tz2id);
 		$updated = true;
 		return lang('Timezones updated to version %1 (%2 records updated).',$tz_version,count($tz2id));
+	}
+
+	/**
+	 * Import timezone aliases
+	 *
+	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
+	 * @param string $file='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
+	 * @param boolean $check_mtime=true true: check version and only act, if it's different
+	 * @return string message about update
+	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
+	 */
+	public static function import_tz_aliases(&$updated=null,$file='calendar/setup/tz_aliases.inc.php',$check_mtime=true)
+	{
+		$path = EGW_SERVER_ROOT.'/'.$file;
+
+		if (!file_exists($path) || !is_readable($path))
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
+		}
+		$config = config::read('phpgwapi');
+		$tz_aliases_mtime = date('Y-m-d H:i:s', filemtime($path));
+		if ($tz_aliases_mtime === $config['tz_aliases_mtime'])
+		{
+			$updated = false;
+			return lang('Nothing to update, version is already %1.',$tz_aliases_mtime);
+		}
+		include($path);	// sets $tz_aliases
+
+		$updated = 0;
+		foreach($tz_aliases as $alias => $tzid)
+		{
+			if (self::tz2id($tzid, 'alias') !== $alias)	// not in DB or different
+			{
+				$GLOBALS['egw']->db->insert('egw_cal_timezones',array(
+					'tz_alias' => $alias,
+				),array(
+					'tz_tzid' => $tzid,
+				),__LINE__,__FILE__,'calendar');
+				++$updated;
+			}
+		}
+		config::save_value('tz_aliases_mtime',$tz_aliases_mtime,$app='phpgwapi');
+
+		//_debug_array($tz2id);
+		$updated = true;
+		return lang('Timezones aliases updated to version %1 (%2 records updated).', $tz_aliases_mtime, $updated);
 	}
 
 	/**
@@ -269,7 +314,10 @@ class calendar_timezones
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		$GLOBALS['egw']->framework->render('<h3>'.self::import_sqlite()."</h3>\n",lang('Update timezones'),true);
+		$GLOBALS['egw']->framework->render(
+			'<h3>'.self::import_sqlite()."</h3>\n".
+			'<h3>'.self::import_tz_aliases()."</h3>\n",
+			lang('Update timezones'),true);
 	}
 }
 /*
