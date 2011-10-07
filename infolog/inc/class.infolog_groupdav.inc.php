@@ -262,6 +262,8 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if ($options['filters'])
 		{
+			$cal_filters_in = $cal_filters;	// remember filter, to be able to reset standard open-filter, if client sets own filters
+
 			foreach($options['filters'] as $filter)
 			{
 				switch($filter['name'])
@@ -298,12 +300,17 @@ class infolog_groupdav extends groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-						$cal_filters[] = $sql = $this->_time_range_filter($filter['attrs']);
+						$cal_filters[] = $this->_time_range_filter($filter['attrs']);
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
 						break;
 				}
+			}
+			// if client set an own filter, reset the open-standard filter
+			if ($cal_filters != $cal_filters_in)
+			{
+				$cal_filters['filter'] = str_replace(array('open', 'open-user'), array('own', 'user'), $cal_filters['filter']);
 			}
 		}
 		// multiget or propfind on a given id
