@@ -95,8 +95,18 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				.appendTo(this.tbody);
 			var cf = jQuery(document.createElement("td"))
 				.appendTo(row);
-			var attrs = jQuery.extend(true, {'id': field_name}, field);
+			var setup_function = '_setup_'+field.type;
+			var attrs = {
+				'id': 		field_name,
+				'statustext':	field.help,
+				'required':	field.needed
+			};
+			if(this[setup_function]) {
+				this[setup_function].call(this, field_name, field, attrs);
+			}
+			
 			if(this._type == 'customfields-list') {
+				attrs.readonly = true;
 				this.detachedNodes.push(cf[0]);
 				this.rows[field_name] = cf[0];
 			} else {
@@ -155,8 +165,28 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		for(var field_name in this.options.customfields)
 		{
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
-			this.widgets[field_name].set_value(_value[this.prefix + field_name]);
+			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
+			if(this.widgets[field_name].implements( et2_IDetachedDOM))
+			{
+				this.widgets[field_name].setDetachedAttributes(this.widgets[field_name].getDetachedNodes(), {value:value});
+			}
+			else
+			{
+				this.widgets[field_name].set_value(value);
+			}
 		}
+	},
+
+	/**
+	 * Adapt provided attributes to match options for widget
+	 */
+	_setup_text: function(field_name, field, attrs) {
+		field.type = 'textbox';
+		attrs.rows = field.rows;
+		attrs.size = field.len;
+	},
+	_setup_select: function(field_name, field, attrs) {
+		attrs.sel_options = field.values;
 	},
 
 	/**
