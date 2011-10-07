@@ -162,6 +162,7 @@ var et2_textbox_ro = et2_valueWidget.extend({
 	set_value: function(_value) {
 		this.value = _value;
 
+		if(!_value) _value = "";
 		this.span.text(_value);
 	}
 
