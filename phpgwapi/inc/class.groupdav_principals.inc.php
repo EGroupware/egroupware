@@ -723,6 +723,62 @@ class groupdav_principals extends groupdav_handler
 	}
 
 	/**
+	 * Convert CalDAV principal URL to a calendar uid
+	 *
+	 * @param string $url
+	 * @param string|array $only_type=null allowed types, return false for other (valid) types, eg. "users", "groups" or "resources", default all
+	 * @return int|string|boolean integer account_id, string calendar uid or false if not a supported uid
+	 */
+	static public function url2uid($url, $only_type=null)
+	{
+		if (!$only_type) $only_type = array('accounts', 'groups', 'resources', 'mailto');
+
+		if ($url[0] == '/')
+		{
+			$schema = 'http';
+		}
+		else
+		{
+			list($schema, $rest) = explode(':', $url, 2);
+		}
+		if (empty($rest)) return false;
+
+		switch(strtolower($schema))
+		{
+			case 'http':
+			case 'https':
+				list(,$rest) = explode($GLOBALS['egw_info']['server']['webserver_url'].'/groupdav.php/principals/', $url);
+				list($type, $name) = explode('/', $rest);
+				$uid = $GLOBALS['egw']->accounts->name2id($name, 'account_lid', $type[0]);	// u=users, g=groups
+				break;
+
+			case 'mailto':
+				if (($uid = $GLOBALS['egw']->accounts->name2id($rest, 'account_email')))
+				{
+					$type = $uid > 0 ? 'accounts' : 'groups';
+					break;
+				}
+				// todo: contacts (uid "c"<contact-id>
+				break;
+
+			case 'urn':
+				list($urn_type, $name) = explode(':', $rest, 2);
+				if ($urn_type === 'uuid' && ($uid = $GLOBALS['egw']->accounts->name2id($name, 'account_lid')))
+				{
+					$type = $uid > 0 ? 'accounts' : 'groups';
+					break;
+				}
+				// todo: resources
+				break;
+
+			default:
+				error_log(__METHOD__."('$url') unsupported principal type '$schema'!");
+				return false;
+		}
+		return $uid && in_array($type, $only_type) ? $uid : false;
+	}
+
+	/**
 	 * Add collection of a single group to a collection
 	 *
 	 * @param array $account

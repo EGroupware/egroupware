@@ -2236,7 +2236,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 * @param string $principalURL=''	Used for CalDAV imports
+	 * @param string $principalURL=''	Used for CalDAV imports, no longer used in favor of groupdav_principals::url2uid()
 	 * @param string $check_component='Horde_iCalendar_vevent'
 	 *
 	 * @return array|boolean			event on success, false on failure
@@ -2705,29 +2705,6 @@ class calendar_ical extends calendar_boupdate
 					{
 						$role = $attributes['params']['ROLE'];
 					}
-					// try pricipal url from CalDAV
-					if (strpos($attributes['value'], 'http') === 0)
-					{
-						if (!empty($principalURL) && strstr($attributes['value'], $principalURL) !== false)
-						{
-							$uid = $this->user;
-							if ($this->log)
-							{
-								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-									. "(): Found myself: '$uid'\n",3,$this->logfile);
-							}
-						}
-						else
-						{
-							if ($this->log)
-							{
-								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-									. '(): Unknown URI: ' . $attributes['value']
-									. "\n",3,$this->logfile);
-							}
-							$attributes['value'] = '';
-						}
-					}
 					// parse email and cn from attendee
 					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
@@ -2767,6 +2744,9 @@ class calendar_ical extends calendar_boupdate
 							// we use the current user
 							$uid = $this->user;
 					}
+					// check principal url from CalDAV here after X-EGROUPWARE-UID and to get optional X-EGROUPWARE-QUANTITY
+					if (!$uid) $uid = groupdav_principals::url2uid($attributes['value']);
+
 					// try to find an email address
 					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))
 					{
