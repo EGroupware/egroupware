@@ -27,6 +27,7 @@ foreach(array(
 try
 {
 	calendar_timezones::import_sqlite();
+	calendar_timezones::import_tz_aliases();
 }
 // catch broken sqlite extension exception and output message, as user can't do anything about it
 // all other exceptions are fatal, to get user to fix them!
