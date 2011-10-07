@@ -3390,9 +3390,17 @@ class felamimail_bo
 			if (is_null($isError)) $isError =& egw_cache::getSession('email','icServerIMAP_connectionError');
 			if ( isset($isError[$_icServerID]) || PEAR::isError($this->icServer->_connectionErrorObject)) 
 			{
-				//error_log(__METHOD__.__LINE__.' failed for Reason:'.$isError[$_icServerID]);
-				$this->errorMessage = ($isError[$_icServerID]?$isError[$_icServerID]:$this->icServer->_connectionErrorObject->message);
-				return false;			
+				if (trim($isError[$_icServerID])==',')
+				{
+					//error_log(__METHOD__.__LINE__.' Connection seemed to have failed in the past, no real reason given, try to recover on our own.');
+					emailadmin_bo::unsetCachedObjects($_icServerID);
+				}
+				else
+				{
+					//error_log(__METHOD__.__LINE__.' failed for Reason:'.$isError[$_icServerID]);
+					$this->errorMessage = ($isError[$_icServerID]?$isError[$_icServerID]:$this->icServer->_connectionErrorObject->message);
+					return false;			
+				}
 			}
 			if (!is_object($this->mailPreferences))
 			{
@@ -3432,7 +3440,7 @@ class felamimail_bo
 					$isError[$_icServerID] = ($tretval?$tretval->message:$this->icServer->_connectionErrorObject->message);
 					if (self::$debug)
 					{
-						error_log(__METHOD__.__LINE__." # failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$this->icServer->_connectionErrorObject->message.' called from '.function_backtrace());
+						error_log(__METHOD__.__LINE__." # failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$isError[$_icServerID].' called from '.function_backtrace());
 						error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 					}
 				}

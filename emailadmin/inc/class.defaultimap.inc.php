@@ -509,7 +509,7 @@ class defaultimap extends Net_IMAP
 	function openConnection($_adminConnection=false, $_timeout=20)
 	{
 		//error_log(__METHOD__.function_backtrace());
-		//error_log(__METHOD__.__LINE__.($_adminConnection?' Adminconnection':'').array2string($this));
+		//error_log(__METHOD__.__LINE__.($_adminConnection?' Adminconnection':' ').array2string($this));
 		unset($this->_connectionErrorObject);
 		
 		if($_adminConnection) {

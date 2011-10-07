@@ -626,11 +626,16 @@ class uifelamimail
 
 		function viewMainScreen()
 		{
+			$connectionReset = false;
 			// get passed messages
 			if (!empty($_GET["msg"])) $message[] = html::purify($_GET["msg"]);
 			if (!empty($_GET["message"])) $message[] = html::purify($_GET["message"]);
+			if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
 			unset($_GET["msg"]);
 			unset($_GET["message"]);
+			unset($_GET["resetConnection"]);
+			//error_log(__METHOD__.__LINE__.$connectionReset);
+
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
 			$bofilter		=& $this->bofilter;
 			$uiwidgets		= CreateObject('felamimail.uiwidgets');
@@ -641,6 +646,11 @@ class uifelamimail
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 				self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			//_debug_array(self::$icServerID);
+			if ($connectionReset)
+			{
+				error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+				emailadmin_bo::unsetCachedObjects(self::$icServerID);
+			}
 			if (is_object($preferences)) $imapServer 	= $preferences->getIncomingServer(self::$icServerID);
 			//_debug_array($imapServer);
 			//_debug_array($preferences->preferences);
@@ -912,7 +922,10 @@ class uifelamimail
 			$this->t->set_var('select_status', $selectStatus);
 
 			if($this->connectionStatus === false) {
-				$this->t->set_var('connection_error_message', lang($this->bofelamimail->getErrorMessage()));
+				$linkData = array('menuaction' => 'felamimail.uifelamimail.viewMainScreen','resetConnection'=>true);
+				$this->t->set_var('connection_error_message', lang($this->bofelamimail->getErrorMessage()).
+					'<br/><a href="'.egw::link('/index.php',$linkData).'">'.
+					lang('You may try to reset the connection using this link.').'</a>');
 				$this->t->set_var('message', '&nbsp;');
 				$this->t->parse('header_rows','error_message',True);
 			} else {

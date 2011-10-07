@@ -535,4 +535,5 @@ yes, offer copy option	felamimail	de	ja, mit Kopieroption
 you can either choose to save as infolog or tracker, not both.	felamimail	de	Sie können eine Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
 you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Endedatum verwenden.
 you have received a new message on the	felamimail	de	Sie haben eine neue Nachricht erhalten:
+you may try to reset the connection using this link.	felamimail	de	Sie können versuchen die Verbindung wiederherzustellen, indem Sie auf diesen Link klicken.
 your message to %1 was displayed.	felamimail	de	Ihre Nachricht an %1 wurde angezeigt.
