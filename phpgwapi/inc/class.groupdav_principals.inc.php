@@ -893,7 +893,7 @@ class groupdav_principals extends groupdav_handler
 		return $this->add_principal($principal.'/'.$type, array(
 				'displayname' => $app.' '.$what.' proxy of '.basename($principal),
 				'group-member-set' => $this->principal_set('group-member-set', $proxys),
-				'getetag' => 'EGw-'.md5(serialize($proxys)).'-wGE',
+				'getetag' => md5(serialize($proxys)),
 				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, $type, '')),
 			));
 	}
@@ -1040,12 +1040,12 @@ class groupdav_principals extends groupdav_handler
 		{
 			$account = $this->read($account);
 		}
-		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).
+		return $account['account_id'].':'.md5(serialize($account)).
 			// add md5 from calendar grants, as they are listed as memberships
 			':'.md5(serialize($this->acl->get_grants('calendar', true, $account['account_id']))).
 			// as the principal of current user is influenced by GroupDAV prefs, we have to include them in the etag
 			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ?
-				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
+				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '');
 	}
 
 	/**

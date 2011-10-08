@@ -575,7 +575,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return false;
 		}
-		return 'EGw-'.$info['info_id'].':'.$info['info_datemodified'].'-wGE';
+		return $info['info_id'].':'.$info['info_datemodified'];
 	}
 
 	/**

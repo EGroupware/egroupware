@@ -217,7 +217,7 @@ abstract class groupdav_handler
 		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
 		}
-		return 'EGw-'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'-wGE';
+		return $entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']);
 	}
 
 	/**

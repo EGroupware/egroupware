@@ -982,7 +982,7 @@ class calendar_groupdav extends groupdav_handler
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
 
-		return 'EGw-'.$ctag.'-wGE';
+		return $ctag;
 	}
 
 	/**
@@ -996,7 +996,7 @@ class calendar_groupdav extends groupdav_handler
 		$etag = $this->bo->get_etag($entry,$this->client_shared_uid_exceptions);
 
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return 'EGw-'.$etag.'-wGE';
+		return $etag;
 	}
 
 	/**

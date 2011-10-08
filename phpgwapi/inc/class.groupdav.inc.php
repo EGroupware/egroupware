@@ -419,7 +419,7 @@ class groupdav extends HTTP_WebDAV_Server
 		// required props per WebDAV standard
 		foreach(array(
 			'displayname'      => basename($path),
-			'getetag'          => 'EGw-no-etag-wGE',
+			'getetag'          => 'none',
 			'getcontentlength' => '',
 			'getlastmodified'  => '',
 			'getcontenttype'   => '',
@@ -716,8 +716,6 @@ class groupdav extends HTTP_WebDAV_Server
 					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
 			}
 		}
-		$props['getetag'] = 'EGw-'.$app.'-wGE';
-
 		if ($handler) $privileges = $handler->current_user_privileges($path.$app.'/', $user) ;
 
 		return $this->add_collection($path.$app.'/', $props, $privileges);
