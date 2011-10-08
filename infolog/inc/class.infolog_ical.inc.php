@@ -177,32 +177,16 @@ class infolog_ical extends infolog_bo
 		if ($tzid && $tzid != 'UTC')
 		{
 			// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
-			if (!($vtimezone = calendar_timezones::tz2id($tzid,'component')))
+			if (!calendar_timezones::add_vtimezone($vcal, $tzid))
 			{
 				error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-				$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
+				calendar_timezones::add_vtimezone($vcal, $tzid=egw_time::$user_timezone->getName());
 				$tzid = null;
 			}
 			if (!isset(self::$tz_cache[$tzid]))
 			{
 				self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
 			}
-			// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
-			// --> we have to parse it and let Horde_iCalendar add it again
-			$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
-			$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
-			// DTSTART must be in local time!
-			$standard = $horde_vtimezone->findComponent('STANDARD');
-			$dtstart = $standard->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone(self::$tz_cache[$tzid]);
-			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-			$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-			$dtstart = $daylight->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone(self::$tz_cache[$tzid]);
-			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-			$vcal->addComponent($horde_vtimezone);
 		}
 
 		$vevent = Horde_iCalendar::newComponent('VTODO',$vcal);

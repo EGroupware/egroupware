@@ -228,7 +228,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$vcal = new Horde_iCalendar;
-		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
 		if ($method) $vcal->setAttribute('METHOD', $method);
@@ -354,42 +354,15 @@ class calendar_ical extends calendar_boupdate
 			if ($tzid && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
 			{
 				// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
-				if (!($vtimezone = calendar_timezones::tz2id($tzid,'component')))
+				if (calendar_timezones::add_vtimezone($vcal, $tzid) ||
+					!in_array($tzid = egw_time::$user_timezone->getName(), $vtimezones_added) &&
+						calendar_timezones::add_vtimezone($vcal, $tzid))
 				{
-					error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-					$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
-					$tzid = null;
-				}
-				if (!isset(self::$tz_cache[$tzid]))
-				{
-					self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
-				}
-				//error_log("in_array('$tzid',\$vtimezones_added)=".array2string(in_array($tzid,$vtimezones_added)).", component=$vtimezone");;
-				if (!in_array($tzid,$vtimezones_added))
-				{
-					// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
-					// --> we have to parse it and let Horde_iCalendar add it again
-					$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
-					$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
-					// DTSTART must be in local time!
-					$standard = $horde_vtimezone->findComponent('STANDARD');
-					if (is_a($standard, 'Horde_iCalendar'))
-					{
-						$dtstart = $standard->getAttribute('DTSTART');
-						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-						$dtstart->setTimezone(self::$tz_cache[$tzid]);
-						$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-					}
-					$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-					if (is_a($daylight, 'Horde_iCalendar'))
-					{
-						$dtstart = $daylight->getAttribute('DTSTART');
-						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-						$dtstart->setTimezone(self::$tz_cache[$tzid]);
-						$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-					}
-					$vcal->addComponent($horde_vtimezone);
 					$vtimezones_added[] = $tzid;
+					if (!isset(self::$tz_cache[$tzid]))
+					{
+						self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+					}
 				}
 			}
 			if ($this->productManufacturer != 'file' && $this->uidExtension)
