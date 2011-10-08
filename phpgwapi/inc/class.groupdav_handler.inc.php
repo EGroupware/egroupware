@@ -285,20 +285,24 @@ abstract class groupdav_handler
 					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed");
 					return '412 Precondition Failed';
 				}
-				else
-				{
-					// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
-					if ($method == 'GET' &&	isset($_SERVER['HTTP_IF_NONE_MATCH']))
-					{
-						if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
-						return '304 Not Modified';
-					}
-				}
 			}
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
 			{
-				if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
-				return '412 Precondition Failed';
+				$if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'];
+				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+				if ($if_none_match[0] == '"') $if_none_match = substr($if_none_match, 1, -1);
+
+				// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
+				if (in_array($method, array('GET','HEAD')) && $etag === $if_none_match)
+				{
+					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
+					return '304 Not Modified';
+				}
+				if ($method == 'PUT' && ($if_none_match == '*' || $if_none_match == $etag))
+				{
+					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
+					return '412 Precondition Failed';
+				}
 			}
 		}
 		return $entry;
