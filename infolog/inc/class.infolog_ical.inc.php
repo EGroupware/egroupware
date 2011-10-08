@@ -621,10 +621,9 @@ class infolog_ical extends infolog_bo
 						$attribute['value'] += $taskData['info_startdate'];
 						// fall throught
 					case 'DUE':
-						// eGroupWare uses date only
-						$parts = @getdate($attribute['value']);
-						$value = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
-						$taskData['info_enddate'] = $value;
+						// even as EGroupware only displays the date, we can still store the full value
+						// unless infolog get's stored, it does NOT truncate the time
+						$taskData['info_enddate'] = $attribute['value'];
 						break;
 
 					case 'COMPLETED':
@@ -657,12 +656,8 @@ class infolog_ical extends infolog_bo
 
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
-						foreach ($component->_attributes as $attr)
-						{
-							if ($attr['name'] == 'X-INFOLOG-STATUS') break;
-						}
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							$attr['name'] == 'X-INFOLOG-STATUS' ? $attr['value'] : null);
+							($attr=$component->getAttribute('X-INFOLOG-STATUS')) ? $attr['value'] : null);
 						break;
 
 					case 'SUMMARY':
