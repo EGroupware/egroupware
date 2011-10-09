@@ -344,13 +344,13 @@ class calendar_timezones
 		// --> we have to parse it and let Horde_iCalendar add it again
 		$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
 		$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
-		// DTSTART must be in UTC time
+		// DTSTART is in UTC time, Horde_iCalendar parses it in server timezone, which we need to set again for printing
 		$standard = $horde_vtimezone->findComponent('STANDARD');
 		if (is_a($standard, 'Horde_iCalendar'))
 		{
 			$dtstart = $standard->getAttribute('DTSTART');
 			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone('UTC');
+			$dtstart->setTimezone(egw_time::$server_timezone);
 			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
 		$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
@@ -358,9 +358,10 @@ class calendar_timezones
 		{
 			$dtstart = $daylight->getAttribute('DTSTART');
 			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone('UTC');
+			$dtstart->setTimezone(egw_time::$server_timezone);
 			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
+		//error_log($vtimezone); error_log($horde_vtimezone->_exportvData('VTIMEZONE'));
 		$vcal->addComponent($horde_vtimezone);
 
 		return true;
