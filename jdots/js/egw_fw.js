@@ -812,7 +812,7 @@ egw_fw.prototype.tzSelection = function(_tz)
 	
 	if (this.activeApp.browser)
 	{
-		this.activeApp.browser.relode();
+		this.activeApp.browser.reload();
 	}
 }
 
