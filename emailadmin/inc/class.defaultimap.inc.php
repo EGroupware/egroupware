@@ -535,6 +535,7 @@ class defaultimap extends Net_IMAP
 		if(empty($username))
 		{
 			if ($this->debug) error_log(__METHOD__."No username supplied.".function_backtrace());
+			if ($this->_connected) $this->disconnect(); // disconnect (if connected)
 			return false;
 		}
 		if( PEAR::isError($status = parent::login($username, $password, 'LOGIN', !$this->isAdminConnection)) ) {

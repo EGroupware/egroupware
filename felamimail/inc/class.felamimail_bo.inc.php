@@ -3391,7 +3391,7 @@ class felamimail_bo
 			if (is_null($isError)) $isError =& egw_cache::getSession('email','icServerIMAP_connectionError');
 			if ( isset($isError[$_icServerID]) || PEAR::isError($this->icServer->_connectionErrorObject)) 
 			{
-				if (trim($isError[$_icServerID])==',')
+				if (trim($isError[$_icServerID])==',' || trim($this->icServer->_connectionErrorObject->message) == ',')
 				{
 					//error_log(__METHOD__.__LINE__.' Connection seemed to have failed in the past, no real reason given, try to recover on our own.');
 					emailadmin_bo::unsetCachedObjects($_icServerID);
