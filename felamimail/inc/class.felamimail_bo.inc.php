@@ -1013,14 +1013,15 @@ class felamimail_bo
 		function _getStructure($_uid, $byUid=true)
 		{
 			static $structure;
+			$_folder = $this->sessionData['mailbox'];
 			if (is_null($structure)) $structure =& egw_cache::getSession('felamimail','structureCache');
-			if (isset($structure[$this->icServer->ImapServerId][$_uid]))
+			if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
 			{
 				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid);
-				return $structure[$this->icServer->ImapServerId][$_uid];
+				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 			}
-			$structure[$this->icServer->ImapServerId][$_uid] = $this->icServer->getStructure($_uid, $byUid);
-			return $structure[$this->icServer->ImapServerId][$_uid];
+			$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
+			return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 		}
 
 		function _getSubStructure($_structure, $_partID)
