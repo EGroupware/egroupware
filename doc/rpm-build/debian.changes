@@ -1,3 +1,34 @@
+egroupware-epl (11.1.20111010-1) hardy; urgency=low
+
+  * emailadmin: fix problem with UpperLowerCase User Names, use lower case usernames ONLY, when accessing / creating / updating mailboxes
+  * emailadmin: caching nameSpace information for the session to reduce communication to imap-server with the goal of improved performance clientside and less querying the mailserver
+  * egw-pear: improve connection handling regarding the validation of connectionsvia expected responses
+  * felamimail: improve connection handling regarding the validation of connections via expected responses
+  * email:caching structure information (per session by server and uid) and status (per server and folder per request) to reduce communication to imap-server with the goal of improved performance clientside and less querying the mailserver
+  * tracker: fix missing translations for (standard) resolutions
+  * eSync: ping livetime depends now on average runtime and can therefore run up to 3540 seconds
+  * knowledgebase: on edit, preset the selected category for new entries
+  * API/CheckPasswordAge: new approach to the issue, as we have to take into account that the timestamp of the last password change may not be provided by the auth system. We fetch the timestamp from the authsystem if the method is implemented for the auth method configured (instead of juggling with account_lastpasswd_change or account_lastpwd_change)
+  * API: is_a compatibility vs. php5.3.8 resolving to instanceof operator for most common basic classes
+  * GroupDAV/KDE assume KDE 4.7+ uses native Akonadi resource, while below pre-Akonadi GroupDAV resource is used: unfortunately both have contradicting requirements
+  * eMail/Sieve/Vacation: set default to 7 for days setting in vacation for new vacation setups
+  * phpbrain: provide class definitions for TOCLevel3-6 (if using ContentArea Feature)
+  * CardDAV/GroupDAV/Addressbook: do NOT check for api version, as it caused accounts created during setup to have no carddav_name and therefore fail in CardDAV/GroupDAV (shown as "/addressbook/" in collection list!)
+  * GroupDAV/KDE: access with old (KDE < 4.7) GroupDAV resource is working again (client did not find any folder, because it requies full URL not just pathes in PROPFIND response)
+  * CalDAV/GroupDAV: return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
+  * Filemanager: Firefox 7.0+ gave error "There is already a directory with that name!" when trying to upload a file
+  * eSync/InfoLog: InfoLog support for ActiveSync (incl. deny device to create folders and ping fixes for Moxier Task)
+  * addressbook/export: fix problem of failed export for non admins, when no export-limit is set
+  * SyncML: Fix WBXML encoding issue (community bug#3020 and SyncEvolution issue bug#2975)
+  * EMailAdmin allow to specify smtp auth credentials for alarms/notifications only, otherwise credentials of current user are used
+  * wiki: add a div with id and class to be able to apply styles for the whole wikipage; apply a left margin to improve readability of pages
+  * Calendar: added windows timezones to all installations (was added in calendar update 1.7.005, but not to new installs)
+  * eMail: improve connection handling and recovery on problems regarded as minor. offer user the possibility to reset the connection on failure
+  * wiki: using egw-build in randomstring generator instead of possible posix_getpid call (for windows based installations) to initialize the diff between versions
+  * Filemanager: Firefox 7.0+ gave error "There is already a directory with that name!" when trying to upload a file
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 10 Oct 2011 11:03:08 +0200
+
 egroupware-epl (11.1.20110919-1) hardy; urgency=low
 
   * Filemanager: fixed not working rename of file, if path contains a # or ?
