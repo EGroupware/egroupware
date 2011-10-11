@@ -398,6 +398,8 @@ var et2_dataview_rowProvider = Class.extend({
 				// from the entry
 				nodes[j] = entry.nodeFuncs[j](_row[0]);
 			}
+			if(typeof nodes[0] == "undefined")
+				et2_debug("warn", "Missing node", entry.widget.id,nodes, entry );
 
 			// Set the array managers first
 			entry.widget._mgrs = mgrs;
