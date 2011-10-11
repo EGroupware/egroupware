@@ -998,10 +998,10 @@ class felamimail_bo
 			return true; // as we do not catch/examine setFlags returnValue
 		}
 
-		function _getStatus($folderName)
+		function _getStatus($folderName,$ignoreStatusCache=false)
 		{
 			static $folderStatus;
-			if (isset($folderStatus[$this->icServer->ImapServerId][$folderName]))
+			if (!$ignoreStatusCache && isset($folderStatus[$this->icServer->ImapServerId][$folderName]))
 			{
 				//error_log(__METHOD__.__LINE__.' Using cache for status on Server:'.$this->icServer->ImapServerId.' for folder:'.$folderName.'->'.array2string($folderStatus[$this->icServer->ImapServerId][$folderName]));
 				return $folderStatus[$this->icServer->ImapServerId][$folderName];
@@ -1643,7 +1643,7 @@ class felamimail_bo
 		*
 		* @return array
 		*/
-		function getFolderStatus($_folderName)
+		function getFolderStatus($_folderName,$ignoreStatusCache=false)
 		{
 			if (self::$debug) error_log(__METHOD__." called with:".$_folderName);
 			$retValue = array();
@@ -1684,7 +1684,7 @@ class felamimail_bo
 				$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 			}
 
-			if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName)) ) {
+			if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache)) ) {
 			/*if ($folderStatus = $this->bofelamimail->getMailBoxCounters($_folderName)) {
 				$retValue['messages']	=	$folderStatus->messages;
 				$retValue['recent']		=	$folderStatus->recent;

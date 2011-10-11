@@ -922,6 +922,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 							if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 							$mailObject->From = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 							$mailObject->FromName = $addressObject->personal;
+//error_log(__METHOD__.__LINE__.'Address to add (FROM):'.array2string($addressObject));
 						}
 						// to
 						$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($headers['TO']):$headers['TO']),'');
@@ -1085,6 +1086,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			// $output->to = $this->messages[$id]['to_address']; //$stat['FETCHED_HEADER']['to_name']
 			// $output->from = $this->messages[$id]['sender_address']; //$stat['FETCHED_HEADER']['sender_name']
 			$output->to = $headers['TO'];
+//error_log(__METHOD__.__LINE__.' From:'.$headers['FROM'].' Charset:'.$this->mail->detect_encoding($headers['FROM']));
 			$output->from = $headers['FROM'];
 			$output->cc = ($headers['CC'] ? $headers['CC']:null);
 			$output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
@@ -1530,7 +1532,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
         debugLog("AlterPingChanges on $folderid ($folder) stat: ". $syncstate);
         $this->mail->reopen($folder);
 
-        $status = $this->mail->getFolderStatus($folder);
+        $status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true);
         if (!$status) {
             debugLog("AlterPingChanges: could not stat folder $folder ");
             return false;
