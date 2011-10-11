@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare - Calendar's timezone information
+ * EGroupware - Calendar's timezone information
  *
  * Timezone information get imported from SQLite database, "borrowed" of Lighting TB extension.
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -67,7 +67,7 @@ class calendar_timezones
 	 * @return DateTimeZone
 	 * @throws Exception if called with an unknown TZID
 	 */
-	public function DateTimeZone($tzid)
+	public static function DateTimeZone($tzid)
 	{
 		if (($id = self::tz2id($tzid,'alias')))
 		{
