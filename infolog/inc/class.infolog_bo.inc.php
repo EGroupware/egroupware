@@ -1074,7 +1074,7 @@ class infolog_bo
 
 		$entry = array_shift($result);
 
-		return 'EGw-'.$entry['info_datemodified'].'-wGE';
+		return $entry['info_datemodified'];
 	}
 
 	/**
