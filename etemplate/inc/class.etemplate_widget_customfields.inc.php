@@ -77,6 +77,9 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 */
 	public function beforeSendToClient($cname)
 	{
+		// No name, no way to get parameters client-side.
+		if(!$this->id) $this->id = 'custom_fields';
+
 		$form_name = self::form_name($cname, $this->id);
 		$app =& $this->getElementAttribute($form_name, 'app');
 
