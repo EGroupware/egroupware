@@ -40,6 +40,9 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 	prefix: '#',
 
 	init: function() {
+		// Some apps (infolog edit) don't give ID, so assign one to get settings
+		if(!arguments[1].id) arguments[1].id = "custom_fields";
+
 		this._super.apply(this, arguments);
 
 		// Create the table body and the table
@@ -47,6 +50,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
                 this.table = $j(document.createElement("table"))
                         .addClass("et2_grid");
                 this.table.append(this.tbody);
+
 
 		this.rows = {};
 		this.widgets = {};
@@ -60,6 +64,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 	destroy: function() {
 		this._super.apply(this, arguments);
+		this.tbody = null;
+		this.table = null;
 		this.rows = null;
 		this.widgets = null;
 	},
@@ -81,13 +87,19 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		return null;
 	},
 
+	/**
+	 * Initialize widgets for custom fields
+	 */
 	loadFields: function() {
 		if(!this.options || !this.options.customfields) return;
-		if(!this.isInTree()) return;
+
+		// Already set up - avoid duplicates in nextmatch
+		if(this._type == 'customfields-list' && !this.isInTree()) return;
 
 		// Create the table rows
 		for(var field_name in this.options.customfields)
 		{
+			// Avoid creating field twice
 			if(this.rows[field_name]) continue;
 
 			var field = this.options.customfields[field_name];
@@ -106,6 +118,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			}
 			
 			if(this._type == 'customfields-list') {
+				// No label, cust widget
 				attrs.readonly = true;
 				this.detachedNodes.push(cf[0]);
 				this.rows[field_name] = cf[0];
@@ -118,32 +131,14 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			}
 			// No label on the widget itself
 			delete(attrs.label);
+
+			// Create widget
 			var widget = this.widgets[field_name] = et2_createWidget(field.type, attrs, this);
 		}
 	},
+
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
-
-		if (this.id)
-		{
-			// Set the value for this element
-			var contentMgr = this.getArrayMgr("content");
-			if (contentMgr != null) {
-				var val = contentMgr.getEntry(this.id);
-				if (val !== null)
-				{
-					// Only set the values that match desired custom fields
-					_attrs["value"] = {};
-					for(var key in val)
-					{
-						if(key.indexOf(this.prefix) == 0) {
-							_attrs["value"][key] = val[key];
-						}
-					}
-					//_attrs["value"] = val;
-				}
-			}
-		}
 
 		// Add in settings that are objects
 		if(!_attrs.customfields)
@@ -154,6 +149,36 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
 			}
 		}
+
+		if (this.id)
+		{
+			// Set the value for this element
+			var contentMgr = this.getArrayMgr("content");
+			if (contentMgr != null) {
+				var val = contentMgr.getEntry(this.id);
+				_attrs["value"] = {};
+				if (val !== null)
+				{
+					// Only set the values that match desired custom fields
+					for(var key in val)
+					{
+						if(key.indexOf(this.prefix) == 0) {
+							_attrs["value"][key] = val[key];
+						}
+					}
+					//_attrs["value"] = val;
+				}
+				else
+				{
+					// Check for custom fields directly in record
+					for(var key in _attrs.customfields)
+					{
+						_attrs["value"][this.prefix + key] = contentMgr.getEntry(this.prefix + key);
+					}
+				}
+			}
+		}
+
 		if(this.options && this.options.customfields)
 		{
 			this.loadFields();
@@ -166,14 +191,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		{
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
-			if(this.widgets[field_name].implements( et2_IDetachedDOM))
-			{
-				this.widgets[field_name].setDetachedAttributes(this.widgets[field_name].getDetachedNodes(), {value:value});
-			}
-			else
-			{
-				this.widgets[field_name].set_value(value);
-			}
+			this.widgets[field_name].set_value(value);
 		}
 	},
 
@@ -206,7 +224,18 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 	{
 		if (typeof _values["value"] != "undefined")
 		{
-			this.set_value(_values["value"]);
+			for(var field_name in this.widgets) {
+				var value = _values["value"][this.prefix + field_name] ? _values["value"][this.prefix + field_name] : null;
+				if(this.widgets[field_name].implements( et2_IDetachedDOM))
+				{
+					widget_values = {"value": value};
+					this.widgets[field_name].setDetachedAttributes(this.widgets[field_name].getDetachedNodes(), widget_values);
+				}
+				else
+				{
+					this.widgets[field_name].set_value(value);
+				}
+			}
 		}
 
 		if (typeof _values["class"] != "undefined")
