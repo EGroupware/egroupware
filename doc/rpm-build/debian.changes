@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20111011-1) hardy; urgency=low
+
+  * CalDAV/CardDAV: added standard /.well-known/(caldav|carddav) redirects and set memory_limit to 128MB in Apache configuration
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 11 Oct 2011 14:55:48 +0200
+
 egroupware-epl (11.1.20111010-1) hardy; urgency=low
 
   * emailadmin: fix problem with UpperLowerCase User Names, use lower case usernames ONLY, when accessing / creating / updating mailboxes
