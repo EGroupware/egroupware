@@ -287,15 +287,17 @@ class calendar_timezones
 		$updated = 0;
 		foreach($tz_aliases as $alias => $tzid)
 		{
-			if (self::tz2id($tzid, 'alias') !== $alias)	// not in DB or different
+			if ((!($alias_id=self::tz2id($alias, 'alias')) || self::id2tz($alias_id, 'tzid') !== $tzid) &&	// not in DB or different
+				($tz_id = self::tz2id($tzid)))	// given tzid for alias exists in DB
 			{
 				$GLOBALS['egw']->db->insert('egw_cal_timezones',array(
-					'tz_alias' => $alias,
+					'tz_alias' => $tz_id,
 				),array(
-					'tz_tzid' => $tzid,
+					'tz_tzid' => $alias,
 				),__LINE__,__FILE__,'calendar');
 				++$updated;
 			}
+			//error_log(__METHOD__."() alias=$alias, tzid=$tzid --> self::tz2id('$alias', 'alias') = ".array2string($alias_id).",  self::tz2id('$tzid')=".array2string($tz_id));
 		}
 		config::save_value('tz_aliases_mtime',$tz_aliases_mtime,$app='phpgwapi');
 
