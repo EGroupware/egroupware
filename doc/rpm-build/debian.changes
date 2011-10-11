@@ -1,3 +1,30 @@
+egroupware (1.8.002.20111011) hardy; urgency=low
+
+  * Calendar: not using freebusy rights for searching calendar, as it would allow to probe for event contents
+  * tracker: mailhandling, fixing a problem with -> not correctly extracting mailadresses <- when adresses contained UpperCase Letters
+  * email: fix for missing style color:red in notification messages
+  * tracker: mailhandling - prevent to use rsh or ssh to establish connection
+  * API: decodeMailHeader handle nested encoding for imap_mime_header_decode
+  * API: take care of INNODB and STRICT_TRANS_TABLES for recent mysql installations
+  * calendar/holidays: fix charset for japanese holidays
+  * API: taking care of sorting AND filtering by customfields with names containing whitespace; (best way to deal with this issue, is not using whitespace in your customfield names at all)
+  * sitemanager: fix PostgreSQL error reported on org-tracker (#2956)
+  * WebDAV: fix for Netdrive to work correct with non-ascii chars like German umlauts
+  * WebDAV: allow locking of not (yet) existing files to create them
+  * Tracker: fixed not working file write rights for assignee
+  * Filemanager: fixed not working rename of file, if path contains a # or ?
+  * eMail/eMailAdmin: is_a compatibility vs. php5.3.8 resolving to instanceof operator
+  * Filemanager/WebDAV: understand Windows7 modification time attribute and setting and returning is as vfs modification time
+  * Addressbook/csv-import: fix/enable update of account - userdata when accounts are stored with ldap. If the condition is on account_id, we supplement the condition with owner=0 (this is needed to correctly determine the storage engine (ldap/sql) for accounts); we strongly recomment NOT to try to use this for adding accounts: use admin import definitions for that task
+  * eMailAdmin: fix problem with UpperLowerCase User Names, use lower case usernames ONLY, when accessing / creating / updating mailboxes
+  * SyncML: Fix WBXML encoding issue (community bug#3020 and SyncEvolution issue bug#2975)
+  * API: is_a compatibility vs. php5.3.8 resolving to instanceof operator for most common basic classes
+  * eMail/Sieve/Vacation: set default to 7 for days setting in vacation for new vacation setups
+  * CalDAV/GroupDAV: return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
+  * Calendar: added windows timezones to all installations (was added in calendar update 1.7.005, but not to new installs)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 11 Oct 2011 08:37:23 +0200
+
 egroupware (1.8.002.20110811) hardy; urgency=low
 
   * Updating version to 1.8.002 to simpler recognice if an EGroupware instance contains the security fixes
