@@ -284,7 +284,7 @@ class calendar_timezones
 		}
 		include($path);	// sets $tz_aliases
 
-		$updated = 0;
+		$updates = 0;
 		foreach($tz_aliases as $alias => $tzid)
 		{
 			if ((!($alias_id=self::tz2id($alias, 'alias')) || self::id2tz($alias_id, 'tzid') !== $tzid) &&	// not in DB or different
@@ -295,7 +295,7 @@ class calendar_timezones
 				),array(
 					'tz_tzid' => $alias,
 				),__LINE__,__FILE__,'calendar');
-				++$updated;
+				++$updates;
 			}
 			//error_log(__METHOD__."() alias=$alias, tzid=$tzid --> self::tz2id('$alias', 'alias') = ".array2string($alias_id).",  self::tz2id('$tzid')=".array2string($tz_id));
 		}
@@ -303,7 +303,7 @@ class calendar_timezones
 
 		//_debug_array($tz2id);
 		$updated = true;
-		return lang('Timezones aliases updated to version %1 (%2 records updated).', $tz_aliases_mtime, $updated);
+		return lang('Timezones aliases updated to version %1 (%2 records updated).', $tz_aliases_mtime, $updates);
 	}
 
 	/**
