@@ -1,3 +1,29 @@
+egroupware-epl (10.1.20111011-1) hardy; urgency=low
+
+  * Filemanager: fixed not working rename of file, if path contains a # or ?
+  * API/Calendar: allow to link to accounts and allow to select accounts as participants by searching them like contacts
+  * eMail: is_a compatibility vs. php5.3.8 resolving to instanceof operator
+  * Filemanager/WebDAV: understand Windows7 modification time attribute and setting and returning is as vfs modification time
+  * addressbook/csv-import: fix/enable update of account - userdata when accounts are stored with ldap. If the condition is on account_id, we supplement the condition with owner=0 (this is needed to correctly determine the storage engine (ldap/sql) for accounts); we strongly recomment NOT to try to use this for adding accounts: use admin import definitions for that task
+  * emailadmin: fix problem with UpperLowerCase User Names, use lower case usernames ONLY, when accessing / creating / updating mailboxes
+  * emailadmin: caching nameSpace information for the request to reduce communication to imap-server with the goal of improved performance clientside and less querying the mailserver
+  * egw-pear: improve connection handling regarding the validation of connectionsvia expected responses
+  * felamimail: improve connection handling regarding the validation of connections via expected responses
+  * knowledgebase: on edit, preset the selected category for new entries
+  * SyncML: Fix WBXML encoding issue (community bug#3020 and SyncEvolution issue bug#2975)
+  * API/CheckPasswordAge: new approach to the issue, as we have to take into account that the timestamp of the last password change may not be provided by the auth system. We fetch the timestamp from the authsystem if the method is implemented for the auth method configured (instead of juggling with account_lastpasswd_change or account_lastpwd_change)
+  * API: is_a compatibility vs. php5.3.8 resolving to instanceof operator for most common basic classes
+  * eMail/Sieve/Vacation: set default to 7 for days setting in vacation for new vacation setups
+  * phpbrain: provide class definitions for TOCLevel3-6 (if using ContentArea Feature)
+  * GroupDAV/KDE: access with old (KDE < 4.7) GroupDAV resource is working again (client did not find any folder, because it requies full URL not just pathes in PROPFIND response)
+  * email: apply timeout for connections for the waiting for data (while no response is comming in) as well
+  * CalDAV/GroupDAV: return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
+  * wiki: add a div with id and class to be able to apply styles for the whole wikipage; apply a left margin to improve readability of pages
+  * Calendar: added windows timezones to all installations (was added in calendar update 1.7.005, but not to new installs)
+  * wiki: using egw-build in randomstring generator instead of possible posix_getpid call (for windows based installations) to initialize the diff between versions
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 11 Oct 2011 08:26:34 +0200
+
 egroupware-epl (10.1.20110905-1) hardy; urgency=low
 
   * tracker: mailhandling, fixing a problem with -> not correctly extracting mailadresses <- when adresses contained UpperCase Letters
