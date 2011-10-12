@@ -641,6 +641,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 		}
 
+		// Let header have a chance
+		if(_sender._parent && _sender._parent == this)
+		{
+			return this.header.getDOMNode(_sender);
+		}
+
 		return null;
 	},
 
@@ -737,26 +743,23 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		// Right
 
-		var filters = jQuery(document.createElement("div")).appendTo(this.div);
+		this.filters = jQuery(document.createElement("div")).appendTo(this.div);
 		
 
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
 			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
-			filters.append(this.category.getDOMNode());
 		}
 
 		// Filter 1
 		if(!settings.no_filter) {
 			this.filter = this._build_select('filter', 'select', settings.filter, settings.filter_no_lang);
-			filters.append(this.filter.getDOMNode());
 		}
 
 		// Filter 2
 		if(!settings.no_filter2) {
 			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
-			filters.append(this.filter2.getDOMNode());
 		}
 
 		// Search
@@ -764,10 +767,9 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		this.search.input.attr("type", "search")
 			.css("left", "40%").css("position", "relative");
 		this.search.input.val(settings.search);
-		filters.append(this.search.getDOMNode());
 		
 		jQuery(document.createElement("button"))
-			.appendTo(filters)
+			.appendTo(this.filters)
 			.css("left", "40%").css("position", "relative")
 			.text(">")
 			.click(this.nextmatch, function(event) {
@@ -784,7 +786,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.getTemplateApp());
 			}
 			var button = et2_createWidget("buttononly", {"label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
-			jQuery(button.getDOMNode()).appendTo(filters).css("float", "right")
+			jQuery(button.getDOMNode()).appendTo(this.filters).css("float", "right")
 				.click(this.nextmatch, function(event) {
 					egw_openWindowCentered2( egw.link('/index.php', {
 						'menuaction':	'importexport.importexport_export_ui.export_dialog',
@@ -838,15 +840,21 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 	 * Sets value, options, labels, and change handlers
 	 */
 	_build_select: function(name, type, value, lang) {
+		// Create widget
 		var select = et2_createWidget(type, {
-			"id": this.nextmatch.id + "_"+name, 
+			"id": this.nextmatch.id + "_"+name,
 			"label": this.nextmatch.options.settings[name+"_label"]
 		},this.nextmatch);
+
+		// Set value
 		select.set_value(value);
+
+		// Set options
 		var mgr = this.nextmatch.getArrayMgr("content");
 		var options = mgr.getEntry("options-" + name);
 		if(options) select.set_select_options(options);
-		select.set_value(this.nextmatch.options.settings[name]);
+
+		// Set onChange
 		var input = select.input;
 		if(this.nextmatch.options.settings[name+"_onchange"])
 		{
@@ -874,6 +882,21 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		}
 			
 		return select;
+	},
+
+	/**
+	 * Help out nextmatch / widget stuff by checking to see if sender is part of header
+	 */
+	getDOMNode: function(_sender) {
+		var filters = [this.category, this.filter, this.filter2, this.search];
+		for(var i = 0; i < filters.length; i++)
+		{
+			if(_sender == filters[i]) 
+			{
+				return this.filters[0];
+			}
+		}
+		return null;
 	}
 
 });
