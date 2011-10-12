@@ -645,6 +645,12 @@ function et2_activateLinks(_content)
  */
 function et2_insertLinkText(_text, _node, _target)
 {
+	if(!_node) 
+	{
+		et2_debug("warn", "et2_insertLinkText called without node", _text, _node, _target);
+		return;
+	}
+
 	// Clear the node
 	for (var i = _node.childNodes.length - 1; i >= 0; i--)
 	{
@@ -661,9 +667,14 @@ function et2_insertLinkText(_text, _node, _target)
 		}
 		else
 		{
+			if(!s.href)
+			{
+				et2_debug("warn", "et2_activateLinks gave bad data", s, _node, _target);
+				s.href = "";
+			}
 			var a = $j(document.createElement("a"))
 				.attr("href", s.href)
-				.text(s.text);
+				.text(s.text ? s.text : "-"+egw.lang("missing")+"-");
 
 			if (typeof _target != "undefined" && _target && _target != "_self")
 			{
