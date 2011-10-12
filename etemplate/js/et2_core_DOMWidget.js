@@ -497,7 +497,7 @@ var et2_surroundingsMgr = Class.extend({
 		this._widgetNode = _widgetNode;
 
 		// Build the container if it didn't exist yet.
-		var updated = this._rebuildContainer(true);
+		var updated = this._rebuildContainer();
 
 		// Return the widget node itself if there are no surroundings arround
 		// it
