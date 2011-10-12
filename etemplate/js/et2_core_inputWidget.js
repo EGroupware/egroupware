@@ -193,7 +193,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			// Delete the labelContainer from the surroundings object
 			if (this._labelContainer)
 			{
-				this.getSurroundings().deleteDOMNode(this._labelContainer[0]);
+				this.getSurroundings().removeDOMNode(this._labelContainer[0]);
 			}
 			this._labelContainer = null;
 		}

@@ -107,9 +107,9 @@ var et2_url = et2_textbox.extend({
 		else
 		{
 			if(this._button) this._button.hide();
-			if(this._button && this.getSurroundings && this.getSurroundings().deleteDOMNode)
+			if(this._button && this.getSurroundings && this.getSurroundings().removeDOMNode)
 			{
-				this.getSurroundings().deleteDOMNode(this._button[0]);
+				this.getSurroundings().removeDOMNode(this._button[0]);
 			}
 			this._button = null;
 		}
