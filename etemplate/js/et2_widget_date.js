@@ -193,6 +193,21 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	set_value: function(_value) {
+		if(_value == null)
+		{
+			this.value = _value;
+
+			if(this.input_date)
+			{
+				this.input_date.val("");
+			}
+			if(this.input_time)
+			{
+				this.input_time.val("");
+			}
+			return;
+		}
+
 		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value)) {
 			if(_value.indexOf(":") > 0 && this.type == "date-timeonly") {
