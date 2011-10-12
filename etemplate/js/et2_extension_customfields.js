@@ -111,7 +111,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			var attrs = {
 				'id': 		field_name,
 				'statustext':	field.help,
-				'required':	field.needed
+				'required':	field.needed,
 			};
 			if(this[setup_function]) {
 				this[setup_function].call(this, field_name, field, attrs);
@@ -129,6 +129,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					.appendTo(row);
 				this.rows[field_name] = cf[0];
 			}
+
 			// No label on the widget itself
 			delete(attrs.label);
 
@@ -204,7 +205,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		attrs.size = field.len;
 	},
 	_setup_select: function(field_name, field, attrs) {
-		attrs.sel_options = field.values;
+		attrs.select_options = field.values;
 	},
 
 	/**
@@ -228,7 +229,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				var value = _values["value"][this.prefix + field_name] ? _values["value"][this.prefix + field_name] : null;
 				if(this.widgets[field_name].implements( et2_IDetachedDOM))
 				{
-					widget_values = {"value": value};
+					var widget_values = {"value": value};
 					this.widgets[field_name].setDetachedAttributes(this.widgets[field_name].getDetachedNodes(), widget_values);
 				}
 				else

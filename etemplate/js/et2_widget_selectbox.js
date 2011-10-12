@@ -80,7 +80,12 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(this.getArrayMgr("sel_options"))
 		{
 			var content_options = this.getArrayMgr("sel_options").getEntry(this.id);
-			if(content_options) _attrs["select_options"] = jQuery.merge(_attrs["select_options"],content_options);
+			if(_attrs["select_options"] && content_options)
+			{
+				_attrs["select_options"] = jQuery.merge(_attrs["select_options"],content_options);
+			} else if (content_options) {
+				_attrs["select_options"] = content_options;
+			}
 		}
 
 		// Check whether the options entry was found, if not read it from the
@@ -105,7 +110,7 @@ var et2_selectbox = et2_inputWidget.extend({
 
 		var option = $j(document.createElement("option"))
 			.attr("value", _value)
-			.text(_label);
+			.text(_label+"");
 
 		if (typeof _title != "undefined" && _title)
 		{
