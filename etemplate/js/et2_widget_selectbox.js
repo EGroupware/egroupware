@@ -79,7 +79,8 @@ var et2_selectbox = et2_inputWidget.extend({
 		// Try to find the options inside the "sel-options" array
 		if(this.getArrayMgr("sel_options"))
 		{
-			_attrs["select_options"] = this.getArrayMgr("sel_options").getEntry(this.id);
+			var content_options = this.getArrayMgr("sel_options").getEntry(this.id);
+			if(content_options) _attrs["select_options"] = jQuery.merge(_attrs["select_options"],content_options);
 		}
 
 		// Check whether the options entry was found, if not read it from the
