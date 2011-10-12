@@ -1477,7 +1477,7 @@ class nextmatch_widget
 			{
 				break;	// nothing to export
 			}
-			if (!$exportLimitExempted && (!bo_merge::hasExportLimit($export_limit,'ISALLOWED') || (int)$export_limit < $total))
+			if (!$exportLimitExempted && (!bo_merge::hasExportLimit($export_limit,'ISALLOWED') || (bo_merge::hasExportLimit($export_limit) && (int)$export_limit < $total)))
 			{
 				etemplate::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',(int)$export_limit));
 				return false;
