@@ -726,9 +726,8 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		// Left
 
 		// Record count
-		this.count = jQuery(document.createElement("div"))
-			.addClass("header_count")
-			.appendTo(this.div);
+		this.count = jQuery(document.createElement("span"))
+			.addClass("header_count ui-corner-all");
 
 		// Need to figure out how to update this as grid scrolls
 		//this.count.append("? - ? ").append(egw.lang("of")).append(" ");
@@ -743,7 +742,8 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		// Right
 
-		this.filters = jQuery(document.createElement("div")).appendTo(this.div);
+		this.filters = jQuery(document.createElement("div")).appendTo(this.div)
+			.addClass("filters");
 		
 
 		// Add category
@@ -762,21 +762,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
 		}
 
-		// Search
-		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this.nextmatch);
-		this.search.input.attr("type", "search")
-			.css("left", "40%").css("position", "relative");
-		this.search.input.val(settings.search);
-		
-		jQuery(document.createElement("button"))
-			.appendTo(this.filters)
-			.css("left", "40%").css("position", "relative")
-			.text(">")
-			.click(this.nextmatch, function(event) {
-				event.data.activeFilters.search = self.search.getValue()
-				event.data.applyFilters();
-			});
-		
+
 		// Export
 		if(!settings.no_csv_export)
 		{
@@ -795,6 +781,23 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 					}), '_blank', 850, 440, 'yes');
 				});
 		}
+
+		this.count.appendTo(this.filters);
+
+		// Search
+		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this.nextmatch);
+		this.search.input.attr("type", "search");
+		this.search.input.val(settings.search);
+		
+		jQuery(document.createElement("button"))
+			.appendTo(this.filters)
+			.text(">")
+			.click(this.nextmatch, function(event) {
+				event.data.activeFilters.search = self.search.getValue()
+				event.data.applyFilters();
+			});
+
+		
 
 		// Letter search
 		var current_letter = this.nextmatch.options.settings.searchletter ? 
@@ -846,13 +849,18 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			"label": this.nextmatch.options.settings[name+"_label"]
 		},this.nextmatch);
 
-		// Set value
-		select.set_value(value);
-
 		// Set options
+		// Check in content for options-<name>
 		var mgr = this.nextmatch.getArrayMgr("content");
 		var options = mgr.getEntry("options-" + name);
+		// Look in sel_options
+		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getEntry(name);
+		// Check parent sel_options, because those are usually global and don't get passed down
+		if(!options) options = this.nextmatch.getArrayMgr("sel_options").parentMgr.getEntry(name);
 		if(options) select.set_select_options(options);
+
+		// Set value
+		select.set_value(value);
 
 		// Set onChange
 		var input = select.input;
