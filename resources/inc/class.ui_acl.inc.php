@@ -28,8 +28,8 @@ class ui_acl
 
 	function ui_acl()
 	{
-		$this->bo =& createobject('resources.bo_acl',True);
-		$this->nextmatchs =& createobject('phpgwapi.nextmatchs');
+		$this->bo = createobject('resources.bo_acl',True);
+		$this->nextmatchs = createobject('phpgwapi.nextmatchs');
 		$this->start = $this->bo->start;
 		$this->query = $this->bo->query;
 		$this->order = $this->bo->order;
@@ -46,10 +46,10 @@ class ui_acl
 
 		if ($_POST['btnDone'])
 		{
-			$GLOBALS['egw']->redirect_link('/admin/index.php');
+			egw::redirect_link('/admin/index.php');
 		}
 
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		echo parse_navbar();
 
 		if ($_POST['btnSave'])
@@ -59,6 +59,7 @@ class ui_acl
 				$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],
 					$_POST['inputcalread'][$cat_id],$_POST['inputcalbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
 			}
+			config::save_value('location_cats', implode(',', $_POST['location_cats']), 'resources');
 		}
 		$template            =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 		$template->set_file(array('acl' => 'acl.tpl'));
@@ -74,7 +75,8 @@ class ui_acl
 			'lang_calread' => lang('Read Calendar permissions'),
 			'lang_calbook' => lang('Direct booking permissions'),
 			'lang_implies_book' => lang('implies booking permission'),
-			'lang_cat_admin' => lang('Categories admin')
+			'lang_cat_admin' => lang('Categories admin'),
+			'lang_locations_rooms' => lang('Locations / rooms'),
 		));
 
 		$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
@@ -91,23 +93,28 @@ class ui_acl
 			'query' => $this->query,
 		));
 
-		@reset($this->bo->cats);
-		while (list(,$cat) = @each($this->bo->cats))
+		if ($this->bo->cats)
 		{
-			$this->rights = $this->bo->get_rights($cat['id']);
+			$config = config::read('resources');
+			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
+			foreach($this->bo->cats as $cat)
+			{
+				$this->rights = $this->bo->get_rights($cat['id']);
 
-			$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
-			$template->set_var(array(
-				'tr_color' => $tr_color,
-				'catname' => $cat['name'],
-				'catid' => $cat['id'],
-				'read' => $this->selectlist(EGW_ACL_READ),
-				'write' => $this->selectlist(EGW_ACL_ADD),
-				'calread' => $this->selectlist(EGW_ACL_CALREAD),
-				'calbook' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
-				'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true)
-			));
-			$template->parse('Cblock','cat_list',True);
+				$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
+				$template->set_var(array(
+					'tr_color' => $tr_color,
+					'catname' => $cat['name'],
+					'catid' => $cat['id'],
+					'read' => $this->selectlist(EGW_ACL_READ),
+					'write' => $this->selectlist(EGW_ACL_ADD),
+					'calread' => $this->selectlist(EGW_ACL_CALREAD),
+					'calbook' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
+					'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true),
+					'location_checked' => in_array($cat['id'], $location_cats) ? 'checked="1"' : '',
+				));
+				$template->parse('Cblock','cat_list',True);
+			}
 		}
 		$template->pfp('out','acl',True);
 	}
@@ -140,7 +147,7 @@ class ui_acl
 				{
 					$selectlist .= ' selected="selected"';
 				}
-				$selectlist .= '>' . $GLOBALS['egw']->common->display_fullname($account['account_lid'],$account['account_firstname'],
+				$selectlist .= '>' . common::display_fullname($account['account_lid'],$account['account_firstname'],
 					$account['account_lastname'],$account['account_id']) . '</option>' . "\n";
 			}
 		}
@@ -150,6 +157,6 @@ class ui_acl
 	function deny()
 	{
 		echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
-		$GLOBALS['egw']->common->egw_exit(True);
+		common::egw_exit(True);
 	}
 }

@@ -24,7 +24,7 @@ class resources_bo
 	/**
 	 * Instance of resources so object
 	 *
-	 * @var so_resources
+	 * @var resources_so
 	 */
 	var $so;
 	/**
