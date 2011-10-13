@@ -82,7 +82,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			var content_options = this.getArrayMgr("sel_options").getEntry(this.id);
 			if(_attrs["select_options"] && content_options)
 			{
-				_attrs["select_options"] = jQuery.merge(_attrs["select_options"],content_options);
+				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
 			} else if (content_options) {
 				_attrs["select_options"] = content_options;
 			}
