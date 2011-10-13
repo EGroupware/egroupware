@@ -591,6 +591,13 @@ class felamimail_bo
 					case 'UNSEEN':
 						$imapFilter .= $criteria .' ';
 						break;
+					case 'KEYWORD1':
+					case 'KEYWORD2':
+					case 'KEYWORD3':
+					case 'KEYWORD4':
+					case 'KEYWORD5':
+						$imapFilter .= "KEYWORD ".'$label'.substr(trim($criteria),strlen('KEYWORD')).' ';
+						break;
 				}
 			}
 			if (isset($_criterias['range']) && !empty($_criterias['range']))
@@ -991,6 +998,37 @@ class felamimail_bo
 				case "mdnnotsent":
 					$this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
 					break;
+				case "label1":
+					$this->icServer->setFlags($_messageUID, '$label1', 'add', true);
+					break;
+				case "unlabel1":
+					$this->icServer->setFlags($_messageUID, '$label1', 'remove', true);
+					break;
+				case "label2":
+					$this->icServer->setFlags($_messageUID, '$label2', 'add', true);
+					break;
+				case "unlabel2":
+					$this->icServer->setFlags($_messageUID, '$label2', 'remove', true);
+					break;
+				case "label3":
+					$this->icServer->setFlags($_messageUID, '$label3', 'add', true);
+					break;
+				case "unlabel3":
+					$this->icServer->setFlags($_messageUID, '$label3', 'remove', true);
+					break;
+				case "label4":
+					$this->icServer->setFlags($_messageUID, '$label4', 'add', true);
+					break;
+				case "unlabel4":
+					$this->icServer->setFlags($_messageUID, '$label4', 'remove', true);
+					break;
+				case "label5":
+					$this->icServer->setFlags($_messageUID, '$label5', 'add', true);
+					break;
+				case "unlabel5":
+					$this->icServer->setFlags($_messageUID, '$label5', 'remove', true);
+					break;
+
 			}
 
 			$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
@@ -2360,6 +2398,7 @@ class felamimail_bo
 			if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
 				return false;
 			}
+			//error_log(__METHOD__.__LINE__.array2string($folderStatus));
 			//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
 			$try2useCache = true;
 			static $eMailListContainsDeletedMessages;
@@ -2639,6 +2678,15 @@ class felamimail_bo
 						$retValue['header'][$sortOrder[$uid]]['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
 						$retValue['header'][$sortOrder[$uid]]['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
 						$retValue['header'][$sortOrder[$uid]]['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
+						if (is_array($headerObject['FLAGS'])) $headerFlags = array_map('strtolower',$headerObject['FLAGS']);
+						if (!empty($headerFlags))
+						{
+							$retValue['header'][$sortOrder[$uid]]['label1']   = in_array('$label1', $headerFlags);
+							$retValue['header'][$sortOrder[$uid]]['label2']   = in_array('$label2', $headerFlags);
+							$retValue['header'][$sortOrder[$uid]]['label3']   = in_array('$label3', $headerFlags);
+							$retValue['header'][$sortOrder[$uid]]['label4']   = in_array('$label4', $headerFlags);
+							$retValue['header'][$sortOrder[$uid]]['label5']   = in_array('$label5', $headerFlags);
+						}
 					}
 					if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
 						if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {

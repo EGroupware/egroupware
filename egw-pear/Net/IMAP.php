@@ -224,6 +224,38 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
+        // try to find out, if the server supports keywords
+        // we assume this is the case if the FLAGS or PERMANENTFLAGS response contains either a known keyword, or \*
+        foreach ($ret["PARSED"] as $k => $commResp)
+        {
+            if ($commResp["EXT"]["FLAGS"]) foreach($commResp["EXT"]["FLAGS"] as $f =>$v) if (stripos($flagsString,$v)===false) $flagsString .= ($flagsString?',':'').$v;
+            if ($commResp["EXT"]["PERMANENTFLAGS"]) foreach($commResp["EXT"]["PERMANENTFLAGS"] as $pf =>$pv) if (stripos($flagsString,$pv)===false) $flagsString .= ($flagsString?',':'').$pv;
+        }
+        if (!empty($flagsString))
+        {
+            foreach (array('$label1','$label2','$label3','$label4','$label5','\*') as $i =>$kw) 
+            {
+                if (stripos($flagsString,$kw) !== false)
+                {
+                    $supportsKeyWords = true;
+                    break;
+                }
+            }
+        }
+        if ($supportsKeyWords)
+        {
+            // check if capabilities is set, if not set it.
+            if( $this->_serverSupportedCapabilities == null ){
+                $this->cmdCapability();
+            }
+            if($this->_serverSupportedCapabilities != null ){
+                if( !in_array( 'SUPPORTS_KEYWORDS' , $this->_serverSupportedCapabilities ) ){
+                    //error_log(__METHOD__.__LINE__.' Mailbox:'.$mailbox.'->'.array2string($flagsString));
+                    $this->_serverSupportedCapabilities[] = 'SUPPORTS_KEYWORDS';
+                    //error_log(__METHOD__.__LINE__.array2string($this->_serverSupportedCapabilities));
+                }
+            }
+        }
         return true;
     }
 

@@ -271,6 +271,7 @@ info	felamimail	de	Info
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	de	Einfügen der Signatur am Anfang einer neuen EMail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der EMail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 invalid user name or password	felamimail	de	Falscher Benutzername oder Pasword
 javascript	felamimail	de	JavaScript
+job	felamimail	de	dienstlich
 jumping to end	felamimail	de	springe zum Ende
 jumping to start	felamimail	de	springe zum Anfang
 junk	felamimail	de	Spammails
@@ -279,6 +280,7 @@ keep local copy of email	felamimail	de	Kopie der E-Mail behalten
 kilobytes	felamimail	de	Kilobytes
 language	felamimail	de	Sprache
 last name	felamimail	de	Nachname
+later	felamimail	de	später
 left	felamimail	de	Links
 less	felamimail	de	kleiner
 less than	felamimail	de	kleiner als
@@ -366,6 +368,7 @@ organization name	admin	de	Name der Organisation
 original message	felamimail	de	ursprüngliche Nachricht
 outgoing mail server(smtp)	felamimail	de	ausgehender Mailserver (SMTP)
 participants	felamimail	de	Teilnehmer
+personal	felamimail	de	persönlich
 personal information	felamimail	de	persönliche Informationen
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	de	Bitte fragen Sie Ihren Administrator um die IMAP Einstellungen für Sie zu korrigieren
 please configure access to an existing individual imap account.	felamimail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
@@ -389,6 +392,7 @@ recent	felamimail	de	neu
 refresh time in minutes	felamimail	de	Aktualisierungsintervall in Minuten
 reject with	felamimail	de	zurückweisen mit
 remove	felamimail	de	entfernen
+remove label	felamimail	de	Schlagwort entfernen
 remove immediately	felamimail	de	sofort löschen
 rename	felamimail	de	Umbenennen
 rename a folder	felamimail	de	Ordner umbenennen
@@ -433,6 +437,7 @@ sent	felamimail	de	Gesendet
 sent folder	felamimail	de	Ordner für gesendete Nachrichten
 server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(Sieve)
 set as default	felamimail	de	Als Vorgabe setzen
+set label	felamimail	de	Schlagwort setzen
 show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	de	zeige alle Ordner (subscribed UND unsubscribed) in der Ordnerleiste des Hauptfensters
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
@@ -476,6 +481,7 @@ there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfig
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
 to	felamimail	de	An
+to do	felamimail	de	zu erledigen
 to mail sent to	felamimail	de	Mail an senden an
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	de	Für eine TLS Verbindung, benötigen Sie PHP 5.1.0 oder neuer.
 translation preferences	felamimail	de	Übersetzungseinstellungen
@@ -504,6 +510,7 @@ unsubscribed successfully!	felamimail	de	Erfolgreich abbestellt
 up	felamimail	de	hoch
 updating message status	felamimail	de	aktualisiere Nachrichtenstatus
 updating view	felamimail	de	aktualisiere Ansicht
+urgent	felamimail	de	dringend
 use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a href="%1">E-MailAdmin</a> um Profile zu erstellen
 use a signature	felamimail	de	Signatur benutzen
 use a signature?	felamimail	de	Eine Signatur benutzen?

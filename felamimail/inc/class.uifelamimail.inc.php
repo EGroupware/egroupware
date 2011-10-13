@@ -940,6 +940,19 @@ class uifelamimail
 				}
  				$headerCount = count($headers['header']);
 				$folderStatus = $this->bofelamimail->getFolderStatus($this->mailbox);
+				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
+				if ($this->bofelamimail->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+				{
+					$statusTypes = $statusTypes + array(
+						'keyword1'	=> 'urgent',
+						'keyword2'	=> 'job',
+						'keyword3'	=> 'personal',
+						'keyword4'	=> 'to do',
+						'keyword5'	=> 'later',
+					);
+					$selectStatus = html::select('status', $defaultSelectStatus, $statusTypes, false, "style='width:100%;' onchange='javascript:quickSearch();' id='status'");
+					$this->t->set_var('select_status', $selectStatus);
+				}
 				$headers['info']['total'] = $folderStatus['messages'];
 				$headers['info']['first'] = $this->startMessage;
 				$headers['info']['last'] = ($headers['info']['total']>$maxMessages?$maxMessages:$headers['info']['total']);

@@ -60,6 +60,27 @@ tr.unseen a {
 	font-weight: bold;
 }
 
+tr.label1 div,
+tr.label1 a {
+	color: #ff0080 !important;
+}
+tr.label2 div,
+tr.label2 a {
+	color: #ff8000 !important;
+}
+tr.label3 div,
+tr.label3 a {
+	color: #008000 !important;
+}
+tr.label4 div,
+tr.label4 a {
+	color: #0000ff !important;
+}
+tr.label5 div,
+tr.label5 a {
+	color: #8000ff !important;
+}
+
 tr.flagged div,
 tr.flagged a {
 	color: #ff0000 !important;
