@@ -218,25 +218,25 @@ class config
 	 *
 	 * @param string $app
 	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
+	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
 	 * @return array with customfields
 	 */
-	static function get_customfields($app,$all_private_too=false)
+	static function get_customfields($app,$all_private_too=false, $only_type2=null)
 	{
 		$config = self::read($app);
 		$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
 
 		$cfs = is_array($config[$config_name]) ? $config[$config_name] : array();
 
-		if (!$all_private_too)
+		foreach($cfs as $name => $field)
 		{
-			foreach($cfs as $name => $field)
+			if (!$all_private_too && $field['private'] && !self::_check_private_cf($field['private']) ||
+				$only_type2 && $field['type2'] && !in_array($only_type2, explode(',', $field['type2'])))
 			{
-				if ($field['private'] && !self::_check_private_cf($field['private']))
-				{
-					unset($cfs[$name]);
-				}
+				unset($cfs[$name]);
 			}
 		}
+		//error_log(__METHOD__."('$app', $all_private_too, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
 		return $cfs;
 	}
 
