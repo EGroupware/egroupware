@@ -50,6 +50,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 * @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
 	 */
 	protected static $prefix = '#';
+	
+	const GLOBAL_VALS = '~custom_fields~';
 
 	protected $legacy_options = 'sub-type,use-private,field-names';
 
@@ -81,12 +83,21 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if(!$this->id) $this->id = 'custom_fields';
 
 		$form_name = self::form_name($cname, $this->id);
-		$app =& $this->getElementAttribute($form_name, 'app');
+
+		// Store properties at top level, so all customfield widgets can share
+		$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
+		if($this->getElementAttribute($form_name, 'app'))
+		{
+			$app =& $this->getElementAttribute($form_name, 'app');
+		} else {
+			// Checking creates it even if it wasn't there
+			unset(self::$request->modifications[$form_name]['app']);
+		}
 
 		if(!$app)
 		{
-			$app =& $this->setElementAttribute($form_name, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
-			$customfields =& $this->setElementAttribute($form_name, 'customfields', config::get_customfields($app));
+			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
+			$customfields =& $this->setElementAttribute(self::GLOBAL_VALS, 'customfields', config::get_customfields($app));
 		}
 
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
@@ -166,7 +177,11 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$fields_with_vals[]=$lname;
 				}
 		}
+		if($fields != $customfields)
+		{
+			// This widget has different settings from global
+			$this->setElementAttribute($form_name, 'customfields', $fields);
+		}
 		parent::beforeSendToClient($cname);
-		$this->setElementAttribute($form_name, 'fields', $fields_with_vals);
 	}
 }
