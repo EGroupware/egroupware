@@ -261,6 +261,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	_genColumnCaption: function(_widget) {
 		var result = null;
 
+		if(typeof _widget._genColumnCaption == "function") return _widget._genColumnCaption();
+
 		_widget.iterateOver(function(_widget) {
 			if (!result)
 			{
@@ -282,6 +284,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 * See _getColumnCaption() for human fiendly captions
 	 */
 	_getColumnName: function(_widget) {
+		if(typeof _widget._getColumnName == 'function') return _widget._getColumnName();
+
 		var name = _widget.id;
 		var child_names = [];
 		var children = _widget.getChildren();
@@ -335,7 +339,22 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				if(!colName) continue;
 
 				if(size[colName]) _colData[i].width = size[colName];
-				for(var j = 0; j < columnDisplay.length; j++) {
+				
+				// Customfields needs special processing
+				if(_row[i].widget.instanceOf(et2_nextmatch_customfields))
+				{
+					var cfDisplay = et2_csvSplit(columnDisplay[i],null,"_#");
+					for(var j = 1; j < cfDisplay.length; j++)
+					{
+						_row[i].widget.options.customfields[cfDisplay[j]].visible = true;
+					} 
+					// Resets field visibility too
+					_row[i].widget._getColumnName();
+					_colData[i].disabled = negated;
+					continue RowLoop;
+				}
+				for(var j = 0; j < columnDisplay.length; j++)
+				{
 					if(columnDisplay[j] == colName)
 					{
 						_colData[i].disabled = negated;
@@ -478,23 +497,34 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	},
 
 	_selectColumnsClick: function(e) {
-		if(!this.selectPopup)
+		var self = this;
+		var columnMgr = this.dataviewContainer.columnMgr;
+		var columns = {};
+		var columns_selected = [];
+		for (var i = 0; i < columnMgr.columns.length; i++)
 		{
-			// Build the popup
-			var self = this;
-			var columnMgr = this.dataviewContainer.columnMgr;
-			var columns = {};
-			var columns_selected = [];
-			for (var i = 0; i < columnMgr.columns.length; i++)
+			var col = columnMgr.columns[i];
+			var widget = this.columns[i].widget;
+
+			if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
 			{
-				var col = columnMgr.columns[i];
-				if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				columns[col.id] = col.caption;
+				if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
+			}
+			// Custom fields get listed separately
+			if(widget.instanceOf(et2_nextmatch_customfields))
+			{
+				for(var field_name in widget.customfields)
 				{
-					columns[col.id] = col.caption;
-					if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
+					columns[et2_customfields_list.prototype.prefix+field_name] = " - "+widget.customfields[field_name].label;
+					if(widget.customfields[field_name].visible) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
 				}
 			}
+		}
 
+		// Build the popup
+		if(!this.selectPopup)
+		{
 			var select = et2_createWidget("select", {multiple: true, rows: 8}, this);
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
@@ -517,9 +547,31 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					}
 				}
 				var value = select.getValue();
+				var column = 0;
 				for(var i = 0; i < value.length; i++)
 				{
-					visibility[value[i]].visible = true;
+					if(visibility[value[i]])
+					{
+						visibility[value[i]].visible = true;
+					}
+					// Custom fields are listed seperately in column list, but are only 1 column
+					if(self.columns[column].widget.instanceOf(et2_nextmatch_customfields)) {
+						var cf = self.columns[column].widget.options.customfields;
+						// Turn off all custom fields
+						for(var field_name in cf)
+						{
+							cf[field_name].visible = false;
+						}
+						i++;
+						// Turn on selected custom fields
+						for(var j = i; j < value.length; j++)
+						{
+							if(value[j].indexOf(et2_customfields_list.prototype.prefix) != 0) break;
+							cf[value[j].substring(1)].visible = true;
+							i++;
+						}
+					}
+					column++;
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
 				self.selectPopup.toggle();
@@ -954,7 +1006,187 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
 });
 
 et2_register_widget(et2_nextmatch_header, ['nextmatch-header',
-	'nextmatch-customfilter', 'nextmatch-customfields']);
+	'nextmatch-customfilter']);
+
+/**
+ * Extend header to process customfields
+ */
+var et2_nextmatch_customfields = et2_nextmatch_header.extend({
+	attributes: {
+		'customfields': {
+                        'name': 'Custom fields',
+                        'description': 'Auto filled'
+                }
+	},
+
+	init: function() {
+
+		// Create the table body and the table
+                this.tbody = $j(document.createElement("tbody"));
+                this.table = $j(document.createElement("table"))
+                        .addClass("et2_grid");
+                this.table.append(this.tbody);
+		this.rows = {};
+
+		this._super.apply(this, arguments);
+	},
+
+	destroy: function() {
+		this.rows = null;
+		this.tbody = null;
+		this.table = null;
+	},
+
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		// Add in settings that are objects
+		if(!_attrs.customfields)
+		{
+			var mgr = this.getArrayMgr("modifications").getRoot();
+			// Check for custom stuff (unlikely)
+			var data = this.getArrayMgr("modifications").getRoot().getEntry(this.id);
+			// Check for global settings
+			if(!data) data = this.getArrayMgr("modifications").getEntry('~custom_fields~');
+			for(var key in data)
+			{
+				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
+			}
+		}
+	},
+
+	setNextmatch: function(_nextmatch) {
+		this._super.apply(this, arguments);
+		this.loadFields();
+	},
+
+	/**
+	 * Build widgets for header - sortable for numeric, text, etc., filterables for selectbox, radio
+	 */
+	loadFields: function() {
+		var columnMgr = this.nextmatch.dataviewContainer.columnMgr;
+		var nm_column = null;
+		for(var i = 0; i < this.nextmatch.columns.length; i++)
+		{
+			if(this.nextmatch.columns[i].widget == this)
+			{
+				nm_column = columnMgr.columns[i];
+				break;
+			}
+		}
+		if(!nm_column) return;
+		for(var field_name in this.options.customfields)
+		{
+			var field = this.options.customfields[field_name];
+
+			
+			if(this.rows[field_name]) continue;
+
+			// Table row
+			var row = jQuery(document.createElement("tr"))
+                                .appendTo(this.tbody);
+                        var cf = jQuery(document.createElement("td"))
+                                .appendTo(row);
+			this.rows[field_name] = cf[0];
+
+			// Create widget by type
+			var widget = null;
+			var cf_id = et2_customfields_list.prototype.prefix + field_name;
+			if(field.type == 'select')
+			{
+			}
+			// TODO
+			else if (field.type == 'app') 
+			{
+			}
+			else
+			{
+				widget = et2_createWidget("nextmatch-sortheader", {
+					id: cf_id,
+					label: field.label
+				}, this);
+			}
+			// Not sure why this is needed, widget should be added by et2_createWidget()
+			cf.append(widget.getDOMNode());
+
+			// Check for column filter
+			if(field.visible == false || typeof field.visible == 'undefined')
+			{
+				cf.hide();
+			}
+		}
+	},
+
+	getDOMNode: function(_sender) {
+		// If the parent class functions are asking for the DOM-Node, return the
+		// outer table.
+		if (_sender == this)
+		{
+			return this.table[0];
+		}
+
+		// Check whether the _sender object exists inside the management array
+		if(this.rows && _sender.id && this.rows[_sender.id])
+		{
+			// Empty it, to avoid doubled DOM nodes
+			//jQuery(this.rows[_sender.id]).empty();
+			return this.rows[_sender.id];
+		}
+
+		return null;
+	},
+
+	/**
+	 * Provide own column caption (column selection)
+	 *
+	 * If only one custom field, just use that, otherwise use "custom fields"
+	 */
+	_genColumnCaption: function() {
+		if(this.options.customfields.length == 1)
+		{
+			return this.options.customfields[0].label;
+		}
+		return egw.lang("Custom fields");
+	},
+
+	/**
+	 * Provide own column naming, including only selected columns
+	 */
+	_getColumnName: function() {
+		var name = this.id;
+		var visible = [];
+		for(field_name in this.options.customfields)
+		{
+			if(this.options.customfields[field_name].visible == true)
+			{
+				visible.push(et2_customfields_list.prototype.prefix + field_name);
+				jQuery(this.rows[field_name]).show();
+			}
+			else if (typeof this.rows[field_name] != "undefined")
+			{
+				jQuery(this.rows[field_name]).hide();
+			}
+		}
+		if(visible.length) {
+			name  +="_"+ visible.join("_");
+		}
+		else
+		{
+			// None hidden means all visible
+			jQuery(this.rows[field_name]).parent().parent().children().show();
+		}
+
+		// Update custom fields column(s)
+		// TODO: figure out how to do this
+/*
+		this.dataviewContainer.getRoot().iterateOver(function() {
+console.debug("iterator", this);
+		}, this, et2_customfields_list);
+*/
+		return name;
+	}
+});
+et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 
 var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, {
 
