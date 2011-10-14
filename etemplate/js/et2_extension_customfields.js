@@ -144,7 +144,11 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		// Add in settings that are objects
 		if(!_attrs.customfields)
 		{
+			// Customized settings for this widget (unlikely)
 			var data = this.getArrayMgr("modifications").getEntry(this.id);
+			// Check for global settings
+                        var global_data = this.getArrayMgr("modifications").getEntry('~custom_fields~');
+			if(global_data) data = jQuery.extend({}, data, global_data);
 			for(var key in data)
 			{
 				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
