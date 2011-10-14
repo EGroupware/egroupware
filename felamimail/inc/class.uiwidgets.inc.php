@@ -749,7 +749,7 @@ $j(document).ready(function() {
 						$rowsFetched['messages'] = count($sR);
 
 						if($reverse === true) $sR = array_reverse((array)$sR);
-						$sR = array_slice($sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
+						$sR = array_slice((array)$sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
 						$sRToFetch = array_slice($sR,0,50); // we fetch only the headers of a subset of the fetched uids
 						//error_log(__METHOD__.__LINE__.' Rows fetched (UID only):'.count($sR).' Data:'.array2string($sR));
 						$maxMessages = 50;
