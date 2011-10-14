@@ -372,7 +372,7 @@ organization name	admin	en	Organization name
 original message	felamimail	en	Original message
 outgoing mail server(smtp)	felamimail	en	Outgoing mail server SMTP
 participants	felamimail	en	Participants
-personal	felamimail	en personal
+personal	felamimail	en	personal
 personal information	felamimail	en	Personal information
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	en	Ask the administrator to correct the eMailAdmin IMAP server settings
 please configure access to an existing individual imap account.	felamimail	en	Configure access to an existing individual IMAP account
