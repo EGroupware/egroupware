@@ -602,5 +602,32 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		$validated = $value;
 	}
+
+	/**
+	 * Run a given method on all children
+	 *
+	 * Reimplemented to add namespace, and make sure row template gets included
+	 *
+	 * @param string $method_name
+	 * @param array $params=array('') parameter(s) first parameter has to be cname!
+	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 */
+	public function run($method_name, $params=array(''), $respect_disabled=false)
+	{
+		$cname =& $params[0];
+		// Need this check or the headers will get involved too
+		if($this->type == 'nextmatch') {
+			parent::run($method_name, $params, $respect_disabled);
+			if ($this->id) $cname = self::form_name($cname, $this->id);
+			if($this->attrs['template'])
+			{
+				$row_template = etemplate_widget_template::instance($this->attrs['template']);
+				$row_template->run($method_name, $params, $respect_disabled);
+			}
+		}
+
+	}
 }
 
+// Registration needs to go here, otherwise customfields won't be loaded until some other cf shows up
+etemplate_widget::registerWidget('etemplate_widget_customfields', array('nextmatch-customfields'));
