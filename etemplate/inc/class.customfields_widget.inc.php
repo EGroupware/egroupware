@@ -26,7 +26,6 @@ class customfields_widget
 {
 	var $public_functions = array(
 		'pre_process' => True,
-		'post_process' => True,
 	);
 	var $human_name = array(
 		'customfields' => 'custom fields',
@@ -113,16 +112,10 @@ class customfields_widget
 	function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
 	{
 		list($app) = explode('.',$tmpl->name);
-		if($extension_data['app']) $app = $extension_data['app'];
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
-		if ($app && $app != 'stylite' && $app != $this->appname && (
-			$this->appname == 'etemplate' || !$this->customfields || etemplate::$hooked || $extension_data['app']
-		))
+		if ($app && $app != 'stylite' && $app != $this->appname && ($this->appname == 'etemplate' || !$this->customfields || etemplate::$hooked))
 		{
 			self::__construct(null,$app); 	// app changed
-
-			// Need to keep hooked app for things like nm filter changes and validation errors
-			if(etemplate::$hooked) $extension_data['app'] = $app;
 		}
 		list($type2,$use_private,$field_names) = explode(',',$cell['size'],3);
 		$fields_with_vals=array();
@@ -498,12 +491,6 @@ class customfields_widget
 		//$cell['size'] = '100%,100%,0,'.$class.','.(in_array($type,array('customfields-list','customfields-no-label'))?'0,0':',').(html::$user_agent != 'msie' ? ',auto' : '');
 
 		return True;	// extra Label is ok
-	}
-
-	/**
-	 * Override to pass along extension_data - doesn't happen otherwise
-	 */
-	public function post_process($name,&$value,&$extension_data,&$loop,etemplate &$tmpl,$value_in) {
 	}
 
 	/**
