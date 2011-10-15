@@ -27,7 +27,7 @@ class XML_WBXML_ContentHandler {
 
     /**
      * WBXML Version.
-     * 1, 2, or 3 supported
+     * 0, 1 or 2 supported
      */
     var $_wbxmlVersion = 2;
 
@@ -63,7 +63,7 @@ class XML_WBXML_ContentHandler {
 
     function setVersion($v)
     {
-        $this->_wbxmlVersion = 2;
+        $this->_wbxmlVersion = $v;
     }
 
     function getOutput()
