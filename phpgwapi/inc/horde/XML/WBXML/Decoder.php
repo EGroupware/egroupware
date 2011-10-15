@@ -145,7 +145,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
 
         // Get Version Number from Section 5.4
         // version = u_int8
-        // currently 1, 2 or 3
+        // currently 0, 1 or 2
         $this->_wbxmlVersion = $this->getVersionNumber($wbxml);
         #Horde::logMessage("WBXML[" . $this->_strpos . "] version " . $this->_wbxmlVersion, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 

@@ -138,12 +138,12 @@ define('RESPONSE_ATOMIC_RESPONSE_TOO_LARGE', 517);
 define('NAME_SPACE_URI_SYNCML_1_0', 'syncml:syncml1.0');
 define('NAME_SPACE_URI_SYNCML_1_1', 'syncml:syncml1.1');
 define('NAME_SPACE_URI_SYNCML_1_2', 'syncml:syncml1.2');
-define('NAME_SPACE_URI_METINF_1_0', 'syncml:metinf');
-define('NAME_SPACE_URI_METINF_1_1', 'syncml:metinf');
-define('NAME_SPACE_URI_METINF_1_2', 'syncml:metinf');
-define('NAME_SPACE_URI_DEVINF_1_0', 'syncml:devinf');
-define('NAME_SPACE_URI_DEVINF_1_1', 'syncml:devinf');
-define('NAME_SPACE_URI_DEVINF_1_2', 'syncml:devinf');
+define('NAME_SPACE_URI_METINF_1_0', 'syncml:metinf1.0');
+define('NAME_SPACE_URI_METINF_1_1', 'syncml:metinf1.1');
+define('NAME_SPACE_URI_METINF_1_2', 'syncml:metinf1.2');
+define('NAME_SPACE_URI_DEVINF_1_0', 'syncml:devinf1.0');
+define('NAME_SPACE_URI_DEVINF_1_1', 'syncml:devinf1.1');
+define('NAME_SPACE_URI_DEVINF_1_2', 'syncml:devinf1.2');
 
 define('CLIENT_SYNC_STARTED',		1);
 define('CLIENT_SYNC_FINNISHED',		2);
