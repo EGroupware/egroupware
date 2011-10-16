@@ -289,7 +289,6 @@ class groupdav extends HTTP_WebDAV_Server
 			$app = 'addressbook';
 		}
 		// CalDAV and CardDAV
-		if (!in_array(2,$dav)) $dav[] = 2;
 		$dav[] = 'access-control';
 
 		if ($app !== 'addressbook')	// CalDAV
