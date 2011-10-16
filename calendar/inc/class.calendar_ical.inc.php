@@ -466,8 +466,8 @@ class calendar_ical extends calendar_boupdate
 									$cutype = 'GROUP';
 									if ($this->productManufacturer == 'groupdav')
 									{
-										$participantURL = 'invalid:nomail';
-										$cutype = 'INDIVIDUAL';
+										$participantURL = 'urn:uuid:'.common::generate_uid('group', substr($uid, 1));
+										$cutype = 'GROUP';
 									}
 									$members = $GLOBALS['egw']->accounts->members($uid, true);
 									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
@@ -487,7 +487,8 @@ class calendar_ical extends calendar_boupdate
 									}
 									break;
 								case 'r':
-									$cutype = 'RESOURCE';
+									$participantURL = 'urn:uuid:'.common::generate_uid('resources', substr($uid, 1));
+									$cutype = ExecMethod2('phpgwapi.groupdav_principals.resouce_is_location', substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
 									break;
 								case 'u':	// account
 								case 'c':	// contact
@@ -505,7 +506,10 @@ class calendar_ical extends calendar_boupdate
 							if (!empty($status)) $options['PARTSTAT'] = $status;
 							if (!empty($cutype)) $options['CUTYPE'] = $cutype;
 							if (!empty($rsvp)) $options['RSVP'] = $rsvp;
-							if (!empty($info['email'])) $options['EMAIL'] = $info['email'];
+							if (!empty($info['email']) && $participantURL != 'MAILTO:'.$info['email'])
+							{
+								$options['EMAIL'] = $info['email'];	// only add EMAIL attribute, if not already URL, as eg. Akonadi is reported to have problems with it
+							}
 							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = $uid;
 							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = $quantity;
 							$attributes['ATTENDEE'][]	= $participantURL;

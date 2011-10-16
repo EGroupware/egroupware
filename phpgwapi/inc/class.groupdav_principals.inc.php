@@ -22,6 +22,13 @@
 class groupdav_principals extends groupdav_handler
 {
 	/**
+	 * Instance of resources_bo
+	 *
+	 * @var resources_bo
+	 */
+	private $resources;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -30,6 +37,8 @@ class groupdav_principals extends groupdav_handler
 	function __construct($app, groupdav $groupdav)
 	{
 		parent::__construct($app, $groupdav);
+
+		$this->resources = new resources_bo();
 	}
 
 	/**
@@ -110,6 +119,7 @@ class groupdav_principals extends groupdav_handler
 		//            /users/$name/calendar-proxy-write/
 		//            /groups/$name/
 		//            /resources/$resource/
+		//            /locations/$resource/
 		//            /__uids__/$uid/.../
 
 		switch($type)
@@ -120,10 +130,13 @@ class groupdav_principals extends groupdav_handler
 			case 'groups':
 				$files['files'] = $this->propfind_groups($name,$rest,$options);
 				break;
-			/*case 'resources':
-				$files['files'] = $this->propfind_resources($name,$rest,$options);
+			case 'resources':
+				$files['files'] = $this->propfind_resources($name,$rest,$options,false);
 				break;
-			case '__uids__':
+			case 'locations':
+				$files['files'] = $this->propfind_resources($name,$rest,$options,true);
+				break;
+			/*case '__uids__':
 				$files['files'] = $this->propfind_uids($name,$rest,$options);
 				break;*/
 			case '':
@@ -701,7 +714,7 @@ class groupdav_principals extends groupdav_handler
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$account['account_lid']))),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])))),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
 			// Calendarserver
 			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
@@ -711,7 +724,7 @@ class groupdav_principals extends groupdav_handler
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','users'),
 			// WebDAV ACL and CalDAV proxy
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
-				'calendar', $account['account_id']),	// add proxy-rights
+				array('calendar', 'resources'), $account['account_id']),	// add proxy-rights
 			'alternate-URI-set' => array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email'])),
 			// CardDAV
@@ -731,7 +744,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	static public function url2uid($url, $only_type=null)
 	{
-		if (!$only_type) $only_type = array('accounts', 'groups', 'resources', 'mailto');
+		if (!$only_type) $only_type = array('accounts', 'groups', 'resources', 'locations', 'mailto');
 
 		if ($url[0] == '/')
 		{
@@ -749,7 +762,17 @@ class groupdav_principals extends groupdav_handler
 			case 'https':
 				list(,$rest) = explode($GLOBALS['egw_info']['server']['webserver_url'].'/groupdav.php/principals/', $url);
 				list($type, $name) = explode('/', $rest);
-				$uid = $GLOBALS['egw']->accounts->name2id($name, 'account_lid', $type[0]);	// u=users, g=groups
+				switch($type)
+				{
+					case 'users':
+					case 'groups':
+						$uid = $GLOBALS['egw']->accounts->name2id($name, 'account_lid', $type[0]);	// u=users, g=groups
+						break;
+					case 'resources':
+					case 'locations':
+						$uid = 'r'.(int)$name;
+						break;
+				}
 				break;
 
 			case 'mailto':
@@ -762,17 +785,30 @@ class groupdav_principals extends groupdav_handler
 				break;
 
 			case 'urn':
-				list($urn_type, $name) = explode(':', $rest, 2);
-				if ($urn_type === 'uuid' && ($uid = $GLOBALS['egw']->accounts->name2id($name, 'account_lid')))
+				list($urn_type, $uid) = explode(':', $rest, 2);
+				list($type, $id, $install_id) = explode('-', $uid);
+				if ($type == 'accounts' && empty($id))	// groups have a negative id, eg. "urn:uuid:accounts--1-..."
 				{
-					$type = $uid > 0 ? 'accounts' : 'groups';
-					break;
+					list($type, $nul, $id, $install_id) = explode('-', $uid);
+					$id = -$id;
 				}
-				// todo: resources
+				// own urn
+				if ($urn_type === 'uuid' && $install_id === $GLOBALS['egw_info']['server']['install_id'])
+				{
+					if ($type == 'accounts')
+					{
+						$uid = $id;
+					}
+					elseif ($type == 'resources')
+					{
+						$uid = 'r'.$id;
+					}
+				}
+				// todo: store urn's from other EGroupware / calendarservers like email addresses ("CN <urn>" or "urn", maybe with 'u' prefix)
 				break;
 
 			default:
-				error_log(__METHOD__."('$url') unsupported principal type '$schema'!");
+				error_log(__METHOD__."('$url') unsupported principal URL '$url'!");
 				return false;
 		}
 		return $uid && in_array($type, $only_type) ? $uid : false;
@@ -805,10 +841,136 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
+			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/groups/'.$account['account_lid'].'/'),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])))),
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','group'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
 			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
 		));
+	}
+
+	/**
+	 * Add collection of a single resource to a collection
+	 *
+	 * @param array $resource
+	 * @param boolean $is_location=null
+	 * @return array with values for keys 'path' and 'props'
+	 */
+	protected function add_principal_resource(array $resource, $is_location=null)
+	{
+		$name = $this->resource2name($resource, $is_location, $displayname);
+
+		return $this->add_principal($name, array(
+			'getetag' => $this->get_resource_etag($resource),
+			'displayname' => $displayname,
+			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$name.'/'),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id'])))),
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type',$is_location ? 'location' : 'resource'),
+			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type',$is_location ? 'ROOM' : 'RESOURCE'),
+		));
+	}
+
+	/**
+	 * Get path of a resource-principal (relative to principal collection)
+	 *
+	 * @param array $resource
+	 * @param boolean $is_location=null
+	 * @param string &$displayname=null on return displayname of resource
+	 * @return string eg. "locations/123-some-room" or "resouces/345-some-device"
+	 */
+	protected function resource2name(array $resource, $is_location=null, &$displayname=null)
+	{
+		if (is_null($is_location)) $is_location = $this->resource_is_locatation($resource);
+
+		$displayname = translation::convert($resource['name'],	translation::charset(), 'utf-8');
+
+		return ($is_location ? 'locations/' : 'resources/').$resource['res_id'].'-'.str_replace(array(' ','/',':','#','?'),'-',$displayname);
+	}
+
+	/**
+	 * Check if resource is a location
+	 *
+	 * @param array|int $resource
+	 * @return boolean
+	 */
+	public function resource_is_locatation($resource)
+	{
+		static $location_cats;
+		if (is_null($location_cats))
+		{
+			$config = config::read('resources');
+			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
+		}
+		if (!is_array($resource))
+		{
+			if (!($resource = $this->resources->read($resource)))
+			{
+				return null;
+			}
+		}
+		return $resource['cat_id'] && in_array($resource['cat_id'], $location_cats);
+	}
+
+	/**
+	 * Get an etag for a resource
+	 *
+	 * @param array $resource
+	 * @return string
+	 */
+	protected function get_resource_etag(array $resource)
+	{
+		return md5(serialize($resource)).'-'.($this->resource_is_locatation($resource) ? 'l' : 'r');
+	}
+
+	/**
+	 * Cache for get_resources
+	 *
+	 * @var array
+	 */
+	private static $all_resources;
+	/**
+	 * Get all resources (we cache the resources here, to only query them once per request)
+	 *
+	 * @return array of array with values for res_id, cat_id and name (no other values1)
+	 */
+	protected function get_resources()
+	{
+		if (!isset(self::$all_resources))
+		{
+			self::$all_resources = array();
+			$query = array(
+
+			);
+			if ($this->resources->get_rows($query, $rows, $readonlys))
+			{
+				//_debug_array($rows);
+				foreach($rows as $resource)
+				{
+					self::$all_resources[$resource['res_id']] = array_intersect_key($resource, array('res_id'=>true,'cat_id'=>true,'name'=>true));
+				}
+			}
+		}
+		return self::$all_resources;
+	}
+
+	/**
+	 * Get category based ACL rights for resouces
+	 *
+	 * Cached to not query it multiple times per request
+	 *
+	 * @return array of 'L'.$cat_id => array($account_id => $rights) pairs
+	 */
+	protected function get_resource_rights()
+	{
+		static $grants;
+
+		if (is_null($grants))
+		{
+			$grants = $this->acl->get_location_grants('L%', 'resources');
+		}
+		return $grants;
 	}
 
 	/**
@@ -860,20 +1022,56 @@ class groupdav_principals extends groupdav_handler
 	 * @param string $principal relative to principal-collection-set, eg. "users/username"
 	 * @param string $type eg. 'calendar-proxy-read' or 'calendar-proxy-write'
 	 * @param array $proxys=array()
+	 * @param array $resource=null resource to use (to not query it multiple times from the database)
 	 * @return array with values for 'path' and 'props'
 	 */
-	protected function add_proxys($principal, $type, array $proxys=array())
+	protected function add_proxys($principal, $type, array $proxys=array(), array $resource=null)
 	{
 		list($app,,$what) = explode('-', $type);
-		$right = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_READ;
-		$mask = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_EDIT|EGW_ACL_READ;	// do NOT report write+read in read
-		//echo "<p>type=$type --> app=$app, what=$what --> right=$right, mask=$mask</p>\n";
-
-		list($account_type,$account) = explode('/', $principal);
-		$account = $this->accounts->name2id($account, 'account_lid', $account_type[0]);
 
 		$proxys = array();
-		foreach($this->acl->get_all_location_rights($account, $app, $app != 'addressbook') as $account_id => $rights)
+		list($account_type,$account) = explode('/', $principal);
+
+		switch($account_type)
+		{
+			case 'users':
+			case 'groups':
+				$account = $location = $this->accounts->name2id($account, 'account_lid', $account_type[0]);
+				$right = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_READ;
+				$mask = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_EDIT|EGW_ACL_READ;	// do NOT report write+read in read
+				break;
+
+			case 'locations':
+			case 'resources':
+				$app = 'resources';
+				if (!is_array($resource) || $resource['res_id'] == (int)$account)
+				{
+					$resource = $this->resources->read((int)$account);
+				}
+				$location = 'L'.$resource['cat_id'];
+				$right = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_CALREAD;
+				$mask = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_DIRECT_BOOKING|EGW_ACL_CALREAD;	// do NOT report write+read in read
+				break;
+		}
+		static $principal2grants = array();
+		$grants =& $principal2grants[$principal];
+		if (!isset($grants))
+		{
+			switch($app)
+			{
+				case 'resources':
+					$grants = $this->get_resource_rights();
+					$grants = (array)$grants[$location];	// returns array($location => $grants)
+					break;
+
+				case 'calendar':
+				default:
+					$grants = $this->acl->get_all_location_rights($account, $app, $app != 'addressbook');
+					break;
+			}
+			//echo "<p>type=$type --> app=$app, what=$what --> right=$right, mask=$mask, account=$account, location=$location --> grants=".array2string($grants)."</p>\n";
+		}
+		foreach($grants as $account_id => $rights)
 		{
 			if ($account_id !== 'run' && $account_id != $account && ($rights & $mask) == $right &&
 				($account_lid = $this->accounts->id2name($account_id)))
@@ -891,7 +1089,7 @@ class groupdav_principals extends groupdav_handler
 			//echo "<p>$account_id ($account_lid): (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
 		}
 		return $this->add_principal($principal.'/'.$type, array(
-				'displayname' => $app.' '.$what.' proxy of '.basename($principal),
+				'displayname' => lang('%1 proxy of %2', lang($app).' '.lang($what), basename($principal)),
 				'group-member-set' => $this->principal_set('group-member-set', $proxys),
 				'getetag' => md5(serialize($proxys)),
 				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, $type, '')),
@@ -905,7 +1103,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param array $accounts=array() account_id => account_lid pairs
 	 * @param string|array $app_proxys=null applications for which proxys should be added
 	 * @param int $account who is the proxy
-	 * @param array with href props
+	 * @return array with href props
 	 */
 	protected function principal_set($prop, array $accounts=array(), $add_proxys=null, $account=null)
 	{
@@ -918,19 +1116,156 @@ class groupdav_principals extends groupdav_handler
 		{
 			foreach((array)$add_proxys as $app)
 			{
-				foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
+				switch($app)
 				{
-					if ($account_id != $account && ($rights & EGW_ACL_READ) &&
-						($account_lid = $this->accounts->id2name($account_id)))
+					case 'resources':
+						$proxy_groups = $this->get_resource_proxy_groups($account);
+						break;
+					default:
+						$proxy_groups = $this->get_calendar_proxy_groups($account, $app);
+						break;
+				}
+				$set = array_merge($set, $proxy_groups);
+			}
+		}
+		return $set;
+	}
+
+	/**
+	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
+	 *
+	 * @param int $account who is the proxy
+	 * @param string|array $app_proxys=null applications for which proxys should be added
+	 * @return array with href props
+	 */
+	protected function get_resource_proxy_groups($account)
+	{
+		$set = array();
+		if (($resources = $this->get_resources()))
+		{
+			// location_grants = array(location => array(account_id => rights))
+			$all_location_grants = $this->get_resource_rights();
+			// get location grants for $account (incl. his memberships)
+			$memberships = $GLOBALS['egw']->accounts->memberships($account, true);
+			$location_grants = array();
+			foreach($all_location_grants as $location => $grants)
+			{
+				foreach($grants as $account_id => $rights)
+				{
+					if (($rights & (EGW_ACL_CALREAD|EGW_ACL_DIRECT_BOOKING)) &&	// we only care for these rights
+						($account_id == $account || in_array($account_id, $memberships)))
 					{
-						$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
-							($account_id < 0 ? 'groups/' : 'users/').
-							$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read').'/');
+						if (!isset($location_grants[$location])) $location_grants[$location] = 0;
+						$location_grants[$location] |= $rights;
+					}
+				}
+			}
+			// now add proxy-groups for all resources user has rights to
+			foreach($resources as $resource)
+			{
+				$rights = $location_grants['L'.$resource['cat_id']];
+				if (isset($rights))
+				{
+					$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
+						'/calendar-proxy-'.($rights & EGW_ACL_DIRECT_BOOKING ? 'write' : 'read').'/');
+				}
+			}
+		}
+		//echo "get_resource_proxy_groups($account)"; _debug_array($set);
+		return $set;
+	}
+
+	/**
+	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
+	 *
+	 * @param int $account who is the proxy
+	 * @param string|array $app_proxys=null applications for which proxys should be added
+	 * @return array with href props
+	 */
+	protected function get_calendar_proxy_groups($account, $app='calendar')
+	{
+		$set = array();
+		foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
+		{
+			if ($account_id != $account && ($rights & EGW_ACL_READ) &&
+				($account_lid = $this->accounts->id2name($account_id)))
+			{
+				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
+					($account_id < 0 ? 'groups/' : 'users/').
+					$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read').'/');
+			}
+		}
+		return $set;
+	}
+
+	/**
+	 * Do propfind in /pricipals/(resources|locations)
+	 *
+	 * @param string $name name of group or empty
+	 * @param string $rest rest of path behind account-name
+	 * @param array $options
+	 * @param boolean $do_locations=false false: /principal/resources, true: /principals/locations
+	 * @return array|string array with files or HTTP error code
+	 */
+	protected function propfind_resources($name,$rest,array $options,$do_locations=false)
+	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['resources']))
+		{
+			return '404 Not Found';
+		}
+		//echo "<p>".__METHOD__."('$name', '$rest', ".array2string($options).', '.array2string($do_locations).")</p>\n";
+		if (empty($name))
+		{
+			$files = array();
+			// add /pricipals/users/ entry
+			$files[] = $this->add_collection('/principals/'.($do_locations ? 'locations/' : 'resources/'));
+
+			if ($options['depth'])
+			{
+				$query = array(
+
+				);
+				if (($resources = $this->get_resources()))
+				{
+					//_debug_array($resources);
+					foreach($resources as $resource)
+					{
+						if (($is_location = $this->resource_is_locatation($resource)) == $do_locations)
+						{
+							$files[] = $this->add_principal_resource($resource, $is_location);
+						}
 					}
 				}
 			}
 		}
-		return $set;
+		else
+		{
+			if (!($resource = $this->resources->read((int)$name)) || ($is_location = $this->resource_is_locatation($resource)) != $do_locations)
+			{
+				return '404 Not Found';
+			}
+			$path = ($is_location ? 'locations/' : 'resources/').$name;
+			while (substr($rest,-1) == '/') $rest = substr($rest,0,-1);
+			switch((string)$rest)
+			{
+				case '':
+					$files[] = $this->add_principal_resource($resource);
+					if ($options['depth'])
+					{
+						$files[] = $this->add_proxys($path, 'calendar-proxy-read', array(), $resource);
+						$files[] = $this->add_proxys($path, 'calendar-proxy-write', array(), $resource);
+					}
+					break;
+				case 'calendar-proxy-read':
+				case 'calendar-proxy-write':
+					$files = array();
+					$files[] = $this->add_proxys($path, $rest, array(), $resource);
+					break;
+				default:
+					return '404 Not Found';
+			}
+		}
+		return $files;
 	}
 
 	/**
@@ -952,8 +1287,12 @@ class groupdav_principals extends groupdav_handler
 			if (is_numeric($options['depth'])) --$options['depth'];
 			$files = array_merge($files,$this->propfind_users('','',$options));
 			$files = array_merge($files,$this->propfind_groups('','',$options));
-			//$files = array_merge($this->propfind_resources('','',$options));
-			//$files = array_merge($this->propfind_uids('','',$options));
+			if ($GLOBALS['egw_info']['user']['apps']['resources'])
+			{
+				$files = array_merge($files,$this->propfind_resources('','',$options,false));	// resources
+				$files = array_merge($files,$this->propfind_resources('','',$options,true));	// locations
+			}
+			//$files = array_merge($files,$this->propfind_uids('','',$options));
 		}
 		return $files;
 	}
@@ -1041,8 +1380,9 @@ class groupdav_principals extends groupdav_handler
 			$account = $this->read($account);
 		}
 		return $account['account_id'].':'.md5(serialize($account)).
-			// add md5 from calendar grants, as they are listed as memberships
-			':'.md5(serialize($this->acl->get_grants('calendar', true, $account['account_id']))).
+			// add md5 from calendar & resource grants, as they are listed as memberships
+			':'.md5(serialize($this->acl->get_grants('calendar', true, $account['account_id'])).
+				serialize($this->get_resource_rights())).
 			// as the principal of current user is influenced by GroupDAV prefs, we have to include them in the etag
 			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ?
 				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '');
