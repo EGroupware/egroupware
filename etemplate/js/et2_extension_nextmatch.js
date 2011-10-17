@@ -346,7 +346,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					var cfDisplay = et2_csvSplit(columnDisplay[i],null,"_#");
 					for(var j = 1; j < cfDisplay.length; j++)
 					{
-						_row[i].widget.options.customfields[cfDisplay[j]].visible = true;
+						_row[i].widget.options.fields[cfDisplay[j]] = true;
 					} 
 					// Resets field visibility too
 					_row[i].widget._getColumnName();
@@ -517,7 +517,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				for(var field_name in widget.customfields)
 				{
 					columns[et2_customfields_list.prototype.prefix+field_name] = " - "+widget.customfields[field_name].label;
-					if(widget.customfields[field_name].visible) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
+					if(widget.fields[field_name]) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
 				}
 			}
 		}
@@ -557,17 +557,19 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					// Custom fields are listed seperately in column list, but are only 1 column
 					if(self.columns[column].widget.instanceOf(et2_nextmatch_customfields)) {
 						var cf = self.columns[column].widget.options.customfields;
+						var visible = self.columns[column].widget.options.fields;
+
 						// Turn off all custom fields
 						for(var field_name in cf)
 						{
-							cf[field_name].visible = false;
+							visible[field_name] = false;
 						}
 						i++;
-						// Turn on selected custom fields
-						for(var j = i; j < value.length; j++)
+						// Turn on selected custom fields - start from 0 in case they're not in order
+						for(var j = 0; j < value.length; j++)
 						{
-							if(value[j].indexOf(et2_customfields_list.prototype.prefix) != 0) break;
-							cf[value[j].substring(1)].visible = true;
+							if(value[j].indexOf(et2_customfields_list.prototype.prefix) != 0) continue;
+							visible[value[j].substring(1)] = true;
 							i++;
 						}
 					}
@@ -1016,7 +1018,11 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 		'customfields': {
                         'name': 'Custom fields',
                         'description': 'Auto filled'
-                }
+                },
+		'fields': {
+			'name': "Visible fields",
+			"description": "Auto filled"
+		}
 	},
 
 	init: function() {
@@ -1043,11 +1049,10 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 		// Add in settings that are objects
 		if(!_attrs.customfields)
 		{
-			var mgr = this.getArrayMgr("modifications").getRoot();
 			// Check for custom stuff (unlikely)
-			var data = this.getArrayMgr("modifications").getRoot().getEntry(this.id);
+			var data = this.getArrayMgr("modifications").getEntry(this.id);
 			// Check for global settings
-			if(!data) data = this.getArrayMgr("modifications").getEntry('~custom_fields~');
+			if(!data) data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
 			for(var key in data)
 			{
 				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
@@ -1107,10 +1112,10 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 				}, this);
 			}
 			// Not sure why this is needed, widget should be added by et2_createWidget()
-			cf.append(widget.getDOMNode());
+			if(widget) cf.append(widget.getDOMNode());
 
 			// Check for column filter
-			if(field.visible == false || typeof field.visible == 'undefined')
+			if(this.options.fields[field_name] == false || typeof this.options.fields[field_name] == 'undefined')
 			{
 				cf.hide();
 			}
@@ -1155,9 +1160,10 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	_getColumnName: function() {
 		var name = this.id;
 		var visible = [];
-		for(field_name in this.options.customfields)
+
+		for(var field_name in this.options.customfields)
 		{
-			if(this.options.customfields[field_name].visible == true)
+			if(this.options.fields[field_name] == true)
 			{
 				visible.push(et2_customfields_list.prototype.prefix + field_name);
 				jQuery(this.rows[field_name]).show();
@@ -1167,6 +1173,9 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 				jQuery(this.rows[field_name]).hide();
 			}
 		}
+
+		
+
 		if(visible.length) {
 			name  +="_"+ visible.join("_");
 		}
@@ -1176,13 +1185,17 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			jQuery(this.rows[field_name]).parent().parent().children().show();
 		}
 
-		// Update custom fields column(s)
-		// TODO: figure out how to do this
-/*
-		this.dataviewContainer.getRoot().iterateOver(function() {
-console.debug("iterator", this);
-		}, this, et2_customfields_list);
-*/
+		// Update global custom fields column(s) - widgets will check on their own
+
+		// Check for custom stuff (unlikely)
+		var data = this.getArrayMgr("modifications").getEntry(this.id);
+		// Check for global settings
+		if(!data) data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
+		if(!data.fields) data.fields = {};
+		for(var field in this.options.customfields)
+		{
+			data.fields[field] = (typeof this.options.fields[field] == 'undefined' ? false : this.options.fields[field]);
+		}
 		return name;
 	}
 });
