@@ -889,7 +889,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				$plainBody = strip_tags($plainBody);
 				if ($this->debugLevel>3 && $output->airsyncbasenativebodytype==1) debugLog(__METHOD__.__LINE__.' Plain Text:'.$plainBody);
 				//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
-				if (isset($bodypreference[4]))
+				if (isset($bodypreference[4]) && ($mimesupport==2 || ($mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)))
 				{
 					debugLog(__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->airsyncbasebody->type = 4;

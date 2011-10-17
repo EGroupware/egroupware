@@ -1583,40 +1583,44 @@ blockquote[type=cite] {
 			return '<img src="'.$imageURL.'" />';
 		}
 
-		function printMessage($messageId = NULL, $callfromcompose = NULL)
+		function printMessage($messageId = NULL, $callfromcompose = NULL, $mailFolder = '')
 		{
 			if (!empty($messageId) && empty($this->uid)) $this->uid = $messageId;
 			$partID	= $this->partID	= $_GET['part'];
+			// figure out which folder to select, can be passed by GET, preset by this->mailbox or passed by parameter
 			if (!empty($_GET['folder'])) $this->mailbox  = base64_decode($_GET['folder']);
-
-			//$transformdate	=& CreateObject('felamimail.transformdate');
-			//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
-			//$uiWidgets	=& CreateObject('felamimail.uiwidgets');
-			// (regis) seems to be necessary to reopen...
-			$folder = $this->mailbox;
-			// the folder for callfromcompose is hardcoded, because the message to be printed from the compose window is saved as draft, and can be
-			// reopened for composing (only) from there
+			// mailFolder set but not existing, no use to be tried for message
+			if (!empty($mailFolder) && !felamimail_bo::folderExists($mailFolder,true)) $mailFolder = '';
+			// fall back to constructor/preset class var for folder, or use the passed parameter (which is validated by now for existance)
+			if (empty($mailFolder)) $folder = $this->mailbox;
+			else $folder = $mailFolder;
+			// the folder for callfromcompose was hardcoded, because the message to be printed from the compose window is saved as draft, 
+			// within the configured draftfolder and can be reopened for composing (only) from there, we pass the folder used as
+			// destinationFolder (by saveAsDraft) in mailFolder to pass it on now when comming from uicompose as special setups 
+			// broke the earlier assumption -> still no mailFolder, try to recover with the defaults
 			if ($callfromcompose)
 			{
 				if (isset($this->mailPreferences->preferences['draftFolder']) &&
 					$this->mailPreferences->preferences['draftFolder'] != 'none')
 				{
-					$folder = $this->mailPreferences->preferences['draftFolder'];
+					if (empty($mailFolder)) $folder = $this->mailPreferences->preferences['draftFolder'];
 				}
 				else
 				{
-					$folder = $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+					if (empty($mailFolder)) $folder = $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
 				}
 			}
+			// it is necessary to reopen... to make sure you are within the folder the message is in
+			//error_log(__METHOD__.__LINE__.$folder);
 			$this->bofelamimail->reopen($folder);
-#			print "$this->mailbox, $this->uid, $partID<br>";
+			//print "$this->mailbox, $this->uid, $partID<br>";
 			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
 			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
-#			_debug_array($headers);exit;
+			//_debug_array($headers);exit;
 			$rawheaders	= $this->bofelamimail->getMessageRawHeader($this->uid, $partID);
 			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid,$partID, '',true);
-#			_debug_array($nextMessage); exit;
+			//_debug_array($nextMessage); exit;
 
 			$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
 
