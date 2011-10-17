@@ -487,6 +487,10 @@ function et2_substr (str, start, len) {
 function et2_csvSplit(_str, _num, _delimiter, _enclosure)
 {
 	// Default the parameters
+	if (typeof _str == "undefined")
+	{
+		_str = "";
+	}
 	if (typeof _num == "undefined")
 	{
 		_num = null;
