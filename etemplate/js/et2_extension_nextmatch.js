@@ -379,6 +379,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		var visibility = colMgr.getColumnVisibilitySet();
 		var colDisplay = [];
 		var colSize = {};
+		var custom_fields = [];
 
 		// visibility is indexed by internal ID, widget is referenced by position, preference needs name
 		for(var i = 0; i < colMgr.columns.length; i++)
@@ -388,6 +389,13 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			if(colName) {
 				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
 				if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
+				// Server side wants each cf listed as a seperate column
+				if(widget.instanceOf(et2_nextmatch_customfields)) 
+				{
+					for(name in widget.options.fields) {
+						 if(widget.options.fields[name]) custom_fields.push("#"+name);
+					}
+				}
 			} else if (colMgr.columns[i].fixedWidth) {
 				et2_debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
@@ -405,6 +413,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
+
+		// Server side wants each cf listed as a seperate column
+		jQuery.merge(colDisplay, custom_fields);
+
 		this.activeFilters.selectcols = colDisplay;
 
 		// We don't need to re-query if they've removed a column
