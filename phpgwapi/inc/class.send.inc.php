@@ -44,7 +44,14 @@ class send extends egw_mailer
 		// if dontUseUserDefinedProfiles is set to yes/true/1 dont restore the session AND dont retrieve UserdefinedAccount settings
 		$notification_config = config::read('notifications');
 		if ($notification_config['dontUseUserDefinedProfiles']) $restoreSession = $getUserDefinedProfiles = false;
-		$bopreferences    =& CreateObject('felamimail.bopreferences',$restoreSession);
+		try
+		{
+			$bopreferences =& CreateObject('felamimail.bopreferences',$restoreSession);
+		}
+		catch (egw_exception_assertion_failed $e)
+		{
+			$bopreferences = false;
+		}
 		if ($bopreferences) {
 			if ($this->debug) error_log(__METHOD__." using felamimail preferences for mailing.");
 			// if dontUseUserDefinedProfiles is set to yes/true/1  dont retrieve UserdefinedAccount settings
