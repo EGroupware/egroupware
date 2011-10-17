@@ -1051,6 +1051,7 @@ class calendar_bo
 					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
 					$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
 					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
+					'app'   => 'accounts',
 				);
 			}
 			else
@@ -1063,6 +1064,7 @@ class calendar_bo
 					{
 						$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
 					}
+					$info['app'] = $this->resources[$uid[0]]['app'];
 				}
 			}
 			$res_info_cache[$uid] = $info;
