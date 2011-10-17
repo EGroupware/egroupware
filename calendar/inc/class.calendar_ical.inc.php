@@ -407,7 +407,6 @@ class calendar_ical extends calendar_boupdate
 				}
 				$event['recur_exception'] = $exceptions;
 			}
-
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
 				if (!isset($this->supportedFields[$egwFieldName]))
@@ -464,11 +463,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								case 'g':
 									$cutype = 'GROUP';
-									if ($this->productManufacturer == 'groupdav')
-									{
-										$participantURL = 'urn:uuid:'.common::generate_uid('group', substr($uid, 1));
-										$cutype = 'GROUP';
-									}
+									$participantURL = 'urn:uuid:'.common::generate_uid('accounts', substr($uid, 1));
 									$members = $GLOBALS['egw']->accounts->members($uid, true);
 									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
 									{
@@ -481,14 +476,13 @@ class calendar_ical extends calendar_boupdate
 											'CUTYPE'	=> 'INDIVIDUAL',
 											'RSVP'		=> 'TRUE',
 											'X-EGROUPWARE-UID'	=> $this->user,
-											'EMAIL'		=>	$user['email'],
-			    							);
+			    						);
 			    						$event['participants'][$this->user] = true;
 									}
 									break;
 								case 'r':
 									$participantURL = 'urn:uuid:'.common::generate_uid('resources', substr($uid, 1));
-									$cutype = ExecMethod2('phpgwapi.groupdav_principals.resouce_is_location', substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
+									$cutype = groupdav_principals::resource_is_location(substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
 									break;
 								case 'u':	// account
 								case 'c':	// contact
@@ -499,6 +493,11 @@ class calendar_ical extends calendar_boupdate
 									$cutype = 'UNKNOWN';
 									break;
 							};
+							// generate urn:uuid, if we have no other participant URL
+							if (empty($participantURL) && $info && $info['app'])
+							{
+								$participantURL = 'urn:uuid:'.common::generate_uid($info['app'], substr($uid, 1));
+							}
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
 							$options = array();
 							if (!empty($participantCN)) $options['CN'] = $participantCN;
@@ -512,7 +511,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = $uid;
 							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = $quantity;
-							$attributes['ATTENDEE'][]	= $participantURL;
+							$attributes['ATTENDEE'][] = $participantURL;
 							$parameters['ATTENDEE'][] = $options;
 						}
 						break;
@@ -1263,7 +1262,9 @@ class calendar_ical extends calendar_boupdate
 						// participants OR the event no longer contains participants, add them back
 						unset($event['participants']);
 					}
-					else
+					// since we export now all participants in CalDAV as urn:uuid, if they have no email,
+					// we dont need and dont want that special treatment anymore, as it keeps client from changing resources
+					elseif ($this->productManufacturer != 'groupdav')
 					{
 						foreach ($event_info['stored_event']['participants'] as $uid => $status)
 						{

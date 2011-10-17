@@ -151,6 +151,7 @@ class calendar_groupdav extends groupdav_handler
 		elseif (substr($path,-7) == '/inbox/')
 		{
 			$filter['filter'] = 'unknown';
+			$filter['start'] = $this->bo->now;	// only return future invitations
 		}
 		// ToDo: not sure what scheduling outbox is supposed to show, leave it empty for now
 		elseif (substr($path,-8) == '/outbox/')
@@ -388,6 +389,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
+
 		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'PUBLISH' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
@@ -739,22 +741,16 @@ class calendar_groupdav extends groupdav_handler
 			$xml->writeElementNs('D', 'href', 'DAV:', $attendee=array_shift($attendees));
 			$xml->endElement();	// recipient
 
-			if (is_numeric($uid))
-			{
-				$xml->writeElementNs('C', 'request-status', null, '2.0;Success');
-				$xml->writeElementNs('C', 'calendar-data', null,
-					$handler->freebusy($uid, $event['end'], true, 'utf-8', $event['start'], 'REPLY', array(
-						'UID' => $event['uid'],
-						'ORGANIZER' => $organizer,
-						'ATTENDEE' => $attendee,
-					)+(empty($mask_uid) || !is_string($mask_uid) ? array() : array(
-						'X-CALENDARSERVER-MASK-UID' => $mask_uid,
-					))));
-			}
-			else
-			{
-				$xml->writeElementNs('C', 'request-status', null, '3.7;Invalid calendar user');
-			}
+			$xml->writeElementNs('C', 'request-status', null, '2.0;Success');
+			$xml->writeElementNs('C', 'calendar-data', null,
+				$handler->freebusy($uid, $event['end'], true, 'utf-8', $event['start'], 'REPLY', array(
+					'UID' => $event['uid'],
+					'ORGANIZER' => $organizer,
+					'ATTENDEE' => $attendee,
+				)+(empty($mask_uid) || !is_string($mask_uid) ? array() : array(
+					'X-CALENDARSERVER-MASK-UID' => $mask_uid,
+				))));
+
 			$xml->endElement();	// response
 		}
 		$xml->endElement();	// schedule-response

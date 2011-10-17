@@ -26,7 +26,7 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @var resources_bo
 	 */
-	private $resources;
+	private static $resources;
 
 	/**
 	 * Constructor
@@ -38,7 +38,7 @@ class groupdav_principals extends groupdav_handler
 	{
 		parent::__construct($app, $groupdav);
 
-		$this->resources = new resources_bo();
+		if (!isset(self::$resources)) self::$resources = new resources_bo();
 	}
 
 	/**
@@ -774,8 +774,8 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])))),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'))),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
 			// Calendarserver
 			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
@@ -793,6 +793,7 @@ class groupdav_principals extends groupdav_handler
 			// CardDAV directory
 			'directory-gateway' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV, 'directory-gateway',array(
 				HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/addressbook/'))),
+			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id']))),
 		));
 	}
 
@@ -842,7 +843,19 @@ class groupdav_principals extends groupdav_handler
 					$type = $uid > 0 ? 'accounts' : 'groups';
 					break;
 				}
-				// todo: contacts (uid "c"<contact-id>
+				// search contacts for email
+				if ((list($data) = $GLOBALS['egw']->contacts->search(array('email' => $rest, 'email_home' => $rest),
+					array('id','egw_addressbook.account_id as account_id','n_fn'),
+					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
+					'','',false,'OR')))
+				{
+					// found an addressbook entry
+					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+				}
+				else	// just store email-address
+				{
+					$uid = 'e'.$rest;
+				}
 				break;
 
 			case 'urn':
@@ -860,9 +873,17 @@ class groupdav_principals extends groupdav_handler
 					{
 						$uid = $id;
 					}
-					elseif ($type == 'resources')
+					else
 					{
-						$uid = 'r'.$id;
+						static $calendar_bo;
+						if (is_null($calendar_bo)) $calendar_bo = new calendar_bo();
+						foreach($calendar_bo->resources as $letter => $info)
+						{
+							if ($info['app'] == $type)
+							{
+								$uid = $letter.$id;
+							}
+						}
 					}
 				}
 				// todo: store urn's from other EGroupware / calendarservers like email addresses ("CN <urn>" or "urn", maybe with 'u' prefix)
@@ -903,11 +924,12 @@ class groupdav_principals extends groupdav_handler
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/groups/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])))),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','group'),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/groups/'.$account['account_lid'].'/'))),
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','groups'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
 			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
+			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id']))),
 		));
 	}
 
@@ -926,10 +948,13 @@ class groupdav_principals extends groupdav_handler
 			'getetag' => $this->get_resource_etag($resource),
 			'displayname' => $displayname,
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$name.'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id'])))),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type',$is_location ? 'location' : 'resource'),
+				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id'])),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$name.'/'))),
+			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type',$is_location ? 'locations' : 'resources'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type',$is_location ? 'ROOM' : 'RESOURCE'),
+			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id']))),
+			// Calendarserver also reports empty email-address-set, thought iCal still does not show resources (only locations)
+			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',''),
 		));
 	}
 
@@ -941,9 +966,9 @@ class groupdav_principals extends groupdav_handler
 	 * @param string &$displayname=null on return displayname of resource
 	 * @return string eg. "locations/123-some-room" or "resouces/345-some-device"
 	 */
-	protected function resource2name(array $resource, $is_location=null, &$displayname=null)
+	protected function resource2name(array $resource, &$is_location=null, &$displayname=null)
 	{
-		if (is_null($is_location)) $is_location = $this->resource_is_locatation($resource);
+		if (is_null($is_location)) $is_location = self::resource_is_location($resource);
 
 		$displayname = translation::convert($resource['name'],	translation::charset(), 'utf-8');
 
@@ -956,7 +981,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param array|int $resource
 	 * @return boolean
 	 */
-	public function resource_is_locatation($resource)
+	public static function resource_is_location($resource)
 	{
 		static $location_cats;
 		if (is_null($location_cats))
@@ -964,9 +989,11 @@ class groupdav_principals extends groupdav_handler
 			$config = config::read('resources');
 			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
 		}
+		if (!isset(self::$resources)) self::$resources = new resources_bo();
+
 		if (!is_array($resource))
 		{
-			if (!($resource = $this->resources->read($resource)))
+			if (!($resource = self::$resources->read($resource)))
 			{
 				return null;
 			}
@@ -982,7 +1009,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function get_resource_etag(array $resource)
 	{
-		return md5(serialize($resource)).'-'.($this->resource_is_locatation($resource) ? 'l' : 'r');
+		return md5(serialize($resource)).'-'.(self::resource_is_location($resource) ? 'l' : 'r');
 	}
 
 	/**
@@ -1002,9 +1029,9 @@ class groupdav_principals extends groupdav_handler
 		{
 			self::$all_resources = array();
 			$query = array(
-
+				'show_bookable' => true,	// ignore non-bookable resources
 			);
-			if ($this->resources->get_rows($query, $rows, $readonlys))
+			if (self::$resources->get_rows($query, $rows, $readonlys))
 			{
 				//_debug_array($rows);
 				foreach($rows as $resource)
@@ -1107,7 +1134,7 @@ class groupdav_principals extends groupdav_handler
 				$app = 'resources';
 				if (!is_array($resource) || $resource['res_id'] == (int)$account)
 				{
-					$resource = $this->resources->read((int)$account);
+					$resource = self::$resources->read((int)$account);
 				}
 				$location = 'L'.$resource['cat_id'];
 				$right = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_CALREAD;
@@ -1291,7 +1318,7 @@ class groupdav_principals extends groupdav_handler
 					//_debug_array($resources);
 					foreach($resources as $resource)
 					{
-						if (($is_location = $this->resource_is_locatation($resource)) == $do_locations)
+						if (($is_location = self::resource_is_location($resource)) == $do_locations)
 						{
 							$files[] = $this->add_principal_resource($resource, $is_location);
 						}
@@ -1301,7 +1328,7 @@ class groupdav_principals extends groupdav_handler
 		}
 		else
 		{
-			if (!($resource = $this->resources->read((int)$name)) || ($is_location = $this->resource_is_locatation($resource)) != $do_locations)
+			if (!($resource = self::$resources->read((int)$name)) || ($is_location = self::resource_is_location($resource)) != $do_locations)
 			{
 				return '404 Not Found';
 			}
