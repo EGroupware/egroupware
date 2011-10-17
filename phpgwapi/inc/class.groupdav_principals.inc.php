@@ -48,7 +48,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	public $supported_reports = array(
 		'acl-principal-prop-set' => array(
-			// not sure why we return that report, if we not implement it ...
+			'method' => 'acl_principal_prop_set_report',
 		),
 		/*'principal-match' => array(
 			// an other report calendarserver announces
@@ -487,6 +487,67 @@ class groupdav_principals extends groupdav_handler
 		echo $xml->outputMemory();
 
 		common::egw_exit();
+	}
+
+	/**
+	 * Handle principal-property-search report
+	 *
+	 * Current implementation runs a full (infinity) propfind, as we have principals only once in the principal collection.
+	 *
+	 * Example from WebDAV ACL rfc 3744:
+	 * REPORT /index.html HTTP/1.1
+	 * Host: www.example.com
+	 * Content-Type: text/xml; charset="utf-8"
+	 * Content-Length: xxxx
+	 * Depth: 0
+	 *
+	 * <?xml version="1.0" encoding="utf-8" ?>
+	 * <D:acl-principal-prop-set xmlns:D="DAV:">
+	 *   <D:prop>
+	 *     <D:displayname/>
+	 *   </D:prop>
+	 * </D:acl-principal-prop-set>
+	 *
+	 * Response is a multistatus as for a propfind. Seems the only diverence is, that prinipals are only returned once
+	 * (even if they exists multiple times), only principals get returned (eg. not the collections they are in) AND the depth 0.
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function acl_principal_prop_set_report($path,&$options,&$files,$user)
+	{
+		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
+
+		// run "regular" propfind
+		$options['root']['name'] = 'propfind';
+		// search all principals, but not the proxys, rfc requires depth=0, but to search all principals
+		$options['depth'] = 5 - count(explode('/', $path)); // /principals/ --> 3
+
+		// we need the resourcetype to only return principals
+		$options['props']['resourcetype'] = array(
+			'name' => 'resourcetype',
+			'xmlns' => 'DAV:',
+		);
+		if (($ret = $this->propfind($path, $options, $files, $user)) !== true)
+		{
+			return $ret;
+		}
+		// now filter out not matching "files"
+		foreach($files['files'] as $n => $resource)
+		{
+			foreach($resource['props']['resourcetype']['val'] as $prop)
+			{
+				if ($prop['name'] == 'principal') continue 2;
+			}
+			unset($files['files'][$n]);	// not a principal --> do not return
+		}
+		// we should not return it
+		unset($options['props']['resourcetype']);
+
+		return $ret;
 	}
 
 	/**
