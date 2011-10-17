@@ -281,6 +281,7 @@ var et2_arrayMgr = Class.extend({
 		// Get the root node
 		var root = typeof _root == "string" ? this.data[_root] :
 			(_root == null ? this.data : _root);
+		if(typeof root == "undefined" && typeof _root == "string") root = this.getEntry(_root);
 
 		// Create a new content array manager with the given root
 		var mgr = new et2_arrayMgr(root, this);
