@@ -156,6 +156,7 @@ class calendar_so
 		else	// array with column => value pairs
 		{
 			$where = $ids;
+			unset($ids);	// otherwise users get not read!
 		}
 		if (isset($where['cal_id']))	// prevent non-unique column-name cal_id
 		{
