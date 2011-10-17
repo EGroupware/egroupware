@@ -29,7 +29,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		},
 		'fields': {
 			'name': 'Custom fields',
-			'description': 'Auto filled'
+			'description': 'Auto filled',
+			"default": {}
 		},
 		'value': {
 			'name': 'Custom fields',
@@ -96,13 +97,22 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		// Already set up - avoid duplicates in nextmatch
 		if(this._type == 'customfields-list' && !this.isInTree()) return;
 
+		// Check for global setting changes (visibility)
+		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
+		if(global_data.fields) this.options.fields = global_data.fields;
+
 		// Create the table rows
 		for(var field_name in this.options.customfields)
 		{
+			var field = this.options.customfields[field_name];
+
+			// Field is not to be shown
+			if(this.options.fields[field_name] == false || 
+				this.options.fields != {} && typeof this.options.fields[field_name] == 'undefined') continue;
+
 			// Avoid creating field twice
 			if(this.rows[field_name]) continue;
 
-			var field = this.options.customfields[field_name];
 			var row = jQuery(document.createElement("tr"))
 				.appendTo(this.tbody);
 			var cf = jQuery(document.createElement("td"))
@@ -147,7 +157,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			// Customized settings for this widget (unlikely)
 			var data = this.getArrayMgr("modifications").getEntry(this.id);
 			// Check for global settings
-                        var global_data = this.getArrayMgr("modifications").getEntry('~custom_fields~');
+			var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
 			if(global_data) data = jQuery.extend({}, data, global_data);
 			for(var key in data)
 			{
