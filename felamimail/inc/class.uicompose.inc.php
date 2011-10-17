@@ -114,13 +114,13 @@
 				$formData['isDraft'] = 1;
 				// pint the composed message. therefore save it as draft and reopen it as plain printwindow
 				$formData['subject'] = "[".lang('printview').":]".$formData['subject'];
-				$messageUid = $this->bocompose->saveAsDraft($formData);
+				$messageUid = $this->bocompose->saveAsDraft($formData,$destinationFolder);
 				if (!$messageUid) {
 					 print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")."');</script>";
 					return;
 				}
 				$uidisplay   = CreateObject('felamimail.uidisplay');
-				$uidisplay->printMessage($messageUid, $formData['printit']);
+				$uidisplay->printMessage($messageUid, $formData['printit'],$destinationFolder);
 				//$GLOBALS['egw']->link('/index.php',array('menuaction' => 'felamimail.uidisplay.printMessage','uid'=>$messageUid));
 				return;
 			}
