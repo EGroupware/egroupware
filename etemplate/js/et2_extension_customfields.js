@@ -52,7 +52,6 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
                         .addClass("et2_grid");
                 this.table.append(this.tbody);
 
-
 		this.rows = {};
 		this.widgets = {};
 		this.detachedNodes = [];
@@ -61,6 +60,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		{
 			this.loadFields();
 		}
+
 	},
 
 	destroy: function() {
@@ -96,6 +96,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 		// Already set up - avoid duplicates in nextmatch
 		if(this._type == 'customfields-list' && !this.isInTree()) return;
+		if(!jQuery.isEmptyObject(this.widgets)) return;
 
 		// Check for global setting changes (visibility)
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
@@ -105,46 +106,54 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		for(var field_name in this.options.customfields)
 		{
 			var field = this.options.customfields[field_name];
-
-			// Field is not to be shown
-			if(this.options.fields[field_name] == false || 
-				this.options.fields != {} && typeof this.options.fields[field_name] == 'undefined') continue;
+			var id = "{"+this.id + "}["+this.prefix + field_name+"]";
 
 			// Avoid creating field twice
-			if(this.rows[field_name]) continue;
+			if(!this.rows[id])
+			{
 
-			var row = jQuery(document.createElement("tr"))
-				.appendTo(this.tbody);
-			var cf = jQuery(document.createElement("td"))
-				.appendTo(row);
-			var setup_function = '_setup_'+field.type;
-			var attrs = {
-				'id': 		field_name,
-				'statustext':	field.help,
-				'required':	field.needed,
-			};
-			if(this[setup_function]) {
-				this[setup_function].call(this, field_name, field, attrs);
-			}
-			
-			if(this._type == 'customfields-list') {
-				// No label, cust widget
-				attrs.readonly = true;
-				this.detachedNodes.push(cf[0]);
-				this.rows[field_name] = cf[0];
-			} else {
-				// Label in first column, widget in 2nd
-				cf.text(field.label + "");
-				cf = jQuery(document.createElement("td"))
+				var row = jQuery(document.createElement("tr"))
+					.appendTo(this.tbody);
+				var cf = jQuery(document.createElement("td"))
 					.appendTo(row);
-				this.rows[field_name] = cf[0];
+				var setup_function = '_setup_'+field.type;
+				var attrs = {
+					'id': 		id,
+					'statustext':	field.help,
+					'required':	field.needed,
+					'readonly':	this.options.readonly
+				};
+				if(this[setup_function]) {
+					this[setup_function].call(this, field_name, field, attrs);
+				}
+				
+				if(this._type == 'customfields-list') {
+					// No label, cust widget
+					attrs.readonly = true;
+					this.detachedNodes.push(cf[0]);
+				} else {
+					// Label in first column, widget in 2nd
+					cf.text(field.label + "");
+					cf = jQuery(document.createElement("td"))
+						.appendTo(row);
+				}
+				this.rows[id] = cf[0];
+
+				// No label on the widget itself
+				delete(attrs.label);
+
+				// Create widget
+				var widget = this.widgets[field_name] = et2_createWidget(field.type, attrs, this);
 			}
 
-			// No label on the widget itself
-			delete(attrs.label);
+			// Field is not to be shown
+			if(!this.options.fields || jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true)
+			{
+				jQuery(this.rows[field_name]).show();
+			} else {
+				jQuery(this.rows[field_name]).hide();
+			}
 
-			// Create widget
-			var widget = this.widgets[field_name] = et2_createWidget(field.type, attrs, this);
 		}
 	},
 
@@ -193,11 +202,6 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				}
 			}
 		}
-
-		if(this.options && this.options.customfields)
-		{
-			this.loadFields();
-		}
 	},
 		
 	set_value: function(_value) {
@@ -237,26 +241,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		if (typeof _values["value"] != "undefined")
-		{
-			for(var field_name in this.widgets) {
-				var value = _values["value"][this.prefix + field_name] ? _values["value"][this.prefix + field_name] : null;
-				if(this.widgets[field_name].implements( et2_IDetachedDOM))
-				{
-					var widget_values = {"value": value};
-					this.widgets[field_name].setDetachedAttributes(this.widgets[field_name].getDetachedNodes(), widget_values);
-				}
-				else
-				{
-					this.widgets[field_name].set_value(value);
-				}
-			}
-		}
-
-		if (typeof _values["class"] != "undefined")
-		{
-			this.set_class(_values["class"]);
-                }
+		// This doesn't need to be implemented.
+		// Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
         }
 });
 
