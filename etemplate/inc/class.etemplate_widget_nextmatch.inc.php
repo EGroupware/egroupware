@@ -142,9 +142,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$value = array_merge($value, $filters);
 		$result = array('rows' => array());
 
-		// Parse sort into something that get_rows functions are expecting: db_field ASC/DESC
+		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
 		if(is_array($value['sort']))
-			$value['sort'] = $value['sort']['id']  . ' ' . $value['sort']['asc'] ? 'ASC' : 'DESC';
+		{
+			$value['order'] = $value['sort']['id'];
+			$value['sort'] = ($value['sort']['asc'] ? 'ASC' : 'DESC');
+		}
 
 		foreach ($fetchList as $entry)
 		{
