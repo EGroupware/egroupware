@@ -264,14 +264,18 @@ var et2_selectbox_ro = et2_selectbox.extend({
 			this.span.text(option.label);
 			this.set_statustext(option.title);
 		}
-		else
+		else if (typeof option == "string")
 		{
 			this.span.text(option);
+		}
+		else
+		{
+			this.span.text("");
 		}
 	}
 });
 
-et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select-cat_ro",
+et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",
 	"select-account_ro", "select-percent_ro", 'select-priority_ro', 'select-access_ro',
 	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
 	'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'select-number_ro', 'select-app_ro',
