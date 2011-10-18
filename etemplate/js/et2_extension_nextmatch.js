@@ -306,8 +306,22 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 */
 	_applyUserPreferences: function(_row, _colData) {
 		// Read preference or default for column visibility
-		var negated = this.options.settings.default_cols[0] == "!";
-		var columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
+		var negated = false;
+		var columnPreference = "";
+		if(this.options.settings.default_cols)
+		{
+			negated = this.options.settings.default_cols[0] == "!";
+			columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
+		}
+		if(this.options.settings.selectcols)
+		{
+			columnPreference = this.options.settings.selectcols;
+		}
+		if(!this.options.settings.columnselection_pref)
+		{
+			// Set preference name so changes are saved
+			this.options.settings.columnselection_pref = this.options.template;
+		}
 		if(this.options.settings.columnselection_pref) {
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 			var app = list[0];
@@ -497,7 +511,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Search the rows for a header-row - if one is found, parse it
 		for (var y = 0; y < _grid.rowData.length; y++)
 		{
-			if (_grid.rowData[y]["class"] == "th")
+			// Parse the first row as a header, need header to parse the data rows 
+			if (_grid.rowData[y]["class"] == "th" || y == 0)
 			{
 				this._parseHeaderRow(_grid.cells[y], _grid.colData);
 			}
@@ -1092,6 +1107,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			}
 		}
 		if(!nm_column) return;
+		var apps = egw.link_app_list();
 		for(var field_name in this.options.customfields)
 		{
 			var field = this.options.customfields[field_name];
@@ -1109,12 +1125,23 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			// Create widget by type
 			var widget = null;
 			var cf_id = et2_customfields_list.prototype.prefix + field_name;
+
 			if(field.type == 'select')
 			{
+				widget = et2_createWidget("nextmatch-filterheader", {
+					id: cf_id,
+					label: field.label,
+					select_options: field.values
+				}, this);
 			}
-			// TODO
-			else if (field.type == 'app') 
+			else if (apps[field.type]) 
 			{
+				// TODO: Figure out why search can't get focus
+				widget = et2_createWidget("nextmatch-entryheader", {
+					id: cf_id,
+					application: field.type,
+					blur: field.label,
+				}, this);
 			}
 			else
 			{
@@ -1127,7 +1154,8 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			if(widget) cf.append(widget.getDOMNode());
 
 			// Check for column filter
-			if(this.options.fields[field_name] == false || typeof this.options.fields[field_name] == 'undefined')
+			if(this.options.fields.length > 0 && (
+				this.options.fields[field_name] == false || typeof this.options.fields[field_name] == 'undefined'))
 			{
 				cf.hide();
 			}
@@ -1159,10 +1187,6 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	 * If only one custom field, just use that, otherwise use "custom fields"
 	 */
 	_genColumnCaption: function() {
-		if(this.options.customfields.length == 1)
-		{
-			return this.options.customfields[0].label;
-		}
 		return egw.lang("Custom fields");
 	},
 
@@ -1175,7 +1199,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 
 		for(var field_name in this.options.customfields)
 		{
-			if(this.options.fields[field_name] == true)
+			if(this.options.fields.length == 0 || this.options.fields[field_name] == true)
 			{
 				visible.push(et2_customfields_list.prototype.prefix + field_name);
 				jQuery(this.rows[field_name]).show();
@@ -1255,12 +1279,24 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 	 * Override to add change handler
 	 */
 	createInputWidget: function() {
+		// Make sure there's an option for all
+		if(!this.options.empty_label && !this.options.select_options[""])
+		{
+			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
+		}
 		this._super.apply(this, arguments);
 
 		this.input.change(this, function(event) {
 			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
 				event.data.nextmatch.activeFilters.col_filter = {};
-			event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+			if(event.data.input.val())
+			{
+				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+			}
+			else
+			{
+				delete (event.data.nextmatch.activeFilters["col_filter"][event.data.id]);
+			}
 			event.data.nextmatch.applyFilters();
 		});
 	},
@@ -1284,3 +1320,38 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader',
 	'nextmatch-accountfilter']);
 
+var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
+
+	/**
+	 * Override to add change handler
+	 */
+	select: function(event, selected) {
+		this._super.apply(this, arguments);
+		if(typeof this.nextmatch.activeFilters.col_filter == 'undefined')
+			this.nextmatch.activeFilters.col_filter = {};
+		if(selected && selected.item.value) {
+			this.nextmatch.activeFilters["col_filter"][this.id] = selected.item.value;
+		} else {
+			delete (this.nextmatch.activeFilters["col_filter"][this.id]);
+		}
+		this.nextmatch.applyFilters();
+	},
+
+	/**
+	 * Set nextmatch is the function which has to be implemented for the
+	 * et2_INextmatchHeader interface.
+	 */
+	setNextmatch: function(_nextmatch) {
+		this.nextmatch = _nextmatch;
+
+		// Set current filter value from nextmatch settings
+		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
+		{
+			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+		}
+		var self = this;
+		// Fire on lost focus, clear filter if user emptied box
+		this.search.focusout(this, function(event) {if(!self.search.val()) { self.select(event, {item:{value:null}});}});
+	}
+});
+et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
