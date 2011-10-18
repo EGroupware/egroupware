@@ -102,6 +102,9 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
 		if(global_data.fields) this.options.fields = global_data.fields;
 
+		// For checking app entries
+		var apps = egw.link_app_list();
+
 		// Create the table rows
 		for(var field_name in this.options.customfields)
 		{
@@ -116,7 +119,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					.appendTo(this.tbody);
 				var cf = jQuery(document.createElement("td"))
 					.appendTo(row);
-				var setup_function = '_setup_'+field.type;
+				var setup_function = '_setup_'+(apps[field.type] ? 'link_entry' : field.type.replace("-","_"));
+					
 				var attrs = {
 					'id': 		id,
 					'statustext':	field.help,
@@ -143,7 +147,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				delete(attrs.label);
 
 				// Create widget
-				var widget = this.widgets[field_name] = et2_createWidget(field.type, attrs, this);
+console.debug(attrs);
+				var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
 			}
 
 			// Field is not to be shown
@@ -224,6 +229,10 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 	},
 	_setup_select: function(field_name, field, attrs) {
 		attrs.select_options = field.values;
+	},
+	_setup_link_entry: function(field_name, field, attrs) {
+		attrs.type = "link-entry";
+		attrs.application = field.type;
 	},
 
 	/**

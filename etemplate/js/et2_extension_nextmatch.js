@@ -1140,7 +1140,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 				widget = et2_createWidget("nextmatch-entryheader", {
 					id: cf_id,
 					application: field.type,
-					blur: field.label,
+					blur: field.label
 				}, this);
 			}
 			else

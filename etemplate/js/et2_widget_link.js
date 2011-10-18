@@ -645,17 +645,26 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	set_value: function(_value) {
-		if(!_value || !_value.title) {
-			this.link.text("").unbind();
-			return;
-		}
-		if(typeof _value != 'object' && !this.options.application)
+		if(typeof _value != 'object' && _value && !this.options.application)
 		{
 			console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
 			return;
 		}
+		// Application set, just passed ID
+		else if (_value == parseInt(_value))
+		{
+			_value = {
+				app:	this.options.application,
+				id:	_value
+			};
+		}
+		if(!_value || jQuery.isEmptyObject(_value)) {
+			this.link.text("").unbind();
+			return;
+		}
 		if(!_value.title) {
-			var title = egw.link_title(_value.app, _value.id, this.set_value, this);
+			var self = this;
+			var title = egw.link_title(_value.app, _value.id, function(title) {self.set_title(self.link[0], title);}, this);
 			if(title != null) {
 				_value.title = title;
 			}
@@ -665,9 +674,17 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 				return;
 			}
 		}
-
-		this.link.text(_value.title).unbind()
+		this.set_title(this.link, _value.title);
+		this.link.unbind()
 			.click( function(){egw.open(_value.id, _value.app, "edit", _value.extra);});
+	},
+
+	/**
+	 * Sets the text to be displayed.
+	 * Used as a callback, so node is provided to make sure we get the right one
+	 */
+	set_title: function(node, _value) {
+		jQuery(node).text(_value+"");
 	},
 
 	/**
@@ -703,7 +720,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	}
 
 });
-et2_register_widget(et2_link, ["link"]);
+et2_register_widget(et2_link, ["link", "link-entry_ro"]);
 
 /**
  * UI widget for one or more links, comma separated
