@@ -138,7 +138,7 @@ et2_register_widget(et2_textbox, ["textbox"]);
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
  */
-var et2_textbox_ro = et2_valueWidget.extend({
+var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	/**
 	 * Ignore all more advanced attributes.
@@ -164,8 +164,28 @@ var et2_textbox_ro = et2_valueWidget.extend({
 
 		if(!_value) _value = "";
 		this.span.text(_value);
-	}
+	},
+	/**
+         * Code for implementing et2_IDetachedDOM
+         */
+        getDetachedAttributes: function(_attrs)
+        {
+                _attrs.push("value");
+        },
 
+        getDetachedNodes: function()
+        {
+                return [this.span[0]];
+        },
+
+        setDetachedAttributes: function(_nodes, _values)
+        {
+		this.span = jQuery(_nodes[0]);
+		if(typeof _values["value"] != 'undefined')
+		{
+			this.set_value(_values["value"]);
+		}
+	}
 });
 
 et2_register_widget(et2_textbox_ro, ["textbox_ro", "int_ro", "float_ro"]);
