@@ -269,7 +269,7 @@
 							break;
 						default:
 							_p.pos--;
-							var result = _php_readString(_p, /[^A-Za-z0-9_]/);
+							var result = _php_readString(_p, /[^A-Za-z0-9_#]/);
 
 							if (!result)
 							{
