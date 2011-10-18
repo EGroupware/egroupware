@@ -73,7 +73,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 			contentMgr = this.getArrayMgr("readonlys");
 			if (contentMgr != null) {
 				var val = contentMgr.getEntry(this.id);
-				if (val !== null)
+				if (val !== null && typeof val !== 'undefined')
 				{
 					hidden = val;
 				}
