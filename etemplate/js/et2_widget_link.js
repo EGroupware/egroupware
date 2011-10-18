@@ -355,24 +355,32 @@ var et2_link_entry = et2_valueWidget.extend({
 		this.div = $j(document.createElement("div")).addClass("et2_link_entry");
 
 		// Application selection
+		
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
 				self.cache = {}; // Clear cache when app changes
 				self.options.value.app = self.app_select.val();
 			})
 			.css("width","39%");
+		var opt_count = 0;
 		for(var key in this.options.select_options) {
+			opt_count++;
 			var option = $j(document.createElement("option"))
 				.attr("value", key)
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
+		}
+		this.app_select.val(this.options.application);
+		if(opt_count == 1) 
+		{
+			this.app_select.hide();
 		}
 		self.options.value.app = this.app_select.val();
 
 		// Search input
 		this.search = $j(document.createElement("input")).attr("type", "search")
 			.css("width","50%")
-			.focus(function(){self.app_select.show();})
+			.focus(function(){if(!self.options.application) {self.app_select.show();}})
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : egw.lang("search"), this.search);
@@ -401,7 +409,19 @@ var et2_link_entry = et2_valueWidget.extend({
 		this._super.apply(this, arguments);
 
 
-		_attrs["select_options"] = egw.link_app_list('query');
+		_attrs["select_options"] = {};
+		if(_attrs["application"])
+		{
+			var apps = et2_csvSplit(_attrs["application"], null, ",");
+			for(var i = 0; i < apps.length; i++)
+			{
+				_attrs["select_options"][apps[i]] = egw.lang(apps[i]);
+			}
+		}
+		else
+		{
+			_attrs["select_options"] = egw.link_app_list('query');
+		}
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.
