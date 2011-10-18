@@ -813,7 +813,7 @@ var et2_widget = Class.extend({
 	 * this, but some extensions need to override this
 	 */
 	getPath: function() {
-		return this.getArrayManager("content").getPath();
+		return this.getArrayMgr("content").getPath();
 	}
 });
 
