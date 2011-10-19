@@ -605,7 +605,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 		this.value = _value;
 
-		if(_value == 0)
+		if(_value == 0 || _value == null)
 		{
 			this.span.attr("datetime", "");
 			return;
