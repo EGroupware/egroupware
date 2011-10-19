@@ -346,7 +346,7 @@ removed from distribution list	addressbook	en	Removed from distribution list
 repetition	addressbook	en	Repetition
 replacements for inserting contacts into documents	addressbook	en	Replacements for inserting contacts into documents
 required fields *	addressbook	en	Required fields *
-role	addressbook	en	Role
+role	addressbook	en	Occupation
 room	addressbook	en	Room
 search for '%1'	addressbook	en	Search for '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
@@ -397,7 +397,7 @@ this module displays block from a adddressbook group.	addressbook	en	This module
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
 timezone	addressbook	en	Timezone
-title	addressbook	en	title
+title	addressbook	en	Job title
 to many might exceed your execution-time-limit	addressbook	en	too many might exceed your execution-time-limit
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.

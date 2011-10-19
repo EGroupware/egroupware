@@ -346,7 +346,7 @@ removed from distribution list	addressbook	de	vom Verteiler gelöscht
 repetition	addressbook	de	Wiederholung
 replacements for inserting contacts into documents	addressbook	de	Platzhalter für das Einfügen von Kontakten in Dokumente
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
-role	addressbook	de	Funktion
+role	addressbook	de	Beruf
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
@@ -397,7 +397,7 @@ this module displays block from a adddressbook group.	addressbook	de	Dieses Modu
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch vorhanden.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch vorhanden.
 timezone	addressbook	de	Zeitzone
-title	addressbook	de	Titel
+title	addressbook	de	Position
 to many might exceed your execution-time-limit	addressbook	de	Zu viele können Ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
