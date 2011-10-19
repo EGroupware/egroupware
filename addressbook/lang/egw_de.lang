@@ -93,7 +93,6 @@ check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
 choose export options	addressbook	de	Wählen Sie die Export Optionen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
-choose seperator and charset	addressbook	de	Wählen Sie ein Trennzeichen und den Zeichensatz
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	de	Bereinige Adressbuch Felder (anwenden, wenn die Synchronisation Duplikate erzeugt)
@@ -128,7 +127,6 @@ country code	addressbook	de	Länderkennung
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
-csv field	addressbook	de	CSV Feld
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
@@ -184,10 +182,9 @@ enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
 existing links	addressbook	de	Bestehende Verknüpfungen
 exists	addressbook	de	besteht bereits
-export	addressbook	de	Export
 export as csv	addressbook	de	Exportieren als CSV
 export as vcard	addressbook	de	Exportieren als VCard
 export contacts	addressbook	de	Kontakte exportieren
@@ -195,7 +192,6 @@ export definitition to use for nextmatch export	addressbook	de	Export Profil der
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
-exported	addressbook	de	exportiert
 exports contacts from your addressbook into a csv file.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
@@ -210,14 +206,10 @@ fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder, die der Benutzer selbst bearbeiten darf
 fields to copy when copying an address?	admin	de	Welche Felder sollen beim Kopieren berücksichtigt werden?
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
-fieldseparator	addressbook	de	Feldtrenner
-fieldseperator	addressbook	de	Feldtrenner
 for read only ldap	admin	de	für nur lesendes LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	de	Wenn Sie Serienbriefe erzeugen möchten, dann benutzen Sie dieses 'Markierungszeichen'. Setzen Sie den Inhalt, der wiederholt werden soll (Anschriftstags und Briefinhalt) zwischen zwei 'Seiten-Wiederholungs-Zeichen'.
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
-general	addressbook	de	Allgemein
-general fields:	addressbook	de	Allgemeine Felder:
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
@@ -239,9 +231,7 @@ home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte sollen Nicht-Adminstratoren exportieren können?
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
-if you specify an export definition, it will be used when you export	addressbook	de	Wählen Sie eine Export Definition für den Export
 ignore first line	addressbook	de	Erste Zeile ignorieren
-import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
 import file	addressbook	de	Datei importieren
@@ -275,12 +265,10 @@ list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 list already exists!	addressbook	de	Die Liste existiert bereits!
 list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
-load sample file	addressbook	de	Beispieldatei laden
 load vcard	addressbook	de	VCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
 main categories in their own field	addressbook	de	Haupkategorien in einem eigenen Feld
-manage mapping	addressbook	de	Zuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge contacts	addressbook	de	Kontakte vereinigen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
@@ -350,7 +338,7 @@ removed from distribution list	addressbook	de	vom Verteiler gelöscht
 repetition	addressbook	de	Wiederholung
 replacements for inserting contacts into documents	addressbook	de	Platzhalter für das Einfügen von Kontakten in Dokumente
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
-role	addressbook	de	Funktion
+role	addressbook	de	Beruf
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
@@ -400,11 +388,10 @@ this module displays block from a adddressbook group.	addressbook	de	Dieses Modu
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch vorhanden.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch vorhanden.
 timezone	addressbook	de	Zeitzone
-title	addressbook	de	Titel
+title	addressbook	de	Position
 to many might exceed your execution-time-limit	addressbook	de	Zu viele können Ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
-translation	addressbook	de	Übersetzung
 two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
