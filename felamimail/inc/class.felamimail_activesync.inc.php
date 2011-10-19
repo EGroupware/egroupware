@@ -574,7 +574,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				} else {
 					// plain text Message
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
-					$mailObject->IsHTML(false);
+					// as we glue together the send mail part, and the smartforward part, we stick to the ContentType of the to be sent-Mail
+					$mailObject->IsHTML($mailObject->ContentType=='text/html');
 					$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 					$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
@@ -694,7 +695,16 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$mailObject->Send();
 		}
 		catch(phpmailerException $e) {
-            debugLog("The email could not be sent. Last-SMTP-error: ". $e->getMessage());
+			debugLog("The email could not be sent. Last-SMTP-error: ". $e->getMessage());
+			debugLog("IMAP-SendMail: MailObject (short):".array2string(array('host'=>$mailObject->Host,
+				'port'=>$mailObject->Port,
+				'username'=>$mailObject->Username,
+				'subject'=>$mailObject->Subject,
+				'CharSet'=>$mailObject->CharSet,
+				'Priority'=>$mailObject->Priority,
+				'Encoding'=>$mailObject->Encoding,
+				'ContentType'=>$mailObject->ContentType,
+			)));
 			$send = false;
 		}
 
