@@ -117,9 +117,10 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * @param int $account=null account_id of addressbook or null to get array of all addressbooks
 	 * @param boolean $return_all_in_one=true if false and all-in-one pref is set, return all selected abs
 	 * 	if true only the all-in-one ab is returned (with id of personal ab)
+	 * @param booelan $ab_prefix=false prefix personal, private and accounts addressbook with lang('Addressbook').' '
 	 * @return string|array addressbook name of array with int account_id => label pairs
 	 */
-	private function get_addressbooks($account=null,$return_all_in_one=true)
+	private function get_addressbooks($account=null,$return_all_in_one=true, $ab_prefix=false)
 	{
 		static $abs;
 
@@ -157,8 +158,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				}
 			}
 		}
-		//error_log(__METHOD__."($account) returning ".array2string(is_null($account) ? $abs : $abs[$account]));
-		return is_null($account) ? $abs : $abs[$account];
+		$ret = is_null($account) ? $abs :
+			($ab_prefix && (!$account || (int)$account == (int)$GLOBALS['egw_info']['user']['account_id']) ?
+				lang('Addressbook').' ' : '').$abs[$account];
+		error_log(__METHOD__."($account, $return_all_in_one, $ab_prefix) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -373,6 +377,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					{
 						$message->categories[] = categories::id2name($cat_id);
 					}
+					// for all addressbooks in one, add addressbook name itself as category
+					if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+					{
+						$message->categories[] = $this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true);
+					}
 					break;
 				case 'email':
 				case 'email_home':
@@ -495,9 +504,10 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			return false;			//no changing of accounts
 		}
 		$contact = array();
-		if ((empty($id) && ($this->addressbook->grants[$account] & EGW_ACL_EDIT)) || ( $contact = $this->addressbook->read($id) && $this->addressbook->check_perms(EGW_ACL_EDIT, $id)))
+		if (empty($id) && ($this->addressbook->grants[$account] & EGW_ACL_EDIT) || ($contact = $this->addressbook->read($id)) && $this->addressbook->check_perms(EGW_ACL_EDIT, $contact))
 		{
-			$contact = array();
+			// remove all fields supported by AS, leaving all unsupported fields unchanged
+			$contact = array_diff_key($contact, array_flip(self::$mapping));
 			foreach (self::$mapping as $key => $attr)
 			{
 				switch ($attr)
@@ -515,6 +525,12 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						break;
 
 					case 'cat_id':
+						// for existing entries in all-in-one addressbook, remove addressbook name as category
+						if ($contact && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+							($k=array_search($this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true),$message->$key)))
+						{
+							unset($message->categories[$k]);
+						}
 						if (is_array($message->$key))
 						{
 							$contact[$attr] = implode(',', array_filter($this->addressbook->find_or_add_categories($message->$key, $id),'strlen'));
@@ -563,9 +579,10 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
 			$newid = $this->addressbook->save($contact);
-			// error_log(__METHOD__."($folderid,$id) addressbook(".array2string($contact).") returning ".array2string($newid));
+			//error_log(__METHOD__."($folderid,$id) contact=".array2string($contact)." returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
+		debugLog(__METHOD__."($folderid, $id) returning false: Permission denied");
 		return false;
 	}
 
@@ -702,16 +719,26 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	/**
 	 * Search global address list for a given pattern
 	 *
-	 * @param string $searchquery
+	 * @param array $searchquery value for keys 'query' and 'range' (eg. "0-50")
 	 * @return array with just rows (no values for keys rows, status or global_search_status!)
 	 * @todo search range not verified, limits might be a good idea
 	 */
 	function getSearchResultsGAL($searchquery)
 	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		//error_log(__METHOD__.'('.array2string($searchquery).')');
+
+		// only return items in given range, eg. "0-50"
+		$range = false;
+		if (isset($searchquery['range']) && preg_match('/^\d+-\d+$/', $searchquery['range']))
+		{
+			list($start,$end) = explode('-', $searchquery['range']);
+			$range = array($start, $end-$start+1);	// array(start, num_entries)
+		}
+		//error_log(__METHOD__.'('.array2string($searchquery).') range='.array2string($range));
 
 		$items = array();
-		if (($contacts =& $this->addressbook->search($searchquery['query'], false, false, '', '%', false, 'OR')))
+		if (($contacts =& $this->addressbook->search($searchquery['query'], false, false, '', '%', false, 'OR', $range)))
 		{
 			foreach($contacts as $contact)
 			{
