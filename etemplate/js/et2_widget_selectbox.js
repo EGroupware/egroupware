@@ -76,10 +76,22 @@ var et2_selectbox = et2_inputWidget.extend({
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 
+		// If select_options are already known, skip the rest
+		if(this.options && this.options.select_options && !jQuery.isEmptyObject(this.options.select_options))
+		{
+			return;
+		}
+
+		var name_parts = this.id.replace(/]/g,'').split('[');
+
 		// Try to find the options inside the "sel-options" array
 		if(this.getArrayMgr("sel_options"))
 		{
-			var content_options = this.getArrayMgr("sel_options").getEntry(this.id);
+			// Select options tend to be defined once, at the top level, so try that first
+			var content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
+
+			// Try again according to ID
+			if(!content_options) content_options = this.getArrayMgr("sel_options").getEntry(this.id);
 			if(_attrs["select_options"] && content_options)
 			{
 				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
@@ -92,7 +104,10 @@ var et2_selectbox = et2_inputWidget.extend({
 		// content array.
 		if (_attrs["select_options"] == null)
 		{
-			_attrs["select_options"] = this.getArrayMgr('content')
+			// Again, try last name part at top level
+			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
+			// If that didn't work, check according to ID
+			_attrs["select_options"] = content_options ? content_options : this.getArrayMgr('content')
 				.getEntry("options-" + this.id)
 		}
 
@@ -218,7 +233,7 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.
  */
-var et2_selectbox_ro = et2_selectbox.extend({
+var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -257,7 +272,6 @@ var et2_selectbox_ro = et2_selectbox.extend({
 
 	set_value: function(_value) {
 		this.value = _value;
-
 		var option = this.optionValues[_value];
 		if (option instanceof Object)
 		{
@@ -272,6 +286,41 @@ var et2_selectbox_ro = et2_selectbox.extend({
 		{
 			this.span.text("");
 		}
+	},
+
+	/**
+	 * Functions for et2_IDetachedDOM
+	 */
+	 /**
+         * Creates a list of attributes which can be set when working in the
+         * "detached" mode. The result is stored in the _attrs array which is provided
+         * by the calling code.
+         */
+        getDetachedAttributes: function(_attrs) {
+                _attrs.push("value");
+        },
+
+        /**
+         * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
+         * passed to the "setDetachedAttributes" function in the same order.
+         */
+        getDetachedNodes: function() {
+                return [this.span[0]];
+        },
+
+        /**
+         * Sets the given associative attribute->value array and applies the
+         * attributes to the given DOM-Node.
+         *
+         * @param _nodes is an array of nodes which have to be in the same order as
+         *      the nodes returned by "getDetachedNodes"
+         * @param _values is an associative array which contains a subset of attributes
+         *      returned by the "getDetachedAttributes" function and sets them to the
+         *      given values.
+         */
+        setDetachedAttributes: function(_nodes, _values) {
+                this.span = jQuery(_nodes[0]);
+                this.set_value(_values["value"]);
 	}
 });
 
