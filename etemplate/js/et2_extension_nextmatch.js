@@ -353,19 +353,25 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				if(!colName) continue;
 
 				if(size[colName]) _colData[i].width = size[colName];
-				
 				// Customfields needs special processing
 				if(_row[i].widget.instanceOf(et2_nextmatch_customfields))
 				{
-					var cfDisplay = et2_csvSplit(columnDisplay[i],null,"_#");
-					for(var j = 1; j < cfDisplay.length; j++)
+					// Find cf field
+					for(var j = 0; j < columnDisplay.length; j++)
 					{
-						_row[i].widget.options.fields[cfDisplay[j]] = true;
-					} 
-					// Resets field visibility too
-					_row[i].widget._getColumnName();
-					_colData[i].disabled = negated;
-					continue RowLoop;
+						if(columnDisplay[j].indexOf(_row[i].widget.id) == 0) {
+							var cfDisplay = et2_csvSplit(columnDisplay[j],null,"_#");
+							_row[i].widget.options.fields = {};
+							for(var k = 1; k < cfDisplay.length; k++)
+							{
+								_row[i].widget.options.fields[cfDisplay[k]] = true;
+							} 
+							// Resets field visibility too
+							_row[i].widget._getColumnName();
+							_colData[i].disabled = negated;
+							continue RowLoop;
+						}
+					}
 				}
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
@@ -1154,7 +1160,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			if(widget) cf.append(widget.getDOMNode());
 
 			// Check for column filter
-			if(this.options.fields.length > 0 && (
+			if(!jQuery.isEmptyObject(this.options.fields) && (
 				this.options.fields[field_name] == false || typeof this.options.fields[field_name] == 'undefined'))
 			{
 				cf.hide();
@@ -1196,10 +1202,9 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	_getColumnName: function() {
 		var name = this.id;
 		var visible = [];
-
 		for(var field_name in this.options.customfields)
 		{
-			if(this.options.fields.length == 0 || this.options.fields[field_name] == true)
+			if(jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true)
 			{
 				visible.push(et2_customfields_list.prototype.prefix + field_name);
 				jQuery(this.rows[field_name]).show();

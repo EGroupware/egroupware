@@ -147,7 +147,6 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				delete(attrs.label);
 
 				// Create widget
-console.debug(attrs);
 				var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
 			}
 
