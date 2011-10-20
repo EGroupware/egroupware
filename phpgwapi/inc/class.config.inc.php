@@ -140,10 +140,6 @@ class config
 			return True;	// no change ==> exit
 		}
 
-		if(is_array($value))
-		{
-			$value = serialize($value);
-		}
 		if (!isset($value) || $value === '')
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
@@ -152,6 +148,7 @@ class config
 		else
 		{
 			self::$configs[$app][$name] = $value;
+			if(is_array($value)) $value = serialize($value);
 			$ok = self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		if ($update_cache) egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
