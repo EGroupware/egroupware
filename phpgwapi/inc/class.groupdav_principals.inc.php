@@ -309,6 +309,25 @@ class groupdav_principals extends groupdav_handler
 				$path = '/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
 			}
 		}
+		// check type attribute to limit search on a certain tree
+		if (isset($options['root']['attrs']['type']))
+		{
+			switch($options['root']['attrs']['type'])
+			{
+				case 'INDIVIDUAL':
+					$path = '/principals/users/';
+					break;
+				case 'GROUP':
+					$path = '/principals/groups/';
+					break;
+				case 'ROOM':
+					$path = '/principals/locations/';
+					break;
+				case 'RESOURCE':
+					$path = '/principals/resources/';
+					break;
+			}
+		}
 		// run "regular" propfind
 		$options['other'] = array();
 		$options['root']['name'] = 'propfind';
