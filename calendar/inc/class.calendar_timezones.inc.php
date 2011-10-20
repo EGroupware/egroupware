@@ -373,10 +373,10 @@ class calendar_timezones
 	 * Query timezone of a given user, returns 'tzid' or VTIMEZONE 'component'
 	 *
 	 * @param int $user=null
-	 * @param string $type='component' everything tz2id supports
+	 * @param string $type='vcalendar' 'tzid' or everything tz2id supports, default 'vcalendar' = full vcalendar component
 	 * @return string
 	 */
-	public static function user_timezone($user=null, $type='component')
+	public static function user_timezone($user=null, $type='vcalendar')
 	{
 		if (!$user || $user == $GLOBALS['egw_info']['user']['account_id'])
 		{
@@ -390,9 +390,22 @@ class calendar_timezones
 		}
 		if (!$tzid) $tzid = egw_time::$server_timezone->getName();
 
-		if ($type != 'tzid')
+		switch ($type)
 		{
-			return self::tz2id($tzid,$type);
+			case 'vcalendar':
+				include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+				// checking type of $val, now we included the object definition (no need to always include it!)
+				$vcal = new Horde_iCalendar;
+				$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+				self::add_vtimezone($vcal, $tzid);
+				$tzid = $vcal->exportvCalendar('utf-8');
+				break;
+			case 'tzid':
+				break;
+			default:
+				$tzid = self::tz2id($tzid,$type == 'vcalendar' ? 'component' : $type);
+				break;
 		}
 		return $tzid;
 	}

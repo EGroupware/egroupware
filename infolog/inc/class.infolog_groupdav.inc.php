@@ -591,17 +591,17 @@ class infolog_groupdav extends groupdav_handler
 	{
 		// calendar description
 		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
+		$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		// supported components, currently only VEVENT
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
 		// supported reports
-		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('report',array(
-				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
+		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
 
@@ -609,7 +609,7 @@ class infolog_groupdav extends groupdav_handler
 		if ($this->groupdav->prop_requested('calendar-timezone'))
 		{
 			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
-				calendar_timezones::user_timezone($user, 'component'));
+				calendar_timezones::user_timezone($user));
 		}
 		return $props;
 	}

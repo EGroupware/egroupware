@@ -1047,7 +1047,7 @@ class calendar_groupdav extends groupdav_handler
 		if ($this->groupdav->prop_requested('calendar-timezone'))
 		{
 			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
-				calendar_timezones::user_timezone($user, 'component'));
+				calendar_timezones::user_timezone($user));
 		}
 		return $props;
 	}
