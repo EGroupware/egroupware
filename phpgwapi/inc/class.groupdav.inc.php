@@ -699,16 +699,17 @@ class groupdav extends HTTP_WebDAV_Server
 					break;
 			}
 		}
-		if (method_exists($app.'_groupdav','extra_properties'))
-		{
-			$displayname = translation::convert(
-				$account['account_id'] > 0 ? $account['account_fullname'] : lang('Group').' '.$account['account_lid'],
-				translation::charset(),'utf-8');
-			$props = ExecMethod2($app.'_groupdav::extra_properties',$props,$displayname,$this->base_uri);
-		}
-		// add ctag if handler implements it
+		// add other handler specific properties
 		if (($handler = self::app_handler($app)))
 		{
+			if (method_exists($handler,'extra_properties'))
+			{
+				$displayname = translation::convert(
+					$account['account_id'] > 0 ? $account['account_fullname'] : lang('Group').' '.$account['account_lid'],
+					translation::charset(),'utf-8');
+				$props = $handler->extra_properties($props,$displayname,$this->base_uri,$user);
+			}
+			// add ctag if handler implements it
 			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
 			{
 				$props['getctag'] = self::mkprop(
@@ -907,7 +908,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		else
 		{
-			$value = $value[0] == '<' ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+			$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
 		}
 		return $value;
 	}

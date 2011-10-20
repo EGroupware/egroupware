@@ -584,30 +584,33 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
+	 * @param int $user=null account_id of owner of collection
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null,$user=null)
 	{
 		// calendar description
-		$displayname = translation::convert(lang('Tasks of') . ' ' .
-			$displayname,translation::charset(),'utf-8');
+		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
-		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
-			// HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTIMEZONE')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
-
+		// supported reports
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+			HTTP_WebDAV_Server::mkprop('report',array(
+				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
 
+		// get timezone of calendar
+		if ($this->groupdav->prop_requested('calendar-timezone'))
+		{
+			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
+				calendar_timezones::user_timezone($user, 'component'));
+		}
 		return $props;
 	}
 

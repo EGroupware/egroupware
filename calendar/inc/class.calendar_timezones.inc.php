@@ -368,6 +368,34 @@ class calendar_timezones
 
 		return true;
 	}
+
+	/**
+	 * Query timezone of a given user, returns 'tzid' or VTIMEZONE 'component'
+	 *
+	 * @param int $user=null
+	 * @param string $type='component' everything tz2id supports
+	 * @return string
+	 */
+	public static function user_timezone($user=null, $type='component')
+	{
+		if (!$user || $user == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$tzid = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
+		}
+		else
+		{
+			$prefs_obj = new preferences($user);
+			$prefs = $prefs_obj->read();
+			$tzid = $prefs['common']['tz'];
+		}
+		if (!$tzid) $tzid = egw_time::$server_timezone->getName();
+
+		if ($type != 'tzid')
+		{
+			return self::tz2id($tzid,$type);
+		}
+		return $tzid;
+	}
 }
 /*
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests

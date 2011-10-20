@@ -574,13 +574,13 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
+	 * @param int $user=null account_id of owner of collection
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
 	{
 		// addressbook description
-		$displayname = translation::convert(lang('Addressbook of') . ' ' .
-			$displayname,translation::charset(),'utf-8');
+		$displayname = translation::convert(lang('Addressbook of'),translation::charset(),'utf-8').' '.$displayname;
 		$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
 		// supported reports (required property for CardDAV)
 		$props['supported-report-set'] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
