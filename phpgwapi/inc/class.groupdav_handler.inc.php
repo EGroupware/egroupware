@@ -244,9 +244,10 @@ abstract class groupdav_handler
 	 * @param array &$options
 	 * @param int|string &$id on return self::$path_extension got removed
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
+	 * @param boolean $ignore_if_match=false if true, ignore If-Match precondition
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false)
+	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false)
 	{
 		if (self::$path_extension) $id = basename($id,self::$path_extension);
 
@@ -275,7 +276,7 @@ abstract class groupdav_handler
 			$etag = $this->get_etag($entry);
 			// If the clients sends an "If-Match" header ($_SERVER['HTTP_IF_MATCH']) we check with the current etag
 			// of the calendar --> on failure we return 412 Precondition failed, to not overwrite the modifications
-			if (isset($_SERVER['HTTP_IF_MATCH']))
+			if (isset($_SERVER['HTTP_IF_MATCH']) && !$ignore_if_match)
 			{
 				$this->http_if_match = $_SERVER['HTTP_IF_MATCH'];
 				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes

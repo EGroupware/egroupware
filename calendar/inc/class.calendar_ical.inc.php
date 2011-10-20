@@ -423,13 +423,14 @@ class calendar_ical extends calendar_boupdate
 				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
-						$attendees = count($event['participants']);
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							calendar_so::split_status($status, $quantity, $role);
-							if ($attendees == 1 &&
-								$uid == $this->user && $status == 'A') continue;
+							// do not include event owner/ORGANIZER as participant in his own calendar, if he is only participant
+							if (count($event['participants']) == 1 && $event['owner'] == $uid) continue;
+
 							if (!($info = $this->resource_info($uid))) continue;
+
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
@@ -521,7 +522,6 @@ class calendar_ical extends calendar_boupdate
 						break;
 
     				case 'ORGANIZER':
-    					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 	    				if (!$organizerCN)
 	    				{
 	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
@@ -551,7 +551,8 @@ class calendar_ical extends calendar_boupdate
 			    				$parameters['ATTENDEE'][] = $options;
 		    				}
 	    				}
-	    				if ($this->productManufacturer != 'groupdav' ||	!$this->check_perms(EGW_ACL_EDIT,$event))
+    					// do NOT use ORGANIZER for events without further participants or a different organizer
+	    				if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]))
 	    				{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
@@ -1317,6 +1318,13 @@ class calendar_ical extends calendar_boupdate
 					$event['owner'] = $event_info['stored_event']['owner'];
 				}
 				$event['caldav_name'] = $event_info['stored_event']['caldav_name'];
+
+				// as we no longer export event owner/ORGANIZER as only participant, we have to re-add owner as participant
+				// to not loose him, as EGroupware knows events without owner/ORGANIZER as participant
+				if (isset($event_info['stored_event']['participants'][$event['owner']]) && !isset($event['participant'][$event['owner']]))
+				{
+					$event['participant'][$event['owner']] = $event_info['stored_event']['participants'][$event['owner']];
+				}
 			}
 			else // common adjustments for new events
 			{
