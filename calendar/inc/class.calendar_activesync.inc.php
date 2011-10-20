@@ -13,6 +13,15 @@
  */
 
 /**
+ * Required for TZID <--> AS timezone blog test, if script is called directly via URL
+ */
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
+{
+	interface activesync_plugin_write {};
+	interface activesync_plugin_meeting_requests {};
+}
+
+/**
  * Calendar eSync plugin
  *
  * Plugin to make EGroupware calendar data available
@@ -1266,9 +1275,9 @@ TZID:Europe/Berlin
 X-LIC-LOCATION:Europe/Berlin
 BEGIN:DAYLIGHT
 TZOFFSETFROM:+0100
---> bias: 60 min
+--> bias: -60 min
 TZOFFSETTO:+0200
---> dstbias: +0200 - +0100 = +0100 = 60 min
+--> dstbias: +1000 - +0200 = +0100 = -60 min
 TZNAME:CEST
 DTSTART:19700329T020000
 RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
@@ -1307,14 +1316,8 @@ END:VTIMEZONE
 		}
 		// get bias and dstbias from standard component, which is present in all tz's
 		// (dstbias is relative to bias and almost always 60 or 0)
-		$data['bias'] = 60 * substr($standard['TZOFFSETTO'],0,-2) + substr($standard['TZOFFSETTO'],-2);
-		$data['dstbias'] = 60 * substr($standard['TZOFFSETFROM'],0,-2) + substr($standard['TZOFFSETFROM'],-2) - $data['bias'];
-
-		// at least Active Sync implementation on iPhone uses -720=-12h for Pacific/Auckland, not 720=+12h
-		if ($data['bias'] == 720)
-		{
-			$data['bias'] = -720;
-		}
+		$data['bias'] = -(60 * substr($standard['TZOFFSETTO'],0,-2) + substr($standard['TZOFFSETTO'],-2));
+		$data['dstbias'] = -(60 * substr($standard['TZOFFSETFROM'],0,-2) + substr($standard['TZOFFSETFROM'],-2) + $data['bias']);
 
 		// check if we have an additional DAYLIGHT component and both have a RRULE component --> tz uses daylight saving
 		if (isset($standard['RRULE']) && isset($daylight) && isset($daylight['RRULE']))
@@ -1325,26 +1328,34 @@ END:VTIMEZONE
 				{
 					$data[$prefix.'month'] = (int)$matches[2];
 					$data[$prefix.'week'] = (int)$matches[1];
-					if ($data[$prefix.'week'] < 0) $data[$prefix.'week'] = 5; // -1 for last week might be 5 for as as in recuring events definition
+					// -1 for last week might be 5 for as as in recuring events definition
+					// seems for start 1SU is always returned with week=5, like -1SU
+					if ($data[$prefix.'week'] < 0 || $prefix == 'dststart' && $matches[1] == '1SU')
+					{
+						$data[$prefix.'week'] = 5;
+					}
+					// if both start and end use 1SU use week=5 and decrement month
+					if ($prefix == 'dststart') $start_byday = $matches[1];
+					if ($prefix == 'dstend' && $matches[1] == '1SU' && $start_byday == '1SU')
+					{
+						$data[$prefix.'week'] = 5;
+						if ($prefix == 'dstend') $data[$prefix.'month'] -= 1;
+					}
 					static $day2int = array('SU'=>0,'MO'=>1,'TU'=>2,'WE'=>3,'TH'=>4,'FR'=>5,'SA'=>6);
 					$data[$prefix.'day'] = (int)$day2int[substr($matches[1],-2)];
 				}
 				if (preg_match('/^\d{8}T(\d{6})$/',$comp['DTSTART'],$matches))
 				{
-					$data[$prefix.'hour'] = (int)substr($matches[1],0,2);
-					$data[$prefix.'minute'] = (int)substr($matches[1],2,2);
+					$data[$prefix.'hour'] = (int)substr($matches[1],0,2)+($prefix=='dststart'?-1:1)*$data['dstbias']/60;
+					$data[$prefix.'minute'] = (int)substr($matches[1],2,2)+($prefix=='dststart'?-1:1)*$data['dstbias']%60;
 					$data[$prefix.'second'] = (int)substr($matches[1],4,2);
 				}
 			}
-			// for southern hermisphere, were DST is in January, Active Sync (at least iPhone implementation)
-			// sends a negative dstbias and a accordingly moved start- and endtime
+			// for southern hermisphere, were DST is in January, we have to swap start- and end-hour/-minute
 			if ($data['dststartmonth'] > $data['dstendmonth'])
 			{
-				$data['dststarthour']   += $data['dstbias'] / 60;
-				$data['dststartminute'] += $data['dstbias'] % 60;
-				$data['dstendhour']     -= $data['dstbias'] / 60;
-				$data['dstendminute']   -= $data['dstbias'] % 60;
-				$data['dstbias'] = -$data['dstbias'];
+				$start = $data['dststarthour'];   $data['dststarthour'] = $data['dstendhour'];     $data['dstendhour'] = $start;
+				$start = $data['dststartminute']; $data['dststartminute'] = $data['dstendminute']; $data['dstendminute'] = $start;
 			}
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($data));
@@ -1552,21 +1563,63 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	ini_set('display_errors',1);
 	error_reporting(E_ALL & ~E_NOTICE);
 
-	// get as timezone data for agive timezone
-	$tz = 'Pacific/Auckland';//'Europe/Zurich';//'America/New_York';//'Australia/Darwin';//'Europe/Berlin';
-	$ical = calendar_timezones::tz2id($tz,'component');
-	echo "<pre>".print_r($ical,true)."</pre>\n";
-	$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
-	echo "<pre>".print_r($ical_arr,true)."</pre>\n";
-	$as_tz = calendar_activesync::tz2as($tz);
-	echo "<pre>".print_r($as_tz,true)."</pre>\n";
+	echo "<html><head><title>Conversation of ActiveSync Timezone Blobs to TZID's</title></head>\n<body>\n";
+	echo "<h3>Conversation of ActiveSync Timezone Blobs to TZID's</h3>\n";
+	echo "<table border='1'>\n<tbody>\n";
+	echo "<tr><th>TZID</th><th>bias</th><th>dstbias</th></th><th>dststart</th><th>dstend</th><th>matched TZID</th></tr>\n";
+	echo "<script>
+	function toggle_display(pre)
+	{
+		pre.style.display = pre.style.display && pre.style.display == 'none' ? 'block' : 'none';
+	}
+	</script>\n";
 
-	// this is what iPhone sends as TZ for New Zealand (eg. Pacific/Auckland)
-	$sync_blob = 'MP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAFAAMAAAAAAAAAxP///w==';
-	$as_tz = calendar_activesync::_getTZFromSyncBlob(base64_decode($sync_blob));
-	echo "<pre>".print_r($as_tz,true)."</pre>\n";
+	// TZID => AS timezone blobs reported by various devices
+	foreach(array(
+		'Europe/Berlin'    => 'xP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAxP///w==',
+		'Europe/Helsinki'  => 'iP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAQAAAAAAAAAxP///w==',
+		'Asia/Tokyo'       => '5P3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxP///w==',
+		'Atlantic/Azores'  => 'PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAIAAAAAAAAAxP///w==',
+		'America/Los_Angeles' => '4AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAACAAMAAAAAAAAAxP///w==',
+		'America/New_York' => 'LAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAACAAMAAAAAAAAAxP///w==',
+		'Pacific/Auckland' => 'MP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAFAAMAAAAAAAAAxP///w==',
+		'Australia/Sydney' => 'qP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAxP///w==',
+	) as $tz => $sync_blob)
+	{
+		// get as timezone data for a given timezone
+		$ical = calendar_timezones::tz2id($tz,'component');
+		//echo "<pre>".print_r($ical,true)."</pre>\n";
+		$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
+		//echo "<pre>".print_r($ical_arr,true)."</pre>\n";
+		$as_tz = calendar_activesync::tz2as($tz);
+		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
 
-	// find matching timezone from as data
-	// this returns the FIRST match, which is in case of Pacific/Auckland eg. Antarctica/McMurdo ;-)
-	echo array2string(calendar_activesync::as2tz($as_tz));
+		$as_tz_org = calendar_activesync::_getTZFromSyncBlob(base64_decode($sync_blob));
+		//echo "sync_blob=<pre>".print_r($as_tz_org,true)."</pre>\n";
+
+		// find matching timezone from as data
+		// this returns the FIRST match, which is in case of Pacific/Auckland eg. Antarctica/McMurdo ;-)
+		$matched = calendar_activesync::as2tz($as_tz);
+		//echo array2string($matched);
+
+		echo "<tr><td><b onclick='toggle_display(this.nextSibling);' style='cursor:pointer;'>$tz</b><pre style='margin:0; font-size: 90%; display:none;'>$ical</pre></td><td>$as_tz_org[bias]<br/>$as_tz[bias]</td><td>$as_tz_org[dstbias]<br/>$as_tz[dstbias]</td>\n";
+		foreach(array('dststart','dstend') as $prefix)
+		{
+			echo "<td>\n";
+			foreach(array($as_tz_org,$as_tz) as $n => $arr)
+			{
+				$parts = array();
+				foreach(array('year','month','day','week','hour','minute','second') as $postfix)
+				{
+					$failed = $n && $as_tz_org[$prefix.$postfix] !== $as_tz[$prefix.$postfix];
+					$parts[] = ($failed?'<font color="red">':'').$arr[$prefix.$postfix].($failed?'</font>':'');
+				}
+				echo implode(' ', $parts).(!$n?'<br/>':'');
+			}
+			echo "</td>\n";
+		}
+		echo "<td>&nbsp;<br/>".($matched=='UTC'?'<font color="red">':'').$matched.($matched=='UTC'?'</font>':'')."</td></tr>\n";
+	}
+	echo "</tbody></table>\n";
+	echo "</body></html>\n";
 }
