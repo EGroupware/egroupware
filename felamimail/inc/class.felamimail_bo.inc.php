@@ -3824,7 +3824,10 @@ class felamimail_bo
 			$mergeobj = new addressbook_merge();
 
 			if (empty($mimetype)) $mimetype = (strlen(strip_tags($content)) == strlen($content) ?'text/plain':'text/html');
-			return $mergeobj->merge_string($content,$ids,$err,$mimetype);
+			$rv = $mergeobj->merge_string($content,$ids,$err,$mimetype);
+			if (empty($rv) && !empty($content) && !empty($err)) $rv = $content;
+			if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.__LINE__.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
+			return $rv;
 		}
 
 		/**
