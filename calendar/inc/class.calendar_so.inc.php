@@ -241,6 +241,11 @@ class calendar_so
 
 			$events[$row['cal_id']]['participants'][$uid] = $status;
 			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
+
+			if (($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$row['cal_id']]['max_user_modified'])
+			{
+				$events[$row['cal_id']]['max_user_modified'] = $modified;
+			}
 		}
 
 		// custom fields

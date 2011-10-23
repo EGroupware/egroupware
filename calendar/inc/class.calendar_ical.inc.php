@@ -848,7 +848,11 @@ class calendar_ical extends calendar_boupdate
 			{
 				$attributes['CREATED'] = $event['created'] ? $event['created'] : $event['modified'];
 			}
-			if ($event['modified'])
+			if ($event['max_user_modified'])
+			{
+				$attributes['LAST-MODIFIED'] = max($event['modified'], $event['max_user_modified']);
+			}
+			elseif ($event['modified'])
 			{
 				$attributes['LAST-MODIFIED'] = $event['modified'];
 			}
