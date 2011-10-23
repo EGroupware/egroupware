@@ -244,11 +244,12 @@ class calendar_groupdav extends groupdav_handler
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
 					'getetag' => '"'.$etag.'"',
 					'schedule-tag' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-tag', '"'.$schedule_tag.'"'),
+					'getlastmodified' => max($event['modified'], $event['max_user_modified']),
 				);
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event, $filter['users'], strpos($path, '/inbox/') !== false ? 'PUBLISH' : null);
+					$content = $this->iCal($event, $filter['users'], strpos($path, '/inbox/') !== false ? 'REQUEST' : null);
 					$props['getcontentlength'] = bytes($content);
 					$props['calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -403,7 +404,7 @@ class calendar_groupdav extends groupdav_handler
 			return $event;
 		}
 
-		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'PUBLISH' : null);
+		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
