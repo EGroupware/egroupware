@@ -530,6 +530,11 @@ class calendar_groupdav extends groupdav_handler
 
 		if (!$prefix) $user = null;	// /infolog/ does not imply setting the current user (for new entries it's done anyway)
 
+		// fix for iCal4OL using WinHTTP only supporting a certain header length
+		if (isset($_SERVER['HTTP_IF_SCHEDULE']) && !isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
+		{
+			$_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'] = $_SERVER['HTTP_IF_SCHEDULE'];
+		}
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access,
 			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']));	// dont fail with 412 Precondition Failed in that case
