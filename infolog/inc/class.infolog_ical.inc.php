@@ -641,7 +641,7 @@ class infolog_ical extends infolog_bo
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							($attr=$component->getAttribute('X-INFOLOG-STATUS')) ? $attr['value'] : null);
+							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_array($attr) ? $attr['value'] : null);
 						break;
 
 					case 'SUMMARY':
