@@ -350,11 +350,15 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					}
 					else
 					{
-						debugLog("airsyncbasebody!");
-						$message->airsyncbasebody = new SyncAirSyncBaseBody();
-						$message->airsyncbasenativebodytype=1;
-						$this->backend->note2messagenote($contact[$attr], $bodypreference, $message->airsyncbasebody);
+						if (strlen ($contact[$attr]) > 0)
+						{
+							debugLog("airsyncbasebody!");
+							$message->airsyncbasebody = new SyncAirSyncBaseBody();
+							$message->airsyncbasenativebodytype=1;
+							$this->backend->note2messagenote($contact[$attr], $bodypreference, $message->airsyncbasebody);
+						}
 					}
+					$message->md5body = md5($contact[$attr]);
 					break;
 
 					case 'jpegphoto':
