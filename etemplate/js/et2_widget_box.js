@@ -20,7 +20,7 @@
 /**
  * Class which implements the hbox and vbox tag
  */ 
-var et2_box = et2_baseWidget.extend({
+var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	createNamespace: true,
 
@@ -32,7 +32,25 @@ var et2_box = et2_baseWidget.extend({
 			.addClass("et2_box_widget");
 
 		this.setDOMNode(this.div[0]);
-	}
+	},
+
+	/**
+         * Code for implementing et2_IDetachedDOM
+	 * This doesn't need to be implemented.
+	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+         */
+        getDetachedAttributes: function(_attrs)
+        {
+        },
+
+        getDetachedNodes: function()
+        {
+                return [];
+        },
+
+        setDetachedAttributes: function(_nodes, _values)
+        {
+        }
 
 });
 
