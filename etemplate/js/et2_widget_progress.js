@@ -108,7 +108,7 @@ var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM,
 	},
 
 	getDetachedNodes: function() {
-		return [this.node[0]];
+		return [this.node];
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
