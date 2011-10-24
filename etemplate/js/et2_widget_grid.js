@@ -21,7 +21,7 @@
 /**
  * Class which implements the "grid" XET-Tag
  */ 
-var et2_grid = et2_DOMWidget.extend({
+var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 	init: function() {
 		// Create the table body and the table
@@ -597,8 +597,25 @@ var et2_grid = et2_DOMWidget.extend({
 		}
 
 		return this._super(this, vis);
-	}
+	},
 
+	/**
+         * Code for implementing et2_IDetachedDOM
+	 * This doesn't need to be implemented.
+	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+         */
+        getDetachedAttributes: function(_attrs)
+        {
+        },
+
+        getDetachedNodes: function()
+        {
+                return [];
+        },
+
+        setDetachedAttributes: function(_nodes, _values)
+        {
+        }
 });
 
 et2_register_widget(et2_grid, ["grid"]);
