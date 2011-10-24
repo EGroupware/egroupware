@@ -45,7 +45,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
 
         getDetachedNodes: function()
         {
-                return [];
+		return [this.getDOMNode()];
         },
 
         setDetachedAttributes: function(_nodes, _values)

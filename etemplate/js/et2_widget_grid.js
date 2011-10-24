@@ -610,7 +610,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
         getDetachedNodes: function()
         {
-                return [];
+                return [this.getDOMNode()];
         },
 
         setDetachedAttributes: function(_nodes, _values)
