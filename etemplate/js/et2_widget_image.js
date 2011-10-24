@@ -21,7 +21,7 @@
 /**
  * Class which implements the "image" XET-Tag
  */ 
-var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
+var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	attributes: {
 		"src": {
@@ -62,7 +62,7 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		this._super.apply(this, arguments);
 
 		// Create the image or a/image tag
-		var node = this.image = $j(document.createElement("img"));
+		this.image = $j(document.createElement("img"));
 		if (this.options.label)
 		{
 			this.image.attr("alt", this.options.label).attr("title", this.options.label);
@@ -73,9 +73,9 @@ var et2_image = et2_baseWidget.extend(et2_IDetachedDOM, {
 		}
 		if(this.options["class"])
 		{
-			node.addClass(this.options["class"]);
+			this.image.addClass(this.options["class"]);
 		}
-		this.setDOMNode(node[0]);
+		this.setDOMNode(this.image[0]);
 	},
 	
 	click: function()
