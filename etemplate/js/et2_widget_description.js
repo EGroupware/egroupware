@@ -142,7 +142,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value", "class");
+		_attrs.push("value", "class", "href");
 	},
 
 	getDetachedNodes: function()
@@ -152,6 +152,10 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
+		if (typeof _values["href"] != "undefined")
+		{
+			this.options.href = _values["href"];
+		}
 		if (typeof _values["value"] != "undefined")
 		{
 			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],
