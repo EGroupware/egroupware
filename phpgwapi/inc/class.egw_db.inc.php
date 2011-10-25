@@ -1431,6 +1431,10 @@ class egw_db
 		{
 			$value = substr($value,0,$length);
 		}
+		// casting boolean explicitly to string, as ADODB_postgres64::qstr() has an unwanted special handling
+		// for boolean types, causing it to return "true" or "false" and not a quoted string like "'1'"!
+		if (is_bool($value)) $value = (string)$value;
+
 		return $this->Link_ID->qstr($value);
 	}
 
