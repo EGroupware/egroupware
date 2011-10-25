@@ -296,6 +296,22 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Get links for the given record
+	 *
+	 * Uses egw_link system to get link titles
+	 */
+	protected function get_links($app, $id)
+	{
+		$links = egw_link::get_links($app, $id);
+		$link_titles = array();
+		foreach($links as $link_id => $link_info)
+		{
+			$link_titles[] = egw_link::title($link_info['app'], $link_info['id']);
+		}
+		return implode("\n",$link_titles);
+	}
+
+	/**
 	 * Format a datetime
 	 *
 	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
