@@ -179,11 +179,6 @@ class importexport_helper_functions {
 		foreach ( $cat_names as $cat_name ) {
 			$cat_name = trim($cat_name);
 			if ( $cat_name == '' ) continue;
-			// Handle any IDs that slip in
-			if ( is_numeric($cat_name) && categories::id2name((int)$cat_name)) {
-				$cat_ids[] = (int)$cat_name;
-				continue;
-			}
 			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 ) {
 				$cat_id = $cats->add( array(
 					'name' => $cat_name,
