@@ -743,7 +743,7 @@ class emailadmin_bo extends so_sql
 			}
 
 			$eaPreferences->userDefinedAccounts		= ($data['userDefinedAccounts'] == 'yes');
-			$eaPreferences->userDefinedIdentities     = ($data['userDefinedIdentities'] == 'yes');
+			$eaPreferences->userDefinedIdentities     = ($data['userDefinedIdentities'] == 'yes' || $data['userDefinedAccounts']=='yes');
 			$eaPreferences->ea_user_defined_signatures	= ($data['ea_user_defined_signatures'] == 'yes');
 			$eaPreferences->ea_default_signature		= $data['ea_default_signature'];
 			if(strlen($data['ea_stationery_active_templates']) > 0)
@@ -842,8 +842,8 @@ class emailadmin_bo extends so_sql
 			);
 
 			if (empty($settings['mail_server'])) $profile['userDefinedAccounts'] = 'yes';
-			if (empty($settings['mail_server'])) $profile['userDefinedIdentities'] == 'yes';
-			if (empty($settings['mail_server'])) $profile['ea_user_defined_signatures'] == 'yes';
+			if (empty($settings['mail_server'])) $profile['userDefinedIdentities'] = 'yes';
+			if (empty($settings['mail_server'])) $profile['ea_user_defined_signatures'] = 'yes';
 		}
 		foreach($to_parse = array(
 			'mail_server' => 'imapServer',
