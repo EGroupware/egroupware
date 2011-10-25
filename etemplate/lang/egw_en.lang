@@ -405,6 +405,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	preferences	en	The following document types are supported:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	Text gets displayed if the input field is empty and has no focus (blur)
 time	etemplate	en	Time
+titles of any entries linked to the current record	preferences	en	Titles of any entries linked to the current record
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 to start the db-tools	etemplate	en	To start DB tools
 to start the etemplate editor	etemplate	en	To start eTemplate editor
