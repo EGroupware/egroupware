@@ -477,6 +477,13 @@ class importexport_definitions_ui
 			{
 				$this->wizard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
 			}
+			if($content['owner'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] ||
+				!$content['owner'] && !$GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				$readonlys[$this->wizard_content_template] = true;
+				$preserve = $content;
+				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+			}
 
 			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
 		}
@@ -491,6 +498,14 @@ class importexport_definitions_ui
 				unset ($content['edit']);
 
 			$this->wizard_content_template = $this->wizard_step10($content, $sel_options, $readonlys, $preserv);
+
+			if($content['owner'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+			{
+				$readonlys[$this->wizard_content_template] = true;
+				$preserve = $content;
+				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+			}
+
 			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
 		}
 
