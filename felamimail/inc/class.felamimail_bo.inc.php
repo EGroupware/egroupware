@@ -3196,21 +3196,23 @@ class felamimail_bo
 		// return the qouta of the users INBOX
 		function getQuotaRoot()
 		{
-			//if (!$this->icServer->_connected) $this->openConnection($this->profileID);
-
+			static $quota;
+			if (isset($quota)) return $quota;
 			if(!$this->icServer->hasCapability('QUOTA')) {
+				$quota = false;
 				return false;
 			}
 			$quota = $this->icServer->getStorageQuotaRoot('INBOX');
 			//error_log(__METHOD__.__LINE__.array2string($quota));
 			if(is_array($quota)) {
-				return array(
+				$quota = array(
 					'usage'	=> $quota['USED'],
 					'limit'	=> $quota['QMAX'],
 				);
 			} else {
-				return false;
+				$quota = false;
 			}
+			return $quota;
 		}
 
 		function getDraftFolder($_checkexistance=TRUE)
@@ -3373,6 +3375,7 @@ class felamimail_bo
 
 			if(($folderInfo[$_folder] instanceof PEAR_Error) || $folderInfo[$_folder] !== true)
 			{
+				$folderInfo[$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
 				return false;
 			} else {
 				return true;
