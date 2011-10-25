@@ -1223,6 +1223,8 @@ class groupdav_principals extends groupdav_handler
 		{
 			foreach((array)$add_proxys as $app)
 			{
+				if (!isset($GLOBALS['egw_info']['user']['apps'][$app])) continue;
+
 				switch($app)
 				{
 					case 'resources':
