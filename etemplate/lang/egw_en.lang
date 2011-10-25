@@ -252,6 +252,7 @@ linkentry	etemplate	en	Link entry
 linklist	etemplate	en	Link list
 linkstring	etemplate	en	Link string
 linkto	etemplate	en	Link to
+list of files linked to the current record	preferences	en	List of files linked to the current record
 load this template into the editor	etemplate	en	Load template to the editor
 maximum size for uploads	filemanager	en	Maximum upload size
 message ...	etemplate	en	Message ...
