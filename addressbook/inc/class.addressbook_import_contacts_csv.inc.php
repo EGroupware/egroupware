@@ -158,8 +158,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups);
-
+			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups, $_definition->plugin_options['convert']);
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv'] && $record['owner']) {
 				if(!is_numeric($record['owner'])) {
@@ -180,9 +179,6 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				$record['owner'] = $contact_owner;
 			}
 
-			// Automatically handle text categories without explicit translation
-			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
-			
 			// Also handle categories in their own field
 			$more_categories = array();
 			foreach($_definition->plugin_options['field_mapping'] as $number => $field_name) {
@@ -204,6 +200,13 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 			// Private set but missing causes hidden entries
 			if(array_key_exists('private', $record) && (!isset($record['private']) || $record['private'] == '')) unset($record['private']);
+
+			// Format birthday as backend requires - converter should give timestamp
+			if($record['bday'] && is_numeric($record['bday']))
+			{
+				$time = new egw_time($record['bday']);
+				$record['bday'] = $time->format('Y-m-d');
+			}
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
