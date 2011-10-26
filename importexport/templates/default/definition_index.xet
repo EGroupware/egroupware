@@ -25,9 +25,9 @@
 						<button statustext="export ALL selected definitions" label="Export" id="export_selected" image="fileexport"/>
 					</hbox>
 				</row>
-				<row class="row">
+				<row class="row $row_cont[class]">
 					<image src="${row}[type]" no_lang="1" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.{$row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[name]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button"/>
-					<description id="${row}[name]" no_lang="1" options="," class="lr_padding"/>
+					<description id="${row}[name]" no_lang="1" class="lr_padding"/>
 					<description id="${row}[application]" class="lr_padding"/>
 					<listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5" options="both" class="lr_padding"/>
 					<menulist>
@@ -78,7 +78,7 @@
 								</menulist>
 								<hbox>
 									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'owner_popup');"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -90,7 +90,7 @@
 								<listbox type="select-account" id="allowed" rows="5" options="groups" class="action_popup-content"/>
 								<hbox>
 									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');"/>
 								</hbox>
 							</vbox>
 						</box>

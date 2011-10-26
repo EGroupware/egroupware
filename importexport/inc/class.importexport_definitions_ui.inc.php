@@ -195,7 +195,6 @@ class importexport_definitions_ui
 				'url' => 'menuaction=importexport.importexport_definitions_ui.edit&definition=$id',
 				'popup' => '500x500',
 				'group' => $group,
-				'disableClass' => 'rowNoEdit',
 			),
 			'add' => array(
 				'caption' => 'Add',
@@ -234,6 +233,7 @@ class importexport_definitions_ui
 						'nm_action' => 'open_popup',
 					)
 				),
+				'disableClass' => 'rowNoEdit',
 			),
 			'select_all' => array(
 				'caption' => 'Whole query',
@@ -454,6 +454,13 @@ class importexport_definitions_ui
 
 			// post process submitted step
 			if($content['step']) {
+				if(!$this->can_edit($content))
+				{
+					// Each step changes definition, reload it
+					$bodefinitions = new importexport_definitions_bo();
+					$definition = $bodefinitions->read($content);
+					$content = $definition + array('step' => $content['step'], 'button' => $content['button']);
+				}
 				if(!key_exists($content['step'],$this->steps))
 					$next_step = $this->plugin->$content['step']($content);
 				else
@@ -477,8 +484,7 @@ class importexport_definitions_ui
 			{
 				$this->wizard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
 			}
-			if($content['owner'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] ||
-				!$content['owner'] && !$GLOBALS['egw_info']['user']['apps']['admin'])
+			if(!$this->can_edit($content))
 			{
 				$readonlys[$this->wizard_content_template] = true;
 				$preserve = $content;
@@ -499,7 +505,7 @@ class importexport_definitions_ui
 
 			$this->wizard_content_template = $this->wizard_step10($content, $sel_options, $readonlys, $preserv);
 
-			if($content['owner'] && $content['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+			if(!$this->can_edit($content))
 			{
 				$readonlys[$this->wizard_content_template] = true;
 				$preserve = $content;
@@ -752,11 +758,14 @@ class importexport_definitions_ui
 		// return from step90
 		if ($content['step'] == 'wizard_step90')
 		{
-			$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ?
-				($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
-				null;
-			$content['allowed_users'] = $content['just_me'] ? '' : implode(',',$content['allowed_users']);
-			unset($content['just_me']);
+			if($this->can_edit($content))
+			{
+				$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ?
+					($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
+					null;
+				$content['allowed_users'] = $content['just_me'] ? '' : implode(',',$content['allowed_users']);
+				unset($content['just_me']);
+			}
 
 			// workaround for some ugly bug related to readonlys;
 			switch (array_search('pressed', $content['button']))
@@ -787,6 +796,11 @@ class importexport_definitions_ui
 				$content['just_me'] = true;
 			}
 
+			// Hide 'just me' checkbox, users get confused by read-only
+			if($readonlys['just_me'] || !$this->can_edit($content))
+			{
+				$content['no_just_me'] = true;
+			}
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
 			if(is_object($this->response)) {
@@ -836,6 +850,30 @@ class importexport_definitions_ui
 			$etpl = new etemplate(self::_appname.'.import_definition');
 			return $etpl->exec(self::_appname.'.importexport_definitions_ui.import_definition',$content,array(),$readonlys,$preserv);
 		}
+	}
+
+	/**
+	 * Determine if the user is allowed to edit the definition
+	 *
+	 */
+	protected function can_edit(Array $definition)
+	{
+		if($definition['owner'] && $definition['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			// Definition belongs to user
+			return true;
+		}
+		elseif($definition['definition_id'] && !$definition['owner'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			// Definition is unowned, and user is an admin
+			return true;
+		}
+		elseif(!$definition['definition_id'])
+		{
+			// Definition is in-progress, not saved yet
+			return true;
+		}
+		return false;
 	}
 
 	/**
