@@ -207,6 +207,12 @@ class calendar_merge extends bo_merge
 		{
 			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
 		}
+
+		// Links
+		$replacements['$$'.($prefix?$prefix.'/':'').'links$$'] = $this->get_links('calendar', $event['id'], '!'.egw_link::VFS_APPNAME);
+ 		$replacements['$$'.($prefix?$prefix.'/':'').'attachments$$'] = $this->get_links('calendar', $event['id'], egw_link::VFS_APPNAME);
+		$replacements['$$'.($prefix?$prefix.'/':'').'links_attachments$$'] = $this->get_links('calendar', $event['id']);
+
 		return $replacements;
 	}
 
@@ -563,6 +569,9 @@ class calendar_merge extends bo_merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
+			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
+			'attachments' => lang('List of files linked to the current record'),
+			'links_attachments' => lang('Links and attached files'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
