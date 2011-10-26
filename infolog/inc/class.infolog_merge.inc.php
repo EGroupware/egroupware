@@ -110,8 +110,9 @@ class infolog_merge extends bo_merge
 		}
 
 		// Links
-		$array['links'] = $this->get_links('infolog', $id);
+		$array['links'] = $this->get_links('infolog', $id, '!'.egw_link::VFS_APPNAME);
 		$array['attachments'] = $this->get_links('infolog', $id, egw_link::VFS_APPNAME);
+		$array['links_attachments'] = $this->get_links('infolog', $id);
 
 		// Add markers
 		foreach($array as $key => &$value)
@@ -185,8 +186,9 @@ class infolog_merge extends bo_merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
-			'links' => lang('Titles of any entries linked to the current record'),
+			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
 			'attachments' => lang('List of files linked to the current record'),
+			'links_attachments' => lang('Links and attached files'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),

@@ -250,6 +250,7 @@ link	etemplate	en	Link
 linkapps	etemplate	en	Link apps
 linkentry	etemplate	en	Link entry
 linklist	etemplate	en	Link list
+links and attached files	preferences	en	Links and attached files
 linkstring	etemplate	en	Link string
 linkto	etemplate	en	Link to
 list of files linked to the current record	preferences	en	List of files linked to the current record
@@ -406,7 +407,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	preferences	en	The following document types are supported:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	Text gets displayed if the input field is empty and has no focus (blur)
 time	etemplate	en	Time
-titles of any entries linked to the current record	preferences	en	Titles of any entries linked to the current record
+titles of any entries linked to the current record, excluding attached files	preferences	en	Titles of any entries linked to the current record, excluding attached files
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 to start the db-tools	etemplate	en	To start DB tools
 to start the etemplate editor	etemplate	en	To start eTemplate editor
