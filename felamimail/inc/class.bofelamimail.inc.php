@@ -3213,6 +3213,20 @@
 				{
 					$mime_type_default = $reqMimeType;
 				}
+				// check the mimetype by extension. as browsers seem to report crap
+				// maybe its application/octet-stream -> this may mean that we could not determine the type
+				// so we check for the suffix too
+				$buff = explode('.',$_formData['name']);
+				$suffix = '';
+				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				if (!empty($suffix) && !empty($sfxMimeType) && 
+					(strlen(trim($_formData['type']))==0 || (strtolower(trim($_formData['type'])) != $sfxMimeType)))
+				{
+					error_log(__METHOD__.__LINE__.' Data:'.array2string($_formData));
+					error_log(__METHOD__.__LINE__.' Form reported Mimetype:'.$_formData['type'].' but seems to be:'.$sfxMimeType);
+					$_formData['type'] = $sfxMimeType;
+				}
 				if (trim($_formData['type']) == '')
 				{
 					$_formData['type'] = 'application/octet-stream';
@@ -3223,18 +3237,13 @@
 					// so if PHP did not pass any file_type info, then substitute the rfc default value
 					if (substr(strtolower(trim($_formData['type'])),0,strlen($mime_type_default)) != $mime_type_default)
 					{
-						// maybe its application/octet-stream -> this may mean that we could not determine the type
-						// so we check for the suffix too
-						$buff = explode('.',$_formData['name']);
-						$suffix = '';
-						if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-						if (!(strtolower(trim($_formData['type'])) == "application/octet-stream" && mime_magic::ext2mime($suffix)== $reqMimeType))
+						if (!(strtolower(trim($_formData['type'])) == "application/octet-stream" && $sfxMimeType== $reqMimeType))
 						{
 							//error_log("Message rejected, no message/rfc. Is:".$_formData['type']);
 							$importfailed = true;
 							$alert_msg .= lang("File rejected, no %2. Is:%1",$_formData['type'],$reqMimeType);
 						}
-						if ((strtolower(trim($_formData['type'])) != $reqMimeType && mime_magic::ext2mime($suffix)== $reqMimeType))
+						if ((strtolower(trim($_formData['type'])) != $reqMimeType && $sfxMimeType== $reqMimeType))
 						{
 							$_formData['type'] = mime_magic::ext2mime($suffix);
 						}
