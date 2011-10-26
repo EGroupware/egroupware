@@ -256,9 +256,9 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @param $fields Array of field type -> field name mappings
 	 * @param $appname Appname for custom field parsing
 	 * @param $selects Array of select values to be automatically parsed
-	 *
+	 * @param $format int 0 if records are supposed to be in DB format, 1 to treat as human values (Used for dates and select-cat)
 	 */
-	public static function convert(Array &$record, Array $fields = array(), $appname = null, Array $selects = array()) {
+	public static function convert(Array &$record, Array $fields = array(), $appname = null, Array $selects = array(), $format=0) {
 		// Automatic conversions
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
@@ -305,6 +305,19 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			}
 			foreach((array)$fields['date-time'] as $name) {
 				if ($record[$name] && !is_numeric($record[$name])) {
+					// Need to handle format first
+					if($format == 1)
+					{
+						$formatted = egw_time::createFromFormat(
+							egw_time::$user_dateformat . ', ' .egw_time::$user_timeformat, 
+							$record[$name]
+						);
+						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+						{
+							$record[$name] = $formatted;
+						}
+					}
+					
 					$record[$name] = egw_time::user2server($record[$name],'ts'); 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date-time']) && 
 							in_array($name, self::$cf_parse_cache[$appname][0]['date-time'])) {
@@ -315,6 +328,15 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			}
 			foreach((array)$fields['date'] as $name) {
 				if ($record[$name] && !is_numeric($record[$name])) {
+					// Need to handle format first
+					if($format == 1)
+					{
+						$formatted = egw_time::createFromFormat(egw_time::$user_dateformat, $record[$name]);
+						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+						{
+							$record[$name] = $formatted;
+						}
+					}
 					$record[$name] = egw_time::user2server($record[$name],'ts'); 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date']) && 
 							in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
@@ -336,9 +358,13 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			}
 			foreach((array)$fields['select-cat'] as $name) {
 				if($record[$name]) {
-					$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
-					// Don't clear it if it wasn't found
-					if($cat_id) $record[$name] = $cat_id;
+					// Only parse name if it needs it
+					if($format == 1)
+					{
+						$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
+						// Don't clear it if it wasn't found
+						if($cat_id) $record[$name] = $cat_id;
+					}
 				}
 			}
 			$GLOBALS['egw_info']['flags']['currentapp'] = $current_app;

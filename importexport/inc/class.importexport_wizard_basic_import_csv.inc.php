@@ -211,11 +211,18 @@ class importexport_wizard_basic_import_csv
 			if(!$content['update_cats'] && $content['plugin_options']['update_cats']) {
 				$content['update_cats'] = $content['plugin_options']['update_cats'];
 			}
+			if(!array_key_exists('convert', $content) && array_key_exists('convert', $content['plugin_options'])) {
+				$content['convert'] = $content['plugin_options']['convert'];
+			}
 
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 			array(
 				'utf-8' => 'utf-8 (Unicode)',
 				'user'	=> lang('User preference')
+			);
+			$sel_options['convert'] = array(
+				0       => lang('Database values'),
+				1       => lang('Human friendly values')
 			);
 			$preserv = $content;
 			if($this->mapping_fields['cat_id']) {
