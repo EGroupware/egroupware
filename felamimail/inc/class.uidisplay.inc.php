@@ -1300,12 +1300,18 @@ blockquote[type=cite] {
 				{
 					$addressbook_vcal = new addressbook_vcal();
 					$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
-					//error_log(print_r($vcard,true));
-					if ($vcard['uid']) $contact = $addressbook_vcal->find_contact($vcard,false);
+					if ($vcard['uid'])
+					{
+						$vcard['uid'] = trim($vcard['uid']);
+						//error_log(__METHOD__.__LINE__.print_r($vcard,true));
+						$contact = $addressbook_vcal->find_contact($vcard,false);
+					}
 					if (!$contact) $contact = null;
 					// if there are not enough fields in the vcard (or the parser was unable to correctly parse the vcard (as of VERSION:3.0 created by MSO))
-					if ($contact || count($vcard)>2) $contact = $addressbook_vcal->addVCard($attachment['attachment'],$contact,true);
-					//error_log(__METHOD__.$contact);
+					if ($contact || count($vcard)>2)
+					{
+						$contact = $addressbook_vcal->addVCard($attachment['attachment'],(is_array($contact)?array_shift($contact):$contact),true);
+					}
 					if ((int)$contact > 0)
 					{
 						$vars = array(
