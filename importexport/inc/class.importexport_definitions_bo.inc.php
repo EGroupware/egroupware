@@ -68,7 +68,11 @@ class importexport_definitions_bo {
 			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] = 
 				($row['owner'] != $GLOBALS['egw_info']['user']['account_id']) &&
 				!$GLOBALS['egw_info']['user']['apps']['admin'];
-			if($readonlys["edit[{$row['definition_id']}]"]) $ro_count++;
+			if($readonlys["edit[{$row['definition_id']}]"]) 
+			{
+				$row['class'] .= 'rowNoEdit';
+				$ro_count++;
+			}
 		}
 		$readonlys['delete_selected'] = $ro_count == count($rows);
 		return $total;
