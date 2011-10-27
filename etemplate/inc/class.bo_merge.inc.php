@@ -306,9 +306,18 @@ abstract class bo_merge
 		$link_titles = array();
 		foreach($links as $link_id => $link_info)
 		{
-			$link_titles[] = egw_link::title($link_info['app'], $link_info['id']);
+			$title = egw_link::title($link_info['app'], $link_info['id']);
+			if(class_exists('stylite_links_stream_wrapper') && $link_info['app'] != egw_link::VFS_APPNAME)
+			{
+				if (!($shortcut = array_search($link_info['app'],stylite_links_stream_wrapper::$shortcut2app)))
+				{
+					$shortcut = $link_info['app'].':';
+				}
+				$title .= ' ('.$shortcut.$link_info['id'].')';
+			}
+			$link_titles[] = $title;
 		}
-		return implode(", ",$link_titles);
+		return implode("\n",$link_titles);
 	}
 
 	/**
