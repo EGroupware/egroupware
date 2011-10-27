@@ -297,6 +297,31 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Get links for the given record
+	 *
+	 * Uses egw_link system to get link titles
+	 */
+	protected function get_links($app, $id, $only_app)
+	{
+		$links = egw_link::get_links($app, $id, $only_app);
+		$link_titles = array();
+		foreach($links as $link_id => $link_info)
+		{
+			$title = egw_link::title($link_info['app'], $link_info['id']);
+			if(class_exists('stylite_links_stream_wrapper') && $link_info['app'] != egw_link::VFS_APPNAME)
+			{
+				if (!($shortcut = array_search($link_info['app'],stylite_links_stream_wrapper::$shortcut2app)))
+				{
+					$shortcut = $link_info['app'].':';
+				}
+				$title .= ' ('.$shortcut.$link_info['id'].')';
+			}
+			$link_titles[] = $title;
+		}
+		return implode("\n",$link_titles);
+	}
+
+	/**
 	 * Format a datetime
 	 *
 	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
