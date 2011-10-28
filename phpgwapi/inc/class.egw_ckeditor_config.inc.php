@@ -171,7 +171,7 @@ class egw_ckeditor_config
 	 * Adds the spellchecker configuration to the options and writes the name of
 	 * the spellchecker toolbar button to the "spellchecker_button" parameter
 	 */
-	private static function add_spellchecker_options(&$config, &$spellchecker_button)
+	private static function add_spellchecker_options(&$config, &$spellchecker_button, &$scayt_button)
 	{
 		//error_log(__METHOD__.__LINE__.' Spellcheck:'.$GLOBALS['egw_info']['server']['enabled_spellcheck']);
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
@@ -187,6 +187,7 @@ class egw_ckeditor_config
 			}
 			if (!($GLOBALS['egw_info']['server']['enabled_spellcheck']=='YesNoSCAYT'))
 			{
+				$scayt_button='Scayt';
 				$config['scayt_autoStartup'] = true;
 				$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
 			}
@@ -202,16 +203,18 @@ class egw_ckeditor_config
 	 * Writes the toolbar configuration to the options which depends on the chosen
 	 * mode and the spellchecker_button written by the add_spellchecker_options button
 	 */
-	private static function add_toolbar_options(&$config, $mode, $spellchecker_button)
+	private static function add_toolbar_options(&$config, $mode, $spellchecker_button, $scayt_button=false)
 	{
 		$config['toolbar'] = array();
 		switch ($mode)
 		{
 			case 'advanced':
-				$config['toolbar'][] = array('Source','DocProps','-','Save','NewPage','Preview','-','Templates');
+				$config['toolbar'][] = array('Source','DocProps','-','Preview','-','Templates');
 				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
 				if ($spellchecker_button)
 					$config['toolbar'][count($config['toolbar']) - 1][] = $spellchecker_button;
+				if ($scayt_button)
+					$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
 				$config['toolbar'][] = array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat');
 
 				$config['toolbar'][] = '/';
@@ -220,7 +223,7 @@ class egw_ckeditor_config
 				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
 				$config['toolbar'][] = array('BulletedList','NumberedList','-','Outdent','Indent');
 				$config['toolbar'][] = array('Link','Unlink','Anchor');
-				$config['toolbar'][] = array('Maximize','Image','Table','HorizontalRule','SpecialChar','PageBreak');
+				$config['toolbar'][] = array('Maximize','Image','Table','HorizontalRule','SpecialChar'/*,'Smiley'*/);
 
 				$config['toolbar'][] = '/';
 
@@ -232,7 +235,7 @@ class egw_ckeditor_config
 			case 'extended': default:
 				$config['toolbar'][] = array('Bold','Italic','Underline');
 				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
-				$config['toolbar'][] = array('BulletedList','NumberedList','Outdent','Indent','Undo','Redo');
+				$config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
 				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
 
 				if ($mode == 'extended')
@@ -240,9 +243,12 @@ class egw_ckeditor_config
 					$config['toolbar'][] = array('Link','Unlink','Anchor');
 					$config['toolbar'][] = array('Find', 'Replace');
 					if ($spellchecker_button)
-						$config['toolbar'][] = array('Maximize', $spellchecker_button, 'Image', 'Table');
+						$config['toolbar'][] = array('Maximize', $spellchecker_button);//, 'Image', 'Table');
 					else
-						$config['toolbar'][] = array('Maximize', 'Image', 'Table');
+						$config['toolbar'][] = array('Maximize');//, 'Image', 'Table');
+					if ($scayt_button)
+						$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
+					$config['toolbar'][count($config['toolbar']) - 1][] = array('Image', 'Table');
 				}
 				else
 				{
@@ -250,10 +256,12 @@ class egw_ckeditor_config
 						$config['toolbar'][] = array('Maximize', $spellchecker_button);
 					else
 						$config['toolbar'][] = array('Maximize');
+					if ($scayt_button)
+						$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
 				}
 
 				$config['toolbar'][] = '/';
-
+				$config['toolbar'][] = array('Find','Replace','-','SelectAll','RemoveFormat');
 				$config['toolbar'][] = array('Format','Font','FontSize');
 				$config['toolbar'][] = array('TextColor','BGColor');
 				$config['toolbar'][] = array('ShowBlocks','-','About');
@@ -269,8 +277,8 @@ class egw_ckeditor_config
 		$spellchecker_button = null;
 
 		self::add_default_options($config, $height, $expanded_toolbar, $start_path);
-		self::add_spellchecker_options($config, $spellchecker_button);
-		self::add_toolbar_options($config, $mode, $spellchecker_button);
+		self::add_spellchecker_options($config, $spellchecker_button, $scayt_button);
+		self::add_toolbar_options($config, $mode, $spellchecker_button, $scayt_button);
 
 		return $config;
 	}
