@@ -161,7 +161,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		$ret = is_null($account) ? $abs :
 			($ab_prefix && (!$account || (int)$account == (int)$GLOBALS['egw_info']['user']['account_id']) ?
 				lang('Addressbook').' ' : '').$abs[$account];
-		error_log(__METHOD__."($account, $return_all_in_one, $ab_prefix) returning ".array2string($ret));
+		//error_log(__METHOD__."($account, $return_all_in_one, $ab_prefix) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -653,15 +653,15 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	}
 
 	/**
-     	 * modify olflags (outlook style) flag of a message
-     	 *
-     	 * @param $folderid
-     	 * @param $id
-     	 * @param $flags
-     	 *
-     	 *
-     	 * @DESC The $flags parameter must contains the poommailflag Object
-     	 */
+	 * modify olflags (outlook style) flag of a message
+	 *
+	 * @param $folderid
+	 * @param $id
+	 * @param $flags
+	 *
+	 *
+	 * @DESC The $flags parameter must contains the poommailflag Object
+ 	 */
 	function ChangeMessageFlag($folderid, $id, $flags)
 	{
 		return false;
