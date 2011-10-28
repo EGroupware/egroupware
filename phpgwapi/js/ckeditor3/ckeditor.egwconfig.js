@@ -8,6 +8,7 @@ CKEDITOR.editorConfig = function( config )
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize'],
 		'/',
+		['Find','Replace','-','SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
@@ -20,6 +21,7 @@ CKEDITOR.editorConfig = function( config )
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize','SpellChecker'],
 		'/',
+		['Find','Replace','-','SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
@@ -32,6 +34,7 @@ CKEDITOR.editorConfig = function( config )
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize','SpellCheck'],
 		'/',
+		['Find','Replace','-','SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
@@ -53,6 +56,7 @@ CKEDITOR.editorConfig = function( config )
 		['Find','Replace'],
 		['Maximize','Image','Table'],
 		'/',
+		['SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
@@ -67,6 +71,7 @@ CKEDITOR.editorConfig = function( config )
 		['Find','Replace'],
 		['Maximize','SpellChecker','Image','Table'],
 		'/',
+		['SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
@@ -81,13 +86,14 @@ CKEDITOR.editorConfig = function( config )
 		['Find','Replace'],
 		['Maximize','SpellCheck','Image','Table'],
 		'/',
+		['SelectAll','RemoveFormat'],
 		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
 	] ;
 
 	config.toolbar_egw_advanced = [
-		['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
+		['Source','DocProps','-','Preview','-','Templates'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 		'/',
@@ -97,13 +103,14 @@ CKEDITOR.editorConfig = function( config )
 		['Link','Unlink','Anchor'],
 		['Maximize','Image',/*'Flash',*/'Table','HorizontalRule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 		'/',
+		['SelectAll','RemoveFormat'],
 		['Style','Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['ShowBlocks','-','About']
 	] ;
 
 	config.toolbar_egw_advanced_spellcheck = [
-		['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
+		['Source','DocProps','-','Preview','-','Templates'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print','SpellChecker'],
 		['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 		'/',
@@ -119,7 +126,7 @@ CKEDITOR.editorConfig = function( config )
 	] ;
 
 	config.toolbar_egw_advanced_aspell = [
-		['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
+		['Source','DocProps','-','Preview','-','Templates'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print','SpellCheck'],
 		['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 		'/',
