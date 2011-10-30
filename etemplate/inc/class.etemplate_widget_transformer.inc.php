@@ -83,7 +83,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 		$cell['id'] =& $cell['name'];		// dto for 'name' instead of 'id'
 
 		// run the transformation
-		foreach(static::$transformation as $filter => $data)
+		foreach($this->transformation as $filter => $data)
 		{
 			$this->action($filter, $data, $cell);
 		}
@@ -111,7 +111,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 		$unmodified = $attrs;
 
 		// run the transformation
-		foreach(static::$transformation as $filter => $data)
+		foreach($this->transformation as $filter => $data)
 		{
 			$this->action($filter, $data, $attrs);
 		}
