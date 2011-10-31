@@ -128,6 +128,11 @@
 			$formData['signatureID'] = (int)$_POST['signatureID'];
 			$formData['stationeryID'] = $_POST['stationeryID'];
 			$formData['mimeType']	= $this->bocompose->stripSlashes($_POST['mimeType']);
+			if ($formData['mimeType'] == 'html' && html::htmlarea_availible()===false)
+			{
+				$formData['mimeType'] = 'plain';
+				$formData['body'] = $this->bocompose->convertHTMLToText($formData['body']);
+			}
 			$formData['disposition'] = (bool)$_POST['disposition'];
 			$formData['to_infolog'] = $_POST['to_infolog'];
 			$formData['to_tracker'] = $_POST['to_tracker'];
@@ -291,6 +296,12 @@
 			{
 				$sessionData['mimeType'] = $_REQUEST['mimeType'];
 			}
+			if ($sessionData['mimeType'] == 'html' && html::htmlarea_availible()===false)
+			{
+				$sessionData['mimeType'] = 'plain';
+				$sessionData['body'] = $this->bocompose->convertHTMLToText($sessionData['body']);
+			}
+
 			// is a certain signature requested?
 			// only the following values are supported (and make sense)
 			// no => means -2
@@ -563,7 +574,14 @@
 			$this->t->set_var("select_signature", $selectBoxSignature);
 			$this->t->set_var("select_stationery", ($showStationaries ? $selectBoxStationery:''));
 			$this->t->set_var("lang_editormode",lang("Editor type"));
-			$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
+			if (html::htmlarea_availible()===false)
+			{
+				$this->t->set_var("toggle_editormode",'');
+			}
+			else
+			{	
+				$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
+			}
 			$this->t->pparse("out","body_input");
 
 			// attachments
