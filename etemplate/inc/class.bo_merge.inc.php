@@ -300,7 +300,7 @@ abstract class bo_merge
 	 *
 	 * Uses egw_link system to get link titles
 	 */
-	protected function get_links($app, $id, $only_app)
+	protected function get_links($app, $id, $only_app='')
 	{
 		$links = egw_link::get_links($app, $id, $only_app);
 		$link_titles = array();
