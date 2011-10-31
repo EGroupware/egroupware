@@ -375,6 +375,7 @@ class importexport_wizard_basic_import_csv
 		if(!$content['conditions'] && $content['plugin_options']['conditions']) {
 			$content['conditions'] = $content['plugin_options']['conditions'];
 		}
+		$preserv = $content;
 
 		foreach($content['field_mapping'] as $field) {
 			$sel_options['string'][$field] = $this->mapping_fields[$field];
@@ -397,7 +398,6 @@ class importexport_wizard_basic_import_csv
 		// Leave room for heading
 		array_unshift($content['conditions'], false);
 
-		$preserv = $content;
 		unset ($preserv['button']);
 		return $this->step_templates[$content['step']];
 	}
