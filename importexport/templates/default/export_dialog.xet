@@ -14,24 +14,24 @@
 				<row class="select_appname">
 					<description value="Select application"/>
 					<menulist>
-						<menupopup no_lang="1" id="appname" onchange="1"/>
+						<menupopup id="appname" no_lang="1" onchange="1"/>
 					</menulist>
 				</row>
 				<row class="select_definition">
 					<description value="Select definition"/>
 					<menulist>
-						<menupopup no_lang="1" id="definition" onchange="1"/>
+						<menupopup id="definition" no_lang="1" onchange="1"/>
 					</menulist>
 				</row>
 				<row class="select_plugin">
 					<description value="Select plugin"/>
 					<menulist>
-						<menupopup onchange="1" no_lang="1" id="plugin"/>
+						<menupopup id="plugin" no_lang="1" onchange="1"/>
 					</menulist>
 				</row>
 				<row>
-					<box span="all" id="plugin_description" needed="1">
-						<description span="all" needed="1" id="description" no_lang="1"/>
+					<box id="plugin_description" needed="1" span="all">
+						<description id="description" needed="1" no_lang="1" span="all"/>
 					</box>
 				</row>
 			</rows>
@@ -72,14 +72,38 @@
 				<column/>
 			</columns>
 			<rows>
+				<row>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description value="Delimiter"/>
+								<hbox no_lang="1">
+									<menulist>
+										<menupopup id="delimiter" no_lang="1" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='') {text.val('');text.show(); text.focus();} else {text.hide();}"/>
+									</menulist>
+									<textbox id="other_delimiter" size="2" class="hide"/>
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
 				<row valign="top" disabled="@plugin_options_template">
-					<html no_lang="1" id="plugin_options_html"/>
+					<html id="plugin_options_html" no_lang="1"/>
 				</row>
 				<row>
 					<template id="@plugin_options_template"/>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			.hide input {
+ display: none;
+}
+		</styles>
 	</template>
 	<template id="importexport.export_dialog" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -93,9 +117,9 @@
 				<row>
 					<tabbox id="general_tab|selection_tab|options_tab">
 						<tabs>
-							<tab label="General" statustext=""/>
-							<tab label="Selection" statustext=""/>
-							<tab label="Options" statustext=""/>
+							<tab id="general_tab" label="General"/>
+							<tab id="selection_tab" label="Selection"/>
+							<tab id="options_tab" label="Options"/>
 						</tabs>
 						<tabpanels>
 							<template id="importexport.export_dialog.general_tab"/>
@@ -113,7 +137,7 @@
 							<button label="Export" id="export" onclick="xajax_eT_wrapper(this);return false;"/>
 							<button label="Preview" id="preview" onclick="xajax_eT_wrapper(this);return false;"/>
 						</hbox>
-						<button label="Cancel" align="right" id="cancel" onclick="window.close(); return false;"/>
+						<button align="right" label="Cancel" id="cancel" onclick="window.close(); return false;"/>
 					</hbox>
 				</row>
 				<row>
@@ -122,8 +146,8 @@
 					</box>
 				</row>
 				<row>
-					<box class="preview-box-buttons" id="preview-box-buttons" needed="1" align="center">
-						<button label="OK" align="center" onclick="document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
+					<box align="center" id="preview-box-buttons" needed="1" class="preview-box-buttons">
+						<button align="center" label="OK" onclick="document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
 					</box>
 				</row>
 			</rows>
