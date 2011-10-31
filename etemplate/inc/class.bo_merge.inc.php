@@ -309,11 +309,7 @@ abstract class bo_merge
 			$title = egw_link::title($link_info['app'], $link_info['id']);
 			if(class_exists('stylite_links_stream_wrapper') && $link_info['app'] != egw_link::VFS_APPNAME)
 			{
-				if (!($shortcut = array_search($link_info['app'],stylite_links_stream_wrapper::$shortcut2app)))
-				{
-					$shortcut = $link_info['app'].':';
-				}
-				$title .= ' ('.$shortcut.$link_info['id'].')';
+				$title = stylite_links_stream_wrapper::entry2name($link_info['app'], $link_info['id'], $title);
 			}
 			$link_titles[] = $title;
 		}
