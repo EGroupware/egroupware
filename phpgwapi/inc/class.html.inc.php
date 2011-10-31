@@ -549,12 +549,16 @@ class html
 	 */
 	static function htmlarea_availible()
 	{
-/*		require_once(EGW_INCLUDE_ROOT.'/phpgwapi/js/fckeditor/fckeditor.php');
+		//error_log(__METHOD__.__LINE__.' userAgent:'.$_SERVER[HTTP_USER_AGENT]);
+		// we check for the useragent to be able to recognize andoid machines that do not support ckeditor yet.
+		// ckeditors fallback is rather unpleaseant.
+		if (stripos($_SERVER[HTTP_USER_AGENT],'android') !== false) return false;
 
-		// use FCKeditor's own check
-		return FCKeditor_IsCompatibleBrowser();*/
+		// this one is for testing how it will turn out, if you do not have the device or agent ready at your fingertips
+		// if (stripos($_SERVER[HTTP_USER_AGENT],'mozilla') !== false) return false;
 
-		//CKeditor3 will check availability for us
+		// CKeditor3 will doublecheck availability for us, but its fallback does not look nice, and you will get 
+		// no conversion of html content to plain text, so we provide a check for known USER_AGENTS to fail the test
 		return true;
 	}
 
@@ -1473,18 +1477,19 @@ class html
 				// enable target attributes
 				$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
 				// actual allowed tags and attributes
-				$config->set('HTML.Allowed', 'br,p[align|style],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[align|style],hr[class|style],'.
-							'ul[type],ol[type|start],li,'.
+				$config->set('HTML.Allowed', 'br,p[class|align|style],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[class|align|style],hr[class|style],'.
+							'ul[class|type],ol[class|type|start],li,'.
 							'h1,h2,h3,h4,h5,h6,'.
 							'span[class|style],'.
 							'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
 							'tbody,thead,tfoot,colgroup,'.
-							'col[width|span],'.
+							'col[class|width|span],'.
 							'blockquote[class|cite|dir],'.
 							'tr[class|style|align|bgcolor|align|valign],'.
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'a[href|target|name|title],img[src|alt|title|align|style|width|height]');
+							'a[class|href|target|name|title],'.
+							'img[class|src|alt|title|align|style|width|height]');
 				$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 			}
 			$purifier = new HTMLPurifier($config);
