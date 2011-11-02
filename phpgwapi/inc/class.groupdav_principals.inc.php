@@ -1001,7 +1001,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param string $str
 	 * @return string
 	 */
-	protected function to_ascii($str)
+	protected static function to_ascii($str)
 	{
 		static $extra = array(
 			'&szlig;' => 'ss',
@@ -1206,14 +1206,7 @@ class groupdav_principals extends groupdav_handler
 				($account_lid = $this->accounts->id2name($account_id)))
 			{
 				$proxys[$account_id] = $account_lid;
-				// for groups add members too, if app is not addressbook
-				if ($account_id < 0 && $app != 'addressbook')
-				{
-					foreach($this->accounts->members($account_id) as $account_id => $account_lid)
-					{
-						$proxys[$account_id] = $account_lid;
-					}
-				}
+				// no need to add group-members, ACL grants to groups are understood by WebDAV ACL (tested with iCal)
 			}
 			//echo "<p>$account_id ($account_lid): (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
 		}
@@ -1475,7 +1468,6 @@ class groupdav_principals extends groupdav_handler
 	function read($id)
 	{
 		return false;
-		//return $this->accounts->read($id);
 	}
 
 	/**
