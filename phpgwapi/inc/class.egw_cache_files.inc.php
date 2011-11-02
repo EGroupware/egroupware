@@ -106,7 +106,7 @@ class egw_cache_files implements egw_cache_provider
 			//error_log(__METHOD__.'('.array2string($keys).") file_exists('$fname') == FALSE!");
 			return false;
 		}
-		if (file_exists($$fname_expiration=$fname.self::EXPIRATION_EXTENSION))
+		if (file_exists($fname_expiration=$fname.self::EXPIRATION_EXTENSION))
 		{
 			unlink($fname_expiration);
 		}
