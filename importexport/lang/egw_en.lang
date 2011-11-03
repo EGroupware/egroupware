@@ -45,6 +45,7 @@ field labels	importexport	en	Field labels
 field names	importexport	en	Field names
 fieldseperator	importexport	en	Field separator
 finish	importexport	en	Finish
+from definition	importexport	en	From definition
 general	preferences	en	General
 general fields:	preferences	en	General fields:
 header lines to skip	importexport	en	Header lines to skip
