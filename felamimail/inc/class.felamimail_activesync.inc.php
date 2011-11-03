@@ -17,7 +17,7 @@
  *
  * Plugin creates a device specific file to map alphanumeric folder names to nummeric id's.
  */
-class felamimail_activesync implements activesync_plugin_write, activesync_plugin_sendmail, activesync_plugin_meeting_response
+class felamimail_activesync implements activesync_plugin_write, activesync_plugin_sendmail, activesync_plugin_meeting_response, activesync_plugin_search_mailbox
 {
 	/**
 	 * var BackendEGW
@@ -1396,7 +1396,99 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		return $messagelist;
 	}
 
+	/**
+	 * Search mailbox for a given pattern
+	 *
+	 * @param string $searchquery
+	 * @return array with just rows (no values for keys rows, status or global_search_status!)
+	 */
+	public function getSearchResultsMailbox($searchquery)
+	{
+		if (!is_array($searchquery)) return array();
+		if ($this->debugLevel>0); debugLog(__METHOD__.__LINE__.array2string($searchquery));
+		// 19.10.2011 16:28:59 [24502] felamimail_activesync::getSearchResultsMailbox1408
+		//Array(
+		//	[query] => Array(
+		//		[0] => Array([op] => Search:And
+		//			[value] => Array(
+		//				[FolderType] => Email
+		//				[FolderId] => 101000000000
+		//				[Search:FreeText] => ttt
+		//				[subquery] => Array(
+		//					[0] => Array([op] => Search:GreaterThan
+		//						[value] => Array(
+		//							[POOMMAIL:DateReceived] => 1318975200))
+		//					[1] => Array([op] => Search:LessThan
+		//						[value] => Array(
+		//							[POOMMAIL:DateReceived] => 1319034600))))))
+		//	[rebuildresults] => 1
+		//	[deeptraversal] => 
+		//	[range] => 0-999)
+		if (isset($searchquery['rebuildresults'])) {
+			$rebuildresults = $searchquery['rebuildresults'];
+		} else {
+			$rebuildresults = false;
+		}
+		if ($this->debugLevel>0) debugLog( 'RebuildResults ['.$rebuildresults.']' );
 
+		if (isset($searchquery['deeptraversal'])) {
+			$deeptraversal = $searchquery['deeptraversal'];
+		} else {
+			$deeptraversal = false;
+		}
+		if ($this->debugLevel>0) debugLog( 'DeepTraversal ['.$deeptraversal.']' );
+
+		if (isset($searchquery['range'])) {
+			$range = explode("-",$searchquery['range']);
+			$limit = $range[1] - $range[0] + 1;
+		} else {
+			$range = false;
+		}
+		if ($this->debugLevel>0) debugLog( 'Range ['.print_r($range, true).']' );
+
+		//foreach($searchquery['query'] as $k => $value) {
+		//	$query = $value;
+		//}
+		if (isset($searchquery['query'][0]['value']['FolderId'])) $folderid = $searchquery['query'][0]['value']['FolderId'];
+		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
+		if (isset($searchquery['query'][0]['value']['Search:FreeText']))
+		{
+			$type = 'quick';
+			$searchText = $searchquery['query'][0]['value']['Search:FreeText'];
+		}
+		if (!$folderid)
+		{
+			$_folderName = ($this->mail->sessionData['mailbox']?$this->mail->sessionData['mailbox']:'INBOX');
+			$folderid = $this->createID($account=0,$_folderName);
+		}
+//if ($searchquery['query'][0]['value'][subquery][0][op]=='Search:GreaterThan');
+//if (isset($searchquery['query'][0]['value'][subquery][0][value][POOMMAIL:DateReceived]));
+//if ($searchquery['query'][0]['value'][subquery][1][op]=='Search:LessThan');
+//if (isset($searchquery['query'][0]['value'][subquery][1][value][POOMMAIL:DateReceived]));
+//$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+		$rv = $this->splitID($folderid,$account,$_folderName,$id);
+		$_filter = array('type'=> 'quick',
+						 'string'=> $searchText,
+						 'status'=>'any',
+						);
+
+		//$_filter[] = array('type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
+		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=($limit?$limit:9999999), $_sort=0, $_reverse=false, $_filter, $_id=NULL);
+		//debugLog(__METHOD__.__LINE__.array2string($rv_messages));
+		$list=array();
+		foreach((array)$rv_messages['header'] as $i => $vars)
+		{
+			$list[] = array(
+				"uniqueid" => $folderid.':'.$vars['uid'],
+				"item"	=> $vars['uid'],
+				//"parent" => ???,
+				"searchfolderid" => $folderid,
+			);
+		}
+		debugLog(__METHOD__.__LINE__.array2string($list));
+		return $list;//array();
+	}
 
 	/**
 	 * Get ID of parent Folder or '0' for folders in root
