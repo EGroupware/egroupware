@@ -799,9 +799,12 @@ class emailadmin_bo extends so_sql
 	*/
 	static function autoload($class)
 	{
-		if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+		if (strlen($class)<100)
 		{
-			include_once($file);
+			if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+			{
+				include_once($file);
+			}
 		}
 	}
 

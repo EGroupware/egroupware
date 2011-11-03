@@ -82,18 +82,21 @@ class felamimail_bo
 		*/
 		static function autoload($class)
 		{
-			if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+			if (strlen($class)<100)
 			{
-				include_once($file);
-				//error_log(__METHOD__."($class) included $file");
-			}
-			elseif (file_exists($file=EGW_INCLUDE_ROOT.'/felamimail/inc/class.'.$class.'.inc.php'))
-			{
-				include_once($file);
-			}
-			else
-			{
-				#error_log(__METHOD__."($class) failed!");
+				if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+				{
+					include_once($file);
+					//error_log(__METHOD__."($class) included $file");
+				}
+				elseif (file_exists($file=EGW_INCLUDE_ROOT.'/felamimail/inc/class.'.$class.'.inc.php'))
+				{
+					include_once($file);
+				}
+				else
+				{
+					#error_log(__METHOD__."($class) failed!");
+				}
 			}
 		}
 
