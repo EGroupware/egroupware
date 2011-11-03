@@ -68,7 +68,7 @@ class emailadmin_sieve extends Net_Sieve
 	function _connect($_icServer,$euser='')
 	{
 		static $isConError;
-		if (is_null($isConError)) $isConError =& egw_cache::getSession('email','icServerSIEVE_connectionError');
+		if (is_null($isConError)) $isConError =& egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
 		if ( isset($isConError[$_icServerID]) ) 
 		{
 			error_log(__METHOD__.__LINE__.' failed for Reason:'.$isConError[$_icServerID]);
@@ -98,18 +98,21 @@ class emailadmin_sieve extends Net_Sieve
 			}
 			$this->icServer = $_icServer;
 		} else {
+			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
 			return 'die';
 		}
 
 		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, null, $useTLS) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in connect($sieveHost,$sievePort): ".$this->error->getMessage());
 			$isConError[$_icServerID] = "SIEVE: error in connect($sieveHost,$sievePort): ".$this->error->getMessage();
+			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
 			return false;
 		}
 		if(PEAR::isError($this->error = $this->login($username, $password, null, $euser) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($this->icServer));
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in login($username,$password,null,$euser): ".$this->error->getMessage());
 			$isConError[$_icServerID] = "SIEVE: error in login($username,$password,null,$euser): ".$this->error->getMessage();
+			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
 			return false;
 		}
 		return true;

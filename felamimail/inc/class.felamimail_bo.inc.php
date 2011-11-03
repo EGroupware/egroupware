@@ -1052,13 +1052,14 @@ class felamimail_bo
 		{
 			static $structure;
 			$_folder = $this->sessionData['mailbox'];
-			if (is_null($structure)) $structure =& egw_cache::getSession('felamimail','structureCache');
+			if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 			if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
 			{
 				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid);
 				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 			}
 			$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*10);
 			return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 		}
 
@@ -3439,7 +3440,7 @@ class felamimail_bo
 		{
 			static $isError;
 			//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
-			if (is_null($isError)) $isError =& egw_cache::getSession('email','icServerIMAP_connectionError');
+			if (is_null($isError)) $isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
 			if ( isset($isError[$_icServerID]) || PEAR::isError($this->icServer->_connectionErrorObject)) 
 			{
 				if (trim($isError[$_icServerID])==',' || trim($this->icServer->_connectionErrorObject->message) == ',')
@@ -3459,11 +3460,13 @@ class felamimail_bo
 				if (self::$debug) error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
 				$this->errorMessage .= lang('No valid data to create MailProfile!!');
 				$isError[$_icServerID] = new PEAR_Error($this->errorMessage);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 				return false;
 			}
 			if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
 				$this->errorMessage .= lang('No active IMAP server found!!');
 				$isError[$_icServerID] = $this->errorMessage;
+				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 				return false;
 			}
 			//error_log(__METHOD__.__LINE__.'->'.array2string($this->icServer->ImapServerId));
@@ -3476,6 +3479,7 @@ class felamimail_bo
 				}
 				$this->icServer->_connectionErrorObject->message .= $this->errorMessage .= $errormessage;
 				$isError[$_icServerID] = $this->errorMessage;
+				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 				return false;
 			}
 			//error_log( "-------------------------->open connection ".function_backtrace());
@@ -3497,6 +3501,7 @@ class felamimail_bo
 					}
 				}
 			}
+			if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 			//error_log(print_r($this->icServer->_connected,true));
 			return $tretval;
 		}
