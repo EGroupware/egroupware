@@ -892,11 +892,10 @@ class importexport_definitions_ui
 			// ACL
 			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'definition',false);
 			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'share_definition',false);
-			if($content['share_definition'])
+
+			foreach($content['share_definition'] as $group)
 			{
-				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $content['share_definition'],
-					EGW_ACL_READ
-				);
+				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $group,EGW_ACL_READ);
 			}
 			unset($content['share_definition']);
 
