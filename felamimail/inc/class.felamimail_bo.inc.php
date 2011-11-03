@@ -3359,28 +3359,28 @@ class felamimail_bo
 				error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
 				return false;
 			}
-			// reduce traffic within on request
+			// reduce traffic within the Instance per User; Expire every 5 Minutes
 			//error_log(__METHOD__.__LINE__.' Called with Folder:'.$_folder.function_backtrace());
-			if (isset($folderInfo[$_folder])) return $folderInfo[$_folder];
+			if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+			if (isset($folderInfo[$this->profileID][$_folder])) return $folderInfo[$this->profileID][$_folder];
 
 			// does the folder exist???
 			//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".($forceCheck?' forceCheck activated':'dont check on server'));
-			if ((!($this->icServer->_connected == 1)) && $forceCheck) {
+			if ((!($this->icServer->_connected == 1)) && $forceCheck || !isset($folderInfo[$this->profileID][$_folder])) {
 				//error_log(__METHOD__."->NotConnected and forceCheck with profile:".$this->profileID);
 				//return false;
 				//try to connect
 				if (!$this->icServer->_connected) $this->openConnection($this->profileID,false);
 			}
-			if(($this->icServer instanceof defaultimap)) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
-			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$_folder].function_backtrace());
+			if(($this->icServer instanceof defaultimap)) $folderInfo[$this->profileID][$_folder] = $this->icServer->mailboxExist($_folder);
+			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$this->profileID][$_folder].function_backtrace());
 
-			if(($folderInfo[$_folder] instanceof PEAR_Error) || $folderInfo[$_folder] !== true)
+			if(($folderInfo[$this->profileID][$_folder] instanceof PEAR_Error) || $folderInfo[$this->profileID][$_folder] !== true)
 			{
-				$folderInfo[$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
-				return false;
-			} else {
-				return true;
+				$folderInfo[$this->profileID][$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
 			}
+			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
+			return $folderInfo[$this->profileID][$_folder];
 		}
 
 		/**
