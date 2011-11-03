@@ -340,6 +340,7 @@ class importexport_wizard_basic_import_csv
 	function wizard_step55(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if($this->debug) error_log(get_class($this) . '::wizard_step55->$content '.print_r($content,true));
+
 		// return from step55
 		if ($content['step'] == 'wizard_step55')
 		{
@@ -352,7 +353,7 @@ class importexport_wizard_basic_import_csv
 					unset($content['conditions'][$key]);
 				}
 			}
-			
+
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -362,7 +363,10 @@ class importexport_wizard_basic_import_csv
 				case 'finish':
 					return 'wizard_finish';
 				case 'add':
-					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],0);
+					unset($content['button']);
+					unset($content['step']);
+					$content['conditions'][] = array('string' => '');
+					return 'wizard_step55';
 				default :
 					return $this->wizard_step55($content,$sel_options,$readonlys,$preserv);
 					break;
@@ -383,15 +387,15 @@ class importexport_wizard_basic_import_csv
 		$sel_options['type'] = $this->conditions;
 		$sel_options['action'] = $this->actions;
 
-		// Make 3 empty conditions
-		$j = 1;
-		foreach ($content['conditions'] as $condition)
+		// Make at least 1 (empty) conditions
+		$j = count($content['conditions']);
+		while ($j < 1) 
 		{
-			if(!$condition['string']) $j++;
-		}
-		while ($j <= 3) 
-		{
-			$content['conditions'][] = array('string' => '');
+			$content['conditions'][] = array(
+				'string' => '',
+				'true'	=> array('stop' => true),
+				'false'	=> array('stop' => true),
+			);
 			$j++;
 		}
 

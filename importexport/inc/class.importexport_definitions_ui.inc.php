@@ -462,7 +462,9 @@ class importexport_definitions_ui
 					$content = $definition + array('step' => $content['step'], 'button' => $content['button']);
 				}
 				if(!key_exists($content['step'],$this->steps))
+				{
 					$next_step = $this->plugin->$content['step']($content);
+				}
 				else
 					$next_step = $this->$content['step']($content);
 			} else {

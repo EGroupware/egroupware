@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.001">
+		<vbox cols="4" rows="1">
+			<grid id="conditions">
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row class="th">
+						<description value="Field"/>
+						<description value="Condition"/>
+						<vbox span="2">
+							<description align="center" value="True" span="2"/>
+							<hbox options="2,0">
+								<description value="Action"/>
+								<description align="right" value="Stop"/>
+							</hbox>
+						</vbox>
+						<vbox span="2">
+							<description align="center" value="False" span="2"/>
+							<hbox options="2,0">
+								<description value="Action"/>
+								<description align="right" value="Stop"/>
+							</hbox>
+						</vbox>
+					</row>
+					<row>
+						<menulist>
+							<menupopup id="${row}[string]" options="Select"/>
+						</menulist>
+						<hbox options="0,0">
+							<menulist>
+								<menupopup id="${row}[type]"/>
+							</menulist>
+							<textbox id="${row}[op_2]"/>
+						</hbox>
+						<menulist>
+							<menupopup id="${row}[true][action]" options="Select"/>
+						</menulist>
+						<checkbox align="center" id="${row}[true][stop]"/>
+						<menulist>
+							<menupopup id="${row}[false][action]" options="Select"/>
+						</menulist>
+						<checkbox align="center" id="${row}[false][stop]"/>
+					</row>
+				</rows>
+			</grid>
+			<button statustext="Add an additional condition" label="add" id="button[add]" onclick="xajax_eT_wrapper(this); return false;"/>
+		</vbox>
+	</template>
+</overlay>
