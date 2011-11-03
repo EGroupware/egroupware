@@ -531,7 +531,7 @@ class admin_categories
 				'caption' => 'Add',
 				'allowOnMultiple' => false,
 				'icon' => 'new',
-				'url' => 'menuaction='.$this->add_link.'&appane='.$appname,
+				'url' => 'menuaction='.$this->add_link.'&appname='.$appname,
 				'popup' => '600x380',
 				'group' => $group,
 			),
