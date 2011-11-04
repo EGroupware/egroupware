@@ -1218,7 +1218,6 @@ class ajaxfelamimail
 		{
 			// we need a lot of encoding/decoding transforming here to get at least some acceptable result
 			// the changing does not work with all sigs, as the old Signature may not match the Signaturepart in Content
-
 			if($this->_debug) error_log(__METHOD__.$_oldSig.','.$_signatureID.'#');
 			$bocompose  = CreateObject('felamimail.bocompose', $_composeID);
 			// prepare signatures, the selected sig may be used on top of the body
@@ -1228,23 +1227,30 @@ class ajaxfelamimail
 			$oldSigText = $oldSignature->fm_signature;
 			$signature = $boSignatures->getSignature($_signatureID);
 			$sigText = $signature->fm_signature;
-
+			//error_log(__METHOD__.'Old:'.$oldSigText.'#');
 			if ($_currentMode == 'plain')
 			{
-				$oldSigText = $bocompose->convertHTMLToText($oldSigText);
-				$sigText = $bocompose->convertHTMLToText($sigText);
+				$oldSigText = utf8_decode($bocompose->convertHTMLToText($oldSigText));
+				$sigText = utf8_decode($bocompose->convertHTMLToText($sigText));
 				$_content = utf8_decode($_content);
 				if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
 			}
 
 			$oldSigText = felamimail_bo::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
 			$sigText = felamimail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			//error_log(__METHOD__.'new+:'.$sigText.'#');
 			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText):$oldSigText));
+			//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
 			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content):$_content));
 			$found = strpos($_content,trim($oldSigText));
 			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
-				$_content = substr_replace($_content,$sigText,$found,mb_strlen($oldSigText));
+				//error_log(__METHOD__.'Old Content:'.$_content.'#');
+				$oldSigText = str_replace('~','\~',$oldSigText,$count);
+				$_content = preg_replace('~'.$oldSigText.'~si',$sigText,$_content,1);
+				if ($count) $_content = str_replace('\~','~',$_content);
+				//error_log(__METHOD__.'new Content:'.$_content.'#');
 			}
 			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
