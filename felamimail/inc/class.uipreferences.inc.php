@@ -415,11 +415,11 @@
 				$this->t->set_var('accountID','new');
 			}
 
-			$trashOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use Trash")),($accountData['active'] ? $folderList :array($icServer->trashfolder => $icServer->trashfolder)));
-			$sentOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use Sent")),($accountData['active'] ? $folderList :array($icServer->sentfolder => $icServer->sentfolder)));
-			$draftOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use draft folder")),($accountData['active'] ? $folderList :array($icServer->draftfolder => $icServer->draftfolder)));
-			$templateOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use template folder")),($accountData['active'] ? $folderList :array($icServer->templatefolder => $icServer->templatefolder)));
-			$tomerge = ($accountData['active'] ? $folderList :$icServer->folderstoshowinhome);
+			$trashOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use Trash")),($accountData['active'] && !empty($folderList) ? $folderList :array($icServer->trashfolder => $icServer->trashfolder)));
+			$sentOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use Sent")),($accountData['active'] && !empty($folderList) ? $folderList :array($icServer->sentfolder => $icServer->sentfolder)));
+			$draftOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use draft folder")),($accountData['active'] && !empty($folderList) ? $folderList :array($icServer->draftfolder => $icServer->draftfolder)));
+			$templateOptions = array_merge(array('' => lang('default').' '.lang("folder settings"), 'none' => lang("Don't use template folder")),($accountData['active'] && !empty($folderList) ? $folderList :array($icServer->templatefolder => $icServer->templatefolder)));
+			$tomerge = ($accountData['active'] && !empty($folderList) ? $folderList :$icServer->folderstoshowinhome);
 			$folderList = array_merge( array('' => lang('default').' '.lang("folder settings")),(is_array($tomerge)?$tomerge:array()));
 
 			$this->t->set_var('allowAccounts',($preferences->userDefinedAccounts ? 1 : 0));
