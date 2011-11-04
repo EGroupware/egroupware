@@ -1247,9 +1247,9 @@ class ajaxfelamimail
 			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
 				//error_log(__METHOD__.'Old Content:'.$_content.'#');
-				$oldSigText = str_replace('~','\~',$oldSigText,$count);
-				$_content = preg_replace('~'.$oldSigText.'~si',$sigText,$_content,1);
-				if ($count) $_content = str_replace('\~','~',$_content);
+				$_oldSigText = preg_quote($oldSigText,'~');
+				//error_log(__METHOD__.'Old(masked):'.$_oldSigText.'#');
+				$_content = preg_replace('~'.$_oldSigText.'~mi',$sigText,$_content,1);
 				//error_log(__METHOD__.'new Content:'.$_content.'#');
 			}
 			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
