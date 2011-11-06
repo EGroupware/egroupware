@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - resources
+ * EGroupware - resources
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package resources
@@ -24,7 +24,7 @@ class resources_bo
 	/**
 	 * Instance of resources so object
 	 *
-	 * @var so_resources
+	 * @var resources_so
 	 */
 	var $so;
 	/**
@@ -165,7 +165,7 @@ class resources_bo
 					}
 				}
 			}
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource['res_id']);
+			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 		return $nr;
@@ -627,21 +627,18 @@ class resources_bo
 	/**
 	 * get resource picture either from vfs or from symlink
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $res_id id of resource
+	 * @param int|array $resource res-id or whole resource array
 	 * @param bool $fullsize false = thumb, true = full pic
 	 * @return string url of picture
 	 */
-	function get_picture($res_id=0,$fullsize=false)
+	function get_picture($resource,$fullsize=false)
 	{
-		if ($res_id > 0)
-		{
-			$src = $this->so->get_value('picture_src',$res_id);
-		}
-#echo $scr."<br>". $this->pictures_dir."<br>";
-		switch($src)
+		if ($resource && !is_array($resource)) $resource = $this->read($resource);
+
+		switch($resource['picture_src'])
 		{
 			case 'own_src':
-				$picture = egw_link::vfs_path('resources',$res_id,self::PICTURE_NAME,true);	// vfs path
+				$picture = egw_link::vfs_path('resources',$resource['res_id'],self::PICTURE_NAME,true);	// vfs path
 				if ($fullsize)
 				{
 					$picture = egw::link(egw_vfs::download_url($picture));
@@ -650,17 +647,17 @@ class resources_bo
 				{
 					$picture = egw::link('/etemplate/thumbnail.php',array('path' => $picture));
 				}
-				//$picture=$GLOBALS['egw_info']['server'].$picture;
-#echo $picture."<br>";
 				break;
+
 			case 'cat_src':
-				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
+				list($picture) = $this->cats->return_single($resource['cat_id']);
 				$picture = unserialize($picture['data']);
 				if($picture['icon'])
 				{
 					$picture = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
 					break;
 				}
+				// fall through
 			case 'gen_src':
 			default :
 				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
@@ -670,7 +667,6 @@ class resources_bo
 	}
 
 	/**
-	 * remove_picture
 	 * removes picture from vfs
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>

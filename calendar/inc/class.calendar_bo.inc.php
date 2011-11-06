@@ -1051,6 +1051,7 @@ class calendar_bo
 					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
 					$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
 					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
+					'app'   => 'accounts',
 				);
 			}
 			else
@@ -1063,6 +1064,7 @@ class calendar_bo
 					{
 						$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
 					}
+					$info['app'] = $this->resources[$uid[0]]['app'];
 				}
 			}
 			$res_info_cache[$uid] = $info;
@@ -1913,10 +1915,11 @@ class calendar_bo
 	 * Get the etag for an entry
 	 *
 	 * @param array|int|string $event array with event or cal_id, or cal_id:recur_date for virtual exceptions
+	 * @param string &$schedule_tag=null on return schedule-tag (egw_cal.cal_id:egw_cal.cal_etag, no participant modifications!)
 	 * @param boolean $client_share_uid_excpetions Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
 	 * @return string|boolean string with etag or false
 	 */
-	function get_etag($entry,$client_share_uid_excpetions=true)
+	function get_etag($entry, &$schedule_tag=null, $client_share_uid_excpetions=true)
 	{
 		if (!is_array($entry))
 		{
@@ -1924,7 +1927,7 @@ class calendar_bo
 			if (!$this->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
 			$entry = $this->read($entry, $recur_date, true, 'server');
 		}
-		$etag = $entry['id'].':'.$entry['etag'];
+		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
 
 		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
 		if (isset($entry['max_user_modified']))
@@ -1953,7 +1956,7 @@ class calendar_bo
 			{
 				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
 				{
-					$etag .= ':'.$this->get_etag($recurrence);
+					$etag .= ':'.$this->get_etag($recurrence, $full_etag);
 				}
 			}
 		}

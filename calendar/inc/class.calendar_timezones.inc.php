@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare - Calendar's timezone information
+ * EGroupware - Calendar's timezone information
  *
  * Timezone information get imported from SQLite database, "borrowed" of Lighting TB extension.
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -67,7 +67,7 @@ class calendar_timezones
 	 * @return DateTimeZone
 	 * @throws Exception if called with an unknown TZID
 	 */
-	public function DateTimeZone($tzid)
+	public static function DateTimeZone($tzid)
 	{
 		if (($id = self::tz2id($tzid,'alias')))
 		{
@@ -320,6 +320,94 @@ class calendar_timezones
 			'<h3>'.self::import_sqlite()."</h3>\n".
 			'<h3>'.self::import_tz_aliases()."</h3>\n",
 			lang('Update timezones'),true);
+	}
+
+	/**
+	 * Add VTIMEZONE component to VCALENDAR
+	 *
+	 * @param Horde_iCalendar $vcal
+	 * @param string $tzid
+	 * @return boolean false if no vtimezone component available, true on success
+	 */
+	public static function add_vtimezone($vcal, $tzid)
+	{
+		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+		// checking type of $val, now we included the object definition (no need to always include it!)
+		if (!$vcal instanceof Horde_iCalendar)
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($val).", '$tzid') no Horde_iCalendar!");
+		}
+		// check if we have vtimezone component data for $tzid
+		if (!($vtimezone = calendar_timezones::tz2id($tzid, 'component')))
+		{
+			return false;
+		}
+		// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
+		// --> we have to parse it and let Horde_iCalendar add it again
+		$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
+		$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
+		// DTSTART is in UTC time, Horde_iCalendar parses it in server timezone, which we need to set again for printing
+		$standard = $horde_vtimezone->findComponent('STANDARD');
+		if (is_a($standard, 'Horde_iCalendar'))
+		{
+			$dtstart = $standard->getAttribute('DTSTART');
+			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+			$dtstart->setTimezone(egw_time::$server_timezone);
+			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+		}
+		$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
+		if (is_a($daylight, 'Horde_iCalendar'))
+		{
+			$dtstart = $daylight->getAttribute('DTSTART');
+			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+			$dtstart->setTimezone(egw_time::$server_timezone);
+			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+		}
+		//error_log($vtimezone); error_log($horde_vtimezone->_exportvData('VTIMEZONE'));
+		$vcal->addComponent($horde_vtimezone);
+
+		return true;
+	}
+
+	/**
+	 * Query timezone of a given user, returns 'tzid' or VTIMEZONE 'component'
+	 *
+	 * @param int $user=null
+	 * @param string $type='vcalendar' 'tzid' or everything tz2id supports, default 'vcalendar' = full vcalendar component
+	 * @return string
+	 */
+	public static function user_timezone($user=null, $type='vcalendar')
+	{
+		if (!$user || $user == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$tzid = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
+		}
+		else
+		{
+			$prefs_obj = new preferences($user);
+			$prefs = $prefs_obj->read();
+			$tzid = $prefs['common']['tz'];
+		}
+		if (!$tzid) $tzid = egw_time::$server_timezone->getName();
+
+		switch ($type)
+		{
+			case 'vcalendar':
+				include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+				// checking type of $val, now we included the object definition (no need to always include it!)
+				$vcal = new Horde_iCalendar;
+				$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+				self::add_vtimezone($vcal, $tzid);
+				$tzid = $vcal->exportvCalendar('utf-8');
+				break;
+			case 'tzid':
+				break;
+			default:
+				$tzid = self::tz2id($tzid,$type == 'vcalendar' ? 'component' : $type);
+				break;
+		}
+		return $tzid;
 	}
 }
 /*

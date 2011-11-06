@@ -156,6 +156,7 @@ class calendar_so
 		else	// array with column => value pairs
 		{
 			$where = $ids;
+			unset($ids);	// otherwise users get not read!
 		}
 		if (isset($where['cal_id']))	// prevent non-unique column-name cal_id
 		{
@@ -240,6 +241,11 @@ class calendar_so
 
 			$events[$row['cal_id']]['participants'][$uid] = $status;
 			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
+
+			if (($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$row['cal_id']]['max_user_modified'])
+			{
+				$events[$row['cal_id']]['max_user_modified'] = $modified;
+			}
 		}
 
 		// custom fields

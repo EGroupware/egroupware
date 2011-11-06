@@ -167,40 +167,26 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vcal = new Horde_iCalendar;
+		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION',$_version);
-		$vcal->setAttribute('METHOD',$_method);
+		if ($_method) $vcal->setAttribute('METHOD',$_method);
 
 		$tzid = $this->tzid;
 
 		if ($tzid && $tzid != 'UTC')
 		{
 			// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
-			if (!($vtimezone = calendar_timezones::tz2id($tzid,'component')))
+			if (!calendar_timezones::add_vtimezone($vcal, $tzid))
 			{
 				error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-				$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
+				calendar_timezones::add_vtimezone($vcal, $tzid=egw_time::$user_timezone->getName());
 				$tzid = null;
 			}
 			if (!isset(self::$tz_cache[$tzid]))
 			{
 				self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
 			}
-			// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
-			// --> we have to parse it and let Horde_iCalendar add it again
-			$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
-			$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
-			// DTSTART must be in local time!
-			$standard = $horde_vtimezone->findComponent('STANDARD');
-			$dtstart = $standard->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone(self::$tz_cache[$tzid]);
-			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-			$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-			$dtstart = $daylight->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-			$dtstart->setTimezone(self::$tz_cache[$tzid]);
-			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
-			$vcal->addComponent($horde_vtimezone);
 		}
 
 		$vevent = Horde_iCalendar::newComponent('VTODO',$vcal);
@@ -573,7 +559,7 @@ class infolog_ical extends infolog_bo
 			{
 				$taskData['info_id'] = $_taskID;
 			}
-			foreach ($component->_attributes as $attribute)
+			foreach ($component->getAllAttributes() as $attribute)
 			{
 				//$attribute['value'] = trim($attribute['value']);
 				if (!strlen($attribute['value'])) continue;
@@ -611,11 +597,17 @@ class infolog_ical extends infolog_bo
 						$taskData['info_location'] = str_replace("\r\n", "\n", $attribute['value']);
 						break;
 
+					case 'DURATION':
+						if (!isset($taskData['info_startdate']))
+						{
+							$taskData['info_startdate']	= $component->getAttribute('DTSTART');
+						}
+						$attribute['value'] += $taskData['info_startdate'];
+						// fall throught
 					case 'DUE':
-						// eGroupWare uses date only
-						$parts = @getdate($attribute['value']);
-						$value = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
-						$taskData['info_enddate'] = $value;
+						// even as EGroupware only displays the date, we can still store the full value
+						// unless infolog get's stored, it does NOT truncate the time
+						$taskData['info_enddate'] = $attribute['value'];
 						break;
 
 					case 'COMPLETED':
@@ -648,12 +640,8 @@ class infolog_ical extends infolog_bo
 
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
-						foreach ($component->_attributes as $attr)
-						{
-							if ($attr['name'] == 'X-INFOLOG-STATUS') break;
-						}
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							$attr['name'] == 'X-INFOLOG-STATUS' ? $attr['value'] : null);
+							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_array($attr) ? $attr['value'] : null);
 						break;
 
 					case 'SUMMARY':
@@ -724,7 +712,9 @@ class infolog_ical extends infolog_bo
 						translation::charset(), $charset);
 				}
 				$vnote = new Horde_iCalendar_vnote();
-				$vNote->setAttribute('VERSION', '1.1');
+				$vnote->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
+					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+				$vnote->setAttribute('VERSION', '1.1');
 				foreach (array(	'SUMMARY'		=> $note['info_subject'],
 								'BODY'			=> $note['info_des'],
 								'CATEGORIES'	=> $note['info_cat'],

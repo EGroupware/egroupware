@@ -72,7 +72,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
-		); 
+		);
 
 	/**
 	 * VCard version
@@ -203,6 +203,8 @@ class addressbook_vcal extends addressbook_bo
 		#Horde::logMessage("vCalAddressbook clientProperties:\n" . print_r($this->clientProperties, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$vCard = new Horde_iCalendar_vcard($this->version);
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
 
@@ -795,7 +797,7 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['TEL;OTHER'] = $vcardKey;
 					}
-					break;	
+					break;
 				case 'TEL;PAGER;WORK':
 				case 'TEL;PAGER;HOME':
 					if (!in_array('TEL;PAGER', $rowNames)
@@ -803,7 +805,7 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['TEL;PAGER'] = $vcardKey;
 					}
-					break;	
+					break;
 				case 'TEL;CAR;VOICE':
 				case 'TEL;CAR;CELL':
 				case 'TEL;CAR;CELL;VOICE':
@@ -966,7 +968,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$this->fixup_contact($contact);
-		
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__	.

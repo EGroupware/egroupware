@@ -411,8 +411,7 @@ class infolog_so
 	 */
 	function get_status($ids)
 	{
-		$this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__);
-		while (($info = $this->db->row(true)))
+		foreach($this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__) as $info)
 		{
 			switch ($info['info_type'].'-'.$info['info_status'])
 			{

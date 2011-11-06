@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - resources
+ * EGroupware - resources
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package resources
@@ -35,21 +35,48 @@ class resources_so extends so_sql_cf
 	 */
 	function get_value($key,$res_id)
 	{
-		return $this->db->select($this->table_name,$key,array('res_id' => $res_id),__LINE__,__FILE__)->fetchColumn();
+		return $res_id == $this->data['res_id'] ? $this->data[$key] :
+			$this->db->select($this->table_name,$key,array('res_id' => $res_id),__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**
 	 * reads resource including custom fields
 	 *
-	 * @param interger $res_id res_id
-	 * @return array/boolean data if row could be retrived else False
+	 * Reimplemented to do some minimal caching (re-use already read data)
+	 *
+	 * @param int|array $res_id res_id
+	 * @return array|boolean data if row could be retrived else False
 	 */
 	function read($res_id)
 	{
-		// read main data
-		$resource = parent::read($res_id);
+		if (is_array($res_id) && count($res_id) == 1 && isset($res_id['res_id'])) $res_id = $res_id['res_id'];
 
-		return $resource;
+		/*if (!is_array($res_id) && $res_id == $this->data['res_id'])
+		{
+			error_log(__METHOD__.'('.array2string($res_id).') this->data[res_id]='.array2string($this->data['res_id']).' --> returning this->data');
+		}
+		else
+		{
+			error_log(__METHOD__.'('.array2string($res_id).') this->data[res_id]='.array2string($this->data['res_id']).' --> returning parent::read()');
+		}*/
+		return !is_array($res_id) && $res_id == $this->data['res_id'] ? $this->data : parent::read($res_id);
+	}
+
+	/**
+	 * deletes resource
+	 *
+	 * Reimplemented to do some minimal caching (re-use already read data)
+	 *
+	 * @param int|array $res_id id of resource
+	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
+	 */
+	function delete($res_id)
+	{
+		if (($ok = parent::delete($res_id)) && !is_array($res_id) && $res_id == $this->data['res_id'])
+		{
+			unset($this->data);
+		}
+		return $ok;
 	}
 
 	/**
@@ -66,5 +93,4 @@ class resources_so extends so_sql_cf
 
 		return $res_id;
 	}
-
 }

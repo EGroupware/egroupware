@@ -898,7 +898,7 @@ class HTTP_WebDAV_Server
                             } elseif (isset($prop['raw'])) {
                             	$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
                             } else {
-	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val']));
+	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8'));
                             }
 	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]$ns_defs>$val".
 	                        	'</'.($this->crrnd?'':'D:')."$prop[name]>\n";
@@ -932,13 +932,22 @@ class HTTP_WebDAV_Server
 		                    		$ns_name = '';
 	                    		}
 	                    		$vals .= "<$ns_name$subprop[name]";
-	                    		if (is_array($subprop['val']))	// val contains only attributes, no value
+	                    		if (is_array($subprop['val']))
 	                    		{
-		                    		foreach($subprop['val'] as $attr => $val)
-									{
-			                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
-									}
-		                    		$vals .= '/>';
+	                    			if (isset($subprop['val'][0]))
+	                    			{
+		                    			$vals .= '>';
+		                    			$vals .= $this->_hierarchical_prop_encode($subprop['val'], $subprop['ns'], $ns_defs, $ns_hash);
+			                    		$vals .= "</$ns_name$subprop[name]>";
+	                    			}
+	                    			else	// val contains only attributes, no value
+	                    			{
+			                    		foreach($subprop['val'] as $attr => $val)
+										{
+				                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
+										}
+			                    		$vals .= '/>';
+	                    			}
 	                    		}
 	                    		else
 	                    		{
@@ -946,7 +955,7 @@ class HTTP_WebDAV_Server
 	                    			if (isset($subprop['raw'])) {
 	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
 	                    			} else {
-		                    			$vals .= htmlspecialchars($subprop['val']);
+		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES, 'utf-8');
 	                    			}
 	                    			$vals .= "</$ns_name$subprop[name]>";
 	                    		}
@@ -957,7 +966,7 @@ class HTTP_WebDAV_Server
                         	{
                         		$val = '<![CDATA['.$prop['val'].']]>';
                         	} else {
-                        		$val = htmlspecialchars($prop['val']);
+                        		$val = htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8');
                         	}
                         	$val = $this->_prop_encode($val);
 	                        // properties from namespaces != "DAV:" or without any namespace
@@ -1072,7 +1081,7 @@ class HTTP_WebDAV_Server
 
             if ($responsedescr) {
                 echo '  <'.($this->crrnd?'':'D:')."responsedescription>".
-                    $this->_prop_encode(htmlspecialchars($responsedescr)).
+                    $this->_prop_encode(htmlspecialchars($responsedescr, ENT_NOQUOTES, 'utf-8')).
                     '</'.($this->crrnd?'':'D:')."responsedescription>\n";
             }
 
@@ -1375,8 +1384,6 @@ class HTTP_WebDAV_Server
         $options         = Array();
         $options['path'] = $this->path;
 
-        error_log('WebDAV POST: ' . $this->path);
-
         if (isset($this->_SERVER['CONTENT_LENGTH']))
         {
 	        $options['content_length'] = $this->_SERVER['CONTENT_LENGTH'];
@@ -1401,6 +1408,8 @@ class HTTP_WebDAV_Server
 	        $options['content_type'] = 'application/octet-stream';
         }
 
+        $options['stream'] = fopen('php://input', 'r');
+
         /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
          ignore any Content-* (e.g. Content-Range) headers that it
          does not understand or implement and MUST return a 501
@@ -1410,10 +1419,22 @@ class HTTP_WebDAV_Server
 	        if (strncmp($key, 'HTTP_CONTENT', 11)) continue;
 	        switch ($key) {
 		        case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
-			        // TODO support this if ext/zlib filters are available
-			        $this->http_status('501 not implemented');
-			        echo "The service does not support '$val' content encoding";
-			        return;
+		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+		        	{
+		        		case 'gzip':
+		        		case 'deflate':	//zlib
+		        			if (extension_loaded('zlib'))
+		        			{
+		        				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
+		        				break;
+		        			}
+		        			// fall through for no zlib support
+		        		default:
+					        $this->http_status('415 Unsupported Media Type');
+					        echo "The service does not support '$val' content encoding";
+					        return;
+		        	}
+		        	break;
 
 		        case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
 			        // we assume it is not critical if this one is ignored
@@ -1469,8 +1490,6 @@ class HTTP_WebDAV_Server
 		        return;
 	        }
         }
-
-        $options['stream'] = fopen('php://input', 'r');
 
         if (method_exists($this, 'POST')) {
 	        $status = $this->POST($options);
@@ -1539,7 +1558,7 @@ class HTTP_WebDAV_Server
                 // for now we do not support any sort of multipart requests
                 if (!strncmp($this->_SERVER["CONTENT_TYPE"], "multipart/", 10)) {
                     $this->http_status("501 not implemented");
-                    echo "The service does not support mulipart PUT requests";
+                    echo "The service does not support multipart PUT requests";
                     return;
                 }
                 $options["content_type"] = $this->_SERVER["CONTENT_TYPE"];
@@ -1547,6 +1566,8 @@ class HTTP_WebDAV_Server
                 // default content type if none given
                 $options["content_type"] = "application/octet-stream";
             }
+
+            $options["stream"] = fopen("php://input", "r");
 
             /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
              ignore any Content-* (e.g. Content-Range) headers that it
@@ -1557,10 +1578,22 @@ class HTTP_WebDAV_Server
                 if (strncmp($key, "HTTP_CONTENT", 11)) continue;
                 switch ($key) {
                 case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
-                    // TODO support this if ext/zlib filters are available
-                    $this->http_status("501 not implemented");
-                    echo "The service does not support '$val' content encoding";
-                    return;
+		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+		        	{
+		        		case 'gzip':
+		        		case 'deflate':	//zlib
+		        			if (extension_loaded('zlib'))
+		        			{
+		        				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
+		        				break;
+		        			}
+		        			// fall through for no zlib support
+		        		default:
+					        $this->http_status('415 Unsupported Media Type');
+					        echo "The service does not support '$val' content encoding";
+					        return;
+		        	}
+		        	break;
 
                 case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
                     // we assume it is not critical if this one is ignored
@@ -1621,8 +1654,6 @@ class HTTP_WebDAV_Server
                     return;
                 }
             }
-
-            $options["stream"] = fopen("php://input", "r");
 
             $stat = $this->PUT($options);
 
@@ -2574,7 +2605,7 @@ class HTTP_WebDAV_Server
 
 			    	foreach($subprop as $attr => $val)
 					{
-				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
+				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
 					}
 
 		             $ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
@@ -2593,8 +2624,14 @@ class HTTP_WebDAV_Server
 					{
 						$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
 					} else {
-						$val = $this->_prop_encode(htmlspecialchars($prop['val']));
-					}            }
+						$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8'));
+						// for href properties we need (minimalistic) urlencoding, eg. space
+						if ($prop['name'] == 'href')
+						{
+							$val = $this->_urlencode($val);
+						}
+					}
+		    	}
 
 		    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
 			    	(empty($prop['val']) ? ' />' : '>'.$val.'</'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');

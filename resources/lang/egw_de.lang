@@ -18,7 +18,7 @@ category:	resources	de	Kategorie
 check all	resources	de	Alle auswählen
 choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
 clear selection	resources	de	Auswahl löschen
-configure access permissions	resources	de	Zugangseinstellungen konfigurieren
+configure access permissions	admin	de	Zugangseinstellungen konfigurieren
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Ressource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
 delete selected resources	resources	de	Ausgewählte Ressourcen löschen
@@ -49,6 +49,7 @@ links	resources	de	Verknüpfungen
 location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Ressource
 location:	resources	de	Lagerort:
+locations / rooms	resources	de	Orte / Räume
 name of resource	resources	de	Name der Ressource
 name:	resources	de	Name:
 no description available	resources	de	Keine Beschreibung vorhanden
@@ -95,6 +96,5 @@ web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
 which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
 write permissions	resources	de	Schreiberechtigung
-you are not permitted to edit this reource!	resources	de	Sie haben keine Erlaubnis diese Ressource zu bearbeiten
 you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich informationen über diese Ressource anzuschauen
 you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewählt als verfügbar sind

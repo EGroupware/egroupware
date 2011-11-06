@@ -28,8 +28,6 @@ class infolog_bo
 	var $so;
 	var $vfs;
 	var $vfs_basedir='/infolog';
-	var $link_pathes = array();
-	var $send_file_ips = array();
 	/**
 	 * Set Logging
 	 *
@@ -184,9 +182,6 @@ class infolog_bo
 		);
 		if (($config_data = config::read('infolog')))
 		{
-			$this->link_pathes   = $config_data['link_pathes'];
-			$this->send_file_ips = $config_data['send_file_ips'];
-
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
 				foreach($config_data['status'] as $key => $data)
@@ -552,7 +547,7 @@ class infolog_bo
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
 		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
-		if (is_scalar($info_id) || isset($info_id[0]))
+		if (is_scalar($info_id) || isset($info_id[count($info_id)-1]))
 		{
 			if (is_scalar($info_id) && !is_numeric($info_id))
 			{
@@ -1079,7 +1074,7 @@ class infolog_bo
 
 		$entry = array_shift($result);
 
-		return 'EGw-'.$entry['info_datemodified'].'-wGE';
+		return $entry['info_datemodified'];
 	}
 
 	/**

@@ -38,6 +38,12 @@ abstract class groupdav_handler
 	 */
 	var $accounts;
 	/**
+	 * Reference to the ACL class
+	 *
+	 * @var acl
+	 */
+	var $acl;
+	/**
 	 * Translates method names into ACL bits
 	 *
 	 * @var array
@@ -54,17 +60,17 @@ abstract class groupdav_handler
 	 */
 	var $app;
 	/**
+	 * Calling groupdav object
+	 *
+	 * @var groupdav
+	 */
+	var $groupdav;
+	/**
 	 * Base url of handler, need to prefix all pathes not automatic handled by HTTP_WebDAV_Server
 	 *
 	 * @var string
 	 */
 	var $base_uri;
-	/**
-	 * principal URL
-	 *
-	 * @var string
-	 */
-	var $principalURL;
 	/**
 	 * HTTP_IF_MATCH / etag of current request / last call to _common_get_put_delete() method
 	 *
@@ -86,32 +92,31 @@ abstract class groupdav_handler
 	static $path_extension = '.ics';
 
 	/**
+	 * Which attribute to use to contruct name part of url/path
+	 *
+	 * @var string
+	 */
+	static $path_attr = 'id';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
 		$this->app = $app;
-		if (!is_null($debug)) $this->debug = $debug;
-		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
-		if (is_null($principalURL))
-		{
-			$this->principalURL = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:") .
-				'//'.$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
-		}
-		else
-		{
-			$this->principalURL = $principalURL.'principals/users/'.
-				$GLOBALS['egw_info']['user']['account_lid'].'/';
-		}
+		if (!is_null($parent->debug)) $this->debug = $groupdav->debug;
+		$this->base_uri = $groupdav->base_uri;
+		$this->groupdav = $groupdav;
 
 		$this->agent = self::get_agent();
 
 		$this->egw_charset = translation::charset();
+
+		$this->accounts = $GLOBALS['egw']->accounts;
+		$this->acl = $GLOBALS['egw']->acl;
 	}
 
 	/**
@@ -188,9 +193,10 @@ abstract class groupdav_handler
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
+	 * @param int $user=null account_id of owner of collection
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
 	{
 		return $props;
 	}
@@ -212,7 +218,7 @@ abstract class groupdav_handler
 		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
 		}
-		return 'EGw-'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'-wGE';
+		return $entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']);
 	}
 
 	/**
@@ -238,9 +244,10 @@ abstract class groupdav_handler
 	 * @param array &$options
 	 * @param int|string &$id on return self::$path_extension got removed
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
+	 * @param boolean $ignore_if_match=false if true, ignore If-Match precondition
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false)
+	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false)
 	{
 		if (self::$path_extension) $id = basename($id,self::$path_extension);
 
@@ -269,29 +276,35 @@ abstract class groupdav_handler
 			$etag = $this->get_etag($entry);
 			// If the clients sends an "If-Match" header ($_SERVER['HTTP_IF_MATCH']) we check with the current etag
 			// of the calendar --> on failure we return 412 Precondition failed, to not overwrite the modifications
-			if (isset($_SERVER['HTTP_IF_MATCH']))
+			if (isset($_SERVER['HTTP_IF_MATCH']) && !$ignore_if_match)
 			{
-				if (strstr($_SERVER['HTTP_IF_MATCH'], $etag) === false)
+				$this->http_if_match = $_SERVER['HTTP_IF_MATCH'];
+				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+				if ($this->http_if_match[0] == '"') $this->http_if_match = substr($this->http_if_match, 1, -1);
+
+				if ($this->http_if_match !== $etag)
 				{
-					$this->http_if_match = $_SERVER['HTTP_IF_MATCH'];
 					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed");
 					return '412 Precondition Failed';
-				}
-				else
-				{
-					$this->http_if_match = $etag;
-					// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
-					if ($method == 'GET' &&	isset($_SERVER['HTTP_IF_NONE_MATCH']))
-					{
-						if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
-						return '304 Not Modified';
-					}
 				}
 			}
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
 			{
-				if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
-				return '412 Precondition Failed';
+				$if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'];
+				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+				if ($if_none_match[0] == '"') $if_none_match = substr($if_none_match, 1, -1);
+
+				// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
+				if (in_array($method, array('GET','HEAD')) && $etag === $if_none_match)
+				{
+					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
+					return '304 Not Modified';
+				}
+				if ($method == 'PUT' && ($if_none_match == '*' || $if_none_match == $etag))
+				{
+					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
+					return '412 Precondition Failed';
+				}
 			}
 		}
 		return $entry;
@@ -302,13 +315,10 @@ abstract class groupdav_handler
 	 *
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $user=null owner of the collection, default current user
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 * @return groupdav_handler
 	 */
-	static function &app_handler($app,$debug=null,$base_uri=null,$principalURL=null)
+	static function app_handler($app, $groupdav)
 	{
 		static $handler_cache = array();
 
@@ -317,13 +327,10 @@ abstract class groupdav_handler
 			$class = $app.'_groupdav';
 			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
 
-			$handler_cache[$app] = new $class($app,$debug,$base_uri,$principalURL);
+			$handler_cache[$app] = new $class($app, $groupdav);
 		}
-		$handler_cache[$app]->$debug = $debug;
-		$handler_cache[$app]->$base_uri = $base_uri;
-		$handler_cache[$app]->$principalURL = $principalURL;
 
-		if ($debug) error_log(__METHOD__."('$app', '$base_uri', '$principalURL')");
+		if ($debug) error_log(__METHOD__."('$app')");
 
 		return $handler_cache[$app];
 	}
@@ -395,6 +402,96 @@ abstract class groupdav_handler
 		if ($debug) error_log(__METHOD__."GroupDAV client: $agent");
 
 		return $agent;
+	}
+
+	/**
+	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 *
+	 * Priviledges are for the collection, not the resources / entries!
+	 *
+	 * @param string $path path of collection
+	 * @param int $user=null owner of the collection, default current user
+	 * @return array with privileges
+	 */
+	public function current_user_privileges($path, $user=null)
+	{
+		static $grants;
+		if (is_null($grants))
+		{
+			$grants = $this->acl->get_grants($this->app, $this->app != 'addressbook');
+		}
+		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
+
+		if (!$user || $grants[$user] & EGW_ACL_READ)
+		{
+			$priviledes['read'] = 'read';
+		}
+		if (!$user || $grants[$user] & EGW_ACL_ADD)
+		{
+			$priviledes['bind'] = 'bind';	// PUT for new resources
+		}
+		if (!$user || $grants[$user] & EGW_ACL_EDIT)
+		{
+			$priviledes['write-content'] = 'write-content';	// otherwise iOS calendar does not allow to add events
+		}
+		if (!$user || $grants[$user] & EGW_ACL_DELETE)
+		{
+			$priviledes['unbind'] = 'unbind';	// DELETE
+		}
+		// copy/move of existing resources might require write-properties, thought we do not support an explicit PROPATCH
+		return $priviledes;
+	}
+
+	/**
+	 * Create the path/name for an entry
+	 *
+	 * @param array $entry
+	 * @return string
+	 */
+	function get_path($entry)
+	{
+		return $entry[self::$path_attr].self::$path_extension;
+	}
+
+	/**
+	 * Add a resource
+	 *
+	 * @param string $path path of collection, NOT entry!
+	 * @param array $entry
+	 * @param array $props
+	 * @return array with values for keys 'path' and 'props'
+	 */
+	public function add_resource($path, array $entry, array $props)
+	{
+		foreach(array(
+			'getetag' => $this->get_etag($entry),
+			'getcontenttype' => 'text/calendar',
+			'getlastmodified' => $entry['modified'],
+			'displayname' => $entry['title'],
+		) as $name => $value)
+		{
+			if (!isset($props[$name]))
+			{
+				$props[$name] = $value;
+			}
+		}
+		// if requested add privileges
+		$privileges = array('read', 'read-current-user-privilege-set');
+		if ($this->groupdav->prop_requested('current-user-privilege-set') === true && !isset($props['current-user-privilege-set']))
+		{
+			if ($this->check_access(EGW_ACL_EDIT, $entry))
+			{
+				$privileges[] = 'write-content';
+			}
+		}
+		if ($this->groupdav->prop_requested('owner') === true && !isset($props['owner']) &&
+			($account_lid = $this->accounts->name2id($entry['owner'])))
+		{
+			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
+			$props['owner'] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
+		}
+		// we urldecode here, as HTTP_WebDAV_Server uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
+		return $this->groupdav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
 	}
 }
 

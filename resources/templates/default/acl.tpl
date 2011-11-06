@@ -33,8 +33,9 @@
    <!-- BEGIN cat_list -->
    <tr bgcolor="{tr_color}">
 	<td>
-		{catname}<input type="hidden" name="catids[]" value="{catid}" /><br>
-		<select name="inputadmin[{catid}][]">{admin}</select>
+		&nbsp;{catname}<input type="hidden" name="catids[]" value="{catid}" /><br>
+		<select name="inputadmin[{catid}][]">{admin}</select><br>
+		<label><input type="checkbox" value="{catid}" name="location_cats[]" {location_checked} /> {lang_locations_rooms}</label>
 	</td>
 	<td align="center"><select multiple="multiple" size="5" name="inputread[{catid}][]">{read}</select></td>
 	<td align="center"><select multiple="multiple" size="5" name="inputwrite[{catid}][]">{write}</select></td>

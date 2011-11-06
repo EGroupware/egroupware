@@ -188,7 +188,7 @@ class _parse_propfind
 
         // record root tag
         if ($this->depth == 0) {
-        	$this->root = array('name' => $tag, 'xmlns' => $ns);
+        	$this->root = array('name' => $tag, 'xmlns' => $ns, 'attrs' => $attrs);
         }
 
         // special tags at level 1: <allprop> and <propname>
@@ -206,6 +206,7 @@ class _parse_propfind
            			break;
             	case 'filter':
             		$this->use = 'filters';
+            		$this->filters['attrs'] = $attrs;	// need attrs eg. <filters test="(anyof|alloff)">
             		break;
             	default:
             		$this->use = 'other';
