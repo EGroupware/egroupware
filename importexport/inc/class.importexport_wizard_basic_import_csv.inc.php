@@ -344,7 +344,6 @@ class importexport_wizard_basic_import_csv
 		// return from step55
 		if ($content['step'] == 'wizard_step55')
 		{
-			array_shift($content['conditions']);
 
 			// Clear conditions that don't do anything
 			foreach($content['conditions'] as $key => $condition) {
