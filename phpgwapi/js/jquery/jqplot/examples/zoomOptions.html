@@ -3,21 +3,21 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Simple Test</title>
-  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.min.js"></script><![endif]-->
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.logAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.logAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.min.js"></script>
 
   <!-- END: load jqplot -->
   <style type="text/css" media="screen">
@@ -73,7 +73,9 @@ var goog = [["6/22/2009",425.32],["6/15/2009",420.09],["6/8/2009",424.84],["6/1/
   </script>
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 
 <p>Zooming has been enhanced to maintain plot zoom while the mouse moves over the entire document, not just the plot.  Two new options have been added to the cursor plugin to further enhance zooming:</p>
 
@@ -95,5 +97,7 @@ var goog = [["6/22/2009",425.32],["6/15/2009",420.09],["6/8/2009",424.84],["6/1/
 <p>The third plot is like the third, but showTooltipOutsideZoom is true and the tooltip is set to follow the mouse, so you have an idea of what your range is while zooming.</p>
     <div id="chart3" style="margin-top:20px; margin-left:20px; width:400px; height:200px;"></div>
     <div style="padding-top:20px"><button value="reset" type="button" onclick="plot3.resetZoom();">Reset Zoom</button></div>
-  </body>
+  
+  </div>
+</body>
 </html>

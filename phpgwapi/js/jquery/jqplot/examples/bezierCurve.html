@@ -2,19 +2,19 @@
 
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
 
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.bezierCurveRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.bezierCurveRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.min.js"></script>
 
 <style type="text/css">
 p { margin-top:30px;}
@@ -64,7 +64,9 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <p>The Bezier curve renderer can distinguish between two different input data formats.  This first example has the data passed in as 2 data points, the second one defining the Bezier curve to the end point.  With this format, non-default axes renderers will require specifying the minimum and maximum on the axes.</p>
 <pre>
     [[xstart, ystart], [cp1x, cp1y, cp2x, cp2y, xend, yend]];
@@ -90,6 +92,8 @@ $(document).ready(function(){
     plot3.series[2].data[1][0] = 1265900400000
     plot3.drawSeries(2)
 </pre>
+
+  </div>
 </body>
 
 

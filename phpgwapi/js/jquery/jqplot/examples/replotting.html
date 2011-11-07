@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
+     <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
+     <script src="../jquery.min.js" type="text/javascript"></script>
+     <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasOverlay.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+     <script language="javascript" type="text/javascript" src="../plugins/jqplot.pointLabels.min.js"></script>
+
+     <script type="text/javascript">
+     
+      $.jqplot.config.enablePlugins = false;
+
+         var Graph;
+         var GraphUpdate;
+         var GraphData = [];
+         var interval = 500;
+         var npoints = 25;
+         var maxIterations = 200;
+         var niters = 0;
+
+         function BuildDataArray() {
+         
+            GraphData = [];
+            var x=0, y=Math.random()*10;
+
+             for(var i = 0; i < npoints; i++) {
+                x += Math.random() * 5;
+                y += (Math.random() - 0.5) * 10;
+                 GraphData[i] = [x,y];
+             }
+         }
+
+         function UpdateGraph() {
+             StopGraphLoop();
+             interval = parseInt($('#interval').val());
+             npoints = parseInt($('#npoints').val());
+             maxIterations = parseInt($('#maxIterations').val());
+             niters = 0;
+             GraphUpdate = setInterval(runUpdate, interval);
+         }
+         
+         
+         function runUpdate() {
+             if (niters < maxIterations) {
+                 BuildDataArray();
+                 Graph.series[0].data = GraphData;
+                 Graph.replot({resetAxes:true});
+                 niters++;
+             }
+             else {
+                 StopGraphLoop();
+             }
+         }
+
+         function StopGraphLoop() {
+
+             clearInterval(GraphUpdate);
+         }
+
+         $(document).ready(function(){
+             BuildDataArray();
+
+             Graph = $.jqplot('GraphContainer', [GraphData], {
+                title: 'Test Data Run',
+                cursor: { show: false },
+                pointLabels: { show: false },
+                highlighter: { show: false },
+                axesDefaults: {
+                    pad:0.05,
+                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    labelOptions: {
+                        fontSize: '13pt'
+                    }
+                },
+
+              axes: {
+                  xaxis: {
+                    label: 'Number'
+                  },
+                  yaxis: {
+                    label: 'Value'
+                  }
+              }
+            });
+
+         });
+
+     </script>
+
+ </head>
+ <body>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
+
+ <div id="GraphContainer" style="height:500px; width:900px;"></div>
+ <label for="interval">Update Inverval (ms):</label><input type="text" name="interval" id="interval" value="500" /><br />
+ <label for="npoints">Number Points:</label><input type="text" name="npoints" id="npoints" value="25" /><br />
+ <label for="maxIterations">Iterations:</label><input type="text" name="maxIterations" id="maxIterations" value="200" /><br />
+ <input type="button" onclick="UpdateGraph();" value="Start updating
+ graph" />
+ <input type="button" onclick="StopGraphLoop();" value="Stop" />
+
+ 
+  </div>
+</body>
+ </html>

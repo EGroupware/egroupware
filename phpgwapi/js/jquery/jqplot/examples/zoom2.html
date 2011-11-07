@@ -6,19 +6,19 @@
   <title>Simple Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.logAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.logAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.min.js"></script>
 
   <!-- END: load jqplot -->
   <style type="text/css" media="screen">
@@ -64,8 +64,12 @@ plot = $.jqplot('chart', [goog], {
   </script>
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
     <div id="chart" style="margin-top:20px; margin-left:20px; width:600px; height:300px;"></div>
     <div style="padding-top:20px"><button value="reset" type="button" onclick="plot.resetZoom();">Zoom Out</button></div>
-  </body>
+  
+  </div>
+</body>
 </html>

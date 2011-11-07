@@ -2,7 +2,7 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r792
+ * Version: 1.0.0b2_r947
  *
  * Copyright (c) 2009-2011 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
@@ -103,21 +103,23 @@
                 nc = 1;
             }
                 
-            var i, j, tr, td1, td2, lt, rs;
+            var i, j, tr, td1, td2, lt, rs, div, div0, div1;
             var idx = 0;
             // check to see if we need to reverse
             for (i=series.length-1; i>=0; i--) {
-                if (series[i]._stack || series[i].renderer.constructor == $.jqplot.BezierCurveRenderer){
+                if (nc == 1 && series[i]._stack || series[i].renderer.constructor == $.jqplot.BezierCurveRenderer){
                     reverse = true;
                 }
             }    
                 
             for (i=0; i<nr; i++) {
+                tr = $(document.createElement('tr'));
+                tr.addClass('jqplot-table-legend');
                 if (reverse){
-                    tr = $('<tr class="jqplot-table-legend"></tr>').prependTo(this._elem);
+                    tr.prependTo(this._elem);
                 }
                 else{
-                    tr = $('<tr class="jqplot-table-legend"></tr>').appendTo(this._elem);
+                    tr.appendTo(this._elem);
                 }
                 for (j=0; j<nc; j++) {
                     if (idx < series.length && series[idx].show && series[idx].showLabel){
@@ -142,11 +144,27 @@
                                 }
                             }
                             rs = (pad) ? this.rowSpacing : '0';
+
+                            td1 = $(document.createElement('td'));
+                            td1.addClass('jqplot-table-legend jqplot-table-legend-swatch');
+                            td1.css({textAlign: 'center', paddingTop: rs});
+
+                            div0 = $(document.createElement('div'));
+                            div0.addClass('jqplot-table-legend-swatch-outline');
+                            div1 = $(document.createElement('div'));
+                            div1.addClass('jqplot-table-legend-swatch');
+                            div1.css({backgroundColor: color, borderColor: color});
+
+                            td1.append(div0.append(div1));
+
+                            td2 = $(document.createElement('td'));
+                            td2.addClass('jqplot-table-legend jqplot-table-legend-label');
+                            td2.css('paddingTop', rs);
                     
-                            td1 = $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
-                                '<div><div class="jqplot-table-legend-swatch" style="background-color:'+color+';border-color:'+color+';"></div>'+
-                                '</div></td>');
-                            td2 = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');
+                            // td1 = $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
+                            //     '<div><div class="jqplot-table-legend-swatch" style="background-color:'+color+';border-color:'+color+';"></div>'+
+                            //     '</div></td>');
+                            // td2 = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');
                             if (this.escapeHtml){
                                 td2.text(lt);
                             }
@@ -163,6 +181,13 @@
                             }
                             
                             if (this.seriesToggle) {
+
+                                // add an overlay for clicking series on/off
+                                // div0 = $(document.createElement('div'));
+                                // div0.addClass('jqplot-table-legend-overlay');
+                                // div0.css({position:'relative', left:0, top:0, height:'100%', width:'100%'});
+                                // tr.append(div0);
+
                                 var speed;
                                 if (typeof(this.seriesToggle) == 'string' || typeof(this.seriesToggle) == 'number') {
                                     if (!$.jqplot.use_excanvas || !this.disableIEFading) {
@@ -170,11 +195,11 @@
                                     }
                                 } 
                                 if (this.showSwatches) {
-                                    td1.bind('click', {series:s, speed:speed}, s.toggleDisplay);
+                                    td1.bind('click', {series:s, speed:speed}, handleToggle);
                                     td1.addClass('jqplot-seriesToggle');
                                 }
                                 if (this.showLabels)  {
-                                    td2.bind('click', {series:s, speed:speed}, s.toggleDisplay);
+                                    td2.bind('click', {series:s, speed:speed}, handleToggle);
                                     td2.addClass('jqplot-seriesToggle');
                                 }
                             }
@@ -183,10 +208,27 @@
                         }
                     }
                     idx++;
-                }   
+                }
+                
+                td1 = td2 = div0 = div1 = null;   
             }
         }
         return this._elem;
+    };
+
+    var handleToggle = function (ev) {
+        ev.data.series.toggleDisplay(ev);
+        if (ev.data.series.canvas._elem.hasClass('jqplot-series-hidden')) {
+            $(this).addClass('jqplot-series-hidden');
+            $(this).next('.jqplot-table-legend-label').addClass('jqplot-series-hidden');
+            $(this).prev('.jqplot-table-legend-swatch').addClass('jqplot-series-hidden');
+
+        }
+        else {
+            $(this).removeClass('jqplot-series-hidden');
+            $(this).next('.jqplot-table-legend-label').removeClass('jqplot-series-hidden');
+            $(this).prev('.jqplot-table-legend-swatch').removeClass('jqplot-series-hidden');
+        }
     };
     
     // called with scope of plot.

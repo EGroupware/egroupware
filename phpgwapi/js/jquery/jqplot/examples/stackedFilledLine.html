@@ -6,16 +6,16 @@
   <title>Simple Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.min.js"></script>
   <!-- END: load jqplot -->
   <style type="text/css" media="screen">
     .jqplot-axis {
@@ -70,7 +70,11 @@ plot3 = $.jqplot('chart', [line1, line2, line3], {
   </script>
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
     <div id="chart" style="margin-top:20px; margin-left:20px; width:400px; height:300px;"></div>
-  </body>
+  
+  </div>
+</body>
 </html>

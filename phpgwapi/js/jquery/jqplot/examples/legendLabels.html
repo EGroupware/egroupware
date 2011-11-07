@@ -6,19 +6,19 @@
   <title>Simple Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.enhancedLegendRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.min.js"></script>
   <!-- END: load jqplot -->
 
 <style type="text/css">
@@ -55,7 +55,7 @@
     }
 </style>
 
-<script id="example_1" type="text/javascript">$(document).ready(function(){
+<script class="code" type="text/javascript">$(document).ready(function(){
 
    s1 = [1,6,9,8];
    s2 = [4,3,1,2];
@@ -79,14 +79,14 @@
            }
 		},
 		axes: {
-		    xaxis:{min:1, max:4},
+		    xaxis:{pad: 0},
 		    yaxis:{min:0, max:35}
 		}
    });
 });
 </script>
   
-<script id="example_2" type="text/javascript">$(document).ready(function(){
+<script class="code" type="text/javascript">$(document).ready(function(){
     plot2 = $.jqplot('chart2',[s1, s2, s3, s4, s5, s6],{
         stackSeries: true,
         seriesDefaults: {
@@ -113,7 +113,35 @@
 });
 </script>
   
-<script id="example_3" type="text/javascript">$(document).ready(function(){
+<script class="code" type="text/javascript">$(document).ready(function(){
+    plot2b = $.jqplot('chart2b',[s1, s2, s3, s4, s5, s6],{
+        stackSeries: true,
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer
+        },
+        legend:{
+            renderer: $.jqplot.EnhancedLegendRenderer,
+            show:true,
+            showLabels: true,
+            labels:['Fog', 'Rain', 'Frost', 'Sleet', 'Hail', 'Snow'],
+            rendererOptions:{
+                numberColumns:1,
+                seriesToggle: 900,
+                disableIEFading: false
+            },
+            placement:'outside',
+            shrinkGrid: true,
+            location: 'w'
+        },
+        axes: {
+            xaxis:{renderer: $.jqplot.CategoryAxisRenderer},
+            yaxis:{min:0, max:35}
+        }
+    });
+});
+</script>
+  
+<script class="code" type="text/javascript">$(document).ready(function(){
    plot3 = $.jqplot('chart3',[s1, s2, s3, s4, s5, s6],{
        stackSeries: true,
         seriesDefaults: {
@@ -133,14 +161,14 @@
            marginTop: '30px'
 		},
 		axes: {
-		    xaxis:{min:1, max:4},
+		    xaxis:{pad: 0},
 		    yaxis:{min:0, max:35}
 		}
    });
 });
 </script>
   
-<script id="example_4" type="text/javascript">$(document).ready(function(){
+<script class="code" type="text/javascript">$(document).ready(function(){
     plot4 = $.jqplot('chart4', [[['A',25],['B',14],['C',7],['D', 13],['E', 11],['F',35]]], {
       seriesDefaults:{
           renderer:$.jqplot.PieRenderer
@@ -156,20 +184,13 @@
  });
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        
-        $('#code_1').html($('#example_1').html());
-        $('#code_2').html($('#example_2').html());
-        $('#code_3').html($('#example_3').html());
-        $('#code_4').html($('#example_4').html());
-        $(document).unload(function() {$('*').unbind(); });
+<script type="text/javascript" src="example.js"></script>
 
-    });
-</script> 
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <p>The following charts demonstrate some options of the EnhancedLegendRendrer. Some of the enhancements are:</p>
 <ul>
     <li>Control of number of rows and/or columns.</li>
@@ -181,25 +202,20 @@
 <p>The first plot has legend labels in 3 columns.  They are clickable.</p>
 
 <div id="chart1" class="plot" style="width:500px;height:300px;"></div>
-
-    <pre id="code_1"></pre>
     
 <p>The second chart has legend labels in 2 columns placed outside of the plot.  The showLabels option is false, but the labels are still clickable.</p>
 <p>The legend renderer's "seriesToggle" option has been set to 900 to produce a slow, 900 ms fade.  You can set this to a number or to 'fast', 'normal' or 'slow'.</p>
 <p>Also, the disableIEFading option is set to false to allow fading on IE (as opposed to simple show/hide).  In IE, series will be toggled with a show()/hide() method by default as opposed to fadeIn()/fadeOut() because of poor performance on some machines.</p>
 <div id="chart2" class="plot" style="width:500px;height:300px;"></div>
-
-    <pre id="code_2"></pre>
+<div id="chart2b" class="plot" style="margin-left:50px;width:500px;height:300px;"></div>
 
 <p>The third plot has legend labels in 1 row outside and below the chart area.  The showSwatches option is false, but the labels are still clickable.</p>
 <div id="chart3" class="plot" style="width:500px;height:300px;"></div>
 
-
-    <pre id="code_3"></pre>
 <p>The fourth chart is a pie plot.  Pie plots use their own legend renderer, since a pie plot is only 1 series.  The pie legend renderer has also been updated to handle custom rows/columns, although it is not clickable.</p>
 <div id="chart4" class="plot" style="width:500px;height:300px;"></div>
-
-    <pre id="code_4"></pre>
     
-  </body>
+  
+  </div>
+</body>
 </html>

@@ -6,16 +6,16 @@
   <title>Simple Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.min.js"></script>
   <!-- END: load jqplot -->
 
   <style type="text/css">
@@ -72,6 +72,18 @@
       legend:{show:true}      
     });   
 });</script>
+  
+<script class="code" type="text/javascript">$(document).ready(function(){  
+    plot7 = $.jqplot('pie7', [[["all", 10]]], {
+      seriesDefaults:{
+        renderer:$.jqplot.PieRenderer,
+        rendererOptions: {
+          showDataLabels: true
+        }
+      },
+      legend:{show:true}      
+    });   
+});</script>
 
   
 <script type="text/javascript">    
@@ -85,7 +97,9 @@
 
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
     <p>This page tests for 3 conditions.  Plotting pies with a slice that begins at 0 and ends at and near 2*pi (360 degrees), disabling the trendline plugin on pies, and plotting a pie that has a 0 value (or a very small value relative to other values) in the data set.</p>
     <div id="pie1" style="margin-top:20px; margin-left:20px; width:200px; height:200px;"></div>
 <pre class="code"></pre>
@@ -99,5 +113,9 @@
 <pre class="code"></pre>
     <div id="pie6" style="margin-top:20px; margin-left:20px; width:400px; height:240px;"></div>
 <pre class="code"></pre>
-  </body>
+    <div id="pie7" style="margin-top:20px; margin-left:20px; width:400px; height:240px;"></div>
+<pre class="code"></pre>
+  
+  </div>
+</body>
 </html>

@@ -7,25 +7,25 @@
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
   <!-- <link rel="stylesheet" type="text/css" href="../themes/jqplot.brass.css" /> -->
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.donutRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.funnelRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisTickRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.donutRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.funnelRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
   <!-- END: load jqplot -->
 
 <style type="text/css">
@@ -289,7 +289,9 @@ function switch35() {
 </script>
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <p>jqPlot has basic theming support for commonly styled atributes of plot elements.  Upon creation, each plot will have a "themeEngine" that controls modificaition, adding, removing and activating of plot themes.  In addition, each plot will have a "Default" theme which corresponds to the styling of the plot at plot creation.<p>
     
 <p>Creation of new themes is easy.  A "style" object is created with properties for the various plot elements to be styles.  Attached to each of those is an ojbect with the actual styling properties.  A simple style object might look like:</p>
@@ -477,5 +479,7 @@ function switch35() {
 </select>
 </p>
 
-  </body>
+  
+  </div>
+</body>
 </html>

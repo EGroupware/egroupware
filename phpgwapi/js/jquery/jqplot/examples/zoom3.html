@@ -5,16 +5,16 @@
   <title>Zoom plugin with multiple Y Axes</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
 
   <!-- END: load jqplot -->
 <script language="javascript" type="text/javascript">
@@ -57,11 +57,15 @@ var ERPM = [[0.0,1503.],[10.0,3006.],[20.0,3005.],[30.0,1505.],[40.0,1505.],[50.
 
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
     <p>Click and drag to zoom.  Double click on plot or click "Reset Zoom" button to reset zoom.</p>
     <div id="chart" style="height:300px; width:600px;"></div>
 <div style="padding-top:20px;">
 <button value="reset" type="button" onclick="plot.resetZoom();">Zoom Out</button>
 </div>
-  </body>
+  
+  </div>
+</body>
 </html>

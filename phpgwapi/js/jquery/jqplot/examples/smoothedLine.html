@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
+    <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
+    <script src="../jquery.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../plugins/jqplot.pointLabels.min.js"></script>
+
+    <script type="text/javascript">
+
+
+         interval = 1500;
+         niters = 0;
+         maxIterations = 200;
+         GraphUpdate = null;
+
+         function UpdateGraph() {
+             StopGraphLoop();
+             GraphUpdate = setInterval(runUpdate, interval);
+         }
+         
+         
+         function runUpdate() {
+             if (niters < maxIterations) {
+                 window.location.reload(true);
+                 niters++;
+             }
+             else {
+                 StopGraphLoop();
+             }
+         }
+
+         function StopGraphLoop() {
+
+             clearInterval(GraphUpdate);
+         }
+
+         function makeLineData(n, p) {
+            n = (n == null) ? 1 : n;
+            p = (p == null) ? 35 : p;
+            var linedata = [];
+            if (n == 1) {
+                for (var i=0; i< p; i++) {
+                    // linedata.push([i, ystart]);
+                    // ystart += (Math.random() - 0.4) * 10;
+                    linedata.push([i, ((Math.random() - 0.4) * 30)])
+                }
+            }
+
+            else if (n == 2) {
+                var ystart = 10;
+                for (var i=0; i< p; i++) {
+                    linedata.push([i, ystart]);
+                    ystart += (Math.random() - 0.4) * 10;
+                }
+            }
+
+            else if (n == 3) {
+                var ystart = 10 + (Math.random() - 0.5) * 5;
+                for (var i=0; i< p; i++) {
+                    linedata.push([i, ystart]);
+                    ystart += (Math.random() - 0.4) * 5;
+                }
+            }
+
+            else {
+
+                linedata = [[0, 108], [1, 99], [2, 95], [3, 119], [4, 109], [5, 96], [6, 119], [7, 108], [8, 117], [9, 87], [10, 97], [11, 120], [12, 117], [13, 86], [14, 123], [15, 105], [16, 98], [17, 90], [18, 113], [19, 110], [20, 110], [21, 99], [22, 110], [23, 94], [24, 103], [25, 99], [26, 93], [27, 84], [28, 123], [29, 105], [30, 105], [31, 92], [32, 100], [33, 99], [34, 102]];
+
+                // linedata = [[0,30], [10,130],[30,150], [50,150], [70,170], [90,220],[100,320]];
+
+                // linedata = [[0, 1000], [1, 1002], [1.02, -1000], [3.98, -980], [4, 1000]];
+
+                linedata = [[0,30], [10,300], [30,300], [50,150], [70,170], [90,220], [100,320]];
+                
+            }
+            
+            return linedata;
+         }
+
+
+        $(document).ready(function(){
+
+            //linedata = [[0, 107.82365883671947], [1, 99.16018668825309], [2, 94.78884418901754], [3, 119.47866379112438], [4, 108.60497096533754], [5, 95.85470385881975], [6, 118.56099903117925], [7, 107.78120403217613], [8, 116.95084761274899], [9, 87.03778841888804], [10, 97.26453809882635], [11, 120.12298234601045], [12, 116.54558331433284], [13, 86.35661502593884], [14, 122.86058241164652], [15, 105.49063230477856], [16, 97.90107693365506], [17, 90.42651033481407], [18, 112.76302896745166], [19, 99.38816776897356], [20, 110.32072892044519], [21, 99.41730398132184], [22, 110.01904139207804], [23, 94.03994244350879], [24, 102.71041277495752], [25, 98.64013661344191], [26, 93.26547044978899], [27, 84.38063003027179], [28, 122.91281762546294], [29, 104.63706448209788], [30, 105.23414202755615], [31, 92.48837995253147], [32, 100.24435203238308], [33, 98.50235067799353], [34, 101.85730984082966]];
+            
+    
+            // linedata = [[0, 8.194554782826964], [1, -8.26006937761056], [2, 12.342827158030525], [3, 8.030109035522102], [4, 8.182886883054381], [5, 8.836386328822941], [6, 11.176736487401527], [7, 1.8960525030185005], [8, -3.6947299645140443], [9, -5.119827875923864], [10, -5.25942310454954], [11, -4.766757691793732], [12, 11.721069537068498], [13, 0.8432892718526719], [14, 5.332522140414763], [15, 15.277740043938193], [16, -4.074006947418175], [17, -4.364855263823531], [18, 14.551497347313791], [19, -2.33555199082259], [20, -7.744684343217381], [21, 7.815264879043241], [22, -1.7010010417223276], [23, -8.103868356916688], [24, 1.4479942203079321], [25, -10.406369533275939], [26, 8.304909437814956], [27, 13.27288566183171], [28, 14.302875136560548], [29, 1.2372348371186415], [30, -3.7768442729862195], [31, 13.438728151296731], [32, -11.02816010529125], [33, 2.936993823708894], [34, 9.575457689028472], [35, 16.10628772599221], [36, 17.885934937223468], [37, -1.437802063100031], [38, 7.991361850692442], [39, 2.3623691308554386], [40, -2.300820182975629], [41, 11.540237597432307], [42, 13.30015246260144], [43, 11.236446225066283], [44, 4.960937895872273], [45, 7.347381297473149], [46, -1.9248338734684833], [47, -4.0690335548722425], [48, 0.4913951765545854], [49, 9.781926104520892], [50, -5.78653717592562], [51, -5.7333876884315425], [52, 6.635865569798751], [53, -10.685897445075966], [54, 16.05371975947152]];
+
+            var dat = makeLineData(2, 15);
+            plot1 = $.jqplot('chart1', [makeLineData(1,15), makeLineData(1, 15)], {
+                grid: {
+                  drawBorder: false,
+                  shadow: false,
+                  background: '#ffffff'
+                },
+                cursor: { show: true,
+                  showTooltip: false,
+                  followMouse: true,
+                  tooltipFormatString: '%.1f, %.1f',
+                  useAxesFormatters: false
+                 },
+                highlighter: { show: true },
+                seriesDefaults: { 
+                    shadow: true,
+                    shadowAlpha: 0.1,
+                    shadowDepth: 2,
+                    fillToZero: true,
+                    pointLabels: { show: false },
+                    showMarker: false,
+                    markerOptions: {
+                        style: 'circle',
+                        size: 12
+                    },
+                    rendererOptions: {
+                      highlightMouseOver: true
+                    }
+                },
+                series: [
+                    {
+                        show: true,
+                        color: 'rgba(198,88,88,.6)',
+                        negativeColor: 'rgba(100,50,50,.6)',
+                        showMarker: true,
+                        showLine: true,
+                        fill: true,
+                        fillAndStroke: true,
+                        markerOptions: {
+                            style: 'filledCircle',
+                            size: 8,
+                            shadow: false
+                        },
+                        rendererOptions: {
+                            smooth: true,
+                            constrainSmoothing: true
+                            // tension: 0.8
+                        }
+                    },
+                    {
+                        show: true,
+                        color: 'rgba(44,215,198, 0.7)',
+                        negativeColor: 'rgba(22,115,98, 0.2)',
+                        fill: false,
+                        showMarker: true,
+                        fillAndStroke: true,
+                        rendererOptions: {
+                            smooth: true,
+                            constrainSmoothing: true
+                            // tension: 0.6
+                        },
+                        markerOptions: {
+                            style: 'filledCircle',
+                            size: 8,
+                            shadow: false
+                        },
+                    }
+                ],
+                axes: {
+                    xaxis: {
+                        pad: 1.0,
+                        tickOptions: {
+                          showGridline: false
+                        }
+                    },
+                    yaxis: {
+                        pad: 1.05
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+ </head>
+ <body>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
+
+ <div id="chart1" style="height:500px; width:800px;"></div>
+
+ 
+  </div>
+</body>
+ </html>

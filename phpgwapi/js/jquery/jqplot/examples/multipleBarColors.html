@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
 
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-	<script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
-	<script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+	<script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+	<script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
 	
 	<style type="text/css">
 	  .jqplot-point-label {white-space: nowrap;}
@@ -129,7 +129,9 @@
 		
 </head>
 <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
     <p>Individual bars can now have different colors.  This is achieved by setting the "varyBarColor" option to true in the series rendererOptions.  The default is to assign each bar a different color from the default "seriesColors" array.  You can customize the seriesColors array to assign whatever colors you like to the bars.</p>
 		<div id="chart1" style="width:500px;height:250px;margin:20px;"></div>
 		<div id="chart2" style="width:500px;height:250px;margin:20px;"></div>
@@ -144,6 +146,8 @@
     
 		<div id="chart4" style="width:700px;height:250px;margin:20px;"></div>
  
+
+  </div>
 </body>
 
 

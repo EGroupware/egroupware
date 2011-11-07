@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Random Test</title>
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
+  
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+
+  <style type="text/css">
+    pre.code {
+        font-size: 0.94em;
+    }
+  </style>
+  
+  <!-- BEGIN: load jquery -->
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
+  <!-- END: load jquery -->
+  
+  <!-- BEGIN: load jqplot -->
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasOverlay.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.cursor.min.js"></script>
+
+  <!-- END: load jqplot -->
+<script language="javascript" type="text/javascript">
+
+  function makeContinuousData(npoints, ybase, yvariation) {
+      var data = [];
+      if (yvariation == null) {
+          yvariation = ybase;
+          ybase = (Math.random() - 0.5) * 2 * yvariation;
+      }
+      for (j=0; j<npoints; j++) {
+          data.push([j, ybase]);
+          ybase += (Math.random() - 0.5) * 2 * yvariation;
+      }
+      return data;
+  }
+
+  function makeRandomData(npoints, yvariation) {
+      var data = [];
+      for (j=0; j<npoints; j++) {
+          var y = (Math.random() - 0.5) * 2 * yvariation;
+          data.push([j, y]);
+      }
+      return data;
+  }
+  function makeDualContinuousData(npoints, xbase, xvariation, ybase, yvariation) {
+      var data = [];
+      if (ybase == null && yvariation == null) {
+          xvariation = xbase;
+          yvariation = xvariation;
+          xbase = (Math.random() - 0.5) * 2 * xvariation;
+          ybase = (Math.random() - 0.5) * 2 * yvariation;
+      }
+      for (j=0; j<npoints; j++) {
+          data.push([xbase, ybase]);
+          xbase += (Math.random()) * xvariation;
+          ybase += (Math.random() - 0.5) * 2 * yvariation;
+      }
+      return data;
+  }
+
+  $.jqplot._noToImageButton = true;
+
+</script>
+
+<script class="code" type="text/javascript"> 
+$(document).ready(function(){
+
+    ////////
+    // Example of passing custom tick options into 
+    // the ticks array to control each tick independently.
+    //
+    // NOTE: This REQURES a jqplot build after r863.
+    //
+    // Items in the tick array can be specified as:
+    //   * number - number to be used for the value and label
+    //   * [value, label] - array containing value and label
+    //   * {options}  - object specifying value, label or other options. 
+    //
+    ////////
+
+    var l1 = [[2001, 40], [2002, 36], [2003, 34], [2004, 38], [2005, 37], 
+        [2006, 38], [2007, 39], [2008, 41], [2009, 43], [2010, 45]];
+    var l2 = [[2001, 55], [2002, 47], [2003, 50], [2004, 55], [2005, 56], 
+        [2006, 57], [2007, 60], [2008, 69], [2009, 73], [2010, 68]];
+
+    var ticks = [
+        {value: 2000.6, showMark: false, showLabel: false}, 
+        2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 
+        {value: 2010.4, showMark: false, showLabel: false}
+    ];
+
+    var plot2 = $.jqplot('chart2',[l1, l2], {
+        cursor: {
+          show: true,
+          zoom: true,
+          looseZoom: true
+        },
+        grid: {
+            drawGridlines: false
+        },
+        series: [
+            {
+                renderer: $.jqplot.BarRenderer,
+                rendererOptions: {
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0
+                }
+            },
+            { yaxis: 'y2axis' }
+        ],
+        axesDefaults: {
+            pad: 1.01
+        },
+        axes: {
+            xaxis: {
+                ticks: ticks,
+                tickOptions: {
+                    formatString: "%d"
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+
+<script type="text/javascript" src="example.js"></script>
+
+  </head>
+  <body>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
+<div id="chart2" style="height:260px; width:500px;margin: 30px;"></div>
+
+  
+  </div>
+</body>
+</html>

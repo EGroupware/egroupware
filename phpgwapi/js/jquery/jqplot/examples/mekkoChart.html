@@ -6,19 +6,19 @@
   <title>Simple Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.mekkoRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.mekkoAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.mekkoRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.mekkoAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasTextRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
   <!-- END: load jqplot -->
   <style type="text/css" media="screen">
     body {
@@ -141,12 +141,14 @@
   </script>
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
       
       <p>Mekko charts make a number of customizations to the series, axes and legend.  You can create a Mekko chart by including the renderers:</p>
 <pre>
-&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../src/plugins/jqplot.mekkoRenderer.js&quot;&gt;&lt;/script&gt;
-&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../src/plugins/jqplot.mekkoAxisRenderer.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../src/plugins/jqplot.mekkoRenderer.min.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../src/plugins/jqplot.mekkoAxisRenderer.min.js&quot;&gt;&lt;/script&gt;
 </pre>
   
   <p>Data is specified per bar in the chart.  You can specify data as an array of y values, or as an array of [label, value] pairs.  Note that labels are used only on the first series.  Labels on subsequent series are ignored:</p>
@@ -220,5 +222,7 @@ legend:{
 </pre>
 
     <div id="chart3" style="width:500px; height:300px;"></div>
-  </body>
+  
+  </div>
+</body>
 </html>

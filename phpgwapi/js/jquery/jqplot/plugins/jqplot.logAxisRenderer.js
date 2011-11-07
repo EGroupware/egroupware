@@ -2,7 +2,7 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r792
+ * Version: 1.0.0b2_r947
  *
  * Copyright (c) 2009-2011 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
@@ -62,11 +62,9 @@
     $.jqplot.LogAxisRenderer.prototype.constructor = $.jqplot.LogAxisRenderer;
     
     $.jqplot.LogAxisRenderer.prototype.init = function(options) {
-        // prop: tickRenderer
-        // A class of a rendering engine for creating the ticks labels displayed on the plot, 
-        // See <$.jqplot.AxisTickRenderer>.
-        // this.tickRenderer = $.jqplot.AxisTickRenderer;
-        // this.labelRenderer = $.jqplot.AxisLabelRenderer;
+        // prop: drawBaseline
+        // True to draw the axis baseline.
+        this.drawBaseline = true;
         $.extend(true, this.renderer, options);
         for (var d in this.renderer.axisDefaults) {
             if (this[d] == null) {
@@ -130,6 +128,12 @@
                         t.showMark = false;
                     }
                     t.setTick(ut[0], this.name);
+                    this._ticks.push(t);
+                }
+
+                else if ($.isPlainObject(ut)) {
+                    $.extend(true, t, ut);
+                    t.axis = this.name;
                     this._ticks.push(t);
                 }
                 

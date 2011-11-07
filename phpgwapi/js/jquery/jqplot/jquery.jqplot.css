@@ -25,13 +25,13 @@
     margin-right: 10px;
 }
 
-.jqplot-y2axis, .jqplot-y3axis, .jqplot-y4axis, .jqplot-y5axis, .jqplot-y6axis, .jqplot-y7axis, .jqplot-y8axis, .jqplot-y9axis {
+.jqplot-y2axis, .jqplot-y3axis, .jqplot-y4axis, .jqplot-y5axis, .jqplot-y6axis, .jqplot-y7axis, .jqplot-y8axis, .jqplot-y9axis, .jqplot-yMidAxis {
     margin-left: 10px;
     margin-right: 10px;
 }
 
 /*rules applied to all axis tick divs*/
-.jqplot-axis-tick, .jqplot-xaxis-tick, .jqplot-yaxis-tick, .jqplot-x2axis-tick, .jqplot-y2axis-tick, .jqplot-y3axis-tick, .jqplot-y4axis-tick, .jqplot-y5axis-tick, .jqplot-y6axis-tick, .jqplot-y7axis-tick, .jqplot-y8axis-tick, .jqplot-y9axis-tick {
+.jqplot-axis-tick, .jqplot-xaxis-tick, .jqplot-yaxis-tick, .jqplot-x2axis-tick, .jqplot-y2axis-tick, .jqplot-y3axis-tick, .jqplot-y4axis-tick, .jqplot-y5axis-tick, .jqplot-y6axis-tick, .jqplot-y7axis-tick, .jqplot-y8axis-tick, .jqplot-y9axis-tick, .jqplot-yMidAxis-tick {
     position: absolute;
 }
 
@@ -78,15 +78,11 @@
     text-align: left;
 }
 
-.jqplot-meterGauge-tick {
-    font-size: 0.75em;
-    color: #999999;
+.jqplot-yMidAxis-tick {
+    text-align: center;
+    white-space: nowrap;
 }
 
-.jqplot-meterGauge-label {
-    font-size: 1em;
-    color: #999999;
-}
 .jqplot-xaxis-label {
     margin-top: 10px;
     font-size: 11pt;
@@ -106,10 +102,26 @@
     position: absolute;
 }
 
+.jqplot-yMidAxis-label {
+    font-size: 11pt;
+    position: absolute;
+}
+
 .jqplot-y2axis-label, .jqplot-y3axis-label, .jqplot-y4axis-label, .jqplot-y5axis-label, .jqplot-y6axis-label, .jqplot-y7axis-label, .jqplot-y8axis-label, .jqplot-y9axis-label {
 /*    text-align: center;*/
     font-size: 11pt;
+    margin-left: 10px;
     position: absolute;
+}
+
+.jqplot-meterGauge-tick {
+    font-size: 0.75em;
+    color: #999999;
+}
+
+.jqplot-meterGauge-label {
+    font-size: 1em;
+    color: #999999;
 }
 
 table.jqplot-table-legend {
@@ -130,11 +142,31 @@ td.jqplot-table-legend {
     vertical-align:middle;
 }
 
+/*
+These rules could be used instead of assigning
+element styles and relying on js object properties.
+*/
+
+/*
+td.jqplot-table-legend-swatch {
+    padding-top: 0.5em;
+    text-align: center;
+}
+
+tr.jqplot-table-legend:first td.jqplot-table-legend-swatch {
+    padding-top: 0px;
+}
+*/
+
 td.jqplot-seriesToggle:hover, td.jqplot-seriesToggle:active {
     cursor: pointer;
 }
 
-td.jqplot-table-legend > div {
+.jqplot-table-legend .jqplot-series-hidden {
+    text-decoration: line-through;
+}
+
+div.jqplot-table-legend-swatch-outline {
     border: 1px solid #cccccc;
     padding:1px;
 }
@@ -173,7 +205,7 @@ table.jqplot-cursor-tooltip {
     padding: 1px;
 }
 
-.jqplot-highlighter-tooltip {
+.jqplot-highlighter-tooltip, .jqplot-canvasOverlay-tooltip {
     border: 1px solid #cccccc;
     font-size: 0.75em;
     white-space: nowrap;
@@ -187,13 +219,13 @@ table.jqplot-cursor-tooltip {
 }
       
 td.jqplot-cursor-legend-swatch {
-vertical-align:middle;
-text-align:center;
+    vertical-align: middle;
+    text-align: center;
 }
 
 div.jqplot-cursor-legend-swatch {
-width:1.2em;
-height:0.7em;
+    width: 1.2em;
+    height: 0.7em;
 }
 
 .jqplot-error {

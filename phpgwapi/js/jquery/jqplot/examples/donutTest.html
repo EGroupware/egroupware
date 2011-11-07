@@ -6,16 +6,16 @@
   <title>Donut Chart Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.donutRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.donutRenderer.min.js"></script>
   <!-- END: load jqplot -->
 
   <script type="text/javascript" src="donutTest.js"></script>
@@ -26,29 +26,143 @@
     }
   </style>
   
-    <script type="text/javascript">    
-    $(document).ready(function(){
-      $.jqplot.config.enablePlugins = true;
-        $('#code').load('donutTest.js');
-        $('#code').dialog({
-			height: 'auto',
-			width: 600,
-			modal: true,
-			autoOpen: false,
-			resizable: true,
-			draggable: true,
-			show: 'fold'
-		});
+<script type="text/javascript" class="code">
+$(document).ready(function(){
 
+    $.jqplot.config.enablePlugins = true;
+
+    s1 = [['a',2], ['b',8], ['c',14], ['d',20]];
+    s2 = [['a', 4], ['b', 12], ['c', 6], ['d', 3]];
+    s3 = [['a', 2], ['b', 1], ['c', 3], ['d', 3]];
+    s4 = [['a', 4], ['b', 3], ['c', 2], ['d', 1]];
+    
+    s5 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+    
+    plot1 = $.jqplot('chart1', [s1], {
+        seriesDefaults:{
+            renderer:$.jqplot.DonutRenderer
+        },
+        legend: {show:true}
     });
-    </script> 
+    
+    $('#chart1').bind('jqplotDataClick', 
+        function (ev, seriesIndex, pointIndex, data) {
+            $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+        }
+    ); 
+    
+    $(document).unload(function() {$('*').unbind(); });
+});
+</script>
+  
+<script type="text/javascript" class="code">
+$(document).ready(function(){
+    
+    plot2 = $.jqplot('chart2', [s1, s2], {
+        seriesDefaults: {
+            renderer:$.jqplot.DonutRenderer,
+            rendererOptions:{
+                sliceMargin: 2,
+                innerDiameter: 110,
+                startAngle: -90
+            }
+        }
+    });
+    
+    $('#chart2').bind('jqplotDataHighlight', 
+        function (ev, seriesIndex, pointIndex, data) {
+            $('#info2').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+        }
+    );
+    
+    $('#chart2').bind('jqplotDataUnhighlight', 
+        function (ev) {
+            $('#info2').html('Nothing');
+        }
+    ); 
+
+});
+</script>
+  
+<script type="text/javascript" class="code">
+$(document).ready(function(){
+
+    plot3 = $.jqplot('chart3', [s1, s2, s3], {
+        captureRightClick: true,
+        seriesDefaults:{
+            renderer:$.jqplot.DonutRenderer,
+            shadow: false,
+            rendererOptions:{
+                innerDiameter: 110,
+                startAngle: -90,
+                sliceMargin: 2,
+                highlightMouseDown: true
+            }
+        },
+        legend: {
+            show: true,
+            location: 'e',
+            placement: 'outside'
+        }      
+    });
+    
+    $('#chart3').bind('jqplotDataRightClick', 
+        function (ev, seriesIndex, pointIndex, data) {
+            $('#info3').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+        }
+    ); 
+  
+});
+</script>
+  
+<script type="text/javascript" class="code">
+$(document).ready(function(){
+
+    plot4 = $.jqplot('chart4', [s1, s2, s3, s4], {
+        seriesDefaults:{
+            renderer:$.jqplot.DonutRenderer
+        },
+        legend: {
+            show: true,
+            location: 's',
+            placement: 'outside',
+            rendererOptions:{
+                numberRows: 1
+            }
+        }
+    });
+  
+});
+</script>
+  
+<script type="text/javascript" class="code">
+$(document).ready(function(){
+    plot5 = $.jqplot('chart5', [s5], {
+        seriesDefaults:{
+            renderer:$.jqplot.DonutRenderer
+        }
+    });
+  
+});
+</script>
+  
+<script type="text/javascript" class="code">
+$(document).ready(function(){
+    
+    plot6 = $.jqplot('chart6', [[1,2,3,4]]);
+  
+});
+</script>
+
+<script type="text/javascript" src="example.js"></script>
     
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <div id="code"></div>
-    <p>To create donut plots, you have to include the "jqplot.donutRenderer.js" file in your source.  You can view the javascript that generated these plots by clicking the "View Code" button below.</p>
-    <button id="seecode" onclick="$('#code').dialog('open');">View Code</button>
+    <p>To create donut plots, you have to include the "jqplot.donutRenderer.min.js" file in your source.</p>
 
     <p>Below is a default donut plot.  Slices will highlight on mouseover.  Events are triggered when you mouseover a slice and also when you click on a slice.  Here We capture the 'jqplotDataClick' event and display the clicked series index, point index and data values.<p>
     
@@ -80,5 +194,7 @@
         
 <p>A simple line chart is added to test for imcompatabilities.</p>
         <div id="chart6" style="margin-top:20px; margin-left:20px; width:100px; height:100px;"></div>
-  </body>
+  
+  </div>
+</body>
 </html>

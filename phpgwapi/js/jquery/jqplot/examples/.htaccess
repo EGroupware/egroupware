@@ -1,13 +1,5 @@
+# This works on my local apache (with mod_php)
 AddType application/x-httpd-php .php .html .htm
 
-#####
-# Other methods that may work:
-#####
-# AddType application/x-httpd-php5 .php .html .htm
-
-# AddHandler php5-script .html
-
-# handler for phpsuexec..
-# <FilesMatch "\.html$">
-#  SetHandler application/x-httpd-php5
-# </FilesMatch>
+# This works for dreamhost (php as fast cgi)
+# AddType php-cgi .php .html .htm

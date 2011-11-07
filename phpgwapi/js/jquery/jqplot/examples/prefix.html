@@ -6,17 +6,17 @@
   <title>Test</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
   <!-- END: load jqplot -->
   <style type="text/css" media="screen">
     .jqplot-axis {
@@ -77,7 +77,9 @@
 </script> 
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <p>Example of the "prefix" axis tick option.  This option adds a prefix to the tick label if and only if no formatString option is specified.</p>
     <div id="chartdiv" style="margin-top:20px; margin-left:20px; width:500px; height:300px;"></div>
     <pre id="code_1" class="code-block"></pre>
@@ -85,5 +87,7 @@
     <p>A new configuration option, $.jqplot.config.defaultTickFormatString, has been added as well.  When no user formatString is specified, linear axes previously used a hard coded '%.1f' default format string.  The config option controls this default format string.  This allows an alternative way to format tick labels, with or without a prefix, if no formatString option is specified.</p>
     <div id="chartdiv2" style="margin-top:20px; margin-left:20px; width:500px; height:300px;"></div>
     <pre id="code_2" class="code-block"></pre>
-  </body>
+  
+  </div>
+</body>
 </html>

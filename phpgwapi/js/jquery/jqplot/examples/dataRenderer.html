@@ -6,19 +6,19 @@
   <title>Data Renderers, AJAX and JSON Data</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.ohlcRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.json2.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.ciParser.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.dateAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.ohlcRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.json2.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.ciParser.min.js"></script>
   
   <style type="text/css">
     div.jqplot-target {
@@ -157,7 +157,9 @@ var ajaxdata = function(url, plot, options) {
 
   </head>
   <body>
-<?php include "nav.inc"; ?>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
 <p>The "dataRenderer" plot options allows you to specify a data preprocessor for your plot.  This enables jqPlot to accept data in any arbitrary format (e.g. AJAX data soruces, JSON strings, etc.).  Below are some examples illustrating how to use dataRenderers.</p>
 
 <p>In this simple example, we create a dataRenderer which takes an array of x values and returns an array of [x, sin(x)] value pairs. Data renderers are passes the plot data and a reference to the plot as arguments.</p>
@@ -174,5 +176,7 @@ var ajaxdata = function(url, plot, options) {
 <pre class="code"></pre>
 
 <p>There is a third argument passed to the data renderer, dataRendererOptions.  It was not used in these examples, but can be set as a separate option on the plot to pass additional arguments into the renderer if needed.</p>
-  </body>
+  
+  </div>
+</body>
 </html>

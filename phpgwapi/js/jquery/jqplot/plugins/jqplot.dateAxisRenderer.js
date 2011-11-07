@@ -2,7 +2,7 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r792
+ * Version: 1.0.0b2_r947
  *
  * Copyright (c) 2009-2011 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
@@ -126,6 +126,21 @@
         // this.tickRenderer = $.jqplot.AxisTickRenderer;
         // this.labelRenderer = $.jqplot.AxisLabelRenderer;
         this.tickOptions.formatter = $.jqplot.DateTickFormatter;
+        // prop: tickInset
+        // Controls the amount to inset the first and last ticks from 
+        // the edges of the grid, in multiples of the tick interval.
+        // 0 is no inset, 0.5 is one half a tick interval, 1 is a full
+        // tick interval, etc.
+        this.tickInset = 0;
+        // prop: drawBaseline
+        // True to draw the axis baseline.
+        this.drawBaseline = true;
+        // prop: baselineWidth
+        // width of the baseline in pixels.
+        this.baselineWidth = null;
+        // prop: baselineColor
+        // CSS color spec for the baseline.
+        this.baselineColor = null;
         this.daTickInterval = null;
         this._daTickInterval = null;
 		
@@ -198,6 +213,43 @@
                 }
 				sum += intv;              
             }
+
+            if (s.renderer.bands) {
+                if (s.renderer.bands.hiData.length) {
+                    var bd = s.renderer.bands.hiData;
+                    for (var j=0, l=bd.length; j < l; j++) {
+                        if (this.name === 'xaxis' || this.name === 'x2axis') {
+                            bd[j][0] = new $.jsDate(bd[j][0]).getTime();
+                            if ((bd[j][0] != null && bd[j][0] > db.max) || db.max == null) {
+                                db.max = bd[j][0];
+                            }                        
+                        }              
+                        else {
+                            bd[j][1] = new $.jsDate(bd[j][1]).getTime();
+                            if ((bd[j][1] != null && bd[j][1] > db.max) || db.max == null) {
+                                db.max = bd[j][1];
+                            }
+                        }
+                    }
+                }
+                if (s.renderer.bands.lowData.length) {
+                    var bd = s.renderer.bands.lowData;
+                    for (var j=0, l=bd.length; j < l; j++) {
+                        if (this.name === 'xaxis' || this.name === 'x2axis') {
+                            bd[j][0] = new $.jsDate(bd[j][0]).getTime();
+                            if ((bd[j][0] != null && bd[j][0] < db.min) || db.min == null) {
+                                db.min = bd[j][0];
+                            }                       
+                        }              
+                        else {
+                            bd[j][1] = new $.jsDate(bd[j][1]).getTime();
+                            if ((bd[j][1] != null && bd[j][1] < db.min) || db.min == null) {
+                                db.min = bd[j][1];
+                            }
+                        }
+                    }
+                }
+            }
 			
 			var tempf = 0,
 				tempn=0;
@@ -220,10 +272,14 @@
     
     // called with scope of an axis
     $.jqplot.DateAxisRenderer.prototype.reset = function() {
-        this.min = this._min;
-        this.max = this._max;
-        this.tickInterval = this._tickInterval;
-        this.numberTicks = this._numberTicks;
+        this.min = this._options.min;
+        this.max = this._options.max;
+        this.tickInterval = this._options.tickInterval;
+        this.numberTicks = this._options.numberTicks;
+        this._autoFormatString = '';
+        if (this._overrideFormatString && this.tickOptions && this.tickOptions.formatString) {
+            this.tickOptions.formatString = '';
+        }
         this.daTickInterval = this._daTickInterval;
         // this._ticks = this.__ticks;
     };
@@ -429,10 +485,16 @@
             }
         }
 
+        if (this.tickInset) {
+            this.min = this.min - this.tickInset * this.tickInterval;
+            this.max = this.max + this.tickInset * this.tickInterval;
+        }
 
         if (this._daTickInterval == null) {
             this._daTickInterval = this.daTickInterval;    
         }
+
+        ticks = null;
     };
    
 })(jQuery);

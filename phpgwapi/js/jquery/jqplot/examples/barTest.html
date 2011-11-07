@@ -6,22 +6,21 @@
   <title>Bar Charts</title>
   <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
   
-  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.css" />
+  <link rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
   <link rel="stylesheet" type="text/css" href="examples.css" />
   
   <!-- BEGIN: load jquery -->
-  <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.min.js"></script>
   <!-- END: load jquery -->
 
   
   
   <!-- BEGIN: load jqplot -->
-  <script language="javascript" type="text/javascript" src="../jquery.jqplot.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.highlighter.js"></script>
-  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pointLabels.js"></script>
+  <script language="javascript" type="text/javascript" src="../jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.barRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pieRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../plugins/jqplot.pointLabels.min.js"></script>
   <!-- END: load jqplot -->
 
   <style type="text/css">
@@ -50,6 +49,7 @@
   </style>
   
   <script class="code" type="text/javascript">$(document).ready(function(){
+        $.jqplot.config.enablePlugins = true;
         var s1 = [2, 6, 7, 10];
         var ticks = ['a', 'b', 'c', 'd'];
         
@@ -243,23 +243,14 @@
 		});
 	});</script> 
 
-  
-    <script type="text/javascript">    
-        $(document).ready(function(){
-            $('script.code').each(function(index) {
-                $('pre.code').eq(index).text($(this).html());
-            });
-            $('script.common').each(function(index) {
-                $('pre.common').eq(index).html($(this).html());
-            });
-            $(document).unload(function() {$('*').unbind(); });
-        });
-    </script> 
+<script type="text/javascript" src="example.js"></script>
     
   </head>
   <body>
-<?php include "nav.inc"; ?>
-    <p>To create bar plots, you have to include the "jqplot.barRenderer.js" file in your source.</p>
+    <?php include "topbanner.inc"; ?>
+    <div class="example-content">
+    <?php include "nav.inc"; ?>
+    <p>To create bar plots, you have to include the "jqplot.barRenderer.min.js" file in your source.</p>
 
     <p>Below is a default bar plot.  Bars will highlight on mouseover.  Events are triggered when you mouseover a bar and also when you click on a bar.  Here We capture the 'jqplotDataClick' event and display the clicked series index, point index and data values. When series data is assigned as a 1-dimensional array as in this example, jqPlot automatically converts it into a 2-dimensional array for plotting.  So a series defined as [2, 6, 7, 10] will become [[1,2], [2,6], [3,7], [4,10]].<p>
     
@@ -303,5 +294,7 @@
 <pre class="code"></pre>
 
 
-  </body>
+  
+  </div>
+</body>
 </html>

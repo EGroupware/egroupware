@@ -2,7 +2,7 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r792
+ * Version: 1.0.0b2_r947
  *
  * Copyright (c) 2009-2011 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
@@ -670,17 +670,18 @@
 
 
                             td1 = $(document.createElement('td'));
-                            td1.addClass('jqplot-table-legend');
+                            td1.addClass('jqplot-table-legend jqplot-table-legend-swatch');
                             td1.css({textAlign: 'center', paddingTop: rs});
 
                             div0 = $(document.createElement('div'));
+                            div0.addClass('jqplot-table-legend-swatch-outline');
                             div1 = $(document.createElement('div'));
                             div1.addClass('jqplot-table-legend-swatch');
                             div1.css({backgroundColor: color, borderColor: color});
                             td1.append(div0.append(div1));
 
                             td2 = $(document.createElement('td'));
-                            td2.addClass('jqplot-table-legend');
+                            td2.addClass('jqplot-table-legend jqplot-table-legend-label');
                             td2.css('paddingTop', rs);
 
                             if (this.escapeHtml){
@@ -761,14 +762,13 @@
                 }
             }
         }
-        this.target.bind('mouseout', {plot:this}, function (ev) { unhighlight(ev.data.plot); });
     }
     
     // called with scope of plot
     function postParseOptions(options) {
         for (var i=0; i<this.series.length; i++) {
             this.series[i].seriesColors = this.seriesColors;
-            this.series[i].colorGenerator = this.colorGenerator;
+            this.series[i].colorGenerator = $.jqplot.colorGenerator;
         }
     }
     
@@ -882,6 +882,7 @@
         }
         
         var hctx = this.plugins.pieRenderer.highlightCanvas.setContext();
+        this.eventCanvas._elem.bind('mouseleave', {plot:this}, function (ev) { unhighlight(ev.data.plot); });
     }
     
     $.jqplot.preInitHooks.push(preInit);
