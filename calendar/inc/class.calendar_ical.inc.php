@@ -2303,7 +2303,7 @@ class calendar_ical extends calendar_boupdate
 								$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
 								// sometimes we do not get an egw_time object but no exception is thrown
 								// may be php 5.2.x related. occurs when a NokiaE72 tries to open Outlook invitations
-								if ($tz instanceof egw_time)
+								if ($tz instanceof DateTimeZone)
 								{
 									$event['tzid'] = $tz->getName();
 								}
@@ -2311,7 +2311,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									error_log(__METHOD__ . '() unknown TZID='
 										. $attributes['params']['TZID'] . ', defaulting to timezone "'
-										. date_default_timezone_get() . '".');
+										. date_default_timezone_get() . '".'.array2string($tz));
 									$event['tzid'] = date_default_timezone_get();	// default to current timezone
 								}
 							}
@@ -2319,7 +2319,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								error_log(__METHOD__ . '() unknown TZID='
 									. $attributes['params']['TZID'] . ', defaulting to timezone "'
-									. date_default_timezone_get() . '".');
+									. date_default_timezone_get() . '".'.$e->getMessage());
 								$event['tzid'] = date_default_timezone_get();	// default to current timezone
 							}
 						}
