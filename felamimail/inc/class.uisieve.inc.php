@@ -287,6 +287,7 @@
 			}
 			else
 			{
+				 $this->errorStack['message'] = lang('Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)');
 				return false;
 			}
 		}
@@ -601,6 +602,7 @@
 					}
 					else
 					{
+						if(isset($_POST['save'])) unset($_POST['save']);
 						$this->t->set_var('validation_errors',implode('<br />',$this->errorStack));
 					}
 				}

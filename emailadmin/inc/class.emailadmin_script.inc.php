@@ -363,8 +363,8 @@ class emailadmin_script {
  
 		if ($this->vacation) {
 			$vacation = $this->vacation;
-			if (!$vacation['days']) $vacation['days'] = $default->vacation_days;
-			if (!$vacation['text']) $vacation['text'] = $default->vacation_text;
+			if (!$vacation['days']) $vacation['days'] = ($default->vacation_days ? $default->vacation_days:'');
+			if (!$vacation['text']) $vacation['text'] = ($default->vacation_text ? $default->vacation_text:'');
 			if (!$vacation['status']) $vacation['status'] = 'on';
 			
 			// filter out invalid addresses.
@@ -505,9 +505,10 @@ class emailadmin_script {
  
 		$newscript = $newscripthead . $newscriptbody . $newscriptfoot;
 		$this->script = $newscript;
-		#print "<pre>$newscript</pre>"; exit;
+		//error_log(__METHOD__.__LINE__.array2string($newscript));
+		//print "<pre>$newscript</pre>"; exit;
 		$scriptfile = $this->name;
-		#print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
+		//print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
 		if (!$connection->installScript($this->name, $newscript, true)) {
 			$this->errstr = 'updateScript: putscript failed: ' . $connection->errstr;
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
