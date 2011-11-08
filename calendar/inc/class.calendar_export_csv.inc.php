@@ -187,27 +187,51 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl($definition = null) {
 		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
-		
 		$start= new egw_time($states['date']);
-		if($states['view'] == 'week') {
+		if($states['view'] == 'week')
+		{
 			$days = isset($_GET['days']) ? $_GET['days'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['days_in_weekview'];
 			if ($days != 5) $days = 7;
 			$end = "+$days days";
-		} else {
+			$end = strtotime($end, $start->format('ts'))-1;
+		}
+		elseif ($states['view'] == 'listview')
+		{
+			$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+
+			// Use UI to get dates
+			$ui = new calendar_uilist();
+			$ui->get_rows($list);
+			if($ui->first) $start = $ui->first;
+			if($ui->last) $end = $ui->last;
+
+			// Special handling
+			if($list['filter'] == 'all') $start = $end = null;
+			if($list['filter'] == 'before')
+			{
+				$end = $start;
+				$start = null;
+			}
+			$ui = null;
+		}
+		else
+		{
 			$end = '+1 ' . $states['view'];
+			$end = strtotime($end, $start->format('ts'))-1;
 		}
 
 		$prefs = unserialize($GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
-		return array(
+		$data = array(
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(
 				'plugin_override' => true, // Plugin overrides preferences
 				'select'	=> $prefs['selection']['select'] ? $prefs['selection']['select'] : 'criteria',
-				'start'		=> $start->format('ts'),
-				'end'		=> strtotime($end, $start->format('ts'))-1,
+				'start'		=> is_object($start) ? $start->format('ts') : $start,
+				'end'		=> $end,
 				'owner'		=> $states['owner']
 			)
 		);
+		return $data;
 	}
 
 	/**
