@@ -57,6 +57,20 @@ class calendar_groupdav extends groupdav_handler
 	var $client_shared_uid_exceptions = true;
 
 	/**
+	 * Enable or disable Schedule-Tag handling:
+	 * - return Schedule-Tag header in PUT response
+	 * - update only status and alarms of calendar owner, if If-Schedule-Tag-Match header in PUT
+	 *
+	 * Disabling Schedule-Tag for iCal, as current implementation seems to create too much trouble :-(
+	 * - iCal on OS X always uses If-Schedule-Tag-Match, even if other stuff in event is changed (eg. title)
+	 * - iCal on iOS allways uses both If-Schedule-Tag-Match and If-Match (ETag)
+	 * - Lighting 1.0 is NOT using it
+	 *
+	 * @var boolean
+	 */
+	var $use_schedule_tag = false;
+
+	/**
 	 * Are we using id, uid or caldav_name for the path/url
 	 *
 	 * Get's set in constructor to 'caldav_name' and groupdav_handler::$path_extension = ''!
@@ -243,9 +257,12 @@ class calendar_groupdav extends groupdav_handler
 				$props = array(
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
 					'getetag' => '"'.$etag.'"',
-					'schedule-tag' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-tag', '"'.$schedule_tag.'"'),
 					'getlastmodified' => max($event['modified'], $event['max_user_modified']),
 				);
+				if ($this->use_schedule_tag)
+				{
+					$props['schedule-tag'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-tag', '"'.$schedule_tag.'"');
+				}
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
@@ -408,8 +425,10 @@ class calendar_groupdav extends groupdav_handler
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
-		header('Schedule-Tag: "'.$schedule_tag.'"');
-
+		if ($this->use_schedule_tag)
+		{
+			header('Schedule-Tag: "'.$schedule_tag.'"');
+		}
 		return true;
 	}
 
@@ -579,8 +598,8 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$eventId = $oldEvent['id'];
 
-			// client specified a CalDAV Scheduling schedule-tag precondition
-			if (isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
+			//client specified a CalDAV Scheduling schedule-tag precondition
+			if ($this->use_schedule_tag && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
 			{
 				$schedule_tag_match = $_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'];
 				if ($schedule_tag_match[0] == '"') $schedule_tag_match = substr($schedule_tag_match, 1, -1);
@@ -588,28 +607,48 @@ class calendar_groupdav extends groupdav_handler
 
 				if ($schedule_tag_match !== $schedule_tag)
 				{
+					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
 					return '412 Precondition Failed';
 				}
 				// update only participant status and alarms of current user
-				if (($events = $handler->icaltoegw($vCalendar)))
+				// fix for iCal on OS X, which uses only a schedule-tag (no etag), if event has no participants (only calendar owner)
+				// --> do regular calendar update as with matching etag (otherwise no updates possible)
+				if (!(count($oldEvent['participants']) == 1 && isset($oldEvent['participants'][$user])) &&
+					($events = $handler->icaltoegw($vCalendar)))
 				{
 					// todo check behavior for recuring events
 					foreach($events as $event)
 					{
-						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId, user=$user, event=".array2string($event));
-						if ($event['participants'][$user] != $oldEvent['participants'][$user] &&
-							!$this->bo->set_status($eventId, $user, $event['participants'][$user], $event['recurrence']))
+						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId, user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', event=".array2string($event));
+						if (isset($event['participants']) && $event['participants'][$user] !== $oldEvent['participants'][$user])
 						{
-							if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($eventId, $user, '{$event['participants'][$user]}')");
-							return '403 Forbidden';
+							if (!$this->bo->set_status($eventId, $user, $event['participants'][$user], $event['recurrence']))
+							{
+								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($eventId, $user, '{$event['participants'][$user]}')");
+								return '403 Forbidden';
+							}
+							else
+							{
+								if ($this->debug) error_log(__METHOD__."() set_status($eventId, $user, ".array2string($event['participants'][$user])." , $event[recurrence])");
+							}
 						}
-						if ($this->debug) error_log(__METHOD__."() set_status($eventId, $user, ".array2string($event['participants'][$user])." , $event[recurrence])");
-						// import alarms
-						$this->sync_alarms($eventId, (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
+						// import alarms, if given and changed
+						if ((array)$event['alarm'] !== (array)$oldEvent['alarm'])
+						{
+							$this->sync_alarms($eventId, (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
+						}
+						elseif (!isset($event['participants']) || $event['participants'][$user] === $oldEvent['participants'][$user])
+						{
+							error_log(__METHOD__."(,,$user) schedule-tag given, but NO change for current user event=".array2string($event).', old-event='.array2string($oldEvent));
+							return '412 Precondition Failed';
+						}
 					}
+					// we should not return an etag here, as we never store the PUT ical byte-by-byte
+					//header('ETag: "'.$etag.'"');
 					header('Schedule-Tag: "'.$schedule_tag.'"');
 					return '204 No Content';
 				}
+				if ($this->debug && !isset($events)) error_log(__METHOD__."(,,$user) only schedule-tag given for event without participants (only calendar owner) --> handle as regular PUT");
 			}
 			if ($return_no_access)
 			{
@@ -641,12 +680,16 @@ class calendar_groupdav extends groupdav_handler
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
 			self::etag2value($this->http_if_match), false, 0, $this->groupdav->current_user_principal, $user, $charset, $id)))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned false");
+			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned ".array2string($cal_id));
 			if ($eventId && $cal_id === false)
 			{
 				// ignore import failures
 				$cal_id = $eventId;
 				$retval = true;
+			}
+			elseif ($cal_id === 0)	// etag failure
+			{
+				return '412 Precondition Failed';
 			}
 			else
 			{
@@ -654,11 +697,13 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 
-		$etag = $this->get_etag($cal_id, $schedule_tag);
-		// we should not return an etag here, as we never store the PUT ical byte-by-byte
-		//header('ETag: "'.$etag.'"');
-		header('Schedule-Tag: "'.$schedule_tag.'"');
-
+		if ($this->use_schedule_tag)
+		{
+			$etag = $this->get_etag($cal_id, $schedule_tag);
+			// we should not return an etag here, as we never store the PUT ical byte-by-byte
+			//header('ETag: "'.$etag.'"');
+			header('Schedule-Tag: "'.$schedule_tag.'"');
+		}
 		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
 		if ($retval !== true && self::$path_attr != 'caldav_name')
 		{

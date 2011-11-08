@@ -484,6 +484,9 @@ class calendar_ical extends calendar_boupdate
 								case 'r':
 									$participantURL = 'urn:uuid:'.common::generate_uid('resources', substr($uid, 1));
 									$cutype = groupdav_principals::resource_is_location(substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
+									// unset resource email (email of responsible user) as iCal at least has problems,
+									// if resonpsible is also pariticipant or organizer
+									unset($info['email']);
 									break;
 								case 'u':	// account
 								case 'c':	// contact
@@ -1325,7 +1328,7 @@ class calendar_ical extends calendar_boupdate
 
 				// as we no longer export event owner/ORGANIZER as only participant, we have to re-add owner as participant
 				// to not loose him, as EGroupware knows events without owner/ORGANIZER as participant
-				if (isset($event_info['stored_event']['participants'][$event['owner']]) && !isset($event['participant'][$event['owner']]))
+				if (isset($event_info['stored_event']['participants'][$event['owner']]) && !isset($event['participants'][$event['owner']]))
 				{
 					$event['participant'][$event['owner']] = $event_info['stored_event']['participants'][$event['owner']];
 				}
@@ -1726,7 +1729,8 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		return $return_id;
+
+		return $updated_id === 0 ? 0 : $return_id;
 	}
 
 	/**
