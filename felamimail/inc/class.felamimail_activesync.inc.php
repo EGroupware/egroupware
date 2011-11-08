@@ -223,13 +223,21 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			if (!$this->mail->openConnection(self::$profileID,false))
 			{
+				error_log(__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage());
 				throw new egw_exception_not_found(__METHOD__."($account) can not open connection!");
 			}
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
-			if (!$this->mail->icServer->_connected) $this->mail->openConnection(self::$profileID,false);
+			if (!$this->mail->icServer->_connected)
+			{
+				if (!$this->mail->openConnection(self::$profileID,false))
+				{
+					error_log(__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage());
+					throw new egw_exception_not_found(__METHOD__."($account) can not open connection!");
+				}
+			}
 		}
 		$this->_wasteID = $this->mail->getTrashFolder(false);
 		//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
@@ -1298,10 +1306,10 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	 */
 	public function StatMessage($folderid, $id)
 	{
-        $messages = $this->fetchMessages($folderid, NULL, (array)$id);
-        $stat = array_shift($messages);
-        //debugLog (__METHOD__."('$folderid','$id') returning ".array2string($stat));
-        return $stat;
+		$messages = $this->fetchMessages($folderid, NULL, (array)$id);
+		$stat = array_shift($messages);
+		//debugLog (__METHOD__."('$folderid','$id') returning ".array2string($stat));
+		return $stat;
 	}
 
 	/**
@@ -1362,6 +1370,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		//debugLog(__METHOD__.__LINE__);
 		$this->_connect($this->account);
 		$messagelist = array();
+		// if not connected, any further action must fail
+		if (!$this->mail->icServer->_connected) return $messagelist;
 		if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
 		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id));
