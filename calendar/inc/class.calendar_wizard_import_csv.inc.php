@@ -28,6 +28,13 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 		$tracking = new calendar_tracking();
 		$this->mapping_fields = array('id' => 'Calendar ID') + $tracking->field2label;
 
+		// List each custom field
+		unset($this->mapping_fields['customfields']);
+		$custom = config::get_customfields('calendar');
+		foreach($custom as $name => $data) {
+			$this->mapping_fields['#'.$name] = $data['label'];
+		}
+
 		// Actions
 		$this->actions = array(
 			'none'		=>	lang('none'),
