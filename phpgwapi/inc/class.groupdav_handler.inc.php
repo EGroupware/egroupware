@@ -229,7 +229,7 @@ abstract class groupdav_handler
 	 */
 	static function etag2value($etag)
 	{
-		list(,$val) = explode(':',substr($etag,4,-4),2);
+		list(,$val) = explode(':',$etag,2);
 
 		return $val;
 	}
@@ -353,6 +353,7 @@ abstract class groupdav_handler
 				'iphone'            => 'iphone',	// Apple iPhone iCal
 				'davkit'            => 'davkit',	// Apple iCal 10.6
 				'coredav'           => 'coredav',	// Apple iCal 10.7
+				'calendarstore'     => 'calendarstore',	// Apple iCal 5.0.1 under OS X 10.7.2
 				'dataaccess'        => 'dataaccess',	// Apple addressbook iPhone
 				'cfnetwork'         => 'cfnetwork',	// Apple Addressbook 10.6/7
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
