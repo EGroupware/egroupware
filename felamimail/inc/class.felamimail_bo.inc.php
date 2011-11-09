@@ -1763,10 +1763,12 @@ class felamimail_bo
 		*
 		* @param _subscribedOnly boolean get subscribed or all folders
 		* @param _getCounters    boolean get get messages counters
+		* @param _alwaysGetDefaultFolders boolean this triggers to ignore the possible notavailableautofolders - preference
+		*			as activeSync needs all folders like sent, trash, drafts, templates and outbox - if not present devices may crash
 		*
 		* @return array with folder objects. eg.: INBOX => {inbox object}
 		*/
-		function getFolderObjects($_subscribedOnly=false, $_getCounters=false)
+		function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false)
 		{
 			$isUWIMAP = false;
 
@@ -1907,7 +1909,7 @@ class felamimail_bo
 							$folderPrefix = $personalPrefix;
 						}
 					}
-					if ($this->mailPreferences->preferences['notavailableautofolders'] && !empty($this->mailPreferences->preferences['notavailableautofolders']))
+					if (!$_alwaysGetDefaultFolders && $this->mailPreferences->preferences['notavailableautofolders'] && !empty($this->mailPreferences->preferences['notavailableautofolders']))
 					{
 						$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences->preferences['notavailableautofolders']));
 					} else {
@@ -1948,7 +1950,15 @@ class felamimail_bo
 									if ($GLOBALS['egw_info']['user']['apps']['activesync']) $createfolder = true;
 									break;
 							}
-							if ($createfolder && self::folderExists($folderName)) $createfolder = false;
+							if ($createfolder && self::folderExists($folderName))
+							{
+								$createfolder = false;
+								if ($_alwaysGetDefaultFolders)
+								{
+									if (!in_array($folderName,$foldersNameSpace['personal']['all'])) $foldersNameSpace['personal']['all'][] = $folderName;
+									if (!in_array($folderName,$foldersNameSpace['personal']['subscribed'])) $foldersNameSpace['personal']['subscribed'][] = $folderName;
+								}
+							}
 							if($createfolder === true && $this->createFolder('', $folderName, true)) {
 								$foldersNameSpace['personal']['all'][] = $folderName;
 								$foldersNameSpace['personal']['subscribed'][] = $folderName;

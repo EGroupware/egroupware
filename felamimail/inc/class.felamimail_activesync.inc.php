@@ -271,7 +271,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		/*foreach($available_accounts as $account)*/ $account = 0;
 		{
 			$this->_connect($account);
-			if (!isset($this->folders)) $this->folders = $this->mail->getFolderObjects(true,false);
+			if (!isset($this->folders)) $this->folders = $this->mail->getFolderObjects(true,false,$_alwaysGetDefaultFolders=true);
 
 			foreach ($this->folders as $folder => $folderObj) {
 				$folderlist[] = $f = array(
