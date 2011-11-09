@@ -1008,11 +1008,15 @@ return array();	// temporary disabling meeting requests from calendar
 		}
 		else
 		{
-			debugLog("airsyncbasebody!");
-			$message->airsyncbasebody = new SyncAirSyncBaseBody();
-			$message->airsyncbasenativebodytype=1;
-			$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
+			if (strlen($event['description']) > 0)
+			{
+				debugLog("airsyncbasebody!");
+				$message->airsyncbasebody = new SyncAirSyncBaseBody();
+				$message->airsyncbasenativebodytype=1;
+				$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
+			}
 		}
+		$message->md5body = md5($event['description']);
 
 		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');
 		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');

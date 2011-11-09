@@ -248,11 +248,15 @@ class infolog_activesync implements activesync_plugin_write
 					}
 					else
 					{
-						debugLog("airsyncbasebody!");
-						$message->airsyncbasebody = new SyncAirSyncBaseBody();
-						$message->airsyncbasenativebodytype=1;
-						$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->airsyncbasebody);
+						if (strlen ($infolog[$attr]) > 0)
+						{
+							debugLog("airsyncbasebody!");
+							$message->airsyncbasebody = new SyncAirSyncBaseBody();
+							$message->airsyncbasenativebodytype=1;
+							$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->airsyncbasebody);
+						}
 					}
+					$message->md5body = md5($infolog[$attr]);
 					break;
 
 				case 'info_cat':
