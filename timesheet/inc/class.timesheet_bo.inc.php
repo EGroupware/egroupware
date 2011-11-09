@@ -262,6 +262,40 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * checks if the user has enough rights for a certain operation
 	 *
+	 * Rights are given via status config admin/noadmin
+	 *
+	 * @param array|int $data=null use $this->data or $this->data['ts_id'] (to fetch the data)
+	 * @param int $user=null for which user to check, default current user
+	 * @return boolean true if the rights are ok, false if no rights
+	 */
+	function check_statusForEditRights($data=null,$user=null)
+	{
+		if (is_null($data) || (int)$data == $this->data['ts_id'])
+		{
+			$data =& $this->data;
+		}
+		if (!is_array($data))
+		{
+			$save_data = $this->data;
+			$data = $this->read($data,true);
+			$this->data = $save_data;
+
+			if (!$data) return null; 	// entry not found
+		}
+		if (!$user) $user = $this->user;
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $data['ts_status'])
+		{
+			if ($this->status_labels_config[$data['ts_status']]['admin'])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * checks if the user has enough rights for a certain operation
+	 *
 	 * Rights are given via owner grants or role based acl
 	 *
 	 * @param int $required EGW_ACL_READ, EGW_ACL_WRITE, EGW_ACL_ADD, EGW_ACL_DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET

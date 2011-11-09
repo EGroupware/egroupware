@@ -708,6 +708,11 @@ class timesheet_ui extends timesheet_bo
 				$readonlys["edit[$row[ts_id]]"] = true;
 				$row['class'] .= ' rowNoEdit ';
 			}
+			if (!$this->check_statusForEditRights($row))
+			{
+				$readonlys["edit[$row[ts_id]]"] = true;
+				$row['class'] .= ' rowNoEdit ';
+			}
 			if (!$this->check_acl(EGW_ACL_DELETE,$row))
 			{
 				$readonlys["delete[$row[ts_id]]"] = true;
