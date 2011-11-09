@@ -803,11 +803,11 @@ class calendar_bo
 					$time->setTime(23, 59, 59);
 					$event['recur_enddate'] = egw_time::to($time, $date_format);
 				}
-				$timestamps = array('modified','created');
+				$timestamps = array('modified','created','max_user_modified');
 			}
 			else
 			{
-				$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','max_user_modified');
 			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
 			foreach ($timestamps as $ts)
