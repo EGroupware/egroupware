@@ -194,7 +194,7 @@ class boetemplate extends soetemplate
 				}
 				else
 				{
-					$value = str_replace(array("'",'"'),array('\\\'','&quot;'),$value);
+					$value = str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$value);
 					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
 				}
 			}
@@ -567,7 +567,10 @@ class boetemplate extends soetemplate
 	 */
 	static function isset_array($arr,$idx)
 	{
-		$idxs = explode('[',str_replace(']','',$idx));
+		if (count($idxs = explode('[', $idx, 2)) > 1)
+		{
+			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
+		}
 		$last_idx = array_pop($idxs);
 		$pos = &$arr;
 		foreach($idxs as $idx)
@@ -598,7 +601,10 @@ class boetemplate extends soetemplate
 		{
 			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx','$val') \$arr is no array!");
 		}
-		$idxs = explode('[',str_replace(']','',$idx));
+		if (count($idxs = explode('[', $idx, 2)) > 1)
+		{
+			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
+		}
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
@@ -627,7 +633,10 @@ class boetemplate extends soetemplate
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
-		$idxs = explode('[',str_replace(']','',$idx));
+		if (count($idxs = explode('[', $idx, 2)) > 1)
+		{
+			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
+		}
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
@@ -656,7 +665,10 @@ class boetemplate extends soetemplate
 		{
 			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx') \$arr is no array!");
 		}
-		$idxs = explode('[',str_replace(']','',$idx));
+		if (count($idxs = explode('[', $idx, 2)) > 1)
+		{
+			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
+		}
 		$last_idx = array_pop($idxs);
 		$pos = &$arr;
 		foreach($idxs as $idx)
