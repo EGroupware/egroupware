@@ -967,8 +967,10 @@ class calendar_boupdate extends calendar_bo
 
 			return EGW_ACL_EDIT & $resource['rights'];
 		}
+		if (!is_array($event) && !($event = $this->read($event))) return false;
+
 		// regular user and groups
-		return $this->check_perms(EGW_ACL_EDIT,0,$uid);
+		return isset($event['participants'][$uid]) && $this->check_perms(EGW_ACL_EDIT,0,$uid);
 	}
 
 	/**
