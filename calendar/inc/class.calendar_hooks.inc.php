@@ -413,16 +413,6 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False
 			),
-			'display_color' => array(
-				'type'   => 'input',
-				'size'   => 9,
-				'label'  => 'Select a color for this calendar',
-				'name'   => 'display_color',
-				'help'   => 'The Apple iCal Apps use this color to display events from this calendar.',
-				'forced' => '#0040A0FF',
-				'xmlrpc' => True,
-				'admin'  => False
-			),
 			'default_private' => array(
 				'type'  => 'check',
 				'label' => 'Set new events to private',
