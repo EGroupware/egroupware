@@ -1,6 +1,6 @@
 <?php
 /**
-* eGroupWare - EditableTemplates - HTML User Interface
+* EGroupware - EditableTemplates - HTML User Interface
 *
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -2189,6 +2189,7 @@ class etemplate extends boetemplate
 			{
 				$attr = array();
 			}
+			$form_name = str_replace(array('&#x5B;','&#x5D;'), array('[',']'), $form_name);
 			$value = etemplate::get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
 			// The comment below does only aplay to normal posts, not for xajax. Files are not supported anyway by xajax atm.
 			// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
