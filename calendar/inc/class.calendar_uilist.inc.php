@@ -461,6 +461,7 @@ class calendar_uilist extends calendar_ui
         {
 		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
+		$msg = null;
 
 		// Split out combined values
 		if(strpos($action, 'status') !== false) {
@@ -527,7 +528,7 @@ class calendar_uilist extends calendar_ui
 					}
 					else
 					{
-						$failure++;
+						$failed++;
 					}
 					break;
 				case 'undelete':
@@ -542,10 +543,11 @@ class calendar_uilist extends calendar_ui
 							break;
 						}
 					}
-					$failure++;
+					$failed++;
 					break;
 				case 'status':
-					if($id && $event = $this->bo->read($id, $recur_date)) 
+					$action_msg = lang('Status changed');
+					if($id && ($event = $this->bo->read($id, $recur_date)))
 					{
 						$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
 						calendar_so::split_status($old_status, $quantity, $role);
@@ -556,11 +558,15 @@ class calendar_uilist extends calendar_ui
 							if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date))
 							{
 								$success++;
-								$msg = lang('Status changed');
+								//$msg = lang('Status changed');
+							}
+							else
+							{
+								$failed++;
 							}
 						}
 					} else {
-						$failure++;
+						$failed++;
 					}
 					break;
 				case 'timesheet-add':
@@ -578,7 +584,7 @@ class calendar_uilist extends calendar_ui
 					}
 					if(!$event) 
 					{
-						$failure++;
+						$failed++;
 						continue;
 					}
 					$timesheet = array(
@@ -620,7 +626,7 @@ class calendar_uilist extends calendar_ui
 					} 
 					else
 					{
-						$failure++;
+						$failed++;
 					}
 					$msg = lang('Timesheet entries created for ');
 					break;
@@ -628,8 +634,8 @@ class calendar_uilist extends calendar_ui
 			unset($app);
 			unset($app_id);
 		}
-
-		return ($failure == 0);
+		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).") sucess=$success, failed=$failed, action_msg='$action_msg', msg=".array2string($msg).' returning '.array2string(!$failed));
+		return !$failed;
 	}
 
 	public function get_javascript() 
