@@ -185,7 +185,7 @@ etemplate2.prototype.load = function(_url, _data)
 	this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
 }
 
-etemplate2.prototype.submit = function()
+etemplate2.prototype.submit = function(button)
 {
 	// Validator
 	/*var valid = true;
@@ -210,6 +210,30 @@ etemplate2.prototype.submit = function()
 
 	if (canSubmit)
 	{
+		// Button parameter used for submit buttons in datagrid
+		if(button)
+		{
+			values.button = button.id
+			var path = button.getPath();
+			var target = values;
+			for(var i = 0; i < path.length; i++)
+			{
+				if(!values[path[i]]) values[path[i]] = {};
+				target = values[path[i]];
+			}
+			if(target != values) 
+			{
+				var indexes = button.id.replace(/]/g,'').split('[');
+				var idx = '';
+				for(var i = 0; i < indexes.length; i++)
+				{
+					idx = indexes[i];
+					if(!target[idx] || target[idx]['$row_cont']) target[idx] = i < indexes.length -1 ? {} : true;
+					target = target[idx];
+				}
+			}
+		}
+
 		// Create the request object
 		if (typeof egw_json_request != "undefined" && this.menuaction)
 		{

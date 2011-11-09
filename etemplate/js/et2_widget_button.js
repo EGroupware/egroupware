@@ -113,7 +113,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		if (this._type != "buttononly")
 		{
 			this.clicked = true;
-			this.getInstanceManager().submit();
+			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
 			this.clicked = false;
 		}
 	},
