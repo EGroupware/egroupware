@@ -494,6 +494,7 @@ class calendar_uilist extends calendar_ui
 	{
 		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
+		$msg = null;
 
 		// Split out combined values
 		if(strpos($action, 'status') !== false)
@@ -573,7 +574,7 @@ class calendar_uilist extends calendar_ui
 					}
 					else
 					{
-						$failure++;
+						$failed++;
 					}
 					break;
 				case 'undelete':
@@ -588,9 +589,10 @@ class calendar_uilist extends calendar_ui
 							break;
 						}
 					}
-					$failure++;
+					$failed++;
 					break;
 				case 'status':
+					$action_msg = lang('Status changed');
 					if($id && ($event = $this->bo->read($id, $recur_date)))
 					{
 						$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
@@ -599,17 +601,21 @@ class calendar_uilist extends calendar_ui
 						{
 							//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
 							$new_status = calendar_so::combine_status($status, $quantity, $role);
-							if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
+							if ($this->bo->set_status($event,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
 								false,true,$skip_notification))
 							{
 								$success++;
-								$msg = lang('Status changed');
+								//$msg = lang('Status changed');
+							}
+							else
+							{
+								$failed++;
 							}
 						}
 					}
 					else
 					{
-						$failure++;
+						$failed++;
 					}
 					break;
 				case 'timesheet-add':
@@ -627,7 +633,7 @@ class calendar_uilist extends calendar_ui
 					}
 					if(!$event)
 					{
-						$failure++;
+						$failed++;
 						continue;
 					}
 					$timesheet = array(
@@ -670,14 +676,14 @@ class calendar_uilist extends calendar_ui
 					}
 					else
 					{
-						$failure++;
+						$failed++;
 					}
 					$msg = lang('Timesheet entries created for ');
 					break;
 			}
 		}
-
-		return ($failure == 0);
+		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).") sucess=$success, failed=$failed, action_msg='$action_msg', msg=".array2string($msg).' returning '.array2string(!$failed));
+		return !$failed;
 	}
 
 	/**
