@@ -587,6 +587,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$form_name = self::form_name($cname, $this->id);
 		$value = self::get_array($content, $form_name);
 
+		// On client, rows does not get its own namespace, but all apps are expecting it
+		$value[$form_name]['rows'] = $value;
+
 		// Save current column settings as default (admins only)
 		if($value['as_default'])
 		{
