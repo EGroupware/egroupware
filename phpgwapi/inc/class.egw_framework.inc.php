@@ -1269,7 +1269,9 @@ abstract class egw_framework
 		if (preg_match('/^[a-z0-9_]+$/i', $app))
 		{
 			$response = egw_json_response::get();
-			$response->script('window.egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences'][$app]).', "'.$app.'");');
+			$pref = $GLOBALS['egw_info']['user']['preferences'][$app];
+			if(!$pref) $pref = Array();
+			$response->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
 		}
 	}
 }
