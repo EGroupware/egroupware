@@ -228,6 +228,7 @@ class calendar_so
 			}
 		}
 
+		$need_max_user_modified = array();
 		// participants, if a recur_date give, we read that recurance, plus the one users from the default entry with recur_date=0
 		// sorting by cal_recur_date ASC makes sure recurence status always overwrites series status
 		foreach($this->db->select($this->user_table,'*',array(
@@ -242,9 +243,21 @@ class calendar_so
 			$events[$row['cal_id']]['participants'][$uid] = $status;
 			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
 
-			if (($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$row['cal_id']]['max_user_modified'])
+			if ($events[$row['cal_id']]['recur_type'])
+			{
+				$need_max_user_modified[$row['cal_id']] = $row['cal_id'];
+			}
+			elseif (($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$row['cal_id']]['max_user_modified'])
 			{
 				$events[$row['cal_id']]['max_user_modified'] = $modified;
+			}
+		}
+		// max_user_modified for recurring events has to include all recurrences, above code only querys $recur_date!
+		if ($need_max_user_modified)
+		{
+			foreach($this->max_user_modified($need_max_user_modified) as $id => $modified)
+			{
+				$events[$id]['max_user_modified'] = $modified;
 			}
 		}
 
@@ -1582,6 +1595,10 @@ ORDER BY cal_user_type, cal_usre_id
 			'cal_start'  => $start,
 		),__LINE__,__FILE__,'calendar');
 
+		if (!is_array($participants))
+		{
+			error_log(__METHOD__."($cal_id, $start, $end, ".array2string($participants).") participants is NO array! ".function_backtrace());
+		}
 		foreach($participants as $uid => $status)
 		{
 			if ($status == 'G') continue;	// dont save group-invitations
