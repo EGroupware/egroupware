@@ -168,7 +168,9 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			// Automatic conversions
-			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups);
+			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups, 
+				$_definition->plugin_options['convert']
+			);
 
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
