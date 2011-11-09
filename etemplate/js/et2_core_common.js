@@ -150,7 +150,7 @@ function et2_js_pseudo_funcs(_val, _cname)
 	
 	if (_val.indexOf('egw::lang(') != -1)
 	{
-		_val = _val.replace('/egw::lang\(/g','egw.lang(');
+		_val = _val.replace(/egw::lang\(/g,'egw.lang(');
 	}
 
 	// ToDo: inserts the styles of a named template
