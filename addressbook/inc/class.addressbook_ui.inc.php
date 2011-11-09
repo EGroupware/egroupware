@@ -249,7 +249,9 @@ class addressbook_ui extends addressbook_bo
 			$content['nm']['search'] = $_GET['search'];
 		}
 		if (isset($typeselection)) $content['nm']['col_filter']['tid'] = $typeselection;
-
+		// save the tid for use in creating new addressbook entrys via UI. Current tid is to be used as type of new entrys
+		//error_log(__METHOD__.__LINE__.' '.$content['nm']['col_filter']['tid']);
+		egw_cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
 		if ($this->lists_available())
 		{
 			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('none')));
@@ -1672,7 +1674,10 @@ class addressbook_ui extends addressbook_bo
 					}
 				}
 				$new_type = array_keys($this->content_types);
-				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : $new_type[0];
+				// fetch active type to preset the type, if param typeid is not passed
+				$active_tid = egw_cache::getSession('addressbook','active_tid');
+				if ($active_tid && strtoupper($active_tid) === 'D') unset($active_tid);
+				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : ($active_tid?$active_tid:$new_type[0]);
 				foreach($this->get_contact_columns() as $field)
 				{
 					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
