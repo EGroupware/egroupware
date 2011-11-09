@@ -617,16 +617,6 @@ class groupdav extends HTTP_WebDAV_Server
 			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
 		}
 
-		if (strlen($user_preferences['calendar']['display_color']) == 9 &&
-			$user_preferences['calendar']['display_color'][0] == '#')
-		{
-			$display_color = $user_preferences['calendar']['display_color'];
-		}
-		else
-		{
-			$display_color = '#0040A0FF';
-		}
-
 		$account = $this->accounts->read($account_lid);
 		$displayname = translation::convert($account['account_fullname'],translation::charset(),'utf-8');
 
@@ -643,26 +633,27 @@ class groupdav extends HTTP_WebDAV_Server
 			'owner' => array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
 		);
 
-		$displayname = translation::convert(lang($app).' '.
-			common::grab_owner_name($user),$this->egw_charset,'utf-8');
 		switch ($app)
 		{
-			case 'calendar':
-				$props['calendar-color'] = self::mkprop(groupdav::ICAL,'calendar-color',$display_color);
-				break;
-			case 'infolog':
-				break;
 			case 'inbox':
-				$displayname = lang('Scheduling inbox').' '.common::grab_owner_name($user);
+				$props['displayname'] = lang('Scheduling inbox').' '.common::grab_owner_name($user);
 				break;
 			case 'outbox':
-				$displayname = lang('Scheduling outbox').' '.common::grab_owner_name($user);
+				$props['displayname'] = lang('Scheduling outbox').' '.common::grab_owner_name($user);
 				break;
 			default:
-				$displayname = translation::convert(lang($app).' '.
-					common::grab_owner_name($user),$this->egw_charset,'utf-8');
+				$props['displayname'] = translation::convert(lang($app).' '.common::grab_owner_name($user),$this->egw_charset,'utf-8');
 		}
-		$props['displayname'] = $displayname;
+
+		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
+		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
+		{
+			list($prop,$prop4user) = explode(':', $name);
+			if ($prop4user == $user && isset(self::$proppatch_props[$prop]))
+			{
+				$props[$prop] = self::mkprop(self::$proppatch_props[$prop], $prop, $value);
+			}
+		}
 
 		foreach((array)$this->root[$app] as $prop => $values)
 		{
@@ -983,6 +974,58 @@ class groupdav extends HTTP_WebDAV_Server
 		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'post'))
 		{
 			return $handler->post($options,$id,$user);
+		}
+		return '501 Not Implemented';
+	}
+
+	/**
+	 * props modifyable via proppatch from client, eg. calendar-color
+	 *
+	 * @var array name => namespace pairs
+	 */
+	static $proppatch_props = array(
+		'displayname' => self::DAV,
+		'calendar-description' => self::CALDAV,
+		'calendar-color' => self::ICAL,
+		'calendar-order' => self::ICAL,
+	);
+
+	/**
+	 * PROPPATCH method handler
+	 *
+	 * @param  array  general parameter passing array
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function PROPPATCH(&$options)
+	{
+		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options).')');
+
+		// parse path in form [/account_lid]/app[/more]
+		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix))
+		{
+			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
+			return '404 Not Found';
+		}
+		/* allow handlers to implement own proppatch handler
+		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'proppatch'))
+		{
+			return $handler->proppatch($options, $user);
+		}*/
+
+		// store selected props in preferences, eg. calendar-color, see self::$proppatch_props
+		foreach($options['props'] as $prop)
+		{
+			if (isset(self::$proppatch_props[$prop['name']]))
+			{
+				$GLOBALS['egw']->preferences->add($app, $prop['name'].':'.$user, $prop['val']);
+				$need_save = true;
+			}
+		}
+		if ($need_save)
+		{
+			$GLOBALS['egw']->preferences->save_repository();
+
+			return '';	// this is as the filesystem example handler does it, no true or false ...
 		}
 		return '501 Not Implemented';
 	}
