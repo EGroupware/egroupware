@@ -180,7 +180,7 @@ class egw_include_mgr
 		// Parse the given file for dependencies
 		$uses = $this->parse_file($path);
 
-		foreach ($uses as $entry)
+		foreach ((array)$uses as $entry)
 		{
 			$uses_path = false;
 
@@ -309,7 +309,7 @@ class egw_include_mgr
 
 		if (self::$DEBUG_MODE) // DEBUG_MODE is currently ALWAYS true. Comment this code out if you don't want error messages.
 		{
-			error_log(__METHOD__."($package,$file,$app) $path NOT found".($this->debug_processing_file ? " while processing file '{$this->debug_processing_file}'." : "!").' '.function_backtrace());
+			//error_log(__METHOD__."($package,$file,$app) $path NOT found".($this->debug_processing_file ? " while processing file '{$this->debug_processing_file}'." : "!").' '.function_backtrace());
 		}
 
 		return false;
