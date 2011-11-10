@@ -1690,7 +1690,7 @@ class infolog_ui
 			unset ($info_id);
 			unset($content['info_datemodified']);
 			unset($content['info_modifier']);
-
+			foreach ($this->bo->copy_excludefields as $k => $f) if (isset($content[$f])) unset($content[$f]);
 			// Get links to be copied
 			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
 			// Special mangling for files so the files get copied
@@ -1707,12 +1707,18 @@ class infolog_ui
 			if($content['info_link_id'])
 			{
 				$info_link_id = $content['info_link_id'];
+				// we need this if copy is triggered via context menu action
+				if (!isset($content['info_contact'])||empty($content['info_contact'])||$content['info_contact']==='copy:')
+				{
+					$linkinfos = egw_link::get_link($info_link_id);
+					$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
+					if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+				}
 				unset($content['info_link_id']);
 			}
-
 			$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 			$content['msg'] = lang('Infolog copied - the copy can now be edited');
-			$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
+			$content['info_subject'] = ($content['info_subject']?lang('Copy of:').' ':'').$content['info_subject'];
 		}
 		// group owners
 		$types = $this->bo->enums['type'];
@@ -1918,7 +1924,7 @@ class infolog_ui
 	 */
 	function admin( )
 	{
-		$fields = array(
+		$fields = $excludefields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
 			'info_addr'     => 'Phone/Email',
@@ -1930,6 +1936,31 @@ class infolog_ui
 			'info_planned_time' => 'Planned time',
 			'info_used_time'    => 'Used time',
 		);
+		$excludefields = array_merge($excludefields,array(
+			'info_type' => 'Type',
+			'info_owner' => 'Owner',
+			'info_responsible' => 'Responsible',
+			'info_access' => 'Access',
+			'info_startdate' => 'Startdate',
+			'info_enddate' => 'Enddate',
+			'info_id_parent' => 'Parent',
+			'info_status' => 'Status',
+			'info_confirm' => 'Confirm',
+			'info_link_id' => 'primary link',
+			'pl_id' => 'pricelist',
+			'info_price' => 'price',
+			'info_percent' => 'completed',
+			'info_datecompleted' => 'date completed',
+			'info_custom_from' => 'from',
+			'info_replanned_time' => 're-planned time',
+			'info_cc' => 'CC',
+		));
+		// add customfields to field list
+		foreach(config::get_customfields('infolog') as $name => $data)
+		{
+			$excludefields['#'.$name] = $data['label'];
+		}
+
 		if($_POST['save'] || $_POST['apply'])
 		{
 			if (get_magic_quotes_gpc())
@@ -1943,6 +1974,14 @@ class infolog_ui
 				$extra = array_intersect((array)$_POST['responsible_edit'],array_keys($fields));
 				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
+			// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
+			if (!isset($this->bo->copy_excludefields)) $this->bo->copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+			if ($_POST['copy_excludefields'])
+			{
+				$extra = array_intersect((array)$_POST['copy_excludefields'],array_keys($excludefields));
+				$this->bo->copy_excludefields = array_merge($this->bo->copy_excludefields,$extra);
+			}
+			config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
 			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
@@ -1967,6 +2006,8 @@ class infolog_ui
 			)),
 			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
 			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
+			'lang_copy_excludefields' => lang('Fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)'),
+			'copy_excludefields' => html::checkbox_multiselect('copy_excludefields',$this->bo->copy_excludefields,$excludefields,false,'',11),
 			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 			'action_url'  => html::link('/index.php',array('menuaction'=>'infolog.infolog_ui.admin')),
 			'save_button' => html::submit_button('save','Save'),
