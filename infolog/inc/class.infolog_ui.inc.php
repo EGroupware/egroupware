@@ -743,7 +743,12 @@ class infolog_ui
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
-	function get_validtypes()
+	/**
+	 * Get valid types
+	 *
+	 * @return array - array of valid types
+	 */
+	private function get_validtypes()
 	{
 		// Types
 		$types = $this->bo->enums['type'];
