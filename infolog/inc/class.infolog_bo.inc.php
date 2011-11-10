@@ -60,6 +60,12 @@ class infolog_bo
 	 */
 	var $responsible_edit=array('info_status','info_percent','info_datecompleted');
 	/**
+	 * fields a user may exclude from copy, if an entry is copied, the ones below are excluded by default.
+	 *
+	 * @var array
+	 */
+	var $copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+	/**
 	 * implicit ACL rights of the responsible user: read or edit
 	 *
 	 * @var string
@@ -225,6 +231,10 @@ class infolog_bo
 			if (is_array($config_data['responsible_edit']))
 			{
 				$this->responsible_edit = array_merge($this->responsible_edit,$config_data['responsible_edit']);
+			}
+			if (is_array($config_data['copy_excludefields']))
+			{
+				$this->copy_excludefields = array_merge($this->copy_excludefields,$config_data['copy_excludefields']);
 			}
 			if ($config_data['implicit_rights'] == 'edit')
 			{
