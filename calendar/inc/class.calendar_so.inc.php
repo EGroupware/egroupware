@@ -294,7 +294,7 @@ class calendar_so
 	 */
 	function max_user_modified($ids, $return_maximum=false)
 	{
-		if (!is_array($ids) || count($ids) == 1) $return_maximum = true;
+		if (!is_array($ids)) $return_maximum = true;
 
 		if ($return_maximum)
 		{
