@@ -1476,7 +1476,6 @@ class felamimail_bo
 							 'attachment' =>__METHOD__.' failed:'.$attachment->message
 						);
 			}
-
 			switch ($structure->encoding) {
 				case 'BASE64':
 					// use imap_base64 to decode
@@ -1489,6 +1488,10 @@ class felamimail_bo
 					break;
 				default:
 					// it is either not encoded or we don't know about it
+			}
+			if ($structure->type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
+			{
+				$attachment = mb_convert_encoding($attachment,self::$displayCharset,$structure->parameters['CHARSET']);
 			}
 
 			$attachmentData = array(
