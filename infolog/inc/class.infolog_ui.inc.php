@@ -1716,7 +1716,7 @@ class infolog_ui
 			$types = $this->get_validtypes();
 			$typekeys = array_keys($types);
 			if (!isset($content['info_type'])) $content['info_type'] = $typekeys[0];
-			if (!isset($content['info_status'])) $this->bo->status[$content['info_type']];
+			if (!isset($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 			if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];
 			// Get links to be copied
 			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
