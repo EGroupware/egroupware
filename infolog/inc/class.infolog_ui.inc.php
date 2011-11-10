@@ -743,16 +743,8 @@ class infolog_ui
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
-	/**
-	 * Get actions / context menu items
-	 *
-	 * @param array $query
-	 * @return array see nextmatch_widget::get_actions()
-	 */
-	private function get_actions(array $query)
+	function get_validtypes()
 	{
-		for($i = 0; $i <= 100; $i += 10) $percent[$i] = $i.'%';
-
 		// Types
 		$types = $this->bo->enums['type'];
 		if ($this->bo->group_owners)
@@ -766,6 +758,21 @@ class infolog_ui
 				}
 			}
 		}
+		return $types;
+	}
+
+	/**
+	 * Get actions / context menu items
+	 *
+	 * @param array $query
+	 * @return array see nextmatch_widget::get_actions()
+	 */
+	private function get_actions(array $query)
+	{
+		for($i = 0; $i <= 100; $i += 10) $percent[$i] = $i.'%';
+
+		// Types
+		$types = $this->get_validtypes();
 		$types_add = array();
 		foreach($types as $type => &$data)
 		{
@@ -1691,6 +1698,21 @@ class infolog_ui
 			unset($content['info_datemodified']);
 			unset($content['info_modifier']);
 			foreach ($this->bo->copy_excludefields as $k => $f) if (isset($content[$f])) unset($content[$f]);
+			if (!isset($content['info_startdate']))
+			{
+				switch($this->prefs['set_start'])
+				{
+					case 'date': default: $set_startdate = mktime(0,0,0,date('m',$this->bo->user_time_now),date('d',$this->bo->user_time_now),date('Y',$this->bo->user_time_now)); break;
+					case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
+					case 'empty':         $set_startdate = 0; break;
+				}
+				$content['info_startdate'] = $set_startdate;
+			}
+			$types = $this->get_validtypes();
+			$typekeys = array_keys($types);
+			if (!isset($content['info_type'])) $content['info_type'] = $typekeys[0];
+			if (!isset($content['info_status'])) $this->bo->status[$content['info_type']];
+			if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];
 			// Get links to be copied
 			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
 			// Special mangling for files so the files get copied
