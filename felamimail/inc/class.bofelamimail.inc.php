@@ -1158,6 +1158,10 @@
 				default:
 					// it is either not encoded or we don't know about it
 			}
+			if ($structure->type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
+			{
+				$attachment = translation::convert($attachment,$structure->parameters['CHARSET'],self::$displayCharset);
+			}
 
 			$attachmentData = array(
 				'type'		=> $structure->type .'/'. $structure->subType,
