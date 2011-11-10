@@ -1290,15 +1290,20 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 
-					if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
+					/* Modifying an existing event with timezone different from default timezone of user
+					 * to a whole-day event (no timezone allowed according to iCal rfc)
+					 * --> code to modify start- and end-time here creates a one day longer event!
+					 * Skipping that code, creates the event correct in default timezone of user
+ 					if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
 					{
 						// Adjust dates to original TZ
 						$time = new egw_time($event['start'],egw_time::$server_timezone);
 						$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
 						$event['start'] = egw_time::to($time,'server');
-						$time = new egw_time($event['end'],egw_time::$server_timezone);
-						$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
-						$time->setTime(23, 59, 59);
+						//$time = new egw_time($event['end'],egw_time::$server_timezone);
+						//$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+						//$time->setTime(23, 59, 59);
+						$time->modify('+'.round(($event['end']-$event['start'])/DAY_s).' day');
 						$event['end'] = egw_time::to($time,'server');
 						if ($event['recur_type'] != MCAL_RECUR_NONE)
 						{
@@ -1315,7 +1320,8 @@ class calendar_ical extends calendar_boupdate
 							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
 							$event['recurrence'] = egw_time::to($time,'server');
 						}
-					}
+						error_log(__METHOD__."() TZ adjusted {$event_info['stored_event']['tzid']} --> {$event['tzid']} event=".array2string($event));
+					}*/
 
 					calendar_rrule::rrule2tz($event, $event_info['stored_event']['start'],
 						$event_info['stored_event']['tzid']);
