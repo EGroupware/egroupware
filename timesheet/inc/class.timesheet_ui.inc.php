@@ -85,14 +85,11 @@ class timesheet_ui extends timesheet_bo
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 
-			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $this->data['ts_status'])
+			if (!$this->check_statusForEditRights($this->data))
 			{
-				if ($this->status_labels_config[$this->data['ts_status']]['admin'])
-				{
-					$view = true;  //only admin can edit with this status
-					$only_admin_edit = true;
-					$msg = lang('only Admin can edit this status');
-				}
+				$view = true;  //only admin can edit with this status
+				$only_admin_edit = true;
+				$msg = lang('only Admin can edit this status');
 			}
 		}
 		else
