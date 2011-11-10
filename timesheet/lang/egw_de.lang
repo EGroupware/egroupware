@@ -84,7 +84,7 @@ no status	timesheet	de	Kein Status
 none: use only free project-names	admin	de	Keine: verwende nur freie Projektnamen
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	de	Anzahl von Reihen für ein Mehrzeiliges Textfeld oder einer Mehrfachauswahlbox
 only admin	timesheet	de	nur Admin
-only admin can edit this status	timesheet	de	nur Admins dürfen diesen Status bearbeiten
+only admin can edit this status	timesheet	de	nur Admins dürfen Stundenzettel mit diesen Status bearbeiten
 or endtime	timesheet	de	oder Endzeit
 order	timesheet	de	Reihenfolge
 parent	timesheet	de	Übergeordnet
