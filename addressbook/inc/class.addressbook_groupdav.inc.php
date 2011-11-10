@@ -338,6 +338,8 @@ class addressbook_groupdav extends groupdav_handler
 					break;
 				case 'limit':
 					break;
+				case 'href':
+					break;	// from addressbook-multiget, handled below
 				default:
 					error_log(__METHOD__."(...) unknown xml: options[other]=".array2string($options['other']));
 					break;
