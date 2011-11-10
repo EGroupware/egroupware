@@ -134,6 +134,9 @@ class translation
 			// if no translations are loaded (system-startup) use a default, else lang('charset')
 			$charset = !self::$lang_arr ? 'utf-8' : strtolower(self::translate('charset'));
 		}
+		// in case no charset is set, default to utf-8
+		if (empty($charset) || $charset == 'charset') $charset = 'utf-8';
+
 		// we need to set our charset as mbstring.internal_encoding if mbstring.func_overlaod > 0
 		// else we get problems for a charset is different from the default utf-8
 		if (ini_get('mbstring.func_overload') && self::$mbstring_internal_encoding != $charset)
@@ -1027,7 +1030,7 @@ class translation
 				if ($element->charset != 'x-unknown')
 				{
 					if( strtoupper($element->charset) != 'UTF-8') $element->text = preg_replace($sar,$rar,$element->text);
-					if(preg_match('/\?=.+=\?/', $element->text)) 
+					if(preg_match('/\?=.+=\?/', $element->text))
 					{
 						$element->text = self::decodeMailHeader($element->text, $element->charset);
 						$element->charset = $displayCharset;
