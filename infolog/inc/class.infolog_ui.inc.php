@@ -2002,7 +2002,7 @@ class infolog_ui
 				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
 			// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
-			if (!isset($this->bo->copy_excludefields)) $this->bo->copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+			$this->bo->copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
 			if ($_POST['copy_excludefields'])
 			{
 				$extra = array_intersect((array)$_POST['copy_excludefields'],array_keys($excludefields));
