@@ -1,4 +1,4 @@
-# EGroupware CalDav or CardDAV support for Apple apps (incl. iPhone)
+# EGroupware CalDav or CardDAV support for Apple apps (OS X and iOS)
 #
 # $Id$
 #
@@ -6,28 +6,6 @@
 # to support Mac or iPhone clients to autodetec CalDAV and CardDAV
 # (currently Addressbook does NOT allow to specify our groupdav.php 
 #  URL manually).
-#
-# As alternative an EGroupware install directly in the docroot or
-# an unconditional redirect from the docroot to EGroupware's index.php 
-# will archive the same thing, as it redirects PROPFIND or OPTION 
-# requests to groupdav.php/ (many have such a redirect already in place).
-#
-# iCal app does NOT allow multiple redirects, therefore it must be redirected
-# directly to groupdav.php/ eg. by the following index.php in the docroot:
-#
-# <?php
-# if ($_SERVER['REQUEST_METHOD'] == 'PROPFIND' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
-# {
-#     header("Location: /egroupware/groupdav.php/\n\n");
-# }
-# else
-# {
-# 	  header("Location: /egroupware/\n\n");
-# }
-# exit;
-#
-# An other alternativ is to copy the above PROPFIND/OPTIONS redirect 
-# into your index.php in the docroot.
 #
 # Please note: 
 # - your Apache web server needs to be setup to read .htaccess files and 
