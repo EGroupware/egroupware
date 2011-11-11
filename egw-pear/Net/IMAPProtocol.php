@@ -316,10 +316,8 @@ class Net_IMAPProtocol {
      */
     function _recvLn()
     {
-
-        //if (PEAR::isError( $this->lastline = $this->_socket->gets( 8192 ) ) ) {
         $this->lastline = $this->_socket->gets( 8192 );
-        if (!(is_string($this->lastline) || is_numeric($this->lastline)) && ( $this->lastline instanceof PEAR_Error) ) {
+        if ( $this->lastline instanceof PEAR_Error ) {
             return new PEAR_Error('Failed to write to socket: ' .
                                               $this->lastline->getMessage() );
         }
@@ -381,7 +379,7 @@ class Net_IMAPProtocol {
     {
        $arguments = '';
        while ( $a = $this->_recvLn() ) {
-           if (!(is_string($a) || is_numeric($a)) && ($a instanceof PEAR_Error)) return $arguments;
+           if ($a instanceof PEAR_Error) return $arguments;
            $reply_code = strtok( $this->lastline , ' ' );
            $arguments.= $this->lastline;
            if ( !(strcmp( $commandId , $reply_code ) ) ) {
