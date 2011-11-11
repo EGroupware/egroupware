@@ -1,3 +1,13 @@
+egroupware (1.8.002.20111111) hardy; urgency=low
+
+  * SyncML: fix WBXML namespache issue (bug 3048)
+  * eMail: bug regarding the mimetype of uploaded files; FF701 reports wrong mime type; work around this, by always checking mimetype by suffix
+  * Calendar/sync: handle error regarding not getting an egw_time object but no exception is thrown; may be php 5.2.x related.
+  * Filemanager/eTemplate: fix for MyStylite bug #2495: deleting files containing [ as first char deletes whole directory
+  * GroupDAV/CalDAV/CardDAV: removed alternative approach from groupdav.htaccess, as it is not suffient for iOS 4.3+ iCal
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 11 Nov 2011 09:54:17 +0100
+
 egroupware (1.8.002.20111011) hardy; urgency=low
 
   * Calendar: not using freebusy rights for searching calendar, as it would allow to probe for event contents
