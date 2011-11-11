@@ -2,8 +2,8 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.index.left" template="" lang="" group="0" version="1.3.001">
-		<menulist>
-			<menupopup class="bold" cols="1" statustext="Select a view" id="org_view" no_lang="1" onchange="1" rows="1" options="All contacts"/>
+		<menulist class="bold">
+			<menupopup cols="1" statustext="Select a view" id="org_view" no_lang="1" onchange="1" rows="1" options="All contacts"/>
 		</menulist>
 	</template>
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
@@ -13,7 +13,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.004">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -37,7 +37,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description options="1"/>
+					<description font_style="1"/>
 					<grid spacing="0" padding="0">
 						<columns>
 							<column/>
@@ -76,7 +76,11 @@
 						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</vbox>
-					<nextmatch-header label="Home address" id="home"/>
+					<vbox options="0,0">
+						<nextmatch-header label="Home address" id="home"/>
+						<nextmatch-customfilter id="adr_two_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
+						<nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
+					</vbox>
 					<vbox options="0,0">
 						<nextmatch-header label="Business phone" id="tel_work"/>
 						<nextmatch-header label="Mobile phone" id="tel_cell"/>
@@ -152,7 +156,7 @@
 						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
 						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"/>
 						<url-phone id="${row}[tel_fax]" readonly="true"/>
-						<description id="${row}[tel_prefered]" no_lang="1" options=",$row_cont[tel_prefered_link],,,calling,$cont[call_popup]"/>
+						<description id="${row}[tel_prefered]" no_lang="1" href="$row_cont[tel_prefered_link]" extra_link_target="calling" extra_link_popup="$cont[call_popup]"/>
 					</vbox>
 					<vbox options="0,0">
 						<url id="${row}[url]" readonly="true" class="fixedHeight"/>
@@ -182,14 +186,14 @@
 					</vbox>
 					<vbox class="noPrint" options="0,0">
 						<hbox>
-							<image label="View" src="view" options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]"/>
+							<image label="View" src="view" href="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]"/>
 							<button label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=870,height=460,scrollbars=yes,status=yes'); return false;" image="edit"/>
 							<button statustext="Delete this contact" label="Delete" id="delete[$row_cont[id]]" onclick="return confirm('Delete this contact');" image="delete"/>
 							<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[id]"/>
 						</hbox>
 						<hbox>
 							<button label="Insert in document" id="document[$row_cont[id]]" image="etemplate/merge" class="image16"/>
-							<image label="Filemanager" src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16"/>
+							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16"/>
 							<button label="Add appointment" id="calendar" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=c$row_cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" image="calendar/navbar" class="image16"/>
 						</hbox>
 					</vbox>
@@ -232,8 +236,8 @@
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right" span="all">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('addressbook.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('addressbook.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('addressbook.'+({$cont[nm][do_email]} ? 'email' : 'index') + '.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('addressbook.'+({$cont[nm][do_email]} ? 'email' : 'index') + '.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
 					</hbox>
 				</row>
 			</rows>
