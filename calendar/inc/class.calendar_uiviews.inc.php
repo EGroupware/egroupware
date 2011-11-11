@@ -1367,19 +1367,19 @@ function open_edit(series)
 	 *
 	 * @param string/int $day_ymd date as Ymd
 	 * @param array $events of events to show
-	 * @param int $left start of the widget
-	 * @param int $width width of the widget
+	 * @param int $pleft start of the widget
+	 * @param int $pwidth width of the widget
 	 * @param string $indent string for correct indention
 	 * @param boolean/string $short_title=True should we add a label (weekday, day) with link to the day-view above each day or string with title
 	 * @param boolean $on_off=false start with row_on or row_off, default false=row_off
 	 * @param int $owner=0 if != 0 owner to add to the add-event link
 	 */
-	function dayColWidget($day_ymd,$events,$left,$width,$indent,$short_title=True,$on_off=False,$owner=0)
+	function dayColWidget($day_ymd,$events,$pleft,$pwidth,$indent,$short_title=True,$on_off=False,$owner=0)
 	{
-		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$left,$width);
+		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$pleft,$pwidth);
 
-		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calDayCol" style="left: '.$left.
-			'%; width: '.$width.'%;">'."\n";
+		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calDayCol" style="left: '.$pleft.
+			'%; width: '.$pwidth.'%;">'."\n";
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
 		$ts = $this->bo->date2ts((string)$day_ymd);
@@ -1484,20 +1484,21 @@ function open_edit(series)
 		foreach($eventCols as $n => $eventCol)
 		{
 			// equal sized columns
-			$width = 95.0 / count($eventCols);
-			$left = 2.5 + $n * $width;
+			//$width = 95.0 / count($eventCols);
+			//$left = 2.5 + $n * $width;
 			// alternative overlapping columns
+			$left = 2.5 + (1.5 * 100 / $pwidth);
 			if (count($eventCols) == 1)
 			{
-				$width = 95;
-				$left = 2.5;
+				$width = 100 - $left;
 			}
 			else
 			{
-				$width = !$n ? 80 : 50;
-				$left = $n * (100.0 / count($eventCols));
+				$width = !$n ? 70 : 50;
+				$left += $n * (100.0-$left) / count($eventCols);
 			}
 			if ($left + $width > 100.0) $width = 100.0 - $left;
+			//echo "<p>count(\$eventCols)=".count($eventCols).", n=$n, pWidth=$pwidth, pLeft=$pleft, width=$width, left=$left</p>\n";
 			$html .= $this->eventColWidget($eventCol,$left,$width,$indent."\t",
 				$owner ? $owner : $this->user, 20+10*$n);
 		}
