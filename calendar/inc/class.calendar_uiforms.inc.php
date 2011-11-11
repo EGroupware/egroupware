@@ -555,6 +555,11 @@ class calendar_uiforms extends calendar_ui
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
+				// modifiy alarms for the exception, unsetting alarm-id to create new alarms
+				foreach($event['alarm'] as $n => &$alarm)
+				{
+					unset($alarm['id']);
+				}
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
 				if (!is_array($conflicts) && $conflicts)
 				{
@@ -562,6 +567,7 @@ class calendar_uiforms extends calendar_ui
 					$recur_event = $this->bo->read($event['reference']);
 					$recur_event['recur_exception'][] = $content['edit_single'];
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
