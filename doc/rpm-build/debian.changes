@@ -1,3 +1,19 @@
+egroupware-epl (10.1.20111111-1) hardy; urgency=low
+
+  * Tracker: fix for lost comment, when tracker item got saved (e.g.:by someone else) while you were still editing
+  * eMailAdmin: fixing not allowed userDefinedIdentities when userDefinedAccounts is allowed, fixing typos
+  * eMail: import of VCARD; opening an already imported VCARD as addressbook-entry failed, and VCARD was offered for download; Fixed -> as the expectation was/is that the already imported vcard (found via uid) is opened as addressbook entry (data merged)
+  * eMail: bug regarding the mimetype of uploaded files; FF701 reports wrong mime type; work around this, by always checking mimetype by suffix
+  * API/CKEditor: updating to version 3.6.2, altering editor modes and availability of toolbar options, supporting iPad and better fallback for Android devices not supported by CKEditor
+  * Calendar: fixed many issues when moving or modifiny (parts of a) recurring event (alarms, recurrance type, time)
+  * Calendar/sync: handle error regarding not getting an egw_time object but no exception is thrown; may be php 5.2.x related. occurs when a NokiaE72 tries to open Outlook invitations
+  * Notification: do not notify expired or inactive users
+  * Calendar: fixed MyStylite bug #2434: context menu could be used to invite yourself to any event you can read
+  * Filemanager/eTemplate: fix for MyStylite bug #2495: deleting files containing [ as first char deletes whole directory
+  * SyncML: fix WBXML namespache issue (bug 3048)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 11 Nov 2011 09:43:00 +0100
+
 egroupware-epl (10.1.20111011-1) hardy; urgency=low
 
   * Filemanager: fixed not working rename of file, if path contains a # or ?
