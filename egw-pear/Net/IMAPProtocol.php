@@ -316,8 +316,8 @@ class Net_IMAPProtocol {
      */
     function _recvLn()
     {
-
-        if (PEAR::isError( $this->lastline = $this->_socket->gets( 8192 ) ) ) {
+        $this->lastline = $this->_socket->gets( 8192 );
+        if ( $this->lastline instanceof PEAR_Error ) {
             return new PEAR_Error('Failed to write to socket: ' .
                                               $this->lastline->getMessage() );
         }
@@ -378,7 +378,8 @@ class Net_IMAPProtocol {
     function _getRawResponse($commandId = '*')
     {
        $arguments = '';
-       while ( !PEAR::isError( $this->_recvLn() ) ) {
+       while ( $a = $this->_recvLn() ) {
+           if ($a instanceof PEAR_Error) return $arguments;
            $reply_code = strtok( $this->lastline , ' ' );
            $arguments.= $this->lastline;
            if ( !(strcmp( $commandId , $reply_code ) ) ) {
@@ -2445,7 +2446,7 @@ class Net_IMAPProtocol {
 				if ((($numOfQuotes - $numOfMaskedQuotes) % 2 ) == 0) {
 					// quotes are balanced, so its unlikely that we meet a stop condition here as strings may contain )(
 					//error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
-					error_log(__METHOD__." problem at $pos with:".$str[$pos]."(last character) Numberof delimiters ('".$startDelim."','".$stopDelim."') found:".$delimCount.' String:'.substr($str,$startingpos,$pos).' called from:'.function_backtrace());
+					if ($_debug) error_log(__METHOD__." problem at $pos with:".$str[$pos]."(last character) Numberof delimiters ('".$startDelim."','".$stopDelim."') found:".$delimCount.' String:'.substr($str,$startingpos,$pos).' called from:'.function_backtrace());
 					//return false;
 				} else {
 					$pos--;	// stopDelimited need to be parsed outside!
