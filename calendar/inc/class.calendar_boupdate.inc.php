@@ -980,7 +980,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		// same with the alarms
-		if (isset($event['alarm']) && is_array($event['alarm']))
+		if (isset($event['alarm']) && is_array($event['alarm']) && isset($event['start']))
 		{
 			foreach($event['alarm'] as $id => $alarm)
 			{
@@ -989,12 +989,15 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		// update all existing alarm times, in case alarm got moved and alarms are not include in $event
-		if ($old_event && is_array($old_event['alarm']))
+		if ($old_event && is_array($old_event['alarm']) && isset($event['start']))
 		{
-			foreach($old_event['alarm'] as $alarm)
+			foreach($old_event['alarm'] as $id => $alarm)
 			{
-				$alarm['time'] = $event['start'] - $alarm['offset'];
-				$this->so->save_alarm($event['id'],$alarm, $this->now);
+				if (!isset($event['alarm'][$id]))
+				{
+					$alarm['time'] = $event['start'] - $alarm['offset'];
+					$this->so->save_alarm($event['id'],$alarm, $this->now);
+				}
 			}
 		}
 
