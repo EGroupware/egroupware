@@ -874,7 +874,7 @@ class calendar_uiforms extends calendar_ui
 							if (!($exception = $this->bo->read($id))) continue;
 							$exception['uid'] = common::generate_uid('calendar', $id);
 							$exception['reference'] = $exception['recurrence'] = 0;
-							$this->bo->update($exception, true,true,false,true,null,$content['no_notifications']);
+							$this->bo->update($exception, true,true,false,true,$msg=null,$content['no_notifications']);
 							$exceptions_kept = true;
 						}
 					}
