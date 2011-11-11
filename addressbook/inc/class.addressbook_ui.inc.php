@@ -1225,7 +1225,8 @@ class addressbook_ui extends addressbook_bo
 					$order = "n_fileas<>'' DESC,n_fileas $sort";
 					break;
 				case 'adr_one_postalcode':
-					$order = "adr_one_postalcode<>'' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
+				case 'adr_two_postalcode':
+					$order = $query['order']."<>'' DESC,".$query['order']." $sort,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				case 'contact_modified':
 				case 'contact_created':
