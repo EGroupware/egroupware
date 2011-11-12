@@ -9,7 +9,7 @@
 				<column disabled="@no_customfields"/>
 				<column width="120"/>
 				<column disabled="@no_info_used_time_info_planned_time"/>
-				<column width="8%" disabled="@no_info_onwer_info_responsible"/>
+				<column width="8%" disabled="@no_info_owner_info_responsible"/>
 				<column width="12%" disabled="@no_info_datemodified"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
