@@ -34,13 +34,14 @@
           <entry type="string" name="end">end</entry>
           <entry type="string" name="participants">Participants: User, Status, Role</entry>
           <entry type="string" name="participants-c">Participants: User, Status, Quantity, Role</entry>
+          <entry type="string" name="all_custom_fields">calendar</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
         <entry type="string" name="charset">user</entry>
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2011-11-10 10:00:00</entry>
     </entry>
     <entry type="array" name="import-calendar-ical">
       <entry type="string" name="name">import-calendar-ical</entry>
