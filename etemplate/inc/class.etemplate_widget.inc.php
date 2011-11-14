@@ -423,14 +423,14 @@ class etemplate_widget
 				{
 					foreach($value as &$val)
 					{
-						$val = "'".str_replace(array("'",'"'),array('\\\'','&quot;'),$val)."'";
+						$val = "'".str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$val)."'";
 					}
-					$value = '[ '.implode(', ',$value).' ]';
+					$value = '&#x5B; '.implode(', ',$value).' &#x5D;';
 					$name = str_replace("'".$matches[1]."'",$value,$name);
 				}
 				else
 				{
-					$value = str_replace(array("'",'"'),array('\\\'','&quot;'),$value);
+					$value = str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$value);
 					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
 				}
 			}
@@ -465,6 +465,7 @@ class etemplate_widget
 				$name = self::get_array($cont,substr($name,1));
 			}
 		}
+		$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
 		return $name;
 	}
 
@@ -526,7 +527,10 @@ class etemplate_widget
 	 */
 	static function form_name($cname,$name)
 	{
-		$name_parts = explode('[',str_replace(']','',$name));
+		if (count($name_parts = explode('[', $name, 2)) > 1)
+		{
+			$name_parts = array_merge(array($name_parts[0]), explode('][', substr($name_parts[1],0,-1)));
+		}
 		if (!empty($cname))
 		{
 			array_unshift($name_parts,$cname);
@@ -534,7 +538,7 @@ class etemplate_widget
 		$form_name = array_shift($name_parts);
 		if (count($name_parts))
 		{
-			$form_name .= '['.implode('][',$name_parts).']';
+			$form_name .= '&#x5B;'.implode('&#x5D;&#x5B;',$name_parts).'&#x5D;';
 		}
 		return $form_name;
 	}
@@ -559,7 +563,10 @@ class etemplate_widget
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
-		$idxs = explode('[',str_replace(']','',$idx));
+		if (count($idxs = explode('[', $idx, 2)) > 1)
+		{
+			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
+		}
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{

@@ -43,7 +43,17 @@ var et2_arrayMgr = Class.extend({
 		if (this.splitIds)
 		{
 			for(var key in _data) {
-				var indexes = key.replace(/]/g,'').split('[');
+				var indexes = key.split('&#x5B;');
+				if (indexes.length > 1)
+				{
+					indexes = [indexes.shift(), indexes.join('&#x5B;')];
+					indexes[1] = indexes[1].substring(0,indexes[1].length-6);
+					var children = indexes[1].split('&#x5B;&#x5D;');
+					if(children.length)
+					{
+						indexes = jQuery.merge([indexes[0]], children);
+					}
+				}
 				if(indexes.length > 1)
 				{
 					var value = _data[key];
@@ -142,7 +152,17 @@ var et2_arrayMgr = Class.extend({
 
 		if (this.splitIds)
 		{
-			indexes = _key.replace(/]/g,'').split('[');
+			indexes = _key.split('[');
+			if (indexes.length > 1)
+			{
+				indexes = [indexes.shift(), indexes.join('[')];
+				indexes[1] = indexes[1].substring(0,indexes[1].length-1);
+				var children = indexes[1].split('][');
+				if(children.length)
+				{
+					indexes = jQuery.merge([indexes[0]], children);
+				}
+			}
 		}
 
 		var entry = this.data;

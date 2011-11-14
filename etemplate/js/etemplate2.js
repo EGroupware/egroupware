@@ -211,6 +211,8 @@ etemplate2.prototype.submit = function(button)
 	if (canSubmit)
 	{
 		// Button parameter used for submit buttons in datagrid
+		// TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
+		// I'm just not sure how.
 		if(button)
 		{
 			values.button = button.id
@@ -223,7 +225,17 @@ etemplate2.prototype.submit = function(button)
 			}
 			if(target != values) 
 			{
-				var indexes = button.id.replace(/]/g,'').split('[');
+				var indexes = button.id.split('[');
+				if (indexes.length > 1)
+				{
+					indexes = [indexes.shift(), indexes.join('[')];
+					indexes[1] = indexes[1].substring(0,indexes[1].length-1);
+					var children = indexes[1].split('][');
+					if(children.length)
+					{
+						indexes = jQuery.merge([indexes[0]], children);
+					}
+				}
 				var idx = '';
 				for(var i = 0; i < indexes.length; i++)
 				{
@@ -270,11 +282,17 @@ etemplate2.prototype.getValues = function(_root)
 		
 		// check if id contains a hierachical name, eg. "button[save]"
 		var id = _widget.id;
-		if (_widget.id.indexOf('[') != -1)
+		var indexes = _widget.id.split('&#x5B;',2);
+		if (indexes.length > 1)
 		{
-			var parts = _widget.id.replace(/]/g,'').split('[');
-			id = parts.pop();
-			path = path.concat(parts);
+			indexes = [indexes.shift(), indexes.join('&#x5B;')];
+			indexes[1] = indexes[1].substring(0,indexes[1].length-6);
+			var children = indexes[1].split('&#x5B;&#x5D;');
+			if(children.length)
+			{
+				indexes = jQuery.merge([indexes[0]], children);
+			}
+			path = path.concat(indexes);
 		}
 
 		// Set the _target variable to that node

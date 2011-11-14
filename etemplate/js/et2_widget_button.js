@@ -195,6 +195,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			this.options.onclick = _values["onclick"];
 		}
 		this.btn.bind("click.et2_baseWidget", this, function(e) {
+			e.data.set_id(_values["id"]);
 			return e.data.click.call(e.data,e);
 		});
 
