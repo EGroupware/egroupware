@@ -49,6 +49,12 @@
 					if($content['dry-run']) {
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
+					if($content['delimiter']) {
+						$options =& $definition_obj->plugin_options;
+						$options['fieldsep'] =
+							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
+						$definition_obj->plugin_options = $options;
+					}
 					$plugin = new $definition_obj->plugin;
 					$file = fopen($content['file']['tmp_name'], 'r');
 
@@ -78,6 +84,8 @@
 
 			$data['appname'] = $appname;
 			$data['definition'] = $definition;
+			$data['delimiter'] = $definition_obj->plugin_options['delimiter'];
+
 			$sel_options = self::get_select_options($data);
 
 			$data['message'] = $this->message;
@@ -93,7 +101,17 @@
 		* Get options for select boxes
 		*/
 		public static function get_select_options(Array $data) {
-			$options = array();
+			$options = array(
+				'delimiter' => array(
+					''	=>	lang('From definition'),
+					';'     =>      ';',
+					','     =>      ',',
+					'\t'    =>      'Tab',
+					' '     =>      'Space',
+					'|'     =>      '|',
+					'other'      =>      lang('Other')
+				)
+			);
 
 			(array)$apps = importexport_helper_functions::get_apps('import');
 			$options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);

@@ -133,6 +133,24 @@ class importexport_export_ui {
 			}
 		}
 
+
+		// Delimiter
+		$sel_options['delimiter'] = array(
+			';'	=>	';',
+			','	=>	',',
+			'\t'	=>	'Tab',
+			' ' 	=>	'Space',
+			'|'	=>	'|',
+			''	=>	lang('Other')
+		);
+		if(!$sel_options['delimiter'][$content['delimiter']]) $sel_options['delimiter'][$content['delimiter']] = $content['delimiter'];
+		$sel_options['delimiter'][$content['delimiter']] = lang('Use default') . ' "' . $sel_options['delimiter'][$content['delimiter']] . '"';
+
+		if(!$_content['delimiter']) $this->js->set_onload('jQuery(\'[other_delimiter]\').hide();');
+
+		// Other delimiter (options)
+		if($_content['other_delimiter']) $_content['delimiter'] = $_content['other_delimiter'];
+
 		// handle selector
 		if($selected_plugin) {
 			$plugin_object = new $selected_plugin;
@@ -153,9 +171,6 @@ class importexport_export_ui {
 				} else {
 					$content['plugin_options_template'] = $options;
 				}
-			}
-			if(!$content['plugin_options_html'] && !$content['plugin_options_template']) {
-				$readonlys[$tabs]['options_tab'] = true;
 			}
 		}
 
@@ -214,6 +229,7 @@ class importexport_export_ui {
 
 		// disable preview box
 		$this->js->set_onload("set_style_by_class('tr','preview-box','display','none');");
+
 
 		//xajax_eT_wrapper submit
 		if(class_exists('xajaxResponse'))
