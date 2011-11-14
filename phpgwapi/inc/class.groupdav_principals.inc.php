@@ -62,10 +62,11 @@ class groupdav_principals extends groupdav_handler
 		/*'expand-property' => array(
 			// an other report calendarserver announces
 		),*/
+		/* seems only be used 'til OS X 10.6, no longer in 10.7
 		'addressbook-findshared' => array(
 			'ns' => groupdav::ADDRESSBOOKSERVER,
 			'method' => 'addressbook_findshared_report',
-		),
+		),*/
 	);
 
 	/**
@@ -163,6 +164,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param int $user account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
+	/* Seens only to work 'til OS X 10.6, no longer in 10.7 AND response seems NOT correct for 10.6
 	function addressbook_findshared_report($path,$options,&$files,$user)
 	{
 		error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
@@ -176,7 +178,7 @@ class groupdav_principals extends groupdav_handler
 			error_log(__METHOD__."() ".array2string($f));
 		}
 		return true;
-	}
+	}*/
 
 	/**
 	 * Handle principal-property-search report
