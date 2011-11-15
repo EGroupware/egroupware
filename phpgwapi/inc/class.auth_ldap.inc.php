@@ -92,7 +92,7 @@ class auth_ldap implements auth_backend
 					$GLOBALS['auto_create_acct'] = array();
 					if (isset($allValues[0]['homedirectory']))
 					{
-						$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'];
+						$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'][0];
 					}
 					if (!($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')))
 					{
