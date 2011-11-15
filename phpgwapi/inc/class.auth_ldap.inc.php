@@ -54,7 +54,7 @@ class auth_ldap implements auth_backend
 			return False;
 		}
 		/* find the dn for this uid, the uid is not always in the dn */
-		$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','shadowExpire');
+		$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','shadowExpire','homeDirectory');
 
 		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
@@ -88,13 +88,18 @@ class auth_ldap implements auth_backend
 			{
 				if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 				{
+					// store homedirectory for egw_session->read_repositories
+					$GLOBALS['auto_create_acct'] = array();
+					if (isset($allValues[0]['homedirectory']))
+					{
+						$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'];
+					}
 					if (!($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')))
 					{
 						// account does NOT exist, check if we should create it
 						if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 						{
 							// create a global array with all availible info about that account
-							$GLOBALS['auto_create_acct'] = array();
 							foreach(array(
 								'givenname' => 'firstname',
 								'sn'        => 'lastname',

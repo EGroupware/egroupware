@@ -1079,7 +1079,7 @@ class egw_session
 
 		// append the url to the webserver url, but avoid more then one slash between the parts of the url
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-		// patch inspired by vladimir kolobkov -> we should not try to match the webserver url against the url without '/' as delimiter, 
+		// patch inspired by vladimir kolobkov -> we should not try to match the webserver url against the url without '/' as delimiter,
 		// as $webserver_url may be part of $url (as /egw is part of phpgwapi/js/egw_instant_load.html)
 		if (($url[0] != '/' || $webserver_url != '/') && (!$webserver_url || strpos($url, $webserver_url.'/') === false))
 		{
@@ -1429,6 +1429,11 @@ class egw_session
 		$GLOBALS['egw']->applications->applications($this->account_id);
 
 		$this->user                = $GLOBALS['egw']->accounts->read_repository();
+		// set homedirectory from auth_ldap or auth_ads, to be able to use it in vfs
+		if (!isset($this->user['homedirectory']) && isset($GLOBALS['auto_create_acct']['homedirectory']))
+		{
+			$this->user['homedirectory'] = $GLOBALS['auto_create_acct']['homedirectory'];
+		}
 		$this->user['acl']         = $GLOBALS['egw']->acl->read_repository();
 		$this->user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		if (is_object($GLOBALS['egw']->datetime))

@@ -194,7 +194,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
 				'pass' => $GLOBALS['egw_info']['user']['passwd'],
 				'host' => $GLOBALS['egw_info']['user']['domain'],
-				'home' => $GLOBALS['egw_info']['user']['homedirectory'],
+				'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
 			);
 		}
 		$parts = array_merge(parse_url($path),$defaults);
