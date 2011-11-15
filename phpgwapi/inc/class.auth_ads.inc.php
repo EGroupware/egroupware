@@ -88,7 +88,7 @@ class auth_ads implements auth_backend
 			$GLOBALS['auto_create_acct'] = array();
 			if (isset($allValues[0]['homedirectory']))
 			{
-				$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'];
+				$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'][0];
 			}
 			if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 			{

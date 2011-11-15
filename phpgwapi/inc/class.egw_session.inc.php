@@ -1430,9 +1430,19 @@ class egw_session
 
 		$this->user                = $GLOBALS['egw']->accounts->read_repository();
 		// set homedirectory from auth_ldap or auth_ads, to be able to use it in vfs
-		if (!isset($this->user['homedirectory']) && isset($GLOBALS['auto_create_acct']['homedirectory']))
+		if (!isset($this->user['homedirectory']))
 		{
-			$this->user['homedirectory'] = $GLOBALS['auto_create_acct']['homedirectory'];
+			// authentication happens in login.php, which does NOT yet create egw-object in session
+			// --> need to store homedirectory in session
+			if(isset($GLOBALS['auto_create_acct']['homedirectory']))
+			{
+				egw_cache::setSession(__CLASS__, 'homedirectory',
+					$this->user['homedirectory'] = $GLOBALS['auto_create_acct']['homedirectory']);
+			}
+			else
+			{
+				$this->user['homedirectory'] = egw_cache::getSession(__CLASS__, 'homedirectory');
+			}
 		}
 		$this->user['acl']         = $GLOBALS['egw']->acl->read_repository();
 		$this->user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
