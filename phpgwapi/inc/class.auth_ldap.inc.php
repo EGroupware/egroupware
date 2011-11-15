@@ -183,6 +183,11 @@ class auth_ldap implements auth_backend
 
 		if ($allValues['count'] > 0)
 		{
+			if (!isset($allValues[0]['shadowlastchange']))
+			{
+				if ($this->debug) error_log(__METHOD__."('$username') no shadowlastchange attribute!");
+				return false;
+			}
 			if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
 				$allValues[0]['uid'][0] != $username)
 			{
