@@ -3021,6 +3021,7 @@ class felamimail_bo
 							//error_log( __METHOD__.__LINE__.array2string($headers));
 							foreach(array('CONTENT-TYPE','CONTENT-DISPOSITION') as $k => $v)
 							{
+								$headers[$v] = rawurldecode(self::decode_header($headers[$v]));
 								foreach(array('filename','name') as $sk => $n)
 								{
 									if (stripos($headers[$v],$n)!== false)
