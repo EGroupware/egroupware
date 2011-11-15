@@ -56,7 +56,7 @@ class auth_ads implements auth_backend
 		}
 		//echo "<p>Bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd'.</p>\n";
 
-		$attributes	= array('samaccountname','givenName','sn','mail');
+		$attributes	= array('samaccountname','givenName','sn','mail','homeDirectory');
 		$filter = "(samaccountname=$username)";
 		// automatic create dn from domain: domain.com ==> DC=domain,DC=com
 		$base_dn = array();
@@ -84,10 +84,15 @@ class auth_ads implements auth_backend
 			{
 				return $GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
 			}
+			// store homedirectory for egw_session->read_repositories
+			$GLOBALS['auto_create_acct'] = array();
+			if (isset($allValues[0]['homedirectory']))
+			{
+				$GLOBALS['auto_create_acct']['homedirectory'] = $allValues[0]['homedirectory'];
+			}
 			if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 			{
 				// create a global array with all availible info about that account
-				$GLOBALS['auto_create_acct'] = array();
 				foreach(array(
 					'givenname' => 'firstname',
 					'sn'        => 'lastname',
