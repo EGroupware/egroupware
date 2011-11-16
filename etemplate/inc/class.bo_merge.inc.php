@@ -360,7 +360,7 @@ abstract class bo_merge
 
 	/**
 	 * getExportLimit
-	 * checks if there is an exportlimit set, and returns 
+	 * checks if there is an exportlimit set, and returns
 	 * @param mixed $app_limit checks and validates app_limit, if not set returns the global limit
 	 *
 	 * @return mixed - no if no export is allowed, false if there is no restriction and int as there is a valid restriction
@@ -376,7 +376,7 @@ abstract class bo_merge
 		{
 			//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
 			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
-			if ($app !='common') 
+			if ($app !='common')
 			{
 				$app_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
 				if ($app_limit) $exportLimitStore[$app] = $app_limit;
@@ -387,7 +387,7 @@ abstract class bo_merge
 				$exportLimitStore[$app] = false;
 				return false;
 			}
-	
+
 			if (is_numeric($exportLimitStore[$app]))
 			{
 				$exportLimitStore[$app] = (int)$exportLimitStore[$app];
@@ -523,8 +523,11 @@ abstract class bo_merge
 		{
 			try
 			{
-				$element = new SimpleXMLelement($content);
-				$content = @$xslt->transformToXml($element);
+				// does NOT work with php 5.2.6: Catchable fatal error: argument 1 to transformToXml() must be of type DOMDocument
+				//$element = new SimpleXMLelement($content);
+				$element = new DOMDocument('1.0', 'utf-8');
+				$element->loadXML($content);
+				$content = $xslt->transformToXml($element);
 
 //echo $content;die();
 				// Word 2003 needs two declarations, add extra declaration back in
@@ -540,7 +543,7 @@ abstract class bo_merge
 			}
 			catch (Exception $e)
 			{
-				error_log($e);
+				error_log($e->getMessage());
 				// Failed...
 			}
 		}
