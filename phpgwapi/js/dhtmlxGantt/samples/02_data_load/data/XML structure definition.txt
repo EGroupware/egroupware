@@ -1,0 +1,36 @@
+XML structure definition:
+
+root tag - <projects>
+it has a number of nested <project> tags.
+
+tag <project> has 3 mandatory attributes: id (string), name (string), startdate(formatted string YYYY,MM,DD as in 2006,12,14)
+
+ <project id = "1" name = "project1" startdate = "2006,12,14">
+
+it has a number of nested <task> tags.
+
+tag <task> has one mandatory attribute id (string)
+
+ <task id="1">
+
+and a number of nested tag-properties:
+
+<name>task1</name>     - task name, string
+
+<est>2006,12,14</est>  - task start date, formatted string YYYY,MM,DD
+
+<duration>120</duration> - task duration in hours
+
+<percentcompleted>60</percentcompleted> - percent complete of this task, integer range 0..100
+
+<predecessortasks>2</predecessortasks> - id of the predecessor task (the one linked to this task with an arrow), so this task runs always after its predecessor. Could be empty tag.
+
+<childtasks>
+
+ ... nested <task> tags
+
+</childtasks>   - defines nested sub-tasks, could be empty tag.
+
+End of XML definition.
+
+Sample XML structure - see "data/data.xml" file.

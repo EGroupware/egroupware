@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Custom menu in Gantt Chart</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="featured" content="yes"><meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body onload="createChartControl('GanttDiv')">
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit">Search</button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/gantt.gif" alt="" >dhtmlxGantt</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >Custom menu</a>
+            </div>
+            <div style="display:block;">
+                <h3>Custom menu in Gantt Chart</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link type="text/css" rel="stylesheet" href="../../codebase/dhtmlxgantt.css">
+    <script type="text/javascript" language="JavaScript" src="../../codebase/dhtmlxcommon.js"></script>
+    <script type="text/javascript" language="JavaScript" src="../../codebase/dhtmlxgantt.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../../dhtmlxMenu/codebase/skins/dhtmlxmenu_dhx_skyblue.css">
+    <script type="text/javascript" language="JavaScript" src="../../../dhtmlxMenu/codebase/dhtmlxmenu.js"></script>
+    <script type="text/javascript" language="JavaScript" src="../../../dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js"></script>
+
+    <script type="text/javascript" language="JavaScript">
+    /*<![CDATA[*/
+    var ganttChartControl;
+    function createChartControl(htmlDiv1)
+    {
+        // Initialize Gantt data structures
+
+        //project 1
+        var project1 = new GanttProjectInfo(1, "Applet redesign", new Date(2010, 5, 11));
+
+        var parentTask1 = new GanttTaskInfo(1, "Old code review", new Date(2010, 5, 11), 208, 50, "");
+        parentTask1.addChildTask(new GanttTaskInfo(2, "Convert to J#", new Date(2010, 5, 11), 100, 40, ""));
+        parentTask1.addChildTask(new GanttTaskInfo(13, "Add new functions", new Date(2010, 5, 12), 80, 90, ""));
+
+        var parentTask2 = new GanttTaskInfo(3, "Hosted Control", new Date(2010, 6, 7), 190, 80, "1");
+        var parentTask5 = new GanttTaskInfo(5, "J# interfaces", new Date(2010, 6, 14), 60, 70, "");
+        var parentTask123 = new GanttTaskInfo(123, "use GUIDs", new Date(2010, 6, 14), 60, 70, "");
+        parentTask5.addChildTask(parentTask123);
+        parentTask2.addChildTask(parentTask5);
+
+        project1.addTask(parentTask1);
+        project1.addTask(parentTask2);
+
+        // Create Gantt control
+        ganttChartControl = new GanttChart();
+        // Setup paths and behavior
+        ganttChartControl.setImagePath("../../codebase/imgs/");
+        ganttChartControl.setEditable(true);
+        ganttChartControl.showTreePanel(true);
+        ganttChartControl.showDescTask(true,'s-f');
+
+
+
+        // Sample custom menu
+        var menu = new dhtmlXMenuObject();
+        menu.setIconsPath("../../../dhtmlxMenu/codebase/imgs/dhtmlxmenu_dhx_skyblue");
+        menu.renderAsContextMenu();
+        menu.loadXMLString('<menu><item id="m1" text="Item name placeholder"/><item id="m2" text="Get info"/><item id="m3" text="Delete Task"/></menu>');
+        menu.attachEvent("onClick", function(id){
+            var obj = menu.getUserData("","obj");
+            if (obj) {
+                var o = obj.o;
+                if (obj.type == "p") {
+                    alert("Project, id=" + o.getId() + ", name=" + o.getName() + ", start date=" + o.getStartDate() +
+                            ", duration=" + o.getDuration() + "hours, percent complete=" + o.getPercentCompleted() + "%");
+                } else
+                if (obj.type == "t") {
+                    if(id=="m3") {
+                        // Handle "Delete Task" menu
+                        if (confirm("Delete task \""+o.getName()+"\"?")) ganttChartControl.getProjectById(1).deleteTask(o.getId());
+                    } else
+                        alert("Task, id=" + obj.o.getId() + ", name=" + obj.o.getName() + ", EST=" + obj.o.getEST() +
+                              ", duration=" + o.getDuration() + "hours, percent complete=" + o.getPercentCompleted() + "%" +
+                              ", parentTaskId=" + o.getParentTaskId() + ", pred.taskId=" + o.getPredecessorTaskId());
+                }
+            }
+        });
+        ganttChartControl.setContextMenu(menu);
+        ganttChartControl.attachEvent("onBeforeContextMenu", function(menu,obj) {
+            // Sample of disabling menu for a particular item with Id = 13
+            if (obj.getId()==13) {alert("This task has no menu."); return false;}
+            if (obj.isProject) {
+                // Project menu
+                menu.setItemText("m1", "Project: " + obj.getName());
+                menu.setUserData("","obj",{type:"p",o:obj});
+                menu.setItemDisabled("m3");
+            } else if (obj.isTask) {
+                // Task menu
+                menu.setItemText("m1", "Task: " + obj.getName());
+                menu.setUserData("","obj",{type:"t",o:obj});
+                menu.setItemEnabled("m3");
+            }
+        });
+
+
+
+		
+        // Load data structure		
+        ganttChartControl.addProject(project1);
+
+        // Build control on the page
+        ganttChartControl.create(htmlDiv1);
+    }
+    /*]]>*/
+</script>
+
+
+
+
+<div style="width:950px; height:500px; position:relative;" id="GanttDiv"></div>
+			
+			
+         </div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-code">&lt;</span><span class="hl-identifier">link</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxgantt.css</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">script</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/javascript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">language</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">JavaScript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;&lt;/</span><span class="hl-identifier">script</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">script</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/javascript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">language</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">JavaScript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxgantt.js</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;&lt;/</span><span class="hl-identifier">script</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">link</span><span class="hl-code"> </span><span class="hl-identifier">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxMenu/codebase/skins/dhtmlxmenu_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">script</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/javascript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">language</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">JavaScript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxMenu/codebase/dhtmlxmenu.js</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;&lt;/</span><span class="hl-identifier">script</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">script</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/javascript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">language</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">JavaScript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;&lt;/</span><span class="hl-identifier">script</span><span class="hl-code">&gt;
+&lt;</span><span class="hl-identifier">script</span><span class="hl-code"> </span><span class="hl-identifier">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/javascript</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">language</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">JavaScript</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;
+</span><span class="hl-comment">/*</span><span class="hl-comment">&lt;![CDATA[</span><span class="hl-comment">*/</span><span class="hl-code">
+</span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">createChartControl</span><span class="hl-brackets">(</span><span class="hl-identifier">htmlDiv1</span><span class="hl-brackets">)</span><span class="hl-code">
+</span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Initialize Gantt data structures</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-comment">//</span><span class="hl-comment">project 1</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">project1</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttProjectInfo</span><span class="hl-brackets">(</span><span class="hl-number">1</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Applet redesign</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">5</span><span class="hl-code">, </span><span class="hl-number">11</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">parentTask1</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">1</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Old code review</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">5</span><span class="hl-code">, </span><span class="hl-number">11</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">208</span><span class="hl-code">, </span><span class="hl-number">50</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">parentTask1</span><span class="hl-code">.</span><span class="hl-identifier">addChildTask</span><span class="hl-brackets">(</span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">2</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Convert to J#</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">5</span><span class="hl-code">, </span><span class="hl-number">11</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">100</span><span class="hl-code">, </span><span class="hl-number">40</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">parentTask1</span><span class="hl-code">.</span><span class="hl-identifier">addChildTask</span><span class="hl-brackets">(</span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">13</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Add new functions</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">5</span><span class="hl-code">, </span><span class="hl-number">12</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">80</span><span class="hl-code">, </span><span class="hl-number">90</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">parentTask2</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">3</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Hosted Control</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">6</span><span class="hl-code">, </span><span class="hl-number">7</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">190</span><span class="hl-code">, </span><span class="hl-number">80</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">1</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">parentTask5</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">5</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">J# interfaces</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">6</span><span class="hl-code">, </span><span class="hl-number">14</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">60</span><span class="hl-code">, </span><span class="hl-number">70</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">parentTask123</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttTaskInfo</span><span class="hl-brackets">(</span><span class="hl-number">123</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">use GUIDs</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-builtin">Date</span><span class="hl-brackets">(</span><span class="hl-number">2010</span><span class="hl-code">, </span><span class="hl-number">6</span><span class="hl-code">, </span><span class="hl-number">14</span><span class="hl-brackets">)</span><span class="hl-code">, </span><span class="hl-number">60</span><span class="hl-code">, </span><span class="hl-number">70</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">parentTask5</span><span class="hl-code">.</span><span class="hl-identifier">addChildTask</span><span class="hl-brackets">(</span><span class="hl-identifier">parentTask123</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">parentTask2</span><span class="hl-code">.</span><span class="hl-identifier">addChildTask</span><span class="hl-brackets">(</span><span class="hl-identifier">parentTask5</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">project1</span><span class="hl-code">.</span><span class="hl-identifier">addTask</span><span class="hl-brackets">(</span><span class="hl-identifier">parentTask1</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">project1</span><span class="hl-code">.</span><span class="hl-identifier">addTask</span><span class="hl-brackets">(</span><span class="hl-identifier">parentTask2</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Create Gantt control</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">GanttChart</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Setup paths and behavior</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">setImagePath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/imgs/</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">setEditable</span><span class="hl-brackets">(</span><span class="hl-reserved">true</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">showTreePanel</span><span class="hl-brackets">(</span><span class="hl-reserved">true</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">showDescTask</span><span class="hl-brackets">(</span><span class="hl-reserved">true</span><span class="hl-code">,</span><span class="hl-quotes">'</span><span class="hl-string">s-f</span><span class="hl-quotes">'</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Sample custom menu</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">menu</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXMenuObject</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setIconsPath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../../dhtmlxMenu/codebase/imgs/dhtmlxmenu_dhx_skyblue</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">renderAsContextMenu</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">loadXMLString</span><span class="hl-brackets">(</span><span class="hl-quotes">'</span><span class="hl-string">&lt;menu&gt;&lt;item id=&quot;m1&quot; text=&quot;Item name placeholder&quot;/&gt;&lt;item id=&quot;m2&quot; text=&quot;Get info&quot;/&gt;&lt;item id=&quot;m3&quot; text=&quot;Delete Task&quot;/&gt;&lt;/menu&gt;</span><span class="hl-quotes">'</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">attachEvent</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">onClick</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">function</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">obj</span><span class="hl-code"> = </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">getUserData</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-quotes">&quot;</span><span class="hl-string">obj</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+        </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">o</span><span class="hl-code"> = </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">o</span><span class="hl-code">;
+            </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">type</span><span class="hl-code"> == </span><span class="hl-quotes">&quot;</span><span class="hl-string">p</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-identifier">alert</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Project, id=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">, name=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getName</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">, start date=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getStartDate</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> +
+                        </span><span class="hl-quotes">&quot;</span><span class="hl-string">, duration=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getDuration</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">hours, percent complete=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getPercentCompleted</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">%</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-brackets">}</span><span class="hl-code"> </span><span class="hl-reserved">else</span><span class="hl-code">
+            </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">type</span><span class="hl-code"> == </span><span class="hl-quotes">&quot;</span><span class="hl-string">t</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+                </span><span class="hl-reserved">if</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-code">==</span><span class="hl-quotes">&quot;</span><span class="hl-string">m3</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+                    </span><span class="hl-comment">//</span><span class="hl-comment"> Handle &quot;Delete Task&quot; menu</span><span class="hl-comment"></span><span class="hl-code">
+                    </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">confirm</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Delete task </span><span class="hl-special">\&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">+</span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getName</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">+</span><span class="hl-quotes">&quot;</span><span class="hl-special">\&quot;</span><span class="hl-string">?</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">getProjectById</span><span class="hl-brackets">(</span><span class="hl-number">1</span><span class="hl-brackets">)</span><span class="hl-code">.</span><span class="hl-identifier">deleteTask</span><span class="hl-brackets">(</span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+                </span><span class="hl-brackets">}</span><span class="hl-code"> </span><span class="hl-reserved">else</span><span class="hl-code">
+                    </span><span class="hl-identifier">alert</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Task, id=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">, name=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getName</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">, EST=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getEST</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> +
+                          </span><span class="hl-quotes">&quot;</span><span class="hl-string">, duration=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getDuration</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">hours, percent complete=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getPercentCompleted</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">%</span><span class="hl-quotes">&quot;</span><span class="hl-code"> +
+                          </span><span class="hl-quotes">&quot;</span><span class="hl-string">, parentTaskId=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getParentTaskId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">, pred.taskId=</span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">o</span><span class="hl-code">.</span><span class="hl-identifier">getPredecessorTaskId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-brackets">}</span><span class="hl-code">
+        </span><span class="hl-brackets">}</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">setContextMenu</span><span class="hl-brackets">(</span><span class="hl-identifier">menu</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">attachEvent</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">onBeforeContextMenu</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">function</span><span class="hl-brackets">(</span><span class="hl-identifier">menu</span><span class="hl-code">,</span><span class="hl-identifier">obj</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+        </span><span class="hl-comment">//</span><span class="hl-comment"> Sample of disabling menu for a particular item with Id = 13</span><span class="hl-comment"></span><span class="hl-code">
+        </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">getId</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">==</span><span class="hl-number">13</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-identifier">alert</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">This task has no menu.</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">; </span><span class="hl-reserved">return</span><span class="hl-code"> </span><span class="hl-reserved">false</span><span class="hl-code">;</span><span class="hl-brackets">}</span><span class="hl-code">
+        </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">isProject</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-comment">//</span><span class="hl-comment"> Project menu</span><span class="hl-comment"></span><span class="hl-code">
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setItemText</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">m1</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Project: </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">getName</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setUserData</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-quotes">&quot;</span><span class="hl-string">obj</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-brackets">{</span><span class="hl-identifier">type</span><span class="hl-code">:</span><span class="hl-quotes">&quot;</span><span class="hl-string">p</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-identifier">o</span><span class="hl-code">:</span><span class="hl-identifier">obj</span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setItemDisabled</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">m3</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+        </span><span class="hl-brackets">}</span><span class="hl-code"> </span><span class="hl-reserved">else</span><span class="hl-code"> </span><span class="hl-reserved">if</span><span class="hl-code"> </span><span class="hl-brackets">(</span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">isTask</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+            </span><span class="hl-comment">//</span><span class="hl-comment"> Task menu</span><span class="hl-comment"></span><span class="hl-code">
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setItemText</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">m1</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Task: </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">obj</span><span class="hl-code">.</span><span class="hl-identifier">getName</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setUserData</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-quotes">&quot;</span><span class="hl-string">obj</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-brackets">{</span><span class="hl-identifier">type</span><span class="hl-code">:</span><span class="hl-quotes">&quot;</span><span class="hl-string">t</span><span class="hl-quotes">&quot;</span><span class="hl-code">,</span><span class="hl-identifier">o</span><span class="hl-code">:</span><span class="hl-identifier">obj</span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+            </span><span class="hl-identifier">menu</span><span class="hl-code">.</span><span class="hl-identifier">setItemEnabled</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">m3</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+        </span><span class="hl-brackets">}</span><span class="hl-code">
+    </span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+    
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Load data structure        </span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">addProject</span><span class="hl-brackets">(</span><span class="hl-identifier">project1</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-comment">//</span><span class="hl-comment"> Build control on the page</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">ganttChartControl</span><span class="hl-code">.</span><span class="hl-identifier">create</span><span class="hl-brackets">(</span><span class="hl-identifier">htmlDiv1</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">
+</span><span class="hl-comment">/*</span><span class="hl-comment">]]&gt;</span><span class="hl-comment">*/</span><span class="hl-code">
+&lt;/</span><span class="hl-identifier">script</span><span class="hl-code">&gt;
+ 
+ 
+&lt;</span><span class="hl-identifier">div</span><span class="hl-code"> </span><span class="hl-identifier">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">width:950px; height:500px; position:relative;</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-identifier">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">GanttDiv</span><span class="hl-quotes">&quot;</span><span class="hl-code">&gt;&lt;/</span><span class="hl-identifier">div</span><span class="hl-code">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>
