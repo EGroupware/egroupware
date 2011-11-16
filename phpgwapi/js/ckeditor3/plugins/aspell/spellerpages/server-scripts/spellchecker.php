@@ -24,17 +24,16 @@ $GLOBALS['egw_info'] = array(
 // will not continue, unless the header get's included and there is a valid eGW session
 require('../../../../../../../header.inc.php');
 
-if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))
-{
-    $lang = $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];
-}
-else
-{
-    $lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-}
+$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ?
+	$GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']:
+	$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 
-$aspell_opts    = '-a '.escapeshellarg('--lang='.$lang).' --encoding=utf-8 -H --rem-sgml-check=alt';        // by FredCK
+$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
+$lang_ext = $lang.'_'.$country;
+$langs = getDictLangs();
+
+$aspell_opts    = '-a '.escapeshellarg('--lang='.(in_array($lang_ext,$langs)?$lang_ext:$lang)).' --encoding=utf-8 -H --rem-sgml-check=alt'; // by FredCK
 $tempfiledir    = "./";
 
 $spellercss		= '../spellerStyle.css';						// by FredCK
@@ -42,6 +41,42 @@ $word_win_src	= '../wordWindow.js';							// by FredCK
 
 $textinputs		= $_POST['textinputs']; # array
 $input_separator = "A";
+
+function getDictLangs()
+{
+	static $langs;
+	if (is_null($langs)) $langs = egw_cache::getCache(egw_cache::TREE,'spellckecher','aspellDictLangs',$callback=null,$callback_params=array(),$expiration=60*60*1);
+	if (isset($langs) && !empty($langs)) return $langs;
+	$langs = array();
+	$aspell_prog = getAspellPath();
+	$cmd = "$aspell_prog dump dicts";
+	if( $aspellret = shell_exec( $cmd )) {
+		    $linesout = explode( "\n", $aspellret );
+		    $index = 0;
+		    $text_input_index = -1;
+		    # parse each line of aspell return
+		    foreach( $linesout as $key=>$val ) {
+		            //error_log('spellerpages'.__LINE__.' : '.trim($val));
+		            $langs[] = trim($val);
+		    }
+	}
+	egw_cache::setCache(egw_cache::TREE,'spellchecker','aspellDictLangs',$langs,$expiration=60*60*1);
+	return $langs;
+}
+
+function getAspellPath()
+{
+	if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
+		is_executable($GLOBALS['egw_info']['server']['aspell_path']))
+	{
+		$aspell_prog = $GLOBALS['egw_info']['server']['aspell_path'];
+	}
+	else    // little fallback that might save linux users
+	{
+		$aspell_prog = 'aspell';
+	}
+	return $aspell_prog;
+}
 
 # set the JavaScript variable to the submitted text.
 # textinputs is an array, each element corresponding to the (url-encoded)
@@ -101,15 +136,7 @@ function print_checker_results() {
 	global $textinputs;
 	global $input_separator;
 	$aspell_err = "";
-    if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
-        is_executable($GLOBALS['egw_info']['server']['aspell_path']))
-    {
-        $aspell_prog = $GLOBALS['egw_info']['server']['aspell_path'];
-    }
-    else    // little fallback that might save linux users
-    {
-        $aspell_prog = 'aspell';
-    }
+    $aspell_prog = getAspellPath();
 
     # create temp file
     // use EGroupware's temp_dir
