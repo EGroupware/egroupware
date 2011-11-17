@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
+		<description id="msg" class="redItalic"/>
+		<grid id="rows">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Phrase"/>
+					<description value="Translation"/>
+					<description value="Action"/>
+				</row>
+				<row>
+					<textbox id="${row}[phrase]" size="64"/>
+					<textbox id="${row}[translation]" size="64"/>
+					<button align="center" label="Delete" id="delete[$row]" onclick="return confirm('Delete');" image="delete"/>
+				</row>
+			</rows>
+		</grid>
+		<hbox>
+			<button label="Save" id="button[save]"/>
+			<button label="Apply" id="button[apply]"/>
+			<button label="Cancel" id="button[cancel]"/>
+		</hbox>
+	</template>
+</overlay>

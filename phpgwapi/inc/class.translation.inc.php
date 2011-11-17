@@ -98,7 +98,7 @@ class translation
 	 *
 	 * @var array
 	 */
-	static $instance_specific_translations = array('loginscreen','mainscreen');
+	static $instance_specific_translations = array('loginscreen','mainscreen','custom');
 
 	/**
 	 * returns the charset to use (!$lang) or the charset of the lang-files or $lang
@@ -188,6 +188,8 @@ class translation
 				self::add_app('common');
 			}
 			self::add_app($GLOBALS['egw_info']['flags']['currentapp']);
+			// load instance specific translations
+			self::add_app('custom');
 		}
 	}
 
@@ -252,6 +254,7 @@ class translation
 	static function add_app($app,$lang=False)
 	{
 		$lang = $lang ? $lang : self::$userlang;
+		if ($app == 'custom') $lang = 'en';	// custom translations use only 'en'
 		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
 		{
 			//$start = microtime(true);
@@ -924,23 +927,33 @@ class translation
 	}
 
 	/**
-	 * insert/update one phrase in the lang-table
+	 * insert/update/delete one phrase in the lang-table
 	 *
 	 * @param string $lang
 	 * @param string $app
 	 * @param string $message_id
-	 * @param string $content
+	 * @param string $content translation or null to delete translation
 	 */
 	static function write($lang,$app,$message_id,$content)
 	{
-		self::$db->insert(self::LANG_TABLE,array(
-			'content' => $content,
-		),array(
-			'lang' => $lang,
-			'app_name' => $app,
-			'message_id' => $message_id,
-		),__LINE__,__FILE__);
-
+		if ($content)
+		{
+			self::$db->insert(self::LANG_TABLE,array(
+				'content' => $content,
+			),array(
+				'lang' => $lang,
+				'app_name' => $app,
+				'message_id' => $message_id,
+			),__LINE__,__FILE__);
+		}
+		else
+		{
+			self::$db->delete(self::LANG_TABLE,array(
+				'lang' => $lang,
+				'app_name' => $app,
+				'message_id' => $message_id,
+			),__LINE__,__FILE__);
+		}
 		// invalidate the cache
 		if(!in_array($app,self::$instance_specific_translations))
 		{
