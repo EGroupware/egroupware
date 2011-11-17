@@ -244,6 +244,7 @@ links	infolog	en	Links
 links of this entry	infolog	en	Links of this entry
 list all categories	infolog	en	List all categories
 list no subs/childs	infolog	en	List no subs/childs
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	en	Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)
 location	infolog	en	Location
 longer textual description	infolog	en	Longer text description
 low	infolog	en	Low
@@ -287,6 +288,7 @@ open(status)	infolog	en	Open
 optional note to the link	infolog	en	Optional note to the link
 order	infolog	en	Order
 organization	infolog	en	Organization
+other configurations	infolog	en	Other configurations
 overdue	infolog	en	Overdue
 own	infolog	en	Own
 own open	infolog	en	Own open
