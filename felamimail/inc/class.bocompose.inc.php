@@ -719,7 +719,7 @@
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddAddress($emailAddress, $emailName);
-					$_mailObject->AddAddress($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
+					$_mailObject->AddAddress($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$emailAddress)));
 				}
 			}
 
@@ -730,7 +730,7 @@
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddCC($emailAddress, $emailName);
-					$_mailObject->AddCC($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
+					$_mailObject->AddCC($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$emailAddress)));
 				}
 			}
 
@@ -741,7 +741,7 @@
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddBCC($emailAddress, $emailName);
-					$_mailObject->AddBCC($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
+					$_mailObject->AddBCC($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$emailAddress)));
 				}
 			}
 
@@ -752,7 +752,7 @@
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddBCC($emailAddress, $emailName);
-					$_mailObject->AddReplyto($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
+					$_mailObject->AddReplyto($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$emailAddress)));
 				}
 			}
 
