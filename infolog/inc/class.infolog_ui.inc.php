@@ -1987,6 +1987,7 @@ class infolog_ui
 		{
 			$excludefields['#'.$name] = $data['label'];
 		}
+		$config_data = config::read('infolog');
 
 		if($_POST['save'] || $_POST['apply'])
 		{
@@ -2012,6 +2013,7 @@ class infolog_ui
 			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
+			config::save_value('index_load_cfs',$config_data['index_load_cfs'] = $_POST['index_load_cfs'],'infolog');
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
@@ -2047,7 +2049,10 @@ class infolog_ui
 				'history' => lang('Yes, with purging of deleted items possible'),
 				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
 				'history_no_delete' => lang('Yes, noone can purge deleted items'),
-			))
+			)),
+			'lang_other' => lang('Other configurations'),
+			'lang_index_load_cfs' => lang('Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)'),
+			'index_load_cfs' => html::checkbox_multiselect('index_load_cfs',$config_data['index_load_cfs'],$this->bo->enums['type'],true,'',5),
 		));
 
 		echo parse_navbar();

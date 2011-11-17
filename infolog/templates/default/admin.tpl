@@ -13,18 +13,27 @@
    <td colspan="3">{lang_responsible_edit}</td>
    <td>{responsible_edit}</td>
   </tr>
-   <tr class="row_off">
-    <td colspan="3">{lang_copy_excludefields}</td>
-    <td>
-    {copy_excludefields}
-    </td>
-   </tr>
   <tr class="th">
    <td colspan="4"><b>{lang_history}</b></td>
   </tr>
   <tr class="row_off">
    <td colspan="3">{lang_history2}</td>
    <td>{history}</td>
+  </tr>
+  <tr class="th">
+   <td colspan="4"><b>{lang_other}</b></td>
+  </tr>
+  <tr class="row_off">
+   <td colspan="3">{lang_copy_excludefields}</td>
+   <td>
+   {copy_excludefields}
+   </td>
+  </tr>
+  <tr class="row_on">
+   <td colspan="3">{lang_index_load_cfs}</td>
+   <td>
+   {index_load_cfs}
+   </td>
   </tr>
   <tr>
    <td colspan="4" align="left">

@@ -11,6 +11,7 @@
 %1 you are responsible for is starting at %2	infolog	de	%1 für die Sie verantwortlich sind startet am %2
 %1 you delegated is due at %2	infolog	de	%1 die Sie delegierten ist am %2 fällig
 %1 you delegated is starting at %2	infolog	de	%1 die Sie delegierten startet am %2
+(and children) deleted	infolog	de	(und Untereinträge) gelöscht.
 - subprojects from	infolog	de	- Untereinträge von
 0%	infolog	de	0%
 10%	infolog	de	10%
@@ -76,7 +77,6 @@ changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Erledigt geändert zu %1%
 changed status to %1	infolog	de	Status geändert zu %1
 changed type	infolog	de	Typ geändert
-charset of file	infolog	de	Zeichensatz der Datei
 check all	infolog	de	Alle marktieren
 check to set startday	infolog	de	ankreuzen um Startdatum zu setzen
 check to specify custom contact	infolog	de	Ankreuzen um einen eigenen Kontakt anzugeben
@@ -179,7 +179,6 @@ error: the entry has been updated since you opened it for editing!	infolog	de	Fe
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
-export definitition to use for nextmatch export	infolog	de	Export Profil der Listenansicht (Disketten Symbol)
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
@@ -189,8 +188,6 @@ first argument for preg_replace	infolog	de	Ersten Argument für pre_replace
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	de	Für Serienbriefe benutzen Sie folgenden Platzhalter. Fügen die den Inhalt zwischen diese beiden Platzhalter ein.
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
-general	infolog	de	Allgemein
-general fields:	infolog	de	Allgemeine Felder
 global categories	infolog	de	Globale Kategorien
 group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
@@ -203,8 +200,6 @@ id	infolog	de	Id
 id#	infolog	de	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
-if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
-import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
@@ -249,10 +244,10 @@ links	infolog	de	Verknüpfungen
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 list all categories	infolog	de	Alle Kategorien anzeigen
 list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
 location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
-manage mapping	infolog	de	Verwaltung der Zuordnung
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 modifier	infolog	de	Geändert von
 modifierer	infolog	de	Geändert von
@@ -293,6 +288,7 @@ open(status)	infolog	de	offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüpfung
 order	infolog	de	Reihenfolge
 organization	infolog	de	Organisation
+other configurations	infolog	de	Weitere Konfigurationen
 overdue	infolog	de	überfällig
 own	infolog	de	eigene
 own open	infolog	de	eigene offen
@@ -320,6 +316,8 @@ primary link	infolog	de	Primäre Verknüpfung
 priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
+project id	infolog	de	Projekt-ID
+project name	infolog	de	Projektname
 project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
 projectmanager	infolog	de	Projektmanager
 re-planned	infolog	de	Umgeplant
@@ -425,7 +423,6 @@ to what should the startdate of new entries be set.	infolog	de	Auf was soll das 
 today	infolog	de	Heute
 todays date	infolog	de	heutiges Datum
 todo	infolog	de	Aufgabe
-translation	infolog	de	Translation
 typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
