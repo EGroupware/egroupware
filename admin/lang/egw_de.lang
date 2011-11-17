@@ -6,6 +6,7 @@
 %1 is no command!	admin	de	%1 ist kein Befehl !
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
+%1 phrases saved.	admin	de	%1 Phrasen gespeichert.
 %1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
 %1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 user %2	admin	de	%1 Benutzer %2
@@ -142,6 +143,7 @@ creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 current hash	admin	de	Aktuelle Verschlüsselung
 custom fields	admin	de	Benutzerdefinierte Felder
+custom translation	admin	de	Eigene Übersetzung
 cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
 day	admin	de	Tag
@@ -439,6 +441,8 @@ permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 personal: eg. within a family	admin	de	Persönlich: z.B. innerhalb einer Familie
 php version	admin	de	PHP Version
 phpinfo	admin	de	PHP-Informationen
+phrase	admin	de	Phrase
+phrase deleted	admin	de	Phrase gelöscht
 please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
@@ -557,6 +561,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	de	oben
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.
 total records	admin	de	Anzahl Datensätze insgesamt
+translation	admin	de	Übersetzung
 true	admin	de	Wahr
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis

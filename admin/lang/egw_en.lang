@@ -6,6 +6,7 @@
 %1 is no command!	admin	en	%1 is no command!
 %1 log entries deleted.	admin	en	%1 log entries deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
+%1 phrases saved.	admin	en	%1 phrases saved.
 %1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3 .
 %1 sessions killed	admin	en	%1 sessions killed.
 %1 user %2	admin	en	%1 user %2
@@ -144,6 +145,7 @@ creates a new field	admin	en	Creates a new field
 crontab only (recomended)	admin	en	Crontab only (recommended)
 current hash	admin	en	Current hash
 custom fields	admin	en	Custom fields
+custom translation	admin	en	Custom translation
 cyrus imap server	admin	en	Cyrus IMAP Server
 data	admin	en	Data
 day	admin	en	Day
@@ -446,6 +448,8 @@ permissions this group has	admin	en	Permissions this group has
 personal: eg. within a family	admin	en	Personal: eg. within a family
 php version	admin	en	PHP version
 phpinfo	admin	en	PHP information
+phrase	admin	en	Phrase
+phrase deleted	admin	en	Phrase deleted
 please enter a name	admin	en	Enter a name
 please enter a name for that server !	admin	en	Enter a name for that server!
 please run setup to become current	admin	en	Run setup to become current
@@ -565,6 +569,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	en	Top
 total of %1 id's changed.	admin	en	Total of %1 id's changed.
 total records	admin	en	Total records
+translation	admin	en	Translation
 true	admin	en	True
 trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
