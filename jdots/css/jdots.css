@@ -9,7 +9,7 @@
  * @version $Id: class.jdots_framework.inc.php 958 2010-06-02 09:32:26Z ralfbecker $
  */
 
-@import url("../../phpgwapi/templates/idots/css/traditional.css");
+@import url("../../phpgwapi/templates/idots/css/traditional.css?11.1");
 @import url("../jquery-ui.css");
 @import url("../egw_fw.css");
 
