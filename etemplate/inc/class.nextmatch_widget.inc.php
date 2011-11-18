@@ -497,7 +497,7 @@ class nextmatch_widget
 		$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 		list($app) = explode('.',$name);
 		$definition = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'];
-		if(!$value['no_csv_export'] && ($definition || !is_array($value['csv_fields'])))
+		if(!$value['no_csv_export'] && $definition != '~nextmatch~' && ($definition || !is_array($value['csv_fields'])))
 		{
 			if($GLOBALS['egw_info']['user']['apps']['importexport'] && ($definition || $value['csv_fields']) && is_object($nextmatch))
 			{
