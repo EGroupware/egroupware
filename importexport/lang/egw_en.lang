@@ -65,6 +65,7 @@ load sample file	importexport	en	Load sample file
 manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
+no definition	preferences	en	No definition
 no records selected	importexport	en	No records selected!
 please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
