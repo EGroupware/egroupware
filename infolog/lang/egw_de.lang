@@ -182,6 +182,7 @@ exists	infolog	de	Besteht
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
+Fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)	infolog	de	Welche felder wollen Sie zurücksetzen, wenn Sie einen Infologeintrag kopieren? (bestimmte Felder werden - aus technischen Erwägungen heraus - während des Kopiervorgangs immer zurückgesetzt. Bsp.: ID, Uid, Erstellt, Erstellt von, Geändert und Geändert von)
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
 first argument for preg_replace	infolog	de	Ersten Argument für pre_replace
