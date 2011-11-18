@@ -1039,9 +1039,9 @@ abstract class bo_merge
 		}
 		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
 		{	//sets a Letterprefix
-			$replaceprefix = array();
+			$replaceprefixsort = array();
 			// ToDo Stefan: $contentstart is NOT defined here!!!
-			$replaceprefix = explode(' ',substr($param[0],21,strlen($contentstart)-2));
+			$replaceprefix = explode(' ',substr($param[0],21,-2));
 			foreach ($replaceprefix as $key => $nameprefix)
 			{
 				if ($this->replacements['$$'.$nameprefix.'$$'] !='') $replaceprefixsort[] = $this->replacements['$$'.$nameprefix.'$$'];
