@@ -1056,8 +1056,8 @@
 				//$bofelamimail->reopen($this->sessionData['messageFolder']);
 				#error_log("(re)opened Connection");
 			}
-			if (count($folder) > 0) {
-
+			// if copying mail to folder, or saving mail to infolog, we need to gather the needed information
+			if (count($folder) > 0 || $_formData['to_infolog'] == 'on') {
 				foreach((array)$this->sessionData['bcc'] as $address) {
 					$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 					foreach((array)$address_array as $addressObject) {
@@ -1067,6 +1067,12 @@
 				}
 				$BCCmail='';
 				if (count($mailAddr)>0) $BCCmail = $mail->AddrAppend("Bcc",$mailAddr);
+				$sentMailHeader = $BCCmail.$mail->getMessageHeader();
+				$sentMailBody = $mail->getMessageBody();
+			}
+			// copying mail to folder
+			if (count($folder) > 0) 
+			{
 				foreach($folder as $folderName) {
 					if($bofelamimail->isSentFolder($folderName)) {
 						$flags = '\\Seen';
@@ -1081,8 +1087,8 @@
 						try
 						{
 							$bofelamimail->appendMessage($folderName,
-									$BCCmail.$mail->getMessageHeader(),
-									$mail->getMessageBody(),
+									$sentMailHeader,
+									$sentMailBody,
 									$flags);
 						}
 						catch (egw_exception_wrong_userinput $e)
@@ -1140,7 +1146,10 @@
 					$mailaddresses,
 					$this->sessionData['subject'],
 					$this->convertHTMLToText($this->sessionData['body']),
-					$this->sessionData['attachments']
+					$this->sessionData['attachments'],
+					false, // date
+					$sentMailHeader, // raw SentMailHeader
+					$sentMailBody // raw SentMailBody
 				);
 			}
 			if ($_formData['to_tracker'] == 'on') {
@@ -1152,6 +1161,17 @@
 					$this->sessionData['attachments']
 				);
 			}
+/*
+			if ($_formData['to_calendar'] == 'on') {
+				$uical =& CreateObject('calendar.calendar_uiforms');
+				$uical->import_mail(
+					$mailaddresses,
+					$this->sessionData['subject'],
+					$this->convertHTMLToText($this->sessionData['body']),
+					$this->sessionData['attachments']
+				);
+			}
+*/
 
 
 			if(is_array($this->sessionData['attachments'])) {

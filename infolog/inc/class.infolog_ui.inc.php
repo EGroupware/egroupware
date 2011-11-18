@@ -2071,8 +2071,10 @@ class infolog_ui
 	 * @param string $_body
 	 * @param array $_attachments
 	 * @param string $_date
+	 * @param string $_rawMailHeader
+	 * @param string $_rawMailBody
 	 */
-	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false)
+	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMailHeader=null,$_rawMailBody=null)
 	{
 		$uid = $_GET['uid'];
 		$partid = $_GET['part'];
@@ -2125,6 +2127,25 @@ class infolog_ui
 				}
 				$bofelamimail->closeConnection();
 			}
+			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
+			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
+			if ($_rawMailHeader && $_rawMailBody && $GLOBALS['egw_info']['user']['preferences']['felamimail']['saveAsOptions']==='add_raw')
+			{
+				$message = ltrim(str_replace("\n","\r\n",$_rawMailHeader)).str_replace("\n","\r\n",$_rawMailBody);
+				$subject = str_replace('$$','__',($_subject?$_subject:lang('(no subject)')));
+				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+				$tmpfile = fopen($attachment_file,'w');
+				fwrite($tmpfile,$message);
+				fclose($tmpfile);
+				$size = filesize($attachment_file);
+				$attachments[] = array(
+						'name' => trim($subject).'.eml',
+						'mimeType' => 'message/rfc822',
+						'tmp_name' => $attachment_file,
+						'size' => $size,
+					);
+			}
+
 			//_debug_array($_to_emailAddress);
 			$toaddr = array();
 			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
@@ -2150,6 +2171,25 @@ class infolog_ui
 
 			$mailcontent = felamimail_bo::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
 
+			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
+			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
+			if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['saveAsOptions']==='add_raw')
+			{
+				$message = $bofelamimail->getMessageRawBody($uid, $partid);
+				$headers = $bofelamimail->getMessageHeader($uid, $partid);
+				$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
+				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+				$tmpfile = fopen($attachment_file,'w');
+				fwrite($tmpfile,$message);
+				fclose($tmpfile);
+				$size = filesize($attachment_file);
+				$mailcontent['attachments'][] = array(
+						'name' => trim($subject).'.eml',
+						'mimeType' => 'message/rfc822',
+						'tmp_name' => $attachment_file,
+						'size' => $size,
+					);
+			}
 			return $this->edit($this->bo->import_mail(
 				$mailcontent['mailaddress'],
 				$mailcontent['subject'],

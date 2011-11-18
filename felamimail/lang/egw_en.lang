@@ -69,6 +69,8 @@ configure a valid imap server in emailadmin for the profile you are using.	felam
 connection dropped by imap server.	felamimail	en	Connection dropped by IMAP server.
 contact not found!	felamimail	en	Contact not found!
 contains	felamimail	en	Contains
+convert mail to item and attach its attachments to this item (standard)	felamimail	en	convert Mail to item and attach its attachments to this item (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	felamimail	en	convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment
 copy or move messages?	felamimail	en	Copy or move messages
 copy to	felamimail	en	Copy to
 copying messages to	felamimail	en	Copying messages to
@@ -426,6 +428,8 @@ save changes	felamimail	en	Save changes
 save message to disk	felamimail	en	Save message to disk
 save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save:	felamimail	en	Save:
+saving of message %1 failed. destination folder %2 does not exist.	felamimail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
+saving of message %1 succeeded. check folder %2.	felamimail	en	Saving of message %1 succeeded. Check Folder %2.
 script name	felamimail	en	Script name
 script status	felamimail	en	Script status
 search	felamimail	en	Search
@@ -532,6 +536,7 @@ use smtp auth	admin	en	Use SMTP authentication
 users can define their own emailaccounts	admin	en	Users can define their own email accounts
 vacation notice	common	en	Vacation notice
 vacation notice is active	felamimail	en	Vacation notice is active
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation start-date must be before the end-date!	felamimail	en	Vacation start date must be BEFORE the end date!
 validate certificate	felamimail	en	Validate certificate
 view full header	felamimail	en	View full header
@@ -541,6 +546,7 @@ viewing full header	felamimail	en	Viewing full header
 viewing message	felamimail	en	Viewing message
 viewing messages	felamimail	en	Viewing messages
 when deleting messages	felamimail	en	When deleting messages
+when saving messages as item of a different app (if app supports the desired option)	felamimail	en	when saving messages as item of a different app (if app supports the desired option)
 when sending messages	felamimail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders additionally to the Sent folder should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	felamimail	en	Which folders - in general - should NOT be automatically created, if not existing

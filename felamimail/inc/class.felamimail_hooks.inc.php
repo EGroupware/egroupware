@@ -197,6 +197,11 @@ class felamimail_hooks
 			'text'   => lang('text/plain'),
 		);
 
+		$saveAsOptions = array(
+			'text'   	=> lang('convert Mail to item and attach its attachments to this item (standard)'),
+			'add_raw'   => lang('convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment'),
+		);
+
 		$htmlOptions = array(
 			'never_display'		=> lang('never display html emails'),
 			'only_if_no_text'	=> lang('display only when no plain text is available'),
@@ -428,6 +433,15 @@ class felamimail_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 'move_to_sent',
+			),
+			'saveAsOptions' => array(
+				'type'   => 'select',
+				'label'  => 'when saving messages as item of a different app (if app supports the desired option)',
+				'name'   => 'saveAsOptions',
+				'values' => $saveAsOptions,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'text',
 			),
 		    'composeOptions' => array(
 		        'type'   => 'select',

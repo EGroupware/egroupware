@@ -69,6 +69,8 @@ configure a valid imap server in emailadmin for the profile you are using.	felam
 connection dropped by imap server.	felamimail	de	Verbindung von IMAP Server beendet.
 contact not found!	felamimail	de	Kontakt nicht gefunden!
 contains	felamimail	de	enthält
+convert mail to item and attach its attachments to this item (standard)	felamimail	de	konvertiere Mail zu Eintrag und füge die Mailanhänge hinzu (Standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	felamimail	de	konvertiere Mail zu Eintrag und füge die Mailanhänge sowie die Orginal Nachricht als message/rfc (.eml) Datei hinzu.
 copy or move messages?	felamimail	de	Nachrichten kopieren oder Verschieben?
 copy to	felamimail	de	Kopieren in
 copying messages to	felamimail	de	kopiere Nachrichten in folgenden Ordner
@@ -288,6 +290,7 @@ light gray	felamimail	de	Hellgrau
 list all	felamimail	de	Alle anzeigen
 loading	felamimail	de	lade
 location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schreiben
+mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	de	Mail Grid Verhalten: wieviele Nachrichten soll der Mail Grid laden? Wenn Sie zeige alle Nachrichten wählen wird die Möglichkeit in der Anzeige der Mailliste zu blättern unterbunden.
 mail server login type	admin	de	Typ der Mailserver Anmeldung
 mail settings	felamimail	de	E-Mail-Einstellungen
 mainmessage	felamimail	de	Hauptnachricht
@@ -315,6 +318,7 @@ move	felamimail	de	Verschieben
 move folder	felamimail	de	Ordner verschieben
 move messages	felamimail	de	Nachrichten verschieben
 move messages?	felamimail	de	Nachrichten verschieben?
+move selected to	felamimail	de	Verschiebe ausgewählte nach
 move to	felamimail	de	Verschieben in
 move to trash	felamimail	de	in den Papierkorb verschieben
 moving messages to	felamimail	de	verschiebe Nachrichten nach
@@ -357,6 +361,7 @@ on behalf of	felamimail	de	im Auftrag von
 one address is not valid	felamimail	de	Eine Adresse ist ungültig
 only inbox	felamimail	de	Nur Posteingang
 only one window	felamimail	de	nur ein einziges Fenster
+only send message, do not copy a version of the message to the configured sent folder	felamimail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet Ordner
 only unseen	felamimail	de	Nur nicht gesehene
 open all	felamimail	de	Öffne alle
 options	felamimail	de	Optionen
@@ -380,6 +385,7 @@ posting	felamimail	de	sende
 preview disabled for folder:	felamimail	de	Die Vorschau für eMails wird in dem ausgewählten Ordner nicht unterstützt:
 previous	felamimail	de	vorherige
 previous message	felamimail	de	vorherige Nachricht
+primary emailadmin profile	felamimail	de	Primäres eMailAdmin Profil
 print it	felamimail	de	E-Mail drucken
 print this page	felamimail	de	Diese Seite drucken
 printview	felamimail	de	Druckansicht
@@ -392,8 +398,8 @@ recent	felamimail	de	neu
 refresh time in minutes	felamimail	de	Aktualisierungsintervall in Minuten
 reject with	felamimail	de	zurückweisen mit
 remove	felamimail	de	entfernen
-remove label	felamimail	de	Schlagwort entfernen
 remove immediately	felamimail	de	sofort löschen
+remove label	felamimail	de	Schlagwort entfernen
 rename	felamimail	de	Umbenennen
 rename a folder	felamimail	de	Ordner umbenennen
 rename folder	felamimail	de	Ordner umbenennen
@@ -416,10 +422,13 @@ save all	felamimail	de	Alle speichern
 save as draft	felamimail	de	als Entwurf speichern
 save as infolog	felamimail	de	Als Infolog speichern
 save as ticket	felamimail	de	Als Ticket speichern
+save as tracker	felamimail	de	Als Ticket speichern
 save changes	felamimail	de	Änderungen speichern
 save message to disk	felamimail	de	Nachricht speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	de	Das speichern der Nachricht %1 schlug fehl. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save:	felamimail	de	Speichern:
+saving of message %1 failed. destination folder %2 does not exist.	felamimail	de	Speichern der Nachricht %1 schlug fehl. Ziel Ordner %2 existiert nicht.
+saving of message %1 succeeded. check folder %2.	felamimail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 script name	felamimail	de	Skriptname
 script status	felamimail	de	Skriptstatus
 search	felamimail	de	Suchen
@@ -432,6 +441,7 @@ select folder	felamimail	de	Ordner auswählen
 select your mail server type	admin	de	Wählen Sie den Typ des Mailservers
 send	felamimail	de	Senden
 send a reject message	felamimail	de	Ablehnungs-E-Mail senden
+send message and move to send folder (if configured)	felamimail	de	Versende Nachricht, und kopiere diese in den konfigurierten Gesendet Ordner
 sender	felamimail	de	Absender
 sent	felamimail	de	Gesendet
 sent folder	felamimail	de	Ordner für gesendete Nachrichten
@@ -439,6 +449,7 @@ server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(S
 set as default	felamimail	de	Als Vorgabe setzen
 set label	felamimail	de	Schlagwort setzen
 show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	de	zeige alle Ordner (subscribed UND unsubscribed) in der Ordnerleiste des Hauptfensters
+show all messages	felamimail	de	Zeige alle Nachrichten
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
 sieve script name	felamimail	de	Sieve Skript Name
@@ -489,6 +500,7 @@ translation server	felamimail	de	Übersetzungsserver
 trash	felamimail	de	Papierkorb
 trash fold	felamimail	de	Abfall Ordner
 trash folder	felamimail	de	Ordner für gelöschte Nachrichten
+trust servers seen / unseen info when retrieving the folder status. (if you select no, we will search for the unseen messages and count them ourselves)	felamimail	de	Vertraue der SEEN/UNSEEN Information beim Abruf des Ordnerstatus
 trying to recover from session data	felamimail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten.
 type	felamimail	de	Typ
 undelete	felamimail	de	wiederherstellen
@@ -515,6 +527,7 @@ use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a
 use a signature	felamimail	de	Signatur benutzen
 use a signature?	felamimail	de	Eine Signatur benutzen?
 use addresses	felamimail	de	Adresse benutzen
+use common preferences max. messages	felamimail	de	Verwende die allgemeine Einstellung für max. Treffer pro Seite
 use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
 use custom settings	felamimail	de	benutze angepaßte Einstellungen
 use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
@@ -522,6 +535,7 @@ use smtp auth	admin	de	SMTP Auth benutzen
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	de	Die Urlaubsnachricht ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab)
 vacation start-date must be before the end-date!	felamimail	de	Startdatum der Urlaubsbenachrichtigung muss VOR dem Endedatum liegen!
 validate certificate	felamimail	de	Zertifikat überprüfen
 view full header	felamimail	de	alle Kopfzeilen anzeigen
@@ -531,6 +545,8 @@ viewing full header	felamimail	de	zeige alle Kopfzeilen
 viewing message	felamimail	de	zeige Nachricht
 viewing messages	felamimail	de	zeige Nachrichten
 when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
+when saving messages as item of a different app (if app supports the desired option)	felamimail	de	wenn Nachrichten als Eintrag einer anderen Anwendung gespeichert werden (die Anwendung muss diese Option unterstützen)
+when sending messages	felamimail	de	wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden.
 which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren
 with message	felamimail	de	mit folgender Nachricht
