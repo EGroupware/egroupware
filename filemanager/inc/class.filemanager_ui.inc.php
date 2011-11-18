@@ -463,7 +463,7 @@ function check_files(upload)
 	{
 		for(var i = 0; i < upload.files.length; ++i)
 		{
-			files.push(upload.files[i].name);
+			files.push(upload.files[i].name || upload.files[i].fileName);
 		}
 	}
 	else if (upload.value)
