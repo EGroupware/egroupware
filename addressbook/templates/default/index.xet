@@ -23,7 +23,7 @@
 				<column width="60" disabled="@no_photo"/>
 				<column/>
 				<column/>
-				<column disabled="@no_home"/>
+				<column disabled="@no_home_adr_two_countrycode_adr_two_postalcode"/>
 				<column/>
 				<column/>
 				<column disabled="@no_customfields"/>

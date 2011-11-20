@@ -1411,7 +1411,7 @@ class addressbook_ui extends addressbook_bo
 			// disable photo column, if view contains no photo(s)
 			if (!$photos) $rows['no_photo'] = true;
 			// disable homeaddress column, if we have no homeaddress(es)
-			if (!$homeaddress) $rows['no_home'] = true;
+			if (!$homeaddress) $rows['no_home_adr_two_countrycode_adr_two_postalcode'] = true;
 			// disable roles column
 			if (!$roles) $rows['no_role'] = true;
 			// disable note column
