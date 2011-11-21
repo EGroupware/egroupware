@@ -972,8 +972,13 @@ class calendar_boupdate extends calendar_bo
 		}
 		if (!is_array($event) && !($event = $this->read($event))) return false;
 
-		// regular user and groups
-		return isset($event['participants'][$uid]) && $this->check_perms(EGW_ACL_EDIT,0,$uid);
+		// regular user and groups (need to check memberships too)
+		if (!isset($event['participants'][$uid]))
+		{
+			$memberships = $GLOBALS['egw']->accounts->memberships($uid,true);
+		}
+		$memberships[] = $uid;
+		return array_intersect($memberships, array_keys($event['participants'])) && $this->check_perms(EGW_ACL_EDIT,0,$uid);
 	}
 
 	/**
