@@ -758,13 +758,13 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string $path path
 	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
 	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
-	 * @param array $stat=null stat array, to not query it again
+	 * @param array|boolean $stat=null stat array or false, to not query it again
 	 * @param int $user=null user used for check, if not current user (egw_vfs::$user)
 	 * @return boolean
 	 */
-	static function check_access($path, $check, array $stat=null, $user=null)
+	static function check_access($path, $check, $stat=null, $user=null)
 	{
-		if (!$stat && $user && $user != self::$user)
+		if (is_null($stat) && $user && $user != self::$user)
 		{
 			static $path_user_stat = array();
 
@@ -809,7 +809,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// throw exception if stat array is used insead of path, can be removed soon
 		if (is_array($path))
 		{
-			throw new egw_exception_wrong_parameter('path has to be string, use check_acces($path,$check,$stat=null)!');
+			throw new egw_exception_wrong_parameter('path has to be string, use check_access($path,$check,$stat=null)!');
 		}
 		// query stat array, if not given
 		if (is_null($stat))
