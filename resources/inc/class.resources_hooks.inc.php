@@ -190,7 +190,7 @@ class resources_hooks
 				'application' => 'resources'
 			));
 			$options = array(
-				'~nextmatch~'	=>	lang('No definition')
+				'~nextmatch~'	=>	lang('Old fixed definition')
 			);
 			$default_def = 'export-resources';
 			foreach ((array)$definitions->get_definitions() as $identifier)

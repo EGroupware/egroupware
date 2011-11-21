@@ -285,7 +285,7 @@ class addressbook_hooks
 				'application' => 'addressbook'
 			));
 			$options = array(
-				'~nextmatch~'	=>	lang('No definition')
+				'~nextmatch~'	=>	lang('Old fixed definition')
 			);
 			$default_def = 'export-addressbook';
 			foreach ((array)$definitions->get_definitions() as $identifier)

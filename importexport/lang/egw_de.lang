@@ -37,7 +37,7 @@ field labels	importexport	de	Feld Beschreibung
 field names	importexport	de	Feld Name
 fieldseperator	importexport	de	Feldtrenner
 finish	importexport	de	Fertig
-general	importexport	de	Generell
+general	preferences	de	Generell
 header lines to skip	importexport	de	Kopfzeilen zu überspringen
 human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
 if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
@@ -56,6 +56,7 @@ manage mapping	importexport	de	Zuordnung bearbeiten
 next	importexport	de	Weiter
 next run	importexport	de	Nächster Import
 no records selected	importexport	de	Keine Datensätze ausgewählt
+old fixed definition	preferences	de	Alte feste Definition
 please select file to import	importexport	de	Bitte wählen Sie ein Import Datei
 plugin	importexport	de	Plug-In
 preview	importexport	de	Vorschau

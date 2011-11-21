@@ -411,7 +411,7 @@ class infolog_hooks
 				'application' => 'infolog'
 			));
 			$options = array(
-				'~nextmatch~'	=>	lang('No definition')
+				'~nextmatch~'	=>	lang('Old fixed definition')
 			);
 			foreach ((array)$definitions->get_definitions() as $identifier)
 			{
