@@ -2873,7 +2873,7 @@ class felamimail_bo
 			if (self::$debug) _debug_array($structure);
 			$attachments = array();
 			// this kind of messages contain only the attachment and no body
-			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE')
+			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE' || ($structure->type == 'TEXT' && $structure->disposition == 'ATTACHMENT') )
 			{
 				$newAttachment = array();
 				$newAttachment['name']		= $this->getFileNameFromStructure($structure,$_uid,$structure->partID);
@@ -4381,6 +4381,65 @@ class felamimail_bo
 				//continue;
 			}
 			return $message;
+		}
+
+		/**
+		 * processURL2InlineImages - parses a html text for images, and adds them as inline attachment
+		 * we do not use the functionality of the phpmailer here, as phpmailers functionality requires
+		 * files to be present within the filesystem, which we do not require as we make this happen 
+		 * (we load the file, and store it temporarily for the use of attaching it to the file send
+		 * @param object $_mailObject instance of the egw_mailer/phpmailer Object to be used
+		 * @param string $_html2parse the html to parse and to be altered, if conditions meet
+		 * @return void
+		 */
+		static function processURL2InlineImages(&$_mailObject, &$_html2parse)
+		{
+			preg_match_all("/(src|background)=\"(.*)\"/Ui", $_html2parse, $images);
+			if(isset($images[2])) {
+				foreach($images[2] as $i => $url) {
+					$basedir = '';
+					//error_log(__METHOD__.__LINE__.$url);
+					//error_log(__METHOD__.__LINE__.$GLOBALS['egw_info']['server']['webserver_url']);
+					//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']));
+					// do not change urls for absolute images (thanks to corvuscorax)
+					//if (!preg_match('#^[A-z]+://#',$url)) {
+						//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images));
+						$filename = basename($url);
+						$directory = dirname($url);
+						($directory == '.')?$directory='':'';
+						$cid = 'cid:' . md5($filename);
+						$ext = pathinfo($filename, PATHINFO_EXTENSION);
+						$mimeType  = $_mailObject->_mime_types($ext);
+						if ( strlen($directory) > 1 && substr($directory,-1) != '/') { $directory .= '/'; }
+						$myUrl = $directory.$filename;
+						if ($myUrl[0]=='/') // local path -> we only path's that are available via http/https (or vfs)
+						{
+							$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
+							if (strpos($myUrl,'webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
+							{
+								egw_vfs::load_wrapper('vfs');
+								list($garbage,$vfspart) = explode('webdav.php',$myUrl,2);
+								$myUrl = $vfspart;
+								$basedir = 'vfs://default';
+							}
+						}
+						if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
+						//error_log(__METHOD__.__LINE__.$basedir.$myUrl);
+						$data = file_get_contents($basedir.urldecode($myUrl));
+						if ($data)
+						{
+							$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$tmpfile = fopen($attachment_file,'w');
+							fwrite($tmpfile,$data);
+							fclose($tmpfile);
+							//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$basedir.$myUrl. ' TmpFile:'.$tmpfile);
+							if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) ) {
+								$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+							}
+						}
+					//}
+				}
+			}
 		}
 
 		/**

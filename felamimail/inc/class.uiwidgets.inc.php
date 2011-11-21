@@ -1162,6 +1162,7 @@ $j(document).ready(function() {
 						$header['mimetype'] == 'multipart/related' ||
 						$header['mimetype'] == 'multipart/report' ||
 						$header['mimetype'] == 'text/calendar' ||
+						$header['mimetype'] == 'text/html' ||
 						substr($header['mimetype'],0,11) == 'application' ||
 						substr($header['mimetype'],0,5) == 'audio' ||
 						substr($header['mimetype'],0,5) == 'video' ||
@@ -1529,6 +1530,7 @@ $j(document).ready(function() {
 					$headerData['mimetype'] == 'multipart/related' ||
 					$headerData['mimetype'] == 'multipart/report' ||
 					$headerData['mimetype'] == 'text/calendar' ||
+					$headerData['mimetype'] == 'text/html' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
 					substr($headerData['mimetype'],0,5) == 'audio' ||
 					substr($headerData['mimetype'],0,5) == 'video' ||
