@@ -235,7 +235,8 @@ class egw_ckeditor_config
 			case 'extended': default:
 				$config['toolbar'][] = array('Bold','Italic','Underline');
 				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
-				$config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
+				if ($mode == 'simple-withimage') $config['toolbar'][] = array('BulletedList','NumberedList','Image'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
+				else $config['toolbar'][] = $config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
 				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
 
 				if ($mode == 'extended')
