@@ -2176,7 +2176,7 @@ class infolog_ui
 			if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['saveAsOptions']==='add_raw')
 			{
 				$message = $bofelamimail->getMessageRawBody($uid, $partid);
-				$headers = $bofelamimail->getMessageHeader($uid, $partid);
+				$headers = $bofelamimail->getMessageHeader($uid, $partid,true);
 				$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
 				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 				$tmpfile = fopen($attachment_file,'w');
