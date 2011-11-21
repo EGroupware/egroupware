@@ -311,12 +311,12 @@ class importexport_helper_functions {
 			while (false !== ($entry = $d->read())) {
 				// Blacklisted?
 				if(is_array(self::$blacklist_files[$appname]) && in_array($entry, self::$blacklist_files[$appname]))  continue;
-
-				list( ,$classname, ,$extension) = explode('.',$entry);
+				if (!preg_match('/^class\.([^.]+)\.inc\.php$/', $entry, $matches)) continue;
+				$classname = $matches[1];
 				$file = $appdir. '/'. $entry;
 
 				foreach ($types as $type) {
-					if( !is_file($file) || strpos($entry, $type) === false || $extension != 'php' ) continue;
+					if( !is_file($file) || strpos($entry, $type) === false) continue;
 					require_once($file);
 					$reflectionClass = new ReflectionClass($classname);
 					if($reflectionClass->IsInstantiable() &&
