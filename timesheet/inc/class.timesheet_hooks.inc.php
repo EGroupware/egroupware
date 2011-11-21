@@ -203,7 +203,9 @@ class timesheet_hooks
 				'type' => 'export',
 				'application' => 'timesheet'
 			));
-			$options = array();
+			$options = array(
+				'~nextmatch~'	=>	lang('Old fixed definition')
+			);
 			foreach ((array)$definitions->get_definitions() as $identifier)
 			{
 				try

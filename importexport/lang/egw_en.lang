@@ -66,6 +66,7 @@ manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
 no records selected	importexport	en	No records selected!
+old fixed definition	preferences	en	Old fixed definition
 please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
 preview	importexport	en	Preview
@@ -98,4 +99,3 @@ users allowed to share their own definitions	importexport	en	Users allowed to sh
 which useres are allowed for this definition	importexport	en	Which users are allowed to use this definition
 which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
 you need to select an app and format first!	importexport	en	You need to select an app and format first!
-1	importexport	en	1
