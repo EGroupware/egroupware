@@ -97,13 +97,21 @@ class _parse_propfind
      */
     var $depth = 0;
 
+    /**
+     * On return whole request, if $store_request == true was specified in constructor
+     *
+     * @var string
+     */
+    var $request;
 
     /**
      * constructor
      *
      * @access public
+     * @param string $path
+     * @param boolean $store_request=false if true whole request data will be made available in $this->request
      */
-    function _parse_propfind($path)
+    function _parse_propfind($path, $store_request=false)
     {
         // success state flag
         $this->success = true;
@@ -140,10 +148,10 @@ class _parse_propfind
         xml_parser_set_option($xml_parser,
                               XML_OPTION_CASE_FOLDING, false);
 
-
         // parse input
         while ($this->success && !feof($f_in)) {
             $line = fgets($f_in);
+            if ($store_request) $this->request .= $line;
             if (is_string($line)) {
                 $had_input = true;
                 $this->success &= xml_parse($xml_parser, $line, false);
