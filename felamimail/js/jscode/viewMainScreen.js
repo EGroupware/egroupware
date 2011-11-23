@@ -1065,8 +1065,36 @@ function changeActiveAccount(_accountSelection)
 	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.changeActiveAccount',_accountSelection.value);
 }
 
+// global var to hold the available overall document height
+var felamimail_documentHeight = 0;
+
 function handleResize()
 {
+	//alert($j("body").height()+' bodyHeight');
+	//alert($j(document).height()+' documentHeight');
+	var documentHeight =  $j("body").height() == 0 ? $j(document).height() : $j("body").height();
+	//alert(documentHeight+' DocumentHeight (a)');
+	if (document.documentElement.clientHeight > documentHeight) documentHeight= documentHeight + ((document.documentElement.clientHeight-documentHeight)/3);
+	//alert(documentHeight+' DocumentHeight (b)');
+	if (felamimail_documentHeight == 0) felamimail_documentHeight = documentHeight;
+	if (felamimail_documentHeight > 0 && felamimail_documentHeight != documentHeight) documentHeight = felamimail_documentHeight;
+	//alert(document.getElementById('thesideboxcolumn').offsetHeight+" SideboxHeight");
+	// if the sidebox is larger than the documentHeight, use that as documentHeight
+	if (document.getElementById('thesideboxcolumn') != null && typeof document.getElementById('thesideboxcolumn').offsetHeight == "number" && document.getElementById('thesideboxcolumn').offsetHeight > documentHeight) documentHeight = document.getElementById('thesideboxcolumn').offsetHeight;
+	var containerHeight = $j(outerContainer).height();
+	//alert(documentHeight+' DocumentHeight');
+	if (document.getElementById('divUpperTabs') != null)
+	{
+		var otabsHeight =0;
+		//otabsHeight += document.getElementById('divUpperTabs') != null && typeof document.getElementById('divUpperTabs').offsetHeight == "numeber" ? document.getElementById('divUpperTabs').offsetHeight : 0;
+		otabsHeight += document.getElementById('topmenu') != null && typeof document.getElementById('topmenu').offsetHeight == "number" ? document.getElementById('topmenu').offsetHeight : 0;
+		otabsHeight += document.getElementById('divAppIconBar') != null && typeof document.getElementById('divAppIconBar').offsetHeight == "number" ? document.getElementById('divAppIconBar').offsetHeight : 0;
+		otabsHeight += document.getElementById('divStatusBar') != null && typeof document.getElementById('divStatusBar').offsetHeight == "number" ? document.getElementById('divStatusBar').offsetHeight: 0;
+		otabsHeight += document.getElementById('divGenTime') != null && typeof document.getElementById('divGenTime').offsetHeight == "number" ? document.getElementById('divGenTime').offsetHeight: 0;
+		otabsHeight += document.getElementById('divPoweredBy') != null && typeof document.getElementById('divPoweredBy').offsetHeight == "number" ? document.getElementById('divPoweredBy').offsetHeight: 0;
+		//alert(otabsHeight+' hoehe verfügbar:'+ documentHeight);
+		if (document.getElementById('tdAppbox') != null && typeof document.getElementById('tdAppbox').offsetHeight=="number") document.getElementById('tdAppbox').height=documentHeight-otabsHeight-30;
+	}
 	var MIN_TABLE_HEIGHT = typeof felamimail_messagelist_height == "number" ? felamimail_messagelist_height : 100;
 	if (isNaN(MIN_TABLE_HEIGHT) || MIN_TABLE_HEIGHT<0) MIN_TABLE_HEIGHT = 100;
 
@@ -1088,8 +1116,6 @@ function handleResize()
 	var mainAreaOffsetTop = $j(mainViewArea).offset()==null ? 0 : $j(mainViewArea).offset().top;
 
 	var viewportHeight = $j(window).height();
-	var documentHeight =  $j("body").height() == 0 ? $j(document).height() : $j("body").height();
-	var containerHeight = $j(outerContainer).height();
 	
 	var totalHeight = viewportHeight;
 	if (mainAreaOffsetTop == 0)
