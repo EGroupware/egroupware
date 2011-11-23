@@ -925,7 +925,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($path[0] == '/')
 		{
-            $path = substr($path, 1);
+			$path = substr($path, 1);
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
@@ -988,5 +988,44 @@ class groupdav extends HTTP_WebDAV_Server
 					HTTP_WebDAV_Server::mkprop('write-content',''),
 				))));
 		return $props;
+	}
+
+	/**
+	 * Serve WebDAV HTTP request
+	 *
+	 * Reimplemented to add logging, currently only to Apache error-log
+	 */
+	function ServeRequest()
+	{
+		if (($debug_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
+			$debug_level === 'f' || $this->debug)
+		{
+			$starttime = microtime(true);
+			$this->store_request = true;
+			ob_start();
+		}
+		parent::ServeRequest();
+
+		if ($starttime)
+		{
+			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['PATH_INFO'].' HTTP/1.1');
+			// reconstruct headers
+			foreach($_SERVER as $name => $value)
+			{
+				list($type,$name) = explode('_',$name,2);
+				if ($type == 'HTTP' || $type == 'CONTENT') error_log(str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).': '.$value);
+			}
+			if ($this->request)
+			{
+				error_log('');
+				foreach(explode("\n",$this->request) as $line) error_log($line);
+			}
+			error_log('HTTP/1.1 '.$this->_http_status);
+			foreach(headers_list() as $line) error_log($line);
+			if (($content = ob_get_flush())) error_log('');
+			if (strlen($content) > 1024 && $debug_level !== 'f') $content = substr($content,0,1024)."\n*** LOG TRUNKATED ";
+			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-$starttime)."\n";
+			foreach(explode("\n",$content) as $line) error_log($line);
+		}
 	}
 }

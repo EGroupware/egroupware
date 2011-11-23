@@ -586,6 +586,19 @@ class HTTP_WebDAV_Server
     // {{{ http_PROPFIND()
 
     /**
+     * Should the whole PROPFIND request (xml) be stored
+     *
+     * @var boolean
+     */
+    var $store_request = false;
+    /**
+     * Content of (last) PROPFIND request
+     *
+     * @var string
+     */
+    var $request;
+
+    /**
      * PROPFIND method handler
      *
      * @param  string $handler='PROPFIND' allows to use method eg. for CalDAV REPORT
@@ -606,7 +619,8 @@ class HTTP_WebDAV_Server
         }
 
         // analyze request payload
-        $propinfo = new _parse_propfind("php://input");
+        $propinfo = new _parse_propfind("php://input", $this->store_request);
+        if ($this->store_request) $this->request = $propinfo->request;
         if (!$propinfo->success) {
             $this->http_status("400 Error");
             return;
@@ -1016,7 +1030,7 @@ class HTTP_WebDAV_Server
 
             $options["path"] = $this->path;
 
-            $propinfo = new _parse_proppatch("php://input");
+            $propinfo = new _parse_proppatch("php://input", $this->store_request);
 
             if (!$propinfo->success) {
                 $this->http_status("400 Error");
@@ -1374,6 +1388,28 @@ class HTTP_WebDAV_Server
 	        $options['content_type'] = 'application/octet-stream';
         }
 
+        $options['stream'] = fopen('php://input', 'r');
+    	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+    	{
+    		case 'gzip':
+    		case 'deflate':	//zlib
+    			if (extension_loaded('zlib'))
+     			{
+      				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
+       			}
+    	}
+		// store request in $this->request, if requested via $this->store_request
+		if ($this->store_request)
+		{
+			$options['content'] = '';
+			while(!feof($options['stream']))
+			{
+				$options['content'] .= fread($options['stream'],8192);
+			}
+			$this->request =& $options['content'];
+			unset($options['stream']);
+		}
+
         /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
          ignore any Content-* (e.g. Content-Range) headers that it
          does not understand or implement and MUST return a 501
@@ -1383,10 +1419,18 @@ class HTTP_WebDAV_Server
 	        if (strncmp($key, 'HTTP_CONTENT', 11)) continue;
 	        switch ($key) {
 		        case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
-			        // TODO support this if ext/zlib filters are available
-			        $this->http_status('501 not implemented');
-			        echo "The service does not support '$val' content encoding";
-			        return;
+		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+		        	{
+		        		case 'gzip':
+		        		case 'deflate':	//zlib
+		        			if (extension_loaded('zlib')) break;
+		        			// fall through for no zlib support
+		        		default:
+					        $this->http_status('415 Unsupported Media Type');
+					        echo "The service does not support '$val' content encoding";
+					        return;
+		        	}
+		        	break;
 
 		        case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
 			        // we assume it is not critical if this one is ignored
@@ -1521,6 +1565,28 @@ class HTTP_WebDAV_Server
                 $options["content_type"] = "application/octet-stream";
             }
 
+            $options["stream"] = fopen("php://input", "r");
+	    	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+	    	{
+	    		case 'gzip':
+	    		case 'deflate':	//zlib
+	    			if (extension_loaded('zlib'))
+	     			{
+	      				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
+	       			}
+	    	}
+			// store request in $this->request, if requested via $this->store_request
+			if ($this->store_request)
+			{
+				$options['content'] = '';
+				while(!feof($options['stream']))
+				{
+					$options['content'] .= fread($options['stream'],8192);
+				}
+				$this->request =& $options['content'];
+				unset($options['stream']);
+			}
+
             /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
              ignore any Content-* (e.g. Content-Range) headers that it
              does not understand or implement and MUST return a 501
@@ -1530,10 +1596,18 @@ class HTTP_WebDAV_Server
                 if (strncmp($key, "HTTP_CONTENT", 11)) continue;
                 switch ($key) {
                 case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
-                    // TODO support this if ext/zlib filters are available
-                    $this->http_status("501 not implemented");
-                    echo "The service does not support '$val' content encoding";
-                    return;
+		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+		        	{
+		        		case 'gzip':
+		        		case 'deflate':	//zlib
+		        			if (extension_loaded('zlib')) break;
+		        			// fall through for no zlib support
+		        		default:
+					        $this->http_status('415 Unsupported Media Type');
+					        echo "The service does not support '$val' content encoding";
+					        return;
+		        	}
+		        	break;
 
                 case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
                     // we assume it is not critical if this one is ignored
