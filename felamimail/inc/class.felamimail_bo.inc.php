@@ -4398,6 +4398,7 @@ class felamimail_bo
 			if(isset($images[2])) {
 				foreach($images[2] as $i => $url) {
 					$basedir = '';
+					$needTempFile = true;
 					//error_log(__METHOD__.__LINE__.$url);
 					//error_log(__METHOD__.__LINE__.$GLOBALS['egw_info']['server']['webserver_url']);
 					//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']));
@@ -4421,17 +4422,25 @@ class felamimail_bo
 								list($garbage,$vfspart) = explode('webdav.php',$myUrl,2);
 								$myUrl = $vfspart;
 								$basedir = 'vfs://default';
+								$needTempFile = false;
 							}
 						}
 						if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
 						//error_log(__METHOD__.__LINE__.$basedir.$myUrl);
-						$data = file_get_contents($basedir.urldecode($myUrl));
-						if ($data)
+						if ($needTempFile) $data = file_get_contents($basedir.urldecode($myUrl));
+						if ($data || $needTempFile === false)
 						{
-							$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-							$tmpfile = fopen($attachment_file,'w');
-							fwrite($tmpfile,$data);
-							fclose($tmpfile);
+							if ($needTempFile)
+							{
+								$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+								$tmpfile = fopen($attachment_file,'w');
+								fwrite($tmpfile,$data);
+								fclose($tmpfile);
+							}
+							else
+							{
+								$attachment_file = $basedir.urldecode($myUrl);
+							}
 							//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$basedir.$myUrl. ' TmpFile:'.$tmpfile);
 							if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) ) {
 								$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);

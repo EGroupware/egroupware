@@ -380,7 +380,7 @@
 			$this->t->set_var('compose_id',$this->composeID);
 			// the editorobject is needed all the time (since we use CKEDITOR3
 			//$editorObject = html::initCKEditor('400px','simple');
-			$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config());//$editorObject->jsEncode($editorObject->config));
+			$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config('simple-withimage'));//$editorObject->jsEncode($editorObject->config));
 
 			// check for some error messages from last posting attempt
 			if($errorInfo = $this->bocompose->getErrorInfo())
@@ -540,7 +540,7 @@
 			}
 			// prepare body
 			if($sessionData['mimeType'] == 'html') {
-				$mode = 'simple';
+				$mode = 'simple-withimage';
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
 				$style="border:0px; width:100%; height:400px;";
 				// dont run purify, as we already did that (getCleanHTML).
