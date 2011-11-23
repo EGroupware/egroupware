@@ -9,6 +9,7 @@
  */
 
 var notifymessages = {};
+var EGW_BROWSER_NOTIFY_ALLOWED = 0;
 
 function egwpopup_init(_i) {
 	window.setTimeout("egwpopup_refresh(" + _i + ");", 1000);
@@ -18,8 +19,16 @@ function egwpopup_setTimeout(_i) {
 	window.setTimeout("egwpopup_refresh(" + _i + ");", _i*1000);
 }
 function egwpopup_refresh(_i) {
-	xajax_doXMLHTTP("notifications.notifications_ajax.get_notifications");
+	var request = xajax_doXMLHTTP("notifications.notifications_ajax.get_notifications", check_browser_notify());
+	request.request.error = function(_xmlhttp,_err){if(console) {console.log(request);console.log(_err)}};
 	egwpopup_setTimeout(_i);
+}
+
+/**
+ * Check to see if browser supports / allows desktop notifications
+ */
+function check_browser_notify() {
+	return window.webkitNotifications && window.webkitNotifications.checkPermission() == EGW_BROWSER_NOTIFY_ALLOWED;
 }
 
 function egwpopup_display() {
@@ -48,7 +57,16 @@ function egwpopup_display() {
 	} else {
 		egwpopup_ok_button.value = "OK";
 	}
-
+	if(window.webkitNotifications && window.webkitNotifications.checkPermission() != EGW_BROWSER_NOTIFY_ALLOWED &&
+		jQuery('#desktop_perms').length == 0)
+	{
+		var desktop_button = jQuery('<button id="desktop_perms">' + (egw?egw.lang('Desktop notifications') : 'Desktop notifications') + '</button>')
+			.click(function() {
+				window.webkitNotifications.requestPermission(); 
+				jQuery(this).hide();
+			});
+		desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
+	}
 }
 
 function notificationbell_switch(mode) {
@@ -99,5 +117,23 @@ function egwpopup_button_close() {
 }
 
 function append_notification_message(_id, _message) {
+
+	if(!check_browser_notify() || typeof notifymessages[_id] != 'undefined')
+	{
+		notifymessages[_id] = _message;
+		return;
+	}
+	// Prevent the same thing popping up multiple times
 	notifymessages[_id] = _message;
+
+	// Notification API
+	var notice = webkitNotifications.createHTMLNotification(_message);
+	notice.ondisplay = function() {
+		// Confirm when user gets to see it - no close needed
+		// Wait a bit to let it load first, or it might not be there when requested.  
+		window.setTimeout( function() {
+			xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
+		}, 2000);
+	};
+	notice.show();
 }
