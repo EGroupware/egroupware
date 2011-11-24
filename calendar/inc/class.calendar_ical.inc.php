@@ -464,7 +464,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								case 'g':
 									$cutype = 'GROUP';
-									$participantURL = 'urn:uuid:'.common::generate_uid('accounts', substr($uid, 1));
+									$participantURL = 'urn:uuid:'.common::generate_uid('accounts', $uid);
 									$members = $GLOBALS['egw']->accounts->members($uid, true);
 									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
 									{
@@ -496,7 +496,7 @@ class calendar_ical extends calendar_boupdate
 								default:
 									$cutype = 'UNKNOWN';
 									break;
-							};
+							}
 							// generate urn:uuid, if we have no other participant URL
 							if (empty($participantURL) && $info && $info['app'])
 							{
