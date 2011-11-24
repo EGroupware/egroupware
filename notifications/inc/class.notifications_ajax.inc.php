@@ -262,22 +262,22 @@ class notifications_ajax {
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
-				if($browserNotify)
+				$message = null;
+				if($browserNotify && $this->preferences[self::_appname]['egwpopup_verbosity'] != 'low')
 				{
-					// Check for a link - doesn't work in notification
-					if(strpos($notification['notify_message'], lang('Linked entries:')))
-					{
-						$notification['notify_message'] = substr_replace($notification['notify_message'], '', strpos($notification['notify_message'], lang('Linked entries:')));
-					}
-					$notification['notify_message'] = preg_replace('#</?a[^>]*>#is','',$notification['notify_message']);
-					
-					$notification['notify_message'] = 'data:text/html;base64,'.base64_encode($notification['notify_message']);
-				}
-				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message']);
-			}
+					$message = $notification['notify_message'];
 
-			// Skip in-page popup
-			if($browserNotify) return true;
+					// Check for a link - doesn't work in notification
+					if(strpos($message, lang('Linked entries:')))
+					{
+						$message = substr_replace($message, '', strpos($message, lang('Linked entries:')));
+					}
+					$message = preg_replace('#</?a[^>]*>#is','',$message);
+					
+					$message = 'data:text/html;base64,'.base64_encode($message);
+				}
+				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message'],$message);
+			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
 				case 'low':

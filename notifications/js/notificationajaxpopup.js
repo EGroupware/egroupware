@@ -116,7 +116,7 @@ function egwpopup_button_close() {
 	notificationbell_switch("inactive");
 }
 
-function append_notification_message(_id, _message) {
+function append_notification_message(_id, _message, _browser_notify) {
 
 	if(!check_browser_notify() || typeof notifymessages[_id] != 'undefined')
 	{
@@ -127,7 +127,7 @@ function append_notification_message(_id, _message) {
 	notifymessages[_id] = _message;
 
 	// Notification API
-	var notice = webkitNotifications.createHTMLNotification(_message);
+	var notice = webkitNotifications.createHTMLNotification(_browser_notify);
 	notice.ondisplay = function() {
 		// Confirm when user gets to see it - no close needed
 		// Wait a bit to let it load first, or it might not be there when requested.  
