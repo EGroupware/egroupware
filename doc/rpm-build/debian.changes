@@ -1,3 +1,24 @@
+egroupware-epl (11.1.20111124-1) hardy; urgency=low
+
+  * Addressbook: filter by country or sort by post code of home address
+  * Add ability for user to change import/export delimiter when importing / exporting
+  * SyncML: re-added accidently removed accounts addressbook
+  * ckeditor/aspell: added check for language availability check on extended dict (Lang_Countrycode) first, then fall back to lang -> e.g.: check on en_GB, if not available try using en
+  * Mergeprint: fixed not working merge (white screen, nothing in error-log) under PHP 5.2.6
+  * Custom / instance-specific translations, eg. to rename an application
+  * eMail/InfoLog: mail to infolog, preference (and action) to allow the additional attaching of the raw mail message as message/rfc822 (.eml) to the entry
+  * Filemanager: Firefox 3.5 gives error "Theres already a directory with that name" when trying to upload a file
+  * Admin: fix white screen (fatal error) when trying to delete a user without home directory
+  * ImportExport: allow to select "Old fixed definition" in preference for nextmatch export (disk icon)
+  * Calendar: fixed groupmembers cant accept/reject group-invitations in listview via context-menu (error: failed because of insufficient rights!)
+  * eMail: fix for text/html attachment was not recognized (neither in list, nor in preview or display) if it is the one and only part of the mail; preparational function for Link2Attachment feature
+  * eMail: feature for html-mails -> convert images included as link to inline images (attachments to the mail)
+  * CalDAV/CardDAV/GroupDAV new user preference to log requests and truncated responses to Apache error-log or full responses to files directory
+  * CalDAV: fixed group-invitations got lost (urn:uuid url lost one char with each new import)
+  * EventMgr: sort locations by hierarchy (was not working for non-admins or in Admin >> Locations)
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 24 Nov 2011 16:04:30 +0100
+
 egroupware-epl (11.1.20111111-1) hardy; urgency=low
 
   * CalDAV/CardDAV: major rework fixing lots of bugs/incompatibilites and adding new features: eg. autocompletion of accounts and resources under iCal, searchable addressbook gateway for all addressbooks available
