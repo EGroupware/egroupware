@@ -141,7 +141,7 @@ class url_widget
 				if (!$readonly)
 				{
 					$cell['type'] = 'text';
-					$cell['size'] = "$size,$max_size,$preg,url";
+					$cell['size'] = "$size,$max_size,$preg";	// ,url"; not using html url type, as it requires a scheme
 					// todo: (optional) validation
 					break;
 				}
