@@ -314,5 +314,8 @@ function phpgwapi_upgrade1_9_010()
 	$prefs->save_repository(false, 'default');
 	egw_vfs::$is_root = false;
 
+	// French language: Français
+	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => 'Français'),array('lang_id' => 'fr'),__LINE__,__FILE__);
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.011';
 }
