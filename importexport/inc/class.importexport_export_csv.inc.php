@@ -182,9 +182,6 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 		}
 		
-		// do charset translation
-		$this->record = $this->translation->convert( $this->record, $this->translation->charset(), $this->csv_charset );
-		
 		$this->fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
 	}
@@ -269,7 +266,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			// Not quite a recursive merge, since only one level
 			foreach($fields as $type => &$list) {
 				if($c_fields[$type]) {
-					$list = array_merge($c_fields[$type], $list);;
+					$list = array_merge($c_fields[$type], $list);
 					unset($c_fields[$type]);
 				}
 			}
@@ -376,6 +373,9 @@ class importexport_export_csv implements importexport_iface_export_record
 			$writeDelimiter = true;
 		} 
 		$string .= "\n";
+		
+		// do charset translation
+		$string = $this->translation->convert( $string, $this->translation->charset(), $this->csv_charset );
 		
 		fwrite($filePointer, $string);
 			
