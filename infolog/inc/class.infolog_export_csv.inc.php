@@ -37,21 +37,41 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			if($field[0] == '#') $query['custom_fields'][] = $field;
 		}
 
+		$ids = array();
 		if ($options['selection'] == 'search') {
 			$query = array_merge($GLOBALS['egw']->session->appsession('session_data','infolog'), $query);
 			$query['num_rows'] = -1;	// all
 			$selection = $bo->search($query);
+			$ids = array_keys($selection);
 		}
 		elseif ( $options['selection'] == 'all' ) {
 			$query['num_rows'] = -1;
 			$selection = $bo->search($query);
+			$ids = array_keys($selection);
 		} else {
-			$selection = explode(',',$options['selection']);
+			$ids = $selection = explode(',',$options['selection']);
+		}
+
+		if($ids && ($options['mapping']['pm_id'] || $options['mapping']['project']))
+		{
+			$projects = egw_link::get_links_multiple('infolog', $ids, true, 'projectmanager');
+			foreach($projects as $id => $links)
+			{
+				if(!is_array($selection[$id])) break;
+				$selection[$id]['pm_id'] = current($links);
+				$selection[$id]['project'] = egw_link::title('projectmanager', $selection[$id]['pm_id']);
+			}
 		}
 
 		foreach ($selection as $_identifier) {
 			if(!is_array($_identifier)) {
 				$record = new infolog_egw_record($_identifier);
+			
+				if($project = $projects[$record->info_id])
+				{
+					$record->pm_id = current($project);
+					$record->project = egw_link::title('projectmanager', $record->pm_id);
+				}
 			} else {
 				$record = new infolog_egw_record();
 				$record->set_record($_identifier);
@@ -69,6 +89,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			$export_object->export_record($record);
 			unset($record);
 		}
+		return $export_object;
 	}
 
 	/**

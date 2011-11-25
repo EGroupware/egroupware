@@ -20,7 +20,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 {
 	private $identifier = '';
 	private $record = array();
-	private $bo;
+	private static $bo;
 
 	// Used in conversions
 	static $types = array(
@@ -39,9 +39,9 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 */
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
-		$this->bo = new infolog_bo();
+		if(self::$bo == null) self::$bo = new infolog_bo();
 		if($_identifier) {
-			$this->set_record($this->bo->read($this->identifier));
+			$this->set_record(self::$bo->read($this->identifier));
 		}
 	}
 
@@ -96,14 +96,6 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 */
 	public function set_record(array $_record){
 		$this->record = $_record;
-		// Check for linked project ID
-		$links = egw_link::get_links('infolog', $_record['info_id'], 'projectmanager');
-		foreach($links as $link_id => $app_id) {
-			$this->record['pm_id'] = $app_id;
-			$this->record['project'] = egw_link::title('projectmanager', $app_id);
-			break;
-		}
-
 	}
 
 	/**
@@ -158,7 +150,6 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 *
 	 */
 	public function __destruct() {
-		unset ($this->bo);
 	}
 
 } // end of egw_addressbook_record
