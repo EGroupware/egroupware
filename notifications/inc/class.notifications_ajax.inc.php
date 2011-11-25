@@ -274,7 +274,7 @@ class notifications_ajax {
 					}
 					$message = preg_replace('#</?a[^>]*>#is','',$message);
 					
-					$message = 'data:text/html;base64,'.base64_encode($message);
+					$message = 'data:text/html;charset=utf-8;base64,'.base64_encode($message);
 				}
 				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message'],$message);
 			}
