@@ -316,3 +316,13 @@ function phpgwapi_upgrade1_9_010()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.011';
 }
+
+/**
+ * Language: French --> Français
+ */
+function phpgwapi_upgrade1_9_011()
+{
+	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => 'Français'),array('lang_id' => 'fr'),__LINE__,__FILE__);
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.012';
+}
