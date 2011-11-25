@@ -43,5 +43,8 @@ function phpgwapi_upgrade1_9_001()
 	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_extra',
 		array('contact_name','contact_value(32)'));
 
+	// French language: Français
+	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => 'Français'),array('lang_id' => 'fr'),__LINE__,__FILE__);
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.002';
 }
