@@ -47,7 +47,7 @@ foreach(array(
 	'fi' => 'Finnish',
 	'fj' => 'Fiji',
 	'fo' => 'Faeroese',
-	'fr' => 'French',
+	'fr' => 'Français',
 	'fy' => 'Frisian',
 	'ga' => 'Irish',
 	'gd' => 'Gaelic / Scots Gaelic',
