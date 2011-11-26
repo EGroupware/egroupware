@@ -4416,14 +4416,17 @@ class felamimail_bo
 						if ($myUrl[0]=='/') // local path -> we only path's that are available via http/https (or vfs)
 						{
 							$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
-							if (strpos($myUrl,'webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
-							{
-								egw_vfs::load_wrapper('vfs');
-								list($garbage,$vfspart) = explode('webdav.php',$myUrl,2);
-								$myUrl = $vfspart;
-								$basedir = 'vfs://default';
-								$needTempFile = false;
-							}
+						}
+						// use vfs instead of url containing webdav.php
+						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
+						// webdav.php urls as vfs
+						if (strpos($myUrl,'webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
+						{
+							egw_vfs::load_wrapper('vfs');
+							list($garbage,$vfspart) = explode('webdav.php',$myUrl,2);
+							$myUrl = $vfspart;
+							$basedir = 'vfs://default';
+							$needTempFile = false;
 						}
 						if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
 						//error_log(__METHOD__.__LINE__.$basedir.$myUrl);
