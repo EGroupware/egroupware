@@ -148,7 +148,8 @@ class notifications_popup implements notifications_iface {
 			} else {
 				$image = '';
 			}
-			if($link->popup) {
+			if($link->popup && !$GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient'])
+			{
 				$dimensions = explode('x', $link->popup);
 				$rendered_links[] = html::div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
 			} else {
@@ -172,8 +173,16 @@ class notifications_popup implements notifications_iface {
 	 */
 	private function jspopup($link,$target='_blank',$width=750,$height=410)
 	{
-		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+		if($GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient'])
+		{
+			return 'window.open('.($link == 'this.href' ? $link : "'".$link."'").','.
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+		}
+		else
+		{
+			return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+		}
 	}
 
 	/**

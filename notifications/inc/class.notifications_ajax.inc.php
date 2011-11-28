@@ -13,6 +13,10 @@
  * Ajax methods for notifications
  */
 class notifications_ajax {
+	public $public_functions = array(
+		'get_notification'	=> true
+	);
+
 	/**
 	 * Appname
 	 */
@@ -84,7 +88,10 @@ class notifications_ajax {
 	 *
 	 */
 	public function __construct() {
-		$this->response = new xajaxResponse();
+		if(class_exists('xajaxResponse'))
+		{
+			$this->response = new xajaxResponse();
+		}
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read();
 
 		$this->config = (object)config::read(self::_appname);
@@ -110,7 +117,7 @@ class notifications_ajax {
 	 *
 	 * @return xajax response
 	 */
-	public function get_notifications() {
+	public function get_notifications($browserNotify = false) {
 		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
 
 		// update currentusers
@@ -120,7 +127,7 @@ class notifications_ajax {
 			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}
 
-		$this->get_egwpopup();
+		$this->get_egwpopup($browserNotify);
 
 		return $this->response->getXML();
 	}
@@ -137,6 +144,7 @@ class notifications_ajax {
 		{
 			$this->db->delete(self::_notification_table,array(
 				'notify_id' => $notify_id,
+				'account_id' => $this->recipient->account_id,
 			),__LINE__,__FILE__,self::_appname);
 		}
 	}
@@ -246,7 +254,7 @@ class notifications_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function get_egwpopup() {
+	private function get_egwpopup($browserNotify = false) {
 		$message = '';
 		$rs = $this->db->select(self::_notification_table, '*', array(
 				'account_id' => $this->recipient->account_id,
@@ -254,7 +262,21 @@ class notifications_ajax {
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
-				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message']);
+				$message = null;
+				if($browserNotify && $this->preferences[self::_appname]['egwpopup_verbosity'] != 'low')
+				{
+					$message = $notification['notify_message'];
+
+					// Check for a link - doesn't work in notification
+					if(strpos($message, lang('Linked entries:')))
+					{
+						$message = substr_replace($message, '', strpos($message, lang('Linked entries:')));
+					}
+					$message = preg_replace('#</?a[^>]*>#is','',$message);
+					
+					$message = 'data:text/html;charset=' . translation::charset() .';base64,'.base64_encode($message);
+				}
+				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message'],$message);
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
