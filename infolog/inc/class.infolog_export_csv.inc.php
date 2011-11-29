@@ -89,7 +89,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		// Pre-load links all at once
 		if($ids && $options['mapping']['info_link_id'])
 		{
-			$links = egw_link::get_links_multiple('infolog', $ids, true);
+			$links = egw_link::get_links_multiple('infolog', $ids, true, '!'.egw_link::VFS_APPNAME);
 			foreach($links as $id => $link) {
 				if(!is_array($selection[$id])) break;
 				$selection[$id]['info_link_id'] = $link;
