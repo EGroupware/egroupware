@@ -182,7 +182,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 		}
 		
-		$this->fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
+		fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
 	}
 
@@ -358,6 +358,7 @@ class importexport_export_csv implements importexport_iface_export_record
 
 	/**
 	 * The php build in fputcsv function is buggy, so we need an own one :-(
+	 * Buggy how?
 	 *
 	 * @param resource $filePointer
 	 * @param array $dataArray
