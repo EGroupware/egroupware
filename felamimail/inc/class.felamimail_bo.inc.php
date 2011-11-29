@@ -201,11 +201,11 @@ class felamimail_bo
 			{
 				if (array_key_exists($selectedID,$identities))
 				{
-					$_profileID = $selectedID; 
+					$_profileID = $selectedID;
 				}
 				else
 				{
-					foreach (array_keys((array)$identities) as $k => $ident) 
+					foreach (array_keys((array)$identities) as $k => $ident)
 					{
 						//error_log(__METHOD__.__LINE__.' Testing Identity with ID:'.$ident.' for being provided by emailadmin.');
 						if ($ident <0) $_profileID = $ident;
@@ -2436,7 +2436,7 @@ class felamimail_bo
 
 			if($try2useCache && (is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
-				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] && 
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']	== $eMailListContainsDeletedMessages[$this->profileID][$_folderName] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['filter']	=== $_filter &&
@@ -3469,7 +3469,7 @@ class felamimail_bo
 				{
 					//error_log(__METHOD__.__LINE__.' failed for Reason:'.$isError[$_icServerID]);
 					$this->errorMessage = ($isError[$_icServerID]?$isError[$_icServerID]:$this->icServer->_connectionErrorObject->message);
-					return false;			
+					return false;
 				}
 			}
 			if (!is_object($this->mailPreferences))
@@ -4015,16 +4015,20 @@ class felamimail_bo
 				// check the mimetype by extension. as browsers seem to report crap
 				// maybe its application/octet-stream -> this may mean that we could not determine the type
 				// so we check for the suffix too
-				$buff = explode('.',$_formData['name']);
-				$suffix = '';
-				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
-				if (!empty($suffix) && !empty($sfxMimeType) && 
-					(strlen(trim($_formData['type']))==0 || (strtolower(trim($_formData['type'])) != $sfxMimeType)))
+				// trust vfs mime-types
+				if (substr($_formData['file'],0,6) !== 'vfs://' || $_formData['type'] == 'application/octet-stream')
 				{
-					error_log(__METHOD__.__LINE__.' Data:'.array2string($_formData));
-					error_log(__METHOD__.__LINE__.' Form reported Mimetype:'.$_formData['type'].' but seems to be:'.$sfxMimeType);
-					$_formData['type'] = $sfxMimeType;
+					$buff = explode('.',$_formData['name']);
+					$suffix = '';
+					if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+					if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+					if (!empty($suffix) && !empty($sfxMimeType) &&
+						(strlen(trim($_formData['type']))==0 || (strtolower(trim($_formData['type'])) != $sfxMimeType)))
+					{
+						error_log(__METHOD__.__LINE__.' Data:'.array2string($_formData));
+						error_log(__METHOD__.__LINE__.' Form reported Mimetype:'.$_formData['type'].' but seems to be:'.$sfxMimeType);
+						$_formData['type'] = $sfxMimeType;
+					}
 				}
 				if (trim($_formData['type']) == '')
 				{
@@ -4386,7 +4390,7 @@ class felamimail_bo
 		/**
 		 * processURL2InlineImages - parses a html text for images, and adds them as inline attachment
 		 * we do not use the functionality of the phpmailer here, as phpmailers functionality requires
-		 * files to be present within the filesystem, which we do not require as we make this happen 
+		 * files to be present within the filesystem, which we do not require as we make this happen
 		 * (we load the file, and store it temporarily for the use of attaching it to the file send
 		 * @param object $_mailObject instance of the egw_mailer/phpmailer Object to be used
 		 * @param string $_html2parse the html to parse and to be altered, if conditions meet
@@ -4547,13 +4551,13 @@ class felamimail_bo
 							if (!empty($AltBody))
 							{
 								$mailObject->IsHTML(true);
-							} 
+							}
 							elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
 							{
 								$mailObject->IsHTML(true);
 								$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
 							}
-							else 
+							else
 							{
 								$mailObject->IsHTML(false);
 							}
@@ -4618,13 +4622,13 @@ class felamimail_bo
 							if (!empty($AltBody))
 							{
 								$mailObject->IsHTML(true);
-							} 
+							}
 							elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
 							{
 								$mailObject->IsHTML(true);
 								$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
 							}
-							else 
+							else
 							{
 								$mailObject->IsHTML(false);
 							}

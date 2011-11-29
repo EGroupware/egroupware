@@ -114,6 +114,7 @@ class mime_magic
 	public static function mime2ext($type)
 	{
 		$type = strtolower($type);
+		if (isset(self::$mime_alias_map[$type])) $type = self::$mime_alias_map[$type];
 		$key = array_search($type, self::$mime_extension_map);
 		if (empty($type) || $key === false)
 		{
@@ -391,7 +392,7 @@ class mime_magic
 		'ustar'	=> 'application/x-ustar',
 		'vbs'	=> 'text/plain', //added by skwashd - for obvious reasons
 		'vcd'	=> 'application/x-cdlink',
-		'vcf'	=> 'text/x-vcard',
+		'vcf'	=> 'text/vcard',
 		'vcs'	=> 'text/calendar',
 		'vfb'	=> 'text/calendar',
 		'vrml'	=> 'model/vrml',
@@ -425,6 +426,12 @@ class mime_magic
 		'xyz'	=> 'chemical/x-xyz',
 		'z'	=> 'application/x-compress',
 		'zip'	=> 'application/zip',
+	);
+	/**
+	 * Mapping some old formats to the newer form, or any other aliasing for mime-types
+	 */
+	static $mime_alias_map = array(
+		'text/x-vcard' => 'text/vcard',
 	);
 
 	/**

@@ -114,6 +114,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 * This method is called in response to stat() calls on the URL paths associated with the wrapper.
 	 *
 	 * Reimplemented from sqlfs, as we have to pass the value of check_extends_acl(), due to the lack of late static binding.
+	 * And to return vcard for url /apps/addressbook/$id/.entry
 	 *
 	 * @param string $path
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
@@ -128,7 +129,28 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		$ret = parent::url_stat($url,$flags,$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE));
+		$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
+		if ($eacl_check && substr($url,-7) == '/.entry' &&
+			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
+		{
+			$ret = array(
+				'ino'   => $info['fs_id'],
+				'name'  => '.entry',
+				'mode'  => self::MODE_FILE|egw_vfs::READABLE,	// required by the stream wrapper
+				'size'  => 1024,	// fmail does NOT attach files with size 0!
+				'uid'   => 0,
+				'gid'   => 0,
+				'mtime' => time(),
+				'ctime' => time(),
+				'nlink' => 1,
+				// eGW addition to return some extra values
+				'mime'  => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
+			);
+		}
+		else
+		{
+			$ret = parent::url_stat($url,$flags,$eacl_check);
+		}
 		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) calling parent::url_stat(,,".array2string($eacl_check).') returning '.array2string($ret));
 		return $ret;
 	}
@@ -206,6 +228,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * Reimplemented from sqlfs to ensure self::url_stat is called, to fill sqlfs stat cache with our eacl!
+	 * And to return vcard for url /apps/addressbook/$id/.entry
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
 	 * @param string $mode mode used to open the file, as detailed for fopen()
@@ -219,8 +242,25 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
 		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
-		self::url_stat($url,0);
+		$stat = self::url_stat($url,0);
+		//error_log(__METHOD__."('$url', '$mode', $options) stat=".array2string($stat));
 
+		if ($stat && $mode[0] == 'r' && substr($url,-7) === '/.entry')
+		{
+			list($id) = array_slice(explode('/',$url),-2,1);
+			$name = md5($url);
+			$ab_vcard = new addressbook_vcal('addressbook','text/vcard');
+			if (!($GLOBALS[$name] =& $ab_vcard->getVCard($id)))
+			{
+				error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned false!");
+				return false;
+			}
+			//error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned ".$GLOBALS[$name]);
+			require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
+			$this->opened_stream = fopen('global://'.$name,'r');
+			unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
+			return true;
+		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
 

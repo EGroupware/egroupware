@@ -255,9 +255,21 @@
 					{
 						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 						{
+							$type = egw_vfs::mime_content_type($path);
+							// special handling for attaching vCard of iCal --> use their link-title as name
+							if (substr($path,-7) != '/.entry' ||
+								!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
+								!($name = egw_link::title($app, $id)))
+							{
+								$name = urldecode(egw_vfs::basename($path));
+							}
+							else
+							{
+								$name .= '.'.mime_magic::mime2ext($type);
+							}
 							$formData = array(
-								'name' => urldecode(egw_vfs::basename($path)),
-								'type' => egw_vfs::mime_content_type($path),
+								'name' => $name,
+								'type' => $type,
 								'file' => $path,
 								'size' => filesize($path),
 							);
@@ -579,7 +591,7 @@
 				$this->t->set_var("toggle_editormode",'');
 			}
 			else
-			{	
+			{
 				$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
 			}
 			$this->t->pparse("out","body_input");

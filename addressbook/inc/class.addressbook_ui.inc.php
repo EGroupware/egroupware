@@ -585,7 +585,15 @@ class addressbook_ui extends addressbook_bo
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
 			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
-
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		{
+			$actions['mail'] = array(
+				'caption' => lang('Mail VCard'),
+				'icon' => 'filemanager/mail_post_to',
+				'group' => $group,
+				'onExecute' => 'javaScript:adb_mail_vcard',
+			);
+		}
 		++$group;
 		if (!($tid_filter == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge'))
 		{
@@ -2192,7 +2200,19 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function js()
 	{
+		list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
+
 		return '<script LANGUAGE="JavaScript">
+		function adb_mail_vcard(_action, _elems)
+		{
+			var link = "'.egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose')).'";
+			for (var i = 0; i < _elems.length; i++)
+			{
+				link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+_elems[i].id+"/.entry");
+			}
+			'."egw_openWindowCentered2(link, '_blank', $width, $height, 'yes');".'
+		}
+
 		function adb_get_selection(form)
 		{
 			var use_all = document.getElementById("exec[use_all]");
