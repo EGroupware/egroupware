@@ -1,4 +1,4 @@
-<center><b>{messages}</b></center>
+<center style="color: red; font-style: italic">{messages}</center>
 
 <!-- BEGIN form -->
 <form method="POST" action="{action_url}">

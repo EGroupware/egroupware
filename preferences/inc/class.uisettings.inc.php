@@ -172,16 +172,11 @@ class uisettings
 
 			if (is_array($error)) $error = false;	// process_array returns the prefs-array on success
 
-			if(!$this->is_admin() || $error)
-			{
-				$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
-			}
-
 			if($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
 			{
 				$this->show_help = $user['show_help'];	// use it, if admin changes his help-prefs
 			}
-			if($_POST['save'])
+			if($_POST['save'] && !$error)
 			{
 				$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
 			}
