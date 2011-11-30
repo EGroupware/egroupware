@@ -259,8 +259,25 @@ class translation
 		{
 			//$start = microtime(true);
 			// for loginscreen we have to use a instance specific cache!
-			$loaded =& egw_cache::getCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,
-				__CLASS__,$app.':'.$lang,array(__CLASS__,'load_app'),array($app,$lang));
+			$instance_specific = in_array($app,self::$instance_specific_translations);
+			$loaded =& egw_cache::getCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
+				__CLASS__,$app.':'.$lang);
+
+			// do NOT use automatic callback to cache result, as installing languages in setup can create
+			// a racecondition, therefore only cache existing non-instance-specific translations,
+			// never cache nothing found === array(), instance-specific translations can and should always be cached!
+			//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+			if (!$loaded && (!$instance_specific || is_null($loaded)))
+			{
+				error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+				$loaded =& self::load_app($app,$lang);
+				if ($loaded || $instance_specific)
+				{
+					error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+					egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
+						__CLASS__,$app.':'.$lang,$loaded);
+				}
+			}
 
 			// we have to use array_merge! (+= does not overwrite common translations with different ones in an app)
 			// array_merge messes up translations of numbers, which make no sense and should be avoided anyway.
@@ -1121,9 +1138,9 @@ class translation
 		if ($tag) $tag = strtolower($tag);
 		if ($endtag == '' || empty($endtag) || !isset($endtag))
 		{
-		        $endtag = $tag;
+			$endtag = $tag;
 		} else {
-		        $endtag = strtolower($endtag);
+			$endtag = strtolower($endtag);
 				//error_log(__METHOD__.' Using EndTag:'.$endtag);
 		}
 		// strip tags out of the message completely with their content
