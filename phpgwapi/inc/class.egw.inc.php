@@ -445,12 +445,12 @@ class egw extends egw_minimal
 	/**
 	 * Link url generator
 	 *
-	 * @param string=''	$string	The url the link is for
+	 * @param string	$string	The url the link is for
 	 * @param string|array	$extravars=''	Extra params to be passed to the url
 	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
-	static function link($url = '', $extravars = '', $link_app=null)
+	static function link($url, $extravars = '', $link_app=null)
 	{
 		return $GLOBALS['egw']->framework->link($url, $extravars, $link_app);
 	}
@@ -462,7 +462,7 @@ class egw extends egw_minimal
 	 * @param string/array	$extravars	Extra params to be passed to the url
 	 * @return string	The full url after processing
 	 */
-	static function redirect_link($url = '',$extravars='')
+	static function redirect_link($url, $extravars='')
 	{
 		return $GLOBALS['egw']->framework->redirect_link($url, $extravars);
 	}
@@ -474,28 +474,12 @@ class egw extends egw_minimal
 	 *
 	 * @param  string The url ro redirect to
 	 */
-	static function redirect($url = '')
+	static function redirect($url)
 	{
-		/* global $HTTP_ENV_VARS; */
-
-		$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
-
 		// Determines whether the current output buffer should be flushed
 		$do_flush = true;
 
-		if(!$url)
-		{
-			$url = $_SERVER['PHP_SELF'];
-		}
-		if($iis)
-		{
-			echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
-			echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
-			echo "\n</HEAD><BODY>";
-			echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
-			echo "\n</BODY></HTML>";
-		}
-		else if (egw_json_response::isJSONResponse() || egw_json_request::isJSONRequest())
+		if (egw_json_response::isJSONResponse() || egw_json_request::isJSONRequest())
 		{
 			$response = egw_json_response::get();
 			$response->redirect($url);
