@@ -266,11 +266,11 @@ class translation
 			//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 			if (!$loaded && (!$instance_specific || is_null($loaded)))
 			{
-				error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+				//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				$loaded =& self::load_app($app,$lang);
 				if ($loaded || $instance_specific)
 				{
-					error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 					egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
 						__CLASS__,$app.':'.$lang,$loaded);
 				}
