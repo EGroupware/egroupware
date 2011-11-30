@@ -26,6 +26,13 @@
  * - url:   download url, if NOT a regular webdav.php download should be used, eg. because directory already
  *          lies within the docroot or is mapped via an alias
  *
+ * Example mount command for an uploads directory in the docroot (needs to be writable by webserver!):
+ *
+ * filemanager/cli.php mount --user root_admin --password secret --domain default \
+ * 	'filesystem://egal/var/www/html/uploads?group=Admins&mode=075&url=http://domain.com/uploads' /uploads
+ *
+ * (admin / secret is username / password of setup user, "root_" prefix differenciate from regular EGw-user!)
+ *
  * To correctly support characters with special meaning in url's (#?%), we urlencode them with egw_vfs::encodePathComponent
  * and urldecode all path again, before passing them to php's filesystem functions.
  *
