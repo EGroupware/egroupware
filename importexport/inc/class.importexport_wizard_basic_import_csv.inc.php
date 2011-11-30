@@ -219,7 +219,7 @@ class importexport_wizard_basic_import_csv
 			array(
 				'utf-8' => 'utf-8 (Unicode)',
 				'user'	=> lang('User preference')
-			);
+			) + array(lang('All encodings') => array_combine(mb_list_encodings(),mb_list_encodings()));
 			$sel_options['convert'] = array(
 				0       => lang('Database values'),
 				1       => lang('Human friendly values')
