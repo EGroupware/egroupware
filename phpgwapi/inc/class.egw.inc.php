@@ -437,7 +437,7 @@ class egw extends egw_minimal
 	 * @param string/array	$extravars	Extra params to be passed to the url
 	 * @return string	The full url after processing
 	 */
-	static function link($url = '', $extravars = '')
+	static function link($url, $extravars = '')
 	{
 		return $GLOBALS['egw']->session->link($url, $extravars);
 	}
@@ -449,7 +449,7 @@ class egw extends egw_minimal
 	 * @param string/array	$extravars	Extra params to be passed to the url
 	 * @return string	The full url after processing
 	 */
-	static function redirect_link($url = '',$extravars='')
+	static function redirect_link($url, $extravars='')
 	{
 		self::redirect($GLOBALS['egw']->session->link($url, $extravars));
 	}
@@ -463,31 +463,13 @@ class egw extends egw_minimal
 	 */
 	static function redirect($url = '')
 	{
-		/* global $HTTP_ENV_VARS; */
+		if (headers_sent($file,$line))
+		{
+			throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
+		}
+		Header("Location: $url");
+		print("\n\n");
 
-		$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
-
-		if(!$url)
-		{
-			$url = $_SERVER['PHP_SELF'];
-		}
-		if($iis)
-		{
-			echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
-			echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
-			echo "\n</HEAD><BODY>";
-			echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
-			echo "\n</BODY></HTML>";
-		}
-		else
-		{
-			if (headers_sent($file,$line))
-			{
-				throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
-			}
-			Header("Location: $url");
-			print("\n\n");
-		}
 		@ob_flush(); flush();
 
 		// commit session (if existing), to fix timing problems sometimes preventing session creation ("Your session can not be verified")
