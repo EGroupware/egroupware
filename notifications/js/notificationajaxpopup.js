@@ -60,7 +60,11 @@ function egwpopup_display() {
 	if(window.webkitNotifications && window.webkitNotifications.checkPermission() != EGW_BROWSER_NOTIFY_ALLOWED &&
 		jQuery('#desktop_perms').length == 0)
 	{
-		var desktop_button = jQuery('<button id="desktop_perms">' + (egw?egw.lang('Desktop notifications') : 'Desktop notifications') + '</button>')
+		var label = 'Desktop notifications';
+		try {
+			if(egw) label = egw.lang(label);
+		} catch(err) {}
+		var desktop_button = jQuery('<button id="desktop_perms">' + label + '</button>')
 			.click(function() {
 				window.webkitNotifications.requestPermission(); 
 				jQuery(this).hide();
