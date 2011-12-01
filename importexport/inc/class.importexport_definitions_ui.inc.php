@@ -245,6 +245,15 @@ class importexport_definitions_ui
 				'caption' => 'Copy',
 				'group' => ++$group,
 			),
+			'createexport' => array(
+				'caption' => 'Create export',
+				'hint' => 'Create a matching export definition based on this import definition',
+				'icon' => 'export',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'disableClass' => 'export'
+			),
+
 			'export' => array(
 				'caption' => 'Export',
 				'group' => $group,
@@ -376,6 +385,34 @@ class importexport_definitions_ui
 					}
 				}
 				break;
+			case 'createexport':
+				$action_msg = lang('created');
+				// Should only be one selected
+				foreach($selected as $id) {
+					$definition = new importexport_definition($id);
+					try {
+						$export = $bodefinitions::export_from_import($definition);
+						$export->save();
+					} catch (Exception $e) {
+						if($export)
+						{
+							try {
+								$export->name = $export->name.' ' . $GLOBALS['egw_info']['user']['account_lid'];
+								$export->save();
+							} catch (Exception $ex) {
+								$failed++;
+								$msg .= lang('Duplicate name, please choose another.');
+								continue;
+							}
+						}
+						else
+						{
+							$failed++;
+						}
+					}
+					$success++;
+				}
+				break;
 		}
 		return !$failed;
 	}
@@ -393,7 +430,14 @@ class importexport_definitions_ui
 		{
 			//close window
 		}
-		$definition = array('name' => $_definition);
+		if(is_numeric($_GET['definition']))
+		{
+			$definition = (int)$_GET['definition'];
+		}
+		else
+		{
+			$definition = array('name' => $_definition);
+		}
 		$bodefinitions = new importexport_definitions_bo();
 		$definition = $bodefinitions->read($definition);
 		$definition['edit'] = true;

@@ -73,6 +73,7 @@ class importexport_definitions_bo {
 				$row['class'] .= 'rowNoEdit';
 				$ro_count++;
 			}
+			$row['class'] .= ' ' . $row['type'];
 		}
 		$readonlys['delete_selected'] = $ro_count == count($rows);
 		return $total;
@@ -234,5 +235,72 @@ class importexport_definitions_bo {
 		}
 	}
 
+	/**
+	 * Create a matching export definition from the given import definition.
+	 *
+	 * Sets up the field mapping as closely as possible, and sets charset,
+	 * header, conversion, etc. using the associated export plugin.  Plugin
+	 * is determined by replacing 'import' with 'export'.
+	 *
+	 * It is not possible to handle some plugin options automatically, because they
+	 * just don't have equivalents.  (eg: What to do with unknown categories)
+	 *
+	 * @param importexport_definition $definition Import definition
+	 *
+	 * @return importexport_definition Export definition
+	 */
+	public static function export_from_import(importexport_definition $import)
+	{
+		// Only operates on import definitions
+		if($import->type != 'import') throw new egw_exception_wrong_parameter('Only import definitions');
+		
+		// Find export plugin
+		$plugin = str_replace('import', 'export',$import->plugin);
+		$plugin_list = importexport_helper_functions::get_plugins($import->application, 'export');
+		foreach($plugin_list as $appname => $type)
+		{
+			$plugins = $type['export'];
+			foreach($plugins as $name => $label)
+			{
+				if($plugin == $name) break;
+			}
+			if($plugin !== $name) $plugin = $name;
+		}
+
+		$export = new importexport_definition();
+		
+		// Common settings
+		$export->name = str_replace('import', 'export',$import->name);
+		if($export->name == $import->name) $export->name = $export->name . '-export';
+		$test = new importexport_definition($export->name);
+		if($test->name) $export->name = $export->name .'-'.$GLOBALS['egw_info']['user']['account_lid'];
+
+		$export->application = $import->application;
+		$export->plugin = $plugin;
+		$export->type = 'export';
+		
+		// Options
+		$i_options = $import->plugin_options;
+		$e_options = array(
+			'delimiter'	=> $i_options['fieldsep'],
+			'charset'	=> $i_options['charset'],
+			'begin_with_fieldnames' => $i_options['num_header_lines'] ? ($i_options['convert'] ? 'label' : 1) : 0,
+			'convert'	=> $i_options['convert']
+		);
+
+		// Mapping
+		foreach($i_options['field_mapping'] as $col_num => $field)
+		{
+			// Try to use heading from import file, if possible
+			$e_options['mapping'][$field] = $i_options['csv_fields'][$col_num] ? $i_options['csv_fields'][$col_num] : $field;
+		}
+		$export->plugin_options = $e_options;
+
+		// Permissions
+		$export->owner = $import->owner;
+		$export->allowed_users = $import->allowed_users;
+
+		return $export;
+	}
 }
 
