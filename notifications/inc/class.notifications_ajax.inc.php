@@ -263,7 +263,7 @@ class notifications_ajax {
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
 				$message = null;
-				if($browserNotify && $this->preferences[self::_appname]['egwpopup_verbosity'] != 'low')
+				if($browserNotify)
 				{
 					$message = $notification['notify_message'];
 
