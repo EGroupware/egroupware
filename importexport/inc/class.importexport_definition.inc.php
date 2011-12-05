@@ -67,7 +67,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->is_admin = $GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_setup'] ? true : false;
 		// compability to string identifiers
-		if (is_string($_identifier) && strlen($_identifier) > 3) $_identifier = $this->name2identifier($_identifier);
+		if (!is_numeric($_identifier) && strlen($_identifier) > 3) $_identifier = $this->name2identifier($_identifier);
 
 		if ((int)$_identifier != 0) {
 			$this->definition = $this->so_sql->read(array('definition_id' => $_identifier));
