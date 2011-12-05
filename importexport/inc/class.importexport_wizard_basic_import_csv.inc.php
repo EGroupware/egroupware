@@ -218,8 +218,17 @@ class importexport_wizard_basic_import_csv
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 			array(
 				'utf-8' => 'utf-8 (Unicode)',
-				'user'	=> lang('User preference')
-			) + array(lang('All encodings') => array_combine(mb_list_encodings(),mb_list_encodings()));
+				'CP850' => 'CP850',
+				'user'	=> lang('User preference'),
+			);
+
+			// Add in extra allowed charsets
+			$config = config::read('importexport');
+			$extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
+			if($extra_charsets)
+			{
+				$sel_options['charset'] += array(lang('Extra encodings') => array_combine($extra_charsets,$extra_charsets));
+			}
 			$sel_options['convert'] = array(
 				0       => lang('Database values'),
 				1       => lang('Human friendly values')
