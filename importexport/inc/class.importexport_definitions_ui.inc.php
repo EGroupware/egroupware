@@ -479,6 +479,9 @@ class importexport_definitions_ui
 				{
 					$wizard_plugin = $content['plugin'];
 				}
+				// App translations
+				if($content['application']) translation::add_app($content['application']);
+
 				$this->plugin = is_object($GLOBALS['egw']->$wizard_plugin) ? $GLOBALS['egw']->$wizard_plugin : new $wizard_plugin;
 
 				// Global object needs to be the same, or references to plugin don't work

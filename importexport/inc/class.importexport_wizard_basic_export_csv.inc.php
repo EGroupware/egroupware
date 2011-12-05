@@ -200,4 +200,12 @@ class importexport_wizard_basic_export_csv
 		}
 		
 	}
+
+	/**
+	 * Expose export fields for use elsewhere
+	 */
+	public function get_export_fields()
+	{
+		return $this->export_fields;
+	}
 }
