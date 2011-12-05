@@ -218,7 +218,7 @@ class importexport_wizard_basic_import_csv
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 			array(
 				'utf-8' => 'utf-8 (Unicode)',
-				'CP850' => 'CP850',
+				'CP850' => 'CP850 (Old DOS systems)',
 				'user'	=> lang('User preference'),
 			);
 
