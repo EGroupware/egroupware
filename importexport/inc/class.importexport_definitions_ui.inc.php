@@ -391,7 +391,7 @@ class importexport_definitions_ui
 				foreach($selected as $id) {
 					$definition = new importexport_definition($id);
 					try {
-						$export = $bodefinitions::export_from_import($definition);
+						$export = $bodefinitions->export_from_import($definition);
 						$export->save();
 					} catch (Exception $e) {
 						if($export)
