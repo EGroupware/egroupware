@@ -1006,6 +1006,12 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//error_log(__METHOD__.'('.array2string($query).')');
+
+		if($query['filter'] == 'bydate')
+		{
+			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
+			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
+		}
 		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
 			if (isset($query['col_filter']))
