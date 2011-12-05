@@ -131,13 +131,16 @@ function append_notification_message(_id, _message, _browser_notify) {
 	notifymessages[_id] = _message;
 
 	// Notification API
-	var notice = webkitNotifications.createHTMLNotification(_browser_notify);
-	notice.ondisplay = function() {
-		// Confirm when user gets to see it - no close needed
-		// Wait a bit to let it load first, or it might not be there when requested.  
-		window.setTimeout( function() {
-			xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
-		}, 2000);
-	};
-	notice.show();
+	if(_browser_notify)
+	{
+		var notice = webkitNotifications.createHTMLNotification(_browser_notify);
+		notice.ondisplay = function() {
+			// Confirm when user gets to see it - no close needed
+			// Wait a bit to let it load first, or it might not be there when requested.  
+			window.setTimeout( function() {
+				xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
+			}, 2000);
+		};
+		notice.show();
+	}
 }
