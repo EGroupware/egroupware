@@ -161,15 +161,24 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			$lookups = $_lookups;
-			if($record['info_type'] && $this->boinfolog->status[$record['info_type']]) {
+			if($record['info_type'] && $this->boinfolog->status[$record['info_type']])
+			{
 				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
 			}
 
 			importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
 
+			// Set default status for type, if not specified
+			if(!$record['info_status'] && $record['info_type'])
+			{
+				$record['info_status'] = $this->boinfolog->status['defaults'][$record['info_type']];
+			}
+
 			// Set owner, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv']) {
-				if(!is_numeric($record['info_owner'])) {
+			if($_definition->plugin_options['owner_from_csv'])
+			{
+				if(!is_numeric($record['info_owner']))
+				{
 					$this->errors[$import_csv->get_current_position()] = lang(
 						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
 						$record['info_owner'],
@@ -177,7 +186,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					);
 					$record['info_owner'] = $_definition->plugin_options['record_owner'];
 				}
-			} else {
+			}
+			else
+			{
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
 			if (!isset($record['info_owner'])) $record['info_owner'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -192,10 +203,13 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
                                 $record['projectmanager'] = self::project_id($record['projectmanager']);
                         }
 
-			if ( $_definition->plugin_options['conditions'] ) {
-				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+			if ( $_definition->plugin_options['conditions'] )
+			{
+				foreach ( $_definition->plugin_options['conditions'] as $condition )
+				{
 					$results = array();
-					switch ( $condition['type'] ) {
+					switch ( $condition['type'] )
+					{
 						// exists
 						case 'exists' :
 							if($record[$condition['string']]) {
@@ -231,7 +245,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					}
 					if ($action['last']) break;
 				}
-			} else {
+			}
+			else
+			{
 				// unconditional insert
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
