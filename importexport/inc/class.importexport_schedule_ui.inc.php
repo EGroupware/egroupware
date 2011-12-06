@@ -40,7 +40,10 @@
 			if(is_array($async_list)) {
 				foreach($async_list as $id => $async) {
 					if(is_array($async['data']['errors'])) {
-						$async['data']['errors'] = implode("\n", $async['data']['errors']);
+						foreach($async['data']['errors'] as $target => $errors)
+						{
+							$async['data']['errors'] = $target . ":\n" . implode("\n", $async['data']['errors']);
+						}
 					}
 					if(is_numeric($async['data']['record_count'])) {
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
@@ -123,6 +126,7 @@
 				if($file_check !== true) $data['message'] .= ($data['message'] ? "\n" . $file_check : $file_check);
 			}
 
+			$data['no_delete_files'] = $data['type'] != 'import';
 			$sel_options = self::get_select_options($data);
 			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
@@ -147,13 +151,14 @@
 				$options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 			}
 
-			if($data['appname']) {
-				$plugins = importexport_helper_functions::get_plugins($data['appname'], $data['type']);
-				if(is_array($plugins[$data['appname']][$data['type']])) {
-					foreach($plugins[$data['appname']][$data['type']] as $key => $title) {
+			$plugins = importexport_helper_functions::get_plugins($data['appname'] ? $data['appname'] : 'all', $data['type']);
+			if(is_array($plugins)) {
+				foreach($plugins as $appname => $types) {
+					if(!is_array($types[$data['type']])) continue;
+					foreach($types[$data['type']] as $key => $title) {
 						$options['plugin'][$key] = $title;
 					}
-				}
+				}	
 			}
 
 			$options['definition'] = array();
@@ -223,6 +228,7 @@
 			} else {
 				$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
 			}
+
 			return $response->getXML();
 		}
 
@@ -321,36 +327,81 @@
 			$po = new $definition->plugin;
 
 			$type = $data['type'];
-			if($resource = fopen( $data['target'], $data['type'] == 'import' ? 'r' : 'w' )) {
-				$result = $po->$type( $resource, $definition );
 
-				fclose($resource);
-			} else {
-				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
+			
+			$data['record_count'] = 0;
+			unset($data['errors']);
+			unset($data['result']);
+
+			if(is_dir($data['target']))
+			{
+				$contents = scandir($data['target']);
+				$targets = array_diff($contents, array('.','..'));
+				foreach($targets as $key => &$target)
+				{
+					$target = $data['target'].'/'.$target;
+					
+					// Check modification time, make sure it's not currently being written
+					// Skip files modified in the last 10 seconds
+					if(filemtime($target) >= time() - 10) 
+					{
+						$data['result'][$target] = lang('Skipped');
+						unset($target[$key]);
+					}
+				}
+				unset($target); // Unset it, or it will be overwritten in loop below
+			}
+			else
+			{
+				$targets = array($data['target']);
 			}
 
-			if(method_exists($po, 'get_errors') && $po->get_errors()) {
-				$data['errors'] = $po->get_errors();
-				fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
-				foreach($po->get_errors() as $record => $error) {
-					fwrite(STDERR, "$record\t$error\n");
-				}
-			} else {
-				unset($data['errors']);
-			}
+			foreach($targets as $target)
+			{
+				if($resource = fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
+					$result = $po->$type( $resource, $definition );
 
-			if($po instanceof importexport_iface_import_plugin) {
-				if(is_numeric($result)) {
-					$data['record_count'] = $result;
+					fclose($resource);
+				} else {
+					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
 				}
-				$data['result'] = '';
-				foreach($po->get_results() as $action => $count) {
-					$data['result'] .= "\n" . lang($action) . ": $count";
+			
+
+				if(method_exists($po, 'get_errors') && $po->get_errors()) {
+					$data['errors'][$target] = $po->get_errors();
+					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
+					foreach($po->get_errors() as $record => $error) {
+						fwrite(STDERR, "$record\t$error\n");
+					}
+				} else {
+					unset($data['errors'][$target]);
 				}
-			} else {
-				$data['result'] = $result;
+
+				if($po instanceof importexport_iface_import_plugin) {
+					if(is_numeric($result)) {
+						$data['record_count'] += $result;
+					}
+					$data['result'][$target] = '';
+					foreach($po->get_results() as $action => $count) {
+						$data['result'][$target] .= "\n" . lang($action) . ": $count";
+					}
+				} else {
+					$data['result'][$target] = $result;
+				}
 			}
 			$data['last_run'] = time();
+
+			// Delete file?
+			if($data['delete_files'] && $type == 'import' && !$data['errors'][$target])
+			{
+				foreach($targets as $target)
+				{
+					if(unlink($target))
+					{
+						$data['result'][$target] .= "\n..." . lang('deleted');
+					}
+				}
+			}
 
 			// Update job with results
 			$id = self::generate_id($data);
