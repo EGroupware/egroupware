@@ -1030,8 +1030,7 @@ return array();	// temporary disabling meeting requests from calendar
 		foreach($event['participants'] as $uid => $status)
 		{
 			// AS does NOT want calendar owner as participant
-// disabled, as otherwise status is NOT transfered to client
-//			if ($uid == $account) continue;
+			if ($uid == $account) continue;
 			calendar_so::split_status($status, $quantity, $role);
 			$attendee = new SyncAttendee();
 			$attendee->attendeestatus = (int)self::$status2as[$status];
