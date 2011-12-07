@@ -828,15 +828,13 @@ class infolog_bo
 		if (isset($this->group_owners[$values['info_type']]))
 		{
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
-			if ($values['info_id'] && !($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
+			if (!($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
 			{
-				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT)) return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
-			}
-			else if (!$values['info_id'] && !($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_ADD))
-			{
-				if (!$this->check_access($values,EGW_ACL_ADD))
+				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT) ||
+					!$values['info_id'] && !$this->check_access($values,EGW_ACL_ADD)
+				)
 				{
-					return false;
+					return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
 				}
 			}
 		}
