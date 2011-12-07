@@ -960,6 +960,12 @@ class importexport_definitions_ui
 		$data = config::read(self::_appname);
 		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
 		$sel_options['import_charsets'] = array_combine(mb_list_encodings(),mb_list_encodings());
+		
+		// Remove 'standard' encodings to prevent doubles
+		foreach($GLOBALS['egw']->translation->get_installed_charsets() as $charset => $label)
+		{
+			unset($sel_options['import_charsets'][strtoupper($charset)]);
+		}
 		unset($sel_options['import_charsets']['CP850']); // This one explicitly added in wizard
 
 		if(!$data['update']) $data['update'] = 'request';

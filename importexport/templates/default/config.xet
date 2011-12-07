@@ -17,7 +17,7 @@
 					<listbox type="select-account" id="share_definition" rows="5" options="both"/>
 				</row>
 				<row valign="top">
-					<description value="Extra charsets for import"/>
+					<description value="Extra charsets for import / export"/>
 					<listbox id="import_charsets" rows="5"/>
 				</row>
 				<row>

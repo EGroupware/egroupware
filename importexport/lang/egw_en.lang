@@ -41,6 +41,7 @@ export data as	importexport	en	Export data as
 export definition to use for nextmatch export	preferences	en	Export definition to use for nextmatch export
 export spreadsheet	importexport	en	Export Spreadsheet
 exported	importexport	en	Exported.
+extra charsets for import / export	importexport	en	Extra charsets for import / export
 false	importexport	en	False
 field labels	importexport	en	Field labels
 field names	importexport	en	Field names
