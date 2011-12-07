@@ -291,6 +291,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					$this->results[$_action]++;
 					break;
 				} else {
+					// Fake an XMLRPC call to avoid failing modification date check
+					$GLOBALS['server']->last_method = '~fake it~';
 					$result = $this->boinfolog->write( $_data, true, true);
 					if(!$result) {
 						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
