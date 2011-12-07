@@ -42,17 +42,17 @@
 					if(is_array($async['data']['errors'])) {
 						foreach($async['data']['errors'] as $target => $errors)
 						{
-							$async['data']['errors'] = $target . ":\n" . implode("\n", $async['data']['errors']);
+							$async['data']['errors'] = (is_numeric($target) ? '' : $target . ":\n") . implode("\n", $async['data']['errors']);
 						}
 					}
 					if(is_numeric($async['data']['record_count'])) {
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 					}
-					$data['scheduled'][] = $async['data'] + array(
+					$data['scheduled'][] = array_merge($async['data'], array(
 						'id'	=>	$id,
 						'next'	=>	$async['next'],
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
-					);
+					));
 				}
 				array_unshift($data['scheduled'], false);
 			}
@@ -310,15 +310,25 @@
 		public static function exec($data) {
 			ob_start();
 
+			$data['last_run'] = time();
+
 			// check file
 			$file_check = self::check_target($data);
 			if($file_check !== true) {
+				$data['errors'][] = $file_check;
+				// Update job with results
+				self::update_job($data);
+
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": $file_check \n");
 				exit();
 			}
 
 			$definition = new importexport_definition($data['definition']);
 			if( $definition->get_identifier() < 1 ) {
+				$data['errors'][] = 'Definition not found!';
+				// Update job with results
+				self::update_job($data);
+
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
 				exit();
 			}
@@ -389,10 +399,9 @@
 					$data['result'][$target] = $result;
 				}
 			}
-			$data['last_run'] = time();
 
 			// Delete file?
-			if($data['delete_files'] && $type == 'import' && !$data['errors'][$target])
+			if($data['delete_files'] && $type == 'import' && !$data['errors'])
 			{
 				foreach($targets as $target)
 				{
@@ -400,10 +409,24 @@
 					{
 						$data['result'][$target] .= "\n..." . lang('deleted');
 					}
+					else
+					{
+						$data['errors'][$target] .= "\n..." . lang('Unable to delete');
+					}
 				}
 			}
 
 			// Update job with results
+			self::update_job($data);
+
+			$contents = ob_get_contents();
+			if($contents) {
+				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
+			}
+			ob_end_clean();
+		}
+
+		private static function update_job($data) {
 			$id = self::generate_id($data);
 			$async = ExecMethod('phpgwapi.asyncservice.read', $id);
 			$async = $async[$id];
@@ -416,12 +439,7 @@
 					$data
 				);
 			}
-
-			$contents = ob_get_contents();
-			if($contents) {
-				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
-			}
-			ob_end_clean();
+			return $result;
 		}
 	}
 ?>
