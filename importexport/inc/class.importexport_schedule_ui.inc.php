@@ -40,10 +40,27 @@
 			if(is_array($async_list)) {
 				foreach($async_list as $id => $async) {
 					if(is_array($async['data']['errors'])) {
+						$processed_errors = array();
 						foreach($async['data']['errors'] as $target => $errors)
 						{
-							$async['data']['errors'] = (is_numeric($target) ? '' : $target . ":\n") . implode("\n", $async['data']['errors']);
+							$processed_errors[] = array(
+								'target' => (is_numeric($target) ? '' : $target),
+								'error' =>  implode("\n", (array)$errors)
+							);
 						}
+						$async['data']['errors'] = $processed_errors;
+					}
+					$results = array();
+					foreach((array)$async['data']['result'] as $target => $result)
+					{
+						$results[] = array(
+							'target' => $target,
+							'result' => implode("\n",(array)$result)
+						);
+					}
+					if($results)
+					{
+						$async['data']['result'] = $results;
 					}
 					if(is_numeric($async['data']['record_count'])) {
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
@@ -77,11 +94,13 @@
 				ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
 				$id = self::generate_id($content);
 				$schedule = $content['schedule'];
+				// Async sometimes changes minutes to an array - keep what user typed
+				$content['min'] = $schedule['min'];
 				unset($content['schedule']);
 
-				// Fill in * for any left blank
+				// Remove any left blank
 				foreach($schedule as $key => &$value) {
-					if($value == '') $value = '*';
+					if($value == '') unset($schedule[$key]);
 				}
 				$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 					$schedule,
@@ -103,6 +122,9 @@
 				if(is_array($async[$id]['data'])) {
 					$data += $async[$id]['data'];
 					$data['schedule'] = $async[$id]['times'];
+
+					// Async sometimes changes minutes to an array - show user what they typed
+					if(is_array($data['schedule']['min'])) $data['schedule']['min'] = $data['min'];
 				} else {
 					$data['message'] = lang('Schedule not found');
 				}
@@ -310,27 +332,31 @@
 		public static function exec($data) {
 			ob_start();
 
+			
+			$data['record_count'] = 0;
+			unset($data['errors']);
+			unset($data['result']);
 			$data['last_run'] = time();
 
 			// check file
 			$file_check = self::check_target($data);
 			if($file_check !== true) {
-				$data['errors'][] = $file_check;
+				$data['errors'] = array($file_check=>'');
 				// Update job with results
 				self::update_job($data);
 
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": $file_check \n");
-				exit();
+				return;
 			}
 
 			$definition = new importexport_definition($data['definition']);
 			if( $definition->get_identifier() < 1 ) {
-				$data['errors'][] = 'Definition not found!';
+				$data['errors'] = array('Definition not found!');
 				// Update job with results
 				self::update_job($data);
 
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
-				exit();
+				return;
 			}
 			$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 
@@ -338,14 +364,14 @@
 
 			$type = $data['type'];
 
-			
-			$data['record_count'] = 0;
-			unset($data['errors']);
-			unset($data['result']);
-
 			if(is_dir($data['target']))
 			{
-				$contents = scandir($data['target']);
+				$dir = opendir($data['target']);
+				$contents = array();
+				while(false !== ($item = readdir($dir))) {
+					$contents[] = $item;
+				}
+				closedir($dir);
 				$targets = array_diff($contents, array('.','..'));
 				foreach($targets as $key => &$target)
 				{
@@ -353,12 +379,17 @@
 					
 					// Check modification time, make sure it's not currently being written
 					// Skip files modified in the last 10 seconds
-					if(filemtime($target) >= time() - 10) 
+					$mod_time = filemtime($target);
+					if($mod_time >= time() - 10) 
 					{
 						$data['result'][$target] = lang('Skipped');
 						unset($target[$key]);
+						continue;
 					}
+					$files[$mod_time] = $target;
 				}
+				ksort($files);
+				$targets = $files;
 				unset($target); // Unset it, or it will be overwritten in loop below
 			}
 			else
@@ -378,9 +409,9 @@
 			
 
 				if(method_exists($po, 'get_errors') && $po->get_errors()) {
-					$data['errors'][$target] = $po->get_errors();
 					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
 					foreach($po->get_errors() as $record => $error) {
+						$data['errors'][$target][] = "#$record: $error";
 						fwrite(STDERR, "$record\t$error\n");
 					}
 				} else {
@@ -390,10 +421,11 @@
 				if($po instanceof importexport_iface_import_plugin) {
 					if(is_numeric($result)) {
 						$data['record_count'] += $result;
+						$data['result'][$target][] = lang('%1 records processed', $result);
 					}
-					$data['result'][$target] = '';
+					$data['result'][$target] = array();
 					foreach($po->get_results() as $action => $count) {
-						$data['result'][$target] .= "\n" . lang($action) . ": $count";
+						$data['result'][$target][] = lang($action) . ": $count";
 					}
 				} else {
 					$data['result'][$target] = $result;
