@@ -9,6 +9,7 @@
 (0-6, 0=sun)	importexport	en	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	en	*Contact ID cannot be changed by import
 admin disabled exporting	importexport	en	Admin disabled exporting
+all encodings	importexport	en	All encodings
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by Import|Export
 basic csv import	importexport	en	Basic CSV import

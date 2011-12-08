@@ -954,6 +954,8 @@ class importexport_definitions_ui
 
 		$data = config::read(self::_appname);
 		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
+		$sel_options['import_charsets'] = array_combine(mb_list_encodings(),mb_list_encodings());
+		unset($sel_options['import_charsets']['CP850']); // This one explicitly added in wizard
 
 		if(!$data['update']) $data['update'] = 'request';
 
