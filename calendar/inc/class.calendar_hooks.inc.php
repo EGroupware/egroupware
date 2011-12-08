@@ -661,6 +661,62 @@ class calendar_hooks
 	public static function config_validate() {
 		$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
 	}
+
+	/**
+	 * Convert from a different app entry to this application
+	 *
+	 * @see phpgwapi/inc/class.transmogrify.inc.php
+	 */
+	public static function convert($data) {
+		$mapping['infolog'] = array(
+			'info_owner'    	=> 'owner',
+			'info_cat'      	=> 'category',
+			'info_priority' 	=> 'priority',
+			'info_access'   	=> 'public',
+			'info_subject'  	=> 'title',
+			'info_des'      	=> 'description',
+			'info_location' 	=> 'location',
+			'info_startdate'	=> 'start',
+			'info_datecompleted'    => 'end',
+		);
+
+		// Check for support
+		if(!$data['from']) return array_keys($mapping);	// Get list of supported apps
+		if(!in_array($data['from'], array_keys($mapping))) return false;
+
+		transmogrify::check($data['to'], $data['from'], $data['data'], $mapping[$data['from']]);
+
+		foreach($mapping[$data['from']] as $from => $to)
+		{
+			$result[$to] = $data['data'][$from];
+		}
+
+		// Add user to participants, or it won't show up
+		$result['participants'][calendar_so::combine_user('u',$result['owner'])] = calendar_so::combine_status(NO_RESPONSE);
+		
+		switch($data['from'])
+		{
+			case 'infolog':
+				$result['public'] = $result['public'] != 'private';
+				// Add responsible as participant
+				foreach($data['data']['info_responsible'] as $responsible) {
+					$result['participants'][calendar_so::combine_user('u',$responsible)] = calendar_so::combine_status('U');
+				}
+				// Add linked contact as participant
+				if($data['data']['info_link']['app'] == 'addressbook')
+				{
+					$result['participants'][calendar_so::combine_user('c',$data['data']['info_link']['id'])] = calendar_so::combine_status('U');
+				}
+				break;
+		}
+
+		if($result)
+		{
+			$bo = new calendar_boupdate();
+			$id = $bo->save($result);
+		}
+		return $id ? $id : $result;
+	}
 }
 
 // Not part of the class, since config hooks are still using the old style

@@ -945,6 +945,15 @@ class infolog_ui
 				'group' => $group,
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$actions['calendar'] = array(	// interactive add for a single event
+				'icon' => 'calendar/navbar',
+				'caption' => 'Calendar',
+				'group' => $group,
+				'allowOnMultiple' => false,
+			);
+		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
 		{
 			$actions['timesheet'] = array(	// interactive add for a single event
@@ -1094,6 +1103,18 @@ class infolog_ui
 			}
 			switch($action)
 			{
+				case 'calendar':
+					$action_msg = lang('copied to %1', lang('calendar'));
+					$cal_id = transmogrify::convert($entry, 'calendar', 'infolog', $id);
+					if($cal_id)
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+					break;
 				case 'close':
 					$action_msg = lang('closed');
 					$this->close($id, '', false, $skip_notifications);
