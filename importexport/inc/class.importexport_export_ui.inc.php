@@ -271,6 +271,7 @@ class importexport_export_ui {
 			if (! $charset = $definition->plugin_options['charset']) {
 				$charset = $GLOBALS['egw']->translation->charset();
 			}
+			if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 			$plugin_object = new $definition->plugin;
 			$plugin_object->export( $file, $definition );
 
@@ -280,6 +281,8 @@ class importexport_export_ui {
 			// save prefs, but do NOT invalid the cache (unnecessary)
 			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 
+			// Store charset to use in header
+			egw_cache::setSession('importexport', $tmpfname, $charset, 100);
 
 			if($_content['export'] == 'pressed') {
 				fclose($file);
@@ -306,10 +309,9 @@ class importexport_export_ui {
 				fclose($file);
 				unlink($tmpfname);
 
-				// NOTE: $definition->plugin_options['charset'] may not be set,
-				// but it's the best guess atm.
+				// Convert back to system charset for display
 				$preview = $GLOBALS['egw']->translation->convert( $preview,
-					$definition->plugin_options['charset'],
+					$charset,
 					$GLOBALS['egw']->translation->charset()
 				);
 
@@ -483,9 +485,13 @@ class importexport_export_ui {
 		// Turn off all output buffering
 		while (@ob_end_clean());
 
-		header('Content-type: ' . $_GET['_type'] ? $_GET['_type'] : 'application/text');
-		header('Content-Disposition: attachment; filename="'.$nicefname.'.'.$_GET['_suffix'].'"');
 		$file = fopen($tmpfname,'rb');
+
+		// Get charset
+		$charset = egw_cache::getSession('importexport', $tmpfname);
+
+		header('Content-type: ' . ($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''));
+		header('Content-Disposition: attachment; filename="'.$nicefname.'.'.$_GET['_suffix'].'"');
 		fpassthru($file);
 
 		unlink($tmpfname);

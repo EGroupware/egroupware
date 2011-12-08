@@ -174,7 +174,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
 			$mapping = $this->translation->convert( $mapping, $this->translation->charset(), $this->csv_charset );
-			fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
+			self::fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		}
 
 		// Check for limit
@@ -196,7 +196,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 		}
 		
-		fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
+		self::fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
 	}
 
@@ -372,7 +372,7 @@ class importexport_export_csv implements importexport_iface_export_record
 
 	/**
 	 * The php build in fputcsv function is buggy, so we need an own one :-(
-	 * Buggy how?
+	 * It ignores encoding, and outputs in UTF-8 / system charset
 	 *
 	 * @param resource $filePointer
 	 * @param array $dataArray
