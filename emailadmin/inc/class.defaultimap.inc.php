@@ -525,13 +525,14 @@ class defaultimap extends Net_IMAP
 		}
 		
 		$this->setStreamContextOptions($this->_getTransportOptions());
-		$this->setTimeout($_timeout);
+		$this->_timeout = $_timeout;
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
 			if ($this->debug) error_log(__METHOD__."Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption);
 			if ($this->debug) error_log(__METHOD__."Status connect:".$status->message);
 			$this->_connectionErrorObject = $status;
 			return false;
 		}
+		//$this->setTimeout($_timeout); // socket::connect sets the timeout on connection
 		if(empty($username))
 		{
 			if ($this->debug) error_log(__METHOD__."No username supplied.".function_backtrace());

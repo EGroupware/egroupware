@@ -115,6 +115,12 @@ class Net_Sieve
     var $_bypassAuth = false;
 
     /**
+     * The timeout for the connection to the SIEVE server.
+     * @var int
+     */
+    var $_timeout = null;
+
+    /**
     * Whether to use TLS if available
     * @var boolean
     */
@@ -343,7 +349,7 @@ class Net_Sieve
             return $this->_raiseError($msg,$code);
         }
 
-        if (PEAR::isError($res = $this->_sock->connect($host, $port, false, 5, $options))) {
+        if (PEAR::isError($res = $this->_sock->connect($host, $port, false, ($this->_timeout?$this->_timeout:10), $options))) {
             return $res;
         }
 
