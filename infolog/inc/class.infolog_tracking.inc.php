@@ -94,8 +94,8 @@ class infolog_tracking extends bo_tracking
 		'info_datecompleted' => 'Date completed',
 		'info_datemodified' => 'Last changed',
 		'info_location'  => 'Location',
-		'info_startdate' => 'Startdate',
-		'info_enddate'   => 'Enddate',
+		'info_startdate' => 'Start date',
+		'info_enddate'   => 'Due date',
 		'info_responsible' => 'Responsible',
 		'info_cc'        => 'Cc',
 		// PM fields
