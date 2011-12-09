@@ -385,7 +385,7 @@
 					if($mod_time >= time() - 10) 
 					{
 						$data['result'][$target] = lang('Skipped');
-						unset($target[$key]);
+						unset($targets[$key]);
 						continue;
 					}
 					$files[$mod_time] = $target;
