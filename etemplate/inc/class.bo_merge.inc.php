@@ -931,8 +931,8 @@ abstract class bo_merge
 					break;
 			}
 			// now decode &, < and >, which need to be encoded as entities in xml
-			//$replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$break),$replacements);
-			$replacements = str_replace(array('&',"\r","\n"),array('&amp;','',$break),$replacements);
+			// Check for encoded >< getting double-encoded
+			$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
