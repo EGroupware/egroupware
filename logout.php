@@ -60,7 +60,7 @@ if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 								$GLOBALS['egw_info']['server']['cas_server_host_name'],
 								(int) $GLOBALS['egw_info']['server']['cas_server_port'],
 								$GLOBALS['egw_info']['server']['cas_server_uri'] );
-	phpCAS::logout($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']);
+	phpCAS::logout(array('url'=>$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']));
 }
 
 // $GLOBALS['egw']->redirect($redirectTarget);
