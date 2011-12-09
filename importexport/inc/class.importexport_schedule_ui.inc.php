@@ -317,14 +317,14 @@
 				return is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
 			// check tmp file for read/write capabilities
 			$rm = file_exists($path);
-			$f = fopen($path, 'a');
+			$f = @fopen($path, 'a');
 
 			if ($f===false)
 				return false;
 
 			fclose($f);
 			if (!$rm)
-				unlink($path);
+				@unlink($path);
 			return true;
 		}
 
@@ -401,7 +401,7 @@
 
 			foreach($targets as $target)
 			{
-				if($resource = fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
+				if($resource = @fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
 					$result = $po->$type( $resource, $definition );
 
 					fclose($resource);
@@ -454,9 +454,13 @@
 			self::update_job($data);
 
 			$contents = ob_get_contents();
-			if($contents) {
+
+			// Log to cron log
+			if($contents)
+			{
 				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
 			}
+
 			ob_end_clean();
 		}
 
@@ -472,6 +476,23 @@
 					'importexport.importexport_schedule_ui.exec',
 					$data
 				);
+			}
+
+			// Send notification to user
+			if($data['errors'])
+			{
+				$notify = new notifications();
+				$notify->set_sender($data['account_id']);
+				$notify->add_receiver($data['account_id']);
+				$notify->set_subject(lang('Schedule import | export'));
+
+				$contents = lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
+				foreach($data['errors'] as $target => $errors)
+				{
+					$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+				}
+				$notify->set_message($contents);
+				$notify->send();
 			}
 			return $result;
 		}
