@@ -142,7 +142,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                 }
             }
             if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
-                return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+                return (PEAR::isError( $ret ) ? $ret : new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]));
             }
         }else{
 			//error_log(__METHOD__.':'.'about to use plain login');

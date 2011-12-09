@@ -507,22 +507,30 @@ class Net_IMAPProtocol {
         switch ($method) {
             case 'DIGEST-MD5':
                 $result = $this->_authDigest_MD5( $uid , $pwd , $cmdid );
-                break;
+                if ( !PEAR::isError($result)) break;
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
+                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
             case 'CRAM-MD5':
                 $result = $this->_authCRAM_MD5( $uid , $pwd ,$cmdid );
-                break;
+                if ( !PEAR::isError($result)) break;
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
+                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
             case 'LOGIN':
                 $result = $this->_authLOGIN( $uid , $pwd , $cmdid );
-                break;
+                if ( !PEAR::isError($result)) break;
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
+                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
             case 'PLAIN':
                 $result = $this->_authPLAIN( $uid , $pwd , $cmdid );
-                break;
+                if ( !PEAR::isError($result)) break;
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
+                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
  
             default :
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
                 break;
         }
-
+        if ( PEAR::isError($result)) return $result;
         $args = $this->_getRawResponse( $cmdid );
         return $this->_genericImapResponseParser( $args , $cmdid );
 
@@ -562,6 +570,8 @@ class Net_IMAPProtocol {
         $this->_getNextToken( $args , $space );
 
         $this->_getNextToken( $args , $challenge );
+
+        if ($plus==$cmdid && $challenge=='NO') return new PEAR_Error( " $plus$space$challenge".array2string($args) );
 
         $challenge = base64_decode( $challenge );
 
@@ -622,6 +632,8 @@ class Net_IMAPProtocol {
 
         $this->_getNextToken( $args , $challenge );
 
+        if ($plus==$cmdid && $challenge=='NO') return new PEAR_Error( " $plus$space$challenge".array2string($args) );
+
         $challenge = base64_decode( $challenge );
 
         $cram = &Auth_SASL::factory('crammd5');
@@ -669,6 +681,8 @@ class Net_IMAPProtocol {
         $this->_getNextToken( $args , $space );
 
         $this->_getNextToken( $args , $challenge );
+
+        if ($plus==$cmdid && $challenge=='NO') return new PEAR_Error( " $plus$space$challenge".array2string($args) );
 
         $challenge = base64_decode( $challenge );
 
@@ -721,6 +735,8 @@ class Net_IMAPProtocol {
         $this->_getNextToken( $args , $space );
 
         $this->_getNextToken( $args , $challenge );
+
+        if ($plus==$cmdid && $challenge=='NO') return new PEAR_Error( " $plus$space$challenge".array2string($args) );
 
         $challenge = base64_decode( $challenge );
 
