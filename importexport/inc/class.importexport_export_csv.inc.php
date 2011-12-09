@@ -163,7 +163,7 @@ class importexport_export_csv implements importexport_iface_export_record
 					$fields = $wizard->get_export_fields();
 					foreach($this->mapping as $field => &$label)
 					{
-						$label = $fields[$field];
+						if($fields[$field]) $label = $fields[$field];
 					}
 				} catch (Exception $e) {
 					translation::add_app($appname);
