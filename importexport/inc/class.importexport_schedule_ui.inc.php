@@ -30,10 +30,12 @@
 		}
 
 		public function index($content = array()) {
-
-			if($content['scheduled']['delete']) {
-				$key = key($content['scheduled']['delete']);
-				ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+			foreach($content['scheduled'] as $row)
+			{
+				if($row['delete']) {
+					$key = key($row['delete']);
+					ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+				}
 			}
 			$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
 			$data = array();
