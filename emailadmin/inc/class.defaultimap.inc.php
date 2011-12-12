@@ -508,6 +508,7 @@ class defaultimap extends Net_IMAP
 	 */
 	function openConnection($_adminConnection=false, $_timeout=20)
 	{
+		static $supportedAuthMethods;
 		//error_log(__METHOD__.function_backtrace());
 		//error_log(__METHOD__.__LINE__.($_adminConnection?' Adminconnection':' ').array2string($this));
 		unset($this->_connectionErrorObject);
@@ -527,27 +528,35 @@ class defaultimap extends Net_IMAP
 		$this->setStreamContextOptions($this->_getTransportOptions());
 		$this->_timeout = $_timeout;
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
-			if ($this->debug) error_log(__METHOD__."Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption);
-			if ($this->debug) error_log(__METHOD__."Status connect:".$status->message);
-			$this->_connectionErrorObject = $status;
-			return false;
+			if ($this->debug) error_log(__METHOD__.__LINE__."Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption);
+			if ($this->debug && !empty($status->message)) error_log(__METHOD__.__LINE__."Status connect:#".$status->message.'#');
+			$this->_connectionErrorObject = (!empty($status->message) ? $status : new PEAR_Error("Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption));
+			return (!empty($status->message) ? $status : false);
 		}
 		//$this->setTimeout($_timeout); // socket::connect sets the timeout on connection
 		if(empty($username))
 		{
 			if ($this->debug) error_log(__METHOD__."No username supplied.".function_backtrace());
 			if ($this->_connected) $this->disconnect(); // disconnect (if connected)
+			$this->_connectionErrorObject = new PEAR_Error("No username supplied.");
 			return false;
 		}
-		if( PEAR::isError($status = parent::login($username, $password, 'LOGIN', !$this->isAdminConnection)) ) {
+		// we cache the supported AuthMethods during session, to be able to speed up login.
+		if (is_null($supportedAuthMethods)) $supportedAuthMethods =& egw_cache::getSession('email','defaultimap_supportedAuthMethods');
+		if (isset($supportedAuthMethods[$this->ImapServerId])) $this->supportedAuthMethods = $supportedAuthMethods[$this->ImapServerId];
+
+		//error_log(__METHOD__.__LINE__.' ImapServerID:'.$this->ImapServerId.' '.array2string($this->supportedAuthMethods));
+		if( PEAR::isError($status = parent::login($username, $password, (in_array('LOGIN', $this->supportedAuthMethods)?'LOGIN':true), !$this->isAdminConnection)) ) {
 			if ($this->debug) error_log(__METHOD__."Could not log in with ->".$username.":".$password."<-");
-			if ($this->debug) error_log(__METHOD__."Status login:".array2string($status->message));
+			if ($this->debug && $status->message) error_log(__METHOD__."Status login:".array2string($status->message));
 			//error_log(__METHOD__.'Called from:'.function_backtrace());
 			$this->disconnect();
-			$this->_connectionErrorObject = $status;
-			return false;
+			$this->_connectionErrorObject = ($status->message ? $status : new PEAR_Error("Could not log in with the supplied credentials"));
+			return ($status->message ? $status : false);
 		}
-
+		$supportedAuthMethods[$this->ImapServerId] = $this->supportedAuthMethods;
+		//error_log(__METHOD__.__LINE__.' ImapServerID:'.$this->ImapServerId.' supported:'.array2string($this->supportedAuthMethods));
+		//error_log(__METHOD__.__LINE__.' ImapServerID:'.$this->ImapServerId.' ServerMethods:'.array2string($this->_serverAuthMethods));
 		return true;
 	}		
 
