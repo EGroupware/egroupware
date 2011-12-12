@@ -166,7 +166,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
 			}
 
-			importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups);
+			importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
 
 			// Set default status for type, if not specified
 			if(!$record['info_status'] && $record['info_type'])
@@ -214,6 +214,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 						case 'exists' :
 							if($record[$condition['string']]) {
 								$query['col_filter'] = array( $condition['string'] => $record[$condition['string']],);
+								// Needed to query custom fields
+								if($condition['string'][0] == '#') $query['custom_fields'] = true;
 								$results = $this->boinfolog->search($query);
 							}
 
