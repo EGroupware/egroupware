@@ -113,6 +113,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 		// dry run?
 		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
 
+		// Needed for categories to work right
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+
 		// fetch the addressbook bo
 		$this->bocontacts = new addressbook_bo();
 
