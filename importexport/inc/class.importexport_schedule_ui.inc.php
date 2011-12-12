@@ -496,7 +496,7 @@
 				$notify = new notifications();
 				$notify->set_sender($data['account_id']);
 				$notify->add_receiver($data['account_id']);
-				$notify->set_subject(lang('Schedule import | export'));
+				$notify->set_subject(lang('Schedule import | export'). ' ' . lang('errors'));
 
 				$contents = lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
 				foreach($data['errors'] as $target => $errors)
