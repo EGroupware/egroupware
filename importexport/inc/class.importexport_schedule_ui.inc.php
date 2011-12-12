@@ -30,11 +30,14 @@
 		}
 
 		public function index($content = array()) {
-			foreach($content['scheduled'] as $row)
+			if(is_array($content['scheduled']))
 			{
-				if($row['delete']) {
-					$key = key($row['delete']);
-					ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+				foreach($content['scheduled'] as $row)
+				{
+					if($row['delete']) {
+						$key = key($row['delete']);
+						ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+					}
 				}
 			}
 			$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
@@ -375,9 +378,10 @@
 				}
 				closedir($dir);
 				$targets = array_diff($contents, array('.','..'));
+				$files = array();
 				foreach($targets as $key => &$target)
 				{
-					$target = $data['target'].'/'.$target;
+					$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
 					
 					// Check modification time, make sure it's not currently being written
 					// Skip files modified in the last 10 seconds
@@ -390,7 +394,10 @@
 					}
 					$files[$mod_time] = $target;
 				}
-				ksort($files);
+				if($files)
+				{
+					ksort($files);
+				}
 				$targets = $files;
 				unset($target); // Unset it, or it will be overwritten in loop below
 			}
@@ -406,7 +413,8 @@
 
 					fclose($resource);
 				} else {
-					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
+					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
+					$data['errors'][$target][] = lang('%1 is not readable',$target);
 				}
 			
 
@@ -441,11 +449,11 @@
 				{
 					if(unlink($target))
 					{
-						$data['result'][$target] .= "\n..." . lang('deleted');
+						$data['result'][$target][] .= "\n..." . lang('deleted');
 					}
 					else
 					{
-						$data['errors'][$target] .= "\n..." . lang('Unable to delete');
+						$data['errors'][$target][] .= "\n..." . lang('Unable to delete');
 					}
 				}
 			}
@@ -464,6 +472,10 @@
 			ob_end_clean();
 		}
 
+		/**
+		 * Update the async job with current status, and send a notification
+		 * to user if there were any errors.
+		 */
 		private static function update_job($data) {
 			$id = self::generate_id($data);
 			$async = ExecMethod('phpgwapi.asyncservice.read', $id);
@@ -490,6 +502,7 @@
 				foreach($data['errors'] as $target => $errors)
 				{
 					$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+					$contents .= is_array($errors) ? implode("\n",$errors) : $errors;
 				}
 				$notify->set_message($contents);
 				$notify->send();
