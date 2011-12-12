@@ -509,22 +509,22 @@ class Net_IMAPProtocol {
                 $result = $this->_authDigest_MD5( $uid , $pwd , $cmdid );
                 if ( !PEAR::isError($result)) break;
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
-                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
+                return $this->cmdAuthenticate($uid , $pwd);
             case 'CRAM-MD5':
                 $result = $this->_authCRAM_MD5( $uid , $pwd ,$cmdid );
                 if ( !PEAR::isError($result)) break;
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
-                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
+                return $this->cmdAuthenticate($uid , $pwd);
             case 'LOGIN':
                 $result = $this->_authLOGIN( $uid , $pwd , $cmdid );
                 if ( !PEAR::isError($result)) break;
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
-                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
+                return $this->cmdAuthenticate($uid , $pwd);
             case 'PLAIN':
                 $result = $this->_authPLAIN( $uid , $pwd , $cmdid );
                 if ( !PEAR::isError($result)) break;
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
-                return $this->cmdAuthenticate($uid , $pwd , $userMethod);
+                return $this->cmdAuthenticate($uid , $pwd);
  
             default :
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
@@ -786,11 +786,12 @@ class Net_IMAPProtocol {
             $myMethods=implode(',' ,$this->supportedAuthMethods);
             if (!empty($userMethod) && !in_array($userMethod,$this->_serverAuthMethods))
             {
+               $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($userMethod)); // we may support it, but if the server does not, its useless
                foreach ( $this->supportedAuthMethods as $method ) {
-                       if ( in_array( $method , $this->_serverAuthMethods ) ) {
-                               if ($this->_debug) error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
-                                return $method;
-                       }
+                  if ( in_array( $method , $this->_serverAuthMethods ) ) {
+                      if ($this->_debug) error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
+                      return $method;
+                  }
                }
             } 
 
