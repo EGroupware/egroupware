@@ -951,7 +951,10 @@ class infolog_ui
 				'icon' => 'calendar/navbar',
 				'caption' => 'Calendar',
 				'group' => $group,
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&'.
+					egw_link::get_registry('calendar', 'add_app') . '[]=infolog&'.egw_link::get_registry('calendar','add_id').'[]=$id',
 				'allowOnMultiple' => false,
+				'popup' => egw_link::get_registry('calendar', 'add_popup'),
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
@@ -1103,18 +1106,6 @@ class infolog_ui
 			}
 			switch($action)
 			{
-				case 'calendar':
-					$action_msg = lang('copied to %1', lang('calendar'));
-					$cal_id = transmogrify::convert($entry, 'calendar', 'infolog', $id);
-					if($cal_id)
-					{
-						$success++;
-					}
-					else
-					{
-						$failed++;
-					}
-					break;
 				case 'close':
 					$action_msg = lang('closed');
 					$this->close($id, '', false, $skip_notifications);

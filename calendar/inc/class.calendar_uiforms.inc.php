@@ -1199,10 +1199,60 @@ class calendar_uiforms extends calendar_ui
 			$event['whole_day'] = !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
 
 			$link_to_id = $event['id'];
-			if (!$add_link && !$event['id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
-				preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$_GET['link_app'].':'.$_GET['link_id']))	// gard against XSS
+			if (!$add_link && !$event['id'] && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']))
 			{
-				egw_link::link('calendar',$link_to_id,$_GET['link_app'],$_GET['link_id']);
+				$link_ids = is_array($_REQUEST['link_id']) ? $_REQUEST['link_id'] : array($_REQUEST['link_id']);
+				foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
+				{
+					$link_id = $link_ids[$n];
+					$app_entry = array();
+					if(!preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// guard against XSS
+					{
+						continue;
+					}
+					
+					switch($link_app)
+					{
+						case 'infolog':
+							static $infolog_bo;
+							if(!$infolog_bo) $infolog_bo = new infolog_bo();
+							$infolog = $app_entry = $infolog_bo->read($link_id);
+							$event = array_merge($event, array(
+								'owner'	=> $infolog['info_owner'],
+								'category'	=> $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $infolog['info_cat']),
+								'priority'	=> $infolog['info_priority'] + 1,
+								'public'	=> $infolog['info_access'] != 'private',
+								'title'		=> $infolog['info_subject'],
+								'description'	=> $infolog['info_des'],
+								'location'	=> $infolog['info_location'],
+								'start'		=> $infolog['info_startdate'],
+								'end'		=> $infolog['info_enddate']
+							));
+							// Add responsible as participant
+							foreach($infolog['info_responsible'] as $responsible) {
+								$event['participants'][calendar_so::combine_user('u',$responsible)] = calendar_so::combine_status('U');
+								$event['participant_types']['u'][$responsible] = 'U';
+							}
+							// Add linked contact as participant
+							if($infolog['info_link']['app'] == 'addressbook')
+							{
+								$event['participants'][calendar_so::combine_user('c',$infolog['info_link']['id'])] = calendar_so::combine_status('U');
+								$event['participant_types']['c'][$responsible] = 'U';
+							}
+
+							break;
+						default:
+							$event['title'] = egw_link::title($link_app,$link_id);
+					}
+					// Copy same custom fields
+					$cal_cfs = config::get_customfields('calendar');
+					$link_app_cfs = config::get_customfields($link_app);
+					foreach($cal_cfs as $name => $settings)
+					{
+						if($link_app_cfs[$name]) $event['#'.$name] = $app_entry['#'.$name];
+					}
+					egw_link::link('calendar',$link_to_id,$link_app,$link_id);
+				}
 			}
 		}
 		$etpl = new etemplate();
