@@ -68,7 +68,7 @@
 		 *
 		 * @param array $_formData fields of the compose form (to,cc,bcc,reply_to,subject,body,priority,signature), plus data of the file (name,file,size,type)
 		 */
-		function addAttachment($_formData)
+		function addAttachment($_formData,$eliminateDoubleAttachments=false)
 		{
 			$attachfailed = false;
 			// to gard against exploits the file must be either uploaded or be in the temp_dir
@@ -82,6 +82,12 @@
 				$attachfailed = true;
 				$alert_msg = $e->getMessage();
 			}
+
+			if ($eliminateDoubleAttachments == true) 
+				foreach ((array)$this->sessionData['attachments'] as $k =>$attach)
+					if ($attach['name'] && $attach['name'] == $_formData['name'] &&
+						strtolower($_formData['type'])== strtolower($attach['type']) &&
+						stripos($_formData['file'],'vfs://') !== false) return; 
 
 			if ($attachfailed === false)
 			{

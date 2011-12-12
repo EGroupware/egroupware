@@ -221,6 +221,13 @@
 			// read the data from session
 			// all values are empty for a new compose window
 			$sessionData = $this->bocompose->getSessionData();
+			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
+			if ((isset($this->bocompose->preferencesArray['attachVCardAtCompose']) &&
+				$this->bocompose->preferencesArray['attachVCardAtCompose']))
+			{
+				$alwaysAttachVCardAtCompose = true;
+				$_REQUEST['preset']['file'][] = "vfs://default/apps/addressbook/".$GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')."/.entry";
+			}
 			if (is_array($_REQUEST['preset']))
 			{
 				//_debug_array($_REQUEST);
@@ -251,7 +258,8 @@
 				{
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
-					foreach((array)$_REQUEST['preset']['file'] as $k => $path)
+					$files = (array)$_REQUEST['preset']['file'];
+					foreach($files as $k => $path)
 					{
 						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 						{
@@ -288,7 +296,7 @@
 						{
 							continue;
 						}
-						$this->bocompose->addAttachment($formData);
+						$this->bocompose->addAttachment($formData,($alwaysAttachVCardAtCompose?true:false));
 					}
 					$sessionData = $this->bocompose->getSessionData();
 				}

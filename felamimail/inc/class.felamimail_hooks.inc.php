@@ -537,6 +537,15 @@ class felamimail_hooks
 				'default'=> 0,
 				'admin'  => False,
 			),
+			'attachVCardAtCompose' => array(
+				'type'   => 'select',
+				'label'  => 'attach users VCard at compose to every new mail',
+				'name'   => 'attachVCardAtCompose',
+				'values' => $no_yes,
+				'xmlrpc' => True,
+				'default'=> 0,
+				'admin'  => False,
+			),
 			'sieveScriptName' => array(
 				'type'   => 'input',
 				'label'  => 'sieve script name',
