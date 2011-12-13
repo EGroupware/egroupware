@@ -295,9 +295,31 @@
 				stream_wrapper_register(vfs_stream_wrapper::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
 			}
 
-			if ($data['type'] == 'import' && ($scheme == egw_vfs::SCHEME && !egw_vfs::is_readable($data['target']) ||
-			    $scheme != egw_vfs::SCHEME && !is_readable($data['target'])))
+			if ($data['type'] == 'import' && ($scheme == egw_vfs::SCHEME && !egw_vfs::is_readable($data['target'])))
 			{
+				return lang('%1 is not readable',$data['target']);
+			}
+			elseif ($data['type'] == 'import' && in_array($scheme, array('http','https')))
+			{
+				// Not supported by is_readable, try headers...
+				$options = array();
+				stream_context_set_default(array('http'=>array(
+					'method'	=> 'HEAD',
+					'ignore_errors'	=> 1
+				)));
+				$headers = get_headers($data['target'],1);
+
+				// Reset...
+				stream_context_set_default(array('http'=>array(
+					'method'	=> 'GET',
+					'ignore_errors'	=> 0
+				)));
+				// Response code has an integer key, but redirects may add more responses
+				for($i = 0; $i < count($headers); $i++)
+				{
+					if(!$headers[$i]) break;
+					if(strpos($headers[$i],'200') !== false) return true;
+				}
 				return lang('%1 is not readable',$data['target']);
 			}
 			elseif ($data['type'] == 'export' && !self::is__writable($data['target'])) {
@@ -408,7 +430,7 @@
 
 			foreach($targets as $target)
 			{
-				if($resource = @fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
+				if($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )) {
 					$result = $po->$type( $resource, $definition );
 
 					fclose($resource);
