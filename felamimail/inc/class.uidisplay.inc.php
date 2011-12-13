@@ -568,6 +568,7 @@
 						case 'TEXT/HTML':
 						case 'TEXT/CALENDAR':
 						case 'TEXT/X-VCARD':
+						case 'TEXT/VCARD':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -584,7 +585,7 @@
 								$windowName = 'displayEvent_'. $this->uid;
 								$reg2 = egw_link::get_registry('calendar','view_popup');
 							}
-							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD')
+							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
 							{
 								$windowName = 'displayContact_'. $this->uid;
 								$reg2 = egw_link::get_registry('addressbook','add_popup');
@@ -857,6 +858,7 @@ blockquote[type=cite] {
 						case 'TEXT/CALENDAR':
 						case 'TEXT/X-VCALENDAR':
 						case 'TEXT/X-VCARD':
+						case 'TEXT/VCARD':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -873,7 +875,7 @@ blockquote[type=cite] {
 								$windowName = 'displayEvent_'. $this->uid;
 								$reg2 = egw_link::get_registry('calendar','view_popup');
 							}
-							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD')
+							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
 							{
 								$windowName = 'displayContact_'. $this->uid;
 								$reg2 = egw_link::get_registry('addressbook','add_popup');
@@ -1296,7 +1298,7 @@ blockquote[type=cite] {
 					}
 					//Import failed, download content anyway
 				}
-				if (strtoupper($attachment['type']) == 'TEXT/X-VCARD')
+				if (strtoupper($attachment['type']) == 'TEXT/X-VCARD' || strtoupper($attachment['type']) == 'TEXT/VCARD')
 				{
 					$addressbook_vcal = new addressbook_vcal();
 					$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
