@@ -127,6 +127,7 @@
 				if(is_array($async[$id]['data'])) {
 					$data += $async[$id]['data'];
 					$data['schedule'] = $async[$id]['times'];
+					unset($data['times']);
 
 					// Async sometimes changes minutes to an array - show user what they typed
 					if(is_array($data['schedule']['min'])) $data['schedule']['min'] = $data['min'];
@@ -479,6 +480,9 @@
 					}
 				}
 			}
+
+			// Run time in minutes
+			$data['run_time'] = (time() - $data['last_run']) / 60;
 
 			// Update job with results
 			self::update_job($data);
