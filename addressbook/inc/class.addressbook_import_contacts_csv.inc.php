@@ -259,7 +259,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				// unconditional insert
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
-			if($success) $count++;
+			$count++;
 		}
 		return $count;
 	}
