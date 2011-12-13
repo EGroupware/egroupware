@@ -1228,6 +1228,9 @@ class calendar_uiforms extends calendar_ui
 								'start'		=> $infolog['info_startdate'],
 								'end'		=> $infolog['info_enddate']
 							));
+							// Only add current user, not all selected calendar users
+							$event['participants'] = array(calendar_so::combine_user('u',$event['owner']) => 'ACHAIR');
+							$event['participant_types'] = array('u' => array($event['owner']=>'ACHAIR'));
 							// Add responsible as participant
 							foreach($infolog['info_responsible'] as $responsible) {
 								$event['participants'][calendar_so::combine_user('u',$responsible)] = calendar_so::combine_status('U');
