@@ -1240,13 +1240,16 @@ class calendar_uiforms extends calendar_ui
 							if($infolog['info_link']['app'] == 'addressbook')
 							{
 								$event['participants'][calendar_so::combine_user('c',$infolog['info_link']['id'])] = calendar_so::combine_status('U');
-								$event['participant_types']['c'][$responsible] = 'U';
+								$event['participant_types']['c'][$infolog['info_link']['id']] = 'U';
 							}
+							// Add infolog link to calendar entry
+							egw_link::link('calendar',$link_to_id,$infolog['info_link']['app'],$infolog['info_link']['id']);
 
 							break;
 						default:
 							$event['title'] = egw_link::title($link_app,$link_id);
 					}
+
 					// Copy same custom fields
 					$cal_cfs = config::get_customfields('calendar');
 					$link_app_cfs = config::get_customfields($link_app);
