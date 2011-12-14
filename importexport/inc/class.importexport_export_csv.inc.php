@@ -155,20 +155,23 @@ class importexport_export_csv implements importexport_iface_export_record
 				if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= $part2; // Handle apps with _ in the name
 
 				// Get translations from wizard, if possible
-				$backtrace = debug_backtrace();
-				$plugin = $backtrace[1]['class'];
-				$wizard_name = $appname . '_wizard_' . str_replace($appname . '_', '', $plugin);
-				try {
-					$wizard = new $wizard_name;
-					$fields = $wizard->get_export_fields();
-					foreach($this->mapping as $field => &$label)
-					{
-						if($fields[$field]) $label = $fields[$field];
-					}
-				} catch (Exception $e) {
-					translation::add_app($appname);
-					foreach($this->mapping as $field => &$label) {
-						$label = lang($label);
+				if(!$this->csv_options['no_header_translation'])
+				{
+					$backtrace = debug_backtrace();
+					$plugin = $backtrace[1]['class'];
+					$wizard_name = $appname . '_wizard_' . str_replace($appname . '_', '', $plugin);
+					try {
+						$wizard = new $wizard_name;
+						$fields = $wizard->get_export_fields();
+						foreach($this->mapping as $field => &$label)
+						{
+							if($fields[$field]) $label = $fields[$field];
+						}
+					} catch (Exception $e) {
+						translation::add_app($appname);
+						foreach($this->mapping as $field => &$label) {
+							$label = lang($label);
+						}
 					}
 				}
 			}
