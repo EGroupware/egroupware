@@ -498,7 +498,7 @@ class translation
 		if (!isset($charsets))
 		{
 			$charsets = array(
-				'utf-8'      => lang('all languages').' (utf-8)',
+				'utf-8'      => lang('Unicode').' (utf-8)',
 				'iso-8859-1' => lang('Western european').' (iso-8859-1)',
 				'iso-8859-2' => lang('Eastern european').' (iso-8859-2)',
 				'iso-8859-7' => lang('Greek').' (iso-8859-7)',
@@ -506,6 +506,7 @@ class translation
 				'euc-kr'     => lang('Korean').' (euc-kr)',
 				'koi8-r'     => lang('Russian').' (koi8-r)',
 				'windows-1251' => lang('Bulgarian').' (windows-1251)',
+				'cp850'      => lang('DOS International').' (CP850)',
 			);
 		}
 		return $charsets;

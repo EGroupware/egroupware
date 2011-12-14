@@ -966,7 +966,6 @@ class importexport_definitions_ui
 		{
 			unset($sel_options['import_charsets'][strtoupper($charset)]);
 		}
-		unset($sel_options['import_charsets']['CP850']); // This one explicitly added in wizard
 
 		if(!$data['update']) $data['update'] = 'request';
 
