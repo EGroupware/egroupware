@@ -1037,7 +1037,8 @@
 			}
 			if($messageIsDraft == true) {
 				if(!empty($this->preferences->preferences['draftFolder']) && $this->bofelamimail->folderExists($this->preferences->preferences['draftFolder'])) {
-					$folder[] = $this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
+					$this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
+					$folder[] = $this->preferences->preferences['draftFolder'];
 				}
 			}
 			$folder = array_unique($folder);
@@ -1109,6 +1110,7 @@
 			if (count($folder) > 0) 
 			{
 				foreach($folder as $folderName) {
+					if (is_array($folderName)) $folderName = array_shift($folderName); // should not happen at all
 					if($bofelamimail->isSentFolder($folderName)) {
 						$flags = '\\Seen';
 					} elseif($bofelamimail->isDraftFolder($folderName)) {
