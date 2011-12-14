@@ -20,7 +20,6 @@ additional info	felamimail	de	Zusätzliche Info
 address book	felamimail	de	Adressbuch
 address book search	felamimail	de	Adressbuch durchsuchen
 after message body	felamimail	de	nach dem Editorfenster
-attach users VCard at compose to every new mail	felamimail	de	füge die VCard des aktiven Benutzers an jede neue eMail an
 all address books	felamimail	de	Alle Adressbücher
 all folders	felamimail	de	Alle Ordner
 all messages in folder	felamimail	de	Alle Nachrichten im Ordner
@@ -34,6 +33,7 @@ any status	felamimail	de	Alle Status
 anyone	felamimail	de	jeder
 as a subfolder of	felamimail	de	als Unterordner von
 attach	felamimail	de	Anhängen
+attach users vcard at compose to every new mail	felamimail	de	füge die VCard des aktiven Benutzers an jede neue eMail an
 attachments	felamimail	de	Anlagen
 authentication required	felamimail	de	Anmeldung erforderlich
 auto refresh folder list	felamimail	de	Ordnerliste automatisch aktualisieren
@@ -329,10 +329,12 @@ new	common	de	Neu
 new filter	felamimail	de	neuer Filter
 next	felamimail	de	nächste
 next message	felamimail	de	nächste Nachricht
+no (valid) send folder set in preferences	felamimail	de	Es ist kein gültiger Gesendet Ordner hinterlegt
 no active imap server found!!	felamimail	de	Kein aktiver IMAP Server gefunden!!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	de	Keine Empfänger Adresse (To/CC/BCC ) angegeben und kein Ordner zur Ablage der Mail spezifiziert.
 no encryption	felamimail	de	keine Verschlüsselung
 no filter	felamimail	de	kein Filter
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	felamimail	de	Es sind keine Zielordner oder andere Methoden (als Infolog/Tracker ablegen) um die Nachricht nach dem Senden zu speichern angegeben.
 no folders	felamimail	de	Keine Ordner
 no folders found	felamimail	de	Keine Ordner gefunden
 no folders were found to subscribe to!	felamimail	de	Keine Order gefunden, die bestellt werden können!
@@ -346,6 +348,7 @@ no messages were selected.	felamimail	de	Es wurde keine NAchricht ausgewählt
 no plain text part found	felamimail	de	Kein Text Teil gefunden.
 no previous message	felamimail	de	Keine vorherige Nachricht vorhanden
 no recipient address given!	felamimail	de	Keine Empfängeradresse angegeben!
+no send folder set in preferences	felamimail	de	Es ist kein Gesendet Ordner hinterlegt
 no signature	felamimail	de	keine Signatur
 no stationery	felamimail	de	Kein Briefkopf
 no subject given!	felamimail	de	Kein Betreff angegeben!

@@ -20,7 +20,6 @@ additional info	felamimail	en	Additional info
 address book	felamimail	en	Address Book
 address book search	felamimail	en	Address Book search
 after message body	felamimail	en	After message body
-attach users VCard at compose to every new mail	felamimail	en	attach users VCard at compose to every new mail
 all address books	felamimail	en	All address books
 all folders	felamimail	en	All folders
 all messages in folder	felamimail	en	All messages in folder
@@ -34,6 +33,7 @@ any status	felamimail	en	Any status
 anyone	felamimail	en	Anyone
 as a subfolder of	felamimail	en	As a sub folder of
 attach	felamimail	en	Attach
+attach users vcard at compose to every new mail	felamimail	en	attach users VCard at compose to every new mail
 attachments	felamimail	en	Attachments
 authentication required	felamimail	en	Authentication required
 auto refresh folder list	felamimail	en	Auto refresh folder list
@@ -330,10 +330,12 @@ new	common	en	New
 new filter	felamimail	en	New filter
 next	felamimail	en	Next
 next message	felamimail	en	Next message
+no (valid) send folder set in preferences	felamimail	en	No (valid) Send Folder set in preferences
 no active imap server found!!	felamimail	en	No active IMAP server found!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	en	No address TO/CC/BCC supplied and no folder to save message provided
 no encryption	felamimail	en	No encryption
 no filter	felamimail	en	No filter
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	felamimail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	felamimail	en	No folders
 no folders found	felamimail	en	No folders found
 no folders were found to subscribe to!	felamimail	en	No folders were found to subscribe to!
@@ -347,6 +349,7 @@ no messages were selected.	felamimail	en	No messages were selected.
 no plain text part found	felamimail	en	No plain text part found.
 no previous message	felamimail	en	No previous messages.
 no recipient address given!	felamimail	en	No recipient address given!
+no send folder set in preferences	felamimail	en	No Send Folder set in preferences
 no signature	felamimail	en	No signature!
 no stationery	felamimail	en	No stationery!
 no subject given!	felamimail	en	No subject given!
