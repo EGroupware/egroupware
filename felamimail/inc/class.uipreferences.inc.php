@@ -224,7 +224,7 @@
 
 			$referer = '../index.php?menuaction=felamimail.uipreferences.listAccountData';
 			if(!($preferences->userDefinedAccounts || $preferences->userDefinedIdentities)) {
-				die('you are not allowed to be here');
+				die(($msg?$msg:'you are not allowed to be here'));
 			}
 
 			if($_POST['save'] || $_POST['apply']) {

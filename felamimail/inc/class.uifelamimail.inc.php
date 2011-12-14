@@ -73,7 +73,6 @@ class uifelamimail
 			$this->bofilter		= new felamimail_bofilter(false);
 			$this->bopreferences=& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences;
-
 			if (is_object($this->preferences))
 			{
 				// account select box
@@ -87,6 +86,27 @@ class uifelamimail
 						'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
 					));
 				}
+			}
+			else
+			{
+				if ($GLOBALS['egw_info']['user']['apps']['emailadmin']) {
+					$errormessage .= "<br>".lang("Configure a valid IMAP Server in emailadmin for the profile you are using.");
+				} else {
+					$errormessage .= "<br>".lang('Please ask the administrator to correct the emailadmin IMAP Server Settings for you.');
+				}
+				$errormessage ='<table style="width:100%;">
+				        <tr>
+				                <td bgcolor="#FFFFCC" align="center" colspan="6">
+				                        <div style="color:red"><b>'.lang("There is no IMAP Server configured.").'</b></div><br>
+				                        <br>'.$errormessage.'<br><br>
+				                </td>
+				        </tr>
+				</table>';
+
+				egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
+					'accountID'=>"new",
+					'msg'   => $errormessage,
+				));
 			}
 			$this->bofelamimail->saveSessionData();
 
