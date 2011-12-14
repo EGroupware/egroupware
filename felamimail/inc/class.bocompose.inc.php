@@ -1013,6 +1013,42 @@
 				$mail->Password	= $ogServer->password;
 			}
 
+			// check if there are folders to be used
+			$folder = (array)$this->sessionData['folder'];
+			if(isset($this->preferences->preferences['sentFolder']) &&
+				$this->preferences->preferences['sentFolder'] != 'none' &&
+				$this->preferences->preferences['sendOptions'] != 'send_only' &&
+				$messageIsDraft == false) 
+			{
+				if ($this->bofelamimail->folderExists($this->preferences->preferences['sentFolder'], true)) 
+				{
+					$folder[] = $this->preferences->preferences['sentFolder'];
+				}
+				else
+				{
+					$this->errorInfo = lang("No (valid) Send Folder set in preferences");
+				}
+			}
+			else
+			{
+				if ((!isset($this->preferences->preferences['sentFolder']) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
+					($this->preferences->preferences['sendOptions'] != 'send_only' &&
+					$this->preferences->preferences['sentFolder'] != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
+			}
+			if($messageIsDraft == true) {
+				if(!empty($this->preferences->preferences['draftFolder']) && $this->bofelamimail->folderExists($this->preferences->preferences['draftFolder'])) {
+					$folder[] = $this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
+				}
+			}
+			$folder = array_unique($folder);
+			if (($this->preferences->preferences['sendOptions'] != 'send_only' && $this->preferences->preferences['sentFolder'] != 'none') && !(count($folder) > 0) && 
+				!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
+			{
+				$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');
+				#error_log($this->errorInfo);
+				return false;
+			}
+
 			// set a higher timeout for big messages
 			@set_time_limit(120);
 			//$mail->SMTPDebug = 10;
@@ -1047,19 +1083,6 @@
 				}
 			}
 			#error_log("Mail Sent.!");
-			$folder = (array)$this->sessionData['folder'];
-			if(isset($this->preferences->preferences['sentFolder']) &&
-				$this->preferences->preferences['sentFolder'] != 'none' &&
-				$this->preferences->preferences['sendOptions'] != 'send_only' &&
-				$messageIsDraft == false) {
-				$folder[] = $this->preferences->preferences['sentFolder'];
-			}
-			if($messageIsDraft == true) {
-			   	if(!empty($this->preferences->preferences['draftFolder'])) {
-				   	$folder[] = $this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
-			   	}
-			}
-			$folder = array_unique($folder);
 			#error_log("Number of Folders to move copy the message to:".count($folder));
 			if ((count($folder) > 0) || (isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
                 || (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
