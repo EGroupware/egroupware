@@ -2860,7 +2860,7 @@ GanttChart.prototype.create = function(divId)
     //Creation panel oData
     this.oData = document.createElement("div");
     this.oData.appendChild(this.createPanelTasks());
-    this.oData.style.cssText = "position:relative;overflow:scroll;height:" + (this.contentHeight - 40) + "px;border-left:#f1f3f1 1px solid";
+    this.oData.style.cssText = "position:relative;overflow:auto;height:" + (this.contentHeight - 40) + "px;border-left:#f1f3f1 1px solid";
 
     this.oData.firstChild.appendChild(this.createPanelErrors());
 
