@@ -44,6 +44,22 @@
 			$data = array();
 			if(is_array($async_list)) {
 				foreach($async_list as $id => $async) {
+					foreach(array('errors', 'warnings', 'result') as $messages)
+					{
+						if(is_array($async['data'][$messages]))
+						{
+							$list = array();
+							foreach($async['data'][$messages] as $target => $message)
+							{
+								$list[] = array(
+									'target' => (is_numeric($target) ? '' : $target),
+									'message' =>  implode("\n", (array)$message)
+								);
+							}
+							$async['data'][$messages] = $list;
+						}
+					}
+/*
 					if(is_array($async['data']['errors'])) {
 						$processed_errors = array();
 						foreach($async['data']['errors'] as $target => $errors)
@@ -56,6 +72,13 @@
 						$async['data']['errors'] = $processed_errors;
 					}
 					$results = array();
+					foreach((array)$async['data']['warnings'] as $target => $message)
+					{
+						$warnings[] = array(
+							'target' => $target,
+							'result' => implode("\n",(array)$result)
+						);
+					}
 					foreach((array)$async['data']['result'] as $target => $result)
 					{
 						$results[] = array(
@@ -63,6 +86,7 @@
 							'result' => implode("\n",(array)$result)
 						);
 					}
+*/
 					if($results)
 					{
 						$async['data']['result'] = $results;
@@ -363,6 +387,7 @@
 			
 			$data['record_count'] = 0;
 			unset($data['errors']);
+			unset($data['warnings']);
 			unset($data['result']);
 			$data['last_run'] = time();
 
@@ -441,6 +466,15 @@
 				}
 			
 
+				if(method_exists($po, 'get_warnings') && $po->get_warnings()) {
+					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n");
+					foreach($po->get_warnings() as $record => $msg) {
+						$data['warnings'][$target][] = "#$record: $msg";
+						fwrite(STDERR, "$record\t$msg\n");
+					}
+				} else {
+					unset($data['warnings'][$target]);
+				}
 				if(method_exists($po, 'get_errors') && $po->get_errors()) {
 					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
 					foreach($po->get_errors() as $record => $error) {
