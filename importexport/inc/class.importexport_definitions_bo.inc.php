@@ -294,6 +294,9 @@ class importexport_definitions_bo {
 			// Try to use heading from import file, if possible
 			$e_options['mapping'][$field] = $i_options['csv_fields'][$col_num] ? $i_options['csv_fields'][$col_num] : $field;
 		}
+		// Keep field names
+		$e_options['no_header_translation'] = true;
+
 		$export->plugin_options = $e_options;
 
 		// Permissions

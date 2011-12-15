@@ -73,7 +73,18 @@ class importexport_wizard_basic_export_csv
 		// return from step30
 		if ($content['step'] == 'wizard_step30')
 		{
-			$content['mapping'] = array_combine($content['fields']['export'], $content['fields']['export']);
+			foreach($content['fields']['export'] as $field_name)
+			{
+				// Preserve original field names, where available
+				if($content['plugin_options']['no_header_translation'] && $content['plugin_options']['mapping'][$field_name])
+				{
+					$content['mapping'][$field_name] = $content['plugin_options']['mapping'][$field_name];
+				}
+				else
+				{
+					$content['mapping'][$field_name] = $field_name;
+				}
+			}
 			if($content['mapping']['all_custom_fields']) {
 				// Need the appname during actual export, to fetch the fields
 				$parts = explode('_', get_class($this));
