@@ -34,7 +34,7 @@ class egw_mailer extends PHPMailer
 		{
 			$lang = $nation;
 		}
-		if (!$this->SetLanguage($lang,$lang_path))
+		if (!$this->SetLanguage((empty($lang)?'en':$lang),$lang_path))
 		{
 			$this->SetLanguage('en',$lang_path);	// use English default
 		}
