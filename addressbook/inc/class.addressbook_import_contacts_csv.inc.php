@@ -83,6 +83,11 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 	private $user = null;
 
 	/**
+	 * List of import warnings
+	 */
+	protected $warnings = array();
+
+	/**
 	 * List of import errors
 	 */
 	protected $errors = array();
@@ -381,6 +386,18 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 	 */
 	public function get_selectors_etpl() {
 		// lets do it!
+	}
+
+	/**
+        * Returns warnings that were encountered during importing
+        * Maximum of one warning message per record, but you can append if you need to
+        *
+        * @return Array (
+        *       record_# => warning message
+        *       )
+        */
+        public function get_warnings() {
+		return $this->warnings;
 	}
 
 	/**
