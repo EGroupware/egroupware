@@ -46,6 +46,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		'link_1'      => '1. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 		'link_2'      => '2. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 		'link_3'      => '3. link: appname:appid the entry should be linked to, eg.: addressbook:123',
+		'link_custom'	=> 'Link by custom field, use <appname>:<custom_field_name>:|[<field_index>]'
 	);
 
 	/**
@@ -312,16 +313,23 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		if(!is_numeric($result)) {
 			return $result;
 		}
-		$info_link_id = false;
+		$info_link_id = $_data['info_link_id'];
 		foreach(self::$special_fields as $field => $desc) {
 			if(!$_data[$field]) continue;
-			if(strpos('link', $field) === 0) {
-				list($app, $id) = explode(':', $_data[$field]);
+			if(strpos($field, 'link') === 0) {
+				list($app, $app_id) = explode(':', $_data[$field],2);
+
+				// Linking to another entry based on matching custom fields
+				if($field == 'link_custom')
+				{
+					$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
+				}
 			} else {
 				$app = $field;
-				$id = $_data[$field];
+				$app_id = $_data[$field];
 			}
 			if ($app && $app_id) {
+				$id = $_data['info_id'] ? $_data['info_id'] : (int)$result;
 				//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
 				$link_id = egw_link::link('infolog',$id,$app,$app_id);
 				if ($link_id && !$info_link_id)
@@ -330,8 +338,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 						'info_id'      => $id,
 						'info_link_id' => $link_id,
 					);
-					$infolog_bo->write($to_write);
-					$info_link_id = true;
+					$this->boinfolog->write($to_write);
+					$info_link_id = $link_id;
 				}
 			}
 		}
@@ -471,6 +479,52 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			return $projects[0]['pm_id'];
 		}
 		return false;
+	}
+
+	/**
+	 * Get the primary key for an entry based on a custom field
+	 * Returns key, so regular linking can take over
+	 */
+	protected function link_by_cf($record_num, $app, $fieldname, $value) 
+	{
+		$app_id = false;
+
+		list($custom_field, $value) = explode(':',$value);
+		// Find matching entry
+		if($app && $custom_field && $value)
+		{
+			$cfs = config::get_customfields($app);
+			if(!$cfs[$custom_field])
+			{
+				// Check for users specifing label instead of name
+				foreach($cfs as $name => $settings)
+				{
+					if($settings['label'] == $custom_field)
+					{
+						$custom_field = $name;
+						break;
+					}
+				}
+			}
+			if($custom_field[0] != '#') $custom_field = '#' . $custom_field;
+
+			// Search
+			if(egw_link::get_registry($app, 'query'))
+			{
+				$options = array('filter' => array($custom_field => $value));
+				$result = egw_link::query($app, '', $options);
+			
+				// Only one allowed
+				if(count($result) != 1)
+				{
+					$this->errors[$record_num] .= lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
+						$custom_field, count($result), lang($app));
+					return false;
+				}
+				$app_id = key($result);
+			}
+		}
+		return $app_id;
 	}
 }
 ?>
