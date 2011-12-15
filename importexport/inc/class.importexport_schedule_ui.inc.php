@@ -551,18 +551,30 @@
 			}
 
 			// Send notification to user
-			if($data['errors'])
+			if($data['warnings'] || $data['errors'])
 			{
 				$notify = new notifications();
 				$notify->set_sender($data['account_id']);
 				$notify->add_receiver($data['account_id']);
 				$notify->set_subject(lang('Schedule import | export'). ' ' . lang('errors'));
 
-				$contents = lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
-				foreach($data['errors'] as $target => $errors)
+				if($data['warnings'])
 				{
-					$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
-					$contents .= is_array($errors) ? implode("\n",$errors) : $errors;
+					$contents = lang($data['type']) . ' ' . lang('Warnings') . ' ' . egw_time::to() . ':';
+					foreach($data['warnings'] as $target => $message)
+					{
+						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+						$contents .= is_array($message) ? implode("\n",$message) : $message;
+					}
+				}
+				if($data['errors'])
+				{
+					$contents = lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
+					foreach($data['errors'] as $target => $errors)
+					{
+						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+						$contents .= is_array($errors) ? implode("\n",$errors) : $errors;
+					}
 				}
 				$notify->set_message($contents);
 				$notify->send();
