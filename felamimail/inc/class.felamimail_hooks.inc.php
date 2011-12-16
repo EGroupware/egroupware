@@ -248,7 +248,7 @@ class felamimail_hooks
 		$folderList['none'] = lang('no folders');
 
 		/* Settings array for this app */
-		return array(
+		$settingsArray = array(
 			'refreshTime' => array(
 				'type'   => 'select',
 				'label'  => 'Refresh time in minutes',
@@ -555,6 +555,8 @@ class felamimail_hooks
 				'forced' => 'felamimail',
 			),
 		);
+		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
+		return $settingsArray;
 	}
 
 	/**

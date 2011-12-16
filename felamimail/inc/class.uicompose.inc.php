@@ -222,7 +222,7 @@
 			// all values are empty for a new compose window
 			$sessionData = $this->bocompose->getSessionData();
 			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
-			if ((isset($this->bocompose->preferencesArray['attachVCardAtCompose']) &&
+			if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->bocompose->preferencesArray['attachVCardAtCompose']) &&
 				$this->bocompose->preferencesArray['attachVCardAtCompose']))
 			{
 				$alwaysAttachVCardAtCompose = true;
