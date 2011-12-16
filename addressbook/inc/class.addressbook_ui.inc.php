@@ -587,7 +587,7 @@ class addressbook_ui extends addressbook_bo
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
 			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
-		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		if (isset($GLOBALS['egw_info']['apps']['stylite']) && $GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{
 			$actions['mail'] = array(
 				'caption' => lang('Mail VCard'),
