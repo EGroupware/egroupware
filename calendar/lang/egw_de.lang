@@ -84,7 +84,6 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
-charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
 choose a category	calendar	de	Wählen Sie eine Kategorie
 close the window	calendar	de	Schließt das Fenster
@@ -185,8 +184,6 @@ exceptions	calendar	de	Ausnahmen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	existiert
-export	calendar	de	Exportieren
-export definitition to use for nextmatch export	calendar	de	Export Profil der Listenansicht (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal Format
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV Format
 extended	calendar	de	Erweitert
@@ -212,8 +209,6 @@ freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
 fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
-general	calendar	de	Allgemein
-general fields:	calendar	de	Allgemeine Felder
 global categories	calendar	de	Globale Kategorien
 global public and group public	calendar	de	Global öffentlich und Gruppen öffentlich
 global public only	calendar	de	nur Global öffentlich
@@ -252,9 +247,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
-if you specify an export definition, it will be used when you export	calendar	de	Wenn Sie Export Definition auswählen, wird diese für den Export verwendet.
 ignore conflict	calendar	de	Konflikt ignorieren
-import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. CSV bedeutet: mit Komma getrennte Werte. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
 imports events into your calendar from an ical file.	calendar	de	Importiert Termin in Ihrem Kalender von einer iCal Datei.
@@ -283,7 +276,6 @@ location to autoload from	admin	de	Von wo sollen sie geladen werden
 location, start- and endtimes, ...	calendar	de	Ort, Start- und Endzeiten
 mail all participants	calendar	de	Mail an alle Teilnehmer
 make freebusy information available to not loged in persons?	calendar	de	Die Belegtzeiten für nicht angemeldete Personen verfügbar machen?
-manage mapping	calendar	de	Feldzuordnung bearbeiten
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
 meeting request	calendar	de	Termineinladung
@@ -406,6 +398,8 @@ select resources	calendar	de	Ressourcen auswählen
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird.
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
+send meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer senden
+send meetingrequest to all participants after the event is saved	calendar	de	Terminanforderung an alle Teilnehmer senden nachdem der Termin gespeichert wurde
 series deleted	calendar	de	Serientermin wurde gelöscht
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige bzw. unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
@@ -496,7 +490,6 @@ to-firstname	calendar	de	An Vorname
 to-fullname	calendar	de	An Vor- und Nachname
 to-lastname	calendar	de	An Nachname
 tomorrow	calendar	de	Morgen
-translation	calendar	de	Übersetzung
 tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen
 type of planner	calendar	de	Planer Typ
@@ -547,6 +540,7 @@ yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren könne
 yes, users can purge their deleted items	admin	de	Ja, Benutzer können gelöschte Einträge selbst bereinigen
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
 you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
+you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanforderung an die oben eingetragenen Empfänger zu versenden. Abhängig vom MailClient wird der jeweilige Empfänger die unten stehende Nachricht nie zu Gesicht bekommen, sondern nur die vom MailClient aufbereitete Terminanforderung.
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!

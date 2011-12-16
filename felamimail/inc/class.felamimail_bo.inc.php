@@ -4017,8 +4017,8 @@ class felamimail_bo
 				// check the mimetype by extension. as browsers seem to report crap
 				// maybe its application/octet-stream -> this may mean that we could not determine the type
 				// so we check for the suffix too
-				// trust vfs mime-types
-				if (substr($_formData['file'],0,6) !== 'vfs://' || $_formData['type'] == 'application/octet-stream')
+				// trust vfs mime-types, trust the mimetype if it contains a method
+				if ((substr($_formData['file'],0,6) !== 'vfs://' || $_formData['type'] == 'application/octet-stream') && stripos($_formData['type'],'method=')===false)
 				{
 					$buff = explode('.',$_formData['name']);
 					$suffix = '';

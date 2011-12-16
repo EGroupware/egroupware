@@ -503,6 +503,7 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'mail':
+		case 'sendrequest':
 		case 'save':
 		case 'print':
 		case 'apply':
@@ -510,8 +511,9 @@ class calendar_uiforms extends calendar_ui
 			{
 				switch ($button)
 				{
+					case 'sendrequest':
 					case 'mail':	// just mail without edit-rights is ok
-						$js = $this->custom_mail($event,false);
+						$js = $this->custom_mail($event,false,($button=='sendrequest'));
 						break 2;
 					case 'print':	// just print without edit-rights is ok
 						$js = $this->custom_print($event,false);
@@ -832,9 +834,9 @@ class calendar_uiforms extends calendar_ui
 					$js = $this->custom_print($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
 				}
 
-				if ($button == 'mail')
+				if ($button == 'mail' || $button == 'sendrequest')
 				{
-					$js = $this->custom_mail($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
+					$js = $this->custom_mail($event,!$content['id'],($button=='sendrequest'))."\n".$js;	// first open the new window and then update the view
 				}
 			}
 			else
@@ -1002,7 +1004,7 @@ class calendar_uiforms extends calendar_ui
 	 * @param boolean $added
 	 * @return string javascript window.open command
 	 */
-	function custom_mail($event,$added)
+	function custom_mail($event,$added,$asrequest=false)
 	{
 		$to = array();
 
@@ -1057,9 +1059,10 @@ class calendar_uiforms extends calendar_ui
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
 			'preset[file]'    => $ics_file,
-			'preset[type]'    => 'text/calendar; method=request',
+			'preset[type]'    => 'text/calendar'.($asrequest?'; method=request':''),
 			'preset[size]'    => filesize($ics_file),
 		);
+		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
 		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
@@ -1107,6 +1110,7 @@ class calendar_uiforms extends calendar_ui
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
 				'print' => array('label' => 'Print', 'title' => 'Print this event'),
 				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
+				'sendrequest' => array('label' => 'Send meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
 			),
 		);
 		unset($sel_options['status']['G']);
@@ -1488,6 +1492,7 @@ function replace_eTemplate_onsubmit()
 		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))	// no mail without mail-app
 		{
 			unset($sel_options['action']['mail']);
+			unset($sel_options['action']['sendmeetingrequest']);
 		}
 		if (!$event['id'])	// no ical export for new (not saved) events
 		{

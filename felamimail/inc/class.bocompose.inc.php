@@ -798,6 +798,7 @@
 			{
 				$signature = felamimail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			}
+
 			if($_formData['mimeType'] =='html') {
 				$_mailObject->IsHTML(true);
 				if(!empty($signature)) {
@@ -862,12 +863,20 @@
 					{
 						egw_vfs::load_wrapper('vfs');
 					}
-					$_mailObject->AddAttachment (
-						$attachment['file'],
-						$_mailObject->EncodeHeader($attachment['name']),
-						'base64',
-						$attachment['type']
-					);
+					if ( stripos($attachment['type'],"text/calendar; method=")!==false )
+					{
+						$_mailObject->AltExtended = file_get_contents($attachment['file']);
+						$_mailObject->AltExtendedContentType = $attachment['type'];
+					}
+					else
+					{
+						$_mailObject->AddAttachment (
+							$attachment['file'],
+							$_mailObject->EncodeHeader($attachment['name']),
+							'base64',
+							$attachment['type']
+						);
+					}
 				}
 			}
 			$bofelamimail->closeConnection();

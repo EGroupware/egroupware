@@ -403,7 +403,9 @@
 			$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config('simple-withimage'));//$editorObject->jsEncode($editorObject->config));
 
 			// check for some error messages from last posting attempt
-			if($errorInfo = $this->bocompose->getErrorInfo())
+			$errorInfo = $this->bocompose->getErrorInfo();
+			if (isset($_REQUEST['preset']['msg'])) $errorInfo = html::purify($_REQUEST['preset']['msg']);
+			if($errorInfo)
 			{
 				$this->t->set_var('errorInfo',"<font color=\"red\"><b>$errorInfo</b></font>");
 			}
