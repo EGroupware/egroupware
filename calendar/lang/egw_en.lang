@@ -398,6 +398,8 @@ select resources	calendar	en	Select resources
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
+send meetingrequest to all participants	calendar	en	Send meetingrequest to all participants
+send meetingrequest to all participants after the event is saved	calendar	en	Send meetingrequest to all participants after the event is saved
 series deleted	calendar	en	Series deleted
 set a year only for one-time / non-regular holidays.	calendar	en	Set a year only for one time / non regular holidays.
 set new events to private	calendar	en	Set new events to private
@@ -538,6 +540,7 @@ yes, only admins can purge deleted items	admin	en	Yes, only admins can purge del
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you are not invited to that event!	calendar	en	You are not invited to that event!
+you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	en	You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the message below, but only see the meeting request attached.
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a year or occurrence, not both!
 you can only set a year or a occurence !!!	calendar	en	You can only set a year or occurrence!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
