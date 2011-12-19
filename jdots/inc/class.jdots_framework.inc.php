@@ -300,6 +300,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			// for remote manual never check/create framework
 			if ($GLOBALS['egw_info']['flags']['currentapp'] != 'manual')
 			{
+				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
 				$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
 	if (typeof top.framework == "undefined" && !opener && !top.opener)
 	{
