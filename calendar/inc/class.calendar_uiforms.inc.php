@@ -1222,7 +1222,6 @@ class calendar_uiforms extends calendar_ui
 							if(!$infolog_bo) $infolog_bo = new infolog_bo();
 							$infolog = $app_entry = $infolog_bo->read($link_id);
 							$event = array_merge($event, array(
-								'owner'	=> $infolog['info_owner'],
 								'category'	=> $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $infolog['info_cat']),
 								'priority'	=> $infolog['info_priority'] + 1,
 								'public'	=> $infolog['info_access'] != 'private',
@@ -1232,6 +1231,8 @@ class calendar_uiforms extends calendar_ui
 								'start'		=> $infolog['info_startdate'],
 								'end'		=> $infolog['info_enddate']
 							));
+							// Match categories by name
+							$event['category'] .= ($event['category'] ? ',':'') . $GLOBALS['egw']->categories->name2id(categories::id2name($infolog['info_cat']));
 							// Only add current user, not all selected calendar users
 							$event['participants'] = array(calendar_so::combine_user('u',$event['owner']) => 'ACHAIR');
 							$event['participant_types'] = array('u' => array($event['owner']=>'ACHAIR'));
@@ -1248,6 +1249,12 @@ class calendar_uiforms extends calendar_ui
 							}
 							// Add infolog link to calendar entry
 							egw_link::link('calendar',$link_to_id,$infolog['info_link']['app'],$infolog['info_link']['id']);
+
+							// Copy infolog's links
+							foreach(egw_link::get_links('infolog',$link_id) as $copy_link)
+							{
+								egw_link::link('calendar', $link_to_id, $copy_link['app'], $copy_link['id'],$copy_link['remark']);
+							}
 
 							break;
 						default:
