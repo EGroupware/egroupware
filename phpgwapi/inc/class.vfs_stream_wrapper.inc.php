@@ -600,7 +600,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			{
 				return false;
 			}
-			$scheme2urls[(string)parse_url($url,PHP_URL_SCHEME)][$path] = $url;
+			$k=(string)parse_url($url,PHP_URL_SCHEME);
+			if (!(is_array($scheme2urls[$k]))) $scheme2urls[$k] = array();
+			$scheme2urls[$k][$path] = $url;
 		}
 		$ret = array();
 		foreach($scheme2urls as $scheme => $urls)

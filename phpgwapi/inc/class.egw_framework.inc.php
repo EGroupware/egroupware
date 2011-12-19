@@ -311,7 +311,7 @@ abstract class egw_framework
 			$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			$app = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
 		}
-
+		$var = array();
 		if($app!='wiki') $robots ='<meta name="robots" content="none" />';
 		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
 		{

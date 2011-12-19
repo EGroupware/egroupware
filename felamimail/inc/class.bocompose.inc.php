@@ -100,6 +100,7 @@
 				// trying diiferent ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
 				$attachmentID = md5(time().serialize($buffer));
 				//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
+				if (!is_array($this->sessionData['attachments'])) $this->sessionData['attachments']=array();
 				$this->sessionData['attachments'][$attachmentID] = $buffer;
 				unset($buffer);
 			}

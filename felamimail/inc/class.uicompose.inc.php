@@ -610,6 +610,7 @@
 			if (is_array($sessionData['attachments']) && count($sessionData['attachments']) > 0)
 			{
 				$imgClearLeft	=  common::image('felamimail','clear_left');
+				$tableRows = array();
 				foreach((array)$sessionData['attachments'] as $id => $attachment) {
 					$tempArray = array (
 						'1' => $attachment['name'], '.1' => 'width="40%"',

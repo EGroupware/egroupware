@@ -1124,4 +1124,5 @@ if (!function_exists('set_cell_attribute_helper'))
 	}
 }
 // just in case someone still uses the old var
+if (!is_array($GLOBALS['egw_info']['flags']['etemplate'])) $GLOBALS['egw_info']['flags']['etemplate'] = array();
 $GLOBALS['egw_info']['flags']['etemplate']['loop'] =& boetemplate::$loop;
