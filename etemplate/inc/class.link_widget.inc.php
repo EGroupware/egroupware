@@ -324,9 +324,6 @@ class link_widget
 					$value[$row]['icon'] = egw_link::get_registry($value[$row]['app'], 'icon');
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
-
-					$value[$row]['view'] = "javascript:egw.open('{$link['id']}', '{$link['app']}', 'view');";
-					unset($value[$row]['target']);
 				}
 			}
 			break;
