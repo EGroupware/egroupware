@@ -404,7 +404,7 @@ class infolog_activesync implements activesync_plugin_write
 						break;
 
 					case 'info_status':	// 0 or 1 in AS --> do NOT change infolog status, if it maps to identical completed boolean value
-						if (in_array($infolog[$attr], self::$done_status) !== (boolean)$message->$key)
+						if ((in_array($infolog[$attr], self::$done_status) !== (boolean)$message->$key) || !isset($infolog[$attr]))
 						{
 							$infolog[$attr] = $message->$key ? 'done' : 'not-started';
 							if (!(boolean)$message->$key) $infolog['info_percent'] = 0;
