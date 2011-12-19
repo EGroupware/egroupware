@@ -557,24 +557,27 @@
 				$notify->set_sender($data['account_id']);
 				$notify->add_receiver($data['account_id']);
 				$notify->set_subject(lang('Schedule import | export'). ' ' . lang('errors'));
+				$contents = '';
 
 				if($data['warnings'])
 				{
-					$contents = lang($data['type']) . ' ' . lang('Warnings') . ' ' . egw_time::to() . ':';
+					$contents .= lang($data['type']) . ' ' . lang('Warnings') . ' ' . egw_time::to() . ':';
 					foreach($data['warnings'] as $target => $message)
 					{
 						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
 						$contents .= is_array($message) ? implode("\n",$message) : $message;
 					}
+					$contents .= "\n";
 				}
 				if($data['errors'])
 				{
-					$contents = lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
+					$contents .= lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
 					foreach($data['errors'] as $target => $errors)
 					{
 						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
 						$contents .= is_array($errors) ? implode("\n",$errors) : $errors;
 					}
+					$contents .= "\n";
 				}
 				$notify->set_message($contents);
 				$notify->send();
