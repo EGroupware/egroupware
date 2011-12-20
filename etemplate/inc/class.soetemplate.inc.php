@@ -362,9 +362,12 @@ class soetemplate
 			{
 				for ($col = 0; $col < $cols; ++$col)
 				{
+					if (!is_array($this->data[$row])) $this->data[$row]=array();
 					$this->data[$row][$this->num2chrs($col)] = $this->empty_cell();
 				}
 			}
+			if (!is_array($this->children)) $this->children = array();
+			if (!is_array($this->children[0])) $this->children[0] = array();
 			$this->children[0]['type'] = 'grid';
 			$this->children[0]['data'] = &$this->data;
 			$this->children[0]['rows'] = &$this->rows;
@@ -553,6 +556,7 @@ class soetemplate
 			$version  = (string) $name['version'];
 			$name     = (string) $name['name'];
 		}
+		$where = array();
 		$where[] = 'et_name LIKE '.$this->db->quote($this->sql_wildcards($name).'%');
 		if ($template != '' && $template != 'default')
 		{

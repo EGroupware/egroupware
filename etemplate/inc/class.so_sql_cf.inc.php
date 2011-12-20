@@ -187,6 +187,7 @@ class so_sql_cf extends so_sql
 		),__LINE__,__FILE__,false,'',$this->app) as $row)
 		{
 			$entry =& $entries[$row[$this->extra_id]];
+			if (!is_array($entry)) $entry = array();
 			$field = $this->get_cf_field($row[$this->extra_key]);
 
 			if ($this->allow_multiple_values && $this->is_multiple($row[$this->extra_key]))

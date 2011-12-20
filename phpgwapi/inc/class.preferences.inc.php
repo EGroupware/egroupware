@@ -151,6 +151,7 @@ class preferences
 		{
 			$vals += $this->values;
 		}
+		$replace = $with = array();
 		foreach($vals as $key => $val)
 		{
 			if ($this->debug) error_log(__METHOD__." replacing \$\$$key\$\$ with $val  ");

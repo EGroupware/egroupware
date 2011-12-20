@@ -326,7 +326,7 @@ abstract class egw_framework
 			$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			$app = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
 		}
-
+		$var = array();
 		if($app!='wiki') $robots ='<meta name="robots" content="none" />';
 		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
 		{
@@ -710,6 +710,7 @@ abstract class egw_framework
 		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
 
 		// add all css files from self::includeCSS
+		if (empty($css_file)) $css_file = '';
 		foreach(self::$css_include_files as $path)
 		{
 			$css_file .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
@@ -1030,7 +1031,7 @@ abstract class egw_framework
 	 */
 	static function set_onload($code='',$replace=false)
 	{
-		if ($replace)
+		if ($replace || empty(self::$body_tags['onLoad']))
 		{
 			self::$body_tags['onLoad'] = $code;
 		}
@@ -1050,7 +1051,7 @@ abstract class egw_framework
 	 */
 	static function set_onunload($code='',$replace=false)
 	{
-		if ($replace)
+		if ($replace || empty(self::$body_tags['onUnload']))
 		{
 			self::$body_tags['onUnload'] = $code;
 		}
@@ -1070,7 +1071,7 @@ abstract class egw_framework
 	*/
 	static function set_onresize($code='',$replace=false)
 	{
-		if ($replace)
+		if ($replace || empty(self::$body_tags['onResize']))
 		{
 			self::$body_tags['onResize'] = $code;
 		}
