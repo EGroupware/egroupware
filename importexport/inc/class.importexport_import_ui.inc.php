@@ -47,6 +47,7 @@
 				try {
 					$definition_obj = new importexport_definition($content['definition']);
 					if($content['dry-run']) {
+						// Set this so plugin doesn't do any data changes
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
 					if($content['delimiter']) {
@@ -60,6 +61,12 @@
 
 					// Some of the translation, conversion, etc look here
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
+
+					if($content['dry-run'])
+					{
+						echo $this->preview($file, $definition_obj);
+					}
+					
 					$count = $plugin->import($file, $definition_obj);
 
 					$this->message = lang('%1 records processed', $count);
@@ -166,6 +173,32 @@
 				}
 			}
 			return $response->getXML();
+		}
+
+		/**
+		 * Display the contents of the file for dry runs
+		 */
+		protected function preview(&$_stream, &$definition_obj)
+		{
+			$import_csv = new importexport_import_csv( $_stream, array(
+				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
+				'charset' => $definition_obj->plugin_options['charset'],
+			));
+			// set FieldMapping.
+			$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
+
+			$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+			for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+			{
+				$row_data = $import_csv->get_record();
+				if($row_data === false) break;
+				$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
+				if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+			}
+
+			// Rewind
+			rewind($_stream);
+			return html::table($rows);
 		}
 	}
 ?>
