@@ -945,6 +945,18 @@ class infolog_ui
 				'group' => $group,
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$actions['calendar'] = array(	// interactive add for a single event
+				'icon' => 'calendar/navbar',
+				'caption' => 'Calendar',
+				'group' => $group,
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&'.
+					egw_link::get_registry('calendar', 'add_app') . '[]=infolog&'.egw_link::get_registry('calendar','add_id').'[]=$id',
+				'allowOnMultiple' => false,
+				'popup' => egw_link::get_registry('calendar', 'add_popup'),
+			);
+		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
 		{
 			$actions['timesheet'] = array(	// interactive add for a single event
