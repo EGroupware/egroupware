@@ -767,6 +767,8 @@ class common
 				{
 					if ($entry[0] != '.')
 					{
+						if (!is_array(self::$found_files)) self::$found_files = array();
+						if (!is_array(self::$found_files[$appname])) self::$found_files[$appname] = array();
 						self::$found_files[$appname][$entry] = $imagedir_olddefault;
 					}
 				}
@@ -778,6 +780,8 @@ class common
 				{
 					if ($entry[0] != '.')
 					{
+						if (!is_array(self::$found_files)) self::$found_files = array();
+						if (!is_array(self::$found_files[$appname])) self::$found_files[$appname] = array();
 						self::$found_files[$appname][$entry] = $imagedir_default;
 					}
 				}
@@ -789,6 +793,8 @@ class common
 				{
 					if ($entry[0] != '.')
 					{
+						if (!is_array(self::$found_files)) self::$found_files = array();
+						if (!is_array(self::$found_files[$appname])) self::$found_files[$appname] = array();
 						self::$found_files[$appname][$entry] = $imagedir;
 					}
 				}
@@ -809,6 +815,8 @@ class common
 						list($type,$subtype) = explode('/',egw_vfs::mime_content_type($vfs_imagedir.'/'.$entry));
 						if ($type == 'image')
 						{
+							if (!is_array(self::$found_files)) self::$found_files = array();
+							if (!is_array(self::$found_files['vfs'])) self::$found_files['vfs'] = array();
 							self::$found_files['vfs'][$entry] = $vfs_imagedir;
 						}
 					}
@@ -832,19 +840,19 @@ class common
 		foreach($img_type as $type)
 		{
 			// first look in the instance specific image dir in vfs
-			if(isset(self::$found_files['vfs'][$image.$type]))
+			if(isset(self::$found_files['vfs'][$image.$type]) && !empty(self::$found_files['vfs'][$image.$type]))
 			{
 				$imgfile = egw::link(egw_vfs::download_url(self::$found_files['vfs'][$image.$type].'/'.$image.$type));
 				break;
 			}
 			// then look in the selected template dir
-			if(self::$found_files[$appname][$image.$type] == $imagedir)
+			if((self::$found_files[$appname][$image.$type] == $imagedir) && !empty(self::$found_files[$appname][$image.$type]))
 			{
 				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
 				break;
 			}
 			//then look everywhere else
-			if (isset(self::$found_files[$appname][$image.$type]))
+			if (isset(self::$found_files[$appname][$image.$type]) && !empty(self::$found_files[$appname][$image.$type]))
 			{
 				$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files[$appname][$image.$type].'/'.$image.$type;
 				break;
@@ -860,7 +868,7 @@ class common
 			}
 			foreach($img_type as $type)
 			{
-				if(isset(self::$found_files['phpgwapi'][$image.$type]))
+				if(isset(self::$found_files['phpgwapi'][$image.$type]) && !empty(self::$found_files['phpgwapi'][$image.$type]))
 				{
 					$imgfile = $GLOBALS['egw_info']['server']['webserver_url'].self::$found_files['phpgwapi'][$image.$type].'/'.$image.$type;
 					break;
@@ -897,6 +905,7 @@ class common
 			}
 			if ($use_lang)
 			{
+				$lang_images = array();
 				foreach((array)$image as $img)
 				{
 					$lang_images[] = $img . '_' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
