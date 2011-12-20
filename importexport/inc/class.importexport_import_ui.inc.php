@@ -68,6 +68,12 @@
 						$this->message .= "\n" . lang($action) . ": $a_count";
 						$total_processed += $a_count;
 					}
+					if(count($plugin->get_warnings())) {
+						$this->message .= "\n".lang('Warnings').':';
+						foreach($plugin->get_warnings() as $record => $message) {
+							$this->message .= "\n$record: $message";
+						}
+					}
 					if(count($plugin->get_errors())) {
 						$this->message .= "\n".lang('Problems during import:');
 						foreach($plugin->get_errors() as $record => $message) {

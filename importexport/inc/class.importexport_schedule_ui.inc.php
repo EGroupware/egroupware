@@ -30,29 +30,75 @@
 		}
 
 		public function index($content = array()) {
-
-			if($content['scheduled']['delete']) {
-				$key = key($content['scheduled']['delete']);
-				ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+			if(is_array($content['scheduled']))
+			{
+				foreach($content['scheduled'] as $row)
+				{
+					if($row['delete']) {
+						$key = key($row['delete']);
+						ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+					}
+				}
 			}
 			$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
 			$data = array();
 			if(is_array($async_list)) {
 				foreach($async_list as $id => $async) {
+					foreach(array('errors', 'warnings', 'result') as $messages)
+					{
+						if(is_array($async['data'][$messages]))
+						{
+							$list = array();
+							foreach($async['data'][$messages] as $target => $message)
+							{
+								$list[] = array(
+									'target' => (is_numeric($target) ? '' : $target),
+									'message' =>  implode("\n", (array)$message)
+								);
+							}
+							$async['data'][$messages] = $list;
+						}
+					}
+/*
 					if(is_array($async['data']['errors'])) {
+						$processed_errors = array();
 						foreach($async['data']['errors'] as $target => $errors)
 						{
-							$async['data']['errors'] = $target . ":\n" . implode("\n", $async['data']['errors']);
+							$processed_errors[] = array(
+								'target' => (is_numeric($target) ? '' : $target),
+								'error' =>  implode("\n", (array)$errors)
+							);
 						}
+						$async['data']['errors'] = $processed_errors;
+					}
+					$results = array();
+					foreach((array)$async['data']['warnings'] as $target => $message)
+					{
+						$warnings[] = array(
+							'target' => $target,
+							'result' => implode("\n",(array)$result)
+						);
+					}
+					foreach((array)$async['data']['result'] as $target => $result)
+					{
+						$results[] = array(
+							'target' => $target,
+							'result' => implode("\n",(array)$result)
+						);
+					}
+*/
+					if($results)
+					{
+						$async['data']['result'] = $results;
 					}
 					if(is_numeric($async['data']['record_count'])) {
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 					}
-					$data['scheduled'][] = $async['data'] + array(
+					$data['scheduled'][] = array_merge($async['data'], array(
 						'id'	=>	$id,
 						'next'	=>	$async['next'],
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
-					);
+					));
 				}
 				array_unshift($data['scheduled'], false);
 			}
@@ -77,11 +123,13 @@
 				ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
 				$id = self::generate_id($content);
 				$schedule = $content['schedule'];
+				// Async sometimes changes minutes to an array - keep what user typed
+				$content['min'] = $schedule['min'];
 				unset($content['schedule']);
 
-				// Fill in * for any left blank
+				// Remove any left blank
 				foreach($schedule as $key => &$value) {
-					if($value == '') $value = '*';
+					if($value == '') unset($schedule[$key]);
 				}
 				$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
 					$schedule,
@@ -103,6 +151,9 @@
 				if(is_array($async[$id]['data'])) {
 					$data += $async[$id]['data'];
 					$data['schedule'] = $async[$id]['times'];
+
+					// Async sometimes changes minutes to an array - show user what they typed
+					if(is_array($data['schedule']['min'])) $data['schedule']['min'] = $data['min'];
 				} else {
 					$data['message'] = lang('Schedule not found');
 				}
@@ -332,17 +383,32 @@
 		public static function exec($data) {
 			ob_start();
 
+			
+			$data['record_count'] = 0;
+			unset($data['errors']);
+			unset($data['warnings']);
+			unset($data['result']);
+			$data['last_run'] = time();
+
 			// check file
 			$file_check = self::check_target($data);
 			if($file_check !== true) {
+				$data['errors'] = array($file_check=>'');
+				// Update job with results
+				self::update_job($data);
+
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": $file_check \n");
-				exit();
+				return;
 			}
 
 			$definition = new importexport_definition($data['definition']);
 			if( $definition->get_identifier() < 1 ) {
+				$data['errors'] = array('Definition not found!');
+				// Update job with results
+				self::update_job($data);
+
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
-				exit();
+				return;
 			}
 			$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 
@@ -350,27 +416,36 @@
 
 			$type = $data['type'];
 
-			
-			$data['record_count'] = 0;
-			unset($data['errors']);
-			unset($data['result']);
-
 			if(is_dir($data['target']))
 			{
-				$contents = scandir($data['target']);
+				$dir = opendir($data['target']);
+				$contents = array();
+				while(false !== ($item = readdir($dir))) {
+					$contents[] = $item;
+				}
+				closedir($dir);
 				$targets = array_diff($contents, array('.','..'));
+				$files = array();
 				foreach($targets as $key => &$target)
 				{
-					$target = $data['target'].'/'.$target;
+					$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
 					
 					// Check modification time, make sure it's not currently being written
 					// Skip files modified in the last 10 seconds
-					if(filemtime($target) >= time() - 10) 
+					$mod_time = filemtime($target);
+					if($mod_time >= time() - 10) 
 					{
 						$data['result'][$target] = lang('Skipped');
 						unset($target[$key]);
+						continue;
 					}
+					$files[$mod_time] = $target;
 				}
+				if($files)
+				{
+					ksort($files);
+				}
+				$targets = $files;
 				unset($target); // Unset it, or it will be overwritten in loop below
 			}
 			else
@@ -380,19 +455,29 @@
 
 			foreach($targets as $target)
 			{
-				if($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )) {
+				if($resource = fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
 					$result = $po->$type( $resource, $definition );
 
 					fclose($resource);
 				} else {
-					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
+					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
+					$data['errors'][$target][] = lang('%1 is not readable',$target);
 				}
 			
 
+				if(method_exists($po, 'get_warnings') && $po->get_warnings()) {
+					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n");
+					foreach($po->get_warnings() as $record => $msg) {
+						$data['warnings'][$target][] = "#$record: $msg";
+						fwrite(STDERR, "$record\t$msg\n");
+					}
+				} else {
+					unset($data['warnings'][$target]);
+				}
 				if(method_exists($po, 'get_errors') && $po->get_errors()) {
-					$data['errors'][$target] = $po->get_errors();
 					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
 					foreach($po->get_errors() as $record => $error) {
+						$data['errors'][$target][] = "#$record: $error";
 						fwrite(STDERR, "$record\t$error\n");
 					}
 				} else {
@@ -402,30 +487,48 @@
 				if($po instanceof importexport_iface_import_plugin) {
 					if(is_numeric($result)) {
 						$data['record_count'] += $result;
+						$data['result'][$target][] = lang('%1 records processed', $result);
 					}
-					$data['result'][$target] = '';
+					$data['result'][$target] = array();
 					foreach($po->get_results() as $action => $count) {
-						$data['result'][$target] .= "\n" . lang($action) . ": $count";
+						$data['result'][$target][] = lang($action) . ": $count";
 					}
 				} else {
 					$data['result'][$target] = $result;
 				}
 			}
-			$data['last_run'] = time();
 
 			// Delete file?
-			if($data['delete_files'] && $type == 'import' && !$data['errors'][$target])
+			if($data['delete_files'] && $type == 'import' && !$data['errors'])
 			{
 				foreach($targets as $target)
 				{
 					if(unlink($target))
 					{
-						$data['result'][$target] .= "\n..." . lang('deleted');
+						$data['result'][$target][] .= "\n..." . lang('deleted');
+					}
+					else
+					{
+						$data['errors'][$target][] .= "\n..." . lang('Unable to delete');
 					}
 				}
 			}
 
 			// Update job with results
+			self::update_job($data);
+
+			$contents = ob_get_contents();
+			if($contents) {
+				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
+			}
+			ob_end_clean();
+		}
+
+		/**
+		 * Update the async job with current status, and send a notification
+		 * to user if there were any errors.
+		 */
+		private static function update_job($data) {
 			$id = self::generate_id($data);
 			$async = ExecMethod('phpgwapi.asyncservice.read', $id);
 			$async = $async[$id];
@@ -439,11 +542,39 @@
 				);
 			}
 
-			$contents = ob_get_contents();
-			if($contents) {
-				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
+			// Send notification to user
+			if($data['warnings'] || $data['errors'])
+			{
+				$notify = new notifications();
+				$notify->set_sender($data['account_id']);
+				$notify->add_receiver($data['account_id']);
+				$notify->set_subject(lang('Schedule import | export'). ' ' . lang('errors'));
+				$contents = '';
+
+				if($data['warnings'])
+				{
+					$contents .= lang($data['type']) . ' ' . lang('Warnings') . ' ' . egw_time::to() . ':';
+					foreach($data['warnings'] as $target => $message)
+					{
+						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+						$contents .= is_array($message) ? implode("\n",$message) : $message;
+					}
+					$contents .= "\n";
+				}
+				if($data['errors'])
+				{
+					$contents .= lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
+					foreach($data['errors'] as $target => $errors)
+					{
+						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
+						$contents .= is_array($errors) ? implode("\n",$errors) : $errors;
+					}
+					$contents .= "\n";
+				}
+				$notify->set_message($contents);
+				$notify->send();
 			}
-			ob_end_clean();
+			return $result;
 		}
 	}
 ?>
