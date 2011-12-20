@@ -894,7 +894,7 @@ class common
 
 		$image_found =& $cache[$appname.implode('-',(array)$image).$ext.$use_lang];
 
-		if (!isset($image_found))
+		if (!isset($image_found) || $image_found === 0) // cache of an not set entry may be reported as 0
 		{
 			if (!is_array($image))
 			{
