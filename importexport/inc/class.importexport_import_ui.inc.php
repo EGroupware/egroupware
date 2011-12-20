@@ -56,15 +56,31 @@
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
 						$definition_obj->plugin_options = $options;
 					}
+
 					$plugin = new $definition_obj->plugin;
 					$file = fopen($content['file']['tmp_name'], 'r');
 
 					// Some of the translation, conversion, etc look here
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 
+					// Destination if we need to hold the file
+					$cachefile = new egw_cache_files(array());
+					$dst_file = $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+						'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
 					if($content['dry-run'])
 					{
 						echo $this->preview($file, $definition_obj);
+						// Keep file
+						if($dst_file)
+						{
+							if(copy($content['file']['tmp_name'],$dst_file)) {
+								$preserve['file']['tmp_name'] = $dst_file;
+							}
+						}
+					} elseif ($dst_file && $content['file']['tmp_name'] == $dst_file) {
+						// Remove file
+						$cachefile->delete(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
 					}
 					
 					$count = $plugin->import($file, $definition_obj);
