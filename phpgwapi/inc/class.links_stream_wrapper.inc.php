@@ -130,11 +130,11 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	static function url_stat ( $url, $flags )
 	{
 		$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
-		if ($eacl_check && substr($url,-7) == '/.entry' &&
+		if ( $eacl_check && substr($url,-7) == '/.entry' &&
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
 			$ret = array(
-				'ino'   => $info['fs_id'],
+				'ino'   => md5($url),
 				'name'  => '.entry',
 				'mode'  => self::MODE_FILE|egw_vfs::READABLE,	// required by the stream wrapper
 				'size'  => 1024,	// fmail does NOT attach files with size 0!
@@ -244,7 +244,6 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
 		$stat = self::url_stat($url,0);
 		//error_log(__METHOD__."('$url', '$mode', $options) stat=".array2string($stat));
-
 		if ($stat && $mode[0] == 'r' && substr($url,-7) === '/.entry')
 		{
 			list($id) = array_slice(explode('/',$url),-2,1);
