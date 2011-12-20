@@ -87,6 +87,11 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	private $user = null;
 
 	/**
+	 * List of import warnings
+	 */
+	protected $warnings = array();
+
+	/**
 	 * List of import errors
 	 */
 	protected $errors = array();
@@ -399,6 +404,18 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	}
 
 	/**
+        * Returns warnings that were encountered during importing
+        * Maximum of one warning message per record, but you can append if you need to
+        *
+        * @return Array (
+        *       record_# => warning message
+        *       )
+        */
+        public function get_warnings() {
+		return $this->warnings;
+	}
+
+	/**
         * Returns errors that were encountered during importing
         * Maximum of one error message per record, but you can append if you need to
         *
@@ -517,7 +534,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				// Only one allowed
 				if(count($result) != 1)
 				{
-					$this->errors[$record_num] .= lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
+					$this->warnings[$record_num] .= lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
 						$custom_field, count($result), lang($app));
 					return false;
 				}
