@@ -496,6 +496,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
 		$this->backend->splitID($folderid, $type, $account);
+		$is_private = false;
+		if ($account == self::PRIVATE_AB)
+		{
+			$account = $GLOBALS['egw_info']['user']['account_id'];
+			$is_private = true;
+
+		}
 		// error_log(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'addressbook') // || !($contact = $this->addressbook->read($id)))
 		{
@@ -579,6 +586,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
 				$contact['owner'] = $account;
+				$contact['private'] = $is_private;
 			}
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
@@ -706,6 +714,10 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				}
 			}
 		}
+		if ($owner == self::PRIVATE_AB)
+                {
+                        $owner = $GLOBALS['egw_info']['user']['account_id'];
+                }
 		$ctag = $this->addressbook->get_ctag($owner);
 
 		$changes = array();	// no change
