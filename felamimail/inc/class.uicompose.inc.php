@@ -226,6 +226,11 @@
 				$this->bocompose->preferencesArray['attachVCardAtCompose']))
 			{
 				$alwaysAttachVCardAtCompose = true;
+				if (!is_array($_REQUEST['preset']['file']) && !empty($_REQUEST['preset']['file']))
+				{
+					$f = $_REQUEST['preset']['file'];
+					$_REQUEST['preset']['file'] = array($f);
+				}
 				$_REQUEST['preset']['file'][] = "vfs://default/apps/addressbook/".$GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')."/.entry";
 			}
 			if (is_array($_REQUEST['preset']))
