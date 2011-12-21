@@ -761,6 +761,8 @@ class uifelamimail
 			$this->t->set_var('reloadView',$refreshURL);
 			// display a warning if vacation notice is active
 			if(($imapServer instanceof defaultimap) && $imapServer->enableSieve) {
+				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
+				$imapServer->getScript($scriptName);
 				$imapServer->retrieveRules($imapServer->scriptName);
 				$vacation = $imapServer->getVacation($imapServer->scriptName);
 				//_debug_array($vacation);
