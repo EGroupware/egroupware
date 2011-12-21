@@ -1,3 +1,24 @@
+egroupware-epl (11.1.20111221-1) hardy; urgency=low
+
+  * Notification: Add ability to use browser notifications+popups, when available from the browser
+  * Addressbook: ablity to mail (multiple) vCard via context menu
+  * eSync: ability to delete serverside profile via eSync preferences, to remove all traces of previous sync attempts of a device
+  * Wiki:-fix SQL for makro WantedPages
+  *  -bugfix for ->fatal error/exception if search is started with no  searchstring<- now we return everything / all entrys on a missing search string
+  *  -bugfix for ->fatal error/exception when inserting new webdav links in HTML mode<-
+  * Import/export: speed improvements, Scheduled import improvements
+  *  -Add ability to create an export definition based on an existing import definition
+  * calendar/esync: active-sync does NOT want calendar owner as participant
+  * email/sieve: improve connection handling (timeout)
+  * API: fixed a reported deprecated warning on logout when using CAS
+  * eMail: feature to attach the VCard of the current user to every new mail sent via UI
+  * news_admin: allow teaser to hold HTML, and enable CKEditor for editing (toolbar hidden)
+  * calendar: allow to send a meeting request to all participants, add action to calendar event edit to choose between sending meeting requests or a mail with the ics file of an event attached.
+  * infolog/esync: fix for -> tasks created on device where set to completed all the time <-
+  * Infolog: Create calendar events based on infolog entries
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 21 Dec 2011 09:28:58 +0100
+
 egroupware-epl (11.1.20111124-1) hardy; urgency=low
 
   * Addressbook: filter by country or sort by post code of home address
