@@ -968,6 +968,18 @@ class infolog_ui
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
+		{
+			$actions['tracker'] = array(	
+				'icon' => 'tracker/navbar',
+				'caption' => 'Tracker',
+				'group' => $group,
+				'url' => 'menuaction=tracker.tracker_ui.edit&'.
+					egw_link::get_registry('tracker', 'add_app') . '[]=infolog&'.egw_link::get_registry('tracker','add_id').'[]=$id',
+				'allowOnMultiple' => false,
+				'popup' => egw_link::get_registry('tracker', 'add_popup'),
+			);
+		}
 
 		$actions['documents'] = infolog_merge::document_action(
 			$this->prefs['document_dir'], ++$group, 'Insert in document', 'document_',
