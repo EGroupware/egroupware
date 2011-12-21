@@ -1229,8 +1229,10 @@ class calendar_uiforms extends calendar_ui
 								'description'	=> $infolog['info_des'],
 								'location'	=> $infolog['info_location'],
 								'start'		=> $infolog['info_startdate'],
-								'end'		=> $infolog['info_enddate']
+								'end'		=> $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
 							));
+							if(!$event['end']) $event['end'] = $event['start'] + (int) $this->bo->cal_prefs['defaultlength']*60;
+
 							// Match categories by name
 							$event['category'] .= ($event['category'] ? ',':'') . $GLOBALS['egw']->categories->name2id(categories::id2name($infolog['info_cat']));
 							// Only add current user, not all selected calendar users
@@ -1253,6 +1255,17 @@ class calendar_uiforms extends calendar_ui
 							// Copy infolog's links
 							foreach(egw_link::get_links('infolog',$link_id) as $copy_link)
 							{
+								if($copy_link['link_id'] < 0) 
+								{
+									continue;
+									// Doesn't work yet
+									$fileinfo = egw_link::get_link($copy_link['app'], $copy_link['id'], 'infolog',$link_id);
+									$copy_link['id'] = array(
+										'name'	=> $copy_link['id'],
+										'type'	=> $copy_link['type'],
+										'tmp_name' => egw_link::vfs_path('infolog',$link_id,$copy_link['id'])
+									);
+								}
 								egw_link::link('calendar', $link_to_id, $copy_link['app'], $copy_link['id'],$copy_link['remark']);
 							}
 
