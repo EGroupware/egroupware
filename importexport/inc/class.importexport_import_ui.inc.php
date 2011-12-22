@@ -111,7 +111,7 @@
 				$GLOBALS['egw']->js->set_onload('window.close();');
 			}
 
-			$data['appname'] = $appname;
+			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
 			$data['definition'] = $definition;
 			$data['delimiter'] = $definition_obj->plugin_options['delimiter'];
 
