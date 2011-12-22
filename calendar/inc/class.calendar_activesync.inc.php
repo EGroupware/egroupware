@@ -1102,12 +1102,21 @@ return array();	// temporary disabling meeting requests from calendar
 			if ($rrule->exceptions)
 			{
 				// search real / non-virtual exceptions
-				$ex_events =& $this->calendar->search(array(
-					'query' => array('cal_uid' => $event['uid']),
-					'filter' => 'owner',  // return all possible entries
-					'daywise' => false,
-					'date_format' => 'server',
-				));
+				if (!empty($event['uid']))
+				{
+					$ex_events =& $this->calendar->search(array(
+						'query' => array('cal_uid' => $event['uid']),
+						'filter' => 'owner',  // return all possible entries
+						'daywise' => false,
+						'date_format' => 'server',
+					));
+				}
+				else
+				{
+					debugLog(__METHOD__.__LINE__." Exceptions found but no UID given for Event:".$event['id'].' Exceptions:'.array2string($event['recur_exception']));
+				}
+				if (count($ex_events)>=1) debugLog(__METHOD__.__LINE__." found ".count($ex_events)." exeptions for event with UID/ID:".$event['uid'].'/'.$event['id']);
+
 				$message->exceptions = array();
 				foreach($ex_events as $ex_event)
 				{
@@ -1129,11 +1138,15 @@ return array();	// temporary disabling meeting requests from calendar
 				// add rest of exceptions as deleted
 				foreach($event['recur_exception'] as $exception_time)
 				{
-					$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
-					$exception->deleted = 1;
-					$exception->exceptionstarttime = $exception_time;
-					debugLog(__METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
-					$message->exceptions[] = $exception;
+					if (!empty($exception_time))
+					{
+						if (empty($event['uid'])) debugLog(__METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
+						$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
+						$exception->deleted = 1;
+						$exception->exceptionstarttime = $exception_time;
+						debugLog(__METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+						$message->exceptions[] = $exception;
+					}
 				}
 			}
 			/* disabled virtual exceptions for now, as AS does NOT support changed participants or status
