@@ -954,6 +954,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+			if (empty($minimum_uid_length) || $minimum_uid_length<=1) $minimum_uid_length = 8; // we just do not accept no uid, or uid way to short!
 		}
 		else
 		{
