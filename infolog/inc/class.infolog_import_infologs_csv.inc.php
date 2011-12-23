@@ -528,7 +528,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// Search
 			if(egw_link::get_registry($app, 'query'))
 			{
-				$options = array('filter' => array($custom_field => $value));
+				$options = array('filter' => array("$custom_field = $value"));
 				$result = egw_link::query($app, '', $options);
 			
 				// Only one allowed
