@@ -113,6 +113,14 @@ class infolog_merge extends bo_merge
 		$array['links'] = $this->get_links('infolog', $id);
 		$array['attachments'] = $this->get_links('infolog', $id, egw_link::VFS_APPNAME);
 
+		// Check for linked project ID	 
+		$links = egw_link::get_links('infolog', $id, 'projectmanager');	 
+		foreach($links as $link_id => $app_id) {
+			$array['pm_id'] = $app_id;	 
+			$array['project'] = egw_link::title('projectmanager', $app_id);	 
+			break;	 
+		}	 
+ 
 		// Add markers
 		foreach($array as $key => &$value)
 		{
