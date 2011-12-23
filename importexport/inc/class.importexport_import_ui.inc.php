@@ -47,6 +47,7 @@
 				try {
 					$definition_obj = new importexport_definition($content['definition']);
 					if($content['dry-run']) {
+						// Set this so plugin doesn't do any data changes
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
 					if($content['delimiter']) {
@@ -55,11 +56,33 @@
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
 						$definition_obj->plugin_options = $options;
 					}
+
 					$plugin = new $definition_obj->plugin;
 					$file = fopen($content['file']['tmp_name'], 'r');
 
 					// Some of the translation, conversion, etc look here
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
+
+					// Destination if we need to hold the file
+					$cachefile = new egw_cache_files(array());
+					$dst_file = $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+						'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
+					if($content['dry-run'])
+					{
+						echo $this->preview($file, $definition_obj);
+						// Keep file
+						if($dst_file)
+						{
+							if(copy($content['file']['tmp_name'],$dst_file)) {
+								$preserve['file']['tmp_name'] = $dst_file;
+							}
+						}
+					} elseif ($dst_file && $content['file']['tmp_name'] == $dst_file) {
+						// Remove file
+						$cachefile->delete(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
+					}
+					
 					$count = $plugin->import($file, $definition_obj);
 
 					$this->message = lang('%1 records processed', $count);
@@ -88,7 +111,7 @@
 				$GLOBALS['egw']->js->set_onload('window.close();');
 			}
 
-			$data['appname'] = $appname;
+			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
 			$data['definition'] = $definition;
 			$data['delimiter'] = $definition_obj->plugin_options['delimiter'];
 
@@ -166,6 +189,32 @@
 				}
 			}
 			return $response->getXML();
+		}
+
+		/**
+		 * Display the contents of the file for dry runs
+		 */
+		protected function preview(&$_stream, &$definition_obj)
+		{
+			$import_csv = new importexport_import_csv( $_stream, array(
+				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
+				'charset' => $definition_obj->plugin_options['charset'],
+			));
+			// set FieldMapping.
+			$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
+
+			$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+			for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+			{
+				$row_data = $import_csv->get_record();
+				if($row_data === false) break;
+				$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
+				if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+			}
+
+			// Rewind
+			rewind($_stream);
+			return html::table($rows);
 		}
 	}
 ?>
