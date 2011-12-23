@@ -24,6 +24,8 @@ if (!isset($GLOBALS['egw_info']))
 	include_once '../../header.inc.php';
 }
 
+$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+
 /**
  * New eTemplate serverside contains:
  * - main server methods like read, exec

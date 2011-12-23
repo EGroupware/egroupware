@@ -86,6 +86,9 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 
 		// Store properties at top level, so all customfield widgets can share
 		$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
+		// Value needs a text key, so it gets handled as a js object, not an array
+		//$this->setElementAttribute(self::GLOBAL_VALS, 'fields', Array('parse_as_object'=>null));
+		$this->setElementAttribute(self::GLOBAL_VALS, 'fields', Array());
 		if($this->getElementAttribute($form_name, 'app'))
 		{
 			$app =& $this->getElementAttribute($form_name, 'app');
