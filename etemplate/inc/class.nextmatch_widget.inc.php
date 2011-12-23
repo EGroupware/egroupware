@@ -1471,7 +1471,6 @@ class nextmatch_widget
 		$value['start'] = 0;
 		$value['num_rows'] = 500;
 		$value['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
-$start = microtime(true);
 		do
 		{
 			if (!($total = self::call_get_rows($value,$rows)))
@@ -1506,7 +1505,6 @@ $start = microtime(true);
 		}
 		while($total > $value['start']);
 
-$time = microtime(true) - $start;
 		unset($value['csv_export']);
 		$value['start'] = $backup_start;
 		$value['num_rows'] = $backup_num_rows;
@@ -1514,8 +1512,6 @@ $time = microtime(true) - $start;
 		{
 			self::call_get_rows($value);
 		}
-fwrite($fp, "\n\nExport time: " . round($time,3) . 's' );
-
 		if ($fp)
 		{
 			fclose($fp);

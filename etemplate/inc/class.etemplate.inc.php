@@ -25,8 +25,6 @@
 *
 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 */
-//class etemplate extends etemplate_new {}
-//class etemplate_old extends boetemplate
 class etemplate extends boetemplate
 {
 	/**
