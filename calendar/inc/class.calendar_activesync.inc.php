@@ -1201,7 +1201,7 @@ return array();	// temporary disabling meeting requests from calendar
 			$stat = false;
 			// error_log why access is denied (should never happen for everything returned by calendar_bo::search)
 			$backup = $this->calendar->debug;
-			$this->calendar->debug = 2;
+			//$this->calendar->debug = 2;
 			list($id) = explode(':',$id);
 			$this->calendar->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
 			$this->calendar->debug = $backup;
