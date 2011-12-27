@@ -281,18 +281,34 @@ class filemanager_ui
 
 		$content['nm']['msg'] = $msg;
 
-		if ($content['nm']['action'] || $content['nm']['rows'])
+		if (($content['nm']['action'] || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
 		{
 			if ($content['nm']['action'])
 			{
 				$content['nm']['msg'] = self::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
-				unset($content['nm']['action']);
+				// clean up after action
+				unset($content['nm']['selected']);
+				// reset any occasion where action may be stored, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in case of action delete
+				if (isset($content['nm']['action'])) unset($content['nm']['action']);
+				if (isset($content['nm']['nm_action'])) unset($content['nm']['nm_action']);
+				if (isset($content['nm_action'])) unset($content['nm_action']);
+				// we dont use ['nm']['rows']['delete'], so unset it, if it is present
+				if (isset($content['nm']['rows']['delete'])) unset($content['nm']['rows']['delete']);
 			}
 			elseif($content['nm']['rows']['delete'])
 			{
 				$content['nm']['msg'] = self::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
+				// clean up after action
+				unset($content['nm']['rows']['delete']);
+				// reset any occasion where action may be stored, as we use ['nm']['rows']['delete'] anyhow
+				// we clean this up, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in case of action delete
+				if (isset($content['nm']['action'])) unset($content['nm']['action']);
+				if (isset($content['nm']['nm_action'])) unset($content['nm']['nm_action']);
+				if (isset($content['nm_action'])) unset($content['nm_action']);
+				if (isset($content['nm']['selected'])) unset($content['nm']['selected']);
 			}
 			unset($content['nm']['rows']);
+			egw_session::appsession('index','filemanager',$content['nm']);
 		}
 		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
 		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
