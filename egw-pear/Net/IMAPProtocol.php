@@ -1086,7 +1086,7 @@ class Net_IMAPProtocol {
     {
         $ret = $this->_genericCommand( 'CAPABILITY' );
 
-        if(isset( $ret["PARSED"] ) ){
+        if(!PEAR::isError($ret) && isset( $ret["PARSED"] ) ){
 			foreach($ret["PARSED"] as $substruct) {
 				if ($substruct["COMMAND"] == "CAPABILITY") {
 					$subrv=$substruct["EXT"]["CAPABILITY"];
