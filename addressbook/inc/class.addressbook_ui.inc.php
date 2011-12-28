@@ -469,7 +469,7 @@ class addressbook_ui extends addressbook_bo
 			),
 			'group' => $group,
 		);
-		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
+		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?, and are we allowed to edit them
 		{
 			$actions['lists']['children'] += array(
 				'to_list' => array(
@@ -477,7 +477,8 @@ class addressbook_ui extends addressbook_bo
 					'children' => $add_lists,
 					'prefix' => 'to_list_',
 					'icon' => 'foldertree_nolines_plus',
-					'disableClass' => 'rowNoEdit',
+					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them, 
+					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
 				),
 				'remove_from_list' => array(
 					'caption' => 'Remove from distribution list',
