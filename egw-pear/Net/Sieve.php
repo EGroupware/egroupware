@@ -505,8 +505,8 @@ class Net_Sieve
     function _authCRAM_MD5($uid, $pwd, $euser)
     {
         if ( PEAR::isError( $challenge = $this->_doCmd( 'AUTHENTICATE "CRAM-MD5"' ) ) ) {
-            $this->_error=challenge ;
-            return challenge ;
+            $this->_error=$challenge ;
+            return $challenge ;
         }
         $challenge=trim($challenge);
         $challenge = base64_decode( trim($challenge) );
@@ -538,8 +538,8 @@ class Net_Sieve
     function _authDigest_MD5($uid, $pwd, $euser)
     {
         if ( PEAR::isError( $challenge = $this->_doCmd('AUTHENTICATE "DIGEST-MD5"') ) ) {
-            $this->_error=challenge ;
-            return challenge ;
+            $this->_error=$challenge ;
+            return $challenge ;
         }
         $challenge = base64_decode( $challenge );
         $digest = &Auth_SASL::factory('digestmd5');
