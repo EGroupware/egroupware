@@ -677,6 +677,7 @@ function fm_set_editor_toggle_states()
 	}
 }
 
+var scaytStartup;
 // Toggle between the HTML and Plain Text editors
 function fm_toggle_editor(toggler)
 {
@@ -716,10 +717,17 @@ function fm_toggle_editor(toggler)
 		plaineditor.style.display = "none";
 		if (ckeditor)
 		{
-			// nothing to do
+			scaytStartup = ckeditor.config.scayt_autoStartup;
+			if (ckeditor.env.ie) ckeditor.config.scayt_autoStartup = false;
+			ckeditor.config.height = '338px'; // seems to fit the area
+			//ckeditor.config.resize_enabled = true;
 		}
 		else
 		{
+			scaytStartup = ckeditorConfig.scayt_autoStartup;
+			if (CKEDITOR.env.ie) ckeditorConfig.scayt_autoStartup = false;
+			ckeditorConfig.height = "338px"; // seems to fit the area
+			//ckeditorConfig.resize_enabled = true;
 			ckeditor = CKEDITOR.replace('body',ckeditorConfig);
 		}
 		//Copy the current ASCII data and recode it via a XAJAX request
@@ -735,7 +743,8 @@ function fm_toggle_editor(toggler)
 		//Copy the current HTML data and recode it via a XAJAX request
 		var existingHtml = ckeditor.getData();
 		var ckeditor_span = document.getElementById('cke_body');
-		ckeditor.setData('');
+		//ckeditor.config.scayt_autoStartup = false;
+		ckeditor.setData('&nbsp;',function(){this.checkDirty();},true);
 		//Hide the old editor		
 		ckeditor_span.style.display = "none";
 		// we need to destroy the ckeditor, as the/a submit is using the content of the ckeditor instance for content of body
@@ -797,7 +806,7 @@ function showPlainEditor(_content)
 	plaineditor.style.display = "block";
 
 	plaineditor.value = _content;
-
+	plaineditor.focus();
 	hideAjaxLoader(document.getElementById('editorArea'));
 }
 
@@ -808,6 +817,9 @@ function showHTMLEditor(_content)
 
 	//Set the new content
 	ckeditor.setData(_content);
+	//alert((typeof scaytStartup)+'->'+ scaytStartup);
+	ckeditor.focus();
+	if ( typeof scaytStartup == boolean ) ckeditor.config.scayt_autoStartup = scaytStartup;
 
 	//Toggle the plain editor visiblity
 	ckeditor_span.style.display = 'block';
