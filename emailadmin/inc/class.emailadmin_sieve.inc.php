@@ -68,6 +68,7 @@ class emailadmin_sieve extends Net_Sieve
 	function _connect($_icServer,$euser='')
 	{
 		static $isConError;
+		$_icServerID = $_icServer->ImapServerId;
 		if (is_null($isConError)) $isConError =& egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
 		if ( isset($isConError[$_icServerID]) ) 
 		{
