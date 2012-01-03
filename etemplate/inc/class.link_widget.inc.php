@@ -531,15 +531,19 @@ class link_widget
 		switch($extension_data['type'])
 		{
 			case 'link-entry':
+				//error_log(__METHOD__.__LINE__.array2string(array('data'=>$value,'value in'=>$value_in,'extension_data'=>$extension_data,'source'=>function_backtrace())));
 				if (!$value_in['id'] && $extension_data['needed'])
 				{
 					$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
 					return true;
 				}
-				if (is_array($extension_data['default']))
+				// beware: default may be something like Array([link_type] => [query] => [id] => ) so take care for id, in case it is empty AND needed
+				if (is_array($extension_data['default']) && !empty($extension_data['default']))
 				{
 					$value = $extension_data['default'];
 					$value['current'] = $extension_data['app'] ? $value_in['id'] : $value_in['app'].':'.$value_in['id'];
+					// we take care for id, in case it is empty AND needed
+					if(empty($value['id']) && $extension_data['needed']) $value['id'] = $value['current'];
 				}
 				else
 				{
