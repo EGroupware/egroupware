@@ -537,19 +537,38 @@ class link_widget
 					$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
 					return true;
 				}
+				$defaultData = false;
 				// beware: default may be something like Array([link_type] => [query] => [id] => ) so take care for id, in case it is empty AND needed
 				if (is_array($extension_data['default']) && !empty($extension_data['default']))
 				{
-					$value = $extension_data['default'];
-					$value['current'] = $extension_data['app'] ? $value_in['id'] : $value_in['app'].':'.$value_in['id'];
-					// we take care for id, in case it is empty AND needed
-					if(empty($value['id']) && $extension_data['needed']) $value['id'] = $value['current'];
+					// this may fail, if $extension_data['default'][0] is set on purpose
+					foreach($extension_data['default'] as $k => $v)
+					{
+						if ($v) 
+						{
+							$defaultData=true; 
+							if ($k==0 && !empty($value_in['id'])) // we have a valid incomming id, we intend to use that
+							{
+								$defaultData=false;
+								continue;
+							}
+							break;
+						}
+					}
+					if ($defaultData)
+					{
+						$value = $extension_data['default'];
+						$value['current'] = $extension_data['app'] ? $value_in['id'] : $value_in['app'].':'.$value_in['id'];
+						// we take care for id, in case it is empty AND needed
+						if(empty($value['id']) && $extension_data['needed']) $value['id'] = $value['current'];
+					}
 				}
-				else
+				if($defaultData === false)
 				{
 					// this was the line before the default opt, not sure it works well in all case
 					$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
 				}
+				//error_log(__METHOD__.__LINE__.array2string(array('return'=>$value)));
 				return true;
 
 			case 'link-apps':
