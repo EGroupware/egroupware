@@ -275,6 +275,7 @@
 				}
 			}
 			if(count($options['plugin']) == 1) {
+				$this->ajax_get_definitions($appname, $value, $response);
 				$response->assign('exec[plugin]','value',$value);
 			} else {
 				$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
@@ -286,9 +287,13 @@
 		/**
 		* Get definitions via ajax
 		*/
-		public function ajax_get_definitions($appname, $plugin) {
+		public function ajax_get_definitions($appname, $plugin, &$response = null) {
 			$options = self::get_select_options(array('appname'=>$appname, 'plugin'=>$plugin));
-			$response = new xajaxResponse();
+			if($response) {
+				$return = false;
+			} else {
+				$response = new xajaxResponse();
+			}
 			$response->addScript("clear_options('exec[definition]');");
 			$response->addScript("selectbox_add_option('exec[definition]','".lang('Select...')."', '',false);");
 			if(is_array($options['definition'])) {
