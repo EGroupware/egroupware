@@ -2067,3 +2067,14 @@ function calendar_upgrade1_9_002()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.003';
 }
 
+
+/**
+ * Add index for cal_modified and cal_user_modified to improve ctag and etag generation on big installtions
+ */
+function calendar_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','cal_modified');
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_user','cal_user_modified');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.004';
+}

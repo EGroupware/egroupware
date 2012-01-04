@@ -36,7 +36,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
-		'ix' => array('cal_uid','cal_owner','cal_deleted','caldav_name'),
+		'ix' => array('cal_uid','cal_owner','cal_modified','cal_deleted','caldav_name'),
 		'uc' => array()
 	),
 	'egw_cal_holidays' => array(
@@ -82,7 +82,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('cal_id','cal_recur_date','cal_user_type','cal_user_id'),
 		'fk' => array(),
-		'ix' => array(array('cal_user_type','cal_user_id')),
+		'ix' => array('cal_user_modified',array('cal_user_type','cal_user_id')),
 		'uc' => array()
 	),
 	'egw_cal_extra' => array(
