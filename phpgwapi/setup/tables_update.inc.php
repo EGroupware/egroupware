@@ -326,3 +326,13 @@ function phpgwapi_upgrade1_9_011()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.012';
 }
+
+/**
+ * Add index for contact_modified to improve performance of ctag generation on big installtions
+ */
+function phpgwapi_upgrade1_9_012()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook','contact_modified');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.013';
+}
