@@ -1,3 +1,15 @@
+egroupware-epl (11.1.20120104-1) hardy; urgency=low
+
+  * Infolog/Tracker: Create tracker tickets from infolog entries
+  * Calendar/Esync: do not allow a minimum length of less then 1 for uid; esync: if no UID given, do not even try to fetch exceptions.
+  * Import/Export: Add data preview to import test mode
+  * Filemanager: delete->reset any occasion where the delete action may be stored, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in certain conditions (delete a file, upload a file with the same name to this very folder, continue uploading files to that folder: this process may lead to the deletion of the former file while uploading other files)
+  * Addressbook: distributionlists, allow to add any seen contact to an available (and editable) distributionlist
+  * Felamimail: handle IE (8) problem regarding toggling editor modes in compose window
+  * API/customfields: fix for Stylite Ticket#2629 ->Mandatory custom field not saved<- fix for customfields (if mandatory) where not saved on first attempt, after failed formvalidation.
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 04 Jan 2012 10:20:00 +0100
+
 egroupware-epl (11.1.20111221-1) hardy; urgency=low
 
   * Notification: Add ability to use browser notifications+popups, when available from the browser
