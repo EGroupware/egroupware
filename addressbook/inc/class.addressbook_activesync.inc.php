@@ -583,10 +583,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			}
 			// for all-in-one addressbook, account is meaningless and wrong!
 			// addressbook_bo::save() keeps the owner or sets an appropriate one if none given
+			if (!isset($contact['private'])) $contact['private'] = (int)$is_private;
 			if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
 				$contact['owner'] = $account;
-				$contact['private'] = $is_private;
+				$contact['private'] = (int)$is_private;
 			}
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
