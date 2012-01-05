@@ -54,7 +54,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.9.001">
+	<template id="filemanager.index" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="250"/>
@@ -67,17 +67,17 @@
 				</row>
 				<row>
 					<hbox span="all">
-						<image label="Up" src="goup" href="filemanager.filemanager_ui.index&amp;path=.."/>
-						<image label="Go to your home directory" src="gohome" href="filemanager.filemanager_ui.index&amp;path=~"/>
+						<image label="Up" src="goup" options="filemanager.filemanager_ui.index&amp;path=.."/>
+						<image label="Go to your home directory" src="gohome" options="filemanager.filemanager_ui.index&amp;path=~"/>
 						<vfs-name label="Path" id="nm[path]" onchange="1" options="80,,1" class="address"/>
 						<button label="Go to" id="button[go]" image="key_enter"/>
 						<image src="buttonseparator"/>
 						<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[{$cont[nm][path]}]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
 						<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;" image="button_createdir" ro_image="createdir_disabled"/>
 						<button label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;" image="link" ro_image="link_disabled"/>
-						<button statustext="call:clipboard_tooltip(this)" id="button[paste]" onclick="return clipboard_files.length &gt; 0;" image="editpaste" ro_image="editpaste_disabled"/>
-						<button statustext="call:clipboard_tooltip(this)" id="button[linkpaste]" onclick="return clipboard_files.length &gt; 0;" image="linkpaste" ro_image="linkpaste_disabled"/>
-						<button statustext="call:clipboard_tooltip(this)" id="button[mailpaste]" onclick="if (clipboard_files.length) open_mail(); return false;" image="mailpaste" ro_image="mailpaste_disabled"/>
+						<button statustext="call:clipboard_tooltip(this);" id="button[paste]" onclick="return clipboard_files.length &gt; 0;" image="editpaste" ro_image="editpaste_disabled"/>
+						<button statustext="call:clipboard_tooltip(this);" id="button[linkpaste]" onclick="return clipboard_files.length &gt; 0;" image="linkpaste" ro_image="linkpaste_disabled"/>
+						<button statustext="call:clipboard_tooltip(this);" id="button[mailpaste]" onclick="if (clipboard_files.length) open_mail(); return false;" image="mailpaste" ro_image="mailpaste_disabled"/>
 						<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 					</hbox>
 				</row>
@@ -85,7 +85,7 @@
 					<nextmatch id="nm" options="filemanager.index.rows" span="all"/>
 				</row>
 				<row valign="bottom" disabled="!@nm[selectcols]=/legacy_actions/">
-					<description font_style="1"/>
+					<description options="1"/>
 					<hbox align="right">
 						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('filemanager.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
 						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('filemanager.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
