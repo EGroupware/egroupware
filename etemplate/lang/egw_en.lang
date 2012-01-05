@@ -251,6 +251,7 @@ linkapps	etemplate	en	Link apps
 linkentry	etemplate	en	Link entry
 linklist	etemplate	en	Link list
 links and attached files	preferences	en	Links and attached files
+links to specified application.  example: {{links/addressbook}}	etemplate	en	Links to specified application.  Example: {{links/addressbook}}
 linkstring	etemplate	en	Link string
 linkto	etemplate	en	Link to
 list of files linked to the current record	preferences	en	List of files linked to the current record
