@@ -1260,6 +1260,8 @@ class etemplate extends boetemplate
 				{
 					$cell_options = $cell['type'] == 'int' ? 5 : 8;
 				}
+				// html5 input type=nummeric seems to ignore size, setting a width instead
+				$options .= ' style="width: '.(3+$cell_options).'ex"';
 				if (($type == 'float' || !is_numeric($pre)) && $value && $pre)
 				{
 					$value = is_numeric($pre) ? self::number_format($value,$pre,$readonly) : sprintf($pre,$value);
