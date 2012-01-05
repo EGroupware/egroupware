@@ -387,6 +387,11 @@ class country
 	{
 		if (!$name) return '';	// nothing to do
 
+		if (strlen($name) == 2 && isset($this->country_array[$name]))
+		{
+			return $name;	// $name is already a country-code
+		}
+
 		if (($code = array_search(strtoupper($name),$this->country_array)) !== false)
 		{
 			return $code;
