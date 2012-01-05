@@ -10,7 +10,7 @@
 
 
 /**
- * Add appointment for selected contacts, call default nm_action after some checks
+ * Add appointment or show calendar for selected contacts, call default nm_action after some checks
  * 
  * @param _action
  * @param _senders
@@ -25,13 +25,13 @@ function add_cal(_action, _senders)
 	else
 	{
 		// call nm_action's popup, but already replace id's in url, because they need to be prefix with a "c"
-		_action.data.nm_action = "popup";
+		if (_action.data.popup) _action.data.nm_action = "popup";
 		var ids = "";
 		for (var i = 0; i < _senders.length; i++)
 		{
 			ids += "c" + _senders[i].id + ((i < _senders.length - 1) ? "," : "");
 		}
-		_action.data.url = _action.data.url.replace(/participants=.*$/,"participants="+ids);
+		_action.data.url = _action.data.url.replace(/=c%24id/,"="+ids);
 	}
 	nm_action(_action, _senders);
 }
