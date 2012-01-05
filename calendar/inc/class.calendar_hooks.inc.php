@@ -452,6 +452,16 @@ class calendar_hooks
 				'admin'  => False,
 				'forced' => 'ical',
 			),
+			'notify_externals' => array(
+				'type'   => 'select',
+				'label'  => 'Notify non-EGroupware users about event updates',
+				'name'   => 'notify_externals',
+				'values' => $updates,
+				'help'   => 'Do you want non-EGroupware participants of events you created to be automatically notified about new or changed appointments?',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'no',
+			),
 			'export_timezone' => array(
 				'type'   => 'select',
 				'label'  => 'Timezone of event iCal file import/export',

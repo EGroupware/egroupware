@@ -503,9 +503,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $old_event Event before the change
 	 * @param array $new_event Event after the change
-	 * @return boolean true = update requested, flase otherwise
+	 * @param string $role we treat CHAIR like event owners
+	 * @return boolean true = update requested, false otherwise
 	 */
-	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event)
+	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -528,6 +529,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			case 'time_change_4h':
 			case 'time_change':
+			default:
 				$diff = max(abs($this->date2ts($old_event['start'])-$this->date2ts($new_event['start'])),
 					abs($this->date2ts($old_event['end'])-$this->date2ts($new_event['end'])));
 				$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
@@ -536,13 +538,17 @@ class calendar_boupdate extends calendar_bo
 					++$want_update;
 				}
 			case 'add_cancel':
-				if ($old_event['owner'] == $userid && $msg_is_response ||
+				if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
 					$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 				{
 					++$want_update;
 				}
 				break;
 			case 'no':
+				if ($msg_is_response && $role == 'CHAIR')	// always notify chairs!
+				{
+					++$want_update;
+				}
 				break;
 		}
 		//error_log(__METHOD__."(userid=$userid,,msg_type=$msg_type,...) msg_is_response=$msg_is_response, want_update=$want_update");
@@ -683,19 +689,31 @@ class calendar_boupdate extends calendar_bo
 		if ($old_event != False) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
 		{
+			unset($res_info);
 			calendar_so::split_status($statusid, $quantity, $role);
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
 
-			if (!is_numeric($userid) && $userid[0] == 'e')
-			{
-				if ($role != 'CHAIR' || $msg_type == MSG_ALARM) continue;	// only notify "external" chairs, but not for alarms
-				$userid = substr($userid,1);
-			}
-			elseif (!is_numeric($userid))
+			if (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
 				$userid = $res_info['responsible'];
-				if (!isset($userid)) continue;
+				if (!isset($userid))
+				{
+					if (empty($res_info['email'])) continue;	// no way to notify
+					// check if event-owner wants non-EGroupware users notified
+					if (is_null($owner_prefs))
+					{
+						$preferences = new preferences($old_event['owner']);
+						$owner_prefs = $preferences->read_repository();
+					}
+					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
+						(empty($owner_prefs['calendar']['notify_externals']) ||
+						$owner_prefs['calendar']['notify_externals'] == 'no'))
+					{
+						continue;
+					}
+					$userid = $res_info['email'];
+				}
 			}
 
 			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
@@ -710,21 +728,27 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (is_numeric($userid))
 				{
-					$preferences = CreateObject('phpgwapi.preferences',$userid);
+					$preferences = new preferences($userid);
 					$part_prefs = $preferences->read_repository();
 
-					if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event))
-					{
-						continue;
-					}
 					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 					$details['to-fullname'] = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
 				}
-				else	// external email address: use current users preferences, plus some hardcoded settings (eg. ical notification)
+				else	// external email address: use preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
-					$details['to-fullname'] = $userid;
-					$part_prefs = $GLOBALS['egw_info']['user']['preferences'];
+					if (is_null($owner_prefs))
+					{
+						$preferences = new preferences($old_event['owner']);
+						$owner_prefs = $preferences->read_repository();
+					}
+					$part_prefs = $owner_prefs;
+					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
 					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
+					$details['to-fullname'] = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
+				}
+				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
+				{
+					continue;
 				}
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
