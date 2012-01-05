@@ -1598,7 +1598,7 @@ blockquote[type=cite] {
 			// figure out which folder to select, can be passed by GET, preset by this->mailbox or passed by parameter
 			if (!empty($_GET['folder'])) $this->mailbox  = base64_decode($_GET['folder']);
 			// mailFolder set but not existing, no use to be tried for message
-			if (!empty($mailFolder) && !felamimail_bo::folderExists($mailFolder,true)) $mailFolder = '';
+			if (!empty($mailFolder) && !$this->bofelamimail->folderExists($mailFolder,true)) $mailFolder = '';
 			// fall back to constructor/preset class var for folder, or use the passed parameter (which is validated by now for existance)
 			if (empty($mailFolder)) $folder = $this->mailbox;
 			else $folder = $mailFolder;
