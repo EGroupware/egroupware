@@ -110,13 +110,13 @@ class infolog_merge extends bo_merge
 		}
 
 		// Links
-		$array['links'] = $this->get_links('infolog', $id, '!'.egw_link::VFS_APPNAME);
+		$array['links'] = $this->get_links('infolog', $id, '!'.egw_link::VFS_APPNAME, array($array['info_link']['id']));
 		$array['attachments'] = $this->get_links('infolog', $id, egw_link::VFS_APPNAME);
-		$array['links_attachments'] = $this->get_links('infolog', $id);
+		$array['links_attachments'] = $this->get_links('infolog', $id, '', array($array['info_link']['id']));
 		// Need to set each app, to make sure placeholders are removed
 		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
 		{
-			$array["links/$app"] = $this->get_links('infolog',$id,$app);
+			$array["links/$app"] = $this->get_links('infolog',$id,$app, array($array['info_link']['id']));
 		}
 
 		// Check for linked project ID	 
