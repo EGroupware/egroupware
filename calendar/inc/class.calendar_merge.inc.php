@@ -212,6 +212,10 @@ class calendar_merge extends bo_merge
 		$replacements['$$'.($prefix?$prefix.'/':'').'links$$'] = $this->get_links('calendar', $event['id'], '!'.egw_link::VFS_APPNAME);
  		$replacements['$$'.($prefix?$prefix.'/':'').'attachments$$'] = $this->get_links('calendar', $event['id'], egw_link::VFS_APPNAME);
 		$replacements['$$'.($prefix?$prefix.'/':'').'links_attachments$$'] = $this->get_links('calendar', $event['id']);
+		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
+                {
+                        $array["$$".($prefix?$prefix.'/':'')."links/{$app}$$"] = $this->get_links('calendar',$id, $app);
+                }
 
 		return $replacements;
 	}
@@ -572,6 +576,7 @@ class calendar_merge extends bo_merge
 			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
 			'attachments' => lang('List of files linked to the current record'),
 			'links_attachments' => lang('Links and attached files'),
+			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),

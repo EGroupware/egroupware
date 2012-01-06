@@ -128,6 +128,10 @@ class timesheet_merge extends bo_merge
 		$array['links'] = $this->get_links('timesheet', $id, '!'.egw_link::VFS_APPNAME);
  		$array['attachments'] = $this->get_links('timesheet', $id, egw_link::VFS_APPNAME);
 		$array['links_attachments'] = $this->get_links('timesheet', $id);
+		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
+		{
+			$array["$$".($prefix?$prefix.'/':'')."links/{$app}$$"] = $this->get_links('timesheet',$id, $app);
+		}
 
 		// Add markers
 		foreach($array as $key => &$value)
@@ -190,6 +194,7 @@ class timesheet_merge extends bo_merge
 			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
  			'attachments' => lang('List of files linked to the current record'),
 			'links_attachments' => lang('Links and attached files'),
+			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
