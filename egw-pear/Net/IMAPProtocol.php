@@ -1144,18 +1144,18 @@ class Net_IMAPProtocol {
 
         $ret = $this->_genericCommand('STATUS', $mailbox_name.' ('.$request.')');
 
-        if (isset($ret['PARSED'])) {
-			foreach ($ret['PARSED'] as &$parsed)
-			{
-				if (!empty($parsed['EXT']))
-				{
-					if(empty($ret['RESPONSE']['CODE'])) $ret['RESPONSE']['CODE'] ='OK';
-					$ret['PARSED'] =  $parsed['EXT'];
-					break;
-				}
-			}
+        if (!PEAR::isError($ret) && isset($ret['PARSED'])) {
+            foreach ($ret['PARSED'] as &$parsed)
+            {
+                if (!empty($parsed['EXT']))
+                {
+                    if(empty($ret['RESPONSE']['CODE'])) $ret['RESPONSE']['CODE'] ='OK';
+                    $ret['PARSED'] =  $parsed['EXT'];
+                    break;
+                }
+            }
         }
-		return $ret;
+        return $ret;
     }
 
 
