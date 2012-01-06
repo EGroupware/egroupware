@@ -108,12 +108,6 @@ class egw_link extends solink
 	 * @var array
 	 */
 	static $app_register = array(
-		'felamimail' => array(
-			'add' => array(
-				'menuaction' => 'felamimail.uicompose.compose',
-			),
-			'add_popup' => '700x750',
-		),
 		'home-accounts' => array(	// user need run-rights for home
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',

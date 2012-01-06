@@ -539,7 +539,7 @@ class customfields_widget
 
 		if (is_null($link_types))
 		{
-			$link_types = array_keys(egw_link::app_list());
+			$link_types = array_keys(array_intersect(egw_link::app_list('query'),egw_link::app_list('title')));
 			$link_types[] = 'link-entry';
 		}
 		return $link_types;
