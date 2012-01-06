@@ -301,12 +301,22 @@ abstract class bo_merge
 	 *
 	 * Uses egw_link system to get link titles
 	 */
-	protected function get_links($app, $id, $only_app='')
+	protected function get_links($app, $id, $only_app='', $exclude = array())
 	{
 		$links = egw_link::get_links($app, $id, $only_app);
 		$link_titles = array();
 		foreach($links as $link_id => $link_info)
 		{
+			// Using only_app only returns the ID
+			if(!is_array($link_info) && $only_app && $only_app[0] !== '!')
+			{
+				$link_info = array(
+					'app'	=> $only_app,
+					'id'	=> $link_info
+				);
+			}
+			if($exclude && in_array($link_info['id'], $exclude)) continue;
+
 			$title = egw_link::title($link_info['app'], $link_info['id']);
 			if(class_exists('stylite_links_stream_wrapper') && $link_info['app'] != egw_link::VFS_APPNAME)
 			{
