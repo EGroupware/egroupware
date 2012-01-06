@@ -318,6 +318,8 @@ function select_toggle(file)
 
 		unset($apps['mydms']);	// they do NOT support adding files to VFS
 		unset($apps['wiki']);
+		unset($apps['home-accounts']);
+		unset($apps['addressbook-email']);
 
 		return $apps;
 	}
