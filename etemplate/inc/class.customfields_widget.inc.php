@@ -165,7 +165,7 @@ class customfields_widget
 					$cell['sel_options'][$lname] = lang($label);
 					$fields_with_vals[]=$lname;
 				}
-				$link_types = egw_link::app_list();
+				$link_types = array_intersect(egw_link::app_list('query'),egw_link::app_list('title'));
 				ksort($link_types);
 				foreach($link_types as $lname => $label) $cell['sel_options'][$lname] = '- '.$label;
 				$cell['no_lang'] = true;
@@ -537,7 +537,7 @@ class customfields_widget
 
 		if (is_null($link_types))
 		{
-			$link_types = array_keys(egw_link::app_list());
+			$link_types = array_keys(array_intersect(egw_link::app_list('query'),egw_link::app_list('title')));
 			$link_types[] = 'link-entry';
 		}
 		return $link_types;
