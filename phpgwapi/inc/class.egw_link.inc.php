@@ -660,7 +660,7 @@ class egw_link extends solink
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{
 			if (self::DEBUG) echo "<p>".__METHOD__."('$app','$id') something is wrong!!!</p>\n";
-			return array();
+			return false; //array(); // not sure why it should return an array on failure, as the description states boolean/string
 		}
 		$method = $reg['title'];
 
