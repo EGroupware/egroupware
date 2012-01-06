@@ -97,15 +97,25 @@ class notifications_email implements notifications_iface {
 		$this->mail->FromName = $this->sender->account_fullname;
 		$this->mail->Subject = $_subject;
 		//error_log(__METHOD__.__LINE__.array2string($_attachments));
+		$isMeetingRequestNotif = false;
 		if ($_attachments && stripos($_attachments[0]->type,"text/calendar; method=")!==false)
 		{
 			$this->mail->AltExtended = $_attachments[0]->string;
 			$this->mail->AltExtendedContentType = $_attachments[0]->type;
 			unset($_attachments[0]);
+			$isMeetingRequestNotif = true;
 		}
-		$this->mail->IsHTML(true);
-		$this->mail->Body = $body_html;
-		$this->mail->AltBody = $body_plain;
+		// do not send html part if this is a meeting request notification
+		$this->mail->IsHTML(($isMeetingRequestNotif?false:true));
+		if ($isMeetingRequestNotif===false)
+		{
+			$this->mail->Body = $body_html;
+			$this->mail->AltBody = $body_plain;
+		}
+		else
+		{
+			$this->mail->Body = $body_plain;
+		}
 		if(is_array($_attachments) && count($_attachments) > 0)
 		{
 			foreach($_attachments as $attachment)
