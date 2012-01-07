@@ -85,7 +85,7 @@ class uiaccountsel
 	 */
 	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false,$label_callback=null)
 	{
-		error_log(__METHOD__."('$name',".array2string($selected).",'$use',rows=$lines,$not,'$options','$onchange',".array2string($select).",$nohtml,$label_callback) account_selection=$this->account_selection");
+		//error_log(__METHOD__."('$name',".array2string($selected).",'$use',rows=$lines,$not,'$options','$onchange',".array2string($select).",$nohtml,$label_callback) account_selection=$this->account_selection");
 		$multi_size=4;
 		if ($lines < 0)
 		{
