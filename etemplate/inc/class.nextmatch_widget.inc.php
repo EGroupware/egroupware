@@ -575,10 +575,14 @@ class nextmatch_widget
 	 *   + 'submit' default action, sets nm[action], nm[selected] and nm[select_all]
 	 *   + 'location' redirects / set location.href to 'url' attribute
 	 *   + 'popup'  opens popup with url given in 'url' attribute
+	 *   + 'egw_open' call egw_open with egw_open parameters separated by dash (eg. "edit-infolog") and selected id's
+	 *   + 'open_popup' open div styled as popup contained in current form and named action.id+'_popup'
 	 * - string 'url' url for location or popup
 	 * - string 'target' target for location or popup
+	 * - string 'targetapp' appname for location and jdots template
 	 * - string 'width' for popup
 	 * - string 'height' for popup
+	 * - string 'egw_open' dash-separated parameters for nm_action=egw_open, eg. "edit-infolog"
 	 * - string 'confirm' confirmation message
 	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
 	 *
