@@ -557,8 +557,9 @@ class addressbook_ui extends addressbook_bo
 					'calendar_view' => array(
 						'caption' => 'Show',
 						'icon' => 'view',
-						'url' => 'menuaction=calendar.calendar_uiviews.index&owner=c$id',
+						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id',
 						'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+						'targetapp' => 'calendar',	// open in calendar tab
 					),
 					'calendar_add' => array(
 						'caption' => 'Add appointment',

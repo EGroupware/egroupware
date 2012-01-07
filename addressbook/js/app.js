@@ -31,7 +31,8 @@ function add_cal(_action, _senders)
 		{
 			ids += "c" + _senders[i].id + ((i < _senders.length - 1) ? "," : "");
 		}
-		_action.data.url = _action.data.url.replace(/=c%24id/,"="+ids);
+		// we cant just replace $id, as under jdots this can get called multiple times (with already replaced url)!
+		_action.data.url = _action.data.url.replace(/(owner|participants)=(0%2C)?[^&]+/,"$1=$2"+ids);
 	}
 	nm_action(_action, _senders);
 }
