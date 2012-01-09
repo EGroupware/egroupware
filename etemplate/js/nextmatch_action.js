@@ -166,7 +166,11 @@ function nm_action(_action, _senders)
 			break;
 			
 		case 'location':
-			if(target)
+			if (typeof _action.data.targetapp != 'undefined')
+			{
+				top.egw_appWindowOpen(_action.data.targetapp, url);
+			}	
+			else if(target)
 			{
 				window.open(url, target);
 			}

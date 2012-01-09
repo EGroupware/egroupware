@@ -163,7 +163,12 @@ class calendar_uilist extends calendar_ui
 				'actions'         => $this->get_actions(),
 			);
 		}
-		if ($_GET['search']) {
+		if (isset($_GET['filter']) && in_array($_GET['filter'],array_keys($this->date_filters)))
+		{
+			$content['nm']['filter'] = $_GET['filter'];
+		}
+		if ($_GET['search'])
+		{
 			$content['nm']['search'] = $_GET['search'];
 		}
 		if (isset($_REQUEST['keywords']))	// new search => set filters so every match is shown

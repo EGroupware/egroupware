@@ -476,7 +476,7 @@ class addressbook_ui extends addressbook_bo
 					'children' => $add_lists,
 					'prefix' => 'to_list_',
 					'icon' => 'foldertree_nolines_plus',
-					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them, 
+					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them,
 					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
 				),
 				'remove_from_list' => array(
@@ -550,11 +550,24 @@ class addressbook_ui extends addressbook_bo
 		{
 			$actions['calendar'] = array(
 				'icon' => 'calendar/navbar',
-				'caption' => 'Add appointment',
-				'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
-				'popup' => egw_link::get_registry('calendar', 'add_popup'),
+				'caption' => 'Calendar',
 				'group' => $group,
-				'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+				'children' => array(
+					'calendar_view' => array(
+						'caption' => 'Show',
+						'icon' => 'view',
+						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id',
+						'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+						'targetapp' => 'calendar',	// open in calendar tab
+					),
+					'calendar_add' => array(
+						'caption' => 'Add appointment',
+						'icon' => 'new',
+						'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
+						'popup' => egw_link::get_registry('calendar', 'add_popup'),
+						'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+					),
+				),
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
@@ -565,6 +578,8 @@ class addressbook_ui extends addressbook_bo
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
 				'allowOnMultiple' => false,
 				'group' => $group,
+				// disable for for org-views, as it needs contact-ids
+				'enabled' => !isset($this->org_views[(string) $org_view]),
 			);
 		}
 
@@ -883,7 +898,7 @@ class addressbook_ui extends addressbook_bo
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
-			case 'calendar':	// add appointment for org-views, other views are handled directly in javascript
+			case 'calendar_add':	// add appointment for org-views, other views are handled directly in javascript
 				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
 				egw_framework::set_onload(
 					"egw_openWindowCentered2('".egw::link('/index.php',array(
@@ -892,6 +907,13 @@ class addressbook_ui extends addressbook_bo
 					))."','_blank',$width,$height);");
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
+
+			case 'calendar_view':	// show calendar for org-views, other views are handled directly in javascript
+				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
+				egw::redirect_link('/index.php',array(
+					'menuaction' => 'calendar.calendar_uiviews.index',
+					'owner' => 'c'.implode(',c',$checked),
+				));
 		}
 		foreach($checked as $id)
 		{
