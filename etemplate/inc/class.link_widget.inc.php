@@ -324,6 +324,15 @@ class link_widget
 					$value[$row]['icon'] = egw_link::get_registry($value[$row]['app'], 'icon');
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
+					if(!egw_link::is_popup($link['app'],'view') && etemplate::$request->output_mode == 2)
+					{
+						// If link doesn't want a popup, make sure to open it in appropriate tab of main window
+						$value[$row]['view'] = "javascript:if(typeof opener.top.framework != 'undefined') {
+							opener.top.egw_appWindowOpen('{$link['app']}','".egw::link('/index.php',$value[$row]['view'])."');
+						} else {
+							opener.open('".egw::link('/index.php',$value[$row]['view'])."','".$value[$row]['target']."');
+						}";
+					}
 				}
 			}
 			break;
