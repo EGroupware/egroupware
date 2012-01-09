@@ -176,7 +176,6 @@ class importexport_export_csv implements importexport_iface_export_record
 				}
 			}
 			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
-			$mapping = $this->translation->convert( $mapping, $this->translation->charset(), $this->csv_charset );
 			self::fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		}
 
