@@ -112,11 +112,13 @@ class customfields_widget
 	function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
 	{
 		list($app) = explode('.',$tmpl->name);
-		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
-		if ($app && $app != 'stylite' && $app != $this->appname && ($this->appname == 'etemplate' || !$this->customfields || etemplate::$hooked))
+
+		// if we are in the etemplate editor or a different app, load the cf's from the app the tpl belongs to
+		if ($app && $app != 'stylite' && $app != $this->appname)
 		{
 			self::__construct(null,$app); 	// app changed
 		}
+
 		list($type2,$use_private,$field_names) = explode(',',$cell['size'],3);
 		$fields_with_vals=array();
 
