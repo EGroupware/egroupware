@@ -768,6 +768,21 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
+	 * Display a button to close one of multiple calendars shown
+	 *
+	 * Necessare to eg. close the calendar of a contact
+	 *
+	 * @param string $uid calendar to close
+	 */
+	private function close_button($uid)
+	{
+		return html::a_href(html::image('phpgwapi', 'close.button', 'Close','style="width: 12px; padding-top: 1px;"'), array(
+			'menuaction' => 'calendar.calendar_uiviews.index',
+			'close' => $uid,
+		));
+	}
+
+	/**
 	 * Displays the weekview, with 5 or 7 days
 	 *
 	 * @param int $days=0 number of days to show, if 0 (default) the value from the URL or the prefs is used
@@ -861,6 +876,7 @@ class calendar_uiviews extends calendar_ui
 			{
 				$search_params['users'] = $uid;
 				$content .= '<b>'.$label."</b>\n";
+				$content .= $this->close_button($uid);
 				$content .= $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),
 					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
 			}
@@ -925,7 +941,7 @@ class calendar_uiviews extends calendar_ui
 				foreach($this->_get_planner_users(false) as $uid => $label)
 				{
 					$search_params['users'] = $uid;
-					list(,$dayEvents['<b>'.$label.'</b>']) = each($this->bo->search($search_params));
+					list(,$dayEvents['<b>'.$label.'</b>'.$this->close_button($uid)]) = each($this->bo->search($search_params));
 					$owner[] = $uid;
 				}
 			}
@@ -959,7 +975,7 @@ class calendar_uiviews extends calendar_ui
 				{
 					foreach(array('task','phone','note') as $type)
 					{
-						$todo_label .= '&nbsp;'.html::a_href( html::image('infolog',$type,lang('Add')),'infolog.uiinfolog.edit',array(
+						$todo_label .= '&nbsp;'.html::a_href( html::image('infolog',$type,lang('Add')),'infolog.infolog_ui.edit',array(
 							'type' => $type,
 							'start_time' => $ts,
 						),' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
@@ -1230,8 +1246,11 @@ function open_edit(series)
 				if ($t == $this->wd_start)
 				{
 					list($id) = @each($daysEvents);
-					$id = 'wd_start_'.$id;
-					$set_id = ' id="'.$id.'"';
+					if (is_numeric($id))
+					{
+						$id = 'wd_start_'.$id;
+						$set_id = ' id="'.$id.'"';
+					}
 				}
 				$html .= $indent."\t".'<div'.$set_id.' class="calTimeRow'.($off ? 'Off row_off' : ' row_on').
 					'" style="height: '.$this->rowHeight.'%; top:'. $i*$this->rowHeight .'%;">'."\n";
@@ -2228,6 +2247,7 @@ function open_edit(series)
 				}
 			}
 		}
+		$owners = explode(',',$this->owner);
 		// display a plannerRowWidget for each row (user or category)
 		foreach($sort2label as $sort => $label)
 		{
@@ -2244,6 +2264,11 @@ function open_edit(series)
 				$start = $time->format('ts');
 				$time->modify('+1month -1second');
 				$end = $time->format('ts');
+			}
+			// display close button only for directly set users, eg. not group-members (as we cant unset them!)
+			if ($by_cat === 'user' && in_array($sort, $owners))
+			{
+				$label .= $this->close_button($sort);
 			}
 			$content .= $this->plannerRowWidget(isset($rows[$sort]) ? $rows[$sort] : array(),$start,$end,$label,$class,$indent."\t");
 		}

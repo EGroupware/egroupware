@@ -328,6 +328,13 @@ class calendar_ui
 			}
 			$this->$state = $states[$state];
 		}
+		// remove a given calendar from the view
+		if (isset($_GET['close']) && ($k = array_search($_GET['close'], $owners=explode(',',$this->owner))) !== false)
+		{
+			unset($owners[$k]);
+			$this->owner = $states['owner'] = implode(',',$owners);
+		}
+
 		if (substr($this->view,0,8) == 'planner_')
 		{
 			$states['sortby'] = $this->sortby = $this->view == 'planner_cat' ? 'category' : 'user';
