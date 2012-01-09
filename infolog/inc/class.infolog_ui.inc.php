@@ -734,6 +734,7 @@ class infolog_ui
 		$sel_options = array(
 			'info_type'     => $this->bo->enums['type'],
 			'pm_id'      => array(lang('No project')),
+			'info_priority' => $this->bo->enums['priority'],
 		);
 
 		egw_framework::validate_file('.','index','infolog');
