@@ -2,7 +2,7 @@
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
 %1 records processed	importexport	de	%1 Einträge ausgeführt
 %s just me	importexport	de	%s Nur für mich persönlich verfügbar
-(* for all)	importexport	de	Für alle
+(* for all)	importexport	de	(* Für alle)
 (0-23)	importexport	de	(0-23)
 (0-6, 0=sun)	importexport	de	(0-6, 0=Sonntag)
 *contact id cannot be changed by import	importexport	de	*Contact ID kann nicht durch den Import verändert werden
