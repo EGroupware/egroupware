@@ -729,7 +729,7 @@ class resources_ui
 				array_merge($resources,$res_cats),
 				$no_lang=true,
 				$options='style="width: 100%;" onchange="load_cal(\''.
-					egw::link('/index.php',$param,false).'\',\'uical_select_resource\');" id="uical_select_resource"',
+					egw::link('/index.php',$param,false).'\',\'uical_select_resource\',true);" id="uical_select_resource"',
 				$multiple=count($selected) ? 4 : 0
 			);
 			return array(

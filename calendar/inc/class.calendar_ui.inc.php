@@ -794,7 +794,7 @@ class calendar_ui
 			$file[] = array(
 				'text' => "
 <script type=\"text/javascript\">
-function load_cal(url,id) {
+function load_cal(url,id,no_reset) {
 	var owner='';
 	var i = 0;
 	selectBox = document.getElementById(id);
@@ -804,7 +804,8 @@ function load_cal(url,id) {
 		}
 	}
 	if (owner) {
-		egw_appWindow('calendar').location=url+'&owner=0,'+owner;
+		if (typeof no_reset == 'unknown') no_reset = false;
+		egw_appWindow('calendar').location=url+'&owner='+(no_reset?'':'0,')+owner;
 	}
 }
 </script>
