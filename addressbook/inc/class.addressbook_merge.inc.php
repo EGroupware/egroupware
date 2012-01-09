@@ -54,6 +54,10 @@ class addressbook_merge extends bo_merge
 			'$$attachments$$'	=> $this->get_links('addressbook', $id, egw_link::VFS_APPNAME),
 			'$$links_attachments$$'	=> $this->get_links('addressbook', $id)
 		);
+		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
+		{
+			$array['$$links/'.$app.'$$'] = $this->get_links('addressbook',$id, $app);
+		}
 		if (!(strpos($content,'$$calendar/') === false))
 		{
 			$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
@@ -182,6 +186,7 @@ class addressbook_merge extends bo_merge
 			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
  			'attachments' => lang('List of files linked to the current record'),
 			'links_attachments' => lang('Links and attached files'),
+			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
