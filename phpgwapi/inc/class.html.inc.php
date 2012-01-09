@@ -1334,7 +1334,7 @@ class html
 			if ($_onCheckHandler && $_selected)	// check selected items on multi selection
 			{
 				if (!is_array($_selected)) $_selected = explode(',',$_selected);
-				if (in_array($path,$_selected,!is_numeric($path))) $entryOptions .= ',CHECKED';
+				if (array_search("$path",$_selected)!==false) $entryOptions .= ',CHECKED';
 				//echo "<p>path=$path, _selected=".print_r($_selected,true).": $entryOptions</p>\n";
 			}
 			// highlight current item
