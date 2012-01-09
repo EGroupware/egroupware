@@ -80,11 +80,12 @@ class uiaccountsel
 	 *  Or a string which gets added as first Option with value='', eg. lang('all'), can also be specified in the array with key ''
 	 * @param boolean $nohtml if true, returns an array with the key 'selected' as the selected participants,
 	 *  and with the key 'participants' as the participants data as would fit in a select.
+	 * @param callback $label_callback=null callback to fetch a label for non-accounts
 	 * @return string/array string with html for !$nohtml, array('selected' => $selected,'participants' => $select)
 	 */
-	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false)
+	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false,$label_callback=null)
 	{
-		//echo "<p align=right>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
+		//error_log(__METHOD__."('$name',".array2string($selected).",'$use',rows=$lines,$not,'$options','$onchange',".array2string($select).",$nohtml,$label_callback) account_selection=$this->account_selection");
 		$multi_size=4;
 		if ($lines < 0)
 		{
@@ -178,6 +179,11 @@ class uiaccountsel
 						'app' => $app,
 					));
 				}
+				// make sure everything in $selected is also in $select, as in the other account-selection methods
+				if ($selected && ($missing = array_diff($selected,$select)))
+				{
+					$select = array_merge($missing,$select);
+				}
 				break;
 		}
 		$already_selected = $users = $groups = array();
@@ -190,19 +196,24 @@ class uiaccountsel
 			{
 				continue;	// dont display that one
 			}
+			$label = common::grab_owner_name($id);
+			if ($label[0] === '#' && $label_callback)
+			{
+				if (!($label = call_user_func($label_callback, $id))) continue;
+			}
 			if (in_array($id,$selected))	// show already selected accounts first
 			{
-				$already_selected[$id] = common::grab_owner_name($id);
+				$already_selected[$id] = $label;
 			}
 			elseif ($this->accounts->get_type($id) == 'u')
 			{
-				$users[$id] = !is_array($val) ? common::grab_owner_name($id) :
+				$users[$id] = !is_array($val) ? $label :
 					common::display_fullname(
 						$val['account_lid'],$val['account_firstname'],$val['account_lastname']);
 			}
 			else
 			{
-				$groups[$id] = common::grab_owner_name($id);
+				$groups[$id] = $label;
 			}
 		}
 		// sort users and groups alphabeticaly and put the groups behind the users

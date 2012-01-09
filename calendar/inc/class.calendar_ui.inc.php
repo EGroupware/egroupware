@@ -286,7 +286,14 @@ class calendar_ui
 					$set_owners = explode(',',$set_states['owner']);
 					if ((string)$set_owners[0] === '0')	// set exactly the specified owners (without the 0)
 					{
-						$set_states['owner'] = substr($set_states['owner'],2);
+						if ($set_states['owner'] === '0,r0')	// small fix for resources
+						{
+							$set_states['owner'] = $default;	// --> set default, instead of none
+						}
+						else
+						{
+							$set_states['owner'] = substr($set_states['owner'],2);
+						}
 					}
 					else	// change only the owners of the given type
 					{
@@ -782,13 +789,8 @@ class calendar_ui
 			{
 				$grants[] = $grant['grantor'];
 			}
-			// exclude non-accounts from the account-selection
-			$accounts = array();
-			foreach(explode(',',$this->owner) as $owner)
-			{
-				if (is_numeric($owner)) $accounts[] = $owner;
-			}
-			if (!$accounts) $grants[''] = lang('None');
+			// we no longer exclude non-accounts from the account-selection: it shows all types of participants
+			$accounts = explode(',',$this->owner);
 			$file[] = array(
 				'text' => "
 <script type=\"text/javascript\">
@@ -802,7 +804,7 @@ function load_cal(url,id) {
 		}
 	}
 	if (owner) {
-		egw_appWindow('calendar').location=url+'&owner='+owner;
+		egw_appWindow('calendar').location=url+'&owner=0,'+owner;
 	}
 }
 </script>
@@ -813,7 +815,7 @@ function load_cal(url,id) {
 					egw::link('/index.php',array(
 						'menuaction' => $this->view_menuaction,
 						'date' => $this->date,
-					),false).'\',\'uical_select_owner\');"','',$grants),
+					),false).'\',\'uical_select_owner\');"','',$grants,false,array($this->bo,'participant_name')),
 				'no_lang' => True,
 				'link' => False
 			);
