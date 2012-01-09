@@ -776,7 +776,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	private function close_button($uid)
 	{
-		return html::a_href(html::image('phpgwapi', 'close.button', 'Close'), array(
+		return html::a_href(html::image('phpgwapi', 'close.button', 'Close','style="width: 12px; padding-top: 1px;"'), array(
 			'menuaction' => 'calendar.calendar_uiviews.index',
 			'close' => $uid,
 		));
