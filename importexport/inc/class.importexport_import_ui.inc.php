@@ -86,6 +86,9 @@
 					$count = $plugin->import($file, $definition_obj);
 
 					$this->message = lang('%1 records processed', $count);
+
+					// Refresh opening window
+					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('{$this->message}','$appname');");
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
 						$this->message .= "\n" . lang($action) . ": $a_count";
