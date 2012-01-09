@@ -314,7 +314,7 @@ abstract class setup_cmd extends admin_cmd
 						{
 							$apps_to_upgrade[] = $app;
 						}
-						if (!isset($data['enabled']))
+						if (!isset($data['enabled']) && $app != 'jdots')	// jdots is no app, but a template
 						{
 							$apps_to_install[] = $app;
 						}
