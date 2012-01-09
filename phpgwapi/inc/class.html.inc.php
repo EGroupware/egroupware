@@ -297,6 +297,7 @@ class html
 	{
 		//if (!is_scalar($str) && !is_null($str)) error_log(__METHOD__.'('.array2string($str).') '.function_backtrace());
 		// as EGroupware supports only utf-8 we should not need to worry about wrong charsets
+		//if (is_array($str)) error_log(__METHOD__.__LINE__.' string expected -> array given:'.array2string($str).'->'.function_backtrace());
 		return htmlspecialchars($str,ENT_COMPAT,self::$charset,false);
 		// we need '&#' unchanged, so we translate it back -> this is provided by 4th param = false -> do not doubleencode
 		//$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
@@ -1359,7 +1360,7 @@ class html
 				if ($_onCheckHandler && $_selected)	// check selected items on multi selection
 				{
 					if (!is_array($_selected)) $_selected = explode(',',$_selected);
-					if (in_array($path,$_selected,!is_numeric($path))) $entryOptions .= ',CHECKED';
+					if (array_search("$path",$_selected)!==false) $entryOptions .= ',CHECKED';
 					//echo "<p>path=$path, _selected=".print_r($_selected,true).": $entryOptions</p>\n";
 				}
 				// highlight current item
