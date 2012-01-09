@@ -179,6 +179,11 @@ class uiaccountsel
 						'app' => $app,
 					));
 				}
+				// make sure everything in $selected is also in $select, as in the other account-selection methods
+				if ($selected && ($missing = array_diff($selected,$select)))
+				{
+					$select = array_merge($missing,$select);
+				}
 				break;
 		}
 		$already_selected = $users = $groups = array();
