@@ -303,12 +303,14 @@ class groupdav_principals extends groupdav_handler
 					'xmlns' => $prop['xmlns'],
 				);
 			}
-			// Hack for Lightning: it requests calendar-home-set matching our root (/egroupware/groupdav.php),
+			// Hack for Lightning prior 1.1.1 (TB 9): it requests calendar-home-set matching our root (/egroupware/groupdav.php),
 			// but interprets returning all principals (all have a matching calendar-home-set) as NOT supporting CalDAV scheduling
 			// --> search only current user's principal
-			if ($prop['name'] == 'calendar-home-set' && stripos($_SERVER['HTTP_USER_AGENT'], 'Lightning') !== false)
+			if ($prop['name'] == 'calendar-home-set' && stripos($_SERVER['HTTP_USER_AGENT'], 'Lightning') !== false &&
+				substr($search_props[0]['match'],-13) == '/groupdav.php')
 			{
 				$path = '/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
+				error_log('Enabling hack for Lightning prior 1.1.1 for searching calendar-home-set matching "/groupdav.php": limiting search to '.$path);
 			}
 		}
 		// check type attribute to limit search on a certain tree
