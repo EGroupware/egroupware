@@ -375,7 +375,14 @@ class so_sql
 			{
 				if (isset($data[$name]) && $data[$name])
 				{
-					$data[$name] = egw_time::server2user($data[$name],$this->timestamp_type);
+					if ($data[$name] === '0000-00-00 00:00:00')
+					{
+						$data[$name] = null;
+					}
+					else
+					{
+						$data[$name] = egw_time::server2user($data[$name],$this->timestamp_type);
+					}
 				}
 			}
 		}
