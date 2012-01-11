@@ -471,6 +471,7 @@ function load_wrapper($url)
 		switch($scheme)
 		{
 			case 'webdav':
+			case 'webdavs':
 				require_once('HTTP/WebDAV/Client.php');
 				break;
 			case '':	// default scheme is file and alsways available
