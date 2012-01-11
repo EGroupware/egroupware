@@ -112,7 +112,7 @@ class date_widget
 		// automatic convert db timestamps to unix timestamps, our db class does the reverse on writing them
 		if ($value && !$data_format && !is_numeric($value) && ($v = strtotime($value)))
 		{
-			$value = $v;
+			$value = $value === '0000-00-00 00:00:00' ? null : $v;
 		}
 		// for date-(time|hour)only widgets we distinct between between 0 and ''/null timestamps
 		if (!$value && ($type != 'date-timeonly' && $type != 'date-houronly' || (string)$value === ''))
