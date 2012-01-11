@@ -1004,8 +1004,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			switch($scheme)
 			{
 				case 'webdav':
+				case 'webdavs':
 					require_once('HTTP/WebDAV/Client.php');
-					self::$wrappers[] = 'webdav';
+					self::$wrappers[] = $scheme;
 					break;
 				case '':
 					break;	// default file, always loaded
