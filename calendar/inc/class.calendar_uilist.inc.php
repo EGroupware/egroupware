@@ -546,7 +546,7 @@ class calendar_uilist extends calendar_ui
 			case 'document':
 				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
 				$document_merge = new calendar_merge();
-				$msg = $document_merge->download($settings, array($checked), '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+				$msg = $document_merge->download($settings, $checked, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 				$failed = count($checked);
 				return false;
 		}
