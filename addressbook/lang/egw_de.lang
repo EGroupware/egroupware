@@ -140,6 +140,7 @@ default document to insert contacts	addressbook	de	Standarddokument zum Einfüge
 default file as format	addressbook	de	Vorgabe für eigene Sortierung
 default filter	addressbook	de	Standardfilter
 default format for fileas, eg. for new entries.	addressbook	de	Vorgegebenes Format für eigene Sortierung, z.B. für neue Einträge
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	de	Vorgabe ist EMail Adressen in EGroupware's EMail Anwendung zu öffnen, wenn der Benutzer darauf Zugriff hat.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mailadresse (geschäftlich oder privat) für Verteilerlisten in E-Mail bevorzugt benutzt werden soll.
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
@@ -296,6 +297,7 @@ no fallback	addressbook	de	Keine Ausweichlösung
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
+open email addresses in external mail program	addressbook	de	Öffne EMail Adressen in externem Mail Programm
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen

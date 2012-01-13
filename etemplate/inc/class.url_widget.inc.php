@@ -205,14 +205,17 @@ class url_widget
 	{
 		if (!$email || strpos($email,'@') === false) return '';
 
-		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		if (!$GLOBALS['egw_info']['user']['preferences']['addressbook']['force_mailto'])
 		{
-			//return 'felamimail.uicompose.compose&preset[to]='.($rfc822 ? $rfc822 : $email);
-			return 'felamimail.uicompose.compose&send_to='.base64_encode($rfc822 ? $rfc822 : $email);
-		}
-		if($GLOBALS['egw_info']['user']['apps']['email'])
-		{
-			return 'email.uicompose.compose&to='.$email;
+			if($GLOBALS['egw_info']['user']['apps']['felamimail'])
+			{
+				//return 'felamimail.uicompose.compose&preset[to]='.($rfc822 ? $rfc822 : $email);
+				return 'felamimail.uicompose.compose&send_to='.base64_encode($rfc822 ? $rfc822 : $email);
+			}
+			if($GLOBALS['egw_info']['user']['apps']['email'])
+			{
+				return 'email.uicompose.compose&to='.$email;
+			}
 		}
 		return 'mailto:' . $email;
 	}

@@ -140,6 +140,7 @@ default document to insert contacts	addressbook	en	Default document to insert co
 default file as format	addressbook	en	Default file as format
 default filter	addressbook	en	Default filter
 default format for fileas, eg. for new entries.	addressbook	en	Default format for fileas, eg. for new entries.
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	en	Default is to open EMail addresses in EGroupware EMail application, if user has access to it.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Which email address is used as preferred one for distribution lists.
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the ID.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!
@@ -296,6 +297,7 @@ no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
+open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
 organisations	addressbook	en	Organisations
