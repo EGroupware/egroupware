@@ -56,7 +56,7 @@ class addressbook_merge extends bo_merge
 		);
 		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
 		{
-			$array['$$links/'.$app.'$$'] = $this->get_links('addressbook',$id, $app);
+			$replacements['$$links/'.$app.'$$'] = $this->get_links('addressbook',$id, $app);
 		}
 		if (!(strpos($content,'$$calendar/') === false))
 		{
