@@ -317,6 +317,18 @@ class addressbook_hooks
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		{
+			$settings['force_mailto'] = array(
+				'type'   => 'check',
+				'label'  => 'Open EMail addresses in external mail program',
+				'name'   => 'force_mailto',
+				'help'   => 'Default is to open EMail addresses in EGroupware EMail application, if user has access to it.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> false,
+			);
+		}
 		return $settings;
 	}
 
