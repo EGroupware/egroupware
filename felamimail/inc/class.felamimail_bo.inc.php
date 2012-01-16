@@ -1171,8 +1171,7 @@ class felamimail_bo
 				// EnableID is needed for anchor tags
 				$config->set('Attr.EnableID',true);
 				// actual allowed tags and attributes
-				$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'mailto' => true, 'cid'=>true));
-				$config->set('AutoFormat.RemoveEmpty', true);
+				$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true, 'data'=>true));				$config->set('AutoFormat.RemoveEmpty', true);
 				$config->set('HTML.Allowed', 'br,p[class|align],b,i,u,s,em,pre,tt,strong,strike,center,div[class|align],hr[class|style],'.
 							'font[size|color],'.
 							'ul[class|type],ol[class|type|start],li,'.
@@ -1425,6 +1424,7 @@ class felamimail_bo
 				$_html = preg_replace('/([\000-\012])/','',$_html);
 				//error_log($_html);
 			}
+			$_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
 		}
 
 		/**
