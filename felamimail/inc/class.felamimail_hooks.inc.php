@@ -196,6 +196,11 @@ class felamimail_hooks
 			'html'     => lang('html'),
 			'text'   => lang('text/plain'),
 		);
+		$replyOptions = array(
+			'none'	=> lang('use source as displayed, if applicable'),
+			'html'  => lang('force html'),
+			'text'  => lang('force plain text'),
+		);
 
 		$saveAsOptions = array(
 			'text'   	=> lang('convert Mail to item and attach its attachments to this item (standard)'),
@@ -451,6 +456,15 @@ class felamimail_hooks
 		        'xmlrpc' => True,
 		        'admin'  => False,
 		        'default'=> 'html',
+		    ),
+		    'replyOptions' => array(
+		        'type'   => 'select',
+		        'label'  => 'start reply messages with mime type plain/text or html or try to use the displayed format (default)?',
+		        'name'   => 'replyOptions',
+		        'values' => $replyOptions,
+		        'xmlrpc' => True,
+		        'admin'  => False,
+		        'default'=> 'none',
 		    ),
 			'htmlOptions' => array(
 				'type'   => 'select',
@@ -799,14 +813,14 @@ class felamimail_hooks
 		// empty trash (if available -> move to trash )
 		if($preferences->preferences['deleteOptions'] == 'move_to_trash')
 		{
-			$file += Array(
+			$file += array(
 				'_NewLine_'	=> '', // give a newline
 				'empty trash'	=> "javascript:egw_appWindow('".$appname."').emptyTrash();",
 			);
 		}
 		if($preferences->preferences['deleteOptions'] == 'mark_as_deleted')
 		{
-			$file += Array(
+			$file += array(
 				'_NewLine_'		=> '', // give a newline
 				'compress folder'	=> "javascript:egw_appWindow('".$appname."').compressFolder();",
 			);
@@ -823,6 +837,7 @@ class felamimail_hooks
 			);
 
 		}
+
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
@@ -842,6 +857,7 @@ class felamimail_hooks
 				$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
 
 			}
+			$file['Test Connection'] = egw::link('/index.php','menuaction=felamimail.uifelamimail.TestConnection&appname=felamimail');
 
 			if($preferences->ea_user_defined_signatures) {
 				$linkData = array (

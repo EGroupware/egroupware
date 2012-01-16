@@ -216,7 +216,7 @@
 			$this->compose($_focusElement);
 		}
 
-		function compose($_focusElement='to',$suppressSigOnTop=false)
+		function compose($_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 		{
 			// read the data from session
 			// all values are empty for a new compose window
@@ -320,6 +320,25 @@
 			if (!empty($_REQUEST['mimeType']))
 			{
 				$sessionData['mimeType'] = $_REQUEST['mimeType'];
+			}
+			else
+			{
+				// try to enforce a mimeType on reply ( if type is not of the wanted type )
+				if ($isReply)
+				{
+					if (!empty($this->bocompose->preferencesArray['replyOptions']) && $this->bocompose->preferencesArray['replyOptions']=="text" &&
+						$sessionData['mimeType'] == 'html')
+					{
+						$sessionData['mimeType']  = 'plain';
+						$sessionData['body'] = $this->bocompose->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$sessionData['body']));
+					}
+					if (!empty($this->bocompose->preferencesArray['replyOptions']) && $this->bocompose->preferencesArray['replyOptions']=="html" &&
+						$sessionData['mimeType'] != 'html')
+					{
+						$sessionData['mimeType']  = 'html';
+						$sessionData['body'] = "<pre>".$sessionData['body']."</pre>";
+					}
+				}
 			}
 			if ($sessionData['mimeType'] == 'html' && html::htmlarea_availible()===false)
 			{
@@ -862,7 +881,7 @@
 				// this fill the session data with the values from the original email
 				$this->bocompose->getReplyData('single', $icServer, $folder, $replyID, $partID);
 			}
-			$this->compose('body');
+			$this->compose('body',false,true);
 		}
 
 		function replyAll() {
@@ -874,7 +893,7 @@
 				// this fill the session data with the values from the original email
 				$this->bocompose->getReplyData('all', $icServer, $folder, $replyID, $partID);
 			}
-			$this->compose('body');
+			$this->compose('body',false,true);
 		}
 
 		function translate() {

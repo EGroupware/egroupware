@@ -37,6 +37,7 @@ attach users vcard at compose to every new mail	felamimail	de	füge die VCard de
 attachments	felamimail	de	Anlagen
 authentication required	felamimail	de	Anmeldung erforderlich
 auto refresh folder list	felamimail	de	Ordnerliste automatisch aktualisieren
+available personal email-accounts/profiles	felamimail	de	verfügbare persönliche EMail Konten bzw. Profile
 back to folder	felamimail	de	zurück zu Ordner
 bad login name or password.	felamimail	de	Falscher Benutzername oder Passwort.
 bad or malformed request. server responded: %s	felamimail	de	Falsche oder ungültige Anfrage. Server antwortet: %s
@@ -68,6 +69,7 @@ condition	felamimail	de	Bedingung
 configuration	felamimail	de	Konfiguration
 configure a valid imap server in emailadmin for the profile you are using.	felamimail	de	Konfigurieren Sie einen gültigen IMAP Server im emailadmin für das von Ihnen verwendete Profil
 connection dropped by imap server.	felamimail	de	Verbindung von IMAP Server beendet.
+connection status	felamimail	de	Verbindungssstatus
 contact not found!	felamimail	de	Kontakt nicht gefunden!
 contains	felamimail	de	enthält
 convert mail to item and attach its attachments to this item (standard)	felamimail	de	konvertiere Mail zu Eintrag und füge die Mailanhänge hinzu (Standard)
@@ -216,6 +218,8 @@ folders created successfully!	felamimail	de	Ordner erfolgreich angelegt
 follow	felamimail	de	folgen
 for mail to be send - not functional yet	felamimail	de	Für zu sendende Mail - funktioniert noch nicht
 for received mail	felamimail	de	Für empfangene Mail
+force html	felamimail	de	erzwinge HTML
+force plain text	felamimail	de	erzwinge Text
 forward	felamimail	de	Weiterleiten
 forward as attachment	felamimail	de	weiterleiten als Anhang
 forward inline	felamimail	de	Inline weiterleiten
@@ -443,6 +447,7 @@ select all	felamimail	de	alle auswählen
 select emailprofile	felamimail	de	E-Mail-Profil auswählen
 select folder	felamimail	de	Ordner auswählen
 select your mail server type	admin	de	Wählen Sie den Typ des Mailservers
+selected	felamimail	de	ausgewählt
 send	felamimail	de	Senden
 send a reject message	felamimail	de	Ablehnungs-E-Mail senden
 send message and move to send folder (if configured)	felamimail	de	Versende Nachricht, und kopiere diese in den konfigurierten Gesendet Ordner
@@ -456,6 +461,7 @@ show all folders (subscribed and unsubscribed) in main screen folder pane	felami
 show all messages	felamimail	de	Zeige alle Nachrichten
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
+sieve connection status	felamimail	de	Sieve Verbindungsstatus
 sieve script name	felamimail	de	Sieve Skript Name
 sieve settings	admin	de	Sieve Einstellungen
 signatur	felamimail	de	Signatur
@@ -470,6 +476,7 @@ skipping previous	felamimail	de	blättere zurück
 small view	felamimail	de	schmale Ansicht
 smtp settings	admin	de	SMTP Einstellungen
 start new messages with mime type plain/text or html?	felamimail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	de	Starte Antworten auf eMails im Text oder im HTML Format, oder versuche bei Antworten das Format zu verwenden, der auch für die Anzeige verwendet wird (Standard)?
 stationery	felamimail	de	Briefkopf
 subject	felamimail	de	Betreff
 subject(a->z)	felamimail	de	Betreff(A->Z)
@@ -478,11 +485,14 @@ submit	felamimail	de	Absenden
 subscribe	felamimail	de	Bestellen
 subscribed	felamimail	de	abonniert
 subscribed successfully!	felamimail	de	Erfolgreich abonniert
+successfully connected	felamimail	de	erfolgreich verbunden
 switching of signatures failed	felamimail	de	Umschalten der Signatur schlug fehl
 system signature	felamimail	de	System Signatur
 table of contents	felamimail	de	Inhaltsverzeichnis
 template folder	felamimail	de	Vorlagen Ordner
 templates	felamimail	de	Vorlagen
+test connection	felamimail	de	Verbindungstest
+test connection and display basic information about the selected profile	felamimail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
 text only	felamimail	de	Nur Text
 text/plain	felamimail	de	text/plain
 the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	de	Die Aktion wird auf ALLE Nachrichten des aktuellen Ordners angewendet.\nMöchten Sie fortfahren?
@@ -536,6 +546,7 @@ use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
 use custom settings	felamimail	de	benutze angepaßte Einstellungen
 use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
 use smtp auth	admin	de	SMTP Auth benutzen
+use source as displayed, if applicable	felamimail	de	Format wie eMailanzeige
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv

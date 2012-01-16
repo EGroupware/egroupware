@@ -37,6 +37,7 @@ attach users vcard at compose to every new mail	felamimail	en	attach users VCard
 attachments	felamimail	en	Attachments
 authentication required	felamimail	en	Authentication required
 auto refresh folder list	felamimail	en	Auto refresh folder list
+available personal email-accounts/profiles	felamimail	en	available personal EMail-Accounts/Profiles
 back to folder	felamimail	en	Back to folder
 bad login name or password.	felamimail	en	Bad login name or password!
 bad or malformed request. server responded: %s	felamimail	en	Bad or malformed request. Server responded: %s
@@ -68,6 +69,7 @@ condition	felamimail	en	Condition
 configuration	felamimail	en	Configuration
 configure a valid imap server in emailadmin for the profile you are using.	felamimail	en	Configure a valid IMAP server in eMailAdmin for the profile you are using.
 connection dropped by imap server.	felamimail	en	Connection dropped by IMAP server.
+connection status	felamimail	en	Connection Status
 contact not found!	felamimail	en	Contact not found!
 contains	felamimail	en	Contains
 convert mail to item and attach its attachments to this item (standard)	felamimail	en	convert Mail to item and attach its attachments to this item (standard)
@@ -217,6 +219,8 @@ folders created successfully!	felamimail	en	Folders created successfully!
 follow	felamimail	en	Follow
 for mail to be send - not functional yet	felamimail	en	For mail to be send - not functional yet
 for received mail	felamimail	en	For received mail
+force html	felamimail	en	force html
+force plain text	felamimail	en	force plain text
 forward	felamimail	en	Forward
 forward as attachment	felamimail	en	Forward as attachment
 forward inline	felamimail	en	Forward inline
@@ -444,6 +448,7 @@ select all	felamimail	en	Select all
 select emailprofile	felamimail	en	Select email profile
 select folder	felamimail	en	Select folder
 select your mail server type	admin	en	Select mail server type
+selected	felamimail	en	selected
 send	felamimail	en	Send
 send a reject message	felamimail	en	Send a reject message
 send message and move to send folder (if configured)	felamimail	en	Send message and move to Sent folder
@@ -457,6 +462,7 @@ show all folders (subscribed and unsubscribed) in main screen folder pane	felami
 show all messages	felamimail	en	Show all messages
 show header	felamimail	en	Show header
 show new messages on main screen	felamimail	en	Show new messages on main screen
+sieve connection status	felamimail	en	Sieve Connection Status
 sieve script name	felamimail	en	Sieve script name
 sieve settings	admin	en	Sieve settings
 signatur	felamimail	en	Signature
@@ -471,6 +477,7 @@ skipping previous	felamimail	en	Skipping previous
 small view	felamimail	en	Small view
 smtp settings	admin	en	SMTP settings
 start new messages with mime type plain/text or html?	felamimail	en	Start new messages with mime type plain/text or HTML?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	en	start reply messages with mime type plain/text or html or try to use the displayed format (default)?
 stationery	felamimail	en	Stationery
 subject	felamimail	en	Subject
 subject(a->z)	felamimail	en	Subject (A->Z)
@@ -479,11 +486,14 @@ submit	felamimail	en	Submit
 subscribe	felamimail	en	Subscribe
 subscribed	felamimail	en	Subscribed
 subscribed successfully!	felamimail	en	Subscribed successfully!
+successfully connected	felamimail	en	Successfully connected
 switching of signatures failed	felamimail	en	Switching of signatures failed
 system signature	felamimail	en	System signature
 table of contents	felamimail	en	Table of contents
 template folder	felamimail	en	Template folder
 templates	felamimail	en	Templates
+test connection	felamimail	en	Test active connection
+test connection and display basic information about the selected profile	felamimail	en	Test Connection and display basic information about the selected profile
 text only	felamimail	en	Text only
 text/plain	felamimail	en	Text/plain
 the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
@@ -537,6 +547,7 @@ use custom identities	felamimail	en	Use custom identities
 use custom settings	felamimail	en	Use custom settings
 use regular expressions	felamimail	en	Use regular expressions
 use smtp auth	admin	en	Use SMTP authentication
+use source as displayed, if applicable	felamimail	en	use source as displayed, if applicable
 users can define their own emailaccounts	admin	en	Users can define their own email accounts
 vacation notice	common	en	Vacation notice
 vacation notice is active	felamimail	en	Vacation notice is active

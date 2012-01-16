@@ -557,7 +557,8 @@
 			}
 
 			//_debug_array($headers);
-			$bodyParts = $bofelamimail->getMessageBody($_uid, $this->preferencesArray['always_display'], $_partID);
+			//error_log(__METHOD__.__LINE__.'->'.array2string($this->preferencesArray['htmlOptions']));
+			$bodyParts = $bofelamimail->getMessageBody($_uid, ($this->preferencesArray['htmlOptions']?$this->preferencesArray['htmlOptions']:''), $_partID);
 			//_debug_array($bodyParts);
 
 			$fromAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL']));
@@ -1259,7 +1260,7 @@
 			$this->sessionData['mailbox'] = $appsessionData['mailbox'];
 
 			$this->sessionData['mimeType'] = 'html';
-			if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $this->sessionData['mimeType']  = 'text/plain';
+			if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $this->sessionData['mimeType']  = 'plain';
 
 			$this->saveSessionData();
 		}

@@ -31,6 +31,7 @@ class uifelamimail
 			'viewMainScreen'	=> True,
 			'redirectToPreferences' => True,
 			'redirectToEmailadmin' => True,
+			'TestConnection' => True,
 		);
 
 		var $mailbox;		// the current folder in use
@@ -158,6 +159,93 @@ class uifelamimail
 </style>';
 
 			ExecMethod2('emailadmin.emailadmin_ui.index');
+			exit;
+		}
+
+		function TestConnection ()
+		{
+			// Simple Test, resets the active connections cachedObjects / ImapServer
+			$this->display_app_header(false);
+			$preferences	=& $this->preferences;
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+				self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+			//_debug_array(self::$icServerID);
+			echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
+			_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+			emailadmin_bo::unsetCachedObjects(self::$icServerID);
+			if (is_object($preferences)) $imapServer 	= $preferences->getIncomingServer(self::$icServerID);
+			echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
+			if($imapServer->_connectionErrorObject) $eO = $imapServer->_connectionErrorObject;
+			unset($imapServer->_connectionErrorObject);
+			if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
+			_debug_array($imapServer);
+			echo "<h4 style='color:red'>".lang('Connection Status')."</h4>";
+			$lE = false;
+			if ($eO && $eO->message)
+			{
+				_debug_array($eO->message);
+				$lE = true;
+			}
+			$isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+			if ($isError[self::$icServerID]) {
+				_debug_array($isError[self::$icServerID]);
+				$lE = true;
+			}
+
+			_debug_array(($lE?'':lang('Successfully connected')));
+
+			if(($imapServer instanceof defaultimap) && $imapServer->enableSieve) {
+				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
+				$imapServer->getScript($scriptName);
+				$imapServer->retrieveRules($imapServer->scriptName);
+				$vacation = $imapServer->getVacation($imapServer->scriptName);
+				echo "<h4 style='color:red'>".lang('Sieve Connection Status')."</h4>";
+				$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
+				if ($isSieveError[self::$icServerID]) _debug_array($isSieveError[self::$icServerID]);
+				else _debug_array($imapServer->rules);
+			}
+			echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
+			_debug_array($preferences->preferences);
+			//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
+			//error_log(__METHOD__.__LINE__.' ImapServerObject:'.array2string($imapServer));
+			if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity(self::$icServerID, true);
+			//_debug_array($activeIdentity);
+			$maxMessages	=  50;
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefMailGridBehavior']) && (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['prefMailGridBehavior'] <> 0)
+				$maxMessages = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['prefMailGridBehavior'];
+			$userPreferences	=&  $GLOBALS['egw_info']['user']['preferences']['felamimail'];
+
+			// retrieve data for/from user defined accounts
+			$selectedID = 0;
+			if($this->preferences->userDefinedAccounts) $allAccountData = $this->bopreferences->getAllAccountData($this->preferences);
+			if ($allAccountData) {
+				foreach ($allAccountData as $tmpkey => $accountData)
+				{
+					$identity =& $accountData['identity'];
+					$icServer =& $accountData['icServer'];
+					//_debug_array($identity);
+					//_debug_array($icServer);
+					//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
+					if (empty($icServer->host)) continue;
+					$identities[$identity->id]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt';
+					if (!empty($identity->default)) $identities[$identity->id] = $identities[$identity->id].'<b>('.lang('selected').')</b>';
+				}
+			}
+			if (count($identities)>0)
+			{
+				echo "<hr /><h3 style='color:red'>".lang('available personal EMail-Accounts/Profiles')."</h3>";
+				_debug_array($identities);
+			}
+
+			if (empty($imapServer->host) && count($identities)==0 && $this->preferences->userDefinedAccounts)
+			{
+				// redirect to new personal account
+				egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
+					'accountID'=>"new",
+					'msg'	=> lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
+				));
+			}
+
 			exit;
 		}
 
