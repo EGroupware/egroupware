@@ -68,6 +68,7 @@ class emailadmin_sieve extends Net_Sieve
 	function _connect($_icServer,$euser='')
 	{
 		static $isConError;
+		static $sieveAuthMethods;
 		$_icServerID = $_icServer->ImapServerId;
 		if (is_null($isConError)) $isConError =& egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
 		if ( isset($isConError[$_icServerID]) ) 
@@ -109,6 +110,10 @@ class emailadmin_sieve extends Net_Sieve
 			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
 			return false;
 		}
+		// we cache the supported AuthMethods during session, to be able to speed up login.
+		if (is_null($sieveAuthMethods)) $sieveAuthMethods =& egw_cache::getSession('email','sieve_supportedAuthMethods');
+		if (isset($sieveAuthMethods[$_icServerID])) $this->supportedAuthMethods = $sieveAuthMethods[$_icServerID];
+
 		if(PEAR::isError($this->error = $this->login($username, $password, null, $euser) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($this->icServer));
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in login($username,$password,null,$euser): ".$this->error->getMessage());

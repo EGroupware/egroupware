@@ -432,15 +432,33 @@ class Net_Sieve
         }
         switch ($method) {
             case 'DIGEST-MD5':
+                //$result = $this->_authDigest_MD5( $uid , $pwd , $euser );
+                //return $result;
+                //break;
                 $result = $this->_authDigest_MD5( $uid , $pwd , $euser );
-                return $result;
-                break;
+                if ( !PEAR::isError($result)) break;
+                $res = $this->_doCmd();
+                unset($this->_error);
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method,'CRAM-MD5'));
+                return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'CRAM-MD5':
+                //$result = $this->_authCRAM_MD5( $uid , $pwd, $euser);
+                //break;
                 $result = $this->_authCRAM_MD5( $uid , $pwd, $euser);
-                break;
+                if ( !PEAR::isError($result)) break;
+                $res = $this->_doCmd();
+                unset($this->_error);
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method,'DIGEST-MD5'));
+                return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'LOGIN':
+                //$result = $this->_authLOGIN( $uid , $pwd , $euser );
+                //break;
                 $result = $this->_authLOGIN( $uid , $pwd , $euser );
-                break;
+                if ( !PEAR::isError($result)) break;
+                $res = $this->_doCmd();
+                unset($this->_error);
+                $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
+                return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'PLAIN':
                 $result = $this->_authPLAIN( $uid , $pwd , $euser );
                 break;
@@ -448,7 +466,7 @@ class Net_Sieve
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
                 break;
         }
-
+        if (PEAR::isError($result)) return $result;
         if (PEAR::isError($res = $this->_doCmd() )) {
             return $res;
         }
