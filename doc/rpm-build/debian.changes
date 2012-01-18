@@ -1,5 +1,11 @@
 egroupware-epl (11.1.20120118-1) hardy; urgency=low
 
+  * rebuild to include debian.changes
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Jan 2012 16:43:45 +0100
+
+egroupware-epl (11.1.20120118-1) hardy; urgency=low
+
   * API/link_widget/wiki: if searched without searchcriteria wiki throws exception, now with an empty search string use a wildcard, as we intend to find all entrys
   * Addressbook: show calendar of contact(s) as list-view with date-filter "all" via context menu
   * Addressbook: preference to open EMail addresses in external mail program, even if user has access to EMail app
