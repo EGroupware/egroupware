@@ -214,7 +214,7 @@ class calendar_merge extends bo_merge
 		$replacements['$$'.($prefix?$prefix.'/':'').'links_attachments$$'] = $this->get_links('calendar', $event['id']);
 		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
                 {
-                        $array["$$".($prefix?$prefix.'/':'')."links/{$app}$$"] = $this->get_links('calendar',$id, $app);
+                        $replacements["$$".($prefix?$prefix.'/':'')."links/{$app}$$"] = $this->get_links('calendar',$event['id'], $app);
                 }
 
 		return $replacements;
