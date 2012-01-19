@@ -129,10 +129,15 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 								'query_type' => $condition['string']
 							));
 							if ( is_array( $accounts ) && count( $accounts ) >= 1 ) {
+								$account = current($accounts);
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$accounts as $account ) {
+									// Read full account, and copy needed info for accounts->save()
+									$account = $GLOBALS['egw']->accounts->read($account['account_id']);
 									$record['account_id'] = $account['account_id'];
+									$record['account_firstname'] = $account['account_firstname'];
+									$record['account_lastname'] = $account['account_lastname'];
 									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
 							} else {
