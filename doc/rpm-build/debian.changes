@@ -1,3 +1,22 @@
+egroupware-epl (11.1.20120119-1) hardy; urgency=low
+
+  * API/link_widget/wiki: if searched without searchcriteria wiki throws exception, now with an empty search string use a wildcard, as we intend to find all entrys
+  * Addressbook: show calendar of contact(s) as list-view with date-filter "all" via context menu
+  * Addressbook: preference to open EMail addresses in external mail program, even if user has access to EMail app
+  * notification: if sending meeting requests: only send the text/plain part, as outlook interprets the html part as meeting description
+  * Calendar: new (forcable) user preference to notify external participants (non-EGroupware users), event owner has to set it, it is off by default, to keep the current behavior of not notifying externals
+  * Calendar: button to close a single calendar if multiple calendars are shown (day, week and planner view)
+  * Calendar: showing now all open calendars in the owner-selection, not just accounts. Allows to close them from all views
+  * Calendar/CalDAV: Add index for cal_modified and cal_user_modified to improve performance of ctag and etag generation on big installtion
+  * Calendar/Resources: do NOT unselect currently selected calendars when selecting a resource category, eg. to choose a meeting room
+  * tracker: fix broken close_pending and do_escalations
+  * Filemanager: allow WebDAVs (https) via PEAR HTTP_WebDAV_Client
+  * filemanager: Tracker#2640 copy/cut/paste not working -> fixing a java-script syntax error
+  * eMail: option to influence reply behavior for pre-selecting the editor type; simple connection test routine (can be used to reset connection too)
+  * eMail: fix for ->print of messages in compose state failes with whitescreen<-
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 19 Jan 2012 09:06:57 +0100
+
 egroupware-epl (11.1.20120104-1) hardy; urgency=low
 
   * Infolog/Tracker: Create tracker tickets from infolog entries
