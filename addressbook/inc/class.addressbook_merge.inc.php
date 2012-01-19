@@ -83,12 +83,9 @@ class addressbook_merge extends bo_merge
 			'offset' => 0,
 			'num_rows' => 20,
 			'order' => 'cal_start',
+			'enum_recurring' => true
 		));
-		if ($events)
-		{
-			array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
-		}
-		else
+		if (!$events)
 		{
 			$events = array();
 		}
@@ -100,12 +97,17 @@ class addressbook_merge extends bo_merge
 				'offset' => 0,
 				'num_rows' => 1,
 				'order' => 'cal_start DESC',
+				'enum_recurring' => true
 			));
 			$events['-1'] = $last ? array_shift($last) : array();	// returned events are indexed by cal_id!
 		}
 		$replacements = array();
-		foreach($events as $n => $event)
+		$n = 1;  // Returned events are indexed by cal_id, need to index sequentially
+		foreach($events as $key => $event)
 		{
+			// Use -1 for previous key
+			if($key < 0) $n = $key;
+
 			foreach($calendar->event2array($event) as $name => $data)
 			{
 				if (substr($name,-4) == 'date') $name = substr($name,0,-4);
