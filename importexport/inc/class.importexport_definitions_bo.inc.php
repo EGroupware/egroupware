@@ -213,7 +213,7 @@ class importexport_definitions_bo {
 		);
 
 		// Avoid warning if no definitions found
-		if(!is_array($definitions)) return;
+		if(!is_array($definitions)) return lang('None found');
 
 		// save definition(s) into internal table
 		foreach ( $definitions as $name => $definition_data )
@@ -233,6 +233,7 @@ class importexport_definitions_bo {
 				$definition->save( $definition_id );
 			}
 		}
+		return $definitions;
 	}
 
 	/**

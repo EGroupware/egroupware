@@ -56,7 +56,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description id="msg" no_lang="1" span="all" class="redItalic"/>
+					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row>
 					<nextmatch cols="6" id="nm" rows="2" options="importexport.definition_index.row"/>

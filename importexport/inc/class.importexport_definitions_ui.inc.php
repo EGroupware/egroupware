@@ -882,8 +882,9 @@ class importexport_definitions_ui
 		{
 			if($content['import_file']['tmp_name'])
 			{
-				$bodefinitions->import($content['import_file']['tmp_name']);
-				// TODO make redirect here!
+				$result = $bodefinitions->import($content['import_file']['tmp_name']);
+				$msg = lang('%1 definitions %2', count($result), lang('imported')) ."\n". implode("\n", array_keys($result));
+				return $this->index(null, $msg);
 			}
 			if($content['update'])
 			{
@@ -891,8 +892,8 @@ class importexport_definitions_ui
 				foreach($applist as $appname) {
 					importexport_helper_functions::load_defaults($appname);
 				}
+				return $this->index();
 			}
-			return $this->index();
 		}
 		else
 		{
