@@ -198,6 +198,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
 			if (!isset($record['info_owner'])) $record['info_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+
+			// Responsible has to be an array
+			$record['info_responsible'] = $record['info_responsible'] ? explode(',',$record['info_responsible']) : 0;
+
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
                         {
