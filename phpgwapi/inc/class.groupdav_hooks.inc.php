@@ -101,7 +101,7 @@ class groupdav_hooks
 			'values' => array(
 				'0' => 'Off',
 				'r' => 'Requests and truncated responses',
-				'f' => 'Requests and full responses',
+				'f' => 'Requests and full responses to files directory',
 				'1' => 'Debug 1 - function calls',
 				'2' => 'Debug 2 - more info',
 				'3' => 'Debug 3 - complete $_SERVER array',
