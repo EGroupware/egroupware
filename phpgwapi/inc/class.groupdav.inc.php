@@ -1008,24 +1008,45 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if ($starttime)
 		{
-			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['PATH_INFO'].' HTTP/1.1');
+			$msg_type = 0;
+			if ($debug_level === 'f')
+			{
+				$msg_type = 3;
+				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
+				$msg_file .= '/groupdav';
+				$msg_nl = "\n";	// error_log to file does NOT contain new-lines
+				if (!file_exists($msg_file) && !mkdir($msg_file,0700))
+				{
+					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
+					return;
+				}
+				$msg_file .= '/'.$GLOBALS['egw_info']['user']['account_lid'].'-'.
+					str_replace('/','!',$_SERVER['HTTP_USER_AGENT']).'.log';
+
+				error_log('*** '.$_SERVER['REMOTE_ADDR'].' '.date('c').$msg_nl,$msg_type,$msg_file);
+			}
+			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'.$msg_nl,$msg_type,$msg_file);
 			// reconstruct headers
 			foreach($_SERVER as $name => $value)
 			{
 				list($type,$name) = explode('_',$name,2);
-				if ($type == 'HTTP' || $type == 'CONTENT') error_log(str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).': '.$value);
+				if ($type == 'HTTP' || $type == 'CONTENT')
+				{
+					error_log(str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).
+						': '.($name=='AUTHORIZATION'?'Basic ***************':$value).$msg_nl,$msg_type,$msg_file);
+				}
 			}
 			if ($this->request)
 			{
-				error_log('');
-				foreach(explode("\n",$this->request) as $line) error_log($line);
+				error_log(''.$msg_nl,$msg_type,$msg_file);
+				foreach(explode("\n",$this->request) as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
 			}
-			error_log('HTTP/1.1 '.$this->_http_status);
-			foreach(headers_list() as $line) error_log($line);
-			if (($content = ob_get_flush())) error_log('');
-			if (strlen($content) > 1024 && $debug_level !== 'f') $content = substr($content,0,1024)."\n*** LOG TRUNKATED ";
+			error_log('HTTP/1.1 '.$this->_http_status.$msg_nl,$msg_type,$msg_file);
+			foreach(headers_list() as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
+			if (($content = ob_get_flush())) error_log(''.$msg_nl,$msg_type,$msg_file);
+			if ($debug_level !== 'f' && strlen($content) > 1536) $content = substr($content,0,1536)."\n*** LOG TRUNKATED ";
 			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-$starttime)."\n";
-			foreach(explode("\n",$content) as $line) error_log($line);
+			foreach(explode("\n",$content) as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
 		}
 	}
 }
