@@ -92,8 +92,7 @@ class addressbook_groupdav extends groupdav_handler
 		$this->bo = new addressbook_bo();
 
 		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
-		if ($this->bo->account_repository != 'ldap' &&
-			version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
+		if (version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
 		{
 			groupdav_handler::$path_attr = 'carddav_name';
 			groupdav_handler::$path_extension = '';
