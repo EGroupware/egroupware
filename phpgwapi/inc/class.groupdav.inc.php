@@ -1329,7 +1329,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 				error_log('*** '.$_SERVER['REMOTE_ADDR'].' '.date('c').$msg_nl,$msg_type,$msg_file);
 			}
-			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['PATH_INFO'].' HTTP/1.1'.$msg_nl,$msg_type,$msg_file);
+			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'.$msg_nl,$msg_type,$msg_file);
 			// reconstruct headers
 			foreach($_SERVER as $name => $value)
 			{
