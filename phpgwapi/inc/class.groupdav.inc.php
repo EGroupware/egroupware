@@ -325,7 +325,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function PROPFIND(&$options, &$files, $method='PROPFIND')
 	{
-		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
+		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options).')');
 
 		// make options (readonly) available to all class methods, eg. prop_requested
 		$this->propfind_options = $options;
@@ -373,6 +373,12 @@ class groupdav extends HTTP_WebDAV_Server
 				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
 				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path);
 
+				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
+				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
+				{
+					error_log(__CLASS__."::$method(".array2string($options).') Enabling hack for iOS 5.0.1 addressbook: force Depth: 0 on PROPFIND for directory gateway!');
+					return true;
+				}
 				if (!$options['depth']) return true;	// depth 0 --> show only the self url
 			}
 			return $handler->propfind($this->_slashify($options['path']),$options,$files,$user,$id);
