@@ -198,6 +198,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$record['info_owner'] = $_definition->plugin_options['record_owner'];
 			}
 			if (!isset($record['info_owner'])) $record['info_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+
+			// Responsible has to be an array
+			$record['info_responsible'] = $record['info_responsible'] ? explode(',',$record['info_responsible']) : 0;
+
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
                         {
@@ -511,17 +515,25 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		if($app && $custom_field && $value)
 		{
 			$cfs = config::get_customfields($app);
+			// Error if no custom fields, probably something wrong in definition
 			if(!$cfs[$custom_field])
 			{
 				// Check for users specifing label instead of name
 				foreach($cfs as $name => $settings)
 				{
-					if($settings['label'] == $custom_field)
+					if(strtolower($settings['label']) == strtolower($custom_field))
 					{
 						$custom_field = $name;
 						break;
 					}
 				}
+			}
+
+			// Couldn't find field, give an error - something's wrong
+			if(!$cfs[$custom_field] && !$cfs[substr($custom_field,1)]) {
+				$this->errors[$record_num] .= lang('No custom field "%1" for %2.', 
+					$custom_field, lang($app));
+				return false;
 			}
 			if($custom_field[0] != '#') $custom_field = '#' . $custom_field;
 
