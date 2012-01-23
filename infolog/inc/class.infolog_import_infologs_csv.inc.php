@@ -202,6 +202,18 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// Responsible has to be an array
 			$record['info_responsible'] = $record['info_responsible'] ? explode(',',$record['info_responsible']) : 0;
 
+			// Check for unknown people / groups left by convert() - happens when there's only 1 assigned, and it's unknown.
+			foreach($record['info_responsible'] as $key => $responsible)
+			{
+				if(!is_numeric($responsible))
+				{
+					unset($record['info_responsible'][$key]);
+					$this->warnings[$import_csv->get_current_position()].= 
+						($this->warnings[$import_csv->get_current_position()] ? "\n" : '') . 
+						lang('%1 is not a known user or group', $responsible);
+				}
+			}
+
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
                         {
