@@ -101,7 +101,7 @@ class resources_bo
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 
-		$query['col_filter'] = $filter;
+		foreach ($filter as $k => $v) $query['col_filter'][$k] = $v;
 		$this->so->get_rows($query, $rows, $readonlys);
 		$nr = $this->so->total;
 
