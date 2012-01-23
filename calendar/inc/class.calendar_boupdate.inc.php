@@ -789,7 +789,9 @@ class calendar_boupdate extends calendar_bo
 						{
 							$calendar_ical = new calendar_ical();
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
-							$ics = $calendar_ical->exportVCal(array($event),'2.0',$method);
+							// we need to pass $event[id] so iCal class reads event again,
+							// as event is in user TZ, but iCal class expects server TZ!
+							$ics = $calendar_ical->exportVCal(array($event['id']),'2.0',$method);
 							unset($calendar_ical);
 						}
 						$attachment = array(
