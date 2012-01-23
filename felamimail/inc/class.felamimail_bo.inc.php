@@ -1139,7 +1139,7 @@ class felamimail_bo
 			translation::replaceTagsCompletley($_body,$tag,$endtag,$addbracesforendtag);
 		}
 
-		static function getCleanHTML(&$_html, $usepurify = false)
+		static function getCleanHTML(&$_html, $usepurify = false, $cleanTags=true)
 		{
 			// remove CRLF and TAB as it is of no use in HTML.
 			// but they matter in <pre>, so we rather don't
@@ -1424,7 +1424,8 @@ class felamimail_bo
 				$_html = preg_replace('/([\000-\012])/','',$_html);
 				//error_log($_html);
 			}
-			$_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
+			// using purify above should have tidied the tags already sufficiently 
+			if ($usepurify == false && $cleanTags==true) $_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
 		}
 
 		/**

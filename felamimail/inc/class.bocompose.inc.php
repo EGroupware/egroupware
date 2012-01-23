@@ -656,12 +656,12 @@
 			$this->saveSessionData();
 		}
 
-		static function _getCleanHTML($_body)
+		static function _getCleanHTML($_body, $usepurify = false, $cleanTags=true)
 		{
 			static $nonDisplayAbleCharacters = array('[\016]','[\017]',
 					'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 					'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-			felamimail_bo::getCleanHTML($_body);
+			felamimail_bo::getCleanHTML($_body, $usepurify, $cleanTags);
 			$_body	= preg_replace($nonDisplayAbleCharacters, '', $_body);
 
 			return $_body;
