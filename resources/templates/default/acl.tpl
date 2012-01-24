@@ -17,7 +17,6 @@
    <tr>
     <td>&nbsp;</td>
     <td colspan="5" align="right">
-	<form method="POST"><input type="text" name="query"  value="{query}" />&nbsp;<input type="submit" name="btnSearch" value="{lang_search}" /></form>
 	</td>
   </tr>
  </table>

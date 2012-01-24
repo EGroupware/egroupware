@@ -66,7 +66,7 @@ class ui_acl
 		$template->set_block('acl','cat_list','Cblock');
 		$template->set_var(array(
 			'title' => $GLOBALS['egw_info']['apps']['resources']['title'] . ' - ' . lang('Configure Access Permissions'),
-			'lang_search' => lang('Search'),
+			//'lang_search' => lang('Search'),
 			'lang_save' => lang('Save'),
 			'lang_done' => lang('Done'),
 			'lang_read' => lang('Read permissions'),
@@ -79,8 +79,8 @@ class ui_acl
 			'lang_locations_rooms' => lang('Locations / rooms'),
 		));
 
-		$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
-		$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
+		$left  = '';//$this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
+		$right = '';//$this->nextmatchs->right('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.ui_acl.acllist');
 
 		$template->set_var(array(
 			'left' => $left,
@@ -90,7 +90,7 @@ class ui_acl
 			'sort_cat' => $this->nextmatchs->show_sort_order(
 				$this->sort,'cat_name','cat_name','/index.php',lang('Category'),'&menuaction=resources.ui_acl.acllist'
 			),
-			'query' => $this->query,
+			//'query' => $this->query,
 		));
 
 		if ($this->bo->cats)
@@ -121,6 +121,8 @@ class ui_acl
 
 	function selectlist($right,$users_only=false)
 	{
+		static $accountList;
+		static $groupList;
 		switch($GLOBALS['egw_info']['user']['preferences']['common']['account_display'])
 		{
 			case 'firstname':
@@ -135,23 +137,67 @@ class ui_acl
 				$order = 'account_lid,n_family,n_given';
 				break;
 		}
-		foreach ($GLOBALS['egw']->accounts->search(array(
-			'type' => 'both',
-			'order' => $order,
-		)) as $num => $account)
+		if (is_null($accountList))
 		{
-			if(!($users_only && $account['account_type'] == 'g'))
+			$accountList = $GLOBALS['egw']->accounts->search(array(
+				'type' => 'accounts',
+				'order' => $order,
+			));
+			uasort($accountList,array($this,($order=='n_given,n_family'?"sortByNGiven":($order=='n_family,n_given'?"sortByNLast":"sortByLid"))));	
+			$resultList = $accountList;
+		}
+		else
+		{
+			$resultList = $accountList;
+		}		
+		if (is_null($groupList) && $users_only==false)
+		{
+			$groupList = array();
+			if ($users_only==false)
 			{
-				$selectlist .= '<option value="' . $account['account_id'] . '"';
-				if($this->rights[$account['account_id']] & $right)
-				{
-					$selectlist .= ' selected="selected"';
-				}
-				$selectlist .= '>' . common::display_fullname($account['account_lid'],$account['account_firstname'],
-					$account['account_lastname'],$account['account_id']) . '</option>' . "\n";
+				$groupList = $GLOBALS['egw']->accounts->search(array(
+					'type' => 'groups',
+					'order' => 'account_lid',
+					));
 			}
+			uasort($groupList,array($this,"sortByLid"));
+			foreach ($groupList as $k => $val) $resultList[$k] = $val;
+		}
+		foreach ($resultList as $num => $account)
+		{
+			$selectlist .= '<option value="' . $account['account_id'] . '"';
+			if($this->rights[$account['account_id']] & $right)
+			{
+				$selectlist .= ' selected="selected"';
+			}
+			$selectlist .= '>' . common::display_fullname($account['account_lid'],$account['account_firstname'],
+				$account['account_lastname'],$account['account_id']) . '</option>' . "\n";
 		}
 		return $selectlist;
+	}
+
+	function sortByNGiven($a,$b)
+	{
+		// 0, 1 und -1
+		$rv = strcasecmp($a['account_firstname'], $b['account_firstname']);
+		if ($rv==0) $rv = strcasecmp($a['account_lastname'], $b['account_lastname']);
+		if ($rv==0) $rv = strcasecmp($a['account_lid'], $b['account_lid']);
+		return $rv;
+	}
+
+	function sortByNLast($a,$b)
+	{
+		// 0, 1 und -1
+		$rv = strcasecmp($a['account_lastname'], $b['account_lastname']);
+		if ($rv==0) $rv = strcasecmp($a['account_firstname'], $b['account_firstname']);
+		if ($rv==0) $rv = strcasecmp($a['account_lid'], $b['account_lid']);
+		return $rv;
+	}
+
+	function sortByLid($a,$b)
+	{
+		// 0, 1 und -1
+		return strcasecmp($a['account_lid'], $b['account_lid']);
 	}
 
 	function deny()
