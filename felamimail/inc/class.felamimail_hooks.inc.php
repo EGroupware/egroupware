@@ -141,6 +141,15 @@ class felamimail_hooks
 
  		$prefAllowManageFolders = $no_yes;
 
+		$test_connection = array(
+			'full' => lang('yes, show all debug information available for the user'),
+			'nocredentials' => lang('yes, but mask all usernames and passwords'),
+			'nopasswords' => lang('yes, but mask all passwords'),
+			'basic' => lang('yes, show basic info only'),
+			'reset' => lang('yes, only trigger connection reset'),
+			'none' => lang('no'),
+		);
+
 		$forwardOptions = array(
 			'asmail' => lang('forward as attachment'),
 			'inline' => lang('forward inline'),
@@ -326,7 +335,16 @@ class felamimail_hooks
 				'admin'  => False,
 				'forced' => '0',
 			),
-		    'notavailableautofolders' => array(
+			'prefcontroltestconnection' => array(
+				'type'   => 'select',
+				'label'  => 'Show Test Connection section and control the level of info displayed?',
+				'name'   => 'prefcontroltestconnection',
+				'values' => $test_connection,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => '0',
+			),
+			'notavailableautofolders' => array(
 		        'type'   => 'multiselect',
 		        'label'  => 'which folders - in general - should NOT be automatically created, if not existing',
 		        'name'   => 'notavailableautofolders',
@@ -857,7 +875,7 @@ class felamimail_hooks
 				$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
 
 			}
-			$file['Test Connection'] = egw::link('/index.php','menuaction=felamimail.uifelamimail.TestConnection&appname=felamimail');
+			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=felamimail.uifelamimail.TestConnection&appname=felamimail');
 
 			if($preferences->ea_user_defined_signatures) {
 				$linkData = array (

@@ -167,18 +167,45 @@ class uifelamimail
 			// Simple Test, resets the active connections cachedObjects / ImapServer
 			$this->display_app_header(false);
 			$preferences	=& $this->preferences;
+
+			if ($preferences->preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
+
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 				self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			//_debug_array(self::$icServerID);
 			echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
 			_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
+
+			if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
+
 			if (is_object($preferences)) $imapServer 	= $preferences->getIncomingServer(self::$icServerID);
 			echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
 			if($imapServer->_connectionErrorObject) $eO = $imapServer->_connectionErrorObject;
 			unset($imapServer->_connectionErrorObject);
 			if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
-			_debug_array($imapServer);
+			if ($preferences->preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
+			{
+				if (!empty($imapServer->password)) $imapServer->password='**********************';
+			}
+			if ($preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
+			{
+				if (!empty($imapServer->adminUsername)) $imapServer->adminUsername='++++++++++++++++++++++';
+				if (!empty($imapServer->username)) $imapServer->username='++++++++++++++++++++++';
+				if (!empty($imapServer->loginName)) $imapServer->loginName='++++++++++++++++++++++';
+			}
+			if ($preferences->preferences['prefcontroltestconnection'] <> 'basic')
+			{
+				_debug_array($imapServer);
+			}
+			else
+			{
+				_debug_array(array('ImapServerID' =>$imapServer->ImapServerId,
+					'host'=>$imapServer->host,
+					'port'=>$imapServer->port,
+					'validatecert'=>$imapServer->validatecert));
+			}
+
 			echo "<h4 style='color:red'>".lang('Connection Status')."</h4>";
 			$lE = false;
 			if ($eO && $eO->message)

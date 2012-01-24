@@ -461,6 +461,7 @@ show all folders (subscribed and unsubscribed) in main screen folder pane	felami
 show all messages	felamimail	de	Zeige alle Nachrichten
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
+show test connection section and control the level of info displayed?	felamimail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 sieve connection status	felamimail	de	Sieve Verbindungsstatus
 sieve script name	felamimail	de	Sieve Skript Name
 sieve settings	admin	de	Sieve Einstellungen
@@ -569,7 +570,12 @@ with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach
 writing	felamimail	de	schreiben
 wrote	felamimail	de	schrieb
+yes, but mask all passwords	felamimail	de	Ja, aber maskiere alle Passwörter
+yes, but mask all usernames and passwords	felamimail	de	Ja, aber maskiere Benutzernamen und Passwörter
 yes, offer copy option	felamimail	de	ja, mit Kopieroption
+yes, only trigger connection reset	felamimail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
+yes, show all debug information available for the user	felamimail	de	Ja, zeige alle, dem Benutzer zugänglichen, Informationen an
+yes, show basic info only	felamimail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	felamimail	de	Sie können eine Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
 you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Endedatum verwenden.
 you have received a new message on the	felamimail	de	Sie haben eine neue Nachricht erhalten:

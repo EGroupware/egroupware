@@ -462,6 +462,7 @@ show all folders (subscribed and unsubscribed) in main screen folder pane	felami
 show all messages	felamimail	en	Show all messages
 show header	felamimail	en	Show header
 show new messages on main screen	felamimail	en	Show new messages on main screen
+show test connection section and control the level of info displayed?	felamimail	en	Show Test Connection section and control the level of info displayed?
 sieve connection status	felamimail	en	Sieve Connection Status
 sieve script name	felamimail	en	Sieve script name
 sieve settings	admin	en	Sieve settings
@@ -570,7 +571,12 @@ with message "%1"	felamimail	en	With message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at
 writing	felamimail	en	Writing
 wrote	felamimail	en	Wrote
+yes, but mask all passwords	felamimail	en	yes, but mask all passwords
+yes, but mask all usernames and passwords	felamimail	en	yes, but mask all usernames and passwords
 yes, offer copy option	felamimail	en	Yes, offer copy option
+yes, only trigger connection reset	felamimail	en	yes, only trigger connection reset
+yes, show all debug information available for the user	felamimail	en	yes, show all debug information available for the user
+yes, show basic info only	felamimail	en	yes, show basic info only
 you can either choose to save as infolog or tracker, not both.	felamimail	en	You can either choose to save as InfoLog OR Tracker, not both.
 you can use %1 for the above start-date and %2 for the end-date.	felamimail	en	You can use %1 for the above start date and %2 for the end date.
 you have received a new message on the	felamimail	en	You have received a new message on the
