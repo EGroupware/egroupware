@@ -152,17 +152,14 @@ class ui_acl
 		}		
 		if (is_null($groupList) && $users_only==false)
 		{
-			$groupList = array();
-			if ($users_only==false)
-			{
-				$groupList = $GLOBALS['egw']->accounts->search(array(
-					'type' => 'groups',
-					'order' => 'account_lid',
-					));
-			}
+			$groupList = $GLOBALS['egw']->accounts->search(array(
+				'type' => 'groups',
+				'order' => 'account_lid',
+				));
 			uasort($groupList,array($this,"sortByLid"));
-			foreach ($groupList as $k => $val) $resultList[$k] = $val;
 		}
+		if (count($groupList)>0 && $users_only==false) foreach ($groupList as $k => $val) $resultList[$k] = $val;
+		
 		foreach ($resultList as $num => $account)
 		{
 			$selectlist .= '<option value="' . $account['account_id'] . '"';
