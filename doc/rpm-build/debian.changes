@@ -1,3 +1,14 @@
+egroupware-epl (11.1.20120124-1) hardy; urgency=low
+
+  * CardDAV: fixed sometimes not working creation of new contacts from the device, if accounts are stored in LDAP
+  * CardDAV: Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1, which might fail on installs with huge addressbooks
+  * Calendar: fixed wrong time in iCal of notification, if notifying user is not in server TZ
+  * email: fix double encoding problem while toggling html2text (introduced while bugfixing a maildisplay issue)
+  * resources: change / introduce sorting for display of Account/Group List in ACL management; in addition groups are now sorted to the end of the list
+  * eMail: allow to control the connection test link in email sidebar and/or the information displayed when called
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 24 Jan 2012 16:18:27 +0100
+
 egroupware-epl (11.1.20120119-1) hardy; urgency=low
 
   * API/link_widget/wiki: if searched without searchcriteria wiki throws exception, now with an empty search string use a wildcard, as we intend to find all entrys
