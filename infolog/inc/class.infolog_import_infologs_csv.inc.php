@@ -172,7 +172,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
 			}
 
-			importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
+			$result = importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
+			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
 
 			// Set default status for type, if not specified
 			if(!$record['info_status'] && $record['info_type'])
@@ -201,18 +202,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 			// Responsible has to be an array
 			$record['info_responsible'] = $record['info_responsible'] ? explode(',',$record['info_responsible']) : 0;
-
-			// Check for unknown people / groups left by convert() - happens when there's only 1 assigned, and it's unknown.
-			foreach($record['info_responsible'] as $key => $responsible)
-			{
-				if(!is_numeric($responsible))
-				{
-					unset($record['info_responsible'][$key]);
-					$this->warnings[$import_csv->get_current_position()].= 
-						($this->warnings[$import_csv->get_current_position()] ? "\n" : '') . 
-						lang('%1 is not a known user or group', $responsible);
-				}
-			}
 
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
@@ -310,6 +299,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			case 'insert' :
 				if ( $this->dry_run ) {
 					//print_r($_data);
+
+					// Check for link during dry run
+					if($_data['link_custom'])
+					{
+						list($app, $app_id) = explode(':', $_data['link_custom'],2);
+						$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
+					}
+
 					$this->results[$_action]++;
 					break;
 				} else {
@@ -558,8 +555,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				// Only one allowed
 				if(count($result) != 1)
 				{
-					$this->warnings[$record_num] .= lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
-						$custom_field, count($result), lang($app));
+					$this->warnings[$record_num] .= ($this->warnings[$record_num] ? "\n" : '') .
+						lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
+						$custom_field, count($result), lang($app)
+					);
 					return false;
 				}
 				$app_id = key($result);
