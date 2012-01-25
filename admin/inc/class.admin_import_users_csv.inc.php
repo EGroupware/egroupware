@@ -142,16 +142,28 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$accounts = $GLOBALS['egw']->accounts->search(array(
-								'type' => 'accounts',
-								'query' => $record[$condition['string']],
-								'query_type' => $condition['string']
-							));
+							$accounts = array();
+							// Skip the search if the field is empty
+							if($record[$condition['string']] !== '')
+							{
+								$accounts = $GLOBALS['egw']->accounts->search(array(
+									'type' => 'accounts',
+									'query' => $record[$condition['string']],
+									'query_type' => $condition['string']
+								));
+							}
 							if ( is_array( $accounts ) && count( $accounts ) >= 1 ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$accounts as $account ) {
-									$record['account_id'] = $account['account_id'];
+									if($account[$condition['string']] == $record[$condition['string']]) {
+										$record['account_id'] = $account['account_id'];
+									}
+									else
+									{
+										// It didn't match after all
+										$action = $condition['false'];
+									}
 									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
 							} else {
