@@ -152,18 +152,16 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 									'query_type' => $condition['string']
 								));
 							}
+							// Search looks in the given field, but doesn't do an exact match
+							foreach ( (array)$accounts as $key => $account )
+							{
+								if($account[$condition['string']] != $record[$condition['string']]) unset($accounts[$key]);
+							}
 							if ( is_array( $accounts ) && count( $accounts ) >= 1 ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$accounts as $account ) {
-									if($account[$condition['string']] == $record[$condition['string']]) {
-										$record['account_id'] = $account['account_id'];
-									}
-									else
-									{
-										// It didn't match after all
-										$action = $condition['false'];
-									}
+									$record['account_id'] = $account['account_id'];
 									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
 							} else {

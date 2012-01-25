@@ -134,6 +134,11 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 									'query_type' => $condition['string']
 								));
 							}
+							// Search looks in the given field, but doesn't do an exact match
+							foreach ( (array)$accounts as $key => $account )
+							{
+								if($account[$condition['string']] != $record[$condition['string']]) unset($accounts[$key]);
+							}
 							if ( is_array( $accounts ) && count( $accounts ) >= 1 ) {
 								$account = current($accounts);
 								// apply action to all contacts matching this exists condition
