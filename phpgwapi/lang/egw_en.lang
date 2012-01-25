@@ -41,16 +41,16 @@ add category	common	en	Add category
 add shortcut	common	en	Add shortcut
 add sub	common	en	Add sub
 addressbook	common	en	Address Book
-addressbooks for carddav attribute "addressbook-home-set".	common	en	Address books for CardDAV attribute "addressbook-home-set".
-addressbooks to sync with apple clients	common	en	Address books to sync with Apple clients
+addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
 administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
+all addressbooks	groupdav	en	All addressbooks
 all fields	common	en	All fields
-all in one	common	en	All in one
+all in one	groupdav	en	All in one
 all languages	common	en	All languages
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style sheet:
@@ -115,6 +115,7 @@ bulgarian	common	en	Bulgarian
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
 calendar	common	en	Calendar
+calendars to sync in addition to personal calendar	groupdav	en	Calendars to sync in addition to personal calendar
 cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
 canada	common	en	CANADA
@@ -501,6 +502,7 @@ oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
 on mouse over	common	en	On mouse over
 only private	common	en	Only private
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	en	Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!
 only yours	common	en	Only yours
 oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintenance.
 open	common	en	Open
@@ -695,6 +697,7 @@ the api requires an upgrade	common	en	The API requires an upgrade
 the following applications require upgrades	common	en	The following applications require upgrades
 the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
+they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade.
 this name has been used already	common	en	This name has been used already!

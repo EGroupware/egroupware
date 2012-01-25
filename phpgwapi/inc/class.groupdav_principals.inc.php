@@ -600,7 +600,7 @@ class groupdav_principals extends groupdav_handler
 				else
 				{
 					// add all users (account_selection == groupmembers is handled by accounts->search())
-					foreach($this->accounts->search(array('type' => 'accounts')) as $account)
+					foreach($this->accounts->search(array('type' => 'accounts','order' => 'account_lid')) as $account)
 					{
 						$files[] = $this->add_account($account);
 					}
@@ -669,7 +669,7 @@ class groupdav_principals extends groupdav_handler
 					'owngroups' : 'groups';
 
 				// add all groups or only membergroups
-				foreach($this->accounts->search(array('type' => $type)) as $account)
+				foreach($this->accounts->search(array('type' => $type,'order' => 'account_lid')) as $account)
 				{
 					$files[] = $this->add_group($account);
 				}
@@ -755,34 +755,12 @@ class groupdav_principals extends groupdav_handler
 	protected function add_account(array $account)
 	{
 		$addressbooks = $calendars = array();
-		if ($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
-		{
-			foreach($this->get_shared_addressbooks() as $path)
-			{
-				$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.$path);
-			}
+		// since we "show" shared addressbooks and calendars in the user home, no need for individualiced homes
+		$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+			$this->base_uri.'/'.$account['account_lid'].'/');
+		$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+			$this->base_uri.'/'.$account['account_lid'].'/');
 
-			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
-				$this->base_uri.'/'.$account['account_lid'].'/');
-
-/* iCal send propfind to wrong url (concatinated href's), if we return multiple href in calendar-home-set
-			$cal_bo = new calendar_bo();
-			foreach ($cal_bo->list_cals() as $label => $entry)
-			{
-				$id = $entry['grantor'];
-				$owner = $this->accounts->id2name($id);
-				$calendars[] = HTTP_WebDAV_Server::mkprop('href',
-					$this->base_uri.'/'.$owner.'/');
-			}
-*/
-		}
-		else
-		{
-			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-				$this->base_uri.'/'.$account['account_lid'].'/');
-			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
-				$this->base_uri.'/'.$account['account_lid'].'/');
-		}
 		$displayname = translation::convert($account['account_fullname'], translation::charset(),'utf-8');
 
 		return $this->add_principal('users/'.$account['account_lid'], array(

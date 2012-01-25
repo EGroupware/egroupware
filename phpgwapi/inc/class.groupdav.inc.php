@@ -331,7 +331,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->propfind_options = $options;
 
 		// parse path in form [/account_lid]/app[/more]
-		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user)
+		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user && $user !== 0)
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
 			return '404 Not Found';
@@ -354,9 +354,9 @@ class groupdav extends HTTP_WebDAV_Server
 					'displayname' => lang('Accounts'),
 				));
 				// todo: account_selection owngroups and none!!!
-				foreach($this->accounts->search(array('type' => 'both')) as $account)
+				foreach($this->accounts->search(array('type' => 'both','order'=>'account_lid')) as $account)
 				{
-					$this->add_home($files, $path.$account['account_lid'].'/', $user, $options['depth'] == 'infinity' ? 'infinity' : $options['depth']-1);
+					$this->add_home($files, $path.$account['account_lid'].'/', $account['account_id'], $options['depth'] == 'infinity' ? 'infinity' : $options['depth']-1);
 				}
 			}
 			return true;
@@ -371,7 +371,7 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
 				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path);
+				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path.$app.'/');
 
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
 				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
@@ -590,10 +590,124 @@ class groupdav extends HTTP_WebDAV_Server
 				if (!$GLOBALS['egw_info']['user']['apps'][$data['app'] ? $data['app'] : $app]) continue;	// no rights for the given app
 				if (!empty($data['user-only']) && ($path == '/' || $user < 0)) continue;
 
-				$files['files'][] = $this->add_app($app,false,$user,$path);
+				$files['files'][] = $this->add_app($app,false,$user,$path.$app.'/');
+
+				// added shared calendars or addressbooks
+				$this->add_shared($files['files'], $path, $app, $user);
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Add shared addressbook, calendar, infolog to user home
+	 *
+	 * @param array &$files
+	 * @param string $path /<username>/
+	 * @param int $app
+	 * @param int $user
+	 * @return string|boolean http status or true|false
+	 */
+	protected function add_shared(array &$files, $path, $app, $user)
+	{
+		// currently only show shared calendars/addressbooks for current user and not in the root
+		if ($path == '/' || $user != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			return true;
+		}
+		switch($app)
+		{
+			case 'addressbook':
+				$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+				if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+				$addressbook_home_set = explode(',',$addressbook_home_set);
+				// replace symbolic id's with real nummeric id's
+				foreach(array(
+					'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+					'U' => '0',
+				) as $sym => $id)
+				{
+					if (($key = array_search($sym, $addressbook_home_set)) !== false)
+					{
+						$addressbook_home_set[$key] = $id;
+					}
+				}
+				foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
+				{
+					if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
+						$user != $id &&	// no current user and no accounts, if disabled in ab prefs
+						(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+						is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
+					{
+						$files[] = $this->add_app($app,false,$id,$path.'addressbook-'.$owner.'/');
+					}
+				}
+				break;
+
+			case 'calendar':
+				$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
+				$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
+				// replace symbolic id's with real nummeric id's
+				foreach(array(
+					'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+				) as $sym => $id)
+				{
+					if (($key = array_search($sym, $calendar_home_set)) !== false)
+					{
+						$calendar_home_set[$key] = $id;
+					}
+				}
+				foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
+				{
+					$id = $entry['grantor'];
+					if ($id && $user != $id &&	// no current user and no accounts yet (todo)
+						(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
+						is_numeric($id) && ($owner = $this->accounts->id2name($id)))
+					{
+						$files[] = $this->add_app($app,false,$id,$path.'calendar-'.$owner.'/');
+					}
+				}
+				break;
+
+			case 'infolog':
+				// ToDo:
+				break;
+		}
+		return true;
+	}
+
+	/**
+	 * Format an account-name for use in displayname
+	 *
+	 * @param int|array $account
+	 * @return string
+	 */
+	public function account_name($account)
+	{
+		if (is_array($account))
+		{
+			if ($account['account_id'] < 0)
+			{
+				$name = lang('Group').' '.$account['account_lid'];
+			}
+			else
+			{
+				$name = $account['account_fullname'];
+			}
+		}
+		else
+		{
+			if ($account < 0)
+			{
+				$name = lang('Group').' '.$this->accounts->id2name($account,'account_lid');
+			}
+			else
+			{
+				$name = $this->accounts->id2name($account,'account_fullname');
+			}
+			if (empty($name)) $name = '#'.$account;
+		}
+		return $name;
 	}
 
 	/**
@@ -625,7 +739,6 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 
 		$account = $this->accounts->read($account_lid);
-		$displayname = translation::convert($account['account_fullname'],translation::charset(),'utf-8');
 
 		if ($user < 0)
 		{
@@ -643,13 +756,26 @@ class groupdav extends HTTP_WebDAV_Server
 		switch ($app)
 		{
 			case 'inbox':
-				$props['displayname'] = lang('Scheduling inbox').' '.common::grab_owner_name($user);
+				$props['displayname'] = lang('Scheduling inbox').' '.$this->account_name($user);
 				break;
 			case 'outbox':
-				$props['displayname'] = lang('Scheduling outbox').' '.common::grab_owner_name($user);
+				$props['displayname'] = lang('Scheduling outbox').' '.$this->account_name($user);
 				break;
+			case 'addressbook':
+				if ($path == '/addressbook/')
+				{
+					$props['displayname'] = lang('All addressbooks');
+					break;
+				}
+				elseif(!$user && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+				{
+					unset($props['owner']);
+					$props['displayname'] = lang($app).' '.lang('Accounts');
+					break;
+				}
+				// fall through
 			default:
-				$props['displayname'] = translation::convert(lang($app).' '.common::grab_owner_name($user),$this->egw_charset,'utf-8');
+				$props['displayname'] = translation::convert(lang($app).' '.$this->account_name($user),$this->egw_charset,'utf-8');
 		}
 
 		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
@@ -703,10 +829,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if (method_exists($handler,'extra_properties'))
 			{
-				$displayname = translation::convert(
-					$account['account_id'] > 0 ? $account['account_fullname'] : lang('Group').' '.$account['account_lid'],
-					translation::charset(),'utf-8');
-				$props = $handler->extra_properties($props,$displayname,$this->base_uri,$user);
+				$props = $handler->extra_properties($props,$this->account_name($account),$this->base_uri,$user);
 			}
 			// add ctag if handler implements it
 			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
@@ -715,9 +838,11 @@ class groupdav extends HTTP_WebDAV_Server
 					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
 			}
 		}
-		if ($handler) $privileges = $handler->current_user_privileges($path.$app.'/', $user) ;
-
-		return $this->add_collection($path.$app.'/', $props, $privileges);
+		if ($handler && $user)
+		{
+			return $this->add_collection($path, $props, $handler->current_user_privileges($path, $user));
+		}
+		return $this->add_collection($path, $props);
 	}
 
 	/**
@@ -803,6 +928,16 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		echo "</h1>\n";
 
+		static $props2show = array(
+			'DAV:getcontentlength' => 'Size',
+			'DAV:getlastmodified'  => 'Last modified',
+			'DAV:getetag'          => 'ETag',
+			'DAV:getcontenttype'   => 'Content type',
+			'DAV:resourcetype'     => 'Resource type',
+			'DAV:displayname'      => 'Displayname',
+			//'DAV:owner'            => 'Owner',
+			//'DAV:current-user-privilege-set' => 'current-user-privilege-set',
+		);
 		$n = 0;
 		foreach($files['files'] as $file)
 		{
@@ -814,8 +949,9 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			if(!$n++)
 			{
-				echo "<table>\n\t<tr class='th'><th>#</th><th>".lang('Name')."</th><th>".lang('Size')."</th><th>".lang('Last modified')."</th><th>".
-					lang('ETag')."</th><th>".lang('Content type')."</th><th>".lang('Resource type')."</th></tr>\n";
+				echo "<table>\n\t<tr class='th'>\n\t\t<th>#</th>\n\t\t<th>".lang('Name')."</th>";
+				foreach($props2show as $label) echo "\t\t<th>".lang($label)."</th>\n";
+				echo "\t</tr>\n";
 			}
 			$props = $this->props2array($file['props']);
 			//echo $file['path']; _debug_array($props);
@@ -836,11 +972,11 @@ class groupdav extends HTTP_WebDAV_Server
 					'#' => '%23',
 					'?' => '%3F',
 				)))."</td>\n";
-			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
-			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
-			echo "\t\t<td>".$props['DAV:getetag']."</td>\n";
-			echo "\t\t<td>".$props['DAV:getcontenttype']."</td>\n";
-			echo "\t\t<td>".$props['DAV:resourcetype']."</td>\n\t</tr>\n";
+			foreach($props2show as $prop => $label)
+			{
+				echo "\t\t<td>".($prop=='DAV:getlastmodified'&&!empty($props[$prop])?date('Y-m-d H:i:s',$props[$prop]):$props[$prop])."</td>\n";
+			}
+			echo "\t</tr>\n";
 		}
 		if (!$n)
 		{
@@ -903,7 +1039,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value))
 		{
-			$value = '<pre>'.preg_replace('/\<(D:)?href\>([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2">\\2</a>&lt;/\\3href&gt;',$value).'</pre>';
+			$value = '<pre>'.preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2\\3">\\3</a>&lt;/\\4href&gt;',$value).'</pre>';
 		}
 		else
 		{
@@ -1255,7 +1391,23 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$app = array_shift($parts);
 
-		if ($user)
+		// shared calendars/addressbooks at /<currentuser>/(calendar|addressbook|infolog)-<username>
+		if ($account_id == $GLOBALS['egw_info']['user']['account_id'] && strpos($app, '-') !== false)
+		{
+			list($app, $username) = explode('-', $app, 2);
+			if ($username == 'accounts')
+			{
+				$account_id = 0;
+			}
+			elseif (!($account_id = $this->accounts->name2id($username, 'account_lid')) &&
+					!($account_id = $this->accounts->name2id($username=urldecode($username))))
+			{
+				return false;
+			}
+			$user = $account_id;
+			$user_prefix = '/'.$GLOBALS['egw_info']['user']['account_lid'].'/'.$app.'-'.$username;
+		}
+		elseif ($user)
 		{
 			$user_prefix = '/'.$user;
 			$user = $account_id;
@@ -1268,7 +1420,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$id = array_pop($parts);
 
-		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals'));
+		$ok = $id && ($user || $user === 0) && in_array($app,array('addressbook','calendar','infolog','principals'));
 		if ($this->debug)
 		{
 			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");
