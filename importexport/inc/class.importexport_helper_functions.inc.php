@@ -94,11 +94,12 @@ class importexport_helper_functions {
 	 * @param mixed $_account_lid comma seperated list or array with lids
 	 * @return mixed comma seperated list or array with ids
 	 */
-	public static function account_name2id( $_account_lids ) {
+	public static function account_name2id( &$_account_lids ) {
 		$account_lids = is_array( $_account_lids ) ? $_account_lids : explode( ',', $_account_lids );
 		$skip = false;
 		foreach ( $account_lids as $key => $account_lid ) {
 			if($skip) {
+				unset($account_lids[$key]);
 				$skip = false;
 				continue;
 			}
@@ -106,6 +107,7 @@ class importexport_helper_functions {
 
 			// Handle any IDs that slip in
 			if(is_numeric($account_lid) && $GLOBALS['egw']->accounts->id2name($account_lid)) {
+				unset($account_lids[$key]);
 				$account_ids[] = (int)$account_lid;
 				continue;
 			}
@@ -113,23 +115,29 @@ class importexport_helper_functions {
 			// Do this first, in case their first name matches a username
 			if ( $account_lids[$key+1][0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lids[$key+1]).' ' .$account_lid, 'account_fullname')) {
 				$account_ids[] = $account_id;
+				unset($account_lids[$key]);
 				$skip = true; // Skip the next one, it's the first name
 				continue ;
 			}
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
+				unset($account_lids[$key]);
 				continue;
 			}
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid, 'account_fullname' )) {
 				$account_ids[] = $account_id;
+				unset($account_lids[$key]);
 				continue;
 			}
 
 			// Handle groups listed as Group, <name>
 			if ( $account_lid[0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lid))) {
 				$account_ids[] = $account_id;
+				unset($account_lids[$key-1]);
+				unset($account_lids[$key]);
 			}
 		}
+		$_account_lids = (is_array($_account_lids) ? $account_lids : implode(',',$account_lids));
 		return is_array( $_account_lids ) ? $account_ids : implode( ',', (array)$account_ids );
 
 	} // end of member function account_lid2id

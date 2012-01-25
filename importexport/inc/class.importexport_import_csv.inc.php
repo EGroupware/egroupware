@@ -257,8 +257,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @param $appname Appname for custom field parsing
 	 * @param $selects Array of select values to be automatically parsed
 	 * @param $format int 0 if records are supposed to be in DB format, 1 to treat as human values (Used for dates and select-cat)
+	 *
+	 * @return string warnings, if any
 	 */
 	public static function convert(Array &$record, Array $fields = array(), $appname = null, Array $selects = array(), $format=0) {
+		$warnings = array();
+
 		// Automatic conversions
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
@@ -293,8 +297,16 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				if ($record[$name]) {
 					// Automatically handle text owner without explicit translation
 					$new_owner = importexport_helper_functions::account_name2id($record[$name]);
+					if(count($new_owner) != count(explode(',',$record[$name])))
+					{
+						// Unable to parse value into account
+						$warnings[] = lang('%1 is not a known user or group', $record[$name]);
+					}
 					if($new_owner != '') {
 						$record[$name] = $new_owner;
+					} else {
+						// Clear it to prevent trouble later on
+						$record[$name] = '';
 					}
 				}
 			}
@@ -370,7 +382,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			$GLOBALS['egw_info']['flags']['currentapp'] = $current_app;
 		}
 
-		return;
+		return implode("\n",$warnings);
 	}
 } // end of import_csv
 ?>
