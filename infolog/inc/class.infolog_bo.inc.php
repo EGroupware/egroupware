@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -706,16 +706,20 @@ class infolog_bo
 		{
 			return false;
 		}
+		// we need to get the old values to update the links in customfields and for the tracking
+		if ($values['info_id'])
+		{
+			$old = $this->read($values['info_id'], false, 'server');
+		}
 		if (($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
-				if (!($values_read = $this->read($values['info_id']))) return false;
-				$responsible =& $values_read['info_responsible'];
+				$responsible = $old['info_responsible'];
 			}
 			else
 			{
-				$responsible =& $values['info_responsible'];
+				$responsible = $values['info_responsible'];
 			}
 			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
@@ -736,14 +740,12 @@ class infolog_bo
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
 				(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
 
-			$backup_values = $values;	// to return the full values
-			$values = array(
-				'info_id'     => $values['info_id'],
-				'info_datemodified' => $values['info_datemodified'],
-			);
+			$values = $old;
+			// only overwrite explicitly allowed fields
+			$values['info_datemodified'] = $values_in['info_datemodified'];
 			foreach ($this->responsible_edit as $name)
 			{
-				if (isset($backup_values[$name])) $values[$name] = $backup_values[$name];
+				if (isset($values_in[$name])) $values[$name] = $values_in[$name];
 			}
 			if ($set_completed)
 			{
@@ -848,8 +850,6 @@ class infolog_bo
 			$values['info_from'] = $this->link_id2from($values);
 		}
 
-		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
-
 		$to_write = $values;
 		if ($user2server)
 		{
@@ -902,11 +902,6 @@ class infolog_bo
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
 
-		// we need to get the old values to update the links in customfields and for the tracking
-		if ($values['info_id'])
-		{
-			$old = $this->read($values['info_id'], false, 'server');
-		}
 		if (($info_id = $this->so->write($to_write,$check_modified)))
 		{
 			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
