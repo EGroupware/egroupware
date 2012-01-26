@@ -434,20 +434,21 @@ class infolog_ical extends infolog_bo
 		// keep the dates
 		$this->time2time($taskData, $this->tzid, false);
 
-		// we suppose that a not set status in a vtodo means that the task did not started yet
-		if (empty($taskData['info_status']))
-		{
-			$taskData['info_status'] = 'not-started';
-		}
-
 		if (empty($taskData['info_datecompleted']))
 		{
 			$taskData['info_datecompleted'] = 0;
 		}
 
-		if (!is_null($user))
+		if (!is_null($user) && $_taskID)
 		{
-			$taskData['info_owner'] = $user;
+			if ($this->check_access($taskData, EGW_ACL_ADD))
+			{
+				$taskData['info_owner'] = $user;
+			}
+			else
+			{
+				$taskData['info_responsible'][] = $user;
+			}
 		}
 
 		if ($this->log)
@@ -553,11 +554,19 @@ class infolog_ical extends infolog_bo
 			}
 
 			$taskData = array();
-			$taskData['info_type'] = 'task';
 
 			if ($_taskID > 0)
 			{
 				$taskData['info_id'] = $_taskID;
+			}
+			// if we have no STATUS, set STATUS by existence of COMPLETED and/or PERCENT-COMPLETED
+			// iOS reminder app only sets COMPLETED, but never STATUS
+			if (!($attr = $component->getAttribute('STATUS')) || !is_scalar($attr))
+			{
+				$status = ($attr=$component->getAttribute('COMPLETED')) && is_scalar($attr) ? 'COMPLETED' :
+					(($attr=$component->getAttribute('COMPLETED-PERCENT')) && is_scalar($attr) && $attr > 0 ? 'IN-PROCESS' : 'NEEDS-ACTION');
+				$component->setAttribute('STATUS', $status);
+				if ($this->log) error_log(__METHOD__."() setting STATUS='$status' from COMPLETED(-PERCENT)\n",3,$this->logfile);
 			}
 			foreach ($component->getAllAttributes() as $attribute)
 			{
@@ -641,7 +650,7 @@ class infolog_ical extends infolog_bo
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_array($attr) ? $attr['value'] : null);
+							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_scalar($attr) ? $attr : null);
 						break;
 
 					case 'SUMMARY':

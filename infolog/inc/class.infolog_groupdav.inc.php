@@ -7,7 +7,7 @@
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -102,33 +102,32 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	private function get_infolog_filter($path, $user)
 	{
-		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['activesync']['infolog-types']))
+		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types']))
 		{
 			$infolog_types = 'task';
 		}
-
-		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
-
 		if ($path == '/infolog/')
 		{
 			$task_filter= 'own';
 		}
 		else
 		{
-			if ($myself)
+			if ($user == $GLOBALS['egw_info']['user']['account_id'])
 			{
-				$task_filter = 'open';
+				$task_filter = 'own';
 			}
 			else
 			{
-				$task_filter = 'open-user' . $user;
+				$task_filter = 'user' . $user;
 			}
 		}
 
-		return array(
+		$ret = array(
 			'filter'	=> $task_filter,
 			'info_type' => explode(',', $infolog_types),
 		);
+		error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -308,10 +307,11 @@ class infolog_groupdav extends groupdav_handler
 				}
 			}
 			// if client set an own filter, reset the open-standard filter
+			/* not longer necessary, as we use now own and user anyway
 			if ($cal_filters != $cal_filters_in)
 			{
 				$cal_filters['filter'] = str_replace(array('open', 'open-user'), array('own', 'user'), $cal_filters['filter']);
-			}
+			}*/
 		}
 		// multiget or propfind on a given id
 		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
@@ -457,29 +457,6 @@ class infolog_groupdav extends groupdav_handler
 			$taskId = 0;
 			$retval = '201 Created';
 		}
-		if ($user)
-		{
-			if (!$prefix)		// for everything in /infolog/
-			{
-				$user = null;	// do NOT set current user (infolog_bo->write() set it for new entries anyway)
-			}
-			elseif($oldTask)	// existing entries
-			{
-				if ($oldTask['info_owner'] != $user)
-				{
-					if ($this->debug) error_log(__METHOD__."(,$id,$user,$prefix) changing owner of existing entries is forbidden!");
-					return '403 Forbidden';		// changing owner of existing entries is generally forbidden
-				}
-				$user = null;
-			}
-			else	// new entries in /$user/infolog
-			{
-				// ACL is checked in infolog_bo->write() called by infolog_ical->importVTODO().
-				// Not sure if it's a good idea to set a different owner, as GUI does NOT allow that,
-				// thought there's an ACL for it and backend (infolog_bo) checks it.
-				// More like the GUI would be to add it for current user and delegate it to $user.
-			}
-		}
 		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
@@ -544,7 +521,14 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if (is_null($task)) return true;
 
-		return $this->bo->check_access($task,$acl);
+		$access = $this->bo->check_access($task,$acl);
+
+		if (!$access && $acl == EGW_ACL_EDIT && $this->bo->is_responsible($task))
+		{
+			$access = true;	// access limited to $this->bo->responsible_edit fields (handled in infolog_bo::write())
+		}
+		if ($this->debug > 1) error_log(__METHOD__."($acl, ".array2string($task).') returning '.array2string($access));
+		return $access;
 	}
 
 	/**
