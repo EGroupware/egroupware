@@ -40,16 +40,16 @@
 <!-- END remember_me_selection -->
 				<tr>
 					<td align="right">{lang_username}:&nbsp;</td>
-					<td><input name="login" tablindex="1" value="{cookie}" size="30" /></td>
+					<td><input name="login" tabindex="4" value="{cookie}" size="30" /></td>
 				</tr>
 				<tr>
 					<td align="right">{lang_password}:&nbsp;</td>
-					<td><input name="passwd" type="password" size="30" /></td>
+					<td><input name="passwd" tabindex="5" type="password" size="30" /></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" value="  {lang_login}  " name="submitit" />
+						<input tabindex="6" type="submit" value="  {lang_login}  " name="submitit" />
 					</td>
 				</tr>
 <!-- BEGIN registration -->
