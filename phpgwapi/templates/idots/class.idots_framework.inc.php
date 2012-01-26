@@ -284,7 +284,7 @@ class idots_framework extends egw_framework
 			}
 			$tmpl->set_var(array(
 				'lang_domain'   => lang('domain'),
-				'select_domain' => html::select('logindomain',$_COOKIE['last_domain'],$domains,true),
+				'select_domain' => html::select('logindomain',$_COOKIE['last_domain'],$domains,true,'tabindex="2"'),
 			));
 		}
 		else
@@ -374,7 +374,7 @@ class idots_framework extends egw_framework
 			$tmpl->set_var(array(
 				'lang_language' => lang('Language'),
 				'select_language' => html::select('lang',$GLOBALS['egw_info']['user']['preferences']['common']['lang'],
-				translation::get_installed_langs(),true),
+				translation::get_installed_langs(),true,'tabindex="1"'),
 			));
 		}
 		else
@@ -399,7 +399,7 @@ class idots_framework extends egw_framework
 				'1week'=> lang('1 Week'),
 				'1month' => lang('1 Month'),
 				'forever' => lang('Forever'),
-			),true));
+			),true,'tabindex="3"'));
 		}
 		else
 		{
