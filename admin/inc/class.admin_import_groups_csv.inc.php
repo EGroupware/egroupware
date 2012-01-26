@@ -123,11 +123,22 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$accounts = $GLOBALS['egw']->accounts->search(array(
-								'type' => 'groups',
-								'query' => $record[$condition['string']],
-								'query_type' => $condition['string']
-							));
+							$accounts = array();
+
+							// Skip the search if the field is empty
+							if($record[$condition['string']] !== '') {
+							
+								$accounts = $GLOBALS['egw']->accounts->search(array(
+									'type' => 'groups',
+									'query' => $record[$condition['string']],
+									'query_type' => $condition['string']
+								));
+							}
+							// Search looks in the given field, but doesn't do an exact match
+							foreach ( (array)$accounts as $key => $account )
+							{
+								if($account[$condition['string']] != $record[$condition['string']]) unset($accounts[$key]);
+							}
 							if ( is_array( $accounts ) && count( $accounts ) >= 1 ) {
 								$account = current($accounts);
 								// apply action to all contacts matching this exists condition
