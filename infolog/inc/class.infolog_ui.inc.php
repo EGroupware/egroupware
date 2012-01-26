@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -971,7 +971,7 @@ class infolog_ui
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
-			$actions['tracker'] = array(	
+			$actions['tracker'] = array(
 				'icon' => 'tracker/navbar',
 				'caption' => 'Tracker',
 				'group' => $group,
@@ -1808,7 +1808,7 @@ class infolog_ui
 		}
 		$preserv = $content;
 		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT)/* && $this->bo->is_responsible($content)*/ && !$undelete)
+		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$undelete)
 		{
 			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
 			if ($this->bo->is_responsible($content))
@@ -1817,7 +1817,7 @@ class infolog_ui
 				{
 					$readonlys[$name] = false;
 				}
-				$readonlys['button[edit]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
+				$readonlys['button[edit]'] = $readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
 			}
 			$readonlys['action'] = $readonlys['button[cancel]'] = false;	// always allowed
 		}
