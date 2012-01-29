@@ -2985,6 +2985,13 @@ class calendar_ical extends calendar_boupdate
 			$event['recur_enddate'] = egw_time::to($last, 'server');
 		}
 
+		// if no end is given in iCal we use the default lenght from user prefs
+		// whole day events get one day in calendar_boupdate::save()
+		if (!isset($event['end']))
+		{
+			$event['end'] = 60 * $this->cal_prefs['defaultlength'];
+		}
+
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 
 		if ($this->log)
