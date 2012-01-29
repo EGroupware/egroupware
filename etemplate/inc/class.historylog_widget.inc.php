@@ -46,6 +46,91 @@ class historylog_widget
 //		'historylog-helper' => '',
 	);
 
+	static $status_widgets;
+
+	/**
+	 * pre-processing of the historylog-helper
+	 *
+	 * @param mixed &$value value / existing content, can be modified
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
+	 * @return boolean true if extra label is allowed, false otherwise
+	 */
+	private function pre_process_helper(&$value, &$cell)
+	{
+		if (empty($value) && (string)$value !== '0')
+		{
+			$cell = etemplate::empty_cell();
+			return true;
+		}
+		//echo $value.'/'.$cell['size']; _debug_array(self::$status_widgets);
+		$type = isset(self::$status_widgets[$cell['size']]) ? self::$status_widgets[$cell['size']] : 'label';
+		$options = '';
+		if (!is_array($type) && strpos($type,':') !== false)
+		{
+			list($type,$options) = explode(':',$type,2);
+		}
+		// For all select-cats, show missing entries as IDs
+		if($type == 'select-cat')
+		{
+			list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',$options);
+			$type6 = 2;
+			$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
+		}
+		$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
+		// display unsupported iCal properties, which have multiple values or attributes
+		if ($type === 'label' && $value[1] === ':' && ($v = unserialize($value)))
+		{
+			$values = $v['values'];
+			foreach((array)$v['params'] as $name => $val)
+			{
+				$values[] = $name.': '.$val;
+			}
+			$value = implode("\n", $values);
+		}
+		elseif (is_array($type))
+		{
+			list($t) = explode(':',$type[0]);
+			if (isset($type[0]) &&	// numeric indexed array --> multiple values of 1:N releation
+				$tmpl->widgetExists($t))
+			{
+				$cell['type'] = 'vbox';
+				$cell['size'] = '0,,0,0';
+				$value = explode(bo_tracking::ONE2N_SEPERATOR,$value);
+				foreach($type as $n => $t)
+				{
+					$opt = '';
+					if(is_array($t))
+					{
+						$sel_options = $t;
+						$t = 'select';
+					}
+					else
+					{
+						list($t,$opt) = explode(':',$t);
+					}
+					$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
+					$child['sel_options'] = $sel_options;
+					etemplate::add_child($cell,$child);
+					unset($sel_options);
+					unset($child);
+				}
+			}
+			else
+			{
+				$cell['sel_options'] = $cell['type'];
+				$cell['type'] = 'select';
+			}
+		}
+		// For all times, show time in user time
+		elseif ($type == 'date-time' && $value)
+		{
+			$value = egw_time::server2user($value);
+		}
+		if ($cell['type'] == 'label') $cell['no_lang'] = 'true';
+
+		return true;
+	}
+
 	/**
 	 * pre-processing of the history logging extension
 	 *
@@ -59,74 +144,13 @@ class historylog_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
 	{
-		static $status_widgets;
-
-		if ($cell['type'] == 'historylog-helper')
+		switch ($cell['type'])
 		{
-			if (empty($value) && (string)$value !== '0')
-			{
-				$cell = etemplate::empty_cell();
-				return true;
-			}
-			//echo $value.'/'.$cell['size']; _debug_array($status_widgets);
-			$type = isset($status_widgets[$cell['size']]) ? $status_widgets[$cell['size']] : 'label';
-			$options = '';
-			if (!is_array($type) && strpos($type,':') !== false)
-			{
-				list($type,$options) = explode(':',$type,2);
-			}
-			// For all select-cats, show missing entries as IDs
-			if($type == 'select-cat')
-			{
-				list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',$options);
-				$type6 = 2;
-				$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
-			}
-			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
-			if (is_array($type))
-			{
-				list($t) = explode(':',$type[0]);
-				if (isset($type[0]) &&	// numeric indexed array --> multiple values of 1:N releation
-					$tmpl->widgetExists($t))
-				{
-					$cell['type'] = 'vbox';
-					$cell['size'] = '0,,0,0';
-					$value = explode(bo_tracking::ONE2N_SEPERATOR,$value);
-					foreach($type as $n => $t)
-					{
-						$opt = '';
-						if(is_array($t))
-						{
-							$sel_options = $t;
-							$t = 'select';
-						}
-						else
-						{
-							list($t,$opt) = explode(':',$t);
-						}
-						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
-						$child['sel_options'] = $sel_options;
-						etemplate::add_child($cell,$child);
-						unset($sel_options);
-						unset($child);
-					}
-				}
-				else
-				{
-					$cell['sel_options'] = $cell['type'];
-					$cell['type'] = 'select';
-				}
-			}
-			// For all times, show time in user time
-			elseif ($type == 'date-time' && $value)
-			{
-				$value = egw_time::server2user($value);
-			}
-			if ($cell['type'] == 'label') $cell['no_lang'] = 'true';
-			return true;
+			case 'historylog-helper':
+				return $this->pre_process_helper($value, $cell);
 		}
 		$app = is_array($value) ? $value['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
-		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
+		self::$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
 
 		$id = is_array($value) ? $value['id'] : $value;
 		$filter = is_array($value) ? $value['filter'] : array();
@@ -168,24 +192,34 @@ class historylog_widget
 			{
 				$tmpl->sel_options[$status]['#'.$cf_name] = lang($cf_data['label']);
 			}
-			if (isset($status_widgets['#'.$cf_name])) continue;	// app set a status widget --> use that
+			if (isset(self::$status_widgets['#'.$cf_name])) continue;	// app set a status widget --> use that
 
 			if(!is_array($cf_data['values']) || !$cf_data['values'])
 			{
-				$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
+				self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
 			}
 			elseif($cf_data['values']['@'])
 			{
-				$status_widgets['#'.$cf_name] = customfields_widget::_get_options_from_file($cf_data['values']['@']);
+				self::$status_widgets['#'.$cf_name] = customfields_widget::_get_options_from_file($cf_data['values']['@']);
 			}
 			elseif(count($cf_data['values']))
 			{
-				$status_widgets['#'.$cf_name] = $cf_data['values'];
+				self::$status_widgets['#'.$cf_name] = $cf_data['values'];
 			}
 		}
 
 		if ($value)	// autorepeated data-row only if there is data
 		{
+			// add "labels" for unsupported iCal properties, we just remove the '##' prefix
+			foreach($value as &$row)
+			{
+				if ($row['status'][0] == '#' && $row['status'][1] == '#' &&
+					isset($tmpl->sel_options[$status]) && !isset($tmpl->sel_options[$status][$row['status']]))
+				{
+					$tmpl->sel_options[$status][$row['status']] = substr($row['status'], 2);
+				}
+			}
+
 			$tpl->new_cell(2,'date-time','','${row}[user_ts]',array('readonly' => true));
 			$tpl->new_cell(2,'select-account','','${row}[owner]',array('readonly' => true));
 
@@ -201,7 +235,7 @@ class historylog_widget
 			}
 			// if $value[status-widgets] is set, use them together with the historylog-helper
 			// to display new_ & old_value in the specified widget, otherwise use a label
-			if ($status_widgets)
+			if (self::$status_widgets)
 			{
 				$tpl->new_cell(2,'historylog-helper','','${row}[new_value]',array('size' => '$row_cont[status]','no_lang' => true,'readonly' => true));
 				$tpl->new_cell(2,'historylog-helper','','${row}[old_value]',array('size' => '$row_cont[status]','no_lang' => true,'readonly' => true));
