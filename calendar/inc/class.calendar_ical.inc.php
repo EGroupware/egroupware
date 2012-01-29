@@ -2989,7 +2989,7 @@ class calendar_ical extends calendar_boupdate
 		// whole day events get one day in calendar_boupdate::save()
 		if (!isset($event['end']))
 		{
-			$event['end'] = 60 * $this->cal_prefs['defaultlength'];
+			$event['end'] = $event['start'] + 60 * $this->cal_prefs['defaultlength'];
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
