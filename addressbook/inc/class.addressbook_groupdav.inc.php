@@ -7,7 +7,7 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -117,7 +117,7 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		$filter = array();
 		// show addressbook of a single user?
-		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
+		if ($user && $path != '/addressbook/' || $user === 0) $filter['contact_owner'] = $user;
 		// should we hide the accounts addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
@@ -327,7 +327,7 @@ class addressbook_groupdav extends groupdav_handler
 		    <B:nresults>10</B:nresults>
 		  </B:limit>
 		*/
-		foreach($options['other'] as $option)
+		foreach((array)$options['other'] as $option)
 		{
 			switch($option['name'])
 			{
@@ -580,9 +580,11 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
 	{
-		// addressbook description
-		$displayname = translation::convert(lang('Addressbook of'),translation::charset(),'utf-8').' '.$displayname;
-		$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
+		if (!isset($props['addressbook-description']))
+		{
+			// default addressbook description: can be overwritten via PROPPATCH, in which case it's already set
+			$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$props['displayname']);
+		}
 		// supported reports (required property for CardDAV)
 		$props['supported-report-set'] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(

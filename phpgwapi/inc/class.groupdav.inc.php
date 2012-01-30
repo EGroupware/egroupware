@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -371,7 +371,8 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
 				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path.$app.'/');
+				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,
+					$user || $app != 'addressbook' ? $path.$app.'/' : '/addressbook-accounts/');
 
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
 				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
@@ -514,24 +515,31 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param string $name property name
 	 * @param string $ns=null namespace, if that is to be checked too
 	 * @param boolean $return_prop=false if true return the property array with values for 'name', 'xmlns', 'attrs', 'children'
-	 * @return boolean|string|array true: $name explicitly requested (or autoindex), 'allprop' requested, false: $name was not requested
+	 * @return boolean|string|array true: $name explicitly requested (or autoindex), "all": allprop or "names": propname requested, false: $name was not requested
 	 */
 	function prop_requested($name, $ns=null, $return_prop=false)
 	{
 		if (!is_array($this->propfind_options) || !isset($this->propfind_options['props']))
 		{
-			return true;	// no props set, should happen only in autoindex, we return true to show all available props
+			$ret = true;	// no props set, should happen only in autoindex, we return true to show all available props
 		}
-		$ret = false;
-		foreach($this->propfind_options['props'] as $prop)
+		elseif (!is_array($this->propfind_options['props']))
 		{
-			if ($prop['name'] == $name && (is_null($ns) || $prop['xmlns'] == $ns))
-			{
-				$ret = $return_prop ? $prop : true;
-				break;
-			}
-			if ($prop['name'] == 'allprop') $ret = 'allprop';
+			$ret = $this->propfind_options['props'];	// "all": allprop or "names": propname
 		}
+		else
+		{
+			$ret = false;
+			foreach($this->propfind_options['props'] as $prop)
+			{
+				if ($prop['name'] == $name && (is_null($ns) || $prop['xmlns'] == $ns))
+				{
+					$ret = $return_prop ? $prop : true;
+					break;
+				}
+			}
+		}
+		//error_log(__METHOD__."('$name', '$ns', $return_prop) propfind_options=".array2string($this->propfind_options));
 		return $ret;
 	}
 
@@ -592,6 +600,12 @@ class groupdav extends HTTP_WebDAV_Server
 
 				$files['files'][] = $this->add_app($app,false,$user,$path.$app.'/');
 
+				// only add global /addressbook-accounts/ as the one in home-set is added (and controled) by add_shared
+				if ($path == '/' && $app == 'addressbook' &&
+					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+				{
+					$files['files'][] = $this->add_app($app,false,0,$path.$app.'-accounts/');
+				}
 				// added shared calendars or addressbooks
 				$this->add_shared($files['files'], $path, $app, $user);
 			}
@@ -781,10 +795,18 @@ class groupdav extends HTTP_WebDAV_Server
 		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
 		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
 		{
-			list($prop,$prop4user) = explode(':', $name);
-			if ($prop4user == $user && isset(self::$proppatch_props[$prop]))
+			unset($ns);
+			list($prop,$prop4user,$ns) = explode(':', $name, 3);
+			if ($prop4user == (string)$user && isset(self::$proppatch_props[$prop]) && !isset($ns))
 			{
 				$props[$prop] = self::mkprop(self::$proppatch_props[$prop], $prop, $value);
+				//error_log(__METHOD__."() explicit ".self::$proppatch_props[$prop].":$prop=".array2string($value));
+			}
+			// props in arbitrary namespaces not mentioned in self::$ns_needs_explicit_named_props
+			elseif(isset($ns) && !in_array($ns,self::$ns_needs_explicit_named_props))
+			{
+				$props[] = self::mkprop($ns, $prop, $value);
+				//error_log(__METHOD__."() arbitrary $ns:$prop=".array2string($value));
 			}
 		}
 
@@ -998,7 +1020,6 @@ class groupdav extends HTTP_WebDAV_Server
 			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
 		}
 		echo "</table>\n";
-
 		$dav = array(1);
 		$allow = false;
 		$this->OPTIONS($options['path'], $dav, $allow);
@@ -1122,55 +1143,74 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * props modifyable via proppatch from client, eg. calendar-color
+	 * Namespaces which need to be eplicitly named in self::$proppatch_props,
+	 * because we consider them protected, if not explicitly named
+	 *
+	 * @var array
+	 */
+	static $ns_needs_explicit_named_props = array(self::DAV, self::CALDAV, self::CARDDAV, self::CALENDARSERVER);
+	/**
+	 * props modifyable via proppatch from client for name-spaces mentioned in self::$ns_needs_explicit_named_props
+	 *
+	 * Props named here are stored in prefs without namespace!
 	 *
 	 * @var array name => namespace pairs
 	 */
 	static $proppatch_props = array(
 		'displayname' => self::DAV,
 		'calendar-description' => self::CALDAV,
-		'calendar-color' => self::ICAL,
+		'addressbook-description' => self::CARDDAV,
+		'calendar-color' => self::ICAL,	// only mentioned that old prefs still work
 		'calendar-order' => self::ICAL,
 	);
 
 	/**
 	 * PROPPATCH method handler
 	 *
-	 * @param  array  general parameter passing array
-	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 * @param array &$options general parameter passing array
+	 * @return string with responsedescription or null, individual status in $options['props'][]['status']
 	 */
 	function PROPPATCH(&$options)
 	{
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options).')');
 
 		// parse path in form [/account_lid]/app[/more]
-		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix))
+		self::_parse_path($options['path'],$id,$app,$user,$user_prefix);	// allways returns false if eg. !$id
+		if (!$app || $app == 'principals' || $id)
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
-			return '404 Not Found';
+			foreach($options['props'] as &$prop) $prop['status'] = '403 Forbidden';
+			return 'NOT allowed to PROPPATCH that resource!';
 		}
-		/* allow handlers to implement own proppatch handler
-		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'proppatch'))
-		{
-			return $handler->proppatch($options, $user);
-		}*/
-
 		// store selected props in preferences, eg. calendar-color, see self::$proppatch_props
-		foreach($options['props'] as $prop)
+		foreach($options['props'] as &$prop)
 		{
-			if (isset(self::$proppatch_props[$prop['name']]))
+			if ((isset(self::$proppatch_props[$prop['name']]) && self::$proppatch_props[$prop['name']] === $prop['xmlns'] ||
+				!in_array($prop['xmlns'],self::$ns_needs_explicit_named_props)))
 			{
-				$GLOBALS['egw']->preferences->add($app, $prop['name'].':'.$user, $prop['val']);
-				$need_save = true;
+				$name = $prop['name'].':'.$user.(isset(self::$proppatch_props[$prop['name']]) &&
+					self::$proppatch_props[$prop['name']] == $prop['ns'] ? '' : ':'.$prop['ns']);
+				//error_log("preferences['user']['$app']['$name']=".array2string($GLOBALS['egw_info']['user']['preferences'][$app][$name]).($GLOBALS['egw_info']['user']['preferences'][$app][$name] !== $prop['val'] ? ' !== ':' === ')."prop['val']=".array2string($prop['val']));
+				if ($GLOBALS['egw_info']['user']['preferences'][$app][$name] !== $prop['val'])	// nothing to change otherwise
+				{
+					if (isset($prop['val']))
+					{
+						$GLOBALS['egw']->preferences->add($app, $name, $prop['val']);
+					}
+					else
+					{
+						$GLOBALS['egw']->preferences->delete($app, $name);
+					}
+					$need_save = true;
+				}
+				$prop['status'] = '200 OK';
+			}
+			else
+			{
+				$prop['status'] = '409 Conflict';	// could also be "403 Forbidden"
 			}
 		}
-		if ($need_save)
-		{
-			$GLOBALS['egw']->preferences->save_repository();
-
-			return '';	// this is as the filesystem example handler does it, no true or false ...
-		}
-		return '501 Not Implemented';
+		if ($need_save) $GLOBALS['egw']->preferences->save_repository();
 	}
 
 	/**
@@ -1391,11 +1431,18 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$app = array_shift($parts);
 
+		// /addressbook-accounts/
+		if (!$account_id && $app == 'addressbook-accounts')
+		{
+			$app = 'addressbook';
+			$user = 0;
+			$user_prefix = '/';
+		}
 		// shared calendars/addressbooks at /<currentuser>/(calendar|addressbook|infolog)-<username>
-		if ($account_id == $GLOBALS['egw_info']['user']['account_id'] && strpos($app, '-') !== false)
+		elseif ($account_id == $GLOBALS['egw_info']['user']['account_id'] && strpos($app, '-') !== false)
 		{
 			list($app, $username) = explode('-', $app, 2);
-			if ($username == 'accounts')
+			if ($username == 'accounts' && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 			{
 				$account_id = 0;
 			}
