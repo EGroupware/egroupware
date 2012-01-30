@@ -55,7 +55,7 @@ class historylog_widget
 	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	private function pre_process_helper(&$value, &$cell)
+	private function pre_process_helper(&$value, &$cell, etemplate $tmpl)
 	{
 		if (empty($value) && (string)$value !== '0')
 		{
@@ -147,7 +147,7 @@ class historylog_widget
 		switch ($cell['type'])
 		{
 			case 'historylog-helper':
-				return $this->pre_process_helper($value, $cell);
+				return $this->pre_process_helper($value, $cell, $tmpl);
 		}
 		$app = is_array($value) ? $value['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
 		self::$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
