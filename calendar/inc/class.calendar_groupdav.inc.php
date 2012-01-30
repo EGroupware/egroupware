@@ -1163,20 +1163,27 @@ class calendar_groupdav extends groupdav_handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
 	 * @param int $user=null account_id of owner of current collection
+	 * @param string $path=null path of the collection
 	 * @return array
 	 */
-	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null, $path=null)
 	{
 		if (!isset($props['calendar-description']))
 		{
 			// default calendar description: can be overwritten via PROPPATCH, in which case it's already set
 			$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		}
-		// supported components, currently only VEVENT
-		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+		$supported_components = array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
-		));
+		);
+		// outbox supports VFREEBUSY too, it is required from OS X iCal to autocomplete locations
+		if (substr($path,-8) == '/outbox/')
+		{
+			$supported_components[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VFREEBUSY'));
+		}
+		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,
+			'supported-calendar-component-set',$supported_components);
 		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
