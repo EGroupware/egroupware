@@ -1067,6 +1067,7 @@ class HTTP_WebDAV_Server
             $options["path"] = $this->path;
 
             $propinfo = new _parse_proppatch("php://input", $this->store_request);
+            if ($this->store_request) $this->request = $propinfo->request;
 
             if (!$propinfo->success) {
                 $this->http_status("400 Error");
