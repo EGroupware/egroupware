@@ -45,7 +45,7 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme {
         } else {
             $data = $result[0];
         }
-        if ($content_type !== null && empty($this->allowed_types[$content_type])) {
+        if ($content_type !== null && empty($this->allowed_types[strtolower($content_type)])) {
             return false;
         }
         if ($charset !== null) {
