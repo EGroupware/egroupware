@@ -1054,10 +1054,10 @@ class addressbook_vcal extends addressbook_bo
 		$vCard->setAttribute('N',$list['list_name']);
 		$vCard->setAttribute('FN',$list['list_name']);
 
-		$vCard->setAttribute('X-ADRESSBOOKSERVER-KIND','group');
+		$vCard->setAttribute('X-ADDRESSBOOKSERVER-KIND','group');
 		foreach($list['members'] as $uid)
 		{
-			$vCard->setAttribute('X-ADRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
+			$vCard->setAttribute('X-ADDRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
 		}
 		$vCard->setAttribute('REV',egw_time::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
 		$vCard->setAttribute('UID',$list['list_uid']);
