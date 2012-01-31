@@ -426,6 +426,9 @@ abstract class groupdav_handler
 		if (!$user || $grants[$user] & EGW_ACL_READ)
 		{
 			$priviledes['read'] = 'read';
+			// allows on all calendars/addressbooks to write properties, as we store them on a per-user basis
+			// and only allow to modify explicit named properties in CalDAV, CardDAV or Calendarserver name-space
+			$priviledes['write-properties'] = 'write-properties';
 		}
 		if (!$user || $grants[$user] & EGW_ACL_ADD)
 		{
