@@ -1385,6 +1385,46 @@ class html
 	}
 
 	/**
+	* creates a HTMLPurifier default config for the needs of HTMLTidy
+	*
+	* @return HTMLPurifier_Config object
+	*/
+	static function purifyCreateHTMLTidyConfig()
+	{
+		$config = html::purifyCreateDefaultConfig();
+		// maybe the two following lines are useful for caching???
+		$config->set('HTML.DefinitionID', 'egroupwareHTMLTidyConfig');
+		$config->set('HTML.DefinitionRev', 1);
+		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));     // doctype and tidylevel
+		$config->set('Core.RemoveInvalidImg', false);
+		$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+		$config->set('HTML.TidyLevel', 'light');
+		$config->set('Attr.EnableID',true);
+		// enable target attributes
+		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
+		// actual allowed tags and attributes
+		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
+		$config->set('AutoFormat.RemoveEmpty', true);
+		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[align|style],hr[class|style],'.
+			'font[size|color],'.
+			'ul[type],ol[type|start],li,'.
+			'h1,h2,h3,h4,h5,h6,'.
+			'span[class|style],'.
+			'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
+			'tbody,thead,tfoot,colgroup,'.
+			'col[width|span],'.
+			'blockquote[class|cite|dir],'.
+			'tr[class|style|align|bgcolor|align|valign],'.
+			'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
+			'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
+			'a[href|target|name|title],'.
+			'img[src|alt|title|align|style|width|height]');
+		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true, 'data'=>true));
+		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
+		return $config;
+	}
+
+	/**
 	 * Runs HTMLPurifier over supplied html to remove malicious code
 	 *
 	 * @param string $html
