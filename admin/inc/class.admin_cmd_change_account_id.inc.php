@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+
 /**
  * admin command: change an account_id
  */
@@ -46,9 +47,8 @@ class admin_cmd_change_account_id extends admin_cmd
 				'egw_addressbook_lists' => array('list_owner','list_creator'),
 				'egw_api_content_history' => 'sync_changedby',
 				'egw_applications'   => false,
-				'egw_app_sessions'   => 'loginid',
 				'egw_async'          => 'async_account_id',
-				'egw_categories'     => array(array('cat_owner','cat_owner > 0')),	// -1 are global cats, not cats from group 1!
+				'egw_categories'     => array(array('cat_owner','.type' => 'comma-sep',"cat_owner > '0'")),	// -1 are global cats, not cats from group 1!
 				'egw_config'         => false,
 				'egw_history_log'    => 'history_owner',
 				'egw_hooks'          => false,
@@ -78,7 +78,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				'egw_cal_user'       => array(array('cal_user_id','cal_user_type' => 'u')),	// cal_user_id for cal_user_type='u'
 			),
 			'emailadmin' => array(
-				'egw_emailadmin'     => array(array('ea_user','ea_user > 0'),array('ea_group','ea_group < 0')),
+				'egw_emailadmin'     => array(array('ea_user',"ea_user > '0'"),array('ea_group',"ea_group < '0'")),
 			),
 			'felamimail' => array(
 				'egw_felamimail_accounts'      => 'fm_owner',
@@ -148,7 +148,7 @@ class admin_cmd_change_account_id extends admin_cmd
 			'wiki' => array(
 				'egw_wiki_interwiki' => false,
 				'egw_wiki_links'     => false,
-				'egw_wiki_pages'     => array(array('wiki_readable','wiki_readable < 0'),array('wiki_writable','wiki_writable < 0')),	// only groups
+				'egw_wiki_pages'     => array(array('wiki_readable',"wiki_readable < '0'"),array('wiki_writable',"wiki_writable < '0'")),	// only groups
 				'egw_wiki_rate'      => false,
 				'egw_wiki_remote_pages' => false,
 				'egw_wiki_sisterwiki'=> false,
@@ -208,6 +208,8 @@ class admin_cmd_change_account_id extends admin_cmd
 
 			foreach($data as $table => $columns)
 			{
+				$db->column_definitions = $db->get_table_definitions($app,$table);
+				$db->column_definitions = $db->column_definitions['fd'];
 				if (!$columns)
 				{
 					echo "$app: $table no columns with account-id's\n";
@@ -235,17 +237,18 @@ class admin_cmd_change_account_id extends admin_cmd
 
 	private static function _update_account_id($ids2change,$db,$table,$column,$where=null,$type=null)
 	{
-		static $update_sql;
-		static $update_sql_abs;
-
-		if (is_null($update_sql))
+		//static $update_sql;
+		//static $update_sql_abs;
+		$update_sql = $update_sql_abs = '';
+		if (is_null($update_sql));
 		{
 			foreach($ids2change as $from => $to)
 			{
-				$update_sql .= "WHEN $from THEN $to ";
+				$update_sql .= "WHEN ".$db->quote($from,$db->column_definitions[$column]['type'])." THEN ".$db->quote($to,$db->column_definitions[$column]['type'])." ";
+				//echo "#$column->".$db->column_definitions[$column]['type']."#\n";
 				if ($to < 0 && $from < 0)
 				{
-					$update_sql_abs .= 'WHEN '.abs($from).' THEN '.abs($to).' ';
+					$update_sql_abs .= 'WHEN '.$db->quote(abs($from),$db->column_definitions[$column]['type']).' THEN '.$db->quote(abs($to),$db->column_definitions[$column]['type']).' ';
 				}
 			}
 			$update_sql .= 'END';
