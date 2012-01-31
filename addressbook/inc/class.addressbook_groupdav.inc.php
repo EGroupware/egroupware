@@ -623,7 +623,7 @@ class addressbook_groupdav extends groupdav_handler
 		// not showing addressbook of a single user?
 		if (!$user || $path == '/addressbook/') $user = null;
 
-		return $this->bo->get_ctag($user);
+		return max($this->bo->get_ctag($user),$this->bo->lists_ctag($user));
 	}
 
 	/**

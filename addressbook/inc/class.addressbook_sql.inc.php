@@ -647,6 +647,24 @@ class addressbook_sql extends so_sql_cf
 	}
 
 	/**
+	 * Get ctag (max list_modified as timestamp) for lists
+	 *
+	 * @param int|array $owner=null null for all lists user has access too
+	 * @return int
+	 */
+	function lists_ctag($owner=null)
+	{
+		if (is_null($owner)) $owner = array_keys($this->grants);
+
+		if (!($modified = $this->db->select($this->lists_table,'MAX(list_modified)',array('list_owner'=>$owner),
+			__LINE__,__FILE__)->fetchColumn()))
+		{
+			return 0;
+		}
+		return $this->db->from_timestamp($modified);
+	}
+
+	/**
 	 * Reads a contact, reimplemented to use the uid, if a non-numeric key is given
 	 *
 	 * @param int|string|array $keys

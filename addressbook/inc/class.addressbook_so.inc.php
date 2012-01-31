@@ -1057,4 +1057,17 @@ class addressbook_so
 
 		return method_exists($backend,'read_list');
 	}
+
+	/**
+	 * Get ctag (max list_modified as timestamp) for lists
+	 *
+	 * @param int|array $owner=null null for all lists user has access too
+	 * @return int
+	 */
+	function lists_ctag($owner=null)
+	{
+		if (!method_exists($this->somain,'read_list')) return 0;
+
+		return $this->somain->lists_ctag($owner);
+	}
 }
