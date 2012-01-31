@@ -398,7 +398,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			$content .= "\t\t\t\t".'<a href="'.$GLOBALS['egw']->link('/index.php',
 				array('menuaction'=>'calendar.calendar_uiviews.month',
-				'date'=>$this->year.$month.'01')).
+				'date'=>$this->year.($month < 10 ? '0' : '').$month.'01')).
 				'" title="'.lang('Monthview').'">'.lang(adodb_date('F',strtotime("+1 week",$month_start))).'</a>'."\n";
 			if ($month == self::YEARVIEW_COLS)
 			{
