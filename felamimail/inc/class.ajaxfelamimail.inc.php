@@ -252,7 +252,7 @@ class ajaxfelamimail
 			} else {
 				$this->sessionData['mimeType'] = 'text';
 				$_content = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$_content);
-				$_content = $bocompose->_getCleanHTML($_content);
+				$_content = $bocompose->_getCleanHTML($_content,false,false);
 				$_content = $bocompose->convertHTMLToText($_content);
 			}
 			$htmlObject = html::fckEditorQuick('body', $_mode, $_content);
