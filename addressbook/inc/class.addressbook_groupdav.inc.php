@@ -207,7 +207,7 @@ class addressbook_groupdav extends groupdav_handler
 		// add groups after contacts
 		if (!$start || count($contacts) < $start[1])
 		{
-			if (($lists = $this->bo->read_lists(array('list_owner' => $filter['contact_owner']?$filter['contact_owner']:array_keys($this->bo->grants)))))
+			if (($lists = $this->bo->read_lists(array('list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)))))
 			{
 				//_debug_array($lists);
 				foreach($lists as $list)
@@ -437,6 +437,7 @@ class addressbook_groupdav extends groupdav_handler
 		$oldContact = $this->_common_get_put_delete('PUT',$options,$id);
 		if (!is_null($oldContact) && !is_array($oldContact))
 		{
+			if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($oldContact));
 			return $oldContact;
 		}
 
@@ -477,7 +478,7 @@ class addressbook_groupdav extends groupdav_handler
 			$contactId = -1;
 			$retval = '201 Created';
 		}
-		$is_group = $contact['##X-CALENDARSERVER-KIND'] == 'group';
+		$is_group = $contact['##X-ADDRESSBOOKSERVER-KIND'] == 'group';
 		if ($oldContact && $is_group !== isset($oldContact['list_id']))
 		{
 			throw new egw_exception_assertion_failed(__METHOD__."(,'$id',$user,'$prefix') can contact into group or visa-versa!");
@@ -512,6 +513,7 @@ class addressbook_groupdav extends groupdav_handler
 			if ($oldContact && $user != $oldContact['owner'] && !($this->bo->grants[$user] & EGW_ACL_ADD) &&
 				(!$this->bo->grants[$oldContact['owner']] & EGW_ACL_DELETE))
 			{
+				if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning '403 Forbidden'");
 				return '403 Forbidden';
 			}
 			$contact['owner'] = $user;
@@ -543,6 +545,7 @@ class addressbook_groupdav extends groupdav_handler
 			header($h='Location: '.$this->base_uri.$path.self::get_path($contact));
 			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): $retval");
 		}
+		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
 		return $retval;
 	}
 
@@ -606,6 +609,7 @@ class addressbook_groupdav extends groupdav_handler
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
 		}
+		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') returning '.array2string($list_id));
 		return $list_id;
 	}
 
@@ -766,11 +770,16 @@ class addressbook_groupdav extends groupdav_handler
 				$contact[$name] = $contact['list_'.$name];
 			}
 		}
+		elseif($contact === array())	// not found from read_lists()
+		{
+			$contact = null;
+		}
 
 		if ($contact && $contact['tid'] == addressbook_so::DELETED_TYPE)
 		{
 			$contact = null;	// handle deleted events, as not existing (404 Not Found)
 		}
+		if ($this->debug > 1) error_log(__METHOD__."('$id') returning ".array2string($contact));
 		return $contact;
 	}
 

@@ -1723,6 +1723,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$owner = $list_data['list_owner'];
 		}
+		//error_log(__METHOD__."($list, $required, $owner) grants[$owner]=".$this->grants[$owner]." returning ".array2string(!!($this->grants[$owner] & $required)));
 		return !!($this->grants[$owner] & $required);
 	}
 
@@ -1737,9 +1738,9 @@ class addressbook_bo extends addressbook_so
 	 */
 	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$this->check_list(null,EGW_ACL_ADD,$owner)) return false;
+		if (!$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner)) return false;
 
-		return parent::add_list($name,$owner,$contacts,$data);
+		return parent::add_list($keys,$owner,$contacts,$data);
 	}
 
 	/**

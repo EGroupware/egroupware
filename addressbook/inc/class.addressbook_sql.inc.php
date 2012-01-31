@@ -497,12 +497,19 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$keys || !(int)$owner) return false;
+		error_log(__METHOD__.'('.array2string($keys).", $owner, ..., ".array2string($data).')');
+		if (!$keys && !$data || !(int)$owner) return false;
 
-		if (!is_array($keys)) $keys = array('list_name' => $keys);
-		$keys['list_owner'] = $owner;
-
-		if (!($list_id = $this->select($this->lists_table,'list_id',$keys)->fetchColumn()))
+		if ($keys && !is_array($keys)) $keys = array('list_name' => $keys);
+		if ($keys)
+		{
+			$keys['list_owner'] = $owner;
+		}
+		else
+		{
+			$data['list_owner'] = $owner;
+		}
+		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys)->fetchColumn()))
 		{
 			$data['list_created'] = time();
 			$data['list_creator'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -513,6 +520,7 @@ class addressbook_sql extends so_sql_cf
 		}
 		$data['list_modified'] = time();
 		$data['list_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+		if (!$data['list_id']) unset($data['list_id']);
 
 		if (!$this->db->insert($this->lists_table,$data,$keys,__LINE__,__FILE__)) return false;
 
@@ -522,18 +530,18 @@ class addressbook_sql extends so_sql_cf
 			$update = array();
 			if (!isset($data['list_uid']))
 			{
-				$update['list_uid'] = $data['list_uid'] = common::generate_uid('addresbook-lists', $list_idD);
+				$update['list_uid'] = $data['list_uid'] = common::generate_uid('addresbook-lists', $list_id);
 			}
 			if (!isset($data['list_carddav_name']))
 			{
 				$update['list_carddav_name'] = $data['list_carddav_name'] = $data['list_uid'].'.vcf';
 			}
-			$this->db->update($this->lists_table,$update,array('list_id'=>$list_id));
+			$this->db->update($this->lists_table,$update,array('list_id'=>$list_id),__LINE__,__FILE__);
 
 			$this->add2list($list_id,$contacts,array());
 		}
-		$data += $keys;
-
+		if ($keys) $data += $keys;
+		//error_log(__METHOD__.'('.array2string($keys).", $owner, ...) data=".array2string($data).' returning '.array2string($list_id));
 		return $list_id;
 	}
 
@@ -549,7 +557,14 @@ class addressbook_sql extends so_sql_cf
 	{
 		if (!(int)$list || !is_array($contact) && !(int)$contact) return false;
 
-		if (!is_array($existing)) $existing = $this->read_list($list);
+		if (!is_array($existing))
+		{
+			$existing = array();
+			foreach($this->db->select($this->ab2list_table,'contact_id',array('list_id'=>$list),__LINE__,__FILE__) as $row)
+			{
+				$existing[] = $row['contact_id'];
+			}
+		}
 		if (!($to_add = array_diff((array)$contact,$existing)))
 		{
 			return true;	// no need to insert it, would give sql error
@@ -564,7 +579,7 @@ class addressbook_sql extends so_sql_cf
 			),array(),__LINE__,__FILE__);
 		}
 		// update etag
-		return $this->db->update($this->list_table,array(
+		return $this->db->update($this->lists_table,array(
 			'list_etag=list_etag+1',
 			'list_modified' => time(),
 			'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
@@ -605,7 +620,7 @@ class addressbook_sql extends so_sql_cf
 		}
 		foreach((array)$list as $list_id)
 		{
-			$this->db->update($this->list_table,array(
+			$this->db->update($this->lists_table,array(
 				'list_etag=list_etag+1',
 				'list_modified' => time(),
 				'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],

@@ -987,7 +987,7 @@ class addressbook_so
 	{
 		if (!method_exists($this->somain,'add_list')) return false;
 
-		return $this->somain->add_list($name,$owner,$contacts,$data);
+		return $this->somain->add_list($keys,$owner,$contacts,$data);
 	}
 
 	/**

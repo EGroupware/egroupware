@@ -971,9 +971,8 @@ class addressbook_vcal extends addressbook_bo
 				}
 			}
 			// add unsupported attributes as with '##' prefix
-			else
+			elseif(($attribute = $vcardValues[$vcardKey]) && !in_array($attribute['name'],array('PRODID','REV')))
 			{
-				$attribute = $vcardValues[$vcardKey];
 				// for attributes with multiple values in multiple lines, merge the values
 				if (isset($contact['##'.$attribute['name']]))
 				{
