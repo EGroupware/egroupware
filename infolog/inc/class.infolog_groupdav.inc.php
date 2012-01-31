@@ -212,7 +212,7 @@ class infolog_groupdav extends groupdav_handler
 
 		if (!$calendar_data)
 		{
-			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name');
+			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject');
 		}
 
 		if (is_array($start))
@@ -235,6 +235,7 @@ class infolog_groupdav extends groupdav_handler
 				$props = array(
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',	// Konqueror (3.5) dont understand it otherwise
 					'getlastmodified' => $task['info_datemodified'],
+					'displayname' => $task['info_subject'],
 				);
 				if ($calendar_data)
 				{
