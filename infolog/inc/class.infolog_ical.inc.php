@@ -334,7 +334,17 @@ class infolog_ical extends infolog_bo
 			{
 				if (substr($name, 0, 2) == '##')
 				{
-					if ($value[1] == ':' && ($attr = unserialize($value)) !== false)
+					if ($name[2] == ':')
+					{
+						if ($value[1] == ':' && ($v = unserialize($value)) !== false) $value = $v;
+						foreach((array)$value as $compvData)
+						{
+							$comp = Horde_iCalendar::newComponent(substr($name,3), $vevent);
+							$comp->parsevCalendar($compvData,substr($name,3),'utf-8');
+							$vevent->addComponent($comp);
+						}
+					}
+					elseif ($value[1] == ':' && ($attr = unserialize($value)) !== false)
 					{
 						$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
 					}
@@ -725,6 +735,21 @@ class infolog_ical extends infolog_bo
 				}
 			}
 			break;
+		}
+		// store included, but unsupported components like valarm as x-properties
+		foreach($component->getComponents() as $comp)
+		{
+			$name = '##:'.strtoupper($comp->getType());
+			$compvData = $comp->exportvCalendar($comp,'utf-8');
+			if (isset($taskData[$name]))
+			{
+				$taskData[$name] = array($taskData[$name]);
+				$taskData[$name][] = $compvData;
+			}
+			else
+			{
+				$taskData[$name] = $compvData;
+			}
 		}
 		if ($this->log)
 		{

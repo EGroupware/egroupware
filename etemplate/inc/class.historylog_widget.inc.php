@@ -77,13 +77,16 @@ class historylog_widget
 			$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
 		}
 		$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
-		// display unsupported iCal properties, which have multiple values or attributes
-		if ($type === 'label' && $value[1] === ':' && ($v = unserialize($value)))
+		// display unsupported iCal properties, which have multiple values or attributes, or multiple components
+		if ($type === 'label' && $value[1] === ':' && ($values = unserialize($value)))
 		{
-			$values = $v['values'];
-			foreach((array)$v['params'] as $name => $val)
+			if (isset($values['values']))
 			{
-				$values[] = $name.': '.$val;
+				foreach((array)$values['params'] as $name => $val)
+				{
+					$values['values'][] = $name.': '.$val;
+				}
+				$values = $values['values'];
 			}
 			$value = implode("\n", $values);
 		}
