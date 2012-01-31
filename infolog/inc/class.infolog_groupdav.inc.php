@@ -208,6 +208,7 @@ class infolog_groupdav extends groupdav_handler
 			'filter'    	=> $task_filter,
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
+			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 		);
 
 		if (!$calendar_data)
