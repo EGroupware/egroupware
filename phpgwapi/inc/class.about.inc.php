@@ -107,7 +107,7 @@ via SyncML.</p>
 <p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems. 
 On the client side, all you need is a internet browser such as Firefox, Safari, Chrome, Konqueror or Internet Explorer 
 and many more.</p>
-<p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite GmbH</a></b> with contributions
+<p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite AG</a></b> with contributions
 from community developers.</p>
 <br />
 <p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
