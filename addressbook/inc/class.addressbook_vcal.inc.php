@@ -72,6 +72,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
+			'REV'               => array('modified'),
 		);
 
 	/**
@@ -206,7 +207,7 @@ class addressbook_vcal extends addressbook_bo
 		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
-		$sysCharSet = $GLOBALS['egw']->translation->charset();
+		$sysCharSet = translation::charset();
 
 		// KAddressbook and Funambol4BlackBerry always requires non-ascii chars to be qprint encoded.
 		if ($this->productName == 'kde' ||
@@ -280,6 +281,10 @@ class addressbook_vcal extends addressbook_bo
 
 				switch ($databaseField)
 				{
+					case 'modified':
+						$value = gmdate("Y-m-d\TH:i:s\Z",egw_time::user2server($value));
+						break;
+
 					case 'private':
 						$value = $value ? 'PRIVATE' : 'PUBLIC';
 						$hasdata++;
@@ -326,7 +331,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'cat_id':
 						if (!empty($value) && ($values = $this->get_categories($value)))
 						{
-							$values = (array) $GLOBALS['egw']->translation->convert($values, $sysCharSet, $_charset);
+							$values = (array) translation::convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
 							if (($size > 0) && strlen($value) > $size)
 							{
@@ -410,7 +415,7 @@ class addressbook_vcal extends addressbook_bo
 							|| in_array($vcardField,array('FN','ORG','N'))
 							|| ($size >= 0 && !$noTruncate))
 						{
-							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, $_charset);
+							$value = translation::convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
 							if (preg_match('/[^\x20-\x7F]/', $value))
 							{
@@ -965,6 +970,21 @@ class addressbook_vcal extends addressbook_bo
 					}
 				}
 			}
+			// add unsupported attributes as with '##' prefix
+			else
+			{
+				$attribute = $vcardValues[$vcardKey];
+				// for attributes with multiple values in multiple lines, merge the values
+				if (isset($contact['##'.$attribute['name']]))
+				{
+					error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($contact['##'.$attribute['name']]));
+					$attribute['values'] = array_merge(
+						is_array($contact['##'.$attribute['name']]) ? $contact['##'.$attribute['name']]['values'] : (array)$contact['##'.$attribute['name']],
+						$attribute['values']);
+				}
+				$contact['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
+					serialize($attribute) : $attribute['value'];
+			}
 		}
 
 		$this->fixup_contact($contact);
@@ -1011,8 +1031,37 @@ class addressbook_vcal extends addressbook_bo
 
 		if (!$file)
 		{
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		return true;
+	}
+
+	/**
+	 * return a groupVCard
+	 *
+	 * @param array $list values for 'list_uid', 'list_name', 'list_modified', 'members'
+	 * @param string $version='3.0' vcard version
+	 * @return string containing the vcard
+	 */
+	function getGroupVCard(array $list,$version='3.0')
+	{
+		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
+
+		$vCard = new Horde_iCalendar_vcard($version);
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+
+		$vCard->setAttribute('N',$list['list_name']);
+		$vCard->setAttribute('FN',$list['list_name']);
+
+		$vCard->setAttribute('X-ADRESSBOOKSERVER-KIND','group');
+		foreach($list['members'] as $uid)
+		{
+			$vCard->setAttribute('X-ADRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
+		}
+		$vCard->setAttribute('REV',egw_time::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
+		$vCard->setAttribute('UID',$list['list_uid']);
+
+		return $vCard->exportvCalendar();
 	}
 }

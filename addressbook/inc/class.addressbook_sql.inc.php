@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2006-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -458,101 +458,162 @@ class addressbook_sql extends so_sql_cf
 	/**
 	 * Get the availible distribution lists for givens users and groups
 	 *
-	 * @param array $uids user or group id's
+	 * @param array $uids array of user or group id's for $uid_column='list_owners', or values for $uid_column,
+	 * 	or whole where array: column-name => value(s) pairs
+	 * @param string $uid_column='list_owner' column-name or null to use $uids as where array
+	 * @param string $member_attr=null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function get_lists($uids)
+	function get_lists($uids,$uid_column='list_owner',$member_attr=null)
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$lists = array();
-		foreach($this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
+		foreach($this->db->select($this->lists_table,'*',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
 			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
 		{
 			$lists[$row['list_id']] = $row;
 		}
-		//echo "<p>socontacts_sql::get_lists(".print_r($uids,true).")</p>\n"; _debug_array($lists);
+		if ($lists && $member_attr && in_array($member_attr,array('contact_id','contact_uid','caldav_name')))
+		{
+			foreach($this->db->select($this->ab2list_table,"list_id,$member_attr",array('list_id'=>array_keys($lists)),
+				__LINE__,__FILE__,false,$member_attr=='contact_id' ? '' :
+				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id") as $row)
+			{
+				$lists[$row['list_id']]['members'][] = $row[$member_attr];
+			}
+		}
+		error_log(__METHOD__.'('.array2string($uids).", '$uid_column', '$member_attr') returning ".array2string($lists));
 		return $lists;
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param string $name list-name
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
 	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return int/boolean integer list_id, true if the list already exists or false on error
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$name || !(int)$owner) return false;
+		if (!$keys || !(int)$owner) return false;
 
-		if ($this->db->select($this->lists_table,'list_id',array(
-			'list_name' => $name,
-			'list_owner' => $owner,
-		),__LINE__,__FILE__)->fetchColumn())
+		if (!is_array($keys)) $keys = array('list_name' => $keys);
+		$keys['list_owner'] = $owner;
+
+		if (!($list_id = $this->select($this->lists_table,'list_id',$keys)->fetchColumn()))
 		{
-			return true;	// return existing list-id
+			$data['list_created'] = time();
+			$data['list_creator'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		if (!$this->db->insert($this->lists_table,array(
-			'list_name' => $name,
-			'list_owner' => $owner,
-			'list_created' => time(),
-			'list_creator' => $GLOBALS['egw_info']['user']['account_id'],
-		),array(),__LINE__,__FILE__)) return false;
-
-		if ((int)($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) && $contacts)
+		else
 		{
-			foreach($contacts as $contact)
+			$data[] = 'list_etag=list_etag+1';
+		}
+		$data['list_modified'] = time();
+		$data['list_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+
+		if (!$this->db->insert($this->lists_table,$data,$keys,__LINE__,__FILE__)) return false;
+
+		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) &&
+			(!isset($data['list_uid']) || !isset($data['list_carddav_name'])))
+		{
+			$update = array();
+			if (!isset($data['list_uid']))
 			{
-				$this->add2list($list_id,$contact);
+				$update['list_uid'] = $data['list_uid'] = common::generate_uid('addresbook-lists', $list_idD);
 			}
+			if (!isset($data['list_carddav_name']))
+			{
+				$update['list_carddav_name'] = $data['list_carddav_name'] = $data['list_uid'].'.vcf';
+			}
+			$this->db->update($this->lists_table,$update,array('list_id'=>$list_id));
+
+			$this->add2list($list_id,$contacts,array());
 		}
+		$data += $keys;
+
 		return $list_id;
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds contact(s) to a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
-		if (!(int)$list || !(int)$contact) return false;
+		if (!(int)$list || !is_array($contact) && !(int)$contact) return false;
 
-		if ($this->db->select($this->ab2list_table,'list_id',array(
-			'contact_id' => $contact,
-			'list_id' => $list,
-		),__LINE__,__FILE__)->fetchColumn())
+		if (!is_array($existing)) $existing = $this->read_list($list);
+		if (!($to_add = array_diff((array)$contact,$existing)))
 		{
 			return true;	// no need to insert it, would give sql error
 		}
-		return $this->db->insert($this->ab2list_table,array(
-			'contact_id' => $contact,
+		foreach($to_add as $contact)
+		{
+			$this->db->insert($this->ab2list_table,array(
+				'contact_id' => $contact,
+				'list_id' => $list,
+				'list_added' => time(),
+				'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
+			),array(),__LINE__,__FILE__);
+		}
+		// update etag
+		return $this->db->update($this->list_table,array(
+			'list_etag=list_etag+1',
+			'list_modified' => time(),
+			'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
+		),array(
 			'list_id' => $list,
-			'list_added' => time(),
-			'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
-		),array(),__LINE__,__FILE__);
+		),__LINE__,__FILE__);
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list=null list-id or null to remove from all lists
 	 * @return false on error
 	 */
 	function remove_from_list($contact,$list=null)
 	{
-		if (!(int)$list && !is_null($list) || !(int)$contact) return false;
+		if (!(int)$list && !is_null($list) || !is_array($contact) && !(int)$contact) return false;
 
 		$where = array(
 			'contact_id' => $contact,
 		);
-		if (!is_null($list)) $where['list_id'] = $list;
-
-		return $this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__);
+		if (!is_null($list))
+		{
+			$where['list_id'] = $list;
+		}
+		else
+		{
+			$list = array();
+			foreach($this->db->select($this->ab2list_table,'list_id',$where,__LINE__,__FILE__) as $row)
+			{
+				$list[] = $row['list_id'];
+			}
+		}
+		if (!$this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__))
+		{
+			return false;
+		}
+		foreach((array)$list as $list_id)
+		{
+			$this->db->update($this->list_table,array(
+				'list_etag=list_etag+1',
+				'list_modified' => time(),
+				'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
+			),array(
+				'list_id' => $list_id,
+			),__LINE__,__FILE__);
+		}
+		return true;
 	}
 
 	/**
