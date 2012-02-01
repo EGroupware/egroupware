@@ -207,7 +207,15 @@ class addressbook_groupdav extends groupdav_handler
 		// add groups after contacts
 		if (!$start || count($contacts) < $start[1])
 		{
-			if (($lists = $this->bo->read_lists(array('list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)))))
+			$where = array(
+				'list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)
+			);
+			if (isset($filter[self::$path_attr]))	// multiget report?
+			{
+				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
+			}
+			//error_log(__METHOD__."() filter=".array2string($filter).', where='.array2string($where));
+			if (($lists = $this->bo->read_lists($where,'contact_uid',true)))	// true = limit to contacts in same AB!
 			{
 				//_debug_array($lists);
 				foreach($lists as $list)
@@ -761,11 +769,13 @@ class addressbook_groupdav extends groupdav_handler
 		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
 
 		// see if we have a distribution-list / group with that id
-		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id))))
+		// bo->read_list(..., true) limits returned uid to same owner's addressbook, as iOS and OS X addressbooks
+		// only understands/shows that and if return more, save_lists would delete the others ones on update!
+		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',true)))
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
-			foreach(array('owner','id','carddav_name','modified','modifier','created','creator') as $name)
+			foreach(array('owner','id','carddav_name','modified','modifier','created','creator','etag') as $name)
 			{
 				$contact[$name] = $contact['list_'.$name];
 			}

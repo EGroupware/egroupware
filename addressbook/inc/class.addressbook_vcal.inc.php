@@ -1050,7 +1050,7 @@ class addressbook_vcal extends addressbook_bo
 		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
-		$vCard->setAttribute('N',$list['list_name']);
+		$vCard->setAttribute('N',$list['list_name'],array(),true,array($list['list_name'],'','','',''));
 		$vCard->setAttribute('FN',$list['list_name']);
 
 		$vCard->setAttribute('X-ADDRESSBOOKSERVER-KIND','group');

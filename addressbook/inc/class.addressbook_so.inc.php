@@ -965,13 +965,14 @@ class addressbook_so
 	 *
 	 * @param array $keys column-name => value(s) pairs, eg. array('list_uid'=>$uid)
 	 * @param string $member_attr='contact_uid' null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
-	 * @return array with list_id => array(list_id,list_name,list_owner,...,'members') pairs
+	 * @param boolean $limit_in_ab=false if true only return members from the same owners addressbook
+	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function read_lists(array $keys,$member_attr='contact_uid')
+	function read_lists($keys,$member_attr=null,$limit_in_ab=false)
 	{
 		if (!method_exists($this->somain,'get_lists')) return false;
 
-		return $this->somain->get_lists($keys,null,$member_attr);
+		return $this->somain->get_lists($keys,null,$member_attr,$limit_in_ab);
 	}
 
 	/**
@@ -1066,7 +1067,7 @@ class addressbook_so
 	 */
 	function lists_ctag($owner=null)
 	{
-		if (!method_exists($this->somain,'read_list')) return 0;
+		if (!method_exists($this->somain,'lists_ctag')) return 0;
 
 		return $this->somain->lists_ctag($owner);
 	}

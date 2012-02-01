@@ -462,27 +462,30 @@ class addressbook_sql extends so_sql_cf
 	 * 	or whole where array: column-name => value(s) pairs
 	 * @param string $uid_column='list_owner' column-name or null to use $uids as where array
 	 * @param string $member_attr=null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
+	 * @param boolean $limit_in_ab=false if true only return members from the same owners addressbook
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function get_lists($uids,$uid_column='list_owner',$member_attr=null)
+	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
-		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$lists = array();
 		foreach($this->db->select($this->lists_table,'*',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
 			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
 		{
+			if ($member_attr) $row['members'] = array();
 			$lists[$row['list_id']] = $row;
 		}
 		if ($lists && $member_attr && in_array($member_attr,array('contact_id','contact_uid','caldav_name')))
 		{
-			foreach($this->db->select($this->ab2list_table,"list_id,$member_attr",array('list_id'=>array_keys($lists)),
+			foreach($this->db->select($this->ab2list_table,"$this->ab2list_table.list_id,$this->table_name.$member_attr",
+				$this->db->expression($this->ab2list_table, $this->ab2list_table.'.', array('list_id'=>array_keys($lists))),
 				__LINE__,__FILE__,false,$member_attr=='contact_id' ? '' :
-				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id") as $row)
+				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id".
+				($limit_in_ab?" JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND $this->lists_table.list_owner=$this->table_name.contact_owner":'')) as $row)
 			{
 				$lists[$row['list_id']]['members'][] = $row[$member_attr];
 			}
 		}
-		error_log(__METHOD__.'('.array2string($uids).", '$uid_column', '$member_attr') returning ".array2string($lists));
+		//error_log(__METHOD__.'('.array2string($uids).", '$uid_column', '$member_attr') returning ".array2string($lists));
 		return $lists;
 	}
 
