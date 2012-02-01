@@ -72,6 +72,11 @@ abstract class bo_merge
 	);
 
 	/**
+	 * Parse HTML styles into target document style, if possible
+	 */
+	protected $parse_html_styles = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @return bo_merge
@@ -518,7 +523,20 @@ abstract class bo_merge
 					// Remove spans with no attributes, linebreaks inside them cause problems
 					'/<span>(.*?)<\/span>/' => '$1'
 				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content, -1, $count);
+
+				/* 
+				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags), 
+				it takes multiple runs to get rid of both spans.  So, loop.  
+				OO.o files have not yet been shown to have this problem.
+				*/
+				$count = $i = 0;
+				do
+				{
+					$content = preg_replace('/<span>(.*?)<\/span>/','$1',$content, -1, $count);
+					$i++;
+				} while($count > 0 && $i < 10);
+
 //echo $content;die();
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
@@ -531,31 +549,27 @@ abstract class bo_merge
 		// XSLT transform known tags
 		if($xslt)
 		{
-			try
+			// does NOT work with php 5.2.6: Catchable fatal error: argument 1 to transformToXml() must be of type DOMDocument
+			//$element = new SimpleXMLelement($content);
+			$element = new DOMDocument('1.0', 'utf-8');
+			$result = $element->loadXML($content);
+			if(!$result)
 			{
-				// does NOT work with php 5.2.6: Catchable fatal error: argument 1 to transformToXml() must be of type DOMDocument
-				//$element = new SimpleXMLelement($content);
-				$element = new DOMDocument('1.0', 'utf-8');
-				$element->loadXML($content);
-				$content = $xslt->transformToXml($element);
+				throw new Exception('Unable to parse merged document for styles.  Check warnings in log for details.');
+			}
+			$content = $xslt->transformToXml($element);
 
 //echo $content;die();
-				// Word 2003 needs two declarations, add extra declaration back in
-				if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
-					$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
-				}
-				// Validate
-				/*
-				$doc = new DOMDocument();
-				$doc->loadXML($content);
-				$doc->schemaValidate(*Schema (xsd) file*);
-				*/
+			// Word 2003 needs two declarations, add extra declaration back in
+			if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
+				$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
 			}
-			catch (Exception $e)
-			{
-				error_log($e->getMessage());
-				// Failed...
-			}
+			// Validate
+			/*
+			$doc = new DOMDocument();
+			$doc->loadXML($content);
+			$doc->schemaValidate(*Schema (xsd) file*);
+			*/
 		}
 	}
 
@@ -804,7 +818,7 @@ abstract class bo_merge
 			// Tags we can replace with the target document's version
 			$replace_tags = array();
 			// only keep tags, if we have xsl extension available
-			if (class_exists(XSLTProcessor) && class_exists(DOMDocument))
+			if (class_exists(XSLTProcessor) && class_exists(DOMDocument) && $this->parse_html_styles)
 			{
 				switch($mimetype.$mso_application_progid)
 				{
@@ -866,6 +880,18 @@ abstract class bo_merge
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
 					$value = strip_tags($value,implode('',$replace_tags));
+
+					// Change <tag>...\r\n</tag> to <tag>...</tag>\r\n or simplistic line break below will mangle it
+					// Loop to catch things like <b><span>Break:\r\n</span></b>
+					if($mso_application_progid)
+					{
+						$count = $i = 0;
+						do
+						{
+							$value = preg_replace('/<(b|strong|i|em|u|span)\b([^>]*?)>(.*?)'."\r\n".'<\/\1>/u', '<$1$2>$3</$1>'."\r\n",$value,-1,$count);
+							$i++;
+						} while($count > 0 && $i < 10); // Limit of 10 chosen arbitrarily just in case
+					}
 				}
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
@@ -1150,9 +1176,25 @@ abstract class bo_merge
 
 		// Apply HTML formatting to target document, if possible
 		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
-		if (class_exists(XSLTProcessor) && class_exists(DOMDocument))
+		if (class_exists(XSLTProcessor) && class_exists(DOMDocument) && $this->parse_html_styles)
 		{
-			$this->apply_styles($merged, $mimetype);
+			try
+			{
+				$this->apply_styles($merged, $mimetype);
+			}
+			catch (Exception $e)
+			{
+				// Error converting HTML styles over
+				error_log($e->getMessage());
+				error_log("Target document: $content_url, IDs: ". array2string($ids));
+
+				// Try again, but strip HTML so user gets something
+				$this->parse_html_styles = false;
+				if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
+				{
+					return $err;
+				}
+			}
 		}
 		if(!empty($name))
 		{
