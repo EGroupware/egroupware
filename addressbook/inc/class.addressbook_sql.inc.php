@@ -500,7 +500,7 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		error_log(__METHOD__.'('.array2string($keys).", $owner, ..., ".array2string($data).')');
+		//error_log(__METHOD__.'('.array2string($keys).", $owner, ".array2string($contacts).', '.array2string($data).') '.function_backtrace());
 		if (!$keys && !$data || !(int)$owner) return false;
 
 		if ($keys && !is_array($keys)) $keys = array('list_name' => $keys);
@@ -512,7 +512,7 @@ class addressbook_sql extends so_sql_cf
 		{
 			$data['list_owner'] = $owner;
 		}
-		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys)->fetchColumn()))
+		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys,__LINE__,__FILE__)->fetchColumn()))
 		{
 			$data['list_created'] = time();
 			$data['list_creator'] = $GLOBALS['egw_info']['user']['account_id'];

@@ -528,7 +528,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
-		if (!($save_ok = $is_group ? $this->save_group($contact) : $this->bo->save($contact)))
+		if (!($save_ok = $is_group ? $this->save_group($contact, $oldContact) : $this->bo->save($contact)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
 			if ($save_ok === 0)
@@ -571,11 +571,12 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			if ($name != self::$path_attr) $data['list_'.$name] = $contact[$name];
 		}
+		//error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') data='.array2string($data));
 		if (($list_id=$this->bo->add_list(array('list_'.self::$path_attr => $contact[self::$path_attr]),
 			$contact['owner'], null, $data)))
 		{
-			// update members given in $contact['##X-CALENDARSERVER-MEMBER']
-			$new_members = $contact['##X-CALENDARSERVER-MEMBER'];
+			// update members given in $contact['##X-ADDRESSBOOKSERVER-MEMBER']
+			$new_members = $contact['##X-ADDRESSBOOKSERVER-MEMBER'];
 			if ($new_members[1] == ':' && ($n = unserialize($new_members)))
 			{
 				$new_members = $n['values'];
@@ -588,13 +589,14 @@ class addressbook_groupdav extends groupdav_handler
 
 			if ($oldContact)
 			{
-				$to_add = array_diff($oldContact['members'],$new_members);
-				$to_delete = array_diff($new_members,$oldContact['members']);
+				$to_add = array_diff($new_members,$oldContact['members']);
+				$to_delete = array_diff($oldContact['members'],$new_members);
 			}
 			else
 			{
 				$to_add = $new_members;
 			}
+			//error_log('to_add='.array2string($to_add).', to_delete='.array2string($to_delete));
 			if ($to_add || $to_delete)
 			{
 				$to_add_ids = $to_delete_ids = array();
@@ -613,6 +615,7 @@ class addressbook_groupdav extends groupdav_handler
 						}
 					}
 				}
+				//error_log('to_add_ids='.array2string($to_add_ids).', to_delete_ids='.array2string($to_delete_ids));
 				if ($to_add_ids) $this->bo->add2list($to_add_ids, $list_id, array());
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
@@ -775,7 +778,7 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
-			foreach(array('owner','id','carddav_name','modified','modifier','created','creator','etag') as $name)
+			foreach(array('owner','id','carddav_name','modified','modifier','created','creator','etag','uid') as $name)
 			{
 				$contact[$name] = $contact['list_'.$name];
 			}
