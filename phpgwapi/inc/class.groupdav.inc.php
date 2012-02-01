@@ -587,10 +587,26 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$displayname = translation::convert($displayname, translation::charset(),'utf-8');
 		// self url
-		$files['files'][] = $this->add_collection($path, array(
+		$props = array(
 			'displayname' => $displayname,
 			'owner' => $path == '/' ? '' : array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
-		));
+		);
+
+		if ($path != '/')
+		{
+			// add props modifyable via proppatch from client, eg. jqcalendar stores it's preferences there
+			foreach((array)$GLOBALS['egw_info']['user']['preferences']['groupdav'] as $name => $value)
+			{
+				list($prop,$prop4path,$ns) = explode(':', $name, 3);
+				if ($prop4path == $path && !in_array($ns,self::$ns_needs_explicit_named_props))
+				{
+					$props[] = self::mkprop($ns, $prop, $value);
+					//error_log(__METHOD__."() arbitrary $ns:$prop=".array2string($value));
+				}
+			}
+		}
+		$files['files'][] = $this->add_collection($path, $props);
+
 		if ($depth)
 		{
 			foreach($this->root as $app => $data)
@@ -1176,7 +1192,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		// parse path in form [/account_lid]/app[/more]
 		self::_parse_path($options['path'],$id,$app,$user,$user_prefix);	// allways returns false if eg. !$id
-		if (!$app || $app == 'principals' || $id)
+		if ($app == 'principals' || $id || $options['path'] == '/')
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
 			foreach($options['props'] as &$prop) $prop['status'] = '403 Forbidden';
@@ -1188,8 +1204,16 @@ class groupdav extends HTTP_WebDAV_Server
 			if ((isset(self::$proppatch_props[$prop['name']]) && self::$proppatch_props[$prop['name']] === $prop['xmlns'] ||
 				!in_array($prop['xmlns'],self::$ns_needs_explicit_named_props)))
 			{
-				$name = $prop['name'].':'.$user.(isset(self::$proppatch_props[$prop['name']]) &&
-					self::$proppatch_props[$prop['name']] == $prop['ns'] ? '' : ':'.$prop['ns']);
+				if (!$app)
+				{
+					$app = 'groupdav';
+					$name = $prop['name'].':'.$options['path'].':'.$prop['ns'];
+				}
+				else
+				{
+					$name = $prop['name'].':'.$user.(isset(self::$proppatch_props[$prop['name']]) &&
+						self::$proppatch_props[$prop['name']] == $prop['ns'] ? '' : ':'.$prop['ns']);
+				}
 				//error_log("preferences['user']['$app']['$name']=".array2string($GLOBALS['egw_info']['user']['preferences'][$app][$name]).($GLOBALS['egw_info']['user']['preferences'][$app][$name] !== $prop['val'] ? ' !== ':' === ')."prop['val']=".array2string($prop['val']));
 				if ($GLOBALS['egw_info']['user']['preferences'][$app][$name] !== $prop['val'])	// nothing to change otherwise
 				{
