@@ -86,13 +86,13 @@ Breakers
 	</xsl:template>
 -->
 
-	<xsl:template name="apply-styles" match="w:r[descendant::strong|descendant::em|descendant::u|descendant::span]">
+	<xsl:template name="apply-styles" match="w:r[descendant::strong|descendant::b|descendant::i|descendant::em|descendant::u|descendant::span]">
 		<xsl:for-each select="node()|@*[not(w:rPr)]">
 			<xsl:choose>
-			<xsl:when test="descendant::strong|descendant::em|descendant::u|descendant::span" >
+			<xsl:when test="descendant::strong|descendant::b|descendant::i|descendant::em|descendant::u|descendant::span" >
 				<xsl:for-each select="node()|@*">
 					<xsl:choose>
-					<xsl:when test="descendant-or-self::strong|descendant-or-self::em|descendant-or-self::u|descendant-or-self::span" >
+					<xsl:when test="descendant-or-self::strong|descendant-or-self::b|descendant-or-self::i|descendant-or-self::em|descendant-or-self::u|descendant-or-self::span" >
 						<w:r>
 							<w:rPr>
 								<xsl:apply-templates select=".|child::*" />

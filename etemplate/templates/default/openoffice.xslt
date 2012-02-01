@@ -211,7 +211,7 @@
 	</xsl:template>
 
 	<!-- Simple, use known styles -->
-	<xsl:template match="strong">
+	<xsl:template match="strong|b">
 		<text:span text:style-name="Tbold"><xsl:apply-templates/></text:span>
 	</xsl:template>
 	<xsl:template match="em|i">
