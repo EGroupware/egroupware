@@ -25,11 +25,16 @@
 				if (method_exists($GLOBALS['egw']->contacts,'search')) {
 					// 1.3+
 					$showAccounts = true;
+					//error_log(__METHOD__.__LINE__.$_searchString);
+					$seStAr = explode(' ',$_searchString);
+					foreach ($seStAr as $k => $v) if (strlen($v)<3) unset($seStAr[$k]);
+					$_searchString = trim(implode(' AND ',$seStAr));
+					//error_log(__METHOD__.__LINE__.$_searchString);
 					if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 					$contacts = $GLOBALS['egw']->contacts->search(array(
-						'n_fn'       => $_searchString,
-						'email'      => $_searchString,
-						'email_home' => $_searchString,
+						0 => "(n_fn  like '%".trim(implode("%' AND n_fn like '%",$seStAr))."%')",
+						1 => "(contact_email  like '%".trim(implode("%' AND contact_email like '%",$seStAr))."%')",
+						2 => "(contact_email_home  like '%".trim(implode("%' AND contact_email_home like '%",$seStAr))."%')",
 					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),($showAccounts?array():array('account_id' => null)));
 					// additionally search the accounts, if the contact storage is not the account storage
 					if ($showAccounts &&
