@@ -556,8 +556,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				if(count($result) != 1)
 				{
 					$this->warnings[$record_num] .= ($this->warnings[$record_num] ? "\n" : '') .
-						lang('Unable to link to %3 by custom field "%1".  %2 matches.', 
-						$custom_field, count($result), lang($app)
+						lang('Unable to link to %3 by custom field "%1": "%4".  %2 matches.', 
+						$custom_field, count($result), lang($app), $options['filter'][0]
 					);
 					return false;
 				}
