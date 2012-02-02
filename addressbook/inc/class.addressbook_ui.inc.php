@@ -822,6 +822,19 @@ class addressbook_ui extends addressbook_bo
 		{	// remove previous addEmail() calls, otherwise they will be run again
 			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
 		}
+
+		// Make sure old lettersearch filter doesn't stay - current letter filter will be added later
+		foreach($query['col_filter'] as $key => $col_filter)
+		{
+			if(!is_numeric($key)) continue;
+			if(preg_match('/'.$GLOBALS['egw']->db->capabilities['case_insensitive_like'].
+				' '.$GLOBALS['egw']->db->quote('[a-z]%').'$/',$col_filter) == 1
+			)
+			{
+				unset($query['col_filter'][$key]);
+			}
+		}
+
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
