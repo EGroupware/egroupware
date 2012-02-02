@@ -430,7 +430,7 @@ type	infolog	en	Type
 type ...	infolog	en	Type ...
 type of customfield	infolog	en	Type of custom field
 type of the log-entry: note, phonecall or todo	infolog	en	Type of the InfoLog entry: Note, Phone call or ToDo
-unable to link to %3 by custom field "%1".  %2 matches.	infolog	en	Unable to link to %3 by custom field "%1".  %2 matches.
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	en	Unable to link to %3 by custom field "%1": "%4".  %2 matches.
 unlink	infolog	en	Unlink
 unlinked from %1	infolog	en	Unlinked from %1
 upcoming	infolog	en	Upcoming
