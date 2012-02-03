@@ -1328,7 +1328,18 @@ END:VTIMEZONE
 
 		if (!isset($standard))
 		{
-			throw new egw_exception_assertion_failed("NO standard component for '$name' in '$component'!");
+			if (preg_match('/^etc\/gmt([+-])([0-9]+)$/i',$name,$matches))
+			{
+				$standard = array(
+					'TZOFFSETTO'   => sprintf('%s%02d00',$matches[1],$matches[2]),
+					'TZOFFSETFROM' => sprintf('%s%02d00',$matches[1],$matches[2]),
+				);
+				unset($daylight);
+			}
+			else
+			{
+				throw new egw_exception_assertion_failed("NO standard component for '$name' in '$component'!");
+			}
 		}
 		// get bias and dstbias from standard component, which is present in all tz's
 		// (dstbias is relative to bias and almost always 60 or 0)
@@ -1482,10 +1493,15 @@ END:VTIMEZONE
 				error_log(__METHOD__.'('.array2string($data).') NO matching timezone found --> using UTC now!');
 				break;
 			}
-			if (self::tz2as($tz) == $data)
-			{
-				$cache[$key] = $tz;
-				break;
+			try {
+				if (self::tz2as($tz) == $data)
+				{
+					$cache[$key] = $tz;
+					break;
+				}
+			}
+			catch(Exception $e) {
+				// simpy ignore that, as it only means $tz can NOT be converted, because it has no VTIMEZONE component
 			}
 		}
 		return $cache[$key];
@@ -1600,6 +1616,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		'America/New_York' => 'LAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAACAAMAAAAAAAAAxP///w==',
 		'Pacific/Auckland' => 'MP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAFAAMAAAAAAAAAxP///w==',
 		'Australia/Sydney' => 'qP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAxP///w==',
+		'Etc/GMT+3'        => 'TP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
 	) as $tz => $sync_blob)
 	{
 		// get as timezone data for a given timezone
