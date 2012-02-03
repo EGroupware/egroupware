@@ -1425,7 +1425,27 @@ class felamimail_bo
 				//error_log($_html);
 			}
 			// using purify above should have tidied the tags already sufficiently 
-			if ($usepurify == false && $cleanTags==true) $_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
+			if ($usepurify == false && $cleanTags==true)
+			{
+				if (extension_loaded('tidy'))
+				{
+					$tidy = new tidy();
+					$cleaned = $tidy->repairString($_html, array('clean'=>true,'output-xhtml'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>false,'word-2000'=>true,'wrap'=>0),'utf8');
+					// Found errors. Strip it all so there's some output
+					if($tidy->getStatus() == 2)
+					{
+						error_log(__METHOD__.__LINE__.' ->'.$tidy->errorBuffer);
+					}
+					else
+					{
+						$_html = $cleaned;
+					}
+				}
+				else
+				{
+					$_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
+				}
+			}
 		}
 
 		/**
