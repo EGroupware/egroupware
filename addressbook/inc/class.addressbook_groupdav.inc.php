@@ -815,4 +815,52 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		return $shared;
 	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		if ($hook_data['setup'])
+		{
+			$addressbooks = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$addressbook_bo = new addressbook_bo();
+			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
+			unset($addressbooks[$user]);	// allways synced
+			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+		}
+		$addressbooks = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+			'U' => lang('Accounts'),
+		) + $addressbooks;
+
+		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
+		if (!isset($addressbooks[0]))
+		{
+			unset($addressbooks['U']);
+		}
+		else
+		{
+			unset($addressbooks[0]);
+		}
+
+		$settings = array();
+		$settings['addressbook-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Addressbooks to sync in addition to personal addressbook',
+			'name'   => 'addressbook-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"'),
+			'values' => $addressbooks,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
+	}
 }

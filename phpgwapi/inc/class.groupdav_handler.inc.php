@@ -468,6 +468,16 @@ abstract class groupdav_handler
 	}
 
 	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		return array();
+	}
+
+	/**
 	 * Add a resource
 	 *
 	 * @param string $path path of collection, NOT entry!

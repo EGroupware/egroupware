@@ -1251,4 +1251,43 @@ class calendar_groupdav extends groupdav_handler
 		}
 		return $shared;
 	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		if ($hook_data['setup'])
+		{
+			$calendars = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$cal_bo = new calendar_bo();
+			foreach ($cal_bo->list_cals() as $entry)
+			{
+				$calendars[$entry['grantor']] = $entry['name'];
+			}
+			unset($calendars[$user]);
+		}
+		$calendars = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+		) + $calendars;
+
+		$settings = array();
+		$settings['calendar-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Calendars to sync in addition to personal calendar',
+			'name'   => 'calendar-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
+			'values' => $calendars,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
+	}
 }
