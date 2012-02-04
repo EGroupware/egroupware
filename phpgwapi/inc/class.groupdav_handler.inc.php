@@ -386,6 +386,8 @@ abstract class groupdav_handler
 						{
 							if ((int)$matches[1] < 868) $agent .= '_old';
 						}
+						// sillently switch "Sync all into one" preference on, as OS X addressbook only supports one AB
+						$GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'] .= ',O';
 						break;
 					case 'kde':
 						// Akonadi (new KDE Pim framework) unfortunately has same user-agent as old kde
