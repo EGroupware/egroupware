@@ -1218,4 +1218,37 @@ class calendar_groupdav extends groupdav_handler
 		if ($this->debug > 1) error_log("ical Handler called: " . $this->agent);
 		return $handler;
 	}
+
+	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		$shared = array();
+		$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
+		$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $calendar_home_set)) !== false)
+			{
+				$calendar_home_set[$key] = $id;
+			}
+		}
+		foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
+		{
+			$id = $entry['grantor'];
+			if ($id && $user != $id &&	// no current user and no accounts yet (todo)
+				(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
+				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
+			{
+				$shared[$id] = $owner;
+			}
+		}
+		return $shared;
+	}
 }

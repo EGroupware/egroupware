@@ -643,71 +643,20 @@ class groupdav extends HTTP_WebDAV_Server
 	protected function add_shared(array &$files, $path, $app, $user)
 	{
 		// currently only show shared calendars/addressbooks for current user and not in the root
-		if ($path == '/' || $user != $GLOBALS['egw_info']['user']['account_id'])
+		if ($path == '/' || $user != $GLOBALS['egw_info']['user']['account_id'] ||
+			!isset($GLOBALS['egw_info']['user']['apps'][$app]))	// also avoids principals, inbox and outbox
 		{
 			return true;
 		}
-		switch($app)
+		$handler = $this->app_handler($app);
+		if (($shared = $handler->get_shared()))
 		{
-			case 'addressbook':
-				$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
-				if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
-				$addressbook_home_set = explode(',',$addressbook_home_set);
-				// replace symbolic id's with real nummeric id's
-				foreach(array(
-					'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
-					'U' => '0',
-				) as $sym => $id)
-				{
-					if (($key = array_search($sym, $addressbook_home_set)) !== false)
-					{
-						$addressbook_home_set[$key] = $id;
-					}
-				}
-				foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
-				{
-					if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
-						$user != $id &&	// no current user and no accounts, if disabled in ab prefs
-						(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
-						is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
-					{
-						$file = $this->add_app($app,false,$id,$path.'addressbook-'.$owner.'/');
-						$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
-						$files[] = $file;
-					}
-				}
-				break;
-
-			case 'calendar':
-				$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
-				$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
-				// replace symbolic id's with real nummeric id's
-				foreach(array(
-					'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
-				) as $sym => $id)
-				{
-					if (($key = array_search($sym, $calendar_home_set)) !== false)
-					{
-						$calendar_home_set[$key] = $id;
-					}
-				}
-				foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
-				{
-					$id = $entry['grantor'];
-					if ($id && $user != $id &&	// no current user and no accounts yet (todo)
-						(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
-						is_numeric($id) && ($owner = $this->accounts->id2name($id)))
-					{
-						$file = $this->add_app($app,false,$id,$path.'calendar-'.$owner.'/');
-						$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
-						$files[] = $file;
-					}
-				}
-				break;
-
-			case 'infolog':
-				// ToDo:
-				break;
+			foreach($shared as $id => $owner)
+			{
+				$file = $this->add_app($app,false,$id,$path.$app.'-'.$owner.'/');
+				$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
+				$files[] = $file;
+			}
 		}
 		return true;
 	}

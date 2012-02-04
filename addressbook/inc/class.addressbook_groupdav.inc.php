@@ -780,4 +780,39 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		return $this->bo->check_perms($acl,$contact);
 	}
+
+	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		$shared = array();
+		$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+		if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+		$addressbook_home_set = explode(',',$addressbook_home_set);
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+			'U' => '0',
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $addressbook_home_set)) !== false)
+			{
+				$addressbook_home_set[$key] = $id;
+			}
+		}
+		foreach($this->bo->get_addressbooks(EGW_ACL_READ) as $id => $label)
+		{
+			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
+				$user != $id &&	// no current user and no accounts, if disabled in ab prefs
+				(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+				is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
+			{
+				$shared[$id] = $owner;
+			}
+		}
+		return $shared;
+	}
 }
