@@ -458,6 +458,29 @@ abstract class groupdav_handler
 	}
 
 	/**
+	 * Send response-headers for a PUT (or POST with add-member query parameter)
+	 *
+	 * @param int|array $entry id or array of new created entry
+	 * @param string $path
+	 * @param int|string $retval
+	 * @param boolean $path_attr_is_name=true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 */
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
+	{
+		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
+		//header('ETag: "'.$this->get_etag($entry).'"');
+
+		// send Location header only if we dont use caldav_name as path-attribute or
+		if ($retval !== true && (!$path_attr_is_name ||
+			// POST with add-member query parameter
+			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
+		{
+			$path = preg_replace('|(.*)/[^/]*|', '\1/', $path);
+			header('Location: '.$this->base_uri.$path.$this->get_path($entry));
+		}
+	}
+
+	/**
 	 * Return calendars/addressbooks shared from other users with the current one
 	 *
 	 * return array account_id => account_lid pairs

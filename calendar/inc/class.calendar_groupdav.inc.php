@@ -703,13 +703,10 @@ class calendar_groupdav extends groupdav_handler
 			//header('ETag: "'.$etag.'"');
 			header('Schedule-Tag: "'.$schedule_tag.'"');
 		}
-		// send GroupDAV Location header only if we dont use caldav_name as path-attribute
-		if ($retval !== true && self::$path_attr != 'caldav_name')
-		{
-			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id: $retval");
-			header('Location: '.$this->base_uri.$path.$this->get_path($cal_id));
-		}
+
+		// send evtl. necessary respose headers: Location, etag, ...
+		$this->put_response_headers($cal_id, $options['path'], $retval, self::$path_attr == 'caldav_name');
+
 		return $retval;
 	}
 
