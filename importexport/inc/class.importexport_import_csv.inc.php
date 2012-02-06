@@ -321,12 +321,19 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(
-							egw_time::$user_dateformat . ', ' .egw_time::$user_timeformat, 
+							egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat, 
 							$record[$name]
 						);
+						if(!$formatted && $errors = egw_time::getLastErrors())
+						{
+							foreach($errors['errors'] as $msg)
+							{
+								$warnings[] = $name . ': ' . $msg;
+							}
+						}
 						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
 						{
-							$record[$name] = $formatted;
+							$record[$name] = $formatted->getTimestamp();
 						}
 					}
 					
@@ -346,7 +353,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 						$formatted = egw_time::createFromFormat(egw_time::$user_dateformat, $record[$name]);
 						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
 						{
-							$record[$name] = $formatted;
+							$record[$name] = $formatted->getTimestamp();
 						}
 					}
 					$record[$name] = egw_time::user2server($record[$name],'ts'); 
