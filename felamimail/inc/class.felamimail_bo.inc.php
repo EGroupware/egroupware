@@ -1430,7 +1430,7 @@ class felamimail_bo
 				if (extension_loaded('tidy'))
 				{
 					$tidy = new tidy();
-					$cleaned = $tidy->repairString($_html, array('clean'=>true,'output-xhtml'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>false,'word-2000'=>true,'wrap'=>0),'utf8');
+					$cleaned = $tidy->repairString($_html, array('clean'=>true,'output-html'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>"auto",'word-2000'=>true,'wrap'=>0),'utf8');
 					// Found errors. Strip it all so there's some output
 					if($tidy->getStatus() == 2)
 					{
@@ -4393,7 +4393,7 @@ class felamimail_bo
 					$newBody = html::purify($newBody);
 					//error_log(__METHOD__.__LINE__.' after purify:'.$newBody);
 					if ($preserveHTML==false) $newBody = $bofelamimail->convertHTMLToText($newBody,true);
-					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
+					$bofelamimail->getCleanHTML($newBody,false,$preserveHTML); // new Body passed by reference
 					//error_log(__METHOD__.__LINE__.' after getClean:'.$newBody);
 					$message .= $newBody;
 					continue;
