@@ -351,7 +351,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(egw_time::$user_dateformat, $record[$name]);
-						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+						if($formatted && $errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
 						{
 							$record[$name] = $formatted->getTimestamp();
 						}
