@@ -521,16 +521,20 @@ class felamimail_bo
 				$HierarchyDelimiter = $this->getHierarchyDelimiter();
 				$newFolderName = $parent . $HierarchyDelimiter . $folderName;
 			}
+			if (self::$debug) error_log(__METHOD__.__LINE__.'->'.$newFolderName);
 			if (self::folderExists($newFolderName,true))
 			{
 				error_log(__METHOD__.__LINE__." Folder $newFolderName already exists.");
 				return $newFolderName;
 			}
-			if ( PEAR::isError($this->icServer->createMailbox($newFolderName) ) ) {
+			$rv = $this->icServer->createMailbox($newFolderName);
+			if ( PEAR::isError($rv ) ) {
+				error_log(__METHOD__.__LINE__.' create Folder '.$newFolderName.'->'.$rv->message);
 				return false;
 			}
-
-			if ( PEAR::isError($this->icServer->subscribeMailbox($newFolderName) ) ) {
+			$srv = $this->icServer->subscribeMailbox($newFolderName);
+			if ( PEAR::isError($srv ) ) {
+				error_log(__METHOD__.__LINE__.' subscribe to new folder '.$newFolderName.'->'.$srv->message);
 				return false;
 			}
 
@@ -817,9 +821,10 @@ class felamimail_bo
 				$oldMailbox = $this->icServer->getCurrentMailbox();
 				$this->icServer->selectMailbox($_folder);
 			}
-
+			$updateCache = false;
 			switch($deleteOptions) {
 				case "move_to_trash":
+					$updateCache = true;
 					if(!empty($trashFolder)) {
 						if (self::$debug) error_log(implode(' : ', $_messageUID));
 						if (self::$debug) error_log("$trashFolder <= ". $this->sessionData['mailbox']);
@@ -864,6 +869,7 @@ class felamimail_bo
 					break;
 
 				case "remove_immediately":
+					$updateCache = true;
 					// mark messages as deleted
 					$retValue = $this->icServer->deleteMessages($_messageUID, true);
 					if ( PEAR::isError($retValue)) {
@@ -875,7 +881,23 @@ class felamimail_bo
 					$this->icServer->expunge();
 					break;
 			}
-
+			if ($updateCache)
+			{
+				$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				$cachemodified = false;
+				foreach ((array)$_messageUID as $k => $_uid)
+				{
+					if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) || $_uid=='all')
+					{
+						$cachemodified = true;
+						if ($_uid=='all')
+							unset($structure[$this->icServer->ImapServerId][$_folder]);
+						else
+							unset($structure[$this->icServer->ImapServerId][$_folder][$_uid]);
+					}
+				}
+				if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+			}
 			if($oldMailbox != '') {
 				$this->icServer->selectMailbox($oldMailbox);
 			}
@@ -1055,14 +1077,14 @@ class felamimail_bo
 		{
 			static $structure;
 			$_folder = $this->sessionData['mailbox'];
-			if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
 			{
 				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid);
 				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 			}
 			$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
-			egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*10);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 			return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 		}
 
@@ -1443,7 +1465,10 @@ class felamimail_bo
 				}
 				else
 				{
+					//$to = ini_get('max_execution_time');
+					//@set_time_limit(10);
 					$_html = html::purify($_html,html::purifyCreateHTMLTidyConfig());
+					//@set_time_limit($to);
 				}
 			}
 		}
@@ -1841,22 +1866,38 @@ class felamimail_bo
 			} else {
 				if (is_array($nameSpace)) {
 				  foreach($nameSpace as $type => $singleNameSpace) {
-					if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('Mail')) {
+					$prefix_present = false;
+					if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->icServer->mailboxExist('Mail')||$this->icServer->mailboxExist('INBOX'))) {
+						$prefix_present = 'forced';
 						// uw-imap server with mailbox prefix or dovecot maybe
 						$foldersNameSpace[$type]['prefix'] = 'Mail';
 					} elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
+						$prefix_present = 'forced';
 						// uw-imap server with mailbox prefix or dovecot maybe
 						$foldersNameSpace[$type]['prefix'] = 'mail';
 					} else {
+						$prefix_present = true;
 						$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
 					}
 					//echo "############## ".print_r($singleNameSpace,true)." ###################<br>";
+					//echo "############## ".print_r($foldersNameSpace,true)." ###################<br>";
 					$foldersNameSpace[$type]['delimiter'] = $delimiter;
 
 					if(is_array($singleNameSpace[0])) {
 						// fetch and sort the subscribed folders
 						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($foldersNameSpace[$type]['prefix']);
-						if (empty($subscribedMailboxes) && $type == 'shared') $subscribedMailboxes = $this->icServer->listsubscribedMailboxes('',0);
+						if (empty($subscribedMailboxes) && $type == 'shared')
+						{
+							$subscribedMailboxes = $this->icServer->listsubscribedMailboxes('',0);
+						}
+						else
+						{
+							if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
+							{
+								$subscribedMailboxesAll = $this->icServer->listsubscribedMailboxes('',0);
+								foreach ($subscribedMailboxesAll as $ksMA => $sMA) if (!in_array($sMA,$subscribedMailboxes)) $subscribedMailboxes[] = $sMA;
+							}
+						}
 
 						//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
 						if( PEAR::isError($subscribedMailboxes) ) {
@@ -1890,7 +1931,18 @@ class felamimail_bo
 						// fetch and sort all folders
 						//echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
 						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
-						if (empty($allMailboxesExt) && $type == 'shared')  $allMailboxesExt = $this->icServer->getMailboxes('',0,true);
+						if (empty($allMailboxesExt) && $type == 'shared')
+						{
+							$allMailboxesExt = $this->icServer->getMailboxes('',0,true);
+						}
+						else
+						{
+							if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
+							{
+								$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
+								foreach ($allMailboxesExtAll as $kaMEA => $aMEA) if (!in_array($aMEA,$allMailboxesExt)) $allMailboxesExt[] = $aMEA;
+							}
+						}
 						if( PEAR::isError($allMailboxesExt) ) {
 							#echo __METHOD__;_debug_array($allMailboxesExt);
 							continue;
@@ -2125,11 +2177,11 @@ class felamimail_bo
 			#_debug_array($mbx);
 			if (is_array($mbx[0]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[0]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[0]["ATTRIBUTES"]))) {
 				// if there are children fetch them
-				#echo $mbx[0]['MAILBOX']."<br>";
+				//echo $mbx[0]['MAILBOX']."<br>";
 				unset($buff);
 				$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'].($mbx[0]['MAILBOX'] == $prefix ? '':$delimiter),2,false);
 				//$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'],2,false);
-				#_debug_array($buff);
+				//_debug_array($buff);
 				if( PEAR::isError($buff) ) {
 					if (self::$debug) error_log(__METHOD__." Error while retrieving Mailboxes for:".$mbx[0]['MAILBOX'].$delimiter.".");
 					return array();
@@ -3468,6 +3520,18 @@ class felamimail_bo
 
 				if($deleteOptions != "mark_as_deleted")
 				{
+					$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+					$cachemodified = false;
+					foreach ((array)$_messageUID as $k => $_uid)
+					{
+						if (isset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+						{
+							$cachemodified = true;
+							unset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+						}
+					}
+					if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+
 					// delete the messages finaly
 					$this->icServer->expunge();
 				}
@@ -3631,13 +3695,15 @@ class felamimail_bo
 		{
 			if (self::$debug) error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName);
 			if($_status === true) {
-				if ( PEAR::isError($this->icServer->subscribeMailbox($_folderName))) {
-					error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName." failed");
+				$rv = $this->icServer->subscribeMailbox($_folderName);
+				if ( PEAR::isError($rv)) {
+					error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
 					return false;
 				}
 			} else {
-				if ( PEAR::isError($this->icServer->unsubscribeMailbox($_folderName))) {
-					error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName." failed");
+				$rv = $this->icServer->unsubscribeMailbox($_folderName);
+				if ( PEAR::isError($rv)) {
+					error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
 					return false;
 				}
 			}
