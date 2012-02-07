@@ -663,9 +663,10 @@
 			        background-color: #FFFFFF;
 			}
 			</style>
-			<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;"><table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
+			<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;">
+				<table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
-            $EndBody = '</td></tr></table>';
+            $EndBody = '</td></tr></table></div>';
 			$EndBody .= "</body></html>";
 			if ($print)	{
 				print $BeginBody. $body .$EndBody;
