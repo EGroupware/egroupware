@@ -462,7 +462,8 @@ class addressbook_sql extends so_sql_cf
 	 * 	or whole where array: column-name => value(s) pairs
 	 * @param string $uid_column='list_owner' column-name or null to use $uids as where array
 	 * @param string $member_attr=null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
-	 * @param boolean $limit_in_ab=false if true only return members from the same owners addressbook
+	 * @param boolean|int|array $limit_in_ab=false if true only return members from the same owners addressbook,
+	 * 	if int|array only return members from the given owners addressbook(s)
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
 	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
@@ -476,11 +477,22 @@ class addressbook_sql extends so_sql_cf
 		}
 		if ($lists && $member_attr && in_array($member_attr,array('contact_id','contact_uid','caldav_name')))
 		{
+			if ($limit_in_ab)
+			{
+				$in_ab_join = " JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND $this->lists_table.";
+				if (!is_bool($limit_in_ab))
+				{
+					$in_ab_join .= $this->db->expression($this->lists_table, array('list_owner'=>$limit_in_ab));
+				}
+				else
+				{
+					$in_ab_join .= "list_owner=$this->table_name.contact_owner";
+				}
+			}
 			foreach($this->db->select($this->ab2list_table,"$this->ab2list_table.list_id,$this->table_name.$member_attr",
 				$this->db->expression($this->ab2list_table, $this->ab2list_table.'.', array('list_id'=>array_keys($lists))),
 				__LINE__,__FILE__,false,$member_attr=='contact_id' ? '' :
-				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id".
-				($limit_in_ab?" JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND $this->lists_table.list_owner=$this->table_name.contact_owner":'')) as $row)
+				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id".$in_ab_join) as $row)
 			{
 				$lists[$row['list_id']]['members'][] = $row[$member_attr];
 			}
