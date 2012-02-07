@@ -358,13 +358,14 @@ abstract class groupdav_handler
 				'cfnetwork'         => 'cfnetwork',	// Apple Addressbook 10.6/7
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
-				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
+				'lightning'         => 'lightning',	// Lighting (incl. SOGo connector for addressbook)
 				'webkit'			=> 'webkit',	// Webkit Browser (also reports KHTML!)
 				'akonadi'			=> 'akonadi',	// new KDE PIM framework (also reports KHTML!)
 				'khtml'             => 'kde',		// KDE clients
 				'neon'              => 'neon',
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
 				'evolution'         => 'evolution',	// Evolution
+				'thunderbird'       => 'thunderbird',	// SOGo connector for addressbook, no Lightning installed
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
@@ -470,8 +471,11 @@ abstract class groupdav_handler
 	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
 	{
 		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
-		//header('ETag: "'.$this->get_etag($entry).'"');
-
+		// as SOGO Connector requires ETag header to recognice as successful PUT, we are sending them again for it
+		if (get_class($this) == 'addressbook_groupdav' && in_array(self::get_agent(),array('thunderbird','lightning')))
+		{
+			header('ETag: "'.$this->get_etag($entry).'"');
+		}
 		// send Location header only if we dont use caldav_name as path-attribute or
 		if ($retval !== true && (!$path_attr_is_name ||
 			// POST with add-member query parameter
