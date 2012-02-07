@@ -1,3 +1,14 @@
+egroupware-epl (11.1.20120207-1) hardy; urgency=low
+
+  * InfoLog/CalDAV: allow updates with implicite rights of responsible user, InfoLog type is kept on update, deduct not set status of client from completed(-percent)
+  * API/Login: using tabindex to control tab succession on/in loginscreen.
+  * Calendar/iCal/CalDAV: if no end(-time) is given in iCal we use the default lenght from user prefs
+  * Site Manager: New slideshow block
+  * eSync/Calendar: fixed tz-aliases to NOT use Etc/GMT* but Olson identifiers, no more exception in AS tzblob generation, generation of tzblobs for Etc/GMT*
+  * email: fix a problem with the retrieval of DOVECOT Mailboxes; shorten mail structure cache expire time; handle structure cache on move and delete
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 07 Feb 2012 15:43:07 +0100
+
 egroupware-epl (11.1.20120124-1) hardy; urgency=low
 
   * CardDAV: fixed sometimes not working creation of new contacts from the device, if accounts are stored in LDAP
