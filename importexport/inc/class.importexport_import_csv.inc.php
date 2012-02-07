@@ -321,14 +321,23 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(
-							egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat, 
+							'!'.egw_time::$user_dateformat . '*' .egw_time::$user_timeformat, 
 							$record[$name]
 						);
+
 						if(!$formatted && $errors = egw_time::getLastErrors())
 						{
-							foreach($errors['errors'] as $msg)
+							// Try again, more options
+							try {
+								$formatted = new egw_time($record[$name]);
+							} catch (Exception $e) {
+								$warnings[] = $name.': ' . $e->getMessage();
+								continue;
+							}
+							$errors = egw_time::getLastErrors();
+							foreach($errors['errors'] as $char => $msg)
 							{
-								$warnings[] = $name . ': ' . $msg;
+								$warnings[] = "$name: [$char] $msg";
 							}
 						}
 						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
