@@ -578,7 +578,8 @@ class emailadmin_bo extends so_sql
 	 * 1) icServerIMAP_connectionError
 	 * 2) icServerSIEVE_connectionError
 	 * 3) defaultimap_nameSpace
-	 * 4) INSTANCE OF FELAMIMAIL_BO
+	 * 4) StructureCache (emailStructure Objects)
+	 * 5) INSTANCE OF FELAMIMAIL_BO
 	 *
 	 * @param int $_profileID
 	 * @return void
@@ -599,6 +600,12 @@ class emailadmin_bo extends so_sql
 			{
 				unset($isConError[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
+			}
+			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($structure[$_profileID]))
+			{
+				unset($structure[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
 			}
 			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
 			if (isset($nameSpace[$_profileID]))

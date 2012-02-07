@@ -107,14 +107,14 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @var string
 	 */
-	var $mailboxDelimiter = '/';
+	var $mailboxDelimiter = '/'; // TODO: Check if still used
 
 	/**
 	 * the mailbox prefix. maybe used by uw-imap only?
 	 *
 	 * @var string
 	 */
-	var $mailboxPrefix = '~/mail';
+	var $mailboxPrefix = '~/mail'; // TODO: Check if still used
 
 	/**
 	 * is the mbstring extension available
