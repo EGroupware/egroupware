@@ -522,6 +522,8 @@ class calendar_ical extends calendar_boupdate
 
 					case 'CLASS':
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
+						// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
+						if (!$event['public']) $vcal->setAttribute('X-CALENDARSERVER-ACCESS', 'CONFIDENTIAL');
 						break;
 
     				case 'ORGANIZER':
@@ -2199,7 +2201,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if (!is_a($component, 'Horde_iCalendar_vevent') ||
-			!($event = $this->vevent2egw($component, $component->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
+			!($event = $this->vevent2egw($component, $component->_container->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
 		{
 			return false;
 		}
@@ -2998,6 +3000,14 @@ class calendar_ical extends calendar_boupdate
 			$last->setTime(0, 0, 0);
 			$event['recur_enddate'] = egw_time::to($last, 'server');
 		}
+
+		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
+		if (($x_calendarserver_access = $component->_container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
+			!is_a($x_calendarserver_access, 'PEAR_Error'))
+		{
+			$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
+		}
+		//error_log(__METHOD__."() X-CALENDARSERVER-ACCESS=".array2string($x_calendarserver_access).' --> public='.array2string($event['public']));
 
 		// if no end is given in iCal we use the default lenght from user prefs
 		// whole day events get one day in calendar_boupdate::save()

@@ -289,11 +289,14 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function OPTIONS($path, &$dav, &$allow)
 	{
-		if (preg_match('#/(calendar|inbox|outbox)/#', $path))
+		// locking support
+		$dav[] = '2';
+
+		if (preg_match('#/(calendar(-[^/]+)?|inbox|outbox)/#', $path))	// eg. /<username>/calendar-<otheruser>/
 		{
 			$app = 'calendar';
 		}
-		elseif (strpos($path, '/addressbook/') !== false)
+		elseif (preg_match('#/addressbook(-[^/]+)?/#', $path))	// eg. /<username>/addressbook-<otheruser>/
 		{
 			$app = 'addressbook';
 		}
@@ -307,11 +310,12 @@ class groupdav extends HTTP_WebDAV_Server
 			$dav[] = 'calendar-proxy';
 			// required by iOS iCal to use principal-property-search to autocomplete participants (and locations)
 			$dav[] = 'calendarserver-principal-property-search';
+			// required by iOS & OS X iCal to show private checkbox (X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALENDAR)
+			$dav[] = 'calendarserver-private-events';
 			// other capabilities calendarserver announces
 			//$dav[] = 'calendar-schedule';
 			//$dav[] = 'calendar-availability';
 			//$dav[] = 'inbox-availability';
-			//$dav[] = 'calendarserver-private-events';
 			//$dav[] = 'calendarserver-private-comments';
 			//$dav[] = 'calendarserver-sharing';
 			//$dav[] = 'calendarserver-sharing-no-scheduling';
