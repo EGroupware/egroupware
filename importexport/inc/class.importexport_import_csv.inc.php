@@ -316,21 +316,50 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) {
+				if ($record[$name] && !is_numeric($record[$name]))
+				{
 					// Need to handle format first
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(
-							egw_time::$user_dateformat . ', ' .egw_time::$user_timeformat, 
-							$record[$name]
+							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat, 
+							$record[$name],
+							egw_time::$user_timezone
 						);
-						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+
+						if(!$formatted && $errors = egw_time::getLastErrors())
 						{
-							$record[$name] = $formatted;
+							// Try again, without time
+							$formatted = egw_time::createFromFormat(
+								'!'.egw_time::$user_dateformat,
+								trim($record[$name]),
+								egw_time::$user_timezone
+							);
+							
+							if(!$formatted && $errors = egw_time::getLastErrors())
+							{
+								// Try again, anything goes
+								try {
+									$formatted = new egw_time($record[$name]);
+								} catch (Exception $e) {
+									$warnings[] = $name.': ' . $e->getMessage();
+									continue;
+								}
+								$errors = egw_time::getLastErrors();
+								foreach($errors['errors'] as $char => $msg)
+								{
+									$warnings[] = "$name: [$char] $msg";
+								}
+							}
+						}
+						if($formatted)
+						{
+							$record[$name] = $formatted->getTimestamp();
+							// Timestamp is apparently in server time, but apps will do the same conversion
+							$record[$name] = egw_time::server2user($record[$name],'ts'); 
 						}
 					}
 					
-					$record[$name] = egw_time::user2server($record[$name],'ts'); 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date-time']) && 
 							in_array($name, self::$cf_parse_cache[$appname][0]['date-time'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
@@ -344,12 +373,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(egw_time::$user_dateformat, $record[$name]);
-						if($errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+						if($formatted && $errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
 						{
-							$record[$name] = $formatted;
+							$record[$name] = $formatted->getTimestamp();
 						}
 					}
-					$record[$name] = egw_time::user2server($record[$name],'ts'); 
+					$record[$name] = egw_time::server2user($record[$name],'ts'); 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date']) && 
 							in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
 						// Custom fields stored in a particular format (from customfields_widget)

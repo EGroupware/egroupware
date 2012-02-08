@@ -59,34 +59,6 @@
 							$async['data'][$messages] = $list;
 						}
 					}
-/*
-					if(is_array($async['data']['errors'])) {
-						$processed_errors = array();
-						foreach($async['data']['errors'] as $target => $errors)
-						{
-							$processed_errors[] = array(
-								'target' => (is_numeric($target) ? '' : $target),
-								'error' =>  implode("\n", (array)$errors)
-							);
-						}
-						$async['data']['errors'] = $processed_errors;
-					}
-					$results = array();
-					foreach((array)$async['data']['warnings'] as $target => $message)
-					{
-						$warnings[] = array(
-							'target' => $target,
-							'result' => implode("\n",(array)$result)
-						);
-					}
-					foreach((array)$async['data']['result'] as $target => $result)
-					{
-						$results[] = array(
-							'target' => $target,
-							'result' => implode("\n",(array)$result)
-						);
-					}
-*/
 					if($results)
 					{
 						$async['data']['result'] = $results;
@@ -96,8 +68,9 @@
 					}
 					$data['scheduled'][] = array_merge($async['data'], array(
 						'id'	=>	$id,
-						'next'	=>	$async['next'],
+						'next'	=>	egw_time::server2user($async['next']),
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
+						'last_run' =>	$async['data']['last_run'] ? egw_time::server2user($async['data']['last_run']) : ''
 					));
 				}
 				array_unshift($data['scheduled'], false);
@@ -179,6 +152,10 @@
 			}
 
 			$data['no_delete_files'] = $data['type'] != 'import';
+
+			// Current server time for nice message
+			$data['current_time'] = time();
+
 			$sel_options = self::get_select_options($data);
 			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 

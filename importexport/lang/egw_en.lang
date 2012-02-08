@@ -78,6 +78,7 @@ save as definition	importexport	en	Save as definition
 schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import | export
 schedule not found	importexport	en	Schedule not found.
+schedule times are server time!  Currently %s.	importexport	en	Schedule times are server time!  Currently %s.
 select definition	importexport	en	Select definition
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
