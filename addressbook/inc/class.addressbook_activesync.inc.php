@@ -589,6 +589,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 				$contact['owner'] = $account;
 				$contact['private'] = (int)$is_private;
 			}
+			// if default addressbook for new contacts is NOT synced --> use personal addressbook
+			elseif($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] &&
+				!in_array($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],
+					array_keys($this->get_addressbooks(null,false))))
+			{
+				$contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			}
 			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
 			$newid = $this->addressbook->save($contact);
