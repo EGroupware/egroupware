@@ -394,6 +394,12 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 						$message->$key = ('"'.$emailname.'"'." <$contact[$attr]>");
 					}
 					break;
+				// HTC Desire needs at least one telefon number, otherwise sync of contact fails without error,
+				// but will be retired forerver --> we always return work-phone xml element, even if it's empty
+				// (Mircosoft ActiveSync Contact Class Protocol Specification says all phone-numbers are optional!)
+				case 'tel_work':
+					$message->$key = (string)$contact[$attr];
+					break;
 				case 'n_fileas':
 					if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-force-fileas'])
 					{
