@@ -736,6 +736,12 @@ class addressbook_vcal extends addressbook_bo
 				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
 
+			// current algorithm cant cope with multiple attributes of same name
+			// --> cumulate them in values, so they can be used later (works only for values, not for parameters!)
+			if (($k = array_search($rowName, $rowNames)) != false)
+			{
+				$vcardValues[$k]['values'] = array_merge($vcardValues[$k]['values'],$vcardValues[$key]['values']);
+			}
 			$rowNames[$key] = $rowName;
 		}
 
@@ -976,7 +982,7 @@ class addressbook_vcal extends addressbook_bo
 				// for attributes with multiple values in multiple lines, merge the values
 				if (isset($contact['##'.$attribute['name']]))
 				{
-					error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($contact['##'.$attribute['name']]));
+					error_log(__METHOD__."() contact['##$attribute[name]'] = ".array2string($contact['##'.$attribute['name']]));
 					$attribute['values'] = array_merge(
 						is_array($contact['##'.$attribute['name']]) ? $contact['##'.$attribute['name']]['values'] : (array)$contact['##'.$attribute['name']],
 						$attribute['values']);

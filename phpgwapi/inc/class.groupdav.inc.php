@@ -26,7 +26,9 @@ require_once('HTTP/WebDAV/Server.php');
  * - /principals/groups/<groupname>/
  * - /<username>/             users home-set with
  * - /<username>/addressbook/ addressbook of user or group <username> given the user has rights to view it
+ * - /<username>/addressbook-<other-username>/ shared addressbooks from other user or group
  * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
+ * - /<username>/calendar-<other-username>/ shared calendar from other user or group
  * - /<username>/inbox/       scheduling inbox of user <username>
  * - /<username>/outbox/      scheduling outbox of user <username>
  * - /<username>/infolog/     InfoLog's of user <username> given the user has rights to view it
@@ -290,7 +292,7 @@ class groupdav extends HTTP_WebDAV_Server
 	function OPTIONS($path, &$dav, &$allow)
 	{
 		// locking support
-		$dav[] = '2';
+		if (!in_array('2', $dav)) $dav[] = '2';
 
 		if (preg_match('#/(calendar(-[^/]+)?|inbox|outbox)/#', $path))	// eg. /<username>/calendar-<otheruser>/
 		{
@@ -319,7 +321,6 @@ class groupdav extends HTTP_WebDAV_Server
 			//$dav[] = 'calendarserver-private-comments';
 			//$dav[] = 'calendarserver-sharing';
 			//$dav[] = 'calendarserver-sharing-no-scheduling';
-
 		}
 		if ($app !== 'calendar')	// CardDAV
 		{
@@ -666,7 +667,8 @@ class groupdav extends HTTP_WebDAV_Server
 			foreach($shared as $id => $owner)
 			{
 				$file = $this->add_app($app,false,$id,$path.$app.'-'.$owner.'/');
-				$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
+				// mark other users calendar as shared (iOS 5.0.1 AB does NOT display AB marked as shared!)
+				if ($app == 'calendar') $file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
 				$files[] = $file;
 			}
 		}
@@ -1480,31 +1482,6 @@ class groupdav extends HTTP_WebDAV_Server
 			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");
 		}
 		return $ok;
-	}
-	/**
-	 * Add the privileges of the current user
-	 *
-	 * @return array self::mkprop('privilege',array(...))
-	 */
-	static function current_user_privilege_set()
-	{
-		return array(self::mkprop('privilege',
-			array(//self::mkprop('all',''),
-				self::mkprop('read',''),
-				self::mkprop('read-free-busy',''),
-				//self::mkprop('read-current-user-privilege-set',''),
-				self::mkprop('bind',''),
-				self::mkprop('unbind',''),
-				self::mkprop('schedule-post',''),
-				self::mkprop('schedule-post-vevent',''),
-				self::mkprop('schedule-respond',''),
-				self::mkprop('schedule-respond-vevent',''),
-				self::mkprop('schedule-deliver',''),
-				self::mkprop('schedule-deliver-vevent',''),
-				self::mkprop('write',''),
-				self::mkprop('write-properties',''),
-				self::mkprop('write-content',''),
-			)));
 	}
 
 	/**
