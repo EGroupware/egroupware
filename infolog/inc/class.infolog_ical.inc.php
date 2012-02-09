@@ -720,11 +720,11 @@ class infolog_ical extends infolog_bo
 						break;
 
 					default:	// X- attribute or other by EGroupware unsupported property
-						error_log(__METHOD__."() $attribute[name] = ".array2string($attribute));
+						//error_log(__METHOD__."() $attribute[name] = ".array2string($attribute));
 						// for attributes with multiple values in multiple lines, merge the values
 						if (isset($taskData['##'.$attribute['name']]))
 						{
-							error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($taskData['##'.$attribute['name']]));
+							//error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($taskData['##'.$attribute['name']]));
 							$attribute['values'] = array_merge(
 								is_array($taskData['##'.$attribute['name']]) ? $taskData['##'.$attribute['name']]['values'] : (array)$taskData['##'.$attribute['name']],
 								$attribute['values']);
