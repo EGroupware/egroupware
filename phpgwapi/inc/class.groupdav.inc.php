@@ -937,14 +937,14 @@ class groupdav extends HTTP_WebDAV_Server
 		echo "</h1>\n";
 
 		static $props2show = array(
-			'DAV:getcontentlength' => 'Size',
+			'DAV:displayname'      => 'Displayname',
 			'DAV:getlastmodified'  => 'Last modified',
 			'DAV:getetag'          => 'ETag',
 			'DAV:getcontenttype'   => 'Content type',
 			'DAV:resourcetype'     => 'Resource type',
-			'DAV:displayname'      => 'Displayname',
 			//'DAV:owner'            => 'Owner',
 			//'DAV:current-user-privilege-set' => 'current-user-privilege-set',
+			//'DAV:getcontentlength' => 'Size',
 		);
 		$n = 0;
 		foreach($files['files'] as $file)
