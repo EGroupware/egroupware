@@ -199,13 +199,13 @@ class infolog_ical extends infolog_bo
 		}
 		// set fields that may contain non-ascii chars and encode them if necessary
 		foreach (array(
-					'SUMMARY'     => $taskData['info_subject'],
-					'DESCRIPTION' => $taskData['info_des'],
-					'LOCATION'    => $taskData['info_location'],
-					'RELATED-TO'  => $taskData['info_id_parent'],
-					'UID'		  => $taskData['info_uid'],
-					'CATEGORIES'  => $taskData['info_cat'],
-				) as $field => $value)
+			'SUMMARY'     => $taskData['info_subject'],
+			'DESCRIPTION' => $taskData['info_des'],
+			'LOCATION'    => $taskData['info_location'],
+			'RELATED-TO'  => $taskData['info_id_parent'],
+			'UID'		  => $taskData['info_uid'],
+			'CATEGORIES'  => $taskData['info_cat'],
+		) as $field => $value)
 		{
 			if (isset($this->clientProperties[$field]['Size']))
 			{
