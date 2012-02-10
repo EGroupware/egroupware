@@ -822,7 +822,7 @@ class groupdav extends HTTP_WebDAV_Server
 							$props['resourcetype'][] = self::mkprop($ns,$type,'');
 						}
 						// add /addressbook/ as directory gateway
-						if ($app == 'addressbook' && $path == '/')
+						if ($path == '/addressbook/')
 						{
 							$props['resourcetype'][] = self::mkprop(self::CARDDAV, 'directory', '');
 						}
