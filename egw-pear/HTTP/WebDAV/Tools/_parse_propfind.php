@@ -198,7 +198,6 @@ class _parse_propfind
         if ($this->depth == 0) {
         	$this->root = array('name' => $tag, 'xmlns' => $ns, 'attrs' => $attrs);
         }
-
         // special tags at level 1: <allprop> and <propname>
         if ($this->depth == 1) {
          	$this->use = 'props';
@@ -221,21 +220,34 @@ class _parse_propfind
             		break;
             }
         }
+		//echo "$this->depth: use=$this->use $ns:$tag attrs=".array2string($attrs)."\n";
 
         // requested properties are found at level 2
         // CalDAV filters can be at deeper levels too and we need the attrs, same for other tags (eg. multiget href's)
-        if ($this->depth == 2 || $this->use == 'filters' && $this->depth >= 2 || $this->use == 'other') {
+        if ($this->depth == 2 || $this->use == 'filters' && $this->depth >= 2 || $this->use == 'other' ||
+        	$this->use == 'props' && $this->depth >= 2) {
             $prop = array("name" => $tag);
             if ($ns)
                 $prop["xmlns"] = $ns;
-            if ($this->use != 'props') {
+            if ($this->use != 'props' || $this->depth > 2) {
             	$prop['attrs'] = $attrs;
             	$prop['depth'] = $this->depth;
             }
-         	// this can happen if we have allprop and prop in one propfind:
-        	// <allprop /><prop><blah /></prop>, eg. blah is not automatic returned by allprop
-            if (!is_array($this->{$this->use}) && $this->{$this->use}) $this->{$this->use} = array($this->{$this->use});
-            $this->{$this->use}[] = $prop;
+            // collect sub-elements of props in the original props children attribute
+            // eg. required for CalDAV <calendar-data><expand start="..." end="..."/></calendar-data>
+            if ($this->use == 'props' && $this->depth > 2)
+            {
+            	$this->last_prop['children'][$tag] = $prop;
+            }
+            else
+            {
+	         	// this can happen if we have allprop and prop in one propfind:
+	        	// <allprop /><prop><blah /></prop>, eg. blah is not automatic returned by allprop
+	            if (!is_array($this->{$this->use}) && $this->{$this->use}) $this->{$this->use} = array($this->{$this->use});
+	            $this->{$this->use}[] =& $prop;
+	            $this->last_prop =& $prop;
+	            unset($prop);
+            }
         }
 
         // increment depth count

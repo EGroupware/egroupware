@@ -28,7 +28,7 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * vCalendar Instance for parsing
 	 *
-	 * @var array
+	 * @var Horde_iCalendar
 	 */
 	var $vCalendar;
 
@@ -191,19 +191,6 @@ class calendar_groupdav extends groupdav_handler
 			error_log(__METHOD__."($path,,,$user,$id) filter=".array2string($filter));
 		}
 
-		// check if we have to return the full calendar data or just the etag's
-		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
-		{
-			foreach($options['props'] as $prop)
-			{
-				if ($prop['name'] == 'calendar-data')
-				{
-					$filter['calendar_data'] = true;
-					break;
-				}
-			}
-		}
 		// return iterator, calling ourself to return result in chunks
 		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
 
@@ -222,8 +209,8 @@ class calendar_groupdav extends groupdav_handler
 	{
 		if ($this->debug) $starttime = microtime(true);
 
-		$calendar_data = $filter['calendar_data'];
-		unset($filter['calendar_data']);
+		$calendar_data = $this->groupdav->prop_requested('calendar-data', groupdav::CALDAV, true);
+		if (!is_array($calendar_data)) $calendar_data = false;	// not in allprop or autoindex
 
 		$files = array();
 
@@ -266,7 +253,10 @@ class calendar_groupdav extends groupdav_handler
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event, $filter['users'], strpos($path, '/inbox/') !== false ? 'REQUEST' : null);
+					$content = $this->iCal($event, $filter['users'],
+						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
+						!isset($calendar_data['children']['expand']) ? false :
+							($calendar_data['children']['expand']['attrs'] ? $calendar_data['children']['expand']['attrs'] : true));
 					$props['getcontentlength'] = bytes($content);
 					$props['calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -440,9 +430,10 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array $event
 	 * @param int $user=null account_id of calendar to display
 	 * @param string $method=null eg. 'PUBLISH' for inbox, nothing anywhere else
+	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
 	 * @return string
 	 */
-	private function iCal(array $event,$user=null, $method=null)
+	private function iCal(array $event,$user=null, $method=null, $expand=false)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -461,7 +452,12 @@ class calendar_groupdav extends groupdav_handler
 		// for recuring events we have to add the exceptions
 		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
 		{
-			$events =& self::get_series($event['uid'],$this->bo);
+			if (is_array($expand))
+			{
+				if (isset($expand['start'])) $expand['start'] = $this->vCalendar->_parseDateTime($expand['start']);
+				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
+			}
+			$events =& self::get_series($event['uid'], $this->bo, $expand);
 		}
 		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
 		{
@@ -477,9 +473,10 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @param string $uid UID
 	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
+	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false)
 	{
 		if (is_null($bo)) $bo = new calendar_bopdate();
 
@@ -488,22 +485,21 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return array(); // should never happen
 		}
+		$exceptions =& $master['recur_exception'];
 
-		$exceptions = $master['recur_exception'];
-
-		$events =& $bo->search(array(
+		$params = array(
 			'query' => array('cal_uid' => $uid),
 			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
 			'date_format' => 'server',
-		));
-		$events = array_merge(array($master), $events);
+		);
+		if (is_array($expand)) $params += $expand;
+
+		$events =& $bo->search($params);
+
 		foreach($events as $k => &$recurrence)
 		{
-			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-			//	"($uid)[$k]:" . array2string($recurrence));
-			if (!$k) continue; // nothing to change
-
+			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
 			if ($recurrence['id'] != $master['id'])	// real exception
 			{
 				//error_log('real exception: '.array2string($recurrence));
@@ -518,7 +514,7 @@ class calendar_groupdav extends groupdav_handler
 				continue;	// nothing to change
 			}
 			// now we need to check if this recurrence is an exception
-			if ($master['participants'] == $recurrence['participants'])
+			if (!$expand && $master['participants'] == $recurrence['participants'])
 			{
 				//error_log('NO exception: '.array2string($recurrence));
 				unset($events[$k]);	// no exception --> remove it
@@ -531,7 +527,10 @@ class calendar_groupdav extends groupdav_handler
 			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
-		$events[0]['recur_exception'] = $exceptions;
+		if (!$expand)
+		{
+			$events = array_merge(array($master), $events);
+		}
 		return $events;
 	}
 

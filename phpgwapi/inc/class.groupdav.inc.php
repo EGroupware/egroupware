@@ -513,9 +513,10 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param string $name property name
 	 * @param string $ns=null namespace, if that is to be checked too
-	 * @return boolean|string true: $name explicitly requested (or autoindex), 'allprop' requested, false: $name was not requested
+	 * @param boolean $return_prop=false if true return the property array with values for 'name', 'xmlns', 'attrs', 'children'
+	 * @return boolean|string|array true: $name explicitly requested (or autoindex), 'allprop' requested, false: $name was not requested
 	 */
-	function prop_requested($name, $ns=null)
+	function prop_requested($name, $ns=null, $return_prop=false)
 	{
 		if (!is_array($this->propfind_options) || !isset($this->propfind_options['props']))
 		{
@@ -526,7 +527,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if ($prop['name'] == $name && (is_null($ns) || $prop['xmlns'] == $ns))
 			{
-				$ret = true;
+				$ret = $return_prop ? $prop : true;
 				break;
 			}
 			if ($prop['name'] == 'allprop') $ret = 'allprop';
