@@ -372,7 +372,7 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
 				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,
-					$user || $app != 'addressbook' ? $path.$app.'/' : '/addressbook-accounts/');
+					$this->_slashify($options['path']));
 
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
 				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
