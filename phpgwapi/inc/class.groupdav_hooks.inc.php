@@ -61,15 +61,13 @@ class groupdav_hooks
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 			$addressbook_bo = new addressbook_bo();
 			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// Use P for personal addressbook
+			unset($addressbooks[$user]);	// allways synced
 			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
 		}
 		$addressbooks = array(
-			'P'	=> lang('Personal'),
-			'G'	=> lang('Primary Group'),
-			//'U' => lang('Accounts'),	// not yet working
-			'O' => lang('All in one'),
 			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+			'U' => lang('Accounts'),
 		) + $addressbooks;
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
@@ -84,13 +82,41 @@ class groupdav_hooks
 
 		$settings['addressbook-home-set'] = array(
 			'type'   => 'multiselect',
-			'label'  => 'Addressbooks to sync with Apple clients',
+			'label'  => 'Addressbooks to sync in addition to personal addressbook',
 			'name'   => 'addressbook-home-set',
-			'help'   => 'Addressbooks for CardDAV attribute "addressbook-home-set".',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"'),
 			'values' => $addressbooks,
 			'xmlrpc' => True,
 			'admin'  => False,
-			'default' => 'P',
+		);
+
+		if ($hook_data['setup'])
+		{
+			$calendars = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$cal_bo = new calendar_bo();
+			foreach ($cal_bo->list_cals() as $entry)
+			{
+				$calendars[$entry['grantor']] = $entry['name'];
+			}
+			unset($calendars[$user]);
+		}
+		$calendars = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+		) + $calendars;
+
+		$settings['calendar-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Calendars to sync in addition to personal calendar',
+			'name'   => 'calendar-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
+			'values' => $calendars,
+			'xmlrpc' => True,
+			'admin'  => False,
 		);
 
 		translation::add_app('infolog');
