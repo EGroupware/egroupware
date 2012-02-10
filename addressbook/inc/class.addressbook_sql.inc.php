@@ -469,10 +469,18 @@ class addressbook_sql extends so_sql_cf
 	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
 		$lists = array();
-		foreach($this->db->select($this->lists_table,'*',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
-			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
+		foreach($this->db->select($this->lists_table,$this->lists_table.'.*,MAX(list_added) AS list_modified',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
+			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
+			"LEFT JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id") as $row)
 		{
+			if (!$row['list_id']) continue;	// because of join, no lists at all still return one row of NULL
 			if ($member_attr) $row['members'] = array();
+			// generate UID and carddav_name for list_id
+			$row['list_uid'] = common::generate_uid('addresbook-lists', $row['list_id']);
+			$row['list_carddav_name'] = $row['list_uid'].'.vcf';
+			// set list_modified (=MAX(list_added)) as etag
+			if (!$row['list_modified']) $row['list_modified'] = $row['list_created'];
+			$row['list_etag'] = $row['list_modified'];
 			$lists[$row['list_id']] = $row;
 		}
 		if ($lists && $member_attr && in_array($member_attr,array('contact_id','contact_uid','caldav_name')))
@@ -529,29 +537,17 @@ class addressbook_sql extends so_sql_cf
 			$data['list_created'] = time();
 			$data['list_creator'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		else
-		{
-			$data[] = 'list_etag=list_etag+1';
-		}
-		$data['list_modified'] = time();
+		$data['list_modified'] = $data['list_etag'] = time();
 		$data['list_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 		if (!$data['list_id']) unset($data['list_id']);
 
 		if (!$this->db->insert($this->lists_table,$data,$keys,__LINE__,__FILE__)) return false;
 
-		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) &&
-			(!isset($data['list_uid']) || !isset($data['list_carddav_name'])))
+		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')))
 		{
-			$update = array();
-			if (!isset($data['list_uid']))
-			{
-				$update['list_uid'] = $data['list_uid'] = common::generate_uid('addresbook-lists', $list_id);
-			}
-			if (!isset($data['list_carddav_name']))
-			{
-				$update['list_carddav_name'] = $data['list_carddav_name'] = $data['list_uid'].'.vcf';
-			}
-			$this->db->update($this->lists_table,$update,array('list_id'=>$list_id),__LINE__,__FILE__);
+			// generate UID and carddav_name for list_id
+			$data['list_uid'] = common::generate_uid('addresbook-lists', $list_id);
+			$data['list_carddav_name'] = $data['list_uid'].'.vcf';
 
 			$this->add2list($list_id,$contacts,array());
 		}
@@ -593,14 +589,6 @@ class addressbook_sql extends so_sql_cf
 				'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
 			),array(),__LINE__,__FILE__);
 		}
-		// update etag
-		return $this->db->update($this->lists_table,array(
-			'list_etag=list_etag+1',
-			'list_modified' => time(),
-			'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
-		),array(
-			'list_id' => $list,
-		),__LINE__,__FILE__);
 	}
 
 	/**
@@ -633,16 +621,6 @@ class addressbook_sql extends so_sql_cf
 		{
 			return false;
 		}
-		foreach((array)$list as $list_id)
-		{
-			$this->db->update($this->lists_table,array(
-				'list_etag=list_etag+1',
-				'list_modified' => time(),
-				'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
-			),array(
-				'list_id' => $list_id,
-			),__LINE__,__FILE__);
-		}
 		return true;
 	}
 
@@ -671,12 +649,14 @@ class addressbook_sql extends so_sql_cf
 	{
 		if (is_null($owner)) $owner = array_keys($this->grants);
 
-		if (!($modified = $this->db->select($this->lists_table,'MAX(list_modified)',array('list_owner'=>$owner),
-			__LINE__,__FILE__)->fetchColumn()))
+		if (!($modified = $this->db->select($this->lists_table,'MAX(list_added)',array('list_owner'=>$owner),
+			__LINE__,__FILE__,false,'',false,0,
+			"JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id")->fetchColumn()))
 		{
-			return 0;
+			$modified = 0;
 		}
-		return $this->db->from_timestamp($modified);
+		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($modified));
+		return $modified;
 	}
 
 	/**
