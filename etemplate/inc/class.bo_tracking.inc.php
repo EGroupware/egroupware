@@ -400,6 +400,8 @@ abstract class bo_tracking
 		{
 			if (!$old[$name] && !$data[$name]) continue;	// treat all sorts of empty equally
 
+			if ($name[0] == '#' && !isset($data[$name])) continue;	// no set customfields are not stored, therefore not changed
+
 			if (is_array($status))	// 1:N relation
 			{
 				self::compact_1_N_relation($data[$name],$status);

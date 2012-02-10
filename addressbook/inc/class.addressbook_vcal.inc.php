@@ -72,7 +72,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
-			'REV'               => array('modified'),
+			'REV'				=> array('modified'),
 		);
 
 	/**
@@ -204,7 +204,7 @@ class addressbook_vcal extends addressbook_bo
 		#Horde::logMessage("vCalAddressbook clientProperties:\n" . print_r($this->clientProperties, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$vCard = new Horde_iCalendar_vcard($this->version);
-		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
 		$sysCharSet = translation::charset();
@@ -283,6 +283,7 @@ class addressbook_vcal extends addressbook_bo
 				{
 					case 'modified':
 						$value = gmdate("Y-m-d\TH:i:s\Z",egw_time::user2server($value));
+						$hasdata++;
 						break;
 
 					case 'private':
@@ -329,7 +330,7 @@ class addressbook_vcal extends addressbook_bo
 						break;
 
 					case 'cat_id':
-						if (!empty($value) && ($values = $this->get_categories($value)))
+						if (!empty($value) && ($values = /*str_replace(',','\\,',*/$this->get_categories($value)))//)
 						{
 							$values = (array) translation::convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
@@ -468,7 +469,6 @@ class addressbook_vcal extends addressbook_bo
 			}
 
 			$vCard->setAttribute($vcardField, $value, $options, true, $values);
-			//$vCard->setParameter($vcardField, $options);
 		}
 
 		$result = $vCard->exportvCalendar($_charset);
@@ -560,6 +560,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
+			'REV'               => array('modified'),
 		);
 
 		if ($this->log)
@@ -579,7 +580,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 		$vcardValues = $vCard->getAllAttributes();
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
 		}
@@ -599,6 +600,7 @@ class addressbook_vcal extends addressbook_bo
 		$url = 1;
 		$pref_tel = false;
 
+		$rowNames = array();
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = strtoupper($vcardRow['name']);
@@ -676,7 +678,7 @@ class addressbook_vcal extends addressbook_bo
 				switch ($pname)
 				{
 					case 'PREF':
-						if ($rowName == 'TEL' && !$pref_tel)
+						if (substr($rowName,0,3) == 'TEL' && !$pref_tel)
 						{
 							$pref_tel = $key;
 						}
@@ -1053,7 +1055,7 @@ class addressbook_vcal extends addressbook_bo
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
 		$vCard = new Horde_iCalendar_vcard($version);
-		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['addressbook']['version'].'//'.
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
 		$vCard->setAttribute('N',$list['list_name'],array(),true,array($list['list_name'],'','','',''));
