@@ -585,6 +585,9 @@ class addressbook_groupdav extends groupdav_handler
 			// default addressbook description: can be overwritten via PROPPATCH, in which case it's already set
 			$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$props['displayname']);
 		}
+		// setting an max image size, so iOS scales the images before transmitting them
+		$props['max-image-size'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'max-image-size',4096);
+
 		// supported reports (required property for CardDAV)
 		$props['supported-report-set'] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
