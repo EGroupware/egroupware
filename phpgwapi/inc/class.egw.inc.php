@@ -56,8 +56,6 @@ class egw extends egw_minimal
 	 */
 	var $hooks;
 
-	private $cat_cache;
-
 	/**
 	 * Constructor: Instantiates the sub-classes
 	 *
@@ -182,8 +180,6 @@ class egw extends egw_minimal
 			$this->check_app_rights();
 
 			$this->load_optional_classes();
-
-			$this->cat_cache =& categories::init_cache();
 		}
 		else	// set the defines for login, in case it's more then just login
 		{
@@ -215,8 +211,6 @@ class egw extends egw_minimal
 		register_shutdown_function(array($this, 'shutdown'));
 
 		$this->define_egw_constants();
-
-		categories::init_cache($this->cat_cache);
 	}
 
 	/**

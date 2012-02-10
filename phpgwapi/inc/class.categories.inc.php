@@ -83,6 +83,8 @@ class categories
 	 * @var array cat_id => array of data
 	 */
 	private static $cache;
+	const CACHE_APP = 'phpgwapi';
+	const CACHE_NAME = 'cat_cache';
 
 	/**
 	 * Appname for global categories
@@ -393,6 +395,8 @@ class categories
 	 */
 	static function read($id)
 	{
+		if (is_null(self::$cache)) self::init_cache();
+
 		if (!isset(self::$cache[$id])) return false;
 
 		$cat = self::$cache[$id];
@@ -903,52 +907,50 @@ class categories
 	 * Initialise or restore the categories cache
 	 *
 	 * We use the default ordering of return_array to avoid doing it again there
-	 *
-	 * @param array &$cache=null cache content to restore it (from the egw-object)
 	 */
-	public static function &init_cache(&$cache=null)
+	public static function init_cache()
 	{
-		if (!is_null($cache))
+		self::$cache = egw_cache::getInstance(self::CACHE_APP, self::CACHE_NAME);
+
+		if (is_null(self::$cache))
 		{
-			//error_log(__METHOD__."() ".count($cache)." cats restored: ".function_backtrace());
-			return self::$cache =& $cache;
-		}
-		// check if we are already updated to global owner == 0, if not do it now
-		if (!$GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',array('cat_owner'=>'0'),__LINE__,__FILE__)->fetchColumn())
-		{
-			$GLOBALS['egw']->db->update(self::TABLE,array('cat_owner'=>'0'),"(cat_owner='-1' OR cat_appname='phpgw')",__LINE__,__FILE__);
-			$GLOBALS['egw']->db->insert(self::TABLE,array(
-				'cat_main'    => 0,
-				'cat_parent'  => 0,
-				'cat_level'   => 0,
-				'cat_owner'   => 0,
-				'cat_appname' => '*update*',
-				'cat_name'    => 'global=0',
-				'cat_description' => 'global=0',
-			),false,__LINE__,__FILE__);
-		}
-		self::$cache = array();
-		// read all cats (cant use $this->db!)
-		foreach($GLOBALS['egw']->db->select(self::TABLE,'*',false,__LINE__,__FILE__,
-			false,'ORDER BY cat_main, cat_level, cat_name ASC') as $cat)
-		{
-			$cat = egw_db::strip_array_keys($cat,'cat_');
-			if ($cat['appname'] == '*update*') continue;	// --> ignore update marker
-			$cat['app_name'] = $cat['appname'];
-			// backlink children to their parent
-			if ($cat['parent'])
+			// check if we are already updated to global owner == 0, if not do it now
+			if (!$GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',array('cat_owner'=>'0'),__LINE__,__FILE__)->fetchColumn())
 			{
-				self::$cache[$cat['parent']]['children'][] = $cat['id'];
+				$GLOBALS['egw']->db->update(self::TABLE,array('cat_owner'=>'0'),"(cat_owner='-1' OR cat_appname='phpgw')",__LINE__,__FILE__);
+				$GLOBALS['egw']->db->insert(self::TABLE,array(
+					'cat_main'    => 0,
+					'cat_parent'  => 0,
+					'cat_level'   => 0,
+					'cat_owner'   => 0,
+					'cat_appname' => '*update*',
+					'cat_name'    => 'global=0',
+					'cat_description' => 'global=0',
+				),false,__LINE__,__FILE__);
 			}
-			if (isset(self::$cache[$cat['id']]))
+			self::$cache = array();
+			// read all cats (cant use $this->db!)
+			foreach($GLOBALS['egw']->db->select(self::TABLE,'*',false,__LINE__,__FILE__,
+				false,'ORDER BY cat_main, cat_level, cat_name ASC') as $cat)
 			{
-				$cat['children'] = self::$cache[$cat['id']]['children'];
-				unset(self::$cache[$cat['id']]);	// otherwise the order gets messed up!
+				$cat = egw_db::strip_array_keys($cat,'cat_');
+				if ($cat['appname'] == '*update*') continue;	// --> ignore update marker
+				$cat['app_name'] = $cat['appname'];
+				// backlink children to their parent
+				if ($cat['parent'])
+				{
+					self::$cache[$cat['parent']]['children'][] = $cat['id'];
+				}
+				if (isset(self::$cache[$cat['id']]))
+				{
+					$cat['children'] = self::$cache[$cat['id']]['children'];
+					unset(self::$cache[$cat['id']]);	// otherwise the order gets messed up!
+				}
+				self::$cache[$cat['id']] = $cat;
 			}
-			self::$cache[$cat['id']] = $cat;
+			egw_cache::setInstance(self::CACHE_APP, self::CACHE_NAME, self::$cache);
 		}
 		//error_log(__METHOD__."() cache initialised: ".function_backtrace());
-		return self::$cache;
 	}
 
 	/**
@@ -961,9 +963,7 @@ class categories
 	 */
 	public static function invalidate_cache($cat_id=null)
 	{
-		self::init_cache();
-		// we need to invalidate the whole session cache, as it stores our cache
-		egw::invalidate_session_cache();
+		egw_cache::unsetInstance(self::CACHE_APP, self::CACHE_NAME);
 	}
 
 	/**
@@ -981,6 +981,8 @@ class categories
 	 */
 	static function return_single($id)
 	{
+		if (is_null(self::$cache)) self::init_cache();
+
 		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
 	}
 
