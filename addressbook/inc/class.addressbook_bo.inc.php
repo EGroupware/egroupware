@@ -816,8 +816,9 @@ class addressbook_bo extends addressbook_so
 		//error_log(__METHOD__."() got image $src_w * $src_h, is_jpeg=".array2string(substr($photo,0,2) === "\377\330"));
 
 		// if $photo is to width or not a jpeg image --> resize it
-		if ($src_w > $dst_w || substr($photo,0,2) !== "\377\330")
+		if ($src_w > $dst_w || cut_bytes($photo,0,2) !== "\377\330")
 		{
+			//error_log(__METHOD__."(,dst_w=$dst_w) src_w=$src_w, cut_bytes(photo,0,2)=".array2string(cut_bytes($photo,0,2)).' --> resizing');
 			// scale the image to a width of 60 and a height according to the proportion of the source image
 			$resized = imagecreatetruecolor($dst_w,$dst_h = round($src_h * $dst_w / $src_w));
 			imagecopyresized($resized,$image,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
@@ -830,6 +831,8 @@ class addressbook_bo extends addressbook_so
 			imagedestroy($resized);
 			//error_log(__METHOD__."() resized image $src_w*$src_h to $dst_w*$dst_h");
 		}
+		//else error_log(__METHOD__."(,dst_w=$dst_w) src_w=$src_w, cut_bytes(photo,0,2)=".array2string(cut_bytes($photo,0,2)).' --> NOT resizing');
+
 		imagedestroy($image);
 
 		return $photo;
