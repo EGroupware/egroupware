@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
