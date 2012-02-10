@@ -183,7 +183,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
-		$cols = array('id','uid','etag','modified');
+		$cols = array('id','uid','etag','modified','n_fn');
 		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
 		if (($contacts =& $this->bo->search(array(),$cols,$order,'','',False,'AND',$start,$filter)))
 		{
@@ -191,6 +191,8 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				$props = array(
 					'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
+					'getlastmodified' => $contact['modified'],
+					'displayname' => $contact['n_fn'],
 				);
 				if ($address_data)
 				{
