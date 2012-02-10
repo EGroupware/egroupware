@@ -355,7 +355,7 @@ abstract class bo_tracking
 		}
 		foreach($changed_fields as $name)
 		{
-			$status = $this->field2history[$name];
+			$status = isset($this->field2history[$name]) ? $this->field2history[$name] : $name;
 			//error_log(__METHOD__.__LINE__." Name $name,".' Status:'.array2string($status));
 			if (is_array($status))	// 1:N relation --> remove common rows
 			{
@@ -421,6 +421,13 @@ abstract class bo_tracking
 				}
 				$changed_fields[] = $name;
 				//echo "<p>$name: ".array2string($data[$name]).' != '.array2string($old[$name])."</p>\n";
+			}
+		}
+		foreach($data as $name => $value)
+		{
+			if ($name[0] == '#' && $name[1] == '#' && $value !== $old[$name])
+			{
+				$changed_fields[] = $name;
 			}
 		}
 		//error_log(__METHOD__."() changed_fields=".array2string($changed_fields));

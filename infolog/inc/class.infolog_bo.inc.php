@@ -694,10 +694,12 @@ class infolog_bo
 	* @param boolean $user2server=true conversion between user- and server-time necessary
 	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
 	* @param boolean $throw_exception=false Throw an exception (if required fields are not set)
+	* @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	*
-	* @return int/boolean info_id on a successfull write or false
+	* @return int|boolean info_id on a successfull write or false
 	*/
-	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false, $throw_exception=false)
+	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true,
+		$skip_notification=false, $throw_exception=false, $purge_cfs=null)
 	{
 		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
@@ -904,7 +906,7 @@ class infolog_bo
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
 
-		if (($info_id = $this->so->write($to_write,$check_modified)))
+		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs)))
 		{
 			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{

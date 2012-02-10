@@ -529,9 +529,10 @@ class infolog_so
 	 *
 	 * @param array $values with the data of the log-entry
 	 * @param int $check_modified=0 old modification date to check before update (include in WHERE)
+	 * @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	 * @return int|boolean info_id, false on error or 0 if the entry has been updated in the meantime
 	 */
-	function write($values,$check_modified=0)  // did _not_ ensure ACL
+	function write($values, $check_modified=0, $purge_cfs=null)  // did _not_ ensure ACL
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -604,6 +605,12 @@ class infolog_so
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 		// write customfields now
+		if ($purge_cfs)
+		{
+			$where = array('info_id' => $info_id);
+			if ($purge_cfs == 'ical') $where[] = "info_extra_name LIKE '#%'";
+			$this->db->delete($this->extra_table,$where,__LINE__,__FILE__);
+		}
 		$to_delete = array();
 		foreach($values as $key => $val)
 		{
@@ -627,7 +634,7 @@ class infolog_so
 				$to_delete[] = substr($key,1);
 			}
 		}
-		if ($to_delete)
+		if ($to_delete && !$purge_cfs)
 		{
 			$this->db->delete($this->extra_table,array(
 					'info_id'			=> $info_id,

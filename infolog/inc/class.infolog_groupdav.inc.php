@@ -126,7 +126,7 @@ class infolog_groupdav extends groupdav_handler
 			'filter'	=> $task_filter,
 			'info_type' => explode(',', $infolog_types),
 		);
-		error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
+		//error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -208,6 +208,7 @@ class infolog_groupdav extends groupdav_handler
 			'filter'    	=> $task_filter,
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
+			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 		);
 
 		if (!$calendar_data)

@@ -327,6 +327,34 @@ class infolog_ical extends infolog_bo
 		}
 		$vevent->setAttribute('PRIORITY', $priority);
 
+		// for CalDAV add all X-Properties previously parsed
+		if ($this->productManufacturer == 'groupdav')
+		{
+			foreach($taskData as $name => $value)
+			{
+				if (substr($name, 0, 2) == '##')
+				{
+					if ($name[2] == ':')
+					{
+						if ($value[1] == ':' && ($v = unserialize($value)) !== false) $value = $v;
+						foreach((array)$value as $compvData)
+						{
+							$comp = Horde_iCalendar::newComponent(substr($name,3), $vevent);
+							$comp->parsevCalendar($compvData,substr($name,3),'utf-8');
+							$vevent->addComponent($comp);
+						}
+					}
+					elseif ($value[1] == ':' && ($attr = unserialize($value)) !== false)
+					{
+						$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
+					}
+					else
+					{
+						$vevent->setAttribute(substr($name, 2), $value);
+					}
+				}
+			}
+		}
 		$vcal->addComponent($vevent);
 
 		$retval = $vcal->exportvCalendar();
@@ -461,7 +489,7 @@ class infolog_ical extends infolog_bo
 		{
 			$taskData['caldav_name'] = $caldav_name;
 		}
-		return $this->write($taskData, true, true, false);
+		return $this->write($taskData, true, true, false, false, false, 'ical');
 	}
 
 	/**
@@ -612,6 +640,7 @@ class infolog_ical extends infolog_bo
 							$taskData['info_startdate']	= $component->getAttribute('DTSTART');
 						}
 						$attribute['value'] += $taskData['info_startdate'];
+						$taskData['##DURATION'] = $attribute['value'];
 						// fall throught
 					case 'DUE':
 						// even as EGroupware only displays the date, we can still store the full value
@@ -647,6 +676,8 @@ class infolog_ical extends infolog_bo
 						}
 						break;
 
+					case 'X-INFOLOG-STATUS':
+						break;
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
@@ -679,9 +710,46 @@ class infolog_ical extends infolog_bo
 					case 'PERCENT-COMPLETE':
 						$taskData['info_percent'] = (int) $attribute['value'];
 						break;
+
+					// ignore all PROPS, we dont want to store like X-properties or unsupported props
+					case 'DTSTAMP':
+					case 'SEQUENCE':
+					case 'CREATED':
+					case 'LAST-MODIFIED':
+					//case 'ATTENDEE':	// todo: add real support for it
+						break;
+
+					default:	// X- attribute or other by EGroupware unsupported property
+						error_log(__METHOD__."() $attribute[name] = ".array2string($attribute));
+						// for attributes with multiple values in multiple lines, merge the values
+						if (isset($taskData['##'.$attribute['name']]))
+						{
+							error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($taskData['##'.$attribute['name']]));
+							$attribute['values'] = array_merge(
+								is_array($taskData['##'.$attribute['name']]) ? $taskData['##'.$attribute['name']]['values'] : (array)$taskData['##'.$attribute['name']],
+								$attribute['values']);
+						}
+						$taskData['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
+							serialize($attribute) : $attribute['value'];
+						break;
 				}
 			}
 			break;
+		}
+		// store included, but unsupported components like valarm as x-properties
+		foreach($component->getComponents() as $comp)
+		{
+			$name = '##:'.strtoupper($comp->getType());
+			$compvData = $comp->exportvCalendar($comp,'utf-8');
+			if (isset($taskData[$name]))
+			{
+				$taskData[$name] = array($taskData[$name]);
+				$taskData[$name][] = $compvData;
+			}
+			else
+			{
+				$taskData[$name] = $compvData;
+			}
 		}
 		if ($this->log)
 		{
