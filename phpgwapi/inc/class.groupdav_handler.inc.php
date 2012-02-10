@@ -173,16 +173,17 @@ abstract class groupdav_handler
 	/**
 	 * Read an entry
 	 *
-	 * @param string/int $id
-	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
+	 * @param string|int $id
+	 * @param string $path=null implementation can use it, used in call from _common_get_put_delete
+	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
-	abstract function read($id);
+	abstract function read($id /*,$path=null*/);
 
 	/**
 	 * Check if user has the neccessary rights on an entry
 	 *
 	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
-	 * @param array/int $entry entry-array or id
+	 * @param array|int $entry entry-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	abstract function check_access($acl,$entry);
@@ -204,8 +205,8 @@ abstract class groupdav_handler
 	/**
 	 * Get the etag for an entry, can be reimplemented for other algorithm or field names
 	 *
-	 * @param array/int $event array with event or cal_id
-	 * @return string/boolean string with etag or false
+	 * @param array|int $event array with event or cal_id
+	 * @return string|boolean string with etag or false
 	 */
 	function get_etag($entry)
 	{
@@ -257,7 +258,7 @@ abstract class groupdav_handler
 			return '403 Forbidden';		// no app rights
 		}
 		$extra_acl = $this->method2acl[$method];
-		if (!($entry = $this->read($id)) && ($method != 'PUT' || $entry === false) ||
+		if (!($entry = $this->read($id, $options['path'])) && ($method != 'PUT' || $entry === false) ||
 			($extra_acl != EGW_ACL_READ && $this->check_access($extra_acl,$entry) === false))
 		{
 			if ($return_no_access && !is_null($entry))
@@ -284,7 +285,7 @@ abstract class groupdav_handler
 
 				if ($this->http_if_match !== $etag)
 				{
-					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed");
+					if ($this->debug) error_log(__METHOD__."($method,path=$options[path],$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed".array2string($entry));
 					return '412 Precondition Failed';
 				}
 			}

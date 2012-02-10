@@ -17,7 +17,7 @@
  * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
  * without getting into problems with memory_limit.
  *
- * @todo create extra addressbook eg. "/accounts/" which shows accounts, even if they are in LDAP (no carddav_name column!)
+ * @todo check/fix contacts in LDAP (no carddav_name column!)
  */
 class addressbook_groupdav extends groupdav_handler
 {
@@ -44,6 +44,19 @@ class addressbook_groupdav extends groupdav_handler
 	var $charset = 'utf-8';
 
 	/**
+	 * 'addressbook_home_set' preference already exploded as array
+	 *
+	 * A = all available addressbooks
+	 * G = primary group
+	 * D = distribution lists as groups
+	 * O = sync all in one (/<username>/addressbook/)
+	 * or nummerical account_id, but not user itself
+	 *
+	 * @var array
+	 */
+	var $home_set_pref;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -65,6 +78,15 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			groupdav_handler::$path_extension = '.vcf';
 		}
+		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+		$this->home_set_pref = $this->home_set_pref ? explode(',',$this->home_set_pref) : array();
+
+		// silently switch "Sync all into one" preference on for OS X addressbook, as it only supports one AB
+		// this restores behavior before Lion (10.7), where AB synced all ABs contained in addressbook-home-set
+		if (substr(self::get_agent(),0,9) == 'cfnetwork' && !in_array('O',$this->home_set_pref))
+		{
+			$this->home_set_pref[] = 'O';
+		}
 	}
 
 	/**
@@ -80,8 +102,17 @@ class addressbook_groupdav extends groupdav_handler
 	function propfind($path,$options,&$files,$user,$id='')
 	{
 		$filter = array();
+		// If "Sync selected addressbooks into one" is set
+		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
+		{
+			$filter['contact_owner'] = array_keys($this->get_shared(true));	// true: ignore all-in-one pref
+			$filter['contact_owner'][] = $user;
+		}
 		// show addressbook of a single user?
-		if ($user && $path != '/addressbook/' || $user === 0) $filter['contact_owner'] = $user;
+		elseif ($user && $path != '/addressbook/' || $user === 0)
+		{
+			$filter['contact_owner'] = $user;
+		}
 		// should we hide the accounts addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
@@ -136,6 +167,7 @@ class addressbook_groupdav extends groupdav_handler
 			$handler = self::_get_handler();
 		}
 		unset($filter['address_data']);
+
 		if (isset($filter['order']))
 		{
 			$order = $filter['order'];
@@ -167,8 +199,8 @@ class addressbook_groupdav extends groupdav_handler
 				$files[] = $this->add_resource($path, $contact, $props);
 			}
 		}
-		// add groups after contacts
-		if (!$start || count($contacts) < $start[1])
+		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['contact_owner'])
+		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['contact_owner']))
 		{
 			$where = array(
 				'list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)
@@ -177,18 +209,23 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
 			}
-			//error_log(__METHOD__."() filter=".array2string($filter).', where='.array2string($where));
-			if (($lists = $this->bo->read_lists($where,'contact_uid',true)))	// true = limit to contacts in same AB!
+			//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
+			if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
 			{
-				//_debug_array($lists);
 				foreach($lists as $list)
 				{
 					$list['carddav_name'] = $list['list_carddav_name'];
+					$etag = $list['list_id'].':'.$list['list_etag'];
+					// for all-in-one addressbook, add selected ABs to etag
+					if (isset($filter['contact_owner']) && is_array($filter['contact_owner']))
+					{
+						$etag .= ':'.implode('-',$filter['contact_owner']);
+					}
 					$props = array(
 						'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
 						'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
 						'displayname' => $list['list_name'],
-						'getetag' => '"'.$list['list_id'].':'.$list['list_etag'].'"',
+						'getetag' => '"'.$etag.'"',
 					);
 					if ($address_data)
 					{
@@ -503,7 +540,7 @@ class addressbook_groupdav extends groupdav_handler
 
 		if (!isset($contact['etag']))
 		{
-			$contact = $this->read($save_ok);
+			$contact = $this->read($save_ok,$options['path']);
 		}
 
 		// send evtl. necessary respose headers: Location, etag, ...
@@ -583,6 +620,8 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Query ctag for addressbook
 	 *
+	 * @param string $path
+	 * @param int $user
 	 * @return string
 	 */
 	public function getctag($path,$user)
@@ -590,36 +629,19 @@ class addressbook_groupdav extends groupdav_handler
 		// not showing addressbook of a single user?
 		if (!$user || $path == '/addressbook/') $user = null;
 
-		return max($this->bo->get_ctag($user),$this->bo->lists_ctag($user));
-	}
-
-	/**
-	 * Add the privileges of the current user
-	 *
-	 * @param array $props=array() regular props by the groupdav handler
-	 * @return array
-	 */
-	static function current_user_privilege_set(array $props=array())
-	{
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
-				array(
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-properties',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-content',''),
-				))));
-		return $props;
+		// If "Sync selected addressbooks into one" is set --> ctag need to take selected AB's into account too
+		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
+		{
+			$user = array_merge((array)$user,array_keys($this->get_shared(true)));	// true: ignore all-in-one pref
+		}
+		$ctag = $this->bo->get_ctag($user);
+		// include lists-ctag, if enabled and NOT in /addressbook/ (we dont sync distribution-lists/groups there)
+		if (in_array('D',$this->home_set_pref) && $path != '/addressbook/')
+		{
+			$lists_ctag = $this->bo->lists_ctag($user);
+		}
+		//error_log(__METHOD__."('$path', ".array2string($user).") ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
+		return max($ctag,$lists_ctag);
 	}
 
 	/**
@@ -710,11 +732,12 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return $contact;
 		}
-		if (($Ok = $this->bo->delete($contact['id'],self::etag2value($this->http_if_match))) === 0)
+		if (($Ok = isset($contact['list_id']) ? $this->bo->delete_list($contact['list_id']) !== false :
+			$this->bo->delete($contact['id'],self::etag2value($this->http_if_match))) === 0)
 		{
 			return '412 Precondition Failed';
 		}
-		return true;
+		return $Ok;
 	}
 
 	/**
@@ -723,10 +746,11 @@ class addressbook_groupdav extends groupdav_handler
 	 * We have to make sure to not return or even consider in read deleted contacts, as the might have
 	 * the same UID and/or carddav_name as not deleted contacts and would block access to valid entries
 	 *
-	 * @param string|id $id
-	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
+	 * @param string|int $id
+	 * @param string $path=null
+	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
-	function read($id)
+	function read($id, $path=null)
 	{
 		static $non_deleted_tids;
 		if (is_null($non_deleted_tids))
@@ -740,13 +764,32 @@ class addressbook_groupdav extends groupdav_handler
 		// see if we have a distribution-list / group with that id
 		// bo->read_list(..., true) limits returned uid to same owner's addressbook, as iOS and OS X addressbooks
 		// only understands/shows that and if return more, save_lists would delete the others ones on update!
-		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',true)))
+		$limit_in_ab = true;
+		list(,$account_lid,$app) = explode('/',$path);	// eg. /<username>/addressbook/<id>
+		// /<username>/addressbook/ with home_set_prefs containing 'O'=all-in-one contains selected ab's
+		if($account_lid == $GLOBALS['egw_info']['user']['account_lid'] && $app == 'addressbook' && in_array('O',$this->home_set_pref))
+		{
+			$limit_in_ab = array_keys($this->get_shared(true));
+			$limit_in_ab[] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		/* we are currently not syncing distribution-lists/groups to /addressbook/ as
+		 * Apple clients use that only as directory gateway
+		elseif ($account_lid == 'addressbook')	// /addressbook/ contains all readably contacts
+		{
+			$limit_in_ab = array_keys($this->bo->grants);
+		}*/
+		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',$limit_in_ab)))
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
 			foreach(array('owner','id','carddav_name','modified','modifier','created','creator','etag','uid') as $name)
 			{
 				$contact[$name] = $contact['list_'.$name];
+			}
+			// if NOT limited to containing AB ($limit_in_ab === true), add that limit to etag
+			if ($limit_in_ab !== true)
+			{
+				$contact['etag'] .= ':'.implode('-',$limit_in_ab);
 			}
 		}
 		elseif($contact === array())	// not found from read_lists()
@@ -766,7 +809,7 @@ class addressbook_groupdav extends groupdav_handler
 	 * Check if user has the neccessary rights on a contact
 	 *
 	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
-	 * @param array/int $contact contact-array or id
+	 * @param array|int $contact contact-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$contact)
@@ -777,30 +820,32 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Return calendars/addressbooks shared from other users with the current one
 	 *
-	 * return array account_id => account_lid pairs
+	 * @param boolean $ignore_all_in_one=false if true, return selected addressbooks and not array() for all-in-one
+	 * @return array account_id => account_lid pairs
 	 */
-	function get_shared()
+	function get_shared($ignore_all_in_one=false)
 	{
 		$shared = array();
-		$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
-		if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
-		$addressbook_home_set = explode(',',$addressbook_home_set);
+
+		// if "Sync all selected addressbook into one" is set --> no (additional) shared addressbooks
+		if (!$ignore_all_in_one && in_array('O',$this->home_set_pref)) return array();
+
 		// replace symbolic id's with real nummeric id's
 		foreach(array(
 			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
 			'U' => '0',
 		) as $sym => $id)
 		{
-			if (($key = array_search($sym, $addressbook_home_set)) !== false)
+			if (($key = array_search($sym, $this->home_set_pref)) !== false)
 			{
-				$addressbook_home_set[$key] = $id;
+				$this->home_set_pref[$key] = $id;
 			}
 		}
 		foreach($this->bo->get_addressbooks(EGW_ACL_READ) as $id => $label)
 		{
 			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
-				$user != $id &&	// no current user and no accounts, if disabled in ab prefs
-				(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+				$GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user and no accounts, if disabled in ab prefs
+				(in_array('A',$this->home_set_pref) || in_array((string)$id,$this->home_set_pref)) &&
 				is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
 			{
 				$shared[$id] = $owner;
@@ -832,6 +877,8 @@ class addressbook_groupdav extends groupdav_handler
 			'A'	=> lang('All'),
 			'G'	=> lang('Primary Group'),
 			'U' => lang('Accounts'),
+			'O' => lang('Sync all selected into one'),
+			'D' => lang('Distribution lists as groups')
 		) + $addressbooks;
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
@@ -849,7 +896,10 @@ class addressbook_groupdav extends groupdav_handler
 			'type'   => 'multiselect',
 			'label'  => 'Addressbooks to sync in addition to personal addressbook',
 			'name'   => 'addressbook-home-set',
-			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"'),
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').
+				'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"').
+				'<br/>'.lang('Select "%1", if your client does not support multiple addressbooks.',lang('Sync all selected into one')).
+				'<br/>'.lang('Select "%1", if your client support groups, eg. OS X or iOS addressbook.',lang('Distribution lists as groups')),
 			'values' => $addressbooks,
 			'xmlrpc' => True,
 			'admin'  => False,
