@@ -841,7 +841,8 @@ class addressbook_ui extends addressbook_bo
 
 			case 'vcard':
 				$action_msg = lang('exported');
-				ExecMethod('addressbook.addressbook_vcal.export',$checked);
+				$vcard = new addressbook_vcal('addressbook','text/vcard');
+				$vcard->export($checked);
 				// does not return!
 				$Ok = false;
 				break;
