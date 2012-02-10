@@ -33,42 +33,6 @@ class addressbook_groupdav extends groupdav_handler
 		'FN' => 'n_fn',
 	);
 
-	var $supportedFields = array(
-			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'				=> array('bday'),
-			//'CLASS'				=> array('private'),
-			//'CATEGORIES'		=> array('cat_id'),
-			'EMAIL;WORK'		=> array('email'),
-			'EMAIL;HOME'		=> array('email_home'),
-			'N'					=> array('n_family','n_given','n_middle',
-									'n_prefix','n_suffix'),
-			'FN'				=> array('n_fn'),
-			'NOTE'				=> array('note'),
-			'ORG'				=> array('org_name','org_unit','room'),
-			'TEL;CELL;WORK'		=> array('tel_cell'),
-			'TEL;CELL;HOME'		=> array('tel_cell_private'),
-			'TEL;CAR'			=> array('tel_car'),
-			'TEL;OTHER'			=> array('tel_other'),
-			'TEL;VOICE;WORK'	=> array('tel_work'),
-			'TEL;FAX;WORK'		=> array('tel_fax'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;FAX;HOME'		=> array('tel_fax_home'),
-			'TEL;PAGER'			=> array('tel_pager'),
-			'TITLE'				=> array('title'),
-			'URL;WORK'			=> array('url'),
-			'URL;HOME'			=> array('url_home'),
-			'ROLE'				=> array('role'),
-			'NICKNAME'			=> array('label'),
-			'FBURL'				=> array('freebusy_uri'),
-			'PHOTO'				=> array('jpegphoto'),
-			'X-ASSISTANT'		=> array('assistent'),
-			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
-			'UID'				=> array('uid'),
-		);
-
 	/**
 	 * Charset for exporting data, as some clients ignore the headers specifying the charset
 	 *
@@ -529,14 +493,24 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		if ($this->agent != 'cfnetwork' && $this->agent != 'dataaccess')
-		{
-			// Apple Addressbook don't support CLASS
-			$this->supportedFields['CLASS'] = array('private');
-			$this->supportedFields['CATEGORIES'] = array('cat_id');
-		}
 		$handler = new addressbook_vcal('addressbook','text/vcard');
-		$handler->setSupportedFields('GroupDAV',$this->agent, $this->supportedFields);
+		// Apple iOS or OS X addressbook
+		if ($this->agent = 'cfnetwork' || $this->agent == 'dataaccess')
+		{
+			$supportedFields = $handler->supportedFields;
+			// Apple Addressbook don't support CLASS
+			unset($supportedFields['CLASS']);
+			unset($supportedFields['CATEGORIES']);
+			// use just CELL and IPHONE, CELL;WORK and CELL;HOME are NOT understood
+			//'TEL;CELL;WORK'		=> array('tel_cell'),
+			//'TEL;CELL;HOME'		=> array('tel_cell_private'),
+			$supportedFields['TEL;CELL'] = array('tel_cell');
+			unset($supportedFields['TEL;CELL;WORK']);
+			$supportedFields['TEL;IPHONE'] = array('tel_cell_private');
+			unset($supportedFields['TEL;CELL;HOME']);
+		}
+		$handler->setSupportedFields('GroupDAV',$this->agent, isset($supportedFields) ?
+			$supportedFields : $handler->supportedFields);
 
 		return $handler;
 	}
