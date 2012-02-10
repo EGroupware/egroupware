@@ -1881,10 +1881,9 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_or_add_categories($catname_list, $contact_id=null)
 	{
-		if ($contact_id && $contact_id > 0)
+		if ($contact_id && $contact_id > 0 && ($old_contact = $this->read($contact_id)))
 		{
 			// preserve categories without users read access
-			$old_contact = $this->read($contact_id);
 			$old_categories = explode(',',$old_contact['cat_id']);
 			$old_cats_preserve = array();
 			if (is_array($old_categories) && count($old_categories) > 0)
@@ -1931,6 +1930,7 @@ class addressbook_bo extends addressbook_so
 			sort($cat_id_list, SORT_NUMERIC);
 		}
 
+		//error_log(__METHOD__."(".array2string($catname_list).", $contact_id) returning ".array2string($cat_id_list));
 		return $cat_id_list;
 	}
 

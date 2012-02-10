@@ -508,6 +508,8 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['owner'] = $oldContact['owner'];
 			$contact['private'] = $oldContact['private'];
 			$contact['carddav_name'] = $oldContact['carddav_name'];
+			$contact['tid'] = $oldContact['tid'];
+			$contact['creator'] = $oldContact['creator'];
 		}
 		else
 		{
@@ -699,12 +701,9 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		$handler = new addressbook_vcal('addressbook','text/vcard');
 		// Apple iOS or OS X addressbook
-		if ($this->agent = 'cfnetwork' || $this->agent == 'dataaccess')
+		if ($this->agent == 'cfnetwork' || $this->agent == 'dataaccess')
 		{
 			$supportedFields = $handler->supportedFields;
-			// Apple Addressbook don't support CLASS
-			unset($supportedFields['CLASS']);
-			unset($supportedFields['CATEGORIES']);
 			// use just CELL and IPHONE, CELL;WORK and CELL;HOME are NOT understood
 			//'TEL;CELL;WORK'		=> array('tel_cell'),
 			//'TEL;CELL;HOME'		=> array('tel_cell_private'),
