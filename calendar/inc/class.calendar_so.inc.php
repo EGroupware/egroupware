@@ -64,6 +64,9 @@ define('WEEK_s',7*DAY_s);
  *  UI only operates in user-time, so there have to be no conversation at all !!!
  *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
  *  SO operates only on server-time
+ *
+ * DB-model uses egw_cal_user.cal_status='X' for participants who got deleted. They never get returned by
+ * read or search methods, but influence the ctag of the deleted users calendar!
  */
 class calendar_so
 {
@@ -234,6 +237,7 @@ class calendar_so
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
+			"cal_status != 'X'",
 		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date ASC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
@@ -500,13 +504,13 @@ class calendar_so
 			{
 				case 'showonlypublic':
 					$where['cal_public'] = 1;
-					$where[] = "$this->user_table.cal_status != 'R'"; break;
+					$where[] = "$this->user_table.cal_status NOT IN ('R','X')"; break;
 				case 'deleted':
 					$where[] = 'cal_deleted IS NOT NULL'; break;
 				case 'unknown':
 					$where[] = "$this->user_table.cal_status='U'"; break;
 				case 'not-unknown':
-					$where[] = "$this->user_table.cal_status != 'U'"; break;
+					$where[] = "$this->user_table.cal_status NOT IN ('U','X')"; break;
 				case 'accepted':
 					$where[] = "$this->user_table.cal_status='A'"; break;
 				case 'tentative':
@@ -517,9 +521,10 @@ class calendar_so
 					$where[] = "$this->user_table.cal_status='D'"; break;
 				case 'all':
 				case 'owner':
+					$where[] = "$this->user_table.cal_status!='X'"; break;
 					break;
 				default:
-					$where[] = "$this->user_table.cal_status != 'R'";
+					$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
 					break;
 			}
 		}
@@ -559,7 +564,7 @@ class calendar_so
 				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)";
 			$or_required = array(
 				'rejected_by_user.cal_status IS NULL',
-				"rejected_by_user.cal_status!='R'",
+				"rejected_by_user.cal_status NOT IN ('R','X')",
 			);
 			if ($filter == 'owner') $or_required[] = 'cal_owner='.(int)$remove_rejected_by_user;
 			$where[] = '('.implode(' OR ',$or_required).')';
@@ -700,7 +705,7 @@ class calendar_so
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',array_unique($ids)).")) utcalid ";
+			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',array_unique($ids)).") AND cal_status!='X') utcalid ";
 			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
@@ -1488,7 +1493,7 @@ ORDER BY cal_user_type, cal_usre_id
 					));
 				}
 				$where[1] = '('.implode(' OR ',$to_or).')';
-				$this->db->delete($this->user_table,$where,__LINE__,__FILE__,'calendar');
+				$this->db->update($this->user_table,array('cal_status'=>'X'),$where,__LINE__,__FILE__,'calendar');
 				unset($where[1]);
 			}
 		}
