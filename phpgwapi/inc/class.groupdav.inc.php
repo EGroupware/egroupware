@@ -851,7 +851,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if (method_exists($handler,'extra_properties'))
 			{
-				$props = $handler->extra_properties($props,$this->account_name($account),$this->base_uri,$user);
+				$props = $handler->extra_properties($props,$this->account_name($account),$this->base_uri,$user,$path);
 			}
 			// add ctag if handler implements it
 			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
