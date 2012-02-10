@@ -620,7 +620,9 @@ class groupdav extends HTTP_WebDAV_Server
 				if ($path == '/' && $app == 'addressbook' &&
 					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 				{
-					$files['files'][] = $this->add_app($app,false,0,$path.$app.'-accounts/');
+					$file = $this->add_app($app,false,0,$path.$app.'-accounts/');
+					$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
+					$files['files'][] = $file;
 				}
 				// added shared calendars or addressbooks
 				$this->add_shared($files['files'], $path, $app, $user);
@@ -669,7 +671,9 @@ class groupdav extends HTTP_WebDAV_Server
 						(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 						is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
 					{
-						$files[] = $this->add_app($app,false,$id,$path.'addressbook-'.$owner.'/');
+						$file = $this->add_app($app,false,$id,$path.'addressbook-'.$owner.'/');
+						$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
+						$files[] = $file;
 					}
 				}
 				break;
@@ -694,7 +698,9 @@ class groupdav extends HTTP_WebDAV_Server
 						(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
 						is_numeric($id) && ($owner = $this->accounts->id2name($id)))
 					{
-						$files[] = $this->add_app($app,false,$id,$path.'calendar-'.$owner.'/');
+						$file = $this->add_app($app,false,$id,$path.'calendar-'.$owner.'/');
+						$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
+						$files[] = $file;
 					}
 				}
 				break;
