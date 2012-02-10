@@ -54,91 +54,20 @@ class groupdav_hooks
 
 		if ($hook_data['setup'])
 		{
-			$addressbooks = array();
+			$apps = array('addressbook','calendar','infolog');
 		}
 		else
 		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// allways synced
-			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+			$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
 		}
-		$addressbooks = array(
-			'A'	=> lang('All'),
-			'G'	=> lang('Primary Group'),
-			'U' => lang('Accounts'),
-		) + $addressbooks;
-
-		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
-		if (!isset($addressbooks[0]))
+		foreach($apps as $app)
 		{
-			unset($addressbooks['U']);
-		}
-		else
-		{
-			unset($addressbooks[0]);
-		}
-
-		$settings['addressbook-home-set'] = array(
-			'type'   => 'multiselect',
-			'label'  => 'Addressbooks to sync in addition to personal addressbook',
-			'name'   => 'addressbook-home-set',
-			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"'),
-			'values' => $addressbooks,
-			'xmlrpc' => True,
-			'admin'  => False,
-		);
-
-		if ($hook_data['setup'])
-		{
-			$calendars = array();
-		}
-		else
-		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$cal_bo = new calendar_bo();
-			foreach ($cal_bo->list_cals() as $entry)
+			$class_name = $app.'_groupdav';
+			if (class_exists($class_name, true))
 			{
-				$calendars[$entry['grantor']] = $entry['name'];
+				$settings += call_user_func(array($class_name,'get_settings'));
 			}
-			unset($calendars[$user]);
 		}
-		$calendars = array(
-			'A'	=> lang('All'),
-			'G'	=> lang('Primary Group'),
-		) + $calendars;
-
-		$settings['calendar-home-set'] = array(
-			'type'   => 'multiselect',
-			'label'  => 'Calendars to sync in addition to personal calendar',
-			'name'   => 'calendar-home-set',
-			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
-			'values' => $calendars,
-			'xmlrpc' => True,
-			'admin'  => False,
-		);
-
-		translation::add_app('infolog');
-		$infolog = new infolog_bo();
-
-		if (!($types = $infolog->enums['type']))
-		{
-			$types = array(
-				'task' => 'Tasks',
-			);
-		}
-
-		$settings['infolog-types'] = array(
-			'type'   => 'multiselect',
-			'label'  => 'InfoLog types to sync',
-			'name'   => 'infolog-types',
-			'help'   => 'Which InfoLog types should be synced with the device, default only tasks.',
-			'values' => $types,
-			'default' => 'task',
-			'xmlrpc' => True,
-			'admin'  => False,
-		);
 
 		$settings['debug_level'] = array(
 			'type'   => 'select',

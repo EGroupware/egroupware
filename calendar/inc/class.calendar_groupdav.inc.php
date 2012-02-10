@@ -1218,4 +1218,76 @@ class calendar_groupdav extends groupdav_handler
 		if ($this->debug > 1) error_log("ical Handler called: " . $this->agent);
 		return $handler;
 	}
+
+	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		$shared = array();
+		$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
+		$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $calendar_home_set)) !== false)
+			{
+				$calendar_home_set[$key] = $id;
+			}
+		}
+		foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
+		{
+			$id = $entry['grantor'];
+			if ($id && $user != $id &&	// no current user and no accounts yet (todo)
+				(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
+				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
+			{
+				$shared[$id] = $owner;
+			}
+		}
+		return $shared;
+	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		if ($hook_data['setup'])
+		{
+			$calendars = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$cal_bo = new calendar_bo();
+			foreach ($cal_bo->list_cals() as $entry)
+			{
+				$calendars[$entry['grantor']] = $entry['name'];
+			}
+			unset($calendars[$user]);
+		}
+		$calendars = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+		) + $calendars;
+
+		$settings = array();
+		$settings['calendar-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Calendars to sync in addition to personal calendar',
+			'name'   => 'calendar-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
+			'values' => $calendars,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
+	}
 }

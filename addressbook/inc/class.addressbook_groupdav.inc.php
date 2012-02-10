@@ -780,4 +780,87 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		return $this->bo->check_perms($acl,$contact);
 	}
+
+	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		$shared = array();
+		$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+		if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+		$addressbook_home_set = explode(',',$addressbook_home_set);
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+			'U' => '0',
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $addressbook_home_set)) !== false)
+			{
+				$addressbook_home_set[$key] = $id;
+			}
+		}
+		foreach($this->bo->get_addressbooks(EGW_ACL_READ) as $id => $label)
+		{
+			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
+				$user != $id &&	// no current user and no accounts, if disabled in ab prefs
+				(in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+				is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
+			{
+				$shared[$id] = $owner;
+			}
+		}
+		return $shared;
+	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		if ($hook_data['setup'])
+		{
+			$addressbooks = array();
+		}
+		else
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$addressbook_bo = new addressbook_bo();
+			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
+			unset($addressbooks[$user]);	// allways synced
+			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+		}
+		$addressbooks = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+			'U' => lang('Accounts'),
+		) + $addressbooks;
+
+		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
+		if (!isset($addressbooks[0]))
+		{
+			unset($addressbooks['U']);
+		}
+		else
+		{
+			unset($addressbooks[0]);
+		}
+
+		$settings = array();
+		$settings['addressbook-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Addressbooks to sync in addition to personal addressbook',
+			'name'   => 'addressbook-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"'),
+			'values' => $addressbooks,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
+	}
 }

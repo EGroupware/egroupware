@@ -458,6 +458,26 @@ abstract class groupdav_handler
 	}
 
 	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		return array();
+	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * return array of array with settings
+	 */
+	static function get_settings()
+	{
+		return array();
+	}
+
+	/**
 	 * Add a resource
 	 *
 	 * @param string $path path of collection, NOT entry!
