@@ -610,6 +610,8 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE'));
 							}
 							unset($attributes['DTSTART']);
+							// Outlook does NOT care about type of DTSTART/END, only setting X-MICROSOFT-CDO-ALLDAYEVENT is used to determine an event is a whole-day event
+							$vevent->setAttribute('X-MICROSOFT-CDO-ALLDAYEVENT','TRUE');
 						}
 						break;
 
@@ -2350,6 +2352,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			switch ($attributes['name'])
 			{
+				case 'X-MICROSOFT-CDO-ALLDAYEVENT':
+					$event['whole_day'] = true;
+					break;
 				case 'AALARM':
 				case 'DALARM':
 					$alarmTime = $attributes['value'];
