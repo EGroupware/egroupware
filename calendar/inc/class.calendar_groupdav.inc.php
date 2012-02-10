@@ -7,7 +7,7 @@
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1167,8 +1167,11 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
 	{
-		// calendar description
-		$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
+		if (!isset($props['calendar-description']))
+		{
+			// default calendar description: can be overwritten via PROPPATCH, in which case it's already set
+			$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
+		}
 		// supported components, currently only VEVENT
 		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
