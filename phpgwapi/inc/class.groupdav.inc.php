@@ -238,6 +238,14 @@ class groupdav extends HTTP_WebDAV_Server
 			$this->dav_powered_by);
 
 		parent::HTTP_WebDAV_Server();
+		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
+		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);
+		/*if (substr($this->_SERVER['REQUEST_URI'],-13) == '/;add-member/')
+		{
+			$_GET['add-member'] = '';
+			$this->_SERVER['REQUEST_URI'] = substr($this->_SERVER['REQUEST_URI'],0,-12);
+		}*/
+		//error_log($_SERVER['REQUEST_URI']." --> ".$this->_SERVER['REQUEST_URI']);
 
 		$this->egw_charset = translation::charset();
 		if (strpos($this->base_uri, 'http') === 0)
@@ -763,6 +771,13 @@ class groupdav extends HTTP_WebDAV_Server
 				$props['displayname'] = translation::convert(lang($app).' '.$this->account_name($user),$this->egw_charset,'utf-8');
 		}
 
+		// rfc 5995 (Use POST to add members to WebDAV collections): we use collection path with add-member query param
+		/* leaving it switched off, until further testing, because OS X iCal seem to ignore it and OS X Addressbook uses POST to full URL without ?add-member
+		if ($app && !in_array($app,array('inbox','outbox','principals')))	// not on inbox, outbox or principals
+		{
+			$props['add-member'][] = self::mkprop('href',$this->base_uri.$path.'?add-member');
+		}*/
+
 		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
 		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
 		{
@@ -1093,6 +1108,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function POST(&$options)
 	{
+		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
+		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
+		if (isset($_GET['add-member']) || groupdav_handler::get_agent() == 'cfnetwork')
+		{
+			$_GET['add-member'] = '';	// otherwise we give no Location header
+			return $this->PUT($options);
+		}
 		// read the content in a string, if a stream is given
 		if (isset($options['stream']))
 		{
@@ -1446,7 +1468,9 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$id = array_pop($parts);
 
-		$ok = $id && ($user || $user === 0) && in_array($app,array('addressbook','calendar','infolog','principals'));
+		$ok = ($id || isset($_GET['add-member']) && $_SERVER['REQUEST_METHOD'] == 'POST') &&
+			($user || $user === 0) && in_array($app,array('addressbook','calendar','infolog','principals'));
+
 		if ($this->debug)
 		{
 			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");
@@ -1525,9 +1549,9 @@ class groupdav extends HTTP_WebDAV_Server
 						': '.($name=='AUTHORIZATION'?'Basic ***************':$value).$msg_nl,$msg_type,$msg_file);
 				}
 			}
+			error_log(''.$msg_nl,$msg_type,$msg_file);
 			if ($this->request)
 			{
-				error_log(''.$msg_nl,$msg_type,$msg_file);
 				foreach(explode("\n",$this->request) as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
 			}
 			error_log('HTTP/1.1 '.$this->_http_status.$msg_nl,$msg_type,$msg_file);

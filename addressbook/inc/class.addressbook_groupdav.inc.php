@@ -506,16 +506,9 @@ class addressbook_groupdav extends groupdav_handler
 			$contact = $this->read($save_ok);
 		}
 
-		// we should not return an etag here, as we never store the PUT vcard byte-by-byte
-		//header('ETag: "'.$this->get_etag($contact).'"');
+		// send evtl. necessary respose headers: Location, etag, ...
+		$this->put_response_headers($contact, $options['path'], $retval, self::$path_attr != 'id');
 
-		// send GroupDAV Location header only if we dont use carddav_name as path-attribute
-		if ($retval !== true && self::$path_attr == 'id')
-		{
-			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			header($h='Location: '.$this->base_uri.$path.self::get_path($contact));
-			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): $retval");
-		}
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
 		return $retval;
 	}
