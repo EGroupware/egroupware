@@ -6,7 +6,7 @@
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -961,38 +961,55 @@ class addressbook_so
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Get the availible distribution lists for givens users and groups
 	 *
-	 * @param string $name list-name
-	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return list_id or false on error
+	 * @param array $keys column-name => value(s) pairs, eg. array('list_uid'=>$uid)
+	 * @param string $member_attr='contact_uid' null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
+	 * @param boolean $limit_in_ab=false if true only return members from the same owners addressbook
+	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function read_lists($keys,$member_attr=null,$limit_in_ab=false)
 	{
-		if (!method_exists($this->somain,'add_list')) return false;
+		if (!method_exists($this->somain,'get_lists')) return false;
 
-		return $this->somain->add_list($name,$owner,$contacts);
+		return $this->somain->get_lists($keys,null,$member_attr,$limit_in_ab);
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
+	 * @param int $owner user- or group-id
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
+	 */
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
+	{
+		if (!method_exists($this->somain,'add_list')) return false;
+
+		return $this->somain->add_list($keys,$owner,$contacts,$data);
+	}
+
+	/**
+	 * Adds contact(s) to a distribution list
+	 *
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
 		if (!method_exists($this->somain,'add2list')) return false;
 
-		return $this->somain->add2list($contact,$list);
+		return $this->somain->add2list($contact,$list,$existing);
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list=null list-id or null to remove from all lists
 	 * @return false on error
 	 */
@@ -1040,5 +1057,18 @@ class addressbook_so
 		$backend =& $this->get_backend(null,$owner);
 
 		return method_exists($backend,'read_list');
+	}
+
+	/**
+	 * Get ctag (max list_modified as timestamp) for lists
+	 *
+	 * @param int|array $owner=null null for all lists user has access too
+	 * @return int
+	 */
+	function lists_ctag($owner=null)
+	{
+		if (!method_exists($this->somain,'lists_ctag')) return 0;
+
+		return $this->somain->lists_ctag($owner);
 	}
 }

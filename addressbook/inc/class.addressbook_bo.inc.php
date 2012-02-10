@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
- * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -1722,42 +1722,45 @@ class addressbook_bo extends addressbook_so
 		{
 			$owner = $list_data['list_owner'];
 		}
+		//error_log(__METHOD__."($list, $required, $owner) grants[$owner]=".$this->grants[$owner]." returning ".array2string(!!($this->grants[$owner] & $required)));
 		return !!($this->grants[$owner] & $required);
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param string $name list-name
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
 	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return list_id or false on error
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$this->check_list(null,EGW_ACL_ADD,$owner)) return false;
+		if (!$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner)) return false;
 
-		return parent::add_list($name,$owner,$contacts);
+		return parent::add_list($keys,$owner,$contacts,$data);
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds contacts to a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
 		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
 
-		return parent::add2list($contact,$list);
+		return parent::add2list($contact,$list,$existing);
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
 	 * @return false on error
 	 */

@@ -42,7 +42,7 @@ class addressbook_groupdav extends groupdav_handler
 			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
 									'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'				=> array('bday'),
-			//'CLASS'				=> array('private'),
+			//'CLASS'			=> array('private'),
 			//'CATEGORIES'		=> array('cat_id'),
 			'EMAIL;WORK'		=> array('email'),
 			'EMAIL;HOME'		=> array('email_home'),
@@ -70,6 +70,7 @@ class addressbook_groupdav extends groupdav_handler
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
+			'REV'				=> array('modified'),
 		);
 
 	/**
@@ -201,6 +202,39 @@ class addressbook_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
 				}
 				$files[] = $this->add_resource($path, $contact, $props);
+			}
+		}
+		// add groups after contacts
+		if (!$start || count($contacts) < $start[1])
+		{
+			$where = array(
+				'list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)
+			);
+			if (isset($filter[self::$path_attr]))	// multiget report?
+			{
+				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
+			}
+			//error_log(__METHOD__."() filter=".array2string($filter).', where='.array2string($where));
+			if (($lists = $this->bo->read_lists($where,'contact_uid',true)))	// true = limit to contacts in same AB!
+			{
+				//_debug_array($lists);
+				foreach($lists as $list)
+				{
+					$list['carddav_name'] = $list['list_carddav_name'];
+					$props = array(
+						'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
+						'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
+						'displayname' => $list['list_name'],
+						'getetag' => '"'.$list['list_id'].':'.$list['list_etag'].'"',
+					);
+					if ($address_data)
+					{
+						$content = $handler->getGroupVCard($list);
+						$props['getcontentlength'] = bytes($content);
+						$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
+					}
+					$files[] = $this->add_resource($path, $list, $props);
+				}
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
@@ -386,7 +420,8 @@ class addressbook_groupdav extends groupdav_handler
 			return $contact;
 		}
 		$handler = self::_get_handler();
-		$options['data'] = $handler->getVCard($contact['id'],$this->charset,false);
+		$options['data'] = $contact['list_id'] ? $handler->getGroupVCard($contact) :
+			$handler->getVCard($contact['id'],$this->charset,false);
 		// e.g. Evolution does not understand 'text/vcard'
 		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
 		header('Content-Encoding: identity');
@@ -410,6 +445,7 @@ class addressbook_groupdav extends groupdav_handler
 		$oldContact = $this->_common_get_put_delete('PUT',$options,$id);
 		if (!is_null($oldContact) && !is_array($oldContact))
 		{
+			if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($oldContact));
 			return $oldContact;
 		}
 
@@ -450,8 +486,13 @@ class addressbook_groupdav extends groupdav_handler
 			$contactId = -1;
 			$retval = '201 Created';
 		}
+		$is_group = $contact['##X-ADDRESSBOOKSERVER-KIND'] == 'group';
+		if ($oldContact && $is_group !== isset($oldContact['list_id']))
+		{
+			throw new egw_exception_assertion_failed(__METHOD__."(,'$id',$user,'$prefix') can contact into group or visa-versa!");
+		}
 
-		if (is_array($contact['cat_id']))
+		if (!$is_group && is_array($contact['cat_id']))
 		{
 			$contact['cat_id'] = implode(',',$this->bo->find_or_add_categories($contact['cat_id'], $contactId));
 		}
@@ -480,13 +521,14 @@ class addressbook_groupdav extends groupdav_handler
 			if ($oldContact && $user != $oldContact['owner'] && !($this->bo->grants[$user] & EGW_ACL_ADD) &&
 				(!$this->bo->grants[$oldContact['owner']] & EGW_ACL_DELETE))
 			{
+				if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning '403 Forbidden'");
 				return '403 Forbidden';
 			}
 			$contact['owner'] = $user;
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
-		if (!($save_ok = $this->bo->save($contact)))
+		if (!($save_ok = $is_group ? $this->save_group($contact, $oldContact) : $this->bo->save($contact)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
 			if ($save_ok === 0)
@@ -511,7 +553,75 @@ class addressbook_groupdav extends groupdav_handler
 			header($h='Location: '.$this->base_uri.$path.self::get_path($contact));
 			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): $retval");
 		}
+		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
 		return $retval;
+	}
+
+	/**
+	 * Save distribition-list / group
+	 *
+	 * @param array $contact
+	 * @param array|false $oldContact
+	 * @param int|boolean $list_id or false on error
+	 */
+	function save_group(array $contact, $oldContact=null)
+	{
+		$data = array('list_name' => $contact['n_fn']);
+		foreach(array('id','carddav_name','uid') as $name)
+		{
+			if ($name != self::$path_attr) $data['list_'.$name] = $contact[$name];
+		}
+		//error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') data='.array2string($data));
+		if (($list_id=$this->bo->add_list(array('list_'.self::$path_attr => $contact[self::$path_attr]),
+			$contact['owner'], null, $data)))
+		{
+			// update members given in $contact['##X-ADDRESSBOOKSERVER-MEMBER']
+			$new_members = $contact['##X-ADDRESSBOOKSERVER-MEMBER'];
+			if ($new_members[1] == ':' && ($n = unserialize($new_members)))
+			{
+				$new_members = $n['values'];
+			}
+			else
+			{
+				$new_members = array($new_members);
+			}
+			foreach($new_members as &$uid) $uid = substr($uid,9);	// cut off "urn:uuid:" prefix
+
+			if ($oldContact)
+			{
+				$to_add = array_diff($new_members,$oldContact['members']);
+				$to_delete = array_diff($oldContact['members'],$new_members);
+			}
+			else
+			{
+				$to_add = $new_members;
+			}
+			//error_log('to_add='.array2string($to_add).', to_delete='.array2string($to_delete));
+			if ($to_add || $to_delete)
+			{
+				$to_add_ids = $to_delete_ids = array();
+				$filter = array('uid' => $to_delete ? array_merge($to_add, $to_delete) : $to_add);
+				if (($contacts =& $this->bo->search(array(),'id,uid','','','',False,'AND',false,$filter)))
+				{
+					foreach($contacts as $contact)
+					{
+						if ($to_delete && in_array($contact['uid'], $to_delete))
+						{
+							$to_delete_ids[] = $contact['id'];
+						}
+						else
+						{
+							$to_add_ids[] = $contact['id'];
+						}
+					}
+				}
+				//error_log('to_add_ids='.array2string($to_add_ids).', to_delete_ids='.array2string($to_delete_ids));
+				if ($to_add_ids) $this->bo->add2list($to_add_ids, $list_id, array());
+				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
+			}
+		}
+		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') returning '.array2string($list_id));
+		return $list_id;
 	}
 
 	/**
@@ -524,7 +634,7 @@ class addressbook_groupdav extends groupdav_handler
 		// not showing addressbook of a single user?
 		if (!$user || $path == '/addressbook/') $user = null;
 
-		return $this->bo->get_ctag($user);
+		return max($this->bo->get_ctag($user),$this->bo->lists_ctag($user));
 	}
 
 	/**
@@ -661,10 +771,28 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
 
+		// see if we have a distribution-list / group with that id
+		// bo->read_list(..., true) limits returned uid to same owner's addressbook, as iOS and OS X addressbooks
+		// only understands/shows that and if return more, save_lists would delete the others ones on update!
+		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',true)))
+		{
+			$contact = array_shift($contact);
+			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
+			foreach(array('owner','id','carddav_name','modified','modifier','created','creator','etag','uid') as $name)
+			{
+				$contact[$name] = $contact['list_'.$name];
+			}
+		}
+		elseif($contact === array())	// not found from read_lists()
+		{
+			$contact = null;
+		}
+
 		if ($contact && $contact['tid'] == addressbook_so::DELETED_TYPE)
 		{
 			$contact = null;	// handle deleted events, as not existing (404 Not Found)
 		}
+		if ($this->debug > 1) error_log(__METHOD__."('$id') returning ".array2string($contact));
 		return $contact;
 	}
 
