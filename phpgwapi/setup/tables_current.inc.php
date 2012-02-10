@@ -366,12 +366,17 @@ $phpgw_baseline = array(
 			'list_name' => array('type' => 'varchar','precision' => '80','nullable' => False),
 			'list_owner' => array('type' => 'int','precision' => '4','nullable' => False),
 			'list_created' => array('type' => 'int','precision' => '8'),
-			'list_creator' => array('type' => 'int','precision' => '4')
+			'list_creator' => array('type' => 'int','precision' => '4'),
+			'list_uid' => array('type' => 'varchar','precision' => '255'),
+			'list_carddav_name' => array('type' => 'varchar','precision' => '64'),
+			'list_etag' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+			'list_modified' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
+			'list_modifier' => array('type' => 'int','precision' => '4')
 		),
 		'pk' => array('list_id'),
 		'fk' => array(),
 		'ix' => array(),
-		'uc' => array(array('list_owner','list_name'))
+		'uc' => array('list_uid','list_carddav_name',array('list_owner','list_name'))
 	),
 	'egw_addressbook2list' => array(
 		'fd' => array(

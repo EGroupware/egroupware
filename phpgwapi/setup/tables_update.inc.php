@@ -336,3 +336,48 @@ function phpgwapi_upgrade1_9_012()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.013';
 }
+
+/**
+ * Adding neccessary information to return list to (Apple) CardDAV clients as "Group"
+ */
+function phpgwapi_upgrade1_9_013()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_lists','list_uid',array(
+		'type' => 'varchar',
+		'precision' => '255'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_lists','list_carddav_name',array(
+		'type' => 'varchar',
+		'precision' => '64'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_lists','list_etag',array(
+		'type' => 'int',
+		'precision' => '4',
+		'nullable' => False,
+		'default' => '0'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_lists','list_modified',array(
+		'type' => 'timestamp',
+		'nullable' => False,
+		'default' => 'current_timestamp'
+	));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_lists','list_modified');
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_lists','list_modifier',array(
+		'type' => 'int',
+		'precision' => '4'
+	));
+	$install_id = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
+		'config_app' => 'phpgwapi',
+		'config_name' => 'install_id',
+	),__LINE__,__FILE__)->fetchColumn();
+	// setting values for existing lists
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook_lists SET '.
+		'list_uid='.$GLOBALS['egw_setup']->db->concat("'addressbook-lists-'",'list_id',"'-$install_id'").
+		',list_carddav_name='.$GLOBALS['egw_setup']->db->concat("'addressbook-lists-'",'list_id',"'-$install_id.vcf'"),
+		__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_lists','list_uid',true);
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_lists','list_carddav_name',true);
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.014';
+}
+
