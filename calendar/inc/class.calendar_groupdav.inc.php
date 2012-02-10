@@ -68,7 +68,7 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @var boolean
 	 */
-	var $use_schedule_tag = false;
+	var $use_schedule_tag = true;
 
 	/**
 	 * Are we using id, uid or caldav_name for the path/url
