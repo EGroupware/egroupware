@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.sitemgr_book" template="" lang="" group="0" version="1.9.001">
+		<box cols="1" rows="1">
+			<grid width="100%">
+				<columns>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<hidden id="res_id"/>
+						<description/>
+					</row>
+					<row disabled="!@msg">
+						<html id="msg" span="all" class="message"/>
+						<description/>
+					</row>
+					<row>
+						<description id="name" class="name"/>
+						<image align="right" src="picture" class="resource_thumb"/>
+					</row>
+					<row disabled="!@short_description">
+						<description id="short_description" span="all" class="description"/>
+						<description/>
+					</row>
+					<row disabled="!@long_description">
+						<html id="long_description" span="all" class="description"/>
+						<description/>
+					</row>
+					<row>
+						<description value="Date"/>
+						<hbox options="0,0">
+							<date id="date" onchange="var request = new egw_json_request('resources.resources_reserve.ajax_update_planner',[document.getElementById('exec[res_id]').value, Math.round(window.calendar.date.getTime()/1000)]);request.sendRequest(); return false;"/>
+							<date-timeonly id="time"/>
+						</hbox>
+					</row>
+					<row disabled="!@contact_form">
+						<template id="@contact_form" span="all"/>
+					</row>
+					<row disabled="!@show_contact">
+						<description value="Name"/>
+						<hbox options="0,0">
+							<textbox id="n_given"/>
+							<textbox id="n_family"/>
+						</hbox>
+					</row>
+					<row disabled="!@show_contact">
+						<description value="Email"/>
+						<url-email id="email" needed="1" options="48"/>
+					</row>
+					<row>
+						<description value="Party size"/>
+						<hbox>
+							<textbox type="integer" id="quantity"/>
+							<button align="right" label="Book" id="book"/>
+						</hbox>
+					</row>
+					<row>
+						<box id="planner_div" span="all">
+							<html id="planner" span="all"/>
+						</box>
+					</row>
+				</rows>
+			</grid>
+		</box>
+		<styles>
+			.resource_thumb img  {
+float:right;
+position:absolute;
+}
+		</styles>
+	</template>
+</overlay>
