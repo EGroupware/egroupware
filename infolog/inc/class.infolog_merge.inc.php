@@ -39,6 +39,14 @@ class infolog_merge extends bo_merge
 	{
 		parent::__construct();
 		$this->bo = new infolog_bo();
+
+		$this->date_fields += array(
+			'info_startdate',
+			'info_enddate',
+			'info_datecompleted',
+			'info_datemodified',
+			'info_created',
+		);
 	}
 
 	/**

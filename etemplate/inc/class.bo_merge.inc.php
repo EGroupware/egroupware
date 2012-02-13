@@ -30,6 +30,11 @@ abstract class bo_merge
 	var $datetime_format = 'Y-m-d H:i';
 
 	/**
+	 * Fields that are to be treated as datetimes, when merged into spreadsheets
+	 */
+	var $date_fields = array();
+
+	/**
 	 * Mimetype of document processed by merge
 	 *
 	 * @var string
@@ -903,43 +908,24 @@ abstract class bo_merge
 			}
 
 			// Look for numbers, set their value if needed
-			$format = $replacement = '';
 			if($this->numeric_fields || count($names))
 			{
 				foreach((array)$this->numeric_fields as $fieldname) {
 					$names[] = preg_quote($fieldname,'/');
 				}
-				switch($mimetype.$mso_application_progid)
-				{
-					case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-						$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
-						$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2>$4</table:table-cell>';
-						break;
-					case 'application/xmlExcel.Sheet':	// Excel 2003
-						$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
-						$replacement = '<Data ss:Type="Number">$1</Data>';
-
-						break;
-				}
-				if($format && $names)
-				{
-					// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
-					$increase = 0;
-					while($increase < 10) {
-						$result = preg_replace($format, $replacement, $content, -1, $count);
-						if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
-							ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
-							$increase++;  // Do not overkill the server
-						} else {  // No fail
-							$content = $result;  // On failure $result would be NULL
-							break;  // Exit loop
-						}
-					}
-					if($increase == 10) {
-						error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
-					}
-				}
+				$this->format_spreadsheet_numbers($content, $names, $mimetype.$mso_application_progid);
 			}
+
+			// Look for dates, set their value if needed
+			if($this->date_fields || count($names))
+			{
+				$names = array();
+				foreach((array)$this->date_fields as $fieldname) {
+					$names[] = preg_quote($fieldname,'/');
+				}
+				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype.$mso_application_progid);
+			}
+
 			// replace CRLF with linebreak tag of given type
 			switch($mimetype.$mso_application_progid)
 			{
@@ -971,6 +957,94 @@ abstract class bo_merge
 			$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
+	}
+
+	/**
+	 * Convert numeric values in spreadsheets into actual numeric values
+	 */
+	protected function format_spreadsheet_numbers(&$content, $names, $mimetype)
+	{
+		foreach((array)$this->numeric_fields as $fieldname) {
+			$names[] = preg_quote($fieldname,'/');
+		}
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2>$4</table:table-cell>';
+				break;
+			case 'application/xmlExcel.Sheet':	// Excel 2003
+				$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
+				$replacement = '<Data ss:Type="Number">$1</Data>';
+
+				break;
+		}
+		if($format && $names)
+		{
+			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
+			$increase = 0;
+			while($increase < 10) {
+				$result = preg_replace($format, $replacement, $content, -1, $count);
+				if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
+					ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
+					$increase++;  // Do not overkill the server
+				} else {  // No fail
+					$content = $result;  // On failure $result would be NULL
+					break;  // Exit loop
+				}
+			}
+			if($increase == 10) {
+				error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
+			}
+		}
+	}
+
+	/**
+	 * Convert date / timestamp values in spreadsheets into actual date / timestamp values
+	 */
+	protected function format_spreadsheet_dates(&$content, $names, &$values, $mimetype)
+	{
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>..('.implode('|',$names).')..<\/\3>.?<\/table:table-cell>/s';
+				$replacement = '<table:table-cell$1office:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
+				break;
+			case 'application/xmlExcel.Sheet':	// Excel 2003
+				$format = '/'.preg_quote('<Data ss:Type="String">','/').'..('.implode('|',$names).')..'.preg_quote('</Data>','/').'/';
+				$replacement = '<Data ss:Type="Number">\$\$$1\$\$</Data>';
+
+				break;
+		}
+		if($format && $names)
+		{
+			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
+			$increase = 0;
+			while($increase < 10) {
+				$result = preg_replace($format, $replacement, $content, -1, $count);
+				if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
+					ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
+					$increase++;  // Do not overkill the server
+				} else {  // No fail
+					$content = $result;  // On failure $result would be NULL
+					break;  // Exit loop
+				}
+			}
+			if($increase == 10) {
+				error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
+			}
+		}
+
+		// Properly format values for spreadsheet
+		foreach($names as $field)
+		{
+			$key = '$$'.$field.'$$';
+			if($values[$key])
+			{
+				$date = egw_time::createFromFormat($this->datetime_format,$values[$key]);
+				$values[$key] = date('Y-m-d\TH:i:s',egw_time::to($date,'ts'));
+			}
+		}
 	}
 
 	/**
