@@ -1012,7 +1012,7 @@ abstract class bo_merge
 				break;
 			case 'application/xmlExcel.Sheet':	// Excel 2003
 				$format = '/'.preg_quote('<Data ss:Type="String">','/').'..('.implode('|',$names).')..'.preg_quote('</Data>','/').'/';
-				$replacement = '<Data ss:Type="Number">\$\$$1\$\$</Data>';
+				$replacement = '<Data ss:Type="DateTime">\$\$$1\$\$</Data>';
 
 				break;
 		}
