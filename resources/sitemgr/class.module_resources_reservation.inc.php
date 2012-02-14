@@ -57,7 +57,14 @@ class module_resources_reservation extends sitemgr_module
 					'rows'	=> 8,
 					'cols'	=> 110
 				)
-			)
+			),
+			'confirmed_addressbook' => array(
+				'type' => 'select',
+				'label' => lang('Confirmed addressbook.').' ('.lang('The anonymous user needs add rights for it!').')',
+				'options' => array(
+					'' => lang('None'),
+				)+registration_bo::get_allowed_addressbooks(registration_bo::CONFIRMED)
+			),
 		);
 	}
 
