@@ -1252,15 +1252,13 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * Return appliction specific settings
 	 *
-	 * return array of array with settings
+	 * @param array $hook_data
+	 * @return array of array with settings
 	 */
-	static function get_settings()
+	static function get_settings($hook_data)
 	{
-		if ($hook_data['setup'])
-		{
-			$calendars = array();
-		}
-		else
+		$calendars = array();
+		if (!isset($hook_data['setup']))
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 			$cal_bo = new calendar_bo();

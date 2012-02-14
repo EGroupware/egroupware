@@ -610,20 +610,23 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * Return appliction specific settings
 	 *
-	 * return array of array with settings
+	 * @param array $hook_data
+	 * @return array of array with settings
 	 */
-	static function get_settings()
+	static function get_settings($hook_data)
 	{
-		translation::add_app('infolog');
-		$infolog = new infolog_bo();
-
-		if (!($types = $infolog->enums['type']))
+		if (!isset($hook_data['setup']))
+		{
+			translation::add_app('infolog');
+			$infolog = new infolog_bo();
+			$types = $infolog->enums['type'];
+		}
+		if (!isset($types))
 		{
 			$types = array(
 				'task' => 'Tasks',
 			);
 		}
-
 		$settings = array();
 		$settings['infolog-types'] = array(
 			'type'   => 'multiselect',

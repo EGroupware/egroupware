@@ -65,7 +65,7 @@ class groupdav_hooks
 			$class_name = $app.'_groupdav';
 			if (class_exists($class_name, true))
 			{
-				$settings += call_user_func(array($class_name,'get_settings'));
+				$settings += call_user_func(array($class_name,'get_settings'), $hook_data);
 			}
 		}
 
