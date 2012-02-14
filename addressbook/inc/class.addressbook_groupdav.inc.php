@@ -868,15 +868,13 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Return appliction specific settings
 	 *
-	 * return array of array with settings
+	 * @param array $hook_data
+	 * @return array of array with settings
 	 */
-	static function get_settings()
+	static function get_settings($hook_data)
 	{
-		if ($hook_data['setup'])
-		{
-			$addressbooks = array();
-		}
-		else
+		$addressbooks = array();
+		if (!isset($hook_data['setup']))
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 			$addressbook_bo = new addressbook_bo();

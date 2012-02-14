@@ -498,9 +498,10 @@ abstract class groupdav_handler
 	/**
 	 * Return appliction specific settings
 	 *
-	 * return array of array with settings
+	 * @param array $hook_data
+	 * @return array of array with settings
 	 */
-	static function get_settings()
+	static function get_settings($hook_data)
 	{
 		return array();
 	}
