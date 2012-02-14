@@ -425,7 +425,7 @@ class categories
 		{
 			$values['level'] = 0;
 		}
-		$this->db->insert(self::TABLE,array(
+		$this->db->insert(self::TABLE,$cat=array(
 			'cat_parent'  => $values['parent'],
 			'cat_owner' => isset($values['owner']) ? $values['owner'] : $this->account_id,
 			'cat_access'  => isset($values['access']) ? $values['access'] : 'public',
@@ -438,14 +438,15 @@ class categories
 			'last_mod'    => time(),
 		),(int)$values['id'] > 0 ? array('cat_id' =>  $values['id']) : array(),__LINE__,__FILE__);
 
-		$id = (int)$values['id'] > 0 ? (int)$values['id'] : $this->db->get_last_insert_id(self::TABLE,'cat_id');
+		$cat['cat_id'] = $id = (int)$values['id'] > 0 ? (int)$values['id'] : $this->db->get_last_insert_id(self::TABLE,'cat_id');
 
 		if (!(int)$values['parent'] && $id != $values['main'])
 		{
 			$this->db->update(self::TABLE,array('cat_main' => $id),array('cat_id' => $id),__LINE__,__FILE__);
+			$cat['cat_main'] = $id;
 		}
 		// update cache accordingly
-		self::invalidate_cache($id);
+		self::invalidate_cache(egw_db::strip_array_keys($cat, 'cat_'));
 
 		return $id;
 	}
@@ -585,8 +586,7 @@ class categories
 		}
 		if ($drop_subs)
 		{
-			$all_cats = $this->return_all_children($cat_id);
-			$where = array("cat_id='".implode("' OR cat_id='", $all_cats)."'");
+			$where['cat_id'] = $this->return_all_children($cat_id);
 		}
 		else
 		{
@@ -613,7 +613,7 @@ class categories
 		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
 		// update cache accordingly
-		self::invalidate_cache($cat_id);
+		self::invalidate_cache($modify_subs ? null : $where['cat_id']);
 	}
 
 	/**
@@ -706,7 +706,7 @@ class categories
 			// adapt the level info in each child
 			$this->adapt_level_in_subtree($values);
 		}
-		$this->db->update(self::TABLE,array(
+		$this->db->update(self::TABLE,$cat=array(
 			'cat_name' => $values['name'],
 			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from the one read
 			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
@@ -721,8 +721,11 @@ class categories
 			'cat_appname' => $this->app_name,
 		),__LINE__,__FILE__);
 
+		$cat['cat_id'] = $values['id'];
+		$cat['cat_appname'] = $this->app_name;
+
 		// update cache accordingly
-		self::invalidate_cache($values['id']);
+		self::invalidate_cache(egw_db::strip_array_keys($cat, 'cat_'));
 
 		return (int)$values['id'];
 	}
@@ -959,11 +962,28 @@ class categories
 	 * Currently we dont care for $cat_id, as changing cats happens very infrequently and
 	 * also changes child categories (!)
 	 *
-	 * @param int $cat_id concerned id or null for all cats
+	 * @param int|array $cat concerned id(s) or array with cat-data or null for all cats
 	 */
-	public static function invalidate_cache($cat_id=null)
+	public static function invalidate_cache($cat=null)
 	{
+		// allways invalidate instance-global cache, as updating our own cache is not perfect and does not help other sessions
 		egw_cache::unsetInstance(self::CACHE_APP, self::CACHE_NAME);
+
+		// if cat given update our own cache, to work around failed sitemgr install via setup (cant read just added categories)
+		if ($cat)
+		{
+			if (!is_array($cat) || isset($cat[0]))
+			{
+				foreach((array)$cat as $cat_id)
+				{
+					unset(self::$cache[$cat_id]);
+				}
+			}
+			elseif($cat['id'])
+			{
+				self::$cache[$cat['id']] = $cat;
+			}
+		}
 	}
 
 	/**
