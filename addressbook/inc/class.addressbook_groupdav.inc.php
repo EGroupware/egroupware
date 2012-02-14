@@ -711,6 +711,18 @@ class addressbook_groupdav extends groupdav_handler
 			unset($supportedFields['TEL;CELL;WORK']);
 			$supportedFields['TEL;IPHONE'] = array('tel_cell_private');
 			unset($supportedFields['TEL;CELL;HOME']);
+			// Apple Addressbook pre Lion (OS X 10.7) messes up CLASS and CATEGORIES (Lion cant set them but leaves them alone)
+			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520)
+			{
+				unset($supportedFields['CLASS']);
+				unset($supportedFields['CATEGORIES']);
+				// gd cant parse or resize images stored from snow leopard addressbook: gd-jpeg:
+				// - JPEG library reports unrecoverable error
+				// - Passed data is not in 'JPEG' format
+				// - Couldn't create GD Image Stream out of Data
+				// FF (10), Safari (5.1.3) and Chrome (17) cant display it either --> ignore images
+				unset($supportedFields['PHOTO']);
+			}
 		}
 		$handler->setSupportedFields('GroupDAV',$this->agent, isset($supportedFields) ?
 			$supportedFields : $handler->supportedFields);

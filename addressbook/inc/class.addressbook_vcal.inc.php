@@ -525,44 +525,6 @@ class addressbook_vcal extends addressbook_bo
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
 
-		$databaseFields = array(
-			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'				=> array('bday'),
-			'X-CLASS'			=> array('private'),
-			'CLASS'				=> array('private'),
-			'CATEGORIES'		=> array('cat_id'),
-			'EMAIL;WORK'		=> array('email'),
-			'EMAIL;HOME'		=> array('email_home'),
-			'N'					=> array('n_family','n_given','n_middle',
-									'n_prefix','n_suffix'),
-			'FN'				=> array('n_fn'),
-			'NOTE'				=> array('note'),
-			'ORG'				=> array('org_name','org_unit','room'),
-			'TEL;CELL;WORK'		=> array('tel_cell'),
-			'TEL;CELL;HOME'		=> array('tel_cell_private'),
-			'TEL;CAR'			=> array('tel_car'),
-			'TEL;OTHER'			=> array('tel_other'),
-			'TEL;VOICE;WORK'	=> array('tel_work'),
-			'TEL;FAX;WORK'		=> array('tel_fax'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;FAX;HOME'		=> array('tel_fax_home'),
-			'TEL;PAGER'			=> array('tel_pager'),
-			'TITLE'				=> array('title'),
-			'URL;WORK'			=> array('url'),
-			'URL;HOME'			=> array('url_home'),
-			'ROLE'				=> array('role'),
-			'NICKNAME'			=> array('label'),
-			'FBURL'				=> array('freebusy_uri'),
-			'PHOTO'				=> array('jpegphoto'),
-			'X-ASSISTANT'		=> array('assistent'),
-			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
-			'UID'				=> array('uid'),
-			'REV'               => array('modified'),
-		);
-
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -928,9 +890,9 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach ($finalRowNames as $key => $vcardKey)
 		{
-			if (isset($databaseFields[$key]))
+			if (isset($this->supportedFields[$key]))
 			{
-				$fieldNames = $databaseFields[$key];
+				$fieldNames = $this->supportedFields[$key];
 				foreach ($fieldNames as $fieldKey => $fieldName)
 				{
 					if (!empty($fieldName))
