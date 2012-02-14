@@ -131,6 +131,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		$this->results = array();
 
 		// Failures
+		$this->warnings = array();
 		$this->errors = array();
 
 		while ( $record = $import_csv->get_record() ) {

@@ -422,7 +422,7 @@
 						unset($targets[$key]);
 						continue;
 					}
-					$files[$mod_time] = $target;
+					$files[$mod_time.$target] = $target;
 				}
 				if($files)
 				{
@@ -438,13 +438,21 @@
 
 			foreach($targets as $target)
 			{
-				if($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )) {
-					$result = $po->$type( $resource, $definition );
+				$resource = null;
+				try {
+					if($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )) {
+						$result = $po->$type( $resource, $definition );
 
+						fclose($resource);
+					} else {
+						fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
+						$data['errors'][$target][] = lang('%1 is not readable',$target);
+					}
+				}
+				catch (Exception $i_ex)
+				{
 					fclose($resource);
-				} else {
-					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
-					$data['errors'][$target][] = lang('%1 is not readable',$target);
+					$data['errors'][$target][] = $i_ex->getMessage();
 				}
 			
 
