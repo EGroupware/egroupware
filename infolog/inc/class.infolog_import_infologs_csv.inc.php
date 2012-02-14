@@ -159,6 +159,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 		// Failures
 		$this->errors = array();
+		$this->warnings = array();
 
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
