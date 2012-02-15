@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -19,7 +20,8 @@
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
 					<nextmatch-filterheader label="Application" id="app" options=","/>
-					<nextmatch-accountfilter label="Category owner" id="owner" options="all,both"/>
+					<nextmatch-accountfilter label="Owner" id="owner" options="all,both"/>
+					<nextmatch-filterheader label="Private" id="access" options="All"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>
 					<nextmatch-header label="Color" id="color"/>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
@@ -38,6 +40,7 @@
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
 					</menulist>
+					<checkbox align="center" id="${row}[access]" readonly="true" options="private,public"/>
 					<image align="center" label="{$row_cont[data][icon]}" src="${row}[icon_url]"/>
 					<description id="${row}[data][color]"/>
 					<date-time id="${row}[last_mod]" readonly="true"/>

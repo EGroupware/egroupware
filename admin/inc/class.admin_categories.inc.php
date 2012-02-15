@@ -316,7 +316,10 @@ class admin_categories
 		{
 			$globalcat = false;
 		}
-		if ($globalcat) $filter['access'] = 'public';
+		if ($globalcat && $query['filter']) $filter['access'] = 'public';
+		// new column-filter access has highest priority
+		if (!empty($query['col_filter']['access']))$filter['access'] = $query['col_filter']['access'];
+
 		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
 		if($query['filter'] > 0 || $query['col_filter']['owner'])
@@ -449,12 +452,12 @@ class admin_categories
 					break; // Only one can come per submit
 				}
 			}
-                        if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
-                        {
-                                $msg = lang('You need to select some entries first!');
-                        }
-                        else
-                        {
+			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+			{
+				$msg = lang('You need to select some entries first!');
+			}
+			else
+			{
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
 				if(in_array($content['nm']['action'], array('owner')))
 				{
@@ -467,17 +470,17 @@ class admin_categories
 					}
 					$content['nm']['action'] .= '_' . $content[$action];
 				}
-                                if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-                                        $success,$failed,$action_msg,$content['nm'],$msg))
-                                {
-                                        $msg .= lang('%1 category(s) %2',$success,$action_msg);
-                                }
-                                elseif(empty($msg))
-                                {
-                                        $msg .= lang('%1 category(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-                                }
-                        }
-                }
+				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
+					$success,$failed,$action_msg,$content['nm'],$msg))
+				{
+					$msg .= lang('%1 category(s) %2',$success,$action_msg);
+				}
+				elseif(empty($msg))
+				{
+					$msg .= lang('%1 category(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+				}
+			}
+		}
 		$content['msg'] = $msg;
 		$content['add_link']= $this->add_link.'&appname='.$appname;
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
@@ -487,6 +490,10 @@ class admin_categories
 		$sel_options['app'] = array(
 			'' => lang('All'),
 			$appname => lang($appname)
+		);
+		$sel_options['access'] = array(
+			'public'  => 'No',
+			'private' => 'Yes',
 		);
 
 		$sel_options['owner'][0] = lang('All users');
