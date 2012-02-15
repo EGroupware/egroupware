@@ -40,6 +40,8 @@ am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	An indexed column speeds up query using that column, cost space on the disk!
 and	etemplate	en	AND
 application	etemplate	en	Application
+application has no etemplates (no file %1) to restore!	etemplate	en	Application has no eTemplates (no file %1) to restore!
+application name needed to restore etemplates!	etemplate	en	Application name needed to restore eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates!
 applications	etemplate	en	Applications
 applies the changes made	etemplate	en	Applies the changes
@@ -89,9 +91,9 @@ contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
 contains	etemplate	en	Contains
-creator	preferences	en	Creator
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)
+creator	preferences	en	Creator
 css class for the table-tag	etemplate	en	CSS class for the table tag
 css properties	etemplate	en	CSS properties
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
@@ -101,8 +103,8 @@ custom	etemplate	en	Custom
 custom fields	etemplate	en	Custom fields
 custom javascript for onchange	etemplate	en	Custom javascript for onChange
 cut	etemplate	en	Cut
-date+time	etemplate	en	Date+Time
 date	preferences	en	Date
+date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
 day	etemplate	en	Day
 days	etemplate	en	Days
@@ -326,6 +328,8 @@ readonly	etemplate	en	Read only
 remove row (can not be undone!!!)	etemplate	en	Remove row
 remove this link (not the entry itself)	etemplate	en	Remove link
 required	etemplate	en	Required
+restore all	etemplate	en	Restore all
+restore all application templates, overwriting existing ones with identical version number	etemplate	en	Restore all application templates, overwriting existing ones with identical version number
 returns savely, without deleting	etemplate	en	Returns WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
