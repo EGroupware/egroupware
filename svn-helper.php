@@ -18,7 +18,7 @@ Changes into the directory of each module and executes svn with the given argume
 \\$module get\'s replaced with the module name, for every svn command but "merge", where log is queryed to avoid running merge on all modules.
 Examples:
 - to merge all changes from trunk between revision 123 and 456 into all modules in the workingcopy:
-	./svn-helper.php merge -r 123:456 ^/trunk
+	./svn-helper.php merge (-c 123|-r 123:456)+ [^/trunk]		# multiple -c or -r are allowed, ^/trunk is the default
 - to switch a workingcopy to the 1.8 branch:
 	./svn-helper.php switch ^/branches/1.8/\\$module
 - to switch an anonymous workingcopy to a developers one:
@@ -57,6 +57,10 @@ function do_merge(array $args)
 	chdir(dirname(__FILE__));	// go to EGroupware root
 
 	array_shift($args);	// get ride of "merge" arg
+	if (substr(end($args),0,2) !== '^/' && strpos(end($args),'://') === false)
+	{
+		array_push($args,'^/trunk');
+	}
 	// get xml log
 	$cmd = "svn log --verbose --xml ".implode(' ',$args);
 	//echo $cmd;
