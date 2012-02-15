@@ -369,6 +369,9 @@ class admin_categories
 		$rows['appname'] = $query['appname'];
 		$rows['edit_link'] = $this->edit_link;
 
+		// disable access column for global categories
+		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'admin') $rows['no_access'] = true;
+
 		$GLOBALS['egw_info']['flags']['app_header'] = lang($this->appname).' - '.lang('categories').
 			($query['appname'] != categories::GLOBAL_APPNAME ? ': '.lang($query['appname']) : '');
 
@@ -384,6 +387,7 @@ class admin_categories
 	public function index(array $content=null,$msg='')
 	{
 		//_debug_array($_GET);
+		if ($this->appname != 'admin') translation::add_app('admin');	// need admin translations
 
 		if(!isset($content))
 		{
@@ -403,7 +407,6 @@ class admin_categories
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	$this->get_rows,	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'no_filter'      => ($appname == categories::GLOBAL_APPNAME),// Can't have personal categories in global
 					'options-filter' => array(
 						'' => lang('All categories'),
 						categories::GLOBAL_ACCOUNT => lang('Global categories'),
@@ -432,6 +435,8 @@ class admin_categories
 			}
 			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
+			// switch filter off for application global cats too, not only for super-global ones
+			$content['nm']['no_filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin';
 
 			$content['nm']['global_cats'] = true;
 			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))
