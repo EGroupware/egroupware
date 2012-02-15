@@ -11,22 +11,22 @@
 			</columns>
 			<rows>
 				<row>
-					<textbox size="25" maxlength="80" label="Name" id="name" statustext="name of the eTemplate, should be in form application.function[.subTemplate]"/>
-					<textbox size="8" maxlength="20" label="Template" id="template" statustext="name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')"/>
-					<textbox size="5" maxlength="5" label="Lang" id="lang" statustext="language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')"/>
-					<textbox size="9" maxlength="20" label="Version" id="version" statustext="version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)"/>
+					<textbox statustext="name of the eTemplate, should be in form application.function[.subTemplate]" label="Name" id="name" size="25" maxlength="80"/>
+					<textbox statustext="name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')" label="Template" id="template" size="8" maxlength="20"/>
+					<textbox statustext="language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')" label="Lang" id="lang" size="5" maxlength="5"/>
+					<textbox statustext="version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)" label="Version" id="version" size="9" maxlength="20"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.7.001">
+	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html span="all" class="redItalic" no_lang="1" id="msg"/>
+					<html id="msg" no_lang="1" span="all" class="redItalic"/>
 				</row>
 				<row disabled="!@xml">
 					<groupbox span="all">
@@ -37,27 +37,28 @@
 				<row>
 					<hbox span="all">
 						<template id="etemplate.editor.keys"/>
-						<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
-						<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
-						<button label="Delete" id="delete" statustext="Delete the spezified eTemplate" onclick="return confirm('Delete the spezified eTemplate');"/>
+						<button statustext="read eTemplate from database (for the keys above)" label="Read" id="read"/>
+						<button statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs" label="Save" id="save"/>
+						<button statustext="Delete the spezified eTemplate" label="Delete" id="delete" onclick="return confirm('Delete the spezified eTemplate');"/>
 					</hbox>
 				</row>
 				<row>
 					<hbox span="all">
-						<button id="styles" label="CSS-Styles" statustext="edit embeded CSS styles or of the applications app.css file" onclick="window.open(egw::link('/index.php','menuaction=etemplate.editor.styles&amp;name=$cont[name]&amp;template=$cont[template]&amp;lang=$cont[lang]&amp;version=$cont[version]'),'etemplate_editor_styles','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Show values" id="values" statustext="shows / allows you to enter values into the eTemplate for testing"/>
-						<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
-						<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
-						<button label="Export XML" id="export_xml" statustext="export the loaded eTemplate into a xml-file"/>
-						<file id="file" statustext="xml-file to import"/>
-						<button label="Import XML" id="import_xml" statustext="import an eTemplate from a xml-file"/>
+						<button statustext="edit embeded CSS styles or of the applications app.css file" label="CSS-Styles" id="styles" onclick="window.open(egw::link('/index.php','menuaction=etemplate.editor.styles&amp;name=$cont[name]&amp;template=$cont[template]&amp;lang=$cont[lang]&amp;version=$cont[version]'),'etemplate_editor_styles','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button statustext="shows / allows you to enter values into the eTemplate for testing" label="Show values" id="values"/>
+						<button statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app" label="Dump4Setup" id="dump"/>
+						<button statustext="creates an english ('en') langfile from label and helptexts (for application in Name)" label="Write Langfile" id="langfile"/>
+						<button statustext="export the loaded eTemplate into a xml-file" label="Export XML" id="export_xml"/>
+						<file statustext="xml-file to import" id="file"/>
+						<button statustext="import an eTemplate from a xml-file" label="Import XML" id="import_xml"/>
+						<button statustext="Restore all application templates, overwriting existing ones with identical version number" label="Restore all" id="restore" onclick="return confirm('Restore all application templates, overwriting existing ones with identical version number');"/>
 					</hbox>
 				</row>
 				<row>
 					<hrule span="all"/>
 				</row>
 				<row>
-					<html span="all" id="onclick"/>
+					<html id="onclick" span="all"/>
 				</row>
 				<row>
 					<template content="cont"/>

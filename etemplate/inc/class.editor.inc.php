@@ -1,10 +1,10 @@
 <?php
 /**
- * eGroupWare  eTemplates - Editor
+ * EGroupware  eTemplates - Editor
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-8 by RalfBecker@outdoor-training.de
+ * @copyright 2002-12 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage tools
@@ -120,7 +120,7 @@ class editor
 
 		if (!is_object($this->etemplate->xul_io))
 		{
-			$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
+			$this->etemplate->xul_io = new xul_io();
 		}
 		$xml = $this->etemplate->xul_io->export($this->etemplate);
 
@@ -159,7 +159,7 @@ class editor
 		}
 		if (!is_object($this->etemplate->xul_io))
 		{
-			$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
+			$this->etemplate->xul_io = new xul_io();
 		}
 		$xml = $this->etemplate->xul_io->export($this->etemplate);
 
@@ -180,7 +180,7 @@ class editor
 
 		if (!is_object($this->etemplate->xul_io))
 		{
-			$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
+			$this->etemplate->xul_io = new xul_io();
 		}
 		$imported = $this->etemplate->xul_io->import($this->etemplate,$xml);
 		$this->etemplate->modified = @filemtime($f);
@@ -322,7 +322,7 @@ class editor
 			$msg = $ok ? lang('Template saved') : lang('Error: while saving !!!');
 			if ($ok) unset($preserv['import']);
 		}
-		elseif (!$content['import_xml'] && (isset($_GET['name']) || isset($content['name'])))
+		elseif (!$content['import_xml'] && (isset($_GET['name']) || isset($content['name'])) && !$content['restore'])
 		{
 			if ($_GET['name'])
 			{
@@ -384,18 +384,18 @@ class editor
 		{
 			if (($extensions = $this->scan_for_extensions()))
 			{
-				$msg .= lang('Extensions loaded:') . ' ' . $extensions;
+				$msg .= lang('Extensions loaded:') . ' ' . $extensions."\n";
 				$msg_ext_loaded = True;
 			}
 		}
-		list($app) = explode('.',$this->etemplate->name);
+		list($app) = explode('.',$this->etemplate->name?$this->etemplate->name:$content['name']);
 		if ($app && $app != 'etemplate')
 		{
-			$GLOBALS['egw']->translation->add_app($app);	// load translations for app
+			translation::add_app($app);	// load translations for app
 
 			if (($extensions = $this->scan_for_extensions($app)))
 			{
-				$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . $extensions;
+				$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . $extensions."\n";
 			}
 		}
 		if (!$msg && $content['delete'])
@@ -407,6 +407,21 @@ class editor
 			$ok = $this->etemplate->delete();
 			$msg = $ok ? lang('Template deleted') : lang('Error: Template not found !!!');
 			$preserv['import'] = $this->etemplate->as_array(1);	// that way the content can be saved again
+		}
+		elseif ($content['restore'])
+		{
+			if (empty($app) || !@is_dir(EGW_SERVER_ROOT.'/'.$app))
+			{
+				$msg .= lang('Application name needed to restore eTemplates!');
+			}
+			elseif (!@file_exists(EGW_SERVER_ROOT.'/'.($file=$app.'/setup/etemplates.inc.php')))
+			{
+				$msg .= lang('Application has no eTemplates (no file %1) to restore!',$file);
+			}
+			else
+			{
+				$msg .= $this->etemplate->import_dump($app);
+			}
 		}
 		elseif ($content['dump'])
 		{
@@ -1286,7 +1301,7 @@ class editor
 				case 'cancel':
 					$js .= 'window.close();';
 					echo "<html><body><script>$js</script></body></html>\n";
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 					break;
 			}
 			if ($js)
@@ -1486,7 +1501,7 @@ class editor
 		{
 			$js .= 'window.close();';
 			echo "<html><body><script>$js</script></body></html>\n";
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		$content = array(
 			'from' => $content['from'],

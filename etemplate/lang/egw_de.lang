@@ -40,6 +40,8 @@ am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 and	etemplate	de	UND
 application	etemplate	de	Anwendung
+application has no etemplates (no file %1) to restore!	etemplate	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherestellen!
+application name needed to restore etemplates!	etemplate	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
 applications	etemplate	de	Anwendungen
 applies the changes made	etemplate	de	übernimmt die Änderungen
@@ -213,8 +215,6 @@ hours	etemplate	de	Stunden
 how many entries should the list show	etemplate	de	Wieviele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the contact data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 image	etemplate	de	Grafik
 import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei
@@ -320,6 +320,8 @@ readonly	etemplate	de	nur lesen
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 required	etemplate	de	Benötigt
+restore all	etemplate	de	Alle wiederherstellen
+restore all application templates, overwriting existing ones with identical version number	etemplate	de	Alle eTemplates der Anwendung wiederherstellen, durch Überschreiben der existierenden mit gleicher Versionsnummer
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
