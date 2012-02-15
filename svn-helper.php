@@ -86,10 +86,11 @@ function do_merge(array $args)
 	//print_r($modules);
 	//print_r($messages);
 	$cmds = array();
-	foreach($modules as $module)
+	foreach($modules as $n => $module)
 	{
 		system('svn -q update '.$module);	// svn >= 1.7 brings an error otherwise
-		$cmds[] = 'svn merge '.implode(' ',$args).'/'.$module.' '.$module;
+		$cmds[] = 'svn merge '.implode(' ',$args).'/'.$module.($module != 'egroupware'?' '.$module:'');
+		if ($module == 'egroupware') $modules[$n] = '.';
 	}
 	$cmds[] = 'svn diff '.implode(' ',$modules);
 	foreach($cmds as $n => $cmd)
