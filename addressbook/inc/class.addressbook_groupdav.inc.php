@@ -514,19 +514,29 @@ class addressbook_groupdav extends groupdav_handler
 		else
 		{
 			$contact['carddav_name'] = $id;
-		}
-		// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/ !)
-		if ($prefix)
-		{
-			// check for modified owners, if user has an add right for the new addressbook and
-			// delete rights for the old addressbook (_common_get_put_delete checks for PUT only EGW_ACL_EDIT)
-			if ($oldContact && $user != $oldContact['owner'] && !($this->bo->grants[$user] & EGW_ACL_ADD) &&
-				(!$this->bo->grants[$oldContact['owner']] & EGW_ACL_DELETE))
+
+			// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/) or sync-all-in-one!)
+			if ($prefix && !in_array('O',$this->home_set_pref))
+			{
+				$contact['owner'] = $user;
+			}
+			// check if default addressbook is synced, if not use (always synced) personal addressbook
+			elseif($this->bo->default_addressbook && !in_array($this->bo->default_addressbook,$this->home_set_pref))
+			{
+				$contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			else
+			{
+				$contact['owner'] = $this->bo->default_addressbook;
+				$contact['private'] = $this->bo->default_private;
+			}
+			// check if user has add rights for addressbook
+			// done here again, as _common_get_put_delete knows nothing about default addressbooks...
+			if (!($this->bo->grants[$contact['owner']] & EGW_ACL_ADD))
 			{
 				if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning '403 Forbidden'");
 				return '403 Forbidden';
 			}
-			$contact['owner'] = $user;
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
