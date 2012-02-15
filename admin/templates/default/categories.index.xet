@@ -8,7 +8,7 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
+				<column disabled="@no_access"/>
 				<column width="40"/>
 				<column width="80"/>
 				<column/>
