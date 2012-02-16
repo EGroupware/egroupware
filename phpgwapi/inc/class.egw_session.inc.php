@@ -727,11 +727,16 @@ class egw_session
 			$subject = lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip);
 			$body    = lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip);
 
-			$subject = $GLOBALS['egw']->send->encode_subject($subject);
 			$admin_mails = explode(',',$GLOBALS['egw_info']['server']['admin_mails']);
 			foreach($admin_mails as $to)
 			{
-				$GLOBALS['egw']->send->msg('email',$to,$subject,$body,'','','',$from,$from);
+				try {
+						$GLOBALS['egw']->send->msg('email',$to,$subject,$body,'','','',$from,$from);
+				}
+				catch(Exception $e) {
+					// ignore exception, but log it, to block the account and give a correct error-message to user
+					error_log(__METHOD__."('$log', '$ip') ".$e->getMessage());
+				}
 			}
 			// save time of mail, to not send to many mails
 			$config = new config('phpgwapi');
