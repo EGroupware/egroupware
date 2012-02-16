@@ -267,7 +267,8 @@ class uisettings
 						$valarray['help'],
 						$valarray['default'],
 						$valarray['run_lang'],
-						$valarray['type'] == 'multiselect'
+						$valarray['type'] == 'multiselect',
+						$valarray['onchange']
 					);
 					break;
 				case 'check':
@@ -518,7 +519,7 @@ class uisettings
 		$this->t->fp('rows','section_row',True);
 	}
 
-	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false)
+	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false,$onchange=null)
 	{
 		$_appname = $this->check_app();
 		if($this->is_forced_value($_appname,$name))
@@ -548,7 +549,8 @@ class uisettings
 			}
 			if (is_array($extra)) $values = $extra + (is_array($values)?$values:array($values));
 
-			$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true);
+			$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true,
+				$onchange?'onchange="'.str_replace('"','\\"',htmlspecialchars($onchange)).'"':'');
 		}
 		else
 		{

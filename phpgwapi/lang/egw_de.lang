@@ -154,6 +154,7 @@ chosen parent category no longer exists	common	de	Die ausgewählte Elternkategor
 christmas island	common	de	WEIHNACHTS INSEL
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
+clear window	common	de	Fenster löschen
 click	common	de	Klicken
 click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder aufzunehmen.
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
@@ -192,12 +193,14 @@ date	common	de	Datum
 date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
+debug level for apache/php error-log	groupdav	de	Debug Stufe für Apache/PHP Fehlerprotokol
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 delete	common	de	Löschen
 delete category	common	de	Kategorie entfernen
+delete file	common	de	Datei löschen
 delete row	common	de	Zeile löschen
 delete these entries	common	de	Diese Einträge löschen
 delete this entry	common	de	Diesen Eintrag löschen
@@ -215,6 +218,7 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
 disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
+distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
 do not notify of these changes	common	de	Nicht über diese Änderungen benachrichtigen
@@ -228,6 +232,7 @@ domestic	common	de	Inland
 dominica	common	de	DOMINICA
 dominican republic	common	de	DOMINIKANISCHE REPUBLIK
 done	common	de	Fertig
+download	common	de	Herunterladen
 drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
@@ -244,6 +249,7 @@ egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
+empty file	common	de	Datei leeren
 enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
@@ -493,6 +499,7 @@ notify window	common	de	Benachrichtigungsfenster
 notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administrator um diese Situation zu lösen
 november	common	de	November
 october	common	de	Oktober
+off	groupdav	de	Aus
 ok	common	de	OK
 old value	common	de	Alter Wert
 oman	common	de	OMAN
@@ -580,6 +587,8 @@ remove shortcut	common	de	Abkürzung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
+requests and full responses to files directory	common	de	Anfragen und komplette Antworten in das Dateiverzeichnis
+requests and truncated responses	groupdav	de	Anfragen und gekürzte Antworten
 resource type	common	de	Ressource Typ
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
@@ -610,6 +619,8 @@ search or select accounts	common	de	Suchen und auswählen von Benutzern
 second	common	de	Sekunden
 section	common	de	Sektion
 select	common	de	Auswählen
+select "%1", if your client does not support multiple addressbooks.	groupdav	de	"%1" auswählen, wenn der Client nur ein einziges Adressbuch unterstützt.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, zB. für das OS X oder iOS Adressbuch.
 select action	common	de	Befehl auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
@@ -641,6 +652,7 @@ show as topmenu	common	de	Menü oben anzeigen
 show clock?	common	de	Uhr anzeigen?
 show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations Balken?
 show in sidebox	common	de	In Seitenmenü anzeigen
+show log of following device	groupdav	de	Zeige Log des folgenden Geräts
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
 show menu	common	de	Menü anzeigen
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
@@ -681,6 +693,7 @@ svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
 swaziland	common	de	SWAZILAND
 sweden	common	de	SCHWEDEN
 switzerland	common	de	SCHWEIZ
+sync all selected into one	groupdav	de	Alle ausgewählten in eines synchronisieren
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
 table %1 is excluded from backup and restore. data will not be restored.	common	de	Tabelle %1 ist ausgeschlossen von der Datensicherung und der Wiederherstellung. Die Daten werden nicht wiederhergestellt.
 table properties	common	de	Tabelleneigenschaften
@@ -795,6 +808,7 @@ you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitz
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
+you need to set above debug-level to "%1" to create/update a log.	groupdav	de	Sie müssen die Debug Stufe darüber auf "%1" setzen um ein Log zu erzeugen/aktualisieren.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet

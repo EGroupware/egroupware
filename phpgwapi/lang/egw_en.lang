@@ -154,6 +154,7 @@ chosen parent category no longer exists	common	en	Chosen parent category no long
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear form
+clear window	common	en	Clear window
 click	common	en	Click
 click here to resume your egroupware session.	common	en	Click to resume your EGroupware session.
 click or mouse over to show menus	common	en	Click or mouse over to show menus.
@@ -192,12 +193,14 @@ date	common	en	Date
 date due	common	en	Due date
 date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
+debug level for apache/php error-log	groupdav	en	Debug level for Apache/PHP error-log
 december	common	en	December
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
 delete	common	en	Delete
 delete category	common	en	Delete category
+delete file	common	en	Delete file
 delete row	common	en	Delete row
 delete these entries	common	en	Delete these entries
 delete this entry	common	en	Delete this entry
@@ -215,6 +218,7 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in PNG-images.
 disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
+distribution lists as groups	groupdav	en	Distribution lists as groups
 djibouti	common	en	DJIBOUTI
 do not notify	common	en	Do not notify
 do not notify of these changes	common	en	Do not notify of these changes
@@ -228,6 +232,7 @@ domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
+download	common	en	Download
 drag to move	jscalendar	en	Drag to move
 e-mail	common	en	Email
 east timor	common	en	EAST TIMOR
@@ -244,6 +249,7 @@ egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 email	common	en	Email
 email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
+empty file	common	en	Empty file
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -494,6 +500,7 @@ notify window	common	en	Notify window
 notify your administrator to correct this situation	common	en	Notify your Administrator to correct this.
 november	common	en	November
 october	common	en	October
+off	groupdav	en	Off
 ok	common	en	OK
 old value	common	en	Old value
 oman	common	en	OMAN
@@ -581,6 +588,8 @@ remove shortcut	common	en	Remove shortcut
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
+requests and full responses to files directory	common	en	Requests and full responses to files directory
+requests and truncated responses	groupdav	en	Requests and truncated responses
 resource type	common	en	Resource type
 restore failed	common	en	Restore failed
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system. Warning: This is return can be quite large.
@@ -611,6 +620,8 @@ search or select accounts	common	en	Search or select accounts
 second	common	en	Second
 section	common	en	Section
 select	common	en	Select
+select "%1", if your client does not support multiple addressbooks.	groupdav	en	Select "%1", if your client does not support multiple addressbooks.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	en	Select "%1", if your client support groups, eg. OS X or iOS addressbook.
 select action	common	en	Select action
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select category
@@ -642,6 +653,7 @@ show as topmenu	common	en	Show as top menu
 show clock?	common	en	Show clock
 show home and logout button in main application bar?	common	en	Show Home and Logout buttons in main application bar.
 show in sidebox	common	en	Show in side menu
+show log of following device	groupdav	en	Show log of following device
 show logo's on the desktop.	common	en	Show logo on the desktop.
 show menu	common	en	Show menu
 show page generation time	common	en	Show page generation time
@@ -682,6 +694,7 @@ svalbard and jan mayen	common	en	SVALBARD AND JAN MAYEN
 swaziland	common	en	SWAZILAND
 sweden	common	en	SWEDEN
 switzerland	common	en	SWITZERLAND
+sync all selected into one	groupdav	en	Sync all selected into one
 syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
 table %1 is excluded from backup and restore. data will not be restored.	common	en	Table %1 is excluded from backup and restore. Data will not be restored.
 table properties	common	en	Table properties
@@ -796,6 +809,7 @@ you need to %1set your timezone preference%2.	common	en	You need to %1set your t
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the web server user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an EGroupware administrator to access this functionality!
 you need to select some entries first!	common	en	You need to select some entries first!
+you need to set above debug-level to "%1" to create/update a log.	groupdav	en	You need to set above debug-level to "%1" to create/update a log.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent.
