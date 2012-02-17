@@ -468,6 +468,20 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
+		if (is_array($uids) && isset($uids['list_carddav_name']))
+		{
+			$ids = array();
+			foreach((array)$uids['list_carddav_name'] as $carddav_name)
+			{
+				if (preg_match('/addressbook-lists-([0-9]+)-/',$carddav_name, $matches))
+				{
+					$ids[] = $matches[1];
+				}
+			}
+			unset($uids['list_carddav_name']);
+			if (!$ids) return array();
+			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $ids));
+		}
 		$lists = array();
 		foreach($this->db->select($this->lists_table,$this->lists_table.'.*,MAX(list_added) AS list_modified',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
 			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
@@ -476,7 +490,7 @@ class addressbook_sql extends so_sql_cf
 			if (!$row['list_id']) continue;	// because of join, no lists at all still return one row of NULL
 			if ($member_attr) $row['members'] = array();
 			// generate UID and carddav_name for list_id
-			$row['list_uid'] = common::generate_uid('addresbook-lists', $row['list_id']);
+			$row['list_uid'] = common::generate_uid('addressbook-lists', $row['list_id']);
 			$row['list_carddav_name'] = $row['list_uid'].'.vcf';
 			// set list_modified (=MAX(list_added)) as etag
 			if (!$row['list_modified']) $row['list_modified'] = $row['list_created'];
@@ -546,7 +560,7 @@ class addressbook_sql extends so_sql_cf
 		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')))
 		{
 			// generate UID and carddav_name for list_id
-			$data['list_uid'] = common::generate_uid('addresbook-lists', $list_id);
+			$data['list_uid'] = common::generate_uid('addressbook-lists', $list_id);
 			$data['list_carddav_name'] = $data['list_uid'].'.vcf';
 
 			$this->add2list($list_id,$contacts,array());
