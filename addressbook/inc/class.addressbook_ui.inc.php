@@ -1489,8 +1489,8 @@ class addressbook_ui extends addressbook_bo
 		}
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys['tabs']['custom'] = !$this->customfields;
-		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
+		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
