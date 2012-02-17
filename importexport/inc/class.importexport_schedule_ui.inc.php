@@ -363,16 +363,37 @@
 		/**
 		* Execute a scheduled import or export
 		*/
-		public static function exec($data) {
+		public static function exec($data)
+		{
 			ob_start();
 
-			
 			$data['record_count'] = 0;
 			unset($data['errors']);
 			unset($data['warnings']);
 			unset($data['result']);
+
+			if($data['lock'])
+			{
+				// Lock expires
+				if($data['lock'] < time())
+				{
+					unset($data['lock']);
+					$data['warnings'][][] = lang('Lock expired on previous run');
+				}
+				else
+				{
+					// Still running
+					ob_end_flush();
+					return;
+				}
+			}
+
 			$data['last_run'] = time();
 
+			// Lock job for an hour to prevent multiples overlapping
+			$data['lock'] = time() + 3600;
+			self::update_job($data, true);
+			
 			// check file
 			$file_check = self::check_target($data);
 			if($file_check !== true) {
@@ -380,6 +401,7 @@
 				// Update job with results
 				self::update_job($data);
 
+				ob_end_flush();
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": $file_check \n");
 				return;
 			}
@@ -422,7 +444,7 @@
 						unset($target[$key]);
 						continue;
 					}
-					$files[$mod_time] = $target;
+					$files[$mod_time.$target] = $target;
 				}
 				if($files)
 				{
@@ -438,13 +460,25 @@
 
 			foreach($targets as $target)
 			{
-				if($resource = fopen( $target, $data['type'] == 'import' ? 'r' : 'w' )) {
-					$result = $po->$type( $resource, $definition );
+				// Update lock timeout
+				$data['lock'] = time() + 3600;
+				self::update_job($data, true);
 
+				$resource = null;
+				try {
+					if($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )) {
+						$result = $po->$type( $resource, $definition );
+
+						fclose($resource);
+					} else {
+						fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
+						$data['errors'][$target][] = lang('%1 is not readable',$target);
+					}
+				}
+				catch (Exception $i_ex)
+				{
 					fclose($resource);
-				} else {
-					fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
-					$data['errors'][$target][] = lang('%1 is not readable',$target);
+					$data['errors'][$target][] = $i_ex->getMessage();
 				}
 			
 
@@ -498,7 +532,10 @@
 			}
 
 			// Run time in minutes
-			$data['run_time'] = (time() - $data['last_run']) / 60;
+			$data['run_time'] = round((time() - $data['last_run']) / 60,1);
+
+			// Clear lock
+			$data['lock'] = 0;
 
 			// Update job with results
 			self::update_job($data);
@@ -514,7 +551,7 @@
 		 * Update the async job with current status, and send a notification
 		 * to user if there were any errors.
 		 */
-		private static function update_job($data) {
+		private static function update_job($data, $no_notification = false) {
 			$id = self::generate_id($data);
 			$async = ExecMethod('phpgwapi.asyncservice.read', $id);
 			$async = $async[$id];
@@ -527,6 +564,7 @@
 					$data
 				);
 			}
+			if($no_notification) return $result;
 
 			// Send notification to user
 			if($data['warnings'] || $data['errors'])
