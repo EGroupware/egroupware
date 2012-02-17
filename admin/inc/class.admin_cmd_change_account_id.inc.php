@@ -48,7 +48,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				'egw_api_content_history' => 'sync_changedby',
 				'egw_applications'   => false,
 				'egw_async'          => 'async_account_id',
-				'egw_categories'     => array(array('cat_owner','.type' => 'comma-sep',"cat_owner > '0'")),	// -1 are global cats, not cats from group 1!
+				'egw_categories'     => array(array('cat_owner','.type' => 'comma-sep')),
 				'egw_config'         => false,
 				'egw_history_log'    => 'history_owner',
 				'egw_hooks'          => false,
