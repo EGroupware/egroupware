@@ -97,7 +97,7 @@ class groupdav_hooks
 			if ($GLOBALS['type'] === 'user')
 			{
 				$logs = array();
-				if (($files = scandir($log_dir=$GLOBALS['egw_info']['server']['files_dir'].'/groupdav')))
+				if (file_exists($log_dir=$GLOBALS['egw_info']['server']['files_dir'].'/groupdav') && ($files = scandir($log_dir)))
 				{
 					$account_lid_len = strlen($GLOBALS['egw_info']['user']['account_lid']);
 					foreach($files as $log)
