@@ -193,7 +193,6 @@ date	common	en	Date
 date due	common	en	Due date
 date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
-debug level for apache/php error-log	groupdav	en	Debug level for Apache/PHP error-log
 december	common	en	December
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
@@ -250,7 +249,9 @@ el salvador	common	en	EL SALVADOR
 email	common	en	Email
 email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
 empty file	common	en	Empty file
+enable logging	groupdav	en	Enable logging
 enabled	common	en	Enabled
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	en	Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.
 end date	common	en	End date
 end time	common	en	End time
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or   /egroupware<br><b>No trailing slash</b>
@@ -413,6 +414,7 @@ list	common	en	List
 list members	common	en	List members
 lithuania	common	en	LITHUANIA
 local	common	en	Local
+logging / debuging	groupdav	en	Logging / debuging
 login	common	en	Login
 loginid	common	en	Login ID
 logout	common	en	Logout
@@ -589,7 +591,7 @@ rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
 requests and full responses to files directory	common	en	Requests and full responses to files directory
-requests and truncated responses	groupdav	en	Requests and truncated responses
+requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
 resource type	common	en	Resource type
 restore failed	common	en	Restore failed
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system. Warning: This is return can be quite large.
@@ -809,7 +811,7 @@ you need to %1set your timezone preference%2.	common	en	You need to %1set your t
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the web server user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an EGroupware administrator to access this functionality!
 you need to select some entries first!	common	en	You need to select some entries first!
-you need to set above debug-level to "%1" to create/update a log.	groupdav	en	You need to set above debug-level to "%1" to create/update a log.
+you need to set enable logging to "%1" to create/update a log.	groupdav	en	You need to set enable logging to "%1" to create/update a log.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent.

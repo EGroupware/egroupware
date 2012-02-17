@@ -193,7 +193,6 @@ date	common	de	Datum
 date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
-debug level for apache/php error-log	groupdav	de	Debug Stufe für Apache/PHP Fehlerprotokol
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
@@ -250,7 +249,9 @@ el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
 empty file	common	de	Datei leeren
+enable logging	groupdav	de	Logging einschalten
 enabled	common	de	Verfügbar
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das loggen des CalDAV/CardDAV Verkehrs zur Diagnose von Problemen mit Geräten ein.
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
@@ -412,6 +413,7 @@ list	common	de	Liste
 list members	common	de	Mitglieder anzeigen
 lithuania	common	de	LITAUEN
 local	common	de	lokal
+logging / debuging	groupdav	de	Logging / Fehlersuche
 login	common	de	Anmelden
 loginid	common	de	Benutzerkennung
 logout	common	de	Abmelden
@@ -588,7 +590,7 @@ rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in das Dateiverzeichnis
-requests and truncated responses	groupdav	de	Anfragen und gekürzte Antworten
+requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
 resource type	common	de	Ressource Typ
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
@@ -808,7 +810,7 @@ you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitz
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
-you need to set above debug-level to "%1" to create/update a log.	groupdav	de	Sie müssen die Debug Stufe darüber auf "%1" setzen um ein Log zu erzeugen/aktualisieren.
+you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet
