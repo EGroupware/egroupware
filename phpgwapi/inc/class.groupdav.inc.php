@@ -1487,7 +1487,7 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Serve WebDAV HTTP request
 	 *
-	 * Reimplemented to add logging, currently only to Apache error-log
+	 * Reimplemented to add logging
 	 */
 	function ServeRequest()
 	{
@@ -1502,13 +1502,10 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if ($starttime)
 		{
-			$msg_type = 0;
 			if ($debug_level === 'f')
 			{
-				$msg_type = 3;
 				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
 				$msg_file .= '/groupdav';
-				$msg_nl = "\n";	// error_log to file does NOT contain new-lines
 				if (!file_exists($msg_file) && !mkdir($msg_file,0700))
 				{
 					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
@@ -1517,30 +1514,52 @@ class groupdav extends HTTP_WebDAV_Server
 				$msg_file .= '/'.$GLOBALS['egw_info']['user']['account_lid'].'-'.
 					str_replace('/','!',$_SERVER['HTTP_USER_AGENT']).'.log';
 
-				error_log('*** '.$_SERVER['REMOTE_ADDR'].' '.date('c').$msg_nl,$msg_type,$msg_file);
+				$content = '*** '.$_SERVER['REMOTE_ADDR'].' '.date('c')."\n";
 			}
-			error_log($_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'.$msg_nl,$msg_type,$msg_file);
+			$content .= $_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'."\n";
 			// reconstruct headers
 			foreach($_SERVER as $name => $value)
 			{
 				list($type,$name) = explode('_',$name,2);
 				if ($type == 'HTTP' || $type == 'CONTENT')
 				{
-					error_log(str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).
-						': '.($name=='AUTHORIZATION'?'Basic ***************':$value).$msg_nl,$msg_type,$msg_file);
+					$content .= str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).
+						': '.($name=='AUTHORIZATION'?'Basic ***************':$value)."\n";
 				}
 			}
-			error_log(''.$msg_nl,$msg_type,$msg_file);
+			$content .= "\n";
 			if ($this->request)
 			{
-				foreach(explode("\n",$this->request) as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
+				$content .= $this->request;
 			}
-			error_log('HTTP/1.1 '.$this->_http_status.$msg_nl,$msg_type,$msg_file);
-			foreach(headers_list() as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
-			if (($content = ob_get_flush())) error_log(''.$msg_nl,$msg_type,$msg_file);
-			if ($debug_level !== 'f' && strlen($content) > 1536) $content = substr($content,0,1536)."\n*** LOG TRUNKATED ";
-			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-$starttime)."\n";
-			foreach(explode("\n",$content) as $line) error_log($line.$msg_nl,$msg_type,$msg_file);
+			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
+			foreach(headers_list() as $line) $content .= $line."\n";
+			if (($c = ob_get_flush())) $content .= "\n";
+			if ($debug_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED ";
+			$content .= $c;
+			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-$starttime)."\n\n";
+			self::log($content,$msg_file);
+		}
+	}
+
+	/**
+	 * Log to a given file or error_log
+	 *
+	 * @param string $content
+	 * @param string $msg_file=null
+	 */
+	private static function log($content,$msg_file=null)
+	{
+		if ($msg_file && ($f = fopen($msg_file,'a')))
+		{
+			flock($f,LOCK_EX);
+			fwrite($f,$content);
+			flock($f,LOCK_UN);
+			fclose($f);
+		}
+		else
+		{
+			foreach($explode("\n",$content) as $line) error_log($line);
 		}
 	}
 }
