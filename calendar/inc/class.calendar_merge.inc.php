@@ -39,6 +39,7 @@ class calendar_merge extends bo_merge
 		'today',
 		'tomorrow',
 		'yesterday',
+		'selected',
 	);
 
 	/**
@@ -336,6 +337,10 @@ class calendar_merge extends bo_merge
 			$date['day'] = $which;
 			$date = $this->bo->date2ts($date);
 			if(is_array($id) && $id['start'] && ($date < $id['start'] || $date > $id['end'])) return array();
+		}
+		elseif ($plugin == 'selected')
+		{
+			$date = $id['start'];
 		}
 		else
 		{
