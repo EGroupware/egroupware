@@ -569,7 +569,7 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array|false $oldContact
 	 * @param int|boolean $list_id or false on error
 	 */
-	function save_group(array $contact, $oldContact=null)
+	function save_group(array &$contact, $oldContact=null)
 	{
 		$data = array('list_name' => $contact['n_fn']);
 		foreach(array('id','carddav_name','uid') as $name)
@@ -608,15 +608,15 @@ class addressbook_groupdav extends groupdav_handler
 				$filter = array('uid' => $to_delete ? array_merge($to_add, $to_delete) : $to_add);
 				if (($contacts =& $this->bo->search(array(),'id,uid','','','',False,'AND',false,$filter)))
 				{
-					foreach($contacts as $contact)
+					foreach($contacts as $c)
 					{
-						if ($to_delete && in_array($contact['uid'], $to_delete))
+						if ($to_delete && in_array($c['uid'], $to_delete))
 						{
-							$to_delete_ids[] = $contact['id'];
+							$to_delete_ids[] = $c['id'];
 						}
 						else
 						{
-							$to_add_ids[] = $contact['id'];
+							$to_add_ids[] = $c['id'];
 						}
 					}
 				}
@@ -624,8 +624,10 @@ class addressbook_groupdav extends groupdav_handler
 				if ($to_add_ids) $this->bo->add2list($to_add_ids, $list_id, array());
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
+			$list_id = $data['list_carddav_name'];
 		}
-		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') returning '.array2string($list_id));
+		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') on return contact='.array2string($data).' returning '.array2string($list_id));
+ 		$contact = $data;
 		return $list_id;
 	}
 
