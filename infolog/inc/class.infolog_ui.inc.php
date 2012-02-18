@@ -1604,6 +1604,7 @@ class infolog_ui
 				$parent = $this->bo->so->data;
 				$content['info_id'] = $info_id = 0;
 				$content['info_uid'] = ''; // ensure that we have our own UID
+				$content['caldav_name'] = ''; // ensure that we have our own caldav_name
 				$content['info_owner'] = $this->user;
 				$content['info_id_parent'] = $parent['info_id'];
 				/*
