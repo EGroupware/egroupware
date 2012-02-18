@@ -1530,7 +1530,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$content .= "\n";
 			if ($this->request)
 			{
-				$content .= $this->request;
+				$content .= $this->request."\n";
 			}
 			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
 			foreach(headers_list() as $line) $content .= $line."\n";
