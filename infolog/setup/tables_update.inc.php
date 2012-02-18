@@ -680,3 +680,26 @@ function infolog_upgrade1_9_001()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.002';
 }
+
+
+/**
+ * Fix caldav_name of subentries is identical with parent
+ */
+function infolog_upgrade1_9_002()
+{
+	$ids = array();
+	foreach($GLOBALS['egw_setup']->db->query('SELECT sub.info_id
+FROM egw_infolog sub
+JOIN egw_infolog parent ON sub.info_id_parent=parent.info_id
+WHERE parent.caldav_name=sub.caldav_name',__LINE__,__FILE__) as $row)
+	{
+		$ids[] = $row['info_id'];
+	}
+	if ($ids)
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_infolog SET caldav_name='.
+			$GLOBALS['egw_setup']->db->concat('info_id',"'.ics'").
+			' WHERE info_id IN ('.implode(',',$ids).')',__LINE__,__FILE__);
+	}
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.003';
+}
