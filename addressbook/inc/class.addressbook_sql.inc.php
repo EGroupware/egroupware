@@ -546,6 +546,10 @@ class addressbook_sql extends so_sql_cf
 		{
 			$data['list_owner'] = $owner;
 		}
+		if (isset($keys['list_carddav_name']))
+		{
+			$keys = false;	// cant PUT a name in 11.1
+		}
 		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys,__LINE__,__FILE__)->fetchColumn()))
 		{
 			$data['list_created'] = time();
