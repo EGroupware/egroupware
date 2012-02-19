@@ -75,16 +75,16 @@ class groupdav_hooks
 
 		$settings[] = array(
 			'type'  => 'section',
-			'title' => 'Debuging',
+			'title' => 'Logging / debuging',
 		);
 		$settings['debug_level'] = array(
 			'type'   => 'select',
-			'label'  => 'Debug level for Apache/PHP error-log',
+			'label'  => 'Enable logging',
 			'name'   => 'debug_level',
-			'help'   => 'Enables debug-messages to Apache/PHP error-log, allowing to diagnose problems on a per user basis.',
+			'help'   => 'Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.',
 			'values' => array(
 				'0' => lang('Off'),
-				'r' => lang('Requests and truncated responses'),
+				'r' => lang('Requests and truncated responses to Apache error-log'),
 				'f' => lang('Requests and full responses to files directory'),
 			),
 			'xmlrpc' => true,
@@ -124,7 +124,7 @@ class groupdav_hooks
 				'type'   => 'select',
 				'label'  => 'Show log of following device',
 				'name'   => 'show-log',
-				'help'   => lang('You need to set above debug-level to "%1" to create/update a log.',
+				'help'   => lang('You need to set enable logging to "%1" to create/update a log.',
 					lang('Requests and full responses to files directory')),
 				'values' => $logs,
 				'xmlrpc' => True,
