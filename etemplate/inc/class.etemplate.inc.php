@@ -1176,13 +1176,14 @@ class etemplate extends boetemplate
 			{
 				if ((int)$cell['no_lang'] < 2 && !$no_lang_on_help)
 				{
+					if (($use_tooltip_for_help = $help[0] == '|')) $help = substr($help,1);
 					$help = lang($help);
 				}
 				if (substr($help,0,5) == 'call:')
 				{
 					$options .= ' onMouseOver="'.html::htmlspecialchars(substr($help,5)).'"';
 				}
-				elseif (($use_tooltip_for_help = strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
+				elseif (($use_tooltip_for_help = $use_tooltip_for_help || strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
 				{
 					$options .= html::tooltip($help);
 				}
