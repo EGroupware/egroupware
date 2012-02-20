@@ -548,7 +548,17 @@ class addressbook_sql extends so_sql_cf
 		}
 		if (isset($keys['list_carddav_name']))
 		{
-			$keys = false;	// cant PUT a name in 11.1
+			if (isset($data['list_id']))	// use id if given
+			{
+				$keys = array(
+					'list_id' => $data['list_id'],
+				);
+				unset($data['list_id']);
+			}
+			else
+			{
+				$keys = false;	// cant PUT a name in 11.1
+			}
 		}
 		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys,__LINE__,__FILE__)->fetchColumn()))
 		{
@@ -673,8 +683,13 @@ class addressbook_sql extends so_sql_cf
 		{
 			$modified = 0;
 		}
-		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($modified));
-		return $modified;
+		if (!($created = $this->db->select($this->lists_table,'MAX(list_created)',array('list_owner'=>$owner),
+			__LINE__,__FILE__)->fetchColumn()))
+		{
+			$created = 0;
+		}
+		//error_log(__METHOD__.'('.array2string($owner).") MAX(list_added)=$modified, MAX(list_created)=$created returning ".array2string(max($modified,$created)));
+		return max($modified,$created);
 	}
 
 	/**
