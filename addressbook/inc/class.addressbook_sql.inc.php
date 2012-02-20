@@ -483,8 +483,10 @@ class addressbook_sql extends so_sql_cf
 			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $ids));
 		}
 		$lists = array();
+		$table_def = $this->db->get_table_definitions('phpgwapi',$this->lists_table);
+		$group_by = 'GROUP BY '.$this->lists_table.'.'.implode(','.$this->lists_table.'.',array_keys($table_def['fd']));
 		foreach($this->db->select($this->lists_table,$this->lists_table.'.*,MAX(list_added) AS list_modified',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
-			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
+			false,$group_by.' ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
 			"LEFT JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id") as $row)
 		{
 			if (!$row['list_id']) continue;	// because of join, no lists at all still return one row of NULL
