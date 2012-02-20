@@ -200,6 +200,9 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if ($this->debug > 2) error_log('groupdav: $_SERVER='.array2string($_SERVER));
 
+		// setting our own exception handler, to be able to still log the requests
+		set_exception_handler(array(__CLASS__,'exception_handler'));
+
 		// crrnd: client refuses redundand namespace declarations
 		// cnrnd: client needs redundand namespace declarations
 		// setting redundand namespaces as the default for (Cal|Card|Group)DAV, as the majority of the clients either require or can live with it
@@ -1484,6 +1487,8 @@ class groupdav extends HTTP_WebDAV_Server
 		return $ok;
 	}
 
+	private static $request_starttime;
+
 	/**
 	 * Serve WebDAV HTTP request
 	 *
@@ -1494,15 +1499,25 @@ class groupdav extends HTTP_WebDAV_Server
 		if (($debug_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
 			$debug_level === 'f' || $this->debug)
 		{
-			$starttime = microtime(true);
+			self::$request_starttime = microtime(true);
 			$this->store_request = true;
 			ob_start();
 		}
 		parent::ServeRequest();
 
-		if ($starttime)
+		if (self::$request_starttime) self::log_request();
+	}
+
+	/**
+	 * Log the request
+	 *
+	 * @param string $extra='' extra text to add below request-log, eg. exception thrown
+	 */
+	private function log_request($extra='')
+	{
+		if (self::$request_starttime)
 		{
-			if ($debug_level === 'f')
+			if (($debug_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'f')
 			{
 				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
 				$msg_file .= '/groupdav';
@@ -1535,9 +1550,10 @@ class groupdav extends HTTP_WebDAV_Server
 			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
 			foreach(headers_list() as $line) $content .= $line."\n";
 			if (($c = ob_get_flush())) $content .= "\n";
-			if ($debug_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED ";
+			if ($debug_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
 			$content .= $c;
-			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-$starttime)."\n\n";
+			if ($extra) $content .= $extra;
+			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
 			self::log($content,$msg_file);
 		}
 	}
@@ -1561,5 +1577,43 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			foreach($explode("\n",$content) as $line) error_log($line);
 		}
+	}
+
+	/**
+	 * Exception handler, which additionally logs the request (incl. a trace)
+	 *
+	 * Does NOT return and get installed in constructor.
+	 *
+	 * @param Exception $e
+	 */
+	public static function exception_handler(Exception $e)
+	{
+		// logging exception as regular egw_execption_hander does
+		_egw_log_exception($e,$headline);
+
+		// exception handler sending message back to the client as basic auth message
+		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+		header('WWW-Authenticate: Basic realm="'.$headline.': '.$error.'"');
+		header('HTTP/1.1 401 Unauthorized');
+		header('X-WebDAV-Status: 401 Unauthorized', true);
+
+		// if our own logging is active, log the request plus a trace, if enabled in server-config
+		if (self::$request_starttime && isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],__CLASS__))
+		{
+			$GLOBALS['groupdav']->_http_status = '401 Unauthorized';	// to correctly log it
+			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+			{
+				$GLOBALS['groupdav']->log_request("\n".$e->getTraceAsString()."\n");
+			}
+			else
+			{
+				$GLOBALS['groupdav']->log_request();
+			}
+		}
+		if (is_object($GLOBALS['egw']))
+		{
+			common::egw_exit();
+		}
+		exit;
 	}
 }
