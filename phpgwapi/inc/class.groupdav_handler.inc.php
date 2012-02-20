@@ -471,7 +471,8 @@ abstract class groupdav_handler
 	{
 		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
 		// as SOGO Connector requires ETag header to recognice as successful PUT, we are sending them again for it
-		if (get_class($this) == 'addressbook_groupdav' && in_array(self::get_agent(),array('thunderbird','lightning')))
+		// --> as all clients dislike not getting an ETag for a PUT, we sending it again even not storing byte-by-byte
+		//if (get_class($this) == 'addressbook_groupdav' && in_array(self::get_agent(),array('thunderbird','lightning')))
 		{
 			header('ETag: "'.$this->get_etag($entry).'"');
 		}
