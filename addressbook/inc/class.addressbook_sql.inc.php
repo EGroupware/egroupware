@@ -575,12 +575,12 @@ class addressbook_sql extends so_sql_cf
 
 		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')))
 		{
-			// generate UID and carddav_name for list_id
-			$data['list_uid'] = common::generate_uid('addressbook-lists', $list_id);
-			$data['list_carddav_name'] = $data['list_uid'].'.vcf';
-
 			$this->add2list($list_id,$contacts,array());
 		}
+		// generate UID and carddav_name for list_id, as we dont store them in 11.1
+		$data['list_uid'] = common::generate_uid('addressbook-lists', $list_id);
+		$data['list_carddav_name'] = $data['list_uid'].'.vcf';
+
 		if ($keys) $data += $keys;
 		//error_log(__METHOD__.'('.array2string($keys).", $owner, ...) data=".array2string($data).' returning '.array2string($list_id));
 		return $list_id;
