@@ -1041,7 +1041,7 @@ abstract class bo_merge
 			$key = '$$'.$field.'$$';
 			if($values[$key])
 			{
-				$date = egw_time::createFromFormat($this->datetime_format,$values[$key]);
+				$date = new egw_time($values[$key]);
 				$values[$key] = date('Y-m-d\TH:i:s',egw_time::to($date,'ts'));
 			}
 		}
