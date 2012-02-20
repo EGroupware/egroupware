@@ -572,7 +572,8 @@ class addressbook_groupdav extends groupdav_handler
 	function save_group(array &$contact, $oldContact=null)
 	{
 		$data = array('list_name' => $contact['n_fn']);
-		foreach(array('id','carddav_name','uid') as $name)
+		if (!isset($contact['owner'])) $contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		foreach(array('id','carddav_name','uid','owner') as $name)
 		{
 			if ($name != self::$path_attr) $data['list_'.$name] = $contact[$name];
 		}
