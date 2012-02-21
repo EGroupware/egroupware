@@ -39,6 +39,9 @@ require_once('HTTP/WebDAV/Server.php');
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
  * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
  *
+ * Permanent error_log() calls should use groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
+ *
  * @link http://www.groupdav.org/ GroupDAV spec
  * @link http://caldav.calconnect.org/ CalDAV resources
  * @link http://carddav.calconnect.org/ CardDAV resources
@@ -393,7 +396,7 @@ class groupdav extends HTTP_WebDAV_Server
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
 				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
 				{
-					error_log(__CLASS__."::$method(".array2string($options).') Enabling hack for iOS 5.0.1 addressbook: force Depth: 0 on PROPFIND for directory gateway!');
+					$this->log(__CLASS__."::$method(".array2string($options).') Enabling hack for iOS 5.0.1 addressbook: force Depth: 0 on PROPFIND for directory gateway!');
 					return true;
 				}
 				if (!$options['depth']) return true;	// depth 0 --> show only the self url
@@ -901,9 +904,6 @@ class groupdav extends HTTP_WebDAV_Server
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
 			return $this->autoindex($options);
-
-			error_log(__METHOD__."(".array2string($options).") 404 Not Found");
-			return '404 Not Found';
 		}
 		if (($handler = self::app_handler($app)))
 		{
@@ -1553,30 +1553,40 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($debug_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
 			$content .= $c;
 			if ($extra) $content .= $extra;
+			if ($this->to_log) $content .= "\n### ".implode("\n### ", $this->to_log)."\n";
 			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
-			self::log($content,$msg_file);
+
+			if ($msg_file && ($f = fopen($msg_file,'a')))
+			{
+				flock($f,LOCK_EX);
+				fwrite($f,$content);
+				flock($f,LOCK_UN);
+				fclose($f);
+			}
+			else
+			{
+				foreach($explode("\n",$content) as $line) error_log($line);
+			}
 		}
 	}
 
 	/**
-	 * Log to a given file or error_log
+	 * Content of log() calls, to be appended to request_log
 	 *
-	 * @param string $content
-	 * @param string $msg_file=null
+	 * @var array
 	 */
-	private static function log($content,$msg_file=null)
+	private $to_log = array();
+
+	/**
+	 * Log unconditional to own request- and PHP error-log
+	 *
+	 * @param string $str
+	 */
+	public function log($str)
 	{
-		if ($msg_file && ($f = fopen($msg_file,'a')))
-		{
-			flock($f,LOCK_EX);
-			fwrite($f,$content);
-			flock($f,LOCK_UN);
-			fclose($f);
-		}
-		else
-		{
-			foreach($explode("\n",$content) as $line) error_log($line);
-		}
+		$to_log[] = $str;
+
+		error_log($str);
 	}
 
 	/**

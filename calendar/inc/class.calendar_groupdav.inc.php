@@ -14,7 +14,10 @@
 require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
- * eGroupWare: GroupDAV access: calendar handler
+ * EGroupware: CalDAV / GroupDAV access: calendar handler
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 class calendar_groupdav extends groupdav_handler
 {
@@ -597,6 +600,20 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$eventId = $oldEvent['id'];
 
+			//client specified a CalDAV Scheduling schedule-tag AND an etag If-Match precondition
+			if ($this->use_schedule_tag && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']) &&
+				isset($_SERVER['HTTP_IF_MATCH']))
+			{
+				if ($oldEvent['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+				{
+					$this->groupdav->log("Both If-Match and If-Schedule-Tag-Match header given: If-Schedule-Tag-Match ignored for event owner!");
+					unset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']);
+				}
+				else
+				{
+					$this->groupdav->log("Both If-Match and If-Schedule-Tag-Match header given: If-Schedule-Tag-Match takes precedence for participants!");
+				}
+			}
 			//client specified a CalDAV Scheduling schedule-tag precondition
 			if ($this->use_schedule_tag && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
 			{
@@ -638,7 +655,7 @@ class calendar_groupdav extends groupdav_handler
 						}
 						elseif (!isset($event['participants']) || $event['participants'][$user] === $oldEvent['participants'][$user])
 						{
-							error_log(__METHOD__."(,,$user) schedule-tag given, but NO change for current user event=".array2string($event).', old-event='.array2string($oldEvent));
+							$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO change for current user event=".array2string($event).', old-event='.array2string($oldEvent));
 							return '412 Precondition Failed';
 						}
 					}
@@ -858,7 +875,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 		if ($event['owner'] != $user)
 		{
-			error_log(__METHOD__."('$ical',,$user) ORGANIZER is NOT principal!");
+			$this->groupdav->log(__METHOD__."('$ical',,$user) ORGANIZER is NOT principal!");
 			return '403 Forbidden';
 		}
 		//print_r($event);

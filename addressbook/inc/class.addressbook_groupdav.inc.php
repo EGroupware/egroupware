@@ -17,6 +17,9 @@
  * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
  * without getting into problems with memory_limit.
  *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
+ *
  * @todo check/fix contacts in LDAP (no carddav_name column!)
  */
 class addressbook_groupdav extends groupdav_handler
@@ -281,7 +284,7 @@ class addressbook_groupdav extends groupdav_handler
 				switch((string)$filter['name'])
 				{
 					case 'param-filter':
-						error_log(__METHOD__."(...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
+						$this->groupdav->log(__METHOD__."(...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'prop-filter':	// can be multiple prop-filter, see example
 						if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
@@ -346,7 +349,7 @@ class addressbook_groupdav extends groupdav_handler
 						}
 						// fall through
 					default:
-						error_log(__METHOD__."(".array2string($options).",,$id) unknown filter=".array2string($filter).' --> ignored');
+						$this->groupdav->log(__METHOD__."(".array2string($options).",,$id) unknown filter=".array2string($filter).' --> ignored');
 						break;
 				}
 			}
@@ -376,7 +379,7 @@ class addressbook_groupdav extends groupdav_handler
 				case 'href':
 					break;	// from addressbook-multiget, handled below
 				default:
-					error_log(__METHOD__."(...) unknown xml: options[other]=".array2string($options['other']));
+					$this->groupdav->log(__METHOD__."(...) unknown xml: options[other]=".array2string($options['other']));
 					break;
 			}
 		}

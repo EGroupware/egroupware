@@ -18,6 +18,9 @@
  * to allow to check if required properties are set!
  * groupdav_principals::add_principal() converts simple associative props (name => value pairs)
  * to name => HTTP_WebDAV_Server(name, value) pairs.
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 class groupdav_principals extends groupdav_handler
 {
@@ -111,7 +114,7 @@ class groupdav_principals extends groupdav_handler
 			{
 				return $this->$method($path, $options, $files, $user);
 			}
-			error_log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
+			$this->groupdav->log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
 			return '501 Not Implemented';
 		}
 		list(,$principals,$type,$name,$rest) = explode('/',$path,5);
@@ -290,7 +293,7 @@ class groupdav_principals extends groupdav_handler
 		}
 		if (!isset($property_search) || !$search_props || !isset($search_props[$property_search]['match']))
 		{
-			error_log(__METHOD__."('$path',...) Could not parse options[other]=".array2string($options['other']));
+			$this->groupdav->log(__METHOD__."('$path',...) Could not parse options[other]=".array2string($options['other']));
 			return '400 Bad Request';
 		}
 		// make sure search property is included in toplevel props (can be missing and defaults to property-search/prop's)
@@ -310,7 +313,7 @@ class groupdav_principals extends groupdav_handler
 				substr($search_props[0]['match'],-13) == '/groupdav.php')
 			{
 				$path = '/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
-				error_log('Enabling hack for Lightning prior 1.1.1 for searching calendar-home-set matching "/groupdav.php": limiting search to '.$path);
+				$this->groupdav->log('Enabling hack for Lightning prior 1.1.1 for searching calendar-home-set matching "/groupdav.php": limiting search to '.$path);
 			}
 		}
 		// check type attribute to limit search on a certain tree
@@ -894,7 +897,7 @@ class groupdav_principals extends groupdav_handler
 				break;
 
 			default:
-				error_log(__METHOD__."('$url') unsupported principal URL '$url'!");
+				$this->groupdav->log(__METHOD__."('$url') unsupported principal URL '$url'!");
 				return false;
 		}
 		return $uid && in_array($type, $only_type) ? $uid : false;
