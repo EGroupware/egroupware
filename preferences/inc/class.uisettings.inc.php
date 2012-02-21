@@ -533,7 +533,7 @@
 			{
 				if (!is_array($default)) $default = explode(',',$default);
 				$select = html::input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
-				$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',5);
+				$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',min(5,count($values)));
 			}
 			if($GLOBALS['type'] == 'user' && (string)$GLOBALS['egw']->preferences->default[$_appname][$name] !== '')
 			{
