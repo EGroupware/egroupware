@@ -73,6 +73,7 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
 			'REV'				=> array('modified'),
+			//set for Apple: 'X-ABSHOWAS' => array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
 
 	/**
@@ -378,6 +379,18 @@ class addressbook_vcal extends addressbook_bo
 							$hasdata++;
 						}
 						break;
+
+					case 'n_fn':
+					case 'fileas_type':
+						// mark entries with fileas_type == 'org_name' as X-ABSHOWAS:COMPANY (Apple AB specific)
+						if (isset($this->supportedFields['X-ABSHOWAS']) &&
+							$entry['org_name'] == $entry['n_fileas'] && $entry['fileas_type'] == 'org_name')
+						{
+							if ($vcardField == 'X-ABSHOWAS') $value = 'COMPANY';
+							if ($databaseField == 'n_fn') $value = $entry['org_name'];
+						}
+						//error_log("vcardField='$vcardField', databaseField='$databaseField', this->supportedFields['X-ABSHOWAS']=".array2string($this->supportedFields['X-ABSHOWAS'])." --> value='$value'");
+						// fall-through
 
 					default:
 						if (($size > 0) && strlen(implode(',', $values) . $value) > $size)
@@ -926,6 +939,14 @@ class addressbook_vcal extends addressbook_bo
 
 							case 'note':
 								$contact[$fieldName] = str_replace("\r\n", "\n", $vcardValues[$vcardKey]['value']);
+								break;
+
+							case 'fileas_type':
+								// store Apple's X-ABSHOWAS:COMPANY as fileas_type == 'org_name'
+								if ($vcardValues[$vcardKey]['value'] == 'COMPANY')
+								{
+									$contact[$fieldName] = 'org_name';
+								}
 								break;
 
 							case 'uid':
