@@ -13,6 +13,9 @@
 
 /**
  * EGroupware: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 abstract class groupdav_handler
 {

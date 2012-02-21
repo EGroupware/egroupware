@@ -15,6 +15,9 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * EGroupware: GroupDAV access: infolog handler
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 class infolog_groupdav extends groupdav_handler
 {
@@ -367,7 +370,7 @@ class infolog_groupdav extends groupdav_handler
 		}
 		elseif (empty($attrs['start']))
 		{
-			error_log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
+			$this->groupdav->log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
 			return '1';	// to not give sql error, but simply not filter out anything
 		}
 		// we dont need to care for DURATION line in rfc4791#section-9.9, as we always put that in DUE/info_enddate
