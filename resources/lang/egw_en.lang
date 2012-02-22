@@ -7,6 +7,7 @@ add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	All categories
 book	resources	en	Book
+book resource	resources	en	Book resource
 book selected resources	resources	en	Book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
@@ -19,11 +20,8 @@ check all	resources	en	Check all
 choose categories admin	resources	en	Choose categories admin
 clear selection	resources	en	Clear selection
 configure access permissions	admin	en	Configure ACL
-conflict	resources	en	Conflict
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
-custom fields	resources	en	Custom fields
-days	resources	en	Days
 delete selected resources	resources	en	Delete selected resources
 delete this entry	resources	en	Delete this entry
 description (short)	resources	en	Short description
@@ -65,6 +63,7 @@ long description	resources	en	Long description
 manage mapping	resources	en	Manage mapping
 name of resource	resources	en	Name of resource
 name:	resources	en	Name:
+new accessory	resources	en	New accessory
 no description available	resources	en	No description available.
 no resources selected	resources	en	No resources selected.
 notify your administrator to correct this situation	resources	en	Notify your administrator.
@@ -108,6 +107,7 @@ use the category's icon	resources	en	Use the category icon
 useable	resources	en	Usable
 useable:	resources	en	Usable:
 view accessories for this resource	resources	en	View accessories
+view calendar	resources	en	View calendar
 view this entry	resources	en	View entry
 web-page of resource	resources	en	Web page of resource
 web-site for this resource	resources	en	Website for this resource
