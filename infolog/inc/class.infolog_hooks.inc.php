@@ -443,6 +443,25 @@ class infolog_hooks
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$settings['calendar_set'] = array(
+				'type'   => 'multiselect',
+				'label'  => 'Participants for scheduling an appointment',
+				'name'   => 'calendar_set',
+				'values' => array(
+					'responsible' => lang('Responsible'),
+					'contact' => lang('Contact'),
+					'owner' => lang('Owner'),
+					'user' => lang('Current user'),
+					'selected' => lang('Selected calendars'),
+				),
+				'help'   => 'Which participants should be preselected when scheduling an appointment.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'responsible,contact,user',
+			);
+		}
 		return $settings;
 	}
 

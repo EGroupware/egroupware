@@ -35,6 +35,12 @@
    {index_load_cfs}
    </td>
   </tr>
+  <tr class="row_off">
+   <td colspan="3">{lang_sub_prefix}</td>
+   <td>
+   {sub_prefix}
+   </td>
+  </tr>
   <tr>
    <td colspan="4" align="left">
     {save_button} &nbsp; {apply_button} &nbsp; {cancel_button}

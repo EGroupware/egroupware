@@ -9,7 +9,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Description" options=",,,info_des" span="all"/>
+					<description value="Description" for="info_des" span="all"/>
 				</row>
 				<row class="row" valign="top">
 					<description/>
@@ -54,13 +54,13 @@
 					<description value="General" span="all"/>
 				</row>
 				<row class="row">
-					<description value="Priority" options=",,,info_priority"/>
+					<description value="Priority" for="info_priority"/>
 					<menulist>
 						<menupopup statustext="select a priority for this task" id="info_priority"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Location" options=",,,info_location"/>
+					<description value="Location" for="info_location"/>
 					<textbox id="info_location" size="80" maxlength="255"/>
 				</row>
 				<row class="th">
@@ -85,11 +85,11 @@
 					</grid>
 				</row>
 				<row class="row" valign="top">
-					<description value="Responsible" options=",,,info_responsible"/>
+					<description value="Responsible" for="info_responsible"/>
 					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="9" options="both"/>
 				</row>
 				<row class="row" disabled="1">
-					<description value="Confirm" options=",,,info_confirm"/>
+					<description value="Confirm" for="info_confirm"/>
 					<menulist>
 						<menupopup statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" id="info_confirm"/>
 					</menulist>
@@ -119,15 +119,15 @@
 					</hbox>
 				</row>
 				<row class="row">
-					<description value="planned time" options=",,,info_planned_time"/>
+					<description value="planned time" for="info_planned_time"/>
 					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
 				</row>
 				<row class="row">
-					<description value="Re-planned time" options=",,,info_replanned_time"/>
+					<description value="Re-planned time" for="info_replanned_time"/>
 					<date-duration id="info_replanned_time" options=",$cont[duration_format]"/>
 				</row>
 				<row class="row" valign="top" height="60%">
-					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" options=",,,info_used_time"/>
+					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"/>
 					<date-duration id="info_used_time"/>
 				</row>
 			</rows>
@@ -160,12 +160,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
 				<column width="260"/>
-				<column width="140"/>
+				<column width="90"/>
 				<column width="27%"/>
 			</columns>
 			<rows>
@@ -176,16 +176,16 @@
 					<description/>
 				</row>
 				<row class="th" height="28">
-					<description value="Type" options=",,,info_type"/>
+					<description value="Type" for="info_type"/>
 					<hbox options="0,0" span="all">
 						<menulist>
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
-						<int id="info_number" readonly="true" class="infoId"/>
+						<textbox type="integer" id="info_number" readonly="true" class="infoId"/>
 					</hbox>
 				</row>
 				<row class="row">
-					<description value="Contact" options=",,,info_from"/>
+					<description value="Contact" for="info_from"/>
 					<vbox options="0,0">
 						<hbox options="0,0">
 							<link-entry id="info_contact" class="noWrap"/>
@@ -193,11 +193,11 @@
 						</hbox>
 						<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="36" maxlength="255" class="$cont[hide_from_css]"/>
 					</vbox>
-					<description value="Phone/Email" options=",,,info_addr"/>
+					<description value="Phone/Email" for="info_addr"/>
 					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="inputFullWidth"/>
 				</row>
 				<row class="row">
-					<description value="Category" options=",,,info_cat"/>
+					<description value="Category" for="info_cat"/>
 					<menulist>
 						<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
 					</menulist>
@@ -207,18 +207,18 @@
 					</hbox>
 				</row>
 				<row class="row">
-					<description value="Subject" options=",,,info_subject"/>
+					<description value="Subject" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all"/>
 				</row>
 				<row valign="top" height="250">
 					<tabbox id="description|links|delegation|project|customfields|history" span="all">
 						<tabs>
-							<tab label="Description" statustext="longer textual description"/>
-							<tab label="Links" statustext="Links of this entry"/>
-							<tab label="Delegation" statustext="responsible user, priority"/>
-							<tab label="Projectmanager" statustext="Project settings: price, times"/>
-							<tab label="Customfields" statustext="Custom fields"/>
-							<tab label="History" statustext="Change history"/>
+							<tab id="description" label="Description" statustext="longer textual description"/>
+							<tab id="links" label="Links" statustext="Links of this entry"/>
+							<tab id="delegation" label="Delegation" statustext="responsible user, priority"/>
+							<tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
+							<tab id="customfields" label="Customfields" statustext="Custom fields"/>
+							<tab id="history" label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
 							<template id="infolog.edit.description"/>
@@ -234,52 +234,57 @@
 					<description value="Dates, Status, Access" span="all"/>
 				</row>
 				<row class="row_on">
-					<description value="Startdate" options=",,,info_startdate"/>
+					<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" options=",2"/>
-					<description value="Enddate" options=",,,info_enddate"/>
-					<date statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
+					<description value="Enddate" for="info_enddate"/>
+					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
 				</row>
 				<row class="row">
-					<description value="Status" options=",,,info_status"/>
+					<description value="Status" for="info_status"/>
 					<menulist>
 						<menupopup statustext="@status_help" id="info_status" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
 					</menulist>
-					<description value="Completed" options=",,,info_percent"/>
+					<description value="Completed" for="info_percent"/>
 					<menulist>
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Date completed" options=",,,info_datecompleted"/>
+					<description value="Date completed" for="info_datecompleted"/>
 					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted"/>
-					<description value="Private" options=",,,info_access"/>
+					<description value="Private" for="info_access"/>
 					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 				</row>
 				<row class="row" disabled="!@info_owner">
 					<description value="Owner"/>
-					<menulist>
-						<menupopup type="select-account" id="info_owner" readonly="true"/>
-					</menulist>
+					<vbox options="0,0">
+						<menulist>
+							<menupopup type="select-account" id="info_owner" readonly="true"/>
+						</menulist>
+						<date-time id="info_created" readonly="true"/>
+					</vbox>
 					<description value="Last modified"/>
-					<hbox options="0" orient="0">
+					<vbox options="0" orient="0">
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
-						<date-time id="info_datemodified" readonly="true" class="lpadding5"/>
-					</hbox>
+						<date-time id="info_datemodified" readonly="true"/>
+					</vbox>
 				</row>
 				<row>
-					<hbox span="3">
+					<hbox span="2">
 						<button statustext="Saves this entry" label="Save" id="button[save]"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="this.form.submit(); this.value='';" options="Actions..."/>
 						</menulist>
-						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 						<html id="js"/>
 					</hbox>
-					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
+					<hbox span="2">
+						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
+						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

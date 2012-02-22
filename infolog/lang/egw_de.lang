@@ -107,6 +107,7 @@ creation	infolog	de	Erstellung
 csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname
 csv-import	common	de	CSV-Import
+current user	infolog	de	Aktueller Benutzer
 custom	infolog	de	Benutzerdefiniert
 custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der Verknüpfung zu verwenden
 custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
@@ -182,7 +183,7 @@ exists	infolog	de	Besteht
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
-Fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)	infolog	de	Welche felder wollen Sie zurücksetzen, wenn Sie einen Infologeintrag kopieren? (bestimmte Felder werden - aus technischen Erwägungen heraus - während des Kopiervorgangs immer zurückgesetzt. Bsp.: ID, Uid, Erstellt, Erstellt von, Geändert und Geändert von)
+fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)	infolog	de	Welche felder wollen Sie zurücksetzen, wenn Sie einen Infologeintrag kopieren? (bestimmte Felder werden - aus technischen Erwägungen heraus - während des Kopiervorgangs immer zurückgesetzt. Bsp.: ID, Uid, Erstellt, Erstellt von, Geändert und Geändert von)
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
 first argument for preg_replace	infolog	de	Ersten Argument für pre_replace
@@ -299,6 +300,7 @@ own upcoming	infolog	de	eigene zukünftig
 owner does not have edit rights	infolog	de	Der Besitzer dieses Datensatzes benötigt Bearbeitungsrechte
 parent	infolog	de	Elterneintrag
 parent infolog	infolog	de	Übergeordneter Infolog
+participants for scheduling an appointment	infolog	de	Teilnehmer für Termin planen
 path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
@@ -311,6 +313,7 @@ phone/email	infolog	de	Telefon/E-Mail
 phonecall	infolog	de	Telefonanruf
 planned	infolog	de	geplant
 planned time	infolog	de	geplante Zeit
+prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vorgabe: Re:)
 price	infolog	de	Preis
 pricelist	infolog	de	Preisliste
 primary link	infolog	de	Primäre Verknüpfung
@@ -351,6 +354,7 @@ same day	infolog	de	gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
 saves this entry	infolog	de	diesen Eintrag speichern
+schedule appointment	infolog	de	Termin planen
 search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
 second parameter for preg_replace	infolog	de	2. Paramter für preg_replace
@@ -370,6 +374,7 @@ select new category	infolog	de	Wählen Sie eine Kategory
 select to filter by owner	infolog	de	Besitzer zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
 select users or groups	infolog	de	Wählen Sie Benutzer oder Gruppen aus
+selected calendars	infolog	de	Ausgewählte Kalender
 selection cf	infolog	de	Auswahl für CF
 sender	infolog	de	Absender
 set status to done	infolog	de	Status auf erledigt setzen
@@ -450,6 +455,7 @@ view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag 
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
+which participants should be preselected when scheduling an appointment.	infolog	de	Welche Teilnehmer sollen als Vorgabe ausgewählt sein bei Termin planen.
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.

@@ -502,18 +502,13 @@ class infolog_bo
 		{
 			$toTZ = egw_time::$server_timezone;
 		}
-
+		//error_log(__METHOD__.'(values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']).", from=".array2string($fromTZId).", to=".array2string($toTZId).") tz=".$tz->getName().', fromTZ='.$fromTZ->getName().', toTZ='.$toTZ->getName().', userTZ='.egw_time::$user_timezone->getName());
 	 	foreach($this->timestamps as $key)
 		{
 		 	if ($values[$key])
 		 	{
 			 	$time = new egw_time($values[$key], $tz);
 			 	$time->setTimezone($fromTZ);
-			 	if ($key == 'info_enddate')
-			 	{
-				 	// Set due date to 00:00
-				 	$time->setTime(0, 0, 0);
-			 	}
 			 	if ($time->format('Hi') == '0000')
 			 	{
 				 	// we keep dates the same in new timezone
@@ -527,6 +522,7 @@ class infolog_bo
 			 	$values[$key] = egw_time::to($time,'ts');
 		 	}
 		}
+		//error_log(__METHOD__.'() --> values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']));
 	 }
 
 	/**
@@ -593,13 +589,6 @@ class infolog_bo
 
 			// pre-cache title and file access
 			self::set_link_cache($data);
-		}
-		elseif (!empty($data['info_enddate']))
-		{
-			$time = new egw_time($data['info_enddate'], egw_time::$server_timezone);
-			// Set due date to 00:00
-			$time->setTime(0, 0, 0);
-			$data['info_enddate'] = egw_time::to($time,'ts');
 		}
 
 		return $data;
@@ -859,24 +848,9 @@ class infolog_bo
 		{
 			// convert user- to server-time
 			$this->time2time($to_write, null, false);
-
-			if (!empty($values['info_enddate']))
-			{
-				$time = new egw_time($values['info_enddate'], egw_time::$user_timezone);
-				// Set due date to 00:00
-				$time->setTime(0, 0, 0);
-				$values['info_enddate'] = egw_time::to($time,'ts');
-			}
 		}
 		else
 		{
-			if (!empty($values['info_enddate']))
-			{
-				$time = new egw_time($values['info_enddate'], egw_time::$server_timezone);
-				// Set due date to 00:00
-				$time->setTime(0, 0, 0);
-				$to_write['info_enddate'] = egw_time::to($time,'ts');
-			}
 			// convert server- to user-time
 			$this->time2time($values);
 		}
@@ -1047,7 +1021,6 @@ class infolog_bo
 					if ($data[$key])
 					{
 						$time = new egw_time($data[$key], egw_time::$server_timezone);
-						if ($key == 'info_enddate') $time->setTime(0, 0,0 ); // Set due date to 00:00
 						if (!isset($query['date_format']) || $query['date_format'] != 'server')
 						{
 							if ($time->format('Hi') == '0000')
