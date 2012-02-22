@@ -7,6 +7,7 @@ add resources	resources	de	Ressourcen hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
 book	resources	de	Buchen
+book resource	resources	de	Ressource buchen
 book selected resources	resources	de	Ausgewählte Ressourcen buchen
 book this resource	resources	de	Ressource buchen
 bookable	resources	de	buchbar
@@ -52,6 +53,7 @@ location:	resources	de	Lagerort:
 locations / rooms	resources	de	Orte / Räume
 name of resource	resources	de	Name der Ressource
 name:	resources	de	Name:
+new accessory	resources	de	Neues Zubehör
 no description available	resources	de	Keine Beschreibung vorhanden
 no resources selected	resources	de	Keine Ressource ausgewählt
 notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
@@ -90,6 +92,7 @@ use the category's icon	resources	de	Bild der Kategorie benutzen
 useable	resources	de	Nutzbar
 useable:	resources	de	Nutzbar:
 view accessories for this resource	resources	de	Zeige das Zubehör der Ressource an
+view calendar	resources	de	Kalender anzeigen
 view this entry	resources	de	Diesen Eintrag anschauen
 web-page of resource	resources	de	Ausführliche Beschreibung der Ressource
 web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource

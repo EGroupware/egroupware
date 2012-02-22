@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="resources.show.rows" template="" lang="" group="0" version="1.5.001">
-		<grid>
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
 				<column width="3%"/>
+				<column/>
 				<column/>
 				<column/>
 				<column width="5%"/>
@@ -19,8 +20,8 @@
 						<nextmatch-sortheader label="Short description" id="short_description"/>
 					</vbox>
 					<vbox>
-						<nextmatch-sortheader label="Useable" id="useable" statustext="How many of this resource are usable"/>
-						<nextmatch-sortheader label="Quantity" id="quantity" statustext="How many of this resource exists"/>
+						<nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
+						<nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Category" id="cat_id"/>
@@ -30,35 +31,37 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<description value="Storage information"/>
 					</vbox>
+					<nextmatch-customfields id="customfields"/>
 					<hbox align="right">
-						<description value="Actions"/>
+						<nextmatch-header label="Actions" id="legacy_actions"/>
 						<description/>
 						<description needed="1"/>
-						<button image="check.png" label="Check all" align="right" id="check_all" statustext="Check all" needed="1" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]'),true); return false;"/>
+						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]'),true); return false;" image="check.png"/>
 					</hbox>
 				</row>
-				<row class="nmr" valign="top">
-					<button align="center" id="${row}[picture_thumb]" image="$row_cont[picture_thumb]" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.show&amp;res_id=$row_cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');return false;"/>
+				<row class="nmr $row_cont[class]" valign="top">
+					<button align="center" id="${row}[picture_thumb]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.show&amp;res_id=$row_cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');return false;" image="$row_cont[picture_thumb]"/>
 					<vbox>
-						<description no_lang="1" id="${row}[name]"/>
-						<description no_lang="1" id="${row}[short_description]"/>
+						<description id="${row}[name]" no_lang="1"/>
+						<description id="${row}[short_description]" no_lang="1"/>
 					</vbox>
 					<vbox align="right">
-						<description no_lang="1" align="right" id="${row}[useable]"/>
-						<description no_lang="1" align="right" id="${row}[quantity]"/>
+						<description align="right" id="${row}[useable]" no_lang="1"/>
+						<description align="right" id="${row}[quantity]" no_lang="1"/>
 					</vbox>
 					<vbox>
 						<menulist>
-							<menupopup type="select-cat" no_lang="1" id="${row}[cat_id]" readonly="true"/>
+							<menupopup type="select-cat" id="${row}[cat_id]" no_lang="1" readonly="true"/>
 						</menulist>
 						<menulist>
-							<menupopup type="select-account" no_lang="1" id="${row}[admin]" readonly="true"/>
+							<menupopup type="select-account" id="${row}[admin]" no_lang="1" readonly="true"/>
 						</menulist>
 					</vbox>
 					<vbox>
-						<description no_lang="1" id="${row}[location]"/>
-						<description no_lang="1" id="${row}[storage_info]"/>
+						<description id="${row}[location]" no_lang="1"/>
+						<description id="${row}[storage_info]" no_lang="1"/>
 					</vbox>
+					<customfields-list id="$row"/>
 					<grid id="${row}">
 						<columns>
 							<column/>
@@ -68,15 +71,15 @@
 						</columns>
 						<rows>
 							<row>
-								<button image="bookable" ro_image="trams16x16" label="Book this resource" align="center" statustext="Book this resource" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" id="bookable[$cont[res_id]]"/>
-								<button image="edit" ro_image="trans16x16" label="Edit" align="center" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" id="edit[$cont[res_id]]"/>
-								<button image="new" ro_image="trans16x16" label="Create new accessory for this resource" align="center" id="new_acc[$cont[res_id]]" statustext="Create new accessory for this resource" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;res_id=0&amp;accessory_of=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
-								<button image="view" ro_image="trans16x16" label="View" align="right" id="view[$cont[res_id]]" statustext="View this entry" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.show&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+								<button align="center" statustext="Book this resource" label="Book this resource" id="bookable[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="navbar" ro_image="trams16x16" class="image16"/>
+								<button align="center" statustext="Edit this entry" label="Edit" id="edit[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="edit" ro_image="trans16x16"/>
+								<button align="center" statustext="Create new accessory for this resource" label="Create new accessory for this resource" id="new_acc[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;res_id=0&amp;accessory_of=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="new" ro_image="trans16x16"/>
+								<button align="right" statustext="View this entry" label="View" id="view[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.show&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="view" ro_image="trans16x16"/>
 							</row>
 							<row>
-								<button image="calendar" ro_image="trans16x16" label="Show calendar of resource" align="center" statustext="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]'); return false;"/>
-								<button label="Delete" align="center" id="delete[$cont[res_id]]" statustext="Delete this entry" onclick="return confirm('Do you really want do delte this resource?');" image="delete" ro_image="trans16x16"/>
-								<button image="view_acc" ro_image="trans16x16" label="View accessories for this resource" align="center" id="view_acc[$cont[res_id]]" statustext="View accessories for this resource"/>
+								<button align="center" statustext="Show calendar of resource" label="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]'); return false;" image="calendar/planner" ro_image="trans16x16"/>
+								<button align="center" statustext="Delete this entry" label="Delete" id="delete[$cont[res_id]]" onclick="return confirm('Delete this entry');" image="delete" ro_image="trans16x16"/>
+								<button align="center" statustext="View accessories for this resource" label="View accessories for this resource" id="view_acc[$cont[res_id]]" image="view_acc" ro_image="trans16x16"/>
 								<checkbox align="right" id="checkbox[]" options="$cont[res_id]"/>
 							</row>
 						</rows>
@@ -85,47 +88,38 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show" template="" lang="" group="0" version="1.5.001">
+	<template id="resources.show" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
 			</columns>
 			<rows>
-				<row>
-					<nextmatch options="resources.show.rows" no_lang="1" id="nm"/>
+				<row disabled="!@msg">
+					<description align="center" id="msg" span="all" class="message"/>
 				</row>
 				<row>
-					<grid width="100%">
-						<columns>
-							<column/>
-							<column width="1%"/>
-							<column width="1%"/>
-							<column width="1%"/>
-							<column width="47px"/>
-						</columns>
-						<rows>
-							<row>
-								<description/>
-								<button image="bookable" ro_image="trans16x16" label="book selected resources" statustext="book selected resources" align="right" onclick="var resources = js_btn_book_selected(this.form); if(resources == false) { return false; } else { window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit')+'&amp;participants='+resources,'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; }" needed="1" id="btn_book_selected"/>
-								<button label="Show calendar of resource" image="calendar" ro_image="trans16x16" id="btn_cal_selected" statustext="Show calendar of resource" align="right" onclick="var resources = js_btn_book_selected(this.form); if(resources == false) { return false; } else { location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner')+'&amp;sortby=user&amp;owner=0,'+resources; return false; }" needed="1"/>
-								<button image="delete" label="delete selected resources" id="btn_delete_selected" statustext="delete selected resources" align="right" onclick="var resources = js_btn_book_selected(this.form); if(resources == false) { return false; } else { return confirm('Do you really want do delete the selected resources?'); }" needed="1"/>
-								<vbox>
-									<description/>
-									<button image="arrow_ltr" label="select/deselect all" statustext="select/deselect all" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]'),true); return false;" needed="1"/>
-									<description/>
-								</vbox>
-							</row>
-						</rows>
-					</grid>
+					<nextmatch id="nm" no_lang="1" options="resources.show.rows"/>
+				</row>
+				<row disabled="!@nm[selectcols]=/legacy_actions/">
+					<hbox align="right" span="all">
+						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('resources.show.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
+						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('resources.show.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
+					</hbox>
 				</row>
 				<row>
 					<hbox>
-						<button label="Add" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" id="add"/>
-						<button label="Add accessory" id="add_sub" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;content=0&amp;accessory_of=$cont[view_accs_of]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
+						<button label="Add accessory" id="add_sub" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;content=0&amp;accessory_of=$cont[view_accs_of]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Back" id="back"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			.image16 img {
+ max-width: 16px;
+ max-height: 16px;
+}
+		</styles>
 	</template>
 </overlay>
