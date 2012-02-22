@@ -551,7 +551,14 @@ abstract class bo_tracking
 		}
 
 		// restore the user enviroment
-		if ($this->save_prefs) $GLOBALS['egw_info']['user'] = $this->save_prefs; unset($this->save_prefs);
+		if ($this->save_prefs)
+		{
+			$GLOBALS['egw_info']['user'] = $this->save_prefs;
+			// need to call preferences constructor and read_repository, to set user timezone again
+			$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
+			unset($this->save_prefs);
+		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
 		{
 			translation::init();
