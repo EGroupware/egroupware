@@ -1214,72 +1214,21 @@ class calendar_uiforms extends calendar_ui
 					{
 						continue;
 					}
-					
-					switch($link_app)
+					if(!$n)
 					{
-						case 'infolog':
-							static $infolog_bo;
-							if(!$infolog_bo) $infolog_bo = new infolog_bo();
-							$infolog = $app_entry = $infolog_bo->read($link_id);
-							$event = array_merge($event, array(
-								'category'	=> $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $infolog['info_cat']),
-								'priority'	=> $infolog['info_priority'] + 1,
-								'public'	=> $infolog['info_access'] != 'private',
-								'title'		=> $infolog['info_subject'],
-								'description'	=> $infolog['info_des'],
-								'location'	=> $infolog['info_location'],
-								'start'		=> $infolog['info_startdate'],
-								'end'		=> $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
-							));
-							if(!$event['end']) $event['end'] = $event['start'] + (int) $this->bo->cal_prefs['defaultlength']*60;
-
-							// Match categories by name
-							$event['category'] .= ($event['category'] ? ',':'') . $GLOBALS['egw']->categories->name2id(categories::id2name($infolog['info_cat']));
-							// Only add current user, not all selected calendar users
-							$event['participants'] = array(calendar_so::combine_user('u',$event['owner']) => 'ACHAIR');
-							$event['participant_types'] = array('u' => array($event['owner']=>'ACHAIR'));
-							// Add responsible as participant
-							foreach($infolog['info_responsible'] as $responsible) {
-								$event['participants'][calendar_so::combine_user('u',$responsible)] = calendar_so::combine_status('U');
-								$event['participant_types']['u'][$responsible] = 'U';
-							}
-							// Add linked contact as participant
-							if($infolog['info_link']['app'] == 'addressbook')
+						$event['title'] = egw_link::title($link_app,$link_id);
+						// ask first linked app via "calendar_set" hook, for further data to set, incl. links
+						if (($set = $GLOBALS['egw']->hooks->single($event+array('location'=>'calendar_set','entry_id'=>$link_id),$link_app)))
+						{
+							foreach((array)$set['link_app'] as $i => $l_app)
 							{
-								$event['participants'][calendar_so::combine_user('c',$infolog['info_link']['id'])] = calendar_so::combine_status('U');
-								$event['participant_types']['c'][$infolog['info_link']['id']] = 'U';
+								if (($l_id=$set['link_id'][$i])) egw_link::link('calendar',$content['link_to']['to_id'],$l_app,$l_id);
 							}
-							// Add infolog link to calendar entry
-							egw_link::link('calendar',$link_to_id,$infolog['info_link']['app'],$infolog['info_link']['id']);
+							unset($set['link_app']);
+							unset($set['link_id']);
 
-							// Copy infolog's links
-							foreach(egw_link::get_links('infolog',$link_id) as $copy_link)
-							{
-								if($copy_link['link_id'] < 0) 
-								{
-									continue;
-									// Doesn't work yet
-									$fileinfo = egw_link::get_link($copy_link['app'], $copy_link['id'], 'infolog',$link_id);
-									$copy_link['id'] = array(
-										'name'	=> $copy_link['id'],
-										'type'	=> $copy_link['type'],
-										'tmp_name' => egw_link::vfs_path('infolog',$link_id,$copy_link['id'])
-									);
-								}
-								egw_link::link('calendar', $link_to_id, $copy_link['app'], $copy_link['id'],$copy_link['remark']);
-							}
-
-							break;
-						default:
-							$event['title'] = egw_link::title($link_app,$link_id);
-					}
-
-					// Copy same custom fields
-					$cal_cfs = config::get_customfields('calendar');
-					$link_app_cfs = config::get_customfields($link_app);
-					foreach($cal_cfs as $name => $settings)
-					{
-						if($link_app_cfs[$name]) $event['#'.$name] = $app_entry['#'.$name];
+							$event = array_merge($event,$set);
+						}
 					}
 					egw_link::link('calendar',$link_to_id,$link_app,$link_id);
 				}

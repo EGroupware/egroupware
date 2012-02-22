@@ -61,6 +61,7 @@ $setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog_hooks::all_hooks';
 $setup_info['infolog']['hooks']['search_link'] = 'infolog_hooks::search_link';
 $setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.infolog_bo.pm_icons';
 $setup_info['infolog']['hooks']['timesheet_set'] = 'infolog.infolog_ui.timesheet_set';
+$setup_info['infolog']['hooks']['calendar_set'] = 'infolog.infolog_ui.calendar_set';
 
 /* Dependencies for this app to work */
 $setup_info['infolog']['depends'][] = array(

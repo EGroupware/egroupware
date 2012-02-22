@@ -81,7 +81,6 @@ class infolog_ui
 		'add'     => 'InfoLog - New',
 		'add_sub' => 'InfoLog - New Subproject',
 		'sp'      => '- Subprojects from',
-		're'      => 'Re:'
 	);
 
 	/**
@@ -127,6 +126,12 @@ class infolog_ui
 		}
 		*/
 		$GLOBALS['infolog_ui'] =& $this;	// make ourself availible for ExecMethod of get_rows function
+
+		// can be removed for next release / infolog update
+		if (!$GLOBALS['egw']->hooks->hook_exists('calendar_set','infolog'))
+		{
+			$GLOBALS['egw']->hooks->register_single_app_hook('infolog','calendar_set');
+		}
 	}
 
 	/**
@@ -477,6 +482,95 @@ class infolog_ui
 			}
 		}
 		return $set;
+	}
+
+	/**
+	 * Hook for calendar to set some extra data and links
+	 *
+	 * @param array $data event-array preset by calendar plus
+	 * @param int $data[entry_id] info_id
+	 * @return array with key => value pairs to set in new event and link_app/link_id arrays
+	 */
+	function calendar_set($data)
+	{
+		if (!($infolog = $this->bo->read($data['entry_id'])))
+		{
+			return $data;
+		}
+		$event = array_merge($data,array(
+			'category'	=> $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $infolog['info_cat']),
+			'priority'	=> $infolog['info_priority'] + 1,
+			'public'	=> $infolog['info_access'] != 'private',
+			'title'		=> $infolog['info_subject'],
+			'description'	=> $infolog['info_des'],
+			'location'	=> $infolog['info_location'],
+			'start'		=> $infolog['info_startdate'],
+			'end'		=> $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
+		));
+		unset($event['entry_id']);
+		if (!$event['end']) $event['end'] = $event['start'] + (int) $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']*60;
+
+		// Match categories by name
+		$event['category'] = $GLOBALS['egw']->categories->name2id(categories::id2name($infolog['info_cat']));
+
+		// make current user the owner of the new event, not the selected calendar, if current user has rights for it
+		$event['owner'] = $user = $GLOBALS['egw_info']['user']['account_id'];
+
+		// add/modify participants according to prefs
+		$prefs = explode(',',$this->prefs['calendar_set'] ? $this->prefs['calendar_set'] : 'responsible,contact,user');
+
+		// if no default participants (selected calendars) --> remove all
+		if (!in_array('selected',$prefs))
+		{
+			$event['participants'] = $event['participant_types'] = array();
+		}
+		// Add responsible as participant
+		if (in_array('responsible',$prefs))
+		{
+			foreach($infolog['info_responsible'] as $responsible)
+			{
+				$event['participants'][$responsible] = $event['participant_types']['u'][$responsible] =
+					calendar_so::combine_status($user==$responsible?'A':'U');
+			}
+		}
+		// Add linked contact as participant
+		if (in_array('contact',$prefs) && $infolog['info_link']['app'] == 'addressbook')
+		{
+			$event['participants'][calendar_so::combine_user('c',$infolog['info_link']['id'])] =
+				$event['participant_types']['c'][$infolog['info_link']['id']] = calendar_so::combine_status('U');
+		}
+		if (in_array('owner',$prefs))
+		{
+			$event['participants'][$infolog['info_owner']] = $event['participant_types']['u'][$infolog['info_owner']] =
+				calendar_so::combine_status('A',1,'CHAIR');
+		}
+		// Add current user, if set or no other participants, which is not allowed
+		if (in_array('user',$prefs))
+		{
+			$event['participants'][$user] = $event['participant_types']['u'][$user] =
+				calendar_so::combine_status('A',1,'CHAIR');
+		}
+
+		// Add infolog link to calendar entry
+		$event['link_app'][] = $infolog['info_link']['app'];
+		$event['link_id'][]  = $infolog['info_link']['id'];
+
+		// Copy infolog's links
+		foreach(egw_link::get_links('infolog',$infolog['info_id'],'','link_lastmod DESC',true) as $link)
+		{
+			if ($link['app'] != egw_link::VFS_APPNAME)
+			{
+				$event['link_app'][] = $link['app'];
+				$event['link_id'][]  = $link['id'];
+			}
+		}
+		// Copy same custom fields
+		foreach(config::get_customfields('calendar') as $name => $settings)
+		{
+			if ($this->bo->customfields[$name]) $event['#'.$name] = $infolog['#'.$name];
+		}
+		//error_log(__METHOD__.'('.array2string($data).') infolog='.array2string($infolog).' returning '.array2string($event));
+		return $event;
 	}
 
 	/**
@@ -950,7 +1044,7 @@ class infolog_ui
 		{
 			$actions['calendar'] = array(	// interactive add for a single event
 				'icon' => 'calendar/navbar',
-				'caption' => 'Calendar',
+				'caption' => 'Schedule appointment',
 				'group' => $group,
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&'.
 					egw_link::get_registry('calendar', 'add_app') . '[]=infolog&'.egw_link::get_registry('calendar','add_id').'[]=$id',
@@ -1619,7 +1713,8 @@ class infolog_ui
 				$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
 				$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
 				$content['info_confirm'] = 'not';
-				$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
+				$config = config::read('infolog');
+				$content['info_subject']= lang(empty($config['sub_prefix']) ? 'Re:': $config['sub_prefix']).' '.$parent['info_subject'];
 				$content['info_des'] = '';
 				$content['info_lastmodified'] = '';
 				if ($content['info_startdate'] < $this->bo->user_time_now)	// parent-startdate is in the past => today
@@ -1821,6 +1916,10 @@ class infolog_ui
 				$readonlys['button[edit]'] = $readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
 			}
 			$readonlys['action'] = $readonlys['button[cancel]'] = false;	// always allowed
+		}
+		elseif (!$info_id)
+		{
+			$readonlys['action'] = true;
 		}
 		// ToDo: use the old status before the delete
 		if ($undelete) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
@@ -2038,6 +2137,7 @@ class infolog_ui
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
 			config::save_value('index_load_cfs',$config_data['index_load_cfs'] = $_POST['index_load_cfs'],'infolog');
+			config::save_value('sub_prefix',$config_data['sub_prefix'] = $_POST['sub_prefix'],'infolog');
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
@@ -2077,6 +2177,8 @@ class infolog_ui
 			'lang_other' => lang('Other configurations'),
 			'lang_index_load_cfs' => lang('Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)'),
 			'index_load_cfs' => html::checkbox_multiselect('index_load_cfs',$config_data['index_load_cfs'],$this->bo->enums['type'],true,'',5),
+			'lang_sub_prefix' => lang('Prefix for sub-entries (default: Re:)'),
+			'sub_prefix' => html::input('sub_prefix',$config_data['sub_prefix']),
 		));
 
 		echo parse_navbar();

@@ -107,6 +107,7 @@ creation	infolog	en	Creation
 csv-fieldname	infolog	en	CSV field name
 csv-filename	infolog	en	CSV file name
 csv-import	common	en	CSV import
+current user	infolog	en	Current user
 custom	infolog	en	Custom fields
 custom contact-address, leave empty to use information from most recent link	infolog	en	Custom contact address, leave empty to use information from most recent link
 custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact information, leave empty to use information from most recent link
@@ -299,6 +300,7 @@ own upcoming	infolog	en	Own upcoming
 owner does not have edit rights	infolog	en	Owner does not have edit rights
 parent	infolog	en	Parent
 parent infolog	infolog	en	Parent InfoLog
+participants for scheduling an appointment	infolog	en	Participants for scheduling an appointment
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	Path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 pattern for search in addressbook	infolog	en	Pattern for search in Address book
@@ -311,6 +313,7 @@ phone/email	infolog	en	Phone/Email
 phonecall	infolog	en	Phone call
 planned	infolog	en	Planned
 planned time	infolog	en	Planned time
+prefix for sub-entries (default: re:)	infolog	en	Prefix for sub-entries (default: Re:)
 price	infolog	en	Price
 pricelist	infolog	en	Price list
 primary link	infolog	en	Primary link
@@ -351,6 +354,7 @@ same day	infolog	en	Same day
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	Saves the changes and leaves
 saves this entry	infolog	en	Saves this entry
+schedule appointment	infolog	en	Schedule appointment
 search	infolog	en	Search
 search for:	infolog	en	Search for:
 second parameter for preg_replace	infolog	en	Second parameter for preg_replace
@@ -370,6 +374,7 @@ select new category	infolog	en	Select new category
 select to filter by owner	infolog	en	Select to filter by owner
 select to filter by responsible	infolog	en	Select to filter by responsible
 select users or groups	infolog	en	Select users or groups
+selected calendars	infolog	en	Selected calendars
 selection cf	infolog	en	Selection CF
 sender	infolog	en	Sender
 set status to done	infolog	en	Set status to done
@@ -451,6 +456,7 @@ view this linked entry in its application	infolog	en	View this linked entry in i
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	When should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (start page)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get
+which participants should be preselected when scheduling an appointment.	infolog	en	Which participants should be preselected when scheduling an appointment.
 which types should the calendar show	infolog	en	Which types should the calendar show
 will-call	infolog	en	Will call
 write (add or update) a record by passing its fields.	infolog	en	Write, add or update a record by passing its fields.

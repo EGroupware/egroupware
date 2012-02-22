@@ -103,7 +103,7 @@
 					</menulist>
 					<vbox cols="1" rows="3" options="0,0,1">
 						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="fixedHeight"/>
-						<date id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class] fixedHeight"/>
+						<date-time id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] fixedHeight"/>
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<vbox cols="1" rows="3" options="0,0">
@@ -161,7 +161,7 @@
 						</hbox>
 						<hbox options="0,0" class="image16" orient="0">
 							<button label="Insert in document" id="document[$row_cont[info_id]]" image="etemplate/merge"/>
-							<image label="Filemanager" src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
+							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
 						</hbox>
 					</vbox>
 				</row>
