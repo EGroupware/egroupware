@@ -1,3 +1,28 @@
+egroupware-epl (11.1.20120222-1) hardy; urgency=low
+
+  * eMail/eSync: using tidy (if loadable) instead of purifier to straighten out html when retieving the displayableBody. This has a huge impact on performance with certain mails.
+  * eSync/Addressbook: for all-in-one addressbook only use add-default, if it is contained in addressbooks selected, otherwise use personal addressbook
+  * eSync: show (tail -f) serverside logs inside EGroupware incl. enabling/disabling them
+  * Project Manager: special field to import sub-projects from CSV and re-create folder structure
+  * SiteMgr: allow to specify favicon in config >> template settings (like the logo)
+  * CalDAV/CardDAV: continous display (like tail -f) of logs inside EGroupware
+  * CalDAV/CardDAV: show addressbooks/calendars selected to sync in prefs under users addressbook-/calendar-home-set (incl. account addressbook, if enabled)
+  * CalDAV/CardDAV: /addressbook-accounts/ and PROPPATCH for addressbooks/calendars for every namespace but CalDAV, CardDAV or Calendarserver (displayname or *-describtion are ok)
+  * InfoLog/CalDAV: store unsupported iCal properties like custom fields incl. history logging, thought they are not displayed unless you explicitly add a custom field from them (prefixed with one #)
+  * Addressbook/CardDAV: fixed Apple iOS and OS X addressbook messed up phone numbers (Mobile is now mobile for both and iPhone is matched to EGroupware private cell)
+  * CalDAV: fixed Outlook needs Microsoft specific x-property to recognice all-day events as such
+  * CalDAV: allow to create private events on OS X iCal, fixing DAV header for new shared folders
+  * Addressbook: use vCard version 3 when exporting via context menu
+  * Addressbook/CardDAV: fixed sync all in one addressbook changed AB to personal, use default addressbook for new contacts if synced, otherwise use always synced personal AB
+  * Addressbook: disable custom field tabs, if contact is stored in LDAP, which does not support CFs
+  * InfoLog/CalDAV: fixed sub-entries created in WebGUI got identical caldav_name as parent and therefore updates of sub-entries did not work as expected
+  * CalDAV/CardDAV/GroupDAV: as all clients dislike not getting an ETag for a PUT, we sending it again even not storing byte-by-byte
+  * CardDAV/Addressbook: storing Apple AB type company (X-ABShowAs:COMPANY) as EGroupware fileAs company
+  * InfoLog/Calendar: renamed context menu "Calendar" to "Schedule appointment" and make preset participants configurable, allow to config prefix for sub-entries and allow times in due-date
+  * Notifications: fixed not correctly reset timezone after notifying users from other timezones
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 22 Feb 2012 15:00:52 +0100
+
 egroupware-epl (11.1.20120207-1) hardy; urgency=low
 
   * InfoLog/CalDAV: allow updates with implicite rights of responsible user, InfoLog type is kept on update, deduct not set status of client from completed(-percent)
