@@ -337,6 +337,7 @@ class date_widget
 		$cell['type'] = 'template';
 		$cell['name'] = $tpl->name;
 		$cell['obj'] = &$tpl;
+		$cell['span'] .= (strpos($cell['span'],',')===false?',':'').($cell['span']?' ':'').'eTdate';
 
 		return True;	// extra Label is ok
 	}
