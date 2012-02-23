@@ -1865,6 +1865,7 @@ class infolog_ui
 			$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 			$content['msg'] = lang('Infolog copied - the copy can now be edited');
 			$content['info_subject'] = ($content['info_subject']?lang('Copy of:').' ':'').$content['info_subject'];
+			unset($action);	// it get stored in $content and will cause an other copy after [apply]
 		}
 		// group owners
 		$types = $this->bo->enums['type'];
