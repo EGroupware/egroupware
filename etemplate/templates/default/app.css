@@ -1,0 +1,162 @@
+/**
+ * eGroupWare - CSS Styles used by eTemplate widgets
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+
+/*
+ * a few generic styles used in most eT apps
+ */
+.redItalic,.message {
+	color: red;
+	font-style: italic;
+}
+.gray {
+	color: gray;
+}
+.leftPad5 {
+	padding-left: 5px;
+}
+.inputFullWidth input {
+	width: 100%;
+}
+
+/*
+ * mark input as required
+ */
+.inputRequired input,.inputRequired select,.inputRequired textarea {
+	border: gray 1px solid;
+	background-color: #ffffd0;
+}
+
+/*
+ * Styles of the eT editor
+ */
+.clickWidgetToEdit {
+	cursor: pointer;
+	display: inline;
+}
+.clickWidgetToEdit:hover {
+	background-color: pink;
+}
+
+/*
+ * Styles of the nextmatch widget
+ */
+.activ_sortcolumn {
+	font-weight: bold;
+}
+.inactiv_sortcolumn {
+	font-weight: normal;
+}
+.lettersearch,.lettersearch_active {
+	background-color: #D3DCE3;
+	width: 25px;
+	border: 1px solid #D3DCE3;
+	text-align: center;
+	cursor: pointer;
+}
+.lettersearch_active {
+	font-weight: bold;
+	background-color: #E8F0F0;
+}
+.lettersearch_active,.lettersearch:hover {
+	border: 1px solid black;
+	background-color: #E8F0F0;
+}
+.selectcols {
+	position: relative;
+}
+.colselection {
+	background-color: white;
+	position: absolute;
+	right: 0px;
+	top: 16px;
+	display: none;
+	z-index: 1;
+}
+
+/*
+ * Styles for the tab widget
+ */
+.etemplate_tab,.etemplate_tab_active {
+	border-style:solid;
+	border-width:1px 1px 0px;
+	border-color:black;
+	padding:3px;
+	padding-left: 6px;
+	padding-right: 6px;
+	width: 60px;
+	white-space: nowrap;
+}
+.etemplate_tab {
+	cursor: pointer;
+	background-color: #E8F0F0;
+}
+.etemplate_tab_active {
+	border-width:2px 2px 0px;
+	background-color: #D3DCE3;
+}
+.tab_body {
+	border: black solid 2px;
+}
+
+.nextmatch_header {
+	border: 1px solid black;
+}
+.nextmatch_header select {
+	width: 140px;
+}
+.nm_num_rows select {
+	width: 40px;
+}
+
+.vfsMode {
+	font-family: monospace; font-weight: bold;
+}
+.vfsMimeIcon img {
+	height: 16px;
+}
+.vfsFilename {
+	white-space: nowrap;
+}
+/**
+ * mark a file (icon) as link
+ */
+.vfsIsLink img {
+	border-bottom: 4px solid darkgray;
+	border-right: 4px solid darkgray;
+}
+/**
+ * nicer would be, but it's not working ...
+ */
+.vfsIsLink img:after {
+	content: url(filemanager/templates/default/images/link.png);
+}
+/**
+ * mark a link (icon) as broken link
+ */
+.vfsIsBrokenLink img {
+	border-bottom: 4px solid red;
+	border-right: 4px solid red;
+}
+
+/**
+ * class for big (more then 5 lines) custom field nextmatch header
+ */
+.cf_header_height_limit {
+	max-height: 6.75em;
+	overflow: auto;
+	padding-right: 15px;
+}
+
+/**
+ * class for table in data_widget
+ */
+.eTdate {
+	white-space: nowrap;
+}
