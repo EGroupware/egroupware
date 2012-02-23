@@ -144,3 +144,9 @@
 	padding-right: 15px;
 }
 
+/**
+ * class for table in data_widget
+ */
+.eTdate {
+	white-space: nowrap;
+}
