@@ -1466,7 +1466,7 @@ class infolog_ui
 	function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 	{
 		$tabs = 'description|links|delegation|project|customfields|history';
-		if (is_array($content))
+		if (($submit = is_array($content)))
 		{
 			//echo "infolog_ui::edit: content="; _debug_array($content);
 			$info_id   = $content['info_id'];
@@ -1483,9 +1483,12 @@ class infolog_ui
 			unset($content['button']);
 			if ($button)
 			{
-				//Copy Infolog
-				if ($button == 'copy') $action = 'copy';
-
+				// Copy or schedule Infolog
+				if (in_array($button,array('copy','schedule')))
+				{
+					$action = $button;
+					if (!$info_id) $button = 'apply';	// need to store infolog first
+				}
 				if ($button == 'print')
 				{
 					$content['js'] = $this->custom_print($content,!$content['info_id'])."\n".$js;	// first open the new window and then update the view
@@ -1494,7 +1497,7 @@ class infolog_ui
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
 					$this->tmpl->set_validation_error('info_subject',lang('Field must not be empty !!!'));
-					$button = '';	// stop save or apply
+					$button = $action = '';	// stop save or apply
 				}
 				if (($button == 'save' || $button == 'apply') && $info_id)
 				{
@@ -1531,7 +1534,7 @@ class infolog_ui
 									'no_popup'   => $no_popup,
 									'referer'    => $referer,
 								))).'">','</a>');
-						$button = '';	// not exiting edit
+						$button = $action = '';	// not exiting edit
 						$info_id = $content['info_id'];
 					}
 					else
@@ -1626,7 +1629,7 @@ class infolog_ui
 				if ($content['info_status'] != 'done') $content['info_datecompleted'] = '';
 			}
 		}
-		else
+		else	// new call via GET
 		{
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 			$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
@@ -1695,36 +1698,6 @@ class infolog_ui
 				{
 					return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
 				}
-				$parent = $this->bo->so->data;
-				$content['info_id'] = $info_id = 0;
-				$content['info_uid'] = ''; // ensure that we have our own UID
-				$content['caldav_name'] = ''; // ensure that we have our own caldav_name
-				$content['info_owner'] = $this->user;
-				$content['info_id_parent'] = $parent['info_id'];
-				/*
-				if ($parent['info_type']=='task' && $parent['info_status']=='offer')
-				{
-					$content['info_type'] = 'confirm';   // confirmation to parent
-					$content['info_responsible'] = $parent['info_owner'];
-				}
-				*/
-				$content['info_type'] = $parent['info_type'];
-				$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-				$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
-				$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
-				$content['info_confirm'] = 'not';
-				$config = config::read('infolog');
-				$content['info_subject']= lang(empty($config['sub_prefix']) ? 'Re:': $config['sub_prefix']).' '.$parent['info_subject'];
-				$content['info_des'] = '';
-				$content['info_lastmodified'] = '';
-				if ($content['info_startdate'] < $this->bo->user_time_now)	// parent-startdate is in the past => today
-				{
-					$content['info_startdate'] = $set_startdate;
-				}
-				if ($content['info_enddate'] < $this->bo->user_time_now)		// parent-enddate is in the past => empty
-				{
-					$content['info_enddate'] = '';
-				}
 			}
 			else
 			{
@@ -1734,19 +1707,25 @@ class infolog_ui
 				'to_id' => $info_id,
 				'to_app' => 'infolog',
 			);
+		}
+		// new call via GET or some actions handled here, as they can happen both ways ($_GET[action] or button/action in GUI)
+		if (!$submit || in_array($action,array('sp','copy','schedule')))
+		{
 			switch ($action)
 			{
-				case 'sp':
-					$links = egw_link::get_links('infolog',$parent['info_id'],'!'.egw_link::VFS_APPNAME);
-					foreach($links as $link)
-					{
-						$link_id = egw_link::link('infolog',$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+				case 'schedule':
+					egw::redirect_link('/index.php',array(
+						'menuaction' => 'calendar.calendar_uiforms.edit',
+						'link_app' => 'infolog',
+						'link_id' => $info_id,
+					));
+					break;
 
-						if ($parent['info_link_id'] == $link['link_id'])
-						{
-							$content['info_link_id'] = $link_id;
-						}
-					}
+				case 'sp':
+				case 'copy':
+					$info_id = 0;
+					$this->create_copy($content, $action == 'sp');
+					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
 
 				case 'tracker':
@@ -1781,8 +1760,11 @@ class infolog_ui
 							egw_link::link('infolog',$content['link_to']['to_id'],$action,$id);
 						}
 						$content['blur_title']   = egw_link::title($action,'$id').",...";
-					} else {
-						if ($action_id) {
+					}
+					else
+					{
+						if ($action_id)
+						{
 							egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
 							$content['blur_title']   = egw_link::title($action,$action_id);
 						}
@@ -1814,58 +1796,6 @@ class infolog_ui
 			{
 				$content['info_type'] = 'note';
 			}
-		}
-		if ($action == 'copy')	// get's called via actions selectbox or url (action=copy&info_id=123)
-		{
-			unset($content['info_id']);
-			unset ($info_id);
-			unset($content['info_datemodified']);
-			unset($content['info_modifier']);
-			foreach ($this->bo->copy_excludefields as $k => $f) if (isset($content[$f])) unset($content[$f]);
-			if (!isset($content['info_startdate']))
-			{
-				switch($this->prefs['set_start'])
-				{
-					case 'date': default: $set_startdate = mktime(0,0,0,date('m',$this->bo->user_time_now),date('d',$this->bo->user_time_now),date('Y',$this->bo->user_time_now)); break;
-					case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
-					case 'empty':         $set_startdate = 0; break;
-				}
-				$content['info_startdate'] = $set_startdate;
-			}
-			$types = $this->get_validtypes();
-			$typekeys = array_keys($types);
-			if (!isset($content['info_type'])) $content['info_type'] = $typekeys[0];
-			if (!isset($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-			if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];
-			// Get links to be copied
-			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
-			// Special mangling for files so the files get copied
-			foreach($content['link_to']['to_id'] as $link_id => &$link)
-			{
-				if ($link['app'] == egw_link::VFS_APPNAME)
-				{
-					$link['id'] = $link + array(
-						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
-						'name' => $link['id'],
-					);
-				}
-			}
-			if($content['info_link_id'])
-			{
-				$info_link_id = $content['info_link_id'];
-				// we need this if copy is triggered via context menu action
-				if (!isset($content['info_contact'])||empty($content['info_contact'])||$content['info_contact']==='copy:')
-				{
-					$linkinfos = egw_link::get_link($info_link_id);
-					$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
-					if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
-				}
-				unset($content['info_link_id']);
-			}
-			$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
-			$content['msg'] = lang('Infolog copied - the copy can now be edited');
-			$content['info_subject'] = ($content['info_subject']?lang('Copy of:').' ':'').$content['info_subject'];
-			unset($action);	// it get stored in $content and will cause an other copy after [apply]
 		}
 		// group owners
 		$types = $this->bo->enums['type'];
@@ -1999,6 +1929,22 @@ class infolog_ui
 		{
 			$readonlys[$tabs]['history'] = true;
 		}
+		$sel_options = array(
+			'info_type'     => $types,
+			'info_priority' => $this->bo->enums['priority'],
+			'info_confirm'  => $this->bo->enums['confirm'],
+			'info_status'   => $this->bo->status[$content['info_type']],
+			'status'        => $history_stati,
+			'action'        => array(
+				'copy'  => array('label' => 'Copy', 'title' => 'Copy this Infolog'),
+				'sp'    => 'Sub-entry',
+				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
+			),
+		);
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$sel_options['action']['schedule'] = array('label' => 'Schedule', 'title' => 'Schedule appointment');
+		}
 		egw_framework::validate_file('.','edit','infolog');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
@@ -2006,17 +1952,7 @@ class infolog_ui
 		//error_log(substr($content['info_des'],1793,10));
 		//$content['info_des'] = substr($content['info_des'],0,1793);
 		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
-		$this->tmpl->exec('infolog.infolog_ui.edit',$content,array(
-			'info_type'     => $types,
-			'info_priority' => $this->bo->enums['priority'],
-			'info_confirm'  => $this->bo->enums['confirm'],
-			'info_status'   => $this->bo->status[$content['info_type']],
-			'status'        => $history_stati,
-			'action'     => array(
-				'copy' => array('label' => 'Copy', 'title' => 'Copy this Infolog'),
-				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
-			),
-		),$readonlys,$preserv+array(	// preserved values
+		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
 			'action'        => $action,
 			'action_id'     => $action_id,
@@ -2024,6 +1960,110 @@ class infolog_ui
 			'no_popup'      => $no_popup,
 			'old_pm_id'     => $old_pm_id,
 		),$no_popup ? 0 : 2);
+	}
+
+	/**
+	 * Create copy or sub-entry from an entry currently read into $content
+	 *
+	 * Taking into account prefs and config about what to copy
+	 *
+	 * @param array &$content
+	 * @param boolean $create_sub=false true: create a sub-entry instead of a copy, default false to create a copy
+	 */
+	private function create_copy(array &$content, $create_sub=false)
+	{
+		$info_id = $content['info_id'];	// it will be unset by exclude-fields
+
+		// empty fields configured to be excluded (also contains id, uid, ...)
+		$exclude_fields = $create_sub ? $this->bo->sub_excludefields : $this->bo->copy_excludefields;
+		foreach ($exclude_fields as $field)
+		{
+			unset($content[$field]);
+			if ($field == 'info_from') unset($content['info_link_id']);	// both together is called contact in UI
+		}
+		if ($create_sub)
+		{
+			$content['info_id_parent'] = $info_id;
+		}
+		// no startdate or startdate in the past --> set startdate from pref
+		if (!isset($content['info_startdate']) || $content['info_startdate'] < $this->bo->user_time_now)
+		{
+			switch($this->prefs['set_start'])
+			{
+				case 'date': default: $set_startdate = mktime(0,0,0,date('m',$this->bo->user_time_now),date('d',$this->bo->user_time_now),date('Y',$this->bo->user_time_now)); break;
+				case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
+				case 'empty':         $set_startdate = 0; break;
+			}
+			$content['info_startdate'] = $set_startdate;
+		}
+		// enddate in the past --> uset it
+		if (isset($content['info_enddate']) || $content['info_enddate'] < $this->bo->user_time_now)
+		{
+			unset($content['info_enddate']);
+		}
+		if (!isset($content['info_type']))
+		{
+			$types = array_keys($this->get_validtypes());
+			$content['info_type'] = $types[0];
+		}
+		// get a consistent status, percent and date-completed
+		if (!isset($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+		if (!isset($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+		$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
+
+		if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];
+
+		$content['link_to']['to_app'] = 'infolog';
+		$content['link_to']['to_id'] = 0;
+		// Get links to be copied, if not excluded
+		if (!in_array('link_to',$exclude_fields))
+		{
+			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $info_id);
+			// Special mangling for files so the files get copied
+			foreach($content['link_to']['to_id'] as $link_id => &$link)
+			{
+				if ($link['app'] == egw_link::VFS_APPNAME)
+				{
+					$link['id'] = $link + array(
+						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+						'name' => $link['id'],
+					);
+				}
+			}
+		}
+		$content['links'] = $content['link_to'];
+
+		if ($content['info_link_id'])
+		{
+			$info_link_id = $content['info_link_id'];
+			// we need this if copy is triggered via context menu action
+			if (!isset($content['info_contact']) || empty($content['info_contact']) || $content['info_contact'] === 'copy:')
+			{
+				$linkinfos = egw_link::get_link($info_link_id);
+				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
+				if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+			}
+			unset($content['info_link_id']);
+		}
+		$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+
+		if (!empty($content['info_subject']))
+		{
+			if ($create_sub)
+			{
+				$config = config::read('infolog');
+				$prefix = lang(empty($config['sub_prefix']) ? 'Re:': $config['sub_prefix']);
+			}
+			else
+			{
+				$prefix = lang('Copy of:');
+			}
+			$content['info_subject'] = $prefix.' '.$content['info_subject'];
+		}
+		if (!$create_sub)
+		{
+			$content['msg'] .= ($content['msg']?"\n":'').lang('Infolog copied - the copy can now be edited');
+		}
 	}
 
 	function icon($cat,$id,$status='')
@@ -2097,7 +2137,6 @@ class infolog_ui
 			'info_id_parent' => 'Parent',
 			'info_status' => 'Status',
 			'info_confirm' => 'Confirm',
-			'info_link_id' => 'primary link',
 			'pl_id' => 'pricelist',
 			'info_price' => 'price',
 			'info_percent' => 'completed',
@@ -2111,6 +2150,9 @@ class infolog_ui
 		{
 			$excludefields['#'.$name] = $data['label'];
 		}
+		$sub_excludefields = $excludefields;
+		unset($sub_excludefields['info_id_parent']);	// always set to parent!
+
 		$config_data = config::read('infolog');
 
 		if($_POST['save'] || $_POST['apply'])
@@ -2134,6 +2176,7 @@ class infolog_ui
 				$this->bo->copy_excludefields = array_merge($this->bo->copy_excludefields,$extra);
 			}
 			config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
+			config::save_value('sub_excludefields',$this->bo->sub_excludefields,'infolog');
 			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
@@ -2159,9 +2202,13 @@ class infolog_ui
 				'edit' => 'edit rights (full edit rights incl. making someone else responsible!)',
 			)),
 			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
-			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
-			'lang_copy_excludefields' => lang('Fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)'),
-			'copy_excludefields' => html::checkbox_multiselect('copy_excludefields',$this->bo->copy_excludefields,$excludefields,false,'',11),
+			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',6),
+			'lang_copy_excludefields' => lang('Fields to exclude when copying an infolog:').'<p>'.
+				lang('Fields id, uid, created, createdby, modified and modifier are always excluded.'),
+			'copy_excludefields' => html::checkbox_multiselect('copy_excludefields',$this->bo->copy_excludefields,$excludefields,false,'',6),
+			'lang_sub_excludefields' => lang('Fields to exclude when creating a sub-entry:').'<p>'.
+				lang('Fields id, uid, created, createdby, modified and modifier are always excluded.'),
+			'sub_excludefields' => html::checkbox_multiselect('sub_excludefields',$this->bo->sub_excludefields,$sub_excludefields,false,'',6),
 			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 			'action_url'  => html::link('/index.php',array('menuaction'=>'infolog.infolog_ui.admin')),
 			'save_button' => html::submit_button('save','Save'),

@@ -60,11 +60,17 @@ class infolog_bo
 	 */
 	var $responsible_edit=array('info_status','info_percent','info_datecompleted');
 	/**
-	 * fields a user may exclude from copy, if an entry is copied, the ones below are excluded by default.
+	 * Fields to exclude from copy, if an entry is copied, the ones below are excluded by default.
 	 *
 	 * @var array
 	 */
 	var $copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+	/**
+	 * Fields to exclude from copy, if a sub-entry is created, the ones below are excluded by default.
+	 *
+	 * @var array
+	 */
+	var $sub_excludefields = array('info_des','info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
 	/**
 	 * implicit ACL rights of the responsible user: read or edit
 	 *
@@ -235,6 +241,11 @@ class infolog_bo
 			if (is_array($config_data['copy_excludefields']))
 			{
 				$this->copy_excludefields = array_merge($this->copy_excludefields,$config_data['copy_excludefields']);
+			}
+			if (is_array($config_data['sub_excludefields']) && $config_data['sub_excludefields'])
+			{
+				if (($k = array_search('info_des',$this->sub_excludefields))) unset($this->sub_excludefields[$k]);
+				$this->sub_excludefields = array_merge($this->sub_excludefields,$config_data['sub_excludefields']);
 			}
 			if ($config_data['implicit_rights'] == 'edit')
 			{
@@ -802,7 +813,8 @@ class infolog_bo
 			}
 
 			// Check required custom fields
-			if($throw_exception) {
+			if($throw_exception)
+			{
 				$custom = config::get_customfields('infolog');
 				foreach($custom as $c_name => $c_field)
 				{
