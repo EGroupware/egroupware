@@ -2172,14 +2172,16 @@ class infolog_ui
 			foreach(array('copy_excludefields','sub_excludefields') as $name)
 			{
 				$efs = array_keys($name == 'sub_excludefields' ? $sub_excludefields : $excludefields);
-				$this->bo->$name = array_diff($this->bo->$name, $efs);	// restore default from bo
+				$this->bo->$name = array_unique(array_diff($this->bo->$name, $efs, 	// restore default from bo
+					$name == 'sub_excludefields' ? $this->bo->default_sub_excludefields : array()));
+
 				if ($_POST[$name])
 				{
-					if ($name == 'sub_excludefields')	// remove default info_des, to be able to unselect it!
-					{
-						$this->bo->sub_excludefields = array_diff($this->bo->sub_excludefields,array('info_des'));
-					}
 					$this->bo->$name = array_merge($this->bo->$name, array_intersect((array)$_POST[$name], $efs));
+				}
+				elseif ($name == 'sub_excludefields' && !in_array('explicit-set',$this->bo->sub_excludefields))
+				{
+					$this->bo->sub_excludefields[] = 'explicit-set';	// otherwise we can NOT unset default info_des
 				}
 			}
 			config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');

@@ -70,7 +70,13 @@ class infolog_bo
 	 *
 	 * @var array
 	 */
-	var $sub_excludefields = array('info_des','info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+	var $sub_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
+	/**
+	 * Additional fields to $sub_excludefields to exclude, if no config stored
+	 *
+	 * @var array
+	 */
+	var $default_sub_excludefields = array('info_des');
 	/**
 	 * implicit ACL rights of the responsible user: read or edit
 	 *
@@ -244,8 +250,11 @@ class infolog_bo
 			}
 			if (is_array($config_data['sub_excludefields']) && $config_data['sub_excludefields'])
 			{
-				if (($k = array_search('info_des',$this->sub_excludefields))) unset($this->sub_excludefields[$k]);
 				$this->sub_excludefields = array_merge($this->sub_excludefields,$config_data['sub_excludefields']);
+			}
+			else
+			{
+				$this->sub_excludefields = array_merge($this->sub_excludefields,$this->default_sub_excludefields);
 			}
 			if ($config_data['implicit_rights'] == 'edit')
 			{
