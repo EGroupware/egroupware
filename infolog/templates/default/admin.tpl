@@ -41,6 +41,12 @@
    {sub_prefix}
    </td>
   </tr>
+  <tr class="row_on">
+   <td colspan="3">{lang_sub_excludefields}</td>
+   <td>
+   {sub_excludefields}
+   </td>
+  </tr>
   <tr>
    <td colspan="4" align="left">
     {save_button} &nbsp; {apply_button} &nbsp; {cancel_button}

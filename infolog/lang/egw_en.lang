@@ -183,7 +183,8 @@ exists	infolog	en	Exists
 exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into a CSV file.
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty!
-fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)	infolog	en	Fields to exclude from copy when copying an infolog? (some fields like id, uid, created, createdby, modified and modifiedby are excluded by default)
+fields to exclude when copying an infolog:	infolog	en	Fields to exclude when copying an infolog:
+fields to exclude when creating a sub-entry:	infolog	en	Fields to exclude when creating a sub-entry:
 fieldseparator	infolog	en	Field separator
 finish	infolog	en	Finish
 first argument for preg_replace	infolog	en	First argument for preg_replace
