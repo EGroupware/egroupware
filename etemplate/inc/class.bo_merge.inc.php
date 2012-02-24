@@ -1004,16 +1004,49 @@ abstract class bo_merge
 	 */
 	protected function format_spreadsheet_dates(&$content, $names, &$values, $mimetype)
 	{
+		if(!in_array($mimetype, array(
+			'application/vnd.oasis.opendocument.spreadsheet',		// open office calc
+			'application/xmlExcel.Sheet',					// Excel 2003
+			//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'//Excel WTF
+		))) return;
+
+		// Properly format values for spreadsheet
+		foreach($names as $idx => $field)
+		{
+			$key = '$$'.$field.'$$';
+			if($values[$key])
+			{
+				$date = new egw_time($values[$key]);
+			
+				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
+				{
+					$interval = $date->diff(new egw_time('1900-01-00 0:00'));
+					$values[$key] = $interval->format('%a')+1;// 1900-02-29 did not exist
+					// 1440 minutes in a day - fractional part
+					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440; 
+				}
+				else
+				{
+					$values[$key] = date('Y-m-d\TH:i:s',egw_time::to($date,'ts'));
+				}
+			}
+			else
+			{
+				unset($names[$idx]);
+			}
+		}
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>..('.implode('|',$names).')..<\/\3>.?<\/table:table-cell>/s';
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>\$\$('.implode('|',$names).')\$\$<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
 				break;
 			case 'application/xmlExcel.Sheet':	// Excel 2003
 				$format = '/'.preg_quote('<Data ss:Type="String">','/').'..('.implode('|',$names).')..'.preg_quote('</Data>','/').'/';
 				$replacement = '<Data ss:Type="DateTime">\$\$$1\$\$</Data>';
 
+				break;
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				break;
 		}
 		if($format && $names)
@@ -1032,17 +1065,6 @@ abstract class bo_merge
 			}
 			if($increase == 10) {
 				error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
-			}
-		}
-
-		// Properly format values for spreadsheet
-		foreach($names as $field)
-		{
-			$key = '$$'.$field.'$$';
-			if($values[$key])
-			{
-				$date = new egw_time($values[$key]);
-				$values[$key] = date('Y-m-d\TH:i:s',egw_time::to($date,'ts'));
 			}
 		}
 	}
