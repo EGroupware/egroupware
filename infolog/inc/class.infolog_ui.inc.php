@@ -2169,11 +2169,18 @@ class infolog_ui
 				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
 			// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
-			$this->bo->copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
-			if ($_POST['copy_excludefields'])
+			foreach(array('copy_excludefields','sub_excludefields') as $name)
 			{
-				$extra = array_intersect((array)$_POST['copy_excludefields'],array_keys($excludefields));
-				$this->bo->copy_excludefields = array_merge($this->bo->copy_excludefields,$extra);
+				$efs = array_keys($name == 'sub_excludefields' ? $sub_excludefields : $excludefields);
+				$this->bo->$name = array_diff($this->bo->$name, $efs);	// restore default from bo
+				if ($_POST[$name])
+				{
+					if ($name == 'sub_excludefields')	// remove default info_des, to be able to unselect it!
+					{
+						$this->bo->sub_excludefields = array_diff($this->bo->sub_excludefields,array('info_des'));
+					}
+					$this->bo->$name = array_merge($this->bo->$name, array_intersect((array)$_POST[$name], $efs));
+				}
 			}
 			config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
 			config::save_value('sub_excludefields',$this->bo->sub_excludefields,'infolog');
@@ -2203,11 +2210,9 @@ class infolog_ui
 			)),
 			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
 			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',6),
-			'lang_copy_excludefields' => lang('Fields to exclude when copying an infolog:').'<p>'.
-				lang('Fields id, uid, created, createdby, modified and modifier are always excluded.'),
+			'lang_copy_excludefields' => lang('Fields to exclude when copying an infolog:'),
 			'copy_excludefields' => html::checkbox_multiselect('copy_excludefields',$this->bo->copy_excludefields,$excludefields,false,'',6),
-			'lang_sub_excludefields' => lang('Fields to exclude when creating a sub-entry:').'<p>'.
-				lang('Fields id, uid, created, createdby, modified and modifier are always excluded.'),
+			'lang_sub_excludefields' => lang('Fields to exclude when creating a sub-entry:'),
 			'sub_excludefields' => html::checkbox_multiselect('sub_excludefields',$this->bo->sub_excludefields,$sub_excludefields,false,'',6),
 			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 			'action_url'  => html::link('/index.php',array('menuaction'=>'infolog.infolog_ui.admin')),
