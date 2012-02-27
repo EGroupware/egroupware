@@ -111,6 +111,8 @@ change password for %1	admin	de	Ändern des Passworts für %1
 check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Einträge auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
+check virtual filesystem	admin	de	Virtuelles Dateisystem überprüfen
+children	admin	de	Kinder
 click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
@@ -251,6 +253,7 @@ false	admin	de	Falsch
 field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
 file space	admin	de	Speicherplatz
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
+filesystem check reported no problems.	admin	de	Überprüfung des Dateisystem ergab keine Probleme.
 find and register all application hooks	admin	de	Suchen und registrieren der "Hooks" aller Anwendungen
 for the times above	admin	de	für die oben angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)

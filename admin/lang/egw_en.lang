@@ -113,6 +113,8 @@ change password for %1	admin	en	change password for %1
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
+check virtual filesystem	admin	en	Check virtual filesystem
+children	admin	en	Children
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
@@ -253,14 +255,18 @@ false	admin	en	false
 field '%1' already exists !!!	admin	en	Field '%1' already exists !!!
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
-find and register all application hooks	admin	en	Find and Register all Application Hooks
-for the times above	admin	en	for the times above
-for the times below (empty values count as '*', all empty = every minute)	admin	en	for the times below (empty values count as '*', all empty = every minute)
-force selectbox	admin	en	Force Selectbox
-forward also to	admin	en	forward also to
-forward emails to	admin	en	forward emails to
-forward only	admin	en	forward only
-global categories	common	en	Global Categories
+filesystem check reported no problems.	admin	en	Filesystem check reported no problems.
+find and register all application hooks	admin	en	Find and register all application hooks
+for the times above	admin	en	For the times above
+for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
+force password strength (1-5, default empty: no check against rules for a strong password)?	admin	en	Set required password strength. 1 = weak, up to 5 = very strong. Default = empty, no password strength checked
+force selectbox	admin	en	Force select box
+force users to change their password regularily?(empty for no,number for after that number of days	admin	en	Set recurrent forced password change. Set a number of days. Empty = No
+forward also to	admin	en	Forward also to
+forward emails to	admin	en	Forward emails to
+forward only	admin	en	Forward only
+full name	admin	en	Full name
+global categories	common	en	Global categories
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant

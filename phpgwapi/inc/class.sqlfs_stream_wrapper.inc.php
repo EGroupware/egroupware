@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: VFS - new DB based VFS stream wrapper
+ * EGroupware API: VFS - new DB based VFS stream wrapper
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -700,7 +700,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$path]);
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
-		return $stmt->execute(array(
+		if (($ok = $stmt->execute(array(
 			'fs_name' => egw_vfs::basename($path),
 			'fs_dir'  => $parent['ino'],
 			'fs_mode' => $parent['mode'],
@@ -711,7 +711,25 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			'fs_created'  => self::_pdo_timestamp(time()),
 			'fs_modified' => self::_pdo_timestamp(time()),
 			'fs_creator'  => egw_vfs::$user,
-		));
+		))))
+		{
+			// check if some other process created the directory parallel to us (sqlfs would gives SQL errors later!)
+			$new_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq');
+
+			unset($stmt);	// free statement object, on some installs a new prepare fails otherwise!
+
+			$stmt = self::$pdo->prepare($q='SELECT COUNT(*) FROM '.self::TABLE.
+				' WHERE fs_dir=:fs_dir AND fs_active=:fs_active AND fs_name'.self::$case_sensitive_equal.':fs_name');
+			if ($stmt->execute(array(
+				'fs_dir'  => $parent['ino'],
+				'fs_active' => self::_pdo_boolean(true),
+				'fs_name' => egw_vfs::basename($path),
+			)) && $stmt->fetchColumn() > 1)	// if there's more then one --> remove our new dir
+			{
+				self::$pdo->query('DELETE FROM '.self::TABLE.' WHERE fs_id='.$new_fs_id);
+			}
+		}
+		return $ok;
 	}
 
 	/**
@@ -1793,80 +1811,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1) foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
 		return $props;
-	}
-
-	/**
-	 * Migrate SQLFS content from DB to filesystem
-	 *
-	 * @param boolean $debug true to echo a message for each copied file
-	 */
-	static function migrate_db2fs($debug=false)
-	{
-		if (!is_object(self::$pdo))
-		{
-			self::_pdo();
-		}
-		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
-			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL';
-
-		$stmt = self::$pdo->prepare($query);
-		$stmt->bindColumn(1,$fs_id);
-		$stmt->bindColumn(2,$fs_name);
-		$stmt->bindColumn(3,$fs_size);
-		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
-
-		if ($stmt->execute())
-		{
-			foreach($stmt as $row)
-			{
-				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
-				// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
-				if (is_string($fs_content))
-				{
-					$name = md5($fs_name.$fs_id);
-					$GLOBALS[$name] =& $fs_content;
-					require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
-					$content = fopen('global://'.$name,'r');
-					if (!$content) echo "fopen('global://$name','w' failed, strlen(\$GLOBALS['$name'])=".strlen($GLOBALS[$name]).", \$GLOBALS['$name']=".substr($GLOBALS['$name'],0,100)."...\n";
-					unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
-				}
-				else
-				{
-					$content = $fs_content;
-				}
-				if (!is_resource($content))
-				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
-				}
-				$filename = self::_fs_path($fs_id);
-				if (!file_exists($fs_dir=egw_vfs::dirname($filename)))
-				{
-					self::mkdir_recursive($fs_dir,0700,true);
-				}
-				if (!($dest = fopen($filename,'w')))
-				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fopen($filename,'w') failed!");
-				}
-				if (($bytes = stream_copy_to_stream($content,$dest)) != $fs_size)
-				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
-				}
-				if ($debug) echo "$fs_id: $fs_name: $bytes bytes copied to fs\n";
-				fclose($dest);
-				fclose($content); unset($content);
-
-				++$n;
-			}
-			unset($stmt);
-
-			if ($n)	// delete all content in DB, if there was some AND no error (exception thrown!)
-			{
-				$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL WHERE fs_content IS NOT NULL';
-				$stmt = self::$pdo->prepare($query);
-				$stmt->execute();
-			}
-		}
-		return $n;
 	}
 }
 
