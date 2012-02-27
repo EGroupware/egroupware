@@ -827,6 +827,12 @@ abstract class bo_merge
 			{
 				switch($mimetype.$mso_application_progid)
 				{
+					case 'text/html':
+						$replace_tags = array(
+							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+							'<table>','<tr>','<td>',
+						);
+						break;
 					case 'application/vnd.oasis.opendocument.text':		// open office
 					case 'application/vnd.oasis.opendocument.spreadsheet':
 						$replace_tags = array(
