@@ -268,7 +268,7 @@ switch($cmd)
 			}
 			die("\n/ NOT mounted with 'storage=db' --> no need to convert!\n\n");
 		}
-		$num_files = sqlfs_stream_wrapper::migrate_db2fs();	// throws exception on error
+		$num_files = sqlfs_utils::migrate_db2fs();	// throws exception on error
 		echo "\n$num_files files migrated from DB to filesystem.\n";
 		$new_url = preg_replace('/storage=db&?/','',$fstab['/']);
 		if (substr($new_url,-1) == '?') $new_url = substr($new_url,0,-1);
