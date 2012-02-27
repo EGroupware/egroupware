@@ -491,6 +491,20 @@ abstract class bo_tracking
 			$email_sent[] = $email;
 		}
 
+		// members of group when entry owned by group
+		if ($this->creator_field && $GLOBALS['egw']->accounts->get_type($data[$this->creator_field]) == 'g')
+		{
+			foreach($GLOBALS['egw']->accounts->members($data[$this->creator_field],true) as $u)
+			{
+				if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) &&
+					!in_array($email, $email_sent))
+				{
+					$this->send_notification($data,$old,$email,$u,'notify_owner_group_member');
+					$email_sent[] = $email;
+				}
+			}
+		}
+
 		// assigned / responsible users
 		if ($this->assigned_field)
 		{

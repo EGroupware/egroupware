@@ -371,6 +371,17 @@ class infolog_hooks
 			'default'=> '0d',	// Same day
 		);
 
+		// receive notification for items owned by groups you are part of
+		$settings['notify_owner_group_member'] = array(
+			'type'   => 'check',
+			'label'  => 'Receive notifications about items of type owned by groups you are part of',
+			'name'   => 'notify_owner_group_member',
+			'help'   => 'Do you want a notification if items owned by groups you are part of get updated ?',
+			'xmlrpc' => True,
+			'admin'  => False,
+			'default'=> '0',	// No
+		);
+
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
