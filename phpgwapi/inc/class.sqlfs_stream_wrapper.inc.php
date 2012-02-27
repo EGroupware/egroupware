@@ -1508,7 +1508,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		return $stat;
 	}
 
-	private static $pdo_type;
+	public static $pdo_type;
 	/**
 	 * Case sensitive comparison operator, for mysql we use ' COLLATE utf8_bin ='
 	 *
