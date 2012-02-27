@@ -593,7 +593,12 @@ class addressbook_ui extends addressbook_bo
 				'icon' => 'filesave',
 				'group' => ++$group,
 				'children' => array(
-					'csv'    => 'Export as CSV',
+					'csv'    => array(
+						'caption' => 'Export as CSV',
+						'url' => 'menuaction=importexport.importexport_export_ui.export_dialog&appname=addressbook&selection=$id',
+						'popup' => '850x440',
+						'allowOnMultiple' => true,
+					),
 					'vcard'  => 'Export as VCard',
 				),
 			);

@@ -53,6 +53,7 @@ class importexport_export_ui {
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
 		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
 		$_selection = $_content['selection'] ? $_content['selection'] : $_GET['selection'];
+		if($_GET['selection'] || $_content['selection_passed']) $content['selection_passed'] = $preserv['selection_passed'] = true;
 
 		// Check global setting
 		if(!bo_merge::is_export_limit_excepted()) {
@@ -175,11 +176,11 @@ class importexport_export_ui {
 		}
 
 		// fill selection tab
-		if($definition && $definition->plugin_options['selection']) {
+		if($definition && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
 		
-		if ($_selection && $content['old_definition'] == $content['definition']) {
+		if ($_selection && ($content['old_definition'] == $content['definition'] || $content['selection_passed'])) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
 			$preserv['selection'] = $_selection;
