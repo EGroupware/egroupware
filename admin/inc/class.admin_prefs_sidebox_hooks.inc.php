@@ -173,7 +173,7 @@ class admin_prefs_sidebox_hooks
 
 		$content .= html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
 			html::submit_button('cancel', lang('Cancel'), "window.location.href='".egw::link('/admin/index.php')."'; return false;").'</p>',
-			'',egw::link('/index.php',array('menuaction'=>'admin.admin_prefs_sidebox_hooks.fsck')));
+			'','/index.php',array('menuaction'=>'admin.admin_prefs_sidebox_hooks.fsck'));
 
 		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
 	}

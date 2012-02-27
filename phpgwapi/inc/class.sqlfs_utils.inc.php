@@ -127,23 +127,30 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		{
 			if (!file_exists($phy_path=self::_fs_path($row['fs_id'])))
 			{
-				egw_vfs::$is_root = true;
 				$path = self::id2path($row['fs_id']);
 				if ($check_only)
 				{
 					$msgs[] = lang('File %1 has no content in physical filesystem %2!',
 						$path.' (#'.$row['fs_id'].')',$phy_path);
 				}
-				elseif (self::unlink($path.'?storage=db'))	// storage=db to not try to delete not existing phy. file
-				{
-					$msgs[] = lang('File %1 has no content in physical filesystem %2 --> file removed!',$path,$phy_path);
-				}
 				else
 				{
-					$msgs[] = lang('File %1 has no content in physical filesystem %2 --> failed to remove file!',
-						$path.' (#'.$row['fs_id'].')',$phy_path);
+					if (!isset($stmt))
+					{
+						$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+						$stmt_props = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id');
+					}
+					if ($stmt->execute(array('fs_id' => $row['fs_id'])) &&
+						$stmt_props->execute(array('fs_id' => $row['fs_id'])))
+					{
+						$msgs[] = lang('File %1 has no content in physical filesystem %2 --> file removed!',$path,$phy_path);
+					}
+					else
+					{
+						$msgs[] = lang('File %1 has no content in physical filesystem %2 --> failed to remove file!',
+							$path.' (#'.$row['fs_id'].')',$phy_path);
+					}
 				}
-				egw_vfs::$is_root = false;
 			}
 		}
 		if ($check_only && $msgs)
@@ -226,7 +233,6 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		if ($check_only && $msgs)
 		{
 			$msgs[] = lang('Unconnected nodes will be moved to %1.',self::LOST_N_FOUND);
-			continue;
 		}
 		return $msgs;
 	}
@@ -242,7 +248,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		$msgs = array();
 		foreach(self::$pdo->query('SELECT fs_dir,fs_name,COUNT(*) FROM '.self::TABLE.
 			' WHERE fs_active='.self::_pdo_boolean(true).
-			' GROUP BY fs_dir,fs_name'.
+			' GROUP BY fs_dir,'.(self::$pdo_type == 'mysql' ? 'BINARY ' : '').'fs_name'.	// fs_name is casesensitive!
 			' HAVING COUNT(*) > 1') as $row)
 		{
 			if (!isset($stmt))
