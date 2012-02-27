@@ -668,7 +668,8 @@ class translation
 		if ($upgrademethod == 'dumpold')
 		{
 			// dont delete the custom main- & loginscreen messages every time
-			self::$db->delete(self::LANG_TABLE,"app_name!='mainscreen' AND app_name!='loginscreen'",__LINE__,__FILE__);
+			self::$db->delete(self::LANG_TABLE,self::$db->expression(self::LANG_TABLE,
+				'NOT ',array('app_name'=>self::$instance_specific_translations)),__LINE__,__FILE__);
 			//echo '<br>Test: dumpold';
 			$GLOBALS['egw_info']['server']['lang_ctimes'] = array();
 		}
