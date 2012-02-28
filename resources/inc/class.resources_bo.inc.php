@@ -311,6 +311,7 @@ class resources_bo
 	{
 		if($res_id < 1){return;}
 		$data = $this->so->search('','res_id,name','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
+		$acc_list = array();
 		foreach($data as $num => $resource)
 		{
 			$acc_list[$resource['res_id']] = $resource['name'];
