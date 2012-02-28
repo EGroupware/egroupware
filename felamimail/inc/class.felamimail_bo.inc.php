@@ -1880,7 +1880,7 @@ class felamimail_bo
 					if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->icServer->mailboxExist('Mail')||$this->icServer->mailboxExist('INBOX'))) {
 						$prefix_present = 'forced';
 						// uw-imap server with mailbox prefix or dovecot maybe
-						$foldersNameSpace[$type]['prefix'] = 'Mail';
+						$foldersNameSpace[$type]['prefix'] = ($this->icServer->mailboxExist('Mail')?'Mail':''); 
 					} elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
 						$prefix_present = 'forced';
 						// uw-imap server with mailbox prefix or dovecot maybe
