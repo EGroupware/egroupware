@@ -4210,13 +4210,14 @@ class felamimail_bo
 		 * @param uid the uid of the email to be processed
 		 * @param partid the partid of the email
 		 * @param mailbox the mailbox, that holds the message
+		 * @param preserveHTML flag to pass through to getdisplayableBody
 		 * @return array with 'mailaddress'=>$mailaddress,
 		 *				'subject'=>$subject,
 		 *				'message'=>$message,
 		 *				'attachments'=>$attachments,
 		 *				'headers'=>$headers,
 		 */
-		static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
+		static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='', $preserveHTML = false)
 		{
 				//echo __METHOD__." called for $uid,$partid <br>";
 				$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
@@ -4231,8 +4232,8 @@ class felamimail_bo
 				//_debug_array($headers);
 				$subject = $headers['SUBJECT'];
 
-				$message = self::getdisplayableBody($bofelamimail, $bodyParts);
-				$headdata = self::createHeaderInfoSection($headers);
+				$message = self::getdisplayableBody($bofelamimail, $bodyParts, $preserveHTML);
+				$headdata = self::createHeaderInfoSection($headers, '',$preserveHTML);
 				$message = $headdata.$message;
 				//echo __METHOD__.'<br>';
 				//_debug_array($attachments);
@@ -4249,7 +4250,7 @@ class felamimail_bo
 							$headdata ='';
 							if ($mailcontent['headers'])
 							{
-								$headdata = self::createHeaderInfoSection($mailcontent['headers']);
+								$headdata = self::createHeaderInfoSection($mailcontent['headers'],'',$preserveHTML);
 							}
 							if ($mailcontent['message'])
 							{
@@ -4298,30 +4299,32 @@ class felamimail_bo
 		/**
 		 * createHeaderInfoSection - creates a textual headersection from headerobject
 		 * @param array header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
+		 * @param string headline Text tom use for headline
+		 * @param bool createHTML do it with HTML breaks
 		 * @return string a preformatted string with the information of the header worked into it
 		 */
-		static function createHeaderInfoSection($header,$headline='')
+		static function createHeaderInfoSection($header,$headline='', $createHTML = false)
 		{
 			$headdata = null;
-			if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT']."\n";
-			if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'])."\n";
-			if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'])."\n";
-			if ($header['TO']) $headdata .= lang('to').': '.self::convertAddressArrayToString($header['TO'])."\n";
-			if ($header['CC']) $headdata .= lang('cc').': '.self::convertAddressArrayToString($header['CC'])."\n";
-			if ($header['BCC']) $headdata .= lang('bcc').': '.self::convertAddressArrayToString($header['BCC'])."\n";
-			if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
-			if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
-			if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
+			if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
+			if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM']).($createHTML?"<br />":"\n");
+			if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER']).($createHTML?"<br />":"\n");
+			if ($header['TO']) $headdata .= lang('to').': '.self::convertAddressArrayToString($header['TO']).($createHTML?"<br />":"\n");
+			if ($header['CC']) $headdata .= lang('cc').': '.self::convertAddressArrayToString($header['CC']).($createHTML?"<br />":"\n");
+			if ($header['BCC']) $headdata .= lang('bcc').': '.self::convertAddressArrayToString($header['BCC']).($createHTML?"<br />":"\n");
+			if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE'].($createHTML?"<br />":"\n");
+			if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY'].($createHTML?"<br />":"\n");
+			if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE'].($createHTML?"<br />":"\n");
 			//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
 			if (!empty($headdata))
 			{
-				if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------\n".$headdata;
-				if (empty($headline)) $headdata = "--------------------------------------------------------\n".$headdata;
-				$headdata .= "--------------------------------------------------------\n";
+				if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
+				if (empty($headline)) $headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n").$headdata;
+				$headdata .= "--------------------------------------------------------".($createHTML?"<br />":"\n");
 			}
 			else
 			{
-				$headdata = "--------------------------------------------------------\n";
+				$headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n");
 			}
 			return $headdata;
 		}
@@ -4437,7 +4440,7 @@ class felamimail_bo
 			for($i=0; $i<count($bodyParts); $i++)
 			{
 				if (!isset($bodyParts[$i]['body'])) {
-					$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i]);
+					$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i], $preserveHTML);
 					$message .= empty($bodyParts[$i]['body'])?'':$bodyParts[$i]['body'];
 					continue;
 				}
