@@ -1235,7 +1235,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 		if(!data.fields) data.fields = {};
 		for(var field in this.options.customfields)
 		{
-			data.fields[field] = (typeof this.options.fields[field] == 'undefined' ? false : this.options.fields[field]);
+			data.fields[field] = (this.options.fields == null || typeof this.options.fields[field] == 'undefined' ? false : this.options.fields[field]);
 		}
 		return name;
 	}
