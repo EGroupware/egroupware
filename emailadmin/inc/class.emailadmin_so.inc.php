@@ -83,7 +83,7 @@
 			foreach($vals as $key => $val)
 			{
 				if (($k = array_search($key,$this->db_cols)) === false) $k = $key;
-				
+
 				$cols[$k] = $val;
 			}
 			return $cols;
@@ -101,7 +101,7 @@
 			foreach($cols as $key => $val)
 			{
 				if (isset($this->db_cols[$key])) $key = $this->db_cols[$key];
-				
+
 				$vals[$key] = $val;
 			}
 			return $vals;
@@ -135,18 +135,18 @@
 		{
 			$_fieldNames = array_keys($this->vals2db(array_flip($_fieldNames)));
 			$this->db->select($this->table,$_fieldNames,array('ea_profile_id' => $_profileID), __LINE__, __FILE__);
-			
+
 			if (($data = $this->db->row(true))) {
 				return $this->db2vals($data);
 			}
 			return $data;
 		}
-		
+
 		function getUserProfile($_appName, $_groups, $_user = NULL)
 		{
 			if(empty($_appName) || !is_array($_groups))
 				return false;
-			if (!empty($_user)) {	
+			if (!empty($_user)) {
 				$where = $this->db->expression(
 					$this->table,'(',
 					array('ea_appname'=>$_appName),
@@ -218,15 +218,15 @@
 		*/
 		static function mergeProfileData($mergeInTo, $toMerge)
 		{
-			if (is_array($toMerge) && count($toMerge)>0) 
+			if (is_array($toMerge) && count($toMerge)>0)
 			{
 				$allkeys = array_unique(array_keys($mergeInTo)+array_keys($toMerge));
 				foreach ($allkeys as $i => $key) {
-					if (!array_key_exists($key, $mergeInTo) && array_key_exists($key, $toMerge) && !empty($toMerge[$key])) 
+					if (!array_key_exists($key, $mergeInTo) && array_key_exists($key, $toMerge) && !empty($toMerge[$key]))
 					{
 						$mergeInTo[$key]=$toMerge[$key];
 					} else {
-						if (array_key_exists($key, $toMerge) && !empty($toMerge[$key])) 
+						if (array_key_exists($key, $toMerge) && !empty($toMerge[$key]))
 						{
 							#error_log($key.'->'.$toMerge[$key]);
 							switch ($key) {
@@ -254,10 +254,10 @@
 								case 'smtpServer':
 									if (strlen($toMerge['smtpServer'])>0) $mergeInTo[$key]=$toMerge[$key];
 									break;
-								case 'smtpLDAPServer':     
-								case 'smtpLDAPBaseDN':    
-								case 'smtpLDAPAdminDN':   
-								case 'smtpLDAPAdminPW': 
+								case 'smtpLDAPServer':
+								case 'smtpLDAPBaseDN':
+								case 'smtpLDAPAdminDN':
+								case 'smtpLDAPAdminPW':
 								case 'smtpLDAPUseDefault':
 									if (strlen($toMerge['smtpLDAPServer'])>0) $mergeInTo[$key]=$toMerge[$key];
 									break;
@@ -274,9 +274,9 @@
 					}
 				}
 			}
-			return $mergeInTo;			
+			return $mergeInTo;
 		}
-		
+
 		function getProfileList($_profileID=0,$_defaultProfile=false,$_appName=false,$_groupID=false,$_accountID=false)
 		{
 			$where = false;
@@ -287,8 +287,8 @@
 			elseif ($_defaultProfile)
 			{
 				$where[] = "(ea_appname ='' or ea_appname is NULL)";
-				$where[] = "(ea_group=0 or ea_group is NULL)";
-				$where[] = "(ea_user =0 or ea_user is NULL)";
+				$where[] = "(ea_group='0' or ea_group is NULL)";	// ea_group&ea_user are varchar!
+				$where[] = "(ea_user ='0' or ea_user is NULL)";
 			}
 			elseif ($_appName)
 			{
@@ -316,7 +316,7 @@
 		function getUserData($_accountID)
 		{
 			$ldap = $GLOBALS['egw']->common->ldapConnect();
-			
+
 			if (($sri = @ldap_search($ldap,$GLOBALS['egw_info']['server']['ldap_context'],"(uidnumber=$_accountID)")))
 			{
 				$allValues = ldap_get_entries($ldap, $sri);
@@ -332,16 +332,16 @@
 					$userData["deliveryMode"]		= $allValues[0]["deliverymode"][0];
 
 					unset($userData["mailAlternateAddress"]["count"]);
-					unset($userData["mailRoutingAddress"]["count"]);					
+					unset($userData["mailRoutingAddress"]["count"]);
 
 					return $userData;
 				}
 			}
-			
+
 			// if we did not return before, return false
 			return false;
 		}
-		
+
 		function saveUserData($_accountID, $_accountData)
 		{
 			$ldap = $GLOBALS['egw']->common->ldapConnect();
@@ -363,21 +363,21 @@
 				$uid	   	= $allValues[0]['uid'][0];
 				$homedirectory	= $allValues[0]['homedirectory'][0];
 				$objectClasses	= $allValues[0]['objectclass'];
-				
+
 				unset($objectClasses['count']);
 			}
 			else
 			{
 				return false;
 			}
-			
+
 			if(empty($homedirectory))
 			{
 				$homedirectory = "/home/".$uid;
 			}
-			
+
 			// the old code for qmail ldap
-			$newData = array 
+			$newData = array
 			(
 				'mail'			=> $_accountData["mailLocalAddress"],
 				'mailAlternateAddress'	=> $_accountData["mailAlternateAddress"],
@@ -388,15 +388,15 @@
 				'qmailDotMode'		=> $_accountData["qmailDotMode"],
 				'deliveryProgramPath'	=> $_accountData["deliveryProgramPath"]
 			);
-			
+
 			if(!in_array('qmailUser',$objectClasses) &&
 				!in_array('qmailuser',$objectClasses))
 			{
-				$objectClasses[]	= 'qmailuser'; 
+				$objectClasses[]	= 'qmailuser';
 			}
-			
+
 			// the new code for postfix+cyrus+ldap
-			$newData = array 
+			$newData = array
 			(
 				'mail'			=> $_accountData["mailLocalAddress"],
 				'accountStatus'		=> $_accountData["accountStatus"],
@@ -404,7 +404,7 @@
 			);
 
 			if(is_array($_accountData["mailAlternateAddress"]))
-			{	
+			{
 				$newData['mailAlternateAddress'] = $_accountData["mailAlternateAddress"];
 			}
 			else
@@ -413,7 +413,7 @@
 			}
 
 			if($_accountData["accountStatus"] == 'active')
-			{	
+			{
 				$newData['accountStatus'] = 'active';
 			}
 			else
@@ -422,7 +422,7 @@
 			}
 
 			if(!empty($_accountData["deliveryMode"]))
-			{	
+			{
 				$newData['deliveryMode'] = $_accountData["deliveryMode"];
 			}
 			else
@@ -432,18 +432,18 @@
 
 
 			if(is_array($_accountData["mailRoutingAddress"]))
-			{	
+			{
 				$newData['mailForwardingAddress'] = $_accountData["mailRoutingAddress"];
 			}
 			else
 			{
 				$newData['mailForwardingAddress'] = array();
 			}
-			
+
 			#print "DN: $accountDN<br>";
 			ldap_mod_replace ($ldap, $accountDN, $newData);
 			#print ldap_error($ldap);
-			
+
 			// also update the account_email field in egw_accounts
 			// when using sql account storage
 			if($GLOBALS['egw_info']['server']['account_repository'] == 'sql')
@@ -457,6 +457,6 @@
 				);
 			}
 			return true;
-		}		
+		}
 	}
 ?>
