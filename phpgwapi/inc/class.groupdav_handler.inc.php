@@ -354,6 +354,7 @@ abstract class groupdav_handler
 			// identify the agent (GroupDAV client) from the HTTP_USER_AGENT header
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
+				'carddav-sync'      => 'carddav-sync',	// dmfs.org CardDAV client for Android: CardDAV-Sync (Android) (like iOS/5.0.1 (9A405) dataaccessd/1.0) gzip
 				'iphone'            => 'iphone',	// Apple iPhone iCal
 				'davkit'            => 'davkit',	// Apple iCal 10.6
 				'coredav'           => 'coredav',	// Apple iCal 10.7
