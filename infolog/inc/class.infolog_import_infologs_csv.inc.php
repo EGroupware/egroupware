@@ -179,7 +179,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// Make sure type is valid
 			if(!$record['info_type'] || $record['info_type'] && !$this->boinfolog->enums['type'][$record['info_type']])
 			{
-				$this->warnings[$import_csv->get_current_position()] .= lang('Unknown type: %1', $record['info_type']);
+				$this->warnings[$import_csv->get_current_position()] .= ($this->warnings[$import_csv->get_current_position()] ? "\n":'').
+					lang('Unknown type: %1', $record['info_type']);
 			}
 
 			// Set default status for type, if not specified
@@ -270,6 +271,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
 			if($success) $count++;
+			if($this->warnings[$import_csv->get_current_position()]) {
+				$this->warnings[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
+			}
+			if($this->errors[$import_csv->get_current_position()]) {
+				$this->errors[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
+			}
 		}
 		return $count;
 	}
