@@ -72,15 +72,20 @@ class addressbook_groupdav extends groupdav_handler
 		$this->bo = new addressbook_bo();
 
 		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
-		if (version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '>='))
+		// LDAP does NOT have a carddav_name attribute --> stick with id mapped to LDAP attribute uid
+		if (version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '<') ||
+			$this->bo->contact_repository == 'ldap' ||
+			$this->bo->account_repository == 'ldap' && strpos($_SERVER['REQUEST_URI'].'/','/addressbook-accounts/') !== false)
+		{
+			groupdav_handler::$path_extension = '.vcf';
+		}
+		else
 		{
 			groupdav_handler::$path_attr = 'carddav_name';
 			groupdav_handler::$path_extension = '';
 		}
-		else
-		{
-			groupdav_handler::$path_extension = '.vcf';
-		}
+		if ($this->debug) error_log(__METHOD__."() contact_repository={$this->bo->contact_repository}, account_repository={$this->bo->account_repository}, REQUEST_URI=$_SERVER[REQUEST_URI] --> path_attr=".self::$path_attr.", path_extension=".self::$path_extension);
+
 		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
 		$this->home_set_pref = $this->home_set_pref ? explode(',',$this->home_set_pref) : array();
 
@@ -108,13 +113,13 @@ class addressbook_groupdav extends groupdav_handler
 		// If "Sync selected addressbooks into one" is set
 		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
 		{
-			$filter['contact_owner'] = array_keys($this->get_shared(true));	// true: ignore all-in-one pref
-			$filter['contact_owner'][] = $user;
+			$filter['owner'] = array_keys($this->get_shared(true));	// true: ignore all-in-one pref
+			$filter['owner'][] = $user;
 		}
 		// show addressbook of a single user?
 		elseif ($user && $path != '/addressbook/' || $user === 0)
 		{
-			$filter['contact_owner'] = $user;
+			$filter['owner'] = $user;
 		}
 		// should we hide the accounts addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
@@ -202,11 +207,11 @@ class addressbook_groupdav extends groupdav_handler
 				$files[] = $this->add_resource($path, $contact, $props);
 			}
 		}
-		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['contact_owner'])
-		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['contact_owner']))
+		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
+		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['owner']))
 		{
 			$where = array(
-				'list_owner' => isset($filter['contact_owner'])?$filter['contact_owner']:array_keys($this->bo->grants)
+				'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
 			);
 			if (isset($filter[self::$path_attr]))	// multiget report?
 			{
@@ -220,9 +225,9 @@ class addressbook_groupdav extends groupdav_handler
 					$list['carddav_name'] = $list['list_carddav_name'];
 					$etag = $list['list_id'].':'.$list['list_etag'];
 					// for all-in-one addressbook, add selected ABs to etag
-					if (isset($filter['contact_owner']) && is_array($filter['contact_owner']))
+					if (isset($filter['owner']) && is_array($filter['owner']))
 					{
-						$etag .= ':'.implode('-',$filter['contact_owner']);
+						$etag .= ':'.implode('-',$filter['owner']);
 					}
 					$props = array(
 						'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
@@ -513,6 +518,7 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['carddav_name'] = $oldContact['carddav_name'];
 			$contact['tid'] = $oldContact['tid'];
 			$contact['creator'] = $oldContact['creator'];
+			$contact['account_id'] = $oldContact['account_id'];
 		}
 		else
 		{
@@ -646,7 +652,7 @@ class addressbook_groupdav extends groupdav_handler
 	public function getctag($path,$user)
 	{
 		// not showing addressbook of a single user?
-		if (!$user || $path == '/addressbook/') $user = null;
+		if (is_null($user) || $user === '' || $path == '/addressbook/') $user = null;
 
 		// If "Sync selected addressbooks into one" is set --> ctag need to take selected AB's into account too
 		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))

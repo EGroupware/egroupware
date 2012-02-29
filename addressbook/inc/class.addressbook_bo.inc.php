@@ -986,23 +986,26 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!($data = parent::read($contact_id)))
 		{
-			return null;	// not found
+			$data = null;	// not found
 		}
-		if (!$this->check_perms(EGW_ACL_READ,$data))
+		elseif (!$this->check_perms(EGW_ACL_READ,$data))
 		{
-			return false;	// no view perms
+			$data = false;	// no view perms
 		}
-		// determine the file-as type
-		$data['fileas_type'] = $this->fileas_type($data);
+		else
+		{
+			// determine the file-as type
+			$data['fileas_type'] = $this->fileas_type($data);
 
-		// Update country name from code
-		if($data['adr_one_countrycode'] != null) {
-			$data['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_one_countrycode'], true);
+			// Update country name from code
+			if($data['adr_one_countrycode'] != null) {
+				$data['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_one_countrycode'], true);
+			}
+			if($data['adr_two_countrycode'] != null) {
+				$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
+			}
 		}
-		if($data['adr_two_countrycode'] != null) {
-			$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
-		}
-
+		//error_log(__METHOD__.'('.array2string($contact_id).') returning '.array2string($data));
 		return $data;
 	}
 
@@ -2219,22 +2222,22 @@ class addressbook_bo extends addressbook_so
 	{
 		$filter = array('tid' => null);	// tid=null --> use all entries incl. deleted (tid='D')
 		// show addressbook of a single user?
-		if (!is_null($owner)) $filter['contact_owner'] = $owner;
+		if (!is_null($owner)) $filter['owner'] = $owner;
 
 		// should we hide the accounts addressbook
 		if (!$owner && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 		{
 			$filter['account_id'] = null;
 		}
-		$result = $this->search(array(),'MAX(contact_modified) AS contact_modified','','','',false,'AND',false,$filter);
+		$result = $this->search(array(),'contact_modified','contact_modified DESC','','',false,'AND',array(0,1),$filter);
 
-		if (!$result || !isset($result[0]['contact_modified']))
+		if (!$result || !isset($result[0]['modified']))
 		{
 			$ctag = 'empty';	// ctag for empty addressbook
 		}
 		else
 		{
-			$ctag = $result[0]['contact_modified'];
+			$ctag = $result[0]['modified'];
 		}
 		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
 		return $ctag;
