@@ -30,6 +30,7 @@ cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohn
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
 cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Verzeichnisses '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
+check virtual filesystem	filemanager	de	Virtuelles Dateisystem überprüfen
 clear search	filemanager	de	Suchfelder zurücksetzen
 comment	filemanager	de	Kommentar
 copied	filemanager	de	kopiert
@@ -96,6 +97,8 @@ filemanager configuration	admin	de	Dateimanager Konfiguration
 filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
+filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
+fix reported problems	filemanager	de	Gefundene Probleme beheben
 folder up	filemanager	de	darüberliegendes Verzeichnis
 general	filemanager	de	Allgemein
 go home	filemanager	de	Heimatverzeichnis
