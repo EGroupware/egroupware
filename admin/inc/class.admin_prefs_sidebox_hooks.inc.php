@@ -22,7 +22,6 @@ class admin_prefs_sidebox_hooks
 	 */
 	var $public_functions = array(
 		'register_all_hooks' => True,
-		'fsck' => true,
 	);
 
 	/**
@@ -102,11 +101,6 @@ class admin_prefs_sidebox_hooks
 				$file['Find and Register all Application Hooks'] = egw::link('/index.php','menuaction=admin.admin_prefs_sidebox_hooks.register_all_hooks');
 			}
 
-			//if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
-			{
-				$file['Check virtual filesystem'] = egw::link('/index.php','menuaction=admin.admin_prefs_sidebox_hooks.fsck');
-			}
-
 			if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
 			{
 				$file['Asynchronous timed services'] = egw::link('/index.php','menuaction=admin.uiasyncservice.index');
@@ -154,25 +148,5 @@ class admin_prefs_sidebox_hooks
 			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
 		}
 		$GLOBALS['egw']->redirect_link('/admin/index.php');
-	}
-
-	/**
-	 * Run fsck on sqlfs
-	 */
-	function fsck()
-	{
-		$check_only = !isset($_POST['fix']);
-
-		if (!($msgs = sqlfs_utils::fsck($check_only)))
-		{
-			$msgs = lang('Filesystem check reported no problems.');
-		}
-		$content = '<p>'.implode("</p>\n<p>", (array)$msgs)."</p>\n";
-
-		$content .= html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
-			html::submit_button('cancel', lang('Cancel'), "window.location.href='".egw::link('/admin/index.php')."'; return false;").'</p>',
-			'','/index.php',array('menuaction'=>'admin.admin_prefs_sidebox_hooks.fsck'));
-
-		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
 	}
 }

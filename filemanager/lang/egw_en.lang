@@ -34,6 +34,7 @@ cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Can not create directory because it begins or ends in a space.
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
+check virtual filesystem	filemanager	en	Check virtual filesystem
 clear search	filemanager	en	Clear search
 comment	filemanager	en	Comment
 copied	filemanager	en	Copied
@@ -101,6 +102,8 @@ filemanager configuration	admin	en	File Manager configuration
 filename must not be empty!	filemanager	en	File name must not be empty!
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
+filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
+fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
 general	filemanager	en	General
 go home	filemanager	en	Go home

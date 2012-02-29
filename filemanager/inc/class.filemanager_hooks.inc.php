@@ -14,6 +14,15 @@
  */
 class filemanager_hooks
 {
+	/**
+	 * Functions callable via menuaction
+	 *
+	 * @var unknown_type
+	 */
+	var $public_functions = array(
+		'fsck' => true,
+	);
+
 	static $appname = 'filemanager';
 	static $foldercount = 1;
 
@@ -91,6 +100,7 @@ class filemanager_hooks
         $file = Array(
             'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
             'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
+			'Check virtual filesystem' => egw::link('/index.php','menuaction=filemanager.filemanager_hooks.fsck'),
         );
         // add other administration links, eg. of filesystem backends like versioning
         if (($other = $GLOBALS['egw']->hooks->process('filemanager_admin',array(),true)))
@@ -234,5 +244,29 @@ class filemanager_hooks
 			);
 		}
 		return $settings;
+	}
+
+	/**
+	 * Run fsck on sqlfs
+	 */
+	function fsck()
+	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new egw_exception_no_permission_admin();
+		}
+		$check_only = !isset($_POST['fix']);
+
+		if (!($msgs = sqlfs_utils::fsck($check_only)))
+		{
+			$msgs = lang('Filesystem check reported no problems.');
+		}
+		$content = '<p>'.implode("</p>\n<p>", (array)$msgs)."</p>\n";
+
+		$content .= html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
+			html::submit_button('cancel', lang('Cancel'), "window.location.href='".egw::link('/admin/index.php')."'; return false;").'</p>',
+			'','/index.php',array('menuaction'=>'filemanager.filemanager_hooks.fsck'));
+
+		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
 	}
 }
