@@ -183,7 +183,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		$msgs = array();
 		foreach(self::$pdo->query('SELECT fs.* FROM '.self::TABLE.' fs'.
 			' LEFT JOIN '.self::TABLE.' dir ON dir.fs_id=fs.fs_dir'.
-			' WHERE fs.fs_id > 1 && dir.fs_id IS NULL') as $row)
+			' WHERE fs.fs_id > 1 AND dir.fs_id IS NULL') as $row)
 		{
 			if ($check_only)
 			{
