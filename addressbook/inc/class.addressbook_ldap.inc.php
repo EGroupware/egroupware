@@ -108,6 +108,7 @@ class addressbook_ldap
 			'n_fileas'		=> 'displayname',
 			'label'			=> 'postaladdress',
 			'pubkey'		=> 'usersmimecertificate',
+			'uid'			=> 'entryuuid',
 		),
 
 		#displayName
@@ -286,7 +287,8 @@ class addressbook_ldap
 	*/
 	function read($contact_id)
 	{
-		if (is_array($contact_id) && isset($contact_id['account_id']) || substr($contact_id,0,8) == 'account:')
+		if (is_array($contact_id) && isset($contact_id['account_id']) ||
+			!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
 		{
 			$filter = 'uidNumber='.(int)(is_array($contact_id) ? $contact_id['account_id'] : substr($contact_id,8));
 		}
@@ -436,6 +438,7 @@ class addressbook_ldap
 			$needRecreation = false;
 			// never allow to change the uidNumber (account_id) on update, as it could be misused by eg. xmlrpc or syncml
 			unset($ldapContact['uidnumber']);
+			unset($ldapContact['entryuuid']);	// not allowed to modify that, no need either
 
 			// add missing objectclasses
 			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses))
@@ -665,6 +668,7 @@ class addressbook_ldap
 			$sort = 'ASC';
 			foreach(explode(',',$order_by) as $o)
 			{
+				if (substr($o,0,8) == 'contact_') $o = substr($o,8);
 				if (substr($o,-4) == ' ASC')
 				{
 					$sort = 'ASC';
