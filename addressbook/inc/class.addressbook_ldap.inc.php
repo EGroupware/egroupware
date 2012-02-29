@@ -590,6 +590,21 @@ class addressbook_ldap
 		#$limit = $need_full_no_count ? 0 : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		#return parent::read($start,$limit,$fields,$query,$filter,$sort,$order);
 
+		if (is_array($filter['owner']))
+		{
+			if (count($filter['owner']) == 1)
+			{
+				$filter['owner'] = array_shift($filter['owner']);
+			}
+			else
+			{
+				// multiple addressbooks happens currently only via CardDAV or eSync
+				// currently we query all contacts and remove not matching ones (not the most efficient way to do it)
+				$owner_filter = $filter['owner'];
+				unset($filter['owner']);
+			}
+		}
+
 		if((int)$filter['owner'])
 		{
 			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
@@ -661,6 +676,18 @@ class addressbook_ldap
 		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
 		{
 			return $rows;
+		}
+		// only return certain owners --> unset not matching ones
+		if ($owner_filter)
+		{
+			foreach($rows as $k => $row)
+			{
+				if (!in_array($row['owner'],$owner_filter))
+				{
+					unset($rows[$k]);
+					--$this->total;
+				}
+			}
 		}
 		if ($order_by)
 		{
