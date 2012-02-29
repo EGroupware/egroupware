@@ -1,0 +1,190 @@
+%1 already exists as a file	filemanager	de	%1 existiert schon als Datei
+%1 directories and %2 files copied.	filemanager	de	%1 Verzeichnisse und %2 Dateien kopiert.
+%1 directories and %2 files deleted.	filemanager	de	%1 Verzeichnisse und %2 Dateien gelöscht.
+%1 elements linked.	filemanager	de	%1 Elemente verknüpft.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Verzeichnisse und %3 Dateien kopiert)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Verzeichnisse und %3 Dateien gelöscht)!
+%1 errors linking (%2)!	filemanager	de	%1 Fehler beim Verknüpfen (%2)!
+%1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
+%1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
+%1 files	common	de	%1 Dateien
+%1 files copied.	filemanager	de	%1 Dateien kopiert.
+%1 files deleted.	filemanager	de	%1 Dateien gelöscht.
+%1 files moved.	filemanager	de	%1 Dateien verschoben.
+%1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
+%1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen.
+%1 the following files into current directory	filemanager	de	Die folgenden Dateien in das aktuelle Verzeichnis %1
+%1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
+accessrights	filemanager	de	Zugangsberechtigungen
+acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
+acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
+actions	filemanager	de	Befehle
+all files	common	de	Alle Dateien
+allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
+and all it's childeren	filemanager	de	und alle seine Kinder
+applications	common	de	Anwendungen
+basedirectory	filemanager	de	Basisverzeichnis
+can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
+cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
+cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
+check all	filemanager	de	Alle auswählen
+check virtual filesystem	filemanager	de	Virtuelles Dateisystem überprüfen
+clear search	filemanager	de	Suchfelder zurücksetzen
+comment	filemanager	de	Kommentar
+comments cannot contain "%1"	filemanager	de	Kommentare dürfen "%1" nicht enthalten
+copied	filemanager	de	kopiert
+copied %1 to %2	filemanager	de	%1 nach %2 kopiert
+copy	filemanager	de	Kopieren
+copy to	filemanager	de	Kopieren nach
+copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
+could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
+could not copy file because no destination directory is given	filemanager	de	Die Datei konnte nicht kopiert werden, da kein Zielverzeichnis angegeben ist.
+could not create %1	filemanager	de	Konnte %1 nicht erstellen
+could not delete %1	filemanager	de	Konnte %1 nicht löschen
+could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
+could not move file because no destination directory is given	filemanager	de	Die Datei konnte nicht verschoben werden, da kein Zielverzeichnis angegeben ist.
+could not rename %1 to %2	filemanager	de	Konnte %1 nicht in %2 umbenennen
+could not save %1	filemanager	de	Konnte %1 nicht speichern
+create a link	filemanager	de	Verknüpfung anlegen
+create directory	filemanager	de	Verzeichnis anlegen
+create file	filemanager	de	Datei erstellen
+create folder	filemanager	de	Verzeichnis erstellen
+created	filemanager	de	erstellt
+created %1,%2	filemanager	de	erstellt %1, %2
+created between	filemanager	de	erstellt zwischen
+created directory %1	filemanager	de	Verzeichis %1 erstellt
+current directory	filemanager	de	Aktuelles Verzeichnis
+custom fields	filemanager	de	Benutzerdefinierte Felder
+cut	filemanager	de	Ausschneiden
+cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
+delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
+deleted %1	filemanager	de	%1 gelöscht
+directories sorted in	filemanager	de	Verzeichnisse einsortiert
+directory	filemanager	de	Verzeichnis
+directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
+directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
+directory names cannot contain "%1"	filemanager	de	Verzeichnisnamen dürfen kein "%1" enthalten
+directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
+display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
+display of content	filemanager	de	Anzeigen des Inhaltes
+do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
+download	filemanager	de	Herunterladen
+edit comments	filemanager	de	Kommentare bearbeiten
+edit settings	filemanager	de	Einstellungen bearbeiten
+enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
+enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu bekommen
+enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	de	Geben Sie den kompletten Pfad ein, um einen Schnelle Zugangsverknüpfung zu einem Verzeichnis zu erzeugen (1)
+enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
+error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
+error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
+error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
+executable	filemanager	de	Ausführbar
+extended access control list	filemanager	de	Erweiterte Zugriffsrechte
+extended acl	filemanager	de	Erweiterte ACL
+failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
+failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
+favorites	filemanager	de	Favoriten
+file	filemanager	de	Datei
+file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte editieren Sie diese, oder löschen Sie sie.
+file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
+file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
+file deleted.	filemanager	de	Datei gelöscht.
+file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
+file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
+file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
+filemanager	common	de	Dateimanager
+filemanager configuration	admin	de	Dateimanager Konfiguration
+files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
+files in this directory	filemanager	de	Dateien in diesem Verzeichnis
+filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
+fix reported problems	filemanager	de	Gefundene Probleme beheben
+folder up	filemanager	de	darüberliegendes Verzeichnis
+general	filemanager	de	Allgemein
+go home	filemanager	de	Heimatverzeichnis
+go to	filemanager	de	Gehe zu
+go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
+go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
+id	filemanager	de	Id
+inherited	filemanager	de	Geerbt
+link	filemanager	de	verknüpfen
+link %1: %2	filemanager	de	%1. Verknüpfung: %2
+link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
+location	filemanager	de	Ort
+log out as superuser	filemanager	de	Superuser abmelden
+max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
+mime type	filemanager	de	MIME-Typ
+modified	filemanager	de	verändert
+modified between	filemanager	de	verändert zwischen
+modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
+move	filemanager	de	verschieben
+move to	filemanager	de	Verschieben nach
+moved %1 to %2	filemanager	de	%1 nach %2 verschoben
+no access	filemanager	de	Kein Zugriff
+no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
+no preview available	filemanager	de	Keine Vorschau verfügbar
+no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
+only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
+open	filemanager	de	Öffnen
+operation	filemanager	de	Vorgang
+permission denied!	filemanager	de	Zugriff verweigert!
+permissions	filemanager	de	Zugriffsrechte
+permissions of %1 changed.	filemanager	de	Zugriffsrechte von %1 geändert.
+please select a file to delete.	filemanager	de	Bitte wählen Sie eine Datei zum Löschen aus
+preview	filemanager	de	Vorschau
+preview %1	filemanager	de	Vorschau %1
+preview of %1	filemanager	de	Vorschau von %1
+projectmanager	filemanager	de	Projektmanager
+properties saved.	filemanager	de	Eigenschaften gespeichert.
+quick jump to	filemanager	de	Springe zu
+read & write access	filemanager	de	Lese- und Schreibzugriff
+read access only	filemanager	de	Nur Lesezugriff
+reload	filemanager	de	Aktualisieren
+rename of %1 to %2 failed!	filemanager	de	Umbenennung von %1 nach %2 schlug fehl!
+rename, change permissions or ownership	filemanager	de	Umbennen, Zugriffsrechte oder Besitzer ändern
+renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
+renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
+replaced %1	filemanager	de	%1 ersetzt
+rights	filemanager	de	Rechte
+root	filemanager	de	root
+root access granted.	filemanager	de	Root Zugriff gewährt.
+root access stopped.	filemanager	de	Root Zugriff gestoppt.
+save %1	filemanager	de	%1 speichern
+save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
+save changes	filemanager	de	Änderungen speichern
+saved %1	filemanager	de	%1 gespeichert
+saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
+search for '%1'	filemanager	de	nach %1 suchen
+searchstring	filemanager	de	Suchbegriff
+select action...	filemanager	de	Befehl auswählen...
+select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
+show	filemanager	de	Zeige
+show hidden files	filemanager	de	Zeige versteckte Dateien
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
+size	filemanager	de	Größe
+start search	filemanager	de	Suche starten
+startfolder	filemanager	de	Anfangsordner
+superuser	filemanager	de	Superuser
+symlink to %1 created.	filemanager	de	Verknüpfung nach %1 angelegt.
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen.
+the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
+there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
+there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
+to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
+total files	filemanager	de	Gesamtanzahl Dateien
+unused space	filemanager	de	Nicht benutzter Platz
+up	filemanager	de	Nach oben
+updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
+used space	filemanager	de	Benutzter Platz
+users and groups	filemanager	de	Benutzer und Gruppen
+wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
+you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
+you can only grant additional rights, you can not take rights away!	filemanager	de	Sie könnnen nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
+you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
+you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
+you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
+you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatverzeichnis geleitet.
+you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Startverzeichnis geleitet.
+your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatverzeichnis hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
+your home directory	filemanager	de	Ihr persönliches Verzeichnis

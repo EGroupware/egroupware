@@ -113,7 +113,6 @@ change password for %1	admin	en	change password for %1
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
-check virtual filesystem	admin	en	Check virtual filesystem
 children	admin	en	Children
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
@@ -255,7 +254,6 @@ false	admin	en	false
 field '%1' already exists !!!	admin	en	Field '%1' already exists !!!
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
-filesystem check reported no problems.	admin	en	Filesystem check reported no problems.
 find and register all application hooks	admin	en	Find and register all application hooks
 for the times above	admin	en	For the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
