@@ -96,7 +96,7 @@ var et2_template = et2_DOMWidget.extend({
 			this.proxiedTemplate.isProxy = true;
 
 			// Disallow adding any new node to this template
-			this.supportedWidgetClasses = [];
+			//this.supportedWidgetClasses = [];
 		}
 	},
 

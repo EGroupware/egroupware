@@ -76,8 +76,6 @@ var et2_link_to = et2_inputWidget.extend({
 	},
 
 	destroy: function() {
-		this._super.apply(this, arguments);
-
 		this.link_button = null;
 		this.status_span = null;
 		this.comment = null;
@@ -87,6 +85,8 @@ var et2_link_to = et2_inputWidget.extend({
 		this.file_upload.destroy();
 		this.file_upload = null;
 		this.div = null;
+
+		this._super.apply(this, arguments);
 	},
 
 	/**
@@ -762,7 +762,9 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	destroy: function() {
 		this._super.apply(this, arguments);
-		this.node.children().unbind();
+		if (this.node != null) {
+			this.node.children().unbind();
+		}
 	},
 
 	set_value: function(_value) {
