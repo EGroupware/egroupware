@@ -623,8 +623,8 @@ abstract class bo_tracking
 		}
 		else
 		{
-			// for the notification copy, we use the default-prefs plus the language from the the tracker config
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default;
+			// for the notification copy, we use default (and forced) prefs plus the language from the the tracker config
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default_prefs();
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $user_or_lang;
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)	// load the right language if needed
