@@ -397,6 +397,25 @@ class preferences
 	}
 
 	/**
+	 * Get default preferences (also taking forced preferences into account!)
+	 *
+	 * @param string $app=null
+	 * @param string $name=null
+	 * @return mixed
+	 */
+	function default_prefs($app=null,$name=null)
+	{
+		// boetemplate::complete_array_merge() is identical to PHP >= 5.3 array_replace_recursive()
+		$default = boetemplate::complete_array_merge($this->default, $this->forced);
+
+		if ($app) $default = $default[$app];
+
+		if ($name && is_array($default)) $default = $default[$name];
+
+		return $default;
+	}
+
+	/**
 	 * Checking new timezone ('tz') pref and setting old tz_offset pref from it
 	 *
 	 */
