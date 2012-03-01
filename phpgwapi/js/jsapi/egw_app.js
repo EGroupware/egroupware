@@ -14,12 +14,13 @@
 
 /*egw:uses
 	egw_core;
-	egw_preferences;
-	egw_lang;
-	egw_links;
-	egw_user;
-	egw_config;
-	egw_images;
-	egw_jsonq;
 */
+
+egw.extend('jsonq', function() {
+
+	return {
+		
+	};
+
+});
 
