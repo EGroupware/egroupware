@@ -14,10 +14,10 @@
 
 /**
  * LDAP connection handling
- * 
+ *
  * Please note for SSL or TLS connections hostname has to be:
- * - SSL: "ldaps://host"
- * - TLS: "tls://host"
+ * - SSL: "ldaps://host[:port]/"
+ * - TLS: "tls://host[:port]/"
  * Both require certificats installed on the webserver, otherwise the connection will fail!
  */
 class ldap
@@ -112,10 +112,11 @@ class ldap
 
 		if (($use_tls = substr($host,0,6) == 'tls://'))
 		{
+			$port = parse_url($host,PHP_URL_PORT);
 			$host = parse_url($host,PHP_URL_HOST);
 		}
 		// connects to ldap server
-		if(!$this->ds = ldap_connect($host))
+		if(!$this->ds = ldap_connect($host, $port))
 		{
 			/* log does not exist in setup(, yet) */
 			if(isset($GLOBALS['egw']->log))
