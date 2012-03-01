@@ -11,9 +11,13 @@
  * @version $Id$
  */
 
+// just to be sure, noone tries something nasty ...
+if (!preg_match('/^[a-z0-9_]+$/i', $_GET['app'])) die('No valid application-name given!');
+if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/i', $_GET['lang'])) die('No valid lang-name given!');
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => in_array($_GET['app'],array('etemplate','common')) ? 'home' : $_GET['app'],
+		'currentapp' => in_array($_GET['app'],array('etemplate','common','custom')) ? 'home' : $_GET['app'],
 		'noheader' => true,
 		'load_translations' => false,	// do not automatically load translations
 		'nocachecontrol' => true,
@@ -21,10 +25,6 @@ $GLOBALS['egw_info'] = array(
 );
 
 include '../header.inc.php';
-
-// just to be sure, noone tries something nasty ...
-if (!preg_match('/^[a-z0-9_]+$/i', $_GET['app'])) die('No valid application-name given!');
-if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/i', $_GET['lang'])) die('No valid lang-name given!');
 
 // use an etag with app, lang and a hash over the creation-times of all lang-files
 $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5(serialize($GLOBALS['egw_info']['server']['lang_ctimes'])).'"';
