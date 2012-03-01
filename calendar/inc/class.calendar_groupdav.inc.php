@@ -1256,7 +1256,7 @@ class calendar_groupdav extends groupdav_handler
 		foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
 		{
 			$id = $entry['grantor'];
-			if ($id && $user != $id &&	// no current user and no accounts yet (todo)
+			if ($id && $GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user
 				(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
 			{
