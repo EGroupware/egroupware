@@ -116,9 +116,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 */
 	public function beforeSendToClient($cname)
 	{
+		$form_name = self::form_name($cname, $this->id);
 		if ($this->attrs['type'])
 		{
-			$form_name = self::form_name($cname, $this->id);
 			// += to keep further options set by app code
 			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
@@ -128,6 +128,19 @@ class etemplate_widget_menupopup extends etemplate_widget
 			if ($no_lang != $this->attr['no_lang'])
 			{
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
+			}
+		}
+		
+		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
+		foreach(self::$request->sel_options[$form_name] as &$label)
+		{
+			if(!is_array($label))
+			{
+				$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+			}
+			elseif($label['label'])
+			{
+				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
 			}
 		}
 	}
@@ -291,7 +304,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
 				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,(int)$type4,true) as $cat)
 				{
-					$s = str_repeat(html_entity_decode('&nbsp;', ENT_NOQUOTES,'utf-8'),$cat['level']) . stripslashes($cat['name']);
+					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
 					if (categories::is_global($cat))
 					{
