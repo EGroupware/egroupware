@@ -81,6 +81,48 @@ if (typeof Array.prototype.indexOf == "undefined")
 
 		var localEgw = {};
 
+		/**
+		 * The egw function returns an instance of the client side api. If no
+		 * parameter is given, an egw istance, which is not bound to a certain
+		 * application is returned.
+		 */
+		egw = function(_app) {
+
+			// If no argument is given, simply return the global egw object, or
+			// check whether 'window.egw_appName' is set correctly.
+			if (typeof _app === 'undefined')
+			{
+				// TODO: Remove this code, window.egw_appName will be removed
+				// in the future.
+				if (typeof window.egw_appName == 'string')
+				{
+					_app = window.egw_appName;
+				}
+				else
+				{
+					return egw;
+				}
+			}
+
+			if (typeof _app == 'string')
+			{
+				// If a argument is given, this represents the current application
+				// name. Check whether we already have a copy of the egw object for
+				// that application. If yes, return it.
+				if (typeof localEgw[_app] === 'undefined')
+				{
+					// Otherwise clone the global egw object, set the application
+					// name and return it
+					localEgw[_app] = cloneObject(egw);
+					localEgw[_app].appName = _app;
+				}
+
+				return localEgw[_app];
+			}
+
+			this.debug("error", "Non-string argument given to the egw function.");
+		}
+
 		var globalEgw = {
 
 			/**
@@ -128,10 +170,6 @@ if (typeof Array.prototype.indexOf == "undefined")
 					// Call the function specified by "_code" which returns
 					// nothing but an object containing the extension.
 					var content = _code.call(this);
-
-					// Merge the extension into the global egw object (used for
-					// cloning)
-					mergeObjects(globalEgw, content);
 
 					// Merge the extension into the egw function
 					mergeObjects(egw, content);
@@ -188,48 +226,6 @@ if (typeof Array.prototype.indexOf == "undefined")
 				}
 			}
 		};
-
-		/**
-		 * The egw function returns an instance of the client side api. If no
-		 * parameter is given, an egw istance, which is not bound to a certain
-		 * application is returned.
-		 */
-		egw = function(_app) {
-
-			// If no argument is given, simply return the global egw object, or
-			// check whether 'window.egw_appName' is set correctly.
-			if (typeof _app === 'undefined')
-			{
-				// TODO: Remove this code, window.egw_appName will be removed
-				// in the future.
-				if (typeof window.egw_appName == 'string')
-				{
-					_app = window.egw_appName;
-				}
-				else
-				{
-					return egw;
-				}
-			}
-
-			if (typeof _app == 'string')
-			{
-				// If a argument is given, this represents the current application
-				// name. Check whether we already have a copy of the egw object for
-				// that application. If yes, return it.
-				if (typeof localEgw[_app] === 'undefined')
-				{
-					// Otherwise clone the global egw object, set the application
-					// name and return it
-					localEgw[_app] = cloneObject(globalEgw);
-					localEgw[_app].appName = _app;
-				}
-
-				return localEgw[_app];
-			}
-
-			this.debug("error", "Non-string argument given to the egw function.");
-		}
 
 		mergeObjects(egw, globalEgw);
 	}
