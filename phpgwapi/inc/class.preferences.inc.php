@@ -425,7 +425,7 @@ class preferences
 
 		if (!empty($prefs['tz']))
 		{
-			egw_time::setUserPrefs($prefs['tz'],$prefs['date_format'],$prefs['time_format']);
+			egw_time::setUserPrefs($prefs['tz'],$prefs['dateformat'],$prefs['timeformat']);
 			// set the old preference for compatibilty with old code
 			$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = egw_time::tz_offset_s()/3600;
 			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset={$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']}</p>\n";
