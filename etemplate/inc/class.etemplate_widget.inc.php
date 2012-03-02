@@ -563,6 +563,9 @@ class etemplate_widget
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
+		// Make sure none of these are left
+		$idx = str_replace(array('&#x5B;','&#x5D;'),array('[',']'),$idx);
+
 		if (count($idxs = explode('[', $idx, 2)) > 1)
 		{
 			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));

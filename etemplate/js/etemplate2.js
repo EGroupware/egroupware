@@ -216,7 +216,7 @@ etemplate2.prototype.submit = function(button)
 		// Button parameter used for submit buttons in datagrid
 		// TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
 		// I'm just not sure how.
-		if(button)
+		if(button && !values.button)
 		{
 			values.button = button.id
 			var path = button.getPath();
@@ -285,17 +285,18 @@ etemplate2.prototype.getValues = function(_root)
 		
 		// check if id contains a hierachical name, eg. "button[save]"
 		var id = _widget.id;
-		var indexes = _widget.id.split('&#x5B;',2);
+		var indexes = _widget.id.split('[',2); // Discards the others
 		if (indexes.length > 1)
 		{
-			indexes = [indexes.shift(), indexes.join('&#x5B;')];
-			indexes[1] = indexes[1].substring(0,indexes[1].length-6);
-			var children = indexes[1].split('&#x5B;&#x5D;');
+			indexes[1] = _widget.id.substring(indexes[0].length+1, _widget.id.length-1); // Add the rest back in, less the trailing ]
+			var children = indexes[1].split('][');
 			if(children.length)
 			{
 				indexes = jQuery.merge([indexes[0]], children);
 			}
 			path = path.concat(indexes);
+			// Take the last one as the ID
+			id = path.pop();
 		}
 
 		// Set the _target variable to that node
