@@ -98,7 +98,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 	},
 
 	transformAttributes: function(_attrs) {
-		this._super.apply(arguments);
+		this._super.apply(this, arguments);
 
 		if (this.id)
 		{
@@ -156,6 +156,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 		{
 			this.options.href = _values["href"];
 		}
+
 		if (typeof _values["value"] != "undefined")
 		{
 			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],
