@@ -179,7 +179,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// Make sure type is valid
 			if(!$record['info_type'] || $record['info_type'] && !$this->boinfolog->enums['type'][$record['info_type']])
 			{
-				$this->warnings[$import_csv->get_current_position()] .= ($this->warnings[$import_csv->get_current_position()] ? "\n":'').
+				$this->errors[$import_csv->get_current_position()] .= ($this->errors[$import_csv->get_current_position()] ? "\n":'').
 					lang('Unknown type: %1', $record['info_type']);
 			}
 
