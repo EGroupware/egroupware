@@ -82,7 +82,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 	{
 		if(this.options.href)
 		{
-			egw.call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
+			this.egw().call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
 		}		
 	},
 
@@ -122,7 +122,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 		}
 
 		this.options.src = _value;
-		var app = this.getTemplateApp();
+		var app = this.egw().getAppName();
 
 		// Handle app/image
 		if(_value.indexOf("/") > 0 && _value.indexOf("/") == _value.lastIndexOf("/")) {
@@ -131,7 +131,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 			_value = split[1];
 		}
 		// Get application to use from template ID
-		var src = egw.image(_value, app);
+		var src = this.egw().image(_value, app);
 		if(src)
 		{
 			this.image.attr("src", src).show();

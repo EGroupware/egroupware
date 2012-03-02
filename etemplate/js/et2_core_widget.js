@@ -551,7 +551,9 @@ var et2_widget = Class.extend({
 			{
 				if (this.attributes[key].translate === true || 
 				   (this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"]))
-				_attrs[key] = egw.lang(_attrs[key]);
+				{
+					_attrs[key] = this.egw().lang(_attrs[key]);
+				}
 			}
 		}
 	},
@@ -672,6 +674,35 @@ var et2_widget = Class.extend({
 	},
 
 	/**
+	 * The egw function returns the instance of the client side api belonging
+	 * to this widget tree. The api instance can be set in the "container"
+	 * widget using the setApiInstance function.
+	 */
+	egw: function() {
+		// The _egw property is not set 
+		if (typeof this._egw === 'undefined')
+		{
+			if (this._parent != null)
+			{
+				return this._parent.egw();
+			}
+
+			// Return the global egw instance if none is given
+			return egw('phpgwapi');
+		}
+
+		return this._egw;
+	},
+
+	/**
+	 * Sets the client side api instance. It can be retrieved by the widget tree
+	 * by using the "egw()" function.
+	 */
+	setApiInstance: function(_egw) {
+		this._egw = _egw;
+	},
+
+	/**
 	 * Sets all array manager objects - this function can be used to set the
 	 * root array managers of the container object.
 	 */
@@ -789,28 +820,6 @@ var et2_widget = Class.extend({
 		}
 
 		return null;
-	},
-
-	/**
-	 * Returns the application for the template the widget is in.
-	 * If a sub-template is used, this may be different from the current app.
-	 */
-	getTemplateApp: function() {
-		if(this._template_application) 
-		{
-			return this._template_application;
-		}
-		else if(this._type == 'template' && this.id)
-		{
-			var parts = this.id.split(".",2);
-			return parts[0];
-		} else if (this.getParent()) {
-			this._template_application = this.getParent().getTemplateApp();
-			return this._template_application;
-		}
-		var app = egw.getAppName() == 'egroupware' ? 'phpgwapi' : egw.getAppName();
-		//console.warn("Unable to find template application, using %s", app);
-		return app;
 	},
 
 	/**

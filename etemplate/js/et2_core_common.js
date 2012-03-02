@@ -138,6 +138,10 @@ function et2_form_name(_cname,_name)
 */
 function et2_js_pseudo_funcs(_val, _cname)
 {
+
+	// TODO: Call et2 specific egw instance
+	// Move this function to the API!
+
 	if (_val.indexOf('egw::link(') != -1)
 	{
 		_val = _val.replace(/egw::link\(/g,'egw.link(');

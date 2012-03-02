@@ -81,7 +81,7 @@ var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM,
 
 		if(this.options.href)
 		{
-			egw.call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
+			this.egw().call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
 		}
 	},
 

@@ -67,6 +67,11 @@ var et2_template = et2_DOMWidget.extend({
 
 		if (this.id != "")
 		{
+			// Set the api instance to the first part of the name of the
+			// template
+			var splitted = this.id.split('.');
+			this.setApiInstance(egw(splitted[0]));
+
 			this.createProxy();
 		}
 	},
@@ -90,13 +95,13 @@ var et2_template = et2_DOMWidget.extend({
 			// template (done by passing "this" to the clone function)
 			this.proxiedTemplate = tmpl.clone(this);
 
-			// Reset the "ignore" flag and manually copy the id
+			// Reset the id and manually copy the id to the proxied template
 			tmpl.options.id = this.id;
 			this.proxiedTemplate.id = tmpl.id;
 			this.proxiedTemplate.isProxy = true;
 
 			// Disallow adding any new node to this template
-			//this.supportedWidgetClasses = [];
+			this.supportedWidgetClasses = [];
 		}
 	},
 

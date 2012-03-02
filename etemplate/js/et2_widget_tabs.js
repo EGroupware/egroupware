@@ -92,7 +92,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 					}
 				}
 				tabData.push({
-					"label": egw.lang(et2_readAttrWithDefault(node, "label", "Tab")),
+					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"contentDiv": null,
 					"flagDiv": null,

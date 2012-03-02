@@ -103,7 +103,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		if(global_data.fields) this.options.fields = global_data.fields;
 
 		// For checking app entries
-		var apps = egw.link_app_list();
+		var apps = this.egw().link_app_list();
 
 		// Create the table rows
 		for(var field_name in this.options.customfields)

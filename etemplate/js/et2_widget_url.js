@@ -136,14 +136,14 @@ var et2_url = et2_textbox.extend({
 				{
 					 value = "tel:"+value;	
 				} 
-				else if (egw.config("call_link")) 
+				else if (this.egw().config("call_link")) 
 				{
-					var link = egw.config("call_link").replace("%1", value).
-						replace("%u",egw.user('account_id')).replace("%t",egw.user('account_phone'));
+					var link = this.egw().config("call_link").replace("%1", value).
+						replace("%u",this.egw().user('account_id')).replace("%t",this.egw().user('account_phone'));
 
-					if(egw.config("call_popup"))
+					if(this.egw().config("call_popup"))
 					{
- 						var size = egw.config("call_popup").split("x");
+ 						var size = this.egw().config("call_popup").split("x");
  						value = function() { egw_openWindowCentered(link, false,size[0],size[1]); };
 					}
 					else	// no popup
@@ -157,9 +157,9 @@ var et2_url = et2_textbox.extend({
 				}
 				break;
 			case "url-email":
-				if(egw.link_registry && egw.link_registry.felamimail)
+				if(this.egw().link_registry && this.egw().link_registry.felamimail)
 				{
-					return function() {egw.open("","felamimail","add","send_to="+jQuery.base64Encode(value));};
+					return function() {this.egw().open("","felamimail","add","send_to="+jQuery.base64Encode(value));};
 				}
 				else if(value.indexOf("mailto:") == -1)
 				{
@@ -185,7 +185,7 @@ var et2_url = et2_textbox.extend({
 			case "url":
 				if(value.indexOf("://") == -1) {
 					e.data.set_value("http://"+value);
-					e.data.showMessage(egw.lang("Protocol is required"), "hint", true);
+					e.data.showMessage(this.egw().lang("Protocol is required"), "hint", true);
 				}
 				break;
 		}

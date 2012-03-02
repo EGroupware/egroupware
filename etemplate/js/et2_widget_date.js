@@ -66,7 +66,7 @@ var et2_date = et2_inputWidget.extend({
 			this.span.append(this.input_date).append(this.button);
 
 			// Icon could be done in CSS file
-			var button_image = egw.image('datepopup','phpgwapi');
+			var button_image = this.egw().image('datepopup','phpgwapi');
 			if(button_image) 
 			{
 				this.button.css("background-image","url("+button_image+")");
@@ -77,7 +77,7 @@ var et2_date = et2_inputWidget.extend({
 			node.addClass("et2_date");
 
 			var _this = this;
-			var dateformat = egw.preference("dateformat");
+			var dateformat = this.egw().preference("dateformat");
 			if (!dateformat) dateformat = "Y-m-d";
 			dateformat = dateformat.replace("Y","%Y").replace("d","%d").replace("m","%m").replace("M", "%b");
 
@@ -87,7 +87,7 @@ var et2_date = et2_inputWidget.extend({
 				showsTime: false,
 				onUpdate: function(_value) {_this.set_value(_value)},
 				daFormat: dateformat,
-				firstDay: egw.preference("weekdaystarts","calendar")
+				firstDay: this.egw().preference("weekdaystarts","calendar")
 			};
 			window.setTimeout(function() {
 				Calendar.setup(setup);
@@ -127,7 +127,7 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	_make_time_selects: function (node) {
-		var timeformat = egw.preference("timeformat");
+		var timeformat = this.egw().preference("timeformat");
 		this.input_hours = $j(document.createElement("select"));
 		for(var i = 0; i < 24; i++)
 		{
@@ -250,7 +250,7 @@ var et2_date = et2_inputWidget.extend({
 
 		if(this.input_date)
 		{
-			this.input_date.val(date(egw.preference('dateformat'), this.date));
+			this.input_date.val(date(this.egw().preference('dateformat'), this.date));
 		}
 		if(this.input_time)
 		{
@@ -339,9 +339,9 @@ var et2_date_duration = et2_date.extend({
 
 		// Get translations
 		this.time_formats = {
-			"d": this.options.short_labels ? egw.lang("m") : egw.lang("Days"),
-			"h": this.options.short_labels ? egw.lang("h") : egw.lang("Hours"),
-			"m": this.options.short_labels ? egw.lang("m") : egw.lang("Minutes")
+			"d": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Days"),
+			"h": this.options.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
+			"m": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes")
 		},
 		this.createInputWidget();
 	},
@@ -468,7 +468,7 @@ var et2_date_duration = et2_date.extend({
 
                 // use decimal separator from user prefs
 		var sep = '.';
-		var format = egw.preference('number_format');
+		var format = this.egw().preference('number_format');
                 if (format && (sep = format[0]) && sep != '.')
                 {
                         _value = _value.replace('.',sep);
@@ -617,14 +617,14 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 		switch(this._type) {
 			case "date":
-				display = date(egw.preference('dateformat'), this.date);
+				display = date(this.egw().preference('dateformat'), this.date);
 				break;
 			case "date-timeonly":
-				display = date(egw.preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
+				display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
 				break;
 			case "date-time":
-				display = date(egw.preference('dateformat') + " " +  
-					(egw.preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
+				display = date(this.egw().preference('dateformat') + " " +  
+					(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
 				break;
 			case "date-since":
 				var unit2label = {
@@ -652,7 +652,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 					var unit_s = unit2s[unit];
 					if (diff >= unit_s || unit == 's')
 					{
-						display = Math.round(diff/unit_s,1)+' '+egw.lang(unit2label[unit]);
+						display = Math.round(diff/unit_s,1)+' '+this.egw().lang(unit2label[unit]);
 						break;
 					}
 				}
@@ -712,7 +712,7 @@ var et2_date_timeonly_ro = et2_date_ro.extend({
 		}
 	},
 	set_value: function(_value) {
-		if(egw.preference("timeformat") == "12" && _value.indexOf(":") > 0) {
+		if(this.egw().preference("timeformat") == "12" && _value.indexOf(":") > 0) {
 			var parts = _value.split(":");
 			if(parts[0] >= 12) {
 				this.span.text((parts[0] == "12" ? "12" : parseInt(parts[0])-12)+":"+parts[1]+" pm");

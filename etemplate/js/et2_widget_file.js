@@ -179,7 +179,7 @@ var et2_file = et2_inputWidget.extend({
 		if(this.input[0].files[index]) {
 			var file = this.input[0].files[index];
 			if(file.size > this.options.max_file_size) {
-				error = egw.lang("File too large");
+				error = this.egw().lang("File too large");
 			}
 		}
 		if(this.progress)

@@ -42,6 +42,9 @@
 	et2_core_xml;
 	et2_core_arrayMgr;
 	et2_core_interfaces;
+
+	// Include the client side api core
+	egw_core;
 */
 
 /**

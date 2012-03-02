@@ -326,7 +326,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 			var app = list[0];
 			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
+			var pref = this.egw().preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
 			if(pref) 
 			{
 				negated = (pref[0] == "!");
@@ -339,7 +339,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		var size = {};
 		if(this.options.settings.columnselection_pref && app)
 		{
-			size = egw.preference("nextmatch-"+this.options.settings.columnselection_pref+"-size", app);
+			size = this.egw().preference("nextmatch-"+this.options.settings.columnselection_pref+"-size", app);
 		}
 		if(!size) size = {};
 
@@ -387,7 +387,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	},
 
 	/**
-	 * Take current column display settings and store them in egw.preferences
+	 * Take current column display settings and store them in this.egw().preferences
 	 * for next time
 	 */
 	_updateUserPreferences: function() {
@@ -426,10 +426,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
+		this.egw().set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
 
 		// Save adjusted column sizes
-		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+		this.egw().set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
@@ -564,10 +564,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 			var defaultCheck = et2_createWidget("checkbox", {}, this);
 			defaultCheck.set_id('as_default');
-			defaultCheck.set_label(egw.lang("As default"));
+			defaultCheck.set_label(this.egw().lang("As default"));
 
 			var okButton = et2_createWidget("buttononly", {}, this);
-			okButton.set_label(egw.lang("ok"));
+			okButton.set_label(this.egw().lang("ok"));
 			okButton.onclick = function() {
 				// Update visibility
 				var visibility = {};
@@ -621,21 +621,21 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			};
 
 			var cancelButton = et2_createWidget("buttononly", {}, this);
-			cancelButton.set_label(egw.lang("cancel"));
+			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();
 			}
 
 			this.selectPopup = jQuery(document.createElement("fieldset"))
 				.addClass("colselection ui-dialog")
-				.append("<legend>"+egw.lang("Select columns")+"</legend>")
+				.append("<legend>"+this.egw().lang("Select columns")+"</legend>")
 				.append(select.getDOMNode())
 				.append(okButton.getDOMNode())
 				.append(cancelButton.getDOMNode())
 				.appendTo(this.div);
 
 			// Add default checkbox for admins
-			var apps = egw.user('apps');
+			var apps = this.egw().user('apps');
 			if(apps['admin'])
 			{
 				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()))
@@ -856,14 +856,14 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			var definition = settings.csv_fields;
 			if(settings.csv_fields === true)
 			{
-				definition = egw.preference('nextmatch-export-definition', this.nextmatch.getTemplateApp());
+				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().getAppName());
 			}
 			var button = et2_createWidget("buttononly", {"label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
 			jQuery(button.getDOMNode()).appendTo(this.filters).css("float", "right")
 				.click(this.nextmatch, function(event) {
 					egw_openWindowCentered2( egw.link('/index.php', {
 						'menuaction':	'importexport.importexport_export_ui.export_dialog',
-						'appname':	event.data.getTemplateApp(),
+						'appname':	event.data.egw().getAppName(),
 						'definition':	definition
 					}), '_blank', 850, 440, 'yes');
 				});
