@@ -172,7 +172,7 @@ var et2_link_to = et2_inputWidget.extend({
 		this.file_upload.progress.children().each(function() {
 			var comment = jQuery(document.createElement("input"))
 				.appendTo(this).hide();
-			self.link_entry.set_blur(this.egw().lang("Comment..."),comment);
+			self.link_entry.set_blur(self.egw().lang("Comment..."),comment);
 
 			var comment_icon = jQuery(document.createElement("span"))
 				.appendTo(this)
@@ -675,8 +675,9 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			}
 		}
 		this.set_title(this.link, _value.title);
+		var self = this;
 		this.link.unbind()
-			.click( function(){this.egw().open(_value.id, _value.app, "edit", _value.extra);});
+			.click( function(){self.egw().open(_value.id, _value.app, "edit", _value.extra);});
 	},
 
 	/**
@@ -813,10 +814,11 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			// Need to set it to something, or call to text() will return current value
 			if(title == null || title == false) _link_data.title = "";
 		}
+		var self = this;
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link")
-			.click( function(){this.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+			.click( function(){self.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
 		if(_link_data.title) link.text(_link_data.title);
 
 		// Now that link is created, get title from server & update
@@ -897,11 +899,12 @@ var et2_link_list = et2_link_string.extend({
 		}
 		
 		var columns = ['app','title','remark'];
+		var self = this;
 		for(var i = 0; i < columns.length; i++) {
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){this.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);})
+				.click( function(){self.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);})
 				.text(_link_data[columns[i]]);
 		}
 
@@ -958,7 +961,7 @@ var et2_link_add = et2_inputWidget.extend({
 		this.button.set_label(this.egw().lang("add"));
 		var self = this;
 		this.button.click = function() {
-			this.egw().open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
+			self.egw().open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
 		};
 		this.div.append(this.button.getDOMNode());
 	}
