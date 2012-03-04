@@ -305,7 +305,7 @@ class addressbook_so
 		$this->content_types = config::get_content_types('addressbook');
 		if (!$this->content_types)
 		{
-			$this->content_types = $custom->content_types = array('n' => array(
+			$this->content_types = array('n' => array(
 				'name' => 'contact',
 				'options' => array(
 					'template' => 'addressbook.edit',

@@ -133,7 +133,7 @@ class accounts_sql
 			$data['account_lastname'] = $data['account_type'] == 'g' ? 'Group' : 'User';
 			// if we call lang() before the translation-class is correctly setup,
 			// we can't switch away from english language anymore!
-			if ($GLOBALS['egw']->translation->lang_arr)
+			if (translation::$lang_arr)
 			{
 				$data['account_lastname'] = lang($data['account_lastname']);
 			}

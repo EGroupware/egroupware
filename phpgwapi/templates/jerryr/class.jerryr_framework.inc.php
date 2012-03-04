@@ -31,7 +31,7 @@ class jerryr_framework extends idots_framework
 		parent::__construct($template);
 	}
 
-	function topmenu(array &$vars,array &$apps)
+	function topmenu(array $vars,array $apps)
 	{
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();

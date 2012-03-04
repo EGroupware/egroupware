@@ -86,7 +86,7 @@ abstract class egw_framework
 	/**
 	 * Constructor for static variables
 	 */
-	public function init_static()
+	public static function init_static()
 	{
 		self::$js_include_mgr = new egw_include_mgr(array(
 			// allways load jquery (not -ui) and egw_json first

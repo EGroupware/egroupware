@@ -629,7 +629,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	* @param array $apps
 	* @return string
 	*/
-	function topmenu(array &$vars,array &$apps)
+	function topmenu(array $vars,array $apps)
 	{
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();

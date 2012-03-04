@@ -558,9 +558,9 @@ abstract class bo_merge
 				);
 				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content, -1, $count);
 
-				/* 
-				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags), 
-				it takes multiple runs to get rid of both spans.  So, loop.  
+				/*
+				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags),
+				it takes multiple runs to get rid of both spans.  So, loop.
 				OO.o files have not yet been shown to have this problem.
 				*/
 				$count = $i = 0;
@@ -1051,13 +1051,13 @@ abstract class bo_merge
 			if($values[$key])
 			{
 				$date = new egw_time($values[$key]);
-			
+
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
 				{
 					$interval = $date->diff(new egw_time('1900-01-00 0:00'));
 					$values[$key] = $interval->format('%a')+1;// 1900-02-29 did not exist
 					// 1440 minutes in a day - fractional part
-					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440; 
+					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440;
 				}
 				else
 				{
@@ -1415,7 +1415,8 @@ abstract class bo_merge
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
+					$parts = explode('.',$file['name']);
+					if (!self::is_implemented($file['mime'],'.'.array_pop($parts))) continue;
 					if ($mime_filter && $negativ_filter === in_array($file['mime'], (array)$mime_filter)) continue;
 					$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 				}
@@ -1477,7 +1478,8 @@ abstract class bo_merge
 		foreach($files as $key => $file)
 		{
 			// use only the mime-types we support
-			if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name']))) ||
+			$parts = explode('.',$file['name']);
+			if (!self::is_implemented($file['mime'],'.'.array_pop($parts)) ||
 				!egw_vfs::check_access($file['path'], egw_vfs::READABLE, $file) ||	// remove files not readable by user
 				$file['path'] === $default_doc)	// default doc already added
 			{

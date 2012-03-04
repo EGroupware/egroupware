@@ -260,7 +260,7 @@ class translation
 			//$start = microtime(true);
 			// for loginscreen we have to use a instance specific cache!
 			$instance_specific = in_array($app,self::$instance_specific_translations);
-			$loaded =& egw_cache::getCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
+			$loaded = egw_cache::getCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
 				__CLASS__,$app.':'.$lang);
 
 			// do NOT use automatic callback to cache result, as installing languages in setup can create
