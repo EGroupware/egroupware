@@ -214,9 +214,9 @@ var et2_dataview_grid = Class.extend(et2_dataview_IViewRange, {
 			// regarding to the count of elements managed in it
 			if (count < Math.pow(ET2_PARTITION_TREE_WIDTH, depth - 1))
 			{
-				this.egw().debug("info", "Rebuilding dataview partition tree");
+				egw.debug("info", "Rebuilding dataview partition tree");
 				this._partitionTree.rebuild();
-				this.egw().debug("info", "Done.");
+				egw.debug("info", "Done.");
 			}
 
 			// Reset the "treeChanged" function.

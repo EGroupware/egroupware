@@ -44,7 +44,8 @@
 	et2_core_interfaces;
 
 	// Include the client side api core
-	egw_core;
+	jsapi.egw_core;
+	jsapi.egw_json;
 */
 
 /**
@@ -252,8 +253,10 @@ etemplate2.prototype.submit = function(button)
 		// Create the request object
 		if (typeof egw_json_request != "undefined" && this.menuaction)
 		{
-			var request = new egw_json_request(this.menuaction, [this.etemplate_exec_id,values], this);
-			request.sendRequest(true);
+			var api = egw(window);
+//			api.debug("Blablub");
+			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this);
+			request.sendRequest();
 		}
 		else
 		{
@@ -341,36 +344,33 @@ etemplate2.prototype.getValues = function(_root)
 	return result;
 }
 
-/**
- * Function which handles the EGW JSON et2_load response
- */
-function etemplate2_handle_response(_type, _response)
+function etemplate2_handle_load(_type, _response)
 {
-	if (_type == "et2_load")
+	// Check the parameters
+	var data = _response.data;
+	if (typeof data.url == "string" && data.data instanceof Object)
 	{
-		// Check the parameters
-		var data = _response.data;
-		if (typeof data.url == "string" && data.data instanceof Object)
-		{
-			this.load(data.url, data.data);
-			return true;
-		}
-
-		throw("Error while parsing et2_load response");
-	} else if (_type == "et2_validation_error") {
-		// Display validation errors
-//		$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
+		this.load(data.url, data.data);
+		return true;
 	}
 
-	return false;
+	throw("Error while parsing et2_load response");
 }
 
+function etemplate2_handle_validation_error(_type, _response)
+{
+	// Display validation errors
+	//$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
+}
+
+
 // Register the egw_json result object
-if (typeof egw_json_register_plugin != "undefined")
+if (typeof egw != "undefined")
 {
 	// Calls etemplate2_handle_response in the context of the object which
 	// requested the response from the server
-	egw_json_register_plugin(etemplate2_handle_response, null);
+	egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
+	egw(window).registerJSONPlugin(etemplate2_handle_validation_error, null, 'et2_validation_error');
 }
 else
 {
