@@ -172,8 +172,6 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	{
 		this.btn = jQuery(_nodes[0]);
 
-
-console.debug(_nodes, _values);
 		if (typeof _values["id"] != "undefined")
 		{
 			this.set_id(_values["id"]);
