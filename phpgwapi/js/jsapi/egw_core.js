@@ -87,7 +87,7 @@ var egw;
 	function getEgwInstance(_egw, _modules, _instances, _app, _window)
 	{
 		// Generate the hash key for the instance descriptor object
-		var hash = _window ? _app + "_" + _window.location : _app;
+		var hash = _app ? _app : '[global]';
 
 		// Let "_window" be exactly null, if it evaluates to false
 		_window = _window ? _window : null;
