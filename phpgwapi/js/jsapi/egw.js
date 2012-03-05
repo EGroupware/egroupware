@@ -14,6 +14,7 @@
 
 /*egw:uses
 	egw_core;
+	egw_debug;
 	egw_preferences;
 	egw_lang;
 	egw_links;
@@ -22,5 +23,6 @@
 	egw_images;
 	egw_jsonq;
 	egw_files;
+	egw_json;
 */
 

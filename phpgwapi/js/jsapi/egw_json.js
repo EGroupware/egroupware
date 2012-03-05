@@ -18,6 +18,7 @@
 	egw_core;
 	egw_utils;
 	egw_files;
+	egw_debug;
 */
 
 egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
@@ -33,49 +34,87 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	/**
 	 * Internal implementation of the JSON request object.
 	 */
-	function json_request(_menuaction, _parameters, _callback, _context, _egw)
+	function json_request(_menuaction, _parameters, _callback, _context,
+		_sender, _async, _egw)
 	{
-		// Initialize undefined parameters
-		if (typeof _parameters === 'undefined')
-		{
-			_parameters = [];
-		}
-
-		if (typeof _callback === 'undefined')
-		{
-			_callback = null;
-		}
-
-		if (typeof _context === 'undefined')
-		{
-			_context = null;
-		}
-
 		// Copy the parameters
-		this.parameters = _parameters;
+		this.url = _egw.ajaxUrl(_menuaction);
+		this.parameters = _parameters ? _parameters : [];
+		this.async = _async ? _async : false;
+		this.callback = _callback ? _callback : null;
+		this.context = _context ? _context : null;
+		this.sender = _sender ? _sender : null;
 		this.egw = _egw;
-		this.callback = _callback;
-		this.context = _context;
 
+		// We currently don't have a request object
 		this.request = null;
-		this.sender = null;
-		this.callback = null;
 
+		// Some variables needed for notification about a JS files done loading
 		this.onLoadFinish = null;
 		this.jsFiles = 0;
 		this.jsCount = 0;
 
-		this.alertHandler = this.alertFunc;
+		// Function which is currently used to display alerts -- may be replaced by
+		// some API function.
+		this.alertHandler = function(_message, _details) {
+			alert(_message);
+
+			if (_details)
+			{
+				_egw.debug('info', _message, _details);
+			}
+		};
 	}
 
-	/**
-	 * Function which is currently used to display alerts -- may be replaced by
-	 * some API function.
-	 */
-	json_request.prototype.alertFunc = function(_message, _details)
-	{
-		alert(_message);
-		if(_details) _egw_json_debug_log(_message, _details);
+	json_request.prototype.sendRequest = function() {
+		// Assemble the complete request
+		var request_obj = {
+			'json_data': this.egw.jsonEncode({
+				'request': {
+					'parameters': this.parameters
+				}
+			})
+		};
+
+		// Send the request via AJAX using the jquery ajax function
+		$j.ajax({
+			url: this.url,
+			async: this.async,
+			context: this,
+			data: request_obj,
+			dataType: 'json',
+			type: 'POST',
+			success: this.handleResponse,
+			error: function(_xmlhttp, _err) {
+				this.egw.debug('error', 'Ajax request to', this.url, ' failed:',
+					_err);
+			}
+		});
+	}
+
+	json_request.prototype.handleResponse = function(data) {
+		if (data && data.response)
+		{
+			for (var i = 0; i < data.response.length; i++)
+			{
+				for (var key in plugins) {
+					try {
+						// Get a reference to the plugin
+						var plugin = plugins[key];
+
+						// Call the plugin callback
+						plugin.callback.call(
+							plugin.context ? plugin.context : this.context,
+							data.response[i].type,
+							data.response[i],
+							this
+						);
+
+					} catch(e) {
+					}
+				}
+			}
+		}
 	}
 
 	var json = {
@@ -86,15 +125,19 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * 	which handles the actual request. If the menuaction is a full featured
 		 * 	url, this one will be used instead.
 		 * @param _parameters which should be passed to the menuaction function.
+		 * @param _async specifies whether the request should be asynchronous or
+		 * 	not.
 		 * @param _callback specifies the callback function which should be
 		 * 	called, once the request has been sucessfully executed.
 		 * @param _context is the context which will be used for the callback function 
+		 * @param _sender is a parameter being passed to the _callback function
 		 */
-		request: function(_menuaction, _parameters, _callback, _context)
+		json: function(_menuaction, _parameters, _callback, _context, _async,
+			_sender)
 		{
-			return new json_request(_menuaction, _parameters, _callback,
-				_context, this);
-		}
+			return new json_request(_menuaction, _parameters, _callback, 
+				_context, _async, _sender, this);
+		},
 
 		/**
 		 * Registers a new handler plugin.
@@ -103,7 +146,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * 	whenever a response is comming from the server.
 		 * @param _context is the context in which the callback function should
 		 * 	be called. If null is given, the plugin is executed in the context
-		 * 	of the request object.
+		 * 	of the request object context.
 		 * @param _type is an optional parameter defaulting to 'global'.
 		 * 	it describes the response type which this plugin should be
 		 * 	handling.
@@ -163,12 +206,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	};
 
 	// Regisert the "alert" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		//Check whether all needed parameters have been passed and call the alertHandler function
 		if ((typeof res.data.message != 'undefined') && 
 			(typeof res.data.details != 'undefined'))
-		{					
-			this.alertHandler(
+		{
+			req.alertHandler(
 				res.data.message,
 				res.data.details)
 			return true;
@@ -177,12 +220,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'alert');
 
 	// Register the "assign" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		//Check whether all needed parameters have been passed and call the alertHandler function
 		if ((typeof res.data.id != 'undefined') && 
 			(typeof res.data.key != 'undefined') &&
 			(typeof res.data.value != 'undefined'))
-		{					
+		{
 			var obj = document.getElementById(res.data.id);
 			if (obj)
 			{
@@ -202,17 +245,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'assign');
 
 	// Register the "data" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		//Callback the caller in order to allow him to handle the data
-		if (this.callback)
+		if (req.callback)
 		{
-			this.callback.call(this.sender, res.data);
+			req.callback.call(req.sender, res.data);
 			return true;
 		}
 	}, null, 'data');
 
 	// Register the "script" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
 		{
 			try
@@ -222,7 +265,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			}
 			catch (e)
 			{
-				this.egw.debug('error', 'Error while executing script: ',
+				req.egw.debug('error', 'Error while executing script: ',
 					res.data)
 			}
 			return true;
@@ -231,7 +274,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'script');
 
 	// Register the "apply" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data.func == 'string' &&
 		    typeof window[res.data.func] == 'function')
 		{
@@ -241,7 +284,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			}
 			catch (e)
 			{
-				this.egw.debug('error', 'Function', res.data.func,
+				req.egw.debug('error', 'Function', res.data.func,
 					'Parameters', res.data.parms);
 			}
 			return true;
@@ -250,18 +293,18 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'apply');
 
 	// Register the "jquery" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data.select == 'string' &&
 			typeof res.data.func == 'string')
 		{
 			try
 			{
-				var jQueryObject = $j(res.data.select, this.context);
+				var jQueryObject = $j(res.data.select, req.context);
 				jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 			}
 			catch (e)
 			{
-				this.egw.debug('error', 'Function', res.data.func,
+				req.egw.debug('error', 'Function', res.data.func,
 					'Parameters', res.data.parms);
 			}
 			return true;
@@ -270,7 +313,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'jquery');
 
 	// Register the "redirect" plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		//console.log(res.data.url);
 		if (typeof res.data.url == 'string' &&
 			typeof res.data.global == 'boolean')
@@ -284,7 +327,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			}
 			else
 			{
-				egw_appWindowOpen(this.app, res.data.url);
+				egw_appWindowOpen(req.app, res.data.url);
 			}
 			return true;
 		}
@@ -292,27 +335,25 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	}, null, 'redirect');
 
 	// Register the 'css' plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
 		{
-			this.egw.includeCSS(res.data);
+			req.egw.includeCSS(res.data);
 			return true;
 		}
 		throw 'Invalid parameters';
 	}, null, 'css');
 
 	// Register the 'js' plugin
-	json.registerPlugin(function(type, res) {
+	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
 		{
-			this.jsCount++;
-			var self = this;
-
-			this.egw.includeJS(res.data, function() {
-				self.jsFiles++;
-				if (self.jsFiles == self.jsCount && this.onLoadFinish)
+			req.jsCount++;
+			req.egw.includeJS(res.data, function() {
+				req.jsFiles++;
+				if (req.jsFiles == req.jsCount && req.onLoadFinish)
 				{
-					this.onLoadFinish.call(this.sender);
+					req.onLoadFinish.call(req.sender);
 				}
 			});
 		}

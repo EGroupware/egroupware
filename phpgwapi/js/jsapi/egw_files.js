@@ -18,7 +18,7 @@
 	egw_debug;
 */
 
-egw.extend('files', egw.MODULE_GLOBAL, function() {
+egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 
 	/**
 	 * Array which contains all currently bound in javascript and css files.

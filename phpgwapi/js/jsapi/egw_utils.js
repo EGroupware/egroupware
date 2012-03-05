@@ -145,7 +145,13 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 
 	// Create the utils object which contains references to all functions
 	// covered by it.
-	var utils = {};
+	var utils = {
+
+		ajaxUrl: function(_menuaction) {
+			return this.webserverUrl + '/json.php?menuaction=' + _menuaction;
+		}
+
+	};
 
 	// Check whether the browser already supports encoding JSON -- if yes, use
 	// its implementation, otherwise our own
@@ -159,7 +165,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 	}
 
 	// Return the extension
-	return {"utils": utils};
+	return utils;
 
 });
 
