@@ -78,5 +78,5 @@ var et2_number = et2_textbox.extend({
 	}
 });
 
-et2_register_widget(et2_number, ["int", "float"]);
+et2_register_widget(et2_number, ["int", "integer", "float"]);
 
