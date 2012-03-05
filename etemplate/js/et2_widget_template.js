@@ -67,10 +67,14 @@ var et2_template = et2_DOMWidget.extend({
 
 		if (this.id != "")
 		{
+			// Get the window this object belongs to
+			var node = this.getDOMNode();
+			var wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
+
 			// Set the api instance to the first part of the name of the
 			// template
 			var splitted = this.id.split('.');
-			this.setApiInstance(egw(splitted[0]));
+			this.setApiInstance(egw(splitted[0], wnd));
 
 			this.createProxy();
 		}

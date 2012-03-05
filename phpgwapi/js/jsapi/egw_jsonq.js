@@ -14,9 +14,10 @@
 
 /*egw:uses
 	egw_core;
+	egw_debug;
 */
 
-egw().extend('jsonq', function() {
+egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
@@ -34,6 +35,79 @@ egw().extend('jsonq', function() {
 	 * Running timer for next send of queued items
 	 */
 	var jsonq_timer = null;
+
+	/**
+	 * Dispatch responses received
+	 * 
+	 * @param object _data uid => response pairs
+	 */
+	function jsonq_callback(_data)
+	{
+		if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
+
+		var json = new egw_json_request('none');
+		for(var uid in _data)
+		{
+			if (typeof jsonq_queue[uid] == 'undefined')
+			{
+				console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
+				console.log(_data[uid]);
+				continue;
+			}
+			var job = jsonq_queue[uid];
+			var response = _data[uid];
+			
+			// fake egw_json_request object, to call it with the current response
+			json.callback = job.callback;
+			json.sender = job.sender;
+			json.handleResponse({response: response});
+
+			delete jsonq_queue[uid];
+		}
+		// if nothing left in queue, stop interval-timer to give browser a rest
+		if (jsonq_timer && typeof jsonq_queue['u'+(jsonq_uid-1)] != 'object')
+		{
+			window.clearInterval(jsonq_timer);
+			jsonq_timer = null;
+		}
+	}
+
+	/**
+	 * Send the whole job-queue to the server in a single json request with menuaction=queue
+	 */
+	function jsonq_send()
+	{
+		if (jsonq_uid > 0 && typeof jsonq_queue['u'+(jsonq_uid-1)] == 'object')
+		{
+			var jobs_to_send = {};
+			var something_to_send = false;
+			for(var uid in jsonq_queue)
+			{
+				var job = jsonq_queue[uid];
+
+				if (job.menuaction == 'send') continue;	// already send to server
+
+				// if job has a callbeforesend callback, call it to allow it to modify pararmeters
+				if (typeof job.callbeforesend == 'function')
+				{
+					job.callbeforesend.call(job.sender, job.parameters);
+				}
+				jobs_to_send[uid] = {
+					menuaction: job.menuaction,
+					parameters: job.parameters
+				};
+				job.menuaction = 'send';
+				job.parameters = null;
+				something_to_send = true;
+			}
+			if (something_to_send)
+			{
+				// TODO: Passing this to the "home" application looks quite ugly
+				var request = new egw_json_request('home.queue', jobs_to_send, this);
+				request.sendRequest(true, jsonq_callback, this);
+			}
+		}
+	}
 
 	return {
 		/**
@@ -64,82 +138,12 @@ egw().extend('jsonq', function() {
 				// check / send queue every N ms
 				var self = this;
 				jsonq_timer = window.setInterval(function(){
-					self.jsonq_send();
+					jsonq_send.call(self);
 				}, 100);
 			}
 			return uid;
-		},
-		
-		/**
-		 * Send the whole job-queue to the server in a single json request with menuaction=queue
-		 */
-		jsonq_send: function()
-		{
-			if (jsonq_uid > 0 && typeof jsonq_queue['u'+(jsonq_uid-1)] == 'object')
-			{
-				var jobs_to_send = {};
-				var something_to_send = false;
-				for(var uid in jsonq_queue)
-				{
-					var job = jsonq_queue[uid];
+		}
 
-					if (job.menuaction == 'send') continue;	// already send to server
-
-					// if job has a callbeforesend callback, call it to allow it to modify pararmeters
-					if (typeof job.callbeforesend == 'function')
-					{
-						job.callbeforesend.call(job.sender, job.parameters);
-					}
-					jobs_to_send[uid] = {
-						menuaction: job.menuaction,
-						parameters: job.parameters
-					};
-					job.menuaction = 'send';
-					job.parameters = null;
-					something_to_send = true;
-				}
-				if (something_to_send)
-				{
-					new egw_json_request('home.queue', jobs_to_send, this).sendRequest(true, this.jsonq_callback, this);
-				}
-			}
-		},
-		
-		/**
-		 * Dispatch responses received
-		 * 
-		 * @param object _data uid => response pairs
-		 */
-		jsonq_callback: function(_data)
-		{
-			if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
-
-			var json = new egw_json_request('none');
-			for(var uid in _data)
-			{
-				if (typeof jsonq_queue[uid] == 'undefined')
-				{
-					console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
-					console.log(_data[uid]);
-					continue;
-				}
-				var job = jsonq_queue[uid];
-				var response = _data[uid];
-				
-				// fake egw_json_request object, to call it with the current response
-				json.callback = job.callback;
-				json.sender = job.sender;
-				json.handleResponse({response: response});
-
-				delete jsonq_queue[uid];
-			}
-			// if nothing left in queue, stop interval-timer to give browser a rest
-			if (jsonq_timer && typeof jsonq_queue['u'+(jsonq_uid-1)] != 'object')
-			{
-				window.clearInterval(jsonq_timer);
-				jsonq_timer = null;
-			}
-		},
 	};
 
 });

@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw().extend('preferences', function() {
+egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Object holding the prefences as 2-dim. associative array, use

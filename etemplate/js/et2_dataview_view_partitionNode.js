@@ -144,7 +144,7 @@ var et2_dataview_partitionNode = Class.extend([et2_dataview_IPartitionHeight,
 			// complete tree!
 			if (isNaN(this._height))
 			{
-				et2_debug("error", "calculateHeight returned a NaN value!");
+				this.egw().debug("error", "calculateHeight returned a NaN value!");
 				this._height = 0;
 			}
 

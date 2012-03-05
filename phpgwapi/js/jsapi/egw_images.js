@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw().extend('images', function() {
+egw.extend('images', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Map to serverside available images for users template-set

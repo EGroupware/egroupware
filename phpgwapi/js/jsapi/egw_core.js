@@ -1,4 +1,4 @@
-/**
+ /**
  * EGroupware clientside API object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -13,21 +13,6 @@
 "use strict";
 
 var egw;
-
-/**
- * IE Fix for array.indexOf
- */
-if (typeof Array.prototype.indexOf == "undefined")
-{
-	Array.prototype.indexOf = function(_elem) {
-		for (var i = 0; i < this.length; i++)
-		{
-			if (this[i] === _elem)
-				return i;
-		}
-		return -1;
-	};
-}
 
 /**
  * This code setups the egw namespace and adds the "extend" function, which is
@@ -51,9 +36,111 @@ if (typeof Array.prototype.indexOf == "undefined")
 		// Extend the egw object
 		for (var key in _from)
 		{
-			if (typeof _to[key] === 'undefined')
+			_to[key] = _from[key];
+		}
+	}
+
+	function createEgwInstance(_egw, _modules, _list, _app, _window)
+	{
+		// Clone the global object
+		var instance = cloneObject(_egw);
+
+		// Let "_window" be exactly null, if it evaluates to false
+		_window = _window ? _window : null;
+
+		// Set the application name and the window the API instance belongs to
+		instance.appName = _app ? _app : null;
+		instance.window = _window;
+
+		// Insert the newly created instance into the instances list
+		_list.push({
+			'window': _window,
+			'app': _app,
+			'instance': instance
+		});
+
+		// Re-instanciate all modules which are marked as "local"
+		for (var key in _modules)
+		{
+			// Get the module object
+			var mod = _modules[key];
+
+			if (mod.flags !== _egw.MODULE_GLOBAL)
 			{
-				_to[key] = _from[key];
+				// If the module is marked as application local and an
+				// application instance is given or if the module is marked as
+				// window local and a window instance is given, re-instanciate
+				// this module.
+				if (((mod.flags & _egw.MODULE_APP_LOCAL) && (_app)) ||
+				    ((mod.flags & _egw.MODULE_WND_LOCAL) && (_window)))
+				{
+					var extension = mod.code.call(instance, instance,
+						_window ? _window : window);
+					mergeObjects(instance, extension);
+				}
+			}
+		}
+
+		return instance;
+	}
+
+	function getEgwInstance(_egw, _modules, _instances, _app, _window)
+	{
+		// Generate the hash key for the instance descriptor object
+		var hash = _window ? _app + "_" + _window.location : _app;
+
+		// Let "_window" be exactly null, if it evaluates to false
+		_window = _window ? _window : null;
+
+		// Create a new entry if the calculated hash does not exist
+		if (typeof _instances[hash] === 'undefined')
+		{
+			_instances[hash] = [];
+			return createEgwInstance(_egw, _modules, _instances[hash], _app,
+				_window);
+		}
+		else
+		{
+			// Otherwise search for the api instance corresponding to the given
+			// window
+			for (var i = 0; i < _instances[hash].length; i++)
+			{
+				if (_instances[hash][i].window === _window)
+				{
+					return _instances[hash][i].instance;
+				}
+			}
+		}
+
+		// If we're still here, no API instance for the given window has been
+		// found -- create a new entry
+		return createEgwInstance(_egw, _modules, _instances[hash], _app, _window);
+	}
+
+	function cleanupEgwInstances(_instances)
+	{
+		// Iterate over the egw instances and check whether the window they
+		// correspond to is still open.
+		for (var key in _instances)
+		{
+			for (var i = _instances[key].length - 1; i >= 0; i--)
+			{
+				// Get the instance descriptor
+				var instDescr = _instances[key][i];
+
+				// Check whether the window this API instance belongs to is
+				// still opened. If not, remove the API instance.
+				if (instDescr.window && instDescr.window.closed)
+				{
+					_instances[key].splice(i, 1)
+				}
+			}
+
+			// If all instances for the current hash have been deleted, delete
+			// the hash entry itself
+			if (_instances[key].length === 0)
+			{
+				delete _instances[key];
 			}
 		}
 	}
@@ -69,66 +156,111 @@ if (typeof Array.prototype.indexOf == "undefined")
 	else
 	{
 		/**
-		 * EGW_DEBUGLEVEL specifies which messages are printed to the console.
-		 * Decrease the value of EGW_DEBUGLEVEL to get less messages.
+		 * Modules contains all currently loaded egw extension modules. A module
+		 * is stored as an object of the following form:
+		 * 	{
+		 * 		name: <NAME OF THE OBJECT>,
+		 * 		code: <REFERENCE TO THE MODULE FUNCTION>,
+		 * 		flags: <MODULE FLAGS (local, global, etc.)
+		 * 	}
 		 */
-		var EGW_DEBUGLEVEL = 4;
+		var modules = {};
 
 		/**
-		 * Modules contains all currently loaded egw extension modules.
+		 * instances contains all api instances. These are organized as a hash
+		 * of the form _app + _window.location. For each of these hashes a list
+		 * of instances is stored, where the instance itself is an entry of the
+		 * form
+		 * 	{
+		 * 		instance: <EGW_API_OBJECT>,
+		 * 		app: <APPLICATION NAME>,
+		 * 		window: <WINDOW REFERENCE>
+		 * 	}
 		 */
-		var modules = [];
+		var instances = {};
 
-		var localEgw = {};
+		/**
+		 * Set a interval which is used to cleanup unused API instances all 10
+		 * seconds.
+		 */
+		window.setInterval(function() {cleanupEgwInstances(instances);}, 10000);
 
 		/**
 		 * The egw function returns an instance of the client side api. If no
 		 * parameter is given, an egw istance, which is not bound to a certain
 		 * application is returned.
+		 * You may pass either an application name (as string) to the egw
+		 * function and/or a window object. If you specify both, the app name
+		 * has to preceed the window object reference. If no window object is
+		 * given, the root window will be used.
 		 */
-		egw = function(_app) {
+		egw = function() {
 
-			// If no argument is given, simply return the global egw object, or
-			// check whether 'window.egw_appName' is set correctly.
-			if (typeof _app === 'undefined')
+			// Get the window/app reference
+			var _app = "";
+			var _window = window;
+
+			switch (arguments.length)
 			{
-				// TODO: Remove this code, window.egw_appName will be removed
-				// in the future.
-				if (typeof window.egw_appName == 'string')
-				{
-					_app = window.egw_appName;
-				}
-				else
-				{
+				case 0:
+					// Return the global instance
 					return egw;
-				}
+
+				case 1:
+					if (typeof arguments[0] === 'string')
+					{
+						_app = arguments[0];
+					}
+					else if (typeof arguments[0] === 'object')
+					{
+						_window = arguments[0];
+					}
+					break;
+
+				case 2:
+					_app = arguments[0];
+					_window = arguments[1];
+					break;
+
+				default:
+					throw "Invalid count of parameters";
 			}
 
-			if (typeof _app == 'string')
-			{
-				// If a argument is given, this represents the current application
-				// name. Check whether we already have a copy of the egw object for
-				// that application. If yes, return it.
-				if (typeof localEgw[_app] === 'undefined')
-				{
-					// Otherwise clone the global egw object, set the application
-					// name and return it
-					localEgw[_app] = cloneObject(egw);
-					localEgw[_app].appName = _app;
-				}
-
-				return localEgw[_app];
-			}
-
-			this.debug("error", "Non-string argument given to the egw function.");
+			// Generate an API instance
+			return getEgwInstance(egw, modules, instances, _app, _window);
 		}
 
 		var globalEgw = {
 
 			/**
+			 * The MODULE_GLOBAL flag describes a module as global. A global
+			 * module always works on the same data.
+			 */
+			MODULE_GLOBAL: 0x00,
+
+			/**
+			 * The MODULE_APP_LOCAL flag is used to describe a module as local
+			 * for each application. Each time an api object is requested for
+			 * another application, the complete module gets recreated.
+			 */
+			MODULE_APP_LOCAL: 0x01,
+
+			/**
+			 * The MODULE_WND_LOCAL flag is used to describe a module as local
+			 * for each window. Each time an api object is requested for another
+			 * window, the complete module gets recreated.
+			 */
+			MODULE_WND_LOCAL: 0x02,
+
+			/**
 			 * Name of the application the egw object belongs to.
 			 */
 			appName: null,
+
+			/**
+			 * Reference to the window this egw object belongs to.
+			 */
+			window: window,
 
 			/**
 			 * Returns the current application name. The current application
@@ -159,74 +291,65 @@ if (typeof Array.prototype.indexOf == "undefined")
 			 *
 			 * @param _module should be a string containing the name of the new
 			 * 	module.
+			 * @param _flags specifies whether the extension should be treated
+			 * 	as a local or a global module.
 			 * @param _code should be a function, which returns an object that
 			 * 	should extend the egw object.
 			 */
-			extend: function(_module, _code) {
+			extend: function(_module, _flags, _code) {
 
-				// Check whether the given module has already been loaded.
-				if (modules.indexOf(_module) < 0) {
+				// Check whether that module is already registered
+				if (typeof modules[_module] === 'undefined')
+				{
+					// Create a new module entry
+					modules[_module] = {
+						'code': _code,
+						'flags': _flags,
+						'name': _module
+					};
 
-					// Call the function specified by "_code" which returns
-					// nothing but an object containing the extension.
-					var content = _code.call(this);
+					// Generate the global extension
+					var globalExtension = _code.call(egw, egw, window);
 
-					// Merge the extension into the egw function
-					mergeObjects(egw, content);
+					// Merge the global extension into the egw function
+					mergeObjects(egw, globalExtension);
 
-					// Merge the extension into the local egw object
-					for (var key in localEgw) {
-						mergeObjects(localEgw[key], content);
+					// Iterate over the instances and merge the modules into
+					// them
+					for (var key in instances)
+					{
+						for (var i = 0; i < instances[key].length; i++)
+						{
+							// Get the instance descriptor
+							var instDescr = instances[key][i];
+
+							// Merge the module into the instance
+							if (_flags !== egw.MODULE_GLOBAL)
+							{
+								mergeObjects(instDescr.instance, _code.call(
+									instDescr.instance, instDescr.instance,
+									instDescr.window ? instDescr.window : window));
+							}
+							else
+							{
+								mergeObjects(instDescr.instance, globalExtension);
+							}
+						}
 					}
-
-					// Register the module as loaded
-					modules.push(_module);
 				}
 			},
 
-			/**
-			 * The debug function can be used to send a debug message to the
-			 * java script console. The first parameter specifies the debug
-			 * level, all other parameters are passed to the corresponding
-			 * console function.
-			 */
-			debug: function(_level) {
-				if (typeof console != "undefined")
-				{
-					// Get the passed parameters and remove the first entry
-					var args = [];
-					for (var i = 1; i < arguments.length; i++)
-					{
-						args.push(arguments[i]);
-					}
+			dumpModules: function() {
+				return modules;
+			},
 
-					if (_level == "log" && EGW_DEBUGLEVEL >= 4 &&
-						typeof console.log == "function")
-					{
-						console.log.apply(console, args);
-					}
-
-					if (_level == "info" && EGW_DEBUGLEVEL >= 3 &&
-						typeof console.info == "function")
-					{
-						console.info.apply(console, args);
-					}
-
-					if (_level == "warn" && EGW_DEBUGLEVEL >= 2 &&
-						typeof console.warn == "function")
-					{
-						console.warn.apply(console, args);
-					}
-
-					if (_level == "error" && EGW_DEBUGLEVEL >= 1 &&
-						typeof console.error == "function")
-					{
-						console.error.apply(console, args);
-					}
-				}
+			dumpInstances: function() {
+				return instances;
 			}
+
 		};
 
+		// Merge the globalEgw functions into the egw object.
 		mergeObjects(egw, globalEgw);
 	}
 })();

@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw().extend('user', function() {
+egw.extend('user', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Data about current user

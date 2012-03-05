@@ -21,5 +21,6 @@
 	egw_config;
 	egw_images;
 	egw_jsonq;
+	egw_files;
 */
 

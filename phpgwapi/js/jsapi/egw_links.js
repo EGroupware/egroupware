@@ -17,7 +17,7 @@
 	egw_link;
 */
 
-egw().extend('links', function() {
+egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Link registry

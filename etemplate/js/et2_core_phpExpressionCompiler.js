@@ -403,7 +403,7 @@
 		var js = _php_compileJSCode(_vars, syntaxTree);
 
 		// Log the successfull compiling
-		et2_debug("log", "Compiled PHP " + _expr + " --> " + js);
+		egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
 
 		// Prepate the attributes for the function constuctor
 		var attrs = [];

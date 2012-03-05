@@ -273,7 +273,7 @@
 						"created": new Date().getTime(),
 						"class": className
 					}
-					et2_debug("log", "*" + this.__OBJ_UID + " (" + className + ")");
+					egw.debug("log", "*" + this.__OBJ_UID + " (" + className + ")");
 				}
 
 				if (this.init)
@@ -323,7 +323,7 @@
 		if (getMem_freeMem_trace)
 		{
 			delete(tracedObjects[this.__OBJ_UID]);
-			et2_debug("log", "-" + this.__OBJ_UID);
+			egw.debug("log", "-" + this.__OBJ_UID);
 		}
 
 		// Delete every object entry
@@ -382,7 +382,7 @@
 		}
 		else
 		{
-			et2_debug("error", this, "Attribute '" + _name  + "' does not exist!");
+			egw.debug("error", this, "Attribute '" + _name  + "' does not exist!");
 		}
 	};
 
@@ -417,7 +417,7 @@
 		}
 		else
 		{
-			et2_debug("warn", this, "Attribute '" + _name + "' does not exist!");
+			egw.debug("warn", this, "Attribute '" + _name + "' does not exist!");
 		}
 	};
 
@@ -445,7 +445,7 @@
 			{
 				// Key does not exist - delete it and issue a warning
 				delete(_attrs[key]);
-				et2_debug("warn", this, "Attribute '" + key +
+				egw.debug("warn", this, "Attribute '" + key +
 					"' does not exist in " + _attrs.type+"!");
 			}
 		}

@@ -506,7 +506,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 
 				if (Math.abs(actualTop - calculatedTop) > 1)
 				{
-					et2_debug("warn", i, "Position missmatch at idx ", idx,
+					egw.debug("warn", i, "Position missmatch at idx ", idx,
 						actualTop, calculatedTop, node);
 				}
 
@@ -515,7 +515,7 @@ var et2_dataview_partitionOrganizationNode = et2_dataview_partitionNode.extend(
 
 				if (Math.abs(actualHeight - calculateHeight) > 1)
 				{
-					et2_debug("warn", i, "Height missmatch at idx ", idx,
+					egw.debug("warn", i, "Height missmatch at idx ", idx,
 						actualHeight, calculateHeight, node);
 				}
 			}

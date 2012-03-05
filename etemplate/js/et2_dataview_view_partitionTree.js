@@ -37,7 +37,7 @@ var et2_dataview_partitionTree = et2_dataview_partitionOrganizationNode.extend({
 		this._dataProvider = _dataProvider;
 		this._rowProvider = _rowProvider;
 
-		et2_debug("Creating partition tree with ", this._count,
+		egw.debug("Creating partition tree with ", this._count,
 			" elements of avgHeight ", this._avgHeight);
 
 		// Append a spacer node to the children

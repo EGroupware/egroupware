@@ -35,7 +35,7 @@ var et2_arrayMgr = Class.extend({
 		// Hold a reference to the data
 		if (typeof _data == "undefined" || !_data)
 		{
-			et2_debug("error", "Invalid data passed to content array manager!");
+			egw.debug("error", "Invalid data passed to content array manager!");
 			_data = {};
 		}
 
@@ -224,7 +224,7 @@ var et2_arrayMgr = Class.extend({
 				catch(e)
 				{
 					proto.compiledExpressions[_ident] = null;
-					et2_debug("error", "Error while compiling PHP->JS ", e);
+					egw.debug("error", "Error while compiling PHP->JS ", e);
 				}
 			}
 
@@ -239,7 +239,7 @@ var et2_arrayMgr = Class.extend({
 				}
 				catch(e)
 				{
-					et2_debug("error", e);
+					egw.debug("error", e);
 				}
 			}
 		}

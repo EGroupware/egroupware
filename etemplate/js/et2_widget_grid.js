@@ -177,7 +177,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			function _readColNode(node, nodeName) {
 				if (y >= h)
 				{
-					et2_debug("warn", "Skipped grid cell in column, '" +
+					this.egw().debug("warn", "Skipped grid cell in column, '" +
 						nodeName + "'");
 					return;
 				}
@@ -234,7 +234,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			function _readRowNode(node, nodeName) {
 				if (x >= w)
 				{
-					et2_debug("warn", "Skipped grid cell in row, '" +
+					this.egw().debug("warn", "Skipped grid cell in row, '" +
 						nodeName + "'");
 					return;
 				}

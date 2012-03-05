@@ -247,7 +247,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	},
 
 	applyFilters: function() {
-		et2_debug("info", "Changing nextmatch filters to ", this.activeFilters);
+		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 
 		// Clear the dataprovider and the dataview container - this will cause
 		// the grid to reload.
@@ -295,7 +295,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		var colName =  name + (name != "" && child_names.length > 0 ? "_" : "") + child_names.join("_");
 		if(colName == "") {
-			et2_debug("info", "Unable to generate nm column name for ", _widget);
+			this.egw().debug("info", "Unable to generate nm column name for ", _widget);
 		}
 		return colName;
 	},
@@ -417,7 +417,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					}
 				}
 			} else if (colMgr.columns[i].fixedWidth) {
-				et2_debug("info", "Could not save column width - no name", colMgr.columns[i].id);
+				this.egw().debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
 		}
 			
@@ -663,7 +663,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 			if (!template.proxiedTemplate)
 			{
-				et2_debug("error", "Error while loading definition template for" + 
+				this.egw().debug("error", "Error while loading definition template for" + 
 					"nextmatch widget.");
 				return;
 			}
@@ -676,7 +676,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 			else
 			{
-				et2_debug("error", "Nextmatch widget expects a grid to be the " + 
+				this.egw().debug("error", "Nextmatch widget expects a grid to be the " + 
 					"first child of the defined template.");
 				return;
 			}

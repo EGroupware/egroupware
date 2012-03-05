@@ -28,49 +28,6 @@ if (typeof Array.prototype.indexOf == "undefined")
 }
 
 /**
- * ET2_DEBUGLEVEL specifies which messages are printed to the console. Decrease
- * the value of ET2_DEBUGLEVEL to get less messages.
- */
-var ET2_DEBUGLEVEL = 4;
-
-function et2_debug(_level)
-{
-	if (typeof console != "undefined")
-	{
-		// Get the passed parameters and remove the first entry
-		var args = [];
-		for (var i = 1; i < arguments.length; i++)
-		{
-			args.push(arguments[i]);
-		}
-
-		if (_level == "log" && ET2_DEBUGLEVEL >= 4 &&
-		    typeof console.log == "function")
-		{
-			console.log.apply(console, args);
-		}
-
-		if (_level == "info" && ET2_DEBUGLEVEL >= 3 &&
-		    typeof console.info == "function")
-		{
-			console.info.apply(console, args);
-		}
-
-		if (_level == "warn" && ET2_DEBUGLEVEL >= 2 &&
-		    typeof console.warn == "function")
-		{
-			console.warn.apply(console, args);
-		}
-
-		if (_level == "error" && ET2_DEBUGLEVEL >= 1 &&
-		    typeof console.error == "function")
-		{
-			console.error.apply(console, args);
-		}
-	}
-}
-
-/**
  * Array with all types supported by the et2_checkType function.
  */
 var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js", "dimension"];
@@ -202,7 +159,7 @@ function et2_checkType(_val, _type, _attr, _cname)
 	function _err() {
 		var res = et2_typeDefaults[_type];
 
-		et2_debug("warn", "'" + _val + "' was not of specified _type '" + 
+		egw.debug("warn", "'" + _val + "' was not of specified _type '" + 
 			_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
 			"and is now '" + res + "'");
 
@@ -270,7 +227,7 @@ function et2_checkType(_val, _type, _attr, _cname)
 				}
 				catch(e)
 				{
-					et2_debug("error", "Error while parsing JS event handler code", e,_val);
+					egw.debug("error", "Error while parsing JS event handler code", e,_val);
 				}
 			}
 
@@ -380,7 +337,7 @@ function et2_validateAttrib(_id, _attrib)
 	if (typeof _attrib["name"] == "undefined")
 	{
 		_attrib["name"] = _id;
-		et2_debug("log", "Human name ('name'-Field) for attribute '" +
+		egw.debug("log", "Human name ('name'-Field) for attribute '" +
 			_id + "' has not been supplied, set to '" + _id + "'");
 console.debug(_attrib);
 	}
@@ -388,7 +345,7 @@ console.debug(_attrib);
 	if (typeof _attrib["description"] == "undefined")
 	{
 		_attrib["description"] = "";
-		et2_debug("log", "Description for attribute '" +
+		egw.debug("log", "Description for attribute '" +
 			_id + "' has not been supplied");
 	}
 
@@ -400,7 +357,7 @@ console.debug(_attrib);
 	{
 		if (et2_validTypes.indexOf(_attrib["type"]) < 0)
 		{
-			et2_debug("error", "Invalid type for attribute '" + _id + 
+			egw.debug("error", "Invalid type for attribute '" + _id + 
 			    "' supplied.");
 		}
 	}
@@ -655,7 +612,7 @@ function et2_insertLinkText(_text, _node, _target)
 {
 	if(!_node) 
 	{
-		et2_debug("warn", "et2_insertLinkText called without node", _text, _node, _target);
+		egw.debug("warn", "et2_insertLinkText called without node", _text, _node, _target);
 		return;
 	}
 
@@ -677,7 +634,7 @@ function et2_insertLinkText(_text, _node, _target)
 		{
 			if(!s.href)
 			{
-				et2_debug("warn", "et2_activateLinks gave bad data", s, _node, _target);
+				egw.debug("warn", "et2_activateLinks gave bad data", s, _node, _target);
 				s.href = "";
 			}
 			var a = $j(document.createElement("a"))

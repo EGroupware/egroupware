@@ -96,7 +96,7 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 
 		if (typeof this._registeredRows[_idx] != "undefined")
 		{
-			et2_debug("warn", "Overriding data row for index " + _idx);
+			this.egw().debug("warn", "Overriding data row for index " + _idx);
 		}
 
 		// Associate the given data row with that index

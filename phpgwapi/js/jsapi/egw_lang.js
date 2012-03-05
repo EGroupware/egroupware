@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw().extend('lang', function() {
+egw.extend('lang', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Translations

@@ -190,7 +190,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		{
 			if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
 			{
-				et2_debug("warning", "Tried to set value that isn't an option", this, _value);
+				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
 	//console.trace();
 			}
 		}

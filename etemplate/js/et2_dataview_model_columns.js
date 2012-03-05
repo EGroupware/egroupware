@@ -121,7 +121,7 @@ var et2_dataview_column = Class.extend({
 		}
 		else
 		{
-			et2_debug("warn", "Invalid visibility option for column: ", _value);
+			this.egw().debug("warn", "Invalid visibility option for column: ", _value);
 		}
 	}
 });

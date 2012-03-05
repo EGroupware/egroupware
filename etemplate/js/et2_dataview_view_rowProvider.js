@@ -166,7 +166,7 @@ var et2_dataview_rowProvider = Class.extend({
 
 					if (!supportsAttr)
 					{
-						et2_debug("warn", "et2_IDetachedDOM widget " +
+						egw.debug("warn", "et2_IDetachedDOM widget " +
 							widget._type + " does not support " + data.attribute);
 					}
 
@@ -203,7 +203,7 @@ var et2_dataview_rowProvider = Class.extend({
 
 			// Issue a warning - widgets which do not implement et2_IDOMNode
 			// are very slow
-			et2_debug("warn", "Non-clonable widget '"+ entry.widget._type + "' in dataview row - this " + 
+			egw.debug("warn", "Non-clonable widget '"+ entry.widget._type + "' in dataview row - this " + 
 				"might be slow", entry);
 
 			// Set the placeholder for the entry to null
@@ -399,7 +399,7 @@ var et2_dataview_rowProvider = Class.extend({
 				nodes[j] = entry.nodeFuncs[j](_row[0]);
 			}
 			if(typeof nodes[0] == "undefined")
-				et2_debug("warn", "Missing node", entry.widget.id,nodes, entry );
+				egw.debug("warn", "Missing node", entry.widget.id,nodes, entry );
 
 			// Set the array managers first
 			entry.widget._mgrs = mgrs;

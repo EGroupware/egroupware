@@ -119,7 +119,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	{
 		if (typeof _data[neededEntries[i]] == "undefined" || !_data[neededEntries[i]])
 		{
-			et2_debug("log", "Created not passed entry '" + neededEntries[i] +
+			egw.debug("log", "Created not passed entry '" + neededEntries[i] +
 				"' in data array.");
 			_data[neededEntries[i]] = {};
 		}
@@ -257,7 +257,7 @@ etemplate2.prototype.submit = function(button)
 		}
 		else
 		{
-			et2_debug("info", "Form got submitted with values: ", values);
+			egw.debug("info", "Form got submitted with values: ", values);
 		}
 	}
 }
@@ -316,7 +316,7 @@ etemplate2.prototype.getValues = function(_root)
 			}
 			else
 			{
-				et2_debug("error", "ID collision while writing at path " + 
+				egw.debug("error", "ID collision while writing at path " + 
 					"node '" + path[i] + "'");
 			}
 		}
@@ -324,7 +324,7 @@ etemplate2.prototype.getValues = function(_root)
 		// Check whether the entry is really undefined
 		if (typeof _target[id] != "undefined")
 		{
-			et2_debug("error", _widget, "Overwriting value of '" + _widget.id + 
+			egw.debug("error", _widget, "Overwriting value of '" + _widget.id + 
 				"', id exists twice!");
 		}
 
@@ -374,6 +374,6 @@ if (typeof egw_json_register_plugin != "undefined")
 }
 else
 {
-	et2_debug("info", "EGW JSON Plugin could not be registered, running ET2 standalone.");
+	egw.debug("info", "EGW JSON Plugin could not be registered, running ET2 standalone.");
 }
 

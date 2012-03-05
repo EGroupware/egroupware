@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw().extend('config', function() {
+egw.extend('config', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Clientside config

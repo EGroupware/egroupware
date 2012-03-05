@@ -41,7 +41,7 @@ function et2_register_widget(_constructor, _types)
 		// types.
 		if (et2_registry[type])
 		{
-			et2_debug("warn", "Widget class registered for " + type +
+			egw.debug("warn", "Widget class registered for " + type +
 				" will be overwritten.");
 		}
 
@@ -272,7 +272,7 @@ var et2_widget = Class.extend({
 	assign: function(_obj) {
 		if (typeof _obj._children == "undefined")
 		{
-			et2_debug("log", "Foo!");
+			this.egw().debug("log", "Foo!");
 		}
 
 		// Create a clone of all child elements of the given object
@@ -345,7 +345,7 @@ var et2_widget = Class.extend({
 		}
 		else
 		{
-			et2_debug("error", this, "Widget is not supported by this widget class", _node);
+			this.egw().debug("error", this, "Widget is not supported by this widget class", _node);
 //			throw("Widget is not supported by this widget class!");
 		}
 	},
@@ -537,7 +537,7 @@ var et2_widget = Class.extend({
 						}
 						else
 						{
-							et2_debug("warn", "Attributes cannot be objects", this, key, data[key]);
+							this.egw().debug("warn", "Attributes cannot be objects", this, key, data[key]);
 						}
 					}
 				}
@@ -579,7 +579,7 @@ var et2_widget = Class.extend({
 				// Try again, but skip the fancy stuff
 				// TODO: Figure out why the getEntry() call doesn't always work
 				var entry = modifications.data[_node.getAttribute("id")];
-				if(entry) et2_debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
+				if(entry) this.egw().debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
 			}
 			if(entry && entry.type)
 			{
@@ -687,8 +687,16 @@ var et2_widget = Class.extend({
 				return this._parent.egw();
 			}
 
-			// Return the global egw instance if none is given
-			return egw('phpgwapi');
+			// Get the window this object belongs to
+			var wnd = null;
+			if (this.implements(et2_IDOMNode))
+			{
+				var node = this.getDOMNode();
+				wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
+			}
+
+			// If we're the root object, return the phpgwapi API instance
+			return egw('phpgwapi', wnd);
 		}
 
 		return this._egw;
@@ -830,5 +838,4 @@ var et2_widget = Class.extend({
 		return this.getArrayMgr("content").getPath();
 	}
 });
-
 
