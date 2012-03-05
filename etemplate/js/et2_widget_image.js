@@ -131,6 +131,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 			_value = split[1];
 		}
 		// Get application to use from template ID
+//if(app == 'phpgwapi') app = 'infolog';
 		var src = this.egw().image(_value, app);
 		if(src)
 		{

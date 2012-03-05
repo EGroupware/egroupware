@@ -48,6 +48,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		this.label = "";
 		this.clicked = false;
 		this.btn = null;
+		this.image = null;
 
 		if (!this.options.readonly)
 		{
@@ -76,10 +77,11 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 				this.btn.removeClass("et2_button_text").addClass("et2_button_icon");
 			}
 			jQuery(this.image.getDOMNode()).appendTo(this.btn);
+			//this.addChild(this.image);
 		}
 		if(!found_image)
 		{
-			this.set_label(this.options.label);
+			this.set_label(this.label);
 		}
 	},
 
@@ -163,7 +165,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 
 	getDetachedNodes: function()
 	{
-		return [this.getDOMNode(),this.image];
+		return [this.getDOMNode()];
 	},
 
 	setDetachedAttributes: function(_nodes, _values)
@@ -171,8 +173,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		this.btn = jQuery(_nodes[0]);
 
 
-		this.image = _nodes[1];
-
+console.debug(_nodes, _values);
 		if (typeof _values["id"] != "undefined")
 		{
 			this.set_id(_values["id"]);
@@ -183,6 +184,11 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 		if (typeof _values["value"] != "undefined")
 		{
+		}
+		if (typeof _values["image"] != "undefined")
+		{
+			this.image = null;
+			this.set_image(_values["image"]);
 		}
 
 		if (typeof _values["class"] != "undefined")

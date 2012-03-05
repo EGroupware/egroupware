@@ -20,7 +20,7 @@
 /**
  * Class which implements the "image" XET-Tag
  */ 
-var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM, 
+var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM], 
 {
 	attributes: {
 		"href": {
@@ -104,7 +104,7 @@ var et2_progress = et2_valueWidget.extend(et2_IDetachedDOM,
 	 */
 
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value", "label");
+		_attrs.push("value", "label", "onclick");
 	},
 
 	getDetachedNodes: function() {

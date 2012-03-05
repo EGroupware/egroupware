@@ -315,6 +315,9 @@ ul.et2_link_string {
     content:           ', ';
 }
 
+.et2_link_list tr {
+	cursor: pointer;
+}
 .et2_link_list td.remark {
 	font-style: italic;
 }

@@ -60,7 +60,7 @@ var et2_selectbox = et2_inputWidget.extend({
 
 		// Legacy options could have row count or empty label in first slot	 
 		if(typeof this.options.rows == "string" && isNaN(this.options.rows)) {
-			this.options.empty_label = this.options.rows;
+			this.options.empty_label = this.egw().lang(this.options.rows);
 			this.options.rows = 1;
 		}
 		if(this.options.rows > 1) this.options.multiple = true;
@@ -210,12 +210,12 @@ var et2_selectbox = et2_inputWidget.extend({
 			{
 				if (_options[key] instanceof Object)
 				{
-					if(_options[key]["label"]) _options[key]["label"] = egw().lang(_options[key]["label"]);
-					if(_options[key]["title"]) _options[key]["title"] = egw().lang(_options[key]["title"]);
+					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
+					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
 				}
 				else
 				{
-					_options[key] = egw().lang(_options[key]);
+					_options[key] = this.egw().lang(_options[key]);
 				}
 			}
 
