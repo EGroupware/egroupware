@@ -204,9 +204,20 @@ var et2_selectbox = et2_inputWidget.extend({
 		// Add the select_options
 		for (var key in _options)
 		{
-			var attrs = {
-				"value": key
-			};
+
+			// Translate the options
+			if(!this.options.no_lang)
+			{
+				if (_options[key] instanceof Object)
+				{
+					if(_options[key]["label"]) _options[key]["label"] = egw().lang(_options[key]["label"]);
+					if(_options[key]["title"]) _options[key]["title"] = egw().lang(_options[key]["title"]);
+				}
+				else
+				{
+					_options[key] = egw().lang(_options[key]);
+				}
+			}
 
 			if (_options[key] instanceof Object)
 			{
