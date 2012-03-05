@@ -465,9 +465,12 @@ class timesheet_bo extends so_sql_cf
 			$this->summary = array();
 			return array();
 		}
-		$this->summary = parent::search($criteria,"SUM(ts_duration) AS duration,SUM($total_sql) AS price".
+		// if we only want to return the summary (sum of duration and sum of price) we have to take care that the customfield table
+		// is not joined, as the join causes a multiplication of the sum per customfield found
+		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
+		$this->summary = parent::search(($only_summary?false:$criteria),"SUM(ts_duration) AS duration,SUM($total_sql) AS price".
 			($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
-			'','',$wildcard,$empty,$op,false,$filter,$join);
+			'','',$wildcard,$empty,$op,false,($only_summary&&is_array($criteria)&&is_array($filter)?array_merge($criteria,$filter):$filter),($only_summary?'':$join));
 		$this->summary = $this->summary[0];
 
 		if ($only_summary) return $this->summary;
