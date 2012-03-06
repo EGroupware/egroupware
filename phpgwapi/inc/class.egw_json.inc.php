@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: JSON - Contains functions and classes for doing JSON requests.
+ * EGroupware API: JSON - Contains functions and classes for doing JSON requests.
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -193,6 +193,7 @@ class egw_json_response
 		if (!isset(self::$response))
 		{
 			self::$response = new egw_json_response();
+			self::sendHeader();
 		}
 		return self::$response;
 	}
@@ -203,10 +204,25 @@ class egw_json_response
 	}
 
 	/**
+	 * Do we have a JSON response to send back
+	 *
+	 * @return boolean
+	 */
+	public function haveJSONResponse()
+	{
+		return (boolean) $this->responseArray;
+	}
+
+	/**
 	 * Private function used to send the HTTP header of the JSON response
 	 */
 	private function sendHeader()
 	{
+		if (headers_sent($file, $line))
+		{
+			error_log(__METHOD__."() header already sent by $file line $line: ".function_backtrace());
+		}
+		else
 		//Send the character encoding header
 		header('content-type: application/json; charset='.translation::charset());
 	}
@@ -220,9 +236,25 @@ class egw_json_response
 
 		//Call each attached before send data proc
 		foreach ($inst->beforeSendDataProcs as $proc)
+		{
 			call_user_func_array($proc['proc'], $proc['params']);
+		}
 
-		$inst->sendHeader();
+		//$inst->sendHeader();
+
+		// check if application made some direct output
+		if (($output = ob_get_clean()))
+		{
+			if (!$inst->haveJSONResponse())
+			{
+				error_log(__METHOD__."() adding output with inst->addGeneric('output', '$output')");
+				$inst->addGeneric('output', $output);
+			}
+			else
+			{
+				$inst->alert('Application echoed something', $output);
+			}
+		}
 
 		echo $inst->getJSON();
 	}
