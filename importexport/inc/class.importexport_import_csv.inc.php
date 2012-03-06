@@ -342,13 +342,15 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								try {
 									$formatted = new egw_time($record[$name]);
 								} catch (Exception $e) {
-									$warnings[] = $name.': ' . $e->getMessage();
+									$warnings[] = $name.': ' . $e->getMessage() . "\n" . 
+										'Format: '.'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat;
 									continue;
 								}
 								$errors = egw_time::getLastErrors();
 								foreach($errors['errors'] as $char => $msg)
 								{
-									$warnings[] = "$name: [$char] $msg";
+									$warnings[] = "$name: [$char] $msg\n".
+										'Format: '.'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat;
 								}
 							}
 						}
