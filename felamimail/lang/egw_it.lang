@@ -1,39 +1,61 @@
+%1 is not writable by you!	felamimail	it	%1 non è scrivibile da te!
 (no subject)	felamimail	it	(nessun oggetto)
 (only cc/bcc)	felamimail	it	(solo Cc/Ccn)
+(separate multiple addresses by comma)	felamimail	it	Usa la virgola per separare indirizzi multipli
 (unknown sender)	felamimail	it	(mittente sconosciuto)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	it	3PanelView: Se vuoi vedere una anteprima di un messaggio email con click singolo sull'oggetto, imposta l'altezza dell'elenco dei messaggi e l'area di anteprima p.es. 300. Puoi specificare anche l'altezza minima della lista dei messaggi, aggiungendola dopo l'altezza dal pannello di anteprima specificata, separando con la virgola: (p.es. 300, 190)
+aborted	felamimail	it	Fallito
 activate	felamimail	it	Attiva
 activate script	felamimail	it	attiva script
+activating by date requires a start- and end-date!	felamimail	it	L'attivazione per data richiede una data di inizio e una di fine!
+add acl	felamimail	it	Aggiungi ACL
 add address	felamimail	it	Aggiungi indirizzo
 add rule	felamimail	it	Aggiungi Regola
 add script	felamimail	it	Aggiungi Script
 add to %1	felamimail	it	Aggiungi a %1
 add to address book	felamimail	it	Aggiungi alla rubrica
 add to addressbook	felamimail	it	aggiungi alla rubrica
+adding file to message. please wait!	felamimail	it	Sto aggiungendo il file al messaggio. Attendere prego...
 additional info	felamimail	it	Informazioni Addizionali
 address book	felamimail	it	Rubrica
 address book search	felamimail	it	Ricerca Rubrica
 after message body	felamimail	it	Dopo il corpo del messaggio
 all address books	felamimail	it	Tutte le rubriche
 all folders	felamimail	it	Tutte le Cartelle
+all messages in folder	felamimail	it	Tutti i messaggi nella cartella
 all of	felamimail	it	tutto di
+allow images from external sources in html emails	felamimail	it	Permetti immagini da sorgenti esterne nei messaggi HTML
 allways a new window	felamimail	it	sempre in una nuova finestra
 always show html emails	felamimail	it	Visualizza sempre le e-mail HTML
+and	felamimail	it	E
 any of	felamimail	it	qualche di
+any status	felamimail	it	Qualsiasi stato
 anyone	felamimail	it	chiunque
 as a subfolder of	felamimail	it	come sottocartella di
+attach	felamimail	it	Allega
+attach users vcard at compose to every new mail	felamimail	it	allega la VCard dell'utente ogni volta che componi un nuovo messaggio
 attachments	felamimail	it	Allegati
+authentication required	felamimail	it	Autenticazione richiesta
 auto refresh folder list	felamimail	it	Auto aggiorna elenco cartelle
+available personal email-accounts/profiles	felamimail	it	Account email/Profili personali disponibili
 back to folder	felamimail	it	Torna alla cartella
+bad login name or password.	felamimail	it	Login o password errati!
+bad or malformed request. server responded: %s	felamimail	it	Richiesta errata o mal posta. Il server ha risposto: %s
+bad request: %s	felamimail	it	Richiesta errata: %s
 based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	it	In base ai criteri stabiliti, i messaggi in entrata possono avere differenti colori nell'elenco messaggi. Ciò aiuta a distinguere facilmente la provenienza dei messaggi, specialmente per liste di distribuzione.
 bcc	felamimail	it	CCN
 before headers	felamimail	it	Prima degli header
 between headers and message body	felamimail	it	Tra gli header e il corpo del messaggio
 body part	felamimail	it	body part
+by date	felamimail	it	Per data
+can not send message. no recipient defined!	felamimail	it	Non posso inviare il messaggio. Non hai specificato il destinatario!
 can't connect to inbox!!	felamimail	it	non riesco a connettermi alla INBOX !!
 cc	felamimail	it	CC
 change folder	felamimail	it	Cambia cartella
 check message against next rule also	felamimail	it	controlla il messaggio anche con regola seguente
 checkbox	felamimail	it	Checkbox
+choose from vfs	felamimail	it	Seleziona dal File System Virtuale
+clear search	felamimail	it	Reimposta la ricerca
 click here to log back in.	felamimail	it	Clicca qui per loggarti di nuovo.
 click here to return to %1	felamimail	it	Clicca qui per tornare a %1
 close all	felamimail	it	chiudi tutto
@@ -41,9 +63,25 @@ close this page	felamimail	it	chiudi questa pagina
 close window	felamimail	it	Chiudi finestra
 color	felamimail	it	Colore
 compose	felamimail	it	Componi
+compose as new	felamimail	it	Componi come nuovo
 compress folder	felamimail	it	Comprimi cartella
+condition	felamimail	it	Condizione
 configuration	felamimail	it	Configurazione
-contains	felamimail	it	contiene
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	it	Configura un server IMAP valido il eMailAdmin per il profilo che stai usando
+connection dropped by imap server.	felamimail	it	Connessione rifiutata dal server IMAP:
+connection status	felamimail	it	Stato della connessione
+contact not found!	felamimail	it	Contatto non trovato!
+contains	felamimail	it	Contiene
+convert mail to item and attach its attachments to this item (standard)	felamimail	it	converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	felamimail	it	converti il messaggio email in elemento e allega i suoi allegati  e aggiungi un messaggio "raw" (messaggio/rfc822 (.eml)) come allegato
+copy or move messages?	felamimail	it	Copia o sposta messaggi
+copy to	felamimail	it	Copia in
+copying messages to	felamimail	it	Copia messaggi in
+could not append message:	felamimail	it	Il messaggio non è stato incluso:
+could not complete request. reason given: %s	felamimail	it	La richiesta non è stata completata. %s
+could not import message:	felamimail	it	Il messaggio non è stato importato
+could not open secure connection to the imap server. %s : %s.	felamimail	it	Non posso aprire una connessione sicura con il server IMAP %s: %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	it	CRAM-MD5 oppure DIGEST-MD5 richiedono il pacchetto Auth_SASL.
 create	felamimail	it	Crea
 create folder	felamimail	it	Crea Cartella
 create sent	felamimail	it	Crea Messaggi Inviati
@@ -56,68 +94,118 @@ dark gray	felamimail	it	Grigio Scuro
 dark green	felamimail	it	Verde Scuro
 dark magenta	felamimail	it	Magenta Scuro
 dark yellow	felamimail	it	Giallo Scuro
+date received	felamimail	it	Ricevuto il
 date(newest first)	felamimail	it	Data (prima più recenti)
 date(oldest first)	felamimail	it	Data (prima meno recenti)
 days	felamimail	it	giorni
 deactivate script	felamimail	it	disattiva script
+default	felamimail	it	Predefinito
+default signature	felamimail	it	Firma predefinita
 default sorting order	felamimail	it	Ordinamento predefinito
 delete all	felamimail	it	cancella tutto
 delete folder	felamimail	it	Cancella Cartella
 delete script	felamimail	it	cancella script
 delete selected	felamimail	it	Cancella selezionati
 delete selected messages	felamimail	it	cancella i messaggi selezionati
+delete this folder irreversible?	felamimail	it	Eliminare definitivamente la cartella?
 deleted	felamimail	it	cancellato
-deleted folder successfully!	felamimail	it	Cartella cancellata!
+deleted folder successfully!	felamimail	it	Cartella eliminata!
+deleting messages	felamimail	it	Eliminazione messaggi
 disable	felamimail	it	Disabilita
-discard message	felamimail	it	scarta messaggio
+disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	it	Disabilita il righello per la separazione del corpo del messaggio quando si aggiunge la firma al messaggio composto.<br>Se sono utilizzati dei modelli, questa opzione viene applicata soltanto nella parte testuale del messaggio.
+discard	felamimail	it	Scarta
+discard message	felamimail	it	Scarta messaggio
 display message in new window	felamimail	it	Visualizza i messaggi in una nuova finestra
+display messages in multiple windows	felamimail	it	Mostra i messaggi in finestre multiple
 display of html emails	felamimail	it	Visualizzazione delle e-mail HTML
 display only when no plain text is available	felamimail	it	Visualizza solo quando non disponibile il testo normale
 display preferences	felamimail	it	Visualizza Preferenze
-do it!	felamimail	it	fallo!
+displaying html messages is disabled	felamimail	it	La visualizzazione dei messaggi HTML è disabilitata
+displaying plain messages is disabled	felamimail	it	La visualizzazione dei messaggi in testo semplice è disabilitata
+do it!	felamimail	it	Esegui!
 do not use sent	felamimail	it	Non usare Inviati
 do not use trash	felamimail	it	Non usare Cestino
+do not validate certificate	felamimail	it	Non convalidare il certificato
+do you really want to attach the selected messages to the new mail?	felamimail	it	Vuoi davvero allegare i messaggi selezionati all'email?
 do you really want to delete the '%1' folder?	felamimail	it	Vuoi veramente cancellare la cartella '%1' ?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	it	Vuoi davvero eliminare le impostazioni e l'identità associata?
+do you really want to delete the selected signatures?	felamimail	it	Vuoi davvero eliminare le firme selezionate?
+do you really want to move or copy the selected messages to folder:	felamimail	it	Vuoi davvero spostare o copiare i messaggi selezionati nella cartella:
+do you really want to move the selected messages to folder:	felamimail	it	Vuoi davvero spostare i messaggi selezionati nella cartella:
+do you want to be asked for confirmation before attaching selected messages to new mail?	felamimail	it	Vuoi una richiesta di conferma prima di allegare i messaggi selezionati al nuovo email?
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	it	Vuoi una richiesta di conferma prima di spostare i messaggi selezionati ad un altra cartella?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	it	Vuoi inibire la modifica/impostazione per l'inoltro di email tramite impostazioni, anche se SIEVE è abilitato?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	it	Vuoi inibire la modifica/impostazione di regole di filtraggio, anche se SIEVE è abilitato?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	it	Vuoi inibire la modifica/impostazione della notifica per email ad altri indirizzi email se arrivassero messaggi, anche se SIEVE è abilitato?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	it	Vuoi inibire la modifica/impostazione della notifica di assenza/vacanza, anche se SIEVE è abilitato?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	it	Vuoi inibire la gestione delle cartelle? (creazione, accesso e sottoscrizione)
 does not contain	felamimail	it	non contiene
+does not exist on imap server.	felamimail	it	Non esiste sul server IMAP
 does not match	felamimail	it	non corrisponde
 does not match regexp	felamimail	it	non corrisponde a regexp
+don't use draft folder	felamimail	it	Non usare la cartella Bozze
 don't use sent	felamimail	it	Non usare Posta Inviata
+don't use template folder	felamimail	it	Non usare la cartella Modelli
 don't use trash	felamimail	it	Non usare il Cestino
+dont strip any tags	felamimail	it	Non togliere i tag
 down	felamimail	it	sotto
 download	felamimail	it	download
 download this as a file	felamimail	it	Download come un file
+draft folder	felamimail	it	Cartella Bozze
+drafts	felamimail	it	Bozze
 e-mail	felamimail	it	E-Mail
 e-mail address	felamimail	it	indirizzo E-Mail
 e-mail folders	felamimail	it	Cartelle E-Mail
+edit email forwarding address	felamimail	it	Modifica l'indirizzo email di inoltro
 edit filter	felamimail	it	Modifica filtro
 edit rule	felamimail	it	modifica regola
 edit selected	felamimail	it	Modifica selezionato
 edit vacation settings	felamimail	it	Modifica impostazioni vacation
+editor type	felamimail	it	Tipo di editor
 email address	felamimail	it	Indirizzo E-Mail
+email forwarding address	felamimail	it	Indirizzo email di inoltro
+email notification update failed	felamimail	it	L'aggiornamento della notifica email è fallita!
 email signature	felamimail	it	Firma E-mail
+emailaddress	felamimail	it	Indirizzo email
 empty trash	felamimail	it	svuota cestino
 enable	felamimail	it	abilita
+encrypted connection	felamimail	it	Connessione criptata
 enter your default mail domain ( from: user@domain )	admin	it	Inserisci il tuo dominio di posta predefinito ( Da: utente@dominio )
 enter your imap mail server hostname or ip address	admin	it	Enter your IMAP mail server hostname or IP address
 enter your sieve server hostname or ip address	admin	it	Enter your SIEVE server hostname or IP address
 enter your sieve server port	admin	it	Enter your SIEVE server port
 enter your smtp server hostname or ip address	admin	it	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	it	Enter your SMTP server port
+entry saved	felamimail	it	Inserimento salvato
 error	felamimail	it	ERRORE
 error connecting to imap serv	felamimail	it	Errore in connessione al server IMAP
+error connecting to imap server. %s : %s.	felamimail	it	Errore di connessione al server IMAP. %s: %s
+error connecting to imap server: [%s] %s.	felamimail	it	Errore di connessione al server IMAP: [%s] %s.
+error creating rule while trying to use forward/redirect.	felamimail	it	Errore di creazione della regola durante l'uso di inoltro/reindirizzamento
 error opening	felamimail	it	Errore in apertura
+error saving %1!	felamimail	it	Errore di salvataggio di %1!
+error:	felamimail	it	Errore:
+error: could not save message as draft	felamimail	it	Errore: Il messaggio non può essere salvato nelle Bozze
+error: could not save rule	felamimail	it	Errore: la regola non può essere salvata
+error: could not send message.	felamimail	it	Errore: il messaggio non può essere inviato
+error: message could not be displayed.	felamimail	it	Errore: il messaggio non può essere visualizzato
+event details follow	felamimail	it	Seguono dettagli dell'evento
 every	felamimail	it	ogni
 every %1 days	felamimail	it	ogni %1 giorni
 expunge	felamimail	it	Svuota
+extended	felamimail	it	Esteso
 felamimail	common	it	FelaMiMail
 file into	felamimail	it	file in
+file rejected, no %2. is:%1	felamimail	it	File rifiutato, no %2. E': %1
+filemanager	felamimail	it	File Manager
 files	felamimail	it	files
 filter active	felamimail	it	filtro attivo
 filter name	felamimail	it	Nome Filtro
-filter rules	felamimail	it	Regole Filtro
+filter rules	common	it	Regole Filtro
 first name	felamimail	it	Nome
 flagged	felamimail	it	contrassegnato
 flags	felamimail	it	Flags
+folder	felamimail	it	Cartella
 folder acl	felamimail	it	acl cartella
 folder name	felamimail	it	Nome Cartella
 folder path	felamimail	it	Path della Cartella
@@ -131,10 +219,16 @@ folders created successfully!	felamimail	it	Cartella creata correttamente!
 follow	felamimail	it	segue
 for mail to be send - not functional yet	felamimail	it	For mail to be send - not functional yet
 for received mail	felamimail	it	For received mail
+force html	felamimail	it	forza HTML
+force plain text	felamimail	it	forza testo semplica
 forward	felamimail	it	Inoltra
+forward as attachment	felamimail	it	Inoltra come allegato
+forward inline	felamimail	it	Inoltra incorporato nel messaggio
+forward messages to	felamimail	it	Inoltra messaggi a
+forward to	felamimail	it	Inoltra a
 forward to address	felamimail	it	inoltra a indirizzo
+forwarding	felamimail	it	Inoltro
 found	felamimail	it	Trovato
-fri	felamimail	it	Ven
 from	felamimail	it	Da
 from(a->z)	felamimail	it	Da (A->Z)
 from(z->a)	felamimail	it	Da (Z->A)
@@ -143,44 +237,76 @@ greater than	felamimail	it	superiore a
 have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	it	Have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about Squirrelmail.<br>
 header lines	felamimail	it	Linee Intestazione
 hide header	felamimail	it	nascondi intestazione
+hostname / address	felamimail	it	Nome host / indirizzo
+how to forward messages	felamimail	it	Come inoltrare i messaggi
 html	felamimail	it	HTML
 icons and text	felamimail	it	Icone e Testo
 icons only	felamimail	it	Solo icone
 identifying name	felamimail	it	Nome identificativo
+identity	felamimail	it	Identità
 if	felamimail	it	SE
 if from contains	felamimail	it	se da contiene
 if mail header	felamimail	it	se intestazione messaggio
 if message size	felamimail	it	se dimensione messaggio
+if shown, which folders should appear on main screen	felamimail	it	Se mostrato, quali cartelle dovrebbero comparire nella schermata principale?
 if subject contains	felamimail	it	se oggetto contiene
 if to contains	felamimail	it	se a contiene
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	it	Se usati SSL o TLS devi avere prima caricato l'estensione openssl in PHP
 illegal folder name.  please select a different name.	felamimail	it	Nome cartella non permesso. Prego scegli un altro nome.
 imap	felamimail	it	IMAP
 imap server	felamimail	it	Server IMAP
 imap server address	felamimail	it	Indirizzo Server IMAP
+imap server closed the connection.	felamimail	it	Il server IMAP ha chiuso la connessione
+imap server closed the connection. server responded: %s	felamimail	it	Il server IMAP ha chiuso la connessione. %s
+imap server password	felamimail	it	Password del server IMAP
 imap server type	felamimail	it	Tipo Server IMAP
-imaps authentication	felamimail	it	IMAPS Authentication
-imaps encryption only	felamimail	it	IMAPS Encryption only
+imap server username	felamimail	it	Nome utente del sever IMAP
+imaps authentication	felamimail	it	Autenticazione IMAPS
+imaps encryption only	felamimail	it	Cifratura IMAPS soltanto
+import	felamimail	it	Importa
+import mail	felamimail	it	Importa mail
+import message	felamimail	it	Importa messaggio
+import of message %1 failed. could not save message to folder %2 due to: %3	felamimail	it	L'importazione del messaggio %1 è fallita. Il messaggio non è stato salvato nella cartella %2. Causa: %3
+import of message %1 failed. destination folder %2 does not exist.	felamimail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione %2 non esiste
+import of message %1 failed. destination folder not set.	felamimail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione non esiste
+import of message %1 failed. no contacts to merge and send to specified.	felamimail	it	L'importazione del messaggio %1 è fallita. Non ci sono contatti da unire e inviare
+importance	felamimail	it	Importanza
 in	felamimail	it	nel
+inbox	felamimail	it	Posta in arrivo
+incoming mail server(imap)	felamimail	it	Server della posta in arrivo
 index order	felamimail	it	Index Order
 info	felamimail	it	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	it	Inserisci la firma all'inizio del nuovo messaggio quando ne componi uno
 invalid user name or password	felamimail	it	Nome utente o password errati
 javascript	felamimail	it	JavaScript
+job	felamimail	it	compito
+jumping to end	felamimail	it	Passaggio veloce alla fine
+jumping to start	felamimail	it	Passaggio veloce all'inizio
+junk	felamimail	it	Spazzatura
 keep a copy of the message in your inbox	felamimail	it	mantieni una copia del messaggio nella tua posta in arrivo
+keep local copy of email	felamimail	it	Mantieni una copia locale del messaggio
 kilobytes	felamimail	it	kilobyte
 language	felamimail	it	Lingua
 last name	felamimail	it	Cognome
+later	felamimail	it	Più tardi
 left	felamimail	it	Sinistra
 less	felamimail	it	pochi
 less than	felamimail	it	meno di
 light gray	felamimail	it	Grigio Chiaro
 list all	felamimail	it	Visualizza tutti
+loading	felamimail	it	Sto caricando...
 location of buttons when composing	felamimail	it	Location of buttons when composing
+mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	it	Comportamento griglia messaggi: quanti messaggi dovrebbero esservi caricati? Se selezionassi tutti allora non ci sarà la paginazione nell'elenco
 mail server login type	admin	it	Mail server login type
 mail settings	felamimail	it	Imposazioni Mail
 mainmessage	felamimail	it	messaggio principale
+manage email accounts and identities	common	it	Gestisci account e identità
+manage emailaccounts	common	it	Gestisci account di posta
 manage emailfilter / vacation	preferences	it	Gestione Filtro Email / Assenze
 manage folders	common	it	Gestione Cartelle
 manage sieve	common	it	Gestione script Sieve
+manage signatures	felamimail	it	Gestisci firme
+mark as	felamimail	it	Segna come
 mark as deleted	felamimail	it	Segna come cancellato
 mark messages as	felamimail	it	Segna i messaggi selezionati come
 mark selected as flagged	felamimail	it	Segna come contrassegnati
@@ -190,12 +316,15 @@ mark selected as unread	felamimail	it	Segna come da leggere
 match	felamimail	it	Corrisponde
 matches	felamimail	it	corrispondenze
 matches regexp	felamimail	it	matches regexp
+max uploadsize	felamimail	it	Dimensione massima consentita
 message highlighting	felamimail	it	Message Highlighting
 message list	felamimail	it	Lista Messaggi
 messages	felamimail	it	messaggi
-mon	felamimail	it	Lun
 move	felamimail	it	sposta
+move folder	felamimail	it	Sposta cartella
 move messages	felamimail	it	sposta messaggi
+move messages?	felamimail	it	Sposta messaggi
+move selected to	felamimail	it	Sposta selezionati in
 move to	felamimail	it	sposta selezionato in
 move to trash	felamimail	it	Sposta nel cestino
 moving messages to	felamimail	it	spostamento messaggi in
@@ -205,43 +334,81 @@ new	common	it	Nuovo
 new filter	felamimail	it	Nuovo Filtro
 next	felamimail	it	Successivo
 next message	felamimail	it	prossimo messaggio
+no (valid) send folder set in preferences	felamimail	it	Non hai impostato una cartella valida nelle preferenze per la posta inviata!
+no active imap server found!!	felamimail	it	Non è stato trovato un server IMAP attivo
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	it	Nessun indirizzo A/CC/CCN fornito. Nessuna cartella di salvataggio messaggi specificata.
+no encryption	felamimail	it	Nessuna cifratura
 no filter	felamimail	it	Nessun Filtro
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	felamimail	it	Non è stata specificata la cartella di destinazione e di salvataggio messaggi o comunque qualche  modo per salvare il messaggio (salvataggio in attività/tracker)
+no folders	felamimail	it	Nessuna cartella
 no folders found	felamimail	it	Nessuna cartella trovata
 no folders were found to subscribe to!	felamimail	it	No folders were found to subscribe to!
 no folders were found to unsubscribe from!	felamimail	it	No folders were found to unsubscribe from!
 no highlighting is defined	felamimail	it	Nessuna evidenziazione definita
+no imap server host configured!!	felamimail	it	Nessun host IMAP configurato
+no message returned.	felamimail	it	Nessun messaggio restituito
 no messages found...	felamimail	it	nessun messaggio trovato...
+no messages selected, or lost selection. changing to folder	felamimail	it	Nessun messaggio selezionato oppure selezione persa. Passaggio alla cartella
 no messages were selected.	felamimail	it	Nessun messaggio selezionato.
+no plain text part found	felamimail	it	Non c'è una parte di testo semplice
 no previous message	felamimail	it	nessun Messaggio precedente
+no recipient address given!	felamimail	it	Nessun indirizzo destinatario
+no send folder set in preferences	felamimail	it	Nessuna cartella per la posta inviata è stata impostata nelle preferenze
+no signature	felamimail	it	Nessuna firma!
+no stationery	felamimail	it	Nessun modello!
+no subject given!	felamimail	it	Nessun oggetto!
+no supported imap authentication method could be found.	felamimail	it	Non è stato trovato alcun metodo valido di autenticazione IMAP
+no text body supplied, check attachments for message text	felamimail	it	Nessun corpo nel messaggio, controlla l'allegato per il testo del messaggio
+no valid data to create mailprofile!!	felamimail	it	Dati non validi per la creazione di un profilo email!
 no valid emailprofile selected!!	felamimail	it	Nessun Profilo E-Mail valido selezionato!!
 none	felamimail	it	nessuno
-on behalf of	felamimail	it	on behalf of
+none, create all	felamimail	it	Nessuno, crea tutti
+not allowed	felamimail	it	Non permesso
+notify when new mails arrive on these folders	felamimail	it	Notifica quando arrivano nuovi messaggi in questa cartella
+on	felamimail	it	Su
+on behalf of	felamimail	it	Da parte di
 one address is not valid	felamimail	it	Un indirizzo non è valido
 only inbox	felamimail	it	Solo INBOX
 only one window	felamimail	it	solo una finestra
+only send message, do not copy a version of the message to the configured sent folder	felamimail	it	Invia semplicemente i messaggio, non copiarli nella cartella della posta inviata
 only unseen	felamimail	it	Solo non letti
 open all	felamimail	it	apri tutto
 options	felamimail	it	Opzioni
+or	felamimail	it	Oppure
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	it	Oppure configura una connessione ad un server IMAP valido usando la gestione di account e identità nelle preferenze dal menù laterale
 organisation	felamimail	it	organizzazione
 organization	felamimail	it	organizzazione
 organization name	admin	it	Nome organizzazione
+original message	felamimail	it	Messaggio originale
+outgoing mail server(smtp)	felamimail	it	Server SMTP in uscita
 participants	felamimail	it	Partecipanti
+personal	felamimail	it	personale
 personal information	felamimail	it	Informazioni Personali
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	it	Richiedi all'amministratore la correzione delle impostazioni in emaladmin
+please configure access to an existing individual imap account.	felamimail	it	Configura l'accesso ad un account IMAP esistente
 please select a address	felamimail	it	Prego seleziona un indirizzo
 please select the number of days to wait between responses	felamimail	it	Prego seleziona il numero di giorni da aspettare tra le risposte
 please supply the message to send with auto-responses	felamimail	it	Prego fornisci il messaggio ta inviare con la risposta automatica
+port	felamimail	it	Porta
 posting	felamimail	it	invio
+preview disabled for folder:	felamimail	it	Anteprima disabilitata per la cartella
 previous	felamimail	it	Precedente
 previous message	felamimail	it	messaggio precedente
+primary emailadmin profile	felamimail	it	Profilo primario emailadmin
 print it	felamimail	it	stampa
 print this page	felamimail	it	stampa questa pagina
+printview	felamimail	it	Vista stampa
+processing of file %1 failed. failed to meet basic restrictions.	felamimail	it	Elaborazione del file %1 non riuscita. Non sono state soddisfate le regole di base delle restrizioni di caricamento.
 quicksearch	felamimail	it	Ricerca Veloce
 read	felamimail	it	leggi
 reading	felamimail	it	leggendo
+receive notification	felamimail	it	Ricevi notifiche
 recent	felamimail	it	recenti
 refresh time in minutes	felamimail	it	Tempo di aggiornamento in minuti
+reject with	felamimail	it	Rifiuta con
 remove	felamimail	it	rimuovi
 remove immediately	felamimail	it	Rimuovi immediatamente
+remove label	felamimail	it	Rimuovi parole chiave
 rename	felamimail	it	Rinomina
 rename a folder	felamimail	it	Rinomina una Cartella
 rename folder	felamimail	it	Rinomina cartella
@@ -251,38 +418,68 @@ reply	felamimail	it	Rispondi
 reply all	felamimail	it	Rispondi a Tutti
 reply to	felamimail	it	Rispondi A
 replyto	felamimail	it	Rispondi A
+required pear class mail/mimedecode.php not found.	felamimail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata
 respond	felamimail	it	AutoRispondi
 respond to mail sent to	felamimail	it	AutoRispondi alle mail inviate a
 return	felamimail	it	Ritorna
 return to options page	felamimail	it	Return to options page
 right	felamimail	it	Destra
+row order style	felamimail	it	Stile dell'ordinameno per righe
 rule	felamimail	it	Regole
-sat	felamimail	it	Sab
 save	felamimail	it	Salva
-save changes	felamimail	it	salva modifiche
-script name	felamimail	it	nome script
-script status	felamimail	it	stato script
+save all	felamimail	it	Salva tutti
+save as draft	felamimail	it	Salva come bozza
+save as infolog	felamimail	it	Salva come Attività
+save as ticket	felamimail	it	Salva come ticked del Tracker
+save as tracker	felamimail	it	Salva come Tracker
+save changes	felamimail	it	Salva le modifiche
+save message to disk	felamimail	it	Salva il messaggio sul disco
+save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
+save:	felamimail	it	Salva:
+saving of message %1 failed. destination folder %2 does not exist.	felamimail	it	Salvataggio del messaggio %1 non riuscito. La cartella %2 non esiste.
+saving of message %1 succeeded. check folder %2.	felamimail	it	Salvataggio del messaggio %1 riuscito. Controlla la cartella %2
+script name	felamimail	it	Nome script
+script status	felamimail	it	Stato script
 search	felamimail	it	Ricerca
 search for	felamimail	it	Cerca
 select	felamimail	it	Seleziona
+select a message to switch on its preview (click on subject)	felamimail	it	Seleziona un messaggio per vederne l'anteprima
 select all	felamimail	it	Seleziona Tutti
 select emailprofile	felamimail	it	Seleziona Profilo E-Mail
 select folder	felamimail	it	seleziona cartella
 select your mail server type	admin	it	Selezona il tipo di server mail
+selected	felamimail	it	selezionato
 send	felamimail	it	Invia
 send a reject message	felamimail	it	invia messaggio di rifiuto
+send message and move to send folder (if configured)	felamimail	it	Invia messaggio e spostalo nella cartella della posta inviata
+sender	felamimail	it	Mittente
+sent	felamimail	it	Inviato
 sent folder	felamimail	it	Cartella Posta Inviata
+server supports mailfilter(sieve)	felamimail	it	Il server supporta il filtro SIEVE
+set as default	felamimail	it	Imposta come predefinito
+set label	felamimail	it	Imposta parole chiave
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	it	Mostra tutte le cartelle, sottoscitte e non, nel pannello delle cartelle della schermata principale.
+show all messages	felamimail	it	Mostra tutti i messaggi
 show header	felamimail	it	visualizza header
 show new messages on main screen	felamimail	it	Visualizza i nuovi messaggi nella schermata principale
+show test connection section and control the level of info displayed?	felamimail	it	Mostrare la sezione di Test della connessione e controllare il livello delle informazioni mostrate
+sieve connection status	felamimail	it	Salva lo stato della connessione
+sieve script name	felamimail	it	Nome script sieve
 sieve settings	admin	it	Impostazioni Sieve
+signatur	felamimail	it	Firma
 signature	felamimail	it	Firma
 simply click the target-folder	felamimail	it	Semplicemente clicca la cartella destinazione
 size	felamimail	it	Dimensione
 size of editor window	felamimail	it	Dimensione della finestra di edit
 size(...->0)	felamimail	it	Dimensione (...->0)
 size(0->...)	felamimail	it	Dimensione (0->...)
+skipping forward	felamimail	it	Salto avanti
+skipping previous	felamimail	it	Salto indietro
 small view	felamimail	it	visualizzazione ridotta
 smtp settings	admin	it	Impostazioni SMTP
+start new messages with mime type plain/text or html?	felamimail	it	Iniziare nuovi messaggi con mime type plain/test o HTML
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	it	Iniziare i messaggi di risposta con mime type plain/text oppure provare a usare il formato mostrato (predefinito)?
+stationery	felamimail	it	Modello
 subject	felamimail	it	Oggetto
 subject(a->z)	felamimail	it	Oggetto (A->Z)
 subject(z->a)	felamimail	it	Oggetto (Z->A)
@@ -290,54 +487,97 @@ submit	felamimail	it	Invia
 subscribe	felamimail	it	Sottoscrivi
 subscribed	felamimail	it	Sottoscritti
 subscribed successfully!	felamimail	it	Sottoscritto con successo!
-sun	felamimail	it	Dom
+successfully connected	felamimail	it	Connesso con successo
+switching of signatures failed	felamimail	it	Scambio delle firme non riuscito
+system signature	felamimail	it	Firma di sistema
 table of contents	felamimail	it	Indice dei contenuti
+template folder	felamimail	it	Cartella dei modelli
+templates	felamimail	it	Modelli
+test connection	felamimail	it	Prova connessione attiva
+test connection and display basic information about the selected profile	felamimail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
 text only	felamimail	it	Solo testo
+text/plain	felamimail	it	Text/plain
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	it	L'azione verrà applicata a tutti i messaggi della cartella corrente.\nVuoi procedere?
 the connection to the imap server failed!!	felamimail	it	La connessione al server IMAP è fallita!!
-then	felamimail	it	ALLORA
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	it	Il server IMAP sembra non supportare il metodo di autenticazione scelto. Contattare l'amministratore di sistema.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	it	Il mittente ha richiesto la ricevuta di lettura. Inviarla?
+the mimeparser can not parse this message.	felamimail	it	Il mime parser non riesce a interpretare il messaggio.
+then	felamimail	it	DI
+there is no imap server configured.	felamimail	it	Non c'è alcun server IMAP configurato!
 this folder is empty	felamimail	it	QUESTA CARTELLA E' VUOTA
 this php has no imap support compiled in!!	felamimail	it	Questo PHP non contiene il supporto IMAP!!
-thu	felamimail	it	Gio
 to	felamimail	it	A
-to mail sent to	felamimail	it	to mail sent to
+to do	felamimail	it	da fare
+to mail sent to	felamimail	it	A email inviata a
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	it	Per usare una connessione TLS, devi avere PHP 5.1.0 o superiore
 translation preferences	felamimail	it	Preferenze Traduzioni
 translation server	felamimail	it	Server Traduzioni
+trash	felamimail	it	Cestino
 trash fold	felamimail	it	Cestino
 trash folder	felamimail	it	Cestino
-tue	felamimail	it	Mar
+trust servers seen / unseen info when retrieving the folder status. (if you select no, we will search for the unseen messages and count them ourselves)	felamimail	it	Usare le informazioni letto/non letto quando si riceve lo stato della cartella
+trying to recover from session data	felamimail	it	Prova di recupero dai dati di sessione
 type	felamimail	it	tipo
+undelete	felamimail	it	Ripristina
+unexpected response from server to authenticate command.	felamimail	it	Risposta inattesa del server al comando AUTHENTICATE
+unexpected response from server to digest-md5 response.	felamimail	it	Risposta inattesa del server alla risposta Digest-MD5.
+unexpected response from server to login command.	felamimail	it	Risposta inaspettata del server al comando LOGIN
 unflagged	felamimail	it	non contrassegnato
 unknown err	felamimail	it	Errore Sconosciuto
 unknown error	felamimail	it	Errore Sconosciuto
+unknown imap response from the server. server responded: %s	felamimail	it	Risposta non riconosciuta del server. %s
 unknown sender	felamimail	it	Mittente Sconosciuto
 unknown user or password incorrect.	felamimail	it	Utente sconosciuto o password sbagliata.
 unread	common	it	da leggere
 unseen	felamimail	it	Nuovi
 unselect all	felamimail	it	Deseleziona Tutto
-unsubscribe	felamimail	it	Unsubscribe
-unsubscribed	felamimail	it	Unsubscribed
-unsubscribed successfully!	felamimail	it	Unsubscribed successfully!
-up	felamimail	it	su
+unsubscribe	felamimail	it	Cancella sottoscrizione
+unsubscribed	felamimail	it	Sottoscrizione cancellata
+unsubscribed successfully!	felamimail	it	Sottoscizione cancellata con successo
+up	felamimail	it	Su
+updating message status	felamimail	it	Aggiornameto dello stato del messaggio
+updating view	felamimail	it	Aggiornamento visualizzazione
+urgent	felamimail	it	urgente
+use <a href="%1">emailadmin</a> to create profiles	felamimail	it	Usa <a href="%1">eMailAdmin</a> per creare profili
 use a signature	felamimail	it	Usa una firma
 use a signature?	felamimail	it	Usare una firma?
 use addresses	felamimail	it	Usa Indirizzo
+use common preferences max. messages	felamimail	it	Usa le preferenze comuni max messaggi
+use custom identities	felamimail	it	Usa identità personalizzate
 use custom settings	felamimail	it	Usa Impostazioni Personali
-use javascript or html addressbook?	felamimail	it	Usa rubrica Javascript o HTML?
 use regular expressions	felamimail	it	usa espressioni regolari
 use smtp auth	admin	it	usa autenticazione SMTP
+use source as displayed, if applicable	felamimail	it	Usa le sorgenti come mostrate, se applicabile
 users can define their own emailaccounts	admin	it	Gli utenti possono definire i propri account email
-vacation notice	felamimail	it	notifica assenza
+vacation notice	common	it	notifica assenza
+vacation notice is active	felamimail	it	La notifica "vacanze" è attiva
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	it	La notifica "vacanze" non è stata ancora salvata! (Però ho già inserito dei valori predefiniti per coprire alcuni degli errori di cui sopra. Per favore correggi e controlla le tue impostazioni e salva di nuovo).
+vacation start-date must be before the end-date!	felamimail	it	La data di inizio delle vacanze deve essere prima della data di fine
+validate certificate	felamimail	it	Convalida certificato
 view full header	felamimail	it	Visualizza gli header completi
+view header lines	felamimail	it	Visualizza righe header
 view message	felamimail	it	Visualizza messaggio
 viewing full header	felamimail	it	Viewing full header
 viewing message	felamimail	it	Viewing message
 viewing messages	felamimail	it	Viewing messages
-wed	felamimail	it	Mer
-welcome to %1's webmail system	felamimail	it	Benvenuti al sistema WebMail %1
 when deleting messages	felamimail	it	Durante la cancellazione dei messaggi
+when saving messages as item of a different app (if app supports the desired option)	felamimail	it	quando si salvano i messaggi come elementi di una applicazione diversa (se la applicazione supporta l'opzione desiderata)
+when sending messages	felamimail	it	Quando si inviano messaggi
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	it	Quali cartelle oltre alla cartella della posta inviata dovrebbe essere mostrata usando lo schema di visualizzazione della posta inviata?
+which folders - in general - should not be automatically created, if not existing	felamimail	it	Quali cartelle in generale non dovrebbero essere automaticamente create se non esistono?
 with message	felamimail	it	con messaggio
 with message "%1"	felamimail	it	con messaggio "%1"
 wrap incoming text at	felamimail	it	Affianca testo a
 writing	felamimail	it	scrittura
 wrote	felamimail	it	scritto
-you must login first.	felamimail	it	Devi prima eseguire il Login.
+yes, but mask all passwords	felamimail	it	sì, però maschera tutte le password
+yes, but mask all usernames and passwords	felamimail	it	sì, però maschera tutti i nomi utente e le password
+yes, offer copy option	felamimail	it	Sì, fornisci l'ozione di copia
+yes, only trigger connection reset	felamimail	it	Sì, innesca solo la reimpostazione della connessione
+yes, show all debug information available for the user	felamimail	it	sì mostra le informazioni di debug complete disponibili all'utente
+yes, show basic info only	felamimail	it	sì, mostra solo le informazioni di base
+you can either choose to save as infolog or tracker, not both.	felamimail	it	Puoi scegliere di salvare come Attività oppure Tracker, non entrambi
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	it	Puoi usare %1 per la data di inizio e %2 per la data fine
+you have received a new message on the	felamimail	it	Hai ricevuto un nuovo messaggio sul
+you may try to reset the connection using this link.	felamimail	it	Puoi provare a reimpostare la connessione tramite questo collegamento
+your message to %1 was displayed.	felamimail	it	Il messaggio a %1 è stato visualizzato dal destinatario
