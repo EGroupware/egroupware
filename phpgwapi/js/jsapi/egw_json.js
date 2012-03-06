@@ -115,7 +115,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 							);
 
 						} catch(e) {
-							this.egw.debug('error', e);
+							this.egw.debug('error', 'Exception "', e ,'" while handling JSON response type "', res.type, '", plugin', plugin, 'response', res);
 						}
 					}
 				}
