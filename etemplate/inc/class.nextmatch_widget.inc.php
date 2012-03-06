@@ -886,7 +886,7 @@ class nextmatch_widget
 		egw_framework::validate_file('egw_action','egw_keymanager');
 		egw_framework::validate_file('.', 'nextmatch_action', 'etemplate');
 
-		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
+		//egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
 
 		if (!is_array($action_links)) $action_links = array();
 
