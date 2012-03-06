@@ -97,20 +97,26 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		{
 			for (var i = 0; i < data.response.length; i++)
 			{
-				for (var key in plugins) {
-					try {
-						// Get a reference to the plugin
-						var plugin = plugins[key];
+				// Get the response object
+				var res = data.response[i];
 
-						// Call the plugin callback
-						plugin.callback.call(
-							plugin.context ? plugin.context : this.context,
-							data.response[i].type,
-							data.response[i],
-							this
-						);
+				// Check whether a plugin for the given type exists
+				if (typeof plugins[res.type] !== 'undefined')
+				{
+					for (var j = 0; j < plugins[res.type].length; j++) {
+						try {
+							// Get a reference to the plugin
+							var plugin = plugins[res.type][j];
 
-					} catch(e) {
+							// Call the plugin callback
+							plugin.callback.call(
+								plugin.context ? plugin.context : this.context,
+								res.type, res, this
+							);
+
+						} catch(e) {
+							this.egw.debug('error', e);
+						}
 					}
 				}
 			}
@@ -367,7 +373,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			// Empty the document tree
 			while (_wnd.document.childNodes.length > 0)
 			{
-				_wnd.document.removeChild(document.childNodes[0]);
+				_wnd.document.removeChild(_wnd.document.childNodes[0]);
 			}
 
 			// Write the given content

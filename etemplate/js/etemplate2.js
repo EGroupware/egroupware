@@ -48,6 +48,8 @@
 	jsapi.egw_json;
 */
 
+egw.extend('etemplate2', egw.MODULE_GLOBAL, function() {
+
 /**
  * The etemplate2 class manages a certain etemplate2 instance.
  *
@@ -169,6 +171,7 @@ etemplate2.prototype.load = function(_url, _data)
 
 	// Create the basic widget container and attach it to the DOM
 	this.widgetContainer = new et2_container(null);
+	this.widgetContainer.setApiInstance(egw(egw.elemWindow(this.DOMContainer)));
 	this.widgetContainer.setInstanceManager(this);
 	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
@@ -253,8 +256,7 @@ etemplate2.prototype.submit = function(button)
 		// Create the request object
 		if (typeof egw_json_request != "undefined" && this.menuaction)
 		{
-			var api = egw(window);
-//			api.debug("Blablub");
+			var api = this.widgetContainer.egw();
 			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this);
 			request.sendRequest();
 		}
@@ -307,13 +309,13 @@ etemplate2.prototype.getValues = function(_root)
 		for (var i = 0; i < path.length; i++)
 		{
 			// Create a new object for not-existing path nodes
-			if (typeof _target[path[i]] == "undefined")
+			if (typeof _target[path[i]] === 'undefined')
 			{
 				_target[path[i]] = {};
 			}
 
 			// Check whether the path node is really an object
-			if (_target[path[i]] instanceof Object)
+			if (typeof _target[path[i]] === 'object')
 			{
 				_target = _target[path[i]];
 			}
@@ -348,7 +350,7 @@ function etemplate2_handle_load(_type, _response)
 {
 	// Check the parameters
 	var data = _response.data;
-	if (typeof data.url == "string" && data.data instanceof Object)
+	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
 		this.load(data.url, data.data);
 		return true;
@@ -363,17 +365,13 @@ function etemplate2_handle_validation_error(_type, _response)
 	//$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
 }
 
+// Calls etemplate2_handle_response in the context of the object which
+// requested the response from the server
+egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
+egw(window).registerJSONPlugin(etemplate2_handle_validation_error, null, 'et2_validation_error');
 
-// Register the egw_json result object
-if (typeof egw != "undefined")
-{
-	// Calls etemplate2_handle_response in the context of the object which
-	// requested the response from the server
-	egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
-	egw(window).registerJSONPlugin(etemplate2_handle_validation_error, null, 'et2_validation_error');
-}
-else
-{
-	egw.debug("info", "EGW JSON Plugin could not be registered, running ET2 standalone.");
-}
+// Return the etemplate2 constructor
+return {'etemplate2': etemplate2};
+
+});
 

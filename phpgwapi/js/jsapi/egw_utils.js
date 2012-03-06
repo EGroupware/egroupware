@@ -149,6 +149,13 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 
 		ajaxUrl: function(_menuaction) {
 			return this.webserverUrl + '/json.php?menuaction=' + _menuaction;
+		},
+
+		elemWindow: function(_elem) {
+			var res =
+				_elem.ownerDocument.parentNode ||
+				_elem.ownerDocument.defaultView;
+			return res;
 		}
 
 	};

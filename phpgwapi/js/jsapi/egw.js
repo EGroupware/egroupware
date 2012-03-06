@@ -24,5 +24,6 @@
 	egw_jsonq;
 	egw_files;
 	egw_json;
+	egw_tooltip;
 */
 

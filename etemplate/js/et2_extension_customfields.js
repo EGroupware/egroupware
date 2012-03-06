@@ -174,7 +174,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			if(global_data) data = jQuery.extend({}, data, global_data);
 			for(var key in data)
 			{
-				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
+				if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
 			}
 		}
 

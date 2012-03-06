@@ -526,12 +526,12 @@ var et2_widget = Class.extend({
 			if(this.getArrayMgr("modifications"))
 			{
 				var data = this.getArrayMgr("modifications").getEntry(this.id);
-				if (data instanceof Object)
+				if (typeof data === 'object')
 				{
 					for (var key in data)
 					{
 						// TODO: Why? 
-						if (!(data[key] instanceof Object))
+						if (!(typeof data[key] === 'object'))
 						{
 							_attrs[key] = data[key];
 						}
@@ -792,7 +792,7 @@ var et2_widget = Class.extend({
 			}
 
 			// Check whether the manager has a namespace for the id of this object
-			if (mgr.getEntry(this.id) instanceof Object)
+			if (typeof mgr.getEntry(this.id) === 'object')
 			{
 				// The content manager has an own node for this object, so
 				// create an own perspective.

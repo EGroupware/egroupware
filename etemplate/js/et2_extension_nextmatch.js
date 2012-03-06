@@ -1088,7 +1088,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 			if(!data) data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
 			for(var key in data)
 			{
-				if(data[key] instanceof Object && ! _attrs[key]) _attrs[key] = data[key];
+				if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
 			}
 		}
 	},

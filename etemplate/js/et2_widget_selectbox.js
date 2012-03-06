@@ -14,7 +14,6 @@
 "use strict";
 
 /*egw:uses
-	lib/tooltip;
 	jquery.jquery;
 	et2_core_xml;
 	et2_core_DOMWidget;
@@ -208,7 +207,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			// Translate the options
 			if(!this.options.no_lang)
 			{
-				if (_options[key] instanceof Object)
+				if (typeof _options[key] === 'object')
 				{
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
@@ -219,7 +218,7 @@ var et2_selectbox = et2_inputWidget.extend({
 				}
 			}
 
-			if (_options[key] instanceof Object)
+			if (typeof _options[key] === 'object')
 			{
 				this._appendOptionElement(key, 
 					_options[key]["label"] ? _options[key]["label"] : "",
@@ -284,12 +283,12 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 	set_value: function(_value) {
 		this.value = _value;
 		var option = this.optionValues[_value];
-		if (option instanceof Object)
+		if (typeof option === 'object')
 		{
 			this.span.text(option.label);
 			this.set_statustext(option.title);
 		}
-		else if (typeof option == "string")
+		else if (typeof option === 'string')
 		{
 			this.span.text(option);
 		}

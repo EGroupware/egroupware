@@ -180,7 +180,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		// Detach this node from the tooltip node
 		if (this._tooltipElem)
 		{
-			egw_global_tooltip.unbindFromElement(this._tooltipElem);
+			this.egw().tooltipUnbind(this._tooltipElem);
 			this._tooltipElem = null;
 		}
 
@@ -258,13 +258,13 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 			//If a tooltip is already attached to the element, remove it first
 			if (this._tooltipElem)
 			{
-				egw_global_tooltip.unbindFromElement(this._tooltipElem);
+				this.egw().tooltipUnbind(this._tooltipElem);
 				this._tooltipElem = null;
 			}
 
 			if (_value && _value != '')
 			{
-				egw_global_tooltip.bindToElement(elem, _value);
+				this.egw().tooltipBind(elem, _value);
 				this._tooltipElem = elem;
 			}
 		}

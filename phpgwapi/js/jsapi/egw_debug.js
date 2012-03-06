@@ -16,7 +16,7 @@
 	egw_core;
 */
 
-egw.extend('debug', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
+egw.extend('debug', egw.MODULE_GLOBAL, function(_egw, _wnd) {
 
 	/**
 	 * DEBUGLEVEL specifies which messages are printed to the console.

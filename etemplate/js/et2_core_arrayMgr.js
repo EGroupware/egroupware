@@ -170,7 +170,7 @@ var et2_arrayMgr = Class.extend({
 		{
 			// Abort if the current entry is not an object (associative array) and
 			// we should descend further into it.
-			var isObject = entry instanceof Object;
+			var isObject = typeof entry === 'object';
 			if (!isObject && !_referenceInto)
 			{
 				return null;
@@ -339,7 +339,7 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 		}
 
 		// Let the array entry override the read only attribute entry
-		if (typeof entry != "undefined" && !(entry instanceof Object))
+		if (typeof entry != "undefined" && !(typeof entry === 'object'))
 		{
 			return entry;
 		}

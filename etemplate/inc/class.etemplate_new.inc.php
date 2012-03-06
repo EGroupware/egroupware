@@ -162,7 +162,7 @@ class etemplate_new extends etemplate_widget_template
 			echo '
 		<div id="container"></div>
 		<script>
-			var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
+			var et2 = new (egw().etemplate2)(document.getElementById("container"), "etemplate_new::ajax_process_content");
 			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
 		</script>
 ';

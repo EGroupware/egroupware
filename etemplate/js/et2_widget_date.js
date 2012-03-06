@@ -89,9 +89,9 @@ var et2_date = et2_inputWidget.extend({
 				daFormat: dateformat,
 				firstDay: this.egw().preference("weekdaystarts","calendar")
 			};
-			window.setTimeout(function() {
+			/*window.setTimeout(function() {
 				Calendar.setup(setup);
-			}, 500);
+			}, 500);*/
 		}
 
 		// If date also has a time, or browser doesn't support HTML5 time type 
