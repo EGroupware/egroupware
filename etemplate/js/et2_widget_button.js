@@ -37,7 +37,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		},
 		"onclick": {
 			"name": "onclick",
-			"type": "js",
+			"type": "string",
 			"description": "JS code which gets executed when the button is clicked"
 		}
 	},
@@ -89,23 +89,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		return this.btn ? this.btn[0] : null;
 	},
 
-	onclick: function(e) {
+	onclick: function(_node) {
 		// Execute the JS code connected to the event handler
 		if (this.options.onclick)
 		{
-			// onclick needs to get current values
-			if(typeof this.options.onclick == "string") {
-				// Don't change this.options.onclick so we can do this again
-				var onclick = et2_js_pseudo_funcs(this.options.onclick, this.id);
-				if(onclick.indexOf("$") >= 0 || onclick.indexOf("@") >= 0) {
-					var mgr = this.getArrayMgr("content");
-					if(mgr) onclick = mgr.expandName(onclick);
-				}
-				onclick = new Function(onclick);
-				if(!onclick())
-					return false;
-			}
-			else if (!this.options.onclick())
+			// Exectute the legacy JS code
+			if (!(et2_compileLegacyJS(this.options.onclick, this, _node))())
 			{
 				return false;
 			}

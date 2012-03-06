@@ -41,7 +41,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		},
 		"onchange": {
 			"name": "onchange",
-			"type": "js",
+			"type": "string",
 			"description": "JS code which is executed when the value changes."
 		},
 		"validation_error": {
@@ -113,7 +113,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 	change: function(_node) {
 		if (this.onchange)
 		{
-			return this.onchange.apply(_node);
+			return this.onchange(_node);
 		}
 	},
 

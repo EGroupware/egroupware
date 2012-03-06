@@ -47,7 +47,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		},
 		"onclick": {
 			"name": "onclick",
-			"type": "js",
+			"type": "string",
 			"description": "JS code which is executed when the element is clicked."
 		}
 	},
@@ -200,7 +200,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		if (this.node)
 		{
 			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
-				return e.data.click.call(e.data,e);
+				return e.data.click.call(e.data, this);
 			});
 		}
 
@@ -232,10 +232,10 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		return this.getDOMNode(this);
 	},
 
-	click: function(event) {
+	click: function(_node) {
 		if (this.onclick)
 		{
-			return this.onclick.call(this, event);
+			return this.onclick(_node);
 		}
 
 		return true;

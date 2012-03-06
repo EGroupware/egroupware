@@ -953,20 +953,11 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		var input = select.input;
 		if(this.nextmatch.options.settings[name+"_onchange"])
 		{
+			// Get the onchange function string
 			var onchange = this.nextmatch.options.settings[name+"_onchange"];
-			// onchange needs to get current values
-			if(typeof onchange == "string") {
-				// Don't change original so we can do this again
-				onchange = et2_js_pseudo_funcs(onchange, this.nextmatch.id);
-				if(onchange.indexOf("$") >= 0 || onchange.indexOf("@") >= 0) {
-					var mgr = this.nextmatch.getArrayMgr("content");
-					if(mgr) onchange = mgr.expandName(onchange);
-				}
-				onchange = new Function(onchange);
-			}
-			input.change(this.nextmatch, function(event) {
-				onchange(event);
-			});
+
+			// Connect it to the onchange event of the input element
+			input.change(this.nextmatch, et2_compileLegacyJS(onchange, this.nextmatch, input));
 		}
 		else
 		{

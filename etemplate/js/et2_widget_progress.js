@@ -48,7 +48,7 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		},
 		"onchange": {
 			"name": "onchange",
-			"type": "js",
+			"type": "string",
 			"description": "JS code which is executed when the value changes."
 		}
 	},

@@ -42,6 +42,7 @@
 	et2_core_xml;
 	et2_core_arrayMgr;
 	et2_core_interfaces;
+	et2_core_legacyJSFunctions;
 
 	// Include the client side api core
 	jsapi.egw_core;
