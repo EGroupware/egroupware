@@ -235,8 +235,8 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 	},
 
 	/**
-         * Code for implementing et2_IDetachedDOM
-         */
+	 * Code for implementing et2_IDetachedDOM
+	 */
 	getDetachedAttributes: function(_attrs)
 	{
 		_attrs.push("value", "class");

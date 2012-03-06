@@ -68,7 +68,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			if(!this.image)
 			{
-				this.image = et2_createWidget("image",{label: this.options.label});
+				this.image = et2_createWidget("image", 
+					{
+						label: this.options.label
+					}, this);
 			}
 			found_image = this.image.set_src(this.options.image);
 			if(found_image) {

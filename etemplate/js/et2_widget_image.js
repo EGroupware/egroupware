@@ -122,6 +122,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 		}
 
 		this.options.src = _value;
+
 		var app = this.egw().getAppName();
 
 		// Handle app/image

@@ -300,7 +300,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		return colName;
 	},
 
-
 	/**
 	 * Apply stored user preferences to discovered columns
 	 */
@@ -1040,9 +1039,9 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header',
 var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	attributes: {
 		'customfields': {
-                        'name': 'Custom fields',
-                        'description': 'Auto filled'
-                },
+			'name': 'Custom fields',
+			'description': 'Auto filled'
+		},
 		'fields': {
 			'name': "Visible fields",
 			"description": "Auto filled"
@@ -1052,10 +1051,10 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	init: function() {
 
 		// Create the table body and the table
-                this.tbody = $j(document.createElement("tbody"));
-                this.table = $j(document.createElement("table"))
-                        .addClass("et2_grid");
-                this.table.append(this.tbody);
+		this.tbody = $j(document.createElement("tbody"));
+		this.table = $j(document.createElement("table"))
+				.addClass("et2_grid");
+		this.table.append(this.tbody);
 		this.rows = {};
 
 		this._super.apply(this, arguments);
@@ -1114,9 +1113,9 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 
 			// Table row
 			var row = jQuery(document.createElement("tr"))
-                                .appendTo(this.tbody);
-                        var cf = jQuery(document.createElement("td"))
-                                .appendTo(row);
+					.appendTo(this.tbody);
+			var cf = jQuery(document.createElement("td"))
+					.appendTo(row);
 			this.rows[field_name] = cf[0];
 
 			// Create widget by type
