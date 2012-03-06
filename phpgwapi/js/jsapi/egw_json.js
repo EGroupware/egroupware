@@ -360,6 +360,25 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		throw 'Invalid parameters';
 	}, null, 'js');
 
+	// Register the 'html' plugin, replacing document content with send html
+	json.registerJSONPlugin(function(type, res, req) {
+		if (typeof res.data == 'string')
+		{
+			// Empty the document tree
+			while (_wnd.document.childNodes.length > 0)
+			{
+				_wnd.document.removeChild(document.childNodes[0]);
+			}
+
+			// Write the given content
+			_wnd.document.write(res.data);
+
+			// Close the document
+			_wnd.document.close();
+		}
+		throw 'Invalid parameters';
+	}, null, 'html');
+
 	// Return the extension
 	return json;
 });

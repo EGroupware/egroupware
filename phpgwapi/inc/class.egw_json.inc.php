@@ -248,7 +248,7 @@ class egw_json_response
 			if (!$inst->haveJSONResponse())
 			{
 				error_log(__METHOD__."() adding output with inst->addGeneric('output', '$output')");
-				$inst->addGeneric('output', $output);
+				$inst->addGeneric('html', $output);
 			}
 			else
 			{
