@@ -1831,7 +1831,9 @@ blockquote[type=cite] {
 
 		function saveMessage()
 		{
+			$display = false;
 			$partID		= $_GET['part'];
+			if (isset($_GET['display'])&& (int)$_GET['display']==1) $display	= (int)$_GET['display'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 
 			// (regis) seems to be necessary to reopen...
@@ -1843,18 +1845,26 @@ blockquote[type=cite] {
 			$this->bofelamimail->closeConnection();
 
 			$GLOBALS['egw']->session->commit_session();
-			$subject = str_replace('$$','__',$headers['SUBJECT']);
-			header ("Content-Type: message/rfc822; name=\"". $subject .".eml\"");
-			header ("Content-Disposition: attachment; filename=\"". $subject .".eml\"");
-			header("Expires: 0");
-			// the next headers are for IE and SSL
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Pragma: public");
+			if ($display==false)
+			{
+				$subject = str_replace('$$','__',$headers['SUBJECT']);
+				header ("Content-Type: message/rfc822; name=\"". $subject .".eml\"");
+				header ("Content-Disposition: attachment; filename=\"". $subject .".eml\"");
+				header("Expires: 0");
+				// the next headers are for IE and SSL
+				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+				header("Pragma: public");
 
-			echo $message;
+				echo $message;
 
-			$GLOBALS['egw']->common->egw_exit();
-			exit;
+				$GLOBALS['egw']->common->egw_exit();
+				exit;
+			}
+			else
+			{
+				header('Content-type: text/html; charset=iso-8859-1');
+				print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
+			}
 		}
 
 		function showHeader()

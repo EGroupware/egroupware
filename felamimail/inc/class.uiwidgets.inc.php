@@ -383,13 +383,28 @@ class uiwidgets
 					'onExecute' => 'javaScript:mail_save',
 					'allowOnMultiple' => false,
 				),
-				'header' => array(
-					'caption' => 'Header',
-					'hint' => 'View header lines',
+				'view' => array(
+					'caption' => 'View',
 					'group' => $group,
 					'icon' => 'kmmsgread',
-					'onExecute' => 'javaScript:mail_header',
-					'allowOnMultiple' => false,
+					'children' => array(
+						'header' => array(
+							'caption' => 'Header',
+							'hint' => 'View header lines',
+							'group' => $group,
+							'icon' => 'kmmsgread',
+							'onExecute' => 'javaScript:mail_header',
+							'allowOnMultiple' => false,
+						),
+						'mailsource' => array(
+							'caption' => 'Mail Source',
+							'hint' => 'View full Mail Source',
+							'group' => $group,
+							'icon' => 'fileexport',
+							'onExecute' => 'javaScript:mail_mailsource',
+							'allowOnMultiple' => false,
+						),
+					),
 				),
 /*
 				'select_all' => array(

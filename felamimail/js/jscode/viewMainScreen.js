@@ -254,6 +254,24 @@ function mail_header(_action, _elems)
 }
 
 /**
+ * View message source
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_mailsource(_action, _elems)
+{
+	//alert('mail_mailsource('+_elems[0].id+')');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=felamimail.uidisplay.saveMessage';	// todo compose for Draft folder
+	//url += '&icServer='+egw_appWindow('felamimail').activeServerID;
+	url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
+	url += '&uid='+_elems[0].id;
+	url += '&display=1';
+	mail_displayHeaderLines(url);
+}
+
+/**
  * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
  * 
  * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
