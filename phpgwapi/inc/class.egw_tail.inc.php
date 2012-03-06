@@ -242,7 +242,7 @@ $j(window).resize(resize_'.$id.');
 		}
 		html::content_header(basename($filename),'text/plain');
 		if ($filename[0] != '/') $filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
-		while(ob_get_level()) ob_end_clean();	// stop all output buffering, to NOT run into memory_limit
+		for($n=ob_get_level(); $n > 0; --$n) ob_end_clean();	// stop all output buffering, to NOT run into memory_limit
 		readfile($filename);
 		common::egw_exit();
 	}
