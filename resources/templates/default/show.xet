@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="resources.show.nm_right" template="" lang="" group="0" version="1.9.002">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -88,7 +100,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show" template="" lang="" group="0" version="1.9.001">
+	<template id="resources.show" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
@@ -96,6 +108,9 @@
 			<rows>
 				<row disabled="!@msg">
 					<description align="center" id="msg" span="all" class="message"/>
+				</row>
+				<row disabled="1">
+					<template align="right" id="nm_right"/>
 				</row>
 				<row>
 					<nextmatch id="nm" no_lang="1" options="resources.show.rows"/>
