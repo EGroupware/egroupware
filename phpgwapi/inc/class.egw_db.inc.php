@@ -1384,7 +1384,8 @@ class egw_db
 		}
 
 		// if name contains special characters, quote it
-		if ( preg_match('/\W/', $name) ) {
+		// always quote for postgreSQL, as this is the only way to support mixed case names
+		if ( preg_match('/\W/', $name) || $this->Type == 'ppsql') {
 			return $quote . $name . $quote;
 		}
 
