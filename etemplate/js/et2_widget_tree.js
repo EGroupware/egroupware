@@ -16,11 +16,11 @@
         et2_core_inputWidget;
 	/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js;
 	/phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/ext/dhtmlxtree_json.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_start.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_json.js;
+//	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_start.js;
 */
 
-var et2_tree = et2_baseWidget.extend({
+var et2_tree = et2_inputWidget.extend({
 
 	attributes: {
 		"multiple": {
@@ -47,6 +47,12 @@ var et2_tree = et2_baseWidget.extend({
 			"default": "",
 			"description": "Javascript executed when user checks a node"
 		},
+		"image_path": {
+			"name": "Image directory",
+			"type": "string",
+			"default": this.egw().webserverUrl + "/phpgwapi/templates/default/images/dhtmlxtree/",
+			"description": "Directory for tree structure images"
+		},
 		"value": {
 			"type": "any",
 			"default": {}
@@ -59,6 +65,12 @@ var et2_tree = et2_baseWidget.extend({
 
 		this.div = $j(document.createElement("div")).addClass("dhtmlxTree");
 		this.setDOMNode(this.div[0]);
+	},
+
+	destroy: function() {
+		this.input.destructor();
+		this.input = null;
+		this._super.apply(this, arguments);
 	},
 
 	/**
@@ -110,38 +122,104 @@ var et2_tree = et2_baseWidget.extend({
 	},
 
 	createTree: function(widget) {
-this.egw().debug("log","ID",widget.div.attr("id"));
-this.egw().debug("log",widget.div[0].parentElement);
-window = this.egw().window;
 			widget.input = new dhtmlXTreeObject({
 				parent:		widget.div[0],
 				width:		'100%',
 				height:		'100%',
-				checkbox:	(widget.options.oncheck),
+				image_path:	widget.options.image_path,
+				checkbox:	true,
 				onCheck:	widget.options.oncheck,
-		//		multiselect:	widget.options.multiple // Documented, but not available
 			});
 
 	},
 
 	set_select_options: function(options) {
-		if(this.input !== null)
+
+		var custom_images = false;
+
+		if(this.input == null)
 		{
-			this.input.loadJSArray(options);
-			return;
+			this.createTree(this);
 		}
 
-		var xmp = jQuery(document.createElement('ul')).attr("container",true).appendTo(this.div);
-		for(var key in options)
-		{
-			var name = (!this.options.no_lang) ? options[key][2] : this.egw().lang(options[key].name ? options[key].name : options[key][2]);
-			var item = jQuery(document.createElement('li'))
-				.attr("id", options[key][0])
-				.text( name)
-				.appendTo(xmp);
-		}
-		this.input = dhtmlXTreeFromHTML(this.div[0]);
+		// Structure data for tree
+		if(!jQuery.isArray(options)) {
+			var data = {id:0,item:[]};
+			var stack = [];
+			for(var key in options)
+			{
+				// See if item has an icon
+				if(options[key].data && typeof options[key].data.icon !== 'undefined' && options[key].data.icon) 
+				{
+					var img = this.egw().image(options[key].data.icon, options[key].appname);
+					if(img) 
+					{
+						custom_images = true;
+						options[key].im0 = options[key].im1 = options[key].im2 = img;
+					}
+				}
+				// Item color - not working
+				if(options[key].data && typeof options[key].data.color !== 'undefined' && options[key].data.color)
+				{
+					options[key].style += "background-color ='"+options[key].data.color+"';";
+				} 
 
+				// Tooltip
+				if(options[key].description && !options[key].tooltip)
+				{
+					options[key].tooltip = options[key].description;
+				}
+
+				var parent_id = parseInt(options[key]['parent']);
+				if(!stack[parent_id]) stack[parent_id] = [];
+				stack[parent_id].push(options[key]);
+			}
+			if(custom_images)
+			{
+				var path = this.input.iconURL;
+				this.input.setIconPath("");
+				for(var k = 0; k < this.input.imageArray.length; k++)
+					this.input.imageArray[k] = path + this.input.imageArray[k];
+			}
+			var f=function(data,f) {
+				if (stack[data.id])
+				{
+					data.item=stack[data.id];
+					for (var j=0; j<data.item.length; j++)
+					{
+						f(data.item[j],f);
+					}
+				}
+			}
+			f(data,f);
+			options = data;
+		}
+
+		this.input.loadJSONObject(options);
+	},
+
+	set_value: function(new_value) {
+		this.value = this._oldValue = (typeof new_value === 'string' ? new_value.split(',') : new_value);
+		if(this.input == null) return;
+
+		// Clear all checked
+		var checked = this.input.getAllChecked().split(this.input.dlmtr);
+		for(var i = 0; i < checked.length; i++)
+		{
+			this.input.setCheck(checked[i], false);
+		}
+
+		// Check selected
+		for(var i = 0; i < this.value.length; i++)
+		{
+			this.input.setCheck(this.value[i], true);
+			this.input.openItem(this.value[i]);
+		}
+	},
+
+	getValue: function() {
+		if(this.input == null) return null;
+		return this.input.getAllChecked().split(this.input.dlmtr);
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);

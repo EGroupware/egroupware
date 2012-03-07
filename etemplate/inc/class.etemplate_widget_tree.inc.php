@@ -114,7 +114,7 @@ class etemplate_widget_tree extends etemplate_widget
 				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
 			}
 		}
-error_log(array2string(self::$request->sel_options[$form_name]));
+
 	}
 
 	/**
@@ -192,7 +192,7 @@ error_log(array2string(self::$request->sel_options[$form_name]));
 					$categories = new categories('',$type3);
 				}
 				$cat2path=array();
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
+				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,0,true) as $cat)
 				{
 					$s = stripslashes($cat['name']);
 
@@ -201,8 +201,12 @@ error_log(array2string(self::$request->sel_options[$form_name]));
 						$s .= ' &#9830;';
 					}
 					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
-					//$options[$cat['id']] = $cat + array('text' => $cat['name'], 'path' => $path);
-					$options[] = array($cat['id'],$cat['parent'],$cat['name']);
+
+					// 1D array
+					$options[$cat['id']] = $cat + array('text' => $cat['name'], 'path' => $path);
+
+					// Tree in array
+					//$options[$cat['parent']][] = $cat;
 				}
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
@@ -226,7 +230,7 @@ error_log(array2string(self::$request->sel_options[$form_name]));
 				break;
 		}
 
-		error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
+		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
 	}
 }
