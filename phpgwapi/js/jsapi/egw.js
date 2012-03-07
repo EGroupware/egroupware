@@ -25,5 +25,6 @@
 	egw_files;
 	egw_json;
 	egw_tooltip;
+	egw_css;
 */
 

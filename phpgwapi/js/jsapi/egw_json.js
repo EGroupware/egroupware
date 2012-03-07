@@ -21,7 +21,7 @@
 	egw_debug;
 */
 
-egw.extend('json', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
+egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	/**
 	 * Object which contains all registered handlers for JS responses.

@@ -17,7 +17,7 @@
 	egw_core;
 */
 
-egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
+egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	var tooltip_div = null;
 	var current_elem = null;

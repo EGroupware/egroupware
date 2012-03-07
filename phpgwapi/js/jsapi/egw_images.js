@@ -48,17 +48,19 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			// For logging all paths tried
 			var tries = {};
 
-			if (typeof _app == 'undefined')
+			if (typeof _app === 'undefined')
 			{
-				if(_name.indexOf('/') > 0)
+				// If the application name is not given, set it to the name of
+				// current application
+				_app = this.getAppName();
+
+				// If this.getAppName does not work, try to determine the image
+				// by looking at the image path.
+				if(!_app && _name.indexOf('/') > 0)
 				{
 					var split = et2_csvSplit(_value, 2,"/");
 					var _app = split[0];
 					_name = split[1];
-				}
-				else
-				{
-					_app = this.getAppName();
 				}
 			}
 			
