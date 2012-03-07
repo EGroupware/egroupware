@@ -293,6 +293,20 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	}
 
 	/**
+	 * Return true if we are rendering the top-level EGroupware window
+	 *
+	 * A top-level EGroupware window has a navbar: eg. no popup and for a framed template (jdots) only frameset itself
+	 *
+	 * @return boolean $consider_navbar_not_yet_called_as_true=true
+	 * @return boolean
+	 */
+	public function isTop($consider_navbar_not_yet_called_as_true=true)
+	{
+		return self::$navbar_done || $consider_navbar_not_yet_called_as_true ||
+			isset($GLOBALS['egw_info']['flags']['nonavbar']) && !$GLOBALS['egw_info']['flags']['nonavbar'];
+	}
+
+	/**
 	* displays a login screen
 	*
 	* @param string $extra_vars for login url

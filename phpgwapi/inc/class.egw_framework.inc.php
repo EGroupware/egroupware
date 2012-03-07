@@ -178,6 +178,16 @@ abstract class egw_framework
 	abstract function navbar();
 
 	/**
+	 * Return true if we are rendering the top-level EGroupware window
+	 *
+	 * A top-level EGroupware window has a navbar: eg. no popup and for a framed template (jdots) only frameset itself
+	 *
+	 * @return boolean $consider_navbar_not_yet_called_as_true=true
+	 * @return boolean
+	 */
+	abstract function isTop($consider_navbar_not_yet_called_as_true=true);
+
+	/**
 	 * Returns the content of one sidebox
 	 *
 	 * @param string $appname
