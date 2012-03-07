@@ -16,6 +16,11 @@
 	egw_core;
 */
 
+/**
+ * Module which allows to add stylesheet rules at runtime. Exports the following
+ * functions:
+ * - css
+ */
 egw.extend('css', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 
 	/**

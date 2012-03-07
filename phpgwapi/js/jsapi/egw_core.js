@@ -40,6 +40,17 @@
 		}
 	}
 
+	function deleteWhere(_arr, _cond)
+	{
+		for (var i = _arr.length - 1; i >= 0; i--)
+		{
+			if (_cond(_arr[i]))
+			{
+				_arr.splice(i, 1)
+			}
+		}
+	}
+
 	/**
 	 * The getAppModules function returns all application specific api modules
 	 * for the given application. If those application specific api instances
@@ -87,10 +98,11 @@
 	 * @param _modules is the hash map which contains all module descriptors.
 	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
+	 * @param _instances refers to all api instances.
 	 * @param _wnd is the window for which the module instances should get
 	 * 	created.
 	 */
-	function getWndModules(_egw, _modules, _moduleInstances, _window)
+	function getWndModules(_egw, _modules, _moduleInstances, _instances, _window)
 	{
 		// Search for the specific window instance
 		for (var i = 0; i < _moduleInstances.wnd.length; i++)
@@ -109,6 +121,13 @@
 			'window': _window,
 			'modules': mods
 		});
+
+		// Add an eventlistener for the "onunload" event -- if "onunload" gets
+		// called, we have to delete the module slot created above
+		_window.addEventListener('beforeunload', function() {
+			cleanupEgwInstances(_instances, _moduleInstances, function(_w) {
+				return _w.window === _window});
+		}, false);
 
 		// Otherwise create the window specific instances
 		for (var key in _modules)
@@ -133,11 +152,12 @@
 	 * 	and window specific module instances.
 	 * @param _list is the overall instances list, to which the module should be
 	 * 	added.
+	 * @param _instances refers to all api instances.
 	 * @param _app is the application for which the instance should be created.
 	 * @param _wnd is the window for which the instance should be created.
 	 */
-	function createEgwInstance(_egw, _modules, _moduleInstances, _list, _app,
-			_window)
+	function createEgwInstance(_egw, _modules, _moduleInstances, _list,
+			_instances, _app, _window)
 	{
 		// Clone the global object
 		var instance = cloneObject(_egw);
@@ -173,7 +193,7 @@
 		if (_window)
 		{
 			var wndModules = getWndModules(_egw, _modules, _moduleInstances,
-				_window);
+				_instances, _window);
 
 			for (var key in wndModules)
 			{
@@ -213,7 +233,7 @@
 		{
 			_instances[hash] = [];
 			return createEgwInstance(_egw, _modules, _moduleInstances, 
-				_instances[hash], _app, _window);
+				_instances[hash], _instances, _app, _window);
 		}
 		else
 		{
@@ -231,27 +251,16 @@
 		// If we're still here, no API instance for the given window has been
 		// found -- create a new entry
 		return createEgwInstance(_egw, _modules, _moduleInstances, 
-			_instances[hash], _app, _window);
+			_instances[hash], _instances, _app, _window);
 	}
 
-	function cleanupEgwInstances(_instances, _moduleInstances)
+	function cleanupEgwInstances(_instances, _moduleInstances, _cond)
 	{
-		function deleteClosedWindows(_arr)
-		{
-			for (var i = _arr.length - 1; i >= 0; i--)
-			{
-				if (_arr[i].window && _arr[i].window.closed)
-				{
-					_arr.splice(i, 1)
-				}
-			}
-		}
-
 		// Iterate over the instances
 		for (var key in _instances)
 		{
 			// Delete all entries corresponding to closed windows
-			deleteClosedWindows(_instances[key]);
+			deleteWhere(_instances[key], _cond);
 
 			// Delete the complete instance key if the array is empty
 			if (_instances[key].length === 0)
@@ -262,7 +271,7 @@
 
 		// Delete all entries corresponding to non existing elements in the
 		// module instances
-		deleteClosedWindows(_moduleInstances.wnd);
+		deleteWhere(_moduleInstances.wnd, _cond);
 	}
 
 	function mergeGlobalModule(_module, _code, _instances, _moduleInstances)
@@ -371,7 +380,9 @@
 		 * seconds.
 		 */
 		window.setInterval(function() {
-			cleanupEgwInstances(instances, moduleInstances);
+			cleanupEgwInstances(instances, moduleInstances, function(w) {
+				return w.window && w.window.closed
+			});
 		}, 10000);
 
 		/**

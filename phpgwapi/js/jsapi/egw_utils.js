@@ -143,6 +143,8 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 		}
 	}
 
+	var uid_counter = 0;
+
 	// Create the utils object which contains references to all functions
 	// covered by it.
 	var utils = {
@@ -156,6 +158,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 				_elem.ownerDocument.parentNode ||
 				_elem.ownerDocument.defaultView;
 			return res;
+		},
+
+		uid: function() {
+			return (uid_counter++).toString(16);
 		}
 
 	};

@@ -11,6 +11,16 @@
  * @version $Id$
  */
 
+// Loading of the egw object, if it already is loaded in an upper window
+if (window.opener && typeof window.opener.egw !== 'undefined')
+{
+	window['egw'] = window.opener.egw;
+}
+else if (window.top && typeof window.top.egw !== 'undefined')
+{
+	window['egw'] = window.top.egw;
+}
+
 /***********************************************\
 *               INITIALIZATION                  *
 \***********************************************/
