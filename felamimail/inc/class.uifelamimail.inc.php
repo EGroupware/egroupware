@@ -675,7 +675,7 @@ class uifelamimail
 				egw_framework::validate_file('egw_action','egw_stylesheet');
 
 				// The ext stuff has to be loaded at the end
-				egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
+				// egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/ext/dhtmlxmenu_ext');
 
 				egw_framework::validate_file('jscode','viewMainScreen','felamimail');
 				egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
