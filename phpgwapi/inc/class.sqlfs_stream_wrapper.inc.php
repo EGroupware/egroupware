@@ -148,7 +148,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @var PDO
 	 */
-	static private $pdo;
+	static protected $pdo;
 	/**
 	 * Array with filenames of dir opened with dir_opendir
 	 *
@@ -1593,6 +1593,21 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$time = date('Y-m-d H:i:s',$time);
 		}
 		return $time;
+	}
+
+	/**
+	 * Just a little abstration 'til I know how to organise stuff like that with PDO
+	 *
+	 * @param boolean $val
+	 * @return string '1' or '0' for mysql, 'true' or 'false' for everyone else
+	 */
+	static protected function _pdo_boolean($val)
+	{
+		if (self::$pdo_type == 'mysql')
+		{
+			return $val ? '1' : '0';
+		}
+		return $val ? 'true' : 'false';
 	}
 
 	/**
