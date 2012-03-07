@@ -1521,7 +1521,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @return PDO
 	 */
-	static private function _pdo()
+	static protected function _pdo()
 	{
 		$egw_db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 
