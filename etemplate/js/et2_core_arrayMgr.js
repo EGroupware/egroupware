@@ -35,7 +35,7 @@ var et2_arrayMgr = Class.extend({
 		// Hold a reference to the data
 		if (typeof _data == "undefined" || !_data)
 		{
-			egw.debug("error", "Invalid data passed to content array manager!");
+			egw.debug("error", "No data passed to content array manager!");
 			_data = {};
 		}
 

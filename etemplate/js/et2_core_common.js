@@ -196,7 +196,7 @@ function et2_checkType(_val, _type, _attr, _cname)
 	}
 
 	// We should never come here
-	throw("Invalid type identifier supplied.");
+	throw("Invalid type identifier '" + _attr + ": " + _type + "' supplied by '" + _cname + "'");
 }
 
 /**
