@@ -747,7 +747,10 @@ class addressbook_bo extends addressbook_so
 			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete))
 			{
 				if (!($old = $this->read($id))) return false;
-				if ($this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE)
+				// check if we only mark contacts as deleted, or really delete them
+				// already marked as deleted item and accounts are always really deleted
+				// we cant mark accounts as deleted, as no such thing exists for accounts!
+				if ($old['owner'] && $this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE)
 				{
 					$delete = $old;
 					$delete['tid'] = addressbook_so::DELETED_TYPE;
@@ -768,10 +771,11 @@ class addressbook_bo extends addressbook_so
 			}
 			else
 			{
-				return $ok;
+				break;
 			}
 		}
-		return true;
+		//error_log(__METHOD__.'('.array2string($contact).', deny_account_delete='.array2string($deny_account_delete).', check_etag='.array2string($check_etag).' returning '.array2string($ok));
+		return $ok;
 	}
 
 	/**

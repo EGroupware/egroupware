@@ -955,9 +955,11 @@ class addressbook_ui extends addressbook_bo
 					$action_msg = lang('deleted');
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 					{
-						if ($contact['owner'])	// regular contact
+						if ($contact['owner'] ||	// regular contact or
+							// already deleted account (should no longer happen, but needed to allow for cleanup)
+							$contact['tid'] == addressbook_so::DELETED_TYPE)
 						{
-							$Ok = $this->delete($id);
+							$Ok = $this->delete($id, $contact['tid'] != addressbook_so::DELETED_TYPE);
 						}
 						// delete single account --> redirect to admin
 						elseif (count($checked) == 1 && $contact['account_id'])
