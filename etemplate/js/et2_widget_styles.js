@@ -35,16 +35,16 @@ var et2_styles = et2_widget.extend({
 		// Create the style node and append it to the head node
 		this.styleNode = document.createElement("style");
 		this.styleNode.setAttribute("type", "text/css");
-		
-		(document.getElementsByTagName("head")[0]).appendChild(this.styleNode);
+
+		this.head = this.egw().window.document.getElementsByTagName("head")[0];
+		this.head.appendChild(this.styleNode);
 	},
 
 	destroy: function() {
-		this._super.apply(this, arguments);
-
 		// Remove the style node again and delete any reference to it
-		(document.getElementsByTagName("head")[0]).removeChild(this.styleNode);
-		this.styleNode = null;
+		this.head.removeChild(this.styleNode);
+
+		this._super.apply(this, arguments);
 	},
 
 	loadContent: function(_content) {

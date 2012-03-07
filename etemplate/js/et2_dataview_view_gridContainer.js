@@ -15,10 +15,9 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_common;
-	et2_core_stylesheet;
 
 	et2_dataview_view_grid;
-	et2_dataview_view_resizeable;
+//	et2_dataview_view_resizeable;
 */
 
 /**
@@ -50,11 +49,12 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Constructor for the grid container
 	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
 	 */
-	init: function(_parentNode, _dataProvider) {
+	init: function(_parentNode, _dataProvider, _egw) {
 
 		// Copy the arguments
 		this.parentNode = $j(_parentNode);
 		this.dataProvider = _dataProvider;
+		this.egw = _egw;
 
 		// Initialize some variables
 		this.columnNodes = []; // Array with the header containers
@@ -67,7 +67,7 @@ var et2_dataview_gridContainer = Class.extend({
 		this.width = 0;
 		this.height = 0;
 
-		this.uniqueId = "gridCont_" + et2_uniqueId();
+		this.uniqueId = "gridCont_" + this.egw.uid();
 
 		// Build the base nodes
 		this._createElements();
@@ -256,9 +256,6 @@ var et2_dataview_gridContainer = Class.extend({
 	 * The columns will be updated.
 	 */
 	_updateColumns: function() {
-		// Get the stylesheet singleton
-		var styleSheet = new et2_dynStyleSheet();
-
 		// Copy the columns data
 		this.columns = this.columnMgr.getColumnData();
 
@@ -289,7 +286,7 @@ var et2_dataview_gridContainer = Class.extend({
 				this.visibleColumnCount++;
 
 				// Update the visibility of the column
-				styleSheet.updateRule("." + col.tdClass, 
+				this.egw.css("." + col.tdClass, 
 					"display: table-cell; " + 
 					((vis_col == total_cnt) ? "border-right-width: 0 " : "border-right-width: 1px ") +
 					"!important;");
@@ -327,12 +324,12 @@ var et2_dataview_gridContainer = Class.extend({
 
 				// Write the width of the header columns
 				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth - subHBorder));
-				styleSheet.updateRule(".egwGridView_outer ." + col.divClass, 
+				this.egw.css(".egwGridView_outer ." + col.divClass, 
 					"width: " + headerWidth + "px;");
 
 				// Write the width of the body-columns
 				var columnWidth = Math.max(0, (col.width  - this.columnBorderWidth - subBorder));
-				styleSheet.updateRule(".egwGridView_grid ." + col.divClass, 
+				this.egw.css(".egwGridView_grid ." + col.divClass, 
 					"width: " + columnWidth + "px;");
 
 				totalWidth += col.width;
@@ -341,14 +338,14 @@ var et2_dataview_gridContainer = Class.extend({
 			}
 			else
 			{
-				styleSheet.updateRule("." + col.tdClass, "display: none;");
+				this.egw.css("." + col.tdClass, "display: none;");
 			}
 		}
 
 		// Add the full row and spacer class
-		styleSheet.updateRule(".egwGridView_grid ." + this.uniqueId + "_div_fullRow",
+		this.egw.css(".egwGridView_grid ." + this.uniqueId + "_div_fullRow",
 			"width: " + (totalWidth - this.columnBorderWidth - 1) + "px; border-right-width: 0 !important;");
-		styleSheet.updateRule(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow",
+		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow",
 			"width: " + (totalWidth - 1) + "px; border-right-width: 0 !important;");
 	},
 
@@ -376,11 +373,11 @@ var et2_dataview_gridContainer = Class.extend({
 			// Every column but last can be resized // TODO: This won't work as the last column could be hidden
 			if(i < this.columns.length-1) {
 				var enc_column = self.columnMgr.getColumnById(col.id);
-				et2_dataview_makeResizeable(column, function(_w) {
+/*				et2_dataview_makeResizeable(column, function(_w) {
 						this.set_width(_w + "px");
 						self.columnMgr.updated = true;
 						self.updateColumns();
-				}, enc_column);
+				}, enc_column);*/
 			}
 
 			// Store both nodes in the columnNodes array

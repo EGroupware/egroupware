@@ -585,16 +585,6 @@ function et2_hasChild(_nodes, _child)
 }
 
 /**
- * Generates a localy unique id and returns it
- */
-var _et2_uniqueId = 0;
-
-function et2_uniqueId()
-{
-	return _et2_uniqueId++;
-}
-
-/**
  * Functions to work with ranges and range intersection (used in the dataview)
  */
 

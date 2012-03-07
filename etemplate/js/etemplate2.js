@@ -154,6 +154,9 @@ etemplate2.prototype._createArrayManagers = function(_data)
  */
 etemplate2.prototype.load = function(_url, _data)
 {
+	// Create the document fragment into which the HTML will be injected
+	var frag = document.createDocumentFragment();
+
 	// Asynchronously load the XET file (code below is executed ahead of the
 	// code in the callback function)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
@@ -162,6 +165,9 @@ etemplate2.prototype.load = function(_url, _data)
 
 		// Inform the widget tree that it has been successfully loaded.
 		this.widgetContainer.loadingFinished();
+
+		// Insert the document fragment to the DOM Container
+		this.DOMContainer.appendChild(frag);
 
 		// Trigger the "resize" event
 		this.resize();
@@ -174,7 +180,7 @@ etemplate2.prototype.load = function(_url, _data)
 	this.widgetContainer = new et2_container(null);
 	this.widgetContainer.setApiInstance(egw(egw.elemWindow(this.DOMContainer)));
 	this.widgetContainer.setInstanceManager(this);
-	this.widgetContainer.setParentDOMNode(this.DOMContainer);
+	this.widgetContainer.setParentDOMNode(frag);
 
 	// store the id to submit it back to server
 	if(_data) {

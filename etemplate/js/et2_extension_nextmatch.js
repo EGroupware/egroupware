@@ -112,7 +112,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Create the outer grid container
 		this.dataviewContainer = new et2_dataview_gridContainer(this.div,
-			this.dataProvider);
+			this.dataProvider, this.egw());
 
 		this.activeFilters = {};
 	},

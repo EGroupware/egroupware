@@ -267,7 +267,7 @@
 				// Do some tracing of the getMem_freeMem_trace is activated
 				if (getMem_freeMem_trace)
 				{
-					this.__OBJ_UID = "obj_" + et2_uniqueId();
+					this.__OBJ_UID = "obj_" + egw.uid();
 					var className = this.className();
 					tracedObjects[this.__OBJ_UID] = {
 						"created": new Date().getTime(),
