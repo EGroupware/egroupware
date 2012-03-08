@@ -41,6 +41,13 @@ class calendar_hooks
 			'add_popup'  => '750x400',
 			'file_access' => 'calendar.calendar_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
+			'mime' => array(
+				'text/calendar' => array(
+					'menuaction' => 'calendar.calendar_uiforms.edit',
+					'mime_id' => 'ical_vfs',
+					'mime_popup' => '750x400',
+				),
+			),
 		);
 	}
 

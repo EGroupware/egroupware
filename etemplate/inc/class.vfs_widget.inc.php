@@ -228,17 +228,18 @@ class vfs_widget
 								break;
 						}
 					}
+					$popup = null;
 					if (egw_vfs::is_readable($path))	// show link only if we have access to the file or dir
 					{
 						if ($n < count($comps)-1 || $mime == egw_vfs::DIR_MIME_TYPE || egw_vfs::is_dir($path))
 						{
-							$value['l'.$n] = '/index.php?menuaction=filemanager.filemanager_ui.index&path='.urlencode($path);
+							$value['l'.$n] = egw_link::mime_open($path, egw_vfs::DIR_MIME_TYPE, $popup);
 							$target = '';
 						}
 						else
 						{
-							$value['l'.$n] = egw_vfs::download_url($path);
-							$target = ',,,_blank';
+							$value['l'.$n] = egw_link::mime_open($path, $mime, $popup);
+							$target = '_blank';
 						}
 					}
 
@@ -255,7 +256,7 @@ class vfs_widget
 					else
 					{
 						$comp = etemplate::empty_cell('label',$cell_name.'[c'.$n.']',array(
-							'size'    => ',@'.$cell_name.'[l'.$n.']'.$target,
+							'size'    => ',@'.$cell_name.'[l'.$n.'],,,'.$target.','.$popup,
 							'no_lang' => true,
 							'span'    => ',vfsFilename',
 						));

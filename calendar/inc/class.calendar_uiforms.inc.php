@@ -1121,27 +1121,11 @@ class calendar_uiforms extends calendar_ui
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
-
-			if (!$cal_id && empty($_GET['ical']) || $cal_id && !($event = $this->bo->read($cal_id)))
-			{
-				if ($cal_id)
-				{
-					if (!$preserv['no_popup'])
-					{
-						$js = "alert('".lang('Permission denied')."'); window.close();";
-					}
-					else
-					{
-						$GLOBALS['egw']->framework->render('<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n",null,true);
-						common::egw_exit();
-					}
-				}
-				$event =& $this->default_add_event();
-			}
-			elseif (!empty($_GET['ical']))
+			if (!empty($_GET['ical']) || !empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
 			{
 				$ical = new calendar_ical();
-				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')) || count($events) != 1)
+				$ical_string = !empty($_GET['ical']) ? $_GET['ical'] : file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']);
+				if (!($events = $ical->icaltoegw($ical_string, '', 'utf-8')) || count($events) != 1)
 				{
 					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 					$msg = lang('Error: importing the iCal');
@@ -1166,6 +1150,23 @@ class calendar_uiforms extends calendar_ui
 					//error_log(__METHOD__."(...) parsed as ".array2string($event));
 				}
 				unset($ical);
+				unset($ical_string);
+			}
+			elseif (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id)))
+			{
+				if ($cal_id)
+				{
+					if (!$preserv['no_popup'])
+					{
+						$js = "alert('".lang('Permission denied')."'); window.close();";
+					}
+					else
+					{
+						$GLOBALS['egw']->framework->render('<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n",null,true);
+						common::egw_exit();
+					}
+				}
+				$event =& $this->default_add_event();
 			}
 			else
 			{
