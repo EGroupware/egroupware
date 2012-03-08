@@ -605,6 +605,7 @@ class infolog_groupdav extends groupdav_handler
 	private function _get_handler()
 	{
 		$handler = new infolog_ical();
+		$handler->tzid = false;	//	as we read server-time timestamps (!= null=user-time), exports UTC times
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;
