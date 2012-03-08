@@ -235,11 +235,15 @@ var et2_date = et2_inputWidget.extend({
 					return;
 				}
 			} else {
-				_value = Date.parse(_value);
+				var text = new Date(_value);
+
+				// Handle timezone offset - times are already in user time
+				var localOffset = text.getTimezoneOffset() * 60000;
 				// JS dates use milliseconds
-				this.date.setTime(parseInt(_value)*1000);
+				this.date.setTime(text.valueOf()+localOffset);
 			}
 		} else if (typeof _value == 'integer') {
+			// Timestamp
 			// JS dates use milliseconds
 			this.date.setTime(parseInt(_value)*1000);
 		} else if (typeof _value == 'object' && _value.date) {
@@ -611,8 +615,19 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 			return;
 		}
 
-		// JS dates use milliseconds
-		this.date.setTime(parseInt(_value)*1000);
+		if(typeof _value == 'string' && isNaN(_value))
+		{
+			var text = new Date(_value);
+			// Handle timezone offset - times are already in user time, but parse does UTC
+			var localOffset = text.getTimezoneOffset() * 60000;
+			// JS dates use milliseconds
+			this.date.setTime(text.valueOf()+localOffset);
+		}
+		else
+		{
+			// JS dates use milliseconds
+			this.date.setTime(parseInt(_value)*1000);
+		}
 		var display = this.date.toString();
 
 		switch(this._type) {
