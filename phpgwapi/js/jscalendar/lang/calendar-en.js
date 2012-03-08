@@ -9,6 +9,11 @@
 // Unicode is the answer to a real internationalized world.  Also please
 // include your contact information in the header, as can be seen above.
 
+
+function calendar_lang_closure(window) {
+
+var Calendar = window.Calendar;
+
 // full day names
 Calendar._DN = new Array
 ("Sunday",
@@ -121,3 +126,7 @@ Calendar._TT["TT_DATE_FORMAT"] = "%a, %b %e";
 
 Calendar._TT["WK"] = "wk";
 Calendar._TT["TIME"] = "Time:";
+
+};
+
+calendar_lang_closure(window);

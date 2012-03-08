@@ -12,6 +12,10 @@
 
 // $Id$
 
+var calendar_closure = function(window, document) {
+
+var Date = window.Date;
+
 /** The Calendar object constructor. */
 Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 	// member variables
@@ -1279,7 +1283,10 @@ Calendar.prototype.callCloseHandler = function () {
 /** Removes the calendar object from the DOM tree and destroys it. */
 Calendar.prototype.destroy = function () {
 	var el = this.element.parentNode;
-	el.removeChild(this.element);
+	if (el)
+	{
+		el.removeChild(this.element);
+	}
 	Calendar._C = null;
 	window.calendar = null;
 };
@@ -1302,7 +1309,7 @@ Calendar._checkCalendar = function(ev) {
 		return false;
 	}
 	var el = Calendar.is_ie ? Calendar.getElement(ev) : Calendar.getTargetElement(ev);
-	for (; el != null && el != calendar.element; el = el.parentNode);
+	for (; el != null && el != window.calendar.element; el = el.parentNode);
 	if (el == null) {
 		// calls closeHandler which should hide the calendar.
 		window.calendar.callCloseHandler();
@@ -1815,3 +1822,11 @@ if ( !Date.prototype.__msh_oldSetFullYear ) {
 
 // global object that remembers the calendar
 window.calendar = null;
+
+// Export the calendar constructor
+window.Calendar = Calendar;
+
+};
+
+calendar_closure(window, document);
+

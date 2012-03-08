@@ -26,5 +26,6 @@
 	egw_json;
 	egw_tooltip;
 	egw_css;
+	egw_calendar;
 */
 
