@@ -173,7 +173,6 @@ class infolog_ical extends infolog_bo
 		if ($_method) $vcal->setAttribute('METHOD',$_method);
 
 		$tzid = $this->tzid;
-
 		if ($tzid && $tzid != 'UTC')
 		{
 			// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
@@ -298,7 +297,7 @@ class infolog_ical extends infolog_bo
 		}
 		if ($taskData['info_enddate'])
 		{
-			self::setDateOrTime($vevent, 'DUE', $taskData['info_enddate'], false); // export always as date
+			self::setDateOrTime($vevent, 'DUE', $taskData['info_enddate'], $tzid);
 		}
 		if ($taskData['info_datecompleted'])
 		{
@@ -380,6 +379,7 @@ class infolog_ical extends infolog_bo
 	static function setDateOrTime(&$vevent, $attr, $time, $tzid)
 	{
 		$params = array();
+		$time_in = $time;
 
 		if ($tzid)
 		{
@@ -410,7 +410,8 @@ class infolog_ical extends infolog_bo
 			$value = array(
 				'year'  => $arr['year'],
 				'month' => $arr['month'],
-				'mday'  => $arr['day']);
+				'mday'  => $arr['day'],
+			);
 			$params['VALUE'] = 'DATE';
 		}
 		else
@@ -429,6 +430,7 @@ class infolog_ical extends infolog_bo
 				$value = egw_time::to($time, 'ts');
 			}
 		}
+		//error_log(__METHOD__."(, '$attr', ".array2string($time_in).', '.array2string($tzid).') tz='.$tz->getName().', value='.array2string($value).(is_int($value)?date('Y-m-d H:i:s',$value):''));
 		$vevent->setAttribute($attr, $value, $params);
 	}
 
