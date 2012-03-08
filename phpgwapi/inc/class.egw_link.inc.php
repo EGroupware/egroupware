@@ -69,6 +69,19 @@
  *			'edit_popup' => '400x300',
  *			'name' => 'Some name',					// Name to use instead of app-name
  *			'icon' => 'app/icon',					// Optional icon to use instead of app-icon
+ *          'mime' => array(						// Optional register mime-types application can open
+ *          	'text/something' => array(
+ *          		'mime_id' => 'path',			// one of id (path) or url is required!
+ *          		'mime_url' => 'url',
+ *          		'menuaction' => 'app.class.method',	// method to call
+ *          		'mime_popup' => '400x300',		// optional size of popup
+ *          		'mime_name' => 'name',			// optional name of get-parameter for name-part of path
+ *          		'mime_type' => 'type',			// ... for mime-type
+ *          		'mime_size' => 'size',			// ... for size
+ *          		// other get-parameters to set in url
+ *          	),
+ *          	// further mime types supported ...
+ *          ),
  *			'additional' => array(					// allow one app to register sub-types,
  *				'app-sub' => array(					// different from 'types' approach above
  *					// every value defined above
@@ -886,6 +899,88 @@ class egw_link extends solink
 			$view[$reg['view_id']] = $id;
 		}
 		return $view;
+	}
+
+	/**
+	 * Get mime-type information from app-registry
+	 *
+	 * @param string $type
+	 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
+	 */
+	static function get_mime_info($type)
+	{
+		foreach(self::$app_register as $app => $registry)
+		{
+			if (isset($registry['mime']))
+			{
+				foreach($registry['mime'] as $mime => $data)
+				{
+					if ($mime == $type) return $data;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get handler (link-data) for given path and mime-type
+	 *
+	 * @param string $path vfs path
+	 * @param string $type=null default to egw_vfs::mime_content_type($path)
+	 * @param string &$popup=null on return popup size or null
+	 * @return string|array string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
+	 */
+	static function mime_open($path, $type=null, &$popup=null)
+	{
+		if (is_null($type)) $type = egw_vfs::mime_content_type($path);
+
+		if (($data = self::get_mime_info($type)))
+		{
+			if (isset($data['mime_url']))
+			{
+				$data[$data['mime_url']] = egw_vfs::PREFIX.$path;
+				unset($data['mime_url']);
+			}
+			elseif (isset($data['mime_id']))
+			{
+				$data[$data['mime_id']] = $path;
+				unset($data['mime_id']);
+			}
+			else
+			{
+				throw egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
+			}
+			// some optional values fmail needs ...
+			foreach(array(
+				'mime_type' => $type,
+				'mime_size' => null,	// filesize(egw_vfs::PREFIX.$path),
+				'mime_name' => basename($path),
+			) as $name => $value)
+			{
+				if (isset($data[$name]))
+				{
+					$data[$data[$name]] = $name == 'mime_size' ? filesize(egw_vfs::PREFIX.$path) : $value;
+					unset($data[$name]);
+				}
+			}
+			$popup = $data['mime_popup'];
+			unset($data['mime_popup']);
+		}
+		elseif ($type == egw_vfs::DIR_MIME_TYPE)
+		{
+			if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
+			{
+				$data = array(
+					'menuaction' => 'filemanager.filemanager_ui.index',
+					'path' => $path,
+				);
+			}
+		}
+		else
+		{
+			$data = egw_vfs::download_url($path);
+		}
+		return $data;
 	}
 
 	/**

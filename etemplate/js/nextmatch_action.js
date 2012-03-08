@@ -352,15 +352,5 @@ function nm_activate_link(_action, _senders)
 {
 	// $j(_senders[0].iface.getDOMNode()).find('a:first').trigger('click');	not sure why this is NOT working
 
-	var a_href = $j(_senders[0].iface.getDOMNode()).find('a:first');
-	
-	if (typeof a_href != undefined)
-	{
-		var target = a_href.attr('target');
-		var href = a_href.attr('href');
-		if (target)
-			window.open(href,target);
-		else
-			window.location = href;
-	}
+	$j(_senders[0].iface.getDOMNode()).find('a:first').click();
 }
