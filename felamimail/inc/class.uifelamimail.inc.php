@@ -24,6 +24,7 @@ class uifelamimail
 			'changeSorting'		=> True,
 			'compressFolder'	=> True,
 			'importMessage'		=> True,
+			'importMessageFromVFS2DraftAndDisplay' => True,
 			'deleteMessage'		=> True,
 			'undeleteMessage'     => True,
 			'hookAdmin'		=> True,
@@ -611,6 +612,47 @@ class uifelamimail
 			{
 				return $messageUid;
 			}
+		}
+
+		/**
+		 * importMessageFromVFS2DraftAndDisplay
+		 *
+		 * @param array $_formData Array with information of name, type, file and size
+		 * @return mixed $messageUID or exception
+		 */
+		function importMessageFromVFS2DraftAndDisplay($formData='')
+		{
+			if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
+			//error_log(array2string($formData));
+			$draftFolder = $this->bofelamimail->getDraftFolder(false);
+			$importID =felamimail_bo::getRandomString();
+/*
+			$formData['name']	= 'a_email.eml';
+			$formData['type']	= 'message/rfc822';
+			$formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
+			$formData['size']	= 2136;
+*/
+			try
+			{
+				$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
+			    $linkData = array
+			    (
+			        'menuaction'    => 'felamimail.uidisplay.display',
+					'uid'		=> $messageUid,
+					'mailbox'    => base64_encode($draftFolder),
+			    );
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+			    $linkData = array
+			    (
+			        'menuaction'    => 'felamimail.uifelamimail.importMessage',
+					'msg'		=> htmlspecialchars($e->getMessage()),
+			    );
+			}
+			egw::redirect_link('/index.php',$linkData);
+			exit;
+
 		}
 
 		function deleteMessage()
