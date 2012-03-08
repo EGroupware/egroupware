@@ -1234,7 +1234,7 @@ blockquote[type=cite] {
 		/**
 		 * Save an attachment in the vfs
 		 *
-		 * @param string|array $ids '::' delemited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
+		 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
 		 * @param string $path path in vfs (no egw_vfs::PREFIX!), only directory for multiple id's ($ids is an array)
 		 * @return string javascript eg. to close the selector window
 		 */
@@ -1254,6 +1254,38 @@ blockquote[type=cite] {
 
 				if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 					!fwrite($fp,$attachment['attachment']))
+				{
+					$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+				}
+				if ($fp) fclose($fp);
+			}
+			$this->bofelamimail->closeConnection();
+
+			return $err.'window.close();';
+		}
+
+		/**
+		 * Save an Message in the vfs
+		 *
+		 * @param string|array $ids '::' delimited mailbox::name (::name for multiple id's)
+		 * @param string $path path in vfs (no egw_vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+		 * @return string javascript eg. to close the selector window
+		 */
+		function vfsSaveMessage($ids,$path)
+		{
+			//return "alert('".__METHOD__.'("'.array2string($id).'","'.$path."\")'); window.close();";
+
+			if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
+			{
+				return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
+			}
+			foreach((array)$ids as $id)
+			{
+				list($this->mailbox,$this->uid,$name) = explode('::',$id,3);
+				if ($mb != $this->mailbox) $this->bofelamimail->reopen($mb = $this->mailbox);
+				$message = $this->bofelamimail->getMessageRawBody($this->uid, $partID='');
+				if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
+					!fwrite($fp,$message))
 				{
 					$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
 				}
@@ -1833,7 +1865,7 @@ blockquote[type=cite] {
 		{
 			$display = false;
 			$partID		= $_GET['part'];
-			if (isset($_GET['display'])&& (int)$_GET['display']==1) $display	= (int)$_GET['display'];
+			if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 
 			// (regis) seems to be necessary to reopen...
@@ -1860,6 +1892,9 @@ blockquote[type=cite] {
 				$GLOBALS['egw']->common->egw_exit();
 				exit;
 			}
+			//elseif ($display=='filemanager') // done in vfsSaveMessage
+			//{
+			//}
 			else
 			{
 				header('Content-type: text/html; charset=iso-8859-1');

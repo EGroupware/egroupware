@@ -377,11 +377,26 @@ class uiwidgets
 				),
 				'save' => array(
 					'caption' => 'Save',
-					'hint' => 'Save message to disk',
 					'group' => $group,
 					'icon' => 'fileexport',
-					'onExecute' => 'javaScript:mail_save',
-					'allowOnMultiple' => false,
+					'children' => array(
+						'save2disk' => array(
+							'caption' => 'Save to disk',
+							'hint' => 'Save message to disk',
+							'group' => $group,
+							'icon' => 'fileexport',
+							'onExecute' => 'javaScript:mail_save',
+							'allowOnMultiple' => false,
+						),
+						'save2filemanager' => array(
+							'caption' => 'Save to filemanager',
+							'hint' => 'Save message to filemanager',
+							'group' => $group,
+							'icon' => 'filemanager/navbar',
+							'onExecute' => 'javaScript:mail_save2fm',
+							'allowOnMultiple' => false,
+						),
+					),
 				),
 				'view' => array(
 					'caption' => 'View',

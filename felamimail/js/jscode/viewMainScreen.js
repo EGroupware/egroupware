@@ -237,6 +237,32 @@ function mail_save(_action, _elems)
 }
 
 /**
+ * Save a message to filemanager
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_save2fm(_action, _elems)
+{
+	//alert('mail_save('+_elems[0].id+')'+'->'+_elems[0].data.data.subject.data+'.eml');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
+	//url += '&icServer='+egw_appWindow('felamimail').activeServerID;
+	url += '&mode=saveas';
+	url += '&name='+encodeURIComponent(_elems[0].data.data.subject.data+'.eml');
+	url += '&mime=message'+encodeURIComponent('/')+'rfc822';
+	url += '&method=felamimail.uidisplay.vfsSaveMessage'
+	url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
+	//url += '&uid='+_elems[0].id;
+	url += '&id='+encodeURIComponent(egw_appWindow('felamimail').activeFolder+'::'+_elems[0].id);
+	url += '&label=Save';
+	//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
+	//document.location = url;
+	egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'640','570',window.outerWidth/2,window.outerHeight/2);
+
+}
+
+/**
  * View header of a message
  * 
  * @param _action
@@ -267,7 +293,7 @@ function mail_mailsource(_action, _elems)
 	//url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 	url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
 	url += '&uid='+_elems[0].id;
-	url += '&display=1';
+	url += '&location=display';
 	mail_displayHeaderLines(url);
 }
 
