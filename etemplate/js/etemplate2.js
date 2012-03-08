@@ -28,6 +28,7 @@
 	et2_widget_styles;
 	et2_widget_html;
 	et2_widget_tabs;
+	et2_widget_tree;
 	et2_widget_hrule;
 	et2_widget_image;
 	et2_widget_file;
