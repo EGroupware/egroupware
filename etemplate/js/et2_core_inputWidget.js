@@ -113,7 +113,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 	change: function(_node) {
 		if (this.onchange)
 		{
-			return this.onchange(_node);
+			return et2_compileLegacyJS(this.onchange, this, _node)();
 		}
 	},
 

@@ -94,7 +94,7 @@ abstract class egw_framework
 			'/phpgwapi/js/./egw_json.js',
 			// always include javascript helper functions
 			'/phpgwapi/js/jsapi/jsapi.js',
-			'/phpgwapi/js/jsapi/egw.js',
+//			'/phpgwapi/js/jsapi/egw.js',
 		));
 	}
 

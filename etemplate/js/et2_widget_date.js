@@ -14,9 +14,6 @@
 
 /*egw:uses
 	jquery.jquery;
-	jscalendar.calendar-setup;
-	jscalendar.calendar;
-	/phpgwapi/js/jscalendar/lang/calendar-en.js;
 	lib/date;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
@@ -81,17 +78,10 @@ var et2_date = et2_inputWidget.extend({
 			if (!dateformat) dateformat = "Y-m-d";
 			dateformat = dateformat.replace("Y","%Y").replace("d","%d").replace("m","%m").replace("M", "%b");
 
-			var setup = {
-				inputField: this.options.id,
-				button: this.button.attr("id"),
-				showsTime: false,
-				onUpdate: function(_value) {_this.set_value(_value)},
-				daFormat: dateformat,
-				firstDay: this.egw().preference("weekdaystarts","calendar")
-			};
-			/*window.setTimeout(function() {
-				Calendar.setup(setup);
-			}, 500);*/
+			this.egw().calendar(this.input_date, this.button,
+				function(_value) {
+					this.set_value(_value);
+				}, this);
 		}
 
 		// If date also has a time, or browser doesn't support HTML5 time type 

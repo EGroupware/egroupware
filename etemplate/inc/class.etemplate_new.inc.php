@@ -101,17 +101,12 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
 	{
+
+		// Overwrite "nonavbar" is the output_mode is two
+		$GLOBALS['egw_info']['flags']['nonavbar'] = ($output_mode == 2);
+
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
-		// load translations
-		translation::add_app('etemplate');
-		foreach(translation::$loaded_apps as $app => $lang)
-		{
-			egw_framework::validate_file('/phpgwapi/lang.php', array(
-				'app' => $app,
-				'lang' => $lang,
-			));
-		}
 		// generate new etemplate request object
 		self::$request = etemplate_request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
@@ -151,7 +146,6 @@ class etemplate_new extends etemplate_widget_template
 		{
 			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
 			egw_framework::validate_file('jquery','jquery.tools.min');
-			egw_framework::validate_file('.','etemplate2','etemplate');
 
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
 			common::egw_header();

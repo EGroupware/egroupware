@@ -64,6 +64,8 @@ class idots_framework extends egw_framework
 	{
 		parent::__construct($template);		// call the constructor of the extended class
 
+		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+
 		$this->tplsav2 = new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
 	}
@@ -86,6 +88,22 @@ class idots_framework extends egw_framework
 		// make sure header is output only once
 		if (self::$header_done) return '';
 		self::$header_done = true;
+
+		// load translations
+		translation::add_app('etemplate');
+		foreach(translation::$loaded_apps as $app => $lang)
+		{
+			egw_framework::validate_file('/phpgwapi/lang.php', array(
+				'app' => $app,
+				'lang' => $lang,
+			));
+		}
+
+		if ($this->isTop(false))
+		{
+			self::validate_file('jsapi', 'egw', 'phpgwapi');
+			self::validate_file('.', 'etemplate2', 'etemplate');
+		}
 
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.translation::charset());
