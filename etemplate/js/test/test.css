@@ -123,7 +123,7 @@ a.et2_url.url {
 	background-image: url(gfx/url.png);
 }
 
-button.et2_button {
+.et2_button {
 	cursor: pointer;
 	text-align: center;
 
@@ -131,7 +131,7 @@ button.et2_button {
 
 	text-shadow: 1px 1px #E0E0E0;
 }
-button.et2_button_text {
+.et2_button_text {
 	background-color: #E0E0E0;
 	background-image: url(gfx/gradient01.png);
 	background-position: center;
@@ -143,7 +143,7 @@ button.et2_button_text {
 	border: 1px solid silver;
 	color: #101010;
 }
-button.et2_button_icon {
+.et2_button_icon {
 	border: none;
 	background: transparent;
 }

@@ -50,6 +50,13 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		this.btn = null;
 		this.image = null;
 
+		if (this.options.image)
+		{
+			this.image = jQuery(document.createElement("img"))
+				.addClass("et2_button et2_button_icon");
+			this.setDOMNode(this.image[0]);
+			return;
+		}
 		if (!this.options.readonly)
 		{
 			this.btn = $j(document.createElement("button"))
@@ -59,28 +66,25 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	},
 
 	set_image: function(_image) {
-		if(!this.isInTree()) return;
+		if(!this.isInTree() || this.image == null) return;
 
 		this.options.image = _image;
 
 		var found_image = false;
 		if(this.options.image != "") 
 		{
-			if(!this.image)
+			var src = this.egw().image(_image);
+			if(src)
 			{
-				this.image = et2_createWidget("image", 
-					{
-						label: this.options.label
-					}, this);
+				this.image.attr("src", src);
+				found_image = true;
 			}
-			found_image = this.image.set_src(this.options.image);
-			if(found_image) {
-				// No label if there's an image
-				this.set_label("");
-				this.btn.removeClass("et2_button_text").addClass("et2_button_icon");
+			// allow url's too
+			else if (_image[0] == '/' || _image.substr(0,4) == 'http')
+			{
+				this.image.attr('src', _image);
+				found_image = true;
 			}
-			jQuery(this.image.getDOMNode()).appendTo(this.btn);
-			//this.addChild(this.image);
 		}
 		if(!found_image)
 		{
@@ -89,7 +93,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	},
 
 	getDOMNode: function() {
-		return this.btn ? this.btn[0] : null;
+		return this.btn ? this.btn[0] : (this.image ? this.image[0] : null);
 	},
 
 	onclick: function(_node) {
@@ -118,6 +122,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			this.label = _value;
 
 			this.btn.text(_value);
+		}
+		if(this.image)
+		{
+			this.image.attr("alt", _value).attr("title",_value);
 		}
 	},
 
@@ -157,12 +165,17 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 
 	getDetachedNodes: function()
 	{
-		return [this.getDOMNode()];
+		return [
+			this.btn != null ? this.btn[0] : null,
+			this.image != null ? this.image[0] : null
+		];
 	},
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		this.btn = jQuery(_nodes[0]);
+		// Datagrid puts in the row for null
+		this.btn = _nodes[0].nodeName == 'button' ? jQuery(_nodes[0]) : null;
+		this.image = jQuery(_nodes[1]);
 
 		if (typeof _values["id"] != "undefined")
 		{
@@ -177,7 +190,6 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 		if (typeof _values["image"] != "undefined")
 		{
-			this.image = null;
 			this.set_image(_values["image"]);
 		}
 
@@ -190,7 +202,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.options.onclick = _values["onclick"];
 		}
-		this.btn.bind("click.et2_baseWidget", this, function(e) {
+		jQuery(this.getDOMNode()).bind("click.et2_baseWidget", this, function(e) {
 			e.data.set_id(_values["id"]);
 			return e.data.click.call(e.data,e);
 		});
