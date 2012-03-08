@@ -123,17 +123,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 		this.options.src = _value;
 
-		var app = this.egw().getAppName();
-
-		// Handle app/image
-		if(_value.indexOf("/") > 0 && _value.indexOf("/") == _value.lastIndexOf("/")) {
-			var split = et2_csvSplit(_value, 2,"/");
-			var app = split[0];
-			_value = split[1];
-		}
-		// Get application to use from template ID
-//if(app == 'phpgwapi') app = 'infolog';
-		var src = this.egw().image(_value, app);
+		var src = this.egw().image(_value);
 		if(src)
 		{
 			this.image.attr("src", src).show();
