@@ -302,7 +302,7 @@ class link_widget
 				if (!is_array($link['id']))
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
-					if (!($value[$row]['popup'] = egw_link::is_popup($link['app'],'view')) &&
+					if (!($value[$row]['popup'] = egw_link::is_popup($link['app'],'view',$link)) &&
 						etemplate::$request->output_mode == 2)	// we are in a popup
 					{
 						$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
@@ -490,7 +490,7 @@ class link_widget
 	 */
 	static function link2a_href(array $link,$help='')
 	{
-		if (($popup = egw_link::is_popup($link['app'],'view')))
+		if (($popup = egw_link::is_popup($link['app'], 'view', $link)))
 		{
 			list($w,$h) = explode('x',$popup);
 			$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
@@ -553,9 +553,9 @@ class link_widget
 					// this may fail, if $extension_data['default'][0] is set on purpose
 					foreach($extension_data['default'] as $k => $v)
 					{
-						if ($v) 
+						if ($v)
 						{
-							$defaultData=true; 
+							$defaultData=true;
 							if ($k==0 && !empty($value_in['id'])) // we have a valid incomming id, we intend to use that
 							{
 								$defaultData=false;
