@@ -515,6 +515,10 @@ function force_download(_action, _senders)
 {
 	var a_href = $j(_senders[0].iface.getDOMNode()).find("a:first").attr("href");
 
+	if (a_href.indexOf("menuaction=") != -1)
+	{
+		a_href = a_href.replace(/index.php?.*$/, "webdav.php"+_senders[0].id);
+	}
 	window.location = a_href+"?download";
 }
 </script>'."\n";
