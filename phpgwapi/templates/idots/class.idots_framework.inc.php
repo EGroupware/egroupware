@@ -99,9 +99,9 @@ class idots_framework extends egw_framework
 			));
 		}
 
+		self::validate_file('jsapi', 'egw', 'phpgwapi');
 		if ($this->isTop(false))
 		{
-			self::validate_file('jsapi', 'egw', 'phpgwapi');
 			self::validate_file('.', 'etemplate2', 'etemplate');
 		}
 
