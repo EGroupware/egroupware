@@ -67,12 +67,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	private $definition;
 
 	/**
-	 * @var business object
+	 * @var infolog_bo
 	 */
 	private $boinfolog;
 
 	/**
 	* For figuring out if a record has changed
+	*
+	* @var infolog_tracking::
 	*/
 	protected $tracking;
 
@@ -97,9 +99,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+ 	* List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -213,14 +215,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
-                        {
-                                list($lastname,$firstname,$org_name) = explode(',',$record['addressbook']);
-                                $record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
-                        }
-                        if ($record['projectmanager'] && !is_numeric($record['projectmanager']))
-                        {
-                                $record['projectmanager'] = self::project_id($record['projectmanager']);
-                        }
+			{
+				list($lastname,$firstname,$org_name) = explode(',',$record['addressbook']);
+				$record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
+			}
+			if ($record['projectmanager'] && !is_numeric($record['projectmanager']))
+			{
+				$record['projectmanager'] = self::project_id($record['projectmanager']);
+			}
 
 			if ( $_definition->plugin_options['conditions'] )
 			{
@@ -324,9 +326,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					$this->results[$_action]++;
 					break;
 				} else {
-					// Fake an XMLRPC call to avoid failing modification date check
-					$GLOBALS['server']->last_method = '~fake it~';
-					$result = $this->boinfolog->write( $_data, true, true);
+					$result = $this->boinfolog->write( $_data, true, 2);	// 2 = dont touch modification date
 					if(!$result) {
 						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
 							$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
@@ -370,7 +370,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 						'info_id'      => $id,
 						'info_link_id' => $link_id,
 					);
-					$this->boinfolog->write($to_write);
+					$this->boinfolog->write($to_write,False,false,true,true);	// last true = no notifications, as no real change
 					$info_link_id = $link_id;
 				}
 			}
@@ -431,40 +431,40 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	}
 
 	/**
-        * Returns warnings that were encountered during importing
-        * Maximum of one warning message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => warning message
-        *       )
-        */
-        public function get_warnings() {
+	* Returns warnings that were encountered during importing
+	* Maximum of one warning message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => warning message
+	*       )
+	*/
+	public function get_warnings() {
 		return $this->warnings;
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	* Returns errors that were encountered during importing
+	* Maximum of one error message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => error message
+	*       )
+	*/
+	public function get_errors() {
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
+	* Returns a list of actions taken, and the number of records for that action.
+	* Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	*
+	* @return Array (
+	*       action => record count
+	* )
+	*/
+	public function get_results() {
+		return $this->results;
+	}
 	// end of iface_export_plugin
 
 	// Extra conversion functions - must be static
@@ -483,7 +483,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		{
 			$contacts =& CreateObject('phpgwapi.contacts');
 		}
-		if (!is_null($org_name))        // org_name given?
+		if (!is_null($org_name))	// org_name given?
 		{
 			$org_name = trim($org_name);
 			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
@@ -529,7 +529,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	 * Get the primary key for an entry based on a custom field
 	 * Returns key, so regular linking can take over
 	 */
-	protected function link_by_cf($record_num, $app, $fieldname, $value) 
+	protected function link_by_cf($record_num, $app, $fieldname, $value)
 	{
 		$app_id = false;
 
@@ -554,7 +554,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 			// Couldn't find field, give an error - something's wrong
 			if(!$cfs[$custom_field] && !$cfs[substr($custom_field,1)]) {
-				$this->errors[$record_num] .= lang('No custom field "%1" for %2.', 
+				$this->errors[$record_num] .= lang('No custom field "%1" for %2.',
 					$custom_field, lang($app));
 				return false;
 			}
@@ -565,12 +565,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			{
 				$options = array('filter' => array("$custom_field = " . $GLOBALS['egw']->db->quote($value)));
 				$result = egw_link::query($app, '', $options);
-			
+
 				// Only one allowed
 				if(count($result) != 1)
 				{
 					$this->warnings[$record_num] .= ($this->warnings[$record_num] ? "\n" : '') .
-						lang('Unable to link to %3 by custom field "%1": "%4".  %2 matches.', 
+						lang('Unable to link to %3 by custom field "%1": "%4".  %2 matches.',
 						$custom_field, count($result), lang($app), $options['filter'][0]
 					);
 					return false;
@@ -581,4 +581,3 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		return $app_id;
 	}
 }
-?>
