@@ -14,6 +14,7 @@
 
 /*egw:uses
 	jquery.jquery;
+	jquery.jquery-ui;
 	lib/date;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
@@ -33,14 +34,13 @@ var et2_date = et2_inputWidget.extend({
 		}
 	},
 
-	/**
-	 * Internal container for working easily with dates
-	 */
-	date: new Date(),
-
 	init: function() {
 		this._super.apply(this, arguments);
 
+		this.date = new Date();
+		this.date.setHours(0);
+		this.date.setMinutes(0);
+		this.date.setSeconds(0);
 		this.input = null;
 
 		this.createInputWidget();
@@ -48,72 +48,118 @@ var et2_date = et2_inputWidget.extend({
 
 	createInputWidget: function() {
 
-		this.input_date = $j(document.createElement("input"));
+		this.span = $j(document.createElement("span")).addClass("et2_date");
 
-		var type=(this.type == "date-timeonly" ? "time" : "text");
-		this.input_date.addClass("et2_date").attr("type", type).attr("size", 5);
+		if(this._type == "date" || this._type == "date-time")
+		{
+			this.input_date = $j(document.createElement("input"));
+			var type=(this._type == "date-timeonly" ? "time" : "text");
+			this.input_date.addClass("et2_date").attr("type", type).attr("size", 5)
+				.appendTo(this.span);
+		}
 
-		var node = this.input_date;
+		// If date also has a time
+		if(this._type == "date-time" || this._type == "date-timeonly")
+		{
+			var input_time = $j(document.createElement("input")).attr("type", "time");
+			if(input_time.attr("type") == "time")
+			{
+				this.input_time = input_time;
+				this.input_time.appendTo(node).attr("size", 5);
+				// Update internal value if control changes
+				this.input_time.change(this,function(e){e.data.set_value($j(e.target).val());});
+			}
+			else
+			{
+				// browser doesn't support HTML5 time type 
+				this._make_time_selects(this.span);
+			}
+		}
+		this.setDOMNode(this.span[0]);
 
-		// Add a button
+		// jQuery-UI date picker
+		this.setupPopup(this.input_date, this._type == "date-time");
+	},
+
+	/**
+	 * Setup the date-picker popup
+	 */
+	setupPopup: function(node, include_time) {
+
+		if(typeof include_time === "undefined") include_time = false;
+
 		if(this.type == "date" || this.type == "date-time") {
-			this.span = $j(document.createElement("span"));
-			this.button = $j(document.createElement("span"));
-			this.button.attr("id", this.options.id + "-trigger");
-			this.span.append(this.input_date).append(this.button);
+			// Date format in jQuery UI date format
+			var dateformat = egw().preference("dateformat").replace("Y","yy").replace("d","dd").replace("m","mm").replace("M", "M");
 
-			// Icon could be done in CSS file
-			var button_image = this.egw().image('datepopup','phpgwapi');
-			if(button_image) 
-			{
-				this.button.css("background-image","url("+button_image+")");
+			// First day of the week
+			var first_day = {"Monday": 1, "Sunday": 0, "Saturday": 6};
+			var first_day_pref = this.egw().preference("weekdaystarts","calendar");
+
+			var self = this;
+
+			// Initialize
+			node.datepicker({
+				dateFormat:	dateformat,
+				autoSize:	true,
+				firstDay:	first_day_pref ? first_day[first_day_pref] : 0,
+				showButtonPanel: true,	// Today, Done buttons
+				nextText:	this.egw().lang("Next"),
+				currentText:	this.egw().lang("today"),
+				prevText:	this.egw().lang("Prev"),
+				closeText:	this.egw().lang("Done"),
+
+				showOtherMonths:	true,
+				selectOtherMonths:	true,
+
+				showWeek:	true,	// Week numbers
+				changeMonth:	true,	// Month selectbox
+				changeYear:	true,	// Year selectbox
+
+				onClose:	function(date_text, picker) {
+					// Only update if there's a change - "" if no date selected
+					if(date_text != "") self.set_value(new Date(
+						picker.selectedYear, 
+						picker.selectedMonth, 
+						picker.selectedDay,
+						self.input_hours ? self.input_hours.val() : 0,
+						self.input_minutes ? self.input_minutes.val() : 0,
+						0,0
+					));
+				},
+				// Trigger button
+				showOn:		"both",
+				buttonImage:	this.egw().image('datepopup','phpgwapi'),
+				buttonImageOnly: true
+			});
+
+			// Translate (after initialize has its way)
+			var translate_fields = {
+				"dayNames":	false, 
+				"dayNamesShort":3,
+				"dayNamesMin":	2,
+				"monthNames":	false,
+				"monthNamesShort":	3
 			}
-
-			node = this.span;
-
-			node.addClass("et2_date");
-
-			var _this = this;
-			var dateformat = this.egw().preference("dateformat");
-			if (!dateformat) dateformat = "Y-m-d";
-			dateformat = dateformat.replace("Y","%Y").replace("d","%d").replace("m","%m").replace("M", "%b");
-
-			this.egw().calendar(this.input_date, this.button,
-				function(_value) {
-					this.set_value(_value);
-				}, this);
-		}
-
-		// If date also has a time, or browser doesn't support HTML5 time type 
-		if(this.type == "date-time" || this.type == "date-timeonly" && this.input_date.attr("type") == 'text')
-		{
-			if(!this.span)
+			var full = [];
+			for(var i in translate_fields)
 			{
-				this.span = $j(document.createElement("span"));
-				node = this.span;
-			}
-			switch(this.type)
-			{
-				case "date-time":
-					var input_time = $j(document.createElement("input")).attr("type", "time");
-					if(input_time.attr("type") == "time")
+				var trans = this.input_date.datepicker("option",i);
+				// Keep the full one for missing short ones
+				for(var key in trans) {
+					if(translate_fields[i] === false)
 					{
-						this.input_time = input_time;
-						this.input_time.appendTo(this.span).attr("size", 5);
-						break;
+						trans[key] = this.egw().lang(trans[key]);
 					}
-					// Fall through
-				default:
-					this._make_time_selects(this.span);
-					break;
+					else
+					{
+						trans[key] = full[key].substr(0,translate_fields[i]);
+					}
+				}
+				if(translate_fields[i] === false) full = trans;
+				node.datepicker("option",i,trans);
 			}
 		}
-		else if (this.type =="date-timeonly")
-		{
-			// Update internal value if control changes
-			this.input_date.change(this,function(e){e.data.set_value($j(e.target).val());});
-		}
-		this.setDOMNode(node[0]);
 	},
 
 	_make_time_selects: function (node) {
@@ -150,7 +196,7 @@ var et2_date = et2_inputWidget.extend({
 			else
 			{
 				e.data.date.setHours(e.target.options[e.target.selectedIndex].value);
-				e.data.set_value(e.data.date.valueOf());
+				e.data.set_value(e.data.date);
 			}
 		});
 		node.append(":");
@@ -173,7 +219,7 @@ var et2_date = et2_inputWidget.extend({
 			else
 			{
 				e.data.date.setMinutes(e.target.options[e.target.selectedIndex].value);
-				e.data.set_value(e.data.date.valueOf());
+				e.data.set_value(e.data.date);
 			}
 		});
 	},
@@ -229,22 +275,22 @@ var et2_date = et2_inputWidget.extend({
 
 				// Handle timezone offset - times are already in user time
 				var localOffset = text.getTimezoneOffset() * 60000;
-				// JS dates use milliseconds
 				this.date.setTime(text.valueOf()+localOffset);
+				_value = Math.round(this.date.valueOf() / 1000);
 			}
-		} else if (typeof _value == 'integer') {
+		} else if (typeof _value == 'number') {
 			// Timestamp
 			// JS dates use milliseconds
 			this.date.setTime(parseInt(_value)*1000);
 		} else if (typeof _value == 'object' && _value.date) {
 			this.date = _value.date;
-			_value = this.date.valueOf();
+		} else if (typeof _value == 'object' && _value.valueOf) {
+			this.date = _value;
 		}
-		this.value = _value;
 
 		if(this.input_date)
 		{
-			this.input_date.val(date(this.egw().preference('dateformat'), this.date));
+			this.input_date.datepicker('setDate',this.date);
 		}
 		if(this.input_time)
 		{
@@ -269,7 +315,16 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	getValue: function() {
-		return this.value;
+		if(this._type == "date-timeonly")
+		{ 
+			return this.value;
+		}
+		else
+		{
+			// Handle timezone offset - times are already in user time
+			var localOffset = this.date.getTimezoneOffset() * 60000;
+			return Math.round((this.date.valueOf()-localOffset) / 1000);
+		}
 	}
 });
 
