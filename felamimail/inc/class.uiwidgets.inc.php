@@ -1710,27 +1710,27 @@ $j(document).ready(function() {
 
 			$navbarImages = array(
 				'new'	=> array(
-					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$asnewURL','composeasnew_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$asnewURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$asnewURL','composeasnew_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$asnewURL'"),
 					'tooltip'   => lang('compose as new'),
 				),
 				'mail_reply'	=> array(
-					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$replyURL','reply_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$replyURL','reply_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyURL'"),
 					'tooltip'	=> lang('reply'),
 				),
 				'mail_replyall'	=> array(
-					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$replyAllURL','replyAll_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyAllURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$replyAllURL','replyAll_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyAllURL'"),
 					'tooltip'	=> lang('reply all'),
 				),
 				'mail_forward'	=> array(
-					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$forwardURL','forward_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$forwardURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$forwardURL','forward_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$forwardURL'"),
 					'tooltip'	=> lang('forward'),
 				),
 				'revert'	=> array(
-					'action'	=> ($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
 				'delete'	=> array(// json_encode(array('msg'=>array($_headerData['uid']))) may be used for {msg:[".$_headerData['uid']."]}
-					'action'	=> ($_forceNewWindow ? "mail_deleteMessages({msg:[".$_headerData['uid']."]});": "window.location.href = '$deleteURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "mail_deleteMessages({msg:[".$_headerData['uid']."]});": "window.location.href = '$deleteURL'"),
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
 			);
@@ -1807,7 +1807,7 @@ $j(document).ready(function() {
 			//print email
 			$navbarImages = array(
 				'print' => array(
-					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$printURL','print_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$printURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$printURL','print_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$printURL'"),
 					'tooltip'	=> lang('print it'),
 				),
 			);
@@ -1815,25 +1815,25 @@ $j(document).ready(function() {
 			{
 				list($i_width,$i_height) = explode('x',egw_link::get_registry('infolog','add_popup'));
 				$navbarImages['to_infolog'] = array(
-					'action'	=> "window.open('$to_infologURL','_blank','dependent=yes,width=".$i_width.",height=".$i_height.",scrollbars=yes,status=yes')",
+					'action'	=> 'do_onunload = false;'."window.open('$to_infologURL','_blank','dependent=yes,width=".$i_width.",height=".$i_height.",scrollbars=yes,status=yes')",
 					'tooltip'	=> lang('save as infolog'));
 			}
 			if ($GLOBALS['egw_info']['user']['apps']['tracker'])
 			{
 				list($i_width,$i_height) = explode('x',egw_link::get_registry('tracker','add_popup'));
 				$navbarImages['to_tracker'] = array(
-					'action'    => "egw_openWindowCentered('$to_trackerURL','_blank',".$i_width.",".$i_height.")",
+					'action'    => 'do_onunload = false;'."egw_openWindowCentered('$to_trackerURL','_blank',".$i_width.",".$i_height.")",
 					'tooltip'   => lang('Save as ticket'));
 			}
 			// save email as
 			$navbarImages['fileexport'] = array(
-				'action'	=> "document.location='$saveMessageURL';",
+				'action'	=> 'do_onunload = false;'."document.location='$saveMessageURL';",
 				'tooltip'	=> lang('Save message to disk'),
 			);
 
 			// view header lines
 			$navbarImages['kmmsgread'] = array(
-				'action'	=> "egw_openWindowCentered('$viewHeaderURL','fm_displayHeaderLines_".$_headerData['uid']."',".$fm_width.",".$fm_height.");",
+				'action'	=> 'do_onunload = false;'."egw_openWindowCentered('$viewHeaderURL','fm_displayHeaderLines_".$_headerData['uid']."',".$fm_width.",".$fm_height.");",
 				'tooltip'	=> lang('view header lines'),
 			);
 

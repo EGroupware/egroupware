@@ -249,7 +249,8 @@ function mail_save2fm(_action, _elems)
 	url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
 	//url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 	url += '&mode=saveas';
-	url += '&name='+encodeURIComponent(_elems[0].data.data.subject.data+'.eml');
+	var filename = _elems[0].data.data.subject.data.replace(/[\f\n\t\v/\\:*?<>\|]/g,"_");
+	url += '&name='+encodeURIComponent(filename+'.eml');
 	url += '&mime=message'+encodeURIComponent('/')+'rfc822';
 	url += '&method=felamimail.uidisplay.vfsSaveMessage'
 	url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;

@@ -8,6 +8,8 @@ var headerDIVHeight;
 
 var bodyDIVTop;
 
+var do_onunload = true;
+
 function getUrlPart(url, name )
 {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
@@ -21,11 +23,13 @@ function getUrlPart(url, name )
 }
 
 function sendNotify (uid) {
+	do_onunload = false;
 	ret = confirm(lang_sendnotify);
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.sendNotify",uid,ret);	
 }
 
 function goToMessage(url) {
+	do_onunload = false;
 	//alert(getUrlPart(window.location.href,'uid'));
 	var oldUid = getUrlPart(window.location.href,'uid');
 	var newUid = getUrlPart(url,'uid');
@@ -60,6 +64,7 @@ function initAll()
 		window.onresize = fm_resizeBodyDIV;
 	}
 	updateTitle();
+	do_onunload = true;
 }
 
 function updateTitle() {

@@ -275,7 +275,8 @@
 		{
 			$partID		= $this->partID = $_GET['part'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
-
+			$deleteDraftOnClose = false;
+			if (!empty($_GET['deleteDraftOnClose']) && $this->bofelamimail->isDraftFolder($this->mailbox)) $deleteDraftOnClose = true;
 			//$transformdate	=& CreateObject('felamimail.transformdate');
 			//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
 			$uiWidgets	= CreateObject('felamimail.uiwidgets');
@@ -345,7 +346,7 @@
 				$rawheaders .= wordwrap($value, 90, "\n     ");
 			}
 
-			$this->display_app_header();
+			$this->display_app_header(NULL,$deleteDraftOnClose);
 			if(!isset($_GET['printable'])) {
 				$this->t->set_file(array("displayMsg" => "view_message.tpl"));
 			} else {
@@ -986,7 +987,7 @@ blockquote[type=cite] {
 			exit;
 		}
 
-		function display_app_header($printing = NULL)
+		function display_app_header($printing = NULL, $deleteDraftOnClose = false)
 		{
 			if ($_GET['menuaction'] != 'felamimail.uidisplay.printMessage' &&
 				$_GET['menuaction'] != 'felamimail.uidisplay.displayBody' &&
@@ -1006,6 +1007,11 @@ blockquote[type=cite] {
 				$_GET['menuaction'] == 'felamimail.uidisplay.displayBody' ||
 				$_GET['menuaction'] == 'felamimail.uidisplay.displayAttachments' ) {
 				$GLOBALS['egw_info']['flags']['nofooter'] = true;
+			}
+			if ($deleteDraftOnClose)
+			{
+				//window.opener.console.log('closing".$this->uid.'->'.$this->mailbox."');
+				$GLOBALS['egw']->js->set_onunload("if (do_onunload) egw_appWindow('felamimail').xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.deleteMessages',{msg:[".$this->uid."]});");
 			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 			common::egw_header();
