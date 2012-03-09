@@ -145,7 +145,7 @@ class etemplate_new extends etemplate_widget_template
 		else	// first call
 		{
 			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
-			egw_framework::validate_file('jquery','jquery.tools.min');
+			// egw_framework::validate_file('jquery','jquery.tools.min');
 
 			egw_framework::includeCSS('/etemplate/js/test/test.css');
 			common::egw_header();
@@ -156,8 +156,10 @@ class etemplate_new extends etemplate_widget_template
 			echo '
 		<div id="container"></div>
 		<script>
-			var et2 = new (egw().etemplate2)(document.getElementById("container"), "etemplate_new::ajax_process_content");
-			et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+			egw(window).ready(function() {
+				var et2 = new (egw().etemplate2)(document.getElementById("container"), "etemplate_new::ajax_process_content");
+				et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+			}, null, true);
 		</script>
 ';
 			common::egw_footer();

@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - A simple PHP expression parser written in JS
+ * eGroupWare eTemplate2 - Execution layer for legacy event code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -114,8 +114,14 @@
 			context = _widget.getDOMNode();
 		}
 
-		// Generate the function itself
-		var func = new Function('egw', 'widget', 'window', _code);
+		// Generate the function itself, if it fails, log the error message and
+		// return a function which always returns false
+		try {
+			var func = new Function('egw', 'widget', 'window', 'document', _code);
+		} catch(e) {
+			_widget.egw().debug('error', 'Error while compiling JS code ', _code);
+			return (function() {return false});
+		}
 
 		// Execute the code and return its results, pass the egw instance and
 		// the widget
@@ -127,7 +133,8 @@
 			egw.debug('log', 'Executing legacy JS code: ', _code);
 
 			// Return the result of the called function
-			return func.call(context, egw, _widget, egw.window);
+			return func.call(context, egw, _widget, egw.window,
+				egw.window.document);
 		}
 	}
 

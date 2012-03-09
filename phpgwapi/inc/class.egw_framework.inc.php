@@ -781,13 +781,39 @@ abstract class egw_framework
 			self::validate_file('/phpgwapi/config.php');
 			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
 		}
-		$java_script .= self::get_script_links();
 
 		// set webserver_url for json
-		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = egw.webserverUrl = '".
+		$java_script .= "<script type=\"text/javascript\">
+			var url = '".
 			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url']."';\n";
-		$java_script .= 'window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
+			$GLOBALS['egw_info']['server']['webserver_url']."';
+
+			// legacy code
+			egw_webserverUrl = url;
+
+			// reference the egw object from the parent window or set the
+			// webserver url
+			if (window.opener && typeof window.opener.egw != 'undefined')
+			{
+				window['egw'] = window.opener.egw;
+			}
+			else if (window.top && typeof window.top.egw != 'undefined')
+			{
+				window['egw'] = window.top.egw;
+			}
+			else
+			{
+				// Create a \"preferences only\" egw object
+				window['egw'] = {
+					'prefsOnly': true,
+					'webserverUrl': url
+				};
+			}
+		</script>";
+
+		$java_script .= self::get_script_links();
+
+		$java_script .= '<script type="text/javascript">window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
 
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])

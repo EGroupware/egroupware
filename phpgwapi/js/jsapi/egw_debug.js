@@ -68,3 +68,4 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		}
 	}
 });
+

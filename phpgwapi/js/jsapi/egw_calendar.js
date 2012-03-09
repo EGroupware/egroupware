@@ -15,119 +15,106 @@
 /*egw:uses
 	egw_core;
 	egw_preferences;
-
-	jscalendar.calendar;
-	/phpgwapi/js/jscalendar/lang/calendar-en.js;
-
+	egw_jquery;
 */
 
 egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
-	// Instanciate the calendar for this window
-	calendar_closure(_wnd, _wnd.document);
-
-	// Load the translation
-	calendar_lang_closure(_wnd);
-
-	function calendarPreferences()
+	function calendarPreferences(_egw)
 	{
-		// Load the date format from the preferences
-		var dateformat = egw.preference("dateformat");
-		if (!dateformat)
-		{
-			dateformat = "Y-m-d";
-		}
+		// Date format in jQuery UI date format
+		var dateformat = _egw.preference("dateformat")
+			.replace("Y","yy")
+			.replace("d","dd")
+			.replace("m","mm")
+			.replace("M", "M");
 
-		// Transform the given format to the correct date format
-		dateformat = dateformat
-				.replace("Y","%Y")
-				.replace("d","%d")
-				.replace("m","%m")
-				.replace("M", "%b");
-
-		// Load the first weekday from the calendar application preferences
-		var firstDay = egw.preference("weekdaystarts","calendar");
+		// First day of the week
+		var first_day = {"Monday": 1, "Sunday": 0, "Saturday": 6};
+		var first_day_pref = _egw.preference("weekdaystarts","calendar");
 
 		return {
-			"format": dateformat,
-			"firstDay": firstDay,
-			"ifFormat": "%Y/%m/%d",
-			"daFormat": "%Y/%m/%d",
-			"titleFormat": "%B, %Y"
+			'dateformat': dateformat,
+			'firstDay': first_day_pref ? first_day[first_day_pref] : 0
 		}
 	}
 
-	function calendarPopup(_input, _button, _callback, _context)
+	function setupCalendar(_egw, _input, _time, _callback, _context)
 	{
+		var prefs = calendarPreferences(_egw);
 
-		function calendarUpdate(_cal)
-		{
-			// Update the input value
-			_input.value = _cal.date.print(_cal.params.format);
+		var params = {
+			dateFormat: prefs.dateformat,
+			firstDay: prefs.firstDay,
 
-			// Close the popup if a date has been clicked
-			if (_cal.dateClicked)
-			{
-				cal.callCloseHandler();
+			autoSize: true,
+			showButtonPanel: true, // Today, Done buttons
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			showWeek: true, // Week numbers
+			changeMonth: true, // Month selectbox
+			changeYear: true, // Year selectbox
+
+			// Trigger button
+			showOn:		"both",
+			buttonImage:	_egw.image('datepopup','phpgwapi'),
+			buttonImageOnly: true,
+
+			nextText: _egw.lang('Next'),
+			currentText: _egw.lang('today'),
+			prevText: _egw.lang('Prev'),
+			closeText: _egw.lang('Done'),
+
+		}
+
+		// Get the preferences
+		_egw.$j(_input).datepicker(params);
+/*
+				onClose:	function(date_text, picker) {
+					// Only update if there's a change - "" if no date selected
+					if(date_text != "") self.set_value(new Date(
+						picker.selectedYear, 
+						picker.selectedMonth, 
+						picker.selectedDay,
+						self.input_hours ? self.input_hours.val() : 0,
+						self.input_minutes ? self.input_minutes.val() : 0,
+						0,0
+					));
+				},
+			});
+
+			// Translate (after initialize has its way)
+			var translate_fields = {
+				"dayNames":	false, 
+				"dayNamesShort":3,
+				"dayNamesMin":	2,
+				"monthNames":	false,
+				"monthNamesShort":	3
 			}
-
-			// Call the callback
-			_callback.call(_context, _cal);
-		}
-
-		function calendarHide(_cal)
-		{
-			_cal.hide();
-		}
-
-		// Read the calendar parameters
-		var params = calendarPreferences();
-
-		// Destroy any existing calendar
-		if (_wnd.calendar)
-		{
-			_wnd.calendar.destroy();
-		}
-
-		// Create a new calendar instance
-		_wnd.calendar = new Calendar(
-			params.firstDay,
-			null,
-			calendarUpdate,
-			calendarHide
-		);
-		_wnd.calendar.showsTime = false;
-		_wnd.calendar.weekNumbers = true;
-		_wnd.calendar.yearStep = 2;
-		_wnd.calendar.setRange(1900, 2999);
-		_wnd.calendar.params = params;
-
-		_wnd.calendar.create();
-
-		_wnd.calendar.setDateFormat(params.format);
-		_wnd.calendar.parseDate($j(_input).val());
-
-		_wnd.calendar.refresh();
-		_wnd.calendar.showAtElement(_button || _input);
+			var full = [];
+			for(var i in translate_fields)
+			{
+				var trans = this.input_date.datepicker("option",i);
+				// Keep the full one for missing short ones
+				for(var key in trans) {
+					if(translate_fields[i] === false)
+					{
+						trans[key] = this.egw().lang(trans[key]);
+					}
+					else
+					{
+						trans[key] = full[key].substr(0,translate_fields[i]);
+					}
+				}
+				if(translate_fields[i] === false) full = trans;
+				node.datepicker("option",i,trans);
+			}*/
 	}
 
 	return {
 
-		/**
-		 * Transforms either the given input element into a date input or
-		 * displays the calendar when clicking on the given input button. When
-		 * the date changes, the given callback function is called.
-		 */
-		calendar: function(_input, _button, _callback, _context) {
-/*			$j([_input, _button]).bind('click.calendar', function() {
-				calendarPopup(_input, _button, _callback, _context);
-			})*/
-			$j(_input).bind('click', function() {
-				calendarPopup(_input, _button, _callback, _context);
-			});
-			$j(_button).bind('click', function() {
-				calendarPopup(_input, _button, _callback, _context);
-			});
+		calendar: function(_input, _time, _callback, _context) {
+			setupCalendar(this, _input, _time, _callback, _context);
 		}
 
 	}

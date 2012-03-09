@@ -65,7 +65,7 @@ var et2_date = et2_inputWidget.extend({
 			if(input_time.attr("type") == "time")
 			{
 				this.input_time = input_time;
-				this.input_time.appendTo(node).attr("size", 5);
+				this.input_time.appendTo(this.span).attr("size", 5);
 				// Update internal value if control changes
 				this.input_time.change(this,function(e){e.data.set_value($j(e.target).val());});
 			}
@@ -78,88 +78,7 @@ var et2_date = et2_inputWidget.extend({
 		this.setDOMNode(this.span[0]);
 
 		// jQuery-UI date picker
-		this.setupPopup(this.input_date, this._type == "date-time");
-	},
-
-	/**
-	 * Setup the date-picker popup
-	 */
-	setupPopup: function(node, include_time) {
-
-		if(typeof include_time === "undefined") include_time = false;
-
-		if(this.type == "date" || this.type == "date-time") {
-			// Date format in jQuery UI date format
-			var dateformat = egw().preference("dateformat").replace("Y","yy").replace("d","dd").replace("m","mm").replace("M", "M");
-
-			// First day of the week
-			var first_day = {"Monday": 1, "Sunday": 0, "Saturday": 6};
-			var first_day_pref = this.egw().preference("weekdaystarts","calendar");
-
-			var self = this;
-
-			// Initialize
-			node.datepicker({
-				dateFormat:	dateformat,
-				autoSize:	true,
-				firstDay:	first_day_pref ? first_day[first_day_pref] : 0,
-				showButtonPanel: true,	// Today, Done buttons
-				nextText:	this.egw().lang("Next"),
-				currentText:	this.egw().lang("today"),
-				prevText:	this.egw().lang("Prev"),
-				closeText:	this.egw().lang("Done"),
-
-				showOtherMonths:	true,
-				selectOtherMonths:	true,
-
-				showWeek:	true,	// Week numbers
-				changeMonth:	true,	// Month selectbox
-				changeYear:	true,	// Year selectbox
-
-				onClose:	function(date_text, picker) {
-					// Only update if there's a change - "" if no date selected
-					if(date_text != "") self.set_value(new Date(
-						picker.selectedYear, 
-						picker.selectedMonth, 
-						picker.selectedDay,
-						self.input_hours ? self.input_hours.val() : 0,
-						self.input_minutes ? self.input_minutes.val() : 0,
-						0,0
-					));
-				},
-				// Trigger button
-				showOn:		"both",
-				buttonImage:	this.egw().image('datepopup','phpgwapi'),
-				buttonImageOnly: true
-			});
-
-			// Translate (after initialize has its way)
-			var translate_fields = {
-				"dayNames":	false, 
-				"dayNamesShort":3,
-				"dayNamesMin":	2,
-				"monthNames":	false,
-				"monthNamesShort":	3
-			}
-			var full = [];
-			for(var i in translate_fields)
-			{
-				var trans = this.input_date.datepicker("option",i);
-				// Keep the full one for missing short ones
-				for(var key in trans) {
-					if(translate_fields[i] === false)
-					{
-						trans[key] = this.egw().lang(trans[key]);
-					}
-					else
-					{
-						trans[key] = full[key].substr(0,translate_fields[i]);
-					}
-				}
-				if(translate_fields[i] === false) full = trans;
-				node.datepicker("option",i,trans);
-			}
-		}
+		this.egw().calendar(this.input_date, this._type == "date-time");
 	},
 
 	_make_time_selects: function (node) {

@@ -13,12 +13,14 @@
 "use strict";
 
 /*egw:uses
-	jquery.jquery; // Used for traversing the DOM
 	egw_core;
+	egw_ready;
 	egw_debug;
 */
 
-egw.extend('files', egw.MODULE_WND_LOCAL, function() {
+egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+
+	var egw = this;
 
 	/**
 	 * Array which contains all currently bound in javascript and css files.
@@ -31,21 +33,30 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 	 * TODO: Currently this can only contain the JS files present in the main
 	 * window.
 	 */
-	$j(document).ready(function() {
-		$j("script, link").each(function() {
-			var elem = $j(this);
+	this.module('ready', _wnd).ready(function() {
+		// Iterate over the script tags
+		var scripts = _wnd.document.getElementsByTagName('script');
+		for (var i = 0; i < scripts.length; i++)
+		{
+			var src = scripts[i].getAttribute('src');
 
-			if (elem.attr("src"))
+			if (src)
 			{
-				files[elem.attr("src")] = true;
+				files[src] = true;
 			}
+		}
 
-			if (elem.attr("href"))
+		// Iterate over the link tags
+		var links = _wnd.document.getElementsByTagName('link');
+		for (var i = 0; i < links.length; i++)
+		{
+			var src = links[i].getAttribute('href');
+
+			if (src)
 			{
-				files[elem.attr("href")] = true;
+				files[src] = true;
 			}
-
-		});
+		}
 	});
 
 	function includeJSFile(_jsFile, _callback, _context)
@@ -55,14 +66,14 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 		if (typeof files[_jsFile] === 'undefined')
 		{
 			// Create the script node which contains the new file
-			var scriptnode = document.createElement('script');
+			var scriptnode = _wnd.document.createElement('script');
 			scriptnode.type = "text/javascript";
 			scriptnode.src = _jsFile;
 			scriptnode._originalSrc = _jsFile;
 
 			// Setup the 'onload' handler for FF, Opera, Chrome
 			scriptnode.onload = function(e) {
-				this.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
+				egw.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
 				_callback.call(_context, _jsFile);
 			};
 
@@ -73,10 +84,10 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 					scriptnode.readyState != 'loaded')
 				{
 					scriptnode.onreadystatechange = function() {
-						var node = window.event.srcElement;
+						var node = _wnd.event.srcElement;
 						if (node.readyState == 'complete' || node.readyState == 'loaded')
 						{
-							this.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
+							egw.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
 							_callback.call(_context, _jsFile);
 						}
 					};
@@ -88,17 +99,17 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 			}
 
 			// Append the newly create script node to the head
-			var head = document.getElementsByTagName('head')[0];
+			var head = _wnd.document.getElementsByTagName('head')[0];
 			head.appendChild(scriptnode);
 
 			// Request the given javascript file
-			this.debug('info', 'Requested JS file "%s" from server', _jsFile);
+			egw.debug('info', 'Requested JS file "%s" from server', _jsFile);
 		}
 
 		// If the file is already loaded, call the callback
 		if (alreadyLoaded)
 		{
-			window.setTimeout(
+			_wnd.setTimeout(
 				function() {
 					_callback.call(_context, _jsFile);
 				}, 0);
@@ -135,14 +146,14 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function() {
 				files[_cssFile] = true;
 
 				// Create the node which is used to include the css fiel
-				var cssnode = document.createElement('link');
+				var cssnode = _wnd.document.createElement('link');
 				cssnode.type = "text/css";
 				cssnode.rel = "stylesheet";
 				cssnode.href = _cssFile;
 
 				// Get the head node and append the newly created "link" node
 				// to it.
-				var head = document.getElementsByTagName('head')[0];
+				var head = _wnd.document.getElementsByTagName('head')[0];
 				head.appendChild(cssnode);
 			}
 		}

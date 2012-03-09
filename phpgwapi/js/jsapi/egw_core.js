@@ -71,21 +71,40 @@
 		if (typeof _moduleInstances.app[_app] === 'undefined')
 		{
 			var modInsts = {};
+			_moduleInstances.app[_app] = modInsts;
 
 			// Otherwise create the application specific instances
 			for (var key in _modules)
 			{
 				var mod = _modules[key];
-				if (mod.flags === _egw.MODULE_APP_LOCAL)
+
+				// Check whether the module is actually an application local
+				// instance. As the module instance may already have been
+				// created by another extension (when calling the egw.module
+				// function) we're doing the second check.
+				if (mod.flags === _egw.MODULE_APP_LOCAL
+				    && typeof modInsts[key] === 'undefined')
 				{
 					modInsts[key] = mod.code.call(_egw, _app, window);
 				}
 			}
-
-			_moduleInstances.app[_app] = modInsts;
 		}
 
 		return _moduleInstances.app[_app];
+	}
+
+	function getExistingWndModules(_moduleInstances, _window)
+	{
+		// Search for the specific window instance
+		for (var i = 0; i < _moduleInstances.wnd.length; i++)
+		{
+			if (_moduleInstances.wnd[i].window === _window)
+			{
+				return _moduleInstances.wnd[i].modules;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -104,19 +123,13 @@
 	 */
 	function getWndModules(_egw, _modules, _moduleInstances, _instances, _window)
 	{
-		// Search for the specific window instance
-		for (var i = 0; i < _moduleInstances.wnd.length; i++)
-		{
-			var descr = _moduleInstances.wnd[i];
-
-			if (descr.window === _window)
-			{
-				return descr.modules;
-			}
+		var mods = getExistingWndModules(_moduleInstances, _window);
+		if (mods) {
+			return mods;
 		}
 
 		// If none was found, create the slot
-		var mods = {};
+		mods = {};
 		_moduleInstances.wnd.push({
 			'window': _window,
 			'modules': mods
@@ -133,7 +146,13 @@
 		for (var key in _modules)
 		{
 			var mod = _modules[key];
-			if (mod.flags === _egw.MODULE_WND_LOCAL)
+
+			// Check whether the module is actually a window local instance. As
+			// the module instance may already have been created by another
+			// extension (when calling the egw.module function) we're doing the
+			// second check.
+			if (mod.flags === _egw.MODULE_WND_LOCAL
+			    && typeof mods[key] === 'undefined')
 			{
 				mods[key] = mod.code.call(_egw, null, _window);
 			}
@@ -279,6 +298,9 @@
 		// Generate the global extension
 		var globalExtension = _code.call(egw, null, window);
 
+		// Store the global extension module
+		_moduleInstances.glo[_module] = globalExtension;
+
 		for (var key in _instances)
 		{
 			for (var i = 0; i < _instances[key].length; i++)
@@ -293,6 +315,9 @@
 	{
 		// Generate the global extension
 		var globalExtension = _code.call(egw, null, window);
+
+		// Store the global extension module
+		_moduleInstances.glo[_module] = globalExtension;
 
 		// Merge the extension into the global instances
 		for (var i = 0; i < _instances['~global~'].length; i++)
@@ -344,16 +369,17 @@
 		}
 	}
 
-	if (window.opener && typeof window.opener.egw !== 'undefined')
+	/**
+	 * Creates the egw object --- if the egw object should be created, some data
+	 * has already been set inside the object by the egw_framework::header
+	 * function and the instance has been marked as "prefsOnly".
+	 */
+	if (typeof window.egw != "undefined" && window.egw.prefsOnly)
 	{
-		this['egw'] = window.opener.egw;
-	}
-	else if (window.top && typeof window.top.egw !== 'undefined')
-	{
-		this['egw'] = window.top.egw;
-	}
-	else
-	{
+		// Rescue the old egw object
+		var prefs = window.egw;
+		delete prefs['prefsOnly'];
+
 		/**
 		 * Modules contains all currently loaded egw extension modules. A module
 		 * is stored as an object of the following form:
@@ -367,7 +393,8 @@
 
 		var moduleInstances = {
 			'app': {},
-			'wnd': []
+			'wnd': [],
+			'glo': {}
 		}
 
 		/**
@@ -481,13 +508,6 @@
 			},
 
 			/**
-			 * base-URL of the EGroupware installation
-			 * 
-			 * get set via egw_framework::header()
-			 */
-			webserverUrl: "/egroupware",
-
-			/**
 			 * The extend function can be used to extend the egw object.
 			 *
 			 * @param _module should be a string containing the name of the new
@@ -541,6 +561,106 @@
 				}
 			},
 
+			/**
+			 * Very similar to the egw function itself, but the module function
+			 * returns just the functions exported by a single extension -- in
+			 * this way extensions themselve are capable of accessing each
+			 * others functions while they are being instanciated. Yet you
+			 * should be carefull not to create any cyclic dependencies.
+			 *
+			 * @param _module is the name of the module
+			 * @param _for may either be a string describing an application,
+			 * 	an object referencing to a window or evaluate to false, in which
+			 * 	case the global instance will be returned.
+			 */
+			module: function(_module, _for) {
+				if (typeof modules[_module] !== 'undefined')
+				{
+					// Return the global instance of the module if _for
+					// evaluates to false
+					if (!_for)
+					{
+						return moduleInstances.glo[_module];
+					}
+
+					// Assume _for is an application name if it is a string.
+					// Check whether the given application instance actually
+					// exists.
+					if (typeof _for === 'string'
+					    && typeof moduleInstances.app[_for] !== 'undefined')
+					{
+						var mods = moduleInstances.app[_for];
+
+						// Otherwise just instanciate the module if it has not
+						// been created yet.
+						if (typeof mods[_module] === 'undefined')
+						{
+							var mod = modules[_module];
+							mods[_module] = mod.code.call(this, _app, window);
+						}
+
+						return mods[_module];
+					}
+
+					// If _for is an object, assume it is a window.
+					if (typeof _for === 'object')
+					{
+						var mods = getExistingWndModules(moduleInstances, _for);
+
+						// Check whether the module container for that window
+						// has been found
+						if (mods != null)
+						{
+							// If the given module has not been instanciated for
+							// this window, 
+							if (typeof mods[_module] === 'undefined')
+							{
+								var mod = modules[_module];
+								mods[_module] = mod.code.call(this, null, _for);
+							}
+
+							return mods[_module];
+						}
+					}
+				}
+
+				return null;
+			},
+
+			/**
+			 * The "constant" function can be used to update a constant in all
+			 * egw instances.
+			 *
+			 * @param _module is the module for which the constant should be set
+			 * @param _name is the name of the constant
+			 * @param _value is the value to which it should be set
+			 * @param _window if set, updating the constant is restricted to
+			 * 	those api instances which belong to the given window, if _window
+			 * 	evaluates to false, all instances will be updated.
+			 */
+			constant: function(_module, _name, _value, _window) {
+				// Update the module instances first
+				for (var i = 0; i < moduleInstances.wnd.length; i++)
+				{
+					if (!_window || _window === moduleInstances.wnd[i].window)
+					{
+						moduleInstances.wnd[i].modules[_module][_name] = _value;
+					}
+				}
+
+				// Now update all already instanciated instances
+				for (var key in instances)
+				{
+					for (var i = 0; i < instances[key].length; i++)
+					{
+						if (!_window || _window === instances[key][i].window)
+						{
+							instances[key][i].instance[_name] = _value;
+						}
+					}
+				}
+			},
+
 			dumpModules: function() {
 				return modules;
 			},
@@ -556,6 +676,9 @@
 
 		// Merge the globalEgw functions into the egw object.
 		mergeObjects(egw, globalEgw);
+
+		// Merge the preferences into the egw object.
+		mergeObjects(egw, prefs);
 
 		// Create the entry for the root window in the module instances
 		moduleInstances.wnd.push({
