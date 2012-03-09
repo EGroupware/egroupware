@@ -699,7 +699,7 @@ class infolog_bo
 	*
 	* @param array &$values values to write
 	* @param boolean $check_defaults=true check and set certain defaults
-	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
+	* @param boolean|int $touch_modified=true touch the modification date and sets the modifier's user-id, 2: only modifier
 	* @param boolean $user2server=true conversion between user- and server-time necessary
 	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
 	* @param boolean $throw_exception=false Throw an exception (if required fields are not set)
@@ -874,7 +874,7 @@ class infolog_bo
 			$this->time2time($values);
 		}
 
-		if ($touch_modified || !$values['info_datemodified'])
+		if ($touch_modified && $touch_modified !== 2 || !$values['info_datemodified'])
 		{
 			// Should only an entry be updated which includes the original modification date?
 			// Used in the web-GUI to check against a modification by an other user while editing the entry.
