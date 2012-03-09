@@ -877,7 +877,8 @@ class egw_link extends solink
 	{
 		if ($app == self::VFS_APPNAME && !empty($id) && is_array($link))
 		{
-			return egw_vfs::download_url(self::vfs_path($link['app2'],$link['id2'],$link['id'],true));
+			//return egw_vfs::download_url(self::vfs_path($link['app2'],$link['id2'],$link['id'],true));
+			return self::mime_open(self::vfs_path($link['app2'],$link['id2'],$link['id'],true), $link['type']);
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
 		{
@@ -988,11 +989,24 @@ class egw_link extends solink
 	 *
 	 * @param string $app app-name
 	 * @param string $action='view' name of the action, atm. 'view' or 'add'
+	 * @param array $link=null link-data for file-attachments
 	 * @return boolean|string false if no popup is used or $app is not registered, otherwise string with the prefered popup size (eg. '640x400)
 	 */
-	static function is_popup($app,$action='view')
+	static function is_popup($app, $action='view', $link=null)
 	{
-		return self::get_registry($app,$action.'_popup');
+		$popup = self::get_registry($app,$action.'_popup');
+
+		// for files/attachments check mime-registry
+		if ($app == self::VFS_APPNAME && is_array($link) && !empty($link['type']))
+		{
+			$path = self::vfs_path($link['app2'], $link['id2'], $link['id'], true);
+			if (self::mime_open($path, $link['type'], $p))
+			{
+				$popup = $p;
+			}
+		}
+		//error_log(__METHOD__."('$app', '$action', ".array2string($link).') returning '.array2string($popup));
+		return $popup;
 	}
 
 	/**
