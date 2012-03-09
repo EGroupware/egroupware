@@ -179,6 +179,9 @@ span.et2_date {
 }
 span.et2_date input.et2_date {
 	min-width: 10ex;
+	background-repeat: no-repeat;
+	background-position: top right;
+	background-size: contain;
 }
 span.et2_date span {
 	background-position: center;

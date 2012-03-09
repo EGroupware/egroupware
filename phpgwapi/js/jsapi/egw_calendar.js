@@ -16,6 +16,7 @@
 	egw_core;
 	egw_preferences;
 	egw_jquery;
+	egw_css;
 */
 
 egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
@@ -34,17 +35,17 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		var first_day_pref = _egw.preference("weekdaystarts","calendar");
 
 		return {
-			'dateformat': dateformat,
+			'dateFormat': dateformat,
 			'firstDay': first_day_pref ? first_day[first_day_pref] : 0
-		}
-	}
+		};
+	};
 
 	function setupCalendar(_egw, _input, _time, _callback, _context)
 	{
 		var prefs = calendarPreferences(_egw);
 
 		var params = {
-			dateFormat: prefs.dateformat,
+			dateFormat: prefs.dateFormat,
 			firstDay: prefs.firstDay,
 
 			autoSize: true,
@@ -53,18 +54,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			selectOtherMonths: true,
 			showWeek: true, // Week numbers
 			changeMonth: true, // Month selectbox
-			changeYear: true, // Year selectbox
-
-			// Trigger button
-			showOn:		"both",
-			buttonImage:	_egw.image('datepopup','phpgwapi'),
-			buttonImageOnly: true,
-
-			nextText: _egw.lang('Next'),
-			currentText: _egw.lang('today'),
-			prevText: _egw.lang('Prev'),
-			closeText: _egw.lang('Done'),
-
+			changeYear: true // Year selectbox
 		}
 
 		// Get the preferences
@@ -83,34 +73,78 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				},
 			});
 
-			// Translate (after initialize has its way)
-			var translate_fields = {
-				"dayNames":	false, 
-				"dayNamesShort":3,
-				"dayNamesMin":	2,
-				"monthNames":	false,
-				"monthNamesShort":	3
-			}
-			var full = [];
-			for(var i in translate_fields)
+*/
+	};
+
+	/**
+	 * Translate, and set as default values
+	 *
+	 */
+	function translate() {
+		var translate_fields = {
+			// These ones are simple strings
+			"nextText": false,
+			"currentText": false,
+			"prevText": false,
+			"closeText": false,
+			
+			// These ones are arrays.  
+			// Integers are length.  If lang() has no short translation, just trim full
+			"dayNames":	false, 
+			"dayNamesShort":3,
+			"dayNamesMin":	2,
+			"monthNames":	false,
+			"monthNamesShort":	3
+		}
+		var regional = {};
+		var full = [];
+		for(var i in translate_fields)
+		{
+			var trans = jQuery.datepicker._defaults[i];
+			if(typeof trans === 'string')
 			{
-				var trans = this.input_date.datepicker("option",i);
-				// Keep the full one for missing short ones
+				trans = egw().lang(trans);
+			}
+			else
+			{
 				for(var key in trans) {
 					if(translate_fields[i] === false)
 					{
-						trans[key] = this.egw().lang(trans[key]);
+						trans[key] = egw().lang(trans[key]);
 					}
 					else
 					{
 						trans[key] = full[key].substr(0,translate_fields[i]);
 					}
 				}
+				// Keep the full one for missing short ones
 				if(translate_fields[i] === false) full = trans;
-				node.datepicker("option",i,trans);
-			}*/
-	}
+			}
+			regional[i] = trans;
+		}
 
+		// Set some non-lang defaults too
+/*
+		var prefs = calendarPreferences(egw());
+		for(var i in prefs)
+		{
+			regional[i] = prefs[i];
+		}
+*/
+
+		jQuery.datepicker.setDefaults(regional);
+	};
+
+	/** 
+	This should be global, static, run once, but adding this part breaks egw's js juggling
+	*/
+	var css = this.module('css',_wnd);
+	css.css(".et2_date input.et2_date", "background-image: url(" + egw().image('datepopup') + ")");
+	/*
+        var ready = this.module('ready', _wnd);
+	ready.ready(translate,this);
+	*/
+	
 	return {
 
 		calendar: function(_input, _time, _callback, _context) {
