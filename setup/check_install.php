@@ -691,6 +691,12 @@ function tnef_check($name,$args)
 		$available = true;
 		$tnef[] = '/usr/bin/tnef';
 	}
+	// Mac ports location
+	elseif (file_exists('/opt/local/bin/tnef'))
+	{
+		$available = true;
+		$tnef[] = '/opt/local/bin/tnef';
+	}
 	elseif (exec("which tnef", $tnef))
 	{
 		$available = true;
