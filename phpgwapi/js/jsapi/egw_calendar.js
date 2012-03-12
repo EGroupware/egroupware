@@ -13,7 +13,8 @@
 "use strict";
 
 /*egw:uses
-	jquery.jquery_ui;
+	jquery.jquery-ui;
+	jquery.jquery-ui-timepicker-addon;
 
 	egw_core;
 	egw_preferences;
@@ -42,6 +43,16 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		};
 	};
 
+	function timePreferences(_egw)
+	{
+		return {
+			"timeFormat": egw.preference("timeformat") == 12 ? "h:mm tt" : "hh:mm",
+			"ampm": (egw.preference("timeformat") == "12"),
+			"hourGrid": 4,
+			"minuteGrid": 10
+		}
+	};
+
 	function setupCalendar(_egw, _input, _time, _callback, _context)
 	{
 		var prefs = calendarPreferences(_egw);
@@ -60,7 +71,15 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		}
 
 		// Get the preferences
-		_wnd.$j(_input).datepicker(params);
+		if(_time)
+		{
+			params = jQuery.extend(params, timePreferences(_egw));
+			_wnd.jQuery(_input).datetimepicker(params);
+		}
+		else
+		{
+			_wnd.$j(_input).datepicker(params);
+		}
 /*
 				onClose:	function(date_text, picker) {
 					// Only update if there's a change - "" if no date selected
@@ -79,10 +98,18 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	};
 
 	/**
+	 * Set up an input to have a time selection popup
+	 */
+	function setupTime(_egw, _input, _callback, _context)
+	{
+		_wnd.jQuery(_input).timepicker(timePreferences(_egw));
+	}
+
+	/**
 	 * Translate, and set as default values
 	 *
 	 */
-	function translate() {
+	function translateCalendar() {
 		var translate_fields = {
 			// These ones are simple strings
 			"nextText": false,
@@ -137,22 +164,50 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		_wnd.jQuery.datepicker.setDefaults(regional);
 	};
 
-	/** 
-	This should be global, static, run once, but adding this part breaks egw's js juggling
-	*/
+	function translateTimepicker()
+	{
+		var translate_fields = {
+			// These ones are simple strings
+			"timeOnlyTitle": false,
+			"timeText": false,
+			"hourText": false,
+			"minuteText": false,
+			"currentText": false,
+			"closeText": false
+		};
+		var regional = {};
+		var full = [];
+		for(var i in translate_fields)
+		{
+			var trans = _wnd.jQuery.timepicker._defaults[i];
+			if(typeof trans === 'string')
+			{
+				trans = egw().lang(trans);
+			}
+			regional[i] = trans;
+		}
+		_wnd.jQuery.timepicker.setDefaults(regional);
+	};
+
+	// Static initialization
+
+	// Set template's icon for date popup - could probably use jquery-ui icons
 	var css = this.module('css',_wnd);
-	css.css(".et2_date input.et2_date", "background-image: url(" + egw().image('datepopup') + ")");
-	/*
+	css.css(".et2_date input.hasDatepicker:hover", "background-image: url(" + egw().image('datepopup') + ")");
+
+	// Translate only once
         var ready = this.module('ready', _wnd);
-	ready.ready(translate,this);
-	*/
+	ready.ready(translateCalendar,this);
+	ready.ready(translateTimepicker,this);
 	
 	return {
 
 		calendar: function(_input, _time, _callback, _context) {
 			setupCalendar(this, _input, _time, _callback, _context);
+		},
+		time: function(_input, _callback, _context) {
+			setupTime(this, _input, _callback, _context);
 		}
-
 	}
 
 });

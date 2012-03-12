@@ -50,115 +50,37 @@ var et2_date = et2_inputWidget.extend({
 
 		this.span = $j(document.createElement("span")).addClass("et2_date");
 
-		if(this._type == "date" || this._type == "date-time")
-		{
-			this.input_date = $j(document.createElement("input"));
-			var type=(this._type == "date-timeonly" ? "time" : "text");
-			this.input_date.addClass("et2_date").attr("type", type).attr("size", 5)
-				.appendTo(this.span);
-		}
+		this.input_date = $j(document.createElement("input"));
+		var type=(this._type == "date-timeonly" ? "time" : "text");
+		this.input_date.addClass("et2_date").attr("type", type).attr("size", 5)
+			.appendTo(this.span);
 
-		// If date also has a time
-		if(this._type == "date-time" || this._type == "date-timeonly")
-		{
-			var input_time = $j(document.createElement("input")).attr("type", "time");
-			if(input_time.attr("type") == "time")
-			{
-				this.input_time = input_time;
-				this.input_time.appendTo(this.span).attr("size", 5);
-				// Update internal value if control changes
-				this.input_time.change(this,function(e){e.data.set_value($j(e.target).val());});
-			}
-			else
-			{
-				// browser doesn't support HTML5 time type 
-				this._make_time_selects(this.span);
-			}
-		}
 		this.setDOMNode(this.span[0]);
 
 		// jQuery-UI date picker
-		this.egw().calendar(this.input_date, this._type == "date-time");
+		if(this._type != 'date-timeonly')
+		{
+			this.egw().calendar(this.input_date, this._type == "date-time");
+		}
+		else
+		{
+			this.egw().time(this.input_date);
+		}
 	},
 
-	_make_time_selects: function (node) {
-		var timeformat = this.egw().preference("timeformat");
-		this.input_hours = $j(document.createElement("select"));
-		for(var i = 0; i < 24; i++)
-		{
-			var time = i;
-			if(timeformat == 12)
-			{
-				switch(i)
-				{
-					case 0:
-						time = "12 am";
-						break;
-					case 12: time = "12 pm";
-						break;
-					default: 
-						time = i % 12 + " " + (i < 12 ? "am" : "pm");
-				}
-			}
-			else if (time < 10) 
-			{
-				time = "0" + time;
-			}
-			var option = $j(document.createElement("option")).attr("value", i).text(time);
-			option.appendTo(this.input_hours);
-		}
-		this.input_hours.appendTo(node).change(this, function(e) {
-			if(e.data.type == "date-timeonly")
-			{
-				e.data.set_value(e.target.options[e.target.selectedIndex].value + ":" + $j('option:selected',e.data.input_minutes).text());
-			}
-			else
-			{
-				e.data.date.setHours(e.target.options[e.target.selectedIndex].value);
-				e.data.set_value(e.data.date);
-			}
-		});
-		node.append(":");
-		this.input_minutes = $j(document.createElement("select"));
-		for(var i = 0; i < 60; i+=5)
-		{
-			var time = i;
-			if(time < 10)
-			{
-				time = "0"+time;
-			}
-			var option = $j(document.createElement("option")).attr("value", time).text(time);
-			option.appendTo(this.input_minutes);
-		}
-		this.input_minutes.appendTo(node).change(this, function(e) {
-			if(e.data.type == "date-timeonly")
-			{
-				e.data.set_value($j('option:selected',e.data.input_hours).val() + ":" + e.target.options[e.target.selectedIndex].text);
-			}
-			else
-			{
-				e.data.date.setMinutes(e.target.options[e.target.selectedIndex].value);
-				e.data.set_value(e.data.date);
-			}
-		});
-	},
 	set_type: function(_type) {
 		this.type = _type;
 		this.createInputWidget();
 	},
 
 	set_value: function(_value) {
-		if(_value == null)
+		if(_value == null || _value == 0)
 		{
 			this.value = _value;
 
 			if(this.input_date)
 			{
 				this.input_date.val("");
-			}
-			if(this.input_time)
-			{
-				this.input_time.val("");
 			}
 			return;
 		}
@@ -167,28 +89,8 @@ var et2_date = et2_inputWidget.extend({
 		if(typeof _value == 'string' && isNaN(_value)) {
 			if(_value.indexOf(":") > 0 && this.type == "date-timeonly") {
 				this.value = _value;
-				// HTML5
-				if(!this.input_hours)
-				{
-					return this._super.apply(this, [_value]);
-				}
-				else
-				{
-					var parts = _value.split(":");
-					$j("option[value='"+parts[0]+"']",this.input_hours).attr("selected","selected");
-					if($j("option[value='"+parseInt(parts[1])+"']",this.input_minutes).length == 0)
-					{
-						// Selected an option that isn't in the list
-						var i = parseInt(parts[1]);
-						var option = $j(document.createElement("option")).attr("value", i).text(i < 10 ? "0"+i : i).attr("selected","selected");
-						option.appendTo(this.input_minutes);
-					}
-					else
-					{
-						$j("option[value='"+parts[1]+"']",this.input_minutes).attr("selected","selected");
-					}
-					return;
-				}
+				this.input_date.timepicker('setTime',_value);
+				return;
 			} else {
 				var text = new Date(_value);
 
@@ -207,30 +109,7 @@ var et2_date = et2_inputWidget.extend({
 			this.date = _value;
 		}
 
-		if(this.input_date)
-		{
-			this.input_date.datepicker('setDate',this.date);
-		}
-		if(this.input_time)
-		{
-			this.input_time.val(date("H:i", this.date));
-		}
-		if(this.input_hours)
-		{
-			$j("option[value='"+date("H",this.date)+"']",this.input_hours).attr("selected","selected");
-		}
-		if(this.input_minutes)
-		{
-			if($j("option[value='"+parseInt(date("i",this.date))+"']",this.input_minutes).length == 0)
-			{
-				// Selected an option that isn't in the list
-				var i = date("i",this.date);
-				var option = $j(document.createElement("option")).attr("value", i).text(i).attr("selected","selected");
-				option.appendTo(this.input_minutes);
-			} else {
-				$j("option[value='"+date("i",this.date)+"']",this.input_minutes).attr("selected","selected");
-			}
-		}
+		this.input_date.datepicker('setDate',this.date);
 	},
 
 	getValue: function() {
