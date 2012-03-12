@@ -202,7 +202,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.options.onclick = _values["onclick"];
 		}
+		var type = this._type
+		var attrs = jQuery.extend(_values, this.options);
+		var parent = this._parent;
 		jQuery(this.getDOMNode()).bind("click.et2_baseWidget", this, function(e) {
+			var widget = et2_createWidget(type,attrs,parent);
+			e.data = widget;
 			e.data.set_id(_values["id"]);
 			return e.data.click.call(e.data,e);
 		});
