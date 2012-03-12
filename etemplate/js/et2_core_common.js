@@ -520,7 +520,18 @@ function et2_insertLinkText(_text, _node, _target)
 
 		if (typeof s == "string" || typeof s == "number")
 		{
-			_node.appendChild(document.createTextNode(s));
+			// Include line breaks
+			var broken = s.split('\n');
+
+			for (var j = 0; j < broken.length; j++)
+			{
+				_node.appendChild(document.createTextNode(broken[j]));
+
+				if (j <= broken.length - 1)
+				{
+					_node.appendChild(document.createElement("br"));
+				}
+			}
 		}
 		else
 		{
