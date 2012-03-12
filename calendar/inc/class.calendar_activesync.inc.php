@@ -1055,7 +1055,7 @@ return array();	// temporary disabling meeting requests from calendar
 				$attendee->email = $info['email'];
 				if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
 			}
-			// email must NOT be empy, but MAY be an arbitrary text
+			// email must NOT be empty, but MAY be an arbitrary text
 			if (empty($attendee->email)) $attendee->email = 'noreply-'.$uid.'-uid@egroupware.org';
 
 			$message->attendees[] = $attendee;
@@ -1196,7 +1196,7 @@ return array();	// temporary disabling meeting requests from calendar
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		if (!($etag = $this->calendar->get_etag($id)))
+		if (!($etag = $this->calendar->get_etag($id, $nul, true, true)))	// last true: $only_master=true
 		{
 			$stat = false;
 			// error_log why access is denied (should never happen for everything returned by calendar_bo::search)
@@ -1236,7 +1236,7 @@ return array();	// temporary disabling meeting requests from calendar
 		if ($type != 'calendar') return false;
 
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
-		$ctag = $this->calendar->get_ctag($owner);
+		$ctag = $this->calendar->get_ctag($owner,'owner',true);	// true only consider recurrence master
 		// workaround for syncstate = 0 when calendar is empty causes synctate to not return 0 but array resulting in foldersync loop
 		if ($ctag == 0) $ctag = 1;
 		$changes = array();	// no change
