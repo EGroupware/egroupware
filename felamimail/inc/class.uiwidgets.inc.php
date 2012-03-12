@@ -340,7 +340,21 @@ class uiwidgets
 					'caption' => 'Forward',
 					'icon' => 'mail_forward',
 					'group' => $group,
-					'onExecute' => 'javaScript:mail_compose',
+					'children' => array(
+						'forwardinline' => array(
+							'caption' => 'forward inline',
+							'icon' => 'mail_forward',
+							'group' => $group,
+							'onExecute' => 'javaScript:mail_compose',
+							'allowOnMultiple' => false,
+						),
+						'forwardasattach' => array(
+							'caption' => 'forward as attachment',
+							'icon' => 'mail_forward',
+							'group' => $group,
+							'onExecute' => 'javaScript:mail_compose',
+						),
+					),
 				),
 				'composeasnew' => array(
 					'caption' => 'Compose as new',

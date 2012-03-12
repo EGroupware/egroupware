@@ -184,12 +184,12 @@ function mail_compose(_action, _elems)
 		url += '&reply_id='+_elems[0].id;
 		egw_openWindowCentered(url,'replyAll_'+_elems[0].id,700,egw_getWindowOuterHeight());
 	}
-	if (_action.id == 'forward')
+	if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
 	{
-		if (multipleIds)
+		if (multipleIds||_action.id == 'forwardasattach')
 		{
 			url += 'menuaction=felamimail.uicompose.compose';
-			mail_openComposeWindow(url)
+			mail_openComposeWindow(url,_action.id == 'forwardasattach');
 		}
 		else
 		{
@@ -900,7 +900,7 @@ function mail_openComposeWindow(_url,forwardByCompose) {
 			//sMessageList.concat(',');
 		}
 	}
-	if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0)
+	if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
 	{
 		askme = egw_appWindow('felamimail').lang_multipleforward;
 		//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
