@@ -152,20 +152,26 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
+		// Update the properties
+		var updateLink = false;
 		if (typeof _values["href"] != "undefined")
 		{
+			updateLink = true;
 			this.options.href = _values["href"];
 		}
 
-		if (typeof _values["value"] != "undefined")
+		if (typeof _values["value"] != "undefined" || updateLink)
 		{
-			et2_insertLinkText(this._parseText(_values["value"]), _nodes[0],
-				this.options.extra_link_target);
+			et2_insertLinkText(this._parseText(
+					_values["value"] ? _values["value"] : this.options.value),
+					_nodes[0],
+					this.options.extra_link_target
+			);
 		}
 
 		if (typeof _values["class"] != "undefined")
 		{
-			this.set_class(_values["class"]);
+			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
 });
