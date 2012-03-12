@@ -640,7 +640,7 @@ abstract class bo_tracking
 				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
 				$notification->set_message($this->get_body(false,$data,$old,false,$receiver)); // set message as plaintext
-				$notification->set_message($this->get_body(true,$data,$old,false,$receiver)); // and html
+				$notification->set_message($this->get_body(true,$data,$old,true,$receiver)); // and html
 				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
 				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
 				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));

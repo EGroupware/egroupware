@@ -25,7 +25,12 @@
 *
 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 */
-class etemplate extends boetemplate
+//*
+//$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+class etemplate extends etemplate_new{}
+class etemplate_old extends boetemplate
+//*/
+//class etemplate extends boetemplate
 {
 	/**
 	* integer debug-level or template-name or cell-type or '' = off

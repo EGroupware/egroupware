@@ -76,7 +76,7 @@ class etemplate_widget_tree extends etemplate_widget
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
-			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
+			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
 
@@ -203,7 +203,7 @@ class etemplate_widget_tree extends etemplate_widget
 					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
 
 					// 1D array
-					$options[$cat['id']] = $cat + array('text' => $cat['name'], 'path' => $path);
+					$options[$cat['id']] = $cat + array('text' => $s, 'path' => $path);
 
 					// Tree in array
 					//$options[$cat['parent']][] = $cat;

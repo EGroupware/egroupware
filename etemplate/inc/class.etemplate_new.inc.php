@@ -135,6 +135,8 @@ class etemplate_new extends etemplate_widget_template
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
 		$template->run('beforeSendToClient');
+error_log('-------------');
+error_log(array2string($sel_options));
 
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
