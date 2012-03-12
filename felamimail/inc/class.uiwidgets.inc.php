@@ -395,7 +395,7 @@ class uiwidgets
 					'icon' => 'fileexport',
 					'children' => array(
 						'save2disk' => array(
-							'caption' => 'Save to disk',
+							'caption' => 'Save message to disk',
 							'hint' => 'Save message to disk',
 							'group' => $group,
 							'icon' => 'fileexport',
@@ -418,7 +418,7 @@ class uiwidgets
 					'icon' => 'kmmsgread',
 					'children' => array(
 						'header' => array(
-							'caption' => 'Header',
+							'caption' => 'Header lines',
 							'hint' => 'View header lines',
 							'group' => $group,
 							'icon' => 'kmmsgread',

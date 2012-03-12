@@ -298,6 +298,7 @@ location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail sch
 mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	de	Mail Grid Verhalten: wieviele Nachrichten soll der Mail Grid laden? Wenn Sie zeige alle Nachrichten wählen wird die Möglichkeit in der Anzeige der Mailliste zu blättern unterbunden.
 mail server login type	admin	de	Typ der Mailserver Anmeldung
 mail settings	felamimail	de	E-Mail-Einstellungen
+mail source	felamimail	de	Nachrichtenquelltext
 mainmessage	felamimail	de	Hauptnachricht
 manage email accounts and identities	common	de	Verwaltung von E-Mail-Konten/Identitäten
 manage emailaccounts	common	de	E-Mail-Konten verwalten
@@ -432,8 +433,9 @@ save as infolog	felamimail	de	Als Infolog speichern
 save as ticket	felamimail	de	Als Ticket speichern
 save as tracker	felamimail	de	Als Ticket speichern
 save changes	felamimail	de	Änderungen speichern
-save message to disk	felamimail	de	Nachricht speichern
+save message to disk	felamimail	de	Nachricht auf Datenträger speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	de	Das speichern der Nachricht %1 schlug fehl. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
+save to filemanager	felamimail	de	Nachricht mit Dateimanger speichern
 save:	felamimail	de	Speichern:
 saving of message %1 failed. destination folder %2 does not exist.	felamimail	de	Speichern der Nachricht %1 schlug fehl. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	felamimail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
