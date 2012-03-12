@@ -2,33 +2,6 @@
 	<head>
 		<title>ET2 - Test</title>
 
-		<script>
-			
-			var url = '/egroupware';
-
-			// legacy code
-			egw_webserverUrl = url;
-
-			// reference the egw object from the parent window or set the
-			// webserver url
-			if (window.opener && typeof window.opener.egw != 'undefined')
-			{
-				window['egw'] = window.opener.egw;
-			}
-			else if (window.top && typeof window.top.egw != 'undefined')
-			{
-				window['egw'] = window.top.egw;
-			}
-			else
-			{
-				// Create a "preferences only" egw object
-				window['egw'] = {
-					'prefsOnly': true,
-					'webserverUrl': url
-				};
-			}
-		
-		</script>
 		<script src="jquery.js"></script>
 		<script src="../../../phpgwapi/js/jsapi/jsapi.js"></script>
 		<script src="../../../phpgwapi/js/egw_json.js"></script>
@@ -163,10 +136,9 @@
 		<div id="container"></div>
 		<div style="color: silver;">[Just here to test the dynheight component...]</div>
 		<script>
+window.egw_webserverUrl = egw.webserverUrl = '/egroupware';
+			var et2 = new (egw().etemplate2)(document.getElementById("container"), "");
 
-			egw(window).ready(function() {
-				var et2 = new etemplate2(document.getElementById("container"), "");
-			},null,true);
 			function open_xet(file, content) {
 				et2.load(file, content);
 			}

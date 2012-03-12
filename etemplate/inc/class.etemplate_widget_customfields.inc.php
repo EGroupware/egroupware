@@ -136,7 +136,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 		}
 		// check if name refers to a single custom field --> show only that
-		if (($pos=strpos($form_name,self::$prefix)) !== false && // allow the prefixed name to be an array index too
+		if (($pos=strpos($form_name,$this->prefix)) !== false && // allow the prefixed name to be an array index too
 			preg_match("/$this->prefix([^\]]+)/",$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
@@ -145,7 +145,6 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			$form_name = substr($form_name,0,-strlen("[$this->prefix$name]"));
 		}
 
-		if(!is_array($fields)) $fields = array();
 		switch($type = $this->type)
 		{
 			case 'customfields-types':
