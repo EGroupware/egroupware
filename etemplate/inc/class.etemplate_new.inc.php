@@ -374,6 +374,35 @@ class etemplate_new extends etemplate_widget_template
 		}
 		return (int)$size;
 	}
+
+	/**
+	* creates HTML from an eTemplate
+	*
+	* Compatibility function for calendar, which uses etemplate::show to generate html --> use etemplate_old class
+	* @todo Once etemplate_new is renamed to etemplate and we have an explicit etemplate_old class, change it at caller (egw. calendar)
+	*
+	* This is done by calling show_cell for each cell in the form. show_cell itself
+	* calls show recursivly for each included eTemplate.
+	* You could use it in the UI-layer of an app, just make shure to call process_show !!!
+	* This is intended as internal function and should NOT be called by new app's direct,
+	* as it deals with HTML and is so UI-dependent, use exec instead.
+	*
+	* @param array $content with content for the cells, keys are the names given in the cells/form elements
+	* @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
+	* @param array $readonlys with names of cells/form-elements to be not allowed to change
+	* 		This is to facilitate complex ACL's which denies access on field-level !!!
+	* @param string $cname basename of names for form-elements, means index in $_POST
+	* 		eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+	* @param string $show_c name/index for name expansion
+	* @param string $show_row name/index for name expansion
+	* @return string the generated HTML
+	*/
+	function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
+	{
+		$etemplate_old = new etemplate_old($this->name, $this->laod_via);
+
+		return $etemplate_old->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+	}
 }
 
 if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_new')
