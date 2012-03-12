@@ -521,13 +521,14 @@ function et2_insertLinkText(_text, _node, _target)
 		if (typeof s == "string" || typeof s == "number")
 		{
 			// Include line breaks
-			var broken = s.split('\n');
+			var lines = s.split('\n');
 
-			for (var j = 0; j < broken.length; j++)
+			// Insert the lines
+			for (var j = 0; j < lines.length; j++)
 			{
-				_node.appendChild(document.createTextNode(broken[j]));
+				_node.appendChild(document.createTextNode(lines[j]));
 
-				if (j <= broken.length - 1)
+				if (j < lines.length - 1)
 				{
 					_node.appendChild(document.createElement("br"));
 				}
