@@ -1,3 +1,33 @@
+egroupware-epl (11.1.20120312-1) hardy; urgency=low
+
+  * InfoLog: fixed multiple [apply] after copying an InfoLog creates multiple new infologs
+  * InfoLog: make fields excluded from copying to a new sub-entry configurable and add scheduling an appointment to action
+  * Admin/Setup: fixed custom translations got lost during update
+  * Filemanager/Admin: ability to check virtual filesystem (Admin >> Check virtual filesystem) and some code to prevent double creation of directories
+  * ProjectManager: Show Infolog Type Icon in Project Elements list
+  * Infolog: preferences to receive notification as member of owner group of Infolog type
+  * News: fixed SQL error happening with multiple translations
+  * eMail: fix bug introduced with rev37914, sometimes an additional Mailbox Mail was introduced, as Mail was assumed falsely as mailbox prefix
+  * CardDAV/GroupDAV/Addressbook: works now with LDAP backend (account only or all contacts), fixed not working update of accounts (SQL and LDAP), changed ctag generation to work with LDAP too
+  * PostgreSQL/Setup/EMailAdmin: fixed Setup >> Configuration was not storing anything
+  * Tracker: mailhandling fix bug regarding tracker item creator. (use known user for tr_creator when required, test on ADMIN/TECHNICIAN/USER before); use mail date for tracker item creation date/comment creation date; add some mail header information on new Tracker items (from/to/cc/date/subject)
+  * Timesheet: fixed wrong sum for timesheets;
+  * Tracker: feature to be able to add simple mailheader information to description and/or comments on auto mailhandling -> must be enabled by tracker mailhandling config
+  * Tracker: feature to be able to show description in tracker list view (pref to be able to handle height of displayed description)
+  * ProjectManager: filter elements by app
+  * eMail: feature to be able to view plain message source on rightclick action
+  * Translations: Italian translation improvements for email, emailadmin and calendar
+  * eSync: changed SyncCache from File to Folder based. Needed to stabilize sync for Android devices running multiple syncs in parallel. Sendmail, Smartforward, Smartreply return WBXML in AS >=14.0 mode only in case of an error occuring.
+  * Admin/Addressbook: do NOT mark accounts as deleted, as accounts do NOT know that state, always deleted them and allow to cleanup already marked as deleted accounts in addressbook
+  * eMail: feature to be able to save Message to filemanager via context menu action
+  * InfoLog/CalDAV: fixed wrong timezone used for iCal generation
+  * Filemanager/FMail/Calendar: allow to open .eml and .ics files from filemanager in fmail or calendar
+  * InfoLog CSV import: do not notify a 2nd time when primary link get set (UI does not do it either)
+  * EMail/Calendar: for meeting requests to recuring events check recurrance enddate, not event-date, to deny importing it with "event is in the past"
+  * Filemanager/Versioning: fixed not working download of older revisions of attachments, fix requires PHP 5.3 for LSB, should not break under 5.2
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 12 Mar 2012 13:15:45 +0100
+
 egroupware-epl (11.1.20120222-1) hardy; urgency=low
 
   * eMail/eSync: using tidy (if loadable) instead of purifier to straighten out html when retieving the displayableBody. This has a huge impact on performance with certain mails.
