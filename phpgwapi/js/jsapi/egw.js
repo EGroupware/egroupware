@@ -28,6 +28,6 @@
 	egw_css;
 	egw_calendar;
 	egw_ready;
-	egw_jquery;
+//	egw_jquery;
 */
 

@@ -90,9 +90,13 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		this.header = new et2_nextmatch_header_bar(this, this.div);
 
+		this.innerDiv = $j(document.createElement("div"))
+			.appendTo(this.div);
+
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = new et2_dynheight(null, this.div, 150);
+		this.dynheight = new et2_dynheight(this.egw().window,
+				this.innerDiv, 150);
 
 		// Create the action manager
 		this.actionManager = new egwActionManager();
@@ -111,7 +115,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		}
 
 		// Create the outer grid container
-		this.dataviewContainer = new et2_dataview_gridContainer(this.div,
+		this.dataviewContainer = new et2_dataview_gridContainer(this.innerDiv,
 			this.dataProvider, this.egw());
 
 		this.activeFilters = {};
@@ -631,7 +635,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				.append(select.getDOMNode())
 				.append(okButton.getDOMNode())
 				.append(cancelButton.getDOMNode())
-				.appendTo(this.div);
+				.appendTo(this.innerDiv);
 
 			// Add default checkbox for admins
 			var apps = this.egw().user('apps');

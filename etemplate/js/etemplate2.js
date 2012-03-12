@@ -50,8 +50,6 @@
 	jsapi.egw_json;
 */
 
-egw.extend('etemplate2', egw.MODULE_GLOBAL, function() {
-
 /**
  * The etemplate2 class manages a certain etemplate2 instance.
  *
@@ -161,6 +159,7 @@ etemplate2.prototype.load = function(_url, _data)
 	// Asynchronously load the XET file (code below is executed ahead of the
 	// code in the callback function)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
+
 		// Read the XML structure
 		this.widgetContainer.loadFromXML(_xmldoc);
 
@@ -181,7 +180,7 @@ etemplate2.prototype.load = function(_url, _data)
 	this.widgetContainer = new et2_container(null);
 	this.widgetContainer.setApiInstance(egw(egw.elemWindow(this.DOMContainer)));
 	this.widgetContainer.setInstanceManager(this);
-	this.widgetContainer.setParentDOMNode(frag);
+	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
 	// store the id to submit it back to server
 	if(_data) {
@@ -377,9 +376,4 @@ function etemplate2_handle_validation_error(_type, _response)
 // requested the response from the server
 egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
 egw(window).registerJSONPlugin(etemplate2_handle_validation_error, null, 'et2_validation_error');
-
-// Return the etemplate2 constructor
-return {'etemplate2': etemplate2};
-
-});
 

@@ -102,8 +102,18 @@ class etemplate_new extends etemplate_widget_template
 	function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
 	{
 
-		// Overwrite "nonavbar" is the output_mode is two
-		$GLOBALS['egw_info']['flags']['nonavbar'] = ($output_mode == 2);
+		// Include the etemplate2 javascript code
+		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
+
+		// load translations
+		translation::add_app('etemplate');
+		foreach(translation::$loaded_apps as $app => $lang)
+		{
+			egw_framework::validate_file('/phpgwapi/lang.php', array(
+				'app' => $app,
+				'lang' => $lang,
+			));
+		}
 
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
@@ -157,7 +167,7 @@ class etemplate_new extends etemplate_widget_template
 		<div id="container"></div>
 		<script>
 			egw(window).ready(function() {
-				var et2 = new (egw().etemplate2)(document.getElementById("container"), "etemplate_new::ajax_process_content");
+				var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
 				et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
 			}, null, true);
 		</script>

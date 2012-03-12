@@ -13,6 +13,8 @@
 "use strict";
 
 /*egw:uses
+	jquery.jquery_ui;
+
 	egw_core;
 	egw_preferences;
 	egw_jquery;
@@ -58,7 +60,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		}
 
 		// Get the preferences
-		_egw.$j(_input).datepicker(params);
+		$j(_input).datepicker(params);
 /*
 				onClose:	function(date_text, picker) {
 					// Only update if there's a change - "" if no date selected

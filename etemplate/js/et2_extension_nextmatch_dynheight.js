@@ -30,13 +30,12 @@ var et2_dynheight = Class.extend({
 	 * @param _outerNode is the node which surrounds the _innerNode and to
 	 * 	which extend the innerNode should be expanded without creating a
 	 * 	scrollbar. Note: The outer node must be a parent of the inner node.
-	 * 	If "null" is passed, the outer node is set to "window".
 	 * @param _innerNode is the node which should be scaled. Call update to
 	 * 	scale the node.
 	 * @param _minHeight is the minimum height the inner node should have
 	 */
 	init: function(_outerNode, _innerNode, _minHeight) {
-		this.outerNode = _outerNode ? $j(_outerNode) : $j(window);
+		this.outerNode = $j(_outerNode);
 		this.innerNode = $j(_innerNode);
 		this.minHeight = _minHeight;
 
@@ -57,6 +56,9 @@ var et2_dynheight = Class.extend({
 		{
 			// Initialize the height calculation
 			this._initialize();
+
+			console.log(this.outerNode);
+			console.log(this.innerNode);
 
 			// Get the outer container height
 			var oh = this.outerNode.height();
@@ -157,13 +159,6 @@ var et2_dynheight = Class.extend({
 			var ioh = this.innerNode.outerHeight(true);
 			var ih = this.innerNode.height();
 			this.innerMargin = ioh - ih;
-
-			// Calculate the outer margin
-			var node = this.outerNode;
-			if (node[0] == window)
-			{
-				node = $j("body");
-			}
 
 			this.initialized = true;
 		}
