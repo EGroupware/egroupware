@@ -1689,8 +1689,9 @@ function replace_eTemplate_onsubmit()
 					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
 				}
 			}
-			// ignore events in the past
-			if ($this->bo->date2ts($event['start']) < $this->bo->now_su)
+			// ignore events in the past (for recurring events check enddate!)
+			if ($this->bo->date2ts($event['start']) < $this->bo->now_su &&
+				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
 			{
 				$msg = lang('Requested meeting is in the past!');
 				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
