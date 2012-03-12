@@ -60,7 +60,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		}
 
 		// Get the preferences
-		$j(_input).datepicker(params);
+		_wnd.$j(_input).datepicker(params);
 /*
 				onClose:	function(date_text, picker) {
 					// Only update if there's a change - "" if no date selected
@@ -102,7 +102,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		var full = [];
 		for(var i in translate_fields)
 		{
-			var trans = jQuery.datepicker._defaults[i];
+			var trans = _wnd.jQuery.datepicker._defaults[i];
 			if(typeof trans === 'string')
 			{
 				trans = egw().lang(trans);
@@ -134,7 +134,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		}
 */
 
-		jQuery.datepicker.setDefaults(regional);
+		_wnd.jQuery.datepicker.setDefaults(regional);
 	};
 
 	/** 
