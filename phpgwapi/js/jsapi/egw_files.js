@@ -27,37 +27,35 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 */
 	var files = {};
 
+	function addFile(src)
+	{
+		if (src)
+		{
+			// Remove everything after the "?"
+			src = src.split('?').shift();
+			files[src] = true;
+		}
+	}
+
 	/**
 	 * Gather all already loaded JavaScript and CSS files on document load.
 	 * 
 	 * TODO: Currently this can only contain the JS files present in the main
 	 * window.
 	 */
-	this.module('ready', _wnd).ready(function() {
-		// Iterate over the script tags
-		var scripts = _wnd.document.getElementsByTagName('script');
-		for (var i = 0; i < scripts.length; i++)
-		{
-			var src = scripts[i].getAttribute('src');
+	// Iterate over the script tags
+	var scripts = _wnd.document.getElementsByTagName('script');
+	for (var i = 0; i < scripts.length; i++)
+	{
+		addFile(scripts[i].getAttribute('src'));
+	}
 
-			if (src)
-			{
-				files[src] = true;
-			}
-		}
-
-		// Iterate over the link tags
-		var links = _wnd.document.getElementsByTagName('link');
-		for (var i = 0; i < links.length; i++)
-		{
-			var src = links[i].getAttribute('href');
-
-			if (src)
-			{
-				files[src] = true;
-			}
-		}
-	});
+	// Iterate over the link tags
+	var links = _wnd.document.getElementsByTagName('link');
+	for (var i = 0; i < links.length; i++)
+	{
+		addFile(links[i].getAttribute('href'));
+	}
 
 	function includeJSFile(_jsFile, _callback, _context)
 	{
@@ -104,6 +102,10 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 			// Request the given javascript file
 			egw.debug('info', 'Requested JS file "%s" from server', _jsFile);
+		}
+		else
+		{
+			alreadyLoaded = true;
 		}
 
 		// If the file is already loaded, call the callback

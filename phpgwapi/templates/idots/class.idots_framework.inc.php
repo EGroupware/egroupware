@@ -90,6 +90,8 @@ class idots_framework extends egw_framework
 		self::$header_done = true;
 
 		// load translations
+		self::validate_file('jsapi', 'egw', 'phpgwapi');
+
 		translation::add_app('etemplate');
 		foreach(translation::$loaded_apps as $app => $lang)
 		{
@@ -99,7 +101,6 @@ class idots_framework extends egw_framework
 			));
 		}
 
-		self::validate_file('jsapi', 'egw', 'phpgwapi');
 		if ($this->isTop(false))
 		{
 			self::validate_file('.', 'etemplate2', 'etemplate');
