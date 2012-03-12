@@ -17,7 +17,7 @@
 	et2_core_common;
 
 	et2_dataview_view_grid;
-//	et2_dataview_view_resizeable;
+	et2_dataview_view_resizeable;
 */
 
 /**
@@ -373,11 +373,11 @@ var et2_dataview_gridContainer = Class.extend({
 			// Every column but last can be resized // TODO: This won't work as the last column could be hidden
 			if(i < this.columns.length-1) {
 				var enc_column = self.columnMgr.getColumnById(col.id);
-/*				et2_dataview_makeResizeable(column, function(_w) {
+				et2_dataview_makeResizeable(column, function(_w) {
 						this.set_width(_w + "px");
 						self.columnMgr.updated = true;
 						self.updateColumns();
-				}, enc_column);*/
+				}, enc_column);
 			}
 
 			// Store both nodes in the columnNodes array

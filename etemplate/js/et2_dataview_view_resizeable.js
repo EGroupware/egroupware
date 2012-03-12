@@ -16,8 +16,7 @@
  * This set of functions is currently only supporting resizing in ew-direction
  */
 
-(function ()
-{
+(function() {
 
 	// Define some constants
 	var RESIZE_BORDER = 7;
@@ -32,9 +31,14 @@
 		return (ol > (_elem.outerWidth(true) - RESIZE_BORDER));
 	}
 
+	var helper = null;
+	var overlay = null;
+	var didResize = false;
+	var resizeWidth = 0;
+
 	function startResize(_outerElem, _elem, _callback)
 	{
-		if (this.overlay == null || this.helper == null)
+		if (overlay == null || helper == null)
 		{
 			// Prevent text selection
 			_elem[0].onselectstart = function() {
@@ -42,11 +46,11 @@
 			}
 
 			// Reset the "didResize" flag
-			this.didResize = false;
+			didResize = false;
 
 			// Create the resize helper
 			var left = _elem.offset().left;
-			this.helper = $j(document.createElement("div"))
+			helper = $j(document.createElement("div"))
 				.addClass("egwResizeHelper")
 				.appendTo("body")
 				.css("top", _elem.offset().top + "px")
@@ -54,7 +58,7 @@
 				.css("height", _outerElem.outerHeight(true) + "px");
 
 			// Create the overlay which will be catching the mouse movements
-			this.overlay = $j(document.createElement("div"))
+			overlay = $j(document.createElement("div"))
 				.addClass("egwResizeOverlay")
 
 				.bind("mousemove", function(e) {
@@ -65,7 +69,7 @@
 				})
 
 				.bind("mouseup", function() {
-					stopResize.call();
+					stopResize();
 
 					// Reset text selection
 					_elem[0].onselectstart = null;
@@ -95,19 +99,7 @@
 		}
 	}
 
-	/**
-	 * Constructor of the et2_dataview_resizeable class. et2_dataview_resizeable
-	 * is instanciated for each dataview grid.
-	 */
-	function et2_dataview_resizeable(_body)
-	{
-		var helper = null;
-		var overlay = null;
-		var didResize = false;
-		var resizeWidth = 0;
-	}
-
-	et2_dataview_resizeable.prototype.makeResizeable = function(_elem, _callback, _context)
+	this.et2_dataview_makeResizeable = function(_elem, _callback, _context)
 	{
 		// Get the table surrounding the given element - this element is used to
 		// align the helper properly
@@ -123,7 +115,7 @@
 			if (inResizeRegion(e.clientX, _elem))
 			{
 				// Start the resizing
-				startResize.call(this, outerTable, _elem, function(_w) {
+				startResize(outerTable, _elem, function(_w) {
 					_callback.call(_context, _w);
 				});
 			}
@@ -132,15 +124,10 @@
 		});
 	}
 
-	et2_dataview_resizeable.prototype.resetResizeable = function(_elem)
+	this.et2_dataview_resetResizeable = function(_elem)
 	{
 		// Remove all events in the ".resize" namespace from the element
 		_elem.unbind(".resize");
 	}
-
-	// Publish the et2_dataview_resizeable class
-	this.et2_dataview_resizeable = et2_dataview_resizeable;
-}
-
 }).call(window);
 
