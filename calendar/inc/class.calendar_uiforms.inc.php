@@ -794,7 +794,9 @@ class calendar_uiforms extends calendar_ui
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 		#error_log(__METHOD__.print_r($event,true));
 		$boical = new calendar_ical();
-		$ics = $boical->exportVCal(array($event),'2.0','request',false);
+		// we need to pass $event[id] so iCal class reads event again,
+		// as event is in user TZ, but iCal class expects server TZ!
+		$ics = $boical->exportVCal(array($event['id']),'2.0','request',false);
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
