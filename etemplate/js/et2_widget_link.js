@@ -685,6 +685,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 * Used as a callback, so node is provided to make sure we get the right one
 	 */
 	set_title: function(node, _value) {
+		if(_value === false || _value === null) _value = "";
 		jQuery(node).text(_value+"");
 	},
 
@@ -717,7 +718,15 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.link = $j(_nodes[0]);
-		this.set_value(_values["value"]);
+		if(typeof _values["value"] !== "undefined" && typeof _values["value"].title !== "undefined")
+		{
+			// Direct route
+			this.set_title(_nodes[0], _values["value"].title);
+		}
+		else
+		{
+			this.set_value(_values["value"]);
+		}
 	}
 
 });
