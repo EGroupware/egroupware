@@ -1,3 +1,11 @@
+egroupware-epl (11.1.20120313-1) hardy; urgency=low
+
+  * Calendar: mail all participants was attaching iCal with wrong time(zone)
+  * ProjectManager: preferences to set order of bars in GanttChart
+  * Tracker: fixed times column was only displayed in session after storing column-selection, also switch new summary+describtion column off by default
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 13 Mar 2012 12:41:33 +0100
+
 egroupware-epl (11.1.20120312-1) hardy; urgency=low
 
   * InfoLog: fixed multiple [apply] after copying an InfoLog creates multiple new infologs
