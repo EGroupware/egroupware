@@ -487,8 +487,10 @@ abstract class bo_tracking
 		if ($this->creator_field && ($email = $GLOBALS['egw']->accounts->id2name($data[$this->creator_field],'account_email')) &&
 			!in_array($email, $email_sent))
 		{
-			$this->send_notification($data,$old,$email,$data[$this->creator_field],'notify_creator');
-			$email_sent[] = $email;
+			if ($this->send_notification($data,$old,$email,$data[$this->creator_field],'notify_creator'))
+			{
+				$email_sent[] = $email;
+			}
 		}
 
 		// members of group when entry owned by group
@@ -499,8 +501,10 @@ abstract class bo_tracking
 				if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) &&
 					!in_array($email, $email_sent))
 				{
-					$this->send_notification($data,$old,$email,$u,'notify_owner_group_member');
-					$email_sent[] = $email;
+					if ($this->send_notification($data,$old,$email,$u,'notify_owner_group_member'))
+					{
+						$email_sent[] = $email;
+					}
 				}
 			}
 		}
@@ -530,9 +534,11 @@ abstract class bo_tracking
 				{
 					if (($email = $GLOBALS['egw']->accounts->id2name($assignee,'account_email')) && !in_array($email, $email_sent))
 					{
-						$this->send_notification($data,$old,$email,$assignee,'notify_assigned',
-							in_array($assignee,$assignees) !== in_array($assignee,$old_assignees) || $deleted);	// assignment changed
-						$email_sent[] = $email;
+						if ($this->send_notification($data,$old,$email,$assignee,'notify_assigned',
+							in_array($assignee,$assignees) !== in_array($assignee,$old_assignees) || $deleted))	// assignment changed
+						{
+							$email_sent[] = $email;
+						}
 					}
 				}
 				else	// item assignee is a group
@@ -541,9 +547,11 @@ abstract class bo_tracking
 					{
 						if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) && !in_array($email, $email_sent))
 						{
-							$this->send_notification($data,$old,$email,$u,'notify_assigned',
-								in_array($u,$assignees) !== in_array($u,$old_assignees) || $deleted);	// assignment changed
-							$email_sent[] = $email;
+							if ($this->send_notification($data,$old,$email,$u,'notify_assigned',
+								in_array($u,$assignees) !== in_array($u,$old_assignees) || $deleted))	// assignment changed
+							{
+								$email_sent[] = $email;
+							}
 						}
 					}
 				}
@@ -558,8 +566,10 @@ abstract class bo_tracking
 			{
 				if (strchr($email,'@') !== false && !in_array($email, $email_sent))
 				{
-					$this->send_notification($data,$old,$email,$lang,'notify_copy');
-					$email_sent[] = $email;
+					if ($this->send_notification($data,$old,$email,$lang,'notify_copy'))
+					{
+						$email_sent[] = $email;
+					}
 				}
 			}
 		}
@@ -593,7 +603,7 @@ abstract class bo_tracking
 	 * @param string $check=null pref. to check if a notification is wanted
 	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
-	 * @return boolean true on success or false on error (error-message is in $this->errors)
+	 * @return boolean true on success or false if notification not requested or error (error-message is in $this->errors)
 	 */
 	public function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true,$deleted=null)
 	{
