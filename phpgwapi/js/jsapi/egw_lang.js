@@ -14,6 +14,8 @@
 
 /*egw:uses
 	egw_core;
+	egw_files;
+	egw_ready;
 */
 
 egw.extend('lang', egw.MODULE_GLOBAL, function() {
@@ -72,6 +74,50 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 				translation = translation.replace('|%'+i+'|', arguments[i]);
 			}
 			return translation;
+		},
+
+		/**
+		 * Includes the language files for the given applications -- if those
+		 * do not already exist, include them.
+		 *
+		 * @param _window is the window which needs the language -- this is
+		 * 	needed as the "ready" event has to be postponed in that window until
+		 * 	all lang files are included.
+		 * @param _apps is an array containing the applications for which the
+		 * 	data is needed as objects of the following form:
+		 * 		{
+		 * 			app: <APPLICATION NAME>,
+		 * 			lang: <LANGUAGE CODE>
+		 * 		}
+		 */
+		langRequire: function(_window, _apps) {
+			// Get the ready and the files module for the given window
+			var ready = this.module("ready", _window);
+			var files = this.module("files", this.window);
+
+			// Build the file names which should be included
+			var jss = [];
+			for (var i = 0; i < _apps.length; i++)
+			{
+				if (typeof lang_arr[_apps[i].app] === "undefined")
+				{
+					jss.push(this.webserverUrl
+						+ '/phpgwapi/lang.php?app='
+						+ _apps[i].app + '&lang=' + _apps[i].lang);
+				}
+			}
+
+			// Only continue if we need to include a language
+			if (jss.length > 0)
+			{
+				// Require a "ready postpone token"
+				var token = ready.readyWaitFor();
+
+				// Call "readyDone" once all js files have been included.
+				files.includeJS(jss, function () {
+					ready.readyDone(token);
+				}, this);
+			}
 		}
 	};
 

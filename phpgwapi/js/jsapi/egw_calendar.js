@@ -18,7 +18,7 @@
 
 	egw_core;
 	egw_preferences;
-	egw_jquery;
+//	egw_jquery;
 	egw_css;
 */
 
