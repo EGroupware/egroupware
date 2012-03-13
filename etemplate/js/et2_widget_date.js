@@ -407,9 +407,12 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],{
 				_nodes[i].removeChild(_nodes[i].childNodes[j]);
 			}
 		}
-		var display = this._convert_to_display(_values.value);
-		_nodes[0].appendChild(document.createTextNode(display.value));
-		_nodes[1].appendChild(document.createTextNode(display.unit));
+		if(typeof _values.value !== 'undefined')
+		{
+			var display = this._convert_to_display(_values.value);
+			_nodes[0].appendChild(document.createTextNode(display.value));
+			_nodes[1].appendChild(document.createTextNode(display.unit));
+		}
 	}
 
 });
