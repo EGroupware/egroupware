@@ -426,6 +426,11 @@ var et2_menulist = et2_DOMWidget.extend({
 		}
 
 		return null;
+	},
+
+	// Also need to pass through parent's children
+	getChildren: function() {
+		return this._parent.getChildren();
 	}
 
 });
