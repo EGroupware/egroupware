@@ -1566,7 +1566,7 @@ class infolog_ui
 			//_debug_array($headers);
 			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
 
-			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
+			$message = bofelamimail::getdisplayableBody($bofelamimail, $bodyParts);
 			//echo __METHOD__.'<br>';
 			//_debug_array($attachments);
 			if (is_array($attachments))
@@ -1634,44 +1634,6 @@ class infolog_ui
 					'attachments'=>$attachments,
 					'headers'=>$headers,
 					);
-	}
-
-	static function &getdisplayableBody(&$bofelamimail, $bodyParts)
-	{
-		for($i=0; $i<count($bodyParts); $i++)
-		{
-			if (!isset($bodyParts[$i]['body'])) {
-				$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i]);
-				$message .= $bodyParts[$i]['body'];
-				continue;
-			}
-
-			// add line breaks to $bodyParts
-			$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
-
-			if ($bodyParts[$i]['mimeType'] == 'text/html') {
-				// convert HTML to text, as we dont want HTML in infologs
-				$newBody = $bofelamimail->convertHTMLToText($newBody,true);
-				$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
-				$message .= $newBody;
-				continue;
-			}
-			$newBody = strip_tags($newBody);
-			$newBody  = explode("\n",$newBody);
-			// create it new, with good line breaks
-			reset($newBody);
-			while(list($key,$value) = @each($newBody))
-			{
-				if (trim($value) != '') {
-					#if ($value != "\r") $value .= "\n";
-				} else {
-					// if you want to strip all empty lines uncomment the following
-					#continue;
-				}
-				$message .= $bofelamimail->wordwrap($value,75,"\n");
-			}
-		}
-		return $message;
 	}
 
 	/**

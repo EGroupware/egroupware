@@ -37,6 +37,13 @@
 		// message types
 		var $type = array("text", "multipart", "message", "application", "audio", "image", "video", "other");
 
+		/**
+		 * static used to configure tidy - if tidy is loadable, this config is used with tidy to straighten out html, instead of using purifiers tidy mode
+		 *
+		 * @array
+		 */
+		static $tidy_config = array('clean'=>true,'output-html'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>"auto",'word-2000'=>true,'wrap'=>0);
+
 		// message encodings
 		var $encoding = array("7bit", "8bit", "binary", "base64", "quoted-printable", "other");
 		static $displayCharset;
@@ -1102,13 +1109,12 @@
 				//error_log($_html);
 			}
 			// using purify above should have tidied the tags already sufficiently 
-			// using purify above should have tidied the tags already sufficiently 
 			if ($usepurify == false && $cleanTags==true)
 			{
 				if (extension_loaded('tidy'))
 				{
 					$tidy = new tidy();
-					$cleaned = $tidy->repairString($_html, array('clean'=>true,'output-xhtml'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>false,'word-2000'=>true,'wrap'=>0),'utf8');
+					$cleaned = $tidy->repairString($_html, self::$tidy_config,'utf8');
 					// Found errors. Strip it all so there's some output
 					if($tidy->getStatus() == 2)
 					{
@@ -3457,7 +3463,7 @@
 		 * @params bodyPorts array with the bodyparts
 		 * @returns string a preformatted string with the mails converted to text
 		 */
-		static function &getdisplayableBody(&$bofelamimail, $bodyParts)
+		static function &getdisplayableBody(&$bofelamimail, $bodyParts,  $preserveHTML = false)
 		{
 			for($i=0; $i<count($bodyParts); $i++)
 			{
@@ -3471,10 +3477,31 @@
 				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 
 				if ($bodyParts[$i]['mimeType'] == 'text/html') {
+					// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
+					$newBody = str_replace("\n"," ",$newBody);
 					// convert HTML to text, as we dont want HTML in infologs
-					$newBody = html::purify($newBody);
-					$newBody = $bofelamimail->convertHTMLToText($newBody,true);
-					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
+					if (extension_loaded('tidy'))
+					{
+						$tidy = new tidy();
+						$cleaned = $tidy->repairString($newBody, self::$tidy_config,'utf8');
+						// Found errors. Strip it all so there's some output
+						if($tidy->getStatus() == 2)
+						{
+							error_log(__METHOD__.__LINE__.' ->'.$tidy->errorBuffer);
+						}
+						else
+						{
+							$newBody = $cleaned;
+						}
+					}
+					else
+					{
+						$newBody = html::purify($newBody);
+					}
+					//error_log(__METHOD__.__LINE__.' after purify:'.$newBody);
+					if ($preserveHTML==false) $newBody = $bofelamimail->convertHTMLToText($newBody,true);
+					$bofelamimail->getCleanHTML($newBody,false,$preserveHTML); // new Body passed by reference
+					//error_log(__METHOD__.__LINE__.' after getClean:'.$newBody);
 					$message .= $newBody;
 					continue;
 				}
