@@ -117,10 +117,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 	public function beforeSendToClient($cname)
 	{
 		$form_name = self::form_name($cname, $this->id);
+		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		if ($this->attrs['type'])
 		{
 			// += to keep further options set by app code
-			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
 
