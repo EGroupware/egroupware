@@ -20,7 +20,7 @@
 	et2_core_inputWidget;
 */
 
-var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
+var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	attributes: {
 		'customfields': {
@@ -56,11 +56,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		this.widgets = {};
 		this.detachedNodes = [];
 
-		if(this.options && this.options.customfields)
-		{
-			this.loadFields();
-		}
-
+		this.setDOMNode(this.table[0]);
 	},
 
 	destroy: function() {
@@ -71,13 +67,15 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		this.widgets = null;
 	},
 
+	/**
+	 * What does this do?  I don't know, but when everything is done the second
+	 * time, this makes it work.  Otherwise, all custom fields are lost.
+	 */
+	assign: function(_obj) {
+		this.loadFields();
+	},
+
 	getDOMNode: function(_sender) {
-		// If the parent class functions are asking for the DOM-Node, return the
-		// outer table.
-		if (_sender == this)
-		{
-			return this.table[0];
-		}
 
 		// Check whether the _sender object exists inside the management array
 		if(this.rows && _sender.id && this.rows[_sender.id])
@@ -85,7 +83,7 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			return this.rows[_sender.id];
 		}
 
-		return null;
+		return this._super.apply(this, arguments);
 	},
 
 	/**
@@ -161,6 +159,9 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 
+	/**
+	 * Read needed info on available custom fields from various places it's stored.
+	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 
@@ -207,7 +208,14 @@ var et2_customfields_list = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			}
 		}
 	},
-		
+	
+	loadFromXML: function(_node) {
+		this.loadFields();
+
+		// Load the nodes as usual
+                this._super.apply(this, arguments);
+	},
+
 	set_value: function(_value) {
 		if(!this.options.customfields) return;
 		for(var field_name in this.options.customfields)
