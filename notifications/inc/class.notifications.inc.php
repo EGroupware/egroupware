@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.config.inc.php');
+if (!defined('SEP')) define('SEP','/');
 
 /**
  * Notifies users according to their preferences.
@@ -370,7 +370,7 @@ final class notifications {
 					// system user, collect data and check for Status and expire state, skip notification if expired or not active
 					$userData = $GLOBALS['egw']->accounts->read($receiver->account_id);
 					//error_log(__METHOD__.__LINE__." fetched data for User:".array2string($userData['account_lid']).'#'.$userData['account_type'].'#'.$userData['account_status'].'#'.$GLOBALS['egw']->accounts->is_expired($userData).'#');
-					if ($userData && $userData['account_type'] === 'u' && 
+					if ($userData && $userData['account_type'] === 'u' &&
 						($userData['account_status'] != 'A' || $GLOBALS['egw']->accounts->is_expired($userData)))
 					{
 						//error_log(__METHOD__.__LINE__." skipped notification for User with Data:".array2string($userData));
