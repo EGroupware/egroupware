@@ -81,7 +81,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			return;
 		}
 
-		var name_parts = this.id.replace(/]/g,'').split('[');
+		var name_parts = this.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
 
 		// Try to find the options inside the "sel-options" array
 		if(this.getArrayMgr("sel_options"))
@@ -89,8 +89,8 @@ var et2_selectbox = et2_inputWidget.extend({
 			// Select options tend to be defined once, at the top level, so try that first
 			var content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
 
-			// Try again according to ID
-			if(!content_options) content_options = this.getArrayMgr("sel_options").getEntry(this.id);
+			// Try again according to ID, but strip any encoded ][
+			if(!content_options) content_options = this.getArrayMgr("sel_options").getEntry(this.id.replace(/&#x5B;/g,'[').replace(/&#x5D;/g,']'));
 			if(_attrs["select_options"] && content_options)
 			{
 				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);

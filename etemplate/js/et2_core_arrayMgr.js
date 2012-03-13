@@ -40,25 +40,22 @@ var et2_arrayMgr = Class.extend({
 		}
 
 		// Expand sub-arrays that have been shmushed together, so further perspectives work
+		// Shmushed keys look like: ${row}&#x5B;info_cat&#x5D;
+		// Expanded: ${row}: Object{info_cat: ..value}
 		if (this.splitIds)
 		{
+			// For each index, we need a key: {..} sub array
 			for(var key in _data) {
+				// Split up indexes
 				var indexes = key.split('&#x5B;');
-				if (indexes.length > 1)
-				{
-					indexes = [indexes.shift(), indexes.join('&#x5B;')];
-					indexes[1] = indexes[1].substring(0,indexes[1].length-6);
-					var children = indexes[1].split('&#x5B;&#x5D;');
-					if(children.length)
-					{
-						indexes = jQuery.merge([indexes[0]], children);
-					}
-				}
+
+				// Put data in the proper place
 				if(indexes.length > 1)
 				{
 					var value = _data[key];
 					var target = _data;
 					for(var i = 0; i < indexes.length; i++) {
+						indexes[i] = indexes[i].replace('&#x5D;','');
 						if(typeof target[indexes[i]] == "undefined") {
 							target[indexes[i]] = i == indexes.length-1 ? value : {};
 						}
