@@ -187,7 +187,7 @@
 					foreach($types[$data['type']] as $key => $title) {
 						$options['plugin'][$key] = $title;
 					}
-				}	
+				}
 			}
 
 			$options['definition'] = array();
@@ -393,7 +393,7 @@
 			// Lock job for an hour to prevent multiples overlapping
 			$data['lock'] = time() + 3600;
 			self::update_job($data, true);
-			
+
 			// check file
 			$file_check = self::check_target($data);
 			if($file_check !== true) {
@@ -423,35 +423,26 @@
 
 			if(is_dir($data['target']))
 			{
-				$dir = opendir($data['target']);
-				$contents = array();
-				while(false !== ($item = readdir($dir))) {
-					$contents[] = $item;
-				}
-				closedir($dir);
-				$targets = array_diff($contents, array('.','..'));
-				$files = array();
-				foreach($targets as $key => &$target)
+				$targets = array();
+				foreach(scandir($data['target']) as $target)
 				{
+					if ($target == '.' || $target == '..') continue;
 					$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
-					
+
 					// Check modification time, make sure it's not currently being written
 					// Skip files modified in the last 10 seconds
 					$mod_time = filemtime($target);
-					if($mod_time >= time() - 10) 
+					if($mod_time >= time() - 10)
 					{
 						$data['result'][$target] = lang('Skipped');
-						unset($targets[$key]);
 						continue;
 					}
-					$files[$mod_time.$target] = $target;
+					$targets[$mod_time.$target] = $target;
 				}
-				if($files)
+				if($targets)
 				{
-					ksort($files);
+					ksort($targets);
 				}
-				$targets = $files;
-				unset($target); // Unset it, or it will be overwritten in loop below
 			}
 			else
 			{
@@ -480,7 +471,7 @@
 					fclose($resource);
 					$data['errors'][$target][] = $i_ex->getMessage();
 				}
-			
+
 
 				if(method_exists($po, 'get_warnings') && $po->get_warnings()) {
 					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n");
