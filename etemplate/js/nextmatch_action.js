@@ -351,6 +351,18 @@ function nm_hide_popup(element, div_id)
 function nm_activate_link(_action, _senders)
 {
 	// $j(_senders[0].iface.getDOMNode()).find('a:first').trigger('click');	not sure why this is NOT working
-
-	$j(_senders[0].iface.getDOMNode()).find('a:first').click();
+	 
+	var a_href = $j(_senders[0].iface.getDOMNode()).find('a:first');
+	
+	if (typeof a_href != undefined)	 
+	{
+		var target = a_href.attr('target');	 
+		var href = a_href.attr('href');	 
+		if (a_href.attr('onclick'))
+			a_href.click();
+		else if (target)	 
+			window.open(href,target);	 
+		else	 
+			window.location = href;	 
+    }
 }
