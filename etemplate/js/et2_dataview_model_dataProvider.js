@@ -106,6 +106,11 @@ var et2_dataview_dataProvider = Class.extend(et2_IDataProvider, {
 		// request immediately
 		if (typeof this._data[_idx] != "undefined")
 		{
+			if (this._data[_idx].data == false)
+			{
+				egw().debug("warn", "App provides blank first row, which causes problems");
+				return;
+			}
 			this._callUpdateData(_idx);
 		}
 		else
