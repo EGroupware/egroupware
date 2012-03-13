@@ -171,7 +171,7 @@ var et2_arrayMgr = Class.extend({
 			// Abort if the current entry is not an object (associative array) and
 			// we should descend further into it.
 			var isObject = typeof entry === 'object';
-			if (!isObject && !_referenceInto)
+			if (!isObject && !_referenceInto || entry == null)
 			{
 				return null;
 			}
