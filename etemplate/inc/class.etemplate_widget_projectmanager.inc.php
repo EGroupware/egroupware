@@ -40,11 +40,11 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 	 */
 	public function beforeSendToClient($cname)
 	{
+		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		if ($this->type)
 		{
 			$form_name = self::form_name($cname, $this->id);
 			// += to keep further options set by app code
-			if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 			$pm_widget = new projectmanager_widget();
 			$cell = $this->attrs + array('type'=>$this->type);
 			$pm_widget->pre_process($form_name, self::get_array(self::$request->content, $form_name), 
