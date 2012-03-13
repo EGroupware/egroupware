@@ -261,37 +261,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 				break;
 
 			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
-				if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
-				{
-					$no_lang = True;
-					if ($value)
-					{
-						if (!is_array($value)) $value = explode(',',$value);
-						foreach($value as $key => $id)
-						{
-							if ($id && ($name = stripslashes($GLOBALS['egw']->categories->id2name($id))) && $name != '--')
-							{
-								$options[$id] = $name;
-							}
-							else
-							{
-								if(!$type6)
-								{
-									unset($value[$key]);	// remove not (longer) existing or inaccessible cats
-								}
-								elseif ($id) // Display id of no longer existing cat
-								{
-									$options[$id] = $type6 == '2' ? $id : lang('Missing: %1',$id);
-								}
-							}
-						}
-					}
-					else
-					{
-						$value = '';
-					}
-					break;
-				}
 				if ((!$type3 || $type3 === $GLOBALS['egw']->categories->app_name) &&
 					(!$type5 || $type5 ==  $GLOBALS['egw']->categories->account_id))
 				{
