@@ -1086,33 +1086,16 @@ class common
 	 * @param int $t=0 timestamp, default current time
 	 * @param string $format='' timeformat, default '' = read from the user prefernces
 	 * @param boolean $adjust_to_usertime=true should datetime::tz_offset be added to $t or not, default true
+	 * @deprecated use egw_time::to($time, $format) egw_time::server2user($time, $format)
 	 * @return string the formated date/time
 	 */
 	static function show_date($t = 0, $format = '', $adjust_to_usertime=true)
 	{
-		if (!$t)
-		{
-			$t = $GLOBALS['egw']->datetime->gmtnow;
-		}
+		if (!$t) $t = 'now';
 
-		if ($adjust_to_usertime)
-		{
-			$t += $GLOBALS['egw']->datetime->tz_offset;
-		}
-
-		if (!$format)
-		{
-			$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' - ';
-			if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
-			{
-				$format .= 'h:i a';
-			}
-			else
-			{
-				$format .= 'H:i';
-			}
-		}
-		return adodb_date($format,$t);
+		$ret = $adjust_to_usertime ? egw_time::server2user($t, $format) : egw_time::to($to, $format);
+		//error_log(__METHOD__.'('.array2string($t).", '$format', ".array2string($adjust_to_usertime).') returning '.array2string($ret));
+		return $ret;
 	}
 
 	/**
