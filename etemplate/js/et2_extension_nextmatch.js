@@ -664,15 +664,15 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			// Load the template
 			var template = et2_createWidget("template", {"id": _value}, this);
 
-			if (!template.proxiedTemplate)
+			if (!template)
 			{
-				this.egw().debug("error", "Error while loading definition template for" + 
-					"nextmatch widget.");
+				this.egw().debug("error", "Error while loading definition template for " + 
+					"nextmatch widget.",_value);
 				return;
 			}
 
 			// Fetch the grid element and parse it
-			var definitionGrid = template.proxiedTemplate.getChildren()[0];
+			var definitionGrid = template.getChildren()[0];
 			if (definitionGrid && definitionGrid instanceof et2_grid)
 			{
 				this._parseGrid(definitionGrid);

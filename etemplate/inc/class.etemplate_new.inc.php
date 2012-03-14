@@ -167,7 +167,7 @@ class etemplate_new extends etemplate_widget_template
 			egw.langRequire(window, '.json_encode($langRequire).');
 			egw(window).ready(function() {
 				var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
-				et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+				et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
 			}, null, true);
 		</script>
 ';

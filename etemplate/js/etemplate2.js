@@ -72,6 +72,9 @@ function etemplate2(_container, _menuaction)
 	// Preset the object variable
 	this.widgetContainer = null;
 
+	// List of templates (XML) that are known, but not used.  Indexed by id.
+	this.templates = {};
+
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize()});
 }
@@ -102,6 +105,7 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
+	this.templates = {};
 }
 
 /**
@@ -152,7 +156,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 /**
  * Loads the template from the given URL and sets the data object
  */
-etemplate2.prototype.load = function(_url, _data)
+etemplate2.prototype.load = function(_name, _url, _data)
 {
 	// Create the document fragment into which the HTML will be injected
 	var frag = document.createDocumentFragment();
@@ -161,8 +165,15 @@ etemplate2.prototype.load = function(_url, _data)
 	// code in the callback function)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
 
-		// Read the XML structure
-		this.widgetContainer.loadFromXML(_xmldoc);
+		// Scan for templates and store them
+		for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+			var template = _xmldoc.childNodes[i];
+			if(template.nodeName.toLowerCase() != "template") continue;
+			this.templates[template.getAttribute("id")] = template;
+		}
+
+		// Read the XML structure of the requested template
+		this.widgetContainer.loadFromXML(this.templates[_name]);
 
 		// Inform the widget tree that it has been successfully loaded.
 		this.widgetContainer.loadingFinished();
