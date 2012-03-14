@@ -52,7 +52,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 			_msg = _msg.toLowerCase();
 			
 			// search apps in given order for a replacement
-			var apps = [this.getAppName(), 'etemplate', 'common'];
+			var apps = ['custom', this.getAppName(), 'etemplate', 'common'];
 			for(var i = 0; i < apps.length; ++i)
 			{
 				if (typeof lang_arr[apps[i]] != "undefined" &&
