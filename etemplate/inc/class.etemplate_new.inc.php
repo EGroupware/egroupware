@@ -105,16 +105,6 @@ class etemplate_new extends etemplate_widget_template
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
-		// load translations
-		translation::add_app('etemplate');
-		foreach(translation::$loaded_apps as $app => $lang)
-		{
-			egw_framework::validate_file('/phpgwapi/lang.php', array(
-				'app' => $app,
-				'lang' => $lang,
-			));
-		}
-
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
 		// generate new etemplate request object
@@ -163,9 +153,18 @@ class etemplate_new extends etemplate_widget_template
 			{
 				parse_navbar();
 			}
+			// load translations
+			translation::add_app('etemplate');
+			$langRequire = array();
+			foreach(translation::$loaded_apps as $app => $lang)
+			{
+				$langRequire[] = array('app' => $app, 'lang' => $lang);
+			}
+
 			echo '
 		<div id="container"></div>
 		<script>
+			egw.langRequire(window, '.json_encode($langRequire).');
 			egw(window).ready(function() {
 				var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
 				et2.load("'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
