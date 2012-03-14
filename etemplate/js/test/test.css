@@ -520,16 +520,23 @@ label input, label span, label div, label select, label textarea {
 /*	background-color: silver;*/
 }
 
+/* Left & right headers*/
+.et2_nextmatch > div > .header {
+	margin-top: -20px;
+	border: none;
+}
+
 .nextmatch_header .header_count {
 	padding: 0px 20px;
 	margin: 0px 20px;
+	margin-top: 5px;
 	border: 1px solid #E0E0E0;
 	float:right;
 	font-size: 150%;
 	text-align: center
 }
 .nextmatch_header > .filters {
-	padding: 5px;
+	padding-left: 5px;
 }
 .nextmatch_header .et2_button_icon {
 	vertical-align: middle;

@@ -756,7 +756,7 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  * Unable to use an existing template for this because parent (nm) doesn't, and template widget doesn't
  * actually load templates from the server.
  */
-var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
+var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 	attributes: {
 		"filter_label": {
 			"name": "Filter label",
@@ -787,11 +787,11 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 	},
 
 	init: function(nextmatch, nm_div) {
+		this._super.apply(this, [nextmatch,nextmatch.options.settings]);
 		this.nextmatch = nextmatch;
 		
 		this.div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header");
-		if(this.nextmatch) this._createHeader();
 	},
 
 	destroy: function() {
@@ -813,8 +813,6 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 
 		this.div.prependTo(nm_div);
 
-		// Left
-
 		// Record count
 		this.count = jQuery(document.createElement("span"))
 			.addClass("header_count ui-corner-all");
@@ -830,7 +828,22 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 			self.count_total.text(e.nm_data.total);
 		});
 
-		// Right
+		// Left & Right headers
+		// TODO: Not quite right.  Should they even go inside the nm?
+		if(settings.header_left || settings.header_right)
+		{
+			var headers = [settings.header_left, settings.header_right];
+			this.header_div = jQuery(document.createElement("div")).prependTo(nm_div);
+			this.headers = [];
+			for(var i = 0; i < headers.length; i++) {
+				if(headers[i]) {
+					// Load the template
+					var header = et2_createWidget("template", {"id": headers[i]}, this);
+					jQuery(header.getDOMNode()).addClass(i == 0 ? "et2_hbox_left":"et2_hbox_right").addClass("header");
+					this.headers.push(header);
+				}
+			}
+		}
 
 		this.filters = jQuery(document.createElement("div")).appendTo(this.div)
 			.addClass("filters");
@@ -872,21 +885,18 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 				});
 		}
 
-		this.count.appendTo(this.filters);
+		this.count.prependTo(this.div);
 
 		// Search
-		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this.nextmatch);
+		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this);
 		this.search.input.attr("type", "search");
 		this.search.input.val(settings.search);
 		
-		jQuery(document.createElement("button"))
-			.appendTo(this.filters)
-			.text(">")
-			.click(this.nextmatch, function(event) {
-				event.data.activeFilters.search = self.search.getValue()
-				event.data.applyFilters();
-			});
-
+		this.search_button = et2_createWidget("button", {"label":">"}, this);
+		this.search_button.onclick = function(event) {
+			self.nextmatch.activeFilters.search = self.search.getValue()
+			self.nextmatch.applyFilters();
+		};
 		
 
 		// Letter search
@@ -937,7 +947,7 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 		var select = et2_createWidget(type, {
 			"id": this.nextmatch.id + "_"+name,
 			"label": this.nextmatch.options.settings[name+"_label"]
-		},this.nextmatch);
+		},this);
 
 		// Set options
 		// Check in content for options-<name>
@@ -977,13 +987,18 @@ var et2_nextmatch_header_bar = Class.extend(et2_INextmatchHeader, {
 	 * Help out nextmatch / widget stuff by checking to see if sender is part of header
 	 */
 	getDOMNode: function(_sender) {
-		var filters = [this.category, this.filter, this.filter2, this.search];
+		var filters = [this.category, this.filter, this.filter2, this.search, this.search_button];
 		for(var i = 0; i < filters.length; i++)
 		{
 			if(_sender == filters[i]) 
 			{
+				// Give them the filter div
 				return this.filters[0];
 			}
+		}
+		for(var i = 0; i < this.headers.length; i++)
+		{
+			if(_sender == this.headers[i]) return this.header_div[0];
 		}
 		return null;
 	}
