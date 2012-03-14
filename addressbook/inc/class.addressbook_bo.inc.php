@@ -714,7 +714,7 @@ class addressbook_bo extends addressbook_so
 		{
 			if (isset($data[$name]))
 			{
-				$data[$name] = egw_time::server2user($data[$name], $date_format);
+				$data[$name] = egw_time::user2server($data[$name], $date_format);
 			}
 		}
 		return $data;

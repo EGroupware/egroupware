@@ -405,8 +405,9 @@ class accounts_sql
 					'account_email'     => $contact['email'],
 					'person_id'         => $contact['id'],
 					'account_status'	=> $contact['account_status'],
-					'account_created'	=> $contact['created'],
-					'account_modified'	=> $contact['modified'],
+					// addressbook_bo::search() returns everything in user-time, need to convert to server-time
+					'account_created'	=> egw_time::user2server($contact['created']),
+					'account_modified'	=> egw_time::user2server($contact['modified']),
 				);
 			}
 		}

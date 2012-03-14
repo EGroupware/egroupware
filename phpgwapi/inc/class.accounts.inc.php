@@ -1,11 +1,6 @@
 <?php
 /**
- * API - accounts
- *
- * This class extends a backend class (at them moment SQL or LDAP) and implements some
- * caching on to top of the backend functions. The cache is share for all instances of
- * the accounts class and for LDAP it is persistent through the whole session, for SQL
- * it's only on a per request basis.
+ * EGroupware API - accounts
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
@@ -31,18 +26,7 @@
  * The backend only implements the read, save, delete, name2id and the {set_}members{hips} methods.
  * The account class implements all other (eg. name2id, id2name) functions on top of these.
  *
- * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006
- *
- * Implements the (now depricated) interfaces on the former accounts class written by
- * Joseph Engo <jengo@phpgroupware.org> and Bettina Gille <ceb@phpgroupware.org>
- * Copyright (C) 2000 - 2002 Joseph Engo, Copyright (C) 2003 Joseph Engo, Bettina Gille
- *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
- * @subpackage accounts
- * @access public
- * @version $Id$
+ * read and search return timestamps (account_(created|modified|lastlogin) in server-time!
  */
 class accounts
 {
