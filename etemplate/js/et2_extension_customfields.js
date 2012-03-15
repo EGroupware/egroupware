@@ -220,6 +220,7 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		if(!this.options.customfields) return;
 		for(var field_name in this.options.customfields)
 		{
+			// Make sure widget is created, and has the needed function
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
 			this.widgets[field_name].set_value(value);

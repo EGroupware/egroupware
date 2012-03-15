@@ -174,6 +174,54 @@ button.et2_button_text:focus {
 	font-style: italic;
 }
 
+/**
+ * Multi-select widget
+ */
+.et2_selectbox .ui-widget-header {
+	padding: 2px 6px 0px 6px;
+}
+.et2_selectbox .ui-widget-header ul {
+	float: right;
+}
+.et2_selectbox .ui-widget-header li {
+	float: left;
+	padding: 2px;
+	padding-top: 0px
+}
+.et2_selectbox .ui-widget-header li span.ui-icon {
+	float: left;
+	margin-top: -2px;
+}
+.et2_selectbox .ui-multiselect-checkboxes {
+	overflow-y: scroll;
+	position: relative;
+	text-align: left;
+}
+.et2_selectbox .ui-multiselect-checkboxes li {
+	margin: 0px;
+	clear: both;
+	padding-left: 26px;
+	padding-right: 3px;
+	text-decoration: none;
+	list-style-image: none;
+	list-style-type: none;
+	text-indent: -26px;
+}
+.et2_selectbox .ui-multiselect-checkboxes label {
+	display: block;
+	border: 1px solid transparent;
+}
+.et2_selectbox input[type="checkbox"] {
+	margin: 3px;
+}
+.et2_selectbox .ui-multiselect-checkboxes img {
+	float: right;
+	height: 1.8em;
+}
+
+/**
+ * Date / Time widgets
+ */
 span.et2_date {
 	min-width: 130px;
 }
@@ -537,7 +585,7 @@ label input, label span, label div, label select, label textarea {
 }
 .nextmatch_header > .filters {
 	padding-left: 5px;
-}
+} 
 .nextmatch_header .et2_button_icon {
 	vertical-align: middle;
 }

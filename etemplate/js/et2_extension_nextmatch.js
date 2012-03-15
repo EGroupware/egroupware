@@ -561,7 +561,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		// Build the popup
 		if(!this.selectPopup)
 		{
-			var select = et2_createWidget("select", {multiple: true, rows: 8}, this);
+			var select = et2_createWidget("select", {
+				multiple: true, 
+				rows: 8,
+				empty_label:this.egw().lang("select columns"),
+				selected_first: false
+			}, this);
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
 
@@ -629,9 +634,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				self.selectPopup.toggle();
 			}
 
-			this.selectPopup = jQuery(document.createElement("fieldset"))
-				.addClass("colselection ui-dialog")
-				.append("<legend>"+this.egw().lang("Select columns")+"</legend>")
+			this.selectPopup = jQuery(document.createElement("div"))
+				.addClass("colselection ui-dialog ui-widget-content")
 				.append(select.getDOMNode())
 				.append(okButton.getDOMNode())
 				.append(cancelButton.getDOMNode())

@@ -46,6 +46,12 @@ var et2_selectbox = et2_inputWidget.extend({
 			"name": "Select options",
 			"default": {},
 			"description": "Internaly used to hold the select options."
+		},
+		"selected_first": {
+			"name": "Selected options first",
+			"type": "boolean",
+			"default": true,
+			"description": "For multi-selects, put the selected options at the top of the list when first loaded"
 		}
 	},
 
@@ -53,17 +59,35 @@ var et2_selectbox = et2_inputWidget.extend({
 
 	init: function() {
 		this._super.apply(this, arguments);
+
+		this.input = null;
  
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
 
 		// Legacy options could have row count or empty label in first slot	 
-		if(typeof this.options.rows == "string" && isNaN(this.options.rows)) {
-			this.options.empty_label = this.egw().lang(this.options.rows);
-			this.options.rows = 1;
+		if(typeof this.options.rows == "string")
+		{
+			if(isNaN(this.options.rows)) 
+			{
+				this.options.empty_label = this.egw().lang(this.options.rows);
+				this.options.rows = 1;
+			}
+			else
+			{
+				this.options.rows = parseInt(this.options.rows);
+			}
 		}
-		if(this.options.rows > 1) this.options.multiple = true;
-		this.createInputWidget();
+
+		if(this.options.rows > 1) 
+		{
+			this.options.multiple = true;
+			this.createMultiSelect();
+		}
+		else
+		{
+			this.createInputWidget();
+		}
 	},
 
 	destroy: function() {
@@ -117,9 +141,17 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Add an option to regular drop-down select
+	 */
 	_appendOptionElement: function(_value, _label, _title) {
 		if(_value == "" && (_label == null || _label == "")) {
 			_label = this.options.empty_label;
+		}
+
+		if(this.input == null)
+		{
+			return this._appendMultiOption(_value, _label, _title);
 		}
 
 		var option = $j(document.createElement("option"))
@@ -133,6 +165,61 @@ var et2_selectbox = et2_inputWidget.extend({
 		option.appendTo(this.input);
 	},
 
+	/**
+	 * Append a value to multi-select 
+	 */
+	_appendMultiOption: function(_value, _label, _title) {
+		var option_data = null;
+		if(typeof _label == "object")
+		{
+			option_data = _label;
+			_label = option_data.label;
+		}
+
+		// Already in header
+		if(_label == this.options.empty_label) return;
+		
+		var opt_id = this.id + "_opt_" + _value;
+		var label = jQuery(document.createElement("label"))
+			.attr("for", opt_id)
+			.hover(
+				function() {jQuery(this).addClass("ui-state-hover")},
+				function() {jQuery(this).removeClass("ui-state-hover")}
+			);
+		var option = jQuery(document.createElement("input"))
+			.attr("type", "checkbox")
+			.attr("id",opt_id)
+			.attr("value", _value)
+			.appendTo(label);
+		if(typeof _title !== "undefined")
+		{
+			option.attr("title",_title);
+		}
+
+		// Some special stuff for categories
+		if(option_data)
+		{
+			if(option_data.data.icon)
+			{
+				var img = this.egw().image(option_data.data.icon);
+				jQuery(document.createElement("img"))
+					.attr("src", img)
+					.appendTo(label);
+			}
+			if(option_data.data.color)
+			{
+				label.css("background-color",option_data.data.color);
+			}
+		}
+		label.append(jQuery("<span>"+_label+"</span>"))
+		var li = jQuery(document.createElement("li")).append(label);
+		
+		li.appendTo(this.multiOptions);
+	},
+
+	/**
+	 * Create a regular drop-down select box
+	 */
 	createInputWidget: function() {
 		// Create the base input widget
 		this.input = $j(document.createElement("select"))
@@ -155,6 +242,73 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Create a list of checkboxes
+	 */
+	createMultiSelect: function() {
+		var node = jQuery(document.createElement("div"))
+			.addClass("et2_selectbox");
+
+		var header = jQuery(document.createElement("div"))
+			.addClass("ui-widget-header ui-helper-clearfix")
+			.appendTo(node);
+
+		if(this.options.empty_label)
+		{
+			jQuery(document.createElement("span"))
+				.text(this.options.empty_label)
+				.addClass("ui-multiselect-header")
+				.appendTo(header);
+		}
+		
+		// Set up for options to be added later
+		var options = this.multiOptions = jQuery(document.createElement("ul"));
+		this.multiOptions.addClass("ui-multiselect-checkboxes ui-helper-reset")
+			.css("height", 1.9*this.options.rows + "em")
+			.appendTo(node);
+
+		if(this.options.rows >= 5) 
+		{
+			// Check / uncheck all
+			var header_controls = {
+				check: {
+					icon_class: 'ui-icon-check',
+					label:	'Check all',
+					click: function(e) {
+						jQuery("input",e.data).attr("checked", true);
+					}
+				},
+				uncheck: {
+					icon_class: 'ui-icon-closethick',
+					label:	'Uncheck all',
+					click: function(e) {
+						jQuery("input",e.data).attr("checked", false);
+					}
+				}
+			}
+			var controls = jQuery(document.createElement("ul"))
+				.addClass('ui-helper-reset')
+				.appendTo(header);
+			for(var key in header_controls)
+			{
+				jQuery(document.createElement("li"))
+					.addClass("et2_clickable")
+					.click(options, header_controls[key].click)
+					.append('<span class="ui-icon ' + header_controls[key].icon_class + '"/>')
+					.append("<span>"+this.egw().lang(header_controls[key].label)+"</span>")
+					.appendTo(controls);
+			}
+
+		}
+		else if (header[0].childNodes.length == 0)
+		{
+			// Hide header - nothing there but padding
+			header.hide();
+		}
+
+		this.setDOMNode(node[0]);
+	},
+
 	loadFromXML: function(_node) {
 		// Read the option-tags
 		var options = et2_directChildrenByTagName(_node, "options");
@@ -169,6 +323,14 @@ var et2_selectbox = et2_inputWidget.extend({
 	},
 
 	set_value: function(_value) {
+		if(typeof _value == "string" && _value.match(/[,0-9]+$/) !== null)
+		{
+			_value = _value.split(',');
+		}
+		if(this.input == null)
+		{
+			return this.set_multi_value(_value);
+		}
 		jQuery("option",this.input).attr("selected", false);
 		this.value = _value;
 		if(typeof _value == "array")
@@ -190,8 +352,38 @@ var et2_selectbox = et2_inputWidget.extend({
 			if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
 			{
 				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
-	//console.trace();
 			}
+		}
+	},
+
+	set_multi_value: function(_value) {
+		jQuery("input",this.multiOptions).attr("checked", false);
+		if(typeof _value == "array")
+		{
+			for(var i = 0; i < _value.length; i++)
+			{
+				jQuery("input[value='"+_value[i]+"']", this.multiOptions).attr("checked", true);
+			}
+		}
+		else if (typeof _value == "object")
+		{
+			for(var i in _value)
+			{
+				jQuery("input[value='"+_value[i]+"']", this.multiOptions).attr("checked", true);
+			}
+		}
+		else
+		{
+			if(jQuery("input[value='"+_value+"']", this.multiOptions).attr("checked", true).length == 0)
+			{
+				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
+			}
+		}
+
+		// Sort selected to the top
+		if(this.selected_first)
+		{
+			this.multiOptions.find("li:has(input:checked)").prependTo(this.multiOptions);
 		}
 	},
 
@@ -220,9 +412,18 @@ var et2_selectbox = et2_inputWidget.extend({
 
 			if (typeof _options[key] === 'object')
 			{
-				this._appendOptionElement(key, 
-					_options[key]["label"] ? _options[key]["label"] : "",
-					_options[key]["title"] ? _options[key]["title"] : "");
+				if(this.input == null)
+				{
+					// Allow some special extras for objects by passing the whole thing
+					_options[key]["label"] = _options[key]["label"] ? _options[key]["label"] : "";
+					this._appendMultiOption(key, _options[key], _options[key]["title"]);
+				}
+				else
+				{
+					this._appendOptionElement(key,
+						_options[key]["label"] ? _options[key]["label"] : "",
+						_options[key]["title"] ? _options[key]["title"] : "");
+				}
 			}
 			else
 			{
@@ -231,6 +432,19 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 		// Sometimes value gets set before options
 		if(this.value) this.set_value(this.value);
+	},
+
+	getValue: function() {
+		if(this.input == null)
+		{
+			var value = [];
+			jQuery("input:checked",this.multiOptions).each(function(){value.push(this.value);});
+			return value;
+		}
+		else
+		{
+			return this._super.apply(this, arguments);
+		}
 	}
 });
 
