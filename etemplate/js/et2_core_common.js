@@ -521,7 +521,7 @@ function et2_insertLinkText(_text, _node, _target)
 		if (typeof s == "string" || typeof s == "number")
 		{
 			// Include line breaks
-			var lines = s.split('\n');
+			var lines = s.split ? s.split('\n') : [s];
 
 			// Insert the lines
 			for (var j = 0; j < lines.length; j++)
