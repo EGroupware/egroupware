@@ -203,7 +203,18 @@ class etemplate_widget_tree extends etemplate_widget
 					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
 
 					// 1D array
-					$options[$cat['id']] = $cat + array('text' => $cat['name'], 'path' => $path);
+					$options[$cat['id']] = $cat + array(
+						'text'	=>	$s,
+						'path'	=>	$path,
+
+						/*
+						These ones to play nice when a user puts a tree & a selectbox with the same
+						ID on the form (addressbook edit):
+						if tree overwrites selectbox options, selectbox will still work
+						*/
+						'label'	=>	$s,
+						'title'	=>	$cat['description']
+					);
 
 					// Tree in array
 					//$options[$cat['parent']][] = $cat;
