@@ -1,18 +1,18 @@
 <?php
 /**
- * eGroupWare API: Database backups
+ * EGroupware API: Database backups
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 /**
- * DB independent backup and restore of eGW's DB
+ * DB independent backup and restore of EGroupware database
  */
 class db_backup
 {
@@ -330,6 +330,7 @@ class db_backup
 		'httpproxy_server_username',
 		'httpproxy_server_password',
 		'system_charset',
+		'usecookies',
 		'install_id',	// do not restore install_id, as that would give two systems with identical install_id
 	);
 
@@ -549,6 +550,32 @@ class db_backup
 					'config_app'  => $row['config_app'],
 				),__LINE__,__FILE__);
 			}
+			// check and reset cookie configuration, if it does not match current enviroment
+			// if $_SERVER[HTTP_HOST] does not end with cookiedomain --> delete cookiedomain
+			if (($cookiedomain = $this->db->select(self::TABLE,'config_value',array(
+					'config_app' => 'phpgwapi',
+					'config_name' => 'cookiedomain',
+				),__LINE__,__FILE__)->fetchColumn()) && isset($_SERVER['HTTP_HOST']) &&
+				(list($hostname) = explode(':',$_SERVER['HTTP_HOST'])) &&
+				substr($hostname,-strlen($cookiedomain) !== $cookiedomain))
+			{
+				$this->db->delete(self::TABLE,array(
+					'config_app' => 'phpgwapi',
+					'config_name' => 'cookiedomain',
+				),__LINE__,__FILE__);
+			}
+			// if configured webserver_url does NOT start with cookiepath --> delete cookiepath
+			if (($cookiepath = $this->db->select(self::TABLE,'config_value',array(
+					'config_app' => 'phpgwapi',
+					'config_name' => 'cookiepath',
+				),__LINE__,__FILE__)->fetchColumn()) &&
+				substr(parse_url($system_config['webserver_url'], PHP_URL_PATH),0,strlen($cookiepath) !== $cookiepath))
+			{
+				$this->db->delete(self::TABLE,array(
+					'config_app' => 'phpgwapi',
+					'config_name' => 'cookiepath',
+				),__LINE__,__FILE__);
+			}
 		}
 		// restore original Halt_On_Error state (if changed)
 		if ($backup_db_halt_on_error)
@@ -699,7 +726,7 @@ class db_backup
 				$file_list = $this->get_file_list($dir);
 			}
 		}
-		fwrite($f,"eGroupWare backup from ".date('Y-m-d H:i:s')."\n\n");
+		fwrite($f,"EGroupware backup from ".date('Y-m-d H:i:s')."\n\n");
 
 		fwrite($f,"version: $this->api_version\n\n");
 
@@ -852,7 +879,7 @@ class db_backup
 		}
 		else
 		{
-			$def = "<?php\n\t/* eGroupWare schema-backup from ".date('Y-m-d H:i:s')." */\n\n".$def;
+			$def = "<?php\n\t/* EGroupware schema-backup from ".date('Y-m-d H:i:s')." */\n\n".$def;
 			html::content_header('schema-backup-'.date('YmdHi').'.inc.php','text/plain',bytes($def));
 			echo $def;
 		}
