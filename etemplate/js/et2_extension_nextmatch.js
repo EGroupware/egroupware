@@ -834,11 +834,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 		// Left & Right headers
 		// TODO: Not quite right.  Should they even go inside the nm?
+		this.headers = [];
 		if(settings.header_left || settings.header_right)
 		{
 			var headers = [settings.header_left, settings.header_right];
 			this.header_div = jQuery(document.createElement("div")).prependTo(nm_div);
-			this.headers = [];
 			for(var i = 0; i < headers.length; i++) {
 				if(headers[i]) {
 					// Load the template
