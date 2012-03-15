@@ -48,6 +48,7 @@ class admin_accesslog
 	function __construct()
 	{
 		$this->so = new so_sql(self::APP,self::TABLE,null,'',true);
+		$this->so->timestamps = array('li', 'lo', 'session_dla', 'notification_hartbeat');
 	}
 
 	/**
