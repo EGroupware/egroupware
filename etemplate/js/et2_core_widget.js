@@ -481,7 +481,11 @@ var et2_widget = Class.extend({
 
 				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
 				{
-					_target[_proto.legacyOptions[j]] = splitted[j];
+					// Check to make sure we don't overwrite a current option with a legacy option
+					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
+					{
+						_target[_proto.legacyOptions[j]] = splitted[j];
+					}
 				}
 			}
 			else
