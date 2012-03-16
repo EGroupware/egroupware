@@ -109,6 +109,18 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$cat_app = $value['cat_app'] ? $value['cat_app'] : $GLOBALS['egw_info']['flags']['current_app'];
 			$value['options-cat_id'] = array('' => lang('all')) + etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
+			// Prevent double encoding - widget does this on its own, but we're just grabbing the options
+			foreach($value['options-cat_id'] as &$label)
+			{
+				if(!is_array($label))
+				{
+					$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+				}
+				elseif($label['label'])
+				{
+					$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+				}
+			}
 		}
 		// todo: no need to store rows in request, it's enought to send them to client
 
