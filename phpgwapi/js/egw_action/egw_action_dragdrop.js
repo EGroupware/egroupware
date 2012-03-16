@@ -349,7 +349,7 @@ function egwDropActionImplementation()
 							// object and the drop action object share same
 							// set of properties.
 							var popup = getPopupImplementation();
-							var pos = popup._getPageXY(event);
+							var pos = popup._getPageXY(event.originalEvent);
 							window.setTimeout(function() {
 								popup.doExecuteImplementation(pos, selected, links,
 									_context);
