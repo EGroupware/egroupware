@@ -1,9 +1,9 @@
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
+%1 file	common	it	% file
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
-%1 manual	common	it	Manuale %1
-%1 start	common	it	Inizio %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	it	%1Scegli un'altra directory%2<br />o rendi %3 scrivibile dal webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
+(session restored in %1 seconds)	common	it	Sessione ripristinata in %1 secondi
 (shift-)click or drag to change value	jscalendar	it	(Shift-)Click o trascina per cambiare valore
 - click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
@@ -12,6 +12,10 @@
 - use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
 - use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
+1 day	common	it	1 giorno
+1 hour	common	it	1 ora
+1 month	common	it	1 mese
+1 week	common	it	1 settimana
 13 (ntp)	admin	it	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Giorno
 3 number of chars for month-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Mese
@@ -26,8 +30,10 @@ account has been created	common	it	Account creato
 account has been deleted	common	it	Account cancellato
 account has been updated	common	it	Account aggiornato
 account is expired	common	it	L'account è scaduto
+accounts	common	it	Account
 acl	common	it	ACL
 action	common	it	Azione
+actions	common	it	Azioni
 active	common	it	Attivo
 add	common	it	Aggiungi
 add %1 category for	common	it	Aggiungi %1 categoria per
@@ -35,16 +41,23 @@ add category	common	it	Aggiungi categoria
 add shortcut	common	it	Aggiungi Scorciatoia
 add sub	common	it	Aggiungi Sotto-
 addressbook	common	it	Rubrica
+addressbooks to sync in addition to personal addressbook	groupdav	it	Rubriche da sincronizzare oltre alla rubrica personale
 admin	common	it	Amministra
 administration	common	it	Amministrazione
 afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 all	common	it	Tutto
+all addressbooks	groupdav	it	Tutte le rubriche
 all fields	common	it	tutti i campi
+all in one	groupdav	it	Tutto in uno
+all languages	common	it	Tutte le lingue
 alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	it	Foglio di stile alternativo:
 american samoa	common	it	SAMOA AMERICANA
+an admin required that you must change your password upon login.	common	it	L'amministratore richiede che tu cambi la tua password dopo l'accesso.
+an error happened	common	it	Un errore è occorso!
+an existing and by the webserver readable directory enables the image browser and upload.	common	it	Una directory esistente e leggibile dal server consente di sfogliare e caricare immagini
 and	common	it	e
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
@@ -53,6 +66,7 @@ antarctica	common	it	ANTARTIDE
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
 application	common	it	Applicazione
 apply	common	it	Applica
+apply the action on the whole query, not only the shown entries	common	it	Applica l'azione all'intera query, NON solo le voci visualizzate
 april	common	it	Aprile
 are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
 are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
@@ -87,7 +101,6 @@ bermuda	common	it	BERMUDA
 bhutan	common	it	BHUTAN
 blocked, too many attempts	common	it	Bloccato, troppi tentativi
 bold	common	it	Grassetto
-bold.gif	common	it	bold.gif
 bolivia	common	it	BOLIVIA
 border	common	it	Bordo
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
@@ -98,14 +111,19 @@ brazil	common	it	BRASILE
 british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
 brunei darussalam	common	it	BRUNEI DARUSSALAM
 bulgaria	common	it	BULGARIA
+bulgarian	common	it	Bulgaro
 burkina faso	common	it	BURKINA FASO
 burundi	common	it	BURUNDI
 calendar	common	it	Agenda
+calendars to sync in addition to personal calendar	groupdav	it	Agende da sincronizzare oltre a quella personale
 cambodia	common	it	CAMBOGIA
 cameroon	common	it	CAMEROON
 canada	common	it	CANADA
 cancel	common	it	Cancella
 cannot replace %1 because it is a directory	common	it	Non è possibile sostituire %1 perché è una directory
+cannot set a category as parent, which is part of this categorys subtree!	common	it	Impossibile impostare una categoria come padre, quando fa parte del sotto-albero di questa categoria!
+cannot set this cat as its own parent!	common	it	Impossibile impostare questa categoria come padre di se stessa!
+cant open %1, needs ziparchive	common	it	Non posso aprire %1, per farlo è necessario ZipArchive
 cant open '%1' for %2	common	it	Non è possibile aprire '%1' per %2
 cape verde	common	it	CAPO VERDE
 caption	common	it	Didascalia
@@ -132,15 +150,21 @@ choose a background style.	common	it	Scegli un stile per lo sfondo
 choose a text color for the icons	common	it	Scegli un colore per il testo delle icone
 choose the category	common	it	Scegli la categoria
 choose the parent category	common	it	Scegli la categoria superiore
+chosen parent category no longer exists	common	it	La categoria scelta non esiste più
 christmas island	common	it	ISOLA DI NATALE
 clear	common	it	Pulisci
 clear form	common	it	Svuota il modulo
+clear window	common	it	Pulisci finestra
 click	common	it	Clicca
+click here to resume your egroupware session.	common	it	Clicca qui per ripristinare la tua sessione EGroupware
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
 click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
+click this image on the navbar: %1	common	it	Clicca su questa immagine sulla barra di navigazione: %1
 close	common	it	Chiudi
 close sidebox	common	it	Chiudi riquadro laterale
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
+collection empty.	common	it	Collezione vuota
+collection listing	common	it	Elenco collezione
 colombia	common	it	COLOMBIA
 common preferences	common	it	Preferenze generiche
 comoros	common	it	COMORE
@@ -148,6 +172,7 @@ company	common	it	Azienda
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 contacting server...	common	it	Sto contattando il Server...
+content type	common	it	Tipo contenuto
 cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
 costa rica	common	it	COSTA RICA
@@ -162,6 +187,8 @@ current	common	it	Attuale
 current users	common	it	Utenti attuali
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
+database error	common	it	Errore del database!
+database error!	common	it	Errore del database!
 date	common	it	Data
 date due	common	it	Data richiesta
 date selection:	jscalendar	it	Selezione data:
@@ -171,20 +198,29 @@ default category	common	it	Categoria Predefinita
 default height for the windows	common	it	Altezza predefinita per le finestre
 default width for the windows	common	it	Larghezza predefinita per le finestre
 delete	common	it	Elimina
+delete category	common	it	Elimina categoria
+delete file	common	it	Elimina file
 delete row	common	it	Cancella riga
+delete these entries	common	it	Elimina queste voci
+delete this entry	common	it	Elimina questa voce
 denmark	common	it	DANIMARCA
 description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilita lo script per sistemare il bug di Internet Explorer 5.5 and superiore nella visualizzazione delle trasparenze nelle immagini PNG?
 direction left to right	common	it	Direzione da sinistra a destra
+directory	common	it	Directory
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	it	La directory non esiste, non è leggibile dal server o non è relativa alla base dei documenti (docroot)
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilitare l'esecuzione di bugfixscript per Internet Explorer 5.5 e superiori per mostrare la trasparenza nelle immagini PNG?
 disabled	common	it	Disabilitato
 display %s first	jscalendar	it	Mostra prima %1
+distribution lists as groups	groupdav	it	Liste di distribuzione come gruppi
 djibouti	common	it	DJIBOUTI
+do not notify	common	it	Non avvisare
+do not notify of these changes	common	it	Non avvisare di questi cambiamenti
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
 doctype:	common	it	TIPO DOCUMENTO:
 document properties	common	it	Proprietà documento
@@ -195,26 +231,32 @@ domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
+download	common	it	Scarica
 drag to move	jscalendar	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
+eastern european	common	it	Europeo orientale
 ecuador	common	it	EQUADOR
 edit	common	it	Modifica
 edit %1 category for	common	it	Modifica categoria %1 per
 edit categories	common	it	Modifica Categorie
 edit category	common	it	Modifica Categoria
-egroupware api version %1	common	it	Versione delle API eGroupWare  %1
+egroupware	common	it	EGroupware
+egroupware api version	common	it	Versione API EGroupware
 egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
-en	common	it	en
+empty file	common	it	File vuoto
+enable logging	groupdav	it	Abilita registro
 enabled	common	it	Abilitato
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	it	Abilita registro del traffico dati CalDAV/CardDAV per diagnosticare problemi con i dispositivi
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
+entry not found!	common	it	Voce non trovata!
 entry updated sucessfully	common	it	La voce è stata aggiornata correttamente
 equatorial guinea	common	it	GUINEA EQUATORIALE
 eritrea	common	it	ERITREA
@@ -223,12 +265,15 @@ error creating %1 %2 directory	common	it	Errore durante la creazione della direc
 error deleting %1 %2 directory	common	it	Errore durante l'eliminazione della directory %1 %2
 error renaming %1 %2 directory	common	it	Errore durante la rinomina della directory %1 %2
 estonia	common	it	ESTONIA
+etag	common	it	ETag
 ethiopia	common	it	ETIOPIA
+everything	common	it	Tutto
 exact	common	it	esatta
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	it	Connessione al Server fallita o risposta del Server non valida. Prova a ripetere il login. Contatta l'Amministratore in caso di fallimento operazione.
 falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
 fax number	common	it	numero di fax
+features of the editor?	common	it	Funzioni dell'editor
 february	common	it	Febbraio
 fields	common	it	Campi
 fiji	common	it	FIJI
@@ -242,6 +287,7 @@ firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI !
 folder already exists.	common	it	La cartella esiste già.
 force selectbox	common	it	Forza Casella di Selezione
+forever	common	it	Per sempre
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
 french polynesia	common	it	POLINESIA FRANCESE
@@ -263,6 +309,7 @@ global public	common	it	Pubblico Globale
 go today	jscalendar	it	Vai a Oggi
 grant access	common	it	Autorizza Accesso
 greece	common	it	GRECIA
+greek	common	it	Greco
 greenland	common	it	GROENLANDIA
 grenada	common	it	GRENADA
 group	common	it	Gruppo
@@ -272,6 +319,7 @@ group has been deleted	common	it	Gruppo cancellato
 group has been updated	common	it	Gruppo aggiornato
 group name	common	it	nome gruppo
 group public	common	it	Gruppo Pubblico
+groupdav	common	it	Server CalDAV, CardCAV e GroupDAV
 groups	common	it	Gruppi
 groups with permission for %1	common	it	Gruppi con permessi per %1
 groups without permission for %1	common	it	Gruppi senza permessi per %1
@@ -293,18 +341,22 @@ home email	common	it	e-mail abitazione
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
+how to show the general egroupware menu ?	common	it	Come mostrare il menù generale di EGroupware
 hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
 iespell not detected. click ok to go to download page.	common	it	ieSpell non trovato. Clicca OK per andare alla pagina di download.
 if the clock is enabled would you like it to update it every second or every minute?	common	it	Se l'orologio è abilitato, vuoi che si aggiorni ogni secondo oppure ogni minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
+image directory relative to document root (use / !), example:	common	it	La cartella delle immagini relativa alla base dei documenti (docroot) (usare / !), esempio:
 image url	common	it	URL immagine
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
-insert 'return false'	common	it	inserisci 'return false'
+infolog types to sync	common	it	Tipi di Attività da sincronizzare
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert column after	common	it	Inserisci colonna dopo
 insert column before	common	it	Inserisci colonna prima
+insert in %1	common	it	Inserisci in %1
+insert in dokument	common	it	Inserisci nel documento
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
 international	common	it	Internazionale
@@ -318,11 +370,11 @@ israel	common	it	ISRAELE
 it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 giorni da quando hai cambiato la password
 it is recommended that you run setup to upgrade your tables to the current version	common	it	E' consigliato eseguire il setup per aggiornare le tabelle alla versione attuale.
 italic	common	it	Corsivo
-italic.gif	common	it	italic.gif
 italy	common	it	ITALIA
 jamaica	common	it	GIAMAICA
 january	common	it	Gennaio
 japan	common	it	GIAPPONE
+japanese	common	it	Giapponese
 jordan	common	it	GIORDANIA
 july	common	it	Luglio
 jun	common	it	Giu
@@ -337,11 +389,13 @@ keywords	common	it	Keywords
 kiribati	common	it	KIRIBATI
 korea, democratic peoples republic of	common	it	KOREA, REPUBBLICA POPOLARE
 korea, republic of	common	it	KOREA, REPUBBLICA
+korean	common	it	Koreano
 kuwait	common	it	KUWAIT
 kyrgyzstan	common	it	KYRGYZSTAN
 language	common	it	Lingua
 language_direction_rtl	common	it	language_direction_rtl
 lao peoples democratic republic	common	it	REPUBBLICA DEMOCRATICA POPOLARE DEL LAOS
+last modified	common	it	Ultima modifica
 last name	common	it	Cognome
 last name of the user, eg. "%1"	common	it	Cognome dell'utente, es. "%1"
 last page	common	it	Ultima pagina
@@ -355,19 +409,23 @@ liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	it	Riga %1: '%2'<br><b> dati csv contengono ##last-check-run## della tabella %3 ==> ignorato</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	it	Linea %1: '%2'<br><b>dati csv non corrisponde al numero colonne della tabella %3 ==> ignorato</b>
 list	common	it	Lista
 list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
 local	common	it	Locale
+logging / debuging	groupdav	it	Resgistro/Debug
 login	common	it	Login
 loginid	common	it	LoginID
 logout	common	it	Logout
+lost login id	common	it	ID di accesso perso
+lost password	common	it	Password persa
 low	common	it	Bassa
 lowest	common	it	Più Bassa
 luxembourg	common	it	LUSSEMBURGO
 macau	common	it	MACAO
-macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA DI YUGOSLAVIA
+macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA YUGOSLAVA DI
 madagascar	common	it	MADAGASCAR
 mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 main category	common	it	Categoria principale
@@ -396,6 +454,7 @@ moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
 monaco	common	it	MONACO
 monday	common	it	Lunedì
 mongolia	common	it	MONGOLIA
+montenegro	common	it	MONTENEGRO
 montserrat	common	it	MONTSERRAT
 morocco	common	it	MAROCCO
 mozambique	common	it	MOZAMBICO
@@ -403,6 +462,7 @@ multiple	common	it	multiplo
 myanmar	common	it	MYANMAR
 name	common	it	Nome
 name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
+namespace	common	it	Spazio dei nomi
 namibia	common	it	NAMIBIA
 nauru	common	it	NAURU
 nepal	common	it	NEPAL
@@ -432,20 +492,28 @@ norfolk island	common	it	ISOLE NORFOLK
 normal	common	it	Normale
 northern mariana islands	common	it	ISOLE NORTHERN MARIANA
 norway	common	it	NORVEGIA
+not	common	it	non
+not a user yet? register now	common	it	Non hai un account? registrati adesso!
 not assigned	common	it	non assegnato
+not readable %1 entry of user %2	common	it	Non leggibile: voce %1 dell'utente %2
 note	common	it	Nota
 notes	common	it	Note
+notifications	common	it	Notifiche
 notify window	common	it	Finestra di Notifica
 notify your administrator to correct this situation	common	it	Chiedi all'Amministratore di correggere questa Situazione
 november	common	it	Novembre
 october	common	it	Ottobre
+off	groupdav	it	Spento
 ok	common	it	OK
 old value	common	it	Vecchio Valore
 oman	common	it	OMAN
 on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
 on mouse over	common	it	Al passaggio del mouse
 only private	common	it	solo privati
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	it	Supportato solo da alcuni client conformi (p.es. Apple). Se devi inserire un URL, con ogni probabilità non sarà supportato!
 only yours	common	it	solo personali
+oops! you caught us in the middle of system maintainance.	common	it	Ops! Ci avete presi mentre stiamo facendo lavori di manutenzione!
+open	common	it	Apri
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 open sidebox	common	it	Apri riquadro laterale
@@ -474,7 +542,9 @@ password must contain at least %1 special characters	common	it	La Password deve 
 password must contain at least %1 uppercase letters	common	it	La Password deve contenere almeno %1 lettere maiuscole
 password must have at least %1 characters	common	it	La Password deve avere almeno %1 caratteri
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
+permission denied!	common	it	Permesso negato
 permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
+permisson denied!	common	it	Permesso negato
 personal	common	it	Personale
 peru	common	it	PERU
 philippines	common	it	FILIPPINE
@@ -488,38 +558,50 @@ please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
 please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
 please wait...	common	it	Attendere per Favore...
+please, check back with us shortly.	common	it	Per favore torna a trovarci più tardi
 poland	common	it	POLONIA
 portugal	common	it	PORTOGALLO
 postal	common	it	Postale
+powered by	common	it	Powered by
 preferences	common	it	Preferenze
-preferences for the idots template set	common	it	Preferenze per il template idots
+preferences for the %1 template set	preferences	it	Preferenze per il set %1 di template
 prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
 prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
 previous page	common	it	Pagina precedente
+primary group	common	it	Gruppo primario
 primary style-sheet:	common	it	Foglio di stile primario:
 print	common	it	Stampa
 priority	common	it	Priorità
 private	common	it	Privato
 programs	common	it	Programmi
 project	common	it	Progetto
+properties	common	it	Proprietà
 public	common	it	pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 read	common	it	Leggi
 read this list of methods.	common	it	Leggi questo elenco di metodi.
 reading	common	it	leggendo
+register	common	it	Registra
+regular	common	it	Regolare
 reject	common	it	Rifiuta
+remember me	common	it	Memorizza
 remove selected accounts	common	it	rimuovi gli account selezionati
 remove shortcut	common	it	Rimuovi scorciatoie
 rename	common	it	Rinomina
 replace	common	it	Sostituisci
 replace with	common	it	Stostituisci con
+requests and full responses to files directory	common	it	Richieste e risposte alla cartella dei file
+requests and truncated responses to apache error-log	groupdav	it	Richieste e risposte troncate al registro errori di apache
+resource type	common	it	Tipo di risorsa
+restore failed	common	it	Rirpristino fallito
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
 right	common	it	Destra
 romania	common	it	ROMANIA
+russian	common	it	Russo
 russian federation	common	it	FEDERAZIONE RUSSA
 rwanda	common	it	RUANDA
 saint helena	common	it	SANT'ELENA
@@ -532,14 +614,18 @@ san marino	common	it	SAN MARINO
 sao tome and principe	common	it	SAO TOME E PRINCIPE
 saturday	common	it	Sabato
 saudi arabia	common	it	ARABIA SAUDITA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	it	La versione Savant2 è diversa dal wrapper Savant2. <br/>Questa versione: %1 <br/> Versione di Savant: %2
 save	common	it	Salva
 search	common	it	Cerca
 search %1 '%2'	common	it	Cerca %1 '%2'
+search accounts	common	it	Cerca account
 search or select accounts	common	it	Cerca o seleziona account
-search or select multiple accounts	common	it	cerca o seleziona account multipli
 second	common	it	secondo
 section	common	it	Sezione
 select	common	it	Seleziona
+select "%1", if your client does not support multiple addressbooks.	groupdav	it	Seleziona "%1", se il tuo client non supporta rubriche multiple
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	it	Seleziona "%1", se il tuo client supporta gruppi, p.es. rubrica OS X oppure iOS
+select action	common	it	Scegli azione
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	common	it	Selezione data
@@ -547,12 +633,15 @@ select group	common	it	Selezione gruppo
 select home email address	common	it	Selezione indirizzo e-mail abitazione
 select multiple accounts	common	it	seleziona molteplici account
 select one	common	it	Seleziona uno
+select the default height for the application windows	common	it	Seleziona l'altezza predefinita per le finestre dell'applicazione
+select the default width for the application windows	common	it	Seleziona la larghezza predefinita per le finestre dell'applicazione
 select user	common	it	Selezione utente
 select work email address	common	it	Selezione indirizzio e-mail ufficio
 selection	common	it	Selezione
 send	common	it	Invia
 senegal	common	it	SENEGAL
 september	common	it	Settembre
+serbia	common	it	Serbia
 server %1 has been added	common	it	Server %1 aggiunto
 server answered. processing response...	common	it	Il Server ha risposto. Elaborazione risposta in corso...
 server contacted. waiting for response...	common	it	Server contattato. Attesa risposta...
@@ -563,8 +652,11 @@ setup main menu	common	it	Menù Principale Setup
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
+show as topmenu	common	it	Mostra come menù in cima
 show clock?	common	it	Mostrare orologio?
 show home and logout button in main application bar?	common	it	Mostrare i pulsanti Home e Logout nella barra applicazioni principale?
+show in sidebox	common	it	Mostra nel menù laterale
+show log of following device	groupdav	it	Mostra il registro del seguente dispositivo
 show logo's on the desktop.	common	it	Mostra logo sul desktop
 show menu	common	it	visualizza menu
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
@@ -575,7 +667,10 @@ show_more_apps	common	it	show_more_apps
 showing %1	common	it	visualizzati %1
 showing %1 - %2 of %3	common	it	visualizzati da %1 a %2 di %3
 sierra leone	common	it	SIERRA LEONE
+simple	common	it	Semplice
 singapore	common	it	SINGAPORE
+site configuration	common	it	Configurazione per tutto il Sito
+size	common	it	Dimensione
 slovakia	common	it	SLOVACCHIA
 slovenia	common	it	SLOVENIA
 solomon islands	common	it	ISOLE DI SOLOMONE
@@ -586,6 +681,7 @@ south georgia and the south sandwich islands	common	it	SUD GEORGIA E LE ISOLE SU
 spain	common	it	SPAGNA
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	it	Directory iniziale per il browser dell'editor di testo in EGroupware File Manager
 start time	common	it	Ora Inizio
 start with	common	it	Inizia con
 starting up...	common	it	Inizializzazione...
@@ -601,7 +697,9 @@ svalbard and jan mayen	common	it	SVALBARD E JAN MAYEN
 swaziland	common	it	SWAZILAND
 sweden	common	it	SVEZIA
 switzerland	common	it	SVIZZERA
+sync all selected into one	groupdav	it	Sincronizza tutti i selezionati in uno
 syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
+table %1 is excluded from backup and restore. data will not be restored.	common	it	La tabella %1 è esclusa dal backup e ripristino. I dati non verranno ripristinati.
 table properties	common	it	Table properties
 taiwan	common	it	TAIWAN/TAIPEI
 tajikistan	common	it	TAJIKISTAN
@@ -612,6 +710,8 @@ the api is current	common	it	L'API è aggiornata
 the api requires an upgrade	common	it	L'API necessita di un aggiornamento
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
 the mail server returned	common	it	Il mail server ha risposto
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	it	C'è già un sistema con questo nome. Per favore usane un altro.
+they will be sub-folders in users home (%1 attribute).	common	it	Saranno sottocartelle nella home dell'utente (attributo %1)
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
 this name has been used already	common	it	Questo nome è già stato usato!
@@ -646,7 +746,6 @@ type	common	it	Tipo
 uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
 underline	common	it	Sottolineato
-underline.gif	common	it	underline.gif
 united arab emirates	common	it	EMIRATI ARABI UNITI
 united kingdom	common	it	REGNO UNITO
 united states	common	it	STATI UNITI
@@ -655,6 +754,8 @@ unknown	common	it	Sconosciuto
 update	common	it	Aggiorna
 update the clock per minute or per second	common	it	Aggiorna l'orologio ogni minuto o ogni secondo
 upload	common	it	Carica
+upload directory does not exist, or is not writeable by webserver	common	it	Cartella di upload inesistente o non scrivibile dal server
+upload requires the directory to be writable by the webserver!	common	it	Il caricamento richiede che il server possa scrivere nella cartella!
 url	common	it	URL
 uruguay	common	it	URUGUAY
 use button to search for	common	it	usa il Pulsante per cercare
@@ -668,9 +769,11 @@ username	common	it	Username
 users	common	it	Utenti
 users choice	common	it	Scelta Utente
 uzbekistan	common	it	UZBEKISTAN
+value	common	it	Valore
 vanuatu	common	it	VANUATU
 venezuela	common	it	VENEZUELA
 version	common	it	Versione
+vfs upload directory	common	it	Directory di upload VFS
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
@@ -678,18 +781,26 @@ virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
 wallis and futuna	common	it	WALLIS E FUTUNA
 wednesday	common	it	Mercoledì
 welcome	common	it	Benvenuto
+western european	common	it	Europeo occidentale
 western sahara	common	it	SAHARA OCCIDENTALE
+what color should all the blank space on the desktop have	common	it	Di che colore dovrebbe essere lo spazio vuoto sul desktop?
 what style would you like the image to have?	common	it	Che stile vuoi che abbia l'immagine?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni
+where and how will the egroupware links like preferences, about and logout be displayed.	common	it	Come e dove verranno visualizzati i collegamenti come Preferenze, About e Log
 which groups	common	it	Quali gruppi
+which infolog types should be synced with the device, default only tasks.	common	it	Quali tipi di Attività dovrebbero essere sincronizzati con il dispositivo? Predefinito = solo task
+whole query	common	it	Tutta la query
 width	common	it	Larghezza
 wk	jscalendar	it	set
 work email	common	it	e-mail ufficio
-writing	common	it	scrittura
+would you like to display the page generation time at the bottom of every window?	common	it	Mostra il tempo per la generazione della pagina in fondo ad ogni finestra
+writing	common	it	Scrittura
 written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
+you can customize how many icons and toolbars the editor shows.	common	it	Quante icone e barre degli strumenti mostra l'editor
 you have been successfully logged out	login	it	L'uscita è stata effettuata correttamente
 you have not entered a title	common	it	Non hai inserito un titolo
 you have not entered a valid date	common	it	Non hai inserito una data valida
@@ -698,15 +809,20 @@ you have not entered participants	common	it	Non hai inserito i partecipanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 you have successfully logged out	common	it	Ti sei disconesso con successo
+you need to %1set your timezone preference%2.	common	it	Devi %1impostare la tua zona oraria%2
 you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
+you need to be an egroupware administrator to access this functionality!	common	it	Devi essere un amministratore per accedere a questa funzione!
+you need to select some entries first!	common	it	Devi prima selezionare alcune voci"
+you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi impostare la registrazione a "%1" per creare e aggiornare i registri
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	it	La tua password non soddisfa i criteri di sicurezza impostati dall'amministratore.<br> Deve soddisfare %1 criteri mentre la tua soddisfa solo %2<br> I seguenti criteri non sono stati soddisfatti:
+your password is about to expire in %1 days, you may change your password now	common	it	La tua password scade in %1 giorni, puoi cambiare la tua password adesso.
 your search returned %1 matchs	common	it	la tua ricerca ha restituito %1 risultati
 your search returned 1 match	common	it	la tua ricerca ha restituito 1 risultato
 your session could not be verified.	login	it	La sessione non può essere verificata.
 your settings have been updated	common	it	Le tue impostazioni sono state aggiornate
-yugoslavia	common	it	YUGOSLAVIA
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
 zoom	common	it	Zoom
-site configuration	common	it	Configurazione per tutto il Sito
