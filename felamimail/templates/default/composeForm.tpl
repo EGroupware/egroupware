@@ -8,6 +8,8 @@
 	var activityImagePath		= "{ajax-loader}";
 	var fm_compose_langNoAddressSet	= "{lang_no_address_set}";
 	var ckeditorConfig = {ckeditorConfig};
+	var aktiv;
+	var _refreshTimeOut = {refreshTimeOut};
 
 	self.focus();
 
@@ -48,6 +50,7 @@
 		}
 		return true;
 	}
+	fm_startTimerSaveAsDraft(_refreshTimeOut);
 </script>
 <center>
 <form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data" onsubmit="return check_data();">

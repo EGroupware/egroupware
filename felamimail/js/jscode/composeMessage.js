@@ -52,6 +52,54 @@ function initAll()
 	if (titletext.length>0) updateTitle(titletext);
 }
 
+function fm_startTimerSaveAsDraft(_refreshTimeOut) {
+	if(aktiv) {
+		window.clearTimeout(aktiv);
+	}
+	if(_refreshTimeOut > 5000) {
+		aktiv = window.setInterval("fm_compose_saveAsDraftBG()", _refreshTimeOut);
+	}
+}
+
+function fm_compose_saveAsDraftBG()
+{
+	//alert('composing in progress->'+composeID);
+
+	var htmlFlag = document.getElementsByName('_is_html')[0];
+	var mimeType = document.getElementById('mimeType');
+	var currentEditor = htmlFlag.value;
+	var currentMode ='';
+	var data = {};
+	if (currentEditor == 1)
+	{fm_startTimerSaveAsDraft(_refreshTimeOut)
+		data['mimeType']=currentMode='html';
+	}
+	else
+	{
+		data['mimeType']=currentMode='plain';
+	}
+
+	var ckeditor = CKEDITOR.instances['body'];
+	var plaineditor = document.getElementsByName('body')[0];
+	var editorArea = document.getElementById('editorArea');
+	data = window.xajax.getFormValues('doit');
+	data['body'] ='';
+	// body
+	if (currentMode == 'html')
+	{
+		//Copy the current HTML data and recode it via a XAJAX request
+		data['body'] = ckeditor.getData();
+	}
+	else
+	{
+		data['body'] = plaineditor.value;
+	}
+
+	//call saveasdraft with xajax_doXMLHTTP, or something equivalent
+	xajax_doXMLHTTP("felamimail.ajaxfelamimail.saveAsDraft", composeID, data);
+	fm_startTimerSaveAsDraft(_refreshTimeOut);
+}
+
 function addEmail(to,email)
 {
 	//alert(to+': '+email);

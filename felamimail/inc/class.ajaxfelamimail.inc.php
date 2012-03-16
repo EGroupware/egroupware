@@ -262,6 +262,66 @@ class ajaxfelamimail
 			return $response->getXML();
 		}
 
+		function saveAsDraft($_composeID, $_data)
+		{
+			if($this->_debug) error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID).' Data:'.array2string($_data));
+			$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
+			$folder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+			$this->bofelamimail->reopen($folder);
+			$status = $this->bofelamimail->getFolderStatus($folder);
+			//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
+			$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
+			$_data['saveAsDraft'] = 1;
+			$formData['identity']	= (int)$_data['identity'];
+
+			foreach((array)$_data['destination'] as $key => $destination) {
+				if(!empty($_data['address'][$key])) {
+					if($destination == 'folder') {
+						$formData[$destination][] = $GLOBALS['egw']->translation->convert($_data['address'][$key], $this->charset, 'UTF7-IMAP');
+					} else {
+						$formData[$destination][] = $_data['address'][$key];
+					}
+				}
+			}
+
+			$formData['subject'] 	= $bocompose->stripSlashes($_data['subject']);
+			$formData['body'] 	= $bocompose->stripSlashes($_data['body']);
+/*
+			// if the body is empty, maybe someone pasted something with scripts, into the message body
+			if(empty($formData['body']))
+			{
+				// this is to be found with the egw_unset_vars array for the _POST['body'] array
+				$name='_POST';
+				$key='body';
+				//error_log($GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
+				if (isset($GLOBALS['egw_unset_vars'][$name.'['.$key.']']))
+				{
+					$formData['body'] = bocompose::_getCleanHTML( $GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
+				}
+			}
+*/
+			$formData['priority'] 	= $bocompose->stripSlashes($_data['priority']);
+			$formData['signatureID'] = (int)$_data['signatureID'];
+			$formData['stationeryID'] = $_data['stationeryID'];
+			$formData['mimeType']	= $bocompose->stripSlashes($_data['mimeType']);
+			if ($formData['mimeType'] == 'html' && html::htmlarea_availible()===false)
+			{
+				$formData['mimeType'] = 'plain';
+				$formData['body'] = $bocompose->convertHTMLToText($formData['body']);
+			}
+			$formData['disposition'] = (bool)$_data['disposition'];
+			$formData['to_infolog'] = $_data['to_infolog'];
+			$formData['to_tracker'] = $_data['to_tracker'];
+			$formData['isDraft'] = 1;
+			$lastDrafted = false;
+			if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
+			$messageUid = $bocompose->saveAsDraft($formData,$folder); // folder may change
+			if ($lastDrafted && is_array($lastDrafted)) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			$bocompose->sessionData['lastDrafted'] = array('uid'=>$messageUid,'folder'=>$folder);
+			$bocompose->saveSessionData();
+			if($this->_debug) error_log(__METHOD__.__LINE__.' saved as:'.$messageUid.' in '.$folder);
+		}
+
         function toggleEditor($_composeID, $_content ,$_mode)
         {
 			$_content = utf8_decode($_content);

@@ -27,6 +27,7 @@
 		var $bopreferences;
 		var $bosignatures;
 		var $displayCharset;
+		var $sessionData;
 
 		function bocompose($_composeID = '', $_charSet = 'iso-8859-1')
 		{
@@ -1151,7 +1152,13 @@
 				}
 				//$bofelamimail->closeConnection();
 			}
-			#error_log("handling draft messages, flagging and such");
+			// handle previous drafted versions of that mail
+			$lastDrafted = false;
+			if (isset($this->sessionData['lastDrafted'])) $lastDrafted = $this->sessionData['lastDrafted'];
+			if ($lastDrafted && is_array($lastDrafted)) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			unset($this->sessionData['lastDrafted']);
+
+			//error_log("handling draft messages, flagging and such");
 			if((isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
 				|| (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 				// mark message as answered

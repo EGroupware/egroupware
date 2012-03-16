@@ -481,6 +481,7 @@ function onNodeSelect(_nodeID) {
 	var actionPending = false;
 //	var formData = new Array();
 	if(top.tree.getUserData(_nodeID, 'folderName')) {
+/*
 		if(document.getElementsByName("folderAction")[0].value == "moveMessage") {
 			if (prefAskForMove == 1 || prefAskForMove == 2) 
 			{
@@ -532,13 +533,14 @@ function onNodeSelect(_nodeID) {
 				}
 			}
 		} else {
+*/
 			mail_resetMessageSelect();
 			egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_loading + ' ' + top.tree.getUserData(_nodeID, 'folderName') + '</span>');
 			mail_cleanup();
 			document.getElementById('divMessageList').innerHTML = '';
 			egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.updateMessageView",_nodeID);
 			egw_appWindow('felamimail').refreshFolderStatus(_nodeID);
-		}
+//		}
 	}
 	CopyOrMove = true;
 }
@@ -1258,7 +1260,7 @@ function topPosition() {
 function leftPosition() {
   return typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement && document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ? document.body.scrollLeft : 0;
 }
-
+/*
 // build/show the dialog box, populate the data and call the fadeDialog function //
 function showDialog(title,message,type,autohide) {
   if(!type) {
@@ -1367,7 +1369,7 @@ function fadeDialog(flag) {
     clearInterval(dialog.timer);
   }
 }
-
+*/
 function felamimail_transform_foldertree() {
 	// Get the felamimail object manager, but do not create it!
 	var objectManager = egw_getObjectManager('felamimail', false);
