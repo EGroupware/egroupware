@@ -1,7 +1,7 @@
 all possible notification backends	notifications	de	alle verfügbaren Benachrichtigungs-Schnittstellen
-check both (first try (active) user defined account, if none use emailadmin profile)	admin	de	Prüfe beides (wenn vorhanden verwende das aktive Benutzerdefinierte Konto, sonst das Emailadminprofil)
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	de	Prüfe beides (wenn vorhanden verwende das aktive Benutzerdefinierte Konto, sonst das Email-adminprofil)
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	de	Wählen Sie eine Benachrichtigungskette. Sie werden über die Schnittstellen benachrichtigt, die in der Kette enthalten sind.<br />Bitte beachten: Wenn eine Benachrichtigungskette als "deaktiviert" markiert ist oder Ihr Administrator erlaubt ein oder mehrere Schnittstellen nicht, die in der Kette enthalten sind, so weicht die EGroupware-Benachrichtigung auf die Methode "E-Mail" aus.
-choose from mailsettings used for notification	admin	de	Auswahl der für die Benachrichtigung per eMail verwendeten Mailprofile
+choose from mailsettings used for notification	admin	de	Auswahl der für die Benachrichtigung per E-Mail verwendeten Mailprofile
 common chains	notifications	de	Einfache Ketten
 disabled chains	notifications	de	Deaktivierte Ketten
 do not notify me at all	notifications	de	benachrichtige mich niemals
@@ -14,7 +14,7 @@ egroupware-popup first, if that fails notify me by e-mail	notifications	de	zuers
 egroupware-popup first, if that fails notify me by sms	notifications	de	zuerst EGroupware-Popup. Wenn dies fehl schlägt, benachrichtige mich per SMS.
 egroupware-popup only	notifications	de	nur EGroupware-Popup
 egroupware-popup verbosity	notifications	de	EGroupware-Popup Mitteilungspriorität
-emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	de	Nur Emailadmin Profil (aktive Benutzerdefinierte Konten werden nicht für die Notifizierung per eMail verwendet)
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	de	Nur Emailadmin Profil (aktive Benutzerdefinierte Konten werden nicht für die Notifizierung per E-Mail verwendet)
 enable egroupware-popup backend	admin	de	EGroupware-Popup Schnittstelle aktivieren
 enable sms backend	admin	de	SMS Schnittstelle aktivieren
 enable windows-popup backend	admin	de	Windows-Popup Schnittstelle aktivieren
@@ -22,7 +22,7 @@ enabled chains	notifications	de	Aktivierte Ketten
 folder	notifications	de	Ordner
 from	notifications	de	von
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	de	Wie hoch soll das EGroupware-Popup die Priorität setzen wenn eine Benachrichtigung an den Benutzer gesendet wird:<br />Niedrig: Es wird nur die Benachrichtigungsglocke im Topmenü angezeigt - das Topmenü muss hierfür eingeschaltet sein!<br />Mittel: Holt das Benachrichtigungsfenster in den Vordergrund<br />Hoch: Holt das Benachrichtigungsfenster in den Vordergrund und aktiviert den Browser zur besseren Erkennung der Benachrichtigung.
-if set, embedded links get rendered special for external clients	notifications	de	Wenn diese Option aktiviert ist, werden in der Benachrichtigungs-E-Mail "eingebettete Links" für externe E-Mail-Clients besondert behandelt.
+if set, embedded links get rendered special for external clients	notifications	de	Wenn diese Option aktiviert ist, werden "eingebettete Links" besser graphisch aufbereitet.
 linked entries:	common	de	Verknüpfte Einträge:
 mail backend	admin	de	Mail Schnittstelle
 maximum sms messages per notification	admin	de	Maximale Anzahl an SMS Nachrichten pro Benachrichtigung
@@ -36,11 +36,10 @@ preferences for notification	notifications	de	Benachrichtigungs-Einstellungen
 received	notifications	de	Erhalten
 sms backend	admin	de	SMS Schnittstelle
 sms only	notifications	de	nur SMS
-this egroupware notification has been sent to you by mail because your	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt.
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt, da Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
 windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
 windows-popup backend	admin	de	Windows-Popup Schnittstelle
 windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
-windows-popup first, if that fails notify me by sms	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schläg, benachrichtige mich per SMS.
+windows-popup first, if that fails notify me by sms	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schlägt, benachrichtige mich per SMS.
 windows-popup only	notifications	de	nur Windows-Popup
 you've got new mail	notifications	de	Sie haben neue E-Mails
