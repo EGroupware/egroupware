@@ -1274,7 +1274,7 @@ class etemplate extends boetemplate
 			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
 				$cell_opts = $c = self::csv_split($cell_options);	// allows to enclose preg in quote to allow comma
 				// fix preg, in case it contains a comma (html5type is only letters and always last option!)
-				if (count($cell_opts) > 3)
+				if (count($cell_opts) > 3 && ($cell_opts2 = explode(',',$cell_options)) && $cell_opts2[2][0] != '"')
 				{
 					$html5type = array_pop($cell_opts);
 					$cell_opts = explode(',',$cell_options,3);
