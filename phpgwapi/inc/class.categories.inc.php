@@ -550,6 +550,7 @@ class categories
 	 */
 	function delete($cat_id, $drop_subs = False, $modify_subs = False)
 	{
+		//error_log(__METHOD__."(".array2string($cat_id).', drop_subs='.array2string($drop_subs).', modify_subs='.array2string($modify_subs).') '.function_backtrace());
 		if ($modify_subs)
 		{
 			$new_parent = $this->id2name($cat_id,'parent');
@@ -966,6 +967,8 @@ class categories
 	 */
 	public static function invalidate_cache($cat=null)
 	{
+		//error_log(__METHOD__."(".array2string($cat).') '.function_backtrace());
+
 		// allways invalidate instance-global cache, as updating our own cache is not perfect and does not help other sessions
 		egw_cache::unsetInstance(self::CACHE_APP, self::CACHE_NAME);
 
@@ -983,6 +986,10 @@ class categories
 			{
 				self::$cache[$cat['id']] = $cat;
 			}
+		}
+		else
+		{
+			self::init_cache();
 		}
 	}
 
