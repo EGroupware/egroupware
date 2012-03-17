@@ -1267,12 +1267,12 @@ class etemplate extends boetemplate
 				{
 					$value = is_numeric($pre) ? self::number_format($value,$pre,$readonly) : sprintf($pre,$value);
 				}
-				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/').',number';
+				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '"/^-?[0-9]*[,.]?[0-9]*$/"').',number';
 				// fall-through
 			case 'hidden':
 			case 'passwd':
 			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
-				$cell_opts = $c = explode(',',$cell_options);
+				$cell_opts = $c = self::csv_split($cell_options);	// allows to enclose preg in quote to allow comma
 				// fix preg, in case it contains a comma (html5type is only letters and always last option!)
 				if (count($cell_opts) > 3)
 				{
