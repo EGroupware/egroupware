@@ -26,3 +26,57 @@ function add_email_from_ab(ab_id,info_cc)
 	}
 	return false;
 }
+
+/**
+ * If one of info_status, info_percent or info_datecompleted changed --> set others to reasonable values
+ * 
+ * @param string changed_id id of changed element
+ * @param string status_id
+ * @param string percent_id
+ * @param string datecompleted_id
+ */
+function status_changed(changed_id, status_id, percent_id, datecompleted_id)
+{
+	var status = document.getElementById(status_id);
+	var percent = document.getElementById(percent_id);
+	var datecompleted = document.getElementById(datecompleted_id+'[str]');
+	var completed;
+	
+	switch(changed_id)
+	{
+		case status_id:
+			completed = status.value == 'done' || status.value == 'billed';
+			if (completed || status.value == 'not-started') percent.value = completed ? 100 : 0;
+			break;
+			
+		case percent_id:
+			completed = percent.value == 100;
+			if (completed != (status.value == 'done' || status.value == 'billed') || 
+				(status.value == 'not-started') != (percent.value == 0))
+			{
+				status.value = percent.value == 0 ? 'not-started' : (percent.value == 100 ? 'done' : 'ongoing');
+			}
+			break;
+			
+		case datecompleted_id+'[str]':
+		case datecompleted_id:
+			completed = datecompleted.value != '';
+			if (completed != (status.value == 'done' || status.value == 'billed'))
+			{
+				status.value = completed ? 'done' : 'not-started';
+			}
+			if (completed != (percent.value == 100))
+			{
+				percent.value = completed ? 100 : 0;
+			}
+			break;
+	}
+	if (!completed && datecompleted.value != '')
+	{
+		datecompleted.value = '';
+	}
+	else if (completed && datecompleted.value == '')
+	{
+		// todo: set current date in correct format
+	}
+}
