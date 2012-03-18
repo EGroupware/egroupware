@@ -166,7 +166,7 @@
 				<column width="103"/>
 				<column width="260"/>
 				<column width="90"/>
-				<column width="27%"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
@@ -242,16 +242,16 @@
 				<row class="row">
 					<description value="Status" for="info_status"/>
 					<menulist>
-						<menupopup statustext="@status_help" id="info_status" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
+						<menupopup statustext="@status_help" id="info_status" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 					<description value="Completed" for="info_percent"/>
 					<menulist>
-						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
+						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 				</row>
 				<row class="row">
 					<description value="Date completed" for="info_datecompleted"/>
-					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted"/>
+					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					<description value="Private" for="info_access"/>
 					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 				</row>
