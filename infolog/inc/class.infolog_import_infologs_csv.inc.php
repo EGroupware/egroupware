@@ -327,12 +327,22 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					break;
 				} else {
 					$result = $this->boinfolog->write( $_data, true, 2);	// 2 = dont touch modification date
-					if(!$result) {
-						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
-							$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
-							lang($_action)
-						);
-					} else {
+					if(!$result)
+					{
+						if($result === false)
+						{
+							$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
+								$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
+								lang($_action)
+							);
+						}
+						else
+						{
+							$this->errors[$record_num] = lang('Error: the entry has been updated since you opened it for editing!');
+						}
+					}
+					else
+					{
 						$this->results[$_action]++;
 					}
 					break;
