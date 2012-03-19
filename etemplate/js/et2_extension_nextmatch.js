@@ -652,6 +652,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 							visible[value[j].substring(1)] = true;
 							i++;
 						}
+						self.columns[column].widget.set_visible(visible);
 					}
 					column++;
 				}

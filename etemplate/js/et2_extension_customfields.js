@@ -256,11 +256,11 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			{
 				if(_fields[name])
 				{
-					this.rows.show();
+					jQuery(this.rows[this.prefix+name]).show();
 				}
 				else
 				{
-					this.rows.hide();
+					jQuery(this.rows[this.prefix+name]).hide();
 				}
 			}
 			this.options.fields[name] = _fields[name];
