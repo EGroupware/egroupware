@@ -869,6 +869,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		this.count_total = jQuery(document.createElement("span"))
 			.appendTo(this.count)
 			.text(settings.total + "");
+		this.count.prependTo(this.div);
 
 		// Set up so if row count changes, display is updated
 		nm_div.bind('nm_data', function(e) { // Have to bind to DOM node, not et2 widget
@@ -876,19 +877,19 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		});
 
 		// Left & Right headers
-		// TODO: Not quite right.  Should they even go inside the nm?
 		this.headers = [];
 		if(settings.header_left || settings.header_right)
 		{
 			var headers = [settings.header_left, settings.header_right];
-			this.header_div = jQuery(document.createElement("div")).prependTo(nm_div);
+			this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 			for(var i = 0; i < headers.length; i++) {
 				if(headers[i]) {
 					// Load the template
 					var header = et2_createWidget("template", {"id": headers[i]}, this);
-					jQuery(header.getDOMNode()).addClass(i == 0 ? "et2_hbox_left":"et2_hbox_right").addClass("header");
+					jQuery(header.getDOMNode()).addClass(i == 0 ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 					this.headers.push(header);
 				}
+				// TODO: Bind onChange to update filter, and refresh if needed
 			}
 		}
 
@@ -932,7 +933,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 				});
 		}
 
-		this.count.prependTo(this.div);
 
 		// Search
 		this.search = et2_createWidget("textbox", {"blur":egw.lang("search")}, this);
