@@ -401,8 +401,8 @@
 				// Update job with results
 				self::update_job($data);
 
-				ob_end_flush();
-				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": $file_check \n");
+				error_log('importexport_schedule: ' . date('c') . ": $file_check \n");
+				error_log(ob_get_flush());
 				return;
 			}
 
@@ -412,7 +412,7 @@
 				// Update job with results
 				self::update_job($data);
 
-				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
+				error_log('importexport_schedule: ' . date('c') . ": Definition not found! \n");
 				return;
 			}
 			$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
@@ -462,7 +462,7 @@
 
 						fclose($resource);
 					} else {
-						fwrite(STDERR,'importexport_schedule: ' . date('c') . ": File $target not readable! \n");
+						error_log('importexport_schedule: ' . date('c') . ": File $target not readable! \n");
 						$data['errors'][$target][] = lang('%1 is not readable',$target);
 					}
 				}
@@ -474,20 +474,22 @@
 
 
 				if(method_exists($po, 'get_warnings') && $po->get_warnings()) {
-					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n");
+					$buffer = 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n";
 					foreach($po->get_warnings() as $record => $msg) {
 						$data['warnings'][$target][] = "#$record: $msg";
-						fwrite(STDERR, "$record\t$msg\n");
+						$buffer += "$record\t$msg\n";
 					}
+					error_log($buffer);
 				} else {
 					unset($data['warnings'][$target]);
 				}
 				if(method_exists($po, 'get_errors') && $po->get_errors()) {
-					fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
+					$buffer = 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n";
 					foreach($po->get_errors() as $record => $error) {
 						$data['errors'][$target][] = "#$record: $error";
-						fwrite(STDERR, "$record\t$error\n");
+						$buffer += "$record\t$error\n";
 					}
+					error_log($buffer);
 				} else {
 					unset($data['errors'][$target]);
 				}
@@ -533,10 +535,10 @@
 
 			$contents = ob_get_contents();
 
-			// Log to cron log
+			// Log to error log
 			if($contents)
 			{
-				fwrite(STDOUT,'importexport_schedule: ' . date('c') . ": \n".$contents);
+				error_log('importexport_schedule: ' . date('c') . ": \n".$contents);
 			}
 
 			ob_end_clean();
