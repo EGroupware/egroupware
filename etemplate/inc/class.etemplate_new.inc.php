@@ -105,6 +105,10 @@ class etemplate_new extends etemplate_widget_template
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
+		// Include the jQuery-UI CSS - many more complex widgets use it
+		$theme = 'smoothness';
+		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.16.custom.css");
+
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
 		// generate new etemplate request object
