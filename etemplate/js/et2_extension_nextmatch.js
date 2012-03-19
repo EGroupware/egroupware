@@ -630,6 +630,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				var column = 0;
 				for(var i = 0; i < value.length; i++)
 				{
+					// Handle skipped columns
+					while(value[i] != "col_"+column && column < columnMgr.columns.length)
+					{
+						column++;
+					}
 					if(visibility[value[i]])
 					{
 						visibility[value[i]].visible = true;
@@ -644,7 +649,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						{
 							visible[field_name] = false;
 						}
-						i++;
 						// Turn on selected custom fields - start from 0 in case they're not in order
 						for(var j = 0; j < value.length; j++)
 						{
@@ -654,7 +658,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						}
 						self.columns[column].widget.set_visible(visible);
 					}
-					column++;
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
 				self.selectPopup.toggle();
@@ -1164,6 +1167,11 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			}
 		}
 		if(!nm_column) return;
+		
+		// Check for global setting changes (visibility)
+		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
+		if(global_data.fields) this.options.fields = global_data.fields;
+
 		var apps = egw.link_app_list();
 		for(var field_name in this.options.customfields)
 		{
