@@ -243,6 +243,30 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		attrs.application = field.type;
 	},
 
+	/** 
+	 * Set which fields are visible, by name
+	 *
+	 * Note: no # prefix on the name
+	 *
+	 */
+	set_visible: function(_fields) {
+		for(var name in _fields)
+		{
+			if(this.rows[this.prefix + name])
+			{
+				if(_fields[name])
+				{
+					this.rows.show();
+				}
+				else
+				{
+					this.rows.hide();
+				}
+			}
+			this.options.fields[name] = _fields[name];
+		}
+	},
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 */

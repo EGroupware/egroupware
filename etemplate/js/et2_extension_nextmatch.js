@@ -31,6 +31,7 @@
 	et2_widget_template;
 	et2_widget_grid;
 	et2_widget_selectbox;
+	et2_extension_customfields;
 
 	// Include the dynheight manager
 	et2_extension_nextmatch_dynheight;
@@ -85,6 +86,22 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	init: function() {
 		this._super.apply(this, arguments);
 
+		/* 
+		Process selected custom fields here, so that the settings are correctly
+		set before the row template is parsed
+		*/
+		var prefs = this._getPreferences();
+		var cfs = {};
+		for(var i = 0; i < prefs.visible.length; i++)
+		{
+			if(prefs.visible[i].indexOf(et2_nextmatch_customfields.prototype.prefix) == 0)
+			{
+				cfs[prefs.visible[i].substr(1)] = !prefs.negated
+			}
+		}
+		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
+		global_data.fields = cfs;
+		
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
 
@@ -304,10 +321,12 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		return colName;
 	},
 
+
 	/**
-	 * Apply stored user preferences to discovered columns
+	 * Retrieve the user's preferences for this nextmatch merged with defaults
+	 * Column display, column size, etc.
 	 */
-	_applyUserPreferences: function(_row, _colData) {
+	_getPreferences: function() {
 		// Read preference or default for column visibility
 		var negated = false;
 		var columnPreference = "";
@@ -345,6 +364,21 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			size = this.egw().preference("nextmatch-"+this.options.settings.columnselection_pref+"-size", app);
 		}
 		if(!size) size = {};
+		return {
+			visible: columnDisplay,
+			visible_negated: negated,
+			size: size
+		};
+	},
+
+	/**
+	 * Apply stored user preferences to discovered columns
+	 */
+	_applyUserPreferences: function(_row, _colData) {
+		var prefs = this._getPreferences();
+		var columnDisplay = prefs.visible;
+		var size = prefs.size;
+		var negated = prefs.visible_negated;
 
 		// Add in display preferences
 		if(columnDisplay && columnDisplay.length > 0)
@@ -352,10 +386,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			RowLoop:
 			for(var i = 0; i < _row.length; i++)
 			{
-				var colName = this._getColumnName(_row[i].widget);
-				if(!colName) continue;
-
-				if(size[colName]) _colData[i].width = size[colName];
 				// Customfields needs special processing
 				if(_row[i].widget.instanceOf(et2_nextmatch_customfields))
 				{
@@ -363,11 +393,13 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					for(var j = 0; j < columnDisplay.length; j++)
 					{
 						if(columnDisplay[j].indexOf(_row[i].widget.id) == 0) {
-							var cfDisplay = et2_csvSplit(columnDisplay[j],null,"_#");
 							_row[i].widget.options.fields = {};
-							for(var k = 1; k < cfDisplay.length; k++)
+							for(var k = i; k < columnDisplay.length; k++)
 							{
-								_row[i].widget.options.fields[cfDisplay[k]] = true;
+								if(columnDisplay[k].indexOf(_row[i].widget.prefix) == 0)
+								{
+									_row[i].widget.options.fields[columnDisplay[k].substr(1)] = true;
+								}
 							} 
 							// Resets field visibility too
 							_row[i].widget._getColumnName();
@@ -376,6 +408,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						}
 					}
 				}
+
+				var colName = this._getColumnName(_row[i].widget);
+				if(!colName) continue;
+
+				if(size[colName]) _colData[i].width = size[colName];
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
 					if(columnDisplay[j] == colName)
@@ -410,15 +447,17 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			var widget = this.columns[i].widget;
 			var colName = this._getColumnName(widget);
 			if(colName) {
-				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
-				if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
 				// Server side wants each cf listed as a seperate column
 				if(widget.instanceOf(et2_nextmatch_customfields)) 
 				{
-					for(name in widget.options.fields) {
-						 if(widget.options.fields[name]) custom_fields.push("#"+name);
+					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
+					colName = widget.id;
+					for(var name in widget.options.fields) {
+						 if(widget.options.fields[name]) custom_fields.push(widget.prefix+name);
 					}
 				}
+				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
+				if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
 			} else if (colMgr.columns[i].fixedWidth) {
 				this.egw().debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
@@ -426,6 +465,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			
 		var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 		var app = list[0];
+
+		// Server side wants each cf listed as a seperate column
+		jQuery.merge(colDisplay, custom_fields);
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
@@ -436,9 +478,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
-
-		// Server side wants each cf listed as a seperate column
-		jQuery.merge(colDisplay, custom_fields);
 
 		this.activeFilters.selectcols = colDisplay;
 
@@ -552,8 +591,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			{
 				for(var field_name in widget.customfields)
 				{
-					columns[et2_customfields_list.prototype.prefix+field_name] = " - "+widget.customfields[field_name].label;
-					if(widget.fields[field_name]) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
+					columns[widget.prefix+field_name] = " - "+widget.customfields[field_name].label;
+					if(widget.options.fields[field_name]) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
 				}
 			}
 		}
@@ -915,6 +954,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			var tbody = jQuery(document.createElement("tbody")).appendTo(this.lettersearch);
 			var row = jQuery(document.createElement("tr")).appendTo(tbody);
 
+			// Capitals, A-Z
 			for(var i = 65; i <= 90; i++) {
 				var button = jQuery(document.createElement("td"))
 					.addClass("lettersearch")
@@ -1059,7 +1099,7 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header',
 /**
  * Extend header to process customfields
  */
-var et2_nextmatch_customfields = et2_nextmatch_header.extend({
+var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader, {
 	attributes: {
 		'customfields': {
 			'name': 'Custom fields',
@@ -1072,21 +1112,13 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	},
 
 	init: function() {
-
-		// Create the table body and the table
-		this.tbody = $j(document.createElement("tbody"));
-		this.table = $j(document.createElement("table"))
-				.addClass("et2_grid");
-		this.table.append(this.tbody);
-		this.rows = {};
-
+		this.nextmatch = null;
 		this._super.apply(this, arguments);
 	},
 
 	destroy: function() {
-		this.rows = null;
-		this.tbody = null;
-		this.table = null;
+		this.nextmatch = null;
+		this._super.apply(this.arguments);
 	},
 
 	transformAttributes: function(_attrs) {
@@ -1107,7 +1139,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	},
 
 	setNextmatch: function(_nextmatch) {
-		this._super.apply(this, arguments);
+		this.nextmatch = _nextmatch;
 		this.loadFields();
 	},
 
@@ -1115,6 +1147,11 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	 * Build widgets for header - sortable for numeric, text, etc., filterables for selectbox, radio
 	 */
 	loadFields: function() {
+		if(this.nextmatch == null)
+		{
+			// not ready yet
+			return;
+		}
 		var columnMgr = this.nextmatch.dataviewContainer.columnMgr;
 		var nm_column = null;
 		for(var i = 0; i < this.nextmatch.columns.length; i++)
@@ -1130,6 +1167,7 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 		for(var field_name in this.options.customfields)
 		{
 			var field = this.options.customfields[field_name];
+			var cf_id = et2_customfields_list.prototype.prefix + field_name;
 
 			
 			if(this.rows[field_name]) continue;
@@ -1139,11 +1177,10 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 					.appendTo(this.tbody);
 			var cf = jQuery(document.createElement("td"))
 					.appendTo(row);
-			this.rows[field_name] = cf[0];
+			this.rows[cf_id] = cf[0];
 
 			// Create widget by type
 			var widget = null;
-			var cf_id = et2_customfields_list.prototype.prefix + field_name;
 
 			if(field.type == 'select')
 			{
@@ -1169,8 +1206,6 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 					label: field.label
 				}, this);
 			}
-			// Not sure why this is needed, widget should be added by et2_createWidget()
-			if(widget) cf.append(widget.getDOMNode());
 
 			// Check for column filter
 			if(!jQuery.isEmptyObject(this.options.fields) && (
@@ -1179,25 +1214,6 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 				cf.hide();
 			}
 		}
-	},
-
-	getDOMNode: function(_sender) {
-		// If the parent class functions are asking for the DOM-Node, return the
-		// outer table.
-		if (_sender == this)
-		{
-			return this.table[0];
-		}
-
-		// Check whether the _sender object exists inside the management array
-		if(this.rows && _sender.id && this.rows[_sender.id])
-		{
-			// Empty it, to avoid doubled DOM nodes
-			//jQuery(this.rows[_sender.id]).empty();
-			return this.rows[_sender.id];
-		}
-
-		return null;
 	},
 
 	/**
@@ -1210,7 +1226,8 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 	},
 
 	/**
-	 * Provide own column naming, including only selected columns
+	 * Provide own column naming, including only selected columns - only useful
+	 * to nextmatch itself, not for sending server-side
 	 */
 	_getColumnName: function() {
 		var name = this.id;
@@ -1227,8 +1244,6 @@ var et2_nextmatch_customfields = et2_nextmatch_header.extend({
 				jQuery(this.rows[field_name]).hide();
 			}
 		}
-
-		
 
 		if(visible.length) {
 			name  +="_"+ visible.join("_");
