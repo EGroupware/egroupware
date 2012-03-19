@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+// switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
+ini_set('zlib.output_compression', 0);
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'home',
@@ -21,10 +24,10 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-$image_map = common::image_map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null);
+$content = common::image_map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null);
 
 // use an etag over the image mapp
-$etag = '"'.md5(serialize($image_map)).'"';
+$etag = '"'.md5(serialize($content)).'"';
 
 // headers to allow caching
 Header('Content-Type: text/javascript; charset=utf-8');
@@ -39,7 +42,15 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	common::egw_exit();
 }
 
-echo 'egw.set_images('.json_encode($image_map).");\n";
+$content = 'egw.set_images('.json_encode($content).");\n";
+
+// we run our own gzip compression, to set a correct Content-Length of the encoded content
+if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))
+{
+	$content = gzencode($content);
+	header('Content-Encoding: gzip');
+}
 
 // Content-Lenght header is important, otherwise browsers dont cache!
-Header('Content-Length: '.ob_get_length());
+Header('Content-Length: '.bytes($content));
+echo $content;
