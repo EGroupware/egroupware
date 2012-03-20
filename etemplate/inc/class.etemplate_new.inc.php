@@ -105,10 +105,6 @@ class etemplate_new extends etemplate_widget_template
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
-		// Include the jQuery-UI CSS - many more complex widgets use it
-		$theme = 'smoothness';
-		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.16.custom.css");
-
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
 		// generate new etemplate request object
@@ -151,7 +147,12 @@ class etemplate_new extends etemplate_widget_template
 			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
 			// egw_framework::validate_file('jquery','jquery.tools.min');
 
-			egw_framework::includeCSS('/etemplate/js/test/test.css');
+			egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
+
+			// Include the jQuery-UI CSS - many more complex widgets use it
+			$theme = 'smoothness';
+			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.16.custom.css");
+
 			common::egw_header();
 			if ($output_mode != 2)
 			{

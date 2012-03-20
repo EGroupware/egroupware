@@ -1,41 +1,17 @@
 /**
- * Styles for etemplate2 tests
+ * Styles for etemplate2 widgets
  *
  * @version: $Id$
  */
 
-/* Stuff for the standalone test webpage */
-
-body, table, td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-/*	overflow: hidden;*/
-}
-
-#linklist a {
-	color: blue;
-	display: block;
-}
-
-#linklist a:visited {
-	color: blue;
-}
-
-#linklist a:hover {
-	color: #5050FF;
-}
-
+/**
+ * Top level
+ */
 #container {
 	/*margin: 10px;
 	border: 1px solid gray;*/
 	padding: 10px;
 	background-color: white;
-}
-
-.header {
-	color: #111;
-	margin: 30px 0 5px 0;
-	border-bottom: 1px solid #111;
 }
 
 /**
@@ -74,6 +50,9 @@ div.et2_hbox_right {
 	clear: right;
 }
 
+/**
+ * Placeholder widget - used for un-implemented widgets
+ */
 .et2_placeholder {
 	display: inline-block;
 	border: 1px solid cornflowerblue;
@@ -99,6 +78,9 @@ div.et2_hbox_right {
 	margin: 2px 0 2px 0;
 }
 
+/**
+ * Label widget, and labels for other widgets
+ */
 .et2_label {
 	color: #101050;
 }
@@ -114,15 +96,18 @@ a.et2_url {
 }
 
 a.et2_url.email {
-	background-image: url(gfx/email.png);
+	background-image: url(images/email.png);
 }
 a.et2_url.phone {
-	background-image: url(gfx/phone.png);
+	background-image: url(images/phone.png);
 }
 a.et2_url.url {
-	background-image: url(gfx/url.png);
+	background-image: url(images/url.png);
 }
 
+/**
+ * Button widget - text only, and icon
+ */
 .et2_button {
 	cursor: pointer;
 	text-align: center;
@@ -133,7 +118,7 @@ a.et2_url.url {
 }
 .et2_button_text {
 	background-color: #E0E0E0;
-	background-image: url(gfx/gradient01.png);
+	background-image: url(images/gradient01.png);
 	background-position: center;
 	background-repeat: repeat-x;
 
@@ -153,7 +138,7 @@ button.et2_button_text:hover {
 	background-color: #D0D0EE;
 }
 button.et2_button_text:active {
-	background-image: url(gfx/gradient02.png);
+	background-image: url(images/gradient02.png);
 	background-color: #D0D0E0;
 }
 button.et2_button_text:focus {
@@ -162,6 +147,9 @@ button.et2_button_text:focus {
 	outline: none;
 }
 
+/**
+ * Text box
+ */
 .et2_textbox {
 	resize: none;
 }
@@ -251,7 +239,7 @@ span.et2_date span {
 .loading {
 	background-position: center right;
 	background-repeat: no-repeat;
-	background-image: url('gfx/ajax-loader.gif');
+	background-image: url('images/ajax-loader.gif');
 }
 
 /**
@@ -282,7 +270,7 @@ span.et2_date span {
 	height: 16px;
 	float: right;
 	display: block;
-	background-image: url("gfx/close.png");
+	background-image: url("images/close.png");
 	background-position: center;
 	background-repeat: no-repeat;
 }
@@ -331,7 +319,7 @@ span.et2_date span {
 .et2_link_to span.status {
 	background-repeat: no-repeat;
 	background-position: 3px center;
-	background-image:url(gfx/tick.png);
+	background-image:url(images/tick.png);
 	width: 22px;
 	height: 22px;
 	display: block;
@@ -381,7 +369,7 @@ ul.et2_link_string {
 	height: 16px;
 	float: right;
 	display: none;
-	background-image: url("gfx/close.png");
+	background-image: url("images/close.png");
 	background-position: center;
 	background-repeat: no-repeat;
 	padding: 0px;
@@ -416,7 +404,7 @@ ul.et2_link_string {
 	border: 1px solid silver;
 
 	background-color: #E0E0E0;
-	background-image: url(gfx/gradient01.png);
+	background-image: url(images/gradient01.png);
 	background-position: center;
 	background-repeat: repeat-x;
 
@@ -432,7 +420,7 @@ ul.et2_link_string {
 }
 
 .et2_tabflag:active {
-	background-image: url(gfx/gradient02.png);
+	background-image: url(images/gradient02.png);
 	background-color: #D0D0E0;
 }
 
@@ -450,7 +438,7 @@ ul.et2_link_string {
 }
 
 .et2_tabheader {
-	background-image: url(gfx/tab_header_bg.png);
+	background-image: url(images/tab_header_bg.png);
 	background-position: bottom;
 	background-repeat: repeat-x;
 }
@@ -541,7 +529,7 @@ label input, label span, label div, label select, label textarea {
 	font-style: italic;
 	background-color: #f3d4d0;
 	border-color: #a93030;
-	background-image:url(gfx/error.png);
+	background-image:url(images/error.png);
 }
 
 .message.success {
@@ -549,7 +537,7 @@ label input, label span, label div, label select, label textarea {
 	background-color: #e5f3d0;
 	color: #98a930;
 	border-color: #9ea930;
-	background-image:url(gfx/tick.png);
+	background-image:url(images/tick.png);
 }
 
 .message.hint {
@@ -557,7 +545,7 @@ label input, label span, label div, label select, label textarea {
 	background-color: #d9e2ed;
 	border-color: #56729a;
 	color: #56729a;
-	background-image:url(gfx/hint.png);
+	background-image:url(images/hint.png);
 }
 
 /**
@@ -604,12 +592,12 @@ label input, label span, label div, label select, label textarea {
 
 .nextmatch_sortheader.asc {
 	font-weight: bold;
-	background-image: url(gfx/up.png);
+	background-image: url(images/up.png);
 }
 
 .nextmatch_sortheader.desc {
 	font-weight: bold;
-	background-image: url(gfx/down.png);
+	background-image: url(images/down.png);
 }
 
 .nextmatch_resize_helper {
