@@ -888,8 +888,26 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 					var header = et2_createWidget("template", {"id": headers[i]}, this);
 					jQuery(header.getDOMNode()).addClass(i == 0 ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 					this.headers.push(header);
+
+					// Bind onChange to update filter, and refresh if needed
+					header.iterateOver(function(_widget) {
+						// Previously set change function
+						var widget_change = _widget.change;
+						_widget.change = function(_node) {
+							// Call previously set change function
+							var result = widget_change.call(_widget,_node);
+
+							// Update filters
+							var old = self.nextmatch.activeFilters[_widget.id];
+							self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+
+							if(result && old != _widget.getValue()) {
+								// Filter now
+								self.nextmatch.applyFilters();
+							}
+						}
+					}, this, et2_inputWidget);
 				}
-				// TODO: Bind onChange to update filter, and refresh if needed
 			}
 		}
 
@@ -1020,13 +1038,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			// Connect it to the onchange event of the input element
 			input.change(this.nextmatch, et2_compileLegacyJS(onchange, this.nextmatch, input));
 		}
-		else
-		{
-			input.change(this.nextmatch, function(event) {
-				event.data.activeFilters[name] = input.val()
-				event.data.applyFilters();
-			});
-		}
+		input.change(this.nextmatch, function(event) {
+			event.data.activeFilters[name] = input.val()
+			event.data.applyFilters();
+		});
 			
 		return select;
 	},
