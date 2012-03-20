@@ -109,6 +109,9 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 		lastModification: <LAST MODIFICATION TIMESTAMP>,
 		 * 		readonlys: <READONLYS>
 		 * 	}
+		 * If a uid got deleted on the server above data is null.
+		 * If a uid is obmitted from data, is has not changed since lastModification.
+		 * 
 		 * If order/data is null, this means that nothing has changed for the
 		 * given range.
 		 * The fetchRows function stores new data for the uid's inside the
@@ -121,17 +124,15 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * @param queriedRange is an object of the following form:
 		 * 	{
 		 * 		start: <START INDEX>,
-		 * 		count: <COUNT OF ENTRIES>
+		 * 		num_rows: <COUNT OF ENTRIES>
 		 * 	}
 		 * The range always corresponds to the given filter settings.
 		 * @param filters contains the filter settings. The filter settings are
 		 * 	those which are crucial for the mapping between index and uid.
-		 * @param knownRanges is an array of the above form and informs the
-		 * 	server which ranges are already known to the client. If there are
-		 * 	changes in the knownRanges (like new elements being inserted or old
-		 * 	ones being removed). This parameter may be null in order to
-		 * 	indicate that the client currently has no data for the given filter
-		 * 	settings.
+		 * @param widgetId id with full namespace of widget
+		 * @param knownUids is an array of uids already known to the client. 
+		 *  This parameter may be null in order to indicate that the client 
+		 *  currently has no data for the given filter settings.
 		 * @param lastModification is the last timestamp that was returned from
 		 * 	the server and for which the client has data. It may be null in
 		 * 	order to indicate, that the client currently has no data or needs a
@@ -153,8 +154,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * @param context is the context in which the callback function will get
 		 * 	called.
 		 */
-		dataFetch: function (_execId, _queriedRange, _filters, _knownRanges,
-				_lastModification, _uids, _callback, _context)
+		dataFetch: function (_execId, _queriedRange, _filters, _widgetId, _knownUids,
+				_lastModification, _callback, _context)
 		{
 			var request = egw.json(
 				"etemplate_widget_nextmatch::ajax_get_rows::etemplate",
@@ -162,9 +163,9 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_execId,
 					_queriedRange,
 					_filters,
-					_knownRanges,
-					_lastModification,
-					_uids
+					_widgetId,
+					_knownUids,
+					_lastModification
 				],
 				function(result) {
 					parseServerResponse.call(
