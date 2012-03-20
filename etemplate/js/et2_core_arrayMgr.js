@@ -301,7 +301,8 @@ var et2_arrayMgr = Class.extend({
 		if(typeof root == "undefined" && typeof _root == "string") root = this.getEntry(_root);
 
 		// Create a new content array manager with the given root
-		var mgr = new et2_arrayMgr(root, this);
+		var constructor = this.isReadOnly ? et2_readonlysArrayMgr : et2_arrayMgr;
+		var mgr = new constructor(root, this);
 
 		// Set the owner
 		mgr.perspectiveData.owner = _owner;
