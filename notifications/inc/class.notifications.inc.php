@@ -10,17 +10,17 @@
  */
 
 if (!defined('SEP')) define('SEP','/');
- 
+
 /**
  * Notifies users according to their preferences.
- * 
- * @abstract NOTE: This is for instant notifications. If you need time dependend notifications use the 
+ *
+ * @abstract NOTE: This is for instant notifications. If you need time dependend notifications use the
  * asyncservices wrapper!
  *
  * This class takes care about the notification-routing. It chooses one or more backends for each
- * given recipient depending on its prefs or falls back to self::_fallback 
- * 
- * The classes doing the notifications are called notifications_<backend> and should only be 
+ * given recipient depending on its prefs or falls back to self::_fallback
+ *
+ * The classes doing the notifications are called notifications_<backend> and should only be
  * called from this class. The backend's job is to deliver ONE message to ONE recipient.
  *
  */
@@ -30,30 +30,30 @@ final class notifications {
 	 * Appname
 	 */
 	const _appname = 'notifications';
-	
+
 	/**
 	 * backend to use for fallback reasons
 	 */
 	const _fallback = 'email_only';
-	
+
 	/**
 	 * registered backends
 	 * @var array
 	 */
 	private $backends = array('popup', 'winpopup', 'email', 'sms');
-	
+
 	/**
 	 * backends to skip even if the user has chosen it
 	 * this could be set by the calling application
 	 * @var array
 	 */
 	private $skip_backends = array();
-	
-	/** 
+
+	/**
 	 * pre-defined notificaton chains
 	 * @abstract
 	 * arrays with name => chain pairs
-	 * the chain itself consists of an array with framework => action pairs 
+	 * the chain itself consists of an array with framework => action pairs
 	 * where action defines what to do after the framework has been executed:
 	 * stop: stop executing notifications
 	 * fail: do not stop if framework fails, otherwise stop
@@ -77,7 +77,7 @@ final class notifications {
 		'sms_only' 				=> array('sms' => 'stop'),
 	);
 
-	/** 
+	/**
 	 * human readable descriptions for the notification chains
 	 * @var array
 	 */
@@ -96,56 +96,56 @@ final class notifications {
 		'winpopup_and_email' 	=> 'Windows-Popup and E-Mail',
 		'sms_only' 				=> 'SMS only',
 	);
-	
+
 	/**
 	 * array with objects of receivers
 	 * @var array
 	 */
 	private $receivers = array();
-	
+
 	/**
 	 * object of sender
 	 * @var object
 	 */
 	private $sender;
-	
+
 	/**
 	 * holds notification subject
 	 * @var string
 	 */
 	private $subject = '';
-	
+
 	/**
 	 * holds notification message in plaintext
 	 * @var string
 	 */
 	private $message_plain = '';
-	
+
 	/**
 	 * holds notification message in html
 	 * @var string
 	 */
 	private $message_html = '';
-	
+
 	/**
 	 * array with objects of links
 	 * @var array
 	 */
 	private $links = array();
-	
+
 	/**
 	 * array with objects of attachments
 	 * @var array
 	 */
 	private $attachments = array();
-		
+
 	/**
 	 * holds config object (sitewide configuration of app)
 	 *
 	 * @var object
 	 */
 	private $config;
-	
+
 	/**
 	 * constructor of notifications
 	 *
@@ -153,7 +153,7 @@ final class notifications {
 	public function __construct() {
 		$this->config = (object) config::read(self::_appname);
 	}
-	
+
 	/**
 	 * Set sender for the current notification
 	 *
@@ -174,14 +174,14 @@ final class notifications {
 			if(is_string($_sender) && strpos($_sender,'@')) {
 				$this->sender = (object) array (
 									'account_email' => $this->get_addresspart($_sender,'email'),
-									'account_fullname' => $this->get_addresspart($_sender,'fullname'),	
+									'account_fullname' => $this->get_addresspart($_sender,'fullname'),
 									);
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Set receivers for the current notification
 	 *
@@ -195,7 +195,7 @@ final class notifications {
 			$this->add_receiver($receiver);
 		}
 	}
-	
+
 	/**
 	 * Add single receiver for the current notification
 	 *
@@ -216,32 +216,32 @@ final class notifications {
 			if(is_string($_receiver) && strpos($_receiver,'@')) {
 				$this->receivers[] = (object) array (
 									'account_email' => $this->get_addresspart($_receiver,'email'),
-									'account_fullname' => $this->get_addresspart($_receiver,'fullname'),	
+									'account_fullname' => $this->get_addresspart($_receiver,'fullname'),
 									);
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * sets notification subject
-	 * 
+	 *
 	 * @param string $_subject
 	 */
 	public function set_subject($_subject) {
 		$this->subject = $_subject;
 		return true;
 	}
-	
+
 	/**
 	 * sets notification message
 	 * @abstract $_message accepts plaintext or html
-	 * NOTE: There is no XSS prevention in notifications framework! 
+	 * NOTE: There is no XSS prevention in notifications framework!
 	 * You have to filter userinputs yourselve (e.g. htmlspechialchars() )
 	 * If you want to set plain AND html messages, just call this function
 	 * two times, it autodetects the type of your input
-	 * 
+	 *
 	 * @param string $_message
 	 */
 	public function set_message($_message) {
@@ -252,10 +252,10 @@ final class notifications {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * sets the notification links
-	 * 
+	 *
    * @param array $_links link array (like defined in $this->add_link)
    */
 	public function set_links(array $_links) {
@@ -267,7 +267,7 @@ final class notifications {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * adds a notification link
 	 *
@@ -283,10 +283,10 @@ final class notifications {
 										);
 		return true;
 	}
-	
+
 	/**
 	 * sets the notification attachments
-	 * 
+	 *
 	 * @param array $_attachments attachment array (like defined in $this->add_attachment)
 	 */
 	public function set_attachments(array $_attachments) {
@@ -302,12 +302,12 @@ final class notifications {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * adds a notification attachment
 	 * This method can be used to attach ascii or binary data,
 	 * such as a BLOB record from a database.
-	 * 
+	 *
 	 * @param string $_string Attachment data.
 	 * @param string $_filename Name of the attachment.
 	 * @param string $_encoding File encoding (see $Encoding).
@@ -322,7 +322,7 @@ final class notifications {
 												);
 		return true;
 	}
-	
+
 	/**
 	 * Sets backends that should be skipped even if the user
 	 * defined them in its chain
@@ -333,7 +333,7 @@ final class notifications {
 	public function set_skip_backends(array $_skip_backends) {
 		$this->skip_backends = $_skip_backends;
 	}
-	
+
 	/**
 	 * sends notifications
 	 */
@@ -347,9 +347,9 @@ final class notifications {
 		if(!$messages = $this->create_messages($this->message_plain, $this->message_html)) {
 			throw new Exception('Error: cannot send notifications. No valid messages supplied');
 		}
-		
+
 		$available_chains = $this->get_available_chains('routing');
-		
+
 		foreach ($this->receivers as $receiver) {
 			$user_notified = false;
 			$prepend_message = '';
@@ -386,7 +386,7 @@ final class notifications {
 					$receiver->handle = $receiver->account_email;
 					$notification_chain = $available_chains[self::_fallback]; // fallback: non-system user
 				}
-				
+
 				if($notification_chain == 'disable') {
 					continue; //user disabled notifications
 				}
@@ -399,7 +399,7 @@ final class notifications {
 							$backend_errors[] = $backend.' will be skipped (as defined by calling application)';
 							continue;
 						}
-						
+
 						$notification_backend = self::_appname.'_'.$backend;
 						if(!file_exists(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php')) {
 							throw new Exception('file for '.$notification_backend. ' does not exist');
@@ -409,7 +409,7 @@ final class notifications {
 							unset ( $obj );
 					 		throw new Exception($notification_backend. ' is no implementation of notifications_iface');
 						}
-									
+
 						$obj->send($this->prepend_message($messages, $prepend_message), $this->subject, $this->links, $this->attachments);
 					}
 					catch (Exception $exception) {
@@ -422,7 +422,7 @@ final class notifications {
 					}
 					// backend sucseeded
 					$user_notified = true;
-					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain				
+					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain
 				}
 				// check if the user has been notified at all
 				/*if(!$user_notified) {
@@ -438,7 +438,7 @@ final class notifications {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * creates an array with the message as plaintext and html
 	 *
@@ -449,23 +449,23 @@ final class notifications {
 	private function create_messages($_message_plain = '', $_message_html = '') {
 		if(empty($_message_plain) && empty($_message_html)) { return false; } // no message set
 		$messages = array();
-		
+
 		// create the messages
 		if(!empty($_message_plain)) {
 			$messages['plain'] = $_message_plain;
 		} else {
 			$messages['plain'] = strip_tags($_message_html);
 		}
-		
+
 		if(!empty($_message_html)) {
 			$messages['html'] = $_message_html;
 		} else {
 			$messages['html'] = nl2br($_message_plain);
 		}
-		
+
 		return $messages;
 	}
-	
+
 	/**
 	 * prepends another message to the messages array
 	 *
@@ -489,10 +489,10 @@ final class notifications {
 				}
 			}
 		}
-		
+
 		return $_messages;
 	}
-	
+
 	/**
 	 * returns specified part from a given mailaddress
 	 *
@@ -501,8 +501,7 @@ final class notifications {
 	 * @return string chosen part of the address
 	 */
 	 private function get_addresspart($_address, $_part='email') {
-	 	if(strpos($_address,'<')) { // _address contains a fullname part
-	 		ereg('^(.*)[:space:]{0,1}<(.*)>',$_address, $parts);
+	 	if(strpos($_address,'<') && preg_match('/^(.*)\S?\<(.*)\>/',$_address, $parts)) { // _address contains a fullname part
 	 		$fullname = trim(trim($parts[1]),'\"');
 	 		$email = $parts[2];
 	 	} else {
@@ -512,7 +511,7 @@ final class notifications {
 	 	switch($_part) {
 	 		case 'fullname':
 	 			return $fullname;
-	 			break;	
+	 			break;
 	 		case 'email':
 	 		default:
 	 			return $email;
@@ -520,7 +519,7 @@ final class notifications {
 	 	}
 	 	return false;
 	 }
-	 
+
 	 /**
 	 * returns notification chains based on admin prefs
 	 * @abstract the available chains can be retrieved in two different output formats:
@@ -544,7 +543,7 @@ final class notifications {
 					break;
 			}
 		}
-				
+
 		$enabled_chains = array();
 		$disabled_chains = array();
 		foreach($this->notification_chains as $key => $chain) {
@@ -562,7 +561,7 @@ final class notifications {
 				}
 			}
 		}
-		
+
 		// common chain
 		$common_chains = array();
 		$common_chains['disable'] = 'disable';
@@ -572,12 +571,12 @@ final class notifications {
 		$backend_count = 1;
 		foreach($enabled_backends as $backend => $enabled) {
 			if($enabled) {
-				$chain_all[$backend] = count($enabled_backends) == $backend_count ? 'stop' : 'continue'; 
+				$chain_all[$backend] = count($enabled_backends) == $backend_count ? 'stop' : 'continue';
 			}
 			$backend_count++;
 		}
 		$common_chains['all'] = $chain_all;
-		
+
 		switch($_output) {
 			case 'human':
 				$chain_groups = array(
@@ -606,13 +605,13 @@ final class notifications {
 				}
 				return $chains_final;
 				break;
-				
+
 			case 'routing':
 			default:
 				return array_merge($common_chains, $enabled_chains);
 				break;
 		}
-		
+
 		return false;
 	}
 }
