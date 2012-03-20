@@ -344,6 +344,11 @@ span.et2_date span {
 
 .et2_link {
 	cursor: pointer;
+	color: #003075;
+	text-decoration: none;
+}
+.et2_link:hover {
+	text-decoration: underline;
 }
 ul.et2_link_string {
 	list-style-type: none;
