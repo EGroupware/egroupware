@@ -28,6 +28,7 @@
 	egw_css;
 	egw_calendar;
 	egw_ready;
+	egw_data;
 //	egw_jquery;
 */
 
