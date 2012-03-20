@@ -90,7 +90,7 @@ var et2_date = et2_inputWidget.extend({
 			}
 			if(old_value !== this.value)
 			{
-				this.onchange(this.input_date);
+				this.change(this.input_date);
 			}
 			return;
 		}
@@ -102,7 +102,7 @@ var et2_date = et2_inputWidget.extend({
 				this.input_date.timepicker('setTime',_value);
 				if(old_value !== this.value)
 				{
-					this.onchange(this.input_date);
+					this.change(this.input_date);
 				}
 				return;
 			} else {
@@ -149,6 +149,11 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	getValue: function() {
+		if(this.input_date.val() == "")
+		{
+			// User blanked the box
+			return null;
+		}
 		if(this._type == "date-timeonly")
 		{ 
 			return this.value;
