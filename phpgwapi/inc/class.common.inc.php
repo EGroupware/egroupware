@@ -871,11 +871,19 @@ class common
 
 				foreach(scandir($dir) as $img)
 				{
-					if ($img[0] == '.' || !in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
+					if ($img[0] == '.') continue;
 
-					if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
+					unset($subdir);
+					foreach(is_dir($dir.'/'.$img) ? scandir($dir.'/'.($subdir=$img)) : (array) $img as $img)
 					{
-						$app_map[$name] = $imagedir.'/'.$img;
+						if (!in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
+
+						if (isset($subdir)) $name = $subdir.'/'.$name;
+
+						if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
+						{
+							$app_map[$name] = $imagedir.'/'.$name.'.'.$ext;
+						}
 					}
 				}
 			}

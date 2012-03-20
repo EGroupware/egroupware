@@ -918,14 +918,14 @@ class infolog_ui
 			),
 			'view' => array(
 				'caption' => 'View subs',
-				'icon' => 'view',
+				'icon' => 'egw_action/arrow_left',
 				'group' => $group,
 				'hint' => 'View all subs of this entry',
 				'enableClass' => 'rowHasSubs',
 			),
 			'parent' => array(
 				'caption' => 'View parent',
-				'icon' => 'parent',
+				'icon' => 'egw_action/arrow_up',
 				'group' => $group,
 				'hideOnDisabled' => true,
 				'hint' => 'View the parent of this entry and all his subs',
