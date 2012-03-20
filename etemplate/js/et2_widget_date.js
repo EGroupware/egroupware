@@ -66,6 +66,11 @@ var et2_date = et2_inputWidget.extend({
 		{
 			this.egw().time(this.input_date);
 		}
+		// Update internal value
+		var self = this;
+		this.input_date.datepicker("option","onSelect", function(text) {
+			self.set_value(text);
+		});
 	},
 
 	set_type: function(_type) {
@@ -109,7 +114,25 @@ var et2_date = et2_inputWidget.extend({
 			this.date = _value;
 		}
 
-		this.input_date.datepicker('setDate',this.date);
+		// Update input - popups do, but framework doesn't
+		if(this._type != 'date-timeonly')
+		{
+			this.input_date.val(jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date));
+		}
+		if(this._type != 'date')
+		{
+			var current = this.input_date.val();
+			if(this.type != 'date-timeonly')
+			{
+				current += " ";
+			}
+			this.input_date.val(current + jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
+				hour: this.date.getHours(),
+				minute: this.date.getMinutes(),
+				seconds: this.date.getSeconds(),
+				timezone: this.date.getTimezoneOffset()
+			}));
+		}
 	},
 
 	getValue: function() {
