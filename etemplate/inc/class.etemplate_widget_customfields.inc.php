@@ -160,7 +160,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 
 				self::$transformation['type'][$type]['sel_options'] = $sel_options;
 				self::$transformation['type'][$type]['no_lang'] = true;
-				return parent::beforeSendToClient($form_name);
+				return parent::beforeSendToClient($cname);
 			case 'customfields-list':
 				foreach(array_reverse($fields) as $lname => $field)
 				{
