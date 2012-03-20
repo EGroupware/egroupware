@@ -302,7 +302,7 @@ class calendar_so
 		if (!is_array($ids)) $return_maximum = true;
 
 		$where = array('cal_id' => $ids);
-		if ($master_only) $where['recur_date'] = 0;
+		if ($master_only) $where['cal_recur_date'] = 0;
 
 		if ($return_maximum)
 		{
