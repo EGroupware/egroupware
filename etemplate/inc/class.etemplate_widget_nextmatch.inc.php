@@ -80,7 +80,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * Legacy options
 	 */
 	protected $legacy_options = 'template';
-		
+
 	/**
 	 * Number of rows to send initially
 	 */
@@ -124,7 +124,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		// todo: no need to store rows in request, it's enought to send them to client
 
-		error_log(__METHOD__."() $this: total=$value[total]");
+		//error_log(__METHOD__."() $this: total=$value[total]");
 		//foreach($value['rows'] as $n => $row) error_log("$n: ".array2string($row));
 
 		// set up actions, but only if they are defined AND not already set up (run throught self::egw_actions())
@@ -139,36 +139,106 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	/**
 	 * Callback to fetch more rows
 	 *
+	 * Callback uses existing get_rows callback, but requires now 'row_id' to be set.
+	 * If no 'row_modified' is set, rows cant checked for modification and therefore
+	 * are always returned to client if in range or deleted if outside range.
+	 *
 	 * @param string $exec_id identifys the etemplate request
-	 * @param array $fetchList array of array with values for keys "startIdx" and "count"
+	 * @param array $queriedRange array with values for keys "start", "num_rows" and optional "refresh"
 	 * @param array $filters Search and filter parameters, passed to data source
-	 * @param string full id of widget incl. all namespaces
-	 * @return array with values for keys 'total', 'rows', 'readonlys'
+	 * @param string $form_name='nm' full id of widget incl. all namespaces
+	 * @param array $knownUids=null uid's know to client
+	 * @param int $lastModified=null date $knowUids last checked
+	 * @todo for $queriedRange[refresh] first check if there's any modification since $lastModified, return $result[order]===null
+	 * @return array with values for keys 'total', 'rows', 'readonlys', 'order', 'data' and 'lastModification'
 	 */
-	static public function ajax_get_rows($exec_id, $fetchList, $filters = array(), $form_name='nm')
+	static public function ajax_get_rows($exec_id, array $queriedRange, array $filters = array(), $form_name='nm',
+		array $knownUids=null, $lastModified=null)
 	{
-		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($fetchList).','.array2string($filters).",'$form_name')");
+		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($queriedRange).','.array2string($filters).",'$form_name', ".array2string($knownUids).", $lastModified)");
 
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
 		$value = array_merge($value, $filters);
-		$result = array('rows' => array());
+		$result = array();
 
 		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
 		if(is_array($value['sort']))
 		{
 			$value['order'] = $value['sort']['id'];
-			$value['sort'] = ($value['sort']['asc'] ? 'ASC' : 'DESC');
+			$value['sort'] = $value['sort']['asc'] ? 'ASC' : 'DESC';
 		}
 
-		foreach ($fetchList as $entry)
+if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff is working ...
+{
+	foreach ($queriedRange as $entry)
+	{
+		$value['start'] = $entry['startIdx'];
+		$value['num_rows'] = $entry['count'];
+
+		$result['rows'] = array();
+		$result['total'] = self::call_get_rows($value, $result['rows'], $result['readonlys']);
+	}
+
+	egw_json_response::get()->data($result);
+	return;
+}
+		$value['start'] = (int)$queriedRange['start'];
+		$value['num_rows'] = (int)$queriedRange['num_rows'];
+		$rows = $result['data'] = $result['order'] = array();
+		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
+		$result['lastModification'] = egw_time::to('now', 'ts')-1;
+
+		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
+		$row_modified = isset($value['row_modified']) ? $value['row_modified'] : 'modified';
+
+		foreach($rows as $n => $row)
 		{
-			$value['start'] = $entry['startIdx'];
-			$value['num_rows'] = $entry['count'];
+			if (is_int($n))
+			{
+				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
 
-			$result['total'] = self::call_get_rows($value, $result['rows'], $result['readonlys']);
+				$id = $row_id ? $row[$row_id] : $n;
+				$result['order'] = $id;
+
+				// check if we need to send the data
+				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
+					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
+				{
+					$result['data'][$id] = $row;
+				}
+				if ($kUkey) unset($knownUids[$kUkey]);
+			}
+			else	// non-row data set by get_rows method
+			{
+				$result['rows'][$n] = $row;
+			}
 		}
-
+		// knowUids outside of range left ..
+		if ($knownUids)
+		{
+			// check if they are up to date
+			$value['col_filter'] = array($row_id => $knownUids);
+			$value['start'] = 0;
+			$value['num_rows'] = count($knownUids);
+			$rows = array();
+			if ($row_id && $lastModified && self::call_get_rows($value, $rows))
+			{
+				foreach($rows as $row)
+				{
+					if (isset($row[$row_modified]))
+					{
+						if ($row[$row_modified] > $lastModified) $result['data'][$row[$row_id]] = $row;
+						unset($knownUids[array_search($row[$row_id], $knownUids)]);
+					}
+				}
+			}
+			// tell client to remove no longer existing uids
+			foreach($knownUids as $uid)
+			{
+				if (!isset($result['data'][$uid])) $result['data'][$uid] = null;
+			}
+		}
 		egw_json_response::get()->data($result);
 	}
 
@@ -614,7 +684,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$cols = $GLOBALS['egw']->preferences->read();
 				$cols = $cols[$app][$pref_name];
 				$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols,'default');
-				
+
 				$GLOBALS['egw']->preferences->save_repository(false,'default');
 			}
 		}
