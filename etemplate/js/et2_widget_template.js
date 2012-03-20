@@ -64,9 +64,12 @@ var et2_template = et2_DOMWidget.extend({
 		if (this.id != "")
 		{
 			// Set the api instance to the first part of the name of the
-			// template
+			// template, if it's in app.function.template format
 			var splitted = this.id.split('.');
-			this.setApiInstance(egw(splitted[0], this._parent.egw().window));
+			if(splitted.length == 3)
+			{
+				this.setApiInstance(egw(splitted[0], this._parent.egw().window));
+			}
 
 			// Check to see if XML is known
 			var xml = null;

@@ -159,6 +159,10 @@ etemplate2.prototype._createArrayManagers = function(_data)
  */
 etemplate2.prototype.load = function(_name, _url, _data)
 {
+	// Appname should be first part of the template name
+	var split = _name.split('.');
+	var appname = split[0];
+
 	// Create the document fragment into which the HTML will be injected
 	var frag = document.createDocumentFragment();
 
@@ -191,7 +195,7 @@ etemplate2.prototype.load = function(_name, _url, _data)
 
 	// Create the basic widget container and attach it to the DOM
 	this.widgetContainer = new et2_container(null);
-	this.widgetContainer.setApiInstance(egw(egw.elemWindow(this.DOMContainer)));
+	this.widgetContainer.setApiInstance(egw(appname, egw.elemWindow(this.DOMContainer)));
 	this.widgetContainer.setInstanceManager(this);
 	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
