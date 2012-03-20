@@ -79,6 +79,7 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	set_value: function(_value) {
+		var old_value = this.value;
 		if(_value == null || _value == 0)
 		{
 			this.value = _value;
@@ -86,6 +87,10 @@ var et2_date = et2_inputWidget.extend({
 			if(this.input_date)
 			{
 				this.input_date.val("");
+			}
+			if(old_value !== this.value)
+			{
+				this.onchange(this.input_date);
 			}
 			return;
 		}
@@ -95,6 +100,10 @@ var et2_date = et2_inputWidget.extend({
 			if(_value.indexOf(":") > 0 && this.type == "date-timeonly") {
 				this.value = _value;
 				this.input_date.timepicker('setTime',_value);
+				if(old_value !== this.value)
+				{
+					this.onchange(this.input_date);
+				}
 				return;
 			} else {
 				var text = new Date(_value);
@@ -132,6 +141,10 @@ var et2_date = et2_inputWidget.extend({
 				seconds: this.date.getSeconds(),
 				timezone: this.date.getTimezoneOffset()
 			}));
+		}
+		if(old_value != this.getValue())
+		{
+			this.change(this.input_date);
 		}
 	},
 
