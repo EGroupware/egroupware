@@ -581,12 +581,12 @@ Preferences tabs
 	height: 19px;
 }
 
-.egwGridView_grid > tbody > tr.focused > td {
+.egwGridView_grid > tbody > tr.focused {
 	background-image: url(../../default/images/egw_action/focused_hatching.png);
 	background-repeat: repeat;
 }
 
-.egwGridView_grid > tbody > tr.selected > td {
+.egwGridView_grid > tbody > tr.selected {
 	background-color: #b7c3ff;
 }
 

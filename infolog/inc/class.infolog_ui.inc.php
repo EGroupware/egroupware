@@ -918,14 +918,14 @@ class infolog_ui
 			),
 			'view' => array(
 				'caption' => 'View subs',
-				'icon' => 'view',
+				'iconUrl' => $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/egw_action/arrow_left.png',
 				'group' => $group,
 				'hint' => 'View all subs of this entry',
 				'enableClass' => 'rowHasSubs',
 			),
 			'parent' => array(
 				'caption' => 'View parent',
-				'icon' => 'parent',
+				'iconUrl' => $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/egw_action/arrow_up.png',
 				'group' => $group,
 				'hideOnDisabled' => true,
 				'hint' => 'View the parent of this entry and all his subs',

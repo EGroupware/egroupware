@@ -19,3 +19,13 @@ table.fullWidth { width: 100%; }
 .user_filter select { width: 100px; }
 .inputFullWidth input { width: 100%; }
 .image16 img { height: 16px; }
+tr.rowHasSubs > td:first-child {
+	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_left.png);
+	background-repeat: no-repeat;
+	background-position: 0px 11px;
+}
+tr.rowHasParent > td:first-child {
+	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
+	background-repeat: no-repeat;
+	background-position: 0px 11px;
+}
