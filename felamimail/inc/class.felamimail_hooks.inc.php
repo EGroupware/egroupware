@@ -85,9 +85,6 @@ class felamimail_hooks
             		'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
             		'mime_popup' => '850xegw_getWindowOuterHeight()',
             		'mime_url'   => 'formData[file]',
-            		'mime_name'  => 'formData[name]',	// why are these required?
-            		'mime_type'  => 'formData[type]',
-            		'mime_size'  => 'formData[size]',
             	),
             ),
         );

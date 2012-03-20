@@ -227,6 +227,7 @@ class egw_link extends solink
 				'edit','edit_id','edit_popup',
 				'list','list_popup',
 				'name','icon','query',
+				'mime',
 			)));
 		}
 		return json_encode($to_json);
@@ -950,19 +951,6 @@ class egw_link extends solink
 			else
 			{
 				throw egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
-			}
-			// some optional values fmail needs ...
-			foreach(array(
-				'mime_type' => $type,
-				'mime_size' => null,	// filesize(egw_vfs::PREFIX.$path),
-				'mime_name' => basename($path),
-			) as $name => $value)
-			{
-				if (isset($data[$name]))
-				{
-					$data[$data[$name]] = $name == 'mime_size' ? filesize(egw_vfs::PREFIX.$path) : $value;
-					unset($data[$name]);
-				}
 			}
 			$popup = $data['mime_popup'];
 			unset($data['mime_popup']);

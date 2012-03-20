@@ -617,7 +617,7 @@ class uifelamimail
 		/**
 		 * importMessageFromVFS2DraftAndDisplay
 		 *
-		 * @param array $_formData Array with information of name, type, file and size; file is required, 
+		 * @param array $formData Array with information of name, type, file and size; file is required,
 		 *                               name, type and size may be set here to meet the requirements
 		 *						Example: $formData['name']	= 'a_email.eml';
 		 *								 $formData['type']	= 'message/rfc822';
@@ -634,14 +634,14 @@ class uifelamimail
 			// name should be set to meet the requirements of checkFileBasics
 			if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['name']) || empty($formData['name'])))
 			{
-				$buff = explode('/',$_formData['file']);
+				$buff = explode('/',$formData['file']);
 				$suffix = '';
 				if (is_array($buff)) $formData['name'] = array_pop($buff); // take the last part as name
 			}
 			// type should be set to meet the requirements of checkFileBasics
 			if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['type']) || empty($formData['type'])))
 			{
-				$buff = explode('.',$_formData['file']);
+				$buff = explode('.',$formData['file']);
 				$suffix = '';
 				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
 				if (!empty($suffix)) $formData['type'] = mime_magic::ext2mime($suffix);
@@ -659,7 +659,7 @@ class uifelamimail
 			        'menuaction'    => 'felamimail.uidisplay.display',
 					'uid'		=> $messageUid,
 					'mailbox'    => base64_encode($draftFolder),
-					'deleteDraftOnClose' => 1, 
+					'deleteDraftOnClose' => 1,
 			    );
 			}
 			catch (egw_exception_wrong_userinput $e)
