@@ -587,7 +587,7 @@ Preferences tabs
 }
 
 .egwGridView_grid > tbody > tr.selected {
-	background-color: #b7c3ff;
+	background-color: #b7c3ff !important;
 }
 
 tr.draggedOver td {
