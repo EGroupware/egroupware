@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Description object
+ * eGroupWare eTemplate2 - JS Grid object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,6 +20,9 @@
 
 /**
  * Class which implements the "grid" XET-Tag
+ * 
+ * This also includes repeating the last row in the grid and filling
+ * it with content data
  */ 
 var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
@@ -152,6 +155,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
 			if (nodeName == "row")
 			{
+				// Remember this row for auto-repeat - it'll eventually be the last one
+				this.lastRowNode = node;
+
 				rowDataEntry["height"] = et2_readAttrWithDefault(node, "height", "auto");
 				rowDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
@@ -163,11 +169,46 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			}
 			rowData.push(rowDataEntry);
 		}, this);
+
+		// Add in repeated rows
+		// TODO: It would be nice if we could skip header (thead) & footer (tfoot) or treat them separately
+		var rowIndex = 0;
+		if(this.getArrayMgr("content"))
+		{
+			var content = this.getArrayMgr("content");
+			var rowDataEntry = rowData[rowData.length-1];
+			// Find out if we have any content rows, and how many
+			for(var key in content.data)
+			{
+				if(content.data[rowIndex])
+				{
+					rowData[rowIndex] = rowDataEntry;
+				
+					rowIndex++;
+				}
+				else if (rowIndex == 0)
+				{
+					// Sometimes the header takes a row, so try at 1
+					rowIndex++;
+				}
+				else
+				{
+					// No more rows, stop
+					break;
+				}
+			}
+		}
+		if(rowIndex <= 1)
+		{
+			// No auto-repeat
+			this.lastRowNode = null;
+		}
 	},
 
 	_fillCells: function(cells, columns, rows) {
 		var h = cells.length;
 		var w = (h > 0) ? cells[0].length : 0;
+		var currentPerspective = this.getArrayMgr("content").perspectiveData;
 
 		// Read the elements inside the columns
 		var x = 0;
@@ -229,9 +270,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 		// Read the elements inside the rows
 		var y = 0;
+		var x = 0;
+		var readRowNode;
 		et2_filteredNodeIterator(rows, function(node, nodeName) {
 
-			function _readRowNode(node, nodeName) {
+			readRowNode = function _readRowNode(node, nodeName) {
 				if (x >= w)
 				{
 					this.egw().debug("warn", "Skipped grid cell in row, '" +
@@ -259,6 +302,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 				var span = cell.colSpan = this._forceNumber(cell.colSpan);
 
+
 				// Create the element
 				var widget = this.createElementFromNode(node, nodeName);
 
@@ -280,18 +324,49 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 			// If the node is a row, create the widgets which belong into
 			// the row
-			var x = 0;
+			x = 0;
+			if(this.lastRowNode && node == this.lastRowNode)
+			{
+				return;
+			}
 			if (nodeName == "row")
 			{
-				et2_filteredNodeIterator(node, _readRowNode, this);
+				// Adjust for the row
+				for(var name in this.getArrayMgrs())
+				{
+					//this.getArrayMgr(name).perspectiveData.row = y;
+				}
+
+				et2_filteredNodeIterator(node, readRowNode, this);
 			}
 			else
 			{
-				_readRowNode.call(this, node, nodeName);
+				readRowNode.call(this, node, nodeName);
 			}
 
 			y++;
 		}, this);
+
+		// Extra content rows
+		for(y; y < h; y++) {
+			var x = 0;
+			// Adjust for the row
+			var mgrs = this.getArrayMgrs();
+			for(var name in mgrs)
+			{
+				if(this.getArrayMgr(name).getEntry(y))
+				{
+					this.getArrayMgr(name).perspectiveData.row = y;
+				}
+			}
+
+			et2_filteredNodeIterator(this.lastRowNode, readRowNode, this);
+		}
+		// Reset
+		for(var name in this.getArrayMgrs())
+		{
+			this.getArrayMgr(name).perspectiveData = currentPerspective;
+		}
 	},
 
 	_expandLastCells: function(_cells) {
@@ -376,14 +451,14 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 	},
 
 	createTableFromCells: function(_cells, _colData, _rowData) {
-		// Set the rowCount and columnCount variables
-		var h = this.rowCount = _cells.length;
-		var w = this.columnCount = (h > 0) ? _cells[0].length : 0;
-
 		this.managementArray = [];
 		this.cells = _cells;
 		this.colData = _colData;
 		this.rowData = _rowData;
+
+		// Set the rowCount and columnCount variables
+		var h = this.rowCount = _cells.length;
+		var w = this.columnCount = (h > 0) ? _cells[0].length : 0;
 
 		// Create the table rows.
 		for (var y = 0; y < h; y++)
@@ -461,100 +536,6 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					x++;
 				}
 			}
-		}
-	},
-
-	/**
-	 * The grid needs its own assign function in order to fill the grid
-	 * accordingly.
-	 */
-	assign: function(_obj) {
-		if (_obj instanceof et2_grid)
-		{
-			// Remember all widgets which have already been instanciated
-			var instances = [];
-
-			// Copy some data from the colData array
-			var colData = new Array(_obj.colData.length);
-			for (var x = 0; x < _obj.colData.length; x++)
-			{
-				colData[x] = {
-					"disabled": _obj.colData[x].disabled,
-					"class": _obj.colData[x]["class"],
-					"width": _obj.colData[x].width
-				}
-			}
-
-			// Copy the some data from the rowData array
-			var rowData = new Array(_obj.rowData.length);
-			for (var y = 0; y < _obj.rowData.length; y++)
-			{
-				rowData[y] = {
-					"disabled": _obj.rowData[y].disabled,
-					"class": _obj.rowData[y]["class"],
-					"height": _obj.rowData[y].height
-				}
-			}
-
-			// Copy the cells array of the other grid and clone the widgets
-			// inside of it
-			var cells = new Array(_obj.cells.length);
-
-			for (var y = 0; y < _obj.cells.length; y++)
-			{
-				cells[y] = new Array(_obj.cells[y].length);
-
-				for (var x = 0; x < _obj.cells[y].length; x++)
-				{
-					var srcCell = _obj.cells[y][x];
-
-					var widget = null;
-					if (srcCell.widget)
-					{
-						// Search for the widget inside the instances array
-						for (var i = 0; i < instances.length; i++)
-						{
-							if (instances[i].srcWidget == srcCell.widget)
-							{
-								widget = instances[i].widget;
-								break;
-							}
-						}
-
-						if (widget == null)
-						{
-							widget = srcCell.widget.clone(this, srcCell.widget.type);
-							instances.push({
-								"widget": widget,
-								"srcWidget": srcCell.widget
-							});
-						}
-					}
-
-					cells[y][x] = {
-						"widget": widget,
-						"td": null,
-						"colSpan": srcCell.colSpan,
-						"rowSpan": srcCell.rowSpan,
-						"disabled": srcCell.disabled,
-						"class": srcCell["class"],
-						"width": srcCell.width
-					}
-				}
-			}
-
-			// Create the table
-			this.createTableFromCells(cells, colData, rowData);
-
-			// Copy a reference to the content array manager
-			if (_obj._mgr)
-			{
-				this._mgr = _obj._mgr;
-			}
-		}
-		else
-		{
-			throw("Invalid assign to grid!");
 		}
 	},
 
