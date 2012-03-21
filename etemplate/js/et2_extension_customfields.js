@@ -36,7 +36,15 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			'name': 'Custom fields',
 			'description': 'Auto filled'
 		},
+		'type_filter': {
+			'name': 'Field filter',
+			"default": "",
+			"type": "string",
+			"description": "Filter displayed custom fields by their 'type2' attribute"
+		}
 	},
+
+	legacyOptions: ["type_filter"],
 
 	prefix: '#',
 
@@ -55,6 +63,34 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		this.rows = {};
 		this.widgets = {};
 		this.detachedNodes = [];
+
+		if(this.options.type_filter && typeof this.options.type_filter == "string")
+		{
+			this.options.type_filter = this.options.type_filter.split(",");
+		}
+		if(this.options.type_filter)
+		{
+			this.options.fields = {};
+			for(var field_name in this.options.customfields)
+			{
+				if(!this.options.customfields[field_name].type2)
+				{
+					// No restrictions
+					this.options.fields[field_name] = true;
+					continue;
+				}
+				var types = this.options.customfields[field_name].type2.split(",");
+				this.options.fields[field_name] = false;
+				for(var i = 0; i < types; i++)
+				{
+					if(jQuery.inArray(types[i],split) > 0)
+					{
+						this.options.fields[field_name] = true;
+						continue;
+					}
+				}
+			}
+		}
 
 		this.setDOMNode(this.table[0]);
 	},
@@ -98,7 +134,7 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 		// Check for global setting changes (visibility)
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
-		if(global_data.fields) this.options.fields = global_data.fields;
+		if(global_data.fields && !this.options.fields) this.options.fields = global_data.fields;
 
 		// For checking app entries
 		var apps = this.egw().link_app_list();
@@ -106,6 +142,9 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		// Create the table rows
 		for(var field_name in this.options.customfields)
 		{
+			// Skip fields if we're filtering
+			if(!jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
+
 			var field = this.options.customfields[field_name];
 			var id = "{"+this.id + "}["+this.prefix + field_name+"]";
 
@@ -123,10 +162,12 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 					'id': 		id,
 					'statustext':	field.help,
 					'required':	field.needed,
-					'readonly':	this.options.readonly
+					'readonly':	this.options.readonly,
+					'value':	this.options.value[this.prefix+field_name]
 				};
 				if(this[setup_function]) {
-					this[setup_function].call(this, field_name, field, attrs);
+					var no_skip = this[setup_function].call(this, field_name, field, attrs);
+					if(!no_skip) continue;
 				}
 				
 				if(this._type == 'customfields-list') {
@@ -140,9 +181,6 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 						.appendTo(row);
 				}
 				this.rows[id] = cf[0];
-
-				// No label on the widget itself
-				delete(attrs.label);
 
 				// Create widget
 				var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
@@ -231,16 +269,45 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 	 * Adapt provided attributes to match options for widget
 	 */
 	_setup_text: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
 		field.type = 'textbox';
 		attrs.rows = field.rows;
 		attrs.size = field.len;
+		return true;
 	},
 	_setup_select: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
 		attrs.select_options = field.values;
+		return true;
+	},
+
+	/**
+	 * People set button attributes as
+	 * label: javascript
+	 */
+	_setup_button: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
+		attrs.label = field.label;
+		for(var key in field.values)
+		{
+			attrs.label = key;
+			attrs.onclick = field.values[key];
+		}
+		return !attrs.readonly;
 	},
 	_setup_link_entry: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
 		attrs.type = "link-entry";
 		attrs.application = field.type;
+		return true;
 	},
 
 	/** 
