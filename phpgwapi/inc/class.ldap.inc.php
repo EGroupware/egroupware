@@ -74,7 +74,11 @@ class ldap
 	}
 
 	/**
-	 * connect to the ldap server and return a handle
+	 * Connect to ldap server and return a handle
+	 *
+	 * If multiple (space-separated) ldap servers are given, try them in order and
+	 * move first successful one to first place in session, to try not working ones
+	 * only once per session.
 	 *
 	 * @param $host ldap host
 	 * @param $dn ldap dn
@@ -115,7 +119,47 @@ class ldap
 			$port = parse_url($host,PHP_URL_PORT);
 			$host = parse_url($host,PHP_URL_HOST);
 		}
-		// connects to ldap server
+		// if multiple hosts given, try them all, but only once per session!
+		if (isset($_SESSION) && isset($_SESSION['ldapConnect']) && isset($_SESSION['ldapConnect'][$host]))
+		{
+			$host = $_SESSION['ldapConnect'][$host];
+		}
+		foreach($hosts=preg_split('/[ ,;]+/', $host) as $h)
+		{
+			if ($this->_connect($h, $dn, $passwd))
+			{
+				if ($h !== $host)
+				{
+					$this->ldapServerInfo[$host] =& $this->ldapServerInfo[$h];
+
+					if (isset($_SESSION))	// store working host as first choice in session
+					{
+						$_SESSION['ldapConnect'][$host] = implode(' ',array_unique(array_merge(array($h),$hosts)));
+					}
+				}
+				return $this->ds;
+			}
+			error_log(__METHOD__."('$h', '$dn', \$passwd) Can't connect/bind to ldap server!".
+				($this->ds ? ' '.ldap_error($this->ds).' ('.ldap_errno($this->ds).')' : '').
+				' '.function_backtrace());
+		}
+		// give visible error, only if we cant connect to any ldap server
+		echo "<p><b>Error: Can't connect/bind to LDAP server '$host' and dn='$dn'!</b><br />".function_backtrace()."</p>\n";
+
+		return false;
+	}
+
+	/**
+	 * connect to the ldap server and return a handle
+	 *
+	 * @param $host ldap host
+	 * @param $dn ldap dn
+	 * @param $passwd ldap pw
+	 * @return resource|boolean resource from ldap_connect() or false on error
+	 */
+	private function _connect($host, $dn, $passwd)
+	{
+		// connect to ldap server (never fails, as connection happens in bind!)
 		if(!$this->ds = ldap_connect($host, $port))
 		{
 			/* log does not exist in setup(, yet) */
@@ -124,9 +168,6 @@ class ldap
 				$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server');
 				$GLOBALS['egw']->log->commit();
 			}
-
-			printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
-			echo function_backtrace(1);
 			return False;
 		}
 
@@ -238,7 +279,6 @@ class ldap
 				$GLOBALS['egw']->log->commit();
 			}
 
-			printf("<b>Error: Can't bind to LDAP server: %s!</b> %s<br />",$dn,function_backtrace(1));
 			return False;
 		}
 
