@@ -33,14 +33,14 @@
 	auth::check_password_age('home','index');
 	$GLOBALS['egw_info']['flags']['nonavbar']=false;
 
-	// Start output buffering
-	ob_start();
+	// Display the header which contains all includes etc.
+	common::egw_header();
 
 	/*
 	** Initializing the template
 	*/
 
-	$GLOBALS['tpl'] =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('home'));
+	$GLOBALS['tpl'] = new Template(common::get_tpl_dir('home'));
 	$GLOBALS['tpl']->set_unknowns('remove');
 
 	$GLOBALS['tpl']->set_file(
@@ -56,9 +56,7 @@
 	$GLOBALS['tpl']->set_block('home','end_row','end_row');
 	$GLOBALS['tpl']->set_block('home','cell','cell');
 
-	// Commented by alpeb: The following prevented anonymous users to get a home page. Perhaps it was done with anonymous users such as the ones
-	// used by  wiki and sitemgr in mind. However, if you mark a normal user as anonymous just to avoid being shown in sessions and access log (like you would for an admin that doesn't want to be noticed), the user won't be able to login anymore. That's why I commented the code.
-	/*if ($GLOBALS['egw']->session->session_flags == 'A')
+	if ($GLOBALS['egw']->session->session_flags == 'A')
 	{
 		if ($_SERVER['HTTP_REFERER'] && strstr($_SERVER['HTTP_REFERER'],'home.php') === False)
 		{
@@ -70,7 +68,7 @@
 			$GLOBALS['egw']->redirect('login.php');
 		}
 		exit;
-	}*/
+	}
 
 	/*
 	** Show the updates
@@ -80,15 +78,15 @@
 	/*
 	** Display the mainscreen message
 	*/
-	$GLOBALS['egw']->translation->add_app('mainscreen');
+	translation::add_app('mainscreen');
 	$greeting = translation::translate('mainscreen_message',false,'');
 
-	if($greeting == 'mainscreen_message'||empty($greeting))
+	if($greeting == 'mainscreen_message'|| empty($greeting))
 	{
 		translation::add_app('mainscreen','en');    // trying the en one
 		$greeting = translation::translate('mainscreen_message',false,'');
 	}
-	if(!($greeting == 'mainscreen_message'||empty($greeting)))
+	if(!($greeting == 'mainscreen_message'|| empty($greeting)))
 	{
 		echo '<div style="text-align: center;">' . $greeting . "</div>\n";
 	}
@@ -104,17 +102,13 @@
 		$GLOBALS['tpl']->pfp('out','notify_window');
 	}
 
-	if(is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+	if (is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
 	{
-		$app_check = Array();
-		@ksort($GLOBALS['egw_info']['user']['preferences']['portal_order']);
-		while(list($order,$app) = each($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+		$sorted_apps = array();
+		ksort($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+		foreach($GLOBALS['egw_info']['user']['preferences']['portal_order'] as $order => $app)
 		{
-			if(!isset($app_check[(int)$app]) || !$app_check[(int)$app])
-			{
-				$app_check[(int)$app] = True;
-				$sorted_apps[] = $GLOBALS['egw']->applications->id2name((int)$app);
-			}
+			$sorted_apps[$app] = $GLOBALS['egw']->applications->id2name((int)$app);
 		}
 	}
 	else
@@ -135,64 +129,11 @@
 			$sorted_apps[] = $app['name'];
 		}
 	}
-	//$GLOBALS['egw']->hooks->process('home',$sorted_apps);
 
-	/*
-	** Migrate preferences
-	** @param $appname, $var_old, $var_new, $type='user'
-	**
-	*/
-	function migrate_pref($appname,$var_old,$var_new,$type='user')
-	{
-		if(empty($appname) || empty($var_old) || empty($var_new))
-		{
-			return false;
-		}
-		$allowedtypes = array('user','default','forced');
-		if($type=='all')
-		{
-			$types = $allowedtypes;
-		}
-		elseif(in_array($type,$allowedtypes))
-		{
-			$types[] = $type;
-		}
-		else
-		{
-			return false;
-		}
-		$result = false;
-		foreach($types as $_type)
-		{
-			if(isset($GLOBALS['egw']->preferences->$_type[$appname][$var_old]))
-			{
-				$GLOBALS['egw']->preferences->$_type[$appname][$var_new] =
-				$GLOBALS['egw']->preferences->$_type[$appname][$var_old];
-				$result = true;
-				$GLOBALS['egw_info']['user']['preferences'] =
-				$GLOBALS['egw']->preferences->save_repository(false,$_type);
-			}
-		}
-		return $result;
-	}
+	// make sure to show only apps user has rights to
+	$sorted_apps = array_intersect($sorted_apps, array_keys($GLOBALS['egw_info']['user']['apps']));
 
 	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated');
-	$migrate_oldvarnames = false;
-	if($migrate_oldvarnames)
-	{
-		$_apps = $GLOBALS['egw_info']['user']['apps'];
-		@reset($_apps);
-		foreach($_apps as $_appname)
-		{
-			@reset($portal_oldvarnames);
-			foreach($portal_oldvarnames as $varname)
-			{
-				//echo "Want to migrate '$appname' from '$varname' to 'homepage_display'.<br>";
-				//migrate_pref($appname,$varname,'homepage_display','all');
-			}
-		}
-	}
-
 	$neworder = array();
 	$done = array();
 
@@ -286,8 +227,7 @@
 	if(count($neworder)>0)//$GLOBALS['portal_order'])
 	{
 		$GLOBALS['egw']->preferences->delete('portal_order');
-		@reset($neworder);
-		while(list($app_order,$app_name) = each($neworder))
+		foreach($neworder as $app_order => $app_name)
 		{
 			$app_id = $GLOBALS['egw']->applications->name2id($app_name);
 			//echo "neworder: $app_order=$app_id:$app_name<br>";
@@ -297,16 +237,4 @@
 	}
 	//_debug_array($GLOBALS['egw_info']['user']['preferences']);
 
-	// Get everything which has been output by now
-	$contents = ob_get_contents();
-	ob_end_clean();
-
-	// Display the header which contains all includes etc.
-	common::egw_header();
-
-	// Display the fetched output
-	echo($contents);
-
-	//$GLOBALS['egw']->common->debug_phpgw_info();
-	//$GLOBALS['egw']->common->debug_list_core_functions();
-	$GLOBALS['egw']->common->egw_footer();
+	common::egw_footer();
