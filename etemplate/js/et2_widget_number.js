@@ -22,6 +22,9 @@
 var et2_number = et2_textbox.extend({
 
 	attributes: {
+		"value": {
+			"type": "float"
+		},
 		// Override default width, numbers are usually shorter
 		"size": {
 			"default": 5
