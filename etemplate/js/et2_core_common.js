@@ -249,8 +249,8 @@ console.debug(_attrib);
 	{
 		if (et2_validTypes.indexOf(_attrib["type"]) < 0)
 		{
-			egw.debug("error", "Invalid type for attribute '" + _id + 
-			    "' supplied.");
+			egw.debug("error", "Invalid type '" + _attrib["type"] + "' for attribute '" + _id + 
+			    "' supplied.  Valid types are ", et2_validTypes);
 		}
 	}
 
