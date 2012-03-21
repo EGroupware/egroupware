@@ -75,9 +75,6 @@
  *          		'mime_url' => 'url',
  *          		'menuaction' => 'app.class.method',	// method to call
  *          		'mime_popup' => '400x300',		// optional size of popup
- *          		'mime_name' => 'name',			// optional name of get-parameter for name-part of path
- *          		'mime_type' => 'type',			// ... for mime-type
- *          		'mime_size' => 'size',			// ... for size
  *          		// other get-parameters to set in url
  *          	),
  *          	// further mime types supported ...
@@ -954,16 +951,6 @@ class egw_link extends solink
 			}
 			$popup = $data['mime_popup'];
 			unset($data['mime_popup']);
-		}
-		elseif ($type == egw_vfs::DIR_MIME_TYPE)
-		{
-			if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
-			{
-				$data = array(
-					'menuaction' => 'filemanager.filemanager_ui.index',
-					'path' => $path,
-				);
-			}
 		}
 		else
 		{

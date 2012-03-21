@@ -28,6 +28,7 @@ $setup_info['filemanager']['hooks']['settings'] = 'filemanager_hooks::settings';
 $setup_info['filemanager']['hooks']['sidebox_menu'] = 'filemanager_hooks::sidebox_menu';
 #$setup_info['filemanager']['hooks']['verify_settings'] = 'filemanager.filemanager_hooks.verify_settings';
 $setup_info['filemanager']['hooks']['admin'] = 'filemanager_hooks::admin';
+$setup_info['filemanager']['hooks']['search_link'] = 'filemanager_hooks::search_link';
 
 
 /* Dependencies for this app to work */

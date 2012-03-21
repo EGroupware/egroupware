@@ -269,4 +269,21 @@ class filemanager_hooks
 
 		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
 	}
+
+	/**
+	 * Register filemanager as handler for directories
+	 *
+	 * @return array see egw_link class
+	 */
+	static function search_link()
+	{
+		return array(
+			'mime' => array(
+				egw_vfs::DIR_MIME_TYPE => array(
+					'menuaction' => 'filemanager.filemanager_ui.index',
+					'mime_id' => 'path',
+				),
+			),
+		);
+	}
 }
