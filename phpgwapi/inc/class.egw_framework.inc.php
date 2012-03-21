@@ -1041,6 +1041,26 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Sets an onBeforeUnload action for a page
+	 *
+	 * @param string $code='' javascript to be used
+	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @return string content of onXXX tag after adding code
+	 */
+	static function set_onbeforeunload($code='',$replace=false)
+	{
+		if ($replace || empty(self::$body_tags['onBeforeUnload']))
+		{
+			self::$body_tags['onBeforeUnload'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onBeforeUnload'] .= $code;
+		}
+		return self::$body_tags['onBeforeUnload'];
+	}
+
+	/**
 	* Sets an onResize action for a page
 	*
 	* @param string $code='' javascript to be used
