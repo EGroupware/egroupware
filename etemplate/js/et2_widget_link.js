@@ -819,13 +819,6 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	_add_link: function(_link_data) {
-		/* RB: seems not used anymore: Nathan?
-			if(!_link_data.title) {
-			// No callback yet, need something to do with it
-			var title = this.egw().link_title(_link_data.app, _link_data.id);
-			// Need to set it to something, or call to text() will return current value
-			if(title == null || title == false) _link_data.title = "";
-		}*/
 		var self = this;
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
