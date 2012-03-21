@@ -678,7 +678,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.set_title(this.link, _value.title);
 		var self = this;
 		this.link.unbind()
-			.click( function(){self.egw().open(_value.id, _value.app, "edit", _value.extra);});
+			.click( function(){self.egw().open(_value, "", "edit");});
 	},
 
 	/**
@@ -819,17 +819,19 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	_add_link: function(_link_data) {
-		if(!_link_data.title) {
+		/* RB: seems not used anymore: Nathan?
+			if(!_link_data.title) {
 			// No callback yet, need something to do with it
 			var title = this.egw().link_title(_link_data.app, _link_data.id);
 			// Need to set it to something, or call to text() will return current value
 			if(title == null || title == false) _link_data.title = "";
-		}
+		}*/
 		var self = this;
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link")
-			.click( function(){self.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);});
+			.click( function(){self.egw().open(_link_data, "", "edit");});
+
 		if(_link_data.title) link.text(_link_data.title);
 
 		// Now that link is created, get title from server & update
@@ -915,7 +917,7 @@ var et2_link_list = et2_link_string.extend({
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){self.egw().open(_link_data.id, _link_data.app, "edit", _link_data.extra);})
+				.click( function(){self.egw().open(_link_data, "", "edit");})
 				.text(_link_data[columns[i]]);
 		}
 

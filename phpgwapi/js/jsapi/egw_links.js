@@ -58,86 +58,94 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
 		 * - egw.open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
 		 * 
-		 * @param string|int id either just the id or "app:id" if app==""
+		 * @param string|int|object id_data either just the id or if app=="" "app:id" or object with all data
+		 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
 		 * @param string app app-name or empty (app is part of id)
 		 * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
 		 * @param object|string extra extra url parameters to append as object or string
 		 * @param string target target of window to open
 		 */
-		open: function(id, app, type, extra, target)
+		open: function(id_data, app, type, extra, target)
 		{
 			if (typeof link_registry != 'object')
 			{
 				alert('egw.open() link registry is NOT defined!');
 				return;
 			}
+			var id;
 			if (!app)
 			{
-				var app_id = id.split(':',2);
-				app = app_id[0];
-				id = app_id[1];
-			}
-			if (!app || typeof link_registry[app] != 'object')
-			{
-				alert('egw.open() app "'+app+'" NOT defined in link registry!');
-				return;	
-			}
-			var app_registry = link_registry[app];
-			if (typeof type == 'undefined') type = 'edit';
-			if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
-			if (typeof app_registry[type] == 'undefined')
-			{
-				alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
-				return;	
-			}
-			var url = this.webserverUrl+'/index.php';
-			var delimiter = '?';
-			var params = app_registry[type];
-			if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
-			{
-				params[app_registry[type+'_id']] = id;
-			}
-			else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
-			{
-				var app_id = id.split(':',2);
-				params[app_registry.add_app] = app_id[0];
-				params[app_registry.add_id] = app_id[1];
-			}
-			for(var attr in params)
-			{
-				url += delimiter+attr+'='+encodeURIComponent(params[attr]);
-				delimiter = '&';
-			}
-			if (typeof extra == 'object')
-			{
-				for(var attr in extra)
+				if (typeof id_data != 'object')
 				{
-					url += delimiter+attr+'='+encodeURIComponent(extra[attr]);
-				}
-			}
-			else if (typeof extra == 'string')
-			{
-				url += delimiter + extra;
-			}
-			if (typeof app_registry[type+'_popup'] == 'undefined')
-			{
-				if (target)
-				{
-					window.open(url, target);
+					var app_id = id.split(':',2);
+					app = app_id[0];
+					id = app_id[1];
 				}
 				else
 				{
-					egw_appWindowOpen(app, url);
+					app = id_data.app;
+					id = id_data.id;
 				}
 			}
 			else
 			{
-				var w_h = app_registry[type+'_popup'].split('x');
-				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-				egw_openWindowCentered2(url, target, w_h[0], w_h[1], 'yes', app, false);
+				id_data = { 'id': id, 'app': app, 'extra': extra };
 			}
+			var url;
+			var popup;
+			var params;
+			if (app == 'file')
+			{
+				url = this.mime_open(id_data);
+				if (typeof url == 'object' && typeof url.mime_popup != 'undefined')
+				{
+					popup = url.mime_popup;
+					delete url.mime_popup;
+					params = url;
+					url = '/index.php';
+				}
+			}
+			else
+			{
+				if (!app || typeof link_registry[app] != 'object')
+				{
+					alert('egw.open() app "'+app+'" NOT defined in link registry!');
+					return;	
+				}
+				var app_registry = link_registry[app];
+				if (typeof type == 'undefined') type = 'edit';
+				if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
+				if (typeof app_registry[type] == 'undefined')
+				{
+					alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
+					return;	
+				}
+				url = '/index.php';
+				params = app_registry[type];
+				if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
+				{
+					params[app_registry[type+'_id']] = id;
+				}
+				else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
+				{
+					var app_id = id.split(':',2);
+					params[app_registry.add_app] = app_id[0];
+					params[app_registry.add_id] = app_id[1];
+				}
+				
+				if (typeof extra == 'string')
+				{
+					url += '?'+extra;
+				}
+				else if (typeof extra == 'object')
+				{
+					$j.extend(params, extra);
+				}
+				popup = app_registry[type+'_popup'];
+			}
+			this.call_link(this.link(url, params), target, popup);
 		},
-
+		
 		/**
 		 * Check if $app is in the registry and has an entry for $name
 		 *
@@ -175,6 +183,83 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				}
 			}
 			return typeof reg[_name] == 'undefined' ? false : reg[_name];
+		},
+		
+		/**
+		 * Get mime-type information from app-registry
+		 *
+		 * @param string _type
+		 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
+		 */
+		get_mime_info: function(_type)
+		{
+			for(var app in link_registry)
+			{
+				var reg = link_registry[app];
+				if (typeof reg.mime != 'undefined')
+				{
+					for(var mime in reg.mime)
+					{
+						if (mime == _type) return reg.mime[_type];
+					}
+				}
+			}
+			return null;
+		},
+		
+		/**
+		 * Get handler (link-data) for given path and mime-type
+		 *
+		 * @param string|object _path vfs path or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
+		 * @param string _type mime-type, if not given in _path object
+		 * @return string|object string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
+		 */
+		mime_open: function(_path, _type)
+		{
+			var path;
+			if (typeof _path == 'object')
+			{
+				if (typeof _path.path == 'undefined')
+				{
+					path = '/apps/'+_path.app2+'/'+_path.id2+'/'+_path.id;
+				}
+				else
+				{
+					path = _path.path;
+				}
+				if (typeof _path.type == 'string')
+				{
+					_type = _path.type;
+				}
+			}
+			else
+			{
+				path = _path;
+			}
+			var mime_info = this.get_mime_info(_type);
+			if (mime_info)
+			{
+				var data = {};
+				for(var attr in mime_info)
+				{
+					switch(attr)
+					{
+						case 'mime_url':
+							data[mime_info.mime_url] = 'vfs://default' + path;
+							break;
+						case 'mime_id':
+							data[mime_info.mime_id] = path;
+							break;
+						default:
+							data[attr] = mime_info[attr];
+					}
+				}
+			}
+			else
+			{
+				var data = '/webdav.php' + path;
+			}
+			return data;
 		},
 		
 		/**
@@ -247,14 +332,13 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				return;
 			}
 			// link is not necessary an url, it can also be a menuaction!
-			if (url.indexOf('/') == -1 &&
-				url.split('.').length >= 3 &&
-				url.indexOf('mailto:') == -1 ||
-				url.indexOf('://') == -1)
+			if (url.indexOf('/') == -1 && url.split('.').length >= 3 &&
+				!(url.indexOf('mailto:') == 0 || url.indexOf('/index.php') == 0 || url.indexOf('://') != -1))
 			{
 				url = "/index.php?menuaction="+url;
 			}
-			if (url[0] == '/')		// link relative to eGW
+			// append the url to the webserver url, if not already contained or empty
+			if (url[0] == '/' && this.webserverUrl && this.webserverUrl != '/' && url.indexOf(this.webserverUrl+'/') != 0)
 			{
 				url = this.webserverUrl + url;
 			}
@@ -287,20 +371,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				var app = window.egw_appName;
 				if (app != 'login' && app != 'logout') _url = app+'/'+_url;
 			}
-			// append the url to the webserver url, but avoid more then one slash between the parts of the url
-			var webserver_url = this.webserverUrl;
-			// patch inspired by vladimir kolobkov -> we should not try to match the webserver url against the url without '/' as delimiter,
-			// as webserver_url may be part of _url (as /egw is part of phpgwapi/js/egw_instant_load.html)
-			if ((_url[0] != '/' || webserver_url != '/') && (!webserver_url || _url.indexOf(webserver_url+'/') == -1))
+			// append the url to the webserver url, if not already contained or empty
+			if (this.webserverUrl && this.webserverUrl != '/' && _url.indexOf(this.webserverUrl+'/') != 0)
 			{
-				if(_url[0] != '/' && webserver_url.lastIndexOf('/') != webserver_url.length-1)
-				{
-					_url = webserver_url +'/'+ _url;
-				}
-				else
-				{
-					_url = webserver_url + _url;
-				}
+				_url = this.webserverUrl + _url;
 			}
 	
 			var vars = {};
