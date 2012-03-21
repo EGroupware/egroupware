@@ -149,7 +149,11 @@ var et2_arrayMgr = Class.extend({
 
 		if (this.splitIds)
 		{
-			indexes = _key.split('[');
+			if(typeof _key === "string")
+			{
+				_key = _key.replace("&#x5B;","[").replace("&#x5D;","]");
+				indexes = _key.split('[');
+			}
 			if (indexes.length > 1)
 			{
 				indexes = [indexes.shift(), indexes.join('[')];
@@ -293,6 +297,11 @@ var et2_arrayMgr = Class.extend({
 		return et2_evalBool(val);
 	},
 
+	/**
+	 * ?
+	 *
+	 * @param _row [integer?] Key for into the _root for the desired row
+	 */
 	openPerspective: function(_owner, _root, _row)
 	{
 		// Get the root node
