@@ -468,6 +468,7 @@ var et2_widget = Class.extend({
 		}
 
 		// Iterate over the given attributes and parse them
+		var mgr = this.getArrayMgr("content");
 		for (var i = 0; i < _attrsObj.length; i++)
 		{
 			var attrName = _attrsObj[i].name;
@@ -484,13 +485,25 @@ var et2_widget = Class.extend({
 					// Check to make sure we don't overwrite a current option with a legacy option
 					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
 					{
-						_target[_proto.legacyOptions[j]] = splitted[j];
+						attrValue = splitted[j];
+						var attr = _proto.attributes[_proto.legacyOptions[j]];
+
+						// If the attribute is marked as boolean, parse the
+						// expression as bool expression.
+						if (attr.type == "boolean")
+						{
+							attrValue = mgr.parseBoolExpression(attrValue);
+						}
+						else
+						{
+							attrValue = mgr.expandName(attrValue);
+						}
+						_target[_proto.legacyOptions[j]] = attrValue;
 					}
 				}
 			}
 			else
 			{
-				var mgr = this.getArrayMgr("content");
 				if (mgr != null && typeof _proto.attributes[attrName] != "undefined")
 				{
 					var attr = _proto.attributes[attrName];
