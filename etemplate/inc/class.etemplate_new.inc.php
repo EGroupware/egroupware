@@ -138,6 +138,7 @@ class etemplate_new extends etemplate_widget_template
 		if (self::$response)	// call is within an ajax event / form submit
 		{
 			self::$response->generic('et2_load', array(
+				'name' => $this->name,
 				'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path,
 				'data' => $data,
 			));
@@ -199,6 +200,7 @@ class etemplate_new extends etemplate_widget_template
 		}
 		$validated = array();
 		$template->run('validate', array('', $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
+
 		if (self::validation_errors(self::$request->ignore_validation))
 		{
 			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));

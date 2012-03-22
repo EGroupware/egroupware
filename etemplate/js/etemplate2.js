@@ -36,6 +36,7 @@
 	et2_widget_link;
 	et2_widget_progress;
 	et2_widget_selectAccount;
+	et2_widget_ajaxSelect;
 
 	et2_extension_nextmatch;
 	et2_extension_customfields;
@@ -376,7 +377,7 @@ function etemplate2_handle_load(_type, _response)
 	var data = _response.data;
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
-		this.load(data.url, data.data);
+		this.load(data.name, data.url, data.data);
 		return true;
 	}
 
