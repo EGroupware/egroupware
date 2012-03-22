@@ -589,14 +589,32 @@ class infolog_ical extends infolog_bo
 			{
 				$taskData['info_id'] = $_taskID;
 			}
-			// if we have no STATUS, set STATUS by existence of COMPLETED and/or PERCENT-COMPLETED
-			// iOS reminder app only sets COMPLETED, but never STATUS
-			if (!($attr = $component->getAttribute('STATUS')) || !is_scalar($attr))
+			// iOS reminder app only sets COMPLETED, but never STATUS nor PERCENT-COMPLETED
+			// if we have no STATUS, set STATUS by existence of COMPLETED and/or PERCENT-COMPLETE and X-INFOLOG-STATUS
+			// if we have no PERCENT-COMPLETE set it from STATUS: 0=NEEDS-ACTION, 10=IN-PROCESS, 100=COMPLETED
+			if (!($status = $component->getAttribute('STATUS')) || !is_scalar($status))
 			{
-				$status = ($attr=$component->getAttribute('COMPLETED')) && is_scalar($attr) ? 'COMPLETED' :
-					(($attr=$component->getAttribute('COMPLETED-PERCENT')) && is_scalar($attr) && $attr > 0 ? 'IN-PROCESS' : 'NEEDS-ACTION');
-				$component->setAttribute('STATUS', $status);
-				if ($this->log) error_log(__METHOD__."() setting STATUS='$status' from COMPLETED(-PERCENT)\n",3,$this->logfile);
+				$completed = $component->getAttribute('COMPLETED');
+				$x_infolog_status = $component->getAttribute('X-INFOLOG-STATUS');
+				// check if we have a X-INFOLOG-STATUS and it's completed state is different from given COMPLETED attr
+				if (is_scalar($x_infolog_status) &&
+					($this->_status2vtodo[$x_infolog_status] === 'COMPLETED') != is_scalar($completed))
+				{
+					$percent_completed = $component->getAttribute('PERCENT-COMPLETE');
+					$status = $completed && is_scalar($completed) ? 'COMPLETED' :
+						($percent_completed && is_scalar($percent_completed) && $percent_completed > 0 ? 'IN-PROCESS' : 'NEEDS-ACTION');
+					$component->setAttribute('STATUS', $status);
+					if (!is_scalar($percent_completed))
+					{
+						$component->setAttribute('PERCENT-COMPLETE', $percent_completed = $status == 'COMPLETED' ?
+							100 : ($status == 'NEEDS-ACTION' ? 0 : 10));
+					}
+					if ($this->log) error_log(__METHOD__."() setting STATUS='$status' and PERCENT-COMPLETE=$percent_completed from COMPLETED and X-INFOLOG-STATUS='$x_infolog_status'\n",3,$this->logfile);
+				}
+				else
+				{
+					if ($this->log) error_log(__METHOD__."() no STATUS, X-INFOLOG-STATUS='$x_infolog_status', COMPLETED".(is_scalar($completed)?'='.$completed:' not set')." --> leaving status and percent unchanged",3,$this->logfile);
+				}
 			}
 			foreach ($component->getAllAttributes() as $attribute)
 			{
