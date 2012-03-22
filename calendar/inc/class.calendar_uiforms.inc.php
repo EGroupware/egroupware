@@ -1135,6 +1135,9 @@ class calendar_uiforms extends calendar_ui
 				}
 				else
 				{
+					// as icaltoegw returns timestamps in server-time, we have to convert them here to user-time
+					$this->bo->db2data($events, 'ts');
+
 					$event = array_shift($events);
 					if (($existing_event = $this->bo->read($event['uid'])))
 					{
