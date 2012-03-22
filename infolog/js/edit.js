@@ -46,7 +46,11 @@ function status_changed(changed_id, status_id, percent_id, datecompleted_id)
 	{
 		case status_id:
 			completed = status.value == 'done' || status.value == 'billed';
-			if (completed || status.value == 'not-started') percent.value = completed ? 100 : 0;
+			if (completed || status.value == 'not-started' || 
+				(status.value == 'ongoing') != (percent.value > 0 && percent.value < 100)) 
+			{
+				percent.value = completed ? 100 : (status.value == 'not-started' ? 0 : 10);
+			}
 			break;
 			
 		case percent_id:
