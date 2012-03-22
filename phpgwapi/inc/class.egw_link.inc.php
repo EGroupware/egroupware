@@ -210,6 +210,8 @@ class egw_link extends solink
 	 * Get clientside relevant attributes from app registry in json format
 	 *
 	 * Only transfering relevant information cuts approx. half of the size.
+	 * Also only transfering information relevant to apps user has access too.
+	 * Important eg. for mime-registry, to not use calendar for opening iCal files, if user has no calendar!
 	 *
 	 * @return string json encoded object with app: object pairs with attributes "(view|add|edit)(|_id|_popup)"
 	 */
@@ -218,14 +220,17 @@ class egw_link extends solink
 		$to_json = array();
 		foreach(self::$app_register as $app => $data)
 		{
-			$to_json[$app] = array_intersect_key($data, array_flip(array(
-				'view','view_id','view_popup',
-				'add','add_app','add_id','add_popup',
-				'edit','edit_id','edit_popup',
-				'list','list_popup',
-				'name','icon','query',
-				'mime',
-			)));
+			if (isset($GLOBALS['egw_info']['user']['apps'][$app]))
+			{
+				$to_json[$app] = array_intersect_key($data, array_flip(array(
+					'view','view_id','view_popup',
+					'add','add_app','add_id','add_popup',
+					'edit','edit_id','edit_popup',
+					'list','list_popup',
+					'name','icon','query',
+					'mime',
+				)));
+			}
 		}
 		return json_encode($to_json);
 	}
