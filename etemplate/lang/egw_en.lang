@@ -69,6 +69,7 @@ cells	etemplate	en	Cells
 cellspacing for the table-tag	etemplate	en	Cell spacing for the table tag
 center	etemplate	en	Center
 changed	etemplate	en	Changed
+check all	etemplate	en	Check all
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	Should content be displayed only, but not altered.
 check if field has to be filled by user	etemplate	en	Check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
@@ -423,6 +424,7 @@ tree	etemplate	en	Tree
 type	etemplate	en	Type
 type of the column	etemplate	en	Type of column
 type of the field (select label if field should be empty)	etemplate	en	Type of field. Select label if field should be empty.
+uncheck all	etemplate	en	Uncheck all
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields

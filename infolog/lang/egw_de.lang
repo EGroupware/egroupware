@@ -78,7 +78,6 @@ changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Erledigt geändert zu %1%
 changed status to %1	infolog	de	Status geändert zu %1
 changed type	infolog	de	Typ geändert
-check all	infolog	de	Alle marktieren
 check to set startday	infolog	de	ankreuzen um Startdatum zu setzen
 check to specify custom contact	infolog	de	Ankreuzen um einen eigenen Kontakt anzugeben
 choose owner of imported data	infolog	de	Wählen Sie den Eigentümer der Importierten Daten
