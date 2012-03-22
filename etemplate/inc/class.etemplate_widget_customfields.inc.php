@@ -184,5 +184,14 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			$this->setElementAttribute($form_name, 'customfields', $fields);
 		}
 		parent::beforeSendToClient($cname);
+
+		// Re-format date custom fields from Y-m-d
+		foreach($fields as $fname => $field)
+		{
+			if($field['type'] == 'date' && self::$request->content[self::$prefix.$fname])
+			{
+				self::$request->content[self::$prefix.$fname] = strtotime(self::$request->content[self::$prefix.$fname]);
+			}
+		}
 	}
 }

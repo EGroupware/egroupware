@@ -261,6 +261,19 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			// Make sure widget is created, and has the needed function
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
+
+			switch(this.options.customfields[field_name].type)
+			{
+				case 'date':
+					// Date custom fields are always in Y-m-d, which seldom matches user's preference
+					// which fails when sent to date widget.  This is only used for nm rows, when possible
+					// this is fixed server side
+					if(value && isNaN(value))
+					{
+						value = jQuery.datepicker.parseDate("yy-mm-dd",value);
+					}
+					break;
+			}
 			this.widgets[field_name].set_value(value);
 		}
 	},
