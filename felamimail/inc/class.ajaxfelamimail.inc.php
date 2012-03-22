@@ -262,11 +262,26 @@ class ajaxfelamimail
 			return $response->getXML();
 		}
 
-		function saveAsDraft($_composeID, $_data)
+		function saveAsDraft($_composeID, $_data, $_autoSave=true)
 		{
-			if($this->_debug) error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID).' Data:'.array2string($_data));
+			if($this->_debug) error_log(__METHOD__.__LINE__.' AutoSave'.$_autoSave.' ID:'.array2string($_composeID).' Data:'.array2string($_data));
 			$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
-			$folder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+			$folder = $messageFolder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+			// autosave should always save to Draft. Manual Save may Save to templates Folder
+			if ($_autoSave)
+			{
+				if ($this->bofelamimail->isTemplateFolder($bocompose->sessionData['messageFolder']))
+				{
+					$messageFolder = $bocompose->sessionData['messageFolder'];
+					$bocompose->sessionData['messageFolder'] = $folder;
+					//error_log(__METHOD__.__LINE__.' MessageFolder:'.$messageFolder.' SavingDestination:'.$folder);
+				}
+			}
+			else
+			{
+				//error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID).'->'.$folder.' Data:'.array2string($bocompose->sessionData['messageFolder']));
+			}
+
 			$this->bofelamimail->reopen($folder);
 			$status = $this->bofelamimail->getFolderStatus($folder);
 			//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
@@ -316,10 +331,34 @@ class ajaxfelamimail
 			$lastDrafted = false;
 			if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
 			$messageUid = $bocompose->saveAsDraft($formData,$folder); // folder may change
-			if ($lastDrafted && is_array($lastDrafted)) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
-			$bocompose->sessionData['lastDrafted'] = array('uid'=>$messageUid,'folder'=>$folder);
+			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']); 
+			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			if ($_autoSave)
+			{
+				$bocompose->sessionData['lastDrafted'] = array('uid'=>$messageUid,'folder'=>$folder);
+				$bocompose->sessionData['messageFolder'] = $messageFolder;
+			}
+			else
+			{
+				if (isset($bocompose->sessionData['lastDrafted'])) unset($bocompose->sessionData['lastDrafted']);
+			}
 			$bocompose->saveSessionData();
 			if($this->_debug) error_log(__METHOD__.__LINE__.' saved as:'.$messageUid.' in '.$folder);
+		}
+
+		function removeLastDraftedVersion($_composeID)
+		{
+			if($this->_debug); error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID));
+			if (!empty($_composeID))
+			{
+				$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
+				$folder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+				$this->bofelamimail->reopen($folder);
+				if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
+				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']); 
+				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+				if($this->_debug) error_log(__METHOD__.__LINE__.' removed last drafted:'.$lastDrafted['uid'].' in '.$lastDrafted['folder']);
+			}
 		}
 
         function toggleEditor($_composeID, $_content ,$_mode)

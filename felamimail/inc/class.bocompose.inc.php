@@ -235,6 +235,8 @@
 			if (!empty($addHeadInfo['X-IDENTITY'])) {
 				$this->sessionData['identity'] = $addHeadInfo['X-IDENTITY'];
 			}
+			// if the message is located within the draft folder, add it as last drafted version (for possible cleanup on abort))
+			if ($bofelamimail->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = array('uid'=>$_uid,'folder'=>$_folder);
 			$this->sessionData['uid'] = $_uid;
 			$this->sessionData['messageFolder'] = $_folder;
 			$this->sessionData['isDraft'] = true;
@@ -1154,7 +1156,12 @@
 			}
 			// handle previous drafted versions of that mail
 			$lastDrafted = false;
-			if (isset($this->sessionData['lastDrafted'])) $lastDrafted = $this->sessionData['lastDrafted'];
+			if (isset($this->sessionData['lastDrafted']))
+			{
+				$lastDrafted = $this->sessionData['lastDrafted'];
+				if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
+				if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
+			}
 			if ($lastDrafted && is_array($lastDrafted)) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
 			unset($this->sessionData['lastDrafted']);
 

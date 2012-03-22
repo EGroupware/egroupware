@@ -4646,7 +4646,7 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' AltBody:'.$AltBody);
 					foreach ($SendAndMergeTocontacts as $k => $val)
 					{
-						$sendOK = $openAsDraft = false;
+						$sendOK = $openComposeWindow = $openAsDraft = false;
 						//error_log(__METHOD__.__LINE__.' Id To Merge:'.$val);
 						if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
 							count($SendAndMergeTocontacts) > 1 &&
@@ -4790,6 +4790,7 @@ class felamimail_bo
 								// no send, save successful, and message_uid present
 								if ($savefailed===false && $messageUid && $sendOK===false)
 								{
+									$openComposeWindow = true;
 									list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
 									$linkData = array
 									(
@@ -4797,6 +4798,7 @@ class felamimail_bo
 										'uid'		=> $messageUid,
 										'folder'    => base64_encode($_folder),
 										'icServer'	=> $this->profileID,
+										'method'	=> 'importMessageToMergeAndSend',
 									);
 									$composeUrl = $GLOBALS['egw']->link('/index.php',$linkData);
 									//error_log(__METHOD__.__LINE__.' ComposeURL:'.$composeUrl);
@@ -4818,7 +4820,7 @@ class felamimail_bo
 							}
 							else
 							{
-								$processStats['failed'][] = 'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+								if (!$openComposeWindow) $processStats['failed'][] = 'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 							}
 						}
 					}

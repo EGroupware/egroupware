@@ -36,6 +36,10 @@ var KEYCODE_DOWN=40;
 // quickserach input field
 var disabledKeys1 = new Array(KEYCODE_TAB, KEYCODE_ENTER, KEYCODE_UP, KEYCODE_DOWN);
 //var disabledKeys1 = new Array(KEYCODE_ENTER, KEYCODE_UP, KEYCODE_DOWN);
+var browserSupportsOnUnloadConfirm = true;
+var do_onunload=false;
+var draftsMayExist=false;
+var justSavedAsDraftManually; // no value yet, as it should indicate that the message was just saved, before another autosave kicked in
 
 function initAll()
 {
@@ -50,6 +54,42 @@ function initAll()
 	//alert(document.onkeydown);
 	var titletext = document.getElementById('fm_compose_subject').value;
 	if (titletext.length>0) updateTitle(titletext);
+	if (window.location.search.search(/&uid=/))
+	{
+		for (var i = 0; i < window.location.search.split("&").length; i++) {
+			if (window.location.search.split("&")[i].search(/uid=/)!= -1)
+			{
+				var a = window.location.search.split("&")[i].replace(/uid=/,'');
+				if (a.length >0) { draftsMayExist = true; /*alert(a+' found');*/}
+			}
+			if (window.location.search.split("&")[i].search(/method=/)!= -1)
+			{
+				var b = window.location.search.split("&")[i].replace(/method=/,'');
+				if (b.length >0 && b=='importMessageToMergeAndSend')
+				{
+					justSavedAsDraftManually = false; /*alert(b+' found');*/
+					do_onunload = true;
+				}
+			}
+		}
+	}
+	if ($j.browser.webkit) browserSupportsOnUnloadConfirm = false; // chrome blocks alert/confirm boxes, but displays (custom) messages on demand before leaving/closing a page
+	if ($j.browser.opera) browserSupportsOnUnloadConfirm = false; // opera does not support unload or onbeforeunload for security reasons
+}
+
+function checkunload(checkBrowser)
+{
+	if (typeof checkBrowser != 'undefined' && justSavedAsDraftManually == false)
+	{
+		if (browserSupportsOnUnloadConfirm && do_onunload) do_onunload=!confirm(checkBrowser);
+		if (!browserSupportsOnUnloadConfirm)
+		{
+		//	window.setTimeout('checkunload();',1000);
+		//	do_onunload = false;
+			return checkBrowser; 	
+		}
+	}
+	if (do_onunload) xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.removeLastDraftedVersion',composeID);
 }
 
 function fm_startTimerSaveAsDraft(_refreshTimeOut) {
@@ -61,10 +101,10 @@ function fm_startTimerSaveAsDraft(_refreshTimeOut) {
 	}
 }
 
-function fm_compose_saveAsDraftBG()
+function fm_compose_saveAsDraftBG(autoSave)
 {
 	//alert('composing in progress->'+composeID);
-
+	if (typeof autoSave == 'undefined') autoSave = true;
 	var htmlFlag = document.getElementsByName('_is_html')[0];
 	var mimeType = document.getElementById('mimeType');
 	var currentEditor = htmlFlag.value;
@@ -96,8 +136,14 @@ function fm_compose_saveAsDraftBG()
 	}
 
 	//call saveasdraft with xajax_doXMLHTTP, or something equivalent
-	xajax_doXMLHTTP("felamimail.ajaxfelamimail.saveAsDraft", composeID, data);
+	xajax_doXMLHTTP("felamimail.ajaxfelamimail.saveAsDraft", composeID, data, autoSave);
 	fm_startTimerSaveAsDraft(_refreshTimeOut);
+	if (autoSave)
+	{
+		draftsMayExist = true;
+		do_onunload=true;
+		justSavedAsDraftManually = false;
+	}
 }
 
 function addEmail(to,email)
@@ -681,12 +727,23 @@ function fm_compose_selectSuggestionOnClick(_selectedSuggestion) {
 
 function fm_compose_saveAsDraft() {
 	document.getElementById('saveAsDraft').value=1;
+/*
+	// if we submit the form, we do not want to execute the onunload stuff
+	do_onunload=false; 
 	document.doit.submit();
+*/
+	// we use our new Background function now
+	fm_compose_saveAsDraftBG(false);
+	justSavedAsDraftManually = true;
 }
 
 function fm_compose_printit() {
 	document.getElementById('printit').value=1;
+	// if we submit the form, we do not want to execute the onunload stuff
+	do_onunload=false; 
+	// ToDo: could be done as fm_compose_saveAsDraftBG() and then reopen it in/as printview
 	document.doit.submit();
+
 }
 
 function fm_blink_currentInputField() {
@@ -707,6 +764,8 @@ function fm_compose_sendEMail() {
 	}
 
 	if(addressSet == true) {
+		// if we submit the form, we do not want to execute the onunload stuff
+		do_onunload=false; 
 		document.doit.submit();
 	} else {
 		alert(fm_compose_langNoAddressSet);

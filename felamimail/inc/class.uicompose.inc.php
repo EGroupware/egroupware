@@ -673,13 +673,17 @@
 			$this->compose('body',$suppressSigOnTop=true);
 		}
 
-
 		function display_app_header()
 		{
 			egw_framework::validate_file('jscode','composeMessage','felamimail');
 			egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
 
 			$GLOBALS['egw']->js->set_onload('javascript:initAll();');
+			$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload) if (draftsMayExist) {a = checkunload(browserSupportsOnUnloadConfirm?'".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."':'".addslashes(lang("if you leave this page without saving to draft, the message will be discarded completely"))."');".' if (!browserSupportsOnUnloadConfirm) return a;}');
+			//$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload) if (draftsMayExist) return '".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."';");
+			$GLOBALS['egw']->js->set_onunload("if (do_onunload) checkunload();");
+			//$GLOBALS['egw']->js->set_onunload("if (do_onunload) egw_appWindow('felamimail').xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.removeLastDraftedVersion','".$this->composeID."');");
+
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 
 			common::egw_header();

@@ -3,6 +3,8 @@
 (only cc/bcc)	felamimail	en	Only Cc/Bcc
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
 (unknown sender)	felamimail	en	Unknown sender
+1) keep drafted message (press OK)	felamimail	en	1) keep drafted message (press OK)
+2) discard the message completely (press Cancel)	felamimail	en	2) discard the message completely (press Cancel)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single click onto the subject, set the height for the message list and the preview area e.g. 300. You may specify the minimum height of the message list too, by adding it after the specified IFrame Preview height, separated by comma (e.g.: 300,190)
 aborted	felamimail	en	Aborted
 activate	felamimail	en	Activate
@@ -252,6 +254,7 @@ if shown, which folders should appear on main screen	felamimail	en	If shown, whi
 if subject contains	felamimail	en	If subject contains
 if to contains	felamimail	en	If to contains
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+if you leave this page without saving to draft, the message will be discarded completely	felamimail	en	If you leave this page without saving to draft, the message will be discarded completely
 illegal folder name.  please select a different name.	felamimail	en	Invalid folder name. Please select a different name.
 imap	felamimail	en	IMAP
 imap server	felamimail	en	IMAP server
@@ -386,6 +389,7 @@ participants	felamimail	en	Participants
 personal	felamimail	en	personal
 personal information	felamimail	en	Personal information
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	en	Ask the administrator to correct the eMailAdmin IMAP server settings
+please choose:	felamimail	en	Please choose:
 please configure access to an existing individual imap account.	felamimail	en	Configure access to an existing individual IMAP account
 please select a address	felamimail	en	Select an address
 please select the number of days to wait between responses	felamimail	en	Select the number of days to wait between responses
