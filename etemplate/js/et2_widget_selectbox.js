@@ -110,11 +110,23 @@ var et2_selectbox = et2_inputWidget.extend({
 		// Try to find the options inside the "sel-options" array
 		if(this.getArrayMgr("sel_options"))
 		{
-			// Select options tend to be defined once, at the top level, so try that first
-			var content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
+			var content_options = {};
 
-			// Try again according to ID, but strip any encoded ][
-			if(!content_options) content_options = this.getArrayMgr("sel_options").getEntry(this.id.replace(/&#x5B;/g,'[').replace(/&#x5D;/g,']'));
+			// Try first according to ID
+			content_options = this.getArrayMgr("sel_options").getEntry(this.id);
+
+			// Select options tend to be defined once, at the top level, so try that first
+			if(!content_options)
+			{
+				content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
+			}
+
+			// Maybe in a row, and options got stuck in ${row} instead of top level
+			if(!content_options && this.getArrayMgr("sel_options").perspectiveData.row)
+			{
+				var row_id = this.id.replace(/[0-9]+/,'${row}');
+				content_options = this.getArrayMgr("sel_options").getEntry(row_id);
+			}
 			if(_attrs["select_options"] && content_options)
 			{
 				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
