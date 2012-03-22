@@ -4998,7 +4998,7 @@ class felamimail_bo
 					$partFetched = false;
 					//echo __METHOD__.__LINE__.$structure->ctype_primary.'/'.$structure->ctype_secondary.'<br>';
 					if ($part->headers['content-transfer-encoding']) $mailObject->Encoding = $part->headers['content-transfer-encoding'];
-					$mailObject->IsHTML($part->ctype_secondary=='html'?true:false);
+					//$mailObject->IsHTML($part->ctype_secondary=='html'?true:false); // we do not set this here, as the default is text/plain
 					if (isset($part->ctype_parameters['charset'])) $mailObject->CharSet = trim($part->ctype_parameters['charset']);
 					if (($structure->ctype_secondary=='alternative'||
 						 $structure->ctype_secondary=='mixed' ||
@@ -5021,7 +5021,7 @@ class felamimail_bo
 						//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
 						$bodyPart = $part->body;
 						if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
-						//$mailObject->IsHTML(true); // do we need/want that here?
+						$mailObject->IsHTML(true); // we need/want that here, because looping through all message parts may mess up the message body mimetype
 						$mailObject->Body = ($isHTML?$mailObject->Body:'').$bodyPart;
 						$alternatebodyneeded = true;
 						$isHTML=true;

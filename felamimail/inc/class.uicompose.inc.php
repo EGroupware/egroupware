@@ -484,7 +484,7 @@
 						if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 						$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
 						$address = felamimail_bo::htmlentities($address, $this->displayCharset);
-						$this->t->set_var('address', $address);
+						$this->t->set_var('address', ($destination=='folder'?$value:$address));
 						$this->t->parse('destinationRows','destination_row',True);
 						$destinationRows++;
 					}
