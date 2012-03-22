@@ -2016,18 +2016,20 @@ class infolog_ui
 		$content['link_to']['to_app'] = 'infolog';
 		$content['link_to']['to_id'] = 0;
 		// Get links to be copied, if not excluded
-		if (!in_array('link_to',$exclude_fields))
+		if (!in_array('link_to',$exclude_fields) || !in_array('attachments',$exclude_fields))
 		{
-			$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $info_id);
-			// Special mangling for files so the files get copied
-			foreach($content['link_to']['to_id'] as $link_id => &$link)
+			foreach(egw_link::get_links($content['link_to']['to_app'], $info_id) as $link_id => $link)
 			{
-				if ($link['app'] == egw_link::VFS_APPNAME)
+				if ($link['app'] != egw_link::VFS_APPNAME && !in_array('link_to', $exclude_fields))
 				{
-					$link['id'] = $link + array(
+					egw_link::link('infolog', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+				}
+				elseif ($link['app'] == egw_link::VFS_APPNAME && !in_array('attachments', $exclude_fields))
+				{
+					egw_link::link('infolog', $content['link_to']['to_id'], egw_link::VFS_APPNAME, array(
 						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
 						'name' => $link['id'],
-					);
+					), $link['remark']);
 				}
 			}
 		}
@@ -2115,7 +2117,7 @@ class infolog_ui
 	 */
 	function admin( )
 	{
-		$fields = $excludefields = array(
+		$fields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
 			'info_addr'     => 'Phone/Email',
@@ -2127,7 +2129,18 @@ class infolog_ui
 			'info_planned_time' => 'Planned time',
 			'info_used_time'    => 'Used time',
 		);
-		$excludefields = array_merge($excludefields,array(
+		$excludefields = array(
+			'info_cat'      => 'Category',
+			'info_from'     => 'Contact',
+			'info_addr'     => 'Phone/Email',
+			'info_subject'  => 'Subject',
+			'info_des'      => 'Description',
+			'link_to'       => 'Links',
+			'attachments'   => 'Attachments',
+			'info_priority' => 'Priority',
+			'info_location' => 'Location',
+			'info_planned_time' => 'Planned time',
+			'info_used_time'    => 'Used time',
 			'info_type' => 'Type',
 			'info_owner' => 'Owner',
 			'info_responsible' => 'Responsible',
@@ -2144,7 +2157,7 @@ class infolog_ui
 			'info_custom_from' => 'from',
 			'info_replanned_time' => 're-planned time',
 			'info_cc' => 'CC',
-		));
+		);
 		// add customfields to field list
 		foreach(config::get_customfields('infolog') as $name => $data)
 		{
