@@ -45,6 +45,6 @@ var et2_html = et2_baseWidget.extend({
 
 });
 
-et2_register_widget(et2_html, ["html"]);
+et2_register_widget(et2_html, ["html","htmlarea_ro"]);
 
 
