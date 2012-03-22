@@ -146,7 +146,13 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			if(!jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
 
 			var field = this.options.customfields[field_name];
-			var id = "{"+this.id + "}["+this.prefix + field_name+"]";
+
+			var id = this.id + "["+this.prefix + field_name+"]";
+			// Need curlies around ID for nm row expansion
+			if(this.id == '$row')
+			{
+				id = "{" + this.id + "}" + "["+this.prefix + field_name+"]";
+			}
 
 			// Avoid creating field twice
 			if(!this.rows[id])
@@ -295,6 +301,15 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		delete(attrs.label);
 
 		attrs.select_options = field.values;
+		return true;
+	},
+
+	_setup_checkbox: function(field_name, field, attrs) {
+	 	// Read-only checkbox is just text
+		if(attrs.readonly)
+		{
+			attrs.ro_true = field.label;
+		}
 		return true;
 	},
 
