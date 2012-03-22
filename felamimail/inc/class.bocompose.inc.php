@@ -329,7 +329,7 @@
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
 					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-					$this->sessionData['body'] .= "<br>". $bodyParts[$i]['body'] ;
+					$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 				}
 
 			} else {
@@ -342,7 +342,7 @@
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
 					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-					$this->sessionData['body'] .= "\r\n". $bodyParts[$i]['body'] ;
+					$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 				}
 			}
 
