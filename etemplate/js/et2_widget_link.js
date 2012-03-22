@@ -636,7 +636,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.link = $j(document.createElement("span"))
 			.addClass("et2_link");
 
-		if(this.options.class) this.link.addClass(this.options.class);
+		if(this.options['class']) this.link.addClass(this.options['class']);
 		this.setDOMNode(this.link[0]);
 	},
 	destroy: function() {
@@ -768,7 +768,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.list = $j(document.createElement("ul"))
 			.addClass("et2_link_string");
 
-		if(this.options.class) this.node.addClass(this.options.class);
+		if(this.options['class']) this.node.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
 	},
 
@@ -884,7 +884,7 @@ var et2_link_list = et2_link_string.extend({
 
 		this.list = $j(document.createElement("table"))
 			.addClass("et2_link_list");
-		if(this.options.class) this.node.addClass(this.options.class);
+		if(this.options['class']) this.node.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
 	},
 
