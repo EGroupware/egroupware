@@ -640,7 +640,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						visibility[value[i]].visible = true;
 					}
 					// Custom fields are listed seperately in column list, but are only 1 column
-					if(self.columns[column].widget.instanceOf(et2_nextmatch_customfields)) {
+					if(self.columns[column] && self.columns[column].widget.instanceOf(et2_nextmatch_customfields)) {
 						var cf = self.columns[column].widget.options.customfields;
 						var visible = self.columns[column].widget.options.fields;
 
