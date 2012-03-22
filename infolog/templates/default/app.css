@@ -29,3 +29,6 @@ tr.rowHasParent > td:first-child {
 	background-repeat: no-repeat;
 	background-position: 0px 11px;
 }
+tr.row_on > td:first-child, tr.row_off > td:first-child {
+	padding-left: 10px;	
+}
