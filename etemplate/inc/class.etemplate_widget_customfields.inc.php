@@ -51,7 +51,11 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 */
 	protected static $prefix = '#';
 	
+	// Make settings available globally
 	const GLOBAL_VALS = '~custom_fields~';
+
+	// Used if there's no ID provided
+	const GLOBAL_ID = 'custom_fields';
 
 	protected $legacy_options = 'sub-type,use-private,field-names';
 
@@ -80,7 +84,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	public function beforeSendToClient($cname)
 	{
 		// No name, no way to get parameters client-side.
-		if(!$this->id) $this->id = 'custom_fields';
+		if(!$this->id) $this->id = self::GLOBAL_ID;
 
 		$form_name = self::form_name($cname, $this->id);
 
@@ -191,6 +195,47 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			if($field['type'] == 'date' && self::$request->content[self::$prefix.$fname])
 			{
 				self::$request->content[self::$prefix.$fname] = strtotime(self::$request->content[self::$prefix.$fname]);
+			}
+		}
+	}
+
+	/**
+	 * Validate input
+	 *
+	 * Following attributes get checked:
+	 * - needed: value must NOT be empty
+	 * - min, max: int and float widget only
+	 * - maxlength: maximum length of string (longer strings get truncated to allowed size)
+	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
+	 * - int and float get casted to their type
+	 *
+	 * @param string $cname current namespace
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $content, &$validated=array())
+	{
+		if (!$this->is_readonly($cname))
+		{
+			if($this->id)
+			{
+				$form_name = self::form_name($cname, $this->id);
+			}
+			else
+			{
+				$form_name = self::GLOBAL_ID;
+			}
+
+			$value_in = self::get_array($content, $form_name);
+			foreach($value_in as $field => $value)
+			{
+				if ((string)$value === '' && $this->attrs['needed'])
+				{
+					self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+				}
+				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
+				$valid = $value;
+				error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 			}
 		}
 	}
