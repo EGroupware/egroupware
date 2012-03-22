@@ -178,7 +178,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 			var content = this.getArrayMgr("content");
 			var rowDataEntry = rowData[rowData.length-1];
 			// Find out if we have any content rows, and how many
-			for(var key in content.data)
+			while(true)
 			{
 				if(content.data[rowIndex])
 				{
