@@ -296,7 +296,7 @@ var et2_link_apps = et2_selectbox.extend({
 });
 et2_register_widget(et2_link_apps, ["link-apps"]);
 
-var et2_link_entry = et2_valueWidget.extend({
+var et2_link_entry = et2_inputWidget.extend({
 
 	attributes: {
 		"application": {
@@ -544,7 +544,14 @@ var et2_link_entry = et2_valueWidget.extend({
 		{
 			if(!this.options.select(event, selected)) return false;
 		}
-		event.data.options.value.id = selected.item.value;
+		if(event.data.options.application && typeof event.data.options.value !== "object") {
+			// Application given in options, just use ID as the value
+			event.data.options.value = selected.item.value;
+		}
+		else
+		{
+			event.data.options.value.id = selected.item.value;
+		}
 		event.data.search.val(selected.item.label);
 
 	},
@@ -651,7 +658,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			return;
 		}
 		// Application set, just passed ID
-		else if (_value == parseInt(_value))
+		else if (typeof _value != "object")
 		{
 			_value = {
 				app:	this.options.application,
