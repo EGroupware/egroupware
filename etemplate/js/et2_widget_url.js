@@ -185,7 +185,7 @@ var et2_url = et2_textbox.extend({
 			case "url":
 				if(value.indexOf("://") == -1) {
 					e.data.set_value("http://"+value);
-					e.data.showMessage(this.egw().lang("Protocol is required"), "hint", true);
+					e.data.showMessage(e.data.egw().lang("Protocol is required"), "hint", true);
 				}
 				break;
 		}
