@@ -770,7 +770,7 @@ class calendar_bo
 		foreach ($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
-			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
+			if (empty($event['tzid']) && (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id']))))
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
 			}
