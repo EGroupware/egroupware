@@ -474,8 +474,13 @@ class infolog_groupdav extends groupdav_handler
 		}
 
 		// send evtl. necessary respose headers: Location, etag, ...
-		$this->put_response_headers($infoId, $options['path'], $retval, self::$path_attr == 'caldav_name');
-
+		// but only for new entries, as X-INFOLOG-STATUS get's not updated on client, if we confirm with an etag
+		if ($retval !== true && (!$path_attr_is_name ||
+			// POST with add-member query parameter
+			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
+		{
+			$this->put_response_headers($infoId, $options['path'], $retval, self::$path_attr == 'caldav_name');
+		}
 		return $retval;
 	}
 
