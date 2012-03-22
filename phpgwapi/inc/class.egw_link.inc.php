@@ -913,7 +913,7 @@ class egw_link extends solink
 	{
 		foreach(self::$app_register as $app => $registry)
 		{
-			if (isset($registry['mime']))
+			if (isset($registry['mime']) && isset($GLOBALS['egw_info']['user']['apps'][$app]))
 			{
 				foreach($registry['mime'] as $mime => $data)
 				{
