@@ -74,12 +74,15 @@ var et2_date = et2_inputWidget.extend({
 	},
 
 	set_type: function(_type) {
-		this.type = _type;
-		this.createInputWidget();
+		if(_type != this._type)
+		{
+			this.type = _type;
+			this.createInputWidget();
+		}
 	},
 
 	set_value: function(_value) {
-		var old_value = this.value;
+		var old_value = this.getValue();
 		if(_value == null || _value == 0)
 		{
 			this.value = _value;
@@ -498,7 +501,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 		if(_value == 0 || _value == null)
 		{
-			this.span.attr("datetime", "");
+			this.span.attr("datetime", "").text("");
 			return;
 		}
 
