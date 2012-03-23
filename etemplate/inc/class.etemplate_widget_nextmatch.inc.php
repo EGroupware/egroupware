@@ -169,20 +169,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$value['sort'] = $value['sort']['asc'] ? 'ASC' : 'DESC';
 		}
 
-if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff is working ...
-{
-	foreach ($queriedRange as $entry)
-	{
-		$value['start'] = $entry['startIdx'];
-		$value['num_rows'] = $entry['count'];
-
-		$result['rows'] = array();
-		$result['total'] = self::call_get_rows($value, $result['rows'], $result['readonlys']);
-	}
-
-	egw_json_response::get()->data($result);
-	return;
-}
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
 		$rows = $result['data'] = $result['order'] = array();
@@ -198,6 +184,7 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 			if (is_int($n))
 			{
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
+				if (!isset($row[$row_modified])) unset($row_modified);
 
 				$id = $row_id ? $row[$row_id] : $n;
 				$result['order'][] = $id;
@@ -215,40 +202,45 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 				$result['rows'][$n] = $row;
 			}
 		}
-		// knowUids outside of range left ..
+		// check knowUids outside of range for modification
 		if ($knownUids)
 		{
-			error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
-			// check if they are up to date: we create a query similar to csv-export without any filters
-			$value['csv_export'] = 'knownUids';	// do not store $value in session
-			$value['filter'] = $value['filter2'] = $value['cat_id'] = $value['search'] = '';
-			$value['col_filter'] = array($row_id => $knownUids);
-			$value['start'] = 0;
-			$value['num_rows'] = count($knownUids);
-			$rows = array();
-			if ($row_id && self::call_get_rows($value, $rows))
+			if (!$row_id)	// row_id not set by nextmatch user --> tell client to delete data, as we cant identify rows
 			{
-				foreach($rows as $row)
-				{
-					if (!$row_modified || !isset($row[$row_modified]) ||
-						!isset($lastModified) || $row[$row_modified] > $lastModified)
-					{
-						$result['data'][$row[$row_id]] = $row;
-					}
-					unset($knownUids[array_search($row[$row_id], $knownUids)]);
-				}
-			}
-			// tell client to remove no longer existing uids
-			foreach($knownUids as $uid)
-			{
-				if (!isset($result['data'][$uid]))
+				foreach($knownUids as $uid)
 				{
 					$result['data'][$uid] = null;
-					error_log(__METHOD__."() result[data][$uid]=NULL=deleted data");
+				}
+			}
+			else
+			{
+				//error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
+				// check if they are up to date: we create a query similar to csv-export without any filters
+				$value['csv_export'] = 'knownUids';	// do not store $value in session
+				$value['filter'] = $value['filter2'] = $value['cat_id'] = $value['search'] = '';
+				$value['col_filter'] = array($row_id => $knownUids);
+				// if we know name of modification column and have a last-modified date
+				if ($row_modified && $lastModified)	// --> set filter to return only modified entries
+				{
+					$value['col_filter'][] = $row_modified.' > '.(int)$lastModified;
+				}
+				$value['start'] = 0;
+				$value['num_rows'] = count($knownUids);
+				$rows = array();
+				if (self::call_get_rows($value, $rows))
+				{
+					foreach($rows as $row)
+					{
+						if (!$row_modified || !isset($row[$row_modified]) ||
+							!isset($lastModified) || $row[$row_modified] > $lastModified)
+						{
+							$result['data'][$row[$row_id]] = $row;
+						}
+					}
 				}
 			}
 		}
-		//foreach($result as $name => $value) error_log(__METHOD__."() result['$name']=".array2string($value));
+		foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
 	}
 
