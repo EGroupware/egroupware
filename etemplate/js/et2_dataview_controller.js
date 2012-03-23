@@ -51,8 +51,21 @@ var et2_dataview_controller = Class.extend({
 		// server.
 		this._lastModification = null;
 
+		// Timer used for queing fetch requests
+		this._queueTimer = null;
+
+		// Array used for queing the requests
+		this._queue = [];
+
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
+	},
+
+	destroy: function () {
+
+		this._clearTimer();
+
+		this._super();
 	},
 
 	/**
@@ -61,6 +74,10 @@ var et2_dataview_controller = Class.extend({
 	 * view without a complete rebuild of every row.
 	 */
 	update: function () {
+		// Clear the fetch queue
+		this._queue = [];
+		this._clearTimer();
+
 		// Get the currently visible range from the grid
 		var range = this._grid.getIndexRange();
 
@@ -72,7 +89,7 @@ var et2_dataview_controller = Class.extend({
 
 		// Require that range from the server
 		this._queueFetch(range.top, range.bottom - range.top + 1,
-				this._lastModification !== null);
+				this._lastModification !== null, true);
 	},
 
 	/**
@@ -205,7 +222,6 @@ var et2_dataview_controller = Class.extend({
 		// Queue fetching that data range
 		if (needsData !== false)
 		{
-			console.log("<--> Calling _queueFetch: ", needsData, _idxEnd - needsData + 1);
 			this._queueFetch(needsData, _idxEnd - needsData + 1, false);
 		}
 	},
@@ -213,21 +229,139 @@ var et2_dataview_controller = Class.extend({
 	/**
 	 * 
 	 */
-	_queueFetch: function (_start, _numRows, _refresh) {
-		// Sanitize the request
-		_start = Math.max(0, _start);
-		_numRows = Math.min(this._grid.getTotalCount(), _start + _numRows)
-				- _start;
+	_queueFetch: function (_start, _numRows, _refresh, _immediate) {
 
-		// Context used in the callback function
-		var ctx = { "self": this, "start": _start, "count": _numRows };
+		// Force immediate to be false
+		_immediate = _immediate ? _immediate : false;
+//		_immediate = true;
 
-		// Build the query
-		var query = { "start": _start, "num_rows": _numRows, "refresh": _refresh };
+		// Push the request onto the request queue
+		this._queue.push({
+				"start": _start,
+				"num_rows": _numRows,
+				"refresh": _refresh
+		});
 
-		// Call the callback
-		this._dataProvider.dataFetch(query, this._lastModification,
-				this._fetchCallback, ctx);
+		// Start the queue timer, if this has not already been done
+		if (this._queueTimer === null && !_immediate)
+		{
+			var self = this;
+			this._queueTimer = window.setTimeout(function () {
+				self._flushQueue();
+			}, ET2_DATAVIEW_FETCH_TIMEOUT);
+		}
+
+		if (_immediate)
+		{
+			this._flushQueue();
+		}
+	},
+
+	_flushQueue: function () {
+
+		function consolidateQueries(_q) {
+			var didConsolidation = false;
+
+			var _new = [];
+			var skip = {};
+
+			for (var i = 0; i < _q.length; i++)
+			{
+				var r1 = et2_range(_q[i].start, _q[i].num_rows);
+
+				var intersected = false;
+
+				for (var j = i + 1; j < _q.length; j++)
+				{
+					if (skip[j])
+					{
+						continue;
+					}
+
+					var r2 = et2_range(_q[j].start, _q[j].num_rows);
+
+					if (et2_rangeIntersect(r1, r2))
+					{
+						var n = et2_bounds(Math.min(r1.top, r2.top),
+								Math.max(r1.botom, r2.bottom));
+						_new.push({
+							"start": n.top,
+							"num_rows": n.bottom - n.top + 1,
+							"refresh": _q[i].refresh
+						});
+						skip[i] = true;
+						skip[j] = true;
+						intersected = true;
+					}
+				}
+
+				if (!intersected)
+				{
+					_new.push(_q[i]);
+					skip[i] = true;
+				}
+			}
+
+			if (didConsolidation) {
+				return consolidateQueries(_new);
+			}
+
+			return _new;
+		}
+
+		// Clear any still existing timer
+		this._clearTimer();
+
+		// Calculate the refresh flag (refresh = false is stronger)
+		var refresh = true;
+		for (var i = 0; i < this._queue.length; i++)
+		{
+			refresh = refresh && this._queue[i].refresh;
+		}
+
+		// Extend all ranges into bottom direction, initialize the queries array
+		for (var i = 0; i < this._queue.length; i++)
+		{
+			this._queue[i].num_rows += 10;
+			this._queue[i].refresh = refresh;
+		}
+
+		// Consolidate all queries
+		var queries = consolidateQueries(this._queue);
+
+		// Execute all queries
+		for (var i = 0; i < queries.length; i++)
+		{
+			// Sanitize the requests
+			queries[i].start = Math.max(0, queries[i].start);
+			queries[i].num_rows = Math.min(this._grid.getTotalCount(),
+					queries[i].start + queries[i].num_rows) - queries[i].start;
+
+			// Context used in the callback function
+			var ctx = {
+					"self": this,
+					"start": queries[i].start,
+					"count": queries[i].num_rows
+			};
+
+			// Call the callback
+			this._dataProvider.dataFetch(queries[i], this._lastModification,
+					this._fetchCallback, ctx);
+		}
+
+		// Flush the queue
+		this._queue = [];
+	},
+
+	_clearTimer: function () {
+
+		// Reset the queue timer upon destruction
+		if (this._queueTimer)
+		{
+			window.clearTimeout(this._queueTimer);
+			this._queueTimer = null;
+		}
+
 	},
 
 	/**
@@ -322,7 +456,14 @@ var et2_dataview_controller = Class.extend({
 				// of that entry is unknown, simply update the entry.
 				current.uid = _order[i];
 				current.idx = idx;
-				this._insertDataRow(current, true);
+
+				// Only update the row, if it is displayed (e.g. has a "loading"
+				// row displayed) -- this is needed for prefetching
+				if (current.row)
+				{
+					this._insertDataRow(current, true);
+				}
+
 				mapIdx++;
 			}
 			else if (current.uid !== _order[i])

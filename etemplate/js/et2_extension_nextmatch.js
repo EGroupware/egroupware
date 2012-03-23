@@ -327,7 +327,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				columnPreference = negated ? pref.substring(1) : pref;
 			}
 		}
-		var columnDisplay = et2_csvSplit(columnPreference,null,",");
+
+		var columnDisplay = typeof columnPreference === "string"
+				? et2_csvSplit(columnPreference,null,",") : columnPreference;
 
 		// Adjusted column sizes
 		var size = {};
