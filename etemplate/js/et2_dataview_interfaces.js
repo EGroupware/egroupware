@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Contains the dataview base object.
+ * eGroupWare eTemplate2 - Contains interfaces used inside the dataview
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,13 +20,7 @@ var et2_dataview_IInvalidatable = new Interface({
 
 	invalidate: function() {}
 
-});
-
-var et2_dataview_IDataRow = new Interface({
-
-	updateData: function(_data) {}
-
-});
+}); 
 
 var et2_dataview_IViewRange = new Interface({
 
@@ -35,51 +29,70 @@ var et2_dataview_IViewRange = new Interface({
 });
 
 /**
- * Interface which objects have to implement, that want to act as low level
- * datasource.
- */
-var et2_IRowFetcher = new Interface({
-
-	/**
-	 * @param _fetchList is an array consisting of objects whith the entries
-	 * 	"startIdx" and "count"
-	 * @param _callback is the callback which is called when the data is ready
-	 * 	(may be immediately or deferred). The callback has the following
-	 * 	signature:
-	 * 		function (_rows)
-	 * 	where _rows is an associative array which contains the data for that row.
-	 * @param _context is the context in which the callback should run.
-	 */
-	getRows: function(_fetchList, _callback, _context) {}
-
-});
-
-/**
- * Interface the data provider has to implement
+ * Interface a data provider has to implement. The data provider functions are
+ * called by the et2_dataview_controller class. The data provider basically acts
+ * like the egw api egw_data extension, but some etemplate specific stuff has
+ * been stripped away -- the implementation (for the nextmatch widget that is
+ * et2_extension_nextmatch_dataprovider) has to take care of that.
  */
 var et2_IDataProvider = new Interface({
 
 	/**
-	 * Returns the total count of grid elements
+	 * This function is used by the et2_dataview_controller to fetch data for
+	 * a certain range. The et2_dataview_controller provides data which allows
+	 * to only update elements which really have changed.
+	 *
+	 * @param queriedRange is an object of the following form:
+	 * {
+	 *    start: <START INDEX>,
+	 *    num_rows: <COUNT OF ENTRIES>
+	 * }
+	 * @param knownRange is an array of the above form and informs the
+	 * implementation which range is already known to the client. This parameter
+	 * may be null in order to indicate that the client currently has no valid
+	 * data.
+	 * @param lastModification is the last timestamp that was returned from the
+	 * data provider and for which the client has data. It may be null in order
+	 * to indicate, that the client currently has no data or needs a complete
+	 * refresh.
+	 * @param callback is the function that should get called, once the data
+	 * is available. The data passed to the callback function has the
+	 * following form:
+	 * {
+	 *     order: [uid, ...],
+	 *     total: <TOTAL COUNT>,
+	 *     lastModification: <LAST MODIFICATION TIMESTAMP>
+	 * 	}
+	 * @param context is the context in which the callback function will get
+	 * 	called.
 	 */
-	getCount: function() {},
+	dataFetch: function (_queriedRange, _lastModification, _callback, _context) {},
 
 	/**
-	 * Registers the given dataRow for the given index. Calls _dataRow.updateData
-	 * as soon as data is available for that row.
+	 * Registers the intrest in a certain uid for a callback function. If
+	 * the data for that uid changes or gets loaded, the given callback
+	 * function is called. If the data for the given uid is available at the
+	 * time of registering the callback, the callback is called immediately.
+	 *
+	 * @param _uid is the uid for which the callback should be registered.
+	 * @param _callback is the callback which should get called.
+	 * @param _context is an optional parameter which can 
 	 */
-	registerDataRow: function(_dataRow, _idx) {},
+	dataRegisterUID: function (_uid, _callback, _context) {},
 
 	/**
-	 * Stops calling _dataRow.updateData for the dataRow registered for the given
-	 * index.
+	 * Unregisters the intrest of updates for a certain data uid.
+	 *
+	 * @param _uid is the data uid for which the callbacks should be
+	 * 	unregistered.
+	 * @param _callback specifies the specific callback that should be
+	 * 	unregistered. If it evaluates to false, all callbacks (or those
+	 * 	matching the optionally given context) are removed.
+	 * @param _context specifies the callback context that should be
+	 * 	unregistered. If it evaluates to false, all callbacks (or those
+	 * 	matching the optionally given callback function) are removed.
 	 */
-	unregisterDataRow: function(_idx) {},
-
-	/**
-	 * Returns the action object manager (if one exists, otherwise null)
-	 */
-	getActionObjectManager: function() {}
+	dataUnregisterUID: function (_uid, _callback, _context) {}
 
 });
 

@@ -1,12 +1,12 @@
 /**
- * eGroupWare eTemplate2 - Class which generates the outer container for the grid
+ * eGroupWare eTemplate2 - dataview code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
+ * @copyright Stylite 2011-2012
  * @version $Id$
  */
 
@@ -16,14 +16,20 @@
 	jquery.jquery;
 	et2_core_common;
 
+	et2_dataview_model_columns;
+	et2_dataview_view_rowProvider;
 	et2_dataview_view_grid;
 	et2_dataview_view_resizeable;
 */
 
 /**
- * Base view class which is responsible for displaying a grid view element.
+ * The et2_dataview class is the main class for displaying a dataview. The
+ * dataview class manages the creation of the outer html nodes (like the table,
+ * header, etc.) and contains the root container: an instance of
+ * et2_dataview_view_grid, which can be accessed using the "grid" property of
+ * this object.
  */
-var et2_dataview_gridContainer = Class.extend({
+var et2_dataview = Class.extend({
 
 	/**
 	 * Constant which regulates the column padding.
@@ -49,11 +55,10 @@ var et2_dataview_gridContainer = Class.extend({
 	 * Constructor for the grid container
 	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
 	 */
-	init: function(_parentNode, _dataProvider, _egw) {
+	init: function(_parentNode, _egw) {
 
 		// Copy the arguments
 		this.parentNode = $j(_parentNode);
-		this.dataProvider = _dataProvider;
 		this.egw = _egw;
 
 		// Initialize some variables
@@ -344,7 +349,9 @@ var et2_dataview_gridContainer = Class.extend({
 
 		// Add the full row and spacer class
 		this.egw.css(".egwGridView_grid ." + this.uniqueId + "_div_fullRow",
-			"width: " + (totalWidth - this.columnBorderWidth - 1) + "px; border-right-width: 0 !important;");
+			"width: " + (totalWidth - this.columnBorderWidth - 2) + "px; border-right-width: 0 !important;");
+		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_td_fullRow",
+			"border-right-width: 0 !important;");
 		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow",
 			"width: " + (totalWidth - 1) + "px; border-right-width: 0 !important;");
 	},
@@ -430,11 +437,12 @@ var et2_dataview_gridContainer = Class.extend({
 		this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
 
 		// Create the grid class and pass "19" as the starting average row height
-		this.grid = new et2_dataview_grid(null, this.uniqueId, colIds,
-			this.dataProvider, this.rowProvider, 19);
+		this.grid = new et2_dataview_grid(null, this.egw, this.rowProvider, 19);
 
 		// Insert the grid into the DOM-Tree
-		this.containerTr.append(this.grid.getJNode());
+		var tr = $j(this.grid._nodes[0]);
+		this.containerTr.replaceWith(tr);
+		this.containerTr = tr;
 	},
 
 	/* --- Code for calculating the browser/css depending widths --- */

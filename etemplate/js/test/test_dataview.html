@@ -1,0 +1,174 @@
+<html>
+	<head>
+		<title>ET2 - Test</title>
+
+		<script src="jquery.js"></script>
+		<script src="../../../phpgwapi/js/jsapi/jsapi.js"></script>
+		<script src="../../../phpgwapi/js/egw_json.js"></script>
+		<script src="../../../phpgwapi/js/jquery/jquery.tools.min.js"></script>
+		<script src="../../../phpgwapi/js/jquery/jquery-ui.js"></script>
+
+		<script>
+			// Create the egw object template
+			window["egw"] = {
+				'prefsOnly': true
+			};
+		</script>
+		<script src="../../../phpgwapi/js/jsapi/egw_core.js"></script>
+		<script src="../../../phpgwapi/js/jsapi/egw_utils.js"></script>
+		<script src="../../../phpgwapi/js/jsapi/egw_css.js"></script>
+		<script src="../../../phpgwapi/js/jsapi/egw_debug.js"></script>
+
+		<script src="../et2_core_inheritance.js"></script>
+		<script src="../et2_core_interfaces.js"></script>
+		<script src="../et2_core_common.js"></script>
+
+		<script src="../et2_extension_nextmatch_dynheight.js"></script>
+
+		<script src="../et2_dataview_interfaces.js"></script>
+		<script src="../et2_dataview_controller.js"></script>
+		<script src="../et2_dataview_model_columns.js"></script>
+		<script src="../et2_dataview_view_rowProvider.js"></script>
+		<script src="../et2_dataview_view_container.js"></script>
+		<script src="../et2_dataview_view_grid.js"></script>
+		<script src="../et2_dataview_view_spacer.js"></script>
+		<script src="../et2_dataview_view_row.js"></script>
+		<script src="../et2_dataview_view_resizeable.js"></script>
+		<script src="../et2_dataview.js"></script>
+
+		<link rel="StyleSheet" type="text/css" href="./test.css" />
+		<link rel="StyleSheet" type="text/css" href="./grid.css" />
+
+	</head>
+	<body>
+		<h1>EGroupware ETemplate2 Dataview Test</h1>
+
+		<div>
+			<button id="update">Update</button>
+			<button id="refresh">Refresh</button>
+			<span id="range" style="float: right; font-size: 12pt; padding-right: 10px">0-0</span>
+		</div>
+
+		<div id="container" style="margin:0; padding:0;">
+		</div>
+
+		<script type="text/javascript">
+
+			document.getElementById("update").onclick = function () {
+				controller.update();
+			};
+
+			document.getElementById("refresh").onclick = function () {
+				controller.reset();
+			};
+
+			// The column data object contains the data which is used to setup
+			// the column properties (visibility, width) etc. "caption" is only
+			// used to build the column selection menu (which is not used in
+			// this example)
+			var columnData = [
+				{
+					"id": "col_0",
+					"caption": "Name",
+					"visibility": ET2_COL_VISIBILITY_VISIBLE,
+					"width": "50%"
+				},
+				{
+					"id": "col_1",
+					"caption": "Size",
+					"visibility": ET2_COL_VISIBILITY_VISIBLE,
+					"width": "auto"
+				},
+				{
+					"id": "col_2",
+					"caption": "Creation Date",
+					"visibility": ET2_COL_VISIBILITY_VISIBLE,
+					"width": "auto"
+				}
+			];
+
+			var data = new Array(1000);
+			for (var i = 0; i < data.length; i++)
+			{
+				data[i] = "uid_" + i;
+			}
+
+			var dataprovider = Class.extend(et2_IDataProvider, {
+
+				dataFetch: function (_queriedRange, _lastModification, _callback, _context) {
+					var response = {
+						"order": data.slice(_queriedRange.start, _queriedRange.start + _queriedRange.num_rows),
+						"total": data.length,
+						"lastModification": 0
+					};
+
+					window.setTimeout(function () {
+						_callback.call(_context, response)
+					}, Math.round(100 + Math.random() * 750));
+				},
+
+				dataRegisterUID: function (_uid, _callback, _context) {
+					_callback.call(_context, {
+						"caption": "Row " + _uid
+					});
+				},
+
+				dataUnregisterUID: function (_uid, _callback, _context) {
+					//
+				}
+
+			});
+
+			/**
+			 * The row callback gets called by the gridview controller whenever
+			 * the actual DOM-Nodes for a node with the given data have to be
+			 * created.
+			 */
+			function rowCallback(_data, _tr, _idx)
+			{
+				var row = dataview.rowProvider.getPrototype("default");
+				$j("div", row).each(function () { $j(this).text("#" + _idx + " " + _data.caption) });
+				$j(_tr).append(row.children());
+			}
+
+			// The dynheight object is responsible for automatically resizing
+			// the gridContainer to its maximum extends
+			var dynheight = new et2_dynheight(window, $j("#container"), 150);
+
+			// The et2_dataview_gridContainer object is the outer grid container
+			// which is responsible for displaying the columns etc.
+			var dataview = new et2_dataview($j("#container"), egw(window));
+
+			// Load the column data
+			dataview.setColumns(columnData);
+
+			// Register the callback for displaying the range
+			dataview.grid.setInvalidateCallback(function (range) {
+				$j("#range").text("Showing elements " + (range.top + 1) + " - " + (range.bottom + 1) + " of " + dataview.grid.getTotalCount());
+			});
+
+			// Create the gridview controller
+			var controller = new et2_dataview_controller(dataview.grid,
+					new dataprovider(), rowCallback);
+
+			// Trigger the initial update
+			controller.update();
+
+			// Write something inside the column headers
+			for (var i = 0; i < columnData.length; i++)
+			{
+				$j(dataview.getHeaderContainerNode(i)).text(columnData[i].caption);
+			}
+
+			// Register a resize callback
+			$j(window).resize(function() {
+				dynheight.update(function(_w, _h) {
+					dataview.resize(_w, _h);
+				});
+			});
+
+			$j(window).resize();
+		</script>
+
+	</body>
+</html>

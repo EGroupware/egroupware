@@ -33,13 +33,13 @@
 	et2_widget_selectbox;
 	et2_extension_customfields;
 
-	// Include the dynheight manager
+	// Include all nextmatch subclasses
+	et2_extension_nextmatch_controller;
+	et2_extension_nextmatch_rowProvider;
 	et2_extension_nextmatch_dynheight;
 
 	// Include the grid classes
-	et2_dataview_view_gridContainer;
-	et2_dataview_model_dataProvider;
-	et2_dataview_model_columns;
+	et2_dataview;
 
 */
 
@@ -115,25 +115,19 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		this.dynheight = new et2_dynheight(this.egw().window,
 				this.innerDiv, 150);
 
-		// Create the action manager
-		this.actionManager = new egwActionManager();
-
-		// Create the data provider which cares about streaming the row data
-		// efficiently to the rows.
-		var total = typeof this.options.settings.total != "undefined" ?
-			this.options.settings.total : 0;
-		this.dataProvider = new et2_dataview_dataProvider(this, total,
-			this.actionManager);
-
 		// Load the first data into the dataProvider
-		if (this.options.settings.rows)
+/*		if (this.options.settings.rows)
 		{
 			this.dataProvider.loadData({"rows": this.options.settings.rows});
-		}
+		}*/
 
 		// Create the outer grid container
-		this.dataviewContainer = new et2_dataview_gridContainer(this.innerDiv,
-			this.dataProvider, this.egw());
+		this.dataview = new et2_dataview(this.innerDiv, this.egw());
+
+		// We cannot create the grid controller now, as this depends on the grid
+		// instance, which can first be created once we have the columns
+		this.controller = null;
+		this.rowProvider = null;
 
 		this.activeFilters = {};
 	},
@@ -173,29 +167,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 */
 	resize: function() {
 		this.dynheight.update(function(_w, _h) {
-			this.dataviewContainer.resize(_w, _h);
+			this.dataview.resize(_w, _h);
 		}, this);
-	},
-
-	/**
-	 * Get Rows callback
-	 */
-	getRows: function(_fetchList, _callback, _context) {
-		// Create an ajax-request
-		var request = new egw_json_request(
-			"etemplate_widget_nextmatch::ajax_get_rows::etemplate", [
-					this.getInstanceManager().etemplate_exec_id,
-					_fetchList,
-					this.activeFilters
-				], this);
-
-		var nextmatch = this;
-		// Send the request
-		request.sendRequest(true, function(_data) {
-			_callback.call(_context, _data);
-			// Let anything else know
-			nextmatch.div.trigger({type:'nm_data', nm_data: _data, 'nextmatch': nextmatch});
-		}, null);
 	},
 
 	/**
@@ -270,10 +243,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	applyFilters: function() {
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 
-		// Clear the dataprovider and the dataview container - this will cause
-		// the grid to reload.
-		this.dataProvider.clear();
-		this.dataviewContainer.clear();
+		// Update the filters in the grid controller
+		this.controller.setFilters(this.activeFilters);
 	},
 
 	/**
@@ -431,7 +402,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 * for next time
 	 */
 	_updateUserPreferences: function() {
-		var colMgr = this.dataviewContainer.getColumnMgr()
+		var colMgr = this.dataview.getColumnMgr()
 		if(!this.options.settings.columnselection_pref) {
 			this.options.settings.columnselection_pref = this.options.template;
 		}
@@ -510,7 +481,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				"widget": _row[x].widget
 			};
 
-
 			columnData[x] = {
 				"id": "col_" + x,
 				"caption": this._genColumnCaption(_row[x].widget),
@@ -524,14 +494,22 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		}
 
 		// Create the column manager and update the grid container
-		this.dataviewContainer.setColumns(columnData);
+		this.dataview.setColumns(columnData);
 
-		var self = this;
+		// Create the nextmatch row provider
+		this.rowProvider = new et2_nextmatch_rowProvider(
+			this.dataview.rowProvider);
+
 		// Register handler to update preferences when column properties are changed
-		this.dataviewContainer.onUpdateColumns = function() { self._updateUserPreferences();};
-		
+		var self = this;
+		this.dataview.onUpdateColumns = function() {
+			self._updateUserPreferences();
+		};
+
 		// Register handler for column selection popup
-		this.dataviewContainer.selectColumnsClick = function(event) { self._selectColumnsClick(event);};
+		this.dataview.selectColumnsClick = function(event) {
+			self._selectColumnsClick(event);
+		};
 	},
 
 	_parseDataRow: function(_row, _colData) {
@@ -552,7 +530,22 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 		}
 
-		this.dataviewContainer.rowProvider.setDataRowTemplate(columnWidgets, this);
+		this.rowProvider.setDataRowTemplate(columnWidgets, this);
+
+		// Set the initial row count
+		var total = typeof this.options.settings.total != "undefined" ?
+			this.options.settings.total : 0;
+		this.dataview.grid.setTotalCount(total);
+
+		// Create the grid controller
+		this.controller = new et2_nextmatch_controller(
+				this.egw(),
+				this.getInstanceManager().etemplate_exec_id,
+				"nm",
+				this.dataview.grid,
+				this.rowProvider);
+
+		this.controller.setFilters(this.activeFilters);
 	},
 
 	_parseGrid: function(_grid) {
@@ -573,7 +566,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 	_selectColumnsClick: function(e) {
 		var self = this;
-		var columnMgr = this.dataviewContainer.columnMgr;
+		var columnMgr = this.dataview.getColumnMgr();
 		var columns = {};
 		var columns_selected = [];
 		for (var i = 0; i < columnMgr.columns.length; i++)
@@ -662,7 +655,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				columnMgr.setColumnVisibilitySet(visibility);
 				self.selectPopup.toggle();
 
-				self.dataviewContainer.updateColumns();
+				self.dataview.updateColumns();
 
 				// Set default?
 				if(defaultCheck.get_value() == "true")
@@ -753,7 +746,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 * Activates the actions
 	 */
 	set_settings: function(_settings) {
-		if (_settings.actions)
+/*		if (_settings.actions)
 		{
 			// Read the actions from the settings array
 			this.actionManager.updateActions(_settings.actions);
@@ -761,7 +754,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			// this is rather hackisch, but I have no idea how to get the action_link & row_id to the actionObject of the row otherwise
 			this.actionManager.action_links = _settings.action_links;
 			this.actionManager.row_id = _settings.row_id;
-		}
+		}*/
 	},
 
 	getDOMNode: function(_sender) {
@@ -774,7 +767,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		{
 			if (_sender == this.columns[i].widget)
 			{
-				return this.dataviewContainer.getHeaderContainerNode(i);
+				return this.dataview.getHeaderContainerNode(i);
 			}
 		}
 
@@ -1171,7 +1164,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			// not ready yet
 			return;
 		}
-		var columnMgr = this.nextmatch.dataviewContainer.columnMgr;
+		var columnMgr = this.nextmatch.dataview.getColumnMgr();
 		var nm_column = null;
 		for(var i = 0; i < this.nextmatch.columns.length; i++)
 		{

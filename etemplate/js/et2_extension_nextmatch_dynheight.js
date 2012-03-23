@@ -57,9 +57,6 @@ var et2_dynheight = Class.extend({
 			// Initialize the height calculation
 			this._initialize();
 
-			console.log(this.outerNode);
-			console.log(this.innerNode);
-
 			// Get the outer container height
 			var oh = this.outerNode.height();
 

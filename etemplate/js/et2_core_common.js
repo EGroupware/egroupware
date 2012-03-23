@@ -651,3 +651,11 @@ function et2_rangeIntersectDir(_ar1, _ar2)
 	return 0;
 }
 
+/**
+ * Returns whether two ranges are equal.
+ */
+function et2_rangeEqual(_ar1, _ar2)
+{
+	return _ar1.top === _ar2.top && _ar1.bottom === _ar2.bottom;
+}
+

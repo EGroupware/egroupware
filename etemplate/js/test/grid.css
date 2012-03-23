@@ -39,6 +39,7 @@
 .egwGridView_spacer {
 	background-image: url(gfx/non_loaded_bg.png);
 	background-position: top left;
+/*	background-attachment: fixed;*/
 }
 
 .egwGridView_outer {
