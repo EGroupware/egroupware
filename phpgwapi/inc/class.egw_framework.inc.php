@@ -818,19 +818,6 @@ abstract class egw_framework
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			$langs = array();
-
-			// load translations
-			translation::add_app('etemplate');
-			foreach(translation::$loaded_apps as $app => $lang)
-			{
-				$langs[] = array(
-					"app" => $app,
-					"lang" => $lang
-				);
-			}
-
-			$java_script .= "egw.langRequire(window, ".json_encode($langs).");\n";
 			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");'."\n";
 			$java_script .= 'egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');'."\n";
 		}
