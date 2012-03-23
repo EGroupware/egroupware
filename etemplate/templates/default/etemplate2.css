@@ -237,7 +237,7 @@ span.et2_date span {
 
 /** Display a loading icon **/
 .loading {
-	background-position: center right;
+	background-position: center;
 	background-repeat: no-repeat;
 	background-image: url('images/ajax-loader.gif');
 }
