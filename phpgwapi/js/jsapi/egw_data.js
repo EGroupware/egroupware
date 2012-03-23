@@ -19,6 +19,8 @@
 
 egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
+	var lastModification = null;
+
 	/**
 	 * The uid function generates a session-unique id for the current
 	 * application by appending the application name to the given uid.
@@ -40,6 +42,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
 		// The "uidsMissing" contains a list of missing uids.
 		var uidsMissing = [];
+
+		if (_result.lastModification)
+		{
+			lastModification = _result.lastModification;
+		}
 
 		if (_result.order && _result.data)
 		{
@@ -151,7 +158,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_filters,
 					_widgetId,
 					egw.dataKnownUIDs(_app),
-					_lastModification
+					lastModification
 				],
 				function(result) {
 					parseServerResponse(result, _callback, _context);
