@@ -137,10 +137,18 @@
 
 		// Add an eventlistener for the "onunload" event -- if "onunload" gets
 		// called, we have to delete the module slot created above
-		_window.addEventListener('beforeunload', function() {
+		var fnct = function() {
 			cleanupEgwInstances(_instances, _moduleInstances, function(_w) {
 				return _w.window === _window});
-		}, false);
+			};
+		if (_window.attachEvent)
+		{
+			_window.attachEvent('onbeforeunload', fnct);
+		}
+		else
+		{
+			_window.addEventListener('beforeunload', fnct, false);
+		}
 
 		// Otherwise create the window specific instances
 		for (var key in _modules)

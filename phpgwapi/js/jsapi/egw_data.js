@@ -28,8 +28,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		return _app + "::" + _uid;
 	}
 
-	function parseServerResponse(_result, _execId, _queriedRange, _filters,
-			_lastModification, _callback, _context)
+	function parseServerResponse(_result, _callback, _context)
 	{
 		// Check whether the result is valid -- so "result" has to be an object
 		// consting of "order" and "data"
@@ -44,28 +43,23 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
 		if (_result.order && _result.data)
 		{
-			var order = [];
+			// Assemble the correct order uids
+			for (var i = 0; i < _result.order.length; i++)
+			{
+				_result.order[i] = UID(_result.order[i]);
+			}
 
-			// Load all data entries that have been sent
+			// Load all data entries that have been sent or delete them
 			for (var key in _result.data)
 			{
 				var uid = UID(key);
-				egw.dataStoreUID(uid, _result.data[key]);
-			}
-
-			// Iterate over the order entries and check whether all uids are
-			// available
-			for (var i = 0; i < _result.order.length; i++)
-			{
-				// Calculate the actual uid and store it
-				var uid = UID(_result.order[i]);
-				order.push(uid);
-
-				// Check whether the data for that row is loaded, if no, update
-				// the "uidsMissing" variable
-				if (!egw.dataHasUID(uid))
+				if (_result.data[key] === null)
 				{
-					uidsMissing.push(_result.order[i]);
+					egw.dataDeleteUID(uid);
+				}
+				else
+				{
+					egw.dataStoreUID(uid, _result.data[key]);
 				}
 			}
 
@@ -74,20 +68,12 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			if (_callback)
 			{
 				_callback.call(_context, {
-					"order": order,
-					"lastModification":
-						typeof _result.lastModification === "undefined"
-							? _lastModification : _result.lastModification,
-					"total": _result.total,
-					"readonlys": _result.readonlys
+					"order": _result.order,
+					"lastModification": _result.lastModification,
+					"total": parseInt(_result.total),
+					"readonlys": _result.readonlys,
+					"rows": _result.rows
 				});
-			}
-
-			// Fetch the missing uids
-			if (uidsMissing.length > 0)
-			{
-				this.dataFetch(_execId, _queriedRange, _filters, null, null,
-					uidsMissing, null, null);
 			}
 		}
 	}
@@ -110,11 +96,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 		readonlys: <READONLYS>
 		 * 	}
 		 * If a uid got deleted on the server above data is null.
-		 * If a uid is obmitted from data, is has not changed since lastModification.
+		 * If a uid is omitted from data, is has not changed since lastModification.
 		 * 
 		 * If order/data is null, this means that nothing has changed for the
 		 * given range.
-		 * The fetchRows function stores new data for the uid's inside the
+		 * The dataFetch function stores new data for the uid's inside the
 		 * local data storage, the grid views are then capable of querying the
 		 * data for those uids from the local storage using the
 		 * "dataRegisterUID" function.
@@ -154,7 +140,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * @param context is the context in which the callback function will get
 		 * 	called.
 		 */
-		dataFetch: function (_execId, _queriedRange, _filters, _widgetId, _knownUids,
+		dataFetch: function (_execId, _queriedRange, _filters, _widgetId,
 				_lastModification, _callback, _context)
 		{
 			var request = egw.json(
@@ -164,23 +150,15 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_queriedRange,
 					_filters,
 					_widgetId,
-					_knownUids,
+					egw.dataKnownUIDs(_app),
 					_lastModification
 				],
 				function(result) {
-					parseServerResponse.call(
-						this,
-						result,
-						_execId,
-						_queriedRange,
-						_filters,
-						_lastModification,
-						_callback,
-						_context
-					); 
+					parseServerResponse(result, _callback, _context);
 				},
 				this
 			);
+			request.sendRequest();
 		}
 
 	};
@@ -302,7 +280,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 					if ((!_callback || registeredCallbacks[_uid][i].callback === _callback)
 					    && (!_context || registeredCallbacks[_uid][i].context === _context))
 					{
-						registeredCallbacks.splice(i, 1);
+						registeredCallbacks[_uid].splice(i, 1);
 					}
 				}
 
@@ -322,6 +300,26 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 */
 		dataHasUID: function (_uid) {
 			return typeof this.localStorage[_uid] !== "undefined";
+		},
+
+		/**
+		 * Returns all uids that have the given prefix
+		 * TODO: Improve this
+		 */
+		dataKnownUIDs: function (_prefix) {
+
+			var result = [];
+
+			for (var key in this.localStorage)
+			{
+				var parts = key.split("::");
+				if (parts[0] === _prefix)
+				{
+					result.push(parts[1]);
+				}
+			}
+
+			return result;
 		},
 
 		/**
@@ -345,10 +343,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			// those.
 			if (typeof registeredCallbacks[_uid] != "undefined")
 			{
-				for (var i = 0; i < this.registeredCallbacks.length; i++)
+				for (var i = 0; i < registeredCallbacks[_uid].length; i++)
 				{
-					this.registeredCallbacks[i].callback.call(
-						this.registeredCallbacks[i].context,
+					registeredCallbacks[_uid][i].callback.call(
+						registeredCallbacks[_uid][i].context,
 						_data
 					);
 				}
