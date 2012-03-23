@@ -292,7 +292,7 @@ class infolog_ui
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		if ($query['csv_export'])
+		if ($query['csv_export'] && $query['csv_export'] !== 'knownUids')
 		{
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
@@ -362,7 +362,7 @@ class infolog_ui
 		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
 
 		// query all links and sub counts in one go
-		if ($infos && !$query['csv_export'])
+		if ($infos && (!$query['csv_export'] || $query['csv_export'] === 'knownUids'))
 		{
 			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true);
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
@@ -376,7 +376,7 @@ class infolog_ui
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
-			if (!$query['csv_export'])
+			if (!$query['csv_export'] || $query['csv_export'] === 'knownUids')
 			{
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
