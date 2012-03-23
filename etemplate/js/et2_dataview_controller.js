@@ -232,8 +232,8 @@ var et2_dataview_controller = Class.extend({
 	_queueFetch: function (_start, _numRows, _refresh, _immediate) {
 
 		// Force immediate to be false
-		_immediate = _immediate ? _immediate : false;
-//		_immediate = true;
+//		_immediate = _immediate ? _immediate : false;
+		_immediate = true;
 
 		// Push the request onto the request queue
 		this._queue.push({
