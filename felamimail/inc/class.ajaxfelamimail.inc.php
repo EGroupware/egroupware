@@ -348,7 +348,7 @@ class ajaxfelamimail
 
 		function removeLastDraftedVersion($_composeID)
 		{
-			if($this->_debug); error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID));
+			if($this->_debug) error_log(__METHOD__.__LINE__.' ID:'.array2string($_composeID));
 			if (!empty($_composeID))
 			{
 				$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
