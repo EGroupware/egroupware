@@ -273,6 +273,7 @@ class infolog_ui
 			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
+			$query['row_modified'] = 'info_datemodified';
 			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
 		}
 		$orginal_colfilter = $query['col_filter'];
@@ -296,7 +297,6 @@ class infolog_ui
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
 		// handle linked filter (show only entries linked to a certain other entry)
-		unset($query['col_filter']['info_id']);
 		if ($query['col_filter']['linked'])
 		{
 			list($app,$id) = explode(':',$query['col_filter']['linked']);
