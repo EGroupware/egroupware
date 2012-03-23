@@ -344,12 +344,17 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			// those.
 			if (typeof registeredCallbacks[_uid] != "undefined")
 			{
-				for (var i = 0; i < registeredCallbacks[_uid].length; i++)
+				for (var i = registeredCallbacks[_uid].length - 1; i >= 0; i--)
 				{
-					registeredCallbacks[_uid][i].callback.call(
-						registeredCallbacks[_uid][i].context,
-						_data
-					);
+					try {
+						registeredCallbacks[_uid][i].callback.call(
+							registeredCallbacks[_uid][i].context,
+							_data
+						);
+					} catch (e) {
+						// Remove this callback from the list
+						registeredCallbacks[_uid].splice(i, 1);
+					}
 				}
 			}
 		},
