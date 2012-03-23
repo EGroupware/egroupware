@@ -234,7 +234,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 				}
 				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-				$valid = $value;
+				
+				$valid = implode(',',$value);
 				error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 			}
 		}
