@@ -155,7 +155,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	static public function ajax_get_rows($exec_id, array $queriedRange, array $filters = array(), $form_name='nm',
 		array $knownUids=null, $lastModified=null)
 	{
-		error_log(__METHOD__."('".substr($exec_id,0,10)."...',".array2string($queriedRange).','.array2string($filters).",'$form_name', ".array2string($knownUids).", $lastModified)");
+		error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified)");
 
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
@@ -191,6 +191,7 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = isset($value['row_modified']) ? $value['row_modified'] : 'modified';
+		$kUkey = false;
 
 		foreach($rows as $n => $row)
 		{
@@ -199,7 +200,7 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
 
 				$id = $row_id ? $row[$row_id] : $n;
-				$result['order'] = $id;
+				$result['order'][] = $id;
 
 				// check if we need to send the data
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
@@ -207,7 +208,7 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 				{
 					$result['data'][$id] = $row;
 				}
-				if ($kUkey) unset($knownUids[$kUkey]);
+				if ($kUkey !== false) unset($knownUids[$kUkey]);
 			}
 			else	// non-row data set by get_rows method
 			{
@@ -217,28 +218,37 @@ if (isset($queriedRange[0]))	// old code, can be removed, as soon as new stuff i
 		// knowUids outside of range left ..
 		if ($knownUids)
 		{
-			// check if they are up to date
+			error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
+			// check if they are up to date: we create a query similar to csv-export without any filters
+			$value['csv_export'] = 'knownUids';	// do not store $value in session
+			$value['filter'] = $value['filter2'] = $value['cat_id'] = $value['search'] = '';
 			$value['col_filter'] = array($row_id => $knownUids);
 			$value['start'] = 0;
 			$value['num_rows'] = count($knownUids);
 			$rows = array();
-			if ($row_id && $lastModified && self::call_get_rows($value, $rows))
+			if ($row_id && self::call_get_rows($value, $rows))
 			{
 				foreach($rows as $row)
 				{
-					if (isset($row[$row_modified]))
+					if (!$row_modified || !isset($row[$row_modified]) ||
+						!isset($lastModified) || $row[$row_modified] > $lastModified)
 					{
-						if ($row[$row_modified] > $lastModified) $result['data'][$row[$row_id]] = $row;
-						unset($knownUids[array_search($row[$row_id], $knownUids)]);
+						$result['data'][$row[$row_id]] = $row;
 					}
+					unset($knownUids[array_search($row[$row_id], $knownUids)]);
 				}
 			}
 			// tell client to remove no longer existing uids
 			foreach($knownUids as $uid)
 			{
-				if (!isset($result['data'][$uid])) $result['data'][$uid] = null;
+				if (!isset($result['data'][$uid]))
+				{
+					$result['data'][$uid] = null;
+					error_log(__METHOD__."() result[data][$uid]=NULL=deleted data");
+				}
 			}
 		}
+		//foreach($result as $name => $value) error_log(__METHOD__."() result['$name']=".array2string($value));
 		egw_json_response::get()->data($result);
 	}
 
