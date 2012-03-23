@@ -313,7 +313,7 @@ var et2_dataview_controller = Class.extend({
 		var idx = _start;
 		for (var i = 0; i < _order.length; i++, idx++)
 		{
-			var current = _idxMap[mapIdx];
+			var current = this._getIndexEntry(mapIdx);
 
 			if (!current.row || !current.uid)
 			{

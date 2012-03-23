@@ -116,6 +116,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			window.clearTimeout(this._invalidateTimeout);
 		}
 
+		// Destroy all containers
+		this.setTotalCount(0);
+
 		this._super();
 	},
 

@@ -1,0 +1,658 @@
+/**
+ * Styles for etemplate2 tests
+ *
+ * @version: $Id$
+ */
+
+/* Stuff for the standalone test webpage */
+
+body, table, td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+/*	overflow: hidden;*/
+}
+
+#linklist a {
+	color: blue;
+	display: block;
+}
+
+#linklist a:visited {
+	color: blue;
+}
+
+#linklist a:hover {
+	color: #5050FF;
+}
+
+#container {
+	/*margin: 10px;
+	border: 1px solid gray;*/
+	padding: 10px;
+	background-color: white;
+}
+
+.header {
+	color: #111;
+	margin: 30px 0 5px 0;
+	border-bottom: 1px solid #111;
+}
+
+/**
+ * VBox widget
+ */
+div.et2_vbox>* {
+	display: block;
+}
+
+/**
+ * HBox widget
+ */
+
+div.et2_hbox div.et2_hbox {
+	display: inline;
+}
+
+div.et2_hbox>* {
+	text-align: left;
+}
+
+div.et2_hbox_left {
+	float: left;
+}
+
+div.et2_hbox_al_center {
+	text-align: center;
+}
+
+div.et2_hbox_al_right {
+	text-align: right;
+}
+
+div.et2_hbox_right {
+	float: right;
+	clear: right;
+}
+
+.et2_placeholder {
+	display: inline-block;
+	border: 1px solid cornflowerblue;
+	background-color: #FCFCFC;
+	padding: 3px;
+	margin: 1px;
+}
+
+.et2_placeholder .et2_caption {
+	display: block;
+	font-size: 8pt;
+	margin: 0 0 5px 0;
+	font-weight: bold;
+	color: #2E2E2E;
+	cursor: pointer;
+	text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
+}
+
+.et2_placeholder .et2_attr {
+	display: block;
+	font-size: 8pt;
+	color: #3030A0;
+	margin: 2px 0 2px 0;
+}
+
+.et2_label {
+	color: #101050;
+}
+
+a.et2_url {
+	background-position: center;
+	background-repeat: no-repeat;
+
+	cursor: pointer;
+	margin: -4px;
+	padding: 2px;
+	padding-left: 16px;
+}
+
+a.et2_url.email {
+	background-image: url(gfx/email.png);
+}
+a.et2_url.phone {
+	background-image: url(gfx/phone.png);
+}
+a.et2_url.url {
+	background-image: url(gfx/url.png);
+}
+
+.et2_button {
+	cursor: pointer;
+	text-align: center;
+
+	font-size: 9pt;
+
+	text-shadow: 1px 1px #E0E0E0;
+}
+.et2_button_text {
+	background-color: #E0E0E0;
+	background-image: url(gfx/gradient01.png);
+	background-position: center;
+	background-repeat: repeat-x;
+
+	margin: 5px;
+	padding: 3px;
+
+	border: 1px solid silver;
+	color: #101010;
+}
+.et2_button_icon {
+	border: none;
+	background: transparent;
+}
+button.et2_button_text:hover {
+	color: #050505;
+	border: 1px solid gray;
+	background-color: #D0D0EE;
+}
+button.et2_button_text:active {
+	background-image: url(gfx/gradient02.png);
+	background-color: #D0D0E0;
+}
+button.et2_button_text:focus {
+	border: 1px solid #2c3d6f;
+	color: #202d52;
+	outline: none;
+}
+
+.et2_textbox {
+	resize: none;
+}
+
+.et2_bold {
+	font-weight: bold;
+}
+
+.et2_italic {
+	font-style: italic;
+}
+
+/**
+ * Multi-select widget
+ */
+.et2_selectbox .ui-widget-header {
+	padding: 2px 6px 0px 6px;
+}
+.et2_selectbox .ui-widget-header ul {
+	float: right;
+}
+.et2_selectbox .ui-widget-header li {
+	float: left;
+	padding: 2px;
+	padding-top: 0px
+}
+.et2_selectbox .ui-widget-header li span.ui-icon {
+	float: left;
+	margin-top: -2px;
+}
+.et2_selectbox .ui-multiselect-checkboxes {
+	overflow-y: scroll;
+	position: relative;
+	text-align: left;
+}
+.et2_selectbox .ui-multiselect-checkboxes li {
+	margin: 0px;
+	clear: both;
+	padding-left: 26px;
+	padding-right: 3px;
+	text-decoration: none;
+	list-style-image: none;
+	list-style-type: none;
+	text-indent: -26px;
+}
+.et2_selectbox .ui-multiselect-checkboxes label {
+	display: block;
+	border: 1px solid transparent;
+}
+.et2_selectbox input[type="checkbox"] {
+	margin: 3px;
+}
+.et2_selectbox .ui-multiselect-checkboxes img {
+	float: right;
+	height: 1.8em;
+}
+
+/**
+ * Date / Time widgets
+ */
+span.et2_date {
+	min-width: 130px;
+}
+span.et2_date input.et2_date {
+	min-width: 16.5ex;
+	background-repeat: no-repeat;
+	background-position: top right;
+	background-size: contain;
+}
+span.et2_date input[type=time].et2_date {
+	min-width: 6ex;
+}
+span.et2_date span {
+	background-position: center;
+	background-repeat: no-repeat;
+
+	color: #101010;
+	cursor: pointer;
+	padding-top: 3px;
+	padding-left: 22px;
+	text-align: center;
+
+	font-size: 9pt;
+}
+
+/** Display a loading icon **/
+.loading {
+	background-position: center right;
+	background-repeat: no-repeat;
+	background-image: url('gfx/ajax-loader.gif');
+}
+
+/**
+ * File upload
+ */
+.et2_file .progress {
+	width: 300px;
+	max-height: 6em;
+	overflow: auto;
+	margin-left: 20px;
+}
+
+.et2_file .progress span.progressBar {
+	height: 5px;
+	width: 150px;
+	max-width: 150px;
+	display: inline;
+}
+
+/* Remove icon displayed when hovering */
+.et2_file .progress li div.remove {
+	display: none;
+	cursor: pointer;
+}
+
+.et2_file .progress li:hover div.remove {
+	width: 16px;
+	height: 16px;
+	float: right;
+	display: block;
+	background-image: url("gfx/close.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.et2_file .progress p {
+	background-color: green;
+	height:5px;
+	margin: 0px;
+}
+
+.et2_file .progress li {
+	color: blue;
+	margin: .5ex;
+}
+/* Hide progress bar when completed */
+.et2_file .progress li.success > span.progressBar {
+	display: none;
+}
+
+
+/**
+ * Autocomplete - used in link widget
+ * Restricting result size
+ */
+.ui-autocomplete {
+	max-height: 20ex;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+}
+
+/**
+ * Link wiget(s)
+ */
+
+/* Link to */
+.et2_link_to {
+	width: 350px;
+	overflow-x: show;
+}
+.et2_link_to button {
+	display: inline;
+	float: right;
+	height: 5ex;
+}
+.et2_link_to span.status {
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	background-image:url(gfx/tick.png);
+	width: 22px;
+	height: 22px;
+	display: block;
+	float: right;
+}
+.et2_link_to .progress {
+	max-height: 12em;
+}
+.et2_link_to .progress > .success input {
+	width: 100%;
+	margin-right: -20px; /* Leave room for remove icon */
+}
+.et2_link_to .progress li.success span.ui-icon-comment {
+	display: none;
+	float: right;
+	cursor: pointer;
+	margin-right: 5px;
+}
+.et2_link_to .progress li:hover.success span.ui-icon-comment {
+	display: inline;
+}
+
+.et2_link {
+	cursor: pointer;
+}
+ul.et2_link_string {
+	list-style-type: none;
+	display: inline;
+	padding: 0px;
+}
+.et2_link_string li {
+	display: inline;
+}
+.et2_link_string li:not(:last-child):after {
+    content:           ', ';
+}
+
+.et2_link_list tr {
+	cursor: pointer;
+}
+.et2_link_list td.remark {
+	font-style: italic;
+}
+.et2_link_list td.delete {
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	float: right;
+	display: none;
+	background-image: url("gfx/close.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 0px;
+}
+.et2_link_list .icon img, .et2_link_list td.icon {
+	width: 16px;
+	height: 16px;
+}
+.et2_link_list tr:hover td.delete {
+	display: inline;
+}
+
+.egw_tooltip
+{
+	position: fixed;
+	border: 1px solid #897f51;
+	padding: 3px;
+	background-color: #FDF9DB;
+	max-width: 300px;
+	color: black;
+}
+
+/**
+ * Tabs widget
+ */
+
+.et2_tabflag {
+	display: inline-block;
+	margin-right: 5px;
+	padding: 5px;
+	cursor: pointer;
+	border: 1px solid silver;
+
+	background-color: #E0E0E0;
+	background-image: url(gfx/gradient01.png);
+	background-position: center;
+	background-repeat: repeat-x;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.et2_tabflag:hover {
+	color: #050505;
+	border: 1px solid gray;
+	background-color: #D0D0EE;
+}
+
+.et2_tabflag:active {
+	background-image: url(gfx/gradient02.png);
+	background-color: #D0D0E0;
+}
+
+.et2_tabs {
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: silver;
+	padding: 5px;
+}
+
+.et2_tabflag.active {
+	border-bottom: 1px solid white;
+	background-color: white;
+	background-image: none;
+}
+
+.et2_tabheader {
+	background-image: url(gfx/tab_header_bg.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
+
+
+/**
+* Validation
+*/
+input[required] {
+	background-color: #ffffd0;
+}
+input.invalid {
+	border: 1px solid #a6261d;
+	background-color: #faecec;
+}
+.error {
+	-moz-border-radius: 0 4px 4px 0;
+	-moz-box-shadow: 0 0 6px #DDDDDD;
+	background-color: #FFFE36;
+	border: 1px solid #E1E16D;
+	color: #000000;
+	display: none;
+	font-size: 11px;
+	height: 15px;
+	padding: 4px 10px;
+}
+.error p {
+	margin: 0;
+}
+
+/**
+ * hrule widget
+ */
+
+hr {
+	border-style: none;
+	border-top: 1px solid silver;
+	height: 1px;
+	margin: 10px 0px 10px 0px;
+}
+
+/**
+ * grid widget
+ */
+
+table.et2_grid {
+	border-collapse: collapse;
+}
+
+.et2_grid td {
+/*	border: 1px dashed silver;*/
+}
+
+/**
+ * Create some spacing for widgets inside labels
+ */
+label input, label span, label div, label select, label textarea {
+	margin-left: 1ex;
+	margin-right: 1ex;
+}
+
+/**
+ * Message styles
+ */
+
+/* Style used for a generic message (such as success messages or validation errors) */
+.message {
+	display: block;
+	border: 1px solid gray;
+	padding: 3px 3px 3px 22px;
+	margin: 5px 0px 5px 0px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	clear: left;
+	max-width: 500px;
+}
+
+.message.floating {
+	display: inline;
+	margin: 0px 5px 0px 5px;
+}
+
+.message.validation_error {
+	color: #a93030;
+	font-style: italic;
+	background-color: #f3d4d0;
+	border-color: #a93030;
+	background-image:url(gfx/error.png);
+}
+
+.message.success {
+	font-style: normal;
+	background-color: #e5f3d0;
+	color: #98a930;
+	border-color: #9ea930;
+	background-image:url(gfx/tick.png);
+}
+
+.message.hint {
+	font-style: normal;
+	background-color: #d9e2ed;
+	border-color: #56729a;
+	color: #56729a;
+	background-image:url(gfx/hint.png);
+}
+
+/**
+ * Nextmatch widget
+ */
+
+.et2_nextmatch {
+/*	background-color: silver;*/
+}
+
+/* Left & right headers*/
+.et2_nextmatch > div > .header {
+	margin-top: -20px;
+	border: none;
+}
+
+.nextmatch_header .header_count {
+	padding: 0px 20px;
+	margin: 0px 20px;
+	margin-top: 5px;
+	border: 1px solid #E0E0E0;
+	float:right;
+	font-size: 150%;
+	text-align: center
+}
+.nextmatch_header > .filters {
+	padding-left: 5px;
+} 
+.nextmatch_header .et2_button_icon {
+	vertical-align: middle;
+}
+.nextmatch_sortheader {
+	color: #003075;
+	cursor: pointer;
+	padding-right: 10px;
+	margin-right: 10px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.nextmatch_sortheader:hover {
+	text-decoration: underline;
+}
+
+.nextmatch_sortheader.asc {
+	font-weight: bold;
+	background-image: url(gfx/up.png);
+}
+
+.nextmatch_sortheader.desc {
+	font-weight: bold;
+	background-image: url(gfx/down.png);
+}
+
+.nextmatch_resize_helper {
+	border-right: 1px dotted gray;
+	min-height: 100%;
+	background-color: gray;
+	opacity: 0.5;
+}
+
+.et2_clickable {
+	cursor: pointer;
+}
+
+div.et2_progress {
+	display: inline-block;
+	border: 1px solid black;
+	background-color: white;
+	width: 30px;
+	padding: 1px; 
+	margin: 2px;
+	text-align: left;
+}
+div.et2_progress > div {
+	background-color: #D00000;
+	height: 5px;
+}
+
+.egwResizeOverlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 99999;
+	cursor: ew-resize;
+}
+
+.egwResizeHelper {
+	position: absolute;
+	display: block;
+	z-index: 99998;
+	opacity: 0.5;
+	background-color: #829cbc;
+	cursor: ew-resize;
+}
+

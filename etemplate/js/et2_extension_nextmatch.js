@@ -137,8 +137,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 	 */
 	destroy: function() {
 		// Free the grid components
-		this.dataviewContainer.free();
-		this.dataProvider.free();
+		this.dataview.free();
+		this.rowProvider.free();
+		this.controller.free();
 		this.dynheight.free();
 
 		this._super.apply(this, arguments);
@@ -1130,7 +1131,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 
 	destroy: function() {
 		this.nextmatch = null;
-		this._super.apply(this.arguments);
+		this._super.apply(this, arguments);
 	},
 
 	transformAttributes: function(_attrs) {
