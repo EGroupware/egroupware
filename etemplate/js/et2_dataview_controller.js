@@ -205,6 +205,7 @@ var et2_dataview_controller = Class.extend({
 		// Queue fetching that data range
 		if (needsData !== false)
 		{
+			console.log("<--> Calling _queueFetch: ", needsData, _idxEnd - needsData + 1);
 			this._queueFetch(needsData, _idxEnd - needsData + 1, false);
 		}
 	},
@@ -313,7 +314,7 @@ var et2_dataview_controller = Class.extend({
 		var idx = _start;
 		for (var i = 0; i < _order.length; i++, idx++)
 		{
-			var current = this._getIndexEntry(mapIdx);
+			var current = _idxMap[mapIdx];
 
 			if (!current.row || !current.uid)
 			{
@@ -400,19 +401,22 @@ var et2_dataview_controller = Class.extend({
 			return;
 		}
 
+		// Make sure _response.order.length is not longer than the requested
+		// count
+		var order = _response.order.splice(0, this.count);
+
 		// Get the current index map for the updated region
 		var idxMap = this.self._getIndexMapping(this.start, this.count);
 
 		// Update the grid using the new order. The _updateOrder function does
 		// not update the internal mapping while inserting and deleting rows, as
 		// this would move us to another asymptotic runtime level.
-		var res = this.self._updateOrder(this.start, this.count, idxMap,
-				_response.order);
+		var res = this.self._updateOrder(this.start, this.count, idxMap, order);
 
 		// Merge the new indices, update all indices with rows that were not
 		// affected and invalidate all indices if there were changes
-		this.self._mergeResult(res, this.start + _response.order.length,
-				idxMap.length - _response.order.length);
+		this.self._mergeResult(res, this.start + order.length,
+				idxMap.length - order.length);
 
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
