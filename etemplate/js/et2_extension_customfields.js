@@ -304,6 +304,15 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		return true;
 	},
 
+	_setup_radio: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
+		field.type = 'radiogroup';
+		attrs.options = field.values;
+		return true;
+	},
+
 	_setup_checkbox: function(field_name, field, attrs) {
 	 	// Read-only checkbox is just text
 		if(attrs.readonly)
