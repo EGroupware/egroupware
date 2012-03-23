@@ -50,6 +50,23 @@ class ldapserverinfo
 	var $supportedOIDs = array();
 
 	/**
+	 * Name of host
+	 *
+	 * @var string
+	 */
+	var $host;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $host
+	 */
+	function __construct($host)
+	{
+		$this->host = $host;
+	}
+
+	/**
 	* gets the version
 	*
 	* @return integer the supported ldap version
