@@ -35,7 +35,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 * Internal implementation of the JSON request object.
 	 */
 	function json_request(_menuaction, _parameters, _callback, _context,
-		_sender, _async, _egw)
+		_async, _sender, _egw)
 	{
 		// Copy the parameters
 		this.url = _egw.ajaxUrl(_menuaction);
@@ -115,7 +115,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 							);
 
 						} catch(e) {
-							this.egw.debug('error', 'Exception "', e ,'" while handling JSON response type "', res.type, '", plugin', plugin, 'response', res);
+							var msg = e.message ? e.message : e + '';
+							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : ""
+							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response type "' + res.type + '", plugin', plugin, 'response', res, stack);
 						}
 					}
 				}

@@ -156,7 +156,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				function(result) {
 					parseServerResponse(result, _callback, _context);
 				},
-				this
+				this,
+				true
 			);
 			request.sendRequest();
 		}
@@ -299,7 +300,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * 	data.
 		 */
 		dataHasUID: function (_uid) {
-			return typeof this.localStorage[_uid] !== "undefined";
+			return typeof localStorage[_uid] !== "undefined";
 		},
 
 		/**
@@ -310,7 +311,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 
 			var result = [];
 
-			for (var key in this.localStorage)
+			for (var key in localStorage)
 			{
 				var parts = key.split("::");
 				if (parts[0] === _prefix)
