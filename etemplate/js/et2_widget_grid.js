@@ -26,6 +26,18 @@
  */ 
 var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
+	attributes: {
+		// Better to use CSS, no need to warn about it
+		"border": {
+			"ignore": true
+		},
+		"spacing": {
+			"ignore": true
+		},
+		"padding": {
+			"ignore": true
+		}
+	},
 	init: function() {
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));

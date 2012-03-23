@@ -35,10 +35,19 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			"type": "string",
 			"description": "Use an icon instead of label (when available)"
 		},
+		"ro_image": { 
+			"name": "Read-only Icon",
+			"type": "string",
+			"description": "Use this icon instead of hiding for read-only"
+		},
 		"onclick": {
 			"name": "onclick",
 			"type": "string",
 			"description": "JS code which gets executed when the button is clicked"
+		},
+		// No such thing as a required button
+		"needed": {
+			"ignore": true,
 		}
 	},
 
@@ -50,7 +59,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		this.btn = null;
 		this.image = null;
 
-		if (this.options.image)
+		if (this.options.image || this.options.ro_image)
 		{
 			this.image = jQuery(document.createElement("img"))
 				.addClass("et2_button et2_button_icon");
@@ -65,8 +74,22 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 	},
 
+	set_ro_image: function(_image) {
+		if(this.options.readonly)
+		{
+			this.set_image(_image);
+		}
+	},
+
 	set_image: function(_image) {
 		if(!this.isInTree() || this.image == null) return;
+
+		// Silently blank for percentages instead of warning about missing image - use a progress widget
+		if(_image.match(/[0-9]+\%/)) 
+		{
+			_image = "";
+			//this.egw().debug("warn", "Use a progress widget instead of percentage images", this);
+		}
 
 		this.options.image = _image;
 
@@ -160,7 +183,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("label", "value", "class", "image", "onclick" );
+		_attrs.push("label", "value", "class", "image", "ro_image","onclick" );
 	},
 
 	getDetachedNodes: function()
@@ -192,7 +215,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.set_image(_values["image"]);
 		}
-
+		if (typeof _values["ro_image"] != "undefined")
+		{
+			this.set_ro_image(_values["ro_image"]);
+		}
 		if (typeof _values["class"] != "undefined")
 		{
 			this.set_class(_values["class"]);

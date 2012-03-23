@@ -1076,6 +1076,11 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
 			"type": "string",
 			"description": "Caption for the nextmatch header",
 			"translate": true
+		},
+		"onchange": {
+			"name": "onchange",
+			"type": "string",
+			"description": "JS code which is executed when the value changes."
 		}
 	},
 
