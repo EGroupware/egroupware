@@ -315,10 +315,11 @@ etemplate2.prototype.getValues = function(_root)
 		
 		// check if id contains a hierachical name, eg. "button[save]"
 		var id = _widget.id;
-		var indexes = _widget.id.split('[',2); // Discards the others
+		var indexes = id.split('[');
 		if (indexes.length > 1)
 		{
-			indexes[1] = _widget.id.substring(indexes[0].length+1, _widget.id.length-1); // Add the rest back in, less the trailing ]
+			indexes = [indexes.shift(), indexes.join('[')];
+			indexes[1] = indexes[1].substring(0,indexes[1].length-1);
 			var children = indexes[1].split('][');
 			if(children.length)
 			{
@@ -349,6 +350,12 @@ etemplate2.prototype.getValues = function(_root)
 				egw.debug("error", "ID collision while writing at path " + 
 					"node '" + path[i] + "'");
 			}
+		}
+
+		// Handle arrays, eg radio[]
+		if(id === "")
+		{
+			id = typeof target == "undefined" ? 0 : _target.length;
 		}
 
 		// Check whether the entry is really undefined
