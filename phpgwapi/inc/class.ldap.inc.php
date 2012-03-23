@@ -28,7 +28,9 @@ class ldap
 	var $ds;
 
 	/**
-	* @var array $ldapServerInfo holds the detected information about the different ldap servers
+	* Holds the detected information about the connected ldap server
+	*
+	* @var ldapserverinfo
 	*/
 	var $ldapServerInfo;
 
@@ -41,21 +43,13 @@ class ldap
 	}
 
 	/**
-	 * escapes a string for use in searchfilters meant for ldap_search.
+	 * Returns information about connected ldap server
 	 *
-	 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
-	 * It's actually a PHP-Bug, that we have to escape space.
-	 * For all other Characters, refer to RFC2254.
-	 * @param $string either a string to be escaped, or an array of values to be escaped
-	 * @return ldapserverinfo|boolean
+	 * @return ldapserverinfo|null
 	 */
-	function getLDAPServerInfo($_host)
+	function getLDAPServerInfo()
 	{
-		if($this->ldapServerInfo[$_host] instanceof ldapserverinfo)
-		{
-			return $this->ldapServerInfo[$_host];
-		}
-		return false;
+		return $this->ldapServerInfo;
 	}
 
 	/**
@@ -130,8 +124,6 @@ class ldap
 			{
 				if ($h !== $host)
 				{
-					$this->ldapServerInfo[$host] =& $this->ldapServerInfo[$h];
-
 					if (isset($_SESSION))	// store working host as first choice in session
 					{
 						$_SESSION['ldapConnect'][$host] = implode(' ',array_unique(array_merge(array($h),$hosts)));
@@ -181,7 +173,9 @@ class ldap
 		}
 		if ($use_tls) ldap_start_tls($this->ds);
 
-		if(!isset($this->ldapServerInfo[$host]))
+		if (!isset($this->ldapServerInfo) ||
+			!is_a($this->ldapServerInfo,'ldapserverinfo') ||
+			$this->ldapServerInfo->host != $host)
 		{
 			//error_log("no ldap server info found");
 			$ldapbind = @ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
@@ -193,9 +187,9 @@ class ldap
 			{
 				if($info = ldap_get_entries($this->ds, $sr))
 				{
-					$ldapServerInfo = new ldapserverinfo();
+					$this->ldapServerInfo = new ldapserverinfo($host);
 
-					$ldapServerInfo->setVersion($supportedLDAPVersion);
+					$this->ldapServerInfo->setVersion($supportedLDAPVersion);
 
 					// check for naming contexts
 					if($info[0]['namingcontexts'])
@@ -204,7 +198,7 @@ class ldap
 						{
 							$namingcontexts[] = $info[0]['namingcontexts'][$i];
 						}
-						$ldapServerInfo->setNamingContexts($namingcontexts);
+						$this->ldapServerInfo->setNamingContexts($namingcontexts);
 					}
 
 					// check for ldap server type
@@ -219,14 +213,14 @@ class ldap
 								$ldapServerType = UNKNOWN_LDAPSERVER;
 								break;
 						}
-						$ldapServerInfo->setServerType($ldapServerType);
+						$this->ldapServerInfo->setServerType($ldapServerType);
 					}
 
 					// check for subschema entry dn
 					if($info[0]['subschemasubentry'])
 					{
 						$subschemasubentry = $info[0]['subschemasubentry'][0];
-						$ldapServerInfo->setSubSchemaEntry($subschemasubentry);
+						$this->ldapServerInfo->setSubSchemaEntry($subschemasubentry);
 					}
 
 					// create list of supported objetclasses
@@ -252,23 +246,18 @@ class ldap
 											}
 										}
 									}
-									$ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
+									$this->ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
 								}
 							}
 						}
 					}
-					$this->ldapServerInfo[$host] = $ldapServerInfo;
 				}
 			}
 			else
 			{
-				$this->ldapServerInfo[$host] = false;
+				unset($this->ldapServerInfo);
 			}
 			$this->saveSessionData();
-		}
-		else
-		{
-			$ldapServerInfo = $this->ldapServerInfo[$host];
 		}
 
 		if(!@ldap_bind($this->ds, $dn, $passwd))
@@ -293,6 +282,8 @@ class ldap
 		if(is_resource($this->ds))
 		{
 			ldap_unbind($this->ds);
+			unset($this->ds);
+			unset($this->ldapServerInfo);
 		}
 	}
 
