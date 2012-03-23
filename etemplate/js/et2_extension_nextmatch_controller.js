@@ -62,7 +62,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	setFilters: function (_filters) {
 		// Update the filters, reset the "lastModification"
 		this._filters = _filters;
-		this._lastModified = null;
+		this._lastModification = null;
 
 		// Trigger an update
 		this.update();

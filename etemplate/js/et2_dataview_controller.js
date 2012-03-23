@@ -49,7 +49,7 @@ var et2_dataview_controller = Class.extend({
 
 		// "lastModified" contains the last timestap which was returned from the
 		// server.
-		this._lastModified = null;
+		this._lastModification = null;
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
@@ -72,7 +72,7 @@ var et2_dataview_controller = Class.extend({
 
 		// Require that range from the server
 		this._queueFetch(range.top, range.bottom - range.top + 1,
-				this._lastModified !== null);
+				this._lastModification !== null);
 	},
 
 	/**
@@ -81,7 +81,7 @@ var et2_dataview_controller = Class.extend({
 	reset: function () {
 		// Throw away all internal mappings and reset the timestamp
 		this._indexMap = {};
-		this._lastModified = null;
+		this._lastModification = null;
 
 		// Clear the grid
 		this._grid.clear();
@@ -226,7 +226,7 @@ var et2_dataview_controller = Class.extend({
 		var query = { "start": _start, "num_rows": _numRows, "refresh": _refresh };
 
 		// Call the callback
-		this._dataProvider.dataFetch(query, this._lastModified,
+		this._dataProvider.dataFetch(query, this._lastModification,
 				this._fetchCallback, ctx);
 	},
 
@@ -400,6 +400,9 @@ var et2_dataview_controller = Class.extend({
 		{
 			return;
 		}
+
+		// Copy the last modification
+		this.self._lastModification = _response.lastModification;
 
 		// Make sure _response.order.length is not longer than the requested
 		// count
