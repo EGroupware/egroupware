@@ -48,6 +48,11 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 */
 		lang: function(_msg, _arg1)
 		{
+			if(typeof _msg !== "string")
+			{
+				egw().debug("warn", "Cannot translate an object", _msg);
+				return _msg;
+			}
 			var translation = _msg;
 			_msg = _msg.toLowerCase();
 			
