@@ -336,7 +336,7 @@ class ajaxfelamimail
 			if ($_autoSave)
 			{
 				$bocompose->sessionData['lastDrafted'] = array('uid'=>$messageUid,'folder'=>$folder);
-				$bocompose->sessionData['messageFolder'] = $messageFolder;
+				if ($this->bofelamimail->isTemplateFolder($messageFolder)) $bocompose->sessionData['messageFolder'] = $messageFolder;
 			}
 			else
 			{

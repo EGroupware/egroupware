@@ -564,7 +564,7 @@
 			$bodyParts = $bofelamimail->getMessageBody($_uid, ($this->preferencesArray['htmlOptions']?$this->preferencesArray['htmlOptions']:''), $_partID);
 			//_debug_array($bodyParts);
 
-			$fromAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL']));
+			$fromAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? str_replace(array('<','>'),array('[',']'),$headers['FROM'][0]['RFC822_EMAIL']) : $headers['FROM'][0]['EMAIL']));
 
 			$toAddressA = array();
 			$toAddress = '';
@@ -573,7 +573,7 @@
 			}
 			if (count($toAddressA)>0)
 			{
-				$toAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(implode(', ', $toAddressA)));
+				$toAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(implode(', ', str_replace(array('<','>'),array('[',']'),$toAddressA))));
 				$toAddress = @htmlspecialchars(lang("to")).": ".$toAddress.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");;
 			}
 			$ccAddressA = array();
@@ -583,7 +583,7 @@
 			}
 			if (count($ccAddressA)>0)
 			{
-				$ccAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(implode(', ', $ccAddressA)));
+				$ccAddress = felamimail_bo::htmlspecialchars($bofelamimail->decode_header(implode(', ', str_replace(array('<','>'),array('[',']'),$ccAddressA))));
 				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
 			}
 			if($bodyParts['0']['mimeType'] == 'text/html') {
@@ -1161,8 +1161,9 @@
 				$lastDrafted = $this->sessionData['lastDrafted'];
 				if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
 				if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
+				//error_log(__METHOD__.__LINE__.array2string($lastDrafted));
 			}
-			if ($lastDrafted && is_array($lastDrafted)) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			if ($lastDrafted && is_array($lastDrafted) && $bofelamimail->isDraftFolder($lastDrafted['folder'])) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
 			unset($this->sessionData['lastDrafted']);
 
 			//error_log("handling draft messages, flagging and such");
