@@ -36,6 +36,12 @@ var et2_textbox = et2_inputWidget.extend({
 			"default": et2_no_init,
 			"description": "Field width"
 		},
+		"maxLength": {
+			"name": "Maximum length",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Maximum number of characters allowed"
+		},
 		"blur": {
 			"name": "Placeholder",
 			"type": "string",
@@ -56,6 +62,8 @@ var et2_textbox = et2_inputWidget.extend({
 			"description": "Multiline field width - better to use CSS"
 		}
 	},
+
+	legacyOptions: ["size", "maxLength"],
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -112,6 +120,18 @@ var et2_textbox = et2_inputWidget.extend({
 		{
 			this.size = _size;
 			this.input.attr("size", this.size);
+		}
+	},
+
+	/**
+	 * Set maximum characters allowed
+	 * @param _size Max characters allowed
+	 */
+	set_maxLength: function(_size) {
+		if (typeof _size != 'undefined' && _size != this.input.attr("maxlength"))
+		{
+			this.maxLength = _size;
+			this.input.attr("maxLength", this.maxLength);
 		}
 	},
 
