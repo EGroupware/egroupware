@@ -1365,7 +1365,7 @@ if (isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[
 }
 // $GLOBALS[egw_info][flags][currentapp] and die  if it contains something nasty or unexpected
 if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
-	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_]+$/'))
+	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
 {
 	die('Invalid $GLOBALS[egw_info][flags][currentapp]!');
 }
