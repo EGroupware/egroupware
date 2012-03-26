@@ -1358,13 +1358,13 @@ foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n 
 //if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
 
 // check menuaction and die if it contains something nasty or unexpected
-if (isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
+if (isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_-]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
 {
 	die('Invalid menuaction!');
 }
 // $GLOBALS[egw_info][flags][currentapp] and die  if it contains something nasty or unexpected
 if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
-	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
+	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_-]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
 {
 	die('Invalid $GLOBALS[egw_info][flags][currentapp]!');
 }
