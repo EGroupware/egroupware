@@ -72,7 +72,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"parent": null
 		};
 
-		this._disabled = false;
+		this.disabled = false;
 		this._surroundingsMgr = null;
 	},
 
@@ -258,7 +258,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 	set_disabled: function(_value) {
 		var node = this.getDOMNode(this);
-		if (node)
+		if (node && this.disabled != _value)
 		{
 			this.disabled = _value;
 
