@@ -1316,14 +1316,14 @@ function _check_script_tag(&$var,$name='')
 			}
 			else
 			{
-				if (preg_match('/<\/?[^>]*(iframe|script\b|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+				if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 				{
 					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
 					// attempt to clean the thing
 					$var[$key] = $val = html::purify($val);
 					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
-					if (preg_match('/<\/?[^>]*(iframe|script\b|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+					if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 					{
 						error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
 						unset($var[$key]);
@@ -1357,6 +1357,18 @@ foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n 
 	}
 }
 //if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
+
+// check menuaction and die if it contains something nasty or unexpected
+if (isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
+{
+	die('Invalid menuaction!');
+}
+// $GLOBALS[egw_info][flags][currentapp] and die  if it contains something nasty or unexpected
+if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
+	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_]+$/'))
+{
+	die('Invalid $GLOBALS[egw_info][flags][currentapp]!');
+}
 
 // neutralises register_globals On, which is not used by eGW
 // some code from the hardend php project: http://www.hardened-php.net/articles/PHPUG-PHP-Sicherheit-Parametermanipulationen.pdf
@@ -1526,13 +1538,13 @@ function egw_exception_handler(Exception $e)
 	// regular GUI exception
 	if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
 	{
-		$message = '<h3>'.$headline."</h3>\n".
-			'<pre><b>'.$e->getMessage()."</b>\n\n";
+		$message = '<h3>'.html::htmlspecialchars($headline)."</h3>\n".
+			'<pre><b>'.html::htmlspecialchars($e->getMessage())."</b>\n\n";
 
 		// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 		{
-			$message .= $e->getTraceAsString();
+			$message .= html::htmlspecialchars($e->getTraceAsString());
 		}
 		$message .= "</pre>\n";
 		if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
@@ -1545,7 +1557,7 @@ function egw_exception_handler(Exception $e)
 		}
 		else
 		{
-			echo "<html>\n<head>\n<title>$headline</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
+			echo "<html>\n<head>\n<title>".html::htmlspecialchars($headline)."</title>\n</head>\n<body>\n$message\n</body>\n</html>\n";
 		}
 	}
 	// exception handler sending message back to the client as basic auth message
