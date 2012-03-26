@@ -26,7 +26,7 @@ var et2_vfs = et2_valueWidget.extend({
 	attributes: {
 		"value": {
 			"type": "any", // Object
-			"description": "Label of the button"
+			"description": "Array of (stat) information about the file"
 		}
 	},
 
@@ -53,7 +53,7 @@ var et2_vfs = et2_valueWidget.extend({
 		}
 		else if (typeof _value !== 'object')
 		{
-			this.egw().debug("warn", "%s only has path, needs full array", this.id);
+			this.egw().debug("warn", "%s only has path, needs full array", this.id, _value);
 			this.span.empty().text(_value);
 			return;
 		}
@@ -63,10 +63,6 @@ var et2_vfs = et2_valueWidget.extend({
 		//this._make_path(path_parts);
 		this._make_path([path_parts[path_parts.length-1]]);
 
-		// TODO: check perms
-		if(_value.mime && _value.mime == this.DIR_MIME_TYPE)
-		{
-		}
 		// Make it clickable
 		var data = {path: path, type: _value.mime}
 		jQuery("li",this.span).addClass("et2_clickable et2_link")
@@ -119,4 +115,190 @@ var et2_vfs = et2_valueWidget.extend({
 
 });
 
-et2_register_widget(et2_vfs, ["vfs", "vfs-name", "vfs-size", "vfs-mode","vfs-mime","vfs-uid","vfs-gid"]);
+et2_register_widget(et2_vfs, ["vfs", "vfs-mime"]);
+
+/**
+ * vfs-name
+ * filename automatically urlencoded on return (urldecoded on display to user)
+ */
+var et2_vfsName = et2_textbox.extend({
+	init: function() {
+                this._super.apply(this, arguments);
+		this.input.addClass("et2_vfs");
+	},
+	set_value: function(_value) {
+		if(_value.path)
+		{
+			_value = _value.path
+		}
+		this._super.apply(this,[_value]);
+	}
+});
+et2_register_widget(et2_vfsName, ["vfs-name"]);
+
+/**
+ * vfs-size
+ * Human readable file sizes
+ */
+var et2_vfsSize = et2_description.extend({
+	init: function() {
+                this._super.apply(this, arguments);
+		this.span.addClass("et2_vfs");
+	},
+	human_size: function(size) {
+		if(typeof size !== "number")
+		{
+			size = parseInt(size);
+		}
+		if(!size)
+		{
+			size = 0;
+		}
+		var units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		var i = 0;
+		while(size >= 1024)
+		{
+			size /= 1024;
+			++i;
+		}
+		return size.toFixed(i == 0 ? 0 : 1) + ' ' + units[i];
+	},
+	set_value: function(_value) {
+		if(_value.size)
+		{
+			_value = _value.size
+		}
+		jQuery(this.node).text(this.human_size(_value));
+	},
+	setDetachedAttributes: function(_nodes, _values)
+        {
+		if(typeof _values["value"] !== "undefined") {
+			this.node = _nodes[0];
+			this.set_value(_values["value"]);
+			delete _values["value"];
+		}
+		this._super.apply(this, arguments);
+	}
+});
+et2_register_widget(et2_vfsSize, ["vfs-size"]);
+
+
+/**
+ * vfs-mode
+ * Textual representation of permissions + extra bits
+ */
+var et2_vfsMode = et2_description.extend({
+	// Masks for file types
+	types: {
+		'p': 0x1000, // FIFO pipe
+		'c': 0x2000, // Character special
+		'd': 0x4000, // Directory
+		'b': 0x6000, // Block special
+		'-': 0x8000, // Regular
+		's': 0xC000 // Socket
+	},
+	// Sticky / UID / GID 
+	sticky: [
+		{ mask: 0x200, "char": "T", position: 9 }, // Sticky
+		{ mask: 0x400, "char": "S", position: 6 }, // sGID
+		{ mask: 0x800, "char": "S", position: 3 } // SUID
+	],
+	perms: {
+		'x': 0x1, // Execute
+		'w': 0x2, // Write
+		'r': 0x4  // Read
+	},
+	init: function() {
+                this._super.apply(this, arguments);
+		this.span.addClass("et2_vfs");
+	},
+
+	/**
+	 * Get text for file stuff
+	 * Result will be like -rwxr--r--.  First char is type, then read, write, execute (or other bits) for
+	 * user, group, world
+	 */
+	text_mode: function(_value) {
+		var text = [];
+		if(typeof _value != "number")
+		{
+			_value = parseInt(_value);
+		}
+		if(!_value) return "----------";
+
+		// Figure out type
+		var type = 'u'; // unknown
+		for(var flag in this.types)
+		{
+			if(_value & this.types[flag])
+			{
+				type = flag;
+				break;
+			}
+		}
+
+		// World, group, user - build string backwards
+		for(var i = 0; i < 3; i++)
+		{
+			for(var perm in this.perms)
+			{
+				if(_value & this.perms[perm])
+				{
+					text.unshift(perm);
+				}
+				else
+				{
+					text.unshift("-");
+				}
+			}
+			_value = _value >> 3;
+		}
+		// Sticky / UID / GID
+		for(var i = 0; i < this.sticky.length; i++)
+		{
+			if(this.sticky[i].mask & _value)
+			{
+				current = text[this.sticky[i].position];
+				text[this.sticky[i].position] = this.sticky[i]["char"] + (current == 'x' ? 0 : 32);
+			}
+		}
+		return type + text.join('');
+	},
+	set_value: function(_value) {
+		if(_value.size)
+		{
+			_value = _value.size
+		}
+		var text = this.text_mode(_value);
+		jQuery(this.node).text(text);
+	},
+
+	setDetachedAttributes: function(_nodes, _values)
+        {
+		if(typeof _values["value"] !== "undefined") {
+			this.node = _nodes[0];
+			this.set_value(_values["value"]);
+			delete _values["value"];
+		}
+		this._super.apply(this, arguments);
+	}
+});
+et2_register_widget(et2_vfsMode, ["vfs-mode"]);
+
+
+/**
+ * vfs-uid / vfs-gid
+ * Displays the name for an ID.
+ * Same as read-only selectAccount, except if there's no user it shows "root"
+ */
+var et2_vfsUid = et2_selectAccount_ro.extend({
+	set_title: function(_node, _value) {
+		if(_value == "")
+		{
+			arguments[1] = "root";
+		}
+		this._super.apply(this, arguments);
+	}
+});
+et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
+
