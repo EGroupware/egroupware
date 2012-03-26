@@ -486,6 +486,10 @@ var et2_widget = Class.extend({
 					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
 					{
 						attrValue = splitted[j];
+
+						// Blank = not set
+						if(attrValue == "") continue;
+
 						var attr = _proto.attributes[_proto.legacyOptions[j]];
 
 						// If the attribute is marked as boolean, parse the
