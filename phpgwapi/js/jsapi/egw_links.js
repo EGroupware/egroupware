@@ -87,7 +87,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 					id = id_data.id;
 				}
 			}
-			else
+			else if (app != 'file')
 			{
 				id_data = { 'id': id, 'app': app, 'extra': extra };
 			}
@@ -97,10 +97,13 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			if (app == 'file')
 			{
 				url = this.mime_open(id_data);
-				if (typeof url == 'object' && typeof url.mime_popup != 'undefined')
+				if (typeof url == 'object')
 				{
-					popup = url.mime_popup;
-					delete url.mime_popup;
+			 		if(typeof url.mime_popup != 'undefined')
+					{
+						popup = url.mime_popup;
+						delete url.mime_popup;
+					}
 					params = url;
 					url = '/index.php';
 				}
