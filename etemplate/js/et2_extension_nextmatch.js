@@ -861,16 +861,17 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			.addClass("header_count ui-corner-all");
 
 		// Need to figure out how to update this as grid scrolls
-		//this.count.append("? - ? ").append(egw.lang("of")).append(" ");
+		// this.count.append("? - ? ").append(egw.lang("of")).append(" ");
 		this.count_total = jQuery(document.createElement("span"))
 			.appendTo(this.count)
 			.text(settings.total + "");
 		this.count.prependTo(this.div);
 
 		// Set up so if row count changes, display is updated
-		nm_div.bind('nm_data', function(e) { // Have to bind to DOM node, not et2 widget
-			self.count_total.text(e.nm_data.total);
-		});
+		// Register the handler which will update the "totalCount" display
+		/*this.dataview.grid.setInvalidateCallback(function () {
+			this.count_total.text(this.dataview.grid.getTotalCount() + "");
+		}, this);*/
 
 		// Left & Right headers
 		this.headers = [];

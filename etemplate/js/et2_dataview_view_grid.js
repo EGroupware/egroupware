@@ -136,6 +136,22 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	},
 
 	/**
+	 * Throws all elements away which are outside the current view range
+	 */
+	cleanup: function () {
+		// Update the pixel positions
+		this._recalculateElementPosition();
+
+		// Get the visible mapping indices and recalculate index and pixel
+		// position of the containers.
+		var mapVis = this._calculateVisibleMappingIndices();
+
+		// Delete all invisible elements -- if anything changed, we have to
+		// recalculate the pixel positions again
+		this._cleanupOutOfRangeElements(mapVis, 0);
+	},
+
+	/**
 	 * The insertRow function can be called to insert the given container(s) at
 	 * the given row index. If there currently is another container at that
 	 * given position, the new container(s) will be inserted above the old
@@ -560,22 +576,24 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	/**
 	 * Deletes all elements which are "out of the view range". This function is
 	 * internally used by "_doInvalidate". How many elements that are out of the
-	 * view range get preserved fully depends on the ET2_GRID_HOLD_COUNT
+	 * view range get preserved fully depends on the _holdCount parameter
 	 * variable.
 	 *
 	 * @param _mapVis contains the _map indices of the just visible containers.
+	 * @param _holdCount contains the number of elements that should be kept,
+	 * if not given, this parameter defaults to ET2_GRID_HOLD_COUNT
 	 */
-	_cleanupOutOfRangeElements: function(_mapVis) {
+	_cleanupOutOfRangeElements: function(_mapVis, _holdCount) {
 
 		// Iterates over the map from and to the given indices and pushes all
-		// elements onto the given array, which are more than ET2_GRID_HOLD_COUNT
+		// elements onto the given array, which are more than _holdCount
 		// elements remote from the start.
 		function searchElements(_arr, _start, _stop, _dir)
 		{
 			var dist = 0;
 			for (var i = _start; _dir > 0 ? i <= _stop : i >= _stop; i += _dir)
 			{
-				if (dist > ET2_GRID_HOLD_COUNT)
+				if (dist > _holdCount)
 				{
 					_arr.push(i);
 				}
@@ -585,6 +603,10 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 				}
 			}
 		}
+
+		// Set _holdCount to ET2_GRID_HOLD_COUNT if the parameters is not given
+		_holdCount = typeof _holdCount === "undefined" ? ET2_GRID_HOLD_COUNT :
+				_holdCount;
 
 		// Collect all elements that will be deleted at the top and at the
 		// bottom of the grid

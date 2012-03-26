@@ -108,8 +108,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	/** -- Implementation of et2_IDataProvider -- **/
 
 
-	dataFetch: function (_queriedRange, _lastModification, _callback,
-			_context) {
+	dataFetch: function (_queriedRange, _callback, _context) {
 		// Pass the fetch call to the API, multiplex the data about the
 		// nextmatch instance into the call.
 		this.egw.dataFetch(
@@ -117,7 +116,6 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 				_queriedRange,
 				this._filters,
 				this._widgetId,
-				_lastModification,
 				_callback,
 				_context);
 	},

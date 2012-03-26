@@ -24,6 +24,8 @@
  */
 var ET2_DATAVIEW_FETCH_TIMEOUT = 50;
 
+var ET2_DATAVIEW_STEPSIZE = 50;
+
 /**
  * The et2_dataview_controller class is the intermediate layer between a grid
  * instance and the corresponding data source. It manages updating the grid,
@@ -47,15 +49,12 @@ var et2_dataview_controller = Class.extend({
 		// containers hashed by the "index"
 		this._indexMap = {};
 
-		// "lastModified" contains the last timestap which was returned from the
-		// server.
-		this._lastModification = null;
-
 		// Timer used for queing fetch requests
 		this._queueTimer = null;
 
-		// Array used for queing the requests
-		this._queue = [];
+		// Array which contains all currently queued indices in the form of
+		// an associative array
+		this._queue = {};
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
@@ -75,8 +74,27 @@ var et2_dataview_controller = Class.extend({
 	 */
 	update: function () {
 		// Clear the fetch queue
-		this._queue = [];
+		this._queue = {};
 		this._clearTimer();
+
+		// ---------
+
+		// TODO: Actually stuff here should be done if the server responds that
+		// there at all were some changes (needs implementation of "refresh")
+
+		// Remove all rows which are outside the view range
+		this._grid.cleanup();
+
+		// Remove all index entries which are currently not displayed
+		for (var key in this._indexMap)
+		{
+			if (!this._indexMap[key].row)
+			{
+				delete this._indexMap[key];
+			}
+		}
+
+		// ---------
 
 		// Get the currently visible range from the grid
 		var range = this._grid.getIndexRange();
@@ -88,8 +106,7 @@ var et2_dataview_controller = Class.extend({
 		}
 
 		// Require that range from the server
-		this._queueFetch(range.top, range.bottom - range.top + 1,
-				this._lastModification !== null, true);
+		this._queueFetch(et2_bounds(range.top, range.bottom + 1), true);
 	},
 
 	/**
@@ -98,7 +115,6 @@ var et2_dataview_controller = Class.extend({
 	reset: function () {
 		// Throw away all internal mappings and reset the timestamp
 		this._indexMap = {};
-		this._lastModification = null;
 
 		// Clear the grid
 		this._grid.clear();
@@ -222,135 +238,144 @@ var et2_dataview_controller = Class.extend({
 		// Queue fetching that data range
 		if (needsData !== false)
 		{
-			this._queueFetch(needsData, _idxEnd - needsData + 1, false);
+			this._queueFetch(et2_bounds(needsData, _idxEnd + 1), false);
 		}
 	},
 
 	/**
-	 * 
+	 * The _queueFetch function is used to queue a fetch request.
+	 * TODO: Refresh is currently not used
 	 */
-	_queueFetch: function (_start, _numRows, _refresh, _immediate) {
+	_queueFetch: function (_range, _isUpdate) {
 
 		// Force immediate to be false
-//		_immediate = _immediate ? _immediate : false;
-		_immediate = true;
+		_isUpdate = _isUpdate ? _isUpdate : false;
 
-		// Push the request onto the request queue
-		this._queue.push({
-				"start": _start,
-				"num_rows": _numRows,
-				"refresh": _refresh
-		});
+		// Push the requests onto the request queue
+		var start = Math.max(0, _range.top);
+		var end = Math.min(this._grid.getTotalCount(), _range.bottom);
+		for (var i = start; i < end; i++)
+		{
+			if (typeof this._queue[i] === "undefined")
+			{
+				this._queue[i] = 1; // Stage 1 -- queued
+			}
+		}
 
 		// Start the queue timer, if this has not already been done
-		if (this._queueTimer === null && !_immediate)
+		if (this._queueTimer === null && !_isUpdate)
 		{
 			var self = this;
 			this._queueTimer = window.setTimeout(function () {
-				self._flushQueue();
+				self._flushQueue(false);
 			}, ET2_DATAVIEW_FETCH_TIMEOUT);
 		}
 
-		if (_immediate)
+		if (_isUpdate)
 		{
-			this._flushQueue();
+			this._flushQueue(true);
 		}
 	},
 
-	_flushQueue: function () {
-
-		function consolidateQueries(_q) {
-			var didConsolidation = false;
-
-			var _new = [];
-			var skip = {};
-
-			for (var i = 0; i < _q.length; i++)
-			{
-				var r1 = et2_range(_q[i].start, _q[i].num_rows);
-
-				var intersected = false;
-
-				for (var j = i + 1; j < _q.length; j++)
-				{
-					if (skip[j])
-					{
-						continue;
-					}
-
-					var r2 = et2_range(_q[j].start, _q[j].num_rows);
-
-					if (et2_rangeIntersect(r1, r2))
-					{
-						var n = et2_bounds(Math.min(r1.top, r2.top),
-								Math.max(r1.botom, r2.bottom));
-						_new.push({
-							"start": n.top,
-							"num_rows": n.bottom - n.top + 1,
-							"refresh": _q[i].refresh
-						});
-						skip[i] = true;
-						skip[j] = true;
-						intersected = true;
-					}
-				}
-
-				if (!intersected)
-				{
-					_new.push(_q[i]);
-					skip[i] = true;
-				}
-			}
-
-			if (didConsolidation) {
-				return consolidateQueries(_new);
-			}
-
-			return _new;
-		}
+	/**
+	 * Flushes the queue.
+	 */
+	_flushQueue: function (_isUpdate) {
 
 		// Clear any still existing timer
 		this._clearTimer();
 
-		// Calculate the refresh flag (refresh = false is stronger)
-		var refresh = true;
-		for (var i = 0; i < this._queue.length; i++)
+		// Mark all elements in a radius of ET2_DATAVIEW_STEPSIZE
+		var marked = {};
+		var r = _isUpdate ? 0 : Math.floor(ET2_DATAVIEW_STEPSIZE / 2);
+		var total = this._grid.getTotalCount();
+		for (var key in this._queue)
 		{
-			refresh = refresh && this._queue[i].refresh;
+			if (this._queue[key] > 1)
+				continue;
+
+			key = parseInt(key);
+
+			var b = Math.max(0, key - r);
+			var t = Math.min(key + r, total - 1);
+			var c = 0;
+			for (var i = b; i <= t && c < ET2_DATAVIEW_STEPSIZE; i ++)
+			{
+				if (typeof this._queue[i] == "undefined"
+						|| this._queue[i] === 1)
+				{
+					this._queue[i] = 2; // Stage 2 -- pending or available
+					marked[i] = true;
+					c++;
+				}
+			}
 		}
 
-		// Extend all ranges into bottom direction, initialize the queries array
-		for (var i = 0; i < this._queue.length; i++)
+		// Create a list with start indices and counts
+		var fetchList = [];
+		var entry = null;
+		var last = 0;
+
+		// Get the int keys and sort the array numeric
+		var arr = et2_arrayIntKeys(marked).sort(
+				function(a,b){return a > b ? 1 : (a == b ? 0 : -1)});
+
+		for (var i = 0; i < arr.length; i++)
 		{
-			this._queue[i].num_rows += 10;
-			this._queue[i].refresh = refresh;
+			if (i == 0 || arr[i] - last > 1)
+			{
+				if (entry)
+				{
+					fetchList.push(entry);
+				}
+				entry = {
+					"start": arr[i],
+					"count": 1
+				};
+			}
+			else
+			{
+				entry.count++;
+			}
+
+			last = arr[i];
 		}
 
-		// Consolidate all queries
-		var queries = consolidateQueries(this._queue);
+		if (entry)
+		{
+			fetchList.push(entry);
+		}
+
+		// Special case: If there are no entries in the fetch list and this is
+		// an update, create an dummy entry, so that we'll get the current count
+		if (fetchList.length === 0 && _isUpdate)
+		{
+			fetchList.push({
+				"start": 0, "count": 0
+			});
+		}
 
 		// Execute all queries
-		for (var i = 0; i < queries.length; i++)
+		for (var i = 0; i < fetchList.length; i++)
 		{
-			// Sanitize the requests
-			queries[i].start = Math.max(0, queries[i].start);
-			queries[i].num_rows = Math.min(this._grid.getTotalCount(),
-					queries[i].start + queries[i].num_rows) - queries[i].start;
+			// Build the query
+			var query = {
+					"start": fetchList[i].start,
+					"num_rows": fetchList[i].count,
+					"refresh": false
+			};
 
 			// Context used in the callback function
 			var ctx = {
 					"self": this,
-					"start": queries[i].start,
-					"count": queries[i].num_rows
+					"start": query.start,
+					"count": query.num_rows,
 			};
 
 			// Call the callback
-			this._dataProvider.dataFetch(queries[i], this._lastModification,
-					this._fetchCallback, ctx);
+			this._dataProvider.dataFetch(query, this._fetchCallback, ctx);
 		}
 
-		// Flush the queue
-		this._queue = [];
 	},
 
 	_clearTimer: function () {
@@ -474,6 +499,7 @@ var et2_dataview_controller = Class.extend({
 					"uid": _order[i],
 					"row": null
 				};
+
 				this._insertDataRow(entry, true);
 
 				// Remember the new entry
@@ -488,16 +514,18 @@ var et2_dataview_controller = Class.extend({
 			}
 		}
 
-		// Delete as many rows as we have left
+		// Delete as many rows as we have left, invalidate the corresponding
+		// index entry
 		for (var i = mapIdx; i < _idxMap.length; i++)
 		{
 			this._grid.deleteRow(idx);
+			_idxMap[i].uid = null;
 		}
 
 		return result;
 	},
 
-	_mergeResult: function (_newEntries, _invalidStartIdx, _diff) {
+	_mergeResult: function (_newEntries, _invalidStartIdx, _diff, _total) {
 
 		if (_newEntries.length > 0 || _diff > 0)
 		{
@@ -510,21 +538,20 @@ var et2_dataview_controller = Class.extend({
 				newMap[_newEntries[i].idx] = _newEntries[i];
 			}
 
-			// Insert all old entries that have a row into the new index map
-			// while adjusting their indices
+			// Merge the old map with all old entries
 			for (var key in this._indexMap)
 			{
 				// Get the corresponding index entry
 				var entry = this._indexMap[key];
 
-				// Only keep index entries which are currently displayed
-				if (entry.row)
+				// Calculate the new index -- if rows were deleted, we'll
+				// have to adjust the index
+				var newIdx = entry.idx >= _invalidStartIdx
+						? entry.idx - _diff : entry.idx;
+				if (newIdx >= 0 && newIdx < _total
+				    && typeof newMap[newIdx] === "undefined")
 				{
-					// Calculate the new index -- if rows were deleted, we'll
-					// have to adjust the index
-					var newIdx = entry.idx >= _invalidStartIdx
-							? entry.idx - _diff : entry.idx;
-					entry.idx = key;
+					entry.idx = newIdx;
 					newMap[newIdx] = entry;
 				}
 			}
@@ -542,9 +569,6 @@ var et2_dataview_controller = Class.extend({
 			return;
 		}
 
-		// Copy the last modification
-		this.self._lastModification = _response.lastModification;
-
 		// Make sure _response.order.length is not longer than the requested
 		// count
 		var order = _response.order.splice(0, this.count);
@@ -560,7 +584,7 @@ var et2_dataview_controller = Class.extend({
 		// Merge the new indices, update all indices with rows that were not
 		// affected and invalidate all indices if there were changes
 		this.self._mergeResult(res, this.start + order.length,
-				idxMap.length - order.length);
+				idxMap.length - order.length, _response.total);
 
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);

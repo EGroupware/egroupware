@@ -83,7 +83,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 		if(this.options.href)
 		{
 			this.egw().call_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
-		}		
+		}
 	},
 
 	transformAttributes: function(_attrs) {
@@ -124,7 +124,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 		this.options.src = _value;
 
 		var src = this.egw().image(_value);
-		if(src)
+		if (src)
 		{
 			this.image.attr("src", src).show();
 			return true;

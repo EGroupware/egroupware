@@ -659,3 +659,30 @@ function et2_rangeEqual(_ar1, _ar2)
 	return _ar1.top === _ar2.top && _ar1.bottom === _ar2.bottom;
 }
 
+/**
+ * Substracts _ar2 from _ar1, returns an array of new ranges.
+ */
+function et2_rangeSubstract(_ar1, _ar2)
+{
+	// Per default return the complete _ar1 range
+	var res = [_ar1];
+
+	// Check whether there is an intersection between the given ranges
+	if (et2_rangeIntersect(_ar1, _ar2))
+	{
+		res = [et2_bounds(_ar1.top, _ar2.top),
+			   et2_bounds(_ar2.bottom, _ar1.bottom)];
+	}
+
+	// Remove all zero-length ranges from the result
+	for (var i = res.length - 1; i >= 0; i--)
+	{
+		if (res[i].bottom - res[i].top <= 0)
+		{
+			res.splice(i, 1);
+		}
+	}
+
+	return res;
+}
+

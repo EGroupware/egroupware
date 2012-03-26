@@ -95,11 +95,10 @@
 
 			var dataprovider = Class.extend(et2_IDataProvider, {
 
-				dataFetch: function (_queriedRange, _lastModification, _callback, _context) {
+				dataFetch: function (_queriedRange, _callback, _context) {
 					var response = {
 						"order": data.slice(_queriedRange.start, _queriedRange.start + _queriedRange.num_rows),
-						"total": data.length,
-						"lastModification": 0
+						"total": data.length
 					};
 
 					window.setTimeout(function () {

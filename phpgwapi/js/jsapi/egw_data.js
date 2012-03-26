@@ -76,7 +76,6 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			{
 				_callback.call(_context, {
 					"order": _result.order,
-					"lastModification": _result.lastModification,
 					"total": parseInt(_result.total),
 					"readonlys": _result.readonlys,
 					"rows": _result.rows
@@ -126,10 +125,6 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * @param knownUids is an array of uids already known to the client. 
 		 *  This parameter may be null in order to indicate that the client 
 		 *  currently has no data for the given filter settings.
-		 * @param lastModification is the last timestamp that was returned from
-		 * 	the server and for which the client has data. It may be null in
-		 * 	order to indicate, that the client currently has no data or needs a
-		 * 	complete refresh.
 		 * @param callback is the function that should get called, once the data
 		 * 	is available. The data passed to the callback function has the
 		 * 	following form:
@@ -148,7 +143,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 	called.
 		 */
 		dataFetch: function (_execId, _queriedRange, _filters, _widgetId,
-				_lastModification, _callback, _context)
+				_callback, _context)
 		{
 			var request = egw.json(
 				"etemplate_widget_nextmatch::ajax_get_rows::etemplate",
