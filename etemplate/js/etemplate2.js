@@ -37,6 +37,7 @@
 	et2_widget_progress;
 	et2_widget_selectAccount;
 	et2_widget_ajaxSelect;
+	et2_widget_vfs;
 
 	et2_extension_nextmatch;
 	et2_extension_customfields;

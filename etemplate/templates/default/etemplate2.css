@@ -448,6 +448,17 @@ ul.et2_link_string {
 	background-repeat: repeat-x;
 }
 
+/**
+ * VFS widget(s)
+ */
+.et2_vfs li.vfsFilename {
+	display: inline;
+	margin-left: -30px;
+}
+.et2_vfs li.vfsFilename:not(:last-child):after {
+	content:           '/';
+	padding: 0.25ex;
+}
 
 /**
 * Validation
