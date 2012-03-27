@@ -21,7 +21,7 @@
 /**
  * Class which implements the "vfs" XET-Tag
  */
-var et2_vfs = et2_valueWidget.extend({
+var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	attributes: {
 		"value": {
@@ -59,15 +59,13 @@ var et2_vfs = et2_valueWidget.extend({
 		}
 		var path_parts = path ? path.split('/') : [];
 
-		// TODO: This is apparently not used in old etemplate
-		//this._make_path(path_parts);
-		this._make_path([path_parts[path_parts.length-1]]);
+		this._make_path(path_parts);
 
 		// Make it clickable
-		var data = {path: path, type: _value.mime}
+		var data = {path: path, type: this.egw().get_mime_info(_value.mime) ? _value.mime : this.DIR_MIME_TYPE }
 		jQuery("li",this.span).addClass("et2_clickable et2_link")
 			.click({data:data, egw: this.egw()}, function(e) {
-			e.data.egw.open(e.data.data, "file");
+				e.data.egw.open(e.data.data, "file");
 		});
 	},
 
@@ -75,9 +73,11 @@ var et2_vfs = et2_valueWidget.extend({
 	 * Create a list of clickable path components
 	 */
 	_make_path: function(path_parts) {
+		// TODO: This is apparently not used in old etemplate
+		var text;
 		for(var i = 0; i < path_parts.length; i++)
 		{
-			var text = path_parts[i];
+			text = path_parts[i];
 
 			// Nice human-readable stuff for apps
 			if(path_parts[1] == 'apps')
@@ -106,16 +106,45 @@ var et2_vfs = et2_valueWidget.extend({
 			}
 			path_parts[i] = text;
 
+		// TODO: This is apparently not used in old etemplate
+		/*
 			var part = $j(document.createElement("li"))
 				.addClass("vfsFilename")
 				.text(text)
 				.appendTo(this.span);
+		*/
 		}
-	}
+		var part = $j(document.createElement("li"))
+			.addClass("vfsFilename")
+			.text(text)
+			.appendTo(this.span);
+	},
+
+	/**
+         * Code for implementing et2_IDetachedDOM (data grid)
+         */
+        getDetachedAttributes: function(_attrs)
+        {
+                _attrs.push("value");
+        },
+
+        getDetachedNodes: function()
+        {
+                return [this.span[0]];
+        },
+
+        setDetachedAttributes: function(_nodes, _values)
+        {
+                this.span = jQuery(_nodes[0]);
+                if(typeof _values["value"] != 'undefined')
+                {
+                        this.set_value(_values["value"]);
+                }
+        }
+
 
 });
-
-et2_register_widget(et2_vfs, ["vfs", "vfs-mime"]);
+et2_register_widget(et2_vfs, ["vfs"]);
 
 /**
  * vfs-name
@@ -135,6 +164,68 @@ var et2_vfsName = et2_textbox.extend({
 	}
 });
 et2_register_widget(et2_vfsName, ["vfs-name"]);
+
+/**
+ * vfs-mime
+ * Icon for mimetype of file, or thumbnail
+ */
+var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
+	attributes: {
+		"value": {
+			"type": "any", // Object
+			"description": "Array of (stat) information about the file"
+		},
+		"size": {
+			"type": "integer",
+			"description": "Size of icon / thumbnail, in pixels",
+			"default": et2_no_init
+		}
+	},
+
+	init: function() {
+                this._super.apply(this, arguments);
+		this.image = jQuery(document.createElement("img"));
+		this.image.addClass("et2_vfs vfsMimeIcon");
+		this.setDOMNode(this.image[0]);
+	},
+	set_value: function(_value) {
+		var src = this.egw().mime_icon(_value['mime'], _value['path']);
+		if(src)
+		{
+			// Set size of thumbnail
+			if(src.indexOf("thumbnail.php") > -1)
+			{
+				if(this.options.size)
+				{
+					src += "&thsize="+this.options.size;
+				}
+				this.image.css("width", "100%");
+			}
+			this.image.attr("src", src);
+		}
+	},
+	/**
+	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
+	 * Override to add needed attributes
+	 */
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("value", "class");
+	},
+	getDetachedNodes: function() {
+		return [this.image[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values) {
+		this.image = jQuery(_nodes[0]);
+		if(typeof _values['class'] != "undefined") {
+			this.image.addClass(_values['class']);
+		}
+		if(typeof _values['value'] != "undefined") {
+			this.set_value(_values['value']);
+		}
+	}
+});
+et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 
 /**
  * vfs-size
@@ -190,12 +281,13 @@ et2_register_widget(et2_vfsSize, ["vfs-size"]);
 var et2_vfsMode = et2_description.extend({
 	// Masks for file types
 	types: {
+		'l': 0xA000, // link
+		's': 0xC000,  // Socket
 		'p': 0x1000, // FIFO pipe
 		'c': 0x2000, // Character special
 		'd': 0x4000, // Directory
 		'b': 0x6000, // Block special
-		'-': 0x8000, // Regular
-		's': 0xC000 // Socket
+		'-': 0x8000 // Regular
 	},
 	// Sticky / UID / GID 
 	sticky: [
@@ -259,7 +351,8 @@ var et2_vfsMode = et2_description.extend({
 			if(this.sticky[i].mask & _value)
 			{
 				current = text[this.sticky[i].position];
-				text[this.sticky[i].position] = this.sticky[i]["char"] + (current == 'x' ? 0 : 32);
+				text[this.sticky[i].position] = this.sticky[i]["char"];
+				if(current == 'x') text[this.sticky[i].position].toLowerCase();
 			}
 		}
 		return type + text.join('');
