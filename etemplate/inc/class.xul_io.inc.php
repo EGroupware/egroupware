@@ -205,7 +205,7 @@ class xul_io
 		{
 		case 'nextmatch':
 			list($tpl) = explode(',',$cell['size']);
-			$embeded = new etemplate($tpl,$this->load_via);
+			$embeded = new boetemplate($tpl,$this->load_via);
 			if ($embeded_too)
 			{
 				$this->add_etempl($embeded,$embeded_too);
@@ -229,7 +229,7 @@ class xul_io
 				if ($helps[$n]) $tab->set_attribute('statustext',$helps[$n]);
 				$child->add_node($tab);
 
-				$embeded = new etemplate($names[$n],$this->load_via);
+				$embeded = new boetemplate($names[$n],$this->load_via);
 				if ($embeded_too)
 				{
 					$this->add_etempl($embeded,$embeded_too);
@@ -282,7 +282,7 @@ class xul_io
 		case 'template':
 			if ($cell['name'][0] != '@' && $embeded_too)
 			{
-				$templ = new etemplate();
+				$templ = new boetemplate();
 				if ($templ->read(boetemplate::expand_name($cell['name'],0,0),'default','default',0,'',$this->load_via))
 				{
 					$this->add_etempl($templ,$embeded_too);
@@ -374,10 +374,10 @@ class xul_io
 	/**
 	 * add / embed an eTemplate into the global $xul_overlay object (used by export)
 	 *
-	 * @param etemplate &$etempl eTemplate to embed
+	 * @param boetemplate &$etempl eTemplate to embed
 	 * @param array &embeded_too array with already embeded templates
 	 */
-	function add_etempl(etemplate $etempl,&$embeded_too)
+	function add_etempl(boetemplate $etempl,&$embeded_too)
 	{
 		if (is_array($embeded_too))
 		{

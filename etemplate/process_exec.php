@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
- * @copyright (c) 2002-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2002-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -21,4 +21,4 @@ $GLOBALS['egw_info'] = array(
 );
 include('../header.inc.php');
 
-ExecMethod('etemplate.etemplate.process_exec');
+ExecMethod('etemplate.etemplate_old.process_exec');

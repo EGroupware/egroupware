@@ -279,8 +279,8 @@ class select_widget
 					}
 					$cell['type'] = 'html';
 					$cell['size'] = '';	// is interpreted as link otherwise
-					etemplate::$request->set_to_process($name,'select');
-					if ($cell['needed']) etemplate::$request->set_to_process_attribute($name,'needed',$cell['needed']);
+					etemplate_old::$request->set_to_process($name,'select');
+					if ($cell['needed']) etemplate_old::$request->set_to_process_attribute($name,'needed',$cell['needed']);
 					break;
 				}
 				$cell['no_lang'] = True;
@@ -384,7 +384,7 @@ class select_widget
 				}
 				if (!$readonly)
 				{
-					etemplate::$request->set_to_process($name,'ext-select-dow');
+					etemplate_old::$request->set_to_process($name,'ext-select-dow');
 				}
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				break;

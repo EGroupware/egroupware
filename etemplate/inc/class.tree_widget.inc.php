@@ -157,7 +157,7 @@ class tree_widget
 		list(,$class) = explode(',',$cell['span']);
 		$value = $script.html::tree($tmpl->_sel_options($cell,$name),$value,false,$onNodeSelect,$tree_id,$class,'',$onCheck);
 
-		$cell = etemplate::empty_cell('html',$cell['name']);
+		$cell = boetemplate::empty_cell('html',$cell['name']);
 
 		return True;	// extra Label Ok
 	}

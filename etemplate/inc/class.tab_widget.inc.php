@@ -85,7 +85,7 @@
 					$labels = array_values($labels);
 				}
 			}
-			$tab_widget = new etemplate('etemplate.tab_widget');
+			$tab_widget = new etemplate_old('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 
 			if ($value && strpos($value,'.') === false)
@@ -117,7 +117,7 @@
 				{
 					$name = $names[$k] = $tmpl->name . '.' . $name;
 				}
-				$tcell =& $tab_widget->empty_cell();
+				$tcell = boetemplate::empty_cell();
 				if ($value == $name)
 				{
 					$tcell['span'] = ',etemplate_tab_active';
@@ -150,8 +150,8 @@
 			{
 				foreach($names as $n => $name)
 				{
-					$bcell = $tab_widget->empty_cell('template',$name);
-					$bcell['obj'] = new etemplate($name,$tmpl->as_array());
+					$bcell = boetemplate::empty_cell('template',$name);
+					$bcell['obj'] = new etemplate_old($name,$tmpl->as_array());
 					$tab_widget->set_cell_attribute('body',$n+1,$bcell);
 				}
 				$tab_widget->set_cell_attribute('body','type','deck');
@@ -161,7 +161,7 @@
 			}
 			else
 			{
-				$stab = new etemplate($selected_tab,$tmpl->as_array());
+				$stab = new etemplate_old($selected_tab,$tmpl->as_array());
 				$tab_widget->set_cell_attribute('body','type','template');
 				$tab_widget->set_cell_attribute('body','size','');	// the deck has a '1' there
 				$tab_widget->set_cell_attribute('body','obj',$stab);

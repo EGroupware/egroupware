@@ -27,9 +27,9 @@ class ajax_captcha_widget
 
 	private $debug = false;
 
-	function ajax_captcha_widget($ui='')
+	function __construct($ui='')
 	{
-		
+
 		$this->img = new securimage();
 		switch($ui)
 		{
@@ -62,25 +62,25 @@ class ajax_captcha_widget
 		//sets main etemplate cell with data created in etemplate.captcha_widget
 		$cell['type'] = 'template';
 		$cell['size'] = $cell['name'];
-		$widget = new etemplate('etemplate.captcha_widget');
+		$widget = new etemplate_old('etemplate.captcha_widget');
 		$widget->no_onclick = True;
 		$cell['obj'] = &$widget;
-		
+
 		$refresh_image_wig =& $widget->get_widget_by_name('etemplate/refresh.gif');
 		$refresh_image_wig['size'] = 'etemplate.captcha_widget.show_image';
 		$refresh_image_wig['onclick']='
 		document.getElementById(\'show_image\').src = \''.$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=etemplate.ajax_captcha_widget.show_image&sid=\' + Math.random(); return false;';
-		
+
 		$value = array('captcha'=>'','captcha_code'=>'');
-		
+
 		//set needed onload for refresh JS
 		egw_framework::set_onload('document.getElementById(\'show_image\').src = \''.$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=etemplate.ajax_captcha_widget.show_image&sid=\' + Math.random(); return false'
 		);
-		
+
 		// sets audio icon link properties
 		$audio_image_wig =& $widget->get_widget_by_name('etemplate/audio_icon.gif');
 		$audio_image_wig['size'] = 'etemplate.ajax_captcha_widget.play_sound';
-		
+
 		// sects code text field to be needed
 		$code_text_wig =& $widget->get_widget_by_name('captcha_code');
 		//$code_text_wig['name']=$name;
@@ -112,7 +112,7 @@ class ajax_captcha_widget
 			if ($value_in[captcha_code]=='' || !isset($value_in[captcha_code]))
 			{
 				$loop=TRUE;
-				return false; 
+				return false;
 			}
 			// sends uder back to form with err msg if wrong code
 			if ($this->img->getCode() != $value_in[captcha_code])
@@ -120,12 +120,12 @@ class ajax_captcha_widget
 
 				$tmpl->set_validation_error('captcha',lang(" Your code is incorrect !!!"));
                 $loop=TRUE;
-				return false; 
+				return false;
 			}
-			
+
 	}//post process
 
-	
+
 		/**
 	 * Public function to return a new image and set the code in the sessions var from within the class
 	 *
@@ -135,19 +135,19 @@ class ajax_captcha_widget
 
 			return $this->img->show();
 	}
-	
-	
+
+
 	 /**
 	 * Return new wav file
 	 * @return new wav file
 	 */
 	function play_sound() {
-		
+
 		header('Content-type: audio/x-wav');
 		header('Content-Disposition: attachment; name="securimage.wav"');
 		echo $this->img->getAudibleCode();
 	}
-	
+
 }//widget
 
 /**
@@ -572,8 +572,8 @@ class Securimage {
      $this->gd_font_file =EGW_SERVER_ROOT.'/etemplate/templates/default/gdfonts/automatic.gdf';
 	 $this->audio_path=EGW_SERVER_ROOT.'/etemplate/templates/default/audio/';
     $this->wordlist_file=EGW_SERVER_ROOT.	'/etemplate/templates/default/words/words.txt';
-	
-	
+
+
 	if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
       session_start();
     }
@@ -1015,7 +1015,7 @@ class Securimage {
    */
   function generateWAV($letters)
   {
-  
+
       $fields = join('/',array( 'H8ChunkID', 'VChunkSize', 'H8Format',
                               'H8Subchunk1ID', 'VSubchunk1Size',
                               'vAudioFormat', 'vNumChannels', 'VSampleRate',
@@ -1023,9 +1023,9 @@ class Securimage {
     $data = '';
 $count=0;
     foreach($letters as $letter){
-        
+
 		//print($count);
-		//if($count!=4){$count++;continue;} 
+		//if($count!=4){$count++;continue;}
 		$fname=$this->audio_path . strtolower($letter) . '.wav';
 		$fp     = fopen($fname,'rb');
         $header = fread($fp,36);

@@ -11,6 +11,13 @@
  * @version $Id$
  */
 
+// to be able to run with new etemplate enabled or not
+require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
+if (!class_exists('etemplate_old'))
+{
+	class etemplate_old extends etemplate {}
+}
+
 /**
  * template editor of the eTemplate package
  */
@@ -106,7 +113,7 @@ class editor
 
 	function __construct()
 	{
-		$this->etemplate = new etemplate();
+		$this->etemplate = new etemplate_old();
 
 		$this->extensions = $GLOBALS['egw']->session->appsession('extensions','etemplate');
 	}
@@ -276,7 +283,7 @@ class editor
 		{
 			$content[$row] = $param;
 		}
-		$list_result = new etemplate('etemplate.editor.list_result');
+		$list_result = new etemplate_old('etemplate.editor.list_result');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 		$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 			'result' => $result,
@@ -326,7 +333,7 @@ class editor
 		{
 			if ($_GET['name'])
 			{
-				foreach(etemplate::$db_key_cols as $var)
+				foreach(boetemplate::$db_key_cols as $var)
 				{
 					$content[$var] = $_GET[$var];
 				}
@@ -445,7 +452,7 @@ class editor
 				$additional = array();
 				if ($app == 'etemplate')
 				{
-					$additional = etemplate::$types + $this->extensions + $this->aligns + $this->valigns +
+					$additional = boetemplate::$types + $this->extensions + $this->aligns + $this->valigns +
 						$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu + $this->onclick_types + $this->onchange_types;
 				}
 				else	// try to call the writeLangFile function of the app's ui-layer
@@ -480,7 +487,7 @@ class editor
 			'xml' => $xml ? '<pre>'.html::htmlspecialchars($xml)."</pre>\n" : '',
 		);
 
-		$editor = new etemplate('etemplate.editor.new');
+		$editor = new etemplate_old('etemplate.editor.new');
 		if (isset($content['values']) && !isset($content['vals']))
 		{
 			$r = 1;
@@ -554,12 +561,12 @@ class editor
 	{
 		//echo "<p>editor::change_widget_type($widget[type]=$old[type])</p>\n";
 		$old_type = $old['type'];
-		$old_had_children = isset(etemplate::$widgets_with_children[$old_type]);
+		$old_had_children = isset(boetemplate::$widgets_with_children[$old_type]);
 
-		if (!isset(etemplate::$widgets_with_children[$widget['type']]) ||
+		if (!isset(boetemplate::$widgets_with_children[$widget['type']]) ||
 			($old_type == 'grid') == ($widget['type'] == 'grid'))
 		{
-			if (etemplate::$widgets_with_children[$widget['type']] == 'box')	// box
+			if (boetemplate::$widgets_with_children[$widget['type']] == 'box')	// box
 			{
 				if ((int) $widget['size'] < 1)	// min. 1 child
 				{
@@ -569,13 +576,13 @@ class editor
 				// create the needed cells, if they dont exist
 				for ($n = 1; $n <= (int) $widget['size']; ++$n)
 				{
-					if (!is_array($widget[$n])) $widget[$n] = $n == 1 ? $old : etemplate::empty_cell();
+					if (!is_array($widget[$n])) $widget[$n] = $n == 1 ? $old : boetemplate::empty_cell();
 				}
 				unset($widget['onclick']);	// not valid for a box
 			}
 			return; // no change necessary, eg. between different box-types
 		}
-		switch (etemplate::$widgets_with_children[$widget['type']])
+		switch (boetemplate::$widgets_with_children[$widget['type']])
 		{
 			case 'grid':
 				$widget['data'] = array(array());
@@ -587,15 +594,15 @@ class editor
 					for ($n = 1; is_array($old[$n]) && $n <= $num; ++$n)
 					{
 						$new_line = null;
-						if ($old_type != 'hbox') etemplate::add_child($widget,$new_line);
-						etemplate::add_child($widget,$old[$n]);
+						if ($old_type != 'hbox') boetemplate::add_child($widget,$new_line);
+						boetemplate::add_child($widget,$old[$n]);
 						unset($widget[$n]);
 					}
 					$widget['size'] = '';
 				}
 				else	// 1 row with 1 column/child
 				{
-					etemplate::add_child($widget,$cell=etemplate::empty_cell());
+					boetemplate::add_child($widget,$cell=boetemplate::empty_cell());
 				}
 				break;
 
@@ -617,8 +624,8 @@ class editor
 						$row =& $old['data'][1];
 						for ($n = 0; $n < $old['cols']; ++$n)
 						{
-							$cell =& $row[etemplate::num2chrs($n)];
-							etemplate::add_child($widget,$cell);
+							$cell =& $row[boetemplate::num2chrs($n)];
+							boetemplate::add_child($widget,$cell);
 							list($span) = (int)explode(',',$cell['span']);
 							if ($span == 'all') break;
 							while ($span-- > 1) ++$n;
@@ -628,13 +635,13 @@ class editor
 					{
 						for ($n = 1; $n <= $old['rows']; ++$n)
 						{
-							etemplate::add_child($widget,$old['data'][$n][etemplate::num2chrs(0)]);
+							boetemplate::add_child($widget,$old['data'][$n][boetemplate::num2chrs(0)]);
 						}
 					}
 				}
 				if (!$widget['size']) // minimum one child
 				{
-					etemplate::add_child($widget,etemplate::empty_cell());
+					boetemplate::add_child($widget,boetemplate::empty_cell());
 				}
 				break;
 		}
@@ -678,11 +685,11 @@ class editor
 		{
 			list(,$r,$c) = $matches;
 			// find the column-number (base 0) for $c (A, B, C, ...)
-			for($col = 0; etemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
+			for($col = 0; boetemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
 
-			if ($col > 0) $left = $parent_path.'/'.$r.etemplate::num2chrs($col-1);
+			if ($col > 0) $left = $parent_path.'/'.$r.boetemplate::num2chrs($col-1);
 
-			if ($col < $parent['cols']-1) $right = $parent_path.'/'.$r.etemplate::num2chrs($col+1);
+			if ($col < $parent['cols']-1) $right = $parent_path.'/'.$r.boetemplate::num2chrs($col+1);
 
 			if ($r > 1) $up = $parent_path.'/'.($r-1).$c;
 
@@ -704,7 +711,7 @@ class editor
 		{
 			$in = $parent_path.'/'.$child_id.'/1A';
 		}
-		elseif (isset(etemplate::$widgets_with_children[$widget['type']]) && $widget['type'] != 'template')
+		elseif (isset(boetemplate::$widgets_with_children[$widget['type']]) && $widget['type'] != 'template')
 		{
 			if ($widget['type'])	// box
 			{
@@ -769,7 +776,7 @@ class editor
 						list($num,$options) = explode(',',$parent['size'],2);
 						if ($num <= 1)	// cant delete last child --> only empty it
 						{
-							$parent[$num=1] = etemplate::empty_cell();
+							$parent[$num=1] = boetemplate::empty_cell();
 						}
 						else
 						{
@@ -785,7 +792,7 @@ class editor
 					{
 						if (count($this->etemplate->children) <= 1)	// cant delete last child
 						{
-							$this->etemplate->children[0] = etemplate::empty_cell();
+							$this->etemplate->children[0] = boetemplate::empty_cell();
 						}
 						else
 						{
@@ -797,7 +804,7 @@ class editor
 				}
 				else
 				{
-					$content['cell'] = etemplate::empty_cell();
+					$content['cell'] = boetemplate::empty_cell();
 					return lang('cant delete a single widget from a grid !!!');
 				}
 				break;
@@ -835,7 +842,7 @@ class editor
 				{
 					$parent[1+$i] = $parent[$i];
 				}
-				$parent[$n] = $content['cell'] = etemplate::empty_cell();
+				$parent[$n] = $content['cell'] = boetemplate::empty_cell();
 				$child_id = $n;
 				if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
 				break;
@@ -931,8 +938,8 @@ class editor
 				}
 				for($i = 0; $i < $cols; ++$i)
 				{
-					echo (1+$r).":$i=".etemplate::num2chrs($i)."=empty_cell()<br>\n";
-					$data[1+$r][etemplate::num2chrs($i)] = etemplate::empty_cell();
+					echo (1+$r).":$i=".boetemplate::num2chrs($i)."=empty_cell()<br>\n";
+					$data[1+$r][boetemplate::num2chrs($i)] = boetemplate::empty_cell();
 				}
 				$opts['c'.(1+$r)] = $opts['h'.(1+$r)] = '';
 				++$rows;
@@ -962,7 +969,7 @@ class editor
 
 		if (preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches)) list(,$r,$c) = $matches;
 		// find the column-number (base 0) for $c (A, B, C, ...)
-		for($col = 0; etemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
+		for($col = 0; boetemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
 
 		if (!$c || !$r || $r > $rows || $col >= $cols) return "wrong child_id='$child_id' => r='$r', c='$c', col=$col";
 
@@ -972,9 +979,9 @@ class editor
 				if ($col >= $cols-1)
 				{
 					if ($col != $cols-1) return lang('no column to swap with !!!');
-					$c = etemplate::num2chrs(--$col); // in last column swap with the one before
+					$c = boetemplate::num2chrs(--$col); // in last column swap with the one before
 				}
-				$c_next = etemplate::num2chrs(1+$col);
+				$c_next = boetemplate::num2chrs(1+$col);
 				for($row = 1; $row <= $rows; ++$row)
 				{
 					$this->swap($data[$row][$c],$data[$row][$c_next]);
@@ -992,15 +999,15 @@ class editor
 				{
 					for ($i = $cols; $i > $col; --$i)
 					{
-						$data[$row][etemplate::num2chrs($i)] = $data[$row][etemplate::num2chrs($i-1)];
+						$data[$row][boetemplate::num2chrs($i)] = $data[$row][boetemplate::num2chrs($i-1)];
 					}
-					$data[$row][etemplate::num2chrs($col)] = etemplate::empty_cell();
+					$data[$row][boetemplate::num2chrs($col)] = boetemplate::empty_cell();
 				}
 				for ($i = $cols; $i > $col; --$i)
 				{
-					$opts[etemplate::num2chrs($i)] = $opts[etemplate::num2chrs($i-1)];
+					$opts[boetemplate::num2chrs($i)] = $opts[boetemplate::num2chrs($i-1)];
 				}
-				unset($opts[etemplate::num2chrs($col)]);
+				unset($opts[boetemplate::num2chrs($col)]);
 				++$cols;
 				//_debug_array($grid); return '';
 				break;
@@ -1015,15 +1022,15 @@ class editor
 				{
 					for ($i = $col; $i < $cols-1; ++$i)
 					{
-						$data[$row][etemplate::num2chrs($i)] = $data[$row][etemplate::num2chrs($i+1)];
+						$data[$row][boetemplate::num2chrs($i)] = $data[$row][boetemplate::num2chrs($i+1)];
 					}
-					unset($data[$row][etemplate::num2chrs($cols-1)]);
+					unset($data[$row][boetemplate::num2chrs($cols-1)]);
 				}
 				for ($i = $col; $i < $cols-1; ++$i)
 				{
-					$opts[etemplate::num2chrs($i)] = $opts[etemplate::num2chrs($i+1)];
+					$opts[boetemplate::num2chrs($i)] = $opts[boetemplate::num2chrs($i+1)];
 				}
-				unset($opts[etemplate::num2chrs(--$cols)]);
+				unset($opts[boetemplate::num2chrs(--$cols)]);
 				break;
 		}
 		$action = 'save-no-merge';
@@ -1251,7 +1258,7 @@ class editor
 				case 'save': case 'apply':
 					// initialise the children arrays if type is changed to a widget with children
 					//echo "<p>$content[path]: $widget[type] --> ".$content['cell']['type']."</p>\n";
-					if (isset(etemplate::$widgets_with_children[$content['cell']['type']]))
+					if (isset(boetemplate::$widgets_with_children[$content['cell']['type']]))
 					{
 						$this->change_widget_type($content['cell'],$widget);
 					}
@@ -1357,8 +1364,8 @@ class editor
 
 		$content['cell']['options'] = explode(',',$content['cell']['size']);
 
-		$editor = new etemplate('etemplate.editor.widget');
-		$type_tmpl = new etemplate;
+		$editor = new etemplate_old('etemplate.editor.widget');
+		$type_tmpl = new etemplate_old;
 
 		list($ext_type) = explode('-',$widget['type']);
 		// allow to read template of app-specific widgets from their app: eg. "infolog-value" --> "infolog.widget.infolog-value"
@@ -1389,7 +1396,7 @@ class editor
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 		$editor->exec('etemplate.editor.widget',$content,array(
-				'type'       => array_merge(etemplate::$types,$this->extensions),
+				'type'       => array_merge(boetemplate::$types,$this->extensions),
 				'align'      => &$this->aligns,
 				'valign'     => &$this->valigns,
 				'part'       => $allowed_parts,
@@ -1445,7 +1452,7 @@ class editor
 	{
 		if (!is_array($content))
 		{
-			foreach(etemplate::$db_key_cols as $var)
+			foreach(boetemplate::$db_key_cols as $var)
 			{
 				if (isset($_GET[$var])) $content[$var] = $_GET[$var];
 			}
@@ -1508,7 +1515,7 @@ class editor
 			'java_script' => $js ? '<script>'.$js.'</script>' : '',
 			'msg' => $msg
 		);
-		$tmpl = new etemplate('etemplate.editor.styles');
+		$tmpl = new etemplate_old('etemplate.editor.styles');
 
 		if ($content['from'])
 		{

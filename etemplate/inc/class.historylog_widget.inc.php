@@ -55,11 +55,11 @@ class historylog_widget
 	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	private function pre_process_helper(&$value, &$cell, etemplate $tmpl)
+	private function pre_process_helper(&$value, &$cell, $tmpl)
 	{
 		if (empty($value) && (string)$value !== '0')
 		{
-			$cell = etemplate::empty_cell();
+			$cell = boetemplate::empty_cell();
 			return true;
 		}
 		//echo $value.'/'.$cell['size']; _debug_array(self::$status_widgets);
@@ -76,7 +76,7 @@ class historylog_widget
 			$type6 = 2;
 			$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
 		}
-		$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
+		$cell = boetemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
 		// display unsupported iCal properties, which have multiple values or attributes, or multiple components
 		if ($type === 'label' && $value[1] === ':' && ($values = unserialize($value)))
 		{
@@ -111,9 +111,9 @@ class historylog_widget
 					{
 						list($t,$opt) = explode(':',$t);
 					}
-					$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
+					$child = boetemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
 					$child['sel_options'] = $sel_options;
-					etemplate::add_child($cell,$child);
+					boetemplate::add_child($cell,$child);
 					unset($sel_options);
 					unset($child);
 				}
@@ -145,7 +145,7 @@ class historylog_widget
 	 * @param etemplate $tmpl reference to the template we belong too
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,etemplate $tmpl)
+	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,$tmpl)
 	{
 		switch ($cell['type'])
 		{
@@ -165,7 +165,7 @@ class historylog_widget
 		}
 		unset($historylog);
 
-		$tpl = new etemplate;
+		$tpl = new etemplate_old;
 		$tpl->init('*** generated fields for historylog','','',0,'',0,0);	// make an empty template
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;

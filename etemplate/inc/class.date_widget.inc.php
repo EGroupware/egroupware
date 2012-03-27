@@ -239,11 +239,11 @@ class date_widget
 		}
 		if ($cell['needed'])
 		{
-			etemplate::$request->set_to_process($name,'ext-'.$type,array(
+			etemplate_old::$request->set_to_process($name,'ext-'.$type,array(
 				'needed' => $cell['needed'],
 			));
 		}
-		$tpl = new etemplate;
+		$tpl = new etemplate_old;
 		$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;
@@ -427,7 +427,7 @@ class date_widget
 				'value' => $value,
 				'unit'  => $unit,
 			);
-			$tpl = new etemplate;
+			$tpl = new etemplate_old;
 			$tpl->init('*** generated fields for duration','','',0,'',0,0);	// make an empty template
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;
@@ -491,7 +491,7 @@ class date_widget
 			'i' => 60,
 			's' => 1,
 		);
-		$cell = etemplate::empty_cell('label','',array('label'=>$cell['label']));
+		$cell = boetemplate_old::empty_cell('label','',array('label'=>$cell['label']));
 
 		if ((string)$value['Y'] !== '')
 		{
@@ -555,7 +555,7 @@ class date_widget
 			}
 			elseif (!preg_match('/^-?[0-9]*[,.]?[0-9]*'.($extension_data['percent_allowed'] ? '%?' : '').'$/',$value_in))
 			{
-				etemplate::set_validation_error($name,lang("'%1' is not a valid floatingpoint number !!!",$value_in));
+				etemplate_old::set_validation_error($name,lang("'%1' is not a valid floatingpoint number !!!",$value_in));
 				return false;
 			}
 			else
@@ -629,7 +629,7 @@ class date_widget
 			// checking the date is a correct one
 			if (!checkdate($value['m'],$value['d'],$value['Y']))
 			{
-				etemplate::set_validation_error($name,lang("'%1' is not a valid date !!!",
+				etemplate_old::set_validation_error($name,lang("'%1' is not a valid date !!!",
 					common::dateformatorder($value['Y'],$value['m'],$value['d'],true)));
 			}
 			$data_format = $extension_data['data_format'];

@@ -171,7 +171,7 @@ class link_widget
 					}
 				}
 				if (!($popup = egw_link::is_popup($value['app'],'view')) &&
-					etemplate::$request->output_mode == 2)	// we are in a popup
+					etemplate_old::$request->output_mode == 2)	// we are in a popup
 				{
 					$target = '_blank';
 				}
@@ -257,14 +257,14 @@ class link_widget
 				// modify add_app default to the action used as value
 				if (isset($value['add_app']) && $app == $value['add_app']) $value['add_app'] = $action;
 			}
-			$tpl = new etemplate('etemplate.link_widget.add');
+			$tpl = new etemplate_old('etemplate.link_widget.add');
 			break;
 
 		case 'link-to':
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 			if ($value['search_label'] && $extension_data['search_label'] != $value['search_label']) $value['search_label'] = lang($value['search_label']);
 			$extension_data = $value;
-			$tpl = new etemplate('etemplate.link_widget.to');
+			$tpl = new etemplate_old('etemplate.link_widget.to');
 			if ($value['link_label']) $tpl->set_cell_attribute('create','label',$value['link_label']);
 			if ($value['search_label']) $tpl->set_cell_attribute('search','label',$value['search_label']);
 
@@ -294,7 +294,7 @@ class link_widget
 				return True;
 			}
 			$value['link_list_format'] = $GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'];
-			$tpl = new etemplate('etemplate.link_widget.list');
+			$tpl = new etemplate_old('etemplate.link_widget.list');
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
@@ -303,7 +303,7 @@ class link_widget
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
 					if (!($value[$row]['popup'] = egw_link::is_popup($link['app'],'view',$link)) &&
-						etemplate::$request->output_mode == 2)	// we are in a popup
+						etemplate_old::$request->output_mode == 2)	// we are in a popup
 					{
 						$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
 					}
@@ -324,7 +324,7 @@ class link_widget
 					$value[$row]['icon'] = egw_link::get_registry($value[$row]['app'], 'icon');
 					$value[$row]['label'] = 'Unlink';
 					$value[$row]['help'] = lang('Remove this link (not the entry itself)');
-					if(!egw_link::is_popup($link['app'],'view') && etemplate::$request->output_mode == 2)
+					if(!egw_link::is_popup($link['app'],'view') && etemplate_old::$request->output_mode == 2)
 					{
 						// If link doesn't want a popup, make sure to open it in appropriate tab of main window
 						$value[$row]['view'] = "javascript:if(typeof opener.top.framework != 'undefined') {
@@ -352,7 +352,7 @@ class link_widget
 				return true;
 			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-			$tpl = new etemplate('etemplate.link_widget.entry');
+			$tpl = new etemplate_old('etemplate.link_widget.entry');
 			$options = $cell['size'] ? explode(',',$cell['size']) : array();
 			$app = $extension_data['app'] = $options[0];
 			$link_type = $extension_data['link_type'];
@@ -495,7 +495,7 @@ class link_widget
 			list($w,$h) = explode('x',$popup);
 			$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
 		}
-		elseif (etemplate::$request->output_mode == 2 || 	// we are in a popup
+		elseif (etemplate_old::$request->output_mode == 2 || 	// we are in a popup
 			$link['app'] == egw_link::VFS_APPNAME ||		// or it's a link to an attachment
 			($target = egw_link::get_registry($link['app'],'view_target')))	// or explicit target set
 		{
@@ -653,7 +653,7 @@ class link_widget
 					if (!($link_id = egw_link::link($value['to_app'],$value['to_id'],
 						egw_link::VFS_APPNAME,$value['file'],$value['remark'])))
 					{
-						etemplate::set_validation_error($name.'[file]',lang('Error copying uploaded file to vfs!'));
+						etemplate_old::set_validation_error($name.'[file]',lang('Error copying uploaded file to vfs!'));
 					}
 					else
 					{
@@ -669,7 +669,7 @@ class link_widget
 				}
 				else
 				{
-					etemplate::set_validation_error($name.'[file]',lang('You need to select a file first!'));
+					etemplate_old::set_validation_error($name.'[file]',lang('You need to select a file first!'));
 				}
 				$extension_data = $value;
 				$loop = True;
