@@ -1314,16 +1314,17 @@ function _check_script_tag(&$var,$name='')
 			{
 				_check_script_tag($var[$key],$name.'['.$key.']');
 			}
-			else
+			elseif(strpos($val, '<') !== false)	// speedup: ignore everything without <
 			{
-				if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+				static $preg = '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
+				if (preg_match($preg,$val))
 				{
 					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
 					// attempt to clean the thing
 					$var[$key] = $val = html::purify($val);
 					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
-					if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+					if (preg_match($preg,$val))
 					{
 						error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
 						unset($var[$key]);
@@ -1335,6 +1336,52 @@ function _check_script_tag(&$var,$name='')
 		reset($var);
 	}
 }
+
+/* some _check_script_tag tests, should be commented out by default
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
+{
+	if (!defined('EGW_INCLUDE_ROOT'))
+	{
+		define(EGW_INCLUDE_ROOT, realpath(dirname(__FILE__).'/../..'));
+		define(EGW_API_INC, realpath(dirname(__FILE__)));
+	}
+
+	$total = $num_failed = 0;
+	$patterns = array(
+		// pattern => true: should fail, false: should not fail
+		'<script>alert(1)</script>' => true,
+		'<span onmouseover="alert(1)">blah</span>' => true,
+		'<a href="javascript:alert(1)">Click Me</a>' => true,
+		'If 1 < 2, what does that mean for description, if 2 > 1.' => false,
+		'If 1 < 2, what does that mean for a script, if 2 > 1.' => false,	// false positive
+	);
+	foreach($patterns as $pattern => $should_fail)
+	{
+		$test = array($pattern);
+		unset($GLOBALS['egw_unset_vars']);
+		_check_script_tag($test,'test');
+		$failed = isset($GLOBALS['egw_unset_vars']) !== $should_fail;
+		++$total;
+		if ($failed) $num_failed++;
+		echo "<p style='color: ".($failed?'red':'black')."'> ".html::htmlspecialchars($pattern).' '.
+			(isset($GLOBALS['egw_unset_vars'])?'removed':'passed')."</p>";
+	}
+	// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
+	$vectors = new SimpleXMLElement(file_get_contents('http://ha.ckers.org/xssAttacks.xml'));
+	foreach($vectors->attack as $attack)
+	{
+		$test = array((string)$attack->code);
+		unset($GLOBALS['egw_unset_vars']);
+		_check_script_tag($test, $attack->name);
+		$failed = !isset($GLOBALS['egw_unset_vars']);
+		++$total;
+		if ($failed) $num_failed++;
+		echo "<p><span style='color: ".($failed?'red':'black')."'>".html::htmlspecialchars($attack->name).": ".html::htmlspecialchars($attack->code)." ".
+			(isset($GLOBALS['egw_unset_vars'])?'removed':'passed').
+			"</span><br /><span style='color: gray'>".html::htmlspecialchars($attack->desc)."</span></p>";
+	}
+	die("<p>Tests finished: $num_failed / $total failed</p>");
+}*/
 
 foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
 {
@@ -1358,11 +1405,6 @@ foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n 
 }
 //if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
 
-// check menuaction and die if it contains something nasty or unexpected
-if (isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_-]+(\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)?|::[A-Za-z0-9_]+)$/',$_GET['menuaction']))
-{
-	die('Invalid menuaction!');
-}
 // $GLOBALS[egw_info][flags][currentapp] and die  if it contains something nasty or unexpected
 if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
 	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_-]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
