@@ -641,3 +641,6 @@ you need to select some users first!	admin	en	You need to select some users firs
 you will need to remove the subcategories before you can delete this category	admin	en	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
 your session could not be verified.	admin	en	Your session could not be verified.
+backup directory %1 mounted as %2	admin	en	Backup directory %1 mounted as %2
+failed to mount backup directory!	admin	en	Failed to mount Backup directory!
+mount backup directory to %1	admin	en	Mount backup directory to %1

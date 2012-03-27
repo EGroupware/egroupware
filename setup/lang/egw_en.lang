@@ -94,6 +94,7 @@ backup '%1' deleted	setup	en	Backup '%1' deleted.
 backup '%1' renamed to '%2'	setup	en	Backup '%1' renamed to '%2' .
 backup '%1' restored	setup	en	Backup '%1' restored.
 backup and restore	setup	en	Backup and restore
+backup directory %1 mounted as %2	setup	en	Backup directory %1 mounted as %2
 backup failed	setup	en	Backup failed.
 backup files (needs ziparchive)	setup	en	Backup files (needs ZipArchive)
 backup finished	setup	en	Backup finished.
@@ -284,6 +285,7 @@ error in group-creation !!!	setup	en	Error in group creation!
 error listing "dn=%1"!	setup	en	Error listing "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	en	Error modifying dn=%1: %2='%3'!
 export has been completed!	setup	en	Export has been completed!
+failed to mount backup directory!	setup	en	Failed to mount Backup directory!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	en	Failed writing configuration file header.inc.php, check the permissions!
 false	setup	en	False
 file	setup	en	FILE
@@ -402,6 +404,7 @@ modifications have been completed!	setup	en	Modifications have been completed!
 modified	setup	en	Modified
 modify	setup	en	Modify
 month	setup	en	Month
+mount backup directory to %1	setup	en	Mount backup directory to %1
 multi-language support setup	setup	en	Multi language support setup
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user EGroupware uses to connect
@@ -543,6 +546,7 @@ size	setup	en	Size
 skip the installation tests (not recommended)	setup	en	Skip the installation tests (not recommended)
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
 smtp server port	setup	en	SMTP server port
+smtp-authentication required	setup	en	SMTP-authentication required
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords
@@ -550,6 +554,7 @@ ssl validation:	setup	en	SSL validation:
 standard (login-name identical to egroupware user-name)	setup	en	Standard, login name identical to EGroupware user name
 standard mailserver settings (used for mail authentication too)	setup	en	Standard mail server settings, used for Mail authentication too
 standard, as defined above	setup	en	Standard, as defined above
+start installing application %1 ...	setup	en	Start installing application %1 ...
 start the postmaster	setup	en	Start the postmaster
 start updating languages %1 ...	setup	en	Start updating languages %1 ...
 start updating the database ...	setup	en	Start updating the database ...
@@ -594,7 +599,9 @@ the session extension is needed to use php sessions (db-sessions work without).	
 the session extension is required!	setup	en	The session extension is required!
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up html before inserting it in office documents.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
+the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
 there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br />please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the web servers document-root!

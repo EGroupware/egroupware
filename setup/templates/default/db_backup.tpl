@@ -27,7 +27,7 @@ function sort_table(id)
 	for(var i = 1;i < l;i++)
 	{
 		var value = rows[i].cells[id].innerHTML.toUpperCase();
-		if (id == 2) 
+		if (id == 2)
 		{
 			start = value.search(/\(/)+1;
 			stop = value.search(/\)/);
@@ -40,7 +40,7 @@ function sort_table(id)
 		sort_columns[i - 1] = value;
 		rows_content[value] = rows[i].innerHTML;
 	}
-	if (id == 2) 
+	if (id == 2)
 	{
 		sort_columns.sort(Numsort);
 	}
@@ -48,7 +48,7 @@ function sort_table(id)
 	{
 		sort_columns.sort();
 	}
-	if (sortedby == id) 
+	if (sortedby == id)
 	{
 		sort_columns.reverse();
 		document.getElementById('sortedby').value = -1;
@@ -145,7 +145,10 @@ function sort_table(id)
 		</td>
 	</tr>
 	<tr bgcolor="#e6e6ee">
-		<td colspan="2" align="right">
+		<td>
+			{backup_mount}
+		</td>
+		<td align="right">
 			{backup_save_settings}
 		</td>
 	</tr>
