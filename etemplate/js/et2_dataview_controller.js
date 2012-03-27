@@ -454,7 +454,7 @@ var et2_dataview_controller = Class.extend({
 
 			// If we have an object manager, create a new action object for this
 			// row and a new row AOI
-			if (this.self._linkCallback && this.self._actionObjectManager)
+			if (this.self._linkCallback)
 			{
 				// Call the link callback
 				var links = this.self._linkCallback.call(
@@ -472,7 +472,7 @@ var et2_dataview_controller = Class.extend({
 					this.self._actionObjectManager.addObject(this.entry.uid, aoi);
 				ao.updateActionLinks(links);
 
-				// Hook the action object into the selection manager
+				// Hook the row into the selection manager
 				this.self._selectionMgr.hook(ao, aoi, this.entry.uid);
 			}
 
@@ -485,6 +485,9 @@ var et2_dataview_controller = Class.extend({
 	 *
 	 */
 	_destroyCallback: function (_row) {
+		// Remove the action object that corresponds to that row
+		this.entry.ao.remove();
+
 		// There is no further row connected to the entry
 		this.entry.row = null;
 
@@ -622,6 +625,7 @@ var et2_dataview_controller = Class.extend({
 
 			// Make the new index map the current index map
 			this._indexMap = newMap;
+			this._selectionMgr.setIndexMap(newMap);
 		}
 
 	},
