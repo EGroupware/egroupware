@@ -34,7 +34,7 @@
 					</hbox>
 				</row>
 				<row class="row $row_cont[class]">
-					<vfs-mime align="center" id="${row}[path]"/>
+					<vfs-mime align="center" id="$row"/>
 					<vfs id="$row" no_lang="1"/>
 					<vfs-size align="right" id="${row}[size]"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
