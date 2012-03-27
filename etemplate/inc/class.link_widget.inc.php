@@ -298,7 +298,7 @@ class link_widget
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
-				$value[$row]['title'] = egw_link::title($link['app'],$link['id'],$link);
+				$value[$row]['title'] = egw_link::title($link['app'],($link['app'] == egw_link::VFS_APPNAME?egw_vfs::decodePath($link['id']):$link['id']),$link);
 				if (!is_array($link['id']))
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
@@ -512,7 +512,7 @@ class link_widget
 			$options .= " onMouseOut=\"self.status=''; return true;\"";
 		}
 		return html::a_href(
-			html::htmlspecialchars(egw_link::title($link['app'],$link['id'])),
+			html::htmlspecialchars(egw_link::title($link['app'],($link['app']==egw_link::VFS_APPNAME?egw_vfs::decodePath($link['id']):$link['id']))),
 			$href ? $href : egw_link::view($link['app'],$link['id'],$link),'',$options);
 	}
 
