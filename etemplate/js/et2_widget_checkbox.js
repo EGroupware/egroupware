@@ -96,7 +96,7 @@ var et2_checkbox = et2_inputWidget.extend({
 et2_register_widget(et2_checkbox, ["checkbox"]);
 
 /**
- * et2_checkbox_ro is the dummy readonly implementation of the checkbox and radio.
+ * et2_checkbox_ro is the dummy readonly implementation of the checkbox
  */
 var et2_checkbox_ro = et2_checkbox.extend({
 
@@ -130,4 +130,4 @@ var et2_checkbox_ro = et2_checkbox.extend({
 
 });
 
-et2_register_widget(et2_checkbox_ro, ["checkbox_ro", "radio_ro"]);
+et2_register_widget(et2_checkbox_ro, ["checkbox_ro"]);
