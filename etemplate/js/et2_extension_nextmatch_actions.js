@@ -28,7 +28,9 @@ function nm_action(_action, _senders)
 	var ids = "";
 	for (var i = 0; i < _senders.length; i++)
 	{
-		ids += (_senders[i].id.indexOf(',') >= 0 ? '"'+_senders[i].id.replace(/"/g,'""')+'"' : _senders[i].id) + 
+		var app_id = _senders[i].id.split('::', 2);
+		var id = app_id[1];
+		ids += (id.indexOf(',') >= 0 ? '"'+id.replace(/"/g,'""')+'"' : id) + 
 			((i < _senders.length - 1) ? "," : "");
 	}
 	//console.log(_action); console.log(_senders);
