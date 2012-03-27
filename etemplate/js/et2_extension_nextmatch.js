@@ -501,7 +501,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
-			this.dataview.rowProvider);
+			this.dataview.rowProvider, this.options.settings.actionLinks,
+			this.options.settings.actions);
 
 		// Register handler to update preferences when column properties are changed
 		var self = this;
@@ -515,7 +516,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		};
 	},
 
-	_parseDataRow: function(_row, _colData) {
+	_parseDataRow: function(_row, _rowData, _colData) {
 		var columnWidgets = new Array(this.columns.length);
 
 		for (var x = 0; x < columnWidgets.length; x++)
@@ -533,7 +534,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 		}
 
-		this.rowProvider.setDataRowTemplate(columnWidgets, this);
+		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
 
 		// Set the initial row count
 		var total = typeof this.options.settings.total != "undefined" ?
@@ -546,7 +547,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				this.getInstanceManager().etemplate_exec_id,
 				"nm",
 				this.dataview.grid,
-				this.rowProvider);
+				this.rowProvider,
+				null,
+				this.options.settings.action_links,
+				this.options.settings.actions
+		);
 
 		this.controller.setFilters(this.activeFilters);
 	},
@@ -562,7 +567,8 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 			else
 			{
-				this._parseDataRow(_grid.cells[y], _grid.colData);
+				this._parseDataRow(_grid.cells[y], _grid.rowData[y],
+						_grid.colData);
 			}
 		}
 	},

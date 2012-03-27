@@ -33,9 +33,14 @@ var et2_nextmatch_rowProvider = Class.extend({
 	},
 
 	/**
-	 * Creates the data row prototype
+	 * Creates the data row prototype.
+	 *
+	 * @param _widgets is an array containing the root widget for each column.
+	 * @param _rowData contains the properties of the root "tr" (like its class)
+	 * @param _rootWidget is the parent widget of the data rows (i.e.
+	 * the nextmatch)
 	 */
-	setDataRowTemplate: function(_widgets, _rootWidget) {
+	setDataRowTemplate: function(_widgets, _rowData, _rootWidget) {
 		// Copy the root widget
 		this._rootWidget = _rootWidget;
 
@@ -45,6 +50,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		// Copy the row template
 		var rowTemplate = {
 			"row": row[0],
+			"rowData": _rowData,
 			"widgets": _widgets,
 			"root": _rootWidget,
 			"seperated": null,
@@ -135,8 +141,6 @@ var et2_nextmatch_rowProvider = Class.extend({
 				// from the entry
 				nodes[j] = entry.nodeFuncs[j](row);
 			}
-			if(typeof nodes[0] == "undefined")
-				egw.debug("warn", "Missing node", entry.widget.id,nodes, entry );
 
 			// Set the array managers first
 			entry.widget._mgrs = mgrs;
@@ -154,6 +158,9 @@ var et2_nextmatch_rowProvider = Class.extend({
 
 		// Insert the row into the tr
 		_tr.appendChild(row);
+
+		// Set the row data
+		this._setRowData(this._template.rowData, _tr, mgrs);
 
 		return rowWidget;
 	},
@@ -398,6 +405,17 @@ var et2_nextmatch_rowProvider = Class.extend({
 				nodeFuncs[j] = this._compileDOMAccessFunc(_rowTemplate.row,
 					nodes[j]);
 			}
+		}
+	},
+
+	/**
+	 * Applies additional row data (like the class) to the tr
+	 */
+	_setRowData: function (_data, _tr, _mgrs) {
+		// TODO: Implement other fields than "class"
+		if (_data["class"])
+		{
+			_tr.setAttribute("class", _mgrs["content"].expandName(_data["class"]));
 		}
 	}
 

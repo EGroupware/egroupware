@@ -15,7 +15,10 @@
 	et2_core_inheritance;
 
 	et2_dataview_interfaces;
+	et2_dataview_view_aoi;
 	et2_dataview_view_row;
+
+	egw_action.egw_action;
 */
 
 /**
@@ -36,14 +39,31 @@ var et2_dataview_controller = Class.extend({
 	/**
 	 * Constructor of the et2_dataview_controller, connects to the grid
 	 * callback.
+	 *
+	 * @param _grid is the grid the controller should controll.
+	 * @param _dataProvider is an object implementing the et2_IDataProvider
+	 * interface.
+	 * @param _rowCallback is the callback function that gets called when a row
+	 * is requested.
+	 * @param _linkCallback is the callback function that gets called for
+	 * requesting action links for a row. The row data, the index of the row and
+	 * the uid are passed as parameters to the function.
+	 * uid is passed to the function.
+	 * @param _context is the context in which the _rowCallback and the 
+	 * _linkCallback are called.
+	 * @param _actionObjectManager is the object that manages the action
+	 * objects.
 	 */
-	init: function (_grid, _dataProvider, _rowCallback, _context)
+	init: function (_grid, _dataProvider, _rowCallback, _linkCallback, _context,
+			_actionObjectManager)
 	{
 		// Copy the given arguments
 		this._grid = _grid;
 		this._dataProvider = _dataProvider;
 		this._rowCallback = _rowCallback;
-		this._rowContext = _context;
+		this._linkCallback = _linkCallback;
+		this._context = _context;
+		this._actionObjectManager = _actionObjectManager;
 
 		// Initialize the "index map" which contains all currently displayed
 		// containers hashed by the "index"
@@ -133,7 +153,8 @@ var et2_dataview_controller = Class.extend({
 		{
 			this._indexMap[_idx] = {
 				"row": null,
-				"uid": null
+				"uid": null,
+				"ao": null
 			};
 		}
 
@@ -404,13 +425,37 @@ var et2_dataview_controller = Class.extend({
 			this.entry.row.clear();
 
 			// Fill the row DOM Node with data
+			var tr = this.entry.row.getDOMNode();
 			this.self._rowCallback.call(
-				this.self._rowContext,
+				this.self._context,
 				_data,
-				this.entry.row.getDOMNode(),
+				tr,
 				this.entry.idx,
 				this.entry
 			);
+
+			// If we have an object manager, create a new action object for this
+			// row and a new row AOI
+			if (this.self._linkCallback && this.self._actionObjectManager)
+			{
+				// Call the link callback
+				var links = this.self._linkCallback.call(
+					this.self._context,
+					_data,
+					this.entry.idx,
+					this.entry.uid
+				);
+
+				// Create the action object
+				var aom = this.self._actionObjectManager;
+				this.entry.ao = aom.addObject(
+					this.entry.uid,
+					new et2_dataview_rowAOI(tr)
+				);
+
+				// Update the action links
+				this.entry.ao.updateActionLinks(links);
+			}
 
 			// Invalidate the current row entry
 			this.entry.row.invalidate();

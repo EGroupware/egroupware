@@ -17,10 +17,10 @@
 	et2_core_inheritance;
 
 	et2_dataview_view_row;
-
 	et2_dataview_controller;
-
 	et2_dataview_interfaces;
+
+	et2_extension_nextmatch_actions; // Contains nm_action
 
 	egw_data;
 */
@@ -35,11 +35,37 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _execId is the execId of the etemplate
 	 * @param _widgetId is the id of the nextmatch-widget we are fetching data
 	 * for.
+	 * @param _grid is the grid the grid controller will be controlling
+	 * @param _rowProvider is the nextmatch row provider instance.
+	 * @param _objectManager is the parent object manager (if null, the object
+	 * manager) will be created using
+	 * @param _actionLinks contains the action links
+	 * @param _actions contains the actions, may be null if an object manager
+	 * is given.
 	 */
-	init: function (_egw, _execId, _widgetId, _grid, _rowProvider) {
+	init: function (_egw, _execId, _widgetId, _grid, _rowProvider,
+			_objectManager, _actionLinks, _actions) {
+
+		// Create the action/object managers
+		if (_objectManager === null)
+		{
+			this._actionManager = new egwActionManager();
+			this._actionManager.updateActions(_actions);
+			this._actionManager.setDefaultExecute("javaScript:nm_action");
+
+			this._objectManager = new egwActionObjectManager("",
+					this._actionManager);
+		}
+		else
+		{
+			this._actionManager = null;
+			this._objectManager = _objectManager;
+		}
+		this._actionLinks = _actionLinks;
 
 		// Call the parent et2_dataview_controller constructor
-		this._super(_grid, this, this._rowCallback, this);
+		this._super(_grid, this, this._rowCallback, this._linkCallback, this,
+			this._objectManager);
 
 		// Copy all parameters
 		this.egw = _egw;
@@ -54,6 +80,19 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// dataUnregisterUID
 		this.dataRegisterUID = _egw.dataRegisterUID;
 		this.dataUnregisterUID = _egw.dataUnregisterUID;
+	},
+
+	destroy: function () {
+
+		// If the actionManager variable is set, the object- and actionManager
+		// were created by this instance -- clear them
+		if (this._actionManager)
+		{
+			this._objectManager.clear();
+			this._actionManager.clear();
+		}
+
+		this._super();
 	},
 
 	/**
@@ -102,6 +141,15 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// rowWidget inside the _entry
 		_entry.widget = this._rowProvider.getDataRow(
 			{ "content": _data }, _tr, _idx);
+	},
+
+	/**
+	 * Returns the action links for a given data row -- currently these are
+	 * always the same links, as we controll enabled/disabled over the row
+	 * classes.
+	 */
+	_linkCallback: function (_data, _idx, _uid) {
+		return this._actionLinks;
 	},
 
 
