@@ -124,11 +124,10 @@ class Net_Sieve
     * The auth methods this class support
     * @var array
     */
-    var $supportedAuthMethods=array('DIGEST-MD5', 'CRAM-MD5', 'PLAIN' , 'LOGIN');
+    //var $supportedAuthMethods=array('DIGEST-MD5', 'CRAM-MD5', 'PLAIN' , 'LOGIN');
     //if you have problems using DIGEST-MD5 authentication  please comment the line above and uncomment the following line
     //var $supportedAuthMethods=array( 'CRAM-MD5', 'PLAIN' , 'LOGIN');
-
-    //var $supportedAuthMethods=array( 'PLAIN' , 'LOGIN');
+    var $supportedAuthMethods=array( 'PLAIN' , 'LOGIN');
 
     /**
     * The auth methods this class support
