@@ -115,12 +115,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		this.dynheight = new et2_dynheight(this.egw().window,
 				this.innerDiv, 150);
 
-		// Load the first data into the dataProvider
-/*		if (this.options.settings.rows)
-		{
-			this.dataProvider.loadData({"rows": this.options.settings.rows});
-		}*/
-
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
 
@@ -246,6 +240,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Update the filters in the grid controller
 		this.controller.setFilters(this.activeFilters);
+
+		// Trigger an update
+		this.controller.update();
 	},
 
 	/**
@@ -553,6 +550,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				this.options.settings.actions
 		);
 
+		// Load the initial order
+		this.controller.loadInitialOrder(this._getInitialOrder(
+			this.options.settings.rows, this.options.settings.row_id
+		));
+
 		this.controller.setFilters(this.activeFilters);
 	},
 
@@ -571,6 +573,33 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						_grid.colData);
 			}
 		}
+	},
+
+	_getInitialOrder: function (_rows, _rowId) {
+
+		var _order = [];
+
+		// Get the length of the non-numerical rows arra
+		var len = 0;
+		for (var key in _rows) {
+			if (!isNaN(key) && parseInt(key) > len)
+				len = parseInt(key);
+		}
+
+		// Iterate over the rows
+		for (var i = 0; i < len; i++)
+		{
+			// Get the uid from the data
+			var uid = this.egw().appName + '::' + _rows[i][_rowId];
+
+			// Store the data for that uid
+			this.egw().dataStoreUID(uid, _rows[i]);
+
+			// Push the uid onto the order array
+			_order.push(uid);
+		}
+
+		return _order;
 	},
 
 	_selectColumnsClick: function(e) {
@@ -749,21 +778,6 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 					this.options.settings.sort == "ASC", false);
 			}
 		}
-	},
-
-	/**
-	 * Activates the actions
-	 */
-	set_settings: function(_settings) {
-/*		if (_settings.actions)
-		{
-			// Read the actions from the settings array
-			this.actionManager.updateActions(_settings.actions);
-			this.actionManager.setDefaultExecute("javaScript:nm_action");
-			// this is rather hackisch, but I have no idea how to get the action_link & row_id to the actionObject of the row otherwise
-			this.actionManager.action_links = _settings.action_links;
-			this.actionManager.row_id = _settings.row_id;
-		}*/
 	},
 
 	getDOMNode: function(_sender) {

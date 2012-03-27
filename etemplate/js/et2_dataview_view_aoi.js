@@ -22,6 +22,9 @@
  * row.
  */
 
+var EGW_SELECTMODE_DEFAULT = 0;
+var EGW_SELECTMODE_TOGGLE = 1;
+
 /**
  * An action object interface for each nextmatch widget row - "inherits" from 
  * egwActionObjectInterface
@@ -31,6 +34,8 @@ function et2_dataview_rowAOI(_node)
 	var aoi = new egwActionObjectInterface();
 
 	aoi.node = _node;
+
+	aoi.selectMode = EGW_SELECTMODE_DEFAULT;
 
 	aoi.checkBox = null; //($j(":checkbox", aoi.node))[0];
 
@@ -45,7 +50,6 @@ function et2_dataview_rowAOI(_node)
 
 	// Now append some action code to the node
 	var selectHandler = function(e) {
-
 		// Reset the focus so that keyboard navigation will work properly
 		// after the element has been clicked
 		egwUnfocus();
@@ -57,11 +61,20 @@ function et2_dataview_rowAOI(_node)
 		if (e.target != aoi.checkBox)
 		{
 			var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
-			var state = EGW_AO_SHIFT_STATE_NONE; // Multiple row selction does not work right now
+			var state = egwGetShiftState(e);
 
-			aoi.updateState(EGW_AO_STATE_SELECTED,
-				!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
-				state);
+			switch (aoi.selectMode)
+			{
+			case EGW_SELECTMODE_DEFAULT:
+				aoi.updateState(EGW_AO_STATE_SELECTED,
+					!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
+					state);
+				break;
+			case EGW_SELECTMODE_TOGGLE:
+				aoi.updateState(EGW_AO_STATE_SELECTED, !selected,
+					egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, true));
+				break;
+			}
 		}
 	};
 

@@ -15,6 +15,7 @@
 	et2_core_inheritance;
 
 	et2_dataview_interfaces;
+	et2_dataview_controller_selection;
 	et2_dataview_view_aoi;
 	et2_dataview_view_row;
 
@@ -78,10 +79,17 @@ var et2_dataview_controller = Class.extend({
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
+
+		// Create the selection manager
+		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap);
 	},
 
 	destroy: function () {
 
+		// Destroy the selection manager
+		this._selectionMgr.free();
+
+		// Clear the selection timeout
 		this._clearTimer();
 
 		this._super();
@@ -141,6 +149,16 @@ var et2_dataview_controller = Class.extend({
 
 		// Update the data
 		this.update();
+	},
+
+	/**
+	 * Loads the initial order. Do not call multiple times.
+	 */
+	loadInitialOrder: function (order) {
+		for (var i = 0; i < order.length; i++)
+		{
+			this._getIndexEntry(i).uid = order[i];
+		}
 	},
 
 
@@ -446,15 +464,16 @@ var et2_dataview_controller = Class.extend({
 					this.entry.uid
 				);
 
-				// Create the action object
-				var aom = this.self._actionObjectManager;
-				this.entry.ao = aom.addObject(
-					this.entry.uid,
-					new et2_dataview_rowAOI(tr)
-				);
+				// Create the action object interface
+				var aoi = new et2_dataview_rowAOI(tr);
 
-				// Update the action links
-				this.entry.ao.updateActionLinks(links);
+				// Create the action object
+				var ao = this.entry.ao =
+					this.self._actionObjectManager.addObject(this.entry.uid, aoi);
+				ao.updateActionLinks(links);
+
+				// Hook the action object into the selection manager
+				this.self._selectionMgr.hook(ao, aoi, this.entry.uid);
 			}
 
 			// Invalidate the current row entry

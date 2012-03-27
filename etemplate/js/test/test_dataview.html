@@ -8,6 +8,9 @@
 		<script src="../../../phpgwapi/js/jquery/jquery.tools.min.js"></script>
 		<script src="../../../phpgwapi/js/jquery/jquery-ui.js"></script>
 
+		<script src="../../../phpgwapi/js/egw_action/egw_action.js"></script>
+		<script src="../../../phpgwapi/js/egw_action/egw_action_common.js"></script>
+
 		<script>
 			// Create the egw object template
 			window["egw"] = {
@@ -27,7 +30,9 @@
 
 		<script src="../et2_dataview_interfaces.js"></script>
 		<script src="../et2_dataview_controller.js"></script>
+		<script src="../et2_dataview_controller_selection.js"></script>
 		<script src="../et2_dataview_model_columns.js"></script>
+		<script src="../et2_dataview_view_aoi.js"></script>
 		<script src="../et2_dataview_view_rowProvider.js"></script>
 		<script src="../et2_dataview_view_container.js"></script>
 		<script src="../et2_dataview_view_grid.js"></script>
@@ -130,6 +135,10 @@
 				$j(_tr).append(row.children());
 			}
 
+			function linkCallback() {
+				return [];
+			}
+
 			// The dynheight object is responsible for automatically resizing
 			// the gridContainer to its maximum extends
 			var dynheight = new et2_dynheight(window, $j("#container"), 150);
@@ -146,9 +155,14 @@
 				$j("#range").text("Showing elements " + (range.top + 1) + " - " + (range.bottom + 1) + " of " + dataview.grid.getTotalCount());
 			});
 
+			// Create the action manager and the object manager (optional)
+			var actionManager = egw_getActionManager("test");
+			var objectManager = egw_getObjectManager("test");
+
 			// Create the gridview controller
 			var controller = new et2_dataview_controller(dataview.grid,
-					new dataprovider(), rowCallback);
+					new dataprovider(), rowCallback, linkCallback, null,
+					objectManager);
 
 			// Trigger the initial update
 			controller.update();
