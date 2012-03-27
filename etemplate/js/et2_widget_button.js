@@ -51,6 +51,8 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 	},
 
+	legacyOptions: ["image", "ro_image"],
+
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -197,7 +199,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	setDetachedAttributes: function(_nodes, _values)
 	{
 		// Datagrid puts in the row for null
-		this.btn = _nodes[0].nodeName == 'button' ? jQuery(_nodes[0]) : null;
+		this.btn = _nodes[0].nodeName[0] != '#' ? jQuery(_nodes[0]) : null;
 		this.image = jQuery(_nodes[1]);
 
 		if (typeof _values["id"] != "undefined")
