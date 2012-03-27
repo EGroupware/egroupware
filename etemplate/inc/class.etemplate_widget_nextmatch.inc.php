@@ -130,6 +130,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// set up actions, but only if they are defined AND not already set up (run throught self::egw_actions())
 		if (isset($value['actions']) && !isset($value['actions'][0]))
 		{
+			$value['action_links'] = array();
 			$template_name = isset($value['template']) ? $value['template'] : $this->attrs['options'];
 			if (!is_array($value['action_links'])) $value['action_links'] = array();
 			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
