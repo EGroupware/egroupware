@@ -96,6 +96,16 @@ if ($_POST['save_backup_settings'])
 		}
 	}
 }
+if ($_POST['mount'])
+{
+	egw_vfs::$is_root = true;
+	echo '<div align="center">'.
+		(egw_vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
+			lang('Backup directory %1 mounted as %2',$db_backup->backup_dir,'/backup') :
+			lang('Failed to mount Backup directory!')).
+		"</div>\n";
+	egw_vfs::$is_root = false;
+}
 // create a backup now
 if($_POST['backup'])
 {
@@ -129,6 +139,7 @@ $setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" v
 // do NOT allow to change "backup files" outside of setup
 	($is_setup ? '' : ' disabled="true" title="'.htmlspecialchars(lang('Can only be change via Setup!')).'"').'/>');
 $setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_backup_settings" value="'.htmlspecialchars(lang('save')).'" />');
+$setup_tpl->set_var('backup_mount','<input type="submit" name="mount" value="'.htmlspecialchars(lang('Mount backup directory to %1','/backup')).'" />');
 
 if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 	is_uploaded_file($_FILES['uploaded']['tmp_name']))

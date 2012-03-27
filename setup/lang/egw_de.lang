@@ -94,6 +94,7 @@ backup '%1' deleted	setup	de	Datensicherung '%1' gelöscht
 backup '%1' renamed to '%2'	setup	de	Datensicherung '%1' nach '%2' umbenannt
 backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
 backup and restore	setup	de	Datensicherung und Wiederherstellung
+backup directory %1 mounted as %2	setup	de	Datensicherungsverzeichnis %1 unter %2 gemounted
 backup failed	setup	de	Datensicherung fehlgeschlagen
 backup files (needs ziparchive)	setup	de	Datensicherung der  EGroupware Dateiumgebung (files Verzeichnis) (benötigt die PHP Bibliothek ZipArchive)
 backup finished	setup	de	Datensicherung beendet
@@ -284,6 +285,7 @@ error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
 error listing "dn=%1"!	setup	de	Fehler beim Auflisten von "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	de	Fehler beim Ändern von dn=%1: %2='%3'!
 export has been completed!	setup	de	Export ist abgeschlossen!
+failed to mount backup directory!	setup	de	Konnte Datensicherungsverzeichnis nicht mounten!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	de	Fehler beim Schreiben der Konfigurationsdatei header.inc.php, bitte überprüfen Sie die Zugriffsrechte !!!
 false	setup	de	Falsch
 file	setup	de	DATEI
@@ -402,6 +404,7 @@ modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modified	setup	de	geändert
 modify	setup	de	Ändern
 month	setup	de	Monat
+mount backup directory to %1	setup	de	Datensicherungsverzeichnis unter %1 mounten
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den eGroupWare verwendet
@@ -543,6 +546,7 @@ size	setup	de	Größe
 skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
 smtp server port	setup	de	SMTP Server Port
+smtp-authentication required	setup	de	SMTP Authentifizierung benötigt
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort
@@ -550,6 +554,7 @@ ssl validation:	setup	de	SSL Validierung:
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
 standard, as defined above	setup	de	Standard, wie darüber definiert
+start installing application %1 ...	setup	de	Beginne mit Installation der Anwendung %1 ...
 start the postmaster	setup	de	Starten Sie den postmaster
 start updating languages %1 ...	setup	de	Starte Aktualisierung der Sprachen %1 ...
 start updating the database ...	setup	de	Starte Aktualisierung der Datenbank ...
@@ -594,7 +599,9 @@ the session extension is needed to use php sessions (db-sessions work without).	
 the session extension is required!	setup	de	Die SESSION Erweiterung wird unbedingt benötigt!
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	de	Die tidy PHP Erweiterung wird im Sammeldruck benötigt um HTML zu reinigen bevor es in Office Dokumente eingefügt wird.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest
+the xmlreader extension is required by egroupware in several applications.	setup	de	Die xmlreader PHP Erweiterung wird in EGroupware von vielen Anwendungen benötigt.
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss außerhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!

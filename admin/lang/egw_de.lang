@@ -100,6 +100,7 @@ authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
 auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
 available placeholders	admin	de	Verfügbare Platzhalter
 back to the list	admin	de	zurück zur Liste
+backup directory %1 mounted as %2	admin	de	Datensicherungsverzeichnis %1 unter %2 gemounted
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
@@ -272,6 +273,7 @@ exists	admin	de	existiert
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 failed to change password for account "%1"!	admin	de	Fehler beim Ändern des Passwortes für Benutzer "%1"!
+failed to mount backup directory!	admin	de	Konnte Datensicherungsverzeichnis nicht mounten!
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
 false	admin	de	Falsch
 field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
@@ -386,6 +388,7 @@ mode	admin	de	Modus
 modified	admin	de	Geändert
 month	admin	de	Monat
 more secure	admin	de	sicherer
+mount backup directory to %1	admin	de	Datensicherungsverzeichnis unter %1 mounten
 must change password upon next login	admin	de	Muss das Passwort beim nächsten Login ändern
 name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
 name of the egroupware instance, eg. default	admin	de	Name der EGroupware Instanz, z.B. default
