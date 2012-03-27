@@ -89,10 +89,11 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		if (this._actionManager)
 		{
 			this._objectManager.clear();
-			this._actionManager.clear();
+			// TODO: No such method.  Maybe implement it?
+			//this._actionManager.clear();
 		}
 
-		this._super();
+		//this._super();
 	},
 
 	/**

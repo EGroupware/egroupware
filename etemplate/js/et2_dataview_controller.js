@@ -81,13 +81,13 @@ var et2_dataview_controller = Class.extend({
 		this._grid.setDataCallback(this._gridCallback, this);
 
 		// Create the selection manager
-		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap);
+//		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap);
 	},
 
 	destroy: function () {
 
 		// Destroy the selection manager
-		this._selectionMgr.free();
+//		this._selectionMgr.free();
 
 		// Clear the selection timeout
 		this._clearTimer();
@@ -473,7 +473,7 @@ var et2_dataview_controller = Class.extend({
 				ao.updateActionLinks(links);
 
 				// Hook the row into the selection manager
-				this.self._selectionMgr.hook(ao, aoi, this.entry.uid);
+//				this.self._selectionMgr.hook(ao, aoi, this.entry.uid);
 			}
 
 			// Invalidate the current row entry
