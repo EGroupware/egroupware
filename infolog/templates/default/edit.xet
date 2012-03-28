@@ -203,7 +203,7 @@
 					</menulist>
 					<hbox span="all">
 						<description value="Parent"/>
-						<link-entry align="right" id="info_id_parent" options="infolog" class="noWrap"/>
+						<link-entry align="right" id="info_id_parent" options="infolog" class="noWrap searchParent"/>
 					</hbox>
 				</row>
 				<row class="row">
@@ -295,6 +295,7 @@
 }
 .link_select select { width: 250px; }
 .description textarea { width: 98%; }
+td.searchParent input[type=search] { width: 90%; }
 		</styles>
 	</template>
 </overlay>
