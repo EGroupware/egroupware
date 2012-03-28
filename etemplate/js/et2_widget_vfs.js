@@ -199,7 +199,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
 				{
 					src += "&thsize="+this.options.size;
 				}
-				this.image.css("width", "100%");
+				this.image.css("max-width", "100%");
 			}
 			this.image.attr("src", src);
 		}
@@ -233,7 +233,7 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
  */
 var et2_vfsSize = et2_description.extend({
 	init: function() {
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 		this.span.addClass("et2_vfs");
 	},
 	human_size: function(size) {

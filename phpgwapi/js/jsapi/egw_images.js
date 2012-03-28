@@ -89,6 +89,43 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			if(matches != null) tries[_app + " (matched)"]= matches;
 			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
 			return null;
+		},
+		
+		/**
+		 * Get image url for a given mime-type and option file
+		 * 
+		 * @param _mime
+		 * @param _path vfs path to generate thumbnails for images
+		 * @param _size defaults to 16 (only supported size currently)
+		 * @returns url of image
+		 */
+		mime_icon: function(_mime, _path, _size)
+		{
+			if (typeof _size == 'undefined') _size = 16;
+			if (!_mime) _mime = 'unknown';
+			if (_mime == 'httpd/unix-directory') _mime = 'directory';
+			
+			var type  = _mime.toLowerCase().split('/');
+			var image;
+			
+			if (type[0] == 'egw' && (image = this.image('navbar',type[1])))
+			{
+				
+			}
+			else if (typeof _path == 'string' && type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/))
+			{
+				var thsize = this.config('link_list_thumbnail') || 32;
+				image = this.link('/etemplate/thumbnail.php',{ 'path': _path, 'thsize': thsize});
+			}
+			else
+			{
+				if ((typeof type[1] == 'undefined' || !(image = this.image('mime'+_size+'_'+type[0]+'_'+type[1], 'etemplate'))) &&
+					!(image = this.image('mime'+_size+'_'+type[0], 'etemplate')))
+				{
+					image = this.image('mime'+_size+'_unknown', 'etemplate');
+				}
+			}
+			return image;
 		}
 	}
 });
