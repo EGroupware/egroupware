@@ -529,6 +529,11 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			{
 				columnWidgets[x] = _row[x].widget;
 			}
+			// Pass along column alignment
+			if(_row[x].align)
+			{
+				columnWidgets[x].align = _row[x].align;
+			}
 		}
 
 		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);

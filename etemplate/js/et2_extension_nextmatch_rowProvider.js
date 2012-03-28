@@ -446,6 +446,11 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode, {
 		{
 			this._widgets[i] = _widgets[i].clone(this);
 			this._widgets[i].loadingFinished();
+			// Set column alignment from widget
+			if(this._widgets[i].align)
+			{
+				this._row.childNodes[i].align = this._widgets[i].align;
+			}
 		}
 	},
 
