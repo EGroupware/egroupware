@@ -320,6 +320,12 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					cell.align = node.getAttribute("align");
 				}
 
+				// Apply widget's class to td, for backward compatability
+				if(node.getAttribute("class"))
+				{
+					cell.class += (cell.class ? " " : "") + node.getAttribute("class");
+				}
+
 				// Create the element
 				var widget = this.createElementFromNode(node, nodeName);
 
