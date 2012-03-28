@@ -33,6 +33,7 @@ var et2_dataview_selectionManager = Class.extend({
 		this._registeredRows = {};
 		this._focusedEntry = null;
 		this._invertSelection = false;
+		this._inUpdate = false;
 	},
 
 	setIndexMap: function (_indexMap) {
@@ -69,6 +70,20 @@ var et2_dataview_selectionManager = Class.extend({
 			if (_links)
 			{
 				var dummyAOI = new egwActionObjectInterface();
+				var self = this;
+
+				// Handling for Action Implementations updating the state
+				dummyAOI.doSetState = function (_state) {
+					if (egwBitIsSet(_state, EGW_AO_STATE_FOCUSED) && !self._inUpdate)
+					{
+						self.resetSelection();
+						self._updateState(_uid, _state);
+						self.setFocused(_uid, true);
+					}
+				};
+
+				// Implementation of the getDOMNode function, so that the event
+				// handlers can be properly bound
 				dummyAOI.getDOMNode = function () {return _tr};
 
 				// Create an action object for the tr and connect it to a dummy AOI
@@ -162,7 +177,7 @@ var et2_dataview_selectionManager = Class.extend({
 	_updateState: function (_uid, _state) {
 		var entry = this._getRegisteredRowsEntry(_uid);
 
-		this._updateEntryState(_entry, _state);
+		this._updateEntryState(entry, _state);
 
 		return entry;
 	},
@@ -180,12 +195,22 @@ var et2_dataview_selectionManager = Class.extend({
 		// Update the state if it has changed
 		if ((_entry.aoi && _entry.aoi.getState() !== _state) || _entry.state != _state)
 		{
+			this._inUpdate = true; // Recursion prevention
 
 			// Update the visual state
 			if (_entry.aoi)
 			{
 				_entry.aoi.setState(_state);
 			}
+
+			// Update the state of the action object
+			if (_entry.ao)
+			{
+				_entry.ao.setSelected(egwBitIsSet(_state, EGW_AO_STATE_SELECTED));
+				_entry.ao.setFocused(egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
+			}
+
+			this._inUpdate = false;
 
 			// Delete the element if state was set to "NORMAL" and there is
 			// no tr
