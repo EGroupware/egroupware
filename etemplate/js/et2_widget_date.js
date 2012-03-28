@@ -82,7 +82,7 @@ var et2_date = et2_inputWidget.extend({
 	set_type: function(_type) {
 		if(_type != this._type)
 		{
-			this.type = _type;
+			this._type = _type;
 			this.createInputWidget();
 		}
 	},
@@ -106,7 +106,7 @@ var et2_date = et2_inputWidget.extend({
 
 		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value)) {
-			if(_value.indexOf(":") > 0 && this.type == "date-timeonly") {
+			if(_value.indexOf(":") > 0 && this._type == "date-timeonly") {
 				this.value = _value;
 				this.input_date.timepicker('setTime',_value);
 				if(old_value !== this.value)
@@ -140,7 +140,7 @@ var et2_date = et2_inputWidget.extend({
 		if(this._type != 'date')
 		{
 			var current = this.input_date.val();
-			if(this.type != 'date-timeonly')
+			if(this._type != 'date-timeonly')
 			{
 				current += " ";
 			}
@@ -494,7 +494,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement(this.type == "date-since" ? "span" : "time"))
+		this.span = $j(document.createElement(this._type == "date-since" ? "span" : "time"))
 			.addClass("et2_date_ro et2_label");
 
 		this.setDOMNode(this.span[0]);
