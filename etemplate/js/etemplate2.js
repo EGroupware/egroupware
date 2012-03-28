@@ -65,7 +65,7 @@ function etemplate2(_container, _menuaction)
 {
 	if (typeof _menuaction == "undefined")
 	{
-		_menuaction = "etemplate_new::ajax_process_content";
+		_menuaction = "etemplate::ajax_process_content";
 	}
 
 	// Copy the given parameters
