@@ -75,7 +75,7 @@
                         var files = this.files;
                         var total = files.length;
                         var $this = $(this);
-                        if (!$this.triggerHandler('html5_upload.onStart', [total])) {
+                        if (!$this.triggerHandler('onStart.html5_upload', [total])) {
                                 return false;
                         }
                         this.disabled = true;
@@ -84,7 +84,7 @@
                         this.html5_upload['continue_after_abort'] = true;
                         function upload_file(number) {
                                 if (number == total) {
-                                        $this.trigger('html5_upload.onFinish', [total]);
+                                        $this.trigger('onFinish.html5_upload', [total]);
                                         options.setStatus(options.genStatus(1, true));
                                         $this.attr("disabled", false);
                                         if (options.autoclear) {
@@ -93,19 +93,19 @@
                                         return;
                                 }
                                 var file = files[number];
-                                if (!$this.triggerHandler('html5_upload.onStartOne', [file.fileName, number, total])) {
+                                if (!$this.triggerHandler('onStartOne.html5_upload', [file.fileName, number, total])) {
                                         return upload_file(number+1);
                                 }
                                 options.setStatus(options.genStatus(0));
                                 options.setName(options.genName(file.fileName, number, total));
                                 options.setProgress(options.genProgress(0, file.fileSize));
                                 xhr.upload['onprogress'] = function(rpe) {
-                                        $this.trigger('html5_upload.onProgress', [rpe.loaded / rpe.total, file.fileName, number, total]);
+                                        $this.trigger('onProgress.html5_upload', [rpe.loaded / rpe.total, file.fileName, number, total]);
                                         options.setStatus(options.genStatus(rpe.loaded / rpe.total));
                                         options.setProgress(options.genProgress(rpe.loaded, rpe.total));
                                 };
                                 xhr.onload = function(load) {
-                                        $this.trigger('html5_upload.onFinishOne', [xhr.responseText, file.fileName, number, total]);
+                                        $this.trigger('onFinishOne.html5_upload', [xhr.responseText, file.fileName, number, total]);
                                         options.setStatus(options.genStatus(1, true));
                                         options.setProgress(options.genProgress(file.fileSize, file.fileSize));
                                         upload_file(number+1);
@@ -122,7 +122,7 @@
                                         }
                                 };
                                 xhr.onerror = function(e) {
-                                        $this.trigger('html5_upload.onError', [file.fileName, e]);
+                                        $this.trigger('onError.html5_upload', [file.fileName, e]);
                                         if (!options.stopOnFirstError) {
                                                 upload_file(number+1);
                                         }
@@ -210,23 +210,23 @@
                         }
                         for (event in available_events) {
                                 if (options[available_events[event]]) {
-                                        $(this).bind("html5_upload."+available_events[event], options[available_events[event]]);
+                                        $(this).bind(available_events[event]+".html5_upload", options[available_events[event]]);
                                 }
                         }
                         $(this)
-                                .bind('html5_upload.start', upload)
-                                .bind('html5_upload.cancelOne', function() {
+                                .bind('start.html5_upload', upload)
+                                .bind('cancelOne.html5_upload', function() {
                                         this.html5_upload['xhr'].abort();
                                 })
-                                .bind('html5_upload.cancelAll', function() {
+                                .bind('cancelAll.html5_upload', function() {
                                         this.html5_upload['continue_after_abort'] = false;
                                         this.html5_upload['xhr'].abort();
                                 })
-                                .bind('html5_upload.destroy', function() {
+                                .bind('destroy.html5_upload', function() {
                                         this.html5_upload['continue_after_abort'] = false;
                                         this.xhr.abort();
                                         delete this.html5_upload;
-                                        $(this).unbind('html5_upload.*').unbind('change', upload);
+                                        $(this).unbind('.html5_upload').unbind('change', upload);
                                 });
                 });
         };
