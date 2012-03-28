@@ -14,6 +14,7 @@
 
 .egwGridView_grid tr.focused td {
 	background-image: url(gfx/focused_hatching.png);
+	background-color: #ad98e8 !important;
 	background-repeat: repeat;
 }
 

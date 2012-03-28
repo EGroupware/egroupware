@@ -10,21 +10,28 @@
  * @version $Id$
  */
 
+/*egw:uses
+	et2_dataview_view_aoi;
+*/
+
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
  * to manage the row selection.
  */
 var et2_dataview_selectionManager = Class.extend({
 
-	init: function (_indexMap) {
-		// Copy the reference to the index map
+	init: function (_indexMap, _actionObjectManager, _queryRangeCallback,
+			_context) {
+		// Copy the arguments
 		this._indexMap = _indexMap;
+		this._actionObjectManager = _actionObjectManager;
+		this._queryRangeCallback = _queryRangeCallback;
+		this._context = _context;
 
-		// Internal map which contains all curently selected uids
-		this._selectedUids = {};
-
-		// Controls whether the selection is currently inverted (e.g. after
-		// selectAll)
+		// Internal map which contains all curently selected uids and their
+		// state
+		this._registeredRows = {};
+		this._focusedEntry = null;
 		this._invertSelection = false;
 	},
 
@@ -32,86 +39,247 @@ var et2_dataview_selectionManager = Class.extend({
 		this._indexMap = _indexMap;
 	},
 
-	/**
-	 * Resets the selection state of all selected elements.
-	 */
-	resetSelection: function () {
-		// Iterate over the index map and reset the selection flag of all rows
-		for (var key in this._indexMap)
+	registerRow: function (_uid, _idx, _tr, _links) {
+
+		// Get the corresponding entry from the registered rows array
+		var entry = this._getRegisteredRowsEntry(_uid);
+
+		// Create the AOI for the tr
+		if (!entry.tr)
 		{
-			if (this._indexMap[key].ao)
+			// Create the AOI which is used internally in the selection manager
+			// this AOI is not connected to the AO, as the selection manager
+			// cares about selection etc.
+			entry.aoi = new et2_dataview_rowAOI(_tr);
+			entry.aoi.setStateChangeCallback(
+				function (_newState, _changedBit, _shiftState) {
+					if (_changedBit === EGW_AO_STATE_SELECTED)
+					{
+						// Call the select handler
+						this._handleSelect(
+								_uid,
+								entry,
+								egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK),
+								egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI)
+							);
+					}
+				}, this);
+
+			// Create AOI
+			if (_links)
 			{
-				this._indexMap[key].ao.setSelected(false);
+				var dummyAOI = new egwActionObjectInterface();
+				dummyAOI.getDOMNode = function () {return _tr};
+
+				// Create an action object for the tr and connect it to a dummy AOI
+				entry.ao = this._actionObjectManager.addObject(_uid, dummyAOI);
+				entry.ao.updateActionLinks(_links);
 			}
 		}
 
-		// Reset the internal representation and the inversion flag
-		this._selectedUids = {};
+		// Update the entry
+		entry.idx = _idx;
+		entry.tr = _tr;
+
+		// Update the visible state of the _tr
+		this._updateEntryState(entry, entry.state);
+	},
+
+	unregisterRow: function (_uid, _tr) {
+		if (typeof this._registeredRows[_uid] !== "undefined"
+		    && this._registeredRows[_uid].tr === _tr)
+		{
+			this._registeredRows[_uid].tr = null;
+			this._registeredRows[_uid].aoi = null;
+
+			// Remove the action object from its container
+			if (this._registeredRows[_uid].ao)
+			{
+				this._registeredRows[_uid].ao.remove();
+				this._registeredRows[_uid].ao = null;
+			}
+
+			if (this._registeredRows[_uid].state === EGW_AO_STATE_NORMAL)
+			{
+				delete this._registeredRows[_uid];
+			}
+		}
+	},
+
+	resetSelection: function () {
 		this._invertSelection = false;
+
+		for (var key in this._registeredRows)
+		{
+			this.setSelected(key, false);
+		}
 	},
 
-	/**
-	 * Marks the given uid as selected.
-	 */
-	uidAddSelection: function (_uid) {
-		this._selectedUids[_uid] = true;
+	setSelected: function (_uid, _selected) {
+		var entry = this._getRegisteredRowsEntry(_uid);
+		this._updateEntryState(entry,
+				egwSetBit(entry.state, EGW_AO_STATE_SELECTED, _selected));
 	},
 
-	/**
-	 * Removes the selection from the given uid.
-	 */
-	uidRemoveSelection: function (_uid) {
-		delete this._selectedUids[_uid];
+	setFocused: function (_uid, _focused) {
+		// Reset the state of the currently focused entry
+		if (this._focusedEntry)
+		{
+			this._updateEntryState(this._focusedEntry,
+					egwSetBit(this._focusedEntry.state, EGW_AO_STATE_FOCUSED,
+							false));
+			this._focusedEntry = null;
+		}
+
+		// Mark the new given uid as focused
+		if (_focused)
+		{
+			var entry = this._focusedEntry = this._getRegisteredRowsEntry(_uid);
+			this._updateEntryState(entry,
+					egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
+		}
 	},
 
-	/**
-	 * Returns whether the given uid is selected or not.
-	 */
-	uidIsSelected: function (_uid) {
-		return (!this._invertSelection) ===
-				(this._selectedUids[_uid] ? true : false);
+	selectAll: function () {
+		// Reset the selection
+		this.resetSelection();
+
+		// Set the "invert selection" flag
+		this._invertSelection = true;
+
+		// Update the selection
+		for (var key in this._registeredRows)
+		{
+			var entry = this._registeredRows[key];
+			this._updateEntryState(entry, entry.state);
+		}
 	},
 
-	/**
-	 * Hooks into the given action object / action object interface in order
-	 * to handle selection.
-	 */
-	hook: function (_ao, _aoi, _uid) {
 
-		// Hook into the action object state change handler, as we need
-		// our own selection code
-		// Big TODO: Remove the old selection handling code from
-		// egwAction once it is no longer used outside et2 applications
-		_aoi.setStateChangeCallback(
-			function (_newState, _changedBit, _shiftState) {
+	/** -- PRIVATE FUNCTIONS -- **/
 
-				var selected = egwBitIsSet(_newState, EGW_AO_STATE_SELECTED);
 
-				// Deselect all other objects inside this container, if the "MULTI" shift-
-				// state is not set
-				if (!egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI))
-				{
-					this.resetSelection();
+	_updateState: function (_uid, _state) {
+		var entry = this._getRegisteredRowsEntry(_uid);
+
+		this._updateEntryState(_entry, _state);
+
+		return entry;
+	},
+
+	_updateEntryState: function (_entry, _state) {
+
+		// Update the state of the entry
+		_entry.state = _state;
+
+		if (this._invertSelection)
+		{
+			_state ^= EGW_AO_STATE_SELECTED;
+		}
+
+		// Update the state if it has changed
+		if ((_entry.aoi && _entry.aoi.getState() !== _state) || _entry.state != _state)
+		{
+
+			// Update the visual state
+			if (_entry.aoi)
+			{
+				_entry.aoi.setState(_state);
+			}
+
+			// Delete the element if state was set to "NORMAL" and there is
+			// no tr
+			if (_state === EGW_AO_STATE_NORMAL && !_entry.tr)
+			{
+				delete this._registeredRows[_entry.uid];
+			}
+		}
+	},
+
+	_getRegisteredRowsEntry: function (_uid) {
+		if (typeof this._registeredRows[_uid] === "undefined")
+		{
+			this._registeredRows[_uid] = {
+				"uid": _uid,
+				"idx": null,
+				"state": EGW_AO_STATE_NORMAL,
+				"tr": null,
+				"aoi": null,
+				"ao": null
+			};
+		}
+
+		return this._registeredRows[_uid];
+	},
+
+	_handleSelect: function (_uid, _entry, _shift, _ctrl) {
+		// If not "_ctrl" is set, reset the selection
+		if (!_ctrl)
+		{
+			this.resetSelection();
+		}
+
+		// Mark the element that was clicked as selected
+		var entry = this._getRegisteredRowsEntry(_uid);
+		this.setSelected(_uid,
+			!_ctrl || !egwBitIsSet(entry.state, EGW_AO_STATE_SELECTED));
+
+		// Focus the element if shift is not pressed
+		if (!_shift)
+		{
+			this.setFocused(_uid, true);
+		}
+		else if (this._focusedEntry)
+		{
+			this._selectRange(this._focusedEntry.idx, _entry.idx);
+		}
+	},
+
+	_selectRange: function (_start, _stop) {
+		// Contains ranges that are not currently in the index map and that have
+		// to be queried
+		var queryRanges = [];
+
+		// Iterate over the given range and select the elements in the range
+		// from _start to _stop
+		var naStart = false;
+		var s = Math.min(_start, _stop);
+		var e = Math.max(_stop, _start);
+		for (var i = s; i <= e; i++)
+		{
+			if (typeof this._indexMap[i] !== "undefined" &&
+			    this._indexMap[i].uid)
+			{
+				// Add the range to the "queryRanges"
+				if (naStart !== false) {
+					queryRanges.push(et2_bounds(naStart, i - 1));
+					naStart = false;
 				}
 
-				// Update the internal status of the uid
-				if (selected)
-				{
-					this.uidAddSelection(_uid);
-				}
-				else
-				{
-					this.uidRemoveSelection(_uid);
-				}
+				// Select the element
+				this.setSelected(this._indexMap[i].uid, true);
+			} else if (naStart === false) {
+				naStart = i;
+			}
+		}
 
-				_ao.setSelected(selected);
+		// Add the last range to the "queryRanges"
+		if (naStart !== false) {
+			queryRanges.push(et2_bounds(naStart, i - 1));
+			naStart = false;
+		}
 
-				return _newState;
-
-			}, this);
-
-		// Set the selection state of the ao
-		_ao.setSelected(this.uidIsSelected(_uid));
+		// Query all unknown ranges from the server
+		for (var i = 0; i < queryRanges.length; i++)
+		{
+			this._queryRangeCallback.call(this._context, queryRanges[i], 
+				function (_order) {
+					for (var j = 0; j < _order.length; j++)
+					{
+						this.setSelected(_order[j], true);
+					}
+				}, this);
+		}
 	}
 
 });

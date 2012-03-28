@@ -153,7 +153,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_filters,
 					_widgetId,
 					egw.dataKnownUIDs(_app),
-					lastModification
+					_queriedRange["no_data"] ? 0xFFFFFFFFFFFF : lastModification
 				],
 				function(result) {
 					parseServerResponse(result, _callback, _context);

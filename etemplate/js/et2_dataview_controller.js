@@ -16,7 +16,6 @@
 
 	et2_dataview_interfaces;
 	et2_dataview_controller_selection;
-	et2_dataview_view_aoi;
 	et2_dataview_view_row;
 
 	egw_action.egw_action;
@@ -64,7 +63,6 @@ var et2_dataview_controller = Class.extend({
 		this._rowCallback = _rowCallback;
 		this._linkCallback = _linkCallback;
 		this._context = _context;
-		this._actionObjectManager = _actionObjectManager;
 
 		// Initialize the "index map" which contains all currently displayed
 		// containers hashed by the "index"
@@ -81,13 +79,14 @@ var et2_dataview_controller = Class.extend({
 		this._grid.setDataCallback(this._gridCallback, this);
 
 		// Create the selection manager
-//		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap);
+		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap,
+				_actionObjectManager, this._selectionFetchRange, this);
 	},
 
 	destroy: function () {
 
 		// Destroy the selection manager
-//		this._selectionMgr.free();
+		this._selectionMgr.free();
 
 		// Clear the selection timeout
 		this._clearTimer();
@@ -171,8 +170,7 @@ var et2_dataview_controller = Class.extend({
 		{
 			this._indexMap[_idx] = {
 				"row": null,
-				"uid": null,
-				"ao": null
+				"uid": null
 			};
 		}
 
@@ -452,29 +450,22 @@ var et2_dataview_controller = Class.extend({
 				this.entry
 			);
 
-			// If we have an object manager, create a new action object for this
-			// row and a new row AOI
+			var links = null;
+
+			// Get the action links if the links callback is set
 			if (this.self._linkCallback)
 			{
-				// Call the link callback
-				var links = this.self._linkCallback.call(
-					this.self._context,
-					_data,
-					this.entry.idx,
-					this.entry.uid
+				links = this.self._linkCallback.call(
+						this.self._context,
+						_data,
+						this.entry.idx,
+						this.entry.uid
 				);
-
-				// Create the action object interface
-				var aoi = new et2_dataview_rowAOI(tr);
-
-				// Create the action object
-				var ao = this.entry.ao =
-					this.self._actionObjectManager.addObject(this.entry.uid, aoi);
-				ao.updateActionLinks(links);
-
-				// Hook the row into the selection manager
-//				this.self._selectionMgr.hook(ao, aoi, this.entry.uid);
 			}
+
+			// Register the row in the selection manager
+			this.self._selectionMgr.registerRow(this.entry.uid, this.entry.idx,
+					tr, links);
 
 			// Invalidate the current row entry
 			this.entry.row.invalidate();
@@ -485,8 +476,13 @@ var et2_dataview_controller = Class.extend({
 	 *
 	 */
 	_destroyCallback: function (_row) {
-		// Remove the action object that corresponds to that row
-		this.entry.ao.remove();
+
+		// Unregister the row from the selection manager
+		if (this.entry.row)
+		{
+			var tr = this.entry.row.getDOMNode();
+			this.self._selectionMgr.unregisterRow(this.entry.uid, tr);
+		}
 
 		// There is no further row connected to the entry
 		this.entry.row = null;
@@ -621,6 +617,12 @@ var et2_dataview_controller = Class.extend({
 					entry.idx = newIdx;
 					newMap[newIdx] = entry;
 				}
+				else
+				{
+					// Make sure the old entry gets invalidated
+					entry.idx = null;
+					entry.row = null;
+				}
 			}
 
 			// Make the new index map the current index map
@@ -656,6 +658,16 @@ var et2_dataview_controller = Class.extend({
 
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
+	},
+
+	_selectionFetchRange: function (_range, _callback, _context) {
+		this._dataProvider.dataFetch(
+				{ "start": _range.top, "num_rows": _range.bottom - _range.top + 1,
+				  "no_data": true },
+				function (_response) {
+					_callback.call(_context, _response.order);
+				}
+		);
 	}
 
 });
