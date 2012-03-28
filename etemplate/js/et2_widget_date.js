@@ -66,11 +66,17 @@ var et2_date = et2_inputWidget.extend({
 		{
 			this.egw().time(this.input_date);
 		}
-		// Update internal value
+		// Update internal value when changed
 		var self = this;
 		this.input_date.datepicker("option","onSelect", function(text) {
 			self.set_value(text);
 		});
+
+		// Framewok skips nulls, but null needs to be processed here
+		if(this.options.value == null)
+		{
+			this.set_value(null);
+		}
 	},
 
 	set_type: function(_type) {
