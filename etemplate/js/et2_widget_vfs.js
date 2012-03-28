@@ -62,11 +62,12 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this._make_path(path_parts);
 
 		// Make it clickable
-		var data = {path: path, type: this.egw().get_mime_info(_value.mime) ? _value.mime : this.DIR_MIME_TYPE }
+		var type = this.egw().get_mime_info(_value.mime) ? _value.mime : this.DIR_MIME_TYPE;
 		jQuery("li",this.span).addClass("et2_clickable et2_link")
-			.click({data:data, egw: this.egw()}, function(e) {
-				e.data.egw.open(e.data.data, "file");
-		});
+			.wrapInner('<a onclick="egw.open({path:\''+
+				egw.encodePath(path.replace('"','&quot;').replace("'", "\\\'"))+
+				'\',type:\''+type+'\'},\'file\');">'
+			);
 	},
 
 	/**
