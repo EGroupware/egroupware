@@ -69,6 +69,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 						popup = url.mime_popup;
 						delete url.mime_popup;
 					}
+			 		if(typeof url.mime_target != 'undefined')
+					{
+						target = url.mime_target;
+						delete url.mime_target;
+					}
 					params = url;
 					url = '/index.php';
 				}

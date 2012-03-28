@@ -282,6 +282,7 @@ class filemanager_hooks
 				egw_vfs::DIR_MIME_TYPE => array(
 					'menuaction' => 'filemanager.filemanager_ui.index',
 					'mime_id' => 'path',
+					'mime_target' => '_self',
 				),
 			),
 		);

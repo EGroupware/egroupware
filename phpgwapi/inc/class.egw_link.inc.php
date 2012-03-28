@@ -75,6 +75,7 @@
  *          		'mime_url' => 'url',
  *          		'menuaction' => 'app.class.method',	// method to call
  *          		'mime_popup' => '400x300',		// optional size of popup
+ *          		'mime_target' => '_self',		// optional target, default _blank
  *          		// other get-parameters to set in url
  *          	),
  *          	// further mime types supported ...
@@ -560,7 +561,7 @@ class egw_link extends solink
 	{
 		if (self::DEBUG)
 		{
-			echo "<p>egw_link::unlink('$link_id','$app','$id','$owner','$app2','$id2')</p>\n";
+			echo "<p>egw_link::unlink('$link_id','$app',".array2string($id).",'$owner','$app2','$id2', $hold_for_purge)</p>\n";
 		}
 		if ($link_id < 0)	// vfs-link?
 		{
