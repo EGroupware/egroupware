@@ -314,6 +314,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 				var span = cell.colSpan = this._forceNumber(cell.colSpan);
 
+				// Read the align value of the element
+				if (node.getAttribute("align"))
+				{
+					cell.align = node.getAttribute("align");
+				}
 
 				// Create the element
 				var widget = this.createElementFromNode(node, nodeName);
@@ -510,6 +515,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					if (cell.width != "auto")
 					{
 						td.width(cell.width);
+					}
+
+					if (cell.align)
+					{
+						td.attr("align",cell.align);
 					}
 
 					// Add the entry for the widget to the management array
