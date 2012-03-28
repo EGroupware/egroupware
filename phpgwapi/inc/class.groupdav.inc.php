@@ -1565,7 +1565,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			else
 			{
-				foreach($explode("\n",$content) as $line) error_log($line);
+				foreach(explode("\n",$content) as $line) error_log($line);
 			}
 		}
 	}
