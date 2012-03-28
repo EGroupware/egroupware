@@ -77,7 +77,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 		var text;
 		for(var i = 0; i < path_parts.length; i++)
 		{
-			text = path_parts[i];
+			text = decodeURIComponent(path_parts[i]);
 
 			// Nice human-readable stuff for apps
 			if(path_parts[1] == 'apps')
@@ -121,26 +121,26 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	/**
-         * Code for implementing et2_IDetachedDOM (data grid)
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-                _attrs.push("value");
-        },
+	 * Code for implementing et2_IDetachedDOM (data grid)
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value");
+	},
 
-        getDetachedNodes: function()
-        {
-                return [this.span[0]];
-        },
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
-                this.span = jQuery(_nodes[0]);
-                if(typeof _values["value"] != 'undefined')
-                {
-                        this.set_value(_values["value"]);
-                }
-        }
+	setDetachedAttributes: function(_nodes, _values)
+	{
+		this.span = jQuery(_nodes[0]);
+		if(typeof _values["value"] != 'undefined')
+		{
+			this.set_value(_values["value"]);
+		}
+	}
 
 
 });
@@ -152,15 +152,19 @@ et2_register_widget(et2_vfs, ["vfs"]);
  */
 var et2_vfsName = et2_textbox.extend({
 	init: function() {
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 		this.input.addClass("et2_vfs");
 	},
 	set_value: function(_value) {
 		if(_value.path)
 		{
-			_value = _value.path
+			_value = _value.path;
 		}
+		_value = egw.decodePath(_value);
 		this._super.apply(this,[_value]);
+	},
+	getValue: function() {
+		return egw.encodePath(this._super.apply(this));
 	}
 });
 et2_register_widget(et2_vfsName, ["vfs-name"]);
@@ -183,7 +187,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	init: function() {
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 		this.image = jQuery(document.createElement("img"));
 		this.image.addClass("et2_vfs vfsMimeIcon");
 		this.setDOMNode(this.image[0]);
@@ -262,7 +266,7 @@ var et2_vfsSize = et2_description.extend({
 		jQuery(this.node).text(this.human_size(_value));
 	},
 	setDetachedAttributes: function(_nodes, _values)
-        {
+	{
 		if(typeof _values["value"] !== "undefined") {
 			this.node = _nodes[0];
 			this.set_value(_values["value"]);
@@ -301,7 +305,7 @@ var et2_vfsMode = et2_description.extend({
 		'r': 0x4  // Read
 	},
 	init: function() {
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 		this.span.addClass("et2_vfs");
 	},
 
@@ -367,7 +371,7 @@ var et2_vfsMode = et2_description.extend({
 	},
 
 	setDetachedAttributes: function(_nodes, _values)
-        {
+	{
 		if(typeof _values["value"] !== "undefined") {
 			this.node = _nodes[0];
 			this.set_value(_values["value"]);

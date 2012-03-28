@@ -162,8 +162,49 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 
 		uid: function() {
 			return (uid_counter++).toString(16);
-		}
+		},
 
+		/**
+		 * Decode encoded vfs special chars
+		 * 
+		 * @param string _path path to decode
+		 * @return string
+		 */
+		decodePath: function(_path) {
+			return decodeURIComponent(_path);
+		},
+		
+		/**
+		 * Encode vfs special chars excluding /
+		 * 
+		 * @param string _path path to decode
+		 * @return string
+		 */
+		encodePath: function(_path) {
+			var components = _path.split('/');
+			for(var n=0; n < components.length; n++)
+			{
+				components[n] = this.encodePathComponent(components[n]);
+			}
+			return components.join('/');
+		},
+		
+		/**
+		 * Encode vfs special chars removing /
+		 * 
+		 * //'%' => '%25',	// % should be encoded, but easily leads to double encoding, therefore better NOT encodig it
+		 * '#' => '%23',
+		 * '?' => '%3F',
+		 * '/' => '',	// better remove it completly
+		 *
+		 * @param string _path path to decode
+		 * @return string
+		 */
+		/*
+		*/
+		encodePathComponent: function(_comp) {
+			return _comp.replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
+		}
 	};
 
 	// Check whether the browser already supports encoding JSON -- if yes, use
