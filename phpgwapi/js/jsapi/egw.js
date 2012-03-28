@@ -18,6 +18,7 @@
 	egw_preferences;
 	egw_lang;
 	egw_links;
+	egw_open;
 	egw_user;
 	egw_config;
 	egw_images;
