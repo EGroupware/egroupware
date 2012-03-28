@@ -11,13 +11,6 @@
  * @version $Id$
  */
 
-// to be able to run with new etemplate enabled or not
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
-if (!class_exists('etemplate_old'))
-{
-	class etemplate_old extends etemplate {}
-}
-
 /**
  * template editor of the eTemplate package
  */
@@ -1158,7 +1151,7 @@ class editor
 	/**
 	 * edit dialog for a widget
 	 *
-	 * @param array $content the submitted content of the etemplate::exec function, default null
+	 * @param array $content the submitted content of the etemplate_old::exec function, default null
 	 * @param string $msg msg to display, default ''
 	 */
 	function widget($content=null,$msg='')
@@ -1325,7 +1318,7 @@ class editor
 			$this->fix_set_onclick($widget,$content['cell'],true);
 			$this->fix_set_onchange($widget,$content['cell'],true);
 
-			foreach(etemplate::$db_key_cols as $var)
+			foreach(boetemplate::$db_key_cols as $var)
 			{
 				if (isset($_GET[$var]))
 				{
@@ -1445,7 +1438,7 @@ class editor
 	/**
 	 * edit dialog for the styles of a templat or app
 	 *
-	 * @param array $content the submitted content of the etemplate::exec function, default null
+	 * @param array $content the submitted content of the etemplate_old::exec function, default null
 	 * @param string $msg msg to display, default ''
 	 */
 	function styles($content=null,$msg='')
