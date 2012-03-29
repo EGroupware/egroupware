@@ -32,7 +32,7 @@
 	* @param string _cname name-prefix / name-space
 	* @return string
 	*/
-	function js_pseudo_funcs(_val)
+	function js_pseudo_funcs(_val,widget)
 	{
 		if (_val.indexOf('egw::link(') != -1)
 		{
@@ -41,8 +41,9 @@
 
 		if (_val.indexOf('form::name(') != -1)
 		{
-			// XXX Use the widget reference XXX
-			//_val = _val.replace(/form::name\(/g,_cname ? "et2_form_name('"+_cname+"'," : '(');
+			// et2_form_name doesn't care about ][, just [
+			var _cname = widget.getPath() ? widget.getPath().join("[") : false;
+			_val = _val.replace(/form::name\(/g,_cname ? "et2_form_name('"+_cname+"'," : '(');
 		}
 	
 		if (_val.indexOf('egw::lang(') != -1)
@@ -87,7 +88,7 @@
 
 	this.et2_compileLegacyJS = function(_code, _widget, _context) {
 		// Replace the javascript pseudo-functions
-		_code = js_pseudo_funcs(_code);
+		_code = js_pseudo_funcs(_code,_widget);
 
 		// Check whether _code is simply "1" -- if yes replace it accordingly
 		if (_code === '1')
