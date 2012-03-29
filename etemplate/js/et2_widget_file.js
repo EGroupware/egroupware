@@ -35,6 +35,12 @@ var et2_file = et2_inputWidget.extend({
 			"default":"8388608",
 			"description": "Largest file accepted, in bytes.  Subject to server limitations.  8Mb = 8388608"
 		},
+		"mime": {
+			"name": "Allowed file types",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "Mime type (eg: image/png) or regex (eg: /^text\//i) for allowed file types"
+		},
 		"blur": {
                         "name": "Placeholder",
                         "type": "string",
@@ -75,21 +81,52 @@ var et2_file = et2_inputWidget.extend({
 			this.options.id = "file_widget";
 		}
 
+		// Legacy - id ending in [] means multiple
+		if(this.options.id.substr(-2) == "[]")
+		{
+			this.options.multiple = true;
+		}
+
 		// Set up the URL to have the request ID & the widget ID
 		var instance = this.getInstanceManager();
 	
 		var self = this;
+
 		this.asyncOptions = jQuery.extend({
 			// Callbacks
-			onStart: function(event, file_count) { return self.onStart(event, file_count); },
-			onFinish: function(event, file_count) { return self.onFinish(event, file_count); },
-			onStartOne: function(event, file_name, index, file_count) { return self.createStatus(event,file_name, index,file_count);},
+			onStart: function(event, file_count) { 
+				// Hide any previous errors
+				self.hideMessage(); 
+				return self.onStart(event, file_count); 
+			},
+			onFinish: function(event, file_count) { 
+				self.onFinish(event, file_count);
+
+				// Fire legacy change action when done
+				self.change(self.input);
+			},
+			onStartOne: function(event, file_name, index, file_count) { 
+				// Here 'this' is the input
+				if(self.checkMime(this.files[index]))
+				{
+					return self.createStatus(event,file_name, index,file_count);
+				}
+				else
+				{
+					// Wrong mime type - show in the list of files
+					return self.createStatus(
+						self.egw().lang("File is of wrong type (%1 != %2)!", this.files[index].type, self.options.mime),
+						file_name
+					);
+				}
+			},
 			onFinishOne: function(event, response, name, number, total) { return self.finishUpload(event,response,name,number,total);},
 			onProgress: function(event, progress, name, number, total) { return self.onProgress(event,progress,name,number,total);},
 			onError: function(event, name, error) { return self.onError(event,name,error);},
 			sendBoundary: window.FormData || jQuery.browser.mozilla,
 			beforeSend: function(form) { return self.beforeSend(form);},
-			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload::etemplate")
+			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload::etemplate"),
+			autoclear: !(this.options.onchange)
 		},this.asyncOptions);
 		this.asyncOptions.fieldName = this.options.id;
 		this.createInputWidget();
@@ -121,10 +158,21 @@ var et2_file = et2_inputWidget.extend({
 			$j(document.createElement("div")).appendTo(this.node);
 		this.progress.addClass("progress");
 
-		if(this.options.multiple) {
+		if(this.options.multiple)
+		{
 			this.input.attr("multiple","multiple");
 		}
+
 		this.setDOMNode(this.node[0]);
+
+	},
+	attachToDOM: function() {
+		this._super.apply(this, arguments);
+		// Override parent's behaviour to fire legacy change when finished
+		if (this.onchange)
+		{
+			this.input.unbind("change.et2_inputWidget");
+		}
 	},
 	getValue: function() {
 		var value = this.options.value ? this.options.value : this.input.val();
@@ -133,6 +181,53 @@ var et2_file = et2_inputWidget.extend({
 	
 	getInputNode: function() {
 		return this.input[0];
+	},
+
+
+	set_mime: function(mime) {
+		if(!mime)
+		{
+			this.options.mime = null;
+		}
+		if(mime.indexOf("/") != 0)
+		{
+			// Lower case it now, if it's not a regex
+			this.options.mime = mime.toLowerCase();
+		}
+		else
+		{
+			// Convert into a js regex
+			var parts = mime.substr(1).match(/(.*)\/([igm]?)$/)
+			this.options.mime = new RegExp(parts[1],parts.length > 2 ? parts[2] : "");
+		}
+	},
+
+	set_multiple: function(_multiple) {
+		this.options.multiple = _multiple;
+		if(_multiple)
+		{
+			return this.input.attr("multiple", "multiple");
+		}
+		return this.input.removeAttr("multiple");
+	},
+	/**
+	 * Check to see if the provided file's mimetype matches
+	 *
+	 * @param f File object
+	 * @return boolean
+	 */
+	checkMime: function(f) {
+		// If missing, let the server handle it
+		if(!this.options.mime || !f.type) return true;
+
+		var is_preg = (typeof this.options.mime == "object");
+		if(!is_preg && f.type.toLowerCase() == this.options.mime || is_preg && this.options.mime.test(f.type))
+		{
+			return true;
+		}
+
+		// Not right mime
+		return false;
 	},
 
 	/**
@@ -173,9 +268,11 @@ var et2_file = et2_inputWidget.extend({
 	/**
 	 * Creates the elements used for displaying the file, and it's upload status, and
 	 * attaches them to the DOM
+	 *
+	 * @param _event Either the event, or an error message
 	 */
-	createStatus: function(event, file_name, index, file_count) {
-		var error = ""
+	createStatus: function(_event, file_name, index, file_count) {
+		var error = (typeof _event == "object" ? "" : _event);
 		if(this.input[0].files[index]) {
 			var file = this.input[0].files[index];
 			if(file.size > this.options.max_file_size) {
@@ -216,19 +313,34 @@ console.warn(event,name,error);
 	 */
 	finishUpload: function(event, response, name, number, total) {
 		if(typeof response == 'string') response = jQuery.parseJSON(response);
-		if(response.response[0].data && typeof response.response[0].data.length == 'undefined') {
+		if(response.response[0] && typeof response.response[0].data.length == 'undefined') {
 			if(typeof this.options.value != 'object') this.options.value = {};
 			for(var key in response.response[0].data) {
-				this.options.value[key] = response.response[0].data[key];
-			}
-			if(this.progress)
-			{
-				$j("[file='"+name+"']",this.progress).addClass("message success");
+				if(typeof response.response[0].data[key] == "string")
+				{
+					// Message from server - probably error
+					
+					$j("[file='"+name+"']",this.progress)
+						.addClass("error")
+						.css("display", "block")
+						.text(response.response[0].data[key]);
+				}
+				else
+				{
+					this.options.value[key] = response.response[0].data[key];
+					if(this.progress)
+					{
+						$j("[file='"+name+"']",this.progress).addClass("message success");
+					}
+				}
 			}
 		}
 		else if (this.progress)
 		{
-			$j("[file='"+name+"']",this.progress).addClass("error").css("display", "block");
+			$j("[file='"+name+"']",this.progress)
+				.addClass("error")
+				.css("display", "block")
+				.text(this.egw().lang("Server error"));
 		}
 		return true;
 	},
