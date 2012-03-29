@@ -298,7 +298,7 @@ class link_widget
 			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
-				$value[$row]['title'] = egw_link::title($link['app'],($link['app'] == egw_link::VFS_APPNAME?egw_vfs::decodePath($link['id']):$link['id']),$link);
+				$value[$row]['title'] = egw_link::title($link['app'],($link['app'] == egw_link::VFS_APPNAME&&!is_array($link['id'])?egw_vfs::decodePath($link['id']):$link['id']),$link);
 				if (!is_array($link['id']))
 				{
 					$value[$row]['view']  = egw_link::view($link['app'],$link['id'],$link);
