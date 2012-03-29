@@ -197,6 +197,7 @@ function mail_compose(_action, _elems)
 			url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 			url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 			url += '&reply_id='+_elems[0].id;
+			url += '&mode=forwardinline';
 			egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
 		}
 	}

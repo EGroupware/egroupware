@@ -788,11 +788,12 @@
 			$folder = base64_decode($_GET['folder']);
 			$replyID = $_GET['reply_id'];
 			$partID  = $_GET['part_id'];
-
+			$mode = false;
+			if (isset($_GET['mode']) && ($_GET['mode']=='forwardasattach'||$_GET['mode']=='forwardinline')) $mode  = ($_GET['mode']=='forwardinline'?'inline':'asattach');
 			if (!empty($replyID))
 			{
 				// this fill the session data with the values from the original email
-				$this->bocompose->getForwardData($icServer, $folder, $replyID, $partID);
+				$this->bocompose->getForwardData($icServer, $folder, $replyID, $partID, $mode);
 			}
 			$this->compose();
 		}

@@ -370,8 +370,13 @@
 			return false;
 		}
 
-		function getForwardData($_icServer, $_folder, $_uid, $_partID)
+		function getForwardData($_icServer, $_folder, $_uid, $_partID, $_mode=false)
 		{
+			if ($_mode)
+			{
+				$modebuff = $this->preferencesArray['message_forwarding'];
+				$this->preferencesArray['message_forwarding'] = $_mode;
+			}
 			if  ($this->preferencesArray['message_forwarding'] == 'inline') {
 				$this->getReplyData('forward', $_icServer, $_folder, $_uid, $_partID);
 			}
@@ -415,7 +420,10 @@
 				}
 			}
 			$bofelamimail->closeConnection();
-
+			if ($_mode)
+			{
+				$this->preferencesArray['message_forwarding'] = $modebuff;
+			}
 			$this->saveSessionData();
 		}
 
