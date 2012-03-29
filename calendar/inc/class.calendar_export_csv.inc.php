@@ -53,6 +53,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			if($states['view'] == 'listview') {
 				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
 				$query['num_rows'] = -1;        // all
+				$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
@@ -114,7 +115,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
 			// the condition below (2 lines) may only work on enum_recuring=false and using the iterator to test an recurring event on the given timerange
-			// Get rid of yearly recurring events that don't belong 
+			// Get rid of yearly recurring events that don't belong
 			//if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
 			// Add in participants
 			if($options['mapping']['participants']) {
@@ -201,6 +202,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 			// Use UI to get dates
 			$ui = new calendar_uilist();
+			$list['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$ui->get_rows($list);
 			if($ui->first) $start = $ui->first;
 			if($ui->last) $end = $ui->last;

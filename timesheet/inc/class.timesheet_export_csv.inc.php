@@ -30,11 +30,15 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		if($options['selection'] == 'selected') {
 			$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
 			$query['num_rows'] = -1;	// all records
+			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
 		} elseif($options['selection'] == 'all') {
-			$query = array('num_rows' => -1);
+			$query = array(
+				'num_rows' => -1,
+				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
+			);
 			$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
-		} 
+		}
 
 
 		$options['begin_with_fieldnames'] = true;
