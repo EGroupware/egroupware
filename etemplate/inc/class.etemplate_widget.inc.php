@@ -301,6 +301,26 @@ class etemplate_widget
 	}
 
 	/**
+	 * Iterate over children to find the one with the given id and optional type
+	 *
+	 * @param string $type
+	 * @return etemplate_widget or NULL
+	 */
+	public function getElementsByType($type)
+	{
+		$elements = array();
+		foreach($this->children as $child)
+		{
+			if ($child->type === $type)
+			{
+				$elements[] = $child;
+			}
+			$elements += $child->getElementsByType($type, $subclass_ok);
+		}
+		return $elements;
+	}
+
+	/**
 	 * Run a given method on all children
 	 *
 	 * Default implementation only calls method on itself and run on all children
@@ -565,6 +585,12 @@ class etemplate_widget
 
 		// Make sure none of these are left
 		$idx = str_replace(array('&#x5B;','&#x5D;'),array('[',']'),$idx);
+
+		// Handle things expecting arrays - ends in []
+		if(substr($idx,-2) == "[]")
+		{
+			$idx = substr($idx,0,-2);
+		}
 
 		if (count($idxs = explode('[', $idx, 2)) > 1)
 		{
