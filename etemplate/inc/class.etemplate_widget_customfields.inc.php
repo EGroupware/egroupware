@@ -227,16 +227,18 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 
 			$value_in = self::get_array($content, $form_name);
-			foreach($value_in as $field => $value)
-			{
-				if ((string)$value === '' && $this->attrs['needed'])
+			if(is_array($value_in)) {
+				foreach($value_in as $field => $value)
 				{
-					self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+					if ((string)$value === '' && $this->attrs['needed'])
+					{
+						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+					}
+					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
+					
+					$valid = implode(',',$value);
+					error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 				}
-				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-				
-				$valid = implode(',',$value);
-				error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 			}
 		}
 	}
