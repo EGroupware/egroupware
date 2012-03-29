@@ -458,7 +458,6 @@ ul.et2_vfs {
 	display: inline;
 }
 .et2_vfs li.vfsFilename:not(:last-child):after {
-	content:           '/';
 	padding: 0.25ex;
 }
 

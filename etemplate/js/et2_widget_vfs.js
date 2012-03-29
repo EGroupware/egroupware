@@ -52,12 +52,16 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this.span.empty().text(_value);
 			return;
 		}
-		var path_parts = _value.path ? _value.path.split('/') : [];
+		var path = _value.path ? _value.path : '/';
+		// calculate path as parent of name, which can contain slashes
+		// eg. _value.path=/home/ralf/sub/file, _value.name=sub/file --> path=/home/ralf
+		// --> generate clickable fields for sub/ + file
+		path = path.substr(0, _value.path.length-_value.name.length-1);
+		var path_offset = path.split('/').length;
+		var path_parts = _value.path.split('/');
 
 		var text;
-		var path = '/';
-		var mime = this.DIR_MIME_TYPE;
-		for(var i = 0; i < path_parts.length; i++)
+		for(var i = path_offset; i < path_parts.length; i++)
 		{
 			path += (path=='/'?'':'/')+path_parts[i];
 			text = egw.decodePath(path_parts[i]);
@@ -87,25 +91,17 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 						break;
 				}
 			}
-			path_parts[i] = text;
-
-		// TODO: This is apparently not used in old etemplate
-		/*
+			var data = {path: path, type: i < path_parts.length-1 ? this.DIR_MIME_TYPE : _value.mime };
 			var part = $j(document.createElement("li"))
 				.addClass("vfsFilename")
-				.text(text)
+				.text(text + (i < path_parts.length-1 ? '/' : ''))
+				//.attr('title', egw.decodePath(path))
+				.addClass("et2_clickable et2_link")
+				.click({data:data, egw: this.egw()}, function(e) {	                         
+					e.data.egw.open(e.data.data, "file");
+				})
 				.appendTo(this.span);
-		*/
 		}
-		var data = {path: path, type: i==path_parts.length-1 ? _value.mime : this.DIR_MIME_TYPE };
-		var part = $j(document.createElement("li"))
-			.addClass("vfsFilename")
-			.text(text)
-			.addClass("et2_clickable et2_link")
-			.click({data:data, egw: this.egw()}, function(e) {	                         
-				e.data.egw.open(e.data.data, "file");
-			})
-			.appendTo(this.span);
 	},
 
 	/**
