@@ -393,13 +393,21 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
  */
 var et2_vfsUpload = et2_file.extend({
 	
+	legacyOptions: ["mime"],
+
 	asyncOptions: {
 		url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_vfs::ajax_upload::etemplate")
 	},
 
-	init: function() {
+	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
 		this.input.addClass("et2_vfs");
+
+		// If the ID is a directory, allow multiple uploads
+		if(this.options.id.substr(-1) == '/')
+		{
+			this.set_multiple(true);
+		}
 	},
 
 	set_value: function(_value) {
