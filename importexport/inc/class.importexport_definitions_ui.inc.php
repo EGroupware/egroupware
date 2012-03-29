@@ -292,12 +292,13 @@ class importexport_definitions_ui
         {
 		//echo __METHOD__."('$action', ".array2string($selected).', '.array2string($use_all).",,, '$session_name')";
 		if ($use_all)
-                {
-                        // get the whole selection
-                        $old_query = $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'importexport');
+		{
+			// get the whole selection
+			$old_query = $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'importexport');
 
-			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
-			$query['num_rows'] = -1;        // all
+			@set_time_limit(0);				// switch off the execution time limit, as it's for big selections to small
+			$query['num_rows'] = -1;		// all
+			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$this->get_rows($query,$rows,$readonlys);
 
 			$selected = array();
@@ -309,7 +310,7 @@ class importexport_definitions_ui
 				// Restore old query
 				egw_session::appsession($session_name, 'importexport',$old_query);
 			}
-                }
+		}
 
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
