@@ -77,6 +77,11 @@
 			_val = _val.replace(/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/,
 				"xajax_doXMLHTTP('"+egw.getAppName()+".$1.etemplate'");
 		}
+
+		if (_val.indexOf('this.form.submit()') != -1)
+		{
+			_val = _val.replace('this.form.submit()','widget.getInstanceManager().submit()');
+		}
 		return _val;
 	}
 

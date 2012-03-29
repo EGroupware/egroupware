@@ -18,7 +18,7 @@ if (!isset($GLOBALS['egw_info']))
 		'flags' => array(
 			'currentapp' => $_REQUEST['sessionid'] ? 'etemplate' : 'login',
 			'nonavbar' => true,
-			'debug' => 'etemplate_new',
+			'debug' => 'etemplate',
 		)
 	);
 	include_once '../../header.inc.php';
@@ -174,7 +174,7 @@ class etemplate_new extends etemplate_widget_template
 		<script>
 			egw.langRequire(window, '.json_encode($langRequire).');
 			egw(window).ready(function() {
-				var et2 = new etemplate2(document.getElementById("container"), "etemplate_new::ajax_process_content");
+				var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
 				et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
 			}, null, true);
 		</script>
@@ -419,7 +419,6 @@ class etemplate_new extends etemplate_widget_template
 	* creates HTML from an eTemplate
 	*
 	* Compatibility function for calendar, which uses etemplate::show to generate html --> use etemplate_old class
-	* @todo Once etemplate_new is renamed to etemplate and we have an explicit etemplate_old class, change it at caller (egw. calendar)
 	*
 	* This is done by calling show_cell for each cell in the form. show_cell itself
 	* calls show recursivly for each included eTemplate.
@@ -445,10 +444,11 @@ class etemplate_new extends etemplate_widget_template
 	}
 }
 
-if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_new')
+
+if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate')
 {
 	$name = isset($_GET['name']) ? $_GET['name'] : 'timesheet.edit';
-	$template = new etemplate_new();
+	$template = new etemplate();
 	if (!$template->read($name))
 	{
 		header('HTTP-Status: 404 Not Found');

@@ -1052,7 +1052,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 		// Set onChange
 		var input = select.input;
-		if(this.nextmatch.options.settings[name+"_onchange"])
+		if (this.nextmatch.options.settings[name+"_onchange"] && 
+			!this.nextmatch.options.settings[name+"_onchange"].match('/^this\.form\.submit();?$/'))
 		{
 			// Get the onchange function string
 			var onchange = this.nextmatch.options.settings[name+"_onchange"];
@@ -1060,11 +1061,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			// Connect it to the onchange event of the input element
 			input.change(this.nextmatch, et2_compileLegacyJS(onchange, this.nextmatch, input));
 		}
-		input.change(this.nextmatch, function(event) {
-			event.data.activeFilters[name] = input.val()
-			event.data.applyFilters();
-		});
-			
+		else	// default request changed rows with new filters, previous this.form.submit()
+		{
+			input.change(this.nextmatch, function(event) {
+				event.data.activeFilters[name] = input.val();
+				event.data.applyFilters();
+			});
+		}	
 		return select;
 	},
 
