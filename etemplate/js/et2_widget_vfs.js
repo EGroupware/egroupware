@@ -46,39 +46,21 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 	},
 
 	set_value: function(_value) {
-		var path = '';
-		if(_value.path)
-		{
-			path = _value.path
-		}
-		else if (typeof _value !== 'object')
+		if (typeof _value !== 'object')
 		{
 			this.egw().debug("warn", "%s only has path, needs full array", this.id, _value);
 			this.span.empty().text(_value);
 			return;
 		}
-		var path_parts = path ? path.split('/') : [];
+		var path_parts = _value.path ? _value.path.split('/') : [];
 
-		this._make_path(path_parts);
-
-		// Make it clickable
-		var type = this.egw().get_mime_info(_value.mime) ? _value.mime : this.DIR_MIME_TYPE;
-		jQuery("li",this.span).addClass("et2_clickable et2_link")
-			.wrapInner('<a onclick="egw.open({path:\''+
-				egw.encodePath(path.replace('"','&quot;').replace("'", "\\\'"))+
-				'\',type:\''+type+'\'},\'file\');">'
-			);
-	},
-
-	/**
-	 * Create a list of clickable path components
-	 */
-	_make_path: function(path_parts) {
-		// TODO: This is apparently not used in old etemplate
 		var text;
+		var path = '/';
+		var mime = this.DIR_MIME_TYPE;
 		for(var i = 0; i < path_parts.length; i++)
 		{
-			text = decodeURIComponent(path_parts[i]);
+			path += (path=='/'?'':'/')+path_parts[i];
+			text = egw.decodePath(path_parts[i]);
 
 			// Nice human-readable stuff for apps
 			if(path_parts[1] == 'apps')
@@ -115,9 +97,14 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 				.appendTo(this.span);
 		*/
 		}
+		var data = {path: path, type: i==path_parts.length-1 ? _value.mime : this.DIR_MIME_TYPE };
 		var part = $j(document.createElement("li"))
 			.addClass("vfsFilename")
 			.text(text)
+			.addClass("et2_clickable et2_link")
+			.click({data:data, egw: this.egw()}, function(e) {	                         
+				e.data.egw.open(e.data.data, "file");
+			})
 			.appendTo(this.span);
 	},
 
