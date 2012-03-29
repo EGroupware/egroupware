@@ -301,7 +301,7 @@ class nextmatch_widget
 		$value['options-num_rows'] =& $row_options;
 
 		if (!isset($value['num_rows'])) $extension_data['num_rows'] = $value['num_rows'] = $max;
-		if ($value['num_rows'] != $max)
+		if ($value['num_rows'] != $max || $value['num_rows'] <= 0)	// can be -1 if importexport crashes
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = (int)$value['num_rows'];
 		}
@@ -1431,7 +1431,6 @@ class nextmatch_widget
 					if($value_in[self::CF_PREFIX.$name]['id'] != '' && $value_in[self::CF_PREFIX.$name]['id'] != $old_id)  {
 						$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
 					}
-
 				}
 				elseif ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
 				{
