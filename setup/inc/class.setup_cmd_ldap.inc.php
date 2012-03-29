@@ -274,6 +274,10 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			list(,$type,$hash) = $matches;
 		}
+		elseif (preg_match('/^[0-9a-f]{32}$/',$hash))
+		{
+			$type = 'md5';
+		}
 		switch(strtolower($type))
 		{
 			case 'plain':

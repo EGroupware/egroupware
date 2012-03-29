@@ -79,9 +79,9 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -126,7 +126,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 		$this->errors = array();
 
 		$lookups = array(
-			'account_status'        => array('A' => lang('Active'), '' => lang('Disabled'), 'D' => lang('Disabled')),
+			'account_status'	=> array('A' => lang('Active'), '' => lang('Disabled'), 'D' => lang('Disabled')),
 		);
 
 		while ( $record = $import_csv->get_record() ) {
@@ -217,7 +217,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 				return true;
 			default:
 				throw new egw_exception('Unsupported action');
-			
+
 		}
 	}
 
@@ -286,27 +286,26 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	* Returns errors that were encountered during importing
+	* Maximum of one error message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => error message
+	*       )
+	*/
+	public function get_errors() {
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
-} // end of iface_export_plugin
-?>
+	* Returns a list of actions taken, and the number of records for that action.
+	* Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	*
+	* @return Array (
+	*       action => record count
+	* )
+	*/
+	public function get_results() {
+		return $this->results;
+	}
+}

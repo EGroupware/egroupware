@@ -165,8 +165,11 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 				admin_cmd::$acl->delete_repository('preferences','nopasswordchange',$data['account_id']);
 			}
 		}
-		// for existing accounts we have to change the password explicitly (at least that's what the old UI does)
-		if($this->account && !is_null($this->password))
+		// if we have a password and it's not a hash, and auth_type != account_repository
+		if (!is_null($this->password) &&
+			!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$this->password) &&
+			!preg_match('/^[0-9a-f]{32}$/',$this->password) &&	// md5 hash
+			admin_cmd::$accounts->config['auth_type'] != admin_cmd::$accounts->config['account_repository'])
 		{
 			admin_cmd_change_pw::exec();		// calling the exec method of the admin_cmd_change_pw
 		}
