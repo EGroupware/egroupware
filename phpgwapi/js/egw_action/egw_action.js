@@ -162,6 +162,24 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 }
 
 /**
+ * Clears the element and removes it from the parent container
+ */
+egwAction.prototype.remove = function () {
+	// Remove all references to the child elements
+	this.children = [];
+
+	// Remove this element from the parent list
+	if (this.parent)
+	{
+		var idx = this.parent.children.indexOf(this);
+		if (idx >= 0)
+		{
+			this.parent.children.splice(idx, 1);
+		}
+	}
+}
+
+/**
  * Searches for a specific action with the given id
  */
 egwAction.prototype.getActionById = function(_id)

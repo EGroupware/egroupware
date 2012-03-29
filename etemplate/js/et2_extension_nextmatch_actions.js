@@ -17,28 +17,33 @@
  * @param _action action object with attributes caption, id, nm_action, ...
  * @param _senders array of rows selected
  */
-function nm_action(_action, _senders)
+function nm_action(_action, _senders, _target, _ids)
 {
 	// ignore checkboxes, unless they have an explicit defined nm_action
 	if (_action.checkbox && (!_action.data || typeof _action.data.nm_action == 'undefined')) return;
 
 	if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
 	if (typeof _action.data.nm_action == 'undefined') _action.data.nm_action = 'submit';
-	
+
+	// ----------------------
+	// TODO: Parse the _ids.inverted flag!
+	// ----------------------
+	var idsArr = _ids.ids;
+
 	var ids = "";
-	for (var i = 0; i < _senders.length; i++)
+	for (var i = 0; i < idsArr.length; i++)
 	{
-		var app_id = _senders[i].id.split('::', 2);
+		var app_id = idsArr[i].split('::', 2);
 		var id = app_id[1];
 		ids += (id.indexOf(',') >= 0 ? '"'+id.replace(/"/g,'""')+'"' : id) + 
-			((i < _senders.length - 1) ? "," : "");
+			((i < idsArr.length - 1) ? "," : "");
 	}
 	//console.log(_action); console.log(_senders);
 
 	var mgr = _action.getManager();
 
 	var select_all = mgr.getActionById("select_all");
-	var confirm_msg = (_senders.length > 1 || select_all && select_all.checked) && 
+	var confirm_msg = (idsArr.length > 1 || select_all && select_all.checked) && 
 		typeof _action.data.confirm_multiple != 'undefined' ?
 			_action.data.confirm_multiple : _action.data.confirm;
 
@@ -49,7 +54,7 @@ function nm_action(_action, _senders)
 		if (!confirm(confirm_msg)) return;
 	}
 	// in case we only need to confirm multiple selected (only _action.data.confirm_multiple)
-	else if (typeof _action.data.confirm_multiple != 'undefined' &&  (_senders.length > 1 || select_all && select_all.checked))
+	else if (typeof _action.data.confirm_multiple != 'undefined' &&  (idsArr.length > 1 || select_all && select_all.checked))
 	{
 		if (!confirm(_action.data.confirm_multiple)) return;		
 	}
@@ -94,7 +99,7 @@ function nm_action(_action, _senders)
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
 			console.log(params);
-			var egw_open_id = _senders[0].id;
+			var egw_open_id = idsArr[0].id;
 			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
 			egw_open(egw_open_id,params[1],params[0],params[3]);
 			break;
@@ -103,7 +108,7 @@ function nm_action(_action, _senders)
 			// open div styled as popup contained in current form and named action.id+'_popup'
 			if (nm_popup_action == null)
 			{
-				nm_open_popup(_action, _senders);
+				nm_open_popup(_action, _ids);
 				break;
 			}
 			// fall through, if popup is open --> submit form
@@ -202,7 +207,9 @@ function nm_compare_field(_action, _senders, _target)
 	return value == _action.data.fieldValue;
 }
 
-var nm_popup_action, nm_popup_senders = null;
+// TODO: This code is rather suboptimal! No global variables as this code will
+// run in a global context
+var nm_popup_action, nm_popup_ids = null;
 
 /**
  * Open popup for a certain action requiring further input
@@ -210,15 +217,15 @@ var nm_popup_action, nm_popup_senders = null;
  * Popup needs to have eTemplate name of action id plus "_popup"
  * 
  * @param _action
- * @param _senders
+ * @param _ids
  */
-function nm_open_popup(_action, _senders)
+function nm_open_popup(_action, _ids)
 {
 	var popup = document.getElementById(_action.getManager().etemplate_var_prefix + '[' + _action.id + '_popup]');
 
 	if (popup) {
 		nm_popup_action = _action;
-		nm_popup_senders = _senders;
+		nm_popup_ids = _ids;
 		popup.style.display = 'block';
 	}
 }
@@ -231,7 +238,7 @@ function nm_submit_popup(button)
 	button.form.submit_button.value = button.name;	// set name of button (sub-action)
 
 	// call regular nm_action to transmit action and senders correct
-	nm_action(nm_popup_action, nm_popup_senders);
+	nm_action(nm_popup_action, null, null, nm_popup_ids);
 }
 
 /**

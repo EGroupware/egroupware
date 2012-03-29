@@ -496,6 +496,46 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		}
 	},
 
+	/**
+	 * Makes the given index visible: TODO: Propagate this to the parent grid.
+	 */
+	makeIndexVisible: function (_idx)
+	{
+		// Get the element range
+		var elemRange = this._getElementRange(_idx);
+
+		// Abort if the index was out of range
+		if (!elemRange)
+		{
+			return false;
+		}
+
+		// Calculate the current visible range
+		var visibleRange = et2_bounds(
+				this._viewRange.top + ET2_GRID_VIEW_EXT,
+				this._viewRange.bottom - ET2_GRID_VIEW_EXT);
+
+		// Check whether the element is currently completely visible -- if yes,
+		// do nothing
+		if (visibleRange.top < elemRange.top
+		    && visibleRange.bottom > elemRange.bottom)
+		{
+			return true;
+		}
+
+		if (elemRange.top < visibleRange.top)
+		{
+			this.scrollarea.scrollTop(elemRange.top);
+		}
+		else
+		{
+			var h = elemRange.bottom - elemRange.top;
+			this.scrollarea.scrollTop(elemRange.top - this._scrollHeight + h);
+		}
+
+	},
+
+
 	/* ---- PRIVATE FUNCTIONS ---- */
 
 /*	_inspectStructuralIntegrity: function() {
@@ -514,6 +554,38 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			throw "Total count missmatch!";
 		}
 	},*/
+
+	/**
+	 * Translates the given index to a range, returns false if the index is
+	 * out of range.
+	 */
+	_getElementRange: function (_idx)
+	{
+		// Recalculate the element positions
+		this._recalculateElementPosition();
+
+		// Translate the given index to the map index
+		var mapIdx = this._calculateMapIndex(_idx);
+
+		// Do nothing if the given index is out of range
+		if (mapIdx === false)
+		{
+			return false;
+		}
+
+		// Get the map element
+		var elem = this._map[mapIdx];
+
+		// Get the element range
+		if (elem instanceof et2_dataview_spacer)
+		{
+			var avg = this.getAverageHeight();
+			return et2_range(elem.getTop() + avg * (elem.getIndex() - _idx),
+					avg);
+		}
+
+		return elem.getRange();
+	},
 
 	/**
 	 * Recalculates the position of the currently managed containers. This

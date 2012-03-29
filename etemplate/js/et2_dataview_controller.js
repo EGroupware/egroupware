@@ -80,7 +80,8 @@ var et2_dataview_controller = Class.extend({
 
 		// Create the selection manager
 		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap,
-				_actionObjectManager, this._selectionFetchRange, this);
+				_actionObjectManager, this._selectionFetchRange,
+				this._makeIndexVisible, this);
 	},
 
 	destroy: function () {
@@ -658,8 +659,13 @@ var et2_dataview_controller = Class.extend({
 
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
+		this.self._selectionMgr.setTotalCount(_response.total);
 	},
 
+	/**
+	 * Callback function used by the selection manager to translate the selected
+	 * range to uids.
+	 */
 	_selectionFetchRange: function (_range, _callback, _context) {
 		this._dataProvider.dataFetch(
 				{ "start": _range.top, "num_rows": _range.bottom - _range.top + 1,
@@ -668,6 +674,13 @@ var et2_dataview_controller = Class.extend({
 					_callback.call(_context, _response.order);
 				}
 		);
+	},
+
+	/**
+	 * Tells the grid to make the given index visible.
+	 */
+	_makeIndexVisible: function (_idx) {
+		this._grid.makeIndexVisible(_idx);
 	}
 
 });

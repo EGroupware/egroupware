@@ -143,8 +143,18 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 	called.
 		 */
 		dataFetch: function (_execId, _queriedRange, _filters, _widgetId,
-				_callback, _context)
+				_callback, _context, _knownUids)
 		{
+			var lm = lastModification;
+			if (_queriedRange["no_data"])
+			{
+				lm = 0xFFFFFFFFFFFF;
+			}
+			else if (_queriedRange["only_data"])
+			{
+				lm = 0;
+			}
+
 			var request = egw.json(
 				"etemplate_widget_nextmatch::ajax_get_rows::etemplate",
 				[
@@ -152,8 +162,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_queriedRange,
 					_filters,
 					_widgetId,
-					egw.dataKnownUIDs(_app),
-					_queriedRange["no_data"] ? 0xFFFFFFFFFFFF : lastModification
+					_knownUids ? _knownUids : egw.dataKnownUIDs(_app),
+					lm
 				],
 				function(result) {
 					parseServerResponse(result, _callback, _context);
@@ -185,6 +195,21 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 * a certain uid.
 	 */
 	var registeredCallbacks = {};
+
+	/**
+	 * Uids and timers used for querying data uids, hashed by the first few
+	 * bytes of the _execId, stored as an object of the form
+	 * {
+	 *     "timer": <QUEUE TIMER>,
+	 *     "uids": <ARRAY OF UIDS>
+	 * }
+	 */
+	var queue = {};
+
+	/**
+	 * Contains the queue timeout in milliseconds.
+	 */
+	var QUEUE_TIMEOUT = 10;
 
 	/**
 	 * This constant specifies the maximum age of entries in the local storrage
@@ -230,9 +255,14 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 *
 		 * @param _uid is the uid for which the callback should be registered.
 		 * @param _callback is the callback which should get called.
-		 * @param _context is an optional parameter which can 
+		 * @param _context is the optional context in which the callback will be
+		 * executed
+		 * @param _execId is the exec id which will be used in case the data is
+		 * not available
+		 * @param _widgetId is the widget id which will be used in case the uid
+		 * has to be fetched.
 		 */
-		dataRegisterUID: function (_uid, _callback, _context) {
+		dataRegisterUID: function (_uid, _callback, _context, _execId, _widgetId) {
 			// Create the slot for the uid if it does not exist now
 			if (typeof registeredCallbacks[_uid] === "undefined")
 			{
@@ -252,6 +282,33 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				// Update the timestamp and call the given callback function
 				localStorage[_uid].timestamp = (new Date).getTime();
 				_callback.call(_context, localStorage[_uid].data);
+			}
+			else if (_execId && _widgetId)
+			{
+				// Get the first 50 bytes of the exex id
+				var hash = _execId.substring(0, 50);
+
+				// Create a new queue if it does not exist yet
+				if (typeof queue[hash] === "undefined")
+				{
+					var self = this;
+					queue[hash] = { "uids": [], "timer": null };
+					queue[hash].timer = window.setTimeout(function () {
+						// Fetch the data
+						self.dataFetch(_execId, {"start": 0, "num_rows": 0, "only_data": true},
+							[], _widgetId, null, null, queue[hash].uids);
+
+						// Delete the queue entry
+						delete queue[hash];
+					}, 10);
+				}
+
+				// Push the uid onto the queue
+				queue[hash].uids.push(_uid.split("::").pop());
+			}
+			else
+			{
+				this.debug("log", "Data for uid " + _uid + " not available.");
 			}
 		},
 

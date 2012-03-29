@@ -44,31 +44,28 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * is given.
 	 */
 	init: function (_egw, _execId, _widgetId, _grid, _rowProvider,
-			_objectManager, _actionLinks, _actions) {
+			_actionLinks, _objectManager, _actions) {
 
-		// Create the action/object managers
-		if (_objectManager === null)
+		// Copy the egw reference
+		this.egw = _egw;
+
+		// Initialize the action and the object manager
+		if (!_objectManager)
 		{
-			this._actionManager = new egwActionManager();
-			this._actionManager.updateActions(_actions);
-			this._actionManager.setDefaultExecute("javaScript:nm_action");
-
-			this._objectManager = new egwActionObjectManager("",
-					this._actionManager, EGW_AO_FLAG_IS_CONTAINER);
+			this._initActions(_actions)
 		}
 		else
 		{
 			this._actionManager = null;
 			this._objectManager = _objectManager;
 		}
-		this._actionLinks = _actionLinks;
 
 		// Call the parent et2_dataview_controller constructor
 		this._super(_grid, this, this._rowCallback, this._linkCallback, this,
 			this._objectManager);
 
-		// Copy all parameters
-		this.egw = _egw;
+		// Copy the given parameters
+		this._actionLinks = _actionLinks
 		this._execId = _execId;
 		this._widgetId = _widgetId;
 		this._rowProvider = _rowProvider;
@@ -78,22 +75,19 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 
 		// Directly use the API-Implementation of dataRegisterUID and
 		// dataUnregisterUID
-		this.dataRegisterUID = _egw.dataRegisterUID;
 		this.dataUnregisterUID = _egw.dataUnregisterUID;
 	},
 
 	destroy: function () {
-
 		// If the actionManager variable is set, the object- and actionManager
 		// were created by this instance -- clear them
 		if (this._actionManager)
 		{
-			this._objectManager.clear();
-			// TODO: No such method.  Maybe implement it?
-			//this._actionManager.clear();
+			this._objectManager.remove();
+			this._actionManager.remove();
 		}
 
-		//this._super();
+		this._super();
 	},
 
 	/**
@@ -107,6 +101,36 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 
 
 	/** -- PRIVATE FUNCTIONS -- **/
+
+	/**
+	 * Initializes the action and the object manager.
+	 */
+	_initActions: function (_actions) {
+		// Generate a uid for the action and object manager
+		var uid = this.egw.uid();
+
+		// Initialize the action manager and add some actions to it
+		var gam = egw_getActionManager(this.egw.appName);
+		this._actionManager = gam.addAction("actionManager", uid);
+		this._actionManager.updateActions(_actions);
+
+		// Set the default execute handler
+		var self = this;
+		this._actionManager.setDefaultExecute(function (_action, _senders, _target) {
+			// Get the selected ids descriptor object
+			var ids = self._selectionMgr.getSelected();
+
+			// Call the nm_action function with the ids
+			nm_action(_action, _senders, _target, ids);
+		});
+
+		// Initialize the object manager
+		var gom = egw_getObjectManager(this.egw.appName);
+		this._objectManager = gom.addObject(
+				new egwActionObjectManager(uid, this._actionManager));
+		this._objectManager.flags = this._objectManager.flags
+				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
+	},
 
 	/**
 	 * Overwrites the inherited _destroyCallback function in order to be able
@@ -166,8 +190,9 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 				_context);
 	},
 
-	dataRegisterUID: function () {
-		// Overwritten in the constructor
+	dataRegisterUID: function (_uid, _callback, _context) {
+		this.egw.dataRegisterUID(_uid, _callback, _context, this._execId,
+				this._widgetId);
 	},
 
 	dataUnregisterUID: function () {
