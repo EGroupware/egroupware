@@ -74,17 +74,23 @@ var et2_dataview_selectionManager = Class.extend({
 
 				// Handling for Action Implementations updating the state
 				dummyAOI.doSetState = function (_state) {
-					if (egwBitIsSet(_state, EGW_AO_STATE_FOCUSED) && !self._inUpdate)
+					if (!self._inUpdate)
 					{
-						self.resetSelection();
+						// Update the "focused" flag
+						self.setFocused(_uid, egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
+
+						// Generally update the state
 						self._updateState(_uid, _state);
-						self.setFocused(_uid, true);
 					}
 				};
 
+				// Connect the "doTriggerEvent" of the dummy AOI to our internal
+				// aoi.
+				dummyAOI.doTriggerEvent = entry.aoi.doTiggerEvent;
+
 				// Implementation of the getDOMNode function, so that the event
 				// handlers can be properly bound
-				dummyAOI.getDOMNode = function () {return _tr};
+				dummyAOI.getDOMNode = function () { return _tr; };
 
 				// Create an action object for the tr and connect it to a dummy AOI
 				entry.ao = this._actionObjectManager.addObject(_uid, dummyAOI);
@@ -104,6 +110,8 @@ var et2_dataview_selectionManager = Class.extend({
 		if (typeof this._registeredRows[_uid] !== "undefined"
 		    && this._registeredRows[_uid].tr === _tr)
 		{
+			this._inUpdate = true;
+
 			this._registeredRows[_uid].tr = null;
 			this._registeredRows[_uid].aoi = null;
 
@@ -118,6 +126,8 @@ var et2_dataview_selectionManager = Class.extend({
 			{
 				delete this._registeredRows[_uid];
 			}
+
+			this._inUpdate = false;
 		}
 	},
 

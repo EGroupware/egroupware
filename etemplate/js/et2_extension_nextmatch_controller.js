@@ -54,7 +54,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			this._actionManager.setDefaultExecute("javaScript:nm_action");
 
 			this._objectManager = new egwActionObjectManager("",
-					this._actionManager);
+					this._actionManager, EGW_AO_FLAG_IS_CONTAINER);
 		}
 		else
 		{
