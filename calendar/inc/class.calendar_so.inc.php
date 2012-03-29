@@ -293,18 +293,21 @@ class calendar_so
 	 * This includes ALL recurences of an event series
 	 *
 	 * @param int|array $ids one or multiple cal_id's
-	 * @param booelan $return_maximum=false if true return only the maximum, even for multiple ids
+	 * @param boolean $return_maximum=false if true return only the maximum, even for multiple ids
+	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
 	 * @return int|array (array of) modification timestamp(s)
 	 */
-	function max_user_modified($ids, $return_maximum=false)
+	function max_user_modified($ids, $return_maximum=false, $master_only=false)
 	{
 		if (!is_array($ids)) $return_maximum = true;
 
+		$where = array('cal_id' => $ids);
+		if ($master_only) $where['cal_recur_date'] = 0;
+
 		if ($return_maximum)
 		{
-			if (($etags = $this->db->select($this->user_table,'MAX(cal_user_modified)',array(
-					'cal_id' => $ids,
-				),__LINE__,__FILE__,false,'','calendar')->fetchColumn()))
+			if (($etags = $this->db->select($this->user_table,'MAX(cal_user_modified)',$where,
+				__LINE__,__FILE__,false,'','calendar')->fetchColumn()))
 			{
 				$etags = $this->db->from_timestamp($etags);
 			}
@@ -312,15 +315,13 @@ class calendar_so
 		else
 		{
 			$etags = array();
-			foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',array(
-				'cal_id' => $ids,
-			),__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
+			foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',$where,
+				__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
 			{
 				$etags[$row['cal_id']] = $this->db->from_timestamp($row['user_etag']);
 			}
 		}
-		//echo "<p>".__METHOD__.'('.array2string($ids).','.array($return_maximum).') = '.array2string($etags)."</p>\n";
-		//error_log(__METHOD__.'('.array2string($ids).','.array2string($return_maximum).') = '.array2string($etags));
+		//error_log(__METHOD__.'('.array2string($ids).', '.array2string($return_maximum).', '.array2string($master_only).') = '.array2string($etags).' '.function_backtrace());
 		return $etags;
 	}
 
@@ -331,14 +332,19 @@ class calendar_so
 	 *
 	 * @param int|array $users one or mulitple calendar users
 	 * @param booelan $owner_too=false if true return also events owned by given users
+	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
 	 * @return int maximum modification timestamp
 	 */
-	function get_ctag($users, $owner_too=false)
+	function get_ctag($users, $owner_too=false,$master_only=false)
 	{
 		$where = array(
 			'cal_user_type' => 'u',
 			'cal_user_id' => $users,
 		);
+		if ($master_only)
+		{
+			$where['cal_recur_date'] = 0;
+		}
 		if ($owner_too)
 		{
 			// owner can only by users, no groups
@@ -406,6 +412,7 @@ class calendar_so
 	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
 	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
 	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
+	 * @param boolean $params['master_only']=false, true only take into account participants/status from master (for AS)
 	 * @param int $remove_rejected_by_user=null add join to remove entry, if given user has rejected it
 	 * @return array of cal_ids, or false if error in the parameters
 	 *
@@ -702,10 +709,13 @@ class calendar_so
 		//_debug_array($events);
 		if (count($ids))
 		{
+			$ids = array_unique($ids);
+
+			$need_max_user_modified = array();
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',array_unique($ids)).") AND cal_status!='X') utcalid ";
+			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',$ids).") AND cal_status!='X') utcalid ";
 			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
@@ -734,6 +744,24 @@ class calendar_so
 
 				// set data, if recurrence is requested
 				if (isset($events[$id])) $events[$id]['participants'][$uid] = $status;
+
+				// fill max_user_modified:
+				if (!$params['master_only'] && $events[$id]['recur_type'])
+				{
+					$need_max_user_modified[$id] = $id;
+				}
+				elseif (isset($events[$id]) && ($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$id]['max_user_modified'])
+				{
+					$events[$id]['max_user_modified'] = $modified;
+				}
+			}
+			// max_user_modified for recurring events has to include all recurrences, above code only querys $recur_date!
+			if (!$params['enum_recuring'] && $need_max_user_modified)
+			{
+				foreach($this->max_user_modified($need_max_user_modified) as $id => $modified)
+				{
+					$events[$id]['max_user_modified'] = $modified;
+				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
 			if (!is_null($params['cfs']))

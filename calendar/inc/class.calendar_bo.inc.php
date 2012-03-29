@@ -407,6 +407,7 @@ class calendar_bo
 	 *  cols string|array columns to select, if set an iterator will be returned
 	 *  append string to append to the query, eg. GROUP BY
 	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
+	 *  master_only boolean default false, true only take into account participants/status from master (for AS)
 	 * @param string $sql_filter=null sql to be and'ed into query (fully quoted), default none
 	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
@@ -621,6 +622,8 @@ class calendar_bo
 	 */
 	function clear_private_infos(&$event,$allowed_participants = array())
 	{
+		if (!is_array($event['participants'])) error_log(__METHOD__.'('.array2string($event).', '.array2string($allowed_participants).') NO PARTICIPANTS '.function_backtrace());
+
 		$event = array(
 			'id'    => $event['id'],
 			'start' => $event['start'],
@@ -1917,9 +1920,11 @@ class calendar_bo
 	 * @param array|int|string $event array with event or cal_id, or cal_id:recur_date for virtual exceptions
 	 * @param string &$schedule_tag=null on return schedule-tag (egw_cal.cal_id:egw_cal.cal_etag, no participant modifications!)
 	 * @param boolean $client_share_uid_excpetions Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
+	 * @param boolean $master_only=false only take into account recurrance masters
+	 * 	(for ActiveSync which does not support different participants/status on recurrences/exceptions!)
 	 * @return string|boolean string with etag or false
 	 */
-	function get_etag($entry, &$schedule_tag=null, $client_share_uid_excpetions=true)
+	function get_etag($entry, &$schedule_tag=null, $client_share_uid_excpetions=true,$master_only=false)
 	{
 		if (!is_array($entry))
 		{
@@ -1936,7 +1941,7 @@ class calendar_bo
 		}
 		else
 		{
-			$modified = max($this->so->max_user_modified($entry['id']), $entry['modified']);
+			$modified = max($this->so->max_user_modified($entry['id'],false,$master_only), $entry['modified']);
 		}
 		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
@@ -1956,8 +1961,16 @@ class calendar_bo
 			{
 				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
 				{
-					$etag .= ':'.$this->get_etag($recurrence, $full_etag);
+					$exception_etag = $this->get_etag($recurrence, $nul);
+					// if $master_only, only add cal_etag, not max. user modification date
+					if ($master_only) list(,$exception_etag) = explode(':',$exception_etag);
+
+					$exception_etags .= ':'.$this->get_etag($recurrence, $nul);
 				}
+			}
+			if ($exception_etags)
+			{
+				$etag .= ':'.md5($exception_etags);	// limit size, as there can be many exceptions
 			}
 		}
 		//error_log(__METHOD__ . "($entry[id],$client_share_uid_excpetions) entry=".array2string($entry)." --> etag=$etag");
@@ -1968,17 +1981,17 @@ class calendar_bo
 	 * Query ctag for calendar
 	 *
 	 * @param int|array $user integer user-id or array of user-id's to use, defaults to the current user
-	 * @param $filter='owner'
-	 * @return string $filter='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
-	 * @todo use MAX(modified) to query everything in one sql query, currently we do one query per event (more then the search)
+	 * @param string $filter='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
+	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
+	 * @return integer
 	 */
-	public function get_ctag($user,$filter='owner')
+	public function get_ctag($user, $filter='owner', $master_only=false)
 	{
 		if ($this->debug > 1) $startime = microtime(true);
 
 		// resolve users to add memberships for users and members for groups
 		$users = $this->resolve_users($user);
-		$ctag = $users ? $this->so->get_ctag($users, $filter == 'owner') : 0;	// no rights, return 0 as ctag (otherwise we get SQL error!)
+		$ctag = $users ? $this->so->get_ctag($users, $filter == 'owner', $master_only) : 0;	// no rights, return 0 as ctag (otherwise we get SQL error!)
 
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;

@@ -225,23 +225,8 @@ class calendar_groupdav extends groupdav_handler
 		$events =& $this->bo->search($filter);
 		if ($events)
 		{
-			// get all max user modified times at once
-			foreach($events as $k => $event)
-			{
-				if ($this->client_shared_uid_exceptions && $event['reference'])
-				{
-					throw new egw_exception_assertion_failed(__METHOD__."() event=".array2string($event));
-					// this exception will be handled with the series master
-					unset($events[$k]);
-					continue;
-				}
-				$ids[] = $event['id'];
-			}
-			$max_user_modified = $this->bo->so->max_user_modified($ids);
-
 			foreach($events as $event)
 			{
-				$event['max_user_modified'] = $max_user_modified[$event['id']];
 				$etag = $this->get_etag($event, $schedule_tag);
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
