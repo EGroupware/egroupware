@@ -569,7 +569,11 @@ class accounts_ldap
 		$utc_diff = date('Z');
 		if (isset($data['account_passwd']) && $data['account_passwd'])
 		{
-			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
+			if (preg_match('/^[a-f0-9]{32}$/', $data['account_passwd']))	// md5 --> ldap md5
+			{
+				$data['account_passwd'] = setup_cmd_ldap::hash_sql2ldap($data['account_passwd']);
+			}
+			elseif (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
 			{
 				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
 			}
