@@ -1162,7 +1162,7 @@ class addressbook_ui extends addressbook_bo
 				'col_filter' => array('tid' => $query['col_filter']['tid']),
 				'org_view'   => $query['org_view'],
 			));
-			if ($state != $this->prefs[$what.'_state'])
+			if ($state != $this->prefs[$what.'_state'] && !$query['csv_export'])
 			{
 				$GLOBALS['egw']->preferences->add('addressbook',$what.'_state',$state);
 				// save prefs, but do NOT invalid the cache (unnecessary)
