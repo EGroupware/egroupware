@@ -54,6 +54,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			// uicontacts selection with checkbox 'use_all'
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
+			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
@@ -268,11 +269,11 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 	/**
 	* Convert some internal data to something with more meaning
-	* 
+	*
 	* Dates, times, user IDs, category IDs
 	*/
 	public static function convert(addressbook_egw_record &$record, $options) {
-		
+
 		if ($record->tel_prefer) {
 			$field = $record->tel_prefer;
 			$record->tel_prefer = $record->$field;

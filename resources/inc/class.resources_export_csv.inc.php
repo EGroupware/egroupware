@@ -31,11 +31,13 @@ class resources_export_csv implements importexport_iface_export_plugin {
 			$query = egw_cache::getSession('resources', 'get_rows');
 			$query['num_rows'] = -1;	// all
 			unset($query['store_state']);
+			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$bo->get_rows($query,$selection,$readonlys);
 		}
 		elseif ( $options['selection'] == 'all' ) {
 			$query = array(
 				'num_rows'	=> -1,
+				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
 			);	// all
 			$bo->get_rows($query,$selection,$readonlys);
 		} else {

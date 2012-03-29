@@ -292,6 +292,10 @@ class nextmatch_widget
 			if ($n-5 <= $max && $max <= $n+5) $n = $max;
 			$row_options[$n] = $n;
 		}
+		if (!isset($value['num_rows']) || $value['num_rows'] <= 0)	// can be -1 if importexport crashes
+		{
+			$extension_data['num_rows'] = $value['num_rows'] = $max;
+		}
 		if (!isset($row_options[$max]) || !isset($row_options[$value['num_rows']]))
 		{
 			$row_options[$max] = $max;
@@ -300,8 +304,7 @@ class nextmatch_widget
 		}
 		$value['options-num_rows'] =& $row_options;
 
-		if (!isset($value['num_rows'])) $extension_data['num_rows'] = $value['num_rows'] = $max;
-		if ($value['num_rows'] != $max || $value['num_rows'] <= 0)	// can be -1 if importexport crashes
+		if ($value['num_rows'] != $max)
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = (int)$value['num_rows'];
 		}
