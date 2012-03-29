@@ -204,7 +204,7 @@ var et2_arrayMgr = Class.extend({
 
 		// Check whether "$" occurs in the given identifier
 		var pos_var = _ident.indexOf('$');
-		if (pos_var >= 0 && this.perspectiveData.row != null)
+		if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/)))
 		{
 			// Get the content array for the current row
 			var row = this.perspectiveData.row;
@@ -219,8 +219,17 @@ var et2_arrayMgr = Class.extend({
 			{
 				try
 				{
-					proto.compiledExpressions[_ident] = et2_compilePHPExpression(
-						_ident, ["row", "cont", "row_cont"]);
+					if(this.perspectiveData.row == null)
+					{
+						// No row, compile for only top level content
+						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
+							_ident, ["cont"]);
+					}
+					else
+					{
+						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
+							_ident, ["row", "cont", "row_cont"]);
+					}
 				}
 				catch(e)
 				{
@@ -236,7 +245,15 @@ var et2_arrayMgr = Class.extend({
 			{
 				try
 				{
-					_ident = proto.compiledExpressions[_ident](row, cont, row_cont);
+					if(this.perspectiveData.row == null)
+					{
+						// No row, exec with only top level content
+						_ident = proto.compiledExpressions[_ident](cont);
+					}
+					else
+					{
+						_ident = proto.compiledExpressions[_ident](row, cont, row_cont);
+					}
 				}
 				catch(e)
 				{
