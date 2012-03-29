@@ -472,7 +472,7 @@ class filemanager_ui
 		$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
 var clipboard_files = [];
 
-function check_files(upload)
+function check_files(upload, path_id)
 {
 	var files = [];
 	if (upload.files)
@@ -486,7 +486,7 @@ function check_files(upload)
 	{
 		files = upload.value;
 	}
-	var path = document.getElementById(upload.id.replace(/upload\]\[/,"nm][path"));
+	var path = document.getElementById(path_id ? path_id : upload.id.replace(/upload\]\[/,"nm][path"));
 
 	xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);
 }

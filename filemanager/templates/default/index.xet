@@ -93,7 +93,7 @@
 				</row>
 				<row>
 					<hbox>
-						<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this);"/>
+						<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this, form::name('nm[path]'));"/>
 						<button label="Upload" id="button[upload]"/>
 					</hbox>
 					<description/>
