@@ -151,7 +151,7 @@ class resources_reserve {
 					$reg_id = registration_bo::save(array(
 						'contact_id' => $contact_id,
 						'timestamp' => time() + ($config['expiry'] * 3600),
-						'post_confirm_hook' => 'resources_reserve::confirm',
+						'post_confirm_hook' => 'resources.resources_reserve.confirm',
 						'sitemgr_version' => $preserve['sitemgr_version']
 					), false);
 					if(is_numeric($reg_id))
