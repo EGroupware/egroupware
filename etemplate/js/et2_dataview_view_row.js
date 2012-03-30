@@ -43,6 +43,16 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		this.expansionButton = null;
 	},
 
+	destroy: function () {
+
+		if (this.expansionContainer != null)
+		{
+			this.expansionContainer.free();
+		}
+
+		this._super();
+	},
+
 	clear: function() {
 		this.tr.empty();
 	},
@@ -54,7 +64,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			if (!this.expansionButton)
 			{
 				this.expansionButton = $j(document.createElement("span"));
-				this.expansionButton.addClass("arrow closed").text(">");
+				this.expansionButton.addClass("arrow closed");
 
 				var self = this;
 				this.expansionButton.click(function () {
@@ -74,7 +84,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
 
 			if (this.expansionContainer)
 			{
-				this.expansionContainer.removeFromTree();
+				this.expansionContainer.free();
 			}
 
 			this.expansionButton = null;

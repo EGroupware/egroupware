@@ -31,6 +31,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	/**
 	 * Initializes the nextmatch controller.
 	 *
+	 * @param _parentController is the parent nextmatch controller instance
 	 * @param _egw is the api instance
 	 * @param _execId is the execId of the etemplate
 	 * @param _widgetId is the id of the nextmatch-widget we are fetching data
@@ -43,8 +44,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _actions contains the actions, may be null if an object manager
 	 * is given.
 	 */
-	init: function (_egw, _execId, _widgetId, _parentId, _grid, _rowProvider,
-			_actionLinks, _objectManager, _actions) {
+	init: function (_parentController, _egw, _execId, _widgetId, _parentId,
+			_grid, _rowProvider, _actionLinks, _objectManager, _actions) {
 
 		// Copy the egw reference
 		this.egw = _egw;
@@ -61,8 +62,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		}
 
 		// Call the parent et2_dataview_controller constructor
-		this._super(_grid, this, this._rowCallback, this._linkCallback, this,
-			this._objectManager);
+		this._super(_parentController, _grid, this, this._rowCallback,
+			this._linkCallback, this, this._objectManager);
 
 		// Copy the given parameters
 		this._actionLinks = _actionLinks
@@ -98,6 +99,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Update the filters, reset the "lastModification"
 		this._filters = _filters;
 		this._lastModification = null;
+	},
+
+	getObjectManager: function () {
+		return this._objectManager;
 	},
 
 
@@ -163,7 +168,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Let the row provider fill in the data row -- store the returned
 		// rowWidget inside the _entry
 		_entry.widget = this._rowProvider.getDataRow(
-			{ "content": _data }, _tr, _idx);
+			{ "content": _data }, _tr, _idx, this);
 	},
 
 	/**
@@ -184,7 +189,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Merge the parent id into the _queriedRange if it is set
 		if (this._parentId !== null)
 		{
-			_queriedRange["parent_id"] = _queriedRange;
+			_queriedRange["parent_id"] = this._parentId;
 		}
 
 		// Pass the fetch call to the API, multiplex the data about the

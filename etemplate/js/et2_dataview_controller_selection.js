@@ -27,14 +27,22 @@
  */
 var et2_dataview_selectionManager = Class.extend({
 
-	init: function (_indexMap, _actionObjectManager, _queryRangeCallback,
-			_makeVisibleCallback, _context) {
+	init: function (_parent, _indexMap, _actionObjectManager,
+			_queryRangeCallback, _makeVisibleCallback, _context) {
+
 		// Copy the arguments
+		this._parent = _parent;
 		this._indexMap = _indexMap;
 		this._actionObjectManager = _actionObjectManager;
 		this._queryRangeCallback = _queryRangeCallback;
 		this._makeVisibleCallback = _makeVisibleCallback;
 		this._context = _context;
+
+		// Attach this manager to the parent manager if one is given
+		if (this._parent)
+		{
+			this._parent._children.push(this);
+		}
 
 		// Internal map which contains all curently selected uids and their
 		// state
@@ -43,6 +51,29 @@ var et2_dataview_selectionManager = Class.extend({
 		this._invertSelection = false;
 		this._inUpdate = false;
 		this._total = 0;
+		this._children = [];
+	},
+
+	destroy: function () {
+
+		// If we have a parent, unregister from that
+		if (this._parent)
+		{
+			var idx = this._parent._children.indexOf(this);
+			this._parent._children.splice(idx, 1);
+		}
+
+		// Destroy all children
+		for (var i = this._children.length - 1; i >= 0; i--)
+		{
+			this._children[i].free();
+		}
+
+		// Delete all still registered rows
+		for (var key in this._registeredRows)
+		{
+			this.unregisterRow(key, this._registeredRows[key].tr);
+		}
 	},
 
 	setIndexMap: function (_indexMap) {
@@ -167,6 +198,12 @@ var et2_dataview_selectionManager = Class.extend({
 			{
 				ids.push(key);
 			}
+		}
+
+		// Push all events of the child managers onto the list
+		for (var i = 0; i < this._children.length; i++)
+		{
+			ids = ids.concat(this._children[i].getSelected().ids);
 		}
 
 		// Return an array containing those ids
@@ -360,6 +397,7 @@ var et2_dataview_selectionManager = Class.extend({
 		if (!_ctrl)
 		{
 			this.resetSelection();
+			this._actionObjectManager.setAllSelected(false); // needed for hirachical stuff
 		}
 
 		// Mark the element that was clicked as selected

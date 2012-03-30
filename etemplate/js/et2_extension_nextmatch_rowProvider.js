@@ -88,7 +88,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		this._template = rowTemplate;
 	},
 
-	getDataRow: function(_data, _row, _idx) {
+	getDataRow: function(_data, _row, _idx, _controller) {
 
 		// Clone the row template
 		var row = this._dataRow.cloneNode(true);
@@ -168,7 +168,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		{
 			_row.makeExpandable(true, function () {
 				return this._subgridCallback.call(this._context,
-						_row, _data.content["parent_id"]);
+						_row, _data, _controller);
 			}, this);
 		}
 

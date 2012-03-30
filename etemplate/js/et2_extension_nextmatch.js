@@ -544,6 +544,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Create the grid controller
 		this.controller = new et2_nextmatch_controller(
+				null,
 				this.egw(),
 				this.getInstanceManager().etemplate_exec_id,
 				"nm",
@@ -580,24 +581,33 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		}
 	},
 
-	_getSubgrid: function (_row, _parentId) {
+	_getSubgrid: function (_row, _data, _controller) {
+		// Fetch the id of the element described by _data, this will be the
+		// parent_id of the elements in the subgrid
+		var rowId = _data.content[this.options.settings.row_id];
+
 		// Create a new grid with the row as parent and the dataview grid as
 		// parent grid
 		var grid = new et2_dataview_grid(_row, this.dataview.grid);
 
 		// Create a new controller for the grid
 		var controller = new et2_nextmatch_controller(
+				_controller,
 				this.egw(),
 				this.getInstanceManager().etemplate_exec_id,
 				"nm",
-				_parentId,
+				rowId,
 				grid,
 				this.rowProvider,
 				this.options.settings.action_links,
-				null,
-				this.options.settings.actions
+				_controller.getObjectManager()
 		);
 		controller.update();
+
+		// Register inside the destruction callback of the grid
+		grid.setDestroyCallback(function () {
+			controller.free();
+		});
 
 		return grid;
 	},

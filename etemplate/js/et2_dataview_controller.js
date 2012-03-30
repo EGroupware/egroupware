@@ -54,10 +54,11 @@ var et2_dataview_controller = Class.extend({
 	 * @param _actionObjectManager is the object that manages the action
 	 * objects.
 	 */
-	init: function (_grid, _dataProvider, _rowCallback, _linkCallback, _context,
-			_actionObjectManager)
+	init: function (_parentController, _grid, _dataProvider, _rowCallback,
+			_linkCallback, _context, _actionObjectManager)
 	{
 		// Copy the given arguments
+		this._parentController = _parentController;
 		this._grid = _grid;
 		this._dataProvider = _dataProvider;
 		this._rowCallback = _rowCallback;
@@ -79,9 +80,14 @@ var et2_dataview_controller = Class.extend({
 		this._grid.setDataCallback(this._gridCallback, this);
 
 		// Create the selection manager
-		this._selectionMgr = new et2_dataview_selectionManager(this._indexMap,
-				_actionObjectManager, this._selectionFetchRange,
-				this._makeIndexVisible, this);
+		this._selectionMgr = new et2_dataview_selectionManager(
+				this._parentController ? this._parentController._selectionMgr : null,
+				this._indexMap,
+				_actionObjectManager,
+				this._selectionFetchRange,
+				this._makeIndexVisible,
+				this
+		);
 	},
 
 	destroy: function () {
@@ -92,7 +98,6 @@ var et2_dataview_controller = Class.extend({
 		// Clear the selection timeout
 		this._clearTimer();
 
-		this._super();
 	},
 
 	/**
@@ -159,6 +164,19 @@ var et2_dataview_controller = Class.extend({
 		{
 			this._getIndexEntry(i).uid = order[i];
 		}
+	},
+
+	/**
+	 * Returns the depth of the controller instance.
+	 */
+	getDepth: function () {
+
+		if (this._parentController)
+		{
+			return this._parentController.getDepth() + 1;
+		}
+
+		return 0;
 	},
 
 
@@ -442,7 +460,6 @@ var et2_dataview_controller = Class.extend({
 			this.entry.row.clear();
 
 			// Fill the row DOM Node with data
-			var tr = this.entry.row.getDOMNode();
 			this.self._rowCallback.call(
 				this.self._context,
 				_data,
@@ -450,6 +467,15 @@ var et2_dataview_controller = Class.extend({
 				this.entry.idx,
 				this.entry
 			);
+
+			// Attach the "subgrid" tag to the row, if the depth of this
+			// controller is larger than zero
+			var tr = this.entry.row.getDOMNode();
+			var d = this.self.getDepth();
+			if (d > 0)
+			{
+				$j(tr).addClass("subentry level_" + d);
+			}
 
 			var links = null;
 

@@ -79,6 +79,8 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 
 		this._parentGrid = _parentGrid;
 
+		this._scrollTimeout = null;
+
 		this._invalidateTimeout = null;
 
 		this._invalidateCallback = null;
@@ -106,6 +108,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	},
 
 	destroy: function () {
+		// Destroy all containers
+		this.setTotalCount(0);
+
 		// Stop the scroll timeout
 		if (this._scrollTimeout)
 		{
@@ -117,9 +122,6 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		{
 			window.clearTimeout(this._invalidateTimeout);
 		}
-
-		// Destroy all containers
-		this.setTotalCount(0);
 
 		this._super();
 	},
