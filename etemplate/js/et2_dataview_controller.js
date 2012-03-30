@@ -446,7 +446,7 @@ var et2_dataview_controller = Class.extend({
 			this.self._rowCallback.call(
 				this.self._context,
 				_data,
-				tr,
+				this.entry.row,
 				this.entry.idx,
 				this.entry
 			);

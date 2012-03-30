@@ -53,17 +53,17 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	 * parameters are ignored and copied from the given grid instance.
 	 * @param _avgHeight is the starting average height of the column rows.
 	 */
-	init: function (_parent, _egw, _rowProvider, _avgHeight) {
+	init: function (_parent, _parentGrid, _egw, _rowProvider, _avgHeight) {
 
 		// Call the inherited constructor
 		this._super(_parent);
 
 		// If the parent is given, copy all other parameters from it
-		if (_parent != null)
+		if (_parentGrid != null)
 		{
 			this.egw = _parent.egw;
 			this._orgAvgHeight = false;
-			this._rowProvider = _parent._rowProvider;
+			this._rowProvider = _parentGrid._rowProvider;
 		}
 		else
 		{
@@ -76,6 +76,8 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			this._scrollHeight = 0;
 			this._scrollTimeout = null;
 		}
+
+		this._parentGrid = _parentGrid;
 
 		this._invalidateTimeout = null;
 
@@ -483,17 +485,11 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		}
 
 		var self = this;
+		var _super = this._super;
 		this._invalidateTimeout = window.setTimeout(function() {
 			self._invalidateTimeout = null;
-			self._doInvalidate();
+			self._doInvalidate(_super);
 		}, ET2_GRID_INVALIDATE_TIMEOUT);
-
-		// Call the inherited invalidate function, broadcast the invalidation
-		// through the container tree.
-		if (this._parent !== null)
-		{
-			this._super();
-		}
 	},
 
 	/**
@@ -805,7 +801,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	 * Invalidate iterates over the "mapping" array. It calculates which
 	 * containers have to be removed and where new containers should be added.
 	 */
-	_doInvalidate: function() {
+	_doInvalidate: function(_super) {
 		// Update the pixel positions
 		this._recalculateElementPosition();
 
@@ -831,6 +827,13 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		// Update the view range of all visible elements that implement the
 		// corresponding interface and request elements for all visible spacers
 		this._updateContainers();
+
+		// Call the inherited invalidate function, broadcast the invalidation
+		// through the container tree.
+		if (this._parent && _super)
+		{
+			_super.call(this);
+		}
 	},
 
 	/**
@@ -1294,12 +1297,12 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		this.outerCell = $j(document.createElement("td"))
 			.addClass("frame")
 			.attr("colspan", this._rowProvider.getColumnCount()
-					+ (this._parent ? 0 : 1))
+					+ (this._parentGrid ? 0 : 1))
 			.appendTo(this.tr);
 
 		// Create the scrollarea div if this is the outer grid
 		this.scrollarea = null;
-		if (this._parent == null)
+		if (this._parentGrid == null)
 		{
 			this.scrollarea = $j(document.createElement("div"))
 				.addClass("egwGridView_scrollarea")
@@ -1347,7 +1350,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			.appendTo(table);
 
 		// Set the tr as container element
-		this.appendNode(this.tr[0]);
+		this.appendNode($j(this.tr[0]));
 	}
 
 });

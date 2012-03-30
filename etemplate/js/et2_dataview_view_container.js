@@ -157,7 +157,7 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, {
 		// tree.
 		if (this._inTree)
 		{
-			if (_nodes.length === 1)
+			if (this._nodes.length === 1)
 			{
 				if (this._attachData.prepend)
 				{
@@ -170,7 +170,7 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, {
 			}
 			else
 			{
-				_node.after(this._nodes[this._nodes.length - 2]);
+				this._nodes[this._nodes.length - 2].after(_node);
 			}
 
 			this.invalidate();

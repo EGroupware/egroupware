@@ -86,7 +86,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		this._template = rowTemplate;
 	},
 
-	getDataRow: function(_data, _tr, _idx) {
+	getDataRow: function(_data, _row, _idx) {
 
 		// Clone the row template
 		var row = this._dataRow.cloneNode(true);
@@ -157,10 +157,11 @@ var et2_nextmatch_rowProvider = Class.extend({
 		}
 
 		// Insert the row into the tr
-		_tr.appendChild(row);
+		var tr = _row.getDOMNode();
+		tr.appendChild(row);
 
 		// Set the row data
-		this._setRowData(this._template.rowData, _tr, mgrs);
+		this._setRowData(this._template.rowData, tr, mgrs);
 
 		return rowWidget;
 	},

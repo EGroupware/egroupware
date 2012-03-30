@@ -437,7 +437,7 @@ var et2_dataview = Class.extend({
 		this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
 
 		// Create the grid class and pass "19" as the starting average row height
-		this.grid = new et2_dataview_grid(null, this.egw, this.rowProvider, 19);
+		this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
 
 		// Insert the grid into the DOM-Tree
 		var tr = $j(this.grid._nodes[0]);

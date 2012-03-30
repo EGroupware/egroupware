@@ -394,20 +394,24 @@ var et2_dataview_selectionManager = Class.extend({
 			    this._indexMap[i].uid)
 			{
 				// Add the range to the "queryRanges"
-				if (naStart !== false) {
+				if (naStart !== false)
+				{
 					queryRanges.push(et2_bounds(naStart, i - 1));
 					naStart = false;
 				}
 
 				// Select the element
 				this.setSelected(this._indexMap[i].uid, true);
-			} else if (naStart === false) {
+			}
+			else if (naStart === false)
+			{
 				naStart = i;
 			}
 		}
 
 		// Add the last range to the "queryRanges"
-		if (naStart !== false) {
+		if (naStart !== false)
+		{
 			queryRanges.push(et2_bounds(naStart, i - 1));
 			naStart = false;
 		}

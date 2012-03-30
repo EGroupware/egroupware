@@ -128,11 +128,23 @@
 			 * the actual DOM-Nodes for a node with the given data have to be
 			 * created.
 			 */
-			function rowCallback(_data, _tr, _idx)
+			function rowCallback(_data, _row, _idx)
 			{
+				var tr = _row.getDOMNode();
+
 				var row = dataview.rowProvider.getPrototype("default");
 				$j("div", row).each(function () { $j(this).text("#" + _idx + " " + _data.caption) });
-				$j(_tr).append(row.children());
+				$j(tr).append(row.children());
+
+				_row.makeExpandable(true, function () {
+					var grid = new et2_dataview_grid(_row, dataview.grid);
+					var controller = new et2_dataview_controller(grid,
+							new dataprovider(), rowCallback, linkCallback, null,
+							objectManager);
+					controller.update();
+
+					return grid;
+				});
 			}
 
 			function linkCallback() {

@@ -28,13 +28,19 @@ function nm_action(_action, _senders, _target, _ids)
 	// ----------------------
 	// TODO: Parse the _ids.inverted flag!
 	// ----------------------
-	var idsArr = _ids.ids;
 
+	// Translate the internal uids back to server uids
+	var idsArr = _ids.ids;
+	for (var i = 0; i < idsArr.length; i++)
+	{
+		idsArr[i] = idsArr[i].split("::").pop();
+	}
+
+	// Calculate the ids parameters
 	var ids = "";
 	for (var i = 0; i < idsArr.length; i++)
 	{
-		var app_id = idsArr[i].split('::', 2);
-		var id = app_id[1];
+		var id = idsArr[i];
 		ids += (id.indexOf(',') >= 0 ? '"'+id.replace(/"/g,'""')+'"' : id) + 
 			((i < idsArr.length - 1) ? "," : "");
 	}
