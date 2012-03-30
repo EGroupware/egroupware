@@ -360,7 +360,16 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 					//this.getArrayMgr(name).perspectiveData.row = y;
 				}
 
-				et2_filteredNodeIterator(node, readRowNode, this);
+				// If row disabled, just skip it
+				var disabled = false;
+				if(node.getAttribute("disabled") == "1")
+				{
+					disabled = true;
+				}
+				if(!disabled)
+				{
+					et2_filteredNodeIterator(node, readRowNode, this);
+				}
 			}
 			else
 			{
