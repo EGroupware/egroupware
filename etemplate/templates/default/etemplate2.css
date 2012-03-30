@@ -661,3 +661,21 @@ div.et2_progress > div {
 	cursor: ew-resize;
 }
 
+/**
+ * Indent grid sublevels
+ */
+
+.et2_nextmatch .subentry.level_1 div.et2_vbox {
+	margin-left: 2.5em;
+}
+
+.et2_nextmatch .subentry.level_2 div.et2_vbox {
+	margin-left: 5em;
+}
+
+.et2_nextmatch .subentry.level_3 div.et2_vbox {
+	margin-left: 7.5em;
+}
+
+
+
