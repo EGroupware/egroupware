@@ -1065,7 +1065,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 	_build_select: function(name, type, value, lang) {
 		// Create widget
 		var select = et2_createWidget(type, {
-			"id": this.nextmatch.id + "_"+name,
+			"id": name,
 			"label": this.nextmatch.options.settings[name+"_label"]
 		},this);
 
@@ -1084,14 +1084,27 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 		// Set onChange
 		var input = select.input;
-		if (this.nextmatch.options.settings[name+"_onchange"] && 
-			!this.nextmatch.options.settings[name+"_onchange"].match('/^this\.form\.submit();?$/'))
+		
+		if (this.nextmatch.options.settings[name+"_onchange"])
 		{
-			// Get the onchange function string
-			var onchange = this.nextmatch.options.settings[name+"_onchange"];
+			// Make sure to get the new value for filtering
+			input.change(this.nextmatch, function(event) {
+				event.data.activeFilters[name] = select.getValue();
+				event.data.applyFilters();
+			});
 
-			// Connect it to the onchange event of the input element
-			input.change(this.nextmatch, et2_compileLegacyJS(onchange, this.nextmatch, input));
+			// Get the onchange function string
+			var onchange = this.nextmatch.options.settings[name+"_onchange"]
+
+			// Real submits cause all sorts of problems
+			if(onchange.match(/this\.form\.submit/))
+			{
+				this.egw().debug("warn","%s tries to submit form",name);
+				onchange = onchange.replace(/this\.form\.submit\([^)]*\);?/,'return true;');
+			}
+
+			// Connect it to the onchange event of the input element - may submit
+			input.change(this.nextmatch, et2_compileLegacyJS(onchange, this.nextmatch, select.getInputNode()));
 		}
 		else	// default request changed rows with new filters, previous this.form.submit()
 		{
