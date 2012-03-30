@@ -620,7 +620,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			if ($query['filter'] == 'custom')	// show the custom dates
 			{
-				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
+				$GLOBALS['egw']->js->set_onload("jQuery('.custom_hide').css('visibility', 'visible');");
 			}
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
@@ -834,7 +834,7 @@ class timesheet_ui extends timesheet_bo
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_left'    => 'timesheet.index.dates',
 				'header_right'   => 'timesheet.index.add',
-				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter_onchange' => "jQuery('.custom_hide').css('visibility', this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom' && this.form) this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
 				//'actions'        => $this->get_actions(),
