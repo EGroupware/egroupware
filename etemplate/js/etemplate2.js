@@ -372,6 +372,16 @@ etemplate2.prototype.getValues = function(_root)
 		{
 			_target[id] = value;
 		}
+		else if (jQuery.isEmptyObject(_target))
+		{
+			// Avoid sending back empty sub-arrays
+			_target = result
+			for (var i = 0; i < path.length-1; i++)
+			{
+				_target = _target[path[i]];
+			}
+			delete _target[path[path.length-1]];
+		}
 		_widget.resetDirty();
 
 	}, this, et2_IInput);
