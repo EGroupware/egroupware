@@ -498,8 +498,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
-			this.dataview.rowProvider, this.options.settings.actionLinks,
-			this.options.settings.actions);
+			this.dataview.rowProvider, this._getSubgrid, this);
 
 		// Register handler to update preferences when column properties are changed
 		var self = this;
@@ -557,9 +556,9 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 		);
 
 		// Load the initial order
-		this.controller.loadInitialOrder(this._getInitialOrder(
+		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
-		));
+		));*/
 
 		this.controller.setFilters(this.activeFilters);
 	},
