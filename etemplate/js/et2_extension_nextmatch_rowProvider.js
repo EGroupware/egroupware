@@ -163,11 +163,12 @@ var et2_nextmatch_rowProvider = Class.extend({
 		tr.appendChild(row);
 
 		// Make the row expandable
-		if (typeof _data["is_parent"] !== "undefined" && _data["is_parent"])
+		if (typeof _data.content["is_parent"] !== "undefined"
+		    && _data.content["is_parent"])
 		{
 			_row.makeExpandable(true, function () {
 				return this._subgridCallback.call(this._context,
-						_row, _data["parent_id"]);
+						_row, _data.content["parent_id"]);
 			}, this);
 		}
 
