@@ -548,6 +548,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				this.egw(),
 				this.getInstanceManager().etemplate_exec_id,
 				"nm",
+				null,
 				this.dataview.grid,
 				this.rowProvider,
 				this.options.settings.action_links,
@@ -578,6 +579,28 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 						_grid.colData);
 			}
 		}
+	},
+
+	_getSubgrid: function (_row, _parentId) {
+		// Create a new grid with the row as parent and the dataview grid as
+		// parent grid
+		var grid = new et2_dataview_grid(_row, this.dataview.grid);
+
+		// Create a new controller for the grid
+		var controller = new et2_nextmatch_controller(
+				this.egw(),
+				this.getInstanceManager().etemplate_exec_id,
+				"nm",
+				_parentId,
+				grid,
+				this.rowProvider,
+				this.options.settings.action_links,
+				null,
+				this.options.settings.actions
+		);
+		controller.update();
+
+		return grid;
 	},
 
 	_getInitialOrder: function (_rows, _rowId) {

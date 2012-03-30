@@ -43,7 +43,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _actions contains the actions, may be null if an object manager
 	 * is given.
 	 */
-	init: function (_egw, _execId, _widgetId, _grid, _rowProvider,
+	init: function (_egw, _execId, _widgetId, _parentId, _grid, _rowProvider,
 			_actionLinks, _objectManager, _actions) {
 
 		// Copy the egw reference
@@ -68,6 +68,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		this._actionLinks = _actionLinks
 		this._execId = _execId;
 		this._widgetId = _widgetId;
+		this._parentId = _parentId;
 		this._rowProvider = _rowProvider;
 
 		// We start with no filters
@@ -179,6 +180,13 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 
 
 	dataFetch: function (_queriedRange, _callback, _context) {
+
+		// Merge the parent id into the _queriedRange if it is set
+		if (this._parentId !== null)
+		{
+			_queriedRange["parent_id"] = _queriedRange;
+		}
+
 		// Pass the fetch call to the API, multiplex the data about the
 		// nextmatch instance into the call.
 		this.egw.dataFetch(

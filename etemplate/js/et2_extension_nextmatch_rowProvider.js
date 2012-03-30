@@ -27,9 +27,11 @@ var et2_nextmatch_rowProvider = Class.extend({
 	/**
 	 * Creates the nextmatch row provider.
 	 */
-	init: function (_rowProvider) {
+	init: function (_rowProvider, _subgridCallback, _context) {
 		// Copy the arguments
 		this._rowProvider = _rowProvider;
+		this._subgridCallback = _subgridCallback;
+		this._context = _context;
 	},
 
 	/**
@@ -159,6 +161,15 @@ var et2_nextmatch_rowProvider = Class.extend({
 		// Insert the row into the tr
 		var tr = _row.getDOMNode();
 		tr.appendChild(row);
+
+		// Make the row expandable
+		if (typeof _data["is_parent"] !== "undefined" && _data["is_parent"])
+		{
+			_row.makeExpandable(true, function () {
+				return this._subgridCallback.call(this._context,
+						_row, _data["parent_id"]);
+			}, this);
+		}
 
 		// Set the row data
 		this._setRowData(this._template.rowData, tr, mgrs);
