@@ -61,7 +61,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 	 *
 	 * @var boolean
 	 */
-	const DEBUG = true;
+	const DEBUG = false;
 
 	/**
 	 * Rendering transformer widget serverside as an old etemplate extension
