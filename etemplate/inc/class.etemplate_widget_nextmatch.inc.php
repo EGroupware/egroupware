@@ -145,7 +145,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * are always returned to client if in range or deleted if outside range.
 	 *
 	 * @param string $exec_id identifys the etemplate request
-	 * @param array $queriedRange array with values for keys "start", "num_rows" and optional "refresh"
+	 * @param array $queriedRange array with values for keys "start", "num_rows" and optional "refresh", "parent_id"
 	 * @param array $filters Search and filter parameters, passed to data source
 	 * @param string $form_name='nm' full id of widget incl. all namespaces
 	 * @param array $knownUids=null uid's know to client
@@ -156,11 +156,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	static public function ajax_get_rows($exec_id, array $queriedRange, array $filters = array(), $form_name='nm',
 		array $knownUids=null, $lastModified=null)
 	{
-		error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified)");
-
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
 		$value = array_merge($value, $filters);
+		error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
+
 		$result = array();
 
 		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
@@ -172,12 +172,19 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
+		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
+		if (($parent_id = $value['parent_id']))
+		{
+			$value['col_filter']['parent_id'] = $queriedRange['parent_id'];
+		}
 		$rows = $result['data'] = $result['order'] = array();
 		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
 		$result['lastModification'] = egw_time::to('now', 'ts')-1;
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
-		$row_modified = isset($value['row_modified']) ? $value['row_modified'] : 'modified';
+		$row_modified = $value['row_modified'];
+		$is_parent = $value['is_parent'];
+
 		$kUkey = false;
 
 		foreach($rows as $n => $row)
@@ -194,6 +201,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
 				{
+					if ($parent_id)	// if app supports parent_id / hierarchy, set parent_id and is_parent
+					{
+						$row['is_parent'] = $row[$is_parent];
+						$row['parent_id'] = $row[$parent_id];
+					}
 					$result['data'][$id] = $row;
 				}
 				if ($kUkey !== false) unset($knownUids[$kUkey]);
