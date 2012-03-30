@@ -234,6 +234,13 @@ var et2_date_duration = et2_date.extend({
 			this.options.display_format = this.options.display_format.replace("%","");
 		}
 
+		// Clean formats
+		this.options.display_format = this.options.display_format.replace(/[^dhm]/,'');
+		if(!this.options.display_format)
+		{
+			this.options.display_format = this.attributes.display_format["default"];
+		}
+
 		// Get translations
 		this.time_formats = {
 			"d": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Days"),
@@ -257,8 +264,14 @@ var et2_date_duration = et2_date.extend({
 			for(var i = 0; i < this.options.display_format.length; i++) {
 				this.format.append("<option value='"+this.options.display_format[i]+"'>"+this.time_formats[this.options.display_format[i]]+"</option>");
 			}
-		} else {
-			this.format = $j(document.createElement("<span>"+this.time_formats[this.options.display_format])+"</span>").appendTo(this.node);
+		}
+		else if (this.time_formats[this.options.display_format])
+		{
+			this.format = $j("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
+		}
+		else
+		{
+			this.format = $j("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
 		}
 	},
 	attachToDOM: function() {
@@ -315,7 +328,7 @@ var et2_date_duration = et2_date.extend({
 		// Set unit as figured for display
 		if(display.unit != this.options.display_format)
 		{
-			if(this.format.children().length > 1) {
+			if(this.format && this.format.children().length > 1) {
 				$j("option[value='"+display.unit+"']",this.format).attr('selected','selected');
 			}
 			else
