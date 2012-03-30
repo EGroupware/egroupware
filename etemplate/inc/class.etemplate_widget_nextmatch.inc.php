@@ -717,6 +717,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
+		$old_param0 = $params[0];
 		$cname =& $params[0];
 		// Need this check or the headers will get involved too
 		if($this->type == 'nextmatch') {
@@ -728,7 +729,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$row_template->run($method_name, $params, $respect_disabled);
 			}
 		}
-
+		$params[0] = $old_param0;
 	}
 }
 
