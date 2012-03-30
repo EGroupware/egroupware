@@ -270,13 +270,18 @@ class infolog_ui
 		if (!$query['csv_export'])
 		{
 			unset($query['no_actions']);
+			$parent_id = $query['col_filter']['parent_id'];
+			unset($query['col_filter']['parent_id']);
 			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
 			$query['row_modified'] = 'info_datemodified';
+			$query['parent_id'] = 'info_id_parent';
+			$query['is_parent'] = 'info_anz_subs';
 			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
 		}
 		$orginal_colfilter = $query['col_filter'];
+		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (int)$parent_id;
 		if ($query['filter'] == 'bydate')
 		{
 			$query['header_left'] = 'infolog.index.dates';
