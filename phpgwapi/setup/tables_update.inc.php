@@ -32,6 +32,23 @@ function phpgwapi_upgrade1_8_002()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
 }
+function phpgwapi_upgrade1_8_003()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
+}
+/**
+ * Combiupdate 1.8.004: includes Trunk updates 1.9.001-1.9.010+1.9.013
+ *
+ * @return string
+ */
+function phpgwapi_upgrade1_8_004()
+{
+	// run the two not included updates
+	phpgwapi_upgrade1_9_010();
+	phpgwapi_upgrade1_9_011();
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.013';
+}
 
 /**
  * Add index to improve import of contacts using a custom field as primary key
@@ -256,7 +273,7 @@ function phpgwapi_upgrade1_9_009()
 
 	// changing pw hashing only, if we auth agains our own account repository and no migration already active
 	if ($config['auth_type'] == $config['account_repository'] &&
-		(!$config['pwd_migration_allowed'] || $config['pwd_migration_types'] = 'md5,crypt'))	// 1.9.009 migration to ssha
+		(!$config['pwd_migration_allowed'] || $config['pwd_migration_types'] == 'md5,crypt'))	// 1.9.009 migration to ssha
 	{
 		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes to get securest available password hash
 		sql_passwdhashes(array(), true, $securest);
