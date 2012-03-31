@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column disabled="@no_sessionstatus"/>
+				<column/>
+				<column/>
+				<column/>
+				<column disabled="@no_lo"/>
+				<column disabled="@no_total"/>
+				<column/>
+				<column/>
+				<column width="1%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-accountfilter options="LoginID" id="account_id"/>
+					<nextmatch-header label="Login-Status" id="sessionstatus"/>
+					<nextmatch-header label="Loginid" id="loginid"/>
+					<nextmatch-header label="IP" id="ip"/>
+					<nextmatch-sortheader label="Login" id="li"/>
+					<nextmatch-sortheader label="Logout" id="lo"/>
+					<nextmatch-header label="Total" id="total"/>
+					<nextmatch-sortheader label="Idle" id="session_dla"/>
+					<nextmatch-header label="Last action" id="session_action"/>
+					<hbox>
+						<description value="Actions" align="center"/>
+						<buttononly options="check" label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<menulist>
+						<menupopup type="select-account" id="${row}[account_id]" readonly="true" label="$row_cont[alt_loginid]"/>
+					</menulist>
+					<description id="${row}[sessionstatus]"/>
+					<description id="${row}[loginid]"/>
+					<description id="${row}[ip]"/>
+					<date-time id="${row}[li]" readonly="true"/>
+					<date-time id="${row}[lo]" readonly="true"/>
+					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
+					<date-since id="${row}[session_dla]" readonly="true"/>
+					<description id="${row}[session_action]"/>
+					<hbox options="0,0" align="center">
+						<button image="delete" label="Delete" id="delete[$row_cont[sessionid]]" statustext="Delete this log entry" onclick="return confirm('Delete this log entry');"/>
+						<button image="close" label="Kill" id="kill[$row_cont[sessionid]]" onclick="return confirm('Are you sure you want to kill this session ?');"/>
+						<checkbox options="$row_cont[sessionid]" id="selected[]" align="right"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.accesslog" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" align="center" id="msg"/>
+					<description/>
+				</row>
+				<row>
+					<nextmatch span="all" id="nm" options="admin.accesslog.rows"/>
+				</row>
+				<row>
+					<hbox options="0,0">
+						<description readonly="true" value="Percent of users that logged out"/>
+						<textbox type="float" precision="1" label=": %s %" readonly="true" id="percent"/>
+					</hbox>
+					<hbox align="right">
+						<button label="Delete" onclick="return confirm('Delete the selected entries');" id="delete" image="delete" statustext="Delete selected entries"/>
+						<button image="close" label="Kill" id="kill" onclick="return confirm('Are you sure you want to kill this session ?');"/>
+						<buttononly options="arrow_ltr" label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.selectAllArrow { padding-right: 12px; }
+		</styles>
+	</template>
+</overlay>

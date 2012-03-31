@@ -13,11 +13,10 @@
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '1.8';
+$setup_info['resources']['version']	= '1.9.001';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
-$setup_info['resources']['index']	= 'resources.ui_resources.index';
 
 $setup_info['resources']['author']	= 'Cornelius Weiss';
 $setup_info['resources']['license']	= 'GPL';
@@ -33,6 +32,7 @@ $setup_info['resources']['hooks']['admin']		= 'resources.resources_hooks.admin_p
 $setup_info['resources']['hooks']['sidebox_menu']	= 'resources.resources_hooks.admin_prefs_sidebox';
 $setup_info['resources']['hooks']['search_link']	= 'resources.resources_hooks.search_link';
 $setup_info['resources']['hooks']['calendar_resources']	= 'resources.resources_hooks.calendar_resources';
+$setup_info['resources']['hooks']['delete_category']	= 'resources.resources_hooks.delete_category';
 //	$setup_info['resources']['hooks'][]	= 'home';
 //	$setup_info['resources']['hooks'][]	= 'settings';
 

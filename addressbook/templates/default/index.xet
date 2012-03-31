@@ -13,7 +13,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.004">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.8.004">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -71,7 +71,7 @@
 					<nextmatch-header id="bday" label="Birthday"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Business address" id="business"/>
-						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
+						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,1" class="countrySelect"/>
 						<nextmatch-sortheader id="adr_one_postalcode" label="zip code"/>
 					</vbox>
 					<nextmatch-header label="Home address" id="home"/>

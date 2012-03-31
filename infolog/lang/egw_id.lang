@@ -1,0 +1,267 @@
+%1 days in advance	infolog	id	%1 hari dimuka
+%1 deleted	infolog	id	%1 dihapus
+%1 deleted by %2 at %3	infolog	id	%1 dihapus oleh %2 pada %3
+%1 modified	infolog	id	%1 diubah
+%1 modified by %2 at %3	infolog	id	%1 diubah oleh %2 pada %3
+%1 records imported	infolog	id	%1 rekaman diimpor
+%1 you are responsible for is due at %2	infolog	id	%1 dimana anda bertanggungjawab akan berakhir pada %2
+%1 you are responsible for is starting at %2	infolog	id	%1 dimana anda bertanggungjawab akan mulai pada %2
+%1 you delegated is due at %2	infolog	id	%1 dimana anda didelegasikan akan berakhir pada %2
+%1 you delegated is starting at %2	infolog	id	%1 dimana anda didelegasikan akan mulai pada %2
+- subprojects from	infolog	id	- Sub-proyek dari
+0%	infolog	id	0%
+10%	infolog	id	10%
+100%	infolog	id	100%
+20%	infolog	id	20%
+30%	infolog	id	30%
+40%	infolog	id	40%
+50%	infolog	id	50%
+60%	infolog	id	60%
+70%	infolog	id	70%
+80%	infolog	id	80%
+90%	infolog	id	90%
+abort without deleting	infolog	id	Batal tanpa menghapus
+accept	infolog	id	diterima
+action	infolog	id	Tindakan
+actions...	infolog	id	Tindakan...
+actual date and time	infolog	id	Tanggal dan waktu sesungguhnya
+add	infolog	id	Tambah
+add a file	infolog	id	Tambah berkas
+add a new entry	infolog	id	Tambah Entri baru
+add a new note	infolog	id	Tambah Catatan baru
+add a new phonecall	infolog	id	Tambah Panggilan telepon baru
+add a new sub-task, -note, -call to this entry	infolog	id	Tambah sub-task, -catatan, -panggilan ke entri ini
+add a new todo	infolog	id	Tambah ToDo baru
+add file	infolog	id	Tambah berkas
+add sub	infolog	id	tambah Sub
+add timesheet entry	infolog	id	Tamba entri lembarwaktu
+add:	infolog	id	Tambah:
+all	infolog	id	Semua
+all links and attachments	infolog	id	semua tautan dan lampiran
+all projects	infolog	id	Semua Proyek
+alternatives	infolog	id	Pengganti
+apply the changes	infolog	id	Terapkan perubahan
+archive	infolog	id	arsip
+are you shure you want to close this entry ?	infolog	id	Apakah anda yakin hendak menutup entri ini?
+are you shure you want to delete this entry ?	infolog	id	Apakah anda yakin hendak menghapus entri ini?
+attach a file	infolog	id	Lampirkan berkas
+attach file	infolog	id	Lampirkan berkas
+attention: no contact with address %1 found.	infolog	id	Perhatian: Tidak ditemukan Kontak dengan alamat %1.
+back to main list	infolog	id	Kembali ke daftar utama
+billed	infolog	id	ditagihkan
+both	infolog	id	both
+call	infolog	id	panggilan
+cancel	infolog	id	Batal
+cancelled	infolog	id	dibatalkan
+categories	infolog	id	Kategori
+category	infolog	id	Kategori
+change history	infolog	id	Riwayat pengubahan
+click here to create the link	infolog	id	klik disini untuk membuat tautan
+click here to start the search	infolog	id	Klik disini untuk memulai pencarian
+close	infolog	id	Tutup
+close all	infolog	id	Tutup semua
+close this entry and all listed sub-entries	infolog	id	Tutup entri ini dan semua sub-entri yang tercantum
+comment	infolog	id	Komentar
+completed	infolog	id	Lengkap
+configuration	infolog	id	Konfigurasi
+confirm	infolog	id	konfirmasi
+contact	infolog	id	Kontak
+copy of:	infolog	id	Salinan dari:
+create new links	infolog	id	Bikin tautan baru
+creates a new field	infolog	id	bikin field baru
+creation	infolog	id	Creation
+csv-fieldname	infolog	id	CSV-Fieldname
+csv-filename	infolog	id	CSV-Filename
+csv-import	common	id	CSV-Import
+custom	infolog	id	Custom
+custom fields	infolog	id	Custom Fields
+custom fields, typ and status	common	id	Custom fields, tipe dan status
+custom from	infolog	id	Custom from
+custom regarding	infolog	id	Custom regarding
+customfields	infolog	id	Customfields
+date completed	infolog	id	Tanggal selesai
+datecreated	infolog	id	tanggal dibuat
+dates, status, access	infolog	id	Tanggal, Status, Akses
+days	infolog	id	hari
+default category for new infolog entries	infolog	id	Kategori bawaan untuk entri baru InfoLog
+default filter for infolog	infolog	id	Saringan bawaan untuk InfoLog
+default status for a new log entry	infolog	id	Status bawaan untuk entri baru InfoLog
+delegated	infolog	id	didelegasikan
+delegated open	infolog	id	delegated open
+delegated overdue	infolog	id	delegated overdue
+delegated upcomming	infolog	id	delegated upcomming
+delegation	infolog	id	Delegasi
+delete	infolog	id	Hapus
+delete the entry	infolog	id	Hapus entri
+delete this entry	infolog	id	Hapus entri ini
+delete this entry and all listed sub-entries	infolog	id	Hapus entri ini dan semua sub-entri tercamtum
+deleted	infolog	id	terhapus
+deletes this field	infolog	id	hapus field ini
+deletes this status	infolog	id	hapus status ini
+description	infolog	id	Uraian
+don't show infolog	infolog	id	JANGAN tampilkan InfoLog
+done	infolog	id	selesai
+download	infolog	id	Unduh
+due %1	infolog	id	Berakhir %1
+duration	infolog	id	Durasi
+e-mail:	infolog	id	E-mail:
+edit	infolog	id	Edit
+edit or create categories for ingolog	infolog	id	Edit atau bikin kategori untuk InfoLog
+edit status	infolog	id	Edit status
+edit the entry	infolog	id	Edit entri
+edit this entry	infolog	id	Edit entri ini
+enddate	infolog	id	Tanggal jatuh-tempo
+enddate can not be before startdate	infolog	id	Tanggal jatuh-tempo tidak dapat sebelum tanggal memulai
+existing links	infolog	id	Tautan yang ada
+fax	infolog	id	Fax
+fieldseparator	infolog	id	Pemisah field
+finish	infolog	id	rampung
+from	infolog	id	Dari
+general	infolog	id	Umum
+global categories	infolog	id	Kategori Global
+high	infolog	id	tinggi
+history	infolog	id	Riwayat
+history logging	infolog	id	Catatan riwayat
+history logging and deleting of items	infolog	id	Riwayat catatan dan penghapusan item
+id	infolog	id	ID
+id#	infolog	id	ID#
+import	infolog	id	Impor
+import next set	infolog	id	Impor kelompok berikutnya
+importance	infolog	id	Importance
+info log	common	id	InfoLog
+infolog	common	id	InfoLog
+infolog - delete	infolog	id	InfoLog - Hapus
+infolog - edit	infolog	id	InfoLog - Edit
+infolog - import csv-file	infolog	id	InfoLog - Impor berkas-CSV
+infolog - new	infolog	id	InfoLog - Baru
+infolog - new subproject	infolog	id	InfoLog - Subproyek Baru
+infolog - subprojects from	infolog	id	InfoLog - Subproyek dari
+infolog list	infolog	id	Daftar InfoLog
+infolog preferences	common	id	Kesukaan InfoLog
+infolog-fieldname	infolog	id	Nama field-InfoLog
+invalid filename	infolog	id	Nama berkas keliru
+label<br>helptext	infolog	id	Label<br>Helptext
+last changed	infolog	id	Pengubahan terakhir
+last modified	infolog	id	Pengubahan terakhir
+leave it empty	infolog	id	biarkan kosong
+length<br>rows	infolog	id	Length<br>Rows
+link	infolog	id	Tautan
+links	infolog	id	Tautan
+list all categories	infolog	id	Daftar semua kategori
+location	infolog	id	Lokasi
+low	infolog	id	rendah
+new %1	infolog	id	Baru %1
+new %1 created by %2 at %3	infolog	id	Baru %1 dibikin oleh %2 pada %3
+new name	infolog	id	nama baru
+new search	infolog	id	Pencarian baru
+no - cancel	infolog	id	Tidak - Batal
+no describtion, links or attachments	infolog	id	tiada uraian, tautan atau lampiran
+no details	infolog	id	tiada kejelasan
+no entries found, try again ...	infolog	id	tiada entri ditemukan, coba lagi ...
+no filter	infolog	id	tiada Saringan
+no links or attachments	infolog	id	tiada tautan dan lampiran
+no project	infolog	id	Tiada proyek
+nonactive	infolog	id	tidak aktif
+none	infolog	id	Tiada
+normal	infolog	id	normal
+not	infolog	id	not
+not assigned	infolog	id	not assigned
+not-started	infolog	id	belum dimulai
+note	infolog	id	Catatan
+offer	infolog	id	penawaran
+one day after	infolog	id	sehari setelah
+one day in advance	infolog	id	sehari dimuka
+ongoing	infolog	id	berlangsung
+open	infolog	id	buka
+order	infolog	id	Urutan
+organization	infolog	id	Organisasi
+overdue	infolog	id	lewat waktu
+own	infolog	id	own
+own open	infolog	id	own open
+own overdue	infolog	id	own overdue
+own upcoming	infolog	id	own upcoming
+parent	infolog	id	Leluhur
+parent infolog	infolog	id	InfoLog Leluhur
+pattern for search in addressbook	infolog	id	pola pencarian pada Buku Alamat
+pattern for search in projects	infolog	id	pola pencarian pada Proyek
+percent completed	infolog	id	Persentasi rampung
+permission denied	infolog	id	Ijin Ditolak
+phone	infolog	id	Panggilan Telepon
+phone/email	infolog	id	Telepon/Email
+phonecall	infolog	id	Panggilan Telepon
+planned	infolog	id	direncanakan
+planned time	infolog	id	waktu yang direncanakan
+price	infolog	id	Harga
+pricelist	infolog	id	Daftar harga
+primary link	infolog	id	tautan utama
+priority	infolog	id	Prioritas
+private	infolog	id	Privat
+project	infolog	id	Proyek
+project settings: price, times	infolog	id	Pengaturan Proyek: harga, waktu
+projectmanager	infolog	id	Manajer Proyek
+re-planned	infolog	id	Perencanaan ulang
+re-planned time	infolog	id	Waktu Perencanaan ulang
+re:	infolog	id	Re:
+remark	infolog	id	Remark
+responsible	infolog	id	penanggungjawab
+responsible open	infolog	id	responsible open
+responsible overdue	infolog	id	responsible overdue
+responsible upcoming	infolog	id	responsible upcoming
+same day	infolog	id	hari yang sama
+save	infolog	id	Simpan
+saves the changes made and leaves	infolog	id	simpan perubahan dan tinggalkan
+saves this entry	infolog	id	Simpan entri ini
+search	infolog	id	Cari
+search for:	infolog	id	Mencari:
+select	infolog	id	Pilih
+select a category for this entry	infolog	id	pilih kategori untuk entri ini
+select a price	infolog	id	Pilih harga
+select a priority for this task	infolog	id	pilih prioritas untuk tugas ini
+select a project	infolog	id	Pilih proyek
+sender	infolog	id	Pengirim
+set status to done	infolog	id	Tetapkan status menjadi selesai
+set status to done for all entries	infolog	id	Tetapkan status menjadi selesai untuk semua entri
+sets the status of this entry and its subs to done	infolog	id	Tetapkan status entri ini dan sub-entrinya menjadi selesai
+show full usernames	infolog	id	Tampilkan Nama lengkap pengguna
+show in the infolog list	infolog	id	Tampilkan pada daftar InfoLog
+show last modified	infolog	id	Tampilkan pengubahan terakhir
+show status and percent done separate	infolog	id	Tampilkan terpisah status dan persentasi selesai
+show ticket id	infolog	id	Tampilkan ID Tiket
+show times	infolog	id	Tampilkan waktu
+small view	infolog	id	tampilan kecil
+start a new search, cancel this link	infolog	id	memulai pencarian baru, batalkan tautan ini
+startdate	infolog	id	Tanggal memulai
+startdate enddate	infolog	id	Tanggal memulai Tanggal berakhir
+startdate for new entries	infolog	id	Tanggal memulai untuk entri baru
+starting %1	infolog	id	Memulai %1
+startrecord	infolog	id	Rekaman awal
+status	infolog	id	Status
+status ...	infolog	id	Status ...
+sub	infolog	id	Sub
+subject	infolog	id	Subyek
+sum	infolog	id	Jml
+task	infolog	id	ToDo
+template	infolog	id	Templat
+times	infolog	id	Waktu
+today	infolog	id	Hari ini
+todays date	infolog	id	Tanggal sekarang
+todo	infolog	id	ToDo
+translation	infolog	id	Terjemahan
+typ	infolog	id	Tipe
+typ '%1' already exists !!!	infolog	id	Tipe '%1' telah ada !!!
+type	infolog	id	Tipe
+type ...	infolog	id	Tipe ...
+type of the log-entry: note, phonecall or todo	infolog	id	Tipe entri log: Catatan, Panggilan telepon atau ToDo
+unlink	infolog	id	Batalkan tautan
+upcoming	infolog	id	mendatang
+urgency	infolog	id	urgency
+urgent	infolog	id	mendesak
+used time	infolog	id	waktu yang dihabiskan
+view parent	infolog	id	Lihat leluhur
+view subs	infolog	id	view Subs
+whole query	infolog	id	seluruh query
+will-call	infolog	id	will call
+yes - close	infolog	id	Ya - Tutup
+yes - close including sub-entries	infolog	id	Ya - Tutup berikut sub-entrinya
+yes - delete	infolog	id	Ya - Hapus
+yes - delete including sub-entries	infolog	id	Ya - Hapus berikut sub-entrinya

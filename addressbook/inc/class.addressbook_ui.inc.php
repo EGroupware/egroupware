@@ -34,7 +34,7 @@ class addressbook_ui extends addressbook_bo
 	 *
 	 * @var boolean
 	 */
-	protected $private_addressbook = false;
+	public $private_addressbook = false;
 	protected $org_views;
 
 	/**

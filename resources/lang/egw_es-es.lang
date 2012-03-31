@@ -19,7 +19,6 @@ check all	resources	es-es	Marcar todo
 choose categories admin	resources	es-es	Elegir administrador de categorías
 clear selection	resources	es-es	Limpiar selección
 configure access permissions	admin	es-es	Configurar permisos de acceso
-conflict	resources	es-es	conflicto
 create new accessory for this resource	resources	es-es	Crear nuevo accesorio para este recurso
 create new links	resources	es-es	Crear nuevos enlaces
 delete selected resources	resources	es-es	Borrar los recursos seleccionados

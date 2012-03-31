@@ -1,13 +1,13 @@
-accessories of	resources	en	accessories of
+accessories of	resources	en	Accessories of
 accessories:	resources	en	Accessories:
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
-add resource	resources	en	add resource
+add resource	resources	en	Add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
-all categories	resources	en	all categories
+all categories	resources	en	All categories
 book	resources	en	Book
-book selected resources	resources	en	book selected resources
+book selected resources	resources	en	Book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
 buy this article	resources	en	Buy this article
@@ -16,87 +16,105 @@ buyable	resources	en	Buyable
 categories admin	resources	en	Categories admin
 category:	resources	en	Category:
 check all	resources	en	Check all
-choose categories admin	resources	en	choose categories admin
-clear selection	resources	en	clear selection
-configure access permissions	admin	en	Configure Access Permissions
-conflict	resources	en	conflict
+choose categories admin	resources	en	Choose categories admin
+clear selection	resources	en	Clear selection
+configure access permissions	admin	en	Configure ACL
+conflict	resources	en	Conflict
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
-delete selected resources	resources	en	delete selected resources
+custom fields	resources	en	Custom fields
+days	resources	en	Days
+delete selected resources	resources	en	Delete selected resources
 delete this entry	resources	en	Delete this entry
-description (short)	resources	en	Description (short)
+description (short)	resources	en	Short description
 direct booking permissions	resources	en	Direct booking permissions
 don't use vfs (this will need a symlink --> see readme)	resources	en	Don't use vfs (this will need a symlink --> see README)
 edit this entry	resources	en	Edit this entry
 existing links	resources	en	Existing links
+exists	resources	en	Exists
+export definitition to use for nextmatch export	resources	en	Export definition to use for nextmatch export
+exports a list of resources to a csv file.	resources	en	Exports a list of resources to a CSV file.
 general	resources	en	General
-general informations about resource	resources	en	General informations about resource
-gernal resource	resources	en	gernal resource
-how many of the resources are useable?	resources	en	How many of the resources are useable?
-how many of them are useable?	resources	en	How many of them are useable?
-how many of this resource are usable	resources	en	How many of this resource are usable
+general informations about resource	resources	en	General information about resource
+gernal resource	resources	en	General resource
+global categories	resources	en	Global categories
+hours	resources	en	Hours
+how many of the resources are useable?	resources	en	How many are usable
+how many of them are useable?	resources	en	How many are usable
+how many of this resource are usable	resources	en	How many are usable
 how many of this resource exists	resources	en	How many of this resource exists
-implies booking permission	resources	en	implies booking permission
-implies read permission	resources	en	implies read permission
-information about storage	resources	en	Information about storage
-informations about the location of resource	resources	en	Informations about the location of resource
+if you specify an export definition, it will be used when you export	resources	en	If you specify an export definition, it will be used when you export
+implies booking permission	resources	en	Implies booking permission
+implies read permission	resources	en	Implies read permission
+imports a list of resources from a csv file.	resources	en	Imports a list of resources from a CSV file.
+information about storage	resources	en	Storage information
+informations about the location of resource	resources	en	Location information
+insert	resources	en	Insert
 inventory number	resources	en	Inventory number
 inventory number:	resources	en	Inventory number:
-is resource bookable?	resources	en	Is resource bookable?
-is resource buyable?	resources	en	Is resource buyable?
-is this resource bookable?	resources	en	Is this resource bookable?
-is this resource buyable?	resources	en	Is this resource buyable?
+is resource bookable?	resources	en	Is resource bookable
+is resource buyable?	resources	en	Is resource buyable
+is this resource bookable?	resources	en	Is this resource bookable
+is this resource buyable?	resources	en	Is this resource buyable
 links	resources	en	Links
 location	resources	en	Location
 location of resource	resources	en	Location of resource
 location:	resources	en	Location:
+locations / rooms	resources	en	Locations / rooms
+long description	resources	en	Long description
+manage mapping	resources	en	Manage mapping
 name of resource	resources	en	Name of resource
 name:	resources	en	Name:
-no description available	resources	en	no description available
-no resources selected	resources	en	No resources selected
-notify your administrator to correct this situation	resources	en	Notify your administrator to correct this situation
+no description available	resources	en	No description available.
+no resources selected	resources	en	No resources selected.
+notify your administrator to correct this situation	resources	en	Notify your administrator.
 picture	resources	en	Picture
-picture source	resources	en	picture source
+picture source	resources	en	Picture source
 picture type is not supported, sorry!	resources	en	Picture type is not supported, sorry!
 pictures or resource	resources	en	Pictures or resource
-planer	resources	en	planer
-prizeing information for booking or buying	resources	en	Prizeing information for booking or buying
+planer	resources	en	Planner
+prize	resources	en	Prize
+prizeing information for booking or buying	resources	en	Prizing information for booking or buying
 quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
-read calendar permissions	resources	en	Read Calendar permissions
+read calendar permissions	resources	en	Read calendar permissions
 read permissions	resources	en	Read permissions
 related links	resources	en	Related links
+resource id	resources	en	Resource ID
 resources	common	en	Resources
+resources csv export	resources	en	Resources CSV export
+resources csv import	resources	en	Resources CSV import
 resources list	resources	en	Resources list
 responsible:	resources	en	Responsible:
-saves entry and exits	resources	en	Saves entry and exits
+saves entry and exits	resources	en	Save entry and exit
 select a category	resources	en	Select a category
-select resource	resources	en	select resource
+select resource	resources	en	Select resource
 select resources	common	en	Select resources
-select/deselect all	resources	en	select/deselect all
+select/deselect all	resources	en	Select/deselect all
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
 show calendar of resource	resources	en	Show calendar of resource
-something went wrong by deleting resource	resources	en	Something went wrong by deleting resource
-something went wrong by saving resource	resources	en	Something went wrong by saving resource
-storage information	resources	en	Storage information
+something went wrong by deleting resource	resources	en	Error deleting resource!
+something went wrong by saving resource	resources	en	Error saving resource!
+storage	resources	en	Storage
+storage information	resources	en	Storage
 storage information:	resources	en	Storage information:
-the calendar of this resource	resources	en	The Calendar of this resource
+the calendar of this resource	resources	en	Calendar of the resource
 this module displays the resources app	resources	en	This module displays the resources app
 use general resources icon	resources	en	Use general resources icon
 use own picture	resources	en	Use own picture
-use the category's icon	resources	en	Use the category's icon
-useable	resources	en	useable
-useable:	resources	en	Useable:
-view accessories for this resource	resources	en	View accessories for this resource
-view this entry	resources	en	View this entry
-web-page of resource	resources	en	Web-Page of resource
-web-site for this resource	resources	en	Web-Site for this resource
-where to find this resource?	resources	en	Where to find this resource?
-which category does this resource belong to?	resources	en	Which category does this resource belong to?
+use the category's icon	resources	en	Use the category icon
+useable	resources	en	Usable
+useable:	resources	en	Usable:
+view accessories for this resource	resources	en	View accessories
+view this entry	resources	en	View entry
+web-page of resource	resources	en	Web page of resource
+web-site for this resource	resources	en	Website for this resource
+where to find this resource?	resources	en	Location information
+which category does this resource belong to?	resources	en	Category of the resource
 write permissions	resources	en	Write permissions
-you are not permitted to delete this reource!	resources	en	You are not permitted to delete this reource!
-you are not permitted to edit this reource!	resources	en	You are not permitted to edit this reource!
+you are not permitted to delete this resource!	resources	en	You are not permitted to delete this resource!
+you are not permitted to edit this resource!	resources	en	You are not permitted to edit this resource!
 you are not permitted to get information about this resource!	resources	en	You are not permitted to get information about this resource!
-you chose more resources than available	resources	en	You chose more resources than available
+you chose more resources than available	resources	en	You chose more resources than available!

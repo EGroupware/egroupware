@@ -5,27 +5,21 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 /**
  * SQL storage object of the adressbook
  */
-class addressbook_sql extends so_sql
+class addressbook_sql extends so_sql_cf
 {
 	/**
-	 * name of customefields table
+	 * name of custom fields table
 	 *
 	 * @var string
 	 */
-	var $extra_table = 'egw_addressbook_extra';
-	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
-	var $extra_join_order = ' LEFT JOIN egw_addressbook_extra extra_order ON egw_addressbook.contact_id=extra_order.contact_id';
-	var $extra_join_filter = ' JOIN egw_addressbook_extra extra_filter ON egw_addressbook.contact_id=extra_filter.contact_id';
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
 	var $grants;
@@ -33,7 +27,7 @@ class addressbook_sql extends so_sql
 	/**
 	 * join to show only active account (and not already expired ones)
 	 */
-	const ACOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
+	const ACCOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
 	/**
 	 * filter to show only active account (and not already expired ones)
 	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
@@ -60,9 +54,18 @@ class addressbook_sql extends so_sql
 	 */
 	var $ab2list_table = 'egw_addressbook2list';
 
-	function __construct()
+	/**
+	 * Constructor
+	 *
+	 * @param egw_db $db=null
+	 */
+	function __construct(egw_db $db=null)
 	{
-		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_',true);	// true = using the global db object, no clone!
+		parent::__construct('phpgwapi','egw_addressbook','egw_addressbook_extra','contact_',
+			$extra_key='_name',$extra_value='_value',$extra_id='_id',$db);
+
+		// Get custom fields from addressbook instead of phpgwapi
+		$this->customfields = config::get_customfields('addressbook');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
 		{
@@ -105,7 +108,7 @@ class addressbook_sql extends so_sql
 		if (isset($param['advanced_search']) && !empty($param['advanced_search'])) $advanced_search = true;
 		$wildcard ='%';
 		if ($advanced_search || (isset($param['wildcard']) && !empty($param['wildcard']))) $wildcard = ($param['wildcard']?$param['wildcard']:'');
-		
+
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if ((int)$filter['cat_id'])
 		{
@@ -133,8 +136,8 @@ class addressbook_sql extends so_sql
 				{
 					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
-				$filter[] = "(contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
-					" OR contact_private=0 AND contact_owner IN (".
+				$filter[] = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
 					implode(',',array_keys($this->grants))."))";
 			}
 		}
@@ -254,10 +257,17 @@ class addressbook_sql extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".array2string($filter).",'$join')</p>\n";
+		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
+		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')");
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
+		// fix cat_id criteria to search in comma-separated multiple cats and return subcats
+		if (is_array($criteria) && ($cats = $criteria['cat_id']))
+		{
+			$criteria = array_merge($criteria, $this->_cat_search($criteria['cat_id']));
+			unset($criteria['cat_id']);
+		}
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if (($cats = $filter['cat_id']))
 		{
@@ -323,122 +333,28 @@ class addressbook_sql extends so_sql
 					implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
 			}
 		}
-		$search_customfields = isset($criteria['contact_value']) && !empty($criteria['contact_value']);
-		if (is_array($criteria))
-		{
-			foreach($criteria as $col => $val)
-			{
-				if ($col[0] === '#')	// search for a value in a certain custom field
-				{
-					$valarray=array();
-					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
-					# we split the value and search for each part individually
-					if ($wildcard !='') {
-						$valarray=explode(',',$val);
-					} else {
-						$valarray[]=$val;
-					}
-					$negate = false;      //negate the search funktion
-					if ($criteria[$col][0] == '!') $negate = True;
-					unset($criteria[$col]);
-					foreach ($valarray as $vkey => $part)
-					{
-						$criteria[] =$this->table_name.'.contact_id'.($negate ? ' not '  :'').' in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
-							"(".$this->extra_table.".contact_name='".substr($col,1)."' AND ".$this->extra_table.".contact_value".(!$wildcard?' = ':' LIKE ')."'".$wildcard.($negate?substr($part,1):$part).$wildcard."'"."))";
-
-					}
-					$search_customfields = true;
-				}
-				elseif($col === 'cat_id')	// search in comma-sep. cat-column
-				{
-					$criteria = array_merge($criteria,$this->_cat_search($val));
-					unset($criteria[$col]);
-				}
-				elseif($col === 'contact_value')
-				{
-					if ($order_by[0] == '#')
-					{
-						$criteria =array_merge($criteria,array('extra_order.contact_value'=>$val));
-						unset($criteria[$col]);
-					}
-				}
-			}
-		}
-		if ($search_customfields)	// search the custom-fields
-		{
-			$join .= $this->extra_join;
-		}
-		// do we order by a cf?
-		if ($order_by[0] == '#')
-		{
-			list($val) = explode("<>''",$order_by);
-			$order_by = str_replace($val,'extra_order.contact_value',$order_by);
-			$join .= $this->extra_join_order.' AND extra_order.contact_name='.$this->db->quote(substr($val,1));
-		}
-		// do we filter by a cf?
-		$extra_filter = '';
-		foreach($filter as $name => $val)
-		{
-			if ($name[0] === '#')
-			{
-				if (!empty($val))	// empty -> dont filter
-				{
-					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($name,1)).
-						' AND extra_filter.contact_value='.$this->db->quote($val));
-					++$extra_filter;
-				}
-				unset($filter[$name]);
-			}
-			elseif($val[0] === '#')	// lettersearch: #cfname like 's%'
-			{
-				list($cf) = explode(' ',$val);
-				$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($cf,1)).
-					' AND '.str_replace($cf,'extra_filter.contact_value',$val));
-				++$extra_filter;
-				unset($filter[$name]);
-			}
-			switch((string)$name)
-			{
-				case 'owner':
-				case 'contact_owner':
-					$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
-						'contact_owner' => $val,
-					));
-					unset($filter[$name]);
-					break;
-			}
-		}
 		if (isset($filter['list']))
 		{
 			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
 			unset($filter['list']);
 		}
-		if ($join)
+		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
+		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
+		{
+			$join .= self::ACCOUNT_ACTIVE_JOIN;
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+		}
+		if ($join || $criteria && is_string($criteria))	// search also adds a join for custom fields!
 		{
 			switch(gettype($only_keys))
 			{
 				case 'boolean':
-					// only return the egw_addressbook columns, to not generate dublicates by the left join
-					// and to not return the NULL for contact_{id|owner} of not found custom fields!
-					$only_keys = (strpos($join,$this->extra_table)!==false?'DISTINCT ':'').$this->table_name.'.'.($only_keys ? 'contact_id AS contact_id' : '*');
+					// Correctly handled by parent class
 					break;
 				case 'string':
 					$only_keys = explode(',',$only_keys);
 					// fall through
-				case 'array':
-					foreach($only_keys as $key => $val)
-					{
-						switch($val)
-						{
-							case 'id': case 'contact_id':
-								$only_keys[$key] = $this->table_name.'.contact_id';
-								break;
-							case 'owner': case 'contact_owner':
-								$only_keys[$key] = $this->table_name.'.contact_owner';
-								break;
-						}
-					}
-					break;
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			if ($this->db->Type != 'mysql' && preg_match_all("/([a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",$order_by,$all_matches,PREG_SET_ORDER))
@@ -470,13 +386,6 @@ class addressbook_sql extends so_sql
 				}
 				//_debug_array($order_by); _debug_array($extra_cols);
 			}
-		}
-		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
-		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
-			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
-		{
-			$join .= self::ACOUNT_ACTIVE_JOIN;
-			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
@@ -549,101 +458,200 @@ class addressbook_sql extends so_sql
 	/**
 	 * Get the availible distribution lists for givens users and groups
 	 *
-	 * @param array $uids user or group id's
+	 * @param array $uids array of user or group id's for $uid_column='list_owners', or values for $uid_column,
+	 * 	or whole where array: column-name => value(s) pairs
+	 * @param string $uid_column='list_owner' column-name or null to use $uids as where array
+	 * @param string $member_attr=null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
+	 * @param boolean|int|array $limit_in_ab=false if true only return members from the same owners addressbook,
+	 * 	if int|array only return members from the given owners addressbook(s)
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function get_lists($uids)
+	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
-		$user = $GLOBALS['egw_info']['user']['account_id'];
-		$lists = array();
-		foreach($this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
-			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
+		if (is_array($uids) && isset($uids['list_carddav_name']))
 		{
+			$ids = array();
+			foreach((array)$uids['list_carddav_name'] as $carddav_name)
+			{
+				if (preg_match('/addressbook-lists-([0-9]+)-/',$carddav_name, $matches))
+				{
+					$ids[] = $matches[1];
+				}
+			}
+			unset($uids['list_carddav_name']);
+			if (!$ids) return array();
+			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $ids));
+		}
+		$lists = array();
+		$table_def = $this->db->get_table_definitions('phpgwapi',$this->lists_table);
+		$group_by = 'GROUP BY '.$this->lists_table.'.'.implode(','.$this->lists_table.'.',array_keys($table_def['fd']));
+		foreach($this->db->select($this->lists_table,$this->lists_table.'.*,MAX(list_added) AS list_modified',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
+			false,$group_by.' ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
+			"LEFT JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id") as $row)
+		{
+			if (!$row['list_id']) continue;	// because of join, no lists at all still return one row of NULL
+			if ($member_attr) $row['members'] = array();
+			// generate UID and carddav_name for list_id
+			$row['list_uid'] = common::generate_uid('addressbook-lists', $row['list_id']);
+			$row['list_carddav_name'] = $row['list_uid'].'.vcf';
+			// set list_modified (=MAX(list_added)) as etag
+			if (!$row['list_modified']) $row['list_modified'] = $row['list_created'];
+			$row['list_etag'] = $row['list_modified'];
 			$lists[$row['list_id']] = $row;
 		}
-		//echo "<p>socontacts_sql::get_lists(".print_r($uids,true).")</p>\n"; _debug_array($lists);
+		if ($lists && $member_attr && in_array($member_attr,array('contact_id','contact_uid','caldav_name')))
+		{
+			if ($limit_in_ab)
+			{
+				$in_ab_join = " JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND $this->lists_table.";
+				if (!is_bool($limit_in_ab))
+				{
+					$in_ab_join .= $this->db->expression($this->lists_table, array('list_owner'=>$limit_in_ab));
+				}
+				else
+				{
+					$in_ab_join .= "list_owner=$this->table_name.contact_owner";
+				}
+			}
+			foreach($this->db->select($this->ab2list_table,"$this->ab2list_table.list_id,$this->table_name.$member_attr",
+				$this->db->expression($this->ab2list_table, $this->ab2list_table.'.', array('list_id'=>array_keys($lists))),
+				__LINE__,__FILE__,false,$member_attr=='contact_id' ? '' :
+				'',false,0,"JOIN $this->table_name ON $this->ab2list_table.contact_id=$this->table_name.contact_id".$in_ab_join) as $row)
+			{
+				$lists[$row['list_id']]['members'][] = $row[$member_attr];
+			}
+		}
+		//error_log(__METHOD__.'('.array2string($uids).", '$uid_column', '$member_attr') returning ".array2string($lists));
 		return $lists;
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param string $name list-name
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
 	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return int/boolean integer list_id, true if the list already exists or false on error
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$name || !(int)$owner) return false;
+		//error_log(__METHOD__.'('.array2string($keys).", $owner, ".array2string($contacts).', '.array2string($data).') '.function_backtrace());
+		if (!$keys && !$data || !(int)$owner) return false;
 
-		if ($this->db->select($this->lists_table,'list_id',array(
-			'list_name' => $name,
-			'list_owner' => $owner,
-		),__LINE__,__FILE__)->fetchColumn())
+		if ($keys && !is_array($keys)) $keys = array('list_name' => $keys);
+		if ($keys)
 		{
-			return true;	// return existing list-id
+			$keys['list_owner'] = $owner;
 		}
-		if (!$this->db->insert($this->lists_table,array(
-			'list_name' => $name,
-			'list_owner' => $owner,
-			'list_created' => time(),
-			'list_creator' => $GLOBALS['egw_info']['user']['account_id'],
-		),array(),__LINE__,__FILE__)) return false;
-
-		if ((int)($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) && $contacts)
+		else
 		{
-			foreach($contacts as $contact)
+			$data['list_owner'] = $owner;
+		}
+		if (isset($keys['list_carddav_name']))
+		{
+			if (isset($data['list_id']))	// use id if given
 			{
-				$this->add2list($list_id,$contact);
+				$keys = array(
+					'list_id' => $data['list_id'],
+				);
+				unset($data['list_id']);
+			}
+			else
+			{
+				$keys = false;	// cant PUT a name in 11.1
 			}
 		}
+		if (!$keys || !($list_id = $this->db->select($this->lists_table,'list_id',$keys,__LINE__,__FILE__)->fetchColumn()))
+		{
+			$data['list_created'] = time();
+			$data['list_creator'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		$data['list_modified'] = $data['list_etag'] = time();
+		$data['list_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+		if (!$data['list_id']) unset($data['list_id']);
+
+		if (!$this->db->insert($this->lists_table,$data,$keys,__LINE__,__FILE__)) return false;
+
+		if (!$list_id && ($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')))
+		{
+			$this->add2list($list_id,$contacts,array());
+		}
+		// generate UID and carddav_name for list_id, as we dont store them in 11.1
+		$data['list_uid'] = common::generate_uid('addressbook-lists', $list_id);
+		$data['list_carddav_name'] = $data['list_uid'].'.vcf';
+
+		if ($keys) $data += $keys;
+		//error_log(__METHOD__.'('.array2string($keys).", $owner, ...) data=".array2string($data).' returning '.array2string($list_id));
 		return $list_id;
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds contact(s) to a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
-		if (!(int)$list || !(int)$contact) return false;
+		if (!(int)$list || !is_array($contact) && !(int)$contact) return false;
 
-		if ($this->db->select($this->ab2list_table,'list_id',array(
-			'contact_id' => $contact,
-			'list_id' => $list,
-		),__LINE__,__FILE__)->fetchColumn())
+		if (!is_array($existing))
+		{
+			$existing = array();
+			foreach($this->db->select($this->ab2list_table,'contact_id',array('list_id'=>$list),__LINE__,__FILE__) as $row)
+			{
+				$existing[] = $row['contact_id'];
+			}
+		}
+		if (!($to_add = array_diff((array)$contact,$existing)))
 		{
 			return true;	// no need to insert it, would give sql error
 		}
-		return $this->db->insert($this->ab2list_table,array(
-			'contact_id' => $contact,
-			'list_id' => $list,
-			'list_added' => time(),
-			'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
-		),array(),__LINE__,__FILE__);
+		foreach($to_add as $contact)
+		{
+			$this->db->insert($this->ab2list_table,array(
+				'contact_id' => $contact,
+				'list_id' => $list,
+				'list_added' => time(),
+				'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
+			),array(),__LINE__,__FILE__);
+		}
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list=null list-id or null to remove from all lists
 	 * @return false on error
 	 */
 	function remove_from_list($contact,$list=null)
 	{
-		if (!(int)$list && !is_null($list) || !(int)$contact) return false;
+		if (!(int)$list && !is_null($list) || !is_array($contact) && !(int)$contact) return false;
 
 		$where = array(
 			'contact_id' => $contact,
 		);
-		if (!is_null($list)) $where['list_id'] = $list;
-
-		return $this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__);
+		if (!is_null($list))
+		{
+			$where['list_id'] = $list;
+		}
+		else
+		{
+			$list = array();
+			foreach($this->db->select($this->ab2list_table,'list_id',$where,__LINE__,__FILE__) as $row)
+			{
+				$list[] = $row['list_id'];
+			}
+		}
+		if (!$this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__))
+		{
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -659,6 +667,31 @@ class addressbook_sql extends so_sql
 		$this->db->delete($this->ab2list_table,array('list_id' => $list),__LINE__,__FILE__);
 
 		return $this->db->affected_rows();
+	}
+
+	/**
+	 * Get ctag (max list_modified as timestamp) for lists
+	 *
+	 * @param int|array $owner=null null for all lists user has access too
+	 * @return int
+	 */
+	function lists_ctag($owner=null)
+	{
+		if (is_null($owner)) $owner = array_keys($this->grants);
+
+		if (!($modified = $this->db->select($this->lists_table,'MAX(list_added)',array('list_owner'=>$owner),
+			__LINE__,__FILE__,false,'',false,0,
+			"JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id")->fetchColumn()))
+		{
+			$modified = 0;
+		}
+		if (!($created = $this->db->select($this->lists_table,'MAX(list_created)',array('list_owner'=>$owner),
+			__LINE__,__FILE__)->fetchColumn()))
+		{
+			$created = 0;
+		}
+		//error_log(__METHOD__.'('.array2string($owner).") MAX(list_added)=$modified, MAX(list_created)=$created returning ".array2string(max($modified,$created)));
+		return max($modified,$created);
 	}
 
 	/**
@@ -682,6 +715,14 @@ class addressbook_sql extends so_sql
 			$keys = array('contact_uid' => $keys);
 		}
 		$contact = parent::read($keys,$extra_cols,$join);
+
+		// Change autoinc_id to match $this->db_cols
+		$this->autoinc_id = $this->db_cols[$this->autoinc_id];
+		if(($id = (int)$this->data[$this->autoinc_id]) && $cfs = $this->read_customfields($keys)) {
+			if (is_array($cfs[$id])) $contact = array_merge($contact,$cfs[$id]);
+		}
+		$this->autoinc_id = array_search($this->autoinc_id, $this->db_cols);
+
 		// enforce a minium uid strength
 		if (is_array($contact) && (!isset($contact['uid'])
 				|| strlen($contact['uid']) < $minimum_uid_length)) {
@@ -730,11 +771,22 @@ class addressbook_sql extends so_sql
 				$this->data['etag'] = 0;
 			}
 		}
+
+		$update = array();
 		// enforce a minium uid strength
-		if (!$err && (!isset($this->data['uid'])
-				|| strlen($this->data['uid']) < $minimum_uid_length)) {
-			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
+		if (!isset($this->data['uid']) || strlen($this->data['uid']) < $minimum_uid_length)
+		{
+			$update['uid'] = common::generate_uid('addressbook',$this->data['id']);
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
+		}
+		// set carddav_name, if not given by caller
+		if (empty($this->data['carddav_name']))
+		{
+			$update['carddav_name'] = $this->data['id'].'.vcf';
+		}
+		if (!$err && $update)
+		{
+			parent::update($update);
 		}
 		return $err;
 	}
@@ -751,5 +803,50 @@ class addressbook_sql extends so_sql
 		if (!$list) return false;
 
 		return $this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__)->fetch();
+	}
+
+	/**
+	 * saves custom field data
+	 * Re-implemented to deal with extra contact_owner column
+	 *
+	 * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
+	 * @return bool false on success, errornumber on failure
+	 */
+	function save_customfields($data)
+	{
+		foreach ((array)$this->customfields as $name => $options)
+		{
+			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
+
+			$where = array(
+					$this->extra_id    => $data['id'],
+					$this->extra_key   => $name,
+				);
+			$is_multiple = $this->is_multiple($name);
+
+			// we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
+			if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
+			{
+				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
+				if (empty($data[$field])) continue;     // nothing else to do for empty values
+			}
+			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
+			{
+				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value, 'contact_owner' => $data['owner']),$where,__LINE__,__FILE__,$this->app))
+				{
+					return $this->db->Errno;
+				}
+			}
+		}
+		return false;   // no error
+	}
+
+	/**
+	* Deletes custom field data
+	* Implemented to deal with LDAP backend, which saves CFs in SQL, but the account record is in LDAP
+	*/
+	function delete_customfields($data)
+	{
+		$this->db->delete($this->extra_table,$data,__LINE__,__FILE__);
 	}
 }

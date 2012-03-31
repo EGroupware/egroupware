@@ -56,11 +56,11 @@ class infolog_tracking extends bo_tracking
 		'info_status'        => 'St',
 		'info_percent'       => 'Pe',
 		'info_datecompleted' => 'Co',
-		'info_datemodified'  => 'Mo',
 		'info_location'      => 'Lo',
 		'info_startdate'     => 'st',
 		'info_enddate'       => 'En',
 		'info_responsible'   => 'Re',
+		'info_cc'            => 'cc',
 		'info_subject'       => 'Su',
 		'info_des'           => 'De',
 		'info_location'      => 'Lo',
@@ -75,11 +75,14 @@ class infolog_tracking extends bo_tracking
 	/**
 	 * Translate field-names to labels
 	 *
+	 * @note The order of these fields is used to determine the order for CSV export
 	 * @var array
 	 */
 	var $field2label = array(
 		'info_type'      => 'Type',
 		'info_from'      => 'Contact',
+		'info_subject'   => 'Subject',
+		'info_des'       => 'Description',
 		'info_addr'      => 'Phone/Email',
 		'info_link_id'   => 'primary link',
 		'info_cat'       => 'Category',
@@ -94,8 +97,7 @@ class infolog_tracking extends bo_tracking
 		'info_startdate' => 'Startdate',
 		'info_enddate'   => 'Enddate',
 		'info_responsible' => 'Responsible',
-		'info_subject'   => 'Subject',
-		'info_des'       => 'Description',
+		'info_cc'        => 'Cc',
 		// PM fields
 		'info_planned_time'  => 'planned time',
 		'info_used_time'     => 'used time',
@@ -136,7 +138,11 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_subject($data,$old)
 	{
-		if (!$old || $old['info_status'] == 'deleted')
+		if ($data['prefix'])
+		{
+			$prefix = $data['prefix'];	// async notification
+		}
+		elseif (!$old || $old['info_status'] == 'deleted')
 		{
 			$prefix = lang('New %1',lang($this->infolog->enums['type'][$data['info_type']]));
 		}
@@ -245,7 +251,7 @@ class infolog_tracking extends bo_tracking
 				}
 				$details['#'.$name] = array(
 					'label' => $field['label'],
-					'value' => $data['#'.$name],
+					'value' => (is_array($field['values']) && !empty($field['values']) && array_key_exists($data['#'.$name],$field['values']))?$field['values'][$data['#'.$name]] : $data['#'.$name],
 				);
 			}
 		}
@@ -254,7 +260,7 @@ class infolog_tracking extends bo_tracking
 
 	/**
 	 * Track changes
-	 * 
+	 *
 	 * Overrides parent to log the modified date in the history, but not to send a notification
 	 *
 	 * @param array $data current entry
@@ -316,5 +322,32 @@ class infolog_tracking extends bo_tracking
 		$old['custom'] = implode("\n",$old_custom);
 
 		return parent::save_history($data,$old);
+	}
+
+	/**
+	 * Get a notification-config value
+	 *
+	 * @param string $what
+	 *  - 'copy' array of email addresses notifications should be copied too, can depend on $data
+	 *  - 'lang' string lang code for copy mail
+	 *  - 'sender' string send email address
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @return mixed
+	 */
+	function get_config($name,$data,$old=null)
+	{
+		$config = array();
+		switch($name)
+		{
+			case 'copy':	// include the info_cc addresses
+				if ($data['info_access'] == 'private') return array();	// no copies for private entries
+				if ($data['info_cc'])
+				{
+					$config = array_merge($config,preg_split('/, ?/',$data['info_cc']));
+				}
+				break;
+		}
+		return $config;
 	}
 }

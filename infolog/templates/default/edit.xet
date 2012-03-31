@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
+		<grid width="100%" height="245" border="0">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description span="all" value="Description" options=",,,info_des"/>
+				</row>
+				<row class="row" valign="top">
+					<description/>
+					<textbox multiline="true" rows="13" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry" class="description"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
+		<grid width="100%" height="245" overflow="auto">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th" disabled="@status_only">
+					<description span="all" value="Create new links"/>
+				</row>
+				<row class="row" disabled="@status_only">
+					<link-to span="all" id="link_to"/>
+				</row>
+				<row>
+					<link-add span="all" id="link_to"/>
+				</row>
+				<row class="th">
+					<description span="all" value="Existing links"/>
+				</row>
+				<row class="row_off" valign="top">
+					<link-list span="all" id="link_to"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.3.001">
+		<grid width="100%" height="245">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description span="all" value="General"/>
+				</row>
+				<row class="row">
+					<description options=",,,info_priority" value="Priority"/>
+					<menulist>
+						<menupopup id="info_priority" statustext="select a priority for this task"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,info_location" value="Location"/>
+					<textbox size="80" maxlength="255" id="info_location"/>
+				</row>
+				<row class="th">
+					<description span="all" value="Delegation"/>
+				</row>
+				<row class="row" valign="top">
+					<description options=",,,info_responsible" value="Responsible"/>
+					<listbox type="select-account" id="info_responsible" rows="10" options="both" statustext="select a responsible user: a person you want to delegate this task"/>
+				</row>
+				<row class="row" disabled="1">
+					<description options=",,,info_confirm" value="Confirm"/>
+					<menulist>
+						<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
+		<grid width="100%" height="245">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description span="all" value="Projectmanager"/>
+				</row>
+				<row class="row">
+					<description value="Project"/>
+					<projectmanager-select id="pm_id" onchange="1" options="None"/>
+				</row>
+				<row class="row">
+					<description value="Price"/>
+					<hbox span="all">
+						<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
+						<textbox type="float" id="info_price" span="all"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description options=",,,info_planned_time" value="planned time"/>
+					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
+				</row>
+				<row class="row">
+					<description options=",,,info_replanned_time" value="Re-planned time"/>
+					<date-duration id="info_replanned_time" options=",$cont[duration_format]"/>
+				</row>
+				<row class="row" valign="top" height="60%">
+					<description options=",,,info_used_time" value="used time" statustext="Leave blank to get the used time calculated by timesheet entries"/>
+					<date-duration id="info_used_time"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th" height="20">
+					<description value="Custom fields"/>
+				</row>
+				<row height="100%">
+					<customfields options="@info_type"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
+		<grid width="100%" height="245" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<historylog id="history"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="103"/>
+				<column width="260"/>
+				<column width="140"/>
+				<column width="27%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<html span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th" height="28">
+					<description value="Type" options=",,,info_type"/>
+					<hbox span="all" options="0,0">
+						<menulist>
+							<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1"/>
+						</menulist>
+						<int id="info_number" class="infoId" readonly="true"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description value="Contact" options=",,,info_from"/>
+					<vbox options="0,0">
+						<hbox options="0,0">
+							<link-entry id="info_contact" class="noWrap"/>
+							<checkbox id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';" statustext="Check to specify custom contact"/>
+						</hbox>
+						<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title" class="$cont[hide_from_css]"/>
+					</vbox>
+					<description options=",,,info_addr" value="Phone/Email"/>
+					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link" class="inputFullWidth"/>
+				</row>
+				<row class="row">
+					<description value="Category" options=",,,info_cat"/>
+					<menulist>
+						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
+					</menulist>
+					<hbox span="all">
+						<description value="Parent"/>
+						<link-entry options="infolog" id="info_id_parent" align="right" class="noWrap"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description value="Subject" options=",,,info_subject"/>
+					<textbox size="80" maxlength="255" span="all" id="info_subject" statustext="a short subject for the entry"/>
+				</row>
+				<row valign="top" height="250">
+					<tabbox span="all" id="description|links|delegation|project|customfields|history">
+						<tabs>
+							<tab label="Description" statustext="longer textual description"/>
+							<tab label="Links" statustext="Links of this entry"/>
+							<tab label="Delegation" statustext="responsible user, priority"/>
+							<tab label="Projectmanager" statustext="Project settings: price, times"/>
+							<tab label="Customfields" statustext="Custom fields"/>
+							<tab label="History" statustext="Change history"/>
+						</tabs>
+						<tabpanels>
+							<template id="infolog.edit.description"/>
+							<template id="infolog.edit.links"/>
+							<template id="infolog.edit.delegation"/>
+							<template id="infolog.edit.project"/>
+							<template id="infolog.edit.customfields"/>
+							<template id="infolog.edit.history"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row class="th" disabled="1">
+					<description span="all" value="Dates, Status, Access"/>
+				</row>
+				<row class="row_on">
+					<description value="Startdate" options=",,,info_startdate"/>
+					<date-time options=",2" id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+					<description value="Enddate" options=",,,info_enddate"/>
+					<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished"/>
+				</row>
+				<row class="row">
+					<description value="Status" options=",,,info_status"/>
+					<menulist>
+						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
+					</menulist>
+					<description value="Completed" options=",,,info_percent"/>
+					<menulist>
+						<menupopup type="select-percent" id="info_percent" statustext="Percent completed" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,info_datecompleted" value="Date completed"/>
+					<date-time id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)"/>
+					<description value="Private" options=",,,info_access"/>
+					<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>
+				</row>
+				<row class="row" disabled="!@info_owner">
+					<description value="Owner"/>
+					<menulist>
+						<menupopup type="select-account" id="info_owner" readonly="true"/>
+					</menulist>
+					<description value="Last modified"/>
+					<hbox options="0" orient="0">
+						<menulist>
+							<menupopup type="select-account" id="info_modifier" readonly="true"/>
+						</menulist>
+						<date-time class="lpadding5" id="info_datemodified" readonly="true"/>
+					</hbox>
+				</row>
+				<row>
+					<hbox span="3">
+						<button label="Save" id="button[save]" statustext="Saves this entry"/>
+						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
+						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" onclick="window.close();"/>
+						<menulist>
+							<menupopup id="action" statustext="Execute a further action for this entry" options="Actions..." onchange="this.form.submit(); this.value='';"/>
+						</menulist>
+						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
+						<html id="js"/>
+					</hbox>
+					<button label="Delete" align="right" id="button[delete]" statustext="delete this entry" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.hideFrom input { display: none; }
+.link_select select { width: 250px; }
+.description textarea { width: 98%; }
+		</styles>
+	</template>
+</overlay>

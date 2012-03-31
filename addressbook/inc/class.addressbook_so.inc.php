@@ -6,7 +6,7 @@
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -128,7 +128,7 @@ class addressbook_so
 	 * In SQL we can search all columns, though a view make on real sense
 	 */
 	var $sql_cols_not_to_search = array(
-		'jpegphoto','owner','tid','private','id','cat_id','etag',
+		'jpegphoto','owner','tid','private','cat_id','etag',
 		'modified','modifier','creator','created','tz','account_id',
 		'uid',
 	);
@@ -165,6 +165,13 @@ class addressbook_so
 	var $content_types = array();
 
 	/**
+	* Special content type to indicate a deleted addressbook
+	*
+	* @var String;
+	*/
+	const DELETED_TYPE = 'D';
+
+	/**
 	 * total number of matches of last search
 	 *
 	 * @var int
@@ -172,9 +179,9 @@ class addressbook_so
 	var $total;
 
 	/**
-	 * storage object: sql (socontacts_sql) or ldap (so_ldap) backend class
+	 * storage object: sql (addressbook_sql) or ldap (addressbook_ldap) backend class
 	 *
-	 * @var socontacts_sql
+	 * @var addressbook_sql
 	 */
 	var $somain;
 	/**
@@ -192,15 +199,21 @@ class addressbook_so
 	/**
 	 * custom fields backend
 	 *
-	 * @var so_sql
+	 * @var addressbook_sql
 	 */
 	var $soextra;
 	var $sodistrib_list;
 	var $backend;
 
-	function __construct($contact_app='addressbook')
+	/**
+	 * Constructor
+	 *
+	 * @param string $contact_app='addressbook' used for acl->get_grants()
+	 * @param egw_db $db=null
+	 */
+	function __construct($contact_app='addressbook',egw_db $db=null)
 	{
-		$this->db     = $GLOBALS['egw']->db;
+		$this->db     = is_null($db) ? $GLOBALS['egw']->db : $db;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
@@ -220,15 +233,6 @@ class addressbook_so
 			$this->contact_repository = 'ldap';
 			$this->somain = new addressbook_ldap();
 
-			if ($this->user)	// not set eg. in setup
-			{
-				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
-				$this->grants = array($this->user => ~0);
-				foreach($this->memberships as $gid)
-				{
-					$this->grants[$gid] = ~0;
-				}
-			}
 			$this->columns_to_search = $this->ldap_search_attributes;
 		}
 		else	// sql or sql->ldap
@@ -237,16 +241,14 @@ class addressbook_so
 			{
 				$this->contact_repository = 'sql-ldap';
 			}
-			$this->somain = new addressbook_sql();
+			$this->somain = new addressbook_sql($db);
 
-			if ($this->user)	// not set eg. in setup
-			{
-				// group grants are now grants for the group addressbook and NOT grants for all its members,
-				// therefor the param false!
-				$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
-			}
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
+		}
+		if ($this->user)
+		{
+			$this->grants = $this->get_grants($this->user,$contact_app);
 		}
 		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
 		{
@@ -290,7 +292,14 @@ class addressbook_so
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
-		$this->soextra = new so_sql('phpgwapi',$this->extra_table);
+		if($this->somain instanceof addressbook_sql)
+		{
+			$this->soextra =& $this->somain;
+		}
+		else
+		{
+			$this->soextra = new addressbook_sql($db);
+		}
 
 		$this->customfields = config::get_customfields('addressbook');
 		$this->content_types = config::get_content_types('addressbook');
@@ -303,6 +312,54 @@ class addressbook_so
 					'icon' => 'navbar.png'
 			)));
 		}
+
+		// Add in deleted type, if holding deleted contacts
+		$config = config::read('phpgwapi');
+		if($config['history'])
+		{
+			$this->content_types[self::DELETED_TYPE] = array(
+				'name'	=>	lang('Deleted'),
+				'options' =>	array(
+					'template'	=>	'addressbook.edit',
+					'icon'		=>	'deleted.png'
+				)
+			);
+		}
+	}
+
+	/**
+	 * Get grants for a given user, taking into account static LDAP ACL
+	 *
+	 * @param int $user
+	 * @param string $contact_app='addressbook'
+	 * @return array
+	 */
+	function get_grants($user,$contact_app='addressbook')
+	{
+		if ($user)
+		{
+			// contacts backend (contacts in LDAP require accounts in LDAP!)
+			if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
+			{
+				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
+				$grants = array($user => ~0);
+				foreach($GLOBALS['egw']->accounts->memberships($user,true) as $gid)
+				{
+					$grants[$gid] = ~0;
+				}
+			}
+			else	// sql or sql->ldap
+			{
+				// group grants are now grants for the group addressbook and NOT grants for all its members,
+				// therefor the param false!
+				$grants = $GLOBALS['egw']->acl->get_grants($contact_app,false,$user);
+			}
+		}
+		else
+		{
+			$grants = array();
+		}
+		return $grants;
 	}
 
 	/**
@@ -321,42 +378,19 @@ class addressbook_so
 	/**
 	 * Read all customfields of the given id's
 	 *
-	 * @param int/array $ids
+	 * @param int|array $ids
 	 * @param array $field_names=null custom fields to read, default all
 	 * @return array id => name => value
 	 */
 	function read_customfields($ids,$field_names=null)
 	{
-		if ($this->contact_repository == 'ldap')
-		{
-			return array();	// ldap does not support custom-fields (non-nummeric uid)
-		}
-		if (is_null($field_names)) $field_names = array_keys($this->customfields);
-
-		if(!is_array($ids) && is_numeric($ids)) {
-			$ids = array((int)$ids);
-		}
-		foreach($ids as $key => $id)
-		{
-			if (!(int)$id) unset($ids[$key]);
-		}
-		if (!$ids || !$field_names) return array();	// nothing to do, eg. all these contacts are in ldap
-
-		$fields = array();
-		foreach((array)$this->soextra->search(array(
-			$this->extra_id => $ids,
-			$this->extra_key => $field_names,
-		),false) as $data)
-		{
-			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];
-		}
-		return $fields;
+		return $this->soextra->read_customfields($ids,$field_names);
 	}
 
 	/**
 	 * Read all distributionlists of the given id's
 	 *
-	 * @param int/array $ids
+	 * @param int|array $ids
 	 * @return array id => name => value
 	 */
 	function read_distributionlist($ids, $dl_allowed=array())
@@ -430,7 +464,10 @@ class addressbook_so
 		if ($this->somain->delete($where))
 		{
 			// delete customfields, can return 0 if there are no customfields
-			$this->soextra->delete(array($this->extra_id => $contact));
+			if(!($this->somain instanceof addressbook_sql))
+			{
+				$this->soextra->delete_customfields(array($this->extra_id => $contact));
+			}
 
 			// delete from distribution list(s)
 			$this->remove_from_list($contact);
@@ -499,35 +536,14 @@ class addressbook_so
 		}
 		if($error_nr) return $error_nr;
 
-		// save customfields
-		foreach ((array)$this->customfields as $field => $options)
-		{
-			if (!isset($contact['#'.$field])) continue;
-
-			$data = array(
-				$this->extra_id    => $contact['id'],
-				$this->extra_owner => $contact['owner'],
-				$this->extra_key   => $field,
-			);
-			if((string) $contact['#'.$field] === '')	// dont write empty values
-			{
-				$this->soextra->delete($data);	// just delete them, in case they were previously set
-				continue;
-			}
-			$data[$this->extra_value] =  $contact['#'.$field];
-			if (($error_nr = $this->soextra->save($data)))
-			{
-				return $error_nr;
-			}
-		}
 		return false;	// no error
 	}
 
 	/**
 	 * reads contact data including custom fields
 	 *
-	 * @param int/string $contact_id contact_id or 'a'.account_id
-	 * @return array/boolean data if row could be retrived else False
+	 * @param int|string $contact_id contact_id or 'a'.account_id
+	 * @return array|boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
 	{
@@ -541,18 +557,6 @@ class addressbook_so
 		{
 			return $contact;
 		}
-		// try reading customfields only if we have some (none for LDAP!)
-		if ($this->customfields && $this->contact_repository != 'ldap')
-		{
-			$customfields = $this->soextra->search(array(
-				$this->extra_id => $contact['id'],
-				$this->extra_key => array_keys($this->customfields),
-			),false);
-			foreach ((array)$customfields as $field)
-			{
-				$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
-			}
-		}
 		$dl_list=$this->read_distributionlist(array($contact['id']));
 		if (count($dl_list)) $contact['distrib_lists']=implode("\n",$dl_list[$contact['id']]);
 		return $this->db2data($contact);
@@ -563,10 +567,10 @@ class addressbook_so
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
-	 * @param array/string $criteria array of key and data cols, OR string to search over all standard search fields
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param array|string $criteria array of key and data cols, OR string to search over all standard search fields
+	 * @param boolean|string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
 	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
@@ -577,14 +581,35 @@ class addressbook_so
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
-		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
-		//error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
+		//echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
+		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')");
 
-		// the nextmatch custom-filter-header country-select returns a 2 letter country-code
-		if (isset($filter['adr_one_countryname']) && strlen($filter['adr_one_countryname']) == 2)
+		// Handle 'None' country option
+		if(is_array($filter) && $filter['adr_one_countrycode'] == '-custom-')
 		{
-			$filter['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($filter['adr_one_countryname']);
+			$filter[] = 'adr_one_countrycode IS NULL';
+			unset($filter['adr_one_countrycode']);
 		}
+		// Hide deleted items unless type is specifically deleted
+		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
+
+		// if no tid set or tid==='' do NOT return deleted entries ($tid === null returns all entries incl. deleted)
+		if(!array_key_exists('tid', $filter) || $filter['tid'] === '')
+		{
+			if ($join && strpos($join,'RIGHT JOIN') !== false)	// used eg. to search for groups
+			{
+				$filter[] = '(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)';
+			}
+			else
+			{
+				$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+			}
+		}
+		elseif(is_null($filter['tid']))
+		{
+			unset($filter['tid']);	// return all entries incl. deleted
+		}
+
 		$backend =& $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
 		if ($criteria && !is_array($criteria))
@@ -602,14 +627,32 @@ class addressbook_so
 			{
 				$cols = $this->account_cols_to_search;
 			}
-			// search the customfields only if some exist, but only for sql!
-			if (get_class($backend) == 'addressbook_sql' && $this->customfields)
+			if($backend instanceof addressbook_sql)
 			{
-				$cols[] = $this->extra_value;
+				// Keep a string, let the parent handle it
+				$criteria = $search;
+
+				foreach($cols as $key => &$col)
+				{
+					if(!array_key_exists($col, $backend->db_cols))
+					{
+						if(!($col = array_search($col, $backend->db_cols)))
+						{
+							// Can't search this column, it will error if we try
+							unset($cols[$key]);
+						}
+					}
+					if ($col=='contact_id') $col='egw_addressbook.contact_id';
+				}
+
+				$backend->columns_to_search = $cols;
 			}
-			foreach($cols as $col)
+			else
 			{
-				$criteria[$col] = $search;
+				foreach($cols as $col)
+				{
+					$criteria[$col] = $search;
+				}
 			}
 		}
 		if (is_array($criteria) && count($criteria))
@@ -662,9 +705,17 @@ class addressbook_so
 		{
 			$search = $param['search'];
 			$param['search'] = array();
-			foreach($this->columns_to_search as $col)
+			if($this->somain instanceof addressbook_sql)
 			{
-				if ($col != 'contact_value') $param['search'][$col] = $search;	// we dont search the customfields
+				// Keep the string, let the parent deal with it
+				$param['search'] = $search;
+			}
+			else
+			{
+				foreach($this->columns_to_search as $col)
+				{
+					if ($col != 'contact_value') $param['search'][$col] = $search;	// we dont search the customfields
+				}
 			}
 		}
 		if (is_array($param['search']) && count($param['search']))
@@ -730,7 +781,10 @@ class addressbook_so
 		if (!$new_owner)
 		{
 			$this->somain->delete(array('owner' => $account_id));
-			$this->soextra->delete(array($this->extra_owner => $account_id));
+			if(!($this->somain instanceof addressbook_sql))
+			{
+				$this->soextra->delete_customfields(array($this->extra_owner => $account_id));
+			}
 		}
 		else
 		{
@@ -746,16 +800,19 @@ class addressbook_so
 	/**
 	 * return the backend, to be used for the given $contact_id
 	 *
-	 * @param mixed $contact_id=null
+	 * @param array|string|int $keys=null
 	 * @param int $owner=null account_id of owner or 0 for accounts
 	 * @return object
 	 */
-	function get_backend($contact_id=null,$owner=null)
+	function get_backend($keys=null,$owner=null)
 	{
 		if ($owner === '') $owner = null;
 
+		$contact_id = !is_array($keys) ? $keys :
+			(isset($keys['id']) ? $keys['id'] : $keys['contact_id']);
+
 		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
-			(!is_null($owner) && !$owner || is_array($contact_id) && $contact_id['account_id'] || !is_null($contact_id) &&
+			(!is_null($owner) && !$owner || is_array($keys) && $keys['account_id'] || !is_null($contact_id) &&
 			($this->contact_repository == 'sql' && (!is_numeric($contact_id) && !is_array($contact_id) )||
 			 $this->contact_repository == 'ldap' && is_numeric($contact_id))))
 		{
@@ -907,38 +964,55 @@ class addressbook_so
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Get the availible distribution lists for givens users and groups
 	 *
-	 * @param string $name list-name
-	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return list_id or false on error
+	 * @param array $keys column-name => value(s) pairs, eg. array('list_uid'=>$uid)
+	 * @param string $member_attr='contact_uid' null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
+	 * @param boolean $limit_in_ab=false if true only return members from the same owners addressbook
+	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function read_lists($keys,$member_attr=null,$limit_in_ab=false)
 	{
-		if (!method_exists($this->somain,'add_list')) return false;
+		if (!method_exists($this->somain,'get_lists')) return false;
 
-		return $this->somain->add_list($name,$owner,$contacts);
+		return $this->somain->get_lists($keys,null,$member_attr,$limit_in_ab);
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
+	 * @param int $owner user- or group-id
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
+	 */
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
+	{
+		if (!method_exists($this->somain,'add_list')) return false;
+
+		return $this->somain->add_list($keys,$owner,$contacts,$data);
+	}
+
+	/**
+	 * Adds contact(s) to a distribution list
+	 *
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
 		if (!method_exists($this->somain,'add2list')) return false;
 
-		return $this->somain->add2list($contact,$list);
+		return $this->somain->add2list($contact,$list,$existing);
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list=null list-id or null to remove from all lists
 	 * @return false on error
 	 */
@@ -952,7 +1026,7 @@ class addressbook_so
 	/**
 	 * Deletes a distribution list (incl. it's members)
 	 *
-	 * @param int/array $list list_id(s)
+	 * @param int|array $list list_id(s)
 	 * @return number of members deleted or false if list does not exist
 	 */
 	function delete_list($list)
@@ -978,7 +1052,7 @@ class addressbook_so
 	/**
 	 * Check if distribution lists are availible for a given addressbook
 	 *
-	 * @param int/string $owner='' addressbook (eg. 0 = accounts), default '' = "all" addressbook (uses the main backend)
+	 * @param int|string $owner='' addressbook (eg. 0 = accounts), default '' = "all" addressbook (uses the main backend)
 	 * @return boolean
 	 */
 	function lists_available($owner='')
@@ -986,5 +1060,18 @@ class addressbook_so
 		$backend =& $this->get_backend(null,$owner);
 
 		return method_exists($backend,'read_list');
+	}
+
+	/**
+	 * Get ctag (max list_modified as timestamp) for lists
+	 *
+	 * @param int|array $owner=null null for all lists user has access too
+	 * @return int
+	 */
+	function lists_ctag($owner=null)
+	{
+		if (!method_exists($this->somain,'lists_ctag')) return 0;
+
+		return $this->somain->lists_ctag($owner);
 	}
 }

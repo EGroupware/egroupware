@@ -1,0 +1,488 @@
+%1 days in advance	infolog	de	%1 Tage im Voraus
+%1 deleted	infolog	de	%1 gelöscht
+%1 deleted by %2 at %3	infolog	de	%1 wurde von %2 am %3 gelöscht
+%1 entries %2	infolog	de	%1 Einträge %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	de	%1 Einträge %2, %3 wegen fehlender Rechte!!!
+%1 modified	infolog	de	%1 geändert
+%1 modified by %2 at %3	infolog	de	%1 wurde von %2 am %3 geändert
+%1 records imported	infolog	de	%1 Datensätze importiert
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+%1 you are responsible for is due at %2	infolog	de	%1 für die Sie verantwortlich sind ist am %2 fällig
+%1 you are responsible for is starting at %2	infolog	de	%1 für die Sie verantwortlich sind startet am %2
+%1 you delegated is due at %2	infolog	de	%1 die Sie delegierten ist am %2 fällig
+%1 you delegated is starting at %2	infolog	de	%1 die Sie delegierten startet am %2
+- subprojects from	infolog	de	- Untereinträge von
+0%	infolog	de	0%
+10%	infolog	de	10%
+100%	infolog	de	100%
+20%	infolog	de	20%
+30%	infolog	de	30%
+40%	infolog	de	40%
+50%	infolog	de	50%
+60%	infolog	de	60%
+70%	infolog	de	70%
+80%	infolog	de	80%
+90%	infolog	de	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>Dateianhänge über Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/pfad für lokale Benutzer
+a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
+abort without deleting	infolog	de	Abbruch ohne zu Löschen
+accept	infolog	de	bei Annahme
+action	infolog	de	Befehle
+actions...	infolog	de	Befehle...
+actual date and time	infolog	de	aktuelles Datum und Uhrzeit
+add	infolog	de	Hinzufügen
+add / remove link	infolog	de	Hinzufügen / Entfernen von Verknüpfungen
+add a file	infolog	de	Datei anhängen
+add a new entry	infolog	de	einen neuen Eintrag anlegen
+add a new note	infolog	de	eine neue Notiz anlegen
+add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
+add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Unterauftrag, -notiz, -anruf zu diesem Eintrag anlegen
+add a new todo	infolog	de	einen neuen Auftrag anlegen
+add file	infolog	de	Datei hinzufügen
+add or delete links	infolog	de	Verknüpfungen hinzufügen oder löschen
+add sub	infolog	de	neuen Untereintrag anlegen
+add timesheet entry	infolog	de	Stundenzettel Eintrag hinzufügen
+add:	infolog	de	Hinzufügen:
+added	infolog	de	Hinzugefügt
+all	infolog	de	alle
+all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
+all projects	infolog	de	Alle Projekte
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
+alternatives	infolog	de	Alternativen
+apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze !!
+apply the changes	infolog	de	Übernimmt die Änderungen
+archive	infolog	de	Archiviert
+are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
+are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+at the moment the following document-types are supported:	infolog	de	Zur Zeit werden die folgenden Dokument Typen unterstützt:
+attach a file	infolog	de	Datei anhängen
+attach file	infolog	de	Datei anhängen
+attention: no contact with address %1 found.	infolog	de	Achtung: Kein Kontakt mit der Adresse %1 gefunden!
+back to main list	infolog	de	Zurück zur Gesamtliste
+billed	infolog	de	abgerechnet
+both	infolog	de	Annahme+erledigt
+call	infolog	de	anrufen
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
+cancel	infolog	de	Abbruch
+cancelled	infolog	de	abgesagt
+categories	infolog	de	Kategorien
+category	infolog	de	Kategorie
+change category	infolog	de	Kategorie ändern
+change completed	infolog	de	Änderungen duchgeführt
+change completion	infolog	de	Bearbeitungsstatus ändern
+change history	infolog	de	Änderungsverlauf
+change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
+change responsible	infolog	de	Zuständigkeit ändern
+change status:	infolog	de	Status ändern
+change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
+change type:	infolog	de	Infolog Typ ändern
+changed category to %1	infolog	de	Kategorie geändert zu %1
+changed completion to %1%	infolog	de	Bearbeitungsstatus geändert zu %1
+changed responsible	infolog	de	Zuständigkeit ändern
+changed status to %1	infolog	de	Typ geändert zu %1
+changed type	infolog	de	Typ ändern
+charset of file	infolog	de	Zeichensatz der Datei
+check all	infolog	de	Alle marktieren
+check to set startday	infolog	de	ankreuzen um Startdatum zu setzen
+check to specify custom contact	infolog	de	Ankreuzen um einen eigenen Kontakt anzugeben
+choose owner of imported data	infolog	de	Wählen Sie den Eigentümer der Importierten Daten
+click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erzeugen
+click here to start the search	infolog	de	hier klicken um die Suche zu starten
+close	infolog	de	Schließen
+close all	infolog	de	Alle schließen
+close this entry and all listed sub-entries	infolog	de	Diesen Eintrag und alle Untereinträge schliessen
+closed	infolog	de	geschlossen
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	de	Spalte (:) Liste von Feldnamen, die für eine Summierung verwendet werden können
+comment	infolog	de	Kommentar
+compare	infolog	de	vergleichen
+completed	infolog	de	Erledigt
+configuration	infolog	de	Konfiguration
+confirm	infolog	de	Bestätigung
+contact	infolog	de	Kontakt
+contact cf	infolog	de	Kontakt CF
+contact fields	infolog	de	Kontaktfelder
+contactfield	infolog	de	Kontaktfelder
+copy of:	infolog	de	Kopie von:
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
+create new links	infolog	de	Neue Verknüpfung erzeugen
+creates a new field	infolog	de	erstellt ein neues Feld
+creates a new status with the given values	infolog	de	erstellt einen neuen Status mit den angegebenen Werten
+creates a new typ with the given name	infolog	de	erstellt einen neuen Typ mit dem eingegebenen Namen
+creation	infolog	de	Erstellung
+csv-fieldname	infolog	de	CSV-Feldname
+csv-filename	infolog	de	CSV-Dateiname
+csv-import	common	de	CSV-Import
+custom	infolog	de	Benutzerdefiniert
+custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der Verknüpfung zu verwenden
+custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
+custom fields	infolog	de	Benutzerdefinierte Felder
+custom fields, typ and status	common	de	Benutzerdefinierte Felder, Typen und Status
+custom from	infolog	de	Benutzerdefinierter  Kontakt
+custom regarding	infolog	de	Benutzerdefinierter Bezug
+custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
+customfields	infolog	de	Benutzerdefinierte Felder
+date completed	infolog	de	Erledigt am
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	de	Fertigstellungsdatum (leer lassen um es automatisch zu setzen wenn der Status erledigt oder abgerechnet ist)
+datecreated	infolog	de	Erstellt am
+dates, status, access	infolog	de	Daten, Status, Zugriff
+days	infolog	de	Tage
+default category for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
+default document to insert entries	infolog	de	Standarddokument zum Einfügen von Infologs
+default filter for infolog	infolog	de	Standard-Filter für InfoLog
+default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
+delegated	infolog	de	delegiert
+delegated open	infolog	de	delegiert offen
+delegated open and upcoming	infolog	de	delegiert offene und zukünftige
+delegated overdue	infolog	de	delegiert überfällig
+delegated upcomming	infolog	de	delegiert zukünftig
+delegation	infolog	de	Delegation
+delete	infolog	de	Löschen
+delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.
+delete selected entries?	infolog	de	Sollen die ausgewählen Datensätze gelöscht werden?
+delete the entry	infolog	de	Eintrag löschen
+delete this entry	infolog	de	diesen Eintrag löschen
+delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
+deleted	infolog	de	gelöscht
+deletes the selected typ	infolog	de	löscht den ausgewählten Typ
+deletes this field	infolog	de	löscht dieses Feld
+deletes this status	infolog	de	löscht diesen Status
+description	infolog	de	Beschreibung
+determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
+directory with documents to insert entries	infolog	de	Verzeichnis mit Dokumenten zum Einfügen von Infologs
+disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu löschen
+do not notify of these changes	infolog	de	Keine Benachrichtigung senden
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	Wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge Ihnen zugewiesen werden oder zugewiesene Einträge geändert werden?
+do you want a notification, if items you are responsible for are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge für die Sie verantwortlich sind beginnen sollen?
+do you want a notification, if items you are responsible for are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge für die Sie verantwortlich sind fällig werden?
+do you want a notification, if items you created get updated?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie angelegt haben aktualisiert werden?
+do you want a notification, if items you delegated are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben beginnen sollen?
+do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
+do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
+document '%1' does not exist or is not readable for you!	infolog	de	Dokument '%1' existiert nicht, oder ist nicht lesbar für Sie!
+don't show infolog	infolog	de	InfoLog NICHT anzeigen
+done	common	de	erledigt
+download	infolog	de	Datei laden
+due %1	infolog	de	%1 fällig
+duration	infolog	de	Dauer
+e-mail:	infolog	de	E-Mail
+each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
+edit	infolog	de	Bearbeiten
+edit or create categories for ingolog	infolog	de	Kategorien für InfoLog bearbeiten oder neu anlegen
+edit rights (full edit rights incl. making someone else responsible!)	infolog	de	Bearbeitungsrechte (komplettes Bearbeiten einschl. jemand anderen dafür verantwortlich machen!)
+edit status	infolog	de	Status ändern
+edit the entry	infolog	de	Eintrag bearbeiten
+edit this entry	infolog	de	diesen Eintrag bearbeiten
+empty for all	infolog	de	leer für alle
+end	infolog	de	Ende
+enddate	infolog	de	Fällig am
+enddate can not be before startdate	infolog	de	Das Fälligkeitsdatum kann nicht vor dem Startdatum liegen
+enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/E-Mail-Adresse, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
+enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
+entry and all files	infolog	de	Eintrag und alle Dateien
+error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
+error: the entry has been updated since you opened it for editing!	infolog	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
+execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
+existing links	infolog	de	Bestehende Verknüpfungen
+exists	infolog	de	Besteht
+export definitition to use for nextmatch export	infolog	de	Export Profil der Listenansicht (Disketten Symbol)
+exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
+fax	infolog	de	Fax
+field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
+fieldseparator	infolog	de	Feldbegrenzer
+finish	infolog	de	wenn erledigt
+first argument for preg_replace	infolog	de	Ersten Argument für pre_replace
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	de	Für Serienbriefe benutzen Sie folgenden Platzhalter. Fügen die den Inhalt zwischen diese beiden Platzhalter ein.
+for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
+from	infolog	de	Von
+general	infolog	de	Allgemein
+general fields:	infolog	de	Allgemeine Felder
+global categories	infolog	de	Globale Kategorien
+group owner for	infolog	de	Gruppeneigentümer für
+high	infolog	de	hoch
+history	infolog	de	Historie
+history logging	infolog	de	Protokollierung der Historie
+history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken (scrollbar) erreicht werden.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen.
+id	infolog	de	Id
+id#	infolog	de	Id#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
+if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
+if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
+if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
+import	infolog	de	Import
+import next set	infolog	de	Nächsten Satz importieren
+importance	infolog	de	Wichtigkeit
+imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
+info log	common	de	InfoLog
+infolog	common	de	InfoLog
+infolog - delete	infolog	de	InfoLog - Löschen
+infolog - edit	infolog	de	InfoLog - Bearbeiten
+infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
+infolog - new	infolog	de	InfoLog - Anlegen
+infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
+infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
+infolog copied - the copy can now be edited	infolog	de	Infolog Kopie - Diese Kopie kann jetzt bearbeitet werden
+infolog csv export	infolog	de	Infolog CSV Export
+infolog csv import	infolog	de	Infolog CSV Import
+infolog entry deleted	infolog	de	InfoLog Eintrag gelöscht
+infolog entry saved	infolog	de	InfoLog Eintrag gespeichert
+infolog fields:	infolog	de	Infolog Felder
+infolog filter for the main screen	infolog	de	InfoLog Filter für Startseite
+infolog id	infolog	de	Infolog ID
+infolog list	infolog	de	InfoLog Liste
+infolog preferences	common	de	InfoLog Einstellungen
+infolog-fieldname	infolog	de	InfoLog-Feldname
+insert	infolog	de	einfügen
+insert in document	infolog	de	In ein Dokument einfügen
+invalid filename	infolog	de	Ungültiger Dateiname
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer ID: %1. Ist möglicher Weise eine falsche Feld Übersetzung. Es wird %2 anstatt dem ursprünglichen Wert verwendet.
+invalid status for entry type %1.	infolog	de	Ungültiger Status für den eingegebenen Typ %1
+label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
+last changed	infolog	de	letzte Änderung
+last modified	infolog	de	zuletzt geändert
+leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
+leave it empty	infolog	de	leer lassen
+leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
+leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
+leaves without saveing	infolog	de	Abbruch ohne speichern
+length<br>rows	infolog	de	Länge<br />Zeilen
+limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
+link	infolog	de	Verknüpfung
+linked to %1	infolog	de	Verknüpft mit %1
+links	infolog	de	Verknüpfungen
+links of this entry	infolog	de	Verknüpfungen dieses Eintrags
+list all categories	infolog	de	Alle Kategorien anzeigen
+list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+location	infolog	de	Ort
+longer textual description	infolog	de	längere textliche Beschreibung
+low	infolog	de	niedrig
+manage mapping	infolog	de	Verwaltung der Zuordnung
+max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
+modifier	infolog	de	Geändert von
+modifierer	infolog	de	Geändert von
+name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
+name of current user, all other contact fields are valid too	infolog	de	Name des aktiven Benutzers, all anderen Kontakt Felder sind weiterhin gültig
+name of new type to create	infolog	de	Name des neu anzulegenden Typs
+never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
+new %1	infolog	de	Neue %1
+new %1 created by %2 at %3	infolog	de	Neue %1 wurde von %2 am %3 angelegt
+new name	infolog	de	neuer Name
+new search	infolog	de	Neue Suche
+no - cancel	infolog	de	Nein - Abbruch
+no describtion, links or attachments	infolog	de	Keine Beschreibung, Verknüpfungen oder Anhänge
+no details	infolog	de	Keine Details
+no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
+no filter	infolog	de	kein Filter
+no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
+no project	infolog	de	Kein Projekt
+nonactive	infolog	de	Nicht aktiv
+none	infolog	de	keine
+normal	infolog	de	normal
+not	infolog	de	nicht
+not assigned	infolog	de	nicht zugewiesen
+not-started	infolog	de	nicht gestartet
+note	infolog	de	Notiz
+number of records to read (%1)	infolog	de	Anzahl Datensätze lesen (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	de	Anzahl Zeilen für ein mehrzeiliges Eingabefeld oder eines mehrfachen Auswahlfeldes
+offer	infolog	de	Angebot
+one day after	infolog	de	am nächsten Tag
+one day in advance	infolog	de	am Vortag
+ongoing	infolog	de	in Arbeit
+only for details	infolog	de	Nur bei Details
+only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
+only the attachments	infolog	de	nur die Anhänge
+only the links	infolog	de	nur die Verknüpfungen
+open	infolog	de	offen
+open and upcoming	infolog	de	zukünftige und offene
+optional note to the link	infolog	de	zusätzliche Notiz zur Verknüpfung
+order	infolog	de	Reihenfolge
+organization	infolog	de	Organisation
+overdue	infolog	de	überfällig
+own	infolog	de	eigene
+own open	infolog	de	eigene offen
+own open and upcoming	infolog	de	eigene offene und zukünftige
+own overdue	infolog	de	eigene überfällig
+own upcoming	infolog	de	eigene zukünftig
+owner does not have edit rights	infolog	de	Der Besitzer dieses Datensatzes benötigt Bearbeitungsrechte
+parent	infolog	de	Elterneintrag
+parent infolog	infolog	de	Übergeordneter Infolog
+path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
+pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
+pattern for search in projects	infolog	de	Muster für Suche des Projekts
+percent completed	infolog	de	Prozent erledigt
+permission denied	infolog	de	Zugriff verweigert
+permissions error - %1 could not %2	infolog	de	Fehler in den Zugriffsberechtigungen - %1 could not %2
+phone	infolog	de	Anruf
+phone/email	infolog	de	Telefon/E-Mail
+phonecall	infolog	de	Telefonanruf
+planned	infolog	de	geplant
+planned time	infolog	de	geplante Zeit
+price	infolog	de	Preis
+pricelist	infolog	de	Preisliste
+primary link	infolog	de	Primäre Verknüpfung
+priority	infolog	de	Priorität
+private	infolog	de	Privat
+project	infolog	de	Projekt
+project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
+projectmanager	infolog	de	Projektmanager
+re-planned	infolog	de	Umgeplant
+re-planned time	infolog	de	Umgeplante Zeit
+re:	infolog	de	Re:
+read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
+read rights (default)	infolog	de	Leserechte (Vorgabe)
+receive notifications about due entries you are responsible for	infolog	de	Benachrichtigungen über fällige Einträge für die Sie verantwortlich sind
+receive notifications about due entries you delegated	infolog	de	Benachrichtigungen über fällige Einträge die Sie delegiert haben
+receive notifications about items assigned to you	infolog	de	Benachrichtigungen über Einträge für die Sie verantwortlich sind
+receive notifications about own items	infolog	de	Benachrichtigungen über eigene Einträge
+receive notifications about starting entries you are responsible for	infolog	de	Benachrichtigungen über zu startende Einträge für die Sie verantwortlich sind
+receive notifications about starting entries you delegated	infolog	de	Benachrichtigungen über zu startende Einträge die Sie delegiert haben
+receive notifications as html-mails	infolog	de	Benachrichtigungen als HTML Mails
+regular expression	infolog	de	Reguläre Ausdrücke
+remark	infolog	de	Bemerkung
+remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
+removed	infolog	de	Entfernt
+replacement	infolog	de	Platzhalter
+replacements for inserting entries into documents	infolog	de	Platzhalter für das Einfügen in Dokumente
+responsible	infolog	de	verantwortlich
+responsible open	infolog	de	verantwortlich offen
+responsible open and upcoming	infolog	de	verantwortlich offene und zukünftige
+responsible overdue	infolog	de	verantwortlich überfällig
+responsible upcoming	infolog	de	verantwortlich zukünftig
+responsible user, priority	infolog	de	Verantwortlicher, Priorität
+returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
+rights for the responsible	infolog	de	Rechte für den Verantwortlichen
+same day	infolog	de	gleichen Tag
+save	infolog	de	Speichern
+saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
+saves this entry	infolog	de	diesen Eintrag speichern
+search	infolog	de	Suchen
+search for:	infolog	de	Suchen nach:
+second parameter for preg_replace	infolog	de	2. Paramter für preg_replace
+select	infolog	de	Auswählen
+select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
+select a price	infolog	de	Preis auswählen
+select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
+select a project	infolog	de	Projekt auswählen
+select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en) der Sie diese Aufgabe delegieren wollen
+select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
+select an action	infolog	de	Befehl oder Aktion auswählen
+select an action...	infolog	de	Befehl oder Aktion auswählen...
+select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
+select an entry to link with	infolog	de	einen Eintrag zum Verknüpfen auswählen
+select multiple contacts for a further action	infolog	de	Wählen Sie mehrere Konatkte für eine weitere Aktion aus.
+select new category	infolog	de	Wählen Sie eine Kategory
+select to filter by owner	infolog	de	Besitzer zum Filtern auswählen
+select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
+select users or groups	infolog	de	Wählen Sie Benutzer oder Gruppen aus
+selection cf	infolog	de	Auswahl für CF
+sender	infolog	de	Absender
+set status to done	infolog	de	Status auf erledigt setzen
+set status to done for all entries	infolog	de	Status für alle Einträge auf erledigt setzen
+sets the status of this entry and its subs to done	infolog	de	Setzt den Status dieses Eintrags und seiner Untereinträge auf erledigt
+sets the status of this entry to done	infolog	de	Setzt den Status für diesen Infolog auf erledigt
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die zB. als Ticketnummer verwendet werden kann.
+should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
+show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
+show a x if content equals this compare value, otherwise show nothing	infolog	de	zeigt ein X an, wenn der Inhalt mit dem  Vergleichswert übereinstimmt, ansonsten erfolgt keine Anzeige.
+show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
+show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
+show last modified	infolog	de	Zuletzt geändert anzeigen
+show status and percent done separate	infolog	de	Status und Prozent erledigt separat anzeigen
+show ticket id	infolog	de	Ticketnummer anzeigen
+show times	infolog	de	Zeiten anzeigen
+small view	infolog	de	schmale Ansicht
+start	infolog	de	Start
+start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
+startdate	infolog	de	Startdatum
+startdate enddate	infolog	de	Startdatum Fälligkeitsdatum
+startdate for new entries	infolog	de	Startdatum für neue Einträge
+starting %1	infolog	de	%1 startet
+startrecord	infolog	de	Startdatensatz
+status	infolog	de	Status
+status ...	infolog	de	Status ...
+sub	infolog	de	Unter-<br />einträge
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
+sub-entries will not be closed	infolog	de	Untereinträge werden nicht geschlossen
+subject	infolog	de	Titel
+sum	infolog	de	Summe
+tag to mark positions for address labels	infolog	de	Platzhalter, um die Position der Adresslabels festzulegen
+task	infolog	de	Aufgabe
+tasks of	infolog	de	Aufgaben von
+template	infolog	de	Vorlage
+test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
+the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
+til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
+times	infolog	de	Zeiten
+to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
+to what should the startdate of new entries be set.	infolog	de	Auf was soll das Startdatum von neuen Einträgen gesetzt werden.
+today	infolog	de	Heute
+todays date	infolog	de	heutiges Datum
+todo	infolog	de	Aufgabe
+translation	infolog	de	Translation
+typ	infolog	de	Typ
+typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
+type	infolog	de	Typ
+type ...	infolog	de	Typ ...
+type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
+type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
+unlink	infolog	de	Verknüpfung lösen
+unlinked from %1	infolog	de	Verknüpfung entfernt von %1
+upcoming	infolog	de	zukünftig
+urgency	infolog	de	Priorität
+urgent	infolog	de	Dringend
+use all	infolog	de	Alle Einträge
+use field from csv if possible	infolog	de	Verwendet die Felder vom CSV, wenn möglich
+use search results	infolog	de	Verwendet die Sucherbegnisse
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
+used time	infolog	de	benötigte Zeit
+values for selectbox	infolog	de	Werte für die Auswahlbox
+view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
+view other subs	infolog	de	andere Untereinträge anzeigen
+view parent	infolog	de	übergeordneter Eintrag anzeigen
+view subs	infolog	de	Untereinträge anzeigen
+view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
+view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
+which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
+which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
+whole query	infolog	de	gesamte Abfrage
+will-call	infolog	de	ruft zurück
+write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
+yes - close	infolog	de	Ja schließen
+yes - close including sub-entries	infolog	de	Ja- schließen inklusive Untereinträge
+yes - delete	infolog	de	Ja - Löschen
+yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
+yes, noone can purge deleted items	infolog	de	Ja, niemand darf gelöschte Einträge bereinigen
+yes, only admins can purge deleted items	infolog	de	Ja, nur Admins dürfen gelöschte Einträge bereinigen
+yes, with larger fontsize	infolog	de	Ja, mit einer größeren Schrift
+yes, with purging of deleted items possible	infolog	de	Ja, jeder darf gelöschte Einträge bereinigen
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	de	Sie können eine Kategorie festlegen die vorausgewählt wird, wenn Sie neue InfoLog Einträge anlegen.
+you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
+you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Fälligkeitsdatum eingegeben
+you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
+you have to enter a name, to create a new typ!!!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
+you must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben
+you need to select an entry for linking.	infolog	de	Sie müssen einen Datensatz auswählen, um eine Verknüpfung zu erstellen.
+you need to select some entries first	infolog	de	Bitte wählen Sie zuerst die Datensätze aus, die Sie bearbeiten wollen.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	de	Ihre Datenbank ist NICHT aktuell (%1 gegenüber %2), bitte rufen Sie  %3setup%4 auf um ihre Datenbank zu aktualisieren.

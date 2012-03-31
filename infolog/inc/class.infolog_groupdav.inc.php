@@ -1,20 +1,23 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: infolog handler
+ * EGroupware: GroupDAV access: infolog handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
- * eGroupWare: GroupDAV access: infolog handler
+ * EGroupware: GroupDAV access: infolog handler
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 class infolog_groupdav extends groupdav_handler
 {
@@ -42,24 +45,36 @@ class infolog_groupdav extends groupdav_handler
 		'PRIORITY'	=> 'info_priority',
 		'LOCATION'	=> 'info_location',
 		'COMPLETED'	=> 'info_datecompleted',
+		'CREATED'   => 'info_created',
 	);
+
+	/**
+	 * Are we using info_id, info_uid or caldav_name for the path/url
+	 *
+	 * Get's set in constructor to 'caldav_name' and groupdav_handler::$path_extension = ''!
+	 */
+	static $path_attr = 'info_id';
+
 	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
-		parent::__construct($app,$debug,$base_uri,$principalURL);
+		parent::__construct($app, $groupdav);
 
 		$this->bo = new infolog_bo();
 		$this->vCalendar = new Horde_iCalendar;
-	}
 
-	const PATH_ATTRIBUTE = 'info_id';
+		// since 1.9.002 we allow clients to specify the URL when creating a new event, as specified by CalDAV
+		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.002', '>='))
+		{
+			self::$path_attr = 'caldav_name';
+			groupdav_handler::$path_extension = '';
+		}
+	}
 
 	/**
 	 * Create the path for an event
@@ -67,18 +82,55 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array|int $info
 	 * @return string
 	 */
-	static function get_path($info)
+	function get_path($info)
 	{
-		if (is_numeric($info) && self::PATH_ATTRIBUTE == 'info_id')
+		if (is_numeric($info) && self::$path_attr == 'info_id')
 		{
 			$name = $info;
 		}
 		else
 		{
 			if (!is_array($info)) $info = $this->bo->read($info);
-			$name = $info[self::PATH_ATTRIBUTE];
+			$name = $info[self::$path_attr];
 		}
-		return $name.'.ics';
+		return $name.groupdav_handler::$path_extension;
+	}
+
+	/**
+	 * Get filter-array for infolog_bo::search used by getctag and propfind
+	 *
+	 * @param string $path
+	 * @param int $user account_id
+	 * @return array
+	 */
+	private function get_infolog_filter($path, $user)
+	{
+		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types']))
+		{
+			$infolog_types = 'task';
+		}
+		if ($path == '/infolog/')
+		{
+			$task_filter= 'own';
+		}
+		else
+		{
+			if ($user == $GLOBALS['egw_info']['user']['account_id'])
+			{
+				$task_filter = 'own';
+			}
+			else
+			{
+				$task_filter = 'user' . $user;
+			}
+		}
+
+		$ret = array(
+			'filter'	=> $task_filter,
+			'info_type' => explode(',', $infolog_types),
+		);
+		//error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -92,29 +144,8 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
-
-		if ($path == '/infolog/')
-		{
-			$task_filter= 'own';
-		}
-		else
-		{
-			if ($myself)
-			{
-				$task_filter = 'open';
-			}
-			else
-			{
-				$task_filter = 'open-user' . $user;
-			}
-		}
-
 		// todo add a filter to limit how far back entries from the past get synced
-		$filter = array(
-			'info_type'	=> 'task',
-			'filter'	=> $task_filter,
-		);
+		$filter = $this->get_infolog_filter($path, $user);
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
@@ -123,6 +154,11 @@ class infolog_groupdav extends groupdav_handler
 			// when trying to request not supported components, eg. VTODO on a calendar collection
 			return true;
 		}
+		// enable time-range filter for tests via propfind / autoindex
+		//$filter[] = $sql = $this->_time_range_filter(array('end' => '20001231T000000Z'));
+
+		if ($id) $path = dirname($path).'/';	// caldav_name get's added anyway in the callback
+
 		if ($this->debug > 1)
 		{
 			error_log(__METHOD__."($path,,,$user,$id) filter=".
@@ -175,11 +211,12 @@ class infolog_groupdav extends groupdav_handler
 			'filter'    	=> $task_filter,
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
+			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 		);
 
 		if (!$calendar_data)
 		{
-			$query['cols'] = array('info_id', 'info_datemodified');
+			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject');
 		}
 
 		if (is_array($start))
@@ -200,28 +237,17 @@ class infolog_groupdav extends groupdav_handler
 			foreach($tasks as $task)
 			{
 				$props = array(
-					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
-							'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
-							// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-							HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
-							HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
-							HTTP_WebDAV_Server::mkprop('getcontentlength',''),
+					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',	// Konqueror (3.5) dont understand it otherwise
+					'getlastmodified' => $task['info_datemodified'],
+					'displayname' => $task['info_subject'],
 				);
 				if ($calendar_data)
 				{
-					$content = $handler->exportVTODO($task,'2.0','PUBLISH');
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
+					$props['getcontentlength'] = bytes($content);
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
-				else
-				{
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', ''); // expensive to calculate and no CalDAV client uses it
-				}
-				$files[] = array(
-	            	'path'  => $path.self::get_path($task),
-	            	'props' => $props,
-				);
+				$files[] = $this->add_resource($path, $task, $props);
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');
@@ -240,6 +266,8 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if ($options['filters'])
 		{
+			$cal_filters_in = $cal_filters;	// remember filter, to be able to reset standard open-filter, if client sets own filters
+
 			foreach($options['filters'] as $filter)
 			{
 				switch($filter['name'])
@@ -276,21 +304,19 @@ class infolog_groupdav extends groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
-				 		if (!empty($filter['attrs']['start']))
-				 		{
-					 		$cal_filters[] = 'info_startdate >= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['start']);
-				 		}
-				 		if (!empty($filter['attrs']['end']))
-				 		{
-					 		$cal_filters[]   = 'info_startdate <= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['end']);
-				 		}
+						$cal_filters[] = $this->_time_range_filter($filter['attrs']);
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
 						break;
 				}
 			}
+			// if client set an own filter, reset the open-standard filter
+			/* not longer necessary, as we use now own and user anyway
+			if ($cal_filters != $cal_filters_in)
+			{
+				$cal_filters['filter'] = str_replace(array('open', 'open-user'), array('own', 'user'), $cal_filters['filter']);
+			}*/
 		}
 		// multiget or propfind on a given id
 		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
@@ -299,14 +325,8 @@ class infolog_groupdav extends groupdav_handler
 			$ids = array();
 			if ($id)
 			{
-				if (is_numeric($id))
-				{
-					$cal_filters['info_id'] = $id;
-				}
-				else
-				{
-					$cal_filters['info_uid'] = basename($id,'.ics');
-				}
+				$cal_filters[self::$path_attr] = groupdav_handler::$path_extension ?
+					basename($id,groupdav_handler::$path_extension) : $id;
 			}
 			else	// fetch all given url's
 			{
@@ -315,12 +335,12 @@ class infolog_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
+						if (($id = basename(array_pop($parts))))
+						{
+							$cal_filters[self::$path_attr][] = groupdav_handler::$path_extension ?
+								basename($id,groupdav_handler::$path_extension) : $id;
+						}
 					}
-				}
-				if ($ids)
-				{
-					$cal_filters[] = 'info_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 				}
 			}
 			if ($this->debug > 1) error_log(__METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids));
@@ -328,6 +348,65 @@ class infolog_groupdav extends groupdav_handler
 		return true;
 	}
 
+	/**
+	 * Create SQL filter from time-range filter attributes
+	 *
+	 * CalDAV time-range for VTODO checks DTSTART, DTEND, DUE, CREATED and allways includes tasks if none given
+	 * @see http://tools.ietf.org/html/rfc4791#section-9.9
+	 *
+	 * @param array $attrs values for keys 'start' and/or 'end', at least one is required by CalDAV rfc!
+	 * @return string with sql
+	 */
+	private function _time_range_filter(array $attrs)
+	{
+		$to_or = $to_and = array();
+ 		if (!empty($attrs['start']))
+ 		{
+ 			$start = (int)$this->vCalendar->_parseDateTime($attrs['start']);
+		}
+ 		if (!empty($attrs['end']))
+ 		{
+ 			$end = (int)$this->vCalendar->_parseDateTime($attrs['end']);
+		}
+		elseif (empty($attrs['start']))
+		{
+			$this->groupdav->log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
+			return '1';	// to not give sql error, but simply not filter out anything
+		}
+		// we dont need to care for DURATION line in rfc4791#section-9.9, as we always put that in DUE/info_enddate
+
+		// we have start- and/or enddate
+		if (isset($start))
+		{
+			$to_and[] = "($start < info_enddate OR $start <= info_startdate)";
+		}
+		if (isset($end))
+		{
+			$to_and[] = "(info_startdate < $end OR info_enddate <= $end)";
+		}
+		$to_or[] = '('.implode(' AND ', $to_and).')';
+
+		/* either start or enddate is already included in the above, because of OR!
+		// only a startdate, no enddate
+		$to_or[] = "NOT info_enddate > 0".($start ? " AND $start <= info_startdate" : '').
+			($end ? " AND info_startdate < $end" : '');
+
+		// only an enddate, no startdate
+		$to_or[] = "NOT info_startdate > 0".($start ? " AND $start < info_enddate" : '').
+			($end ? " AND info_enddate <= $end" : '');*/
+
+		// no startdate AND no enddate (2. half of rfc4791#section-9.9) --> use created and due dates instead
+		$to_or[] = 'NOT info_startdate > 0 AND NOT info_enddate > 0 AND ('.
+			// we have a completed date
+			"info_datecompleted > 0".(isset($start) ? " AND ($start <= info_datecompleted OR $start <= info_created)" : '').
+				(isset($end) ? " AND (info_datecompleted <= $end OR info_created <= $end)" : '').' OR '.
+			// we have no completed date, but always a created date
+ 			"NOT info_datecompleted > 0". (isset($end) ? " AND info_created < $end" : '').
+		')';
+		$sql = '('.implode(' OR ', $to_or).')';
+		if ($this->debug > 1) error_log(__FILE__ . __METHOD__.'('.array2string($attrs).") time-range={$filter['attrs']['start']}-{$filter['attrs']['end']} --> $sql");
+		return $sql;
+	}
 
 	/**
 	 * Handle get request for a task / infolog entry
@@ -344,10 +423,10 @@ class infolog_groupdav extends groupdav_handler
 			return $task;
 		}
 		$handler = $this->_get_handler();
-		$options['data'] = $handler->exportVTODO($id,'2.0','PUBLISH');
+		$options['data'] = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($task));
+		header('ETag: "'.$this->get_etag($task).'"');
 		return true;
 	}
 
@@ -378,104 +457,31 @@ class infolog_groupdav extends groupdav_handler
 			$taskId = $oldTask['info_id'];
 			$retval = true;
 		}
-		else
+		else	// new entry
 		{
-			// new entry?
-			if (($foundTasks = $handler->searchVTODO($vTodo)))
-			{
-				if (($taskId = array_shift($foundTasks)) &&
-					($oldTask = $this->bo->read($taskId)))
-				{
-					$retval = '301 Moved Permanently';
-				}
-				else
-				{
-					// to be safe
-					$taskId = 0;
-					$retval = '201 Created';
-				}
-			}
-			else
-			{
-				// new entry
-				$taskId = 0;
-				$retval = '201 Created';
-			}
+			$taskId = 0;
+			$retval = '201 Created';
 		}
-		if ($user)
-		{
-			if (!$prefix)		// for everything in /infolog/
-			{
-				$user = null;	// do NOT set current user (infolog_bo->write() set it for new entries anyway)
-			}
-			elseif($oldTask)	// existing entries
-			{
-				if ($oldTask['info_owner'] != $user)
-				{
-					if ($this->debug) error_log(__METHOD__."(,$id,$user,$prefix) changing owner of existing entries is forbidden!");
-					return '403 Forbidden';		// changing owner of existing entries is generally forbidden
-				}
-				$user = null;
-			}
-			else	// new entries in /$user/infolog
-			{
-				// ACL is checked in infolog_bo->write() called by infolog_ical->importVTODO().
-				// Not sure if it's a good idea to set a different owner, as GUI does NOT allow that,
-				// thought there's an ACL for it and backend (infolog_bo) checks it.
-				// More like the GUI would be to add it for current user and delegate it to $user.
-			}
-		}
-		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user)))
+		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
 		}
 
-		/*
-		if (strstr($option['path'], '/infolog/') === 0)
-		{
-			$task_filter= 'own';
-		}
-		else
-		{
-			if ($myself)
-			{
-				$task_filter = 'open';
-			}
-			else
-			{
-				$task_filter = 'user' . $user. '-open';
-			}
-		}
-
-		$query = array(
-			'order'			=> 'info_datemodified',
-			'sort'			=> 'DESC',
-			'filter'    	=> $task_filter,
-			'date_format'	=> 'server',
-			'col_filter'	=> array('info_id' => $infoId),
-		);
-
-		if (!$this->bo->search($query))
-		{
-			$retval = '410 Gone';
-		}
-		else
-		*/
 		if ($infoId != $taskId)
 		{
 			$retval = '201 Created';
-
 		}
 
-		header('ETag: '.$this->get_etag($infoId));
-		if ($retval !== true)
+		// send evtl. necessary respose headers: Location, etag, ...
+		// but only for new entries, as X-INFOLOG-STATUS get's not updated on client, if we confirm with an etag
+		if ($retval !== true && (!$path_attr_is_name ||
+			// POST with add-member query parameter
+			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
 		{
-			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			header('Location: '.$this->base_uri.$path.self::get_path($infoId));
-			return $retval;
+			$this->put_response_headers($infoId, $options['path'], $retval, self::$path_attr == 'caldav_name');
 		}
-		return true;
+		return $retval;
 	}
 
 	/**
@@ -491,32 +497,42 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $task;
 		}
-		return $this->bo->delete($id);
+		return $this->bo->delete($task['info_id']);
 	}
 
 	/**
 	 * Read an entry
 	 *
-	 * @param string/id $id
-	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
+	 * We have to make sure to not return or even consider in read deleted infologs, as the might have
+	 * the same UID and/or caldav_name as not deleted ones and would block access to valid entries
+	 *
+	 * @param string|id $id
+	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		if (is_numeric($id)) return $this->bo->read($id,false,'server');
-		return null;
+		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,'server');
 	}
 
 	/**
 	 * Check if user has the neccessary rights on a task / infolog entry
 	 *
 	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
-	 * @param array/int $task task-array or id
+	 * @param array|int $task task-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$task)
 	{
 		if (is_null($task)) return true;
-		return $this->bo->check_access($task,$acl);
+
+		$access = $this->bo->check_access($task,$acl);
+
+		if (!$access && $acl == EGW_ACL_EDIT && $this->bo->is_responsible($task))
+		{
+			$access = true;	// access limited to $this->bo->responsible_edit fields (handled in infolog_bo::write())
+		}
+		if ($this->debug > 1) error_log(__METHOD__."($acl, ".array2string($task).') returning '.array2string($access));
+		return $access;
 	}
 
 	/**
@@ -526,48 +542,16 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	public function getctag($path,$user)
 	{
-		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
-
-		if ($path == '/infolog/')
-		{
-			$task_filter= 'own';
-		}
-		else
-		{
-			if ($myself)
-			{
-				$task_filter = 'open';
-			}
-			else
-			{
-				$task_filter = 'open-user' . $user;
-			}
-		}
-
-		$query = array(
-			'order'			=> 'info_datemodified',
-			'sort'			=> 'DESC',
-			'filter'    	=> $task_filter,
-			'date_format'	=> 'server',
-			'col_filter'	=> array('info_type' => 'task'),
-			'start'			=> 0,
-			'num_rows'		=> 1,
-		);
-
-		$result =& $this->bo->search($query);
-
-		if (empty($result)) return 'EGw-0-wGE';
-
-		$entry = array_shift($result);
-
-		return $this->get_etag($entry);
+		return $this->bo->getctag($this->get_infolog_filter($path, $user));
 	}
 
 	/**
 	 * Get the etag for an infolog entry
 	 *
-	 * @param array/int $info array with infolog entry or info_id
-	 * @return string/boolean string with etag or false
+	 * etag currently uses the modifcation time (info_modified), 1.9.002 adds etag column, but it's not yet used!
+	 *
+	 * @param array|int $info array with infolog entry or info_id
+	 * @return string|boolean string with etag or false
 	 */
 	function get_etag($info)
 	{
@@ -579,7 +563,7 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return false;
 		}
-		return 'EGw-'.$info['info_id'].':'.$info['info_datemodified'].'-wGE';
+		return $info['info_id'].':'.$info['info_datemodified'];
 	}
 
 	/**
@@ -588,30 +572,33 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
+	 * @param int $user=null account_id of owner of collection
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null,$user=null)
 	{
 		// calendar description
-		$displayname = translation::convert(lang('Tasks of') . ' ' .
-			$displayname,translation::charset(),'utf-8');
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
-		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
+		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
+		$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		// supported components, currently only VEVENT
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
-			// HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
+		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTIMEZONE')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
-
-		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+		// supported reports
+		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
 
+		// get timezone of calendar
+		if ($this->groupdav->prop_requested('calendar-timezone'))
+		{
+			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
+				calendar_timezones::user_timezone($user));
+		}
 		return $props;
 	}
 
@@ -627,5 +614,39 @@ class infolog_groupdav extends groupdav_handler
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;
+	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * @param array $hook_data
+	 * @return array of array with settings
+	 */
+	static function get_settings($hook_data)
+	{
+		if (!isset($hook_data['setup']))
+		{
+			translation::add_app('infolog');
+			$infolog = new infolog_bo();
+			$types = $infolog->enums['type'];
+		}
+		if (!isset($types))
+		{
+			$types = array(
+				'task' => 'Tasks',
+			);
+		}
+		$settings = array();
+		$settings['infolog-types'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'InfoLog types to sync',
+			'name'   => 'infolog-types',
+			'help'   => 'Which InfoLog types should be synced with the device, default only tasks.',
+			'values' => $types,
+			'default' => 'task',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
 	}
 }

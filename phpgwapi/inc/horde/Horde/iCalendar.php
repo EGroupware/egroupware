@@ -470,7 +470,8 @@ class Horde_iCalendar {
     {
         // Default values.
         $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library' . (defined('HORDE_VERSION') ? ', Horde ' . constant('HORDE_VERSION') : '') . '//EN';
-        $requiredAttributes['METHOD'] = 'PUBLISH';
+        // METHOD is only required for iTip, but not for CalDAV, therefore removing it here calendar_ical sets it anyway by default
+        //$requiredAttributes['METHOD'] = 'PUBLISH';
 
         foreach ($requiredAttributes as $name => $default_value) {
             if (is_a($this->getattribute($name), 'PEAR_Error')) {
@@ -821,17 +822,15 @@ class Horde_iCalendar {
 	                case 'ORG':
 		                $value = trim($value);
 		                // As of rfc 2426 2.4.2 semicolon, comma, and colon must
-		                // be escaped (comma is unescaped after splitting below).
-		                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
-			                array("\n", "\n", ';', ':'),
+		                // be escaped (semicolon is unescaped after splitting below).
+		                $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
+			                array("\n", "\n", ',', ':'),
 							$value);
 
 		                // Split by unescaped semicolons:
 		                $values = preg_split('/(?<!\\\\);/', $value);
 		                $value = str_replace('\\;', ';', $value);
 		                $values = str_replace('\\;', ';', $values);
-		                $value = str_replace('\\,', ',', $value);
-		                $values = str_replace('\\,', ',', $values);
 		                $this->setAttribute($tag, trim($value), $params, true, $values);
 		                break;
 
@@ -840,15 +839,13 @@ class Horde_iCalendar {
 	                case 'CATEGORIES':
 		                $value = trim($value);
 		                // As of rfc 2426 2.4.2 semicolon, comma, and colon must
-		                // be escaped (semicolon is unescaped after splitting below).
-		                $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
-			                array("\n", "\n", ',', ':'),
+		                // be escaped (comma is unescaped after splitting below).
+		                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
+			                array("\n", "\n", ';', ':'),
 							$value);
 
 		                // Split by unescaped commas:
 		                $values = preg_split('/(?<!\\\\),/', $value);
-		                $value = str_replace('\\;', ';', $value);
-		                $values = str_replace('\\;', ';', $values);
 		                $value = str_replace('\\,', ',', $value);
 		                $values = str_replace('\\,', ',', $values);
 		                $this->setAttribute($tag, trim($value), $params, true, $values);
@@ -860,16 +857,14 @@ class Horde_iCalendar {
 			                $value = trim($value);
 			                // vCalendar 1.0 and vCard 2.1 only escape semicolons
 			                // and use unescaped semicolons to create lists.
-			                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
-				                array("\n", "\n", ';', ':'),
+			                $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
+				                array("\n", "\n", ',', ':'),
 								$value);
 
 			                // Split by unescaped semicolons:
 			                $values = preg_split('/(?<!\\\\);/', $value);
 			                $value = str_replace('\\;', ';', $value);
 			                $values = str_replace('\\;', ';', $values);
-			                $value = str_replace('\\,', ',', $value);
-			                $values = str_replace('\\,', ',', $values);
 			                $this->setAttribute($tag, trim($value), $params, true, $values);
 		                } else {
 			                $value = trim($value);

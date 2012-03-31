@@ -223,6 +223,14 @@ class egw_db
 	 */
 	const CAPABILITY_REQUIRE_TRUNCATE_VARCHAR = 'require_truncate_varchar';
 	/**
+	 * How to cast a column to varchar: CAST(%s AS varchar)
+	 *
+	 * MySQL requires to use CAST(%s AS char)!
+	 *
+	 * Use as: $sql = sprintf($GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CAST_AS_VARCHAR],$expression);
+	 */
+	const CAPABILITY_CAST_AS_VARCHAR = 'cast_as_varchar';
+	/**
 	 * default capabilities will be changed by method set_capabilities($ado_driver,$db_version)
 	 *
 	 * should be used with the CAPABILITY_* constants as key
@@ -240,6 +248,7 @@ class egw_db
 		self::CAPABILITY_CLIENT_ENCODING  => false,
 		self::CAPABILITY_CASE_INSENSITIV_LIKE => 'LIKE',
 		self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR => true,
+		self::CAPABILITY_CAST_AS_VARCHAR   => 'CAST(%s AS varchar)',
 	);
 
 	var $prepared_sql = array();	// sql is the index
@@ -265,6 +274,7 @@ class egw_db
 				$this->$var = $db_data[$key];
 			}
 		}
+//if ($GLOBALS['egw_info']['server']['default_domain'] == 'ralfsmacbook.local') $this->query_log = '/tmp/query.log';
 	}
 
 	/**
@@ -498,6 +508,7 @@ class egw_db
 				$this->capabilities[self::CAPABILITY_UNION] = (float) $db_version >= 4.0;
 				$this->capabilities[self::CAPABILITY_NAME_CASE] = 'preserv';
 				$this->capabilities[self::CAPABILITY_CLIENT_ENCODING] = (float) $db_version >= 4.1;
+				$this->capabilities[self::CAPABILITY_CAST_AS_VARCHAR] = 'CAST(%s AS char)';
 				break;
 
 			case 'postgres':
@@ -836,7 +847,7 @@ class egw_db
 		if ($id === False)	// function not supported
 		{
 			echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type' OR no insert operation before</p>\n";
-			function_backtrace();
+			echo '<p>'.function_backtrace()."</p>\n";
 			return -1;
 		}
 		return $id;
@@ -1251,7 +1262,7 @@ class egw_db
 			case 'mssql':
 				return "DATEDIFF(second,'1970-01-01',($expr))";
 		}
-		
+
 	}
 
 	/**
@@ -1311,6 +1322,38 @@ class egw_db
 				return str_replace($from,$to,$format);
 		}
 		return false;
+	}
+
+	/**
+	 * Cast a column or sql expression to integer, necessary at least for postgreSQL
+	 *
+	 * @param string $expr
+	 * @return string
+	 */
+	function to_int($expr)
+	{
+		switch($this->Type)
+		{
+			case 'pgsql':
+				return $expr.'::integer';
+		}
+		return $expr;
+	}
+
+	/**
+	 * Cast a column or sql expression to varchar, necessary at least for postgreSQL
+	 *
+	 * @param string $expr
+	 * @return string
+	 */
+	function to_varchar($expr)
+	{
+		switch($this->Type)
+		{
+			case 'pgsql':
+				return 'CAST('.$expr.' AS varchar)';
+		}
+		return $expr;
 	}
 
 	/**

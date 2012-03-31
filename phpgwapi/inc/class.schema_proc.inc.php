@@ -616,7 +616,23 @@ class schema_proc
 		$blob_column_included = $auto_column_included = False;
 		foreach($aTableDef['fd'] as $name => $data)
 		{
-			if ($aDefaults && isset($aDefaults[$name]))	// use given default
+			// new auto column with no default or explicit NULL as default (can be an existing column too!)
+			if ($data['type'] == 'auto' &&
+				(!isset($old_table_def['fd'][$name]) && (!$aDefaults || !isset($aDefaults[$name])) ||
+				$aDefaults && strtoupper($aDefaults[$name]) == 'NULL'))
+			{
+				$sequence_name = $sTableName.'_'.$name.'_seq';
+				switch($GLOBALS['egw_setup']->db->Type)
+				{
+					case 'mysql':
+						$value = 'NULL'; break;
+					case 'pgsql':
+						$value = "nextval('$sequence_name'::regclass)"; break;
+					default:
+						$value = "nextval('$sequence_name')"; break;
+				}
+			}
+			elseif ($aDefaults && isset($aDefaults[$name]))	// use given default
 			{
 				$value = $aDefaults[$name];
 			}
@@ -649,6 +665,11 @@ class schema_proc
 				if (!isset($data['default']) && (!isset($data['nullable']) || $data['nullable']))
 				{
 					$value = 'NULL';
+				}
+				// some stuff is NOT to be quoted
+				elseif (in_array(strtoupper($data['default']),array('CURRENT_TIMESTAMP','CURRENT_DATE','NULL','NOW()')))
+				{
+					$value = $data['default'];
 				}
 				else
 				{
@@ -690,10 +711,11 @@ class schema_proc
 			$Ok = $this->RenameTable($sTableName,$tmp_name);
 		}
 		$Ok = $Ok && $this->CreateTable($sTableName,$aTableDef) &&
-			$this->m_odb->query("$extra INSERT INTO $sTableName (".
+			$this->m_odb->query($sql_copy_data="$extra INSERT INTO $sTableName (".
 				implode(',',array_keys($aTableDef['fd'])).
 				") SELEcT $distinct $select FROM $tmp_name",__LINE__,__FILE__) &&
 			$this->DropTable($tmp_name);
+		//error_log($sql_copy_data);
 
 		if (!$Ok)
 		{

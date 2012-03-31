@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -633,4 +633,59 @@ function infolog_upgrade1_5_004()
 function infolog_upgrade1_6()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.8';
+}
+
+function infolog_upgrade1_8()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_cc',array(
+		'type' => 'varchar',
+		'precision' => '255'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.001';
+}
+
+
+/**
+ * Add column to store CalDAV name given by client and etag (not yet used!)
+ */
+function infolog_upgrade1_9_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','caldav_name',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_infolog SET caldav_name='.
+		$GLOBALS['egw_setup']->db->concat(
+			$GLOBALS['egw_setup']->db->to_varchar('info_id'),"'.ics'"),__LINE__,__FILE__);
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_infolog','caldav_name');
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_etag',array(
+		'type' => 'int',
+		'precision' => '4',
+		'default' => '0',
+		'comment' => 'etag, not yet used'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_created',array(
+		'type' => 'int',
+		'precision' => '8',
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_creator',array(
+		'type' => 'int',
+		'precision' => '4',
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.002';
+}
+
+
+/**
+ * Fix caldav_name of subentries is identical with parent: not necessary
+ */
+function infolog_upgrade1_9_002()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.003';
 }

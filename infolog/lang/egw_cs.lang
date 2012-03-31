@@ -75,7 +75,7 @@ completed	infolog	cs	Ukončeno
 configuration	infolog	cs	Konfigurace
 confirm	infolog	cs	Potvrdit
 contact	infolog	cs	Kontakt
-copy of:	infolog	cs	Kopie (čeho):
+copy of:	infolog	cs	Kopie z:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	cs	Zkopírujte Vaše úpravy do clipboardu, %1načtěte znovu záznam%2 a slučte je.
 create new links	infolog	cs	Vytvořit nové odkazy
 creates a new field	infolog	cs	vytvoří novou položku
@@ -104,6 +104,7 @@ default filter for infolog	infolog	cs	Výchozí filtr pro InfoLog
 default status for a new log entry	infolog	cs	výchozí stav pro nový záznam
 delegated	infolog	cs	delegované
 delegated open	infolog	cs	delegované otevřené
+delegated open and upcoming	infolog	cs	delegované otevřené a nadcházející
 delegated overdue	infolog	cs	delegované po termínu
 delegated upcomming	infolog	cs	delegované nadcházející
 delegation	infolog	cs	Pověření
@@ -130,6 +131,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	cs	Chc
 don't show infolog	infolog	cs	NEzobrazovat InfoLog
 done	infolog	cs	hotovo
 download	infolog	cs	Stáhnout
+due %1	infolog	cs	Do %1
 duration	infolog	cs	Trvání
 e-mail:	infolog	cs	E-mail:
 each value is a line like <id>[=<label>]	infolog	cs	každá hodnota je řádkem jako <id>[=<label>]
@@ -179,7 +181,7 @@ infolog - import csv-file	infolog	cs	InfoLog - Importovat CSV soubor
 infolog - new	infolog	cs	InfoLog - Nový
 infolog - new subproject	infolog	cs	InfoLog - Nový podprojekt
 infolog - subprojects from	infolog	cs	InfoLog - Podprojekty (čeho)
-infolog copied - the copy can now be edited	infolog	cs	InfoLog zkopírován - kopii lze nyní editovat
+infolog copied - the copy can now be edited	infolog	cs	Infolog byl zkopírován a kopii lze nyní editovat
 infolog entry deleted	infolog	cs	Záznam InfoLogu smazán
 infolog entry saved	infolog	cs	Záznam InfoLogu uložen
 infolog filter for the main screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
@@ -205,7 +207,6 @@ location	infolog	cs	Umístění
 longer textual description	infolog	cs	delší textový popis
 low	infolog	cs	Nízká
 max length of the input [, length of the inputfield (optional)]	infolog	cs	maximální délka vstupu (volitelné)
-modifierer	infolog	cs	Modifikátor
 name must not be empty !!!	infolog	cs	Název nemůže být prázdný !!!
 name of new type to create	infolog	cs	název nově vytvářeného typu
 never hide search and filters	infolog	cs	Nikdy neskrývat hledání a filtry
@@ -238,12 +239,14 @@ only if i get assigned or removed	infolog	cs	Jen pokud budu přidělen nebo odeb
 only the attachments	infolog	cs	jen přílohy
 only the links	infolog	cs	jen odkazy
 open	infolog	cs	otevřít
+open and upcoming	infolog	cs	otevřené a nadcházející
 optional note to the link	infolog	cs	volitelná poznámka k odkazu
 order	infolog	cs	Pořadí
 organization	infolog	cs	Organizace
 overdue	infolog	cs	po termínu
 own	infolog	cs	vlastní
 own open	infolog	cs	vlastní otevřené
+own open and upcoming	infolog	cs	vlastní otevřené a nadcházející
 own overdue	infolog	cs	vlastní po termínu
 own upcoming	infolog	cs	vlastní nadcházející
 parent	infolog	cs	Nadřazený
@@ -258,7 +261,7 @@ phone	infolog	cs	Telefonní hovor
 phone/email	infolog	cs	Telefon/E-mail
 phonecall	infolog	cs	Telefonní hovor
 planned	infolog	cs	plánované
-planned time	infolog	cs	plánovaný čas
+planned time	infolog	cs	Plánovaný čas
 price	infolog	cs	Cena
 pricelist	infolog	cs	Ceník
 primary link	infolog	cs	hlavní odkaz
@@ -284,6 +287,7 @@ remark	infolog	cs	Poznámka
 remove this link (not the entry itself)	infolog	cs	Odstranit tento odkaz (ne celý záznam)
 responsible	infolog	cs	odpovědný
 responsible open	infolog	cs	odpovědný - otevřené
+responsible open and upcoming	infolog	cs	odpovědný - otevřené a nadcházející
 responsible overdue	infolog	cs	odpovědný - po termínu
 responsible upcoming	infolog	cs	odpovědný - nastávající
 responsible user, priority	infolog	cs	odpovědný uživatel, priorita
@@ -307,8 +311,8 @@ select an entry to link with	infolog	cs	Vybrat záznam, na který se má odkazov
 select to filter by owner	infolog	cs	vybrat pro filtrování dle vlastníka
 select to filter by responsible	infolog	cs	vybrat pro filtrování dle odpovědné osoby
 sender	infolog	cs	Odesílatel
-set status to done	infolog	cs	Změnit stav na hotovo
-set status to done for all entries	infolog	cs	Změnit stav na hotovo u všech záznamů
+set status to done	infolog	cs	Nastavit stav na hotovo
+set status to done for all entries	infolog	cs	Nastavit stav na hotovo pro všechny záznamy
 sets the status of this entry and its subs to done	infolog	cs	Nastavit stav záznamu a jeho podpoložek na hotový
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	Má InfoLog zobrazovat Pod-úkoly, -hovory nebo -poznámky v normálním zobrazení nebo ne? Podpoložky můžete vždy zobrazit přes jejich rodiče.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	Má InfoLog zobrazovat odkazy na ostatní aplikace nebo připojené soubory v seznamu InfoLogu nebo ne (normální zobrazení při vstupu do InfoLogu)?
@@ -330,6 +334,7 @@ start a new search, cancel this link	infolog	cs	začít nové hledání, zrušit
 startdate	infolog	cs	Počáteční datum
 startdate enddate	infolog	cs	Počáteční datum Datum dokončení
 startdate for new entries	infolog	cs	Počáteční datum pro nové záznamy
+starting %1	infolog	cs	Začíná %1
 startrecord	infolog	cs	První záznam
 status	infolog	cs	Stav
 status ...	infolog	cs	Stav ...
@@ -338,6 +343,7 @@ sub-entries become subs of the parent or main entries, if there's no parent	info
 subject	infolog	cs	Předmět
 sum	infolog	cs	Celkem
 task	infolog	cs	Úkol
+tasks of	infolog	cs	Úkoly
 template	infolog	cs	Šablona
 test import (show importable records <u>only</u> in browser)	infolog	cs	Testovat import (zobrazit importovatelné záznamy <u>jen</u> v prohlížeči)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	cs	název používaný interně (<= 10 znaků), jeho změna způsobí nedostupnost stávajících dat
@@ -376,6 +382,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?<br>Stav, procento a datum dokončení může vždy.
 which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitní ACL práva má odpovědná osoba dostat?
 which types should the calendar show	infolog	cs	Které typy má kalendář zobrazovat
+whole query	infolog	cs	celý dotaz
 will-call	infolog	cs	zavolá
 write (add or update) a record by passing its fields.	infolog	cs	Zapsat (přidat nebo smazat) záznam zadáním jeho položek.
 yes - close	infolog	cs	Ano - uzavřít

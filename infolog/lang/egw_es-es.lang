@@ -26,7 +26,6 @@ a short subject for the entry	infolog	es-es	descripción corta para la entrada
 abort without deleting	infolog	es-es	Cancelar sin eliminar
 accept	infolog	es-es	aceptar
 action	infolog	es-es	Acción
-actions...	infolog	es-es	Acciones...
 actual date and time	infolog	es-es	Fecha y hora actuales
 add	infolog	es-es	Añadir
 add a file	infolog	es-es	Añadir archivo
@@ -75,7 +74,6 @@ completed	infolog	es-es	Completado
 configuration	infolog	es-es	Configuración
 confirm	infolog	es-es	Confirmar
 contact	infolog	es-es	Contacto
-copy of:	infolog	es-es	Copia de:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	es-es	Copiar los cambios al portapapeles, %1recargar la entrada%2 e incluirlos.
 create new links	infolog	es-es	Crear nuevos enlaces
 creates a new field	infolog	es-es	crea un campo nuevo
@@ -179,7 +177,6 @@ infolog - import csv-file	infolog	es-es	Registro - Importar archivo CSV
 infolog - new	infolog	es-es	Registro - Nuevo
 infolog - new subproject	infolog	es-es	Registro - Nuevo subproyecto
 infolog - subprojects from	infolog	es-es	Registro - Subproyectos de
-infolog copied - the copy can now be edited	infolog	es-es	Registro copiado - ahora la copia se puede editar
 infolog entry deleted	infolog	es-es	Se ha borrado la entrada del registro
 infolog entry saved	infolog	es-es	Se ha guardado la entrada en el registro
 infolog filter for the main screen	infolog	es-es	Filtro para el registro en la pantalla principal
@@ -279,7 +276,6 @@ receive notifications about own items	infolog	es-es	Recibir notificaciones acerc
 receive notifications about starting entries you are responsible for	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan de las que usted es responsable
 receive notifications about starting entries you delegated	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan que usted ha delegado
 receive notifications as html-mails	infolog	es-es	Recibir notificaciones como correo html
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales<br>ej. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales<br>ej. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
@@ -308,8 +304,6 @@ select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apun
 select to filter by owner	infolog	es-es	seleccionar para filtrar por propietario
 select to filter by responsible	infolog	es-es	seleccionar para filtrar por responsable
 sender	infolog	es-es	Remitente
-set status to done	infolog	es-es	Establecer estado a terminado
-set status to done for all entries	infolog	es-es	Establecer el estado a terminado para todas las entradas
 sets the status of this entry and its subs to done	infolog	es-es	Pone el estado de esta entrada y las inferiores a Hecho
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es-es	¿Mostrar las Subtareas (llamadas o notas) en la vista normal? Siempre puede ver estos subtipos a través de su tipo superior.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	es-es	¿Deben mostrarse los enlaces a otras aplicaciones y/o los ficheros adjuntos en la lista del registro (la vista normal al entrar en el registro)?
@@ -365,7 +359,6 @@ urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
 valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	ruta válida en el cliente<br>p.ej. \\servidor\recurso o e:
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el cliente<br>p.ej. \\servidor\recurso o e:
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs
@@ -377,6 +370,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	es-es	¿Qué campos adicionales puede editar el responsable sin tener derechos de edición?<br />El estado, porcentaje y fecha de finalización se permiten siempre.
 which implicit acl rights should the responsible get?	infolog	es-es	¿Qué derechos implícitos de ACL debe tener el responsable?
 which types should the calendar show	infolog	es-es	Qué tipos debe mostrar el calendario
+whole query	infolog	es-es	la consulta completa
 will-call	infolog	es-es	va a llamar
 write (add or update) a record by passing its fields.	infolog	es-es	Escribir (añadir o actualizar) un registro pasando sus campos.
 yes - close	infolog	es-es	Sí, cerrar

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry type="array" name="importExportDefinitions">
+  <entry type="array" name="metainfo">
+    <entry type="string" name="type">importexport definitions</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">2</entry>
+  </entry>
+  <entry type="array" name="definitions">
+    <entry type="array" name="export-infolog">
+      <entry type="string" name="name">export-infolog</entry>
+      <entry type="string" name="application">infolog</entry>
+      <entry type="string" name="plugin">infolog_export_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="array" name="mapping">
+          <entry type="string" name="info_type">Type</entry>
+          <entry type="string" name="info_from">Contact</entry>
+          <entry type="string" name="info_subject">Subject</entry>
+          <entry type="string" name="info_des">Description</entry>
+          <entry type="string" name="info_addr">Phone/Email</entry>
+          <entry type="string" name="info_link_id">primary link</entry>
+          <entry type="string" name="info_cat">Category</entry>
+          <entry type="string" name="info_priority">Priority</entry>
+          <entry type="string" name="info_owner">Owner</entry>
+          <entry type="string" name="info_access">Access</entry>
+          <entry type="string" name="info_status">Status</entry>
+          <entry type="string" name="info_percent">Completed</entry>
+          <entry type="string" name="info_datecompleted">Date completed</entry>
+          <entry type="string" name="info_datemodified">Last changed</entry>
+          <entry type="string" name="info_location">Location</entry>
+          <entry type="string" name="info_startdate">Startdate</entry>
+          <entry type="string" name="info_enddate">Enddate</entry>
+          <entry type="string" name="info_responsible">Responsible</entry>
+          <entry type="string" name="info_planned_time">planned time</entry>
+          <entry type="string" name="info_used_time">used time</entry>
+          <entry type="string" name="pl_id">pricelist</entry>
+          <entry type="string" name="info_price">price</entry>
+          <entry type="string" name="all_custom_fields">infolog</entry>
+        </entry>
+        <entry type="string" name="delimiter">;</entry>
+        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
+      </entry>
+      <entry type="string" name="modified">2011-03-02 09:58:16</entry>
+    </entry>
+    <entry type="array" name="import-infolog">
+      <entry type="string" name="name">import-infolog</entry>
+      <entry type="string" name="application">infolog</entry>
+      <entry type="string" name="plugin">infolog_import_infologs_csv</entry>
+      <entry type="string" name="type">import</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="string" name="fieldsep">;</entry>
+        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="num_header_lines">1</entry>
+        <entry type="array" name="csv_fields">
+          <entry type="string" name="0">info_from</entry>
+          <entry type="string" name="1">info_subject</entry>
+          <entry type="string" name="2">info_des</entry>
+          <entry type="string" name="3">info_addr</entry>
+          <entry type="string" name="4">info_link_id</entry>
+          <entry type="string" name="5">info_cat</entry>
+          <entry type="string" name="6">info_priority</entry>
+          <entry type="string" name="7">info_owner</entry>
+          <entry type="string" name="8">info_access</entry>
+          <entry type="string" name="9">info_status</entry>
+          <entry type="string" name="10">info_percent</entry>
+          <entry type="string" name="11">info_datecompleted</entry>
+          <entry type="string" name="12">info_datemodified</entry>
+          <entry type="string" name="13">info_location</entry>
+          <entry type="string" name="14">info_startdate</entry>
+          <entry type="string" name="15">info_enddate</entry>
+          <entry type="string" name="16">info_responsible</entry>
+          <entry type="string" name="17">info_planned_time</entry>
+          <entry type="string" name="18">info_used_time</entry>
+          <entry type="string" name="19">pl_id</entry>
+          <entry type="string" name="20">info_price</entry>
+          <entry type="string" name="21">no_csv_1</entry>
+          <entry type="string" name="22">no_csv_2</entry>
+          <entry type="string" name="23">no_csv_3</entry>
+        </entry>
+        <entry type="array" name="field_mapping">
+          <entry type="string" name="0">info_type</entry>
+          <entry type="string" name="1">info_from</entry>
+          <entry type="string" name="2">info_subject</entry>
+          <entry type="string" name="3">info_des</entry>
+          <entry type="string" name="4">info_addr</entry>
+          <entry type="string" name="5">info_link_id</entry>
+          <entry type="string" name="6">info_cat</entry>
+          <entry type="string" name="7">info_priority</entry>
+          <entry type="string" name="8">info_owner</entry>
+          <entry type="string" name="9">info_access</entry>
+          <entry type="string" name="10">info_status</entry>
+          <entry type="string" name="11">info_percent</entry>
+          <entry type="string" name="12">info_datecompleted</entry>
+          <entry type="string" name="13">info_datemodified</entry>
+          <entry type="string" name="14">info_location</entry>
+          <entry type="string" name="15">info_startdate</entry>
+          <entry type="string" name="16">info_enddate</entry>
+          <entry type="string" name="17">info_responsible</entry>
+          <entry type="string" name="18">info_planned_time</entry>
+          <entry type="string" name="19">info_used_time</entry>
+          <entry type="string" name="20">pl_id</entry>
+          <entry type="string" name="21">info_price</entry>
+        </entry>
+        <entry type="string" name="field_conversion"/>
+        <entry type="string" name="conditions"/>
+      </entry>
+      <entry type="string" name="modified">2011-03-01 18:06:41</entry>
+    </entry>
+  </entry>
+</entry>

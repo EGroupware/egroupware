@@ -108,6 +108,7 @@ class addressbook_ldap
 			'n_fileas'		=> 'displayname',
 			'label'			=> 'postaladdress',
 			'pubkey'		=> 'usersmimecertificate',
+			'uid'			=> 'entryuuid',
 		),
 
 		#displayName
@@ -123,19 +124,21 @@ class addressbook_ldap
 		'mozillaabpersonalpha' => array(
 			'adr_one_street2'	=> 'mozillaworkstreet2',
 			'adr_one_countryname'	=> 'c',	// 2 letter country code
+			'adr_one_countrycode'	=> 'c',	// 2 letter country code
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomestreet2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
 			'adr_two_region'	=> 'mozillahomestate',
 			'adr_two_postalcode'	=> 'mozillahomepostalcode',
 			'adr_two_countryname'	=> 'mozillahomecountryname',
+			'adr_two_countrycode'	=> 'mozillahomecountryname',
 			'email_home'		=> 'mozillasecondemail',
 			'url_home'			=> 'mozillahomeurl',
 		),
 		// similar to the newer mozillaAbPerson, but uses mozillaPostalAddress2 instead of mozillaStreet2
 		'mozillaorgperson' => array(
 			'adr_one_street2'	=> 'mozillapostaladdress2',
-			'adr_one_countryname'	=> 'c',	// 2 letter country code
+			'adr_one_countrycode'	=> 'c',	// 2 letter country code
 			'adr_one_countryname'	=> 'co',	// human readable country name, must be after 'c' to take precedence on read!
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomepostaladdress2',
@@ -284,7 +287,8 @@ class addressbook_ldap
 	*/
 	function read($contact_id)
 	{
-		if (is_array($contact_id) && isset($contact_id['account_id']) || substr($contact_id,0,8) == 'account:')
+		if (is_array($contact_id) && isset($contact_id['account_id']) ||
+			!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
 		{
 			$filter = 'uidNumber='.(int)(is_array($contact_id) ? $contact_id['account_id'] : substr($contact_id,8));
 		}
@@ -434,6 +438,7 @@ class addressbook_ldap
 			$needRecreation = false;
 			// never allow to change the uidNumber (account_id) on update, as it could be misused by eg. xmlrpc or syncml
 			unset($ldapContact['uidnumber']);
+			unset($ldapContact['entryuuid']);	// not allowed to modify that, no need either
 
 			// add missing objectclasses
 			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses))
@@ -663,6 +668,7 @@ class addressbook_ldap
 			$sort = 'ASC';
 			foreach(explode(',',$order_by) as $o)
 			{
+				if (substr($o,0,8) == 'contact_') $o = substr($o,8);
 				if (substr($o,-4) == ' ASC')
 				{
 					$sort = 'ASC';
@@ -1113,9 +1119,17 @@ class addressbook_ldap
 	 */
 	function _egw2mozillaabpersonalpha(&$ldapContact,$data,$isUpdate)
 	{
-		if ($data['adr_one_countryname'])
+		if ($data['adr_one_countrycode'])
+		{
+			$ldapContact['c'] = $data['adr_one_countrycode'];
+		}
+		elseif ($data['adr_one_countryname'])
 		{
 			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
+			{
+				$ldapContact['c'] = array(); // should return error...
+			}
 		}
 		elseif ($isUpdate)
 		{
@@ -1134,10 +1148,7 @@ class addressbook_ldap
 	 */
 	function _mozillaorgperson2egw(&$contact,$data)
 	{
-		if ($data['c'] && strlen($contact['adr_one_countryname']) <= 2)	// dont overwrite a set human readable name
-		{
-			$contact['adr_one_countryname'] = ExecMethod('phpgwapi.country.get_full_name',$data['c'][0]);
-		}
+		// no special handling necessary, as it supports two distinct attributes: c, cn
 	}
 
 	/**
@@ -1152,14 +1163,24 @@ class addressbook_ldap
 	 */
 	function _egw2mozillaorgperson(&$ldapContact,$data,$isUpdate)
 	{
-		if ($data['adr_one_countryname'])
+		if ($data['adr_one_countrycode'])
+		{
+			$ldapContact['c'] = $data['adr_one_countrycode'];
+			if ($isUpdate) $ldapContact['co'] = array();
+		}
+		elseif ($data['adr_one_countryname'])
 		{
 			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
+			{
+				$ldapContact['c'] = array(); // should return error...
+			}
 		}
 		elseif ($isUpdate)
 		{
-			$ldapContact['c'] = array();
+			$ldapContact['c'] = $ldapContact['co'] = array();
 		}
+		//error_log(__METHOD__."() adr_one_countrycode='{$data['adr_one_countrycode']}', adr_one_countryname='{$data['adr_one_countryname']}' --> c=".array2string($ldapContact['c']).', co='.array2string($ldapContact['co']));
 	}
 
 	/**

@@ -167,7 +167,7 @@ class setup_cmd_config extends setup_cmd
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap'),'default'=>'sql'),
 			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam'),'default'=>'sql'),
-			array('name' => 'sql_encryption','allowed' => array('ssha','smd5','md5','blowfish_crypt','md5_crypt','crypt'),'default'=>'ssha'),
+			array('name' => 'sql_encryption','allowed' => array('sha512_crypt','sha256_crypt','blowfish_crypt','md5_crypt','crypt','ssha','smd5','md5'),'default'=>'sha512_crypt'),
 			'check_save_password','allow_cookie_auth'),
 		'--ldap-host' => 'ldap_host',
 		'--ldap-root-dn' => 'ldap_root_dn',

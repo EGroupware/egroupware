@@ -1,0 +1,371 @@
+%1 days in advance	infolog	pt-br	%1 dias para frente
+%1 deleted	infolog	pt-br	%1 removido
+%1 deleted by %2 at %3	infolog	pt-br	%1 removido por %2 em %3
+%1 modified	infolog	pt-br	%1 modificado
+%1 modified by %2 at %3	infolog	pt-br	%1 modificado por %2 em %3
+%1 records imported	infolog	pt-br	%1 registros importados
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pt-br	%1 arquivos lidos (não foi importado, você pode %2voltar%3 e efetuar o Teste de importação)
+%1 you are responsible for is due at %2	infolog	pt-br	%1, você é o responsável. Excede o prazo em %2
+%1 you are responsible for is starting at %2	infolog	pt-br	%1, você é o responsável. Inicia em %2
+%1 you delegated is due at %2	infolog	pt-br	%1, você designou. Excede o prazo em %2
+%1 you delegated is starting at %2	infolog	pt-br	%1, você designou. Inicia em %2
+- subprojects from	infolog	pt-br	- Subprojetos de
+0%	infolog	pt-br	0%
+10%	infolog	pt-br	10%
+100%	infolog	pt-br	100%
+20%	infolog	pt-br	20%
+30%	infolog	pt-br	30%
+40%	infolog	pt-br	40%
+50%	infolog	pt-br	50%
+60%	infolog	pt-br	60%
+70%	infolog	pt-br	70%
+80%	infolog	pt-br	80%
+90%	infolog	pt-br	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pt-br	<b>Arquivos anexados</b> através do sistema de envio:/caminho para clientes de sua própria rede
+a short subject for the entry	infolog	pt-br	um nome curto para este registro
+abort without deleting	infolog	pt-br	Cancelar sem apagar
+accept	infolog	pt-br	aceitar
+action	infolog	pt-br	Ação
+actual date and time	infolog	pt-br	Data e Hora atuais
+add	infolog	pt-br	Adicionar
+add a file	infolog	pt-br	Adicionar um arquivo
+add a new entry	infolog	pt-br	Adicionar um novo registro
+add a new note	infolog	pt-br	Adicionar uma nota
+add a new phonecall	infolog	pt-br	Adicionar uma nova ligação
+add a new sub-task, -note, -call to this entry	infolog	pt-br	Adicionar um sub-tarefa, -nota, -ligação para este registro
+add a new todo	infolog	pt-br	Adicionar um Apontamento
+add file	infolog	pt-br	Adicionar um arquivo
+add sub	infolog	pt-br	adicionar uma Sub
+add timesheet entry	infolog	pt-br	Adicionar registro à planilha de tempo
+add:	infolog	pt-br	Adicionar:
+all	infolog	pt-br	Todos
+all links and attachments	infolog	pt-br	todos links e arquivos anexados
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt-br	permite configurar o status de um registro. Ex. marque um Apontamento com o Status finalizado quando esta estiver terminada. (Os valores dependem do tipo de registro)
+apply the changes	infolog	pt-br	Aplicar as alterações
+archive	infolog	pt-br	arquivar
+are you shure you want to delete this entry ?	infolog	pt-br	Você tem certeza que deseja apagar este registro?
+attach a file	infolog	pt-br	Anexar um arquivo
+attach file	infolog	pt-br	Anexar arquivo
+attention: no contact with address %1 found.	infolog	pt-br	Atenção: nenhum contato com endereço %1 encontrado.
+back to main list	infolog	pt-br	Retornar a lista principal
+billed	infolog	pt-br	cobrado
+both	infolog	pt-br	ambos
+call	infolog	pt-br	ligar
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	pt-br	Pode ser usado para exibir tipos de Tarefas na Agenda or limitar sua exibição, por exemplo: somente tarefas.
+cancel	infolog	pt-br	Cancelar
+cancelled	infolog	pt-br	Cancelada
+categories	infolog	pt-br	Categorias
+category	infolog	pt-br	Categoria
+change the status of an entry, eg. close it	infolog	pt-br	Alterar o status de um registro (ex. fechado)
+charset of file	infolog	pt-br	Conjunto de carácteres do arquivo
+check to set startday	infolog	pt-br	Selecione para determinar a data de início
+check to specify custom contact	infolog	pt-br	Marque para especificar contato personalizado
+click here to create the link	infolog	pt-br	clique aqui para inserir um hyperlink
+click here to start the search	infolog	pt-br	clique aqui para iniciar uma pesquisa
+close	infolog	pt-br	Fechar
+comment	infolog	pt-br	Comentário
+completed	infolog	pt-br	Completada
+configuration	infolog	pt-br	Configuração
+confirm	infolog	pt-br	Confirme
+contact	infolog	pt-br	Contato
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.
+create new links	infolog	pt-br	Criar um novo hyperlink
+creates a new field	infolog	pt-br	criar um novo campo
+creates a new status with the given values	infolog	pt-br	criar um status novo com os valores antigos
+creates a new typ with the given name	infolog	pt-br	criar um novo tipo com nomes antigos
+creation	infolog	pt-br	Criação
+csv-fieldname	infolog	pt-br	CSV-Nome do Campo
+csv-filename	infolog	pt-br	CSV-Nome do Arquivo
+csv-import	common	pt-br	CSV-Importar
+custom	infolog	pt-br	Personalizado
+custom contact-address, leave empty to use information from most recent link	infolog	pt-br	Personalizar endereço de contato, deixe vazio para usar a informação do link mais recente.
+custom contact-information, leave emtpy to use information from most recent link	infolog	pt-br	Personalizar informações de contato, deixe vazio para utilizar a informação do link mais recente.
+custom fields	infolog	pt-br	Campos Personalizáveis
+custom fields, typ and status	common	pt-br	Campos Personalizáveis, tipo e status
+custom from	infolog	pt-br	Personalizar de
+custom regarding	infolog	pt-br	Personalizar Atenção
+custom status for typ	infolog	pt-br	Personalizar status por tipo
+customfields	infolog	pt-br	Campos Perssonalizáveis
+date completed	infolog	pt-br	Data de Finalização
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pt-br	Data de finalização (deixe em branco para ser automaticamente informada, quando o status for alterado para Completada ou Cobrada)
+datecreated	infolog	pt-br	data da criação
+dates, status, access	infolog	pt-br	Datas, Status, Acessos
+days	infolog	pt-br	dias
+default category for new infolog entries	infolog	pt-br	Categoria padrão para novos registros Tarefas
+default filter for infolog	infolog	pt-br	Filtro padrao
+default status for a new log entry	infolog	pt-br	status padrão para um novo registro
+delegated	infolog	pt-br	designado
+delegated open	infolog	pt-br	designado e aberto
+delegated overdue	infolog	pt-br	designado e prazo excedido
+delegated upcomming	infolog	pt-br	designado e prazo excedendo
+delegation	infolog	pt-br	Atribuição
+delete	infolog	pt-br	Apagar
+delete one record by passing its id.	infolog	pt-br	Apagar um registro contornando seu id.
+delete the entry	infolog	pt-br	Apagar o registro
+delete this entry	infolog	pt-br	Apagar este registro
+delete this entry and all listed sub-entries	infolog	pt-br	Apagar este registro e todos os sub-registros listados
+deleted	infolog	pt-br	removido
+deletes the selected typ	infolog	pt-br	Apagar os tipos selecionados
+deletes this field	infolog	pt-br	Apagar este campo
+deletes this status	infolog	pt-br	Apagar este status
+description	infolog	pt-br	Descrição
+determines the order the fields are displayed	infolog	pt-br	determine a ordem em que os campos aparecerão
+disables a status without deleting it	infolog	pt-br	desabilitar o status após a remoção
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt-br	você quer uma confirmação do responsável quanto à: aceitação, encerramento ou ambos
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	pt-br	Você quer receber uma notificação, caso itens forem designados a você ou caso itens designados a você forem atualizados?
+do you want a notification, if items you are responsible for are about to start?	infolog	pt-br	Você quer receber uma notificação, caso algum item esteja prestes a iniciar e você seja o responsável?
+do you want a notification, if items you are responsible for are due?	infolog	pt-br	Você quer receber uma notificação, caso itens excedam o prazo e você seja o responsável?
+do you want a notification, if items you created get updated?	infolog	pt-br	Você quer receber uma notificação, se itens que você criou forem atualizados?
+do you want a notification, if items you delegated are about to start?	infolog	pt-br	Você quer receber uma notificação, se itens que você designou estiverem prestes a iniciar?
+do you want a notification, if items you delegated are due?	infolog	pt-br	Você quer receber uma notificação, se itens que você designou excederem o prazo?
+do you want to receive notifications as html-mails or plain text?	infolog	pt-br	Você quer receber notificações em HTML ou texto puro?
+don't show infolog	infolog	pt-br	Não exibir Tarefas
+done	infolog	pt-br	Encerrado
+download	infolog	pt-br	Baixar
+duration	infolog	pt-br	Duração
+each value is a line like <id>[=<label>]	infolog	pt-br	cada valor por linha <id>[=<label>]
+edit	infolog	pt-br	Editar
+edit or create categories for ingolog	infolog	pt-br	Editar ou criar categorias para o Módulo Tarefas
+edit rights (full edit rights incl. making someone else responsible!)	infolog	pt-br	Permissões de edição (edição total inclui fazer outra pessoa responsável)
+edit status	infolog	pt-br	Editar o Status
+edit the entry	infolog	pt-br	Editar o registro
+edit this entry	infolog	pt-br	Editar este registro
+empty for all	infolog	pt-br	esvaziar tudo
+enddate	infolog	pt-br	Data Final
+enddate can not be before startdate	infolog	pt-br	A data final não pode ser anterior a data inicial
+enter a custom contact, leave empty if linked entry should be used	infolog	pt-br	Digitar um contato personalizado, deixe vazio para utilizar o que já existe
+enter a custom phone/email, leave empty if linked entry should be used	infolog	pt-br	Digitar um fone/e-mail personalizado, deixe vazio para utilizar o que já existe
+enter a textual description of the log-entry	infolog	pt-br	Digitar uma descrição para este novo registro
+enter the query pattern	infolog	pt-br	Digite o argumento da consulta
+entry and all files	infolog	pt-br	Este e todos os arquivos
+error: saving the entry	infolog	pt-br	Erro salvando o registro
+error: the entry has been updated since you opened it for editing!	infolog	pt-br	Erro: o registro foi atualizado desde sua abertura, por você, para edição!
+existing links	infolog	pt-br	Links existentes
+fax	infolog	pt-br	Fax
+field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!!!
+fieldseparator	infolog	pt-br	Separador de Campos
+finish	infolog	pt-br	finalizar
+for which types should this field be used	infolog	pt-br	para quais tipos este campo deve ser utilizado
+from	infolog	pt-br	De
+general	infolog	pt-br	Geral
+group owner for	infolog	pt-br	Grupo-proprietário para
+high	infolog	pt-br	alta
+history logging	infolog	pt-br	Registro de histórico
+history logging and deleting of items	infolog	pt-br	Registro de histórico e remoção de itens
+id	infolog	pt-br	Id
+id#	infolog	pt-br	Id#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pt-br	Se um tipo tem um grupo-proprietário, todas as entradas deste tipo terão como dono o grupo informado e não o usuário que as criou.
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pt-br	Se não informado, a linha com Pesquisa e Filtros ficará oculta para menos registros que "número máximo de registro por página" (definido em suas preferências).
+import	infolog	pt-br	Importar
+import next set	infolog	pt-br	importar o próximo  conjunto
+info log	common	pt-br	Tarefas
+infolog	common	pt-br	Tarefas
+infolog - delete	infolog	pt-br	Apagar - Tarefas
+infolog - edit	infolog	pt-br	Editar - Tarefas
+infolog - import csv-file	infolog	pt-br	Importar arquivo CVS - Tarefas
+infolog - new	infolog	pt-br	Nova - Tarefas
+infolog - new subproject	infolog	pt-br	Novo Subprojeto - Tarefas
+infolog - subprojects from	infolog	pt-br	Novo Subprojeto de - Tarefas
+infolog entry deleted	infolog	pt-br	Tarefa removida
+infolog entry saved	infolog	pt-br	Tarefa salva
+infolog filter for the main screen	infolog	pt-br	Filtro para Tarefas na Página Inicial
+infolog list	infolog	pt-br	Lista de Tarefas
+infolog preferences	common	pt-br	Preferências - Tarefas
+infolog-fieldname	infolog	pt-br	Nome do campo - Tarefas
+invalid filename	infolog	pt-br	Nome de arquivo inválido
+label<br>helptext	infolog	pt-br	Etiqueta<br>Texto para ajuda
+last changed	infolog	pt-br	Última alteração
+last modified	infolog	pt-br	Última modificação
+leave it empty	infolog	pt-br	Deixe em branco
+leave without saveing the entry	infolog	pt-br	Sair sem salvar o registro
+leaves without saveing	infolog	pt-br	Sair sem salvar
+length<br>rows	infolog	pt-br	Largura<br>Colunas
+link	infolog	pt-br	Link
+links	infolog	pt-br	Links
+links of this entry	infolog	pt-br	Links para este registro
+list all categories	infolog	pt-br	Listar todas as categorias
+list no subs/childs	infolog	pt-br	não listar subs/filhos
+location	infolog	pt-br	Local
+longer textual description	infolog	pt-br	descrição detalhada
+low	infolog	pt-br	baixo
+max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
+modifierer	infolog	pt-br	Modificador
+name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
+name of new type to create	infolog	pt-br	nome para o novo tipo
+never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros
+new %1	infolog	pt-br	Novo %1
+new %1 created by %2 at %3	infolog	pt-br	Novo %1 criado por %2 em %3
+new name	infolog	pt-br	novo nome
+new search	infolog	pt-br	Nova pesquisa
+no - cancel	infolog	pt-br	Não - Cancelar
+no describtion, links or attachments	infolog	pt-br	Sem descrição, links ou anexos
+no details	infolog	pt-br	Sem detalhes
+no entries found, try again ...	infolog	pt-br	nenhum registro encontrado, tente novamente ...
+no filter	infolog	pt-br	sem filtro
+no links or attachments	infolog	pt-br	sem links ou anexos
+nonactive	infolog	pt-br	não ativo
+none	infolog	pt-br	Nenhum
+normal	infolog	pt-br	normal
+not	infolog	pt-br	não
+not assigned	infolog	pt-br	não atribuido
+not-started	infolog	pt-br	Não iniciada
+note	infolog	pt-br	Nota
+number of records to read (%1)	infolog	pt-br	Número de registros para ler (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	pt-br	Número de linha para campos ou caixas de entrada multilinhas
+offer	infolog	pt-br	Livre
+one day after	infolog	pt-br	um dia depois
+one day in advance	infolog	pt-br	um dia adiantado
+ongoing	infolog	pt-br	Aberto
+only for details	infolog	pt-br	Somente para detalhes
+only if i get assigned or removed	infolog	pt-br	Somente se eu for designado ou removido
+only the attachments	infolog	pt-br	apenas arquivos anexos
+only the links	infolog	pt-br	apenas links
+open	infolog	pt-br	abrir
+optional note to the link	infolog	pt-br	Nota opcional para o Link
+order	infolog	pt-br	Ordem
+overdue	infolog	pt-br	atrasado
+own	infolog	pt-br	Suas tarefas
+own open	infolog	pt-br	Suas tarefas abertas
+own overdue	infolog	pt-br	Suas tarefas em Atraso
+own upcoming	infolog	pt-br	Suas tarefas futuras
+parent	infolog	pt-br	Pai
+path on (web-)serverside<br>eg. /var/samba/share	infolog	pt-br	caminho (web-)serverside<br>ex. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	pt-br	O diretório para os arquivos de usuário ou grupo DEVE ESTAR FORA da raiz de documentos do servidor web!!!
+pattern for search in addressbook	infolog	pt-br	argumento de pesquisa em catálogo de endereços
+pattern for search in projects	infolog	pt-br	argumento de pesquisa nos Projetos
+percent completed	infolog	pt-br	Percentagem completada
+permission denied	infolog	pt-br	Permissão negada
+phone	infolog	pt-br	Chamadas Telefônicas
+phone/email	infolog	pt-br	Telefone/E-mail
+phonecall	infolog	pt-br	Chamadas Telefônicas
+planned	infolog	pt-br	Planejada
+planned time	infolog	pt-br	Horas planejadas
+price	infolog	pt-br	Preço
+pricelist	infolog	pt-br	Lista de preços
+primary link	infolog	pt-br	Link primário
+priority	infolog	pt-br	Prioridade
+private	infolog	pt-br	Particular
+project	infolog	pt-br	Projeto
+project settings: price, times	infolog	pt-br	Configurações do projeto: preço, tempo
+re:	infolog	pt-br	Re:
+read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
+read rights (default)	infolog	pt-br	Permissões de leitura (padrão)
+receive notifications about due entries you are responsible for	infolog	pt-br	Receber notificações sobre registros com prazos excedidos, cujo responsável seja você.
+receive notifications about due entries you delegated	infolog	pt-br	Receber notificações sobre registros com prazos excedidos que você tenha designado
+receive notifications about items assigned to you	infolog	pt-br	Receber notificações sobre registros designados a você
+receive notifications about own items	infolog	pt-br	Receber notificações sobre seus próprios registros
+receive notifications about starting entries you are responsible for	infolog	pt-br	Receber notificações sobre registros prestes a se iniciar, cujo responsável seja você.
+receive notifications about starting entries you delegated	infolog	pt-br	Receber notificações sobre registros prestes a se iniciar que você tenha designado.
+receive notifications as html-mails	infolog	pt-br	Receber notificações em formato HTML
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
+remark	infolog	pt-br	Destaque
+remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o registro)
+responsible	infolog	pt-br	Responsável
+responsible open	infolog	pt-br	Responsável pela abertura
+responsible overdue	infolog	pt-br	Responsável pela realização
+responsible upcoming	infolog	pt-br	Responsável futuro
+responsible user, priority	infolog	pt-br	Usuário responsável, prioridade
+returns a list / search for records.	infolog	pt-br	Retornar uma lista / pesquisar por registros
+rights for the responsible	infolog	pt-br	Permissões para o responsável
+same day	infolog	pt-br	mesmo dia
+save	infolog	pt-br	Salvar
+saves the changes made and leaves	infolog	pt-br	salvar as alterações realizadas e sair.
+saves this entry	infolog	pt-br	Salvar este registro
+search	infolog	pt-br	Pesquisar
+search for:	infolog	pt-br	Pesquizar  por:
+select	infolog	pt-br	Selecionar
+select a category for this entry	infolog	pt-br	selecione uma categoria para este registro
+select a price	infolog	pt-br	Selecione um preço
+select a priority for this task	infolog	pt-br	selecione uma prioridade para esta tarefa
+select a project	infolog	pt-br	Selecione um projeto
+select a responsible user: a person you want to delegate this task	infolog	pt-br	selecione um responsável: a pessoa a quem você delegará essa tarefa
+select a typ to edit it's status-values or delete it	infolog	pt-br	selecione um tipo para editar o valor do status ou apague-o
+select an app to search in	infolog	pt-br	Selecione em que aplicativo a pesquisa será feita
+select an entry to link with	infolog	pt-br	Selecione um registro para link
+select to filter by owner	infolog	pt-br	Selecione para filtrar por proprietário
+select to filter by responsible	infolog	pt-br	Selecione para filtrar por responsável
+sets the status of this entry and its subs to done	infolog	pt-br	Configura o status deste registros e seus sub-registros como Completada
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt-br	As sub tarefas de chamadas, notas, devem ser mostradas ou não . Você pode sempre pode visualizar as sub tarefas à partir da principal.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt-br	Links para outros aplicativos ou anexos deverão ser exibidos na lista de Tarefas (quando você abrir Tarefas em modo normal de visualização).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt-br	O aplicativo Tarefas deverá ser exibido na Página Inicial ? Com qual filtro? Funciona somente se você não selecionou um aplicativo para sua Página Inicial (em suas preferências).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt-br	O aplicativo Tarefas deve usar o nome completo (nome e sobrenome) ou apenas o login de acesso.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir um identificador número único, que poderá ser usado, por exemplo, como identificador de Ticket.
+should the infolog list show the column "last modified".	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a coluna "Última alteração".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a percentagem já realizada somente para o status ou dois ícones separados.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	pt-br	Este registro deve ser visível apenas para você e para usuários que você determine atráves das regras de controle de acesso, ou deve ser público?
+show a column for used and planned times in the list.	infolog	pt-br	Exibir uma coluna para tempo planejado e usado na lista.
+show full usernames	infolog	pt-br	Mostrar nomes completos
+show in the infolog list	infolog	pt-br	Mostrar na lista de tarefas
+show last modified	infolog	pt-br	Exibir última alteração
+show status and percent done separate	infolog	pt-br	Exibir status e percentagem já realizada separados
+show ticket id	infolog	pt-br	Exibir identificador do Ticket
+show times	infolog	pt-br	Exibir horários
+small view	infolog	pt-br	visão compacta
+start a new search, cancel this link	infolog	pt-br	iniciar um nova pesquisa, cancelar este link
+startdate	infolog	pt-br	Data Inicial
+startdate enddate	infolog	pt-br	Data inicial / Data Final
+startdate for new entries	infolog	pt-br	Data inicial para novas tarefas
+startrecord	infolog	pt-br	Iniciar registro
+status	infolog	pt-br	Status
+status ...	infolog	pt-br	Status ...
+sub	infolog	pt-br	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt-br	Sub-entradas tornam-se "filhas" da "entrada-pai" ou, se não houver "entrada-pai", da entrada principal
+subject	infolog	pt-br	Assunto
+sum	infolog	pt-br	Soma
+task	infolog	pt-br	Pendências
+template	infolog	pt-br	Modelo
+test import (show importable records <u>only</u> in browser)	infolog	pt-br	Teste de Importação (mostrará arquivos importados <u>apenas</u> no navegador)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pt-br	o nome usado internamente (<= 10 caracteres), alterando-o fará dados existentes inacessíveis
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o fará dados existentes inacessíveis
+the text displayed to the user	infolog	pt-br	o texto mostrado ao usuário
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pt-br	Estes são os filtros padrões do Módulo de Tarefas. Os filtros ajudam a limitar a visão atual. Existem filtros para mostrar tarefas encerradas, ou abertas, ou até todas as tarefas disponíveis a todos os usuários.
+til when should the todo or phonecall be finished	infolog	pt-br	até quando uma pendência ou chamada esteja encerrada.
+times	infolog	pt-br	Horários
+to many might exceed your execution-time-limit	infolog	pt-br	mostrar muitos registros pode provocar a violação do tempo limite do servidor
+to what should the startdate of new entries be set.	infolog	pt-br	Para que data inicial novas tarefas deverão ser configuradas.
+today	infolog	pt-br	Para Hoje
+todays date	infolog	pt-br	Data de hoje
+todo	infolog	pt-br	Pendências
+translation	infolog	pt-br	Tradução
+typ	infolog	pt-br	Tipo
+typ '%1' already exists !!!	infolog	pt-br	O tipo '%1' já existe!!!
+type	infolog	pt-br	Tipo
+type ...	infolog	pt-br	Tipo ...
+type of customfield	infolog	pt-br	Tipo de campo personalizado
+type of the log-entry: note, phonecall or todo	infolog	pt-br	Tipo de registro: Nota, Recado ou Pendência
+unlink	infolog	pt-br	Remover link
+upcoming	infolog	pt-br	futuras
+urgency	infolog	pt-br	urgência
+urgent	infolog	pt-br	urgente
+used time	infolog	pt-br	Horas utilizadas
+valid path on clientside<br>eg. \\server\share or e:\	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
+valid path on clientside<br>eg. servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
+values for selectbox	infolog	pt-br	Valores para a caixa de seleção
+view all subs of this entry	infolog	pt-br	Ver todas as subs para este registro
+view other subs	infolog	pt-br	ver outras subs
+view parent	infolog	pt-br	Ver superiores
+view subs	infolog	pt-br	ver inferiores
+view the parent of this entry and all his subs	infolog	pt-br	Ver o registro superior e todos os inferiores
+view this linked entry in its application	infolog	pt-br	Ver esse link no aplicativo correspondente
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt-br	Quando uma pendência ou chamada for iniciada ela deverá ser mostrada primeiro no filtro que esteja aberto ou na sua página inicial
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt-br	Que registros adicionais o responsável estará autorizado a editar sem ter acesso à edição?<br/>Status, percentagem e data de finalização são sempre autorizados.
+which implicit acl rights should the responsible get?	infolog	pt-br	Que direitos implícitos o responsável deverá receber ?
+which types should the calendar show	infolog	pt-br	Quais tipos deverão ser exibidos pela Agenda
+whole query	infolog	pt-br	toda a consulta
+will-call	infolog	pt-br	a chamar
+write (add or update) a record by passing its fields.	infolog	pt-br	Escrever (adicionar ou atualizar) um registro contornando seus campos.
+yes - delete	infolog	pt-br	Sim - Apagar
+yes - delete including sub-entries	infolog	pt-br	Sim - Apagar inclusive sub-registros
+yes, noone can purge deleted items	infolog	pt-br	Sim, ninguém pode limpar registros removidos
+yes, only admins can purge deleted items	infolog	pt-br	Sim, somente administradores podem limpar registros removidos
+yes, with larger fontsize	infolog	pt-br	Sim, com fontes grandes
+yes, with purging of deleted items possible	infolog	pt-br	Sim, com possibilidade de limpeza de registros removidos
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pt-br	Você pode selecionar uma categoria para ser pré-selecionada, quando você criar um novo registro.
+you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!!!
+you have entered an invalid ending date	infolog	pt-br	Você informou uma data final inválida
+you have entered an invalid starting date	infolog	pt-br	Você informou uma data inícial inválida
+you have to enter a name, to create a new typ!!!	infolog	pt-br	Você deve digitar um nome para criar um novo tipo!!!
+you must enter a subject or a description	infolog	pt-br	Você deve digitar um assunto ou uma descrição
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pt-br	Sua base de dados NÃO está atualizada (%1 x %2), por favor execute %3setup%4 para atualizá-la.

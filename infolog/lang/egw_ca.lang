@@ -1,0 +1,325 @@
+%1 modified by %2 at %3	infolog	ca	%1 modificat per %2 a %3
+%1 records imported	infolog	ca	%1 registres importats
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ca	%1 registres llegits (encara sense importar, podeu %2tornar%3 i desmarcar Provar d'Importació)
+- subprojects from	infolog	ca	- Subprojectes de
+0%	infolog	ca	0%
+10%	infolog	ca	10%
+100%	infolog	ca	100%
+20%	infolog	ca	20%
+30%	infolog	ca	30%
+40%	infolog	ca	40%
+50%	infolog	ca	50%
+60%	infolog	ca	60%
+70%	infolog	ca	70%
+80%	infolog	ca	80%
+90%	infolog	ca	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	ca	<b>fitxers adjunts via enllaços simbòlics</b> en lloc d'enviaments i recuperacions via fitxer:/ruta per clients de la xarxa local
+a short subject for the entry	infolog	ca	descripció curta per l'entrada
+abort without deleting	infolog	ca	Cancel·lar sense esborrar
+accept	infolog	ca	acceptar
+action	infolog	ca	Acció
+actual date and time	infolog	ca	Data i hora actual
+add	infolog	ca	Afegir
+add a file	infolog	ca	Afegir arxiu
+add a new entry	infolog	ca	Afegir una nova entrada
+add a new note	infolog	ca	Afegir una nova nota
+add a new phonecall	infolog	ca	Afegir una nova trucada
+add a new sub-task, -note, -call to this entry	infolog	ca	Afegir nova subtasca, -nota-, -trucada a aquesta entrada
+add a new todo	infolog	ca	Afegir nova tasca pendent
+add file	infolog	ca	Afegir arxiu
+add sub	infolog	ca	afegir Sub
+add timesheet entry	infolog	ca	Afegeix entrada d'horari
+add:	infolog	ca	Afegir:
+all	infolog	ca	Tots
+all links and attachments	infolog	ca	tots els enllaços i arxius adjunts
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	ca	permet establir l'estat d'una entrada, p.e. posar una tasca pendent com a finalitzada si està acabada (els valors depenen del tipus d'entrada)
+apply the changes	infolog	ca	Aplica els canvis
+are you shure you want to delete this entry ?	infolog	ca	Esteu segurs d'esborrar aquesta entrada?
+attach a file	infolog	ca	Adjunta un arxiu
+attach file	infolog	ca	Adjunta arxiu
+attension: no contact with address %1 found.	infolog	ca	Atenció: No s'ha trobat el contacte amb l'adreça %1
+attention: no contact with address %1 found.	infolog	ca	Atenció: No s'ha trobat el contacte amb l'adreça %1
+back to main list	infolog	ca	Tornar a la llista principal
+billed	infolog	ca	facturat
+both	infolog	ca	ambdós
+call	infolog	ca	truca
+cancel	infolog	ca	Cancel·la
+cancelled	infolog	ca	cancel·lat
+categories	infolog	ca	Categories
+category	infolog	ca	Categoria
+change the status of an entry, eg. close it	infolog	ca	Canviar l'estat d'una entrada, ex. tancar-la
+charset of file	infolog	ca	Joc de caràcters de l'arxiu
+check to set startday	infolog	ca	marca per establir data d'inici
+check to specify custom contact	infolog	ca	Comproveu per especificat el contacte personalitzat
+click here to create the link	infolog	ca	premeu aquí per crear un enllaç
+click here to start the search	infolog	ca	premeu aquí per començar la recerca
+close	infolog	ca	Tancar
+comment	infolog	ca	Comentari
+completed	infolog	ca	Complet
+configuration	infolog	ca	Configuració
+confirm	infolog	ca	confirmar
+contact	infolog	ca	Contacte
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	ca	Copia els teus canvis al portapapers, %1recarrega l'entrada%2 i ajunta-ho.
+create new links	infolog	ca	Crear nous enllaços
+creates a new field	infolog	ca	crea un camp nou
+creates a new status with the given values	infolog	ca	crea un nou estat amb els valors donats
+creates a new typ with the given name	infolog	ca	crea un nou tipus amb el nom donat
+creation	infolog	ca	Creació
+csv-fieldname	infolog	ca	CSV-Nom de Camp
+csv-filename	infolog	ca	CSV-Nom d'Arxiu
+csv-import	common	ca	CSV-Importar
+custom	infolog	ca	Personalitzat
+custom contact-address, leave empty to use information from most recent link	infolog	ca	Adreça de contacte personalitzada. Deixar en blanc per usar la informació de l'enllaç més recent
+custom contact-information, leave emtpy to use information from most recent link	infolog	ca	Informació de contacte personalitzada. Deixar en blanc per usar la informació de l'enllaç més recent
+custom fields	infolog	ca	Camps personalitzats
+custom fields, typ and status	common	ca	Camps personalitzats, tipus i estat
+custom regarding	infolog	ca	Records personals
+custom status for typ	infolog	ca	Estat personalitzat per al tipus
+customfields	infolog	ca	Camps personalitzats
+date completed	infolog	ca	Data complerta
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ca	Data complerta (deixeu-la buida per
+datecreated	infolog	ca	data de creació
+dates, status, access	infolog	ca	Dates, Estat, Accés
+days	infolog	ca	dies
+default filter for infolog	infolog	ca	Filtre predeterminat per Tasques
+default status for a new log entry	infolog	ca	Estat predeterminat per a una nova entrada de registre
+delegation	infolog	ca	Delegació
+delete	infolog	ca	Esborrar
+delete one record by passing its id.	infolog	ca	Suprimeix un registre indicant el seu ID.
+delete the entry	infolog	ca	Esborrar l'entrada
+delete this entry	infolog	ca	esborrar aquesta entrada
+delete this entry and all listed sub-entries	infolog	ca	Esborra aquesta entrada i totes les subentrades llistades
+deletes the selected typ	infolog	ca	esborra el tipus seleccionat
+deletes this field	infolog	ca	esborra aquest camp
+deletes this status	infolog	ca	esborra aquest estat
+description	infolog	ca	Descripció
+determines the order the fields are displayed	infolog	ca	determina l'ordre en que es mostren els camps
+disables a status without deleting it	infolog	ca	desactiva un estat sense esborrar-lo
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ca	Voleu una confirmació del responsable en acceptar, finalitzar la tasca, o ambdues coses?
+do you want a notification mail, if items you created get updated?	infolog	ca	Voleu un e-mail de notificació si els elements que heu creat són actualitzats?
+do you want a notification mails, if items get assigned to you or assigned items get updated?	infolog	ca	Voleu un e-mail de notificació si us assignen elements o si els elements assignats són actualitzats?
+do you want to receive notifications as html-mails or plain text?	infolog	ca	Voleu rebre notificacions com e-mails html o text simple?
+do you want to see custom infolog types in the calendar?	infolog	ca	Voleu veure tipus personalitzats de Tasques i Notes al calendari?
+don't show infolog	infolog	ca	NO mostris Tasques i Notes
+done	infolog	ca	fet
+download	infolog	ca	Descarregar
+duration	infolog	ca	Duració
+each value is a line like <id>[=<label>]	infolog	ca	cada valor és una línia com <id>[=<etiqueta>]
+edit	infolog	ca	Editar
+edit or create categories for ingolog	infolog	ca	Editar o crear categories per les Tasques
+edit rights (full edit rights incl. making someone else responsible!)	infolog	ca	drets d'edició (drets totals d'edició inclouen fer algú responsable)
+edit status	infolog	ca	Editar Estat
+edit the entry	infolog	ca	Editar l'entrada
+edit this entry	infolog	ca	Editar aquesta entrada
+empty for all	infolog	ca	buidar tot
+enddate	infolog	ca	Data de finalització
+enddate can not be before startdate	infolog	ca	La data de finalització no pot ser anterior a la d'inici
+enter a custom contact, leave empty if linked entry should be used	infolog	ca	entreu un contacte personalitzat, o deixeu-lo buit si preferiu usar un enllaç
+enter a custom phone/email, leave empty if linked entry should be used	infolog	ca	entreu un telèfon o correu electrònic personalitzat, o deixeu-lo buit si preferiu usar un enllaç
+enter a textual description of the log-entry	infolog	ca	entreu un text descriptiu de l'entrada
+enter the query pattern	infolog	ca	entreu el patró de recerca
+entry and all files	infolog	ca	Entrada i tots els arxius
+error: saving the entry	infolog	ca	Error guardant l'entrada
+error: the entry has been updated since you opened it for editing!	infolog	ca	Error: l'entrada ha estat actualitzada des de que l'has obert per editar-la!
+existing links	infolog	ca	Enllaços existents
+fax	infolog	ca	Fax
+field must not be empty !!!	infolog	ca	El camp no ha d'estar buit !!!
+fieldseparator	infolog	ca	Separador de camps
+finish	infolog	ca	finalitzar
+for which types should this field be used	infolog	ca	per quins tipus s'utilitza aquest camp
+from	infolog	ca	De
+general	infolog	ca	General
+group owner for	infolog	ca	Propietari de grup per
+high	infolog	ca	alta
+id	infolog	ca	id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ca	Si un tipus té un propietari de grup, totes les entrades del tipus seran del grup donat i no de l'usuari que l'ha creat!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ca	Si no se posa, la línia amb cerca i filtres s'amaga per menys entrades de "max coincidències per pàgina" (definit a les teves preferències comuns).
+import	infolog	ca	Importar
+import next set	infolog	ca	importar grup següent
+info log	common	ca	Tasques i Notes
+infolog	common	ca	Tasques i Notes
+infolog - delete	infolog	ca	Tasques i Notes - Esborrar
+infolog - edit	infolog	ca	Tasques i Notes - Editar
+infolog - import csv-file	infolog	ca	Tasques i Notes - Importar arxiu CSV
+infolog - new	infolog	ca	Tasques i Notes - Nou
+infolog - new subproject	infolog	ca	Tasques i Notes - Nou Subprojecte
+infolog - subprojects from	infolog	ca	Tasques i Notes- Subprojectes de
+infolog entry deleted	infolog	ca	Entrada de Tasques i Notes esborrada
+infolog entry saved	infolog	ca	Entrada de Tasques i notes desada
+infolog filter for the main screen	infolog	ca	Filtre de Tasques i Notes per la pàgina d'inici
+infolog list	infolog	ca	Llista de Tasques i Notes
+infolog preferences	common	ca	Preferències de Tasques i Notes
+infolog-fieldname	infolog	ca	Tasques i Notes - Nom de Camp
+invalid filename	infolog	ca	El nom d'arxiu no és vàlid
+label<br>helptext	infolog	ca	Marca<br>Text d'ajuda
+last changed	infolog	ca	Darrer canvi
+last modified	infolog	ca	Darrera modificació
+leave it empty	infolog	ca	deixa-ho buit
+leave without saveing the entry	infolog	ca	Sortir sense desar l'entrada
+leaves without saveing	infolog	ca	Sortir sense desar
+length<br>rows	infolog	ca	Longitud<br>Files
+link	infolog	ca	Enllaç
+links	infolog	ca	Enllaços
+links of this entry	infolog	ca	Enllaços de l'entrada
+list all categories	infolog	ca	Llista totes les categories
+list no subs/childs	infolog	ca	No llistar Subs/Fills
+location	infolog	ca	Ubicació
+longer textual description	infolog	ca	descripció llarga de l'entrada
+low	infolog	ca	baix
+max length of the input [, length of the inputfield (optional)]	infolog	ca	longitud màxima de l'entrada [, longitud del camp d'entrada (opcional)]
+name must not be empty !!!	infolog	ca	El nom no pot estar buit !!!
+name of new type to create	infolog	ca	Nom del nou tipus a crear
+never hide search and filters	infolog	ca	Mai amaga cerca i filtres
+new %1 created by %2 at %3	infolog	ca	Nou %1 creat per %2 a %3
+new name	infolog	ca	nou nom
+new search	infolog	ca	Nova recerca
+no - cancel	infolog	ca	No - Cancel·lar
+no describtion, links or attachments	infolog	ca	sense descripció, links o adjunts
+no details	infolog	ca	sense detalls
+no entries found, try again ...	infolog	ca	no s'han trobat registres, intenteu de nou ...
+no filter	infolog	ca	sense filtre
+no links or attachments	infolog	ca	sense enllaços o adjunts
+none	infolog	ca	Cap
+normal	infolog	ca	normal
+not	infolog	ca	no
+not assigned	infolog	ca	sense assignar
+not-started	infolog	ca	sense començar
+note	infolog	ca	Nota
+number of records to read (%1)	infolog	ca	Nombre de registres a llegir (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	ca	Número de fila per a un quadre de text multilínia o llista desplegable multiselecció
+offer	infolog	ca	suggerit
+ongoing	infolog	ca	en curs
+only for details	infolog	ca	Només per detalls
+only the attachments	infolog	ca	només adjunts
+only the links	infolog	ca	només enllaços
+open	infolog	ca	obert
+optional note to the link	infolog	ca	nota opcional per a l'enllaç
+order	infolog	ca	Ordre
+overdue	infolog	ca	vençut
+own	infolog	ca	propi
+own open	infolog	ca	propi obert
+own overdue	infolog	ca	propi vençut
+own upcoming	infolog	ca	propi en camí
+path on (web-)serverside<br>eg. /var/samba/share	infolog	ca	Ruta al servidor (web) <br>ex. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	ca	La ruta als arxius d'usuari i grups HA D'ESTAR FORA de l'estructura de directoris del servidor web!!
+pattern for search in addressbook	infolog	ca	patró a cercar a la Llibreta d'Adreces
+pattern for search in projects	infolog	ca	patró a cercar dins Projectes
+percent completed	infolog	ca	Percentatge completat
+permission denied	infolog	ca	Permís denegat
+phone	infolog	ca	Trucada Telefònica
+phone/email	infolog	ca	Telèfon/Correu electrònic
+phonecall	infolog	ca	Trucada Telefònica
+planned	infolog	ca	panificat
+planned time	infolog	ca	temps planificat
+price	infolog	ca	Preu
+priority	infolog	ca	Prioritat
+private	infolog	ca	Privat
+project	infolog	ca	Projecte
+project settings: price, times	infolog	ca	Configuració del projecte: preu, horaris
+re:	infolog	ca	Re:
+read one record by passing its id.	infolog	ca	Llegeix un registre introduïnt el seu ID.
+read rights (default)	infolog	ca	llegiu els drets (per defecte)
+receive notifications about items assigned to you	infolog	ca	Rebeu notificacions sobre els vostres elements assignats
+receive notifications about own items	infolog	ca	Rebeu notificacions sobre els vostres propis elements
+receive notifications as html-mails	infolog	ca	Rebeu notificacions com a e-mails html
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	ca	expressió regular per IPs locals <br>ex. ^192\.168\.1\.
+remark	infolog	ca	Comentari
+remove this link (not the entry itself)	infolog	ca	Eliminar aquest enllaç (no l'entrada)
+responsible	infolog	ca	Responsable
+responsible open	infolog	ca	responsable obrir
+responsible overdue	infolog	ca	responsable restràs
+responsible upcoming	infolog	ca	responsable pròxim
+responsible user, priority	infolog	ca	usuari responsable, prioritat
+returns a list / search for records.	infolog	ca	Retorna una llista / cerca registres.
+rights for the responsible	infolog	ca	Drets del responsable
+save	infolog	ca	Desar
+saves the changes made and leaves	infolog	ca	Desar els canvis fets i sortir
+saves this entry	infolog	ca	Desar aquesta entrada
+search	infolog	ca	Cercar
+search for:	infolog	ca	Cercar per:
+select	infolog	ca	Seleccionar
+select a category for this entry	infolog	ca	seleccionar una categoria per aquesta entrada
+select a price	infolog	ca	Selecciona un preu
+select a priority for this task	infolog	ca	seleccionar una prioritat per aquesta tasca
+select a project	infolog	ca	Selecciona un projecte
+select a responsible user: a person you want to delegate this task	infolog	ca	seleccionar un responsable: una persona en la que es vol delegar la tasca
+select a typ to edit it's status-values or delete it	infolog	ca	seleccionar un tipus per editar els seus valors d'estat o esborrar-lo
+select an app to search in	infolog	ca	Seleccionar una aplicació on cercar
+select an entry to link with	infolog	ca	Seleccionar una entrada per enllaçar
+select to filter by owner	infolog	ca	selecciona filtrar per propietari
+select to filter by responsible	infolog	ca	selecciona filtrar per responsable
+sets the status of this entry and its subs to done	infolog	ca	Estableix l'estat d'aquesta entrada i les seves subtasques com a fetes.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ca	S'han de mostrar les Subtasques, (subtrucades o subnotes) a la visualització normal? Podeu veure sempre els subtipus a través del seu tipus pare.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ca	Tasques i Notes hauria de mostrar els enllaços a altres aplicacions i/o els fitxers adjunts dins la llista de Tasques i Notes (vista normal quan entres a Tasques i Notes).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ca	Tasques i Notes hauria de mostrar-se a la pàgina d'inici i amb quin filtre. Funciona només si no seleccioneu una aplicació per la pantalla d'inici (en les vostres preferències).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	ca	Fem servir noms complets (cognom i nom de pila), o només els noms d'usuari de l'aplicació?
+should the calendar show custom types too	infolog	ca	El calendari ha de mostrar tipus personalitzats també
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ca	La llista de Tasques i Notes ha de mostrar un únic Id numèric, que pot ser utilitzat p.e. com ticket Id.
+should the infolog list show the column "last modified".	infolog	ca	La llista de Tasques i Notes ha de mostrar la columna "darrera modificació".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	ca	La llista de Tasques i Notes ha de mostrar el percentatge fet només per estat iniciat o per dues icones separades.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	ca	Aquesta entrada ha de ser visible només per vos i a qui atorgueu accés privat mitjançant la llista LCA?
+show a column for used and planned times in the list.	infolog	ca	Mostra una columna per a horaris utilitzats i planificats de la llista.
+show full usernames	infolog	ca	Mostrar noms d'usuari complets
+show in the infolog list	infolog	ca	Mostrar la llista de Tasques i Notes
+show last modified	infolog	ca	Mostra la darrera modificació
+show status and percent done separate	infolog	ca	Mostra per separat l'estat i el percentatge completat
+show ticket id	infolog	ca	Mostra ticket Id
+show times	infolog	ca	Mostra horaris
+small view	infolog	ca	vista reduïda
+start a new search, cancel this link	infolog	ca	iniciar nova recerca, cancel·lar aquest enllaç
+startdate	infolog	ca	Data d'inici
+startdate enddate	infolog	ca	Dates d'inici i fi
+startdate for new entries	infolog	ca	Data d'inici per a noves entrades
+startrecord	infolog	ca	Començar gravació de registre
+status	infolog	ca	Estat
+status ...	infolog	ca	Estat...
+sub	infolog	ca	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	ca	Les subentrades se converteixen en filles de l'entrada pare o de l'entrada principal si no té pare.
+subject	infolog	ca	Assumpte
+task	infolog	ca	Tasca
+test import (show importable records <u>only</u> in browser)	infolog	ca	Prova d'Importació (mostrar registres importables <u>només</u> al navegador)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	ca	nom utilitzat internament (<= 10 caràcters). Si es canvia algunes dades seran inaccessibles
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ca	nom utilitzat internament (<= 20 caràcters). Si es canvia algunes dades seran inaccessibles
+the text displayed to the user	infolog	ca	el text mostrat a l'usuari
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	ca	Aquest és el filtre que Tasques i Notes usa quan entreu a l'aplicació. Els filtres limiten les entrades que es mostren a la vista actual. Hi ha filtres per mostrar només les acabades, encara obertes o entrades futures vostres o de tots els usuaris.
+til when should the todo or phonecall be finished	infolog	ca	Quan s'ha de finalitzar la tasca o trucada telefònica?
+times	infolog	ca	Hores
+to many might exceed your execution-time-limit	infolog	ca	Quant es pot excedir el límit de temps d'execució?
+to what should the startdate of new entries be set.	infolog	ca	En relació a què s'ha d'establir la data d'inici de les noves entrades.
+today	infolog	ca	Avui
+todays date	infolog	ca	data d'avui
+todo	infolog	ca	Tasques Pendents
+translation	infolog	ca	Traducció
+typ	infolog	ca	Tipus
+typ '%1' already exists !!!	infolog	ca	El tipus '%1' ja existeix!
+type	infolog	ca	Tipus
+type ...	infolog	ca	Tipus...
+type of customfield	infolog	ca	Tipus de camp personalitzat
+type of the log-entry: note, phonecall or todo	infolog	ca	Tipus d'entrada: Nota, Trucada Telefònica o Tasca Pendent
+unlink	infolog	ca	Desenllaçar
+upcoming	infolog	ca	propera
+urgency	infolog	ca	Urgència
+urgent	infolog	ca	urgent
+used time	infolog	ca	temps usat
+valid path on clientside<br>eg. \\server\share or e:\	infolog	ca	Ruta vàlida en el client<br>ex. \\servidor\recurs o e:\
+values for selectbox	infolog	ca	Valors per a llista desplegable
+view all subs of this entry	infolog	ca	Veure tots els subs d'aquesta entrada
+view other subs	infolog	ca	veure altres subs
+view parent	infolog	ca	Veure pare
+view subs	infolog	ca	Veure subs
+view the parent of this entry and all his subs	infolog	ca	Veure el pare d'aquesta entrada i tots els seus subs
+view this linked entry in its application	infolog	ca	Veure aquesta entrada vinculada a la seva aplicació
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ca	Quan s'han d'iniciar les Tasques Pendents o les Trucades Telefòniques. Es mostra a la data del filtre o en obrir manualment a la plana d'inici
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ca	Quins camps adicionals pot editar el responsable sense tenir drets per editar?<br />,Estat, percentatge i data complerta sempre estan permesos.
+which implicit acl rights should the responsible get?	infolog	ca	Quins drets ACL implícits ha de tenir el responsable?
+whole query	infolog	ca	consulta sencera
+will-call	infolog	ca	trucarà
+write (add or update) a record by passing its fields.	infolog	ca	Escriu (afegeix o actualitza) un registre, introduïnt els seus camps.
+yes - delete	infolog	ca	Sí - Esborrar
+yes - delete including sub-entries	infolog	ca	Sí - Esborrar incloent subentrades
+you can't delete one of the stock types !!!	infolog	ca	No podeu esborrar un dels tipus de cotitzacions !!
+you have entered an invalid ending date	infolog	ca	Heu entrat una data incorrecta de finalització
+you have entered an invalid starting date	infolog	ca	Heu entrat una data incorrecta d'inici
+you have to enter a name, to create a new typ!!!	infolog	ca	Heu d'entrar un nom per crear un tipus nou!!!
+you must enter a subject or a description	infolog	ca	Heu d'entrar un assumpte o descripció
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	ca	La teva base de dades NO està al dia (%1 vs. %2), per favor, executa %3setup%4 per actualitzar la teva base de dades.

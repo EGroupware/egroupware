@@ -72,7 +72,9 @@ class addressbook_vcal extends addressbook_bo
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
-		); 
+			'REV'				=> array('modified'),
+			//set for Apple: 'X-ABSHOWAS' => array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
+		);
 
 	/**
 	 * VCard version
@@ -175,23 +177,6 @@ class addressbook_vcal extends addressbook_bo
 			{
 				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
 			}
-			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
-    		{
-	    		$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-	    		switch ($owner)
-				{
-					case 'G':
-						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-					break;
-					case 'P':
-					case 'N':
-					case  0:
-						$contact['owner'] = $this->user;
-						break;
-					default:
-						$contact['owner'] = (int)$owner;
-				}
-    		}
     	}
     	if (isset($contact['owner']) && $contact['owner'] != $this->user)
     	{
@@ -220,8 +205,10 @@ class addressbook_vcal extends addressbook_bo
 		#Horde::logMessage("vCalAddressbook clientProperties:\n" . print_r($this->clientProperties, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$vCard = new Horde_iCalendar_vcard($this->version);
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
-		$sysCharSet = $GLOBALS['egw']->translation->charset();
+		$sysCharSet = translation::charset();
 
 		// KAddressbook and Funambol4BlackBerry always requires non-ascii chars to be qprint encoded.
 		if ($this->productName == 'kde' ||
@@ -295,6 +282,11 @@ class addressbook_vcal extends addressbook_bo
 
 				switch ($databaseField)
 				{
+					case 'modified':
+						$value = gmdate("Y-m-d\TH:i:s\Z",egw_time::user2server($value));
+						$hasdata++;
+						break;
+
 					case 'private':
 						$value = $value ? 'PRIVATE' : 'PUBLIC';
 						$hasdata++;
@@ -339,9 +331,9 @@ class addressbook_vcal extends addressbook_bo
 						break;
 
 					case 'cat_id':
-						if (!empty($value) && ($values = $this->get_categories($value)))
+						if (!empty($value) && ($values = /*str_replace(',','\\,',*/$this->get_categories($value)))//)
 						{
-							$values = (array) $GLOBALS['egw']->translation->convert($values, $sysCharSet, $_charset);
+							$values = (array) translation::convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
 							if (($size > 0) && strlen($value) > $size)
 							{
@@ -388,6 +380,18 @@ class addressbook_vcal extends addressbook_bo
 						}
 						break;
 
+					case 'n_fn':
+					case 'fileas_type':
+						// mark entries with fileas_type == 'org_name' as X-ABSHOWAS:COMPANY (Apple AB specific)
+						if (isset($this->supportedFields['X-ABSHOWAS']) &&
+							$entry['org_name'] == $entry['n_fileas'] && $entry['fileas_type'] == 'org_name')
+						{
+							if ($vcardField == 'X-ABSHOWAS') $value = 'COMPANY';
+							if ($databaseField == 'n_fn') $value = $entry['org_name'];
+						}
+						//error_log("vcardField='$vcardField', databaseField='$databaseField', this->supportedFields['X-ABSHOWAS']=".array2string($this->supportedFields['X-ABSHOWAS'])." --> value='$value'");
+						// fall-through
+
 					default:
 						if (($size > 0) && strlen(implode(',', $values) . $value) > $size)
 						{
@@ -425,7 +429,7 @@ class addressbook_vcal extends addressbook_bo
 							|| in_array($vcardField,array('FN','ORG','N'))
 							|| ($size >= 0 && !$noTruncate))
 						{
-							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, $_charset);
+							$value = translation::convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
 							if (preg_match('/[^\x20-\x7F]/', $value))
 							{
@@ -478,7 +482,6 @@ class addressbook_vcal extends addressbook_bo
 			}
 
 			$vCard->setAttribute($vcardField, $value, $options, true, $values);
-			//$vCard->setParameter($vcardField, $options);
 		}
 
 		$result = $vCard->exportvCalendar($_charset);
@@ -535,43 +538,6 @@ class addressbook_vcal extends addressbook_bo
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
 
-		$databaseFields = array(
-			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
-									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
-									'adr_two_postalcode','adr_two_countryname'),
-			'BDAY'				=> array('bday'),
-			'X-CLASS'			=> array('private'),
-			'CLASS'				=> array('private'),
-			'CATEGORIES'		=> array('cat_id'),
-			'EMAIL;WORK'		=> array('email'),
-			'EMAIL;HOME'		=> array('email_home'),
-			'N'					=> array('n_family','n_given','n_middle',
-									'n_prefix','n_suffix'),
-			'FN'				=> array('n_fn'),
-			'NOTE'				=> array('note'),
-			'ORG'				=> array('org_name','org_unit','room'),
-			'TEL;CELL;WORK'		=> array('tel_cell'),
-			'TEL;CELL;HOME'		=> array('tel_cell_private'),
-			'TEL;CAR'			=> array('tel_car'),
-			'TEL;OTHER'			=> array('tel_other'),
-			'TEL;VOICE;WORK'	=> array('tel_work'),
-			'TEL;FAX;WORK'		=> array('tel_fax'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;FAX;HOME'		=> array('tel_fax_home'),
-			'TEL;PAGER'			=> array('tel_pager'),
-			'TITLE'				=> array('title'),
-			'URL;WORK'			=> array('url'),
-			'URL;HOME'			=> array('url_home'),
-			'ROLE'				=> array('role'),
-			'NICKNAME'			=> array('label'),
-			'FBURL'				=> array('freebusy_uri'),
-			'PHOTO'				=> array('jpegphoto'),
-			'X-ASSISTANT'		=> array('assistent'),
-			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
-			'UID'				=> array('uid'),
-		);
-
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -589,7 +555,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 		$vcardValues = $vCard->getAllAttributes();
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
 		}
@@ -609,6 +575,7 @@ class addressbook_vcal extends addressbook_bo
 		$url = 1;
 		$pref_tel = false;
 
+		$rowNames = array();
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = strtoupper($vcardRow['name']);
@@ -686,7 +653,7 @@ class addressbook_vcal extends addressbook_bo
 				switch ($pname)
 				{
 					case 'PREF':
-						if ($rowName == 'TEL' && !$pref_tel)
+						if (substr($rowName,0,3) == 'TEL' && !$pref_tel)
 						{
 							$pref_tel = $key;
 						}
@@ -746,6 +713,12 @@ class addressbook_vcal extends addressbook_bo
 				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
 
+			// current algorithm cant cope with multiple attributes of same name
+			// --> cumulate them in values, so they can be used later (works only for values, not for parameters!)
+			if (($k = array_search($rowName, $rowNames)) != false)
+			{
+				$vcardValues[$k]['values'] = array_merge($vcardValues[$k]['values'],$vcardValues[$key]['values']);
+			}
 			$rowNames[$key] = $rowName;
 		}
 
@@ -812,7 +785,7 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['TEL;OTHER'] = $vcardKey;
 					}
-					break;	
+					break;
 				case 'TEL;PAGER;WORK':
 				case 'TEL;PAGER;HOME':
 					if (!in_array('TEL;PAGER', $rowNames)
@@ -820,7 +793,7 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames['TEL;PAGER'] = $vcardKey;
 					}
-					break;	
+					break;
 				case 'TEL;CAR;VOICE':
 				case 'TEL;CAR;CELL':
 				case 'TEL;CAR;CELL;VOICE':
@@ -930,9 +903,9 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach ($finalRowNames as $key => $vcardKey)
 		{
-			if (isset($databaseFields[$key]))
+			if (isset($this->supportedFields[$key]))
 			{
-				$fieldNames = $databaseFields[$key];
+				$fieldNames = $this->supportedFields[$key];
 				foreach ($fieldNames as $fieldKey => $fieldName)
 				{
 					if (!empty($fieldName))
@@ -968,6 +941,14 @@ class addressbook_vcal extends addressbook_bo
 								$contact[$fieldName] = str_replace("\r\n", "\n", $vcardValues[$vcardKey]['value']);
 								break;
 
+							case 'fileas_type':
+								// store Apple's X-ABSHOWAS:COMPANY as fileas_type == 'org_name'
+								if ($vcardValues[$vcardKey]['value'] == 'COMPANY')
+								{
+									$contact[$fieldName] = 'org_name';
+								}
+								break;
+
 							case 'uid':
 								if (strlen($value) < $minimum_uid_length) {
 									// we don't use it
@@ -980,10 +961,24 @@ class addressbook_vcal extends addressbook_bo
 					}
 				}
 			}
+			// add unsupported attributes as with '##' prefix
+			elseif(($attribute = $vcardValues[$vcardKey]) && !in_array($attribute['name'],array('PRODID','REV')))
+			{
+				// for attributes with multiple values in multiple lines, merge the values
+				if (isset($contact['##'.$attribute['name']]))
+				{
+					error_log(__METHOD__."() contact['##$attribute[name]'] = ".array2string($contact['##'.$attribute['name']]));
+					$attribute['values'] = array_merge(
+						is_array($contact['##'.$attribute['name']]) ? $contact['##'.$attribute['name']]['values'] : (array)$contact['##'.$attribute['name']],
+						$attribute['values']);
+				}
+				$contact['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
+					serialize($attribute) : $attribute['value'];
+			}
 		}
 
 		$this->fixup_contact($contact);
-		
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__	.
@@ -1026,8 +1021,37 @@ class addressbook_vcal extends addressbook_bo
 
 		if (!$file)
 		{
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		return true;
+	}
+
+	/**
+	 * return a groupVCard
+	 *
+	 * @param array $list values for 'list_uid', 'list_name', 'list_modified', 'members'
+	 * @param string $version='3.0' vcard version
+	 * @return string containing the vcard
+	 */
+	function getGroupVCard(array $list,$version='3.0')
+	{
+		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
+
+		$vCard = new Horde_iCalendar_vcard($version);
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+
+		$vCard->setAttribute('N',$list['list_name'],array(),true,array($list['list_name'],'','','',''));
+		$vCard->setAttribute('FN',$list['list_name']);
+
+		$vCard->setAttribute('X-ADDRESSBOOKSERVER-KIND','group');
+		foreach($list['members'] as $uid)
+		{
+			$vCard->setAttribute('X-ADDRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
+		}
+		$vCard->setAttribute('REV',egw_time::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
+		$vCard->setAttribute('UID',$list['list_uid']);
+
+		return $vCard->exportvCalendar();
 	}
 }

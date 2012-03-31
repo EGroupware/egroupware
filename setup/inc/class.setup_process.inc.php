@@ -280,8 +280,10 @@ class setup_process
 
 		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report
 
-		// use ssha (salted sha1) password hashes by default
-		$current_config['sql_encryption_type'] = $current_config['ldap_encryption_type'] = 'ssha';
+		// use securest password hash by default
+		require_once './hook_config.inc.php';	// for sql_passwdhashes, to get securest available password hash
+		sql_passwdhashes(array(), true, $securest);
+		$current_config['sql_encryption_type'] = $current_config['ldap_encryption_type'] = $securest;
 
 		if ($preset_config)
 		{

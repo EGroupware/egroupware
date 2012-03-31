@@ -1,12 +1,12 @@
 <?php
 /**
- * InfoLog - Business object
+ * EGroupware - InfoLog - Business object
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -28,8 +28,6 @@ class infolog_bo
 	var $so;
 	var $vfs;
 	var $vfs_basedir='/infolog';
-	var $link_pathes = array();
-	var $send_file_ips = array();
 	/**
 	 * Set Logging
 	 *
@@ -54,13 +52,19 @@ class infolog_bo
 	 *
 	 * @var array
 	 */
-	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted');
+	var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted','info_created');
 	/**
 	 * fields the responsible user can change
 	 *
 	 * @var array
 	 */
 	var $responsible_edit=array('info_status','info_percent','info_datecompleted');
+	/**
+	 * fields a user may exclude from copy, if an entry is copied, the ones below are excluded by default.
+	 *
+	 * @var array
+	 */
+	var $copy_excludefields = array('info_id', 'info_uid', 'info_etag', 'caldav_name', 'info_created', 'info_creator', 'info_datemodified', 'info_modifier');
 	/**
 	 * implicit ACL rights of the responsible user: read or edit
 	 *
@@ -117,17 +121,21 @@ class infolog_bo
 		'responsible-open-today'   => 'responsible open',
 		'responsible-open-overdue' => 'responsible overdue',
 		'responsible-upcoming'     => 'responsible upcoming',
+		'responsible-open-upcoming'=> 'responsible open and upcoming',
 		'delegated'                => 'delegated',
 		'delegated-open-today'     => 'delegated open',
 		'delegated-open-overdue'   => 'delegated overdue',
 		'delegated-upcoming'       => 'delegated upcomming',
+		'delegated-open-upcoming'  => 'delegated open and upcoming',
 		'own'                      => 'own',
 		'own-open-today'           => 'own open',
 		'own-open-overdue'         => 'own overdue',
 		'own-upcoming'             => 'own upcoming',
-		'open-today'               => 'open',
+		'own-open-upcoming'		   => 'own open and upcoming',
+		'open-today'               => 'open(status)',
 		'open-overdue'             => 'overdue',
 		'upcoming'                 => 'upcoming',
+		'open-upcoming'			   => 'open and upcoming',
 		'bydate'                   => 'startdate',
 	);
 
@@ -180,9 +188,6 @@ class infolog_bo
 		);
 		if (($config_data = config::read('infolog')))
 		{
-			$this->link_pathes   = $config_data['link_pathes'];
-			$this->send_file_ips = $config_data['send_file_ips'];
-
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
 				foreach($config_data['status'] as $key => $data)
@@ -226,6 +231,10 @@ class infolog_bo
 			if (is_array($config_data['responsible_edit']))
 			{
 				$this->responsible_edit = array_merge($this->responsible_edit,$config_data['responsible_edit']);
+			}
+			if (is_array($config_data['copy_excludefields']))
+			{
+				$this->copy_excludefields = array_merge($this->copy_excludefields,$config_data['copy_excludefields']);
 			}
 			if ($config_data['implicit_rights'] == 'edit')
 			{
@@ -286,53 +295,73 @@ class infolog_bo
 	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
+	 * @param int $user=null user whos rights to check, default current user
 	 * @return boolean
 	 */
-	function check_access($info,$required_rights,$other=0)
+	function check_access($info,$required_rights,$other=0,$user=null)
 	{
 		static $cache = array();
 
-		if (!$info)
-		{
-			$owner = $other ? $other : $this->user;
-			$grants = $this->grants[$owner];
-			return $grants & $required_rights;
-		}
-
 		$info_id = is_array($info) ? $info['info_id'] : $info;
 
-		if (isset($cache[$info_id][$required_rights]))
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
 		{
-			return $cache[$info_id][$required_rights];
+			$grants = $this->grants;
+			if ($info_id) $access =& $cache[$info_id][$required_rights];	// we only cache the current user!
 		}
-		// handle delete for the various history modes
-		if ($this->history)
+		else
 		{
-			if (!is_array($info) && !($info = $this->so->read($info_id))) return false;
+			$grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true,$user);
+		}
+		if (!$info)
+		{
+			$owner = $other ? $other : $user;
+			$grant = $grants[$owner];
+			return $grant & $required_rights;
+		}
 
-			if ($info['info_status'] == 'deleted' &&
-				($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
-				 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
-				 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
-				 $this->history == 'history_admin_delete' && !isset($GLOBALS['egw_info']['user']['apps']['admin']))))	// delete only for admins
-			{
-				return $cache[$info_id][$required_rights] = false;
-			}
-			if ($required_rights == EGW_ACL_UNDELETE)
-			{
-				if ($info['info_status'] != 'deleted')
-				{
-					return $cache[$info_id][$required_rights] = false;	// can only undelete deleted items
-				}
-				// undelete requires edit rights
-				return $cache[$info_id][$required_rights] = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit' );
-			}
-		}
-		elseif ($required_rights == EGW_ACL_UNDELETE)
+
+		if (!isset($access))
 		{
-			return $cache[$info_id][$required_rights] = false;
+			// handle delete for the various history modes
+			if ($this->history)
+			{
+				if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
+
+				if ($info['info_status'] == 'deleted' &&
+					($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
+					 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
+					 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
+					 $this->history == 'history_admin_delete' && (!isset($GLOBALS['egw_info']['user']['apps']['admin']) || $user!=$this->user))))	// delete only for admins
+				{
+					$access = false;
+				}
+				elseif ($required_rights == EGW_ACL_UNDELETE)
+				{
+					if ($info['info_status'] != 'deleted')
+					{
+						$access = false;	// can only undelete deleted items
+					}
+					else
+					{
+						// undelete requires edit rights
+						$access = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit',$grants,$user );
+					}
+				}
+			}
+			elseif ($required_rights == EGW_ACL_UNDELETE)
+			{
+				$access = false;
+			}
+			if (!isset($access))
+			{
+				$access = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit',$grants,$user );
+			}
 		}
-		return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
+		// else $cached = ' (from cache)';
+		// error_log(__METHOD__."($info_id,$required_rights,$other,$user) returning$cached ".array2string($access));
+		return $access;
 	}
 
 	/**
@@ -517,7 +546,7 @@ class infolog_bo
 	/**
 	 * Read an infolog entry specified by $info_id
 	 *
-	 * @param int|array $info_id integer id or array with key 'info_id' of the entry to read
+	 * @param int|array $info_id integer id or array with id's or array with column=>value pairs of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
@@ -527,9 +556,17 @@ class infolog_bo
 	 */
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
-		if (is_array($info_id))
+		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
+		if (is_scalar($info_id) || isset($info_id[count($info_id)-1]))
 		{
-			$info_id = isset($info_id['info_id']) ? $info_id['info_id'] : $info_id[0];
+			if (is_scalar($info_id) && !is_numeric($info_id))
+			{
+				$info_id = array('info_uid' => $info_id);
+			}
+			else
+			{
+				$info_id = array('info_id' => $info_id);
+			}
 		}
 
 		if (($data = $this->so->read($info_id)) === False)
@@ -574,19 +611,20 @@ class infolog_bo
 	 * @param int|array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
 	 * @param int|boolean $new_parent parent to use for not deleted children if > 0
+	 * @param boolean $skip_notification Do not send notification of delete
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
 	 */
-	function delete($info_id,$delete_children=False,$new_parent=False)
+	function delete($info_id,$delete_children=False,$new_parent=False, $skip_notification=False)
 	{
 		if (is_array($info_id))
 		{
 			$info_id = (int)(isset($info_id[0]) ? $info_id[0] : (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id['info_id']));
 		}
-		if ($this->so->read($info_id) === False)
+		if (($info = $this->so->read(array('info_id' => $info_id), true, 'server')) === False)
 		{
 			return False;
 		}
-		if (!$this->check_access($info_id,EGW_ACL_DELETE))
+		if (!$this->check_access($info,EGW_ACL_DELETE))
 		{
 			return False;
 		}
@@ -597,7 +635,7 @@ class infolog_bo
 			{
 				if ($delete_children && $this->so->grants[$owner] & EGW_ACL_DELETE)
 				{
-					$this->delete($id,$delete_children,$new_parent);	// call ourself recursive to delete the child
+					$this->delete($id,$delete_children,$new_parent,$skip_notification);	// call ourself recursive to delete the child
 				}
 				else	// dont delete or no rights to delete the child --> re-parent it
 				{
@@ -608,8 +646,6 @@ class infolog_bo
 				}
 			}
 		}
-		if (!($info = $this->read($info_id, true, 'server'))) return false;			// should not happen
-
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
 		$deleted['info_datemodified'] = time();
@@ -622,7 +658,7 @@ class infolog_bo
 
 			$this->so->write($deleted);
 
-			egw_link::unlink(0,'infolog',$info_id,'','!file');	// keep the file attachments, only delete the rest
+			egw_link::unlink(0,'infolog',$info_id,'','!file','',true);	// keep the file attachments, hide the rest
 		}
 		else
 		{
@@ -635,11 +671,14 @@ class infolog_bo
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
 
 			// send email notifications and do the history logging
-			if (!is_object($this->tracking))
+			if(!$skip_notification)
 			{
-				$this->tracking = new infolog_tracking($this);
+				if (!is_object($this->tracking))
+				{
+					$this->tracking = new infolog_tracking($this);
+				}
+				$this->tracking->track($deleted,$info,$this->user,true);
 			}
-			$this->tracking->track($deleted,$info,$this->user,true);
 		}
 		return True;
 	}
@@ -654,27 +693,35 @@ class infolog_bo
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @param boolean $user2server=true conversion between user- and server-time necessary
 	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
+	* @param boolean $throw_exception=false Throw an exception (if required fields are not set)
+	* @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	*
-	* @return int/boolean info_id on a successfull write or false
+	* @return int|boolean info_id on a successfull write or false
 	*/
-	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false)
+	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true,
+		$skip_notification=false, $throw_exception=false, $purge_cfs=null)
 	{
+		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&
 			!$this->check_access(0,EGW_ACL_ADD,$values['info_owner']))
 		{
 			return false;
 		}
+		// we need to get the old values to update the links in customfields and for the tracking
+		if ($values['info_id'])
+		{
+			$old = $this->read($values['info_id'], false, 'server');
+		}
 		if (($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
-				if (!($values_read = $this->read($values['info_id']))) return false;
-				$responsible =& $values_read['info_responsible'];
+				$responsible = $old['info_responsible'];
 			}
 			else
 			{
-				$responsible =& $values['info_responsible'];
+				$responsible = $values['info_responsible'];
 			}
 			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
@@ -695,14 +742,12 @@ class infolog_bo
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
 				(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
 
-			$backup_values = $values;	// to return the full values
-			$values = array(
-				'info_id'     => $values['info_id'],
-				'info_datemodified' => $values['info_datemodified'],
-			);
+			$values = $old;
+			// only overwrite explicitly allowed fields
+			$values['info_datemodified'] = $values_in['info_datemodified'];
 			foreach ($this->responsible_edit as $name)
 			{
-				if (isset($backup_values[$name])) $values[$name] = $backup_values[$name];
+				if (isset($values_in[$name])) $values[$name] = $values_in[$name];
 			}
 			if ($set_completed)
 			{
@@ -746,7 +791,7 @@ class infolog_bo
 				$status = 'done';
 				if (isset($values['info_type'])) {
 					if (isset($this->status[$values['info_type']]['done'])) {
-                        $status = 'done';
+						$status = 'done';
 					} elseif (isset($this->status[$values['info_type']]['billed'])) {
 						$status = 'billed';
 					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
@@ -766,13 +811,35 @@ class infolog_bo
 			{
 				$values['info_subject'] = $this->subject_from_des($values['info_des']);
 			}
+
+			// Check required custom fields
+			if($throw_exception) {
+				$custom = config::get_customfields('infolog');
+				foreach($custom as $c_name => $c_field)
+				{
+					if($c_field['type2']) $type2 = explode(',',$c_field['type2']);
+					if($c_field['needed'] && (!$c_field['type2'] || $c_field['type2'] && in_array($values['info_type'],$type2)))
+					{
+						// Required custom field
+						if(!$values['#'.$c_name])
+						{
+							throw new egw_exception_wrong_userinput(lang('For infolog type %1, %2 is required',lang($values['info_type']),$c_field['label']));
+						}
+					}
+				}
+			}
 		}
 		if (isset($this->group_owners[$values['info_type']]))
 		{
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
 			if (!($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
 			{
-				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT)) return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
+				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT) ||
+					!$values['info_id'] && !$this->check_access($values,EGW_ACL_ADD)
+				)
+				{
+					return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
+				}
 			}
 		}
 		elseif (!$values['info_id'] && !$values['info_owner'] || $GLOBALS['egw']->accounts->get_type($values['info_owner']) == 'g')
@@ -784,8 +851,6 @@ class infolog_bo
 		{
 			$values['info_from'] = $this->link_id2from($values);
 		}
-
-		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
 
 		$to_write = $values;
 		if ($user2server)
@@ -826,20 +891,22 @@ class infolog_bo
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
-			$values['info_modifier'] = $this->so->user;
-			$to_write['info_modifier'] = $this->so->user;
+			$values['info_modifier'] = $to_write['info_modifier'] = $this->so->user;
+		}
+
+		// set created and creator for new entries
+		if (!$values['info_id'])
+		{
+			$values['info_created'] = $this->user_time_now;
+			$to_write['info_created'] = $this->now;
+			$values['info_creator'] = $to_write['info_creator'] = $this->so->user;
 		}
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
 
-		// we need to get the old values to update the links in customfields and for the tracking
-		if ($values['info_id'])
+		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs)))
 		{
-			$old = $this->read($values['info_id'], false, 'server');
-		}
-		if (($info_id = $this->so->write($to_write,$check_modified)))
-		{
-			if (!isset($values['info_type']) || $status_only)
+			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{
 				$values = $this->read($info_id, true, 'server');
 			}
@@ -871,6 +938,12 @@ class infolog_bo
 			// create (and remove) links in custom fields
 			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
 
+			// Check for restore of deleted entry, restore held links
+			if($old['info_status'] == 'deleted' && $values['info_status'] != 'deleted')
+			{
+				egw_link::restore('infolog', $info_id);
+			}
+
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update('infolog',$info_id,$values);
 
@@ -888,15 +961,23 @@ class infolog_bo
 				$values = array_merge($values,$missing_fields);
 			}
 			// Add keys missing in the $to_write array
-			if ($missing_fields = array_diff_key($values,$to_write))
+			if (($missing_fields = array_diff_key($values,$to_write)))
 			{
 				$to_write = array_merge($to_write,$missing_fields);
 			}
 			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
 				null,$skip_notification);
-		}
-		if ($info_from_set) $values['info_from'] = '';
 
+			if ($info_from_set) $values['info_from'] = '';
+
+			// Change new values back to user time before sending them back
+			if($user2server)
+			{
+				$this->time2time($values);
+			}
+			// merge changes (keeping extra values from the UI)
+			$values_in = array_merge($values_in,$values);
+		}
 		return $info_id;
 	}
 
@@ -926,7 +1007,13 @@ class infolog_bo
 	 */
 	function &search(&$query)
 	{
-		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
+		//error_log(__METHOD__.'('.array2string($query).')');
+
+		if($query['filter'] == 'bydate')
+		{
+			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
+			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
+		}
 		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
 			if (isset($query['col_filter']))
@@ -984,6 +1071,31 @@ class infolog_bo
 	}
 
 	/**
+	 * Query ctag for infolog
+	 *
+	 * @param array $filter=array('filter'=>'own','info_type'=>'task')
+	 * @return string
+	 */
+	public function getctag(array $filter=array('filter'=>'own','info_type'=>'task'))
+	{
+		$filter += array(
+			'order'			=> 'info_datemodified',
+			'sort'			=> 'DESC',
+			'date_format'	=> 'server',
+			'start'			=> 0,
+			'num_rows'		=> 1,
+		);
+
+		$result =& $this->search($filter);
+
+		if (empty($result)) return 'EGw-empty-wGE';
+
+		$entry = array_shift($result);
+
+		return $entry['info_datemodified'];
+	}
+
+	/**
 	 * imports a mail identified by uid as infolog
 	 *
 	 * @author Cornelius Weiss <nelius@cwtech.de>
@@ -1017,7 +1129,7 @@ class infolog_bo
 			'info_addr' => implode(', ',$email),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
-			'info_startdate' => $_date,
+			'info_startdate' => egw_time::server2user($_date),
 			'info_status' => $status,
 			'info_priority' => 1,
 			'info_percent' => $status == 'done' ? 100 : 0,
@@ -1146,15 +1258,17 @@ class infolog_bo
 	}
 
 	/**
-	 * Check access to the projects file store
+	 * Check access to the file store
 	 *
 	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in InfoLog
+	 * @param int $user=null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
-	function file_access($id,$check,$rel_path=null)
+	function file_access($id,$check,$rel_path=null,$user=null)
 	{
-		return $this->check_access($id,$check);
+		return $this->check_access($id,$check,0,$user);
 	}
 
 	/**
@@ -1222,6 +1336,8 @@ class infolog_bo
 				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
+				$edit = egw_link::edit('infolog',$info['info_id'], $size);
+				$edit['size'] = $size;
 				$content=array();
 				foreach ($icons = array(
 					$info['info_type']   => 'infolog',
@@ -1238,6 +1354,7 @@ class infolog_bo
 					'endtime'   => ($info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate']),
 					'title'     => $title,
 					'view'      => $view,
+					'edit'      => $edit,
 					'icons'     => $icons,
 					'content'   => $content
 				);
@@ -1424,24 +1541,27 @@ class infolog_bo
 
 					if (is_null($this->tracking) || $this->tracking->user != $user)
 					{
-						require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 						$this->tracking = new infolog_tracking($this);
 					}
 					switch($pref)
 					{
 						case 'notify_due_responsible':
+							$info['prefix'] = lang('Due %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_due_delegated':
+							$info['prefix'] = lang('Due %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_start_responsible':
+							$info['prefix'] = lang('Starting %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 						case 'notify_start_delegated':
+							$info['prefix'] = lang('Starting %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_startdate'],null));
 							break;

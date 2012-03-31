@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1055,6 +1055,7 @@ class infolog_ui
 				$parent = $this->bo->so->data;
 				$content['info_id'] = $info_id = 0;
 				$content['info_uid'] = ''; // ensure that we have our own UID
+				$content['caldav_name'] = ''; // ensure that we have our own caldav_name
 				$content['info_owner'] = $this->user;
 				$content['info_id_parent'] = $parent['info_id'];
 				/*
@@ -1220,13 +1221,17 @@ class infolog_ui
 			}
 		}
 		$preserv = $content;
-		// for implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content) && !$undelete)
+		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
+		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$undelete)
 		{
 			$content['status_only'] = !in_array('link_to',$this->bo->responsible_edit);
 			foreach(array_diff(array_merge(array_keys($content),array('pm_id')),$this->bo->responsible_edit) as $name)
 			{
-				$readonlys[$name] = true;
+				foreach($this->bo->responsible_edit as $name)
+				{
+					$readonlys[$name] = false;
+				}
+				$readonlys['button[edit]'] = $readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
 			}
 			unset($readonlys[$tabs]);
 			// need to set all customfields extra, as they are not set if empty

@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - resources
+ * EGroupware - resources
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package resources
@@ -16,7 +16,7 @@
  *
  * @package resources
  */
-class bo_resources
+class resources_bo
 {
 	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
@@ -24,7 +24,7 @@ class bo_resources
 	/**
 	 * Instance of resources so object
 	 *
-	 * @var so_resources
+	 * @var resources_so
 	 */
 	var $so;
 	/**
@@ -38,9 +38,9 @@ class bo_resources
 	 */
 	var $cats;
 
-	function bo_resources()
+	function __construct()
 	{
-		$this->so =& CreateObject('resources.so_resources');
+		$this->so = new resources_so();
 		$this->acl =& CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
 
@@ -69,7 +69,6 @@ class bo_resources
 			}
 		}
 		if ($this->debug) _debug_array($query);
-		$criteria = array('name' => $query['search'], 'short_description' => $query['search'], 'inventory_number' => $query['search']);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
@@ -91,7 +90,9 @@ class bo_resources
 			$filter['cat_id'] = array_keys($readcats);
 		}
 		// if there is no catfilter -> this means you have no rights, so set the cat filter to null
-		if (!isset($filter['cat_id']) || empty($filter['cat_id'])) $filter['cat_id'] = NUll;
+		if (!isset($filter['cat_id']) || empty($filter['cat_id'])) {
+			$filter['cat_id'] = NUll;
+		}
 
 		if ($query['show_bookable'])
 		{
@@ -100,7 +101,8 @@ class bo_resources
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 
-		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','%',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
+		$query['col_filter'] = $filter;
+		$this->so->get_rows($query, $rows, $readonlys);
 		$nr = $this->so->total;
 
 		// we are called to serve bookable resources (e.g. calendar-dialog)
@@ -157,7 +159,7 @@ class bo_resources
 					}
 				}
 			}
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource['res_id']);
+			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 		return $nr;
@@ -318,7 +320,7 @@ class bo_resources
 	 */
 	function get_calendar_info($res_id)
 	{
-		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true).")</p>\n";
+		//echo "<p>resources_bo::get_calendar_info(".print_r($res_id,true).")</p>\n";
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');
@@ -366,9 +368,10 @@ class bo_resources
 	 * @param string|array $pattern if it's a string it is the string we will search for as a criteria, if it's an array we
 	 * 	will seach for 'search' key in this array to get the string criteria. others keys handled are actually used
 	 *	for calendar disponibility.
+	 * @param array $options Array of options for the search
 	 *
 	 */
-	function link_query( $pattern )
+	function link_query( $pattern, Array &$options = array() )
 	{
 		if (is_array($pattern))
 		{
@@ -385,7 +388,11 @@ class bo_resources
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
 		);
-		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',false,$filter);
+		$limit = false;
+		if($options['start'] || $options['num_rows']) {
+			$limit = array($options['start'], $options['num_rows']);
+		}
+		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
 		if (is_array($pattern) && isset($pattern['exec']) )
@@ -499,6 +506,7 @@ class bo_resources
 				error_log(__METHOD__." No Data found for Resource with id ".$resource['res_id']);
 			}
 		}
+		$options['total'] = $this->so->total;
 		return $list;
 	}
 
@@ -613,21 +621,18 @@ class bo_resources
 	/**
 	 * get resource picture either from vfs or from symlink
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $res_id id of resource
+	 * @param int|array $resource res-id or whole resource array
 	 * @param bool $fullsize false = thumb, true = full pic
 	 * @return string url of picture
 	 */
-	function get_picture($res_id=0,$fullsize=false)
+	function get_picture($resource,$fullsize=false)
 	{
-		if ($res_id > 0)
-		{
-			$src = $this->so->get_value('picture_src',$res_id);
-		}
-#echo $scr."<br>". $this->pictures_dir."<br>";
-		switch($src)
+		if ($resource && !is_array($resource)) $resource = $this->read($resource);
+
+		switch($resource['picture_src'])
 		{
 			case 'own_src':
-				$picture = egw_link::vfs_path('resources',$res_id,self::PICTURE_NAME,true);	// vfs path
+				$picture = egw_link::vfs_path('resources',$resource['res_id'],self::PICTURE_NAME,true);	// vfs path
 				if ($fullsize)
 				{
 					$picture = egw::link(egw_vfs::download_url($picture));
@@ -636,17 +641,17 @@ class bo_resources
 				{
 					$picture = egw::link('/etemplate/thumbnail.php',array('path' => $picture));
 				}
-				//$picture=$GLOBALS['egw_info']['server'].$picture;
-#echo $picture."<br>";
 				break;
+
 			case 'cat_src':
-				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
+				list($picture) = $this->cats->return_single($resource['cat_id']);
 				$picture = unserialize($picture['data']);
 				if($picture['icon'])
 				{
 					$picture = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
 					break;
 				}
+				// fall through
 			case 'gen_src':
 			default :
 				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
@@ -656,7 +661,6 @@ class bo_resources
 	}
 
 	/**
-	 * remove_picture
 	 * removes picture from vfs
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>

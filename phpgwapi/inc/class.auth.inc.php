@@ -82,20 +82,20 @@ class auth
 	}
 
 	/**
-	 * return a random string of size $size
+	 * return a random string of letters [0-9a-zA-Z] of size $size
 	 *
 	 * @param $size int-size of random string to return
 	 */
 	static function randomstring($size)
 	{
-		$s = '';
-		$random_char = array(
+		static $random_char = array(
 			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
 			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
 			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
 			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 		);
 
+		$s = '';
 		for ($i=0; $i<$size; $i++)
 		{
 			$s .= $random_char[mt_rand(1,61)];
@@ -124,14 +124,17 @@ class auth
 	 *
 	 * encryption type set in setup and calls the appropriate encryption functions
 	 *
-	 * @param $cleartext cleartext password
-	 * @param $encrypted encrypted password, can have a {hash} prefix, which overrides $type
-	 * @param $type type of encryption
-	 * @param $username used as optional key of encryption for md5_hmac
+	 * @param string $cleartext cleartext password
+	 * @param string $encrypted encrypted password, can have a {hash} prefix, which overrides $type
+	 * @param string $type_i type of encryption
+	 * @param string $username used as optional key of encryption for md5_hmac
+	 * @param string &$type=null on return detected type of hash
+	 * @return boolean
 	 */
-	static function compare_password($cleartext,$encrypted,$type,$username='')
+	static function compare_password($cleartext, $encrypted, $type_in, $username='', &$type=null)
 	{
 		// allow to specify the hash type to prefix the hash, to easy migrate passwords from ldap
+		$type = $type_in;
 		$saved_enc = $encrypted;
 		if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$encrypted,$matches))
 		{
@@ -149,34 +152,100 @@ class auth
 					break;
 				default:
 					$encrypted = $saved_enc;
-				// ToDo: the others ...
+					break;
 			}
 		}
+		elseif($encrypted[0] == '$')
+		{
+			$type = 'crypt';
+		}
+
 		switch($type)
 		{
 			case 'plain':
-				if(strcmp($cleartext,$encrypted) == 0)
-				{
-					return True;
-				}
-				return False;
+				$ret = $cleartext === $encrypted;
+				break;
 			case 'smd5':
-				return self::smd5_compare($cleartext,$encrypted);
+				$ret = self::smd5_compare($cleartext,$encrypted);
+				break;
 			case 'sha':
-				return self::sha_compare($cleartext,$encrypted);
+				$ret = self::sha_compare($cleartext,$encrypted);
+				break;
 			case 'ssha':
-				return self::ssha_compare($cleartext,$encrypted);
+				$ret = self::ssha_compare($cleartext,$encrypted);
+				break;
 			case 'crypt':
+			case 'des':
 			case 'md5_crypt':
+			case 'blowish_crypt':	// was for some time a typo in setup
 			case 'blowfish_crypt':
 			case 'ext_crypt':
-				return self::crypt_compare($cleartext,$encrypted,$type);
+			case 'sha256_crypt':
+			case 'sha512_crypt':
+				$ret = self::crypt_compare($cleartext, $encrypted, $type);
+				break;
 			case 'md5_hmac':
-				return self::md5_hmac_compare($cleartext,$encrypted,$username);
-			case 'md5':
+				$ret = self::md5_hmac_compare($cleartext,$encrypted,$username);
+				break;
 			default:
-				return strcmp(md5($cleartext),$encrypted) == 0 ? true : false;
+				$type = 'md5';
+				// fall through
+			case 'md5':
+				$ret = md5($cleartext) === $encrypted;
+				break;
 		}
+		//error_log(__METHOD__."('$cleartext', '$encrypted', '$type_in', '$username') type='$type' returning ".array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * Parameters used for crypt: const name, salt prefix, len of random salt, postfix
+	 *
+	 * @var array
+	 */
+	static $crypt_params = array(	//
+		'crypt' => array('CRYPT_STD_DES', '', 2, ''),
+		'ext_crypt' => array('CRYPT_EXT_DES', '_J9..', 4, ''),
+		'md5_crypt' => array('CRYPT_MD5', '$1$', 8, '$'),
+		//'old_blowfish_crypt' => array('CRYPT_BLOWFISH', '$2$', 13, ''),	// old blowfish hash not in line with php.net docu, but could be in use
+		'blowfish_crypt' => array('CRYPT_BLOWFISH', '$2a$12$', 22, ''),	// $2a$12$ = 2^12 = 4096 rounds
+		'sha256_crypt' => array('CRYPT_SHA256', '$5$', 16, '$'),	// no "round=N$" --> default of 5000 rounds
+		'sha512_crypt' => array('CRYPT_SHA512', '$6$', 16, '$'),	// no "round=N$" --> default of 5000 rounds
+	);
+
+	/**
+	 * compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
+	 *
+	 * @param string $form_val user input value for comparison
+	 * @param string $db_val   stored value / hash (from database)
+	 * @param string &$type    detected crypt type on return
+	 * @return boolean	 True on successful comparison
+	*/
+	static function crypt_compare($form_val, $db_val, &$type)
+	{
+		// detect type of hash by salt part of $db_val
+		list($first, $dollar, $salt, $salt2) = explode('$', $db_val);
+		foreach(self::$crypt_params as $type => $params)
+		{
+			list(,$prefix, $random, $postfix) = $params;
+			list(,$d) = explode('$', $prefix);
+			if ($dollar === $d || !$dollar && ($first[0] === $prefix[0] || $first[0] !== '_' && !$prefix))
+			{
+				$len = !$postfix ? strlen($prefix)+$random : strlen($prefix.$salt.$postfix);
+				// sha(256|512) might contain options, explicit $rounds=N$ prefix in salt
+				if (($type == 'sha256_crypt' || $type == 'sha512_crypt') && substr($salt, 0, 7) === 'rounds=')
+				{
+					$len += strlen($salt2)+1;
+				}
+				break;
+			}
+		}
+
+		$salt = substr($db_val, 0, $len);
+		$new_hash = crypt($form_val, $salt);
+		//error_log(__METHOD__."('$form_val', '$db_val') type=$type --> len=$len --> salt='$salt' --> new_hash='$new_hash' returning ".array2string($db_val === $new_hash));
+
+		return $db_val === $new_hash;
 	}
 
 	/**
@@ -191,41 +260,30 @@ class auth
 	static function encrypt_ldap($password, $type=null)
 	{
 		if (is_null($type)) $type = $GLOBALS['egw_info']['server']['ldap_encryption_type'];
+
 		$salt = '';
 		switch(strtolower($type))
 		{
 			default:	// eg. setup >> config never saved
 			case 'des':
-				$salt       = self::randomstring(2);
-				$_password  = crypt($password, $salt);
-				$e_password = '{crypt}'.$_password;
-				break;
+			case 'blowish_crypt':	// was for some time a typo in setup
+				$type = $type == 'blowish_crypt' ? 'blowfish_crypt' : 'crypt';
+				// fall through
+			case 'crypt':
+			case 'sha256_crypt':
+			case 'sha512_crypt':
 			case 'blowfish_crypt':
-				if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
-				{
-					$salt = '$2$' . self::randomstring(13);
-					$e_password = '{crypt}'.crypt($password,$salt);
-					break;
-				}
-				self::$error = 'no blowfish crypt';
-				break;
 			case 'md5_crypt':
-				if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
-				{
-					$salt = '$1$' . self::randomstring(9);
-					$e_password = '{crypt}'.crypt($password,$salt);
-					break;
-				}
-				self::$error = 'no md5 crypt';
-				break;
 			case 'ext_crypt':
-				if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+				list($const, $prefix, $len, $postfix) = self::$crypt_params[$type];
+				if(defined($const) && constant($const) == 1)
 				{
-					$salt = self::randomstring(9);
-					$e_password = '{crypt}'.crypt($password,$salt);
+					$salt = $prefix.self::randomstring($len).$postfix;
+					$e_password = '{crypt}'.crypt($password, $salt);
 					break;
 				}
-				self::$error = 'no ext crypt';
+				self::$error = 'no '.str_replace('_', ' ', $type);
+				$e_password = false;
 				break;
 			case 'md5':
 				/* New method taken from the openldap-software list as recommended by
@@ -235,7 +293,7 @@ class auth
 				break;
 			case 'smd5':
 				$salt = self::randomstring(16);
-				$hash = md5($password . $salt,true);
+				$hash = md5($password . $salt, true);
 				$e_password = '{SMD5}' . base64_encode($hash . $salt);
 				break;
 			case 'sha':
@@ -243,14 +301,15 @@ class auth
 				break;
 			case 'ssha':
 				$salt = self::randomstring(16);
-				$hash = sha1($password . $salt,true);
+				$hash = sha1($password . $salt, true);
 				$e_password = '{SSHA}' . base64_encode($hash . $salt);
 				break;
 			case 'plain':
 				// if plain no type is prepended
-				$e_password =$password;
+				$e_password = $password;
 				break;
 		}
+		//error_log(__METHOD__."('$password', ".array2string($type).") returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
 		return $e_password;
 	}
 
@@ -263,67 +322,43 @@ class auth
 	static function encrypt_sql($password)
 	{
 		/* Grab configured type, or default to md5() (old method) */
-		$type = @$GLOBALS['egw_info']['server']['sql_encryption_type']
-			? strtolower($GLOBALS['egw_info']['server']['sql_encryption_type'])
-			: 'md5';
+		$type = @$GLOBALS['egw_info']['server']['sql_encryption_type'] ?
+			strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']) : 'md5';
 
 		switch($type)
 		{
 			case 'plain':
 				// since md5 is the default, type plain must be prepended, for eGroupware to understand
-				return '{PLAIN}'.$password;
-			case 'crypt':
-				if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
-				{
-					$salt = self::randomstring(2);
-					return crypt($password,$salt);
-				}
-				self::$error = 'no std crypt';
+				$e_password = '{PLAIN}'.$password;
 				break;
-			case 'blowfish_crypt':
-				if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
-				{
-					$salt = '$2$' . self::randomstring(13);
-					return crypt($password,$salt);
-				}
-				self::$error = 'no blowfish crypt';
-				break;
-			case 'md5_crypt':
-				if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
-				{
-					$salt = '$1$' . self::randomstring(9);
-					return crypt($password,$salt);
-				}
-				self::$error = 'no md5 crypt';
-				break;
-			case 'ext_crypt':
-				if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
-				{
-					$salt = self::randomstring(9);
-					return crypt($password,$salt);
-				}
-				self::$error = 'no ext crypt';
-				break;
-			case 'smd5':
-				$salt = self::randomstring(16);
-				$hash = md5($password . $salt,true);
-				return '{SMD5}' . base64_encode($hash . $salt);
-			case 'sha':
-				return '{SHA}' . base64_encode(sha1($password,true));
-			case 'ssha':
-				$salt = self::randomstring(16);
-				$hash = sha1($password . $salt,true);
-				return '{SSHA}' . base64_encode($hash . $salt);
+
 			case 'md5':
-			default:
 				/* This is the old standard for password storage in SQL */
-				return md5($password);
+				$e_password = md5($password);
+				break;
+
+			// all other types are identical to ldap, so no need to doublicate the code here
+			case 'des':
+			case 'blowish_crypt':	// was for some time a typo in setup
+			case 'crypt':
+			case 'sha256_crypt':
+			case 'sha512_crypt':
+			case 'blowfish_crypt':
+			case 'md5_crypt':
+			case 'ext_crypt':
+			case 'smd5':
+			case 'sha':
+			case 'ssha':
+				$e_password = self::encrypt_ldap($password, $type);
+				break;
+
+			default:
+				self::$error = 'no valid encryption available';
+				$e_password = false;
+				break;
 		}
-		if (!self::$error)
-		{
-			self::$error = 'no valid encryption available';
-		}
-		return False;
+		//error_log(__METHOD__."('$password') using '$type' returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
+		return $e_password;
 	}
 
 	/**
@@ -421,31 +456,6 @@ class auth
 
 		//error_log(__METHOD__."('$form_val', '$db_val') hash='$hash', orig_hash='$orig_hash', salt='$salt', new_hash='$new_hash' returning ".array2string(strcmp($orig_hash,$new_hash) == 0));
 		return strcmp($orig_hash,$new_hash) == 0;
-	}
-
-	/**
-	 * compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
-	 *
-	 * @param string $form_val user input value for comparison
-	 * @param string $db_val   stored value (from database)
-	 * @param string $type     crypt() type
-	 * @return boolean	 True on successful comparison
-	*/
-	static function crypt_compare($form_val,$db_val,$type)
-	{
-		$saltlen = array(
-			'blowfish_crypt' => 16,
-			'md5_crypt' => 12,
-			'ext_crypt' => 9,
-			'crypt' => 2
-		);
-
-		// PHP's crypt(): salt + hash
-		// notice: "The encryption type is triggered by the salt argument."
-		$salt = substr($db_val, 0, (int)$saltlen[$type]);
-		$new_hash = crypt($form_val, $salt);
-
-		return strcmp($db_val,$new_hash) == 0;
 	}
 
 	/**

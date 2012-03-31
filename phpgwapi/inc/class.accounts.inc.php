@@ -215,7 +215,8 @@ class accounts
 	 * Searches / lists accounts: users and/or groups
 	 *
 	 * @param array with the following keys:
-	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
+	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both',
+	 * 	'groupmembers' (members of groups the user is a member of), 'groupmembers+memberships' (incl. memberships too)
 	 *	or integer group-id for a list of members of that group
 	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
 	 * @param $param['order'] string column to sort after, default account_lid if unset
@@ -233,7 +234,7 @@ class accounts
 	 */
 	function search($param)
 	{
-		//echo "<p>accounts::search(".print_r($param,True).") start: ".microtime()."</p>\n";
+		//error_log(__METHOD__.'('.array2string($param).')');
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
 		$serial = serialize($param);
@@ -245,7 +246,7 @@ class accounts
 		// no backend understands $param['app'] and sql does not understand group-parameters
 		// --> do an full search first and then filter and limit that search
 		elseif($param['app'] || $this->config['account_repository'] != 'ldap' &&
-			(is_numeric($param['type']) || $param['type'] == 'owngroups'))
+			(is_numeric($param['type']) || in_array($param['type'],array('owngroups','groupmembers','groupmembers+memberships'))))
 		{
 			$app = $param['app'];
 			unset($param['app']);
@@ -254,13 +255,23 @@ class accounts
 
 			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
 			{
-				$group = (int) $param['type'];
+				$members = $this->members($param['type'],true);
 				$param['type'] = 'accounts';
 			}
 			elseif ($param['type'] == 'owngroups')
 			{
-				$group = true;
+				$members = $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 				$param['type'] = 'groups';
+			}
+			elseif(in_array($param['type'],array('groupmembers','groupmembers+memberships')))
+			{
+				$members = array();
+				foreach($this->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $grp)
+				{
+					$members = array_unique(array_merge($members,$this->members($grp,true)));
+					if ($param['type'] == 'groupmembers+memberships') $members[] = $grp;
+				}
+				$param['type'] = $param['type'] == 'groupmembers+memberships' ? 'both' : 'accounts';
 			}
 			// call ourself recursive to get (evtl. cached) full search
 			$full_search = $this->search($param);
@@ -272,9 +283,9 @@ class accounts
 				// we want the result merged, whatever it takes, as we only care for the ids
 				$valid = $this->split_accounts($app,!in_array($param['type'],array('accounts','groups')) ? 'merge' : $param['type']);
 			}
-			if ($group)
+			if (isset($members))
 			{
-				$members = is_int($group) ? $this->members($group,true) : $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+				//error_log(__METHOD__.'() members='.array2string($members));
 				if (!$members) $members = array();
 				$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 			}

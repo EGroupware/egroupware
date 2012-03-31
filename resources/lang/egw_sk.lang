@@ -1,0 +1,104 @@
+accessories of	resources	sk	Príslušenstvo k
+accessories:	resources	sk	Príslušenstvo:
+actions	resources	sk	Akcie
+add accessory	resources	sk	Pridať kategóriu
+add resource	resources	sk	Pridať zdroj
+add resources	resources	sk	Pridať zdroje
+administrator	resources	sk	Správca
+all categories	resources	sk	Všetky kategórie
+book	resources	sk	Rezervovať
+book selected resources	resources	sk	Rezervovať vybrané zdroje
+book this resource	resources	sk	Rezervovať tento zdroj
+bookable	resources	sk	Rezervovateľný
+buy this article	resources	sk	Kúpiť tento článok
+buy this resource	resources	sk	Kúpiť tento zdroj
+buyable	resources	sk	Na predaj
+categories admin	resources	sk	Správca kategórií
+category:	resources	sk	Kategória:
+check all	resources	sk	Označ všetko
+choose categories admin	resources	sk	Vyberte správcu kategórií
+clear selection	resources	sk	Zrušiť výber
+configure access permissions	admin	sk	Nastaviť prístupové práva
+conflict	resources	sk	konflikt
+create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
+create new links	resources	sk	Vytvoriť nové odkazy
+custom fields	resources	sk	Vlastné polia
+delete selected resources	resources	sk	Odstrániť vybrané zdroje
+delete this entry	resources	sk	Odstrániť túto položku
+description (short)	resources	sk	Popis (stručný)
+direct booking permissions	resources	sk	Priame rezervačné práva
+don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
+edit this entry	resources	sk	Uprav tento záznam
+existing links	resources	sk	Existujúce odkazy
+general	resources	sk	Hlavné
+general informations about resource	resources	sk	Hlavné informácie o zdroji
+gernal resource	resources	sk	Hlavný zdroj
+global categories	resources	sk	Globálne kategórie
+how many of the resources are useable?	resources	sk	Koľko zdrojov je použíteľných?
+how many of them are useable?	resources	sk	Koľko z nich je použiteľných?
+how many of this resource are usable	resources	sk	Koľko kusov tohto zdroja je použiteľných
+how many of this resource exists	resources	sk	Koľko kusov tohto zdroja existuje
+implies booking permission	resources	sk	Z toho automaticky vyplýva aj rezervačné právo
+implies read permission	resources	sk	Z toho automaticky vyplýva aj právo na čítanie
+information about storage	resources	sk	Informácie o sklade
+informations about the location of resource	resources	sk	Informácie o umiestnení zdroja
+inventory number	resources	sk	Inventárne číslo
+inventory number:	resources	sk	Inventárne číslo:
+is resource bookable?	resources	sk	Dá sa zdroj rezervovať?
+is resource buyable?	resources	sk	Dá sa zdroj kúpiť?
+is this resource bookable?	resources	sk	Dá sa zdroj rezervovať?
+is this resource buyable?	resources	sk	Dá sa zdroj kúpiť?
+links	resources	sk	Odkazy
+location	resources	sk	Umiestnenie
+location of resource	resources	sk	Umiestnenie zdroja
+location:	resources	sk	Umiestnenie:
+name of resource	resources	sk	Názov zdroja:
+name:	resources	sk	Názov:
+no description available	resources	sk	Žiadny popis sa nenašiel
+no resources selected	resources	sk	Nie sú vybrané žiadne zdroje
+notify your administrator to correct this situation	resources	sk	Upozornite svojho správcu, nech napraví vzniknutú situáciu
+picture	resources	sk	Obrázok
+picture source	resources	sk	Zdroj obrázka
+picture type is not supported, sorry!	resources	sk	Je mi ľúto, tento typ obrázka nie je podporovaný!
+pictures or resource	resources	sk	Obrázky zdroja
+planer	resources	sk	Plánovač
+prizeing information for booking or buying	resources	sk	Cenník rezervácií a nákupov
+quantity	resources	sk	Množstvo
+quantity of resource	resources	sk	Počet kusov zdroja
+quantity:	resources	sk	Množstvo:
+read calendar permissions	resources	sk	Právo čítať Kalendár
+read permissions	resources	sk	Právo na čítanie
+related links	resources	sk	Súvisiace odkazy
+resources	common	sk	Zdroje
+resources list	resources	sk	Zoznam zdrojov
+responsible:	resources	sk	Zodpovedný:
+saves entry and exits	resources	sk	Uloží položku a skončí
+select a category	resources	sk	Vyberte kategóriu
+select resource	resources	sk	Vyberte zdroj
+select resources	common	sk	Vyberte zdroje
+select/deselect all	resources	sk	Vybrať všetko / zrušiť výber
+short description	resources	sk	Stručný popis
+short description of resource	resources	sk	Zobraziť popis zdroja
+show calendar of resource	resources	sk	Zobraziť kalendár zdroja
+something went wrong by deleting resource	resources	sk	Počas odstraňovania zdroja sa niečo nepodarilo
+something went wrong by saving resource	resources	sk	Počas ukladania zdroja sa niečo nepodarilo
+storage information	resources	sk	Informácie o sklade
+storage information:	resources	sk	Informácie o sklade:
+the calendar of this resource	resources	sk	Kalendár pre tento zdroj
+this module displays the resources app	resources	sk	Tento modul zobrazuje aplikáciu pre zdroje
+use general resources icon	resources	sk	Použiť všeobecnú ikonu zdrojov
+use own picture	resources	sk	Použiť vlastný obrázok
+use the category's icon	resources	sk	Použiť ikonu kategórie
+useable	resources	sk	Použiteľné
+useable:	resources	sk	Použiteľné:
+view accessories for this resource	resources	sk	Zobraziť príslušenstvo k tomuto zdroju
+view this entry	resources	sk	Zobraziť položku
+web-page of resource	resources	sk	Webstránka zdroja
+web-site for this resource	resources	sk	Webstránka tohto zdroja
+where to find this resource?	resources	sk	Kde sa dá nájsť tento zdroj
+which category does this resource belong to?	resources	sk	Do ktorej kategórie tento zdroj patrí?
+write permissions	resources	sk	Oprávnenia k zápisu
+you are not permitted to delete this reource!	resources	sk	Nemáte oprávnenie odstrániť tento zdroj!
+you are not permitted to edit this reource!	resources	sk	Nemáte oprávnenie upravovať tento zdroj!
+you are not permitted to get information about this resource!	resources	sk	Nemáte oprávnenia čítať informácie o tomto zdroji!
+you chose more resources than available	resources	sk	Vybrali ste si viacej zdrojov než je dostupných

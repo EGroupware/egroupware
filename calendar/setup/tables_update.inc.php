@@ -1630,6 +1630,7 @@ function calendar_upgrade1_5_002()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6';
 }
 
+
 /**
  * Adjust UIDs of series exceptions to RFC standard
  * Propagate cal_reference field to temporarily contain RECURRENCE-ID
@@ -1968,24 +1969,50 @@ function calendar_upgrade1_7_009()
 
 function calendar_upgrade1_7_010()
 {
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.8';
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_deleted',array(
+		'type' => 'bool',
+		'nullable' => False,
+		'default' => '0',
+		'comment' => '1 if the event has been deleted, but you want to keep it around'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';	// was 1.7.011
+}
+
+function calendar_upgrade1_7_011()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
+}
+
+function calendar_upgrade1_8()
+{
+	calendar_upgrade1_7_010();
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
 }
 
 /**
- * Downgrade from Trunk / EPL 10.1 to 1.8: droping cal_deleted
- * 
+ * Convert bool column cal_deleted with egw_api_content_history table to a unix timestamp
+ *
+ * Using cal_modified as deleted-timestamp, as querying it from SyncML tables creates too many problems (refresh table stops before copying all rows!)
+ *
  * @return string
  */
-function calendar_upgrade1_7_011()
+function calendar_upgrade1_9_001()
 {
-	$deleted = 'cal_deleted=1 OR cal_deleted IS NOT NULL AND cal_deleted != 0';
-	foreach(array('egw_cal_dates','egw_cal_extra','egw_cal_repeats','egw_cal_user') as $table)
-	{
-		$GLOBALS['egw_setup']->db->delete($table,"cal_id IN (SELECT cal_id FROM egw_cal WHERE $deleted)",__LINE__,__FILE__,'calendar');
-	}
-	$GLOBALS['egw_setup']->db->delete('egw_cal',$deleted,__LINE__,__FILE__);
-	
-	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal',array(
+	// delete in the past wrongly created entries for a single recurrence, which mess up the update, beside being wrong anyway
+	$GLOBALS['egw_setup']->db->delete('egw_api_content_history',array(
+		'sync_appname' => 'calendar',
+		"sync_contentid LIKE '%:%'",
+	), __LINE__, __FILE__);
+
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_deleted',array(
+		'type' => 'int',
+		'precision' => '8',
+		'comment' => 'ts when event was deleted'
+	));*/
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_cal',array(
 		'fd' => array(
 			'cal_id' => array('type' => 'auto','nullable' => False),
 			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
@@ -2012,15 +2039,42 @@ function calendar_upgrade1_7_011()
 		'fk' => array(),
 		'ix' => array('cal_uid','cal_owner','cal_deleted'),
 		'uc' => array()
-	),'cal_deleted');
+	),array(
+		// for deleted rows use cal_modified as deleted date, NULL for not deleted ones
+		'cal_deleted' => 'CASE cal_deleted WHEN '.$GLOBALS['egw_setup']->db->quote(true,'bool').' THEN cal_modified ELSE NULL END',
+	));
 
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.8';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.002';
 }
-function calendar_upgrade1_9_001()
-{
-	return calendar_upgrade1_7_011();
-}
+
+
+/**
+ * Add column to store CalDAV name given by client
+ */
 function calendar_upgrade1_9_002()
 {
-	return calendar_upgrade1_7_011();
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','caldav_name',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+	$GLOBALS['egw_setup']->db->query($sql='UPDATE egw_cal SET caldav_name='.
+		$GLOBALS['egw_setup']->db->concat(
+			$GLOBALS['egw_setup']->db->to_varchar('cal_id'),"'.ics'"),__LINE__,__FILE__);
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','caldav_name');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.003';
+}
+
+
+/**
+ * Add index for cal_modified and cal_user_modified to improve ctag and etag generation on big installtions
+ */
+function calendar_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','cal_modified');
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_user','cal_user_modified');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.004';
 }

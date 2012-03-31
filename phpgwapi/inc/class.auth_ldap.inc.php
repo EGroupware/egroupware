@@ -128,8 +128,10 @@ class auth_ldap implements auth_backend
 					// try to query password from ldap server (might fail because of ACL) and check if we need to migrate the hash
 					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
 						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
-						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? $matches[1] : 'plain') &&
-						in_array(strtolower($type),explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
+						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? strtolower($matches[1]) : 'plain') &&
+						// for crypt use auth::crypt_compare to detect correct sub-type, strlen("{crypt}")=7
+						($type != 'crypt' || auth::crypt_compare($passwd, substr($values[0]['userpassword'][0], 7), $type)) &&
+						in_array($type, explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 					{
 						$this->change_password($passwd, $passwd, $allValues[0]['uidnumber'][0], false);
 					}

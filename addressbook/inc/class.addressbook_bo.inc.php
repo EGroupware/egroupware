@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -36,6 +36,9 @@ class addressbook_bo extends addressbook_so
 		'org_name: n_family, n_prefix',
 		'org_name: n_given n_family',
 		'org_name: n_fn',
+		'org_name, org_unit: n_family, n_given',
+		'org_name, adr_one_locality: n_family, n_given',
+		'org_name, org_unit, adr_one_locality: n_family, n_given',
 		'n_family, n_given: org_name',
 		'n_family, n_given (org_name)',
 		'n_family, n_prefix: org_name',
@@ -63,6 +66,7 @@ class addressbook_bo extends addressbook_so
 		'adr_one_region',
 		'adr_one_postalcode',
 		'adr_one_countryname',
+		'adr_one_countrycode',
 		'label',
 		'tel_work',
 		'tel_fax',
@@ -122,15 +126,43 @@ class addressbook_bo extends addressbook_so
 	 */
 	var $default_private;
 	/**
+	 * Use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
+	 *
+	 * @var boolean
+	 */
+	var $private_addressbook = false;
+	/**
 	 * Categories object
 	 *
 	 * @var object
 	 */
 	var $categories;
 
-	function __construct($contact_app='addressbook')
+	/**
+	* Tracking changes
+	*
+	* @var object
+	*/
+	protected $tracking;
+
+	/**
+	* Keep deleted addresses, or really delete them
+	* Set in Admin -> Addressbook -> Site Configuration
+	* ''=really delete, 'history'=keep, only admins delete, 'userpurge'=keep, users delete
+ 	*
+	* @var string
+ 	*/
+	protected $delete_history = '';
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $contact_app='addressbook' used for acl->get_grants()
+	 * @param egw_db $db=null
+	 */
+	function __construct($contact_app='addressbook',egw_db $db=null)
 	{
-		parent::__construct($contact_app);
+		parent::__construct($contact_app,$db);
 		if ($this->log)
 		{
 			$this->logfile = $GLOBALS['egw_info']['server']['temp_dir'].'/log-addressbook_bo';
@@ -151,6 +183,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$this->default_addressbook = $this->user;	// admin set a default or forced pref for personal addressbook
 		}
+		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
 
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
@@ -178,6 +211,7 @@ class addressbook_bo extends addressbook_so
 			'adr_one_region'       => lang('state').' ('.lang('business').')',
 			'adr_one_postalcode'   => lang('zip code').' ('.lang('business').')',
 			'adr_one_countryname'  => lang('country').' ('.lang('business').')',
+			'adr_one_countrycode'  => lang('country code').' ('.lang('business').')',
 			'label'                => lang('label'),
 			'adr_two_street'       => lang('street').' ('.lang('private').')',
 			'adr_two_street2'      => lang('address line 2').' ('.lang('private').')',
@@ -185,6 +219,7 @@ class addressbook_bo extends addressbook_so
 			'adr_two_region'       => lang('state').' ('.lang('private').')',
 			'adr_two_postalcode'   => lang('zip code').' ('.lang('private').')',
 			'adr_two_countryname'  => lang('country').' ('.lang('private').')',
+			'adr_two_countrycode'  => lang('country code').' ('.lang('private').')',
 			'tel_work'             => lang('work phone'),
 			'tel_cell'             => lang('mobile phone'),
 			'tel_fax'              => lang('fax').' ('.lang('business').')',
@@ -257,8 +292,24 @@ class addressbook_bo extends addressbook_so
 		if ($GLOBALS['egw_info']['server']['org_fileds_to_update'])
 		{
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
+
+			// Set country code if country name is selected
+			$supported_fields = $this->get_fields('supported',null,0);
+			if(in_array('adr_one_countrycode', $supported_fields) && in_array('adr_one_countryname',$this->org_fields))
+			{
+				$this->org_fields[] = 'adr_one_countrycode';
+			}
+			if(in_array('adr_two_countrycode', $supported_fields) && in_array('adr_two_countryname',$this->org_fields))
+			{
+				$this->org_fields[] = 'adr_two_countrycode';
+			}
 		}
 		$this->categories = new categories($this->user,'addressbook');
+
+		$this->tracking = new addressbook_tracking($this);
+
+		$config = config::read('phpgwapi');
+		$this->delete_history = $config['history'];
 	}
 
 	/**
@@ -323,14 +374,30 @@ class addressbook_bo extends addressbook_so
 	 *
 	 * @param array $contact
 	 * @param string $type=null file_as type, default null to read it from the contact, unknown/not set type default to the first one
+	 * @param boolean $update=false If true, reads the old record for any not set fields
 	 * @return string
 	 */
-	function fileas($contact,$type=null)
+	function fileas($contact,$type=null, $isUpdate=false)
 	{
 		if (is_null($type)) $type = $contact['fileas_type'];
 		if (!$type) $type = $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
 
 		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
+
+		if($isUpdate)
+		{
+			$fileas_fields = array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality');
+			$old = null;
+			foreach($fileas_fields as $field)
+			{
+				if(!isset($contact[$field]))
+				{
+					if(is_null($old)) $old = $this->read($contact['id']);
+					$contact[$field] = $old[$field];
+				}
+			}
+			unset($old);
+		}
 
 		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
 			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
@@ -480,8 +547,8 @@ class addressbook_bo extends addressbook_so
 
 		// fields that must not be touched
 		$fields_exclude = array(
-			'id'				=> true,
-			'tid'				=> true,
+			'id'			=> true,
+			'tid'			=> true,
 			'owner'			=> true,
 			'private'		=> true,
 			'created'		=> true,
@@ -490,9 +557,9 @@ class addressbook_bo extends addressbook_so
 			'modifier'		=> true,
 			'account_id'	=> true,
 			'etag'			=> true,
-			'uid'				=> true,
+			'uid'			=> true,
 			'freebusy_uri'	=> true,
-			'calendar_uri' => true,
+			'calendar_uri'	=> true,
 			'photo'			=> true,
 		);
 
@@ -589,6 +656,8 @@ class addressbook_bo extends addressbook_so
 	 */
 	function db2data($data, $date_format='ts')
 	{
+		static $fb_url = false;
+
 		// convert timestamps from server-time in the db to user-time
 		foreach ($this->timestamps as $name)
 		{
@@ -602,10 +671,12 @@ class addressbook_bo extends addressbook_so
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
 		{
-			static $fb_url;
-			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = calendar_bo::freebusy_url('');
-			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode(
-				isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']));
+			if ($fb_url || @is_dir(EGW_SERVER_ROOT.'/calendar/inc'))
+			{
+				$fb_url = true;
+				$user = isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']);
+				$data['freebusy_uri'] = calendar_bo::freebusy_url($user);
+			}
 		}
 		return $data;
 	}
@@ -672,17 +743,38 @@ class addressbook_bo extends addressbook_so
 			$id = is_array($c) ? $c['id'] : $c;
 
 			$ok = false;
-			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && ($ok = parent::delete($id,$check_etag)))
+			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete))
 			{
-				egw_link::unlink(0,'addressbook',$id);
-				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+				if (!($old = $this->read($id))) return false;
+				// check if we only mark contacts as deleted, or really delete them
+				// already marked as deleted item and accounts are always really deleted
+				// we cant mark accounts as deleted, as no such thing exists for accounts!
+				if ($old['owner'] && $this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE)
+				{
+					$delete = $old;
+					$delete['tid'] = addressbook_so::DELETED_TYPE;
+					$ok = $this->save($delete);
+					egw_link::unlink(0,'addressbook',$id,'','','',true);
+				}
+				elseif (($ok = parent::delete($id,$check_etag)))
+				{
+					egw_link::unlink(0,'addressbook',$id);
+				}
+
+				// Don't notify of final purge
+				if ($ok && $old['tid'] != addressbook_so::DELETED_TYPE)
+				{
+					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+					$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
+				}
 			}
 			else
 			{
-				return $ok;
+				break;
 			}
 		}
-		return true;
+		//error_log(__METHOD__.'('.array2string($contact).', deny_account_delete='.array2string($deny_account_delete).', check_etag='.array2string($check_etag).' returning '.array2string($ok));
+		return $ok;
 	}
 
 	/**
@@ -747,6 +839,27 @@ class addressbook_bo extends addressbook_so
 		{
 			$contact['cat_id'] = implode(',',$contact['cat_id']);
 		}
+
+		// Update country codes
+		foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
+			if($contact[$c_prefix.'countryname'] && !$contact[$c_prefix.'countrycode'] &&
+				$code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
+			{
+				if(strlen($code) == 2)
+				{
+					$contact[$c_prefix.'countrycode'] = $code;
+				}
+				else
+				{
+					$contact[$c_prefix.'countrycode'] = null;
+				}
+			}
+			if($contact[$c_prefix.'countrycode'] != null)
+			{
+				$contact[$c_prefix.'countryname'] = null;
+			}
+		}
+
 		// last modified
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
@@ -754,8 +867,9 @@ class addressbook_bo extends addressbook_so
 		if (!isset($contact['n_fn']))
 		{
 			$contact['n_fn'] = $this->fullname($contact);
-			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
+		if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact, null, false);
+
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
 		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
@@ -766,6 +880,22 @@ class addressbook_bo extends addressbook_so
 				{
 					unset($to_write[$field]);	// user is now allowed to change that
 				}
+			}
+		}
+
+		// Get old record for tracking changes
+		if (!isset($old) && $isUpdate)
+		{
+			$old = $this->read($contact['id']);
+		}
+		// IF THE OLD ENTRY IS A ACCOUNT, dont allow to change the owner/location
+		// maybe we need that for id and account_id as well.
+		if (is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
+		{
+			if (isset($to_write['owner']) && !empty($to_write['owner']))
+			{
+				error_log(__METHOD__.__LINE__." Trying to change account to owner:". $to_write['owner'].' Account affected:'.array2string($old).' Data send:'.array2string($to_write));
+				unset($to_write['owner']);
 			}
 		}
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
@@ -788,6 +918,18 @@ class addressbook_bo extends addressbook_so
 			}
 			// Notify linked apps about changes in the contact data
 			egw_link::notify_update('addressbook',  $contact['id'], $contact);
+
+			// Check for restore of deleted contact, restore held links
+			if($old && $old['tid'] == addressbook_so::DELETED_TYPE && $contact['tid'] != addressbook_so::DELETED_TYPE)
+			{
+				egw_link::restore('addressbook', $contact['id']);
+			}
+
+			// Record change history for sql - doesn't work for LDAP accounts
+			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql') {
+				$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
+				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
+			}
 		}
 
 		return $this->error ? false : $contact['id'];
@@ -848,31 +990,55 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!($data = parent::read($contact_id)))
 		{
-			return null;	// not found
+			$data = null;	// not found
 		}
-		if (!$this->check_perms(EGW_ACL_READ,$data))
+		elseif (!$this->check_perms(EGW_ACL_READ,$data))
 		{
-			return false;	// no view perms
+			$data = false;	// no view perms
 		}
-		// determine the file-as type
-		$data['fileas_type'] = $this->fileas_type($data);
+		else
+		{
+			// determine the file-as type
+			$data['fileas_type'] = $this->fileas_type($data);
 
+			// Update country name from code
+			if($data['adr_one_countrycode'] != null) {
+				$data['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_one_countrycode'], true);
+			}
+			if($data['adr_two_countrycode'] != null) {
+				$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
+			}
+		}
+		//error_log(__METHOD__.'('.array2string($contact_id).') returning '.array2string($data));
 		return $data;
 	}
 
 	/**
-	* Checks if the current user has the necessary ACL rights
-	*
-	* If the access of a contact is set to private, one need a private grant for a personal addressbook
-	* or the group membership for a group-addressbook
-	*
-	* @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
-	* @param mixed $contact contact as array or the contact-id
-	* @param boolean $deny_account_delete=false if true never allow to delete accounts
-	* @return boolean true permission granted, false for permission denied, null for contact does not exist
-	*/
-	function check_perms($needed,$contact,$deny_account_delete=false)
+	 * Checks if the current user has the necessary ACL rights
+	 *
+	 * If the access of a contact is set to private, one need a private grant for a personal addressbook
+	 * or the group membership for a group-addressbook
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param mixed $contact contact as array or the contact-id
+	 * @param boolean $deny_account_delete=false if true never allow to delete accounts
+	 * @param int $user=null for which user to check, default current user
+	 * @return boolean true permission granted, false for permission denied, null for contact does not exist
+	 */
+	function check_perms($needed,$contact,$deny_account_delete=false,$user=null)
 	{
+		if (!$user) $user = $this->user;
+		if ($user == $this->user)
+		{
+			$grants = $this->grants;
+			$memberships = $this->memberships;
+		}
+		else
+		{
+			$grants = $this->get_grants($user);
+			$memberships =  $GLOBALS['egw']->accounts->memberships($user,true);
+		}
+
 		if ((!is_array($contact) || !isset($contact['owner'])) &&
 			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
@@ -881,25 +1047,43 @@ class addressbook_bo extends addressbook_so
 		$owner = $contact['owner'];
 
 		// allow the user to edit his own account
-		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user && $this->own_account_acl)
+		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $user && $this->own_account_acl)
 		{
-			return true;
+			$access = true;
 		}
 		// dont allow to delete own account (as admin handels it too)
-		if (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $this->user))
+		elseif (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $user))
 		{
-			return false;
+			$access = false;
 		}
 		// for reading accounts (owner == 0) and account_selection == groupmembers, check if current user and contact are groupmembers
-		if ($owner == 0 && $needed == EGW_ACL_READ &&
+		elseif ($owner == 0 && $needed == EGW_ACL_READ &&
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
-			return !!array_intersect($GLOBALS['egw']->accounts->memberships($this->user,true),
-				$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
+			$access = !!array_intersect($memberships,$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
-		return ($this->grants[$owner] & $needed) &&
-			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
+		else
+		{
+			$access = ($grants[$owner] & $needed) &&
+				(!$contact['private'] || ($grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$memberships));
+		}
+		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
+		return $access;
+	}
+
+	/**
+	 * Check access to the file store
+	 *
+	 * @param int|array $id id of entry or entry array
+	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param string $rel_path=null currently not used in InfoLog
+	 * @param int $user=null for which user to check, default current user
+	 * @return boolean true if access is granted or false otherwise
+	 */
+	function file_access($id,$check,$rel_path=null,$user=null)
+	{
+		return $this->check_perms($check,$id,false,$user);
 	}
 
 	/**
@@ -1186,23 +1370,29 @@ class addressbook_bo extends addressbook_so
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string|array $pattern pattern to search, or an array with a 'search' key
+	 * @param array $options Array of options for the search
 	 * @return array with id - title pairs of the matching entries
 	 */
-	function link_query($pattern)
+	function link_query($pattern, Array &$options = array())
 	{
-		$result = $criteria = array();
+		$filter = $result = $criteria = array();
+		$limit = false;
 		if ($pattern)
 		{
-			foreach($this->columns_to_search as $col)
-			{
-				$criteria[$col] = is_array($pattern) ? $pattern['search'] : $pattern;
-			}
+			$criteria = is_array($pattern) ? $pattern['search'] : $pattern;
 		}
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR')))
+		if($options['start'] || $options['num_rows'])
+		{
+			$limit = array($options['start'], $options['num_rows']);
+		}
+		$filter = (array)$options['filter'];
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		if (($contacts =& parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
 		{
 			foreach($contacts as $contact)
 			{
-				$result[$contact['id']] = $this->link_title($contact);
+				$result[$contact['id']] = $this->link_title($contact).
+					($options['type'] === 'email' ? ' <'.$contact['email'].'>' : '');
 				// show category color
 				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
 				{
@@ -1213,19 +1403,30 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
+		$options['total'] = $this->total;
 		return $result;
 	}
 
 	/**
-	 * Check access to the projects file store
+	 * Query for subtype email (returns only contacts with email address set)
 	 *
-	 * @param int $id id of entry
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
-	 * @return boolean true if access is granted or false otherwise
+	 * @param string|array $pattern
+	 * @param array $options
+	 * @return Ambigous <multitype:, string, multitype:Ambigous <multitype:, string> string >
 	 */
-	function file_access($id,$check,$rel_path)
+	function link_query_email($pattern, Array &$options = array())
 	{
-		return $this->check_perms($check,$id);
+		if (isset($options['filter']) && !is_array($options['filter']))
+		{
+			$options['filter'] = (array)$options['filter'];
+		}
+		// return only contacts with email set
+		$options['filter'][] = "contact_email LIKE '%@%'";
+
+		// let link query know, to append email to list
+		$options['type'] = 'email';
+
+		return $this->link_query($pattern,$options);
 	}
 
 	/**
@@ -1301,6 +1502,9 @@ class addressbook_bo extends addressbook_so
 							'id' => $event['id'],
 							'app' => 'calendar',
 							'title' => $bocal->link_title($event),
+							'extra_args' => array(
+								'date' => date('Ymd',$event['start']),
+							),
 						);
 						if ($extra_title)
 						{
@@ -1319,6 +1523,9 @@ class addressbook_bo extends addressbook_so
 							'id' => $event['id'],
 							'app' => 'calendar',
 							'title' => $bocal->link_title($event),
+							'extra_args' => array(
+								'date' => date('Ymd',$event['start']),
+							),
 						);
 						if ($extra_title)
 						{
@@ -1330,7 +1537,6 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
-		//_debug_array($calendars);
 		return $calendars;
 	}
 
@@ -1404,6 +1610,7 @@ class addressbook_bo extends addressbook_so
 	function merge($ids)
 	{
 		$this->error = false;
+		$account = null;
 		$custom_fields = config::get_customfields('addressbook', true);
 		$custom_field_list = $this->read_customfields($ids);
 		foreach(parent::search(array('id'=>$ids),false) as $contact)	// $this->search calls the extended search from ui!
@@ -1419,9 +1626,7 @@ class addressbook_bo extends addressbook_so
 				continue;
 			}
 			// Add in custom fields
-			foreach($custom_field_list[$contact['id']] as $field => $value) {
-				$contact['#'.$field] = $value;
-			}
+			if (is_array($custom_field_list[$contact['id']])) $contact = array_merge($contact, $custom_field_list[$contact['id']]);
 
 			$pos = array_search($contact['id'],$ids);
 			$contacts[$pos] = $contact;
@@ -1490,10 +1695,10 @@ class addressbook_bo extends addressbook_so
 				// info_from and info_link_id (main link)
 				$newlinkID = egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
 				//_debug_array(array('newLinkID'=>$newlinkID));
-				if ($newlinkID) 
+				if ($newlinkID)
 				{
 					// update egw_infolog set info_link_id=$newlinkID where info_id=$data['id'] and info_link_id=$data['link_id']
-					if ($data['app']=='infolog') 
+					if ($data['app']=='infolog')
 					{
 						$this->db->update('egw_infolog',array(
 								'info_link_id' => $newlinkID
@@ -1524,42 +1729,45 @@ class addressbook_bo extends addressbook_so
 		{
 			$owner = $list_data['list_owner'];
 		}
+		//error_log(__METHOD__."($list, $required, $owner) grants[$owner]=".$this->grants[$owner]." returning ".array2string(!!($this->grants[$owner] & $required)));
 		return !!($this->grants[$owner] & $required);
 	}
 
 	/**
-	 * Adds a distribution list
+	 * Adds / updates a distribution list
 	 *
-	 * @param string $name list-name
+	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
 	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add
-	 * @return list_id or false on error
+	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
+	 * @return int|boolean integer list_id or false on error
 	 */
-	function add_list($name,$owner,$contacts=array())
+	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$this->check_list(null,EGW_ACL_ADD,$owner)) return false;
+		if (!$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner)) return false;
 
-		return parent::add_list($name,$owner,$contacts);
+		return parent::add_list($keys,$owner,$contacts,$data);
 	}
 
 	/**
-	 * Adds one contact to a distribution list
+	 * Adds contacts to a distribution list
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
+	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list)
+	function add2list($contact,$list,array $existing=null)
 	{
 		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
 
-		return parent::add2list($contact,$list);
+		return parent::add2list($contact,$list,$existing);
 	}
 
 	/**
 	 * Removes one contact from distribution list(s)
 	 *
-	 * @param int $contact contact_id
+	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
 	 * @return false on error
 	 */
@@ -1680,17 +1888,16 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_or_add_categories($catname_list, $contact_id=null)
 	{
-		if($contact_id && $contact_id > 0)
+		if ($contact_id && $contact_id > 0 && ($old_contact = $this->read($contact_id)))
 		{
 			// preserve categories without users read access
-			$old_contact = $this->read($contact_id);
 			$old_categories = explode(',',$old_contact['cat_id']);
 			$old_cats_preserve = array();
-			if(is_array($old_categories) && count($old_categories) > 0)
+			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
-					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if (!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1699,11 +1906,10 @@ class addressbook_bo extends addressbook_so
 		}
 
 		$cat_id_list = array();
-		foreach($catname_list as $cat_name)
+		foreach ((array)$catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
-
 			if (!$cat_id)
 			{
 				// some SyncML clients (mostly phones) add an X- to the category names
@@ -1720,7 +1926,7 @@ class addressbook_bo extends addressbook_so
 			}
 		}
 
-		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		if (is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
 		}
@@ -1731,6 +1937,7 @@ class addressbook_bo extends addressbook_so
 			sort($cat_id_list, SORT_NUMERIC);
 		}
 
+		//error_log(__METHOD__."(".array2string($catname_list).", $contact_id) returning ".array2string($cat_id_list));
 		return $cat_id_list;
 	}
 
@@ -2002,5 +2209,41 @@ class addressbook_bo extends addressbook_so
 				. "\n", 3, $this->logfile);
 		}
 		return $matchingContacts;
+	}
+
+	/**
+	 * Get a ctag (collection tag) for one addressbook or all addressbooks readable by a user
+	 *
+	 * Currently implemented as maximum modification date (1 seconde granularity!)
+	 *
+	 * We have to include deleted entries, as otherwise the ctag will not change if an entry gets deleted!
+	 * (Only works if tracking of deleted entries / history is switched on!)
+	 *
+	 * @param int|array $owner=null 0=accounts, null=all addressbooks or integer account_id of user or group
+	 * @return string
+	 */
+	public function get_ctag($owner=null)
+	{
+		$filter = array('tid' => null);	// tid=null --> use all entries incl. deleted (tid='D')
+		// show addressbook of a single user?
+		if (!is_null($owner)) $filter['owner'] = $owner;
+
+		// should we hide the accounts addressbook
+		if (!$owner && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		{
+			$filter['account_id'] = null;
+		}
+		$result = $this->search(array(),'contact_modified','contact_modified DESC','','',false,'AND',array(0,1),$filter);
+
+		if (!$result || !isset($result[0]['modified']))
+		{
+			$ctag = 'empty';	// ctag for empty addressbook
+		}
+		else
+		{
+			$ctag = $result[0]['modified'];
+		}
+		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
+		return $ctag;
 	}
 }

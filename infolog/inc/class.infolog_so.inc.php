@@ -1,11 +1,11 @@
 <?php
 /**
- * InfoLog - Storage object
+ * EGroupare - InfoLog - Storage object
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -83,13 +83,16 @@ class infolog_so
 	 * @param array $info infolog entry as array
 	 * @return boolean
 	 */
-	function is_responsible($info)
+	function is_responsible($info,$user=null)
 	{
-		static $user_and_memberships;
-		if (is_null($user_and_memberships))
+		if (!$user) $user = $this->user;
+
+		static $um_cache = array();
+		if ($user == $this->user) $user_and_memberships =& $um_cache[$user];
+		if (!isset($user_and_memberships))
 		{
-			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
-			$user_and_memberships[] = $this->user;
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+			$user_and_memberships[] = $user;
 		}
 		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
 	}
@@ -100,10 +103,15 @@ class infolog_so
 	 * @param array|int $info data or info_id of InfoLog entry
 	 * @param int $required_rights EGW_ACL_xyz anded together
 	 * @param boolean $implicit_edit=false responsible has only implicit read and add rigths, unless this is set to true
+	 * @param array $grants=null grants to use, default (null) $this->grants
+	 * @param int $user=null user to check, default (null) $this->user
 	 * @return boolean True if access is granted else False
 	 */
-	function check_access( $info,$required_rights,$implicit_edit=false )
+	function check_access( $info,$required_rights,$implicit_edit=false,array $grants=null,$user=null )
 	{
+		if (is_null($grants)) $grants = $this->grants;
+		if (!$user) $user = $this->user;
+
 		if (is_array($info))
 		{
 
@@ -112,7 +120,7 @@ class infolog_so
 		{
 			// dont change our own internal data,
 			$backup_data = $this->data;
-			$info = $this->read($info);
+			$info = $this->read(array('info_id'=>$info));
 			$this->data = $backup_data;
 		}
 		else
@@ -124,15 +132,14 @@ class infolog_so
 			return False;
 		}
 		$owner = $info['info_owner'];
-
-		$access_ok = $owner == $this->user ||	// user has all rights
+		$access_ok = $owner == $user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
-			(!!($this->grants[$owner] & $required_rights) ||
-				$this->is_responsible($info) &&	// implicite rights for responsible user(s) and his memberships
+			(!!($grants[$owner] & $required_rights) ||
+				$this->is_responsible($info,$user) &&	// implicite rights for responsible user(s) and his memberships
 				($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
-			($info['info_access'] == 'public' || !!($this->grants[$this->user] & EGW_ACL_PRIVATE));
+			($info['info_access'] == 'public' || !!($this->grants[$user] & EGW_ACL_PRIVATE));
 
-		//echo "<p align=right>check_access(info_id=$info_id,requited=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
+		// error_log(__METHOD__."($info[info_id],$required_rights,$implicit_edit,".array2string($grants).",$user) returning ".array2string($access_ok));
 		return $access_ok;
 	}
 
@@ -255,7 +262,7 @@ class infolog_so
 				)," AND info_responsible='0' OR ",$this->responsible_filter($f_user),')');
 			}
 		}
-		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
+		//echo "<p>aclFilter(filter='$filter_was',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 	}
 
@@ -295,7 +302,7 @@ class infolog_so
 	 */
 	function dateFilter($filter = '')
 	{
-		preg_match('/(upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
+		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
 		$filter = $vars[1];
 
 		if (isset($vars[2]) && !empty($vars[2]) && ($date = preg_split('/[-\\/.]/',$vars[2])))
@@ -310,6 +317,8 @@ class infolog_so
 		}
 		switch ($filter)
 		{
+			case 'open-upcoming':
+				return  "AND (info_startdate >= $tomorrow OR NOT (info_status IN ('done','billed','cancelled','deleted','template','nonactive','archive')))";
 			case 'upcoming':
 				return " AND info_startdate >= $tomorrow";
 			case 'today':
@@ -353,11 +362,12 @@ class infolog_so
 	 *
 	 * some cacheing is done to prevent multiple reads of the same entry
 	 *
-	 * @param int|string $info_id id or uid of entry
+	 * @param array $where where clause for entry to read
 	 * @return array|boolean the entry as array or False on error (eg. entry not found)
 	 */
-	function read($info_id)		// did _not_ ensure ACL
+	function read(array $where)		// did _not_ ensure ACL
 	{
+		//error_log(__METHOD__.'('.array2string($where).')');
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -367,18 +377,16 @@ class infolog_so
 			$minimum_uid_length = 8;
 		}
 
-		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
-		if (!$info_id || !$this->db->select($this->info_table,'*',
-			$this->db->expression($this->info_table,array('info_id'=>$info_id),' OR ',array('info_uid'=>$info_id)),__LINE__,__FILE__) ||
-			 !(($this->data = $this->db->row(true))))
+		if (!$where || !($this->data = $this->db->select($this->info_table,'*',$where,__LINE__,__FILE__)->fetch()))
 		{
 			$this->init( );
+			//error_log(__METHOD__.'('.array2string($where).') returning FALSE');
 			return False;
 		}
-		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
 		// entry without uid --> create one based on our info_id and save it
-
-			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
+		{
+			$this->data['info_uid'] = common::generate_uid('infolog', $this->data['info_id']);
 			$this->db->update($this->info_table,
 				array('info_uid' => $this->data['info_uid']),
 				array('info_id' => $this->data['info_id']), __LINE__,__FILE__);
@@ -387,11 +395,11 @@ class infolog_so
 		{
 			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 		}
-		$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__);
-		while ($this->db->next_record())
+		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__) as $row)
 		{
-			$this->data['#'.$this->db->f(0)] = $this->db->f(1);
+			$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
 		}
+		//error_log(__METHOD__.'('.array2string($where).') returning '.array2string($this->data));
 		return $this->data;
 	}
 
@@ -403,8 +411,7 @@ class infolog_so
 	 */
 	function get_status($ids)
 	{
-		$this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__);
-		while (($info = $this->db->row(true)))
+		foreach($this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__) as $info)
 		{
 			switch ($info['info_type'].'-'.$info['info_status'])
 			{
@@ -522,9 +529,10 @@ class infolog_so
 	 *
 	 * @param array $values with the data of the log-entry
 	 * @param int $check_modified=0 old modification date to check before update (include in WHERE)
+	 * @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	 * @return int|boolean info_id, false on error or 0 if the entry has been updated in the meantime
 	 */
-	function write($values,$check_modified=0)  // did _not_ ensure ACL
+	function write($values, $check_modified=0, $purge_cfs=null)  // did _not_ ensure ACL
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -575,21 +583,34 @@ class infolog_so
 
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
-
 		}
 
-		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
-			// entry without uid --> create one based on our info_id and save it
-
-			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
-			$this->db->update($this->info_table,
-				array('info_uid' => $this->data['info_uid']),
+		$update = array();
+		// entry without (reasonable) uid --> create one based on our info_id and save it
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
+		{
+			$update['info_uid'] = $this->data['info_uid'] = common::generate_uid('infolog', $info_id);
+		}
+		// entry without caldav_name --> generate one based on info_id plus '.ics' extension
+		if (empty($this->data['caldav_name']))
+		{
+			$update['caldav_name'] = $this->data['caldav_name'] = $info_id.'.ics';
+		}
+		if ($update)
+		{
+			$this->db->update($this->info_table,$update,
 				array('info_id' => $info_id), __LINE__,__FILE__);
 		}
 
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 		// write customfields now
+		if ($purge_cfs)
+		{
+			$where = array('info_id' => $info_id);
+			if ($purge_cfs == 'ical') $where[] = "info_extra_name LIKE '#%'";
+			$this->db->delete($this->extra_table,$where,__LINE__,__FILE__);
+		}
 		$to_delete = array();
 		foreach($values as $key => $val)
 		{
@@ -613,7 +634,7 @@ class infolog_so
 				$to_delete[] = substr($key,1);
 			}
 		}
-		if ($to_delete)
+		if ($to_delete && !$purge_cfs)
 		{
 			$this->db->delete($this->extra_table,array(
 					'info_id'			=> $info_id,
@@ -624,8 +645,8 @@ class infolog_so
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
 		// update the index
-		egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
-			array('info_uid','info_type','info_status','info_confirm','info_access'));
+		//egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
+		//	array('info_uid','info_type','info_status','info_confirm','info_access'));
 
 		return $this->data['info_id'];
 	}
@@ -645,7 +666,10 @@ class infolog_so
 			if ((int)$info_id <= 0) return 0;
 		}
 		$counts = array();
-		foreach($this->db->select($this->info_table,'info_id_parent,COUNT(*) AS info_anz_subs',array('info_id_parent' => $info_id),__LINE__,__FILE__,
+		foreach($this->db->select($this->info_table,'info_id_parent,COUNT(*) AS info_anz_subs',array(
+			'info_id_parent' => $info_id,
+			"info_status != 'deleted'",	// dont count deleted subs as subs, as they are not shown by default
+		),__LINE__,__FILE__,
 			false,'GROUP BY info_id_parent','infolog') as $row)
 		{
 			$counts[$row['info_id_parent']] = (int)$row['info_anz_subs'];
@@ -673,7 +697,7 @@ class infolog_so
 	 */
 	function search(&$query)
 	{
-		//echo "<p>soinfolog.search(".print_r($query,True).")</p>\n";
+		//error_log(__METHOD__.'('.array2string($query).')');
 		$action2app = array(
 			'addr'        => 'addressbook',
 			'proj'        => 'projects',
@@ -682,7 +706,9 @@ class infolog_so
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
 		if ($action != '')
 		{
-			$links = solink::get_links($action=='sp'?'infolog':$action,explode(',',$query['action_id']),'infolog');
+			$links = solink::get_links($action=='sp'?'infolog':$action,
+				is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog');
+
 			if (count($links))
 			{
 				$links = call_user_func_array('array_merge',$links);	// flatten the array
@@ -735,7 +761,7 @@ class infolog_so
 					$filtermethod .= ' AND '.$data;
 					continue;
 				}
-				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
+				if ($col[0] != '#' && substr($col,0,5) != 'info_' && isset($table_def['fd']['info_'.$col])) $col = 'info_'.$col;
 				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
 					switch ($col)
@@ -768,17 +794,16 @@ class infolog_so
 						// Multi-select - any entry with the filter value selected matches
 						$filtermethod .= $this->db->expression($this->extra_table, array(
 							'info_extra_name' => substr($col,1),
-							"CONCAT(',',info_extra_value,',') LIKE '%,$data,%'"
+							$this->db->concat("','",'info_extra_value',"','").' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$data.',%'),
 						)).')';
 					}
 					else
 					{
 						$filtermethod .= $this->db->expression($this->extra_table,array(
- 							'info_extra_name'  => substr($col,1),
- 							'info_extra_value' => $data,
- 						)).')';
+							'info_extra_name'  => substr($col,1),
+							'info_extra_value' => $data,
+						)).')';
 					}
-
 					$cfcolfilter++;
 				}
 			}
@@ -818,14 +843,15 @@ class infolog_so
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
+			$search = so_sql::search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
-				implode($pattern.' OR ',$columns).$pattern.') ';
+				implode($op, $search) .')';
 
 			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
-		$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
+		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
 		if (!$GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] &&
 			 $action != 'sp' || isset($query['subs']) && $query['subs'])
@@ -883,11 +909,19 @@ class infolog_so
 
 				$ids[$info['info_id']] = $info;
 			}
+			static $index_load_cfs;
+			if (is_null($index_load_cfs) && $query['col_filter']['info_type'])
+			{
+				$config_data = config::read('infolog');
+				$index_load_cfs = (array)$config_data['index_load_cfs'];
+			}
 			// if no specific custom field is selected, show/query all custom fields
-			if ($ids && ($query['custom_fields'] || $query['csv_export']))
+			if ($ids && ($query['custom_fields'] || $query['csv_export'] ||
+				$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
 			{
 				$where = array('info_id' => array_keys($ids));
-				if (!($query['csv_export'] || strchr($query['selectcols'],'#') === false))
+				if (!($query['csv_export'] || strchr($query['selectcols'],'#') === false ||
+					$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
 				{
 					$where['info_extra_name'] = array();
 					foreach(explode(',',$query['selectcols']) as $col)

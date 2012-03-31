@@ -14,7 +14,7 @@
 		</hbox>
 	</template>
 	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.005">
-		<grid>
+		<grid width="100%" class="my_form">
 			<columns>
 				<column width="2%"/>
 				<column/>
@@ -146,6 +146,7 @@
 							<description/>
 							<description/>
 						</hbox>
+						<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
 					</vbox>
 				</row>
 			</rows>
@@ -296,6 +297,7 @@
 							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
 							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 						</hbox>
+						<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
 					</vbox>
 				</row>
 			</rows>

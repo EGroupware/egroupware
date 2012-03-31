@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -16,6 +16,10 @@
  */
 class groupdav_hooks
 {
+	public $public_functions = array(
+		'log' => true,
+	);
+
 	/**
 	 * Show GroupDAV preferences link in preferences
 	 *
@@ -54,62 +58,103 @@ class groupdav_hooks
 
 		if ($hook_data['setup'])
 		{
-			$addressbooks = array();
+			$apps = array('addressbook','calendar','infolog');
 		}
 		else
 		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// Use P for personal addressbook
-			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+			$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
 		}
-		$addressbooks = array(
-			'P'	=> lang('Personal'),
-			'G'	=> lang('Primary Group'),
-			//'U' => lang('Accounts'),	// not yet working
-			'O' => lang('All in one'),
-			'A'	=> lang('All'),
-		) + $addressbooks;
-
-		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
-		if (!isset($addressbooks[0]))
+		foreach($apps as $app)
 		{
-			unset($addressbooks['U']);
-		}
-		else
-		{
-			unset($addressbooks[0]);
+			$class_name = $app.'_groupdav';
+			if (class_exists($class_name, true))
+			{
+				$settings += call_user_func(array($class_name,'get_settings'), $hook_data);
+			}
 		}
 
-		$settings['addressbook-home-set'] = array(
-			'type'   => 'multiselect',
-			'label'  => 'Addressbooks to sync with Apple clients',
-			'name'   => 'addressbook-home-set',
-			'help'   => 'Addressbooks for CardDAV attribute "addressbook-home-set".',
-			'values' => $addressbooks,
-			'xmlrpc' => True,
-			'admin'  => False,
-			'default' => 'P',
+		$settings[] = array(
+			'type'  => 'section',
+			'title' => 'Logging / debuging',
 		);
-
 		$settings['debug_level'] = array(
 			'type'   => 'select',
-			'label'  => 'Debug level for Apache/PHP error-log',
+			'label'  => 'Enable logging',
 			'name'   => 'debug_level',
-			'help'   => 'Enables debug-messages to Apache/PHP error-log, allowing to diagnose problems on a per user basis.',
+			'help'   => 'Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.',
 			'values' => array(
-				'0' => 'Off',
-				'r' => 'Requests and truncated responses',
-				'f' => 'Requests and full responses to files directory',
-				'1' => 'Debug 1 - function calls',
-				'2' => 'Debug 2 - more info',
-				'3' => 'Debug 3 - complete $_SERVER array',
+				'0' => lang('Off'),
+				'r' => lang('Requests and truncated responses to Apache error-log'),
+				'f' => lang('Requests and full responses to files directory'),
 			),
 			'xmlrpc' => true,
 			'admin'  => false,
 			'default' => '0',
 		);
+		if ($GLOBALS['type'] === 'forced' || $GLOBALS['type'] === 'user' &&
+			$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug-log'] !== 'never')
+		{
+			if ($GLOBALS['type'] === 'user')
+			{
+				$logs = array();
+				if (file_exists($log_dir=$GLOBALS['egw_info']['server']['files_dir'].'/groupdav') && ($files = scandir($log_dir)))
+				{
+					$account_lid_len = strlen($GLOBALS['egw_info']['user']['account_lid']);
+					foreach($files as $log)
+					{
+						if (substr($log,0,$account_lid_len+1) == $GLOBALS['egw_info']['user']['account_lid'].'-' &&
+							substr($log,-4) == '.log')
+						{
+							$logs['groupdav/'.$log] = egw_time::to(filemtime($log_dir.'/'.$log)).': '.
+								str_replace('!','/',substr($log,$account_lid_len+1,-4));
+						}
+					}
+				}
+				$link = egw::link('/index.php',array(
+					'menuaction' => 'groupdav.groupdav_hooks.log',
+					'filename' => '',
+				));
+				$onchange = "egw_openWindowCentered('$link'+encodeURIComponent(this.value), '_blank', 1000, 500); this.value=''";
+			}
+			else	// allow to force users to NOT be able to delete their profiles
+			{
+				$logs = array('never' => lang('Never'));
+			}
+			$settings['show-log'] = array(
+				'type'   => 'select',
+				'label'  => 'Show log of following device',
+				'name'   => 'show-log',
+				'help'   => lang('You need to set enable logging to "%1" to create/update a log.',
+					lang('Requests and full responses to files directory')),
+				'values' => $logs,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'onchange' => $onchange,
+			);
+		}
 		return $settings;
+	}
+
+	/**
+	 * Open log window for log-file specified in GET parameter filename (relative to files_dir)
+	 *
+	 * $_GET['filename'] has to be in groupdav sub-dir of files_dir and start with account_lid of current user
+	 *
+	 * @throws egw_exception_wrong_parameter
+	 */
+	public function log()
+	{
+		$filename = $_GET['filename'];
+		if (!preg_match('|^groupdav/'.preg_quote($GLOBALS['egw_info']['user']['account_lid'],'|').'-[^/]+\.log$|',$filename))
+		{
+			throw new egw_exception_wrong_parameter("Access denied to file '$filename'!");
+		}
+		$GLOBALS['egw_info']['flags']['css'] = '
+body { background-color: #e0e0e0; }
+pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
+';
+		$header = str_replace('!','/',substr($filename,10+strlen($GLOBALS['egw_info']['user']['account_lid']),-4));
+		$tail = new egw_tail($filename);
+		$GLOBALS['egw']->framework->render($tail->show($header),false,false);
 	}
 }

@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '1.8';
+$setup_info['calendar']['version'] = '1.9.004';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';
@@ -41,6 +41,9 @@ $setup_info['calendar']['hooks']['preferences'] = 'calendar_hooks::preferences';
 $setup_info['calendar']['hooks']['settings'] = 'calendar_hooks::settings';
 $setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.calendar_ui.sidebox_menu';
 $setup_info['calendar']['hooks']['search_link'] = 'calendar_hooks::search_link';
+$setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_validate';
+$setup_info['calendar']['hooks']['timesheet_set'] = 'calendar.calendar_bo.timesheet_set';
+$setup_info['calendar']['hooks']['export_limit'] = 'calendar_hooks::getAppExportLimit';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
@@ -65,3 +68,5 @@ $setup_info['calendar']['check_install'] = array(
 		'from' => 'Calendar',
 	),
 );
+
+

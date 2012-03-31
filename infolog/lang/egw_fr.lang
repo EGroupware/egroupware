@@ -1,0 +1,318 @@
+%1 records imported	infolog	fr	%1 enregistrements importés
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous pourriez %2revenir%3 et désélectionner Test d'Importation)
+- subprojects from	infolog	fr	- Sous-projets de
+0%	infolog	fr	0%
+10%	infolog	fr	10%
+100%	infolog	fr	100%
+20%	infolog	fr	20%
+30%	infolog	fr	30%
+40%	infolog	fr	40%
+50%	infolog	fr	50%
+60%	infolog	fr	60%
+70%	infolog	fr	70%
+80%	infolog	fr	80%
+90%	infolog	fr	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachement de fichiers via des liens symboliques</b> à la place du dépôt de fichiers et récupération via fichier:/chemin pour les clients avec accès réseau direct
+a short subject for the entry	infolog	fr	Un court sujet pour l'entrée
+abort without deleting	infolog	fr	Annuler sans supprimer
+accept	infolog	fr	Accepte
+action	infolog	fr	Action
+actual date and time	infolog	fr	date et heure actuelles
+add	infolog	fr	Ajouter
+add a file	infolog	fr	Ajouter un fichier
+add a new entry	infolog	fr	Ajouter uen nouvelle entrée
+add a new note	infolog	fr	Ajouter une nouvelle Note
+add a new phonecall	infolog	fr	Ajouter un nouvel appel téléphonique
+add a new sub-task, -note, -call to this entry	infolog	fr	Ajouter un(e) nouvelle sous-tâche, -note, -appel à cette entrée
+add a new todo	infolog	fr	Ajouter un nouveau A-faire
+add file	infolog	fr	Ajouter un fichier
+add sub	infolog	fr	Ajouter enfant
+add timesheet entry	infolog	fr	Ajouter une entrée feuille de temps
+add:	infolog	fr	Ajouter:
+all	infolog	fr	Tous
+all links and attachments	infolog	fr	Tous les liens et attachements
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fr	permet de changer le statut d´une entrée, c'est-à-dire de spécifier un A-Faire à fait s'il est terminé (les valeurs dépendent du type d´entrée).
+apply the changes	infolog	fr	Appliquer les changements
+are you shure you want to delete this entry ?	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
+attach a file	infolog	fr	Attacher un fichier
+attach file	infolog	fr	Attacher un fichier
+attension: no contact with address %1 found.	infolog	fr	Attention: Aucun contact avec adresse %1 trouvé.
+back to main list	infolog	fr	Retour à la liste principale
+billed	infolog	fr	Facturé
+both	infolog	fr	Les deux
+call	infolog	fr	Appel
+cancel	infolog	fr	Annuler
+cancelled	infolog	fr	Annulé
+categories	infolog	fr	Catégories
+category	infolog	fr	Catégorie
+change the status of an entry, eg. close it	infolog	fr	Change le statut d´une entrée, c'est-à-dire la ferme
+charset of file	infolog	fr	Jeu de caractères du fichier
+check to set startday	infolog	fr	Vérifier pour mettre le jour de départ
+check to specify custom contact	infolog	fr	Vérifiez pour spécifier un contact personnalisé
+click here to create the link	infolog	fr	Cliquer ici pour créer le lien
+click here to start the search	infolog	fr	Cliquer ici pour démarrer la recherche
+close	infolog	fr	Fermer
+comment	infolog	fr	Commentaire
+completed	infolog	fr	Terminé
+configuration	infolog	fr	Configuration
+confirm	infolog	fr	Confirmer
+contact	infolog	fr	Contact
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	fr	Copie vos changements vers le presse-papiers, %1recharger l'entrée%2 et les fusionne.
+create new links	infolog	fr	Créer de nouveaux liens
+creates a new field	infolog	fr	crée un nouveau champ
+creates a new status with the given values	infolog	fr	crée un nouveau statut avec la valeur spécifiée
+creates a new typ with the given name	infolog	fr	créée un nouveau type avec le nom spécifié
+creation	infolog	fr	Création
+csv-fieldname	infolog	fr	CSV-Nomdechamp
+csv-filename	infolog	fr	CSV-Nomdefichier
+csv-import	common	fr	CSV-Importer
+custom	infolog	fr	Personnalisé
+custom contact-address, leave empty to use information from most recent link	infolog	fr	Adresse de contact personnalisée, laissez vide pour utiliser l'information du lien le plus récent
+custom contact-information, leave emtpy to use information from most recent link	infolog	fr	Information de contact personnalisée, laissez vide pour utiliser l'information du lien le plus récent
+custom fields	infolog	fr	Champs personnalisés
+custom fields, typ and status	common	fr	Champs, types et statuts personnalisés
+custom regarding	infolog	fr	Personnalisé concernant
+custom status for typ	infolog	fr	Statuts personnalisés pour le type
+customfields	infolog	fr	Champs personnalisés
+date completed	infolog	fr	Date de clôture
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	fr	Date de clôture (laisser vide pour que ce soit rempli automatiquement si le statut est Fait ou Rempli)
+datecreated	infolog	fr	Date de création
+dates, status, access	infolog	fr	Dates, Statut, Accès
+days	infolog	fr	Jours
+default filter for infolog	infolog	fr	Filtre par défaut pour InfoLog
+default status for a new log entry	infolog	fr	statut par défaut pour une nouvelle entrée de log
+delegation	infolog	fr	Délégation
+delete	infolog	fr	Supprimer
+delete one record by passing its id.	infolog	fr	Effacer un enregistrement en passant son id.
+delete the entry	infolog	fr	supprimer l´entrée
+delete this entry	infolog	fr	supprimer cette entrée
+delete this entry and all listed sub-entries	infolog	fr	Détruire cette entrée et toutes les sous-entrées listées
+deletes the selected typ	infolog	fr	supprime le type sélectionné
+deletes this field	infolog	fr	supprime ce champ
+deletes this status	infolog	fr	supprime ce statut
+description	infolog	fr	Description
+determines the order the fields are displayed	infolog	fr	détermine l´ordre d´affichage des champs
+disables a status without deleting it	infolog	fr	désactive un statut sans le supprimer
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fr	Voulez-vous une confirmation du responsable sur: accepter, finir la tâche, ou les deux
+do you want to see custom infolog types in the calendar?	infolog	fr	Voulez-vous voir les types d'InfoLog personnalisé dans le calendrier?
+don't show infolog	infolog	fr	NE PAS afficher InfoLog
+done	infolog	fr	Fait
+download	infolog	fr	Télécharger
+duration	infolog	fr	Durée
+each value is a line like <id>[=<label>]	infolog	fr	chaque valeur est une ligne telle que <id>[=<label>]
+edit	infolog	fr	Modifier
+edit or create categories for ingolog	infolog	fr	Modifier ou créer des catégories pour InfoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	fr	modifier les droits (édition complète des droits, pouvant rendre quelqu'un d'autre responsable!)
+edit status	infolog	fr	Modifier Statut
+edit the entry	infolog	fr	Modifier l'entrée
+edit this entry	infolog	fr	Modifier cette entrée
+empty for all	infolog	fr	vide pour tous
+enddate	infolog	fr	Date de fin
+enddate can not be before startdate	infolog	fr	La date de fin ne peut pas être avant la date de début
+enter a custom contact, leave empty if linked entry should be used	infolog	fr	Entrez un contact personnalisé, laissez vide si l'entrée liée devrait être utilisée
+enter a custom phone/email, leave empty if linked entry should be used	infolog	fr	Entrez un EMail/numéro de téléphone personnalisé, laissez vide si l'entrée liée devait être utilisée
+enter a textual description of the log-entry	infolog	fr	Entrez une description textuelle de l'entrée de Log
+enter the query pattern	infolog	fr	Entrez le champ de requête
+entry and all files	infolog	fr	Entrée et tous les fichiers
+error: saving the entry	infolog	fr	Erreur: lors de l'enregistrement de l'entrée
+error: the entry has been updated since you opened it for editing!	infolog	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
+existing links	infolog	fr	Liens existants
+fax	infolog	fr	Fax
+fieldseparator	infolog	fr	Séparateur de champ
+finish	infolog	fr	Terminer
+for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
+from	infolog	fr	De
+general	infolog	fr	Général
+group owner for	infolog	fr	Propriétaire de Groupe pour
+high	infolog	fr	Haut
+id	infolog	fr	Id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fr	Si un type a un propriétaire de groupe, toutes les entrées de ce type appartiendront à ce groupe, et NON à l'utilisateur qui l'a créé!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fr	Si non renseigné, la ligne contenant la recherche et les filtres est cachée lorsqu'il y a plus d'entrées que le "Nombre max d'occurences correspondantes par page" (défini dans les préférences).
+import	infolog	fr	Importer
+import next set	infolog	fr	importer l´élément suivant
+info log	common	fr	InfoLog
+infolog	common	fr	InfoLog
+infolog - delete	infolog	fr	InfoLog - Supprimer
+infolog - edit	infolog	fr	InfoLog - Modifier
+infolog - import csv-file	infolog	fr	InfoLog - Importer fichier CSV
+infolog - new	infolog	fr	InfoLog - Nouveau
+infolog - new subproject	infolog	fr	InfoLog - Nouveau sous-projet
+infolog - subprojects from	infolog	fr	InfoLog - Sous-projets de
+infolog entry deleted	infolog	fr	InfoLog entrée supprimée
+infolog entry saved	infolog	fr	InfoLog entrée enregistrée
+infolog filter for the main screen	infolog	fr	InfoLog filtre pour l'écran principal
+infolog list	infolog	fr	Liste InfoLog
+infolog preferences	common	fr	Préférences InfoLog
+infolog-fieldname	infolog	fr	InfoLog - Nom du champ
+invalid filename	infolog	fr	Nom de fichier invalide
+label<br>helptext	infolog	fr	Label<br>Texte d´aide
+last changed	infolog	fr	Dernière modification
+last modified	infolog	fr	Dernière modification
+leave it empty	infolog	fr	laisser vide
+leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
+leaves without saveing	infolog	fr	quitte sans enregistrer
+length<br>rows	infolog	fr	Longueur<br>Lignes
+link	infolog	fr	Lien
+links	infolog	fr	Liens
+links of this entry	infolog	fr	Liens de cette entrée
+list all categories	infolog	fr	Liste toutes les catégories
+list no subs/childs	infolog	fr	Ne pas lister les Sous/Enfants
+location	infolog	fr	Emplacement
+longer textual description	infolog	fr	Description textuelle plus longue
+low	infolog	fr	Bas
+max length of the input [, length of the inputfield (optional)]	infolog	fr	taille max de l´entrée [, taille du champ d´entrée (optionnel)]
+name must not be empty !!!	infolog	fr	Le nom ne peut pas être vide !!!
+name of new type to create	infolog	fr	nom du nouveau type à créer
+never hide search and filters	infolog	fr	Ne jamais cacher la recherche et les filtres
+new name	infolog	fr	nouveau nom
+new search	infolog	fr	Nouvelle recherche
+no - cancel	infolog	fr	Non - Abandonner
+no describtion, links or attachments	infolog	fr	Pas de description, de liens ou d'attachements
+no details	infolog	fr	Pas de détails
+no entries found, try again ...	infolog	fr	Aucune occurrence trouvée, essayez à nouveau ...
+no filter	infolog	fr	Aucun filtre
+no links or attachments	infolog	fr	Aucun lien ou attachement
+none	infolog	fr	Aucun
+normal	infolog	fr	Normal
+not	infolog	fr	pas
+not assigned	infolog	fr	Pas attribué
+not-started	infolog	fr	Non démarré
+note	infolog	fr	Note
+number of records to read (%1)	infolog	fr	Nombre d'enregistrements à lire (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	fr	nombre de lignes pour un champ d´entrées multilignes ou pour une boîte de sélection multiple
+offer	infolog	fr	Offre
+ongoing	infolog	fr	Entrant
+only for details	infolog	fr	Seulement pour les détails
+only the attachments	infolog	fr	Seulement les attachements
+only the links	infolog	fr	Seulement les liens
+open	infolog	fr	Ouvrir
+optional note to the link	infolog	fr	note optionnelle vers le lien
+order	infolog	fr	Tri
+overdue	infolog	fr	Tardif
+own	infolog	fr	Propre
+own open	infolog	fr	Propre ouvert
+own overdue	infolog	fr	Propre tardif
+own upcoming	infolog	fr	Propre arrivant
+path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin côté (web)server<br>p.ex. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	fr	Le chemin vers les fichiers utilisateurs et groupes DOIT FIGURER EN DEHORS du répertoire racine des serveurs Web!!!
+pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
+pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
+percent completed	infolog	fr	Pourcentage complété
+permission denied	infolog	fr	Permission refusée
+phone	infolog	fr	Appel téléphonique
+phone/email	infolog	fr	Téléphone/EMail
+phonecall	infolog	fr	Appel téléphonique
+planned	infolog	fr	planifié
+planned time	infolog	fr	Temps prévu
+price	infolog	fr	Prix
+priority	infolog	fr	Priorité
+private	infolog	fr	Privé
+project	infolog	fr	Projet
+project settings: price, times	infolog	fr	Réglages projet: prix, heures
+re:	infolog	fr	Re:
+read one record by passing its id.	infolog	fr	Lire un enregistrement en passant son id.
+read rights (default)	infolog	fr	droits de lecture (défaut)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192\.168\.1\.
+remark	infolog	fr	Remarque
+remove this link (not the entry itself)	infolog	fr	Enlever ce lien (pas l'entrée elle-même)
+responsible	infolog	fr	Responsable
+responsible open	infolog	fr	Responsable ouverture
+responsible overdue	infolog	fr	Responsable tardif
+responsible upcoming	infolog	fr	Responsable à venir
+responsible user, priority	infolog	fr	Responsable utilisateur, priorité
+returns a list / search for records.	infolog	fr	Retourne une liste / Recherche d´enregistrements.
+rights for the responsible	infolog	fr	Droits pour le responsable
+save	infolog	fr	Enregistrer
+saves the changes made and leaves	infolog	fr	enregistre les modifications et quitte
+saves this entry	infolog	fr	Enregistre cette entrée
+search	infolog	fr	Rechercher
+search for:	infolog	fr	Rechercher ceci:
+select	infolog	fr	Choisir
+select a category for this entry	infolog	fr	Choisissez une catégorie pour cette entrée
+select a price	infolog	fr	Sélectionnez un prix
+select a priority for this task	infolog	fr	Choisissez une priorité pour cette tâche
+select a project	infolog	fr	Sélectionnez un projet
+select a responsible user: a person you want to delegate this task	infolog	fr	Choisissez un utilisateur responsable: une personne à qui déléguer cette tâche
+select a typ to edit it's status-values or delete it	infolog	fr	sélectionnez un type dont la valeur est à éditer ou effacez-le
+select an app to search in	infolog	fr	Choisissez une App dans laquelle rechercher
+select an entry to link with	infolog	fr	Choisissez une entrée à lier
+select to filter by owner	infolog	fr	Filtrer par propriétaire
+select to filter by responsible	infolog	fr	Filtrer par responsable
+sets the status of this entry and its subs to done	infolog	fr	Fixer le statut de cette entrée et ses sous-entrées à Fait
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fr	InfoLog doit-il afficher les sous-tâches, -appels ou -notes dans la vue normale ou pas. Vous pouvez toujours voir les sous- via leurs parents.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	fr	InfoLog doit-il afficher les liens vers d'autres applications et/ou les attachements de fichiers dans la liste InfoLog (vue normale quand vous entrez dans InfoLog)
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	fr	InfoLog doit-il s'afficher sur l'écran principal et avec quel filtre. Ne fonctionne que si vous n'avez pas sélectionné une application pour l'écran principal (dans vos préférences)
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	fr	InfoLog doit-il utiliser les noms complets (surnom et nom de famille) ou juste les noms de connexion.
+should the calendar show custom types too	infolog	fr	Le calendrier doit-il afficher aussi les types personnalisés
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	fr	InfoLog doit-il afficher un Id numérique unique qui peut être utilisé p.ex. comme Id de ticket.
+should the infolog list show the column "last modified".	infolog	fr	La liste InfoLog doit-elle afficher la colonne "dernière modification".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	fr	La liste InfoLog doit-elle afficher le pourcentage de réalisation seulement pour le statut en cours ou deux icônes séparées.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	fr	Cette entrée ne doit-elle être visible que par vous et les personnes à qui vous avez donné l'accès privé via ACL
+show a column for used and planned times in the list.	infolog	fr	Afficher une colonne dans la liste pour les temps utilisés et planifiés.
+show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
+show in the infolog list	infolog	fr	Montrer dans la liste InfoLog
+show last modified	infolog	fr	Montrer les derniers modifiés
+show status and percent done separate	infolog	fr	Montrer les statuts et pourcentage réalisés séparément
+show ticket id	infolog	fr	Montrer l'Id de ticket
+show times	infolog	fr	Montrer les heures
+small view	infolog	fr	vue réduite
+start a new search, cancel this link	infolog	fr	Démarre une nouvelle recherche, annule ce lien
+startdate	infolog	fr	Date de départ
+startdate enddate	infolog	fr	Date de départ date de fin
+startdate for new entries	infolog	fr	Date de début pour les nouvelles entrées
+startrecord	infolog	fr	Enregistrement de départ
+status	infolog	fr	Statut
+status ...	infolog	fr	Statut ...
+sub	infolog	fr	Enfant
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	fr	Les sous-entrées deviennent les enfants des parents des entrées principales s'il n'y a pas de parent
+subject	infolog	fr	Sujet
+task	infolog	fr	Tâche
+test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'importation (montrer les enregistrements importables <u>seulement</u> dans le navigateur)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fr	le nom utilisé en interne (<= 10 caractères), le modifier rend les données indisponible
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
+the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
+til when should the todo or phonecall be finished	infolog	fr	jusqu'à quand le A-faire ou l'appel téléphonique devrait être terminé
+times	infolog	fr	Heures
+to many might exceed your execution-time-limit	infolog	fr	trop peut excéder votre temps limite d´exécution.
+to what should the startdate of new entries be set.	infolog	fr	A quoi devrait être fixée la date de départ de la nouvelle entrée.
+today	infolog	fr	Aujourd'hui
+todays date	infolog	fr	date du jour
+todo	infolog	fr	A-faire
+translation	infolog	fr	Traduction
+typ	infolog	fr	Type
+typ '%1' already exists !!!	infolog	fr	Type '%1' existe déjà !!!
+type	infolog	fr	Type
+type ...	infolog	fr	Type ...
+type of customfield	infolog	fr	Type de champ personnalisé
+type of the log-entry: note, phonecall or todo	infolog	fr	Type de l'entrée Log: Note, Appel téléphonique ou A-faire
+unlink	infolog	fr	Délier
+upcoming	infolog	fr	Arrivant
+urgency	infolog	fr	Priorité
+urgent	infolog	fr	Urgent
+used time	infolog	fr	Temps utilisé
+valid path on clientside<br>eg. \\server\share or e:\	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+valid path on clientside<br>eg. servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+values for selectbox	infolog	fr	Valeurs des boîtes de sélection
+view all subs of this entry	infolog	fr	Voir tous les Enfants de cette entrée
+view other subs	infolog	fr	Voir les autres Enfants
+view parent	infolog	fr	Voir le parent
+view subs	infolog	fr	Voir les Enfants
+view the parent of this entry and all his subs	infolog	fr	Voir le parent de cette entrée et tous ses Enfants
+view this linked entry in its application	infolog	fr	Voir cette entrée liée dans son application
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fr	Quand le A-faire ou l'appel téléphonique devrait être démarré, il s'affiche depuis cette date dans le filtre ouvert ou propre ouvert (page de démarrage)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fr	Quels champs supplémentaires le responsable devrait être autorisé à modifier sans avoir à modifier les droits d'édition??<br />Statuts, pourcentage et date de fin sont toujours permis.
+which implicit acl rights should the responsible get?	infolog	fr	Quels droits ACL implicites le responsable devrait obtenir?
+whole query	infolog	fr	requête entière
+will-call	infolog	fr	Va appeler
+write (add or update) a record by passing its fields.	infolog	fr	Ecrit (ajoute ou met à jour) un enregistrement en passant ses champs.
+yes - delete	infolog	fr	Oui - Supprimer
+yes - delete including sub-entries	infolog	fr	Oui - Supprimer y-compris les sous-entrées
+you can't delete one of the stock types !!!	infolog	fr	Vous ne pouvez pas effacer un des types de stock !!!
+you have entered an invalid ending date	infolog	fr	Vous avez entré une date de fin invalide
+you have entered an invalid starting date	infolog	fr	Vous avez entré une date de début invalide
+you have to enter a name, to create a new typ!!!	infolog	fr	Vous devez entrer un nom pour créer un nouveau type!!!
+you must enter a subject or a description	infolog	fr	Vous devez entrer un sujet ou une description
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	fr	Votre base de données n'est PAS à jour (%1 au lieu de %2), veuillez exécuter %3setup%4 pour la mettre à jour.

@@ -78,7 +78,7 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
 			{
-				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
+				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.admin_accesslog.sessions');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))

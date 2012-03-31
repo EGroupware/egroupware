@@ -187,6 +187,7 @@ class so_sql_cf extends so_sql
 		),__LINE__,__FILE__,false,'',$this->app) as $row)
 		{
 			$entry =& $entries[$row[$this->extra_id]];
+			if (!is_array($entry)) $entry = array();
 			$field = $this->get_cf_field($row[$this->extra_key]);
 
 			if ($this->allow_multiple_values && $this->is_multiple($row[$this->extra_key]))
@@ -417,10 +418,12 @@ class so_sql_cf extends so_sql
 		// if string given as criteria --> search in all (or $this->columns_to_search) columns including custom fields
 		if ($criteria && is_string($criteria))
 		{
-			$criteria = $this->search2criteria($criteria,$wildcard,$op,$this->extra_value);
+			$criteria = $this->search2criteria($criteria,$wildcard,$op);
 		}
 		if ($criteria && is_array($criteria))
 		{
+			$join .= $this->extra_join;
+
 			// check if we search in the custom fields
 			if (isset($criteria[$this->extra_value]))
 			{
@@ -432,7 +435,6 @@ class so_sql_cf extends so_sql
 					$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
 					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard);
 				unset($criteria[$this->extra_value]);
-				$join .= $this->extra_join;
 			}
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
 			if (isset($criteria[$this->autoinc_id]))
@@ -444,15 +446,76 @@ class so_sql_cf extends so_sql
 				}
 				unset($criteria[$this->autoinc_id]);
 			}
+			// replace ambiguous column with (an exact match of) table_name.column
+			foreach($criteria as $name => $val)
+			{
+				$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
+				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)])
+				{
+					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+						array_search($name, $this->db_cols) => $val,
+					));
+					unset($criteria[$name]);
+				}
+				elseif (is_string($name) && $this->is_cf($name))
+				{
+					if ($op != 'AND')
+					{
+						$name = substr($name, 1);
+						if (($negate = $criteria[$name][0] === '!'))
+						{
+							$val = substr($val,1);
+						}
+						$cfcriteria[] = '(' . $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+							$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
+							$this->db->quote($wildcard.$val.$wildcard) . ' AND ' .
+							$this->extra_table.'.'.$this->extra_key . ' = ' . $this->db->quote($name) .
+							')';
+						unset($criteria[self::CF_PREFIX.$name]);
+					}
+					else
+					{
+						// criteria operator is AND we remap the criteria to be transformed to filters
+						$filter[$name] = $val;
+						unset($criteria[$name]);
+					}
+				}
+			}
+			if ($cfcriteria && $op =='OR') $criteria[] = implode(' OR ',$cfcriteria);
+		}
+		if($only_keys === true) {
+			// Expand to keys here, so table_name can be prepended below
+			$only_keys = array_values($this->db_key_cols);
+		}
+		// replace ambiguous column with (an exact match of) table_name.column
+		if(is_array($only_keys))
+		{
+			foreach($only_keys as $key => &$col)
+			{
+				if(is_numeric($key) && in_array($col, $this->db_cols))
+				{
+					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
+				}
+			}
 		}
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
-		if (strpos($order_by,self::CF_PREFIX) !== false &&
-			preg_match('/'.self::CF_PREFIX.'([^ ]+) (asc|desc)/i',$order_by,$matches))
+		if (strpos($order_by,self::CF_PREFIX) !== false)
 		{
-			$order_by = str_replace($matches[0],'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$matches[2],$order_by);
-			$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($matches[1]);
+			// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
+			$fields2order = explode(',',$order_by);
+			foreach($fields2order as $k => $v)
+			{
+				if (strpos($v,self::CF_PREFIX) !== false)
+				{
+					// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
+					$buff = explode(' ',trim($v));
+					$orderDir = array_pop($buff);
+					$key = trim(implode(' ',$buff));
+					$order_by = str_replace($v,'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$orderDir,$order_by);
+					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote(substr($key,1));
+				}
+			}
 		}
-
 		// check if we filter by a custom field
 		if (is_array($filter))
 		{
@@ -470,6 +533,17 @@ class so_sql_cf extends so_sql
 					}
 					unset($filter[$this->autoinc_id]);
 				}
+				// replace ambiguous column with (an exact match of) table_name.column
+				elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
+				{
+					$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
+					if($extra_columns['fd'][array_search($name, $this->db_cols)]) {
+						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+							array_search($name, $this->db_cols) => $val,
+						));
+						unset($filter[$name]);
+					}
+				}
 				elseif (is_string($name) && $this->is_cf($name))
 				{
 					if (!empty($val))	// empty -> dont filter
@@ -480,13 +554,21 @@ class so_sql_cf extends so_sql
 						}
 						else	// using egw_db::expression to allow to use array() with possible values or NULL
 						{
-							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' && 
+							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' &&
 								$this->customfields[$this->get_cf_name($name)]['rows'] > 1)
 							{
 								// Multi-select - any entry with the filter value selected matches
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
 									$this->extra_value,$this->db->expression($this->extra_table,array(
-										"CONCAT(',',{$this->extra_value},',') LIKE '%,$val,%'"
+										$this->db->concat("','",$this->extra_value,"','").' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$val.',%')
+									))
+								);
+							}
+							elseif ($this->customfields[$this->get_cf_name($name)]['type'] == 'text')
+							{
+								$sql_filter = str_replace($this->extra_value,'extra_filter.'.$this->extra_value,
+										$this->db->expression($this->extra_table,array(
+										$this->extra_value.' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($wildcard.$val.$wildcard)
 									))
 								);
 							}
@@ -495,7 +577,6 @@ class so_sql_cf extends so_sql
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
 									$this->extra_value,$this->db->expression($this->extra_table,array($this->extra_value => $val)));
 							}
-
 						}
 						// need to use a LEFT JOIN for negative search or to allow NULL values
 						$need_left_join = $val[0] === '!' || strpos($sql_filter,'IS NULL') !== false ? ' LEFT ' : '';
@@ -532,6 +613,45 @@ class so_sql_cf extends so_sql
 		if (!empty($join) && !is_array($only_keys)) $only_keys = 'DISTINCT '.$only_keys;	// otherwise join returns rows more then once
 
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+	}
+
+	/**
+	 * Return criteria array for a given search pattern
+	 * Reimplemented to search custom fields
+	 *
+	 * @param string $pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
+	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
+	 * @param string $extra_col=null extra column to search
+	 * @param array $search_cols=array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @return array or column => value pairs
+	 */
+	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	{
+		// This function can get called multiple times.  Make sure it doesn't re-process.
+		if (empty($pattern) || is_array($pattern)) return $pattern;
+		if(strpos($pattern, 'CAST(COALESCE(') !== false)
+		{
+			return $pattern;
+		}
+
+		$pattern = trim($pattern);
+		$filter = array();
+		if(!$search_cols)
+		{
+			$search_cols = $this->get_default_search_columns();
+		}
+
+		// Add in custom field column, if it is not already there
+		if(!in_array($this->extra_table.'.'.$this->extra_value, $search_cols))
+		{
+			$search_cols[] = $this->extra_table.'.'.$this->extra_value;
+		}
+
+		// Let parent deal with the normal stuff
+		$criteria = parent::search2criteria($pattern, $wildcard, $op, $extra_col, $search_cols);
+
+		return $criteria;
 	}
 
 	/**

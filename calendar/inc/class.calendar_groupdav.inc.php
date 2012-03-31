@@ -1,20 +1,23 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: calendar handler
+ * EGroupware: CalDAV / GroupDAV access: calendar handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
- * eGroupWare: GroupDAV access: calendar handler
+ * EGroupware: CalDAV / GroupDAV access: calendar handler
+ *
+ * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
 class calendar_groupdav extends groupdav_handler
 {
@@ -28,7 +31,7 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * vCalendar Instance for parsing
 	 *
-	 * @var array
+	 * @var Horde_iCalendar
 	 */
 	var $vCalendar;
 
@@ -57,24 +60,45 @@ class calendar_groupdav extends groupdav_handler
 	var $client_shared_uid_exceptions = true;
 
 	/**
-	 * Are we using id or uid for the path/url
+	 * Enable or disable Schedule-Tag handling:
+	 * - return Schedule-Tag header in PUT response
+	 * - update only status and alarms of calendar owner, if If-Schedule-Tag-Match header in PUT
+	 *
+	 * Disabling Schedule-Tag for iCal, as current implementation seems to create too much trouble :-(
+	 * - iCal on OS X always uses If-Schedule-Tag-Match, even if other stuff in event is changed (eg. title)
+	 * - iCal on iOS allways uses both If-Schedule-Tag-Match and If-Match (ETag)
+	 * - Lighting 1.0 is NOT using it
+	 *
+	 * @var boolean
 	 */
-	const PATH_ATTRIBUTE = 'id';
+	var $use_schedule_tag = true;
+
+	/**
+	 * Are we using id, uid or caldav_name for the path/url
+	 *
+	 * Get's set in constructor to 'caldav_name' and groupdav_handler::$path_extension = ''!
+	 */
+	static $path_attr = 'id';
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param int $debug=null debug-level to set
-	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null principal url of handler
+	 * @param groupdav $groupdav calling class
 	 */
-	function __construct($app,$debug=null, $base_uri=null, $principalURL=null)
+	function __construct($app, groupdav $groupdav)
 	{
-		parent::__construct($app,$debug,$base_uri,$principalURL);
+		parent::__construct($app, $groupdav);
 
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_iCalendar;
+
+		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
+		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		{
+			self::$path_attr = 'caldav_name';
+			groupdav_handler::$path_extension = '';
+		}
 	}
 
 	/**
@@ -85,16 +109,18 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function get_path($event)
 	{
-		if (is_numeric($event) && self::PATH_ATTRIBUTE == 'id')
+		if (is_numeric($event) && self::$path_attr == 'id')
 		{
 			$name = $event;
 		}
 		else
 		{
 			if (!is_array($event)) $event = $this->bo->read($event);
-			$name = $event[self::PATH_ATTRIBUTE];
+			$name = $event[self::$path_attr];
 		}
-		return $name.'.ics';
+		$name .= groupdav_handler::$path_extension;
+		//error_log(__METHOD__.'('.array2string($event).") path_attr='".self::$path_attr."', path_extension='".groupdav_handler::$path_extension."' returning ".array2string($name));
+		return $name;
 	}
 
 	/**
@@ -114,6 +140,11 @@ class calendar_groupdav extends groupdav_handler
 			error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
 		}
 
+		if ($options['root']['name'] == 'free-busy-query')
+		{
+			return $this->free_busy_report($path, $options, $user);
+		}
+
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
@@ -122,11 +153,27 @@ class calendar_groupdav extends groupdav_handler
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
+			'no_total' => true,	// we need no total number of rows (saves extra query)
 		);
+		if ($this->client_shared_uid_exceptions)	// do NOT return (non-virtual) exceptions
+		{
+			$filter['query'] = array('cal_reference' => 0);
+		}
 
 		if ($path == '/calendar/')
 		{
 			$filter['filter'] = 'owner';
+		}
+		// scheduling inbox, shows only not yet accepted or rejected events
+		elseif (substr($path,-7) == '/inbox/')
+		{
+			$filter['filter'] = 'unknown';
+			$filter['start'] = $this->bo->now;	// only return future invitations
+		}
+		// ToDo: not sure what scheduling outbox is supposed to show, leave it empty for now
+		elseif (substr($path,-8) == '/outbox/')
+		{
+			return true;
 		}
 		else
 		{
@@ -140,31 +187,19 @@ class calendar_groupdav extends groupdav_handler
 			// when trying to request not supported components, eg. VTODO on a calendar collection
 			return true;
 		}
+		if ($id) $path = dirname($path).'/';	// caldav_name get's added anyway in the callback
+
 		if ($this->debug > 1)
 		{
-			error_log(__METHOD__."($path,,,$user,$id) filter=".
-				array2string($filter));
+			error_log(__METHOD__."($path,,,$user,$id) filter=".array2string($filter));
 		}
 
-		// check if we have to return the full calendar data or just the etag's
-		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
-		{
-			foreach($options['props'] as $prop)
-			{
-				if ($prop['name'] == 'calendar-data')
-				{
-					$filter['calendar_data'] = true;
-					break;
-				}
-			}
-		}
-/* disabling not working iterator
 		// return iterator, calling ourself to return result in chunks
 		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+
 		return true;
 	}
-*/
+
 	/**
 	 * Callback for profind interator
 	 *
@@ -173,15 +208,13 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-/* disabling not working iterator
 	function propfind_callback($path,array $filter,$start=false)
 	{
-*/
 		if ($this->debug) $starttime = microtime(true);
 
-		$calendar_data = $filter['calendar_data'];
-		unset($filter['calendar_data']);
-/* disabling not working iterator
+		$calendar_data = $this->groupdav->prop_requested('calendar-data', groupdav::CALDAV, true);
+		if (!is_array($calendar_data)) $calendar_data = false;	// not in allprop or autoindex
+
 		$files = array();
 
 		if (is_array($start))
@@ -189,54 +222,44 @@ class calendar_groupdav extends groupdav_handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
-error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($filter));
-*/
 		$events =& $this->bo->search($filter);
 		if ($events)
 		{
-			// get all max user modified times at once
-			foreach($events as $k => $event)
-			{
-				if ($this->client_shared_uid_exceptions && $event['reference'])
-				{
-					// this exception will be handled with the series master
-					unset($events[$k]);
-					continue;
-				}
-				$ids[] = $event['id'];
-			}
-			$max_user_modified = $this->bo->so->max_user_modified($ids);
-
 			foreach($events as $event)
 			{
-				$event['max_user_modified'] = $max_user_modified[$event['id']];
+				$etag = $this->get_etag($event, $schedule_tag);
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
-					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', $this->agent != 'kde' ?
-	            			'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
-					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
-					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
+					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
+					'getetag' => '"'.$etag.'"',
+					'getlastmodified' => max($event['modified'], $event['max_user_modified']),
 				);
+				if ($this->use_schedule_tag)
+				{
+					$props['schedule-tag'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-tag', '"'.$schedule_tag.'"');
+				}
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event,$filter['users']);
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
+					$content = $this->iCal($event, $filter['users'],
+						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
+						!isset($calendar_data['children']['expand']) ? false :
+							($calendar_data['children']['expand']['attrs'] ? $calendar_data['children']['expand']['attrs'] : true));
+					$props['getcontentlength'] = bytes($content);
+					$props['calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
-				else
+				/* Calendarserver reports new events with schedule-changes: action: create, which iCal request
+				 * adding it, unfortunately does not lead to showing the new event in the users inbox
+				if (strpos($path, '/inbox/') !== false && $this->groupdav->prop_requested('schedule-changes'))
 				{
-					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
-				}
-/* disabling not working iterator
-				$files[] = array(
-*/
-				$files['files'][] = array(
-	            	'path'  => $path.$this->get_path($event),
-	            	'props' => $props,
-				);
+					$props['schedule-changes'] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'schedule-changes',array(
+						HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'dtstamp',gmdate('Ymd\THis',$event['created']).'Z'),
+						HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'action',array(
+							HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'create',''),
+						)),
+					));
+				}*/
+				$files[] = $this->add_resource($path, $event, $props);
 			}
 		}
 		if ($this->debug)
@@ -244,10 +267,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
 				' to return '.count($files['files']).' items');
 		}
-/* disabling not working iterator
 		return $files;
-*/
-		return true;
 	}
 
 	/**
@@ -327,6 +347,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 				$cal_filters['end']   = $cal_end;
 			}
 		}
+
 		// multiget or propfind on a given id
 		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
 		if ($options['root']['name'] == 'calendar-multiget' || $id)
@@ -339,15 +360,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 			if ($id)
 			{
-				if (is_numeric($id))
-				{
-					$ids[] = (int)$id;
-				}
-				else
-				{
-					$cal_filters['query']['cal_uid'] = basename($id,'.ics');
-				}
-
+				$cal_filters['query'][self::$path_attr] = groupdav_handler::$path_extension ?
+					basename($id,groupdav_handler::$path_extension) : $id;
 			}
 			else	// fetch all given url's
 			{
@@ -356,22 +370,13 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (!($id = basename(array_pop($parts),'.ics'))) continue;
-
-						if (is_numeric($id))
+						if (($id = array_pop($parts)))
 						{
-							$ids[] = $id;
-						}
-						else	// eg. lightning uses multiget after a PUT on the PUT url, which is the uid
-						{
-							$cal_filters['query']['cal_uid'][] = $id;
+							$cal_filters['query'][self::$path_attr][] = groupdav_handler::$path_extension ?
+								basename($id,groupdav_handler::$path_extension) : $id;
 						}
 					}
 				}
-			}
-			if ($ids)
-			{
-				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
 
 			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids).', cal_filters='.array2string($cal_filters));
@@ -393,10 +398,15 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		{
 			return $event;
 		}
-		$options['data'] = $this->iCal($event,$user);
+
+		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
-		header('ETag: '.$this->get_etag($event));
+		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
+		if ($this->use_schedule_tag)
+		{
+			header('Schedule-Tag: "'.$schedule_tag.'"');
+		}
 		return true;
 	}
 
@@ -407,9 +417,11 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 *
 	 * @param array $event
 	 * @param int $user=null account_id of calendar to display
+	 * @param string $method=null eg. 'PUBLISH' for inbox, nothing anywhere else
+	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
 	 * @return string
 	 */
-	private function iCal(array $event,$user=null)
+	private function iCal(array $event,$user=null, $method=null, $expand=false)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -428,13 +440,18 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		// for recuring events we have to add the exceptions
 		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
 		{
-			$events =& self::get_series($event['uid'],$this->bo);
+			if (is_array($expand))
+			{
+				if (isset($expand['start'])) $expand['start'] = $this->vCalendar->_parseDateTime($expand['start']);
+				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
+			}
+			$events =& self::get_series($event['uid'], $this->bo, $expand);
 		}
 		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
 		{
 			$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
 		}
-		return $handler->exportVCal($events,'2.0','PUBLISH');
+		return $handler->exportVCal($events, '2.0', $method);
 	}
 
 	/**
@@ -444,9 +461,10 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 *
 	 * @param string $uid UID
 	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
+	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false)
 	{
 		if (is_null($bo)) $bo = new calendar_bopdate();
 
@@ -455,22 +473,21 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		{
 			return array(); // should never happen
 		}
+		$exceptions =& $master['recur_exception'];
 
-		$exceptions = $master['recur_exception'];
-
-		$events =& $bo->search(array(
+		$params = array(
 			'query' => array('cal_uid' => $uid),
 			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
 			'date_format' => 'server',
-		));
-		$events = array_merge(array($master), $events);
+		);
+		if (is_array($expand)) $params += $expand;
+
+		$events =& $bo->search($params);
+
 		foreach($events as $k => &$recurrence)
 		{
-			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-			//	"($uid)[$k]:" . array2string($recurrence));
-			if (!$k) continue; // nothing to change
-
+			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
 			if ($recurrence['id'] != $master['id'])	// real exception
 			{
 				//error_log('real exception: '.array2string($recurrence));
@@ -485,7 +502,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 				continue;	// nothing to change
 			}
 			// now we need to check if this recurrence is an exception
-			if ($master['participants'] == $recurrence['participants'])
+			if (!$expand && $master['participants'] == $recurrence['participants'])
 			{
 				//error_log('NO exception: '.array2string($recurrence));
 				unset($events[$k]);	// no exception --> remove it
@@ -498,7 +515,10 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
-		$events[0]['recur_exception'] = $exceptions;
+		if (!$expand)
+		{
+			$events = array_merge(array($master), $events);
+		}
 		return $events;
 	}
 
@@ -508,14 +528,23 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 * @param array &$options
 	 * @param int $id
 	 * @param int $user=null account_id of owner, default null
+	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null)
+	function put(&$options,$id,$user=null,$prefix=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
+		if (!$prefix) $user = null;	// /infolog/ does not imply setting the current user (for new entries it's done anyway)
+
+		// fix for iCal4OL using WinHTTP only supporting a certain header length
+		if (isset($_SERVER['HTTP_IF_SCHEDULE']) && !isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
+		{
+			$_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'] = $_SERVER['HTTP_IF_SCHEDULE'];
+		}
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
-		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
+		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access,
+			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']));	// dont fail with 412 Precondition Failed in that case
 		if (!is_null($oldEvent) && !is_array($oldEvent))
 		{
 			if ($this->debug) error_log(__METHOD__.': '.print_r($oldEvent,true).function_backtrace());
@@ -525,7 +554,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if (is_null($oldEvent) && ($user >= 0) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
 			// we have no add permission on this user's calendar
-			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
+			// ToDo: create event in current users calendar and invite only $user
+			if ($this->debug) error_log(__METHOD__."(,,$user) we have not enough rights on this calendar");
 			return '403 Forbidden';
 		}
 
@@ -554,6 +584,73 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if (is_array($oldEvent))
 		{
 			$eventId = $oldEvent['id'];
+
+			//client specified a CalDAV Scheduling schedule-tag AND an etag If-Match precondition
+			if ($this->use_schedule_tag && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']) &&
+				isset($_SERVER['HTTP_IF_MATCH']))
+			{
+				if ($oldEvent['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+				{
+					$this->groupdav->log("Both If-Match and If-Schedule-Tag-Match header given: If-Schedule-Tag-Match ignored for event owner!");
+					unset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']);
+				}
+				else
+				{
+					$this->groupdav->log("Both If-Match and If-Schedule-Tag-Match header given: If-Schedule-Tag-Match takes precedence for participants!");
+				}
+			}
+			//client specified a CalDAV Scheduling schedule-tag precondition
+			if ($this->use_schedule_tag && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
+			{
+				$schedule_tag_match = $_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'];
+				if ($schedule_tag_match[0] == '"') $schedule_tag_match = substr($schedule_tag_match, 1, -1);
+				$this->get_etag($oldEvent, $schedule_tag);
+
+				if ($schedule_tag_match !== $schedule_tag)
+				{
+					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
+					return '412 Precondition Failed';
+				}
+				// update only participant status and alarms of current user
+				// fix for iCal on OS X, which uses only a schedule-tag (no etag), if event has no participants (only calendar owner)
+				// --> do regular calendar update as with matching etag (otherwise no updates possible)
+				if (!(count($oldEvent['participants']) == 1 && isset($oldEvent['participants'][$user])) &&
+					($events = $handler->icaltoegw($vCalendar)))
+				{
+					// todo check behavior for recuring events
+					foreach($events as $event)
+					{
+						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId, user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', event=".array2string($event));
+						if (isset($event['participants']) && $event['participants'][$user] !== $oldEvent['participants'][$user])
+						{
+							if (!$this->bo->set_status($eventId, $user, $event['participants'][$user], $event['recurrence']))
+							{
+								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($eventId, $user, '{$event['participants'][$user]}')");
+								return '403 Forbidden';
+							}
+							else
+							{
+								if ($this->debug) error_log(__METHOD__."() set_status($eventId, $user, ".array2string($event['participants'][$user])." , $event[recurrence])");
+							}
+						}
+						// import alarms, if given and changed
+						if ((array)$event['alarm'] !== (array)$oldEvent['alarm'])
+						{
+							$this->sync_alarms($eventId, (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
+						}
+						elseif (!isset($event['participants']) || $event['participants'][$user] === $oldEvent['participants'][$user])
+						{
+							$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO change for current user event=".array2string($event).', old-event='.array2string($oldEvent));
+							return '412 Precondition Failed';
+						}
+					}
+					// we should not return an etag here, as we never store the PUT ical byte-by-byte
+					//header('ETag: "'.$etag.'"');
+					header('Schedule-Tag: "'.$schedule_tag.'"');
+					return '204 No Content';
+				}
+				if ($this->debug && !isset($events)) error_log(__METHOD__."(,,$user) only schedule-tag given for event without participants (only calendar owner) --> handle as regular PUT");
+			}
 			if ($return_no_access)
 			{
 				$retval = true;
@@ -576,39 +673,24 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		}
 		else
 		{
-			// new entry?
-			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
-			{
-				if (($eventId = array_shift($foundEvents)) &&
-					(list($eventId) = explode(':', $eventId)) &&
-					($oldEvent = $this->bo->read($eventId)))
-				{
-					$retval = '301 Moved Permanently';
-				}
-				else
-				{
-					// to be safe
-					$eventId = -1;
-					$retval = '201 Created';
-				}
-			}
-			else
-			{
-				// new entry
-				$eventId = -1;
-				$retval = '201 Created';
-			}
+			// new entry
+			$eventId = -1;
+			$retval = '201 Created';
 		}
 
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset)))
+			self::etag2value($this->http_if_match), false, 0, $this->groupdav->current_user_principal, $user, $charset, $id)))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
+			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned ".array2string($cal_id));
 			if ($eventId && $cal_id === false)
 			{
 				// ignore import failures
 				$cal_id = $eventId;
 				$retval = true;
+			}
+			elseif ($cal_id === 0)	// etag failure
+			{
+				return '412 Precondition Failed';
 			}
 			else
 			{
@@ -616,15 +698,61 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			}
 		}
 
-		header('ETag: '.$this->get_etag($cal_id));
-		if ($retval !== true)
+		if ($this->use_schedule_tag)
 		{
-			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id: $retval");
-			header('Location: '.$this->base_uri.$path.$this->get_path($cal_id));
-			return $retval;
+			$etag = $this->get_etag($cal_id, $schedule_tag);
+			// we should not return an etag here, as we never store the PUT ical byte-by-byte
+			//header('ETag: "'.$etag.'"');
+			header('Schedule-Tag: "'.$schedule_tag.'"');
 		}
-		return true;
+
+		// send evtl. necessary respose headers: Location, etag, ...
+		$this->put_response_headers($cal_id, $options['path'], $retval, self::$path_attr == 'caldav_name');
+
+		return $retval;
+	}
+
+	/**
+	 * Sync alarms of current user: add alarms added on client and remove the ones removed
+	 *
+	 * @param int $cal_id of event to set alarms
+	 * @param array $alarms
+	 * @param array $old_alarms
+	 * @param int $user account_id of user to create alarm for
+	 * @param int $start start-time of event
+	 * @ToDo store other alarm properties like: ACTION, DESCRIPTION, X-WR-ALARMUID
+	 */
+	private function sync_alarms($cal_id, array $alarms, array $old_alarms, $user, $start)
+	{
+		if ($this->debug) error_log(__METHOD__."($cal_id, ".array2string($alarms).', '.array2string($old_alarms).", $user, $start)");
+		// todo import alarms
+		foreach($alarms as $alarm)
+		{
+			if ($alarm['owner'] != $this->user) continue;	// only import alarms of current user
+
+			// check if alarm is already stored or from other users
+			foreach($old_alarms as $id => $old_alarm)
+			{
+				if ($old_alarm['owner'] != $user || $alarm['offset'] == $old_alarm['offset'])
+				{
+					unset($old_alarms[$id]);	// remove alarms of other user, or already existing alarms
+				}
+			}
+			// alarm not found --> add it
+			if ($alarm['offset'] != $old_alarm['offset'] || $old_alarm['owner'] != $user)
+			{
+				$alarm['owner'] = $user;
+				$alarm['time'] = $start - $alarm['offset'];
+				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
+				$this->bo->save_alarm($cal_id, $alarm);
+			}
+		}
+		// remove all old alarms left from current user
+		foreach($old_alarms as $id => $old_alarm)
+		{
+			if ($this->debug) error_log(__METHOD__."() deleting alarm '$id' deleted on client ".array2string($old_alarm));
+			$this->bo->delete_alarm($id);
+		}
 	}
 
 	/**
@@ -639,44 +767,198 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
-		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
+		$vCalendar = htmlspecialchars_decode($options['content']);
+		$charset = null;
+		if (!empty($options['content_type']))
 		{
-			$handler = $this->_get_handler();
-			$vCalendar = htmlspecialchars_decode($options['content']);
-			$charset = null;
-			if (!empty($options['content_type']))
+			$content_type = explode(';', $options['content_type']);
+			if (count($content_type) > 1)
 			{
-				$content_type = explode(';', $options['content_type']);
-				if (count($content_type) > 1)
+				array_shift($content_type);
+				foreach ($content_type as $attribute)
 				{
-					array_shift($content_type);
-					foreach ($content_type as $attribute)
+					trim($attribute);
+					list($key, $value) = explode('=', $attribute);
+					switch (strtolower($key))
 					{
-						trim($attribute);
-						list($key, $value) = explode('=', $attribute);
-						switch (strtolower($key))
-						{
-							case 'charset':
-								$charset = strtoupper(substr($value,1,-1));
-						}
+						case 'charset':
+							$charset = strtoupper(substr($value,1,-1));
 					}
 				}
 			}
+		}
 
+		if (substr($options['path'],-8) == '/outbox/')
+		{
+			if (preg_match('/^METHOD:REQUEST(\r\n|\r|\n)(.*)^BEGIN:VFREEBUSY/ism', $vCalendar))
+			{
+				if ($user != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					error_log(__METHOD__."() freebusy request only allowed to own outbox!");
+					return '403 Forbidden';
+				}
+				// do freebusy request
+				return $this->outbox_freebusy_request($vCalendar, $charset, $user, $options);
+			}
+			else
+			{
+				// POST to deliver an invitation, containing http headers:
+				// Originator: mailto:<organizer-email>
+				// Recipient: mailto:<attendee-email>
+				// --> currently we simply ignore these posts, as EGroupware does it's own notifications based on user preferences
+				return '204 No Content';
+			}
+		}
+		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
+		{
+			$handler = $this->_get_handler();
 			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
 				$eventId = array_shift($foundEvents);
 				list($eventId) = explode(':', $eventId);
 
 				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
-					false, 0, $this->principalURL, $user, $charset)))
+					false, 0, $this->groupdav->current_user_principal, $user, $charset)))
 				{
 					if ($this->debug) error_log(__METHOD__."() importVCal($eventId) returned false");
 				}
-				header('ETag: '.$this->get_etag($eventId));
+				// we should not return an etag here, as we never store the ical byte-by-byte
+				//header('ETag: "'.$this->get_etag($eventId).'"');
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Handle outbox freebusy request
+	 *
+	 * @param string $ical
+	 * @param string $charset of ical
+	 * @param int $user account_id of owner
+	 * @param array &$options
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	protected function outbox_freebusy_request($ical, $charset, $user, array &$options)
+	{
+		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+		$vcal = new Horde_iCalendar();
+		if (!$vcal->parsevCalendar($ical, 'VCALENDAR', $charset))
+		{
+			return '400 Bad request';
+		}
+		$version = $vcal->getAttribute('VERSION');
+
+		//echo $ical."\n";
+
+		$handler = $this->_get_handler();
+		$handler->setSupportedFields('groupdav');
+		$handler->calendarOwner = $handler->user = 0;	// to NOT default owner/organizer to something
+		if (!($component = $vcal->getComponent(0)) ||
+			!($event = $handler->vevent2egw($component, $version, $handler->supportedFields, $this->groupdav->current_user_principal, 'Horde_iCalendar_vfreebusy')))
+		{
+			return '400 Bad request';
+		}
+		if ($event['owner'] != $user)
+		{
+			$this->groupdav->log(__METHOD__."('$ical',,$user) ORGANIZER is NOT principal!");
+			return '403 Forbidden';
+		}
+		//print_r($event);
+		$organizer = $component->getAttribute('ORGANIZER');
+		$attendees = (array)$component->getAttribute('ATTENDEE');
+		// X-CALENDARSERVER-MASK-UID specifies to exclude given event from busy-time
+		$mask_uid = $component->getAttribute('X-CALENDARSERVER-MASK-UID');
+
+		header('Content-type: text/xml; charset=UTF-8');
+
+		$xml = new XMLWriter;
+		$xml->openMemory();
+		$xml->startDocument('1.0', 'UTF-8');
+		$xml->startElementNs('C', 'schedule-response', groupdav::CALDAV);
+
+		foreach($event['participants'] as $uid => $status)
+		{
+			$xml->startElementNs('C', 'response', null);
+
+			$xml->startElementNs('C', 'recipient', null);
+			$xml->writeElementNs('D', 'href', 'DAV:', $attendee=array_shift($attendees));
+			$xml->endElement();	// recipient
+
+			$xml->writeElementNs('C', 'request-status', null, '2.0;Success');
+			$xml->writeElementNs('C', 'calendar-data', null,
+				$handler->freebusy($uid, $event['end'], true, 'utf-8', $event['start'], 'REPLY', array(
+					'UID' => $event['uid'],
+					'ORGANIZER' => $organizer,
+					'ATTENDEE' => $attendee,
+				)+(empty($mask_uid) || !is_string($mask_uid) ? array() : array(
+					'X-CALENDARSERVER-MASK-UID' => $mask_uid,
+				))));
+
+			$xml->endElement();	// response
+		}
+		$xml->endElement();	// schedule-response
+		$xml->endDocument();
+		echo $xml->outputMemory();
+
+		return true;
+	}
+
+	/**
+	 * Handle free-busy-query report
+	 *
+	 * @param string $path
+	 * @param array $options
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function free_busy_report($path,$options,$user)
+	{
+		if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		{
+			return '403 Forbidden';
+		}
+		foreach($options['other'] as $filter)
+		{
+			if ($filter['name'] == 'time-range')
+			{
+				$start = $this->vCalendar->_parseDateTime($filter['attrs']['start']);
+				$end = $this->vCalendar->_parseDateTime($filter['attrs']['end']);
+			}
+		}
+		$handler = $this->_get_handler();
+		header('Content-Type: text/calendar');
+		echo $handler->freebusy($user, $end, true, 'utf-8', $start, 'REPLY', array());
+
+		common::egw_exit();	// otherwise we get a 207 multistatus, not 200 Ok
+	}
+
+	/**
+	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 *
+	 * Reimplemented to add read-free-busy and schedule-deliver privilege
+	 *
+	 * @param string $path path of collection
+	 * @param int $user=null owner of the collection, default current user
+	 * @return array with privileges
+	 */
+	public function current_user_privileges($path, $user=null)
+	{
+		$priviledes = parent::current_user_privileges($user);
+
+		if ($this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		{
+			$priviledes['read-free-busy'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'read-free-busy', '');
+
+			if (substr($path, -8) == '/outbox/' && $this->bo->check_acl_invite($user))
+			{
+				$priviledes['schedule-send'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-send', '');
+			}
+		}
+		if (substr($path, -7) == '/inbox/' && $this->bo->check_acl_invite($user))
+		{
+			$priviledes['schedule-deliver'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-deliver', '');
+		}
+		return $priviledes;
 	}
 
 	/**
@@ -689,9 +971,6 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	static function fix_series(array &$events)
 	{
-		//foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
-		//$master =& $events[0];
-
 		$bo = new calendar_boupdate();
 
 		// get array with orginal recurrences indexed by recurrence-id
@@ -764,36 +1043,70 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function delete(&$options,$id)
 	{
+		if (strpos($options['path'], '/inbox/') !== false)
+		{
+			return true;	// simply ignore DELETE in inbox for now
+		}
 		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
 		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access)
 		{
-			if (!$return_no_access)
+ 			if (!$return_no_access)
 			{
-				$ret = isset($event['participants'][$this->bo->user]) &&
-					$this->bo->set_status($event,$this->bo->user,'R') ? true : '403 Forbidden';
-				if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string($event['participants']).", user={$this->bo->user} --> return $ret");
-				return $ret;
+				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
+				$ret = '403 Forbidden';
+				$memberships = $GLOBALS['egw']->accounts->memberships($this->bo->user, true);
+				foreach($event['participants'] as $uid => $status)
+				{
+					if ($this->bo->user == $uid || in_array($uid, $memberships))
+					{
+						if ($this->bo->set_status($event,$this->bo->user, 'R')) $ret = true;
+						break;
+					}
+				}
 			}
-			return $event;
+			else
+			{
+				$ret = $event;
+			}
 		}
-		return $this->bo->delete($id);
+		else
+		{
+			$ret = $this->bo->delete($event['id']);
+		}
+		if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string(is_array($event)?$event['participants']:null).", user={$this->bo->user} --> return ".array2string($ret));
+		return $ret;
 	}
 
 	/**
 	 * Read an entry
 	 *
-	 * @param string/id $id
-	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
+	 * We have to make sure to not return or even consider in read deleted events, as the might have
+	 * the same UID and/or caldav_name as not deleted events and would block access to valid entries
+	 *
+	 * @param string|id $id
+	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
-		if ($this->debug > 1) error_log("bo-ical read  :$id:");
-		$event = $this->bo->read($id, null, true, 'server');
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))) return $retval;
+		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
+
+		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL'), null, true, 'server');
+		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
+
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
+		{
+			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
+			return $retval;
+		}
 		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
+		// handle deleted events, as not existing
+		if ($event['deleted']) $event = null;
+
+		if ($this->debug > 1) error_log(__METHOD__."($id) returning ".array2string($event));
+
 		return $event;
 	}
 
@@ -808,28 +1121,28 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
 
-		return 'EGw-'.$ctag.'-wGE';
+		return $ctag;
 	}
 
 	/**
-	 * Get the etag for an entry, reimplemented to include the participants and stati in the etag
+	 * Get the etag for an entry
 	 *
-	 * @param array/int $event array with event or cal_id
-	 * @return string/boolean string with etag or false
+	 * @param array|int $event array with event or cal_id
+	 * @return string|boolean string with etag or false
 	 */
-	function get_etag($entry)
+	function get_etag($entry, &$schedule_tag=null)
 	{
-		$etag = $this->bo->get_etag($entry,$this->client_shared_uid_exceptions);
+		$etag = $this->bo->get_etag($entry, $schedule_tag, $this->client_shared_uid_exceptions);
 
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return 'EGw-'.$etag.'-wGE';
+		return $etag;
 	}
 
 	/**
 	 * Check if user has the neccessary rights on an event
 	 *
 	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
-	 * @param array/int $event event-array or id
+	 * @param array|int $event event-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$event)
@@ -843,94 +1156,52 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	}
 
 	/**
-	 * Add the privileges of the current user
-	 *
-	 * @param array $props=array() regular props by the groupdav handler
-	 * @return array
-	 */
-	static function current_user_privilege_set(array $props=array())
-	{
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
-				array(
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver-vevent',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-properties',''),
-					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-content',''),
-				))));
-		return $props;
-	}
-
-	/**
 	 * Add extra properties for calendar collections
 	 *
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
+	 * @param int $user=null account_id of owner of current collection
+	 * @param string $path=null path of the collection
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
+	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null, $path=null)
 	{
-		if (strlen($GLOBALS['egw_info']['user']['preferences']['calendar']['display_color']) == 9 &&
-			$GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'][0] == '#')
+		if (!isset($props['calendar-description']))
 		{
-			$display_color = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'];
+			// default calendar description: can be overwritten via PROPPATCH, in which case it's already set
+			$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		}
-		else
-		{
-			$display_color = '#0040A0FF';
-		}
-		// calendar description
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
-		/*
-		// BOX URLs of the current user
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-inbox-URL',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-default-calendar-URL',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'dropbox-home-URL',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'notifications-URL',
-			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
-		*/
-		// email of the current user, see caldav-sheduling draft
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']),
-			HTTP_WebDAV_Server::mkprop('href',$base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
-			HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid'])));
-		//$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-		//	HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
-		// supported components, currently only VEVENT
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+		$supported_components = array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTIMEZONE')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
-		//	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),	// not yet supported
-		));
-		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+		);
+		// outbox supports VFREEBUSY too, it is required from OS X iCal to autocomplete locations
+		if (substr($path,-8) == '/outbox/')
+		{
+			$supported_components[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VFREEBUSY'));
+		}
+		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,
+			'supported-calendar-component-set',$supported_components);
+		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))),
+		))));
+		$props['supported-calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color',$display_color);
-		//$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'publish-url',array(
-		//	HTTP_WebDAV_Server::mkprop('href',$base_uri.'/calendar/')));
 
-		//$props = self::current_user_privilege_set($props);
+		// get timezone of calendar
+		if ($this->groupdav->prop_requested('calendar-timezone'))
+		{
+			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
+				calendar_timezones::user_timezone($user));
+		}
 		return $props;
 	}
 
@@ -946,5 +1217,74 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if ($this->debug > 1) error_log("ical Handler called: " . $this->agent);
 		return $handler;
 	}
-}
 
+	/**
+	 * Return calendars/addressbooks shared from other users with the current one
+	 *
+	 * return array account_id => account_lid pairs
+	 */
+	function get_shared()
+	{
+		$shared = array();
+		$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
+		$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
+		// replace symbolic id's with real nummeric id's
+		foreach(array(
+			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+		) as $sym => $id)
+		{
+			if (($key = array_search($sym, $calendar_home_set)) !== false)
+			{
+				$calendar_home_set[$key] = $id;
+			}
+		}
+		foreach(ExecMethod('calendar.calendar_bo.list_cals') as $entry)
+		{
+			$id = $entry['grantor'];
+			if ($id && $GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user
+				(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
+				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
+			{
+				$shared[$id] = $owner;
+			}
+		}
+		return $shared;
+	}
+
+	/**
+	 * Return appliction specific settings
+	 *
+	 * @param array $hook_data
+	 * @return array of array with settings
+	 */
+	static function get_settings($hook_data)
+	{
+		$calendars = array();
+		if (!isset($hook_data['setup']))
+		{
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$cal_bo = new calendar_bo();
+			foreach ($cal_bo->list_cals() as $entry)
+			{
+				$calendars[$entry['grantor']] = $entry['name'];
+			}
+			unset($calendars[$user]);
+		}
+		$calendars = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+		) + $calendars;
+
+		$settings = array();
+		$settings['calendar-home-set'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Calendars to sync in addition to personal calendar',
+			'name'   => 'calendar-home-set',
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
+			'values' => $calendars,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		return $settings;
+	}
+}

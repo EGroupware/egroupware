@@ -1,12 +1,12 @@
 <?php
 /**
- * eGroupWare - Calendar's buisness-object - access + update
+ * EGroupware - Calendar's buisness-object - access + update
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -111,7 +111,7 @@ class calendar_boupdate extends calendar_bo
 	 * +      + +  C   +	which is clearly wrong for everything with a maximum quantity > 1
 	 * ++++++++ ++++++++
 	 */
-	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null)
+	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 
@@ -129,6 +129,8 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;
 		}
+
+		$status_reset_to_unknown = false;
 
 		if (($new_event = !$event['id']))	// some defaults for new entries
 		{
@@ -356,19 +358,28 @@ class calendar_boupdate extends calendar_bo
 		$event = $this->read($cal_id);	// we re-read the event, in case only partial information was update and we need the full info for the notifies
 		//echo "new $cal_id="; _debug_array($event);
 
+		if($old_event['deleted'] && $event['deleted'] == null)
+		{
+			// Restored, bring back links
+			egw_link::restore('calendar', $cal_id);
+		}
 		if ($this->log_file)
 		{
 			$this->log2file($event2save,$event,$old_event);
 		}
 		// send notifications
-		if ($new_event)
+		if(!$skip_notification)
 		{
-			$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+			if ($new_event)
+			{
+				$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+			}
+			else // update existing event
+			{
+				$this->check4update($event,$old_event);
+			}
 		}
-		else // update existing event
-		{
-			$this->check4update($event,$old_event);
-		}
+
 		// notify the link-class about the update, as other apps may be subscribt to it
 		egw_link::notify_update('calendar',$cal_id,$event);
 
@@ -393,7 +404,7 @@ class calendar_boupdate extends calendar_bo
 			$old_event = $this->read($event['id']);
 		}
 		$removed = array();
-		foreach($event['participants'] as $uid => $status)
+		foreach((array)$event['participants'] as $uid => $status)
 		{
 			if ((is_null($old_event) || !isset($old_event['participants'][$uid])) && !$this->check_acl_invite($uid))
 			{
@@ -492,9 +503,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $old_event Event before the change
 	 * @param array $new_event Event after the change
-	 * @return boolean true = update requested, flase otherwise
+	 * @param string $role we treat CHAIR like event owners
+	 * @return boolean true = update requested, false otherwise
 	 */
-	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event)
+	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -517,6 +529,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			case 'time_change_4h':
 			case 'time_change':
+			default:
 				$diff = max(abs($this->date2ts($old_event['start'])-$this->date2ts($new_event['start'])),
 					abs($this->date2ts($old_event['end'])-$this->date2ts($new_event['end'])));
 				$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
@@ -525,13 +538,17 @@ class calendar_boupdate extends calendar_bo
 					++$want_update;
 				}
 			case 'add_cancel':
-				if ($old_event['owner'] == $userid && $msg_is_response ||
+				if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
 					$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 				{
 					++$want_update;
 				}
 				break;
 			case 'no':
+				if ($msg_is_response && $role == 'CHAIR')	// always notify chairs!
+				{
+					++$want_update;
+				}
 				break;
 		}
 		//error_log(__METHOD__."(userid=$userid,,msg_type=$msg_type,...) msg_is_response=$msg_is_response, want_update=$want_update");
@@ -672,12 +689,31 @@ class calendar_boupdate extends calendar_bo
 		if ($old_event != False) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
 		{
-			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid");
+			unset($res_info);
+			calendar_so::split_status($statusid, $quantity, $role);
+			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
+
 			if (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
 				$userid = $res_info['responsible'];
-				if (!isset($userid)) continue;
+				if (!isset($userid))
+				{
+					if (empty($res_info['email'])) continue;	// no way to notify
+					// check if event-owner wants non-EGroupware users notified
+					if (is_null($owner_prefs))
+					{
+						$preferences = new preferences($old_event['owner']);
+						$owner_prefs = $preferences->read_repository();
+					}
+					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
+						(empty($owner_prefs['calendar']['notify_externals']) ||
+						$owner_prefs['calendar']['notify_externals'] == 'no'))
+					{
+						continue;
+					}
+					$userid = $res_info['email'];
+				}
 			}
 
 			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
@@ -690,16 +726,30 @@ class calendar_boupdate extends calendar_bo
 					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)
 			{
-				$preferences = CreateObject('phpgwapi.preferences',$userid);
-				$part_prefs = $preferences->read_repository();
+				if (is_numeric($userid))
+				{
+					$preferences = new preferences($userid);
+					$part_prefs = $preferences->read_repository();
 
-				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event))
+					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
+					$details['to-fullname'] = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
+				}
+				else	// external email address: use preferences of event-owner, plus some hardcoded settings (eg. ical notification)
+				{
+					if (is_null($owner_prefs))
+					{
+						$preferences = new preferences($old_event['owner']);
+						$owner_prefs = $preferences->read_repository();
+					}
+					$part_prefs = $owner_prefs;
+					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
+					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
+					$details['to-fullname'] = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
+				}
+				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
 				{
 					continue;
 				}
-				$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
-				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
-
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 				$timezone = new DateTimeZone($part_prefs['common']['tz']);
@@ -735,27 +785,28 @@ class calendar_boupdate extends calendar_bo
 				switch($part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
-						if ($method == 'REQUEST')
+						if (is_null($ics))
 						{
-							if (is_null($ics))
-							{
-								$calendar_ical = new calendar_ical();
-								$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
-								$ics = $calendar_ical->exportVCal($event['id'],'2.0',$method);
-								unset($calendar_ical);
-							}
-							$attachment = array(	'string' => $ics,
-													'filename' => 'cal.ics',
-													'encoding' => '8bit',
-													'type' => 'text/calendar; method='.$method,
-													);
+							$calendar_ical = new calendar_ical();
+							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
+							// we need to pass $event[id] so iCal class reads event again,
+							// as event is in user TZ, but iCal class expects server TZ!
+							$ics = $calendar_ical->exportVCal(array($event['id']),'2.0',$method);
+							unset($calendar_ical);
 						}
+						$attachment = array(
+							'string' => $ics,
+							'filename' => 'cal.ics',
+							'encoding' => '8bit',
+							'type' => 'text/calendar; method='.$method,
+						);
 						// fall through
 					case 'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
-							if(strlen($details[$key])) {
+							if(!empty($details[$key]))
+							{
 								switch($key){
 							 		case 'access':
 									case 'priority':
@@ -770,7 +821,8 @@ class calendar_boupdate extends calendar_bo
 						break;
 				}
 				// send via notification_app
-				if($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
+				if($GLOBALS['egw_info']['apps']['notifications']['enabled'])
+				{
 					try {
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
@@ -785,7 +837,9 @@ class calendar_boupdate extends calendar_bo
 						error_log(__METHOD__.' error while notifying user '.$userid.':'.$exception->getMessage());
 						continue;
 					}
-				} else {
+				}
+				else
+				{
 					error_log(__METHOD__.' cannot send any notifications because notifications is not installed');
 				}
 			}
@@ -872,12 +926,59 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 
-		// invalidate the read-cache if it contains the event we store now
-		if ($event['id'] && $event['id'] == self::$cached_event['id']) self::$cached_event = array();
+		if ($event['id'])
+		{
+			// invalidate the read-cache if it contains the event we store now
+			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
+			$old_event = $this->read($event['id'], $event['recurrence'], false, 'server');
+		}
+		else
+		{
+			$old_event = null;
+		}
 
+		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 		$save_event = $event;
+		if ($event['whole_day'])
+		{
+			if (!empty($event['start']))
+			{
+				$time = new egw_time($event['start'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['start'] = egw_time::to($time, 'ts');
+				$save_event['start'] = $time;
+			}
+			if (!empty($event['end']))
+			{
+				$time = new egw_time($event['end'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$time->setTime(23, 59, 59);
+				$event['end'] = egw_time::to($time, 'ts');
+			}
+			if (!empty($event['recurrence']))
+			{
+				$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['recurrence'] = egw_time::to($time, 'ts');
+			}
+			if (!empty($event['recur_enddate']))
+			{
+				$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['recur_enddate'] = egw_time::to($time, 'ts');
+				$time->setUser();
+				$save_event['recur_enddate'] = egw_time::to($time, 'ts');
+			}
+			$timestamps = array('modified','created');
+			// all-day events are handled in server time
+			$event['tzid'] = $save_event['tzid'] = egw_time::$server_timezone->getName();
+		}
+		else
+		{
+			$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+		}
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
-		foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
+		foreach($timestamps as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
@@ -892,7 +993,16 @@ class calendar_boupdate extends calendar_bo
 		{
 			foreach($event['recur_exception'] as $n => $date)
 			{
-				$event['recur_exception'][$n] = $this->date2ts($date,true);
+				if ($event['whole_day'])
+				{
+					$time = new egw_time($date, egw_time::$user_timezone);
+					$time =& $this->so->startOfDay($time);
+					$date = egw_time::to($time, 'ts');
+				}
+				else
+				{
+					$event['recur_exception'][$n] = $this->date2ts($date,true);
+				}
 			}
 		}
 		// same with the alarms
@@ -935,7 +1045,12 @@ class calendar_boupdate extends calendar_bo
 			unset($save_event['participants']);
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
-		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
+		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
+
+		// Update history
+		$tracking = new calendar_tracking($this);
+		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
+		$tracking->track($event, $old_event);
 
 		return $cal_id;
 	}
@@ -1119,7 +1234,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $updateTS=true update the content history of the event
 	 * @return int number of changed recurrences
 	 */
-	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true)
+	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false)
 	{
 		$cal_id = is_array($event) ? $event['id'] : $event;
 		//echo "<p>calendar_boupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
@@ -1133,11 +1248,15 @@ class calendar_boupdate extends calendar_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				"($cal_id, $uid, $status, $recur_date)\n",3,$this->logfile);
 		}
+		$old_event = $this->read($cal_id, $recur_date, false, 'server');
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],
 				is_numeric($uid)?$uid:substr($uid,1),$status,
 				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
-			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
+			if ($updateTS)
+			{
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
+			}
 
 			static $status2msg = array(
 				'R' => MSG_REJECTED,
@@ -1145,12 +1264,17 @@ class calendar_boupdate extends calendar_bo
 				'A' => MSG_ACCEPTED,
 				'D' => MSG_DELEGATED,
 			);
-			if (isset($status2msg[$status]))
+			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
+
+			// Update history
+			$event = $this->read($cal_id, $recur_date, false, 'server');
+			$tracking = new calendar_tracking($this);
+			$tracking->track($event, $old_event);
 
 		}
 		return $Ok;
@@ -1195,22 +1319,47 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_acl=false true for no ACL check, default do ACL check
 	 * @return boolean true on success, false on error (usually permission denied)
 	 */
-	function delete($cal_id,$recur_date=0,$ignore_acl=false)
+	function delete($cal_id,$recur_date=0,$ignore_acl=false,$skip_notification=false)
 	{
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
 		{
 			return false;
 		}
-		$this->send_update(MSG_DELETED,$event['participants'],$event);
+
+		// Don't send notification if the event has already been deleted
+		if(!$event['deleted'] && !$skip_notification)
+		{
+			$this->send_update(MSG_DELETED,$event['participants'],$event);
+		}
 
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
-			$this->so->delete($cal_id);
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
+			$config = config::read('phpgwapi');
+			if(!$config['calendar_delete_history'] || $event['deleted'])
+			{
+				$this->so->delete($cal_id);
 
-			// delete all links to the event
-			egw_link::unlink(0,'calendar',$cal_id);
+				// delete all links to the event
+				egw_link::unlink(0,'calendar',$cal_id);
+			}
+			elseif ($config['calendar_delete_history'])
+			{
+				// mark all links to the event as deleted, but keep them
+				egw_link::unlink(0,'calendar',$cal_id,'','','',true);
+
+				$event['deleted'] = $this->now;
+				$this->save($event, $ignore_acl);
+				// Actually delete alarms
+				if (isset($event['alarm']) && is_array($event['alarm']))
+				{
+					foreach($event['alarm'] as $id => $alarm)
+					{
+						$this->delete_alarm($id);
+					}
+				}
+			}
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'delete', $this->now);
 		}
 		else	// delete an exception
 		{
@@ -1384,7 +1533,7 @@ class calendar_boupdate extends calendar_bo
 			echo "<p>error opening '$this->log_file' !!!</p>\n";
 			return false;
 		}
-		fwrite($f,$type.': '.$GLOBALS['egw']->common->grab_owner_name($this->user).': '.date('r')."\n");
+		fwrite($f,$type.': '.common::grab_owner_name($this->user).': '.date('r')."\n");
 		fwrite($f,"Time: time to save / saved time read back / old time before save\n");
 		foreach(array('start','end') as $name)
 		{
@@ -1418,9 +1567,9 @@ class calendar_boupdate extends calendar_bo
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
-		return $this->so->save_alarm($cal_id,$alarm, $this->now_su);
+		return $this->so->save_alarm($cal_id,$alarm, $this->now);
 	}
 
 	/**
@@ -1438,9 +1587,9 @@ class calendar_boupdate extends calendar_bo
 			return false;	// no rights to delete the alarm
 		}
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
-		return $this->so->delete_alarm($id, $this->now_su);
+		return $this->so->delete_alarm($id, $this->now);
 	}
 
 	/**
@@ -1448,16 +1597,16 @@ class calendar_boupdate extends calendar_bo
 	 * currently used for ical/sif import
 	 *
 	 * @param array $catname_list names of the categories which should be found or added
-	 * @param int $cal_id=-1 match against existing event and expand the returned category ids
+	 * @param int|array $old_event=null match against existing event and expand the returned category ids
 	 *  by the ones the user normally does not see due to category permissions - used to preserve categories
 	 * @return array category ids (found, added and preserved categories)
 	 */
-	function find_or_add_categories($catname_list, $cal_id=-1)
+	function find_or_add_categories($catname_list, $old_event=null)
 	{
-		if ($cal_id && $cal_id > 0)
+		if (is_array($old_event) || $old_event > 0)
 		{
 			// preserve categories without users read access
-			$old_event = $this->read($cal_id);
+			if (!is_array($old_event)) $old_event = $this->read($old_event);
 			$old_categories = explode(',',$old_event['category']);
 			$old_cats_preserve = array();
 			if (is_array($old_categories) && count($old_categories) > 0)
@@ -1548,13 +1697,25 @@ class calendar_boupdate extends calendar_bo
 				"($filter)[EVENT]:" . array2string($event)."\n",3,$this->logfile);
 		}
 
+		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
+
 		if ($filter == 'master')
 		{
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
-
-		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
+		elseif ($filter == 'exact')
+		{
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$query[] = 'recur_type='.$event['recur_type'];
+			}
+			else
+			{
+				$query[] = 'recur_type IS NULL';
+			}
+			$query['cal_recurrence'] = $event['recurrence'];
+		}
 
 		if ($event['id'])
 		{
@@ -1679,7 +1840,6 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif (isset($event['start']))
 			{
-
 				if ($filter == 'relax')
 				{
 					$query[] = ('cal_start>' . ($event['start'] - 3600));
@@ -1700,7 +1860,6 @@ class calendar_boupdate extends calendar_bo
 			{
 				$matchFields = array('priority', 'public');
 			}
-			$matchFields[] = 'recurrence';
 			foreach ($matchFields as $key)
 			{
 				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
@@ -1723,7 +1882,7 @@ class calendar_boupdate extends calendar_bo
 				'[QUERY]: ' . array2string($query)."\n",3,$this->logfile);
 		}
 		if (!count($users) || !($foundEvents =
-			$this->so->search(null, null, $users, 0, 'owner', $query)))
+			$this->so->search(null, null, $users, 0, 'owner', false, 0, array('query' => $query))))
 		{
 			if ($this->log)
 			{
@@ -1821,7 +1980,7 @@ class calendar_boupdate extends calendar_bo
 					continue;
 				}
 			}
-			
+
 			// check times
 			if ($filter != 'relax')
 			{
@@ -1925,8 +2084,15 @@ class calendar_boupdate extends calendar_bo
 							unset($egwEvent['participants'][$attendee]);
 						}
 					}
-					// ORGANIZER is maybe missing
+					// ORGANIZER and Groups may be missing
 					unset($egwEvent['participants'][$egwEvent['owner']]);
+					foreach ($egwEvent['participants'] as $attendee => $status)
+					{
+						if (is_numeric($attendee) && $attendee < 0)
+						{
+							unset($egwEvent['participants'][$attendee]);
+						}
+					}
 					if (!empty($egwEvent['participants']))
 					{
 						if ($this->log)
@@ -1978,7 +2144,7 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 								'() missing event[recur_exception]: ' .
-								array2string($event['recur_exception']));
+								array2string($event['recur_exception'])."\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -2002,12 +2168,10 @@ class calendar_boupdate extends calendar_bo
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
 		}
-		if (!empty($event['uid']) &&
-			count($matchingEvents) > 1 || $filter != 'master' &&
-			$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-			empty($event['recur_type']))
+
+		if ($filter == 'exact' && !empty($event['uid']) && count($matchingEvents) > 1
+			|| $filter != 'master' && !empty($egwEvent['recur_type']) && empty($event['recur_type']))
 		{
-			
 			// Unknown exception for existing series
 			if ($this->log)
 			{
@@ -2170,7 +2334,7 @@ class calendar_boupdate extends calendar_bo
 			// check for changed data
 			foreach (array('start','end','uid','title','location','description',
 				'priority','public','special','non_blocking') as $key)
-				{
+			{
 				if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 				{
 					if ($wasPseudo)
@@ -2190,7 +2354,7 @@ class calendar_boupdate extends calendar_bo
 					}
 					break;
 				}
-				}
+			}
 			// the event id here is always the id of the master event
 			// unset it to prevent confusion of stored event and master event
 			unset($event['id']);
@@ -2252,4 +2416,15 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
     }
+	/**
+	 * Delete events that are more than $age years old
+	 *
+	 * Purges old events from the database
+	 *
+	 * @param int|float $age How many years old the event must be before it is deleted
+	 */
+	function purge($age)
+	{
+		$this->so->purge(time() - 365*24*3600*(float)$age);
+	}
 }
