@@ -22,6 +22,7 @@ config::save_value('location_cats', $locations_cat_id, 'resources');
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 $GLOBALS['egw_setup']->add_acl('resources','run',$defaultgroup);
 $GLOBALS['egw_setup']->add_acl('resources',"L$cat_id",$defaultgroup,399);
+$GLOBALS['egw_setup']->add_acl('resources',"L$locations_cat_id",$defaultgroup,399);
 
 // Add two rooms to give user an idea of what resources is...
 $oProc->query("INSERT INTO {$resources_table_prefix} (name,cat_id,bookable,picture_src,accessory_of) VALUES ( 'Meeting room 1',$locations_cat_id,1,'cat_src',-1)");
