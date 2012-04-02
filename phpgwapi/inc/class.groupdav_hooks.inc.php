@@ -155,6 +155,8 @@ pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
 ';
 		$header = str_replace('!','/',substr($filename,10+strlen($GLOBALS['egw_info']['user']['account_lid']),-4));
 		$tail = new egw_tail($filename);
+		$GLOBALS['egw']->js->validate_file('jquery','jquery');
+		$GLOBALS['egw']->js->validate_file('.','egw_json');
 		$GLOBALS['egw']->framework->render($tail->show($header),false,false);
 	}
 }

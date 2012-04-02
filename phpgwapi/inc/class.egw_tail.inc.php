@@ -162,6 +162,7 @@ class egw_tail
 
 		return '
 <script type="text/javascript">
+var egw_webserverUrl = "'.$GLOBALS['egw_info']['server']['webserver_url'].'";
 var '.$id.'_tail_start = 0;
 function button_'.$id.'(button)
 {
