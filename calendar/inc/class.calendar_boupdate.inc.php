@@ -1047,11 +1047,6 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
-		// Update history
-		$tracking = new calendar_tracking($this);
-		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
-		$tracking->track($event, $old_event);
-
 		return $cal_id;
 	}
 
@@ -1270,12 +1265,6 @@ class calendar_boupdate extends calendar_bo
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
-
-			// Update history
-			$event = $this->read($cal_id, $recur_date, false, 'server');
-			$tracking = new calendar_tracking($this);
-			$tracking->track($event, $old_event);
-
 		}
 		return $Ok;
 	}
