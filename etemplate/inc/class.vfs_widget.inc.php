@@ -195,7 +195,8 @@ class vfs_widget
 				}
 				if (($cell_name = $cell['name']) == '$row')
 				{
-					$cell_name = array_pop($arr=explode('][',substr($form_name,0,-1)));
+					$arr = explode('][',substr($form_name,0,-1));
+					$cell_name = array_pop($arr);
 				}
 				$cell['name'] = '';
 				$cell['type'] = 'hbox';
