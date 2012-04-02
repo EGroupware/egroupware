@@ -1104,6 +1104,43 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Expand link_to custom fields with the merge replacements from the app
+	 * but only if the template uses them.
+	 */
+	public function cf_link_to_expand($values, $content, &$replacements, $app = null)
+	{
+		if($app == null)
+		{
+			$app = str_replace('_merge','',get_class($this));
+		}
+		$cfs = config::get_customfields($app);
+
+		// Cache, in case more than one sub-placeholder is used
+		$app_replacements = array();
+
+		// Custom field placeholders look like {{#name}}
+		// Placeholders that need expanded will look like {{#name/placeholder}}
+		preg_match_all('/[${]{2}(([\w]+\/)*)#([\w]+)\/(.*)[$}]{2}/', $content, $matches);
+		list($placeholders, $prefixes, $pre, $cf, $sub) = $matches;
+
+		foreach($cf as $index => $field)
+		{
+			if($cfs[$field])
+			{
+				// Get replacements for that application
+				$field_app = $cfs[$field]['type'];
+				if(!$app_replacements[$field_app])
+				{
+					$classname = "{$field_app}_merge";
+					$class = new $classname();
+					$app_replacements[$field_app] = $class->get_replacements($values['#'.$field], $placeholders[$index]);
+				}
+				$replacements[$placeholders[$index]] = $app_replacements[$field_app]['$$'.$sub[$index].'$$'];
+			}
+		}
+	}
+
+	/**
 	 * Process special flags, such as IF or NELF
 	 *
 	 * @param content Text to be examined and changed

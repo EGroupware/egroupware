@@ -58,7 +58,7 @@ class infolog_merge extends bo_merge
 	 */
 	protected function get_replacements($id,&$content=null)
 	{
-		if (!($replacements = $this->infolog_replacements($id)))
+		if (!($replacements = $this->infolog_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -81,7 +81,7 @@ class infolog_merge extends bo_merge
 	 * @param string $prefix='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function infolog_replacements($id,$prefix='') 
+	public function infolog_replacements($id,$prefix='', &$content = '') 
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
@@ -94,6 +94,12 @@ class infolog_merge extends bo_merge
 			$selects['info_'.$name] = $value;
 			$types['select'][] = 'info_'.$name;
 		}
+
+		if($content && strpos($content, '$$#') !== 0)
+		{
+			$this->cf_link_to_expand($record->get_record_array(), $content, $info);
+		}
+
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
 		if($record->info_contact)
 		{
