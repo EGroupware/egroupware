@@ -1,5 +1,5 @@
 Name: eGroupware
-Version: 1.8.001.20100917
+Version: 1.8.002.20111111
 Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -450,6 +450,7 @@ install -m 444 %{SOURCE5} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/header.inc.php
 %{egwdir}/header.inc.php.template
 %{egwdir}/index.php
+%{egwdir}/json.php
 %{egwdir}/login.php
 %{egwdir}/logout.php
 %{egwdir}/redirect.php
@@ -460,6 +461,7 @@ install -m 444 %{SOURCE5} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/xajax.php
 %{egwdir}/xmlrpc.php
 %{egwdir}/groupdav.php
+%{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
 %{egwdir}/admin
