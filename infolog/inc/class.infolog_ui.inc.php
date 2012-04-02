@@ -1085,6 +1085,12 @@ class infolog_ui
 			$this->prefs['document_dir'], ++$group, 'Insert in document', 'document_',
 			$this->prefs['default_document']
 		);
+		$actions['ical'] = array(
+			'icon' => 'calendar/navbar',
+			'caption' => 'Export iCal',
+			'group' => $group,
+			'allowOnMultiple' => true,
+		);
 
 		$actions['delete'] = array(
 			'caption' => 'Delete',
@@ -1207,6 +1213,17 @@ class infolog_ui
 
 			case 'view':
 				return $this->index(array(),'sp',$checked,0);
+			case 'ical':
+				$boical = new infolog_ical();
+				$result = '';
+				foreach($checked as $id)
+				{
+					$result .= $boical->exportVTODO($id,'2.0','PUBLISH',false);
+				}
+				ExecMethod2('phpgwapi.browser.content_header','todo.ical','text/calendar');
+				echo $result;
+				common::egw_exit();
+				
 		}
 
 		// Actions that need to loop
@@ -1714,7 +1731,7 @@ class infolog_ui
 			);
 		}
 		// new call via GET or some actions handled here, as they can happen both ways ($_GET[action] or button/action in GUI)
-		if (!$submit || in_array($action,array('sp','copy','schedule')))
+		if (!$submit || in_array($action,array('sp','copy','schedule','ical')))
 		{
 			switch ($action)
 			{
@@ -1725,7 +1742,12 @@ class infolog_ui
 						'link_id' => $info_id,
 					));
 					break;
-
+				case 'ical':
+					$boical = new infolog_ical();
+					$result = $boical->exportVTODO($content,'2.0','PUBLISH',false);
+					ExecMethod2('phpgwapi.browser.content_header','todo.ical','text/calendar');
+					echo $result;
+					common::egw_exit();
 				case 'sp':
 				case 'copy':
 					$info_id = 0;
@@ -1944,6 +1966,7 @@ class infolog_ui
 				'copy'  => array('label' => 'Copy', 'title' => 'Copy this Infolog'),
 				'sp'    => 'Sub-entry',
 				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
+				'ical' => array('label' => 'Export iCal', 'title' => 'Export iCal'),
 			),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
