@@ -1,3 +1,34 @@
+egroupware-epl (11.1.20120402-1) hardy; urgency=low
+
+  * SECURITY: fix for a XSS (cross-site-scripting) vulnerability, it is recommended to update ASAP!
+  * Admin/Addressbook: fixed wrong timezone in created and modified times for contacts and accounts
+  * Admin: view sessions and view access log was not using user-timezone but server, also causing display of wrong idle-time
+  * eMail: feature to save messages that are in progress of being composed to draft every 3 minutes;
+  * translations: Italian translation improvements for admin and API; provided by Ilias Chasapakis, Webtrain Services
+  * translations: improving german translation
+  * Calendar: update timezones to 2011n from Lightning
+  * InfoLog: if one of status, percent or datecompleted changed, change others to reasonable values
+  * InfoLog: icons to visualise entry has a parent or subs, using these icons (arrow left or up) in context-menu too
+  * LDAP: if multiple hosts given, try them all for first working one and store choice in session to start new trial only if working one fails
+  * API: fix account-selection-method "selectbox" containing selected account double (eg. in Admin >> Manage groups)
+  * Home: only display apps user has rights to (were not checked for calendar, email, infolog, news_admin or if user changes positions on home, before gotten app-rights removed)
+  * InfoLog/CalDAV: fixed not working toggeling of completed from iOS reminder app (only sets COMPLETED, but never STATUS or PERCENT-COMPLETED)
+  * Calendar: iCal import via mime-registry (clicking on iCal file in filemanager) displayed event in server- instead of user-time
+  * InfoLog: new config for copying or creating sub-entries to exclude just attachments (was links including attachments and links to other apps), fixed deleting attachments in copys/subs before storing them, deleted original attachment
+  * Wiki/PostgreSQL: whitespace before database-type caused creation of index on egw_wiki_pages.wiki_body limiting article length to 32k --> re-install wiki or drop index egw_wiki_pages_body
+  * SiteMgr: fixed every block had identical id="Mod" validation error
+  * SiteMgr: remove CKeditor SCAYT (spell-check-as-you-type) tags, which dont validate
+  * SiteMgr: properly escape block-titles containing special chars
+  * SiteMgr: allow to set meta description on category level by using {description} tag instead of {slogan} or {sitedesc}, proper escaping of all placeholders
+  * Admin/Setup: button to mount backup directory under /backup into VFS
+  * CalDAV/CardDAV: fixed typo preventing sync, if logging to Apache error-log was switched on
+  * ImportExport/Tracker: timeout left num-rows set to -1, causing nextmatch to try to display full list on next login
+  * Calendar/CalDAV/eSync: fixed etag generation to NOT query maximum user-modification date for each entry, fixed etag and ctag for eSync to only use recurance master, as ActiveSync event does not contain extra participant data for exceptions (virtual and real)
+  * Admin/ImportExport: fixed import of already hashed passwords
+  * knowledgebase: feature to allow author to publish own articles if automatic publishing of articles is denied
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 02 Apr 2012 08:36:09 +0200
+
 egroupware-epl (11.1.20120313-1) hardy; urgency=low
 
   * Calendar: mail all participants was attaching iCal with wrong time(zone)
