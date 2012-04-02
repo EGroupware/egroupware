@@ -110,6 +110,7 @@ class admin_categories
 				else
 				{
 					$appname = categories::GLOBAL_APPNAME;
+					$content['all_cats'] = 'all_no_acl';
 				}
 			}
 			elseif ($content['appname'] != $appname || !self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
@@ -435,8 +436,13 @@ class admin_categories
 			}
 			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
-			// switch filter off for application global cats too, not only for super-global ones
-			$content['nm']['no_filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin';
+			// switch filter off for super-global categories
+			if($appname == 'phpgw')
+			{
+				$content['nm']['no_filter'] = true;
+				// Make sure filter is set properly, could be different if user was looking at something else
+				$content['nm']['filter'] = categories::GLOBAL_ACCOUNT;
+			}
 
 			$content['nm']['global_cats'] = true;
 			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))

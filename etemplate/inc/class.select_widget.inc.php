@@ -209,8 +209,10 @@ class select_widget
 				{
 					$categories = new categories($type5,$type3);
 				}
+				// Allow text for global
+				$type = ($type && strlen($type) > 1 ? $type : !$type);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,(int)$type4,true) as $cat)
+				foreach((array)$categories->return_sorted_array(0,False,'','','',$type,(int)$type4,true) as $cat)
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
