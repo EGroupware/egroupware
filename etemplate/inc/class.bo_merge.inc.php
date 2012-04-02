@@ -345,11 +345,12 @@ abstract class bo_merge
 				$link = egw_link::view($link_info['app'], $link_info['id'], $link_info);
 				if($link_info['app'] != egw_link::VFS_APPNAME)
 				{
-					$link = str_replace(',','%2C',egw::link('/index.php',$link, $link_info['app']));
+					// Set app to false so we always get an external link
+					$link = str_replace(',','%2C',egw::link('/index.php',$link, false));
 				}
 				else
 				{
-					$link = egw::link($link);
+					$link = egw::link($link, array());
 				}
 				// Prepend site
 				if ($link{0} == '/')
