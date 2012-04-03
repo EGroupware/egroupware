@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20120403-1) hardy; urgency=low
+
+  * ProjectManager: fixed not working editing of projectelement via context-menu (also check registed sub-types of apps user has access to)
+  * InfoLog/CalDAV: add support for responsible as iCal ATTENDEE, make sure not to empty InfoLog fields not supported by iCal standard
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 03 Apr 2012 18:09:24 +0200
+
 egroupware-epl (11.1.20120402-1) hardy; urgency=low
 
   * SECURITY: fix for a XSS (cross-site-scripting) vulnerability, it is recommended to update ASAP!
