@@ -171,6 +171,7 @@ class egw_link extends solink
 				{
 					foreach($data['additional'] as $name => $values)
 					{
+						$values['app'] = $app;	// store name of registring app, to be able to check access
 						self::$app_register[$name] = $values;
 					}
 					unset($data['additional']);
@@ -213,6 +214,7 @@ class egw_link extends solink
 	 * Only transfering relevant information cuts approx. half of the size.
 	 * Also only transfering information relevant to apps user has access too.
 	 * Important eg. for mime-registry, to not use calendar for opening iCal files, if user has no calendar!
+	 * As app can store additonal types, we have to check the registring app $data['app'] too!
 	 *
 	 * @return string json encoded object with app: object pairs with attributes "(view|add|edit)(|_id|_popup)"
 	 */
@@ -221,7 +223,8 @@ class egw_link extends solink
 		$to_json = array();
 		foreach(self::$app_register as $app => $data)
 		{
-			if (isset($GLOBALS['egw_info']['user']['apps'][$app]))
+			if (isset($GLOBALS['egw_info']['user']['apps'][$app]) ||
+				isset($data['app']) && isset($GLOBALS['egw_info']['user']['apps'][$data['app']]))
 			{
 				$to_json[$app] = array_intersect_key($data, array_flip(array(
 					'view','view_id','view_popup',
@@ -909,6 +912,8 @@ class egw_link extends solink
 	/**
 	 * Get mime-type information from app-registry
 	 *
+	 * Only return information from apps the user has access too (incl. registered sub-types of that apps).
+	 *
 	 * @param string $type
 	 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 	 */
@@ -916,7 +921,9 @@ class egw_link extends solink
 	{
 		foreach(self::$app_register as $app => $registry)
 		{
-			if (isset($registry['mime']) && isset($GLOBALS['egw_info']['user']['apps'][$app]))
+			if (isset($registry['mime']) &&
+				(isset($GLOBALS['egw_info']['user']['apps'][$app]) ||
+				isset($registry['app']) && isset($GLOBALS['egw_info']['user']['apps'][$registry['app']])))
 			{
 				foreach($registry['mime'] as $mime => $data)
 				{
