@@ -112,6 +112,9 @@ class infolog_so
 		if (is_null($grants)) $grants = $this->grants;
 		if (!$user) $user = $this->user;
 
+		// if info-array, but no owner given, force reading of info from db
+		if (is_array($info) && !$info['info_owner']) $info = $info['info_id'];
+
 		if (is_array($info))
 		{
 

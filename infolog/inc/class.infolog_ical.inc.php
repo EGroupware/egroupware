@@ -326,6 +326,51 @@ class infolog_ical extends infolog_bo
 		}
 		$vevent->setAttribute('PRIORITY', $priority);
 
+		// add ATTENDEE and ORGANIZER only if ATTENDEEs other then owner are specified
+		if ($taskData['info_responsible'] &&
+			(count($taskData['info_responsible']) > 1 ||
+				$taskData['info_responsible'][0] != $taskData['info_onwer']))
+		{
+			if (($url = $GLOBALS['egw']->accounts->id2name($taskData['info_owner'],'account_email')))
+			{
+				$url = 'MAILTO:'.$url;
+			}
+			else
+			{
+				$url = 'urn:uuid:'.common::generate_uid('accounts', $taskData['info_owner']);
+			}
+			$vevent->setAttribute('ORGANIZER',$url,array(
+				'CN'		=>	$GLOBALS['egw']->accounts->id2name($taskData['info_owner'],'account_fullname'),
+				'X-EGROUPWARE-UID'	=> $taskData['info_owner'],
+			), true);
+			foreach($taskData['info_responsible'] as $responsible)
+			{
+				if (($url = $GLOBALS['egw']->accounts->id2name($responsible,'account_email')))
+				{
+					$url = 'MAILTO:'.$url;
+				}
+				else
+				{
+					$url = 'urn:uuid:'.common::generate_uid('accounts', $responsible);
+				}
+				if ($responsible > 0)
+				{
+					$vevent->setAttribute('ATTENDEE',$url,array(
+						'CN'		=>	$GLOBALS['egw']->accounts->id2name($responsible,'account_fullname'),
+						'CUTYPE'	=> 'INDIVIDUAL',
+						'X-EGROUPWARE-UID'	=> $responsible,
+					), true);
+				}
+				elseif ($responsible < 0)
+				{
+					$vevent->setAttribute('ATTENDEE',$url,array(
+						'CN'		=>	$GLOBALS['egw']->accounts->id2name($responsible),
+						'CUTYPE'	=> 'GROUP',
+						'X-EGROUPWARE-UID'	=> $responsible,
+					), true);
+				}
+			}
+		}
 		// for CalDAV add all X-Properties previously parsed
 		if ($this->productManufacturer == 'groupdav')
 		{
@@ -469,13 +514,14 @@ class infolog_ical extends infolog_bo
 			$taskData['info_datecompleted'] = 0;
 		}
 
-		if (!is_null($user) && $_taskID)
+		// setting owner or responsible for new tasks based on folder
+		if (!is_null($user) && $_taskID == -1)
 		{
 			if ($this->check_access($taskData, EGW_ACL_ADD))
 			{
 				$taskData['info_owner'] = $user;
 			}
-			else
+			elseif (!in_array($user, (array)$taskData['info_responsible']))
 			{
 				$taskData['info_responsible'][] = $user;
 			}
@@ -490,6 +536,24 @@ class infolog_ical extends infolog_bo
 		if ($caldav_name)
 		{
 			$taskData['caldav_name'] = $caldav_name;
+		}
+
+		// make sure not to empty fields not supported by iCal or not allowed to change by CalDAV
+		if ($_taskID > 0 && ($old = $this->read($_taskID,true,'server')))
+		{
+			// remove all values supported by iCal standard
+			$old = array_diff_key($old, array_flip(array(
+				'info_subject','info_des','info_location','info_cat','info_responsible',
+				'info_startdate','info_enddate','info_priority','info_location',
+				'info_access','info_status','info_percent','info_datecompleted',
+			)));
+			// remove all iCal fields not supported by EGroupware (stored like custom fields)
+			foreach($old as $name => $value)
+			{
+				if (substr($name,0,2) == '##') unset($old[$name]);
+			}
+			// merge in again all infolog fields not supported by iCal or not allowed to change
+			$taskData = array_merge($taskData, $old);
 		}
 		return $this->write($taskData, true, true, false, false, false, 'ical');
 	}
@@ -731,12 +795,25 @@ class infolog_ical extends infolog_bo
 						$taskData['info_percent'] = (int) $attribute['value'];
 						break;
 
+					case 'ATTENDEE':
+						if (($uid = groupdav_principals::url2uid($attribute['value'])) && is_numeric($uid))
+						{
+							$taskData['info_responsible'][] = $uid;
+						}
+						break;
+
+					case 'ORGANIZER':
+						if (($uid = groupdav_principals::url2uid($attribute['value'])) && is_numeric($uid))
+						{
+							$taskData['info_owner'] = $uid;
+						}
+						break;
+
 					// ignore all PROPS, we dont want to store like X-properties or unsupported props
 					case 'DTSTAMP':
 					case 'SEQUENCE':
 					case 'CREATED':
 					case 'LAST-MODIFIED':
-					//case 'ATTENDEE':	// todo: add real support for it
 						break;
 
 					default:	// X- attribute or other by EGroupware unsupported property
