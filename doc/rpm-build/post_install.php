@@ -385,6 +385,9 @@ else
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
+	// restart running Apache, to force APC to update changed sources and/or Apache configuration
+	run_cmd($config['start_webserver'].' status && '.$config['start_webserver'].' restart', null, true);
+
 	exit($ret);
 }
 
@@ -418,7 +421,7 @@ function patch_header($filename,&$user,$password)
  *
  * @param string $cmd
  * @param array &$output=null $output of command
- * @param int|array $no_bailout=null exit code(s) to NOT bail out
+ * @param int|array|true $no_bailout=null exit code(s) to NOT bail out, or true to never bail out
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
@@ -435,7 +438,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 		$output[] = $cmd;
 		exec($cmd,$output,$ret);
 	}
-	if ($ret && !in_array($ret,(array)$no_bailout))
+	if ($ret && $no_bailout !== true && !in_array($ret,(array)$no_bailout))
 	{
 		bail_out($ret,$verbose?null:$output);
 	}
