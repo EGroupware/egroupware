@@ -907,7 +907,7 @@ class addressbook_vcal extends addressbook_bo
 		{
 			foreach($fields as $field)
 			{
-				$contact[$field] = null;
+				if ($field != 'fileas_type') $contact[$field] = null;
 			}
 		}
 
