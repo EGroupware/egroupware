@@ -491,7 +491,7 @@ class date_widget
 			'i' => 60,
 			's' => 1,
 		);
-		$cell = boetemplate_old::empty_cell('label','',array('label'=>$cell['label']));
+		$cell = boetemplate::empty_cell('label','',array('label'=>$cell['label']));
 
 		if ((string)$value['Y'] !== '')
 		{
