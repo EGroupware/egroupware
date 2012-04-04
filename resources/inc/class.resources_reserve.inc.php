@@ -54,7 +54,7 @@ class resources_reserve {
                 }
 
 		$this->tmpl->read('resources.sitemgr_book');
-		
+
 		if(!$arguments['resource'] && !($arguments['resource'] = $content['resource'])) return false;
 		$data += $this->bo->read($arguments['resource']);
 
@@ -82,7 +82,7 @@ class resources_reserve {
 			$config = config::read('registration');
 
 			// Not a user, need contact
-			if($GLOBALS['egw_info']['user']['account_lid'] == $GLOBALS['sitemgr_info']['anonymous_user'] && !$content['contact_id']) 
+			if($GLOBALS['egw_info']['user']['account_lid'] == $GLOBALS['sitemgr_info']['anonymous_user'] && !$content['contact_id'])
 			{
 				if ($config['pending_addressbook'])   // save the contact in the addressbook
 				{
@@ -100,7 +100,7 @@ class resources_reserve {
 						throw new egw_exception_no_permission($addressbook->error);
 						return False;
 					}
-		
+
 
 					$contact_id = $result;
 					$contact = 'c'.$contact_id;
@@ -134,8 +134,8 @@ class resources_reserve {
 				if(!is_numeric($result))
 				{
 					$form = new calendar_uiforms();
-					$freetime = $form->freetime('r'.$data['res_id'], 
-						strtotime($GLOBALS['egw_info']['user']['preferences']['calendar']['workdaystarts'] . ':00',$start_time), 
+					$freetime = $form->freetime('r'.$data['res_id'],
+						strtotime($GLOBALS['egw_info']['user']['preferences']['calendar']['workdaystarts'] . ':00',$start_time),
 						strtotime($GLOBALS['egw_info']['user']['preferences']['calendar']['workdayends'] . ':00 ',$end_time),
 						$duration
 					);
@@ -168,10 +168,10 @@ class resources_reserve {
 						);
 						if($preserve['email_message'])
 						{
-							$email_info['message'] = lang($preserve['email_message'], 
-								egw_time::to($start_time), 
+							$email_info['message'] = lang($preserve['email_message'],
+								egw_time::to($start_time),
 								$preserve['link'].'&confirm='.$reg['register_code'],
-								egw_time::to($reg['timestamp']) 
+								egw_time::to($reg['timestamp'])
 							);
 						}
 						$data['msg'] .= registration_bo::send_confirmation($email_info, $reg);
@@ -183,7 +183,7 @@ class resources_reserve {
 		$data['picture'] = $this->bo->get_picture($data);
 
 		// Not a user, need contact
-		if($GLOBALS['egw_info']['user']['account_lid'] == $GLOBALS['sitemgr_info']['anonymous_user'] && !$content['contact_id']) 
+		if($GLOBALS['egw_info']['user']['account_lid'] == $GLOBALS['sitemgr_info']['anonymous_user'] && !$content['contact_id'])
 		{
 			$data['contact_form'] = $preserve['contact_form'];
 			$data['show_contact'] = !$preserve['contact_form'];
@@ -203,7 +203,7 @@ class resources_reserve {
 		{
 			$data['planner'] = 'Permission error - site not configured properly.  Need ' . lang('resources') . ' & ' . lang('calendar');
 		}
-		else 
+		else
 		{
 			$data['planner'] = $this->get_planner(
 				$arguments['resource'],
@@ -229,7 +229,7 @@ class resources_reserve {
 	/**
 	 * Get HTML for the planner to show when its busy
 	 *
-	 * @param resource_id 
+	 * @param resource_id
 	 *
 	 * @return String - HTML
 	 */
@@ -247,7 +247,7 @@ class resources_reserve {
 		$calendar->search_params['users'][] = 'r'.$resource_id;
 		$calendar->search_params['users'][] = $GLOBALS['egw_info']['user']['account_id'];
 		$calendar->allowEdit = false;    // switches off all edit popups
-		
+
 		$planner = '<style type="text/css">'."\n".
 			'@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/templates/default/app.css'.");\n".
 			'</style>'."\n";
