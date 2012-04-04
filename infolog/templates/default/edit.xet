@@ -131,7 +131,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" height="245" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -142,7 +142,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -251,16 +251,16 @@
 					</hbox>
 				</row>
 				<row>
-					<hbox span="3">
+					<hbox span="2">
 						<button label="Save" id="button[save]" statustext="Saves this entry"/>
 						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
 						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" onclick="window.close();"/>
 						<menulist>
 							<menupopup id="action" statustext="Execute a further action for this entry" options="Actions..." onchange="this.form.submit(); this.value='';"/>
 						</menulist>
-						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 						<html id="js"/>
 					</hbox>
+					<description/>
 					<button label="Delete" align="right" id="button[delete]" statustext="delete this entry" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
 				</row>
 			</rows>
