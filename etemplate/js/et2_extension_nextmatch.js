@@ -374,7 +374,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 							} 
 							// Resets field visibility too
 							_row[i].widget._getColumnName();
-							_colData[i].disabled = negated;
+							_colData[i].disabled = negated || jQuery.isEmptyObject(_row[i].widget.options.fields);
 							continue RowLoop;
 						}
 					}
