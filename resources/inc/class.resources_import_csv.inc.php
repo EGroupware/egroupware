@@ -153,14 +153,14 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			// Automatically handle human friendly values
-			importexport_import_csv::convert($record, $types, 'resources', $lookups);
+			importexport_import_csv::convert($record, $types, 'resources', $lookups,($_definition->plugin_options['convert']?$_definition->plugin_options['convert']:0));
 
 			// Check for a new category, it needs permissions set
 			$category = $GLOBALS['egw']->categories->read($record['cat_id']);
 
 			if($category['last_mod'] >= $start_time) {
 				// New category.  Give read & write permissions to the current user's default group
-				$this->acl_bo->set_rights($record['cat_id'], 
+				$this->acl_bo->set_rights($record['cat_id'],
 					array($GLOBALS['egw_info']['user']['account_primary_group']),
 					array($GLOBALS['egw_info']['user']['account_primary_group']),
 					array(),
@@ -170,8 +170,18 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 				// Refresh ACL
 				//$GLOBALS['egw']->acl->read_repository();
 			}
-			
+			//error_log(__METHOD__.__LINE__.array2string($_definition->plugin_options['conditions']));
+			$conditionexist=false;
 			if ( $_definition->plugin_options['conditions'] ) {
+				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+					switch ( $condition['type'] ) {
+						case 'exists' :
+							if ((isset($condition['true']['action'])&&!empty($condition['true']['action'])) ||
+								(isset($condition['false']['action'])&&!empty($condition['false']['action']))) $conditionexist=true;
+					}
+				}
+			}
+			if ($conditionexist) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					$results = array();
 					switch ( $condition['type'] ) {
