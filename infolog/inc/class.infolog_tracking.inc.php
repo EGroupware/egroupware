@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package tracker
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -219,7 +219,7 @@ class infolog_tracking extends bo_tracking
 			'info_datecompleted' => $data['info_datecompleted'] ? $this->datetime($data['info_datecompleted']) : '',
 			'info_location'  => $data['info_location'],
 			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate'],null) : '',
-			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate'],false) : '',
+			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate'],null) : '',
 			'info_responsible' => implode(', ',$responsible),
 			'info_subject'   => $data['info_subject'],
 		) as $name => $value)
