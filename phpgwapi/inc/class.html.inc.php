@@ -45,11 +45,6 @@ class html
 	 * @var string
 	 */
 	static $api_js_url;
-	/**
-	 * do we need to set the wz_tooltip class, to be included at the end of the page
-	 * @var boolean
-	 */
-	static private $wz_tooltip_included = False;
 
 	/**
 	 * initialise our static vars
@@ -98,8 +93,6 @@ class html
 	/**
 	* Handles tooltips via the wz_tooltip class from Walter Zorn
 	*
-	* Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
-	*
 	* @param string $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
 	* @param boolean $do_lang (default False) should the text be run though lang()
 	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
@@ -109,6 +102,9 @@ class html
 	*/
 	static function tooltip($text,$do_lang=False,$options=False)
 	{
+		// tell egw_framework to include wz_tooltip.js
+		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
+
 		if ($do_lang) $text = lang($text);
 
 		$ttip = ' onmouseover="Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';

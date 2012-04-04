@@ -19,20 +19,13 @@
 	*/
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
-			'noheader'                => False,
-			'nonavbar'                => False,
+			'noheader'                => true,
+			'nonavbar'                => true,
 			'currentapp'              => 'home',
-			'enable_network_class'    => False,
-			'enable_contacts_class'   => False,
-			'enable_nextmatchs_class' => False,
-			'include_xajax'		  => True,
 		)
 	);
 
 	include('../header.inc.php');
-
-	// Display the header which contains all includes etc.
-	common::egw_header();
 
 	/*
 	** Initializing the template
@@ -223,4 +216,4 @@
 	}
 	//_debug_array($GLOBALS['egw_info']['user']['preferences']);
 
-	common::egw_footer();
+	$GLOBALS['egw']->framework->render(ob_get_clean());
