@@ -56,9 +56,9 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 
 				// If this.getAppName does not work, try to determine the image
 				// by looking at the image path.
-				if(!_app && _name.indexOf('/') > 0)
+				if((!_app || _name.indexOf(_app+'/') == 0) && _name.indexOf('/') > 0)
 				{
-					var split = et2_csvSplit(_value, 2,"/");
+					var split = et2_csvSplit(_name, 2,"/");
 					var _app = split[0];
 					_name = split[1];
 				}
