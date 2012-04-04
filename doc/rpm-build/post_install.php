@@ -386,7 +386,8 @@ else
 	fix_perms();
 
 	// restart running Apache, to force APC to update changed sources and/or Apache configuration
-	run_cmd($config['start_webserver'].' status && '.$config['start_webserver'].' restart', null, true);
+	$output = array();
+	run_cmd($config['start_webserver'].' status && '.$config['start_webserver'].' restart', $output, true);
 
 	exit($ret);
 }
