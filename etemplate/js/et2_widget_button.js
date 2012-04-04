@@ -150,7 +150,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 		if(this.image)
 		{
-			this.image.attr("alt", _value).attr("title",_value);
+			this.image.attr("alt", _value);
+			// Don't set title if there's a tooltip, browser may show both
+			if(!this.options.statustext)
+			{
+				this.image.attr("title",_value);
+			}
 		}
 	},
 
