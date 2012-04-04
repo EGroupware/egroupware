@@ -168,7 +168,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.9.002">
+	<template id="infolog.index" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
@@ -225,18 +225,19 @@
 								</hbox>
 							</vbox>
 						</box>
+						<box class="action_popup prompt" id="link_popup">
+							<vbox>
+								<description value="Add / Remove link" class="promptheader"/>
+								<link-entry id="link" class="action_popup-content"/>
+								<hbox>
+									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
 					</hbox>
-					<box class="action_popup prompt" id="link_popup">
-						<vbox>
-							<description value="Add / Remove link" class="promptheader"/>
-							<link-entry id="link" class="action_popup-content"/>
-							<hbox>
-								<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
-								<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-								<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
-							</hbox>
-						</vbox>
-					</box>
+					<description/>
 				</row>
 			</rows>
 		</grid>
