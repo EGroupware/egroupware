@@ -225,7 +225,8 @@ class calendar_ui
 	 */
 	function do_header()
 	{
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+		// tell egw_framework to include wz_tooltip
+		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 		common::egw_header();
 
 		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";

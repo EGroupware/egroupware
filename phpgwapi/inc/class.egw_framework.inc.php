@@ -322,8 +322,8 @@ abstract class egw_framework
 			$var['favicon_file'] = common::image('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
 		}
 
-		$wz_tooltip = '/phpgwapi/js/wz_tooltip/wz_tooltip.js';
-		if (file_exists(EGW_SERVER_ROOT.$wz_tooltip))
+		if ($GLOBALS['egw_info']['flags']['include_wz_tooltip'] &&
+			file_exists(EGW_SERVER_ROOT.($wz_tooltip = '/phpgwapi/js/wz_tooltip/wz_tooltip.js')))
 		{
 			$include_wz_tooltip = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				$wz_tooltip.'?'.filemtime(EGW_SERVER_ROOT.$wz_tooltip).'" type="text/javascript"></script>';
