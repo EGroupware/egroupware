@@ -325,6 +325,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		},
 	},
 
+	legacyOptions: ["application"],
 	search_timeout: 200, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 

@@ -1291,7 +1291,6 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			}
 			else if (apps[field.type]) 
 			{
-				// TODO: Figure out why search can't get focus
 				widget = et2_createWidget("nextmatch-entryheader", {
 					id: cf_id,
 					application: field.type,
