@@ -471,6 +471,10 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],{
 			}
 		}
 		if(typeof _values.value !== 'undefined')
+		{ 
+			_values.value = parseFloat(_values.value);
+		}
+		if(_values.value)
 		{
 			var display = this._convert_to_display(_values.value);
 			_nodes[0].appendChild(document.createTextNode(display.value));
