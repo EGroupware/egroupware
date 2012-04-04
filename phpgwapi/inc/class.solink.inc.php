@@ -19,7 +19,7 @@
  * generalized linking between entries of eGroupware apps - SO layer
  *
  * All vars passed to this class get correct escaped to prevent query insertion.
- * 
+ *
  * All methods are now static!
  */
 class solink
@@ -91,7 +91,7 @@ class solink
 				'link_owner'	=> $owner,
 			),False,__LINE__,__FILE__) ? self::$db->get_last_insert_id(self::TABLE,'link_id') : false;
 	}
-	
+
 	/**
 	 * update the remark of a link
 	 *
@@ -112,7 +112,7 @@ class solink
 	/**
 	 * returns array of links to $app,$id
 	 *
-	 * @param string $app appname 
+	 * @param string $app appname
 	 * @param string/array $id id(s) in $app
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order defaults to newest links first
@@ -173,7 +173,7 @@ class solink
 			'link_id' => $row['link_id'],
 		);
 	}
-	
+
 	/**
 	 * returns data of a link
 	 *
@@ -284,7 +284,7 @@ class solink
 		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
 		{
 			$deleted[] = $row;
-		}			
+		}
 		self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
 		return $deleted;
@@ -310,21 +310,21 @@ class solink
 
 		return self::$db->affected_rows();
 	}
-	
+
 	/**
 	 * Get all links from a given app's entries to an other app's entries, which both link to the same 3. app and id
 	 *
 	 * Example:
 	 * I search all timesheet's linked to a given project and id(s), who are also linked to other entries,
 	 * which link to the same project:
-	 * 
+	 *
 	 * ($app='timesheet'/some id) <--a--> (other app/other id) <--b--> ($t_app='projectmanager'/$t_id=$pm_id)
-	 *                  ^                                                                     ^   
+	 *                  ^                                                                     ^
 	 *                  +---------------------------c-----------------------------------------+
-	 * 
-	 * bolink::get_3links('timesheet','projectmanager',$pm_id) returns the links (c) between the timesheet and the project, 
+	 *
+	 * bolink::get_3links('timesheet','projectmanager',$pm_id) returns the links (c) between the timesheet and the project,
 	 * plus the other app/id in the keys 'app3' and 'id3'
-	 * 
+	 *
 	 * @param string $app app the returned links are linked on one side (atm. this must be link_app1!)
 	 * @param string $target_app app the returned links other side link also to
 	 * @param string/array $target_id=null id(s) the returned links other side link also to
@@ -346,10 +346,10 @@ class solink
 			),
 			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker and projectmanager->timesheet
 			array('table'=>self::TABLE,
-				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
+				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,null,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
                        		'where'=>'a.link_app1='.self::$db->quote($app).' AND b.link_app1='.self::$db->quote($target_app).
                         		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND b.',array('link_id1' => $target_id))),
-                        	'join'=>" a 
+                        	'join'=>" a
                         		JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
                         		JOIN $table c ON a.link_id2=c.link_id1 AND a.link_app2=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app1 AND c.link_id2=b.link_id1",
 			),
@@ -358,7 +358,7 @@ class solink
 				'cols'=>'a.*,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
                      		'where'=>'a.link_app1='.self::$db->quote($app).' AND a.link_app2='.self::$db->quote($target_app).
                         		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND a.',array('link_id2' => $target_id))),
-                       		'join'=>" a 
+                       		'join'=>" a
                        			JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
                         		JOIN $table c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
 			),
