@@ -678,6 +678,12 @@ class infolog_ui
 				$nm['action'] = $action = '';
 				$nm['action_id'] = $action_id = 0;
 				$nm['action_title'] = $action_title = '';
+				// check if action-view reset filter and restore it
+				if (($filter = egw_cache::getSession('infolog', 'filter_reset_from')))
+				{
+					$nm['filter'] = $filter;
+					egw_cache::unsetSession('infolog', 'filter_reset_from');
+				}
 			}
 			$values = array('nm' => $nm);
 
@@ -1212,6 +1218,8 @@ class infolog_ui
 				// Fall through
 
 			case 'view':
+				// remember filter to restore it, if infolog icon get's clicked next time
+				if ($query['filter']) egw_cache::setSession('infolog', 'filter_reset_from', $query['filter']);
 				return $this->index(array(),'sp',$checked,0);
 			case 'ical':
 				$boical = new infolog_ical();
