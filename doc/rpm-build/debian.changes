@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20120404-1) hardy; urgency=low
+
+  * restart running Apache after each update, to force APC to update changed sources and/or Apache configuration
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 04 Apr 2012 07:40:58 +0200
+
 egroupware-epl (11.1.20120403-1) hardy; urgency=low
 
   * ProjectManager: fixed not working editing of projectelement via context-menu (also check registed sub-types of apps user has access to)
