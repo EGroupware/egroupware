@@ -920,8 +920,7 @@ var et2_link_list = et2_link_string.extend({
 			icon.append(icon_widget.getDOMNode());
 		}
 		
-		var columns = ['app','title','remark'];
-		_link_data.app = this.egw().lang(_link_data.app);
+		var columns = ['title','remark'];
 		
 		var self = this;
 		for(var i = 0; i < columns.length; i++) {
