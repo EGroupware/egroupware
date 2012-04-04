@@ -900,18 +900,29 @@ var et2_link_list = et2_link_string.extend({
 			.appendTo(this.list)
 
 		// Icon
-		//TODO: Needs vfs widget
 		var icon = $j(document.createElement("td"))
 			.appendTo(row)
 			.addClass("icon");
 		if(_link_data.icon)
 		{
 			var icon_widget = et2_createWidget("image");
-			icon_widget.set_src(_link_data.icon);
+			var src = '';
+			if(_link_data.type)
+			{
+				// VFS - file
+				src = this.egw().mime_icon(_link_data.type, _link_data.icon);
+			}
+			else
+			{
+				src = this.egw().image(_link_data.icon);
+			}
+			if(src)	icon_widget.set_src(src);
 			icon.append(icon_widget.getDOMNode());
 		}
 		
 		var columns = ['app','title','remark'];
+		_link_data.app = this.egw().lang(_link_data.app);
+		
 		var self = this;
 		for(var i = 0; i < columns.length; i++) {
 			$j(document.createElement("td"))
