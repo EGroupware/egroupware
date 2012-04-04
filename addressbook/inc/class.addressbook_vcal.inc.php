@@ -631,6 +631,7 @@ class addressbook_vcal extends addressbook_bo
 								case 'PREF':
 								case 'X-CUSTOMLABEL-CAR':
 								case 'X-CUSTOMLABEL-IPHONE':
+								case 'IPHONE':
 									if ($vcardRow['name'] == 'TEL')
 									{
 										$vcardRow['tparams'][$type] = '';
@@ -676,9 +677,10 @@ class addressbook_vcal extends addressbook_bo
 						}
 						break;
 					case 'X-CUSTOMLABEL-IPHONE':
-						if ($rowName == 'TEL')
+					case 'IPHONE':
+						if ($rowName == 'TEL' || $rowName == 'TEL;CELL')
 						{
-							$rowName = 'TEL;CELL;HOME';
+							$rowName = 'TEL;IPHONE';
 						}
 						break;
 					default:
@@ -827,17 +829,17 @@ class addressbook_vcal extends addressbook_bo
 					}
 					break;
 				case 'TEL;CELL;X-egw-Ref1':
-					if (!in_array('TEL;CELL;WORK', $rowNames)
-							&& !isset($finalRowNames['TEL;CELL;WORK']))
+					$supported = isset($this->supportedFields['TEL;CELL']) ? 'TEL;CELL' : 'TEL;CELL;WORK';
+					if (!in_array($supported, $rowNames) && !isset($finalRowNames[$supported]))
 					{
-						$finalRowNames['TEL;CELL;WORK'] = $vcardKey;
+						$finalRowNames[$supported] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref2':
-					if (!in_array('TEL;CELL;HOME', $rowNames)
-							&& !isset($finalRowNames['TEL;CELL;HOME']))
+					$supported = isset($this->supportedFields['TEL;IPHONE']) ? 'TEL;IPHONE' : 'TEL;CELL;HOME';
+					if (!in_array($supported, $rowNames) && !isset($finalRowNames[$supported]))
 					{
-						$finalRowNames['TEL;CELL;HOME'] = $vcardKey;
+						$finalRowNames[$supported] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref3':
@@ -889,7 +891,7 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$finalRowNames[$rowName] = $vcardKey;
 					}
-				break;
+					break;
 			}
 		}
 
@@ -900,6 +902,14 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$contact = array();
+		// to be able to delete fields, we have to set all supported fields to at least null
+		foreach($this->supportedFields as $fields)
+		{
+			foreach($fields as $field)
+			{
+				$contact[$field] = null;
+			}
+		}
 
 		foreach ($finalRowNames as $key => $vcardKey)
 		{
