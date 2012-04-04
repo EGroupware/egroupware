@@ -89,6 +89,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 						break;
 				}
 			}
+			if (reg && typeof _name == 'undefined')
+			{
+				// No key requested, return the whole thing
+				return reg;
+			}
 			return typeof reg[_name] == 'undefined' ? false : reg[_name];
 		},
 		
