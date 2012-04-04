@@ -379,7 +379,6 @@ var et2_link_entry = et2_inputWidget.extend({
 
 		// Search input
 		this.search = $j(document.createElement("input")).attr("type", "search")
-			.css("width","50%")
 			.focus(function(){if(!self.options.application) {self.app_select.show();}})
 			.appendTo(this.div);
 
