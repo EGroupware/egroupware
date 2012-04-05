@@ -100,7 +100,10 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 			}
 		}
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
-		global_data.fields = cfs;
+		if(typeof global_data !== 'undefined')
+		{
+			global_data.fields = cfs;
+		}
 		
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
@@ -1186,9 +1189,7 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
 	}
 
 });
-
-et2_register_widget(et2_nextmatch_header, ['nextmatch-header',
-	'nextmatch-customfilter']);
+et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
 
 /**
  * Extend header to process customfields
@@ -1461,7 +1462,18 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 		if(typeof this.nextmatch.activeFilters.col_filter == 'undefined')
 			this.nextmatch.activeFilters.col_filter = {};
 		if(selected && selected.item.value) {
-			this.nextmatch.activeFilters["col_filter"][this.id] = selected.item.value;
+			if(event.data.options.application)
+			{
+				// Only one application, just give the ID
+				this.nextmatch.activeFilters["col_filter"][this.id] = selected.item.value;
+			}
+			else
+			{
+				// App is expecting app:id
+				this.nextmatch.activeFilters["col_filter"][this.id] = 
+					event.data.app_select.val() + ":"+ selected.item.value;
+				
+			}
 		} else {
 			delete (this.nextmatch.activeFilters["col_filter"][this.id]);
 		}
@@ -1486,3 +1498,47 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 	}
 });
 et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
+
+
+var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
+	attributes: {
+		"widget_type": {
+			"name": "Actual type",
+			"type": "string",
+			"description": "The actual type of widget you should use"
+		},
+	},
+	legacyOptions: ["widget_type"],
+
+	real_node: null,
+
+	init: function(_parent, _attrs) {
+		this._super.apply(this, arguments);
+
+		switch(_attrs.widget_type)
+		{
+			case "link-entry":
+				_attrs.type = 'nextmatch-entryheader';
+				break;
+		}
+		this.real_node = et2_createWidget(_attrs.type, _attrs, this._parent);
+	},
+
+	// Just pass the real DOM node through, in case anybody asks
+	getDOMNode: function(_sender) {
+		return this.real_node ? this.real_node.getDOMNode(_sender) : null;
+	},
+
+	// Also need to pass through real children
+	getChildren: function() {
+		return this.real_node.getChildren();
+	},
+	setNextmatch: function(_nextmatch)
+	{
+		if(this.real_node && this.real_node.setNextmatch)
+		{
+			return this.real_node.setNextmatch(_nextmatch);
+		}
+	}
+});
+et2_register_widget(et2_nextmatch_customfilter, ['nextmatch-customfilter']);
