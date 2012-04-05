@@ -76,7 +76,7 @@
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<description value="Sub" class="noPrint"/>
+					<nextmatch-header label="Sub" id="sub" value="Sub" class="noPrint"/>
 					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
