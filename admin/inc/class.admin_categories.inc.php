@@ -101,7 +101,10 @@ class admin_categories
 				$content = array('data' => array());
 				if(isset($_GET['parent']) && $_GET['parent'] > 0)
 				{
+					// Sub-category - set some defaults from parent
 					$content['parent'] = (int)$_GET['parent'];
+					$parent_cat = categories::read($content['parent']);
+					$content['owner'] = $parent_cat['owner'];
 				}
 				if (isset($_GET['appname']) && isset($GLOBALS['egw_info']['apps'][$_GET['appname']]))
 				{
@@ -201,7 +204,7 @@ class admin_categories
 		$sel_options['owner'] = array();
 
 		// User's category - add current value to be able to preserve owner
-		if(!$content['id'])
+		if(!$content['id'] && !$content['owner'])
 		{
 			if($this->appname != 'admin')
 			{
