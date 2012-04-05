@@ -545,7 +545,6 @@
 					$this->t->set_var('mimetype',mime_magic::mime2label($value['mimeType']));
 					$this->t->set_var('size',egw_vfs::hsize($value['size']));
 					$this->t->set_var('attachment_number',$key);
-
 					switch(strtoupper($value['mimeType']))
 					{
 						case 'MESSAGE/RFC822':
@@ -567,9 +566,21 @@
 						case 'APPLICATION/PDF':
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
-						case 'TEXT/CALENDAR':
+						case 'TEXT/DIRECTORY':
+							$sfxMimeType = $value['mimeType'];
+							$buff = explode('.',$value['name']);
+							$suffix = '';
+							if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+							if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+							if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+							{
+								$attachments[$key]['mimeType'] = $sfxMimeType;
+								$value['mimeType'] = strtoupper($sfxMimeType);
+							}
 						case 'TEXT/X-VCARD':
 						case 'TEXT/VCARD':
+						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCALENDAR':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -857,10 +868,21 @@ blockquote[type=cite] {
 						case 'APPLICATION/PDF':
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
-						case 'TEXT/CALENDAR':
-						case 'TEXT/X-VCALENDAR':
+						case 'TEXT/DIRECTORY':
+							$sfxMimeType = $value['mimeType'];
+							$buff = explode('.',$value['name']);
+							$suffix = '';
+							if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+							if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+							if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+							{
+								$attachments[$key]['mimeType'] = $sfxMimeType;
+								$value['mimeType'] = strtoupper($sfxMimeType);
+							}
 						case 'TEXT/X-VCARD':
 						case 'TEXT/VCARD':
+						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCALENDAR':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -1317,6 +1339,16 @@ blockquote[type=cite] {
 			$GLOBALS['egw']->session->commit_session();
 			if ($_GET['mode'] != "save")
 			{
+				if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY')
+				{
+					$sfxMimeType = $attachment['type'];
+					$buff = explode('.',$attachment['filename']);
+					$suffix = '';
+					if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+					if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+					$attachment['type'] = $sfxMimeType;
+					if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD') $attachment['type'] = strtoupper($sfxMimeType);
+				}
 				//error_log(__METHOD__.print_r($attachment,true));
 				if (strtoupper($attachment['type']) == 'TEXT/CALENDAR' || strtoupper($attachment['type']) == 'TEXT/X-VCALENDAR')
 				{
@@ -1413,7 +1445,7 @@ blockquote[type=cite] {
 				// some characterreplacements, as they fail to translate
 				$sar = array(
 					'@(\x84|\x93|\x94)@',
-					'@(\x96|\x97)@',
+					'@(\x96|\x97|\x1a)@',
 					'@(\x82|\x91|\x92)@',
 					'@(\x85)@',
 					'@(\x86)@',
@@ -1446,7 +1478,7 @@ blockquote[type=cite] {
 					$test = json_encode($singleBodyPart['body']);
 					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
-					if ($test=="null" && strlen($singleBodyPart['body'])>0)  
+					if ($test=="null" && strlen($singleBodyPart['body'])>0)
 					{
 						// this should not be needed, unless something fails with charset detection/ wrong charset passed
 						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
@@ -1641,9 +1673,9 @@ blockquote[type=cite] {
 			// fall back to constructor/preset class var for folder, or use the passed parameter (which is validated by now for existance)
 			if (empty($mailFolder)) $folder = $this->mailbox;
 			else $folder = $mailFolder;
-			// the folder for callfromcompose was hardcoded, because the message to be printed from the compose window is saved as draft, 
+			// the folder for callfromcompose was hardcoded, because the message to be printed from the compose window is saved as draft,
 			// within the configured draftfolder and can be reopened for composing (only) from there, we pass the folder used as
-			// destinationFolder (by saveAsDraft) in mailFolder to pass it on now when comming from uicompose as special setups 
+			// destinationFolder (by saveAsDraft) in mailFolder to pass it on now when comming from uicompose as special setups
 			// broke the earlier assumption -> still no mailFolder, try to recover with the defaults
 			if ($callfromcompose)
 			{
