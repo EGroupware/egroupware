@@ -164,7 +164,7 @@
 			#$domain = "(http(s?):\/\/)*";
 			#$domain            .= "([$alnum]([-$alnum]*[$alnum]+)?)";
 			#$domain = "^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&%\$#\=~])*[^\.\,\)\(\s]$ ";
-			$domain = "(http(s?):\/\/)+([[:alpha:]][-[:alnum:]]*[[:alnum:]])(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])*(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])+";	
+			$domain = "(http(s?):\/\/)+([[:alpha:]][-[:alnum:]]*[[:alnum:]])(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])*(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])+";
 			#$dir = "(/[[:alpha:]][-[:alnum:]]*[[:alnum:]])*";
 			#$trailingslash  = "(\/?)";
 			#$page = "(/[[:alpha:]][-[:alnum:]]*\.[[:alpha:]]{3,5})?";
@@ -509,7 +509,6 @@
 					$this->t->set_var('mimetype',mime_magic::mime2label($value['mimeType']));
 					$this->t->set_var('size',egw_vfs::hsize($value['size']));
 					$this->t->set_var('attachment_number',$key);
-
 					switch(strtoupper($value['mimeType']))
 					{
 						case 'MESSAGE/RFC822':
@@ -531,8 +530,20 @@
 						case 'APPLICATION/PDF':
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
-						case 'TEXT/CALENDAR':
+						case 'TEXT/DIRECTORY':
+							$sfxMimeType = $value['mimeType'];
+							$buff = explode('.',$value['name']);
+							$suffix = '';
+							if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+							if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+							if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+							{
+								$attachments[$key]['mimeType'] = $sfxMimeType;
+								$value['mimeType'] = strtoupper($sfxMimeType);
+							}
 						case 'TEXT/X-VCARD':
+						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCALENDAR':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -544,7 +555,7 @@
 							$windowName = 'displayAttachment_'. $this->uid;
 							$reg = '800x600';
 							// handle calendar/vcard
-							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR') 
+							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR')
 							{
 								$windowName = 'displayEvent_'. $this->uid;
 								$reg2 = egw_link::get_registry('calendar','view_popup');
@@ -800,9 +811,21 @@
 						case 'APPLICATION/PDF':
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
+						case 'TEXT/DIRECTORY':
+							$sfxMimeType = $value['mimeType'];
+							$buff = explode('.',$value['name']);
+							$suffix = '';
+							if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+							if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+							if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+							{
+								$attachments[$key]['mimeType'] = $sfxMimeType;
+								$value['mimeType'] = strtoupper($sfxMimeType);
+							}
+						case 'TEXT/X-VCARD':
+						case 'TEXT/VCARD':
 						case 'TEXT/CALENDAR':
 						case 'TEXT/X-VCALENDAR':
-						case 'TEXT/X-VCARD':
 							$linkData = array
 							(
 								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
@@ -814,7 +837,7 @@
 							$windowName = 'displayAttachment_'. $this->uid;
 							$reg = '800x600';
 							// handle calendar/vcard
-							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR' || strtoupper($value['mimeType'])=='TEXT/X-VCALENDAR') 
+							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR' || strtoupper($value['mimeType'])=='TEXT/X-VCALENDAR')
 							{
 								$windowName = 'displayEvent_'. $this->uid;
 								$reg2 = egw_link::get_registry('calendar','view_popup');
@@ -932,9 +955,9 @@
 		function display_app_header($printing = NULL)
 		{
 			if ($_GET['menuaction'] != 'felamimail.uidisplay.printMessage' &&
-				$_GET['menuaction'] != 'felamimail.uidisplay.displayBody' && 
+				$_GET['menuaction'] != 'felamimail.uidisplay.displayBody' &&
 				$_GET['menuaction'] != 'felamimail.uidisplay.displayAttachments' &&
-				empty($printing)) 
+				empty($printing))
 			{
 				$GLOBALS['egw']->js->validate_file('tabs','tabs');
 				$GLOBALS['egw']->js->validate_file('jscode','view_message','felamimail');
@@ -980,7 +1003,7 @@
 					if($addressData['PERSONAL_NAME'] != 'NIL') {
 						$newSenderAddressORG = $newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
 						$decodedPersonalNameORG = $decodedPersonalName = $addressData['PERSONAL_NAME'];
-						if ($decode) 
+						if ($decode)
 						{
 							$newSenderAddress = bofelamimail::decode_header($newSenderAddressORG);
 							$decodedPersonalName = bofelamimail::decode_header($decodedPersonalName);
@@ -1137,6 +1160,16 @@
 			$GLOBALS['egw']->session->commit_session();
 			if ($_GET['mode'] != "save")
 			{
+				if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY')
+				{
+					$sfxMimeType = $attachment['type'];
+					$buff = explode('.',$attachment['filename']);
+					$suffix = '';
+					if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+					if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+					$attachment['type'] = $sfxMimeType;
+					if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD') $attachment['type'] = strtoupper($sfxMimeType);
+				}
 				//error_log(__METHOD__.print_r($attachment,true));
 				if (strtoupper($attachment['type']) == 'TEXT/CALENDAR' || strtoupper($attachment['type']) == 'TEXT/X-VCALENDAR')
 				{
@@ -1167,7 +1200,7 @@
 					// if there are not enough fields in the vcard (or the parser was unable to correctly parse the vcard (as of VERSION:3.0 created by MSO))
 					if ($contact || count($vcard)>2) $contact = $addressbook_vcal->addVCard($attachment['attachment'],$contact,true);
 					//error_log(__METHOD__.$contact);
-					if ((int)$contact > 0) 
+					if ((int)$contact > 0)
 					{
 						$vars = array(
 							'menuaction'	=> 'addressbook.addressbook_ui.edit',
@@ -1228,7 +1261,7 @@
 				// some characterreplacements, as they fail to translate
 				$sar = array(
 					'@(\x84|\x93|\x94)@',
-					'@(\x96|\x97)@',
+					'@(\x96|\x97|\x1a)@',
 					'@(\x82|\x91|\x92)@',
 					'@(\x85)@',
 					'@(\x86)@',
@@ -1260,7 +1293,7 @@
 					$test = json_encode($singleBodyPart['body']);
 					//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error());
 					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
-					if ($test=="null" && strlen($singleBodyPart['body'])>0)  
+					if ($test=="null" && strlen($singleBodyPart['body'])>0)
 					{
 						// this should not be needed, unless something fails with charset detection/ wrong charset passed
 						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.bofelamimail::detect_encoding($singleBodyPart['body']));
@@ -1288,10 +1321,10 @@
 					// create links for websites
 					$newBody = html::activate_links($newBody);
 					// redirect links for websites if you use no cookies
-					#if (!($GLOBALS['egw_info']['server']['usecookies'])) 
+					#if (!($GLOBALS['egw_info']['server']['usecookies']))
 					#	$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
-					#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"$this->displayCharset\").'\"'", $newBody);	
-					
+					#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"$this->displayCharset\").'\"'", $newBody);
+
 					// create links for email addresses
 					$this->parseEmail($newBody);
 					$newBody	= $this->highlightQuotes($newBody);
@@ -1345,7 +1378,7 @@
 						"'href=\"#\"'.' onclick=\"egw_openWindowCentered(\'$link&send_to='.base64_encode('$2').'\',\'compose\',700,egw_getWindowOuterHeight());\"'", $newBody);
 //						"'href=\"$link&send_to='.base64_encode('$2').'\"'", $newBody);
 					//print "<pre>".htmlentities($newBody)."</pre><hr>";
-					
+
 					// replace emails within the text with clickable links.
 					$this->parseEmail($newBody);
 				}
@@ -1381,7 +1414,7 @@
 				if (isset($this->mailPreferences->preferences['draftFolder']) &&
                 	$this->mailPreferences->preferences['draftFolder'] != 'none')
 				{
-					$folder = $this->mailPreferences->preferences['draftFolder']; 
+					$folder = $this->mailPreferences->preferences['draftFolder'];
 				}
 				else
 				{
