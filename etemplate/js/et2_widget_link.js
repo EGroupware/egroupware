@@ -402,6 +402,17 @@ var et2_link_entry = et2_inputWidget.extend({
 			disabled: self.options.disabled
 		});
 
+		// Bind to enter key to start search early
+		this.search.keydown(function(e) {
+			var keycode = (e.keyCode ? e.keyCode : e.which);
+			if(keycode == '13')
+			{
+				self.search.autocomplete("option","minLength", 0);
+				self.search.autocomplete("search");
+				self.search.autocomplete("option","minLength", self.minimum_characters);
+				e.stopPropagation();
+			}
+		});
 		this.setDOMNode(this.div[0]);
 	},
 
