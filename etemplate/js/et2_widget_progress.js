@@ -125,6 +125,10 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			this.set_value(_values["value"]);
 		}
+		else if (_values["label"])
+		{
+			this.set_value(_values["label"]);
+		}
 	}
 });
 
