@@ -41,7 +41,6 @@ function check_owner(element_id) {
 		}
 	}
 
-
 	// Somebody will lose permission, give warning.
 	if(diff.length > 0) {
 		var msg = permission_prompt;
@@ -51,4 +50,26 @@ function check_owner(element_id) {
 		return confirm(msg);
 	}
 	return true;
+}
+
+/**
+ * Show icon based on icon-selectbox, hide placeholder (broken image), if no icon selected
+ */
+function change_icon(_icon)
+{
+	var img = document.getElementById('exec[icon_url]') || document.getElementById('icon_url');
+	
+	if (typeof _icon == 'undefined')
+	{
+		_icon = document.getElementById('exec[data][icon]') || document.getElementById('data[icon]');
+	}
+	if (_icon && _icon.value)
+	{
+		img.src = img.src.replace(/\/[^\/]*$/,'\/'+_icon.value);
+		img.style.display = 'block';
+	}
+	else
+	{
+		img.style.display = 'none';
+	}
 }
