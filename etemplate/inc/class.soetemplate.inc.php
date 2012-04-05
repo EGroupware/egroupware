@@ -917,6 +917,10 @@ class soetemplate
 			$str = '$templ_data[] = array(';
 			foreach (self::$db_cols as $db_col => $name)
 			{
+				if ($name == 'style')	// remove trailing whitespace
+				{
+					$row[$db_col] = preg_replace('/[ \t]+$/m', '', $row[$db_col]);
+				}
 				// escape only backslashes and single quotes (in that order)
 				$str .= "'$name' => '".str_replace(array('\\','\'',"\r"),array('\\\\','\\\'',''),$row[$db_col])."',";
 			}
