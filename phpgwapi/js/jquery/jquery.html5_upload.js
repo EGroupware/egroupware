@@ -36,8 +36,8 @@
                         headers: {
                                 "Cache-Control":"no-cache",
                                 "X-Requested-With":"XMLHttpRequest",
-                                "X-File-Name": function(file){return file.fileName},
-                                "X-File-Size": function(file){return file.fileSize},
+                                "X-File-Name": function(file){return file.fileName ? file.fileName : file.name},
+                                "X-File-Size": function(file){return file.fileSize ? file.fileSize : file.size},
                                 "Content-Type": function(file){
                                         if (!options.sendBoundary) return 'multipart/form-data';
                                         return false;
@@ -93,21 +93,23 @@
                                         return;
                                 }
                                 var file = files[number];
-                                if (!$this.triggerHandler('onStartOne.html5_upload', [file.fileName, number, total])) {
+				var fileName = file.fileName ? file.fileName : file.name;
+				var fileSize = file.fileSize ? file.fileSize : file.size;
+                                if (!$this.triggerHandler('onStartOne.html5_upload', [fileName, number, total])) {
                                         return upload_file(number+1);
                                 }
                                 options.setStatus(options.genStatus(0));
-                                options.setName(options.genName(file.fileName, number, total));
-                                options.setProgress(options.genProgress(0, file.fileSize));
+                                options.setName(options.genName(fileName, number, total));
+                                options.setProgress(options.genProgress(0, fileSize));
                                 xhr.upload['onprogress'] = function(rpe) {
-                                        $this.trigger('onProgress.html5_upload', [rpe.loaded / rpe.total, file.fileName, number, total]);
+                                        $this.trigger('onProgress.html5_upload', [rpe.loaded / rpe.total, fileName, number, total]);
                                         options.setStatus(options.genStatus(rpe.loaded / rpe.total));
                                         options.setProgress(options.genProgress(rpe.loaded, rpe.total));
                                 };
                                 xhr.onload = function(load) {
-                                        $this.trigger('onFinishOne.html5_upload', [xhr.responseText, file.fileName, number, total]);
+                                        $this.trigger('onFinishOne.html5_upload', [xhr.responseText, fileName, number, total]);
                                         options.setStatus(options.genStatus(1, true));
-                                        options.setProgress(options.genProgress(file.fileSize, file.fileSize));
+                                        options.setProgress(options.genProgress(fileSize, fileSize));
                                         upload_file(number+1);
                                 };
                                 xhr.onabort = function() {
@@ -122,7 +124,7 @@
                                         }
                                 };
                                 xhr.onerror = function(e) {
-                                        $this.trigger('onError.html5_upload', [file.fileName, e]);
+                                        $this.trigger('onError.html5_upload', [fileName, e]);
                                         if (!options.stopOnFirstError) {
                                                 upload_file(number+1);
                                         }
@@ -159,7 +161,7 @@
                                                 builder += 'Content-Disposition: form-data; name="'+(typeof(options.fieldName) == "function" ? options.fieldName() : options.fieldName)+'"';
 
                                                 //thanks to oyejo...@gmail.com for this fix
-                                                fileName = unescape(encodeURIComponent(file.fileName)); //encode_utf8
+                                                fileName = unescape(encodeURIComponent(fileName)); //encode_utf8
 
                                                 builder += '; filename="' + fileName + '"';
                                                 builder += crlf;
