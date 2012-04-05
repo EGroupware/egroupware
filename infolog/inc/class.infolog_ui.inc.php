@@ -1222,14 +1222,20 @@ class infolog_ui
 				if ($query['filter']) egw_cache::setSession('infolog', 'filter_reset_from', $query['filter']);
 				return $this->index(array(),'sp',$checked,0);
 			case 'ical':
+				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
-				$result = '';
-				foreach($checked as $id)
-				{
-					$result .= $boical->exportVTODO($id,'2.0','PUBLISH',false);
+				$horde = new Horde_iCalendar();
+				foreach($checked as $_selection) {
+					$result = $boical->exportVTODO($_selection,'2.0','PUBLISH',false);
+
+					// infolog_ical doesn't allow a nice call to get just the VTODO
+					if($result)
+					{
+						$horde->parsevCalendar($result, 'VCALENDAR', 'utf-8', false);
+					}
 				}
-				ExecMethod2('phpgwapi.browser.content_header','todo.ical','text/calendar');
-				echo $result;
+				ExecMethod2('phpgwapi.browser.content_header','todo.ics','text/calendar');
+				echo $horde->exportvCalendar();
 				common::egw_exit();
 				
 		}

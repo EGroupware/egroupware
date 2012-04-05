@@ -116,7 +116,7 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 	 * @return string name
 	 */
 	public static function get_name() {
-		return lang('iCal import');
+		return lang('Infolog iCal import');
 	}
 
 	/**
