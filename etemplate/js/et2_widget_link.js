@@ -380,7 +380,8 @@ var et2_link_entry = et2_inputWidget.extend({
 
 		// Search input
 		this.search = $j(document.createElement("input")).attr("type", "search")
-			.focus(function(){if(!self.options.application) {self.app_select.show();}})
+			.focus(function(){if(!self.options.application) {self.search.css("width", "60%");self.app_select.show();}})
+			.css("width", opt_count == 1 ? "100%" : "60%")
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
@@ -482,13 +483,21 @@ var et2_link_entry = et2_inputWidget.extend({
 			else
 			{
 				// Title will be fetched from server and then set
-				var title = this.egw().link_title(_value.app, _value.id, function(title) {this.val(title+"");}, this.search);
+				var title = this.egw().link_title(_value.app, _value.id, function(title) {
+					this.removeClass("loading").val(title+"");
+				}, this.search);
+				this.search.addClass("loading");
 			}
 		}
+		else
+		{
+			this.search.val(_value.title+"");
+		}
 		this.value = _value;
-		this.search.val(_value.title+"");
+		
 		jQuery("option[value='"+_value.app+"']",this.app_select).attr("selected",true);
 		this.app_select.hide();
+		this.search.css("width", "100%");
 	},
 
 	set_blur: function(_value, input) {
