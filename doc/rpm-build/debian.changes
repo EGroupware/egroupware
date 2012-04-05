@@ -1,3 +1,58 @@
+egroupware (1.8.004.20120405) hardy; urgency=low
+
+  * SECURITY: fix for a XSS (cross-site-scripting) vulnerability, it is recommended to update ASAP!
+  * REQUIRES TO VISIT SETUP for schema updates
+  * more secure password hashing types: sha512_crypt and sha256_crypt
+  * enable automatic migration to sha512_crypt if accounts in SQL or LDAP (but only on Linux, as OpenLDAP has no native support for it)
+  * session listing without the need of a listable (less secure) session directory
+  * numerous CalDAV and CardDAV fixes (EGroupware 1.8.004 is now far more standard compliant then 1.8.002!)
+  * --> CalDAV/CardDAV is now recommended over SyncML, which will be no longer supported in the next major release
+  * show calendars and addressbooks selected to sync under user calendar- or addressbook-home-set allowing clients to automatic detect them
+  * CalDAV scheduling support allows clients eg. to show free busy status of invited participants
+  * client can choose the url for new events or contacts (standard requirement!)
+  * allow clients to store attributes (eg. calendar colors) via PROPPATCH
+  * store unknown attributes (eg. location based alarms) in custom fields in InfoLog
+  * CardDAV works now with LDAP backend
+  * ability to log and display CalDAV/CardDAV traffic without access to commandline of server
+  * PHP 5.4: fixes for strict warnings, thought disabling E_STRICT for now, because of various strict warnings in working code, which could not be easy fixed in all areas
+  * wiki: fix SQL for makro WantedPages
+  * wiki: bugfix for ->fatal error/exception if search is started with no searchstring<- now we return everything / all entrys on a missing search string
+  * wiki: bugfix for ->fatal error/exception when inserting new webdav links in HTML mode<- 
+  * API: fixed a reported deprecated warning on logout when using CAS
+  * felamimail: handle IE (8) problem regarding toggling editor modes in compose window
+  * Filemanager: allow WebDAVs (https) via PEAR HTTP_WebDAV_Client
+  * API/Login: using tabindex to control tab succession on/in loginscreen.
+  * Calendar/iCal/CalDAV: if no end(-time) is given in iCal we use the default lenght from user prefs
+  * Calendar: fixed tz-aliases to NOT use Etc/GMT* but Olson identifiers
+  * CalDAV: fixed Outlook needs Microsoft specific x-property to recognice all-day events as such
+  * Addressbook/CardDAV: fixed Apple iOS and OS X addressbook messed up phone numbers (Mobile is now mobile for both and iPhone is matched to EGroupware private cell)
+  * Addressbook: disable custom field tabs, if contact is stored in LDAP, which does not support CFs
+  * Notifications: fixed not correctly reset timezone after notifying users from other timezones
+  * Filemanager/Admin: ability to check virtual filesystem (Admin >> Check virtual filesystem) and some code to prefent double creation of directories
+  * News: fixed SQL error happening with multiple translations
+  * PostgreSQL/Setup/EMailAdmin: fixed Setup >> Configuration was not storing anything
+  * timesheet: fixed wrong sum for timesheets;
+  * InfoLog/CalDAV: fixed wrong timezone used for iCal generation
+  * Calendar: mail all participants was attaching iCal with wrong time(zone)
+  * Admin/Addressbook: fixed wrong timezone in created and modified times for contacts and accounts
+  * eMail: fix bug regarding language strings with single quotes in Javascript;
+  * Calendar: update timezones to 2011n from Lightning
+  * API: fix account-selection-method "selectbox" containing selected account double (eg. in Admin >> Manage groups)
+  * Home: only display apps user has rights to (were not checked for calendar, email, infolog, news_admin or if user changes positions on home, before gotten app-rights removed)
+  * Wiki/PostgreSQL: whitespace before database-type caused creation of index on egw_wiki_pages.wiki_body limiting article length to 32k --> re-install wiki or drop index egw_wiki_pages_body
+  * SiteMgr: fixed every block had identical id="Mod" validation error
+  * SiteMgr: remove CKeditor SCAYT (spell-check-as-you-type) tags, which dont validate
+  * SiteMgr: properly escape block-titles containing special chars
+  * SiteMgr: allow to set meta description on category level by using {description} tag instead of {slogan} or {sitedesc}, proper escaping of all placeholders
+  * Projectmanager: add /usr/share/fonts to open_basedir to allow JpGraph for ganttchars access to default font location
+  * Admin: fixed import of already hashed passwords
+  * InfoLog/CalDAV: add support for responsible as iCal ATTENDEE, make sure not to empty InfoLog fields not supported by iCal standard
+  * wiki: patch to handle the case that we have 2 versions of the same wikipage with wiki_supercede=wiki_time (up-to-date version)-> use the one with the highest version number; bugfix regarding the import of manual into own wiki; use wiki_id from constructor in where clause where ever it applies and not already present (e.g.: exists(), read(), write (in special cases (import of manual)) and makros (as we should not mix wikis)
+  * CardDAV: fixed not working deleting of existing fields and cell phone numbers for Apple clients
+  * eMail: supporting deprecated text/directory mimetype (if filename extension is of type text/vcard) for opening in addressbook edit dialog.
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 05 Apr 2012 15:10:11 +0200
+
 egroupware (1.8.002.20111111) hardy; urgency=low
 
   * SyncML: fix WBXML namespache issue (bug 3048)
