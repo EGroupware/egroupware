@@ -131,6 +131,7 @@ a.et2_url.url {
 .et2_button_icon {
 	border: none;
 	background: transparent;
+	padding: 2px;
 }
 button.et2_button_text:hover {
 	color: #050505;
@@ -597,6 +598,9 @@ label input, label span, label div, label select, label textarea {
 }
 .nextmatch_header .et2_button_icon {
 	vertical-align: middle;
+}
+.nextmatch_header > .filters .et2_button_icon {
+	margin-top: 8px;
 }
 .nextmatch_sortheader {
 	color: #003075;
