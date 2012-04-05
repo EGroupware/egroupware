@@ -117,7 +117,7 @@ var et2_link_to = et2_inputWidget.extend({
 			.appendTo(this.div).addClass("status").hide();
 
 		// Need a div for link-to widget
-		this.link_div = $j(document.createElement("div")).appendTo(this.div);
+		this.link_div = $j(document.createElement("div")).css("margin-bottom", "1ex").appendTo(this.div);
 
 		// Link comment field
 		this.comment = $j(document.createElement("input"))
@@ -380,7 +380,10 @@ var et2_link_entry = et2_inputWidget.extend({
 
 		// Search input
 		this.search = $j(document.createElement("input")).attr("type", "search")
-			.focus(function(){if(!self.options.application) {self.search.css("width", "60%");self.app_select.show();}})
+			.focus(function(){if(!self.options.application) {
+				// Adjust width, leave room for app select & link button
+				self.search.css("width", "50%");self.app_select.show();
+			}})
 			.css("width", opt_count == 1 ? "100%" : "60%")
 			.appendTo(this.div);
 

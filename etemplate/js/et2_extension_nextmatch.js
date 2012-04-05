@@ -1209,6 +1209,9 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 	init: function() {
 		this.nextmatch = null;
 		this._super.apply(this, arguments);
+
+		// Specifically take the whole column
+		this.table.css("width", "100%");
 	},
 
 	destroy: function() {
