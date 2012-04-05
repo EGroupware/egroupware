@@ -75,11 +75,11 @@ function status_changed(changed_id, status_id, percent_id, datecompleted_id)
 			}
 			break;
 	}
-	if (!completed && datecompleted.value != '')
+	if (!completed && datecompleted && datecompleted.value != '')
 	{
 		datecompleted.value = '';
 	}
-	else if (completed && datecompleted.value == '')
+	else if (completed && datecompleted && datecompleted.value == '')
 	{
 		// todo: set current date in correct format
 	}
