@@ -1627,7 +1627,7 @@ class egw_db
 	/**
 	* reads the table-definitions from the app's setup/tables_current.inc.php file
 	*
-	* The already read table-definitions are shared between all db-instances via $GLOBALS['egw_info']['apps'][$app]['table_defs']
+	* The already read table-definitions are shared between all db-instances via a static var.
 	*
 	* @author RalfBecker<at>outdoor-training.de
 	*
@@ -1638,13 +1638,14 @@ class egw_db
 	*/
 	function get_table_definitions($app=False,$table=False)
 	{
-		if ($app === true && $table && isset($GLOBALS['egw_info']['apps']))
+		static $all_app_data;
+		if ($app === true && $table && isset($all_app_data))
 		{
-			foreach($GLOBALS['egw_info']['apps'] as $app => &$app_data)
+			foreach($all_app_data as $app => &$app_data)
 			{
-				if (isset($app_data['table_defs'][$table]))
+				if (isset($app_data[$table]))
 				{
-					return $app_data['table_defs'][$table];
+					return $app_data[$table];
 				}
 			}
 			$app = false;
@@ -1653,33 +1654,26 @@ class egw_db
 		{
 			$app = $this->app ? $this->app : $GLOBALS['egw_info']['flags']['currentapp'];
 		}
-		if (isset($GLOBALS['egw_info']['apps']))	// dont set it, if it does not exist!!!
-		{
-			$this->app_data = &$GLOBALS['egw_info']['apps'][$app];
-		}
-		// this happens during the eGW startup or in setup
-		else
-		{
-			$this->app_data =& $this->all_app_data[$app];
-		}
-		if (!isset($this->app_data['table_defs']))
+		$app_data =& $all_app_data[$app];
+
+		if (!isset($app_data))
 		{
 			$tables_current = EGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
 			if (!@file_exists($tables_current))
 			{
-				return $this->app_data['table_defs'] = False;
+				return $app_data = False;
 			}
 			include($tables_current);
-			$this->app_data['table_defs'] =& $phpgw_baseline;
+			$app_data =& $phpgw_baseline;
 			unset($phpgw_baseline);
 		}
-		if ($table && (!$this->app_data['table_defs'] || !isset($this->app_data['table_defs'][$table])))
+		if ($table && (!$app_data || !isset($app_data[$table])))
 		{
 			if ($this->Debug) echo "<p>!!!get_table_definitions($app,$table) failed!!!</p>\n";
 			return False;
 		}
 		if ($this->Debug) echo "<p>get_table_definitions($app,$table) succeeded</p>\n";
-		return $table ? $this->app_data['table_defs'][$table] : $this->app_data['table_defs'];
+		return $table ? $app_data[$table] : $app_data;
 	}
 
 	/**
