@@ -57,8 +57,8 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				// Handle images in appname/imagename format
 				if(_name.indexOf('/') > 0)
 				{
-					var split = et2_csvSplit(_name, 2,"/");
-					var _app = split[0];
+					var split = _name.split('/',2);
+					_app = split[0];
 					_name = split[1];
 				}
 			}
