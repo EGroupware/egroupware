@@ -87,7 +87,7 @@
 					<description value="Icon" options=",,,data[icon]"/>
 					<hbox options="0,0">
 						<menulist>
-							<menupopup id="data[icon]" onchange="document.getElementById('icon_url').src = '$cont[base_url]' + this.value;" options="None"/>
+							<menupopup id="data[icon]" onchange="change_icon(this);" options="None"/>
 						</menulist>
 						<image src="icon_url" class="leftPad5"/>
 					</hbox>

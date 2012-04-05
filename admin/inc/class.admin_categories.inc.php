@@ -253,6 +253,7 @@ class admin_categories
 		egw_framework::set_onload('$j(document).ready(function() {
 			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : ($content['id'] ? '0' : '')) .'];
 			permission_prompt = \'' . lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:').'\';
+			change_icon();
 		});');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
