@@ -94,7 +94,7 @@ class calendar_groupdav extends groupdav_handler
 		$this->vCalendar = new Horde_iCalendar;
 
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
-		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.8.004', '>='))
 		{
 			self::$path_attr = 'caldav_name';
 			groupdav_handler::$path_extension = '';
