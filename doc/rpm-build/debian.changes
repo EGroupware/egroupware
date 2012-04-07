@@ -1,3 +1,11 @@
+egroupware (1.8.004.20120407) hardy; urgency=low
+
+  * Resources: SiteMgr module uses old class-name ui_resources instead of resources_ui
+  * CalDAV: fix error nothing known about column "id"
+  * CalDAV/CardDAV: add API version to pseudo session-id used to invalidate all sessions from the previous version (which eg. give database errors, because using old schema)
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 07 Apr 2012 08:54:56 +0200
+
 egroupware (1.8.004.20120405) hardy; urgency=low
 
   * SECURITY: fix for a XSS (cross-site-scripting) vulnerability, it is recommended to update ASAP!
