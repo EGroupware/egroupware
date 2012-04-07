@@ -761,7 +761,8 @@ class egw_session
 			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
-			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
+			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.$GLOBALS['egw_info']['apps']['phpgwapi']['version']);
 		}
 		// same for digest auth
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
@@ -770,7 +771,8 @@ class egw_session
 			// we generate a pseudo-sessionid from the digest username, realm and nounce
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
 			$data = egw_digest_auth::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
-			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
+			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.$GLOBALS['egw_info']['apps']['phpgwapi']['version']);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
