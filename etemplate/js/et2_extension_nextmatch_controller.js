@@ -34,8 +34,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _parentController is the parent nextmatch controller instance
 	 * @param _egw is the api instance
 	 * @param _execId is the execId of the etemplate
-	 * @param _widgetId is the id of the nextmatch-widget we are fetching data
-	 * for.
+	 * @param _widget is the nextmatch-widget we are fetching data for.
 	 * @param _grid is the grid the grid controller will be controlling
 	 * @param _rowProvider is the nextmatch row provider instance.
 	 * @param _objectManager is the parent object manager (if null, the object
@@ -44,7 +43,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _actions contains the actions, may be null if an object manager
 	 * is given.
 	 */
-	init: function (_parentController, _egw, _execId, _widgetId, _parentId,
+	init: function (_parentController, _egw, _execId, _widget, _parentId,
 			_grid, _rowProvider, _actionLinks, _objectManager, _actions) {
 
 		// Copy the egw reference
@@ -65,10 +64,13 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		this._super(_parentController, _grid, this, this._rowCallback,
 			this._linkCallback, this, this._objectManager);
 
+		// Keep a reference to the widget
+		this._widget = _widget;
+
 		// Copy the given parameters
 		this._actionLinks = _actionLinks
 		this._execId = _execId;
-		this._widgetId = _widgetId;
+		this._widgetId = _widget.id;
 		this._parentId = _parentId;
 		this._rowProvider = _rowProvider;
 
@@ -180,6 +182,43 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		return this._actionLinks;
 	},
 
+
+	/**
+	 * Overridden from the parent to also process any additional data that
+	 * the data source adds, such as readonlys and additonal content.
+	 * For example, non-numeric IDs in rows are added to the content manager
+	 */
+	_fetchCallback: function (_response) {
+		var nm = this.self._widget;
+
+		// Readonlys
+		// Other stuff
+		for(var i in _response.rows)
+		{
+			if(jQuery.isNumeric(i)) continue;
+			if(i == 'sel_options')
+			{
+				var mgr = nm.getArrayMgr(i);
+				for(var id in _response.rows.sel_options)
+				{
+					mgr.data[id] = _response.rows.sel_options[id];
+					var select = nm.getWidgetById(id);
+					if(select)
+					{
+						select.set_select_options(_response.rows.sel_options[id]);
+					}
+				}
+			}
+			else
+			{
+				var mgr = nm.getArrayMgr('content');
+				mgr.data[i] = _response.rows[i]
+			}
+		}
+
+		// Call the inherited function
+		this._super.apply(this, arguments);
+	},
 
 	/** -- Implementation of et2_IDataProvider -- **/
 

@@ -550,7 +550,7 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 				null,
 				this.egw(),
 				this.getInstanceManager().etemplate_exec_id,
-				"nm",
+				this,
 				null,
 				this.dataview.grid,
 				this.rowProvider,
