@@ -28,7 +28,9 @@ div.et2_vbox>* {
 div.et2_hbox div.et2_hbox {
 	display: inline;
 }
-
+div.et2_hbox {
+	white-space: nowrap;
+}
 div.et2_hbox>* {
 	text-align: left;
 }
@@ -48,6 +50,9 @@ div.et2_hbox_al_right {
 div.et2_hbox_right {
 	float: right;
 	clear: right;
+}
+div.et2_hbox>div {
+	display: inline-block;
 }
 
 /**
