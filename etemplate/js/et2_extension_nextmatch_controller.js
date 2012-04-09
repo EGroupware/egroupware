@@ -203,7 +203,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 				{
 					mgr.data[id] = _response.rows.sel_options[id];
 					var select = nm.getWidgetById(id);
-					if(select)
+					if(select && select.set_select_options)
 					{
 						select.set_select_options(_response.rows.sel_options[id]);
 					}
