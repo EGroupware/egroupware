@@ -47,8 +47,14 @@ var et2_checkbox = et2_inputWidget.extend({
 			"type": "string",
 			"default": "",
 			"description": "What should be displayed when readonly and not selected"
+		},
+		"value": {
+			// Stop framework from messing with value
+			"type": "any"
 		}
 	},
+
+	legacyOptions: ["selected_value", "unselected_value", "ro_true", "ro_false"],
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -73,7 +79,8 @@ var et2_checkbox = et2_inputWidget.extend({
 	 */
 	set_value: function(_value) {
 		if(_value != this.value) {
-			if(_value == this.options.selected_value) {
+			if(_value == this.options.selected_value || 
+					_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"]) {
 				this.input.attr("checked", "checked");
 			} else {
 				this.input.removeAttr("checked");
