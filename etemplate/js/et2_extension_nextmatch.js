@@ -929,9 +929,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 		// Set up so if row count changes, display is updated
 		// Register the handler which will update the "totalCount" display
-		/*this.dataview.grid.setInvalidateCallback(function () {
-			this.count_total.text(this.dataview.grid.getTotalCount() + "");
-		}, this);*/
+		this.nextmatch.dataview.grid.setInvalidateCallback(function () {
+			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
+		}, this);
 
 		// Left & Right headers
 		this.headers = [];
