@@ -308,7 +308,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		"blur": {
 			"name": "Placeholder",
 			"type": "string",
-			"default": "",
+			"default": et2_no_init,
 			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
 		},
 		"query": {
