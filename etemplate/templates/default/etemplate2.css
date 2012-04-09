@@ -544,7 +544,7 @@ label input, label span, label div, label select, label textarea {
 }
 
 .message.floating {
-	display: inline;
+	display: inline-block;
 	margin: 0px 5px 0px 5px;
 }
 
