@@ -40,6 +40,10 @@ function status_changed(changed_id, status_id, percent_id, datecompleted_id)
 	var status = document.getElementById(status_id);
 	var percent = document.getElementById(percent_id);
 	var datecompleted = document.getElementById(datecompleted_id+'[str]');
+	if(!datecompleted)
+	{
+		datecompleted = jQuery('#'+datecompleted_id +' input').get(0);
+	}
 	var completed;
 	
 	switch(changed_id)
