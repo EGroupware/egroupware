@@ -289,7 +289,7 @@
 			</rows>
 		</grid>
 		<styles>
-			.hideFrom input { display: none; }
+			.hideFrom input, input.hideFrom { display: none; }
 .hiddenRow {
   display: none;
 }
