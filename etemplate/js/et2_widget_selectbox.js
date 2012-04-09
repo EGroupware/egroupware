@@ -52,6 +52,9 @@ var et2_selectbox = et2_inputWidget.extend({
 			"type": "boolean",
 			"default": true,
 			"description": "For multi-selects, put the selected options at the top of the list when first loaded"
+		},
+		"value": {
+			"type": "any" // Can be string or integer
 		}
 	},
 
