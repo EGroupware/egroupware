@@ -509,6 +509,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 				tr.height(this.rowData[y].height);
 			}
 
+			if (this.rowData[y].valign)
+			{
+				tr.attr("valign", this.rowData[y].valign);
+			}
 			// Create the cells. x is incremented by the colSpan value of the
 			// cell.
 			for (var x = 0; x < w;)
