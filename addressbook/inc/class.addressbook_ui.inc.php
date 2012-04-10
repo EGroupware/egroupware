@@ -964,7 +964,7 @@ class addressbook_ui extends addressbook_bo
 				default:
 					if ($query['order'][0] == '#')	// we order by a custom field
 					{
-						$order = "$query[order]<>'' DESC,$query[order] $sort,org_name $sort,n_family $sort,n_given $sort";
+						$order = "{$query['order']} $sort,org_name $sort,n_family $sort,n_given $sort";
 						break;
 					}
 					$query['order'] = 'n_family';
@@ -1050,10 +1050,8 @@ class addressbook_ui extends addressbook_bo
 
 		$readonlys = array();
 		$photos = $homeaddress = $roles = $notes = false;
-		foreach($rows as $n => $val)
+		foreach($rows as $n => &$row)
 		{
-			$row =& $rows[$n];
-
 			$given = $row['n_given'] ? $row['n_given'] : ($row['n_prefix'] ? $row['n_prefix'] : '');
 
 			switch($order)
@@ -1108,7 +1106,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					foreach($this->customfields as $name => $data)
 					{
-						$row['#'.$name] = $customfields[$row['id']][$name];
+						$row['#'.$name] = $customfields[$row['id']]['#'.$name];
 					}
 				}
 				if (isset($distributionlist[$row['id']]))
