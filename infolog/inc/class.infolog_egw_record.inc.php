@@ -25,8 +25,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 	// Used in conversions
 	static $types = array(
                 'select-account' => array('info_owner','info_responsible','modifier'),
-                'date-time' => array('info_startdate', 'info_datecompleted', 'info_datemodified','created','last_event','next_event'),
-		'date' => array('info_enddate'),
+                'date-time' => array('info_startdate', 'info_enddate','info_datecompleted', 'info_datemodified','created','last_event','next_event'),
                 'select-cat' => array('info_cat', 'cat_id'),
 		'links' => array('info_link_id'),
         );
