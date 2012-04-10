@@ -13,7 +13,7 @@
 			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="note"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.003">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%">
 			<columns>
 				<column width="2%"/>
@@ -25,7 +25,6 @@
 				<column/>
 				<column width="8%" disabled="@no_info_owner_info_responsible"/>
 				<column width="12%"/>
-				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
 			<rows>
@@ -76,7 +75,6 @@
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<nextmatch-header label="Sub" id="sub" class="noPrint"/>
 					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
@@ -143,12 +141,6 @@
 							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox align="center" options="0" class="noPrint" orient="0">
-						<button align="center" statustext="Add a new sub-task, -note, -call to this entry" label="Add sub" id="sp[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="new"/>
-						<button align="center" statustext="View all subs of this entry" label="View subs" id="view[$row_cont[info_id]]" image="view"/>
-						<button align="center" statustext="View the parent of this entry and all his subs" label="View parent" id="view[$row_cont[info_id_parent]]" image="parent"/>
-						<button align="center" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;link_id[]=$row_cont[info_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="timesheet"/>
-					</vbox>
 					<vbox options="0" class="noPrint" orient="0">
 						<hbox options="0,0" class="noPrint" orient="0">
 							<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="edit"/>
@@ -168,7 +160,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.9.003">
+	<template id="infolog.index" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
