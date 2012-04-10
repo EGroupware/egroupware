@@ -1,3 +1,11 @@
+egroupware (1.8.004.20120410) hardy; urgency=low
+
+  * WebDAV/Filemanager: fixed not working home-directores
+  * Setup: fixed failed install under Ubuntu 10.04 (include ./hook_config.inc.php failed)
+  * Addressbook: fixed sql error when sorting by a custom field and not displayed custom field content
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Apr 2012 14:51:08 +0200
+
 egroupware (1.8.004.20120407) hardy; urgency=low
 
   * Resources: SiteMgr module uses old class-name ui_resources instead of resources_ui
