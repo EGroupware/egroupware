@@ -76,7 +76,7 @@
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<nextmatch-header label="Sub" id="sub" value="Sub" class="noPrint"/>
+					<nextmatch-header label="Sub" id="sub" class="noPrint"/>
 					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
@@ -201,7 +201,7 @@
 					</hbox>
 				</row>
 				<row>
-					<hbox class="action_popup prompt">
+					<hbox class=" ">
 						<box class="action_popup prompt" id="responsible_popup">
 							<vbox>
 								<description value="Change responsible" class="promptheader"/>
@@ -246,7 +246,7 @@
  * Add / remove link or category popup used for actions on multiple entries
  */
 
-.action_popup {
+div.action_popup[id] {
 	position: fixed;
 	top: 200px;
 	left: 450px;
