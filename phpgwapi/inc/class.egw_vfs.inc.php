@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -34,11 +34,11 @@
  *
  * The two following methods can be used to persitently mount further filesystems (without editing the code):
  *
- * - boolean/array egw_vfs::mount($url,$path) to mount $ur on $path or to return the fstab when called without argument
+ * - boolean|array egw_vfs::mount($url,$path) to mount $ur on $path or to return the fstab when called without argument
  * - boolean egw_vfs::umount($path) to unmount a path or url
  *
  * The stream wrapper interface allows to access hugh files in junks to not be limited by the
- * memory_limit setting of php. To do you should path a resource to the opened file and not the content:
+ * memory_limit setting of php. To do you should pass the opened file as resource and not the content:
  *
  * 		$file = egw_vfs::fopen('/home/user/somefile','r');
  * 		$content = fread($file,1024);
@@ -180,20 +180,42 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$ret = false;
 
-		if (($from_fp = self::fopen($from,'r')) &&
-			($to_fp = self::fopen($to,'w')))
+		$old_props = self::file_exists($to) ? self::propfind($to,null) : array();
+		// copy properties (eg. file comment), if there are any and evtl. existing old properties
+		$props = self::propfind($from,null);
+
+		foreach($old_props as $prop)
 		{
-			$ret = stream_copy_to_stream($from_fp,$to_fp) !== false;
+			if (!self::find_prop($props,$prop))
+			{
+				$prop['val'] = null;	// null = delete prop
+				$props[] = $prop;
+			}
 		}
- 		if ($from_fp)
- 		{
- 			fclose($from_fp);
- 		}
- 		if ($to_fp)
- 		{
- 			fclose($to_fp);
- 		}
- 		return $ret;
+		// using self::copy_uploaded() to treat copying incl. properties as atomar operation in respect of notifications
+		return self::copy_uploaded(self::PREFIX.$from,$to,$props,false);	// false = no is_uploaded_file check!
+	}
+
+	/**
+	 * Find a specific property in an array of properties (eg. returned by propfind)
+	 *
+	 * @param array &$props
+	 * @param array|string $name property array or name
+	 * @param string $ns=self::DEFAULT_PROP_NAMESPACE namespace, only if $prop is no array
+	 * @return &array reference to property in $props or null if not found
+	 */
+	static function &find_prop(array &$props,$name,$ns=self::DEFAULT_PROP_NAMESPACE)
+	{
+		if (is_array($name))
+		{
+			$ns = $name['ns'];
+			$name = $name['name'];
+		}
+		foreach($props as &$prop)
+		{
+			if ($prop['name'] == $name && $prop['ns'] == $ns) return $prop;
+		}
+		return null;
 	}
 
 	/**
@@ -276,10 +298,14 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $url=null url of the filesystem to mount, eg. oldvfs://default/
 	 * @param string $path=null path to mount the filesystem in the vfs, eg. /
-	 * @return array/boolean array with fstab, if called without parameter or true on successful mount
+	 * @param boolean $check_url=null check if url is an existing directory, before mounting it
+	 * 	default null only checks if url does not contain a $ as used in $user or $pass
+	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null)
+	static function mount($url=null,$path=null,$check_url=null)
 	{
+		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
+
 		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
 		{
 			$api_config = config::read('phpgwapi');
@@ -306,7 +332,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		self::load_wrapper(parse_url($url,PHP_URL_SCHEME));
 
-		if (!file_exists($url) || opendir($url) === false)
+		if ($check_url && (!file_exists($url) || opendir($url) === false))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
 			return false;	// url does not exist
@@ -317,7 +343,11 @@ class egw_vfs extends vfs_stream_wrapper
 
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-
+		// invalidate session cache
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
 		return true;
 	}
@@ -343,15 +373,32 @@ class egw_vfs extends vfs_stream_wrapper
 
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-
+		// invalidate session cache
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful unmount).');
 		return true;
 	}
 
 	/**
+	 * Check if file is hidden: name starts with a '.' or is Thumbs.db
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	public static function is_hidden($path)
+	{
+		$file = self::basename($path);
+
+		return $file[0] == '.' || $file == 'Thumbs.db';
+	}
+
+	/**
 	 * find = recursive search over the filesystem
 	 *
-	 * @param string/array $base base of the search
+	 * @param string|array $base base of the search
 	 * @param array $options=null the following keys are allowed:
 	 * - type => {d|f|F} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
@@ -371,7 +418,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
-	 * @param string/array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
+	 * @param string|array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
@@ -447,7 +494,7 @@ class egw_vfs extends vfs_stream_wrapper
 				{
 					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
 
-					if (($file[0] == '.' || $file == 'Thumbs.db') && !$options['hidden']) continue;	// ignore hidden files
+					if (self::is_hidden($file) && !$options['hidden']) continue;	// ignore hidden files
 
 					$file = self::concat($path,$file);
 
@@ -571,7 +618,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 		if ($options['url'])
 		{
-			$stat = lstat($path);
+			$stat = @lstat($path);
 		}
 		else
 		{
@@ -653,7 +700,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
-	 * @param string/array $urls url or array of url's
+	 * @param string|array $urls url or array of url's
 	 * @param boolean $allow_urls=false allow to use url's, default no only pathes (to stay within the vfs)
 	 * @return array
 	 */
@@ -685,9 +732,9 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		if (is_dir($url) && !is_link($url))
 		{
-			return rmdir($url);
+			return egw_vfs::rmdir($url,0);
 		}
-		return unlink($url);
+		return egw_vfs::unlink($url);
 	}
 
 	/**
@@ -695,10 +742,11 @@ class egw_vfs extends vfs_stream_wrapper
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
 	 * @param string $path
-	 * @param int $check=4 mode to check: 4 = read, 2 = write, 1 = executable
+	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
+	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
 	 * @return boolean
 	 */
-	static function is_readable($path,$check = 4)
+	static function is_readable($path,$check = self::READABLE)
 	{
 		return self::check_access($path,$check);
 	}
@@ -707,13 +755,52 @@ class egw_vfs extends vfs_stream_wrapper
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param array/string $path stat array or path
-	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
-	 * @param array $stat=null stat array, to not query it again
+	 * @param string $path path
+	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
+	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
+	 * @param array|boolean $stat=null stat array or false, to not query it again
+	 * @param int $user=null user used for check, if not current user (egw_vfs::$user)
 	 * @return boolean
 	 */
-	static function check_access($path,$check,$stat=null)
+	static function check_access($path, $check, $stat=null, $user=null)
 	{
+		if (is_null($stat) && $user && $user != self::$user)
+		{
+			static $path_user_stat = array();
+
+			$backup_user = self::$user;
+			self::$user = $user;
+
+			if (!isset($path_user_stat[$path]) || !isset($path_user_stat[$path][$user]))
+			{
+				self::clearstatcache($path);
+
+				$path_user_stat[$path][$user] = self::url_stat($path, 0);
+
+				self::clearstatcache($path);	// we need to clear the stat-cache after the call too, as the next call might be the regular user again!
+			}
+			if (($stat = $path_user_stat[$path][$user]))
+			{
+				// some backend mounts use $user:$pass in their url, for them we have to deny access!
+				if (strpos(self::resolve_url($path, false, false, false), '$user') !== false)
+				{
+					$ret = false;
+				}
+				else
+				{
+					$ret = self::check_access($path, $check, $stat);
+				}
+			}
+			else
+			{
+				$ret = false;	// no access, if we can not stat the file
+			}
+			self::$user = $backup_user;
+
+			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check,$user) ".array2string($ret));
+			return $ret;
+		}
+
 		if (self::$is_root)
 		{
 			return true;
@@ -722,7 +809,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// throw exception if stat array is used insead of path, can be removed soon
 		if (is_array($path))
 		{
-			throw new egw_exception_wrong_parameter('path has to be string, use check_acces($path,$check,$stat=null)!');
+			throw new egw_exception_wrong_parameter('path has to be string, use check_access($path,$check,$stat=null)!');
 		}
 		// query stat array, if not given
 		if (is_null($stat))
@@ -735,6 +822,20 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
 			return false;	// file not found
+		}
+		// check if we use an EGroupwre stream wrapper, or a stock php one
+		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
+		if (($scheme = parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
+		{
+			switch($check)
+			{
+				case self::READABLE:
+					return is_readable($stat['url']);
+				case self::WRITABLE:
+					return is_writable($stat['url']);
+				case self::EXECUTABLE:
+					return is_executable($stat['url']);
+			}
 		}
 		// check if other rights grant access
 		if (($stat['mode'] & $check) == $check)
@@ -751,12 +852,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// check if there's a group access and we have the right membership
 		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
 		{
-			static $memberships;
-			if (is_null($memberships))
-			{
-				$memberships = $GLOBALS['egw']->accounts->memberships(self::$user,true);
-			}
-			if (in_array(-abs($stat['gid']),$memberships))
+			if (($memberships = $GLOBALS['egw']->accounts->memberships(self::$user, true)) && in_array(-abs($stat['gid']), $memberships))
 			{
 				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
@@ -778,7 +874,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_writable($path)
 	{
-		return self::is_readable($path,2);
+		return self::is_readable($path,self::WRITABLE);
 	}
 
 	/**
@@ -790,7 +886,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_executable($path)
 	{
-		return self::is_readable($path,1);
+		return self::is_readable($path,self::EXECUTABLE);
 	}
 
 	/**
@@ -811,7 +907,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $path string with path
 	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int|boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
 	static function eacl($url,$rights=null,$owner=null)
@@ -825,7 +921,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Calls itself recursive, to get the parent directories
 	 *
 	 * @param string $path
-	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 * @return array|boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
 	static function get_eacl($path)
 	{
@@ -836,7 +932,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Store properties for a single ressource (file or dir)
 	 *
 	 * @param string $path string with path
-	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
+	 * @param array $props array of array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
 	static function proppatch($path,array $props)
@@ -874,7 +970,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Convert a symbolic mode string or octal mode to an integer
 	 *
-	 * @param string/int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
+	 * @param string|int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
 	 * @param int $mode=0 current mode of the file, necessary for +/- operation
 	 * @return int
 	 */
@@ -1022,6 +1118,10 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$img = $GLOBALS['egw']->common->image('etemplate',$icon='mime'.$size.'_unknown');
 		}
+		if ($et_image === 'url')
+		{
+			return $img;
+		}
 		if ($et_image)
 		{
 			return 'etemplate/'.$icon;
@@ -1030,7 +1130,7 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
-	 * Human readable size values in k or M
+	 * Human readable size values in k, M or G
 	 *
 	 * @param int $size
 	 * @return string
@@ -1039,7 +1139,8 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if ($size < 1024) return $size;
 		if ($size < 1024*1024) return sprintf('%3.1lfk',(float)$size/1024);
-		return sprintf('%3.1lfM',(float)$size/(1024*1024));
+		if ($size < 1024*1024*1024) return sprintf('%3.1lfM',(float)$size/(1024*1024));
+		return sprintf('%3.1lfG',(float)$size/(1024*1024*1024));
 	}
 
 	/**
@@ -1059,8 +1160,10 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Get the directory / parent of a given path or url(!), return false for '/'!
 	 *
+	 * Also works around PHP under Windows returning dirname('/something') === '\\', which is NOT understood by EGroupware's VFS!
+	 *
 	 * @param string $path path or url
-	 * @return string/boolean parent or false if there's none ($path == '/')
+	 * @return string|boolean parent or false if there's none ($path == '/')
 	 */
 	static function dirname($url)
 	{
@@ -1169,7 +1272,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		// we do NOT need to encode % itself, as our path are already url encoded, with the exception of ' ' and '+'
 		// we urlencode double quotes '"', as that fixes many problems in html markup
-		return '/webdav.php'.strtr($path,array('+' => '%2B',' ' => '%20','"' => '%22'));
+		return '/webdav.php'.strtr($path,array('+' => '%2B',' ' => '%20','"' => '%22')).($force_download ? '?download' : '');
 	}
 
 	/**
@@ -1338,6 +1441,35 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Get backend specific information (data and etemplate), to integrate as tab in filemanagers settings dialog
+	 *
+	 * @param string $path
+	 * @param array $content=null
+	 * @return array|boolean array with values for keys 'data','etemplate','name','label','help' or false if not supported by backend
+	 */
+	static function getExtraInfo($path,array $content=null)
+	{
+		$extra = array();
+		if (($extra_info = self::_call_on_backend('extra_info',array($path,$content),true)))	// true = fail silent if backend does NOT support it
+		{
+			$extra[] = $extra_info;
+		}
+
+		if (($vfs_extra = $GLOBALS['egw']->hooks->process(array(
+			'location' => 'vfs_extra',
+			'path' => $path,
+			'content' => $content,
+		))))
+		{
+			foreach($vfs_extra as $app => $data)
+			{
+				$extra = $extra ? array_merge($extra, $data) : $data;
+			}
+		}
+		return $extra;
+	}
+
+	/**
 	 * Mapps entries of applications to a path for the locking
 	 *
 	 * @param string $app
@@ -1411,6 +1543,234 @@ class egw_vfs extends vfs_stream_wrapper
 		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		self::$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		self::$lock_cache = array();
+	}
+
+	/**
+	 * Returns the URL to the thumbnail of the given file. The thumbnail may simply
+	 * be the mime-type icon, or - if activated - the preview with the given thsize.
+	 *
+	 * @param string $file name of the file
+	 * @param int $thsize the size of the preview - false if the default should be used.
+	 * @param string $mime if you already know the mime type of the file, you can supply
+	 * 	it here. Otherwise supply "false".
+	 */
+	public static function thumbnail_url($file, $thsize = false, $mime = false)
+	{
+		// Retrive the mime-type of the file
+		if (!$mime)
+		{
+			$mime = egw_vfs::mime_content_type($file);
+		}
+
+		$image = "";
+
+		// Seperate the mime type into the primary and the secondary part
+		list($mime_main, $mime_sub) = explode('/', $mime);
+
+		if ($mime_main == 'egw')
+		{
+			$image = $GLOBALS['egw']->common->image($mime_sub, 'navbar');
+		}
+		else if ($file && $mime_main == 'image' && in_array($mime_sub, array('png','jpeg','jpg','gif','bmp')) &&
+		         (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
+		         (string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
+		         (!is_array($value) && ($stat = egw_vfs::stat($file)) ? $stat['size'] : $value['size']) < 1500000)
+		{
+			if (substr($file, 0, 6) == '/apps/')
+			{
+				$file = parse_url(egw_vfs::resolve_url_symlinks($path), PHP_URL_PATH);
+			}
+
+			//Assemble the thumbnail parameters
+			$thparams = array();
+			$thparams['path'] = $file;
+			if ($thsize)
+			{
+				$thparams['thsize'] = $thsize;
+			}
+			$image = $GLOBALS['egw']->link('/etemplate/thumbnail.php', $thparams);
+		}
+		else
+		{
+			list($app, $name) = explode("/", egw_vfs::mime_icon($mime), 2);
+			$image = $GLOBALS['egw']->common->image($app, $name);
+		}
+
+		return $image;
+	}
+
+	/**
+	 * Get the configured start directory for the current user
+	 *
+	 * @return string
+	 */
+	static public function get_home_dir()
+	{
+		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+
+		// check if user specified a valid startpath in his prefs --> use it
+		if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
+			$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
+		{
+			$start = $path;
+		}
+		return $start;
+	}
+
+	/**
+	 * Copies the files given in $src to $dst.
+	 *
+	 * @param array $src contains the source file
+	 * @param string $dst is the destination directory
+	 */
+	static public function copy_files(array $src, $dst, &$errs, array &$copied)
+	{
+		if (self::is_dir($dst))
+		{
+			foreach ($src as $file)
+			{
+				// Check whether the file has already been copied - prevents from
+				// recursion
+				if (!in_array($file, $copied))
+				{
+					// Calculate the target filename
+					$target = egw_vfs::concat($dst, egw_vfs::basename($file));
+
+					if (self::is_dir($file))
+					{
+						if ($file !== $target)
+						{
+							// Create the target directory
+							egw_vfs::mkdir($target,null,STREAM_MKDIR_RECURSIVE);
+
+							$files = egw_vfs::find($file, array(
+								"hidden" => true
+							));
+
+							$copied[] = $file;
+							$copied[] = $target; // < newly created folder must not be copied again!
+							if (egw_vfs::copy_files(egw_vfs::find($file), $target,
+								$errs, $copied))
+							{
+								continue;
+							}
+						}
+
+						$errs++;
+					}
+					else
+					{
+						// Copy a single file - check whether the file should be
+						// copied onto itself.
+						// TODO: Check whether target file already exists and give
+						// return those files so that a dialog might be displayed
+						// on the client side which lets the user decide.
+						if ($target !== $file && egw_vfs::copy($file, $target))
+						{
+							$copied[] = $file;
+						}
+						else
+						{
+							$errs++;
+						}
+					}
+				}
+			}
+		}
+
+		return $errs == 0;
+	}
+
+	/**
+	 * Moves the files given in src to dst
+	 */
+	static public function move_files(array $src, $dst, &$errs, array &$moved)
+	{
+		if (egw_vfs::is_dir($dst))
+		{
+			foreach($src as $file)
+			{
+				$target = egw_vfs::concat($dst, egw_vfs::basename($file));
+
+				if ($file != $target && egw_vfs::rename($file, $target))
+				{
+					$moved[] = $file;
+				}
+				else
+				{
+					++$errs;
+				}
+			}
+
+			return $errs == 0;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Copy an uploaded file into the vfs, optionally set some properties (eg. comment or other cf's)
+	 *
+	 * Treat copying incl. properties as atomar operation in respect of notifications (one notification about an added file).
+	 *
+	 * @param array|string $src path to uploaded file or etemplate file array (value for key 'tmp_name')
+	 * @param string $target path or directory to copy uploaded file
+	 * @param array|string $props=null array with properties (name => value pairs, eg. 'comment' => 'FooBar','#cfname' => 'something'),
+	 * 	array as for proppatch (array of array with values for keys 'name', 'val' and optional 'ns') or string with comment
+	 * @param boolean $check_is_uploaded_file=true should method perform an is_uploaded_file check, default yes
+	 * @return boolean|array stat array on success, false on error
+	 */
+	static public function copy_uploaded($src,$target,$props=null,$check_is_uploaded_file=true)
+	{
+		$tmp_name = is_array($src) ? $src['tmp_name'] : $src;
+
+		if (self::stat($target) && self::is_dir($target))
+		{
+			$target = self::concat($target, self::encodePathComponent(is_array($src) ? $src['name'] : basename($tmp_name)));
+		}
+		if ($check_is_uploaded_file && !is_uploaded_file($tmp_name))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !is_uploaded_file()");
+			return false;
+		}
+		if (!(self::is_writable($target) || self::is_writable(self::dirname($target))))
+		{
+			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !writable");
+			return false;
+		}
+		if ($props)
+		{
+			if (!is_array($props)) $props = array(array('name' => 'comment','val' => $props));
+
+			// if $props is name => value pairs, convert it to internal array or array with values for keys 'name', 'val' and optional 'ns'
+			if (!isset($props[0]))
+			{
+				foreach($props as $name => $val)
+				{
+					if (($name == 'comment' || $name[0] == '#') && $val)	// only copy 'comment' and cfs
+					{
+						$vfs_props[] = array(
+							'name' => $name,
+							'val'  => $val,
+						);
+					}
+				}
+				$props = $vfs_props;
+			}
+		}
+		if ($props)
+		{
+			// set props before copying the file, so notifications already contain them
+			if (!self::stat($target))
+			{
+				self::touch($target);	// create empty file, to be able to attach properties
+				self::$treat_as_new = true;	// notify as new
+			}
+			self::proppatch($target, $props);
+		}
+		$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
+		if (self::LOG_LEVEL > 1 || !$ret && self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
+		return $ret;
 	}
 }
 

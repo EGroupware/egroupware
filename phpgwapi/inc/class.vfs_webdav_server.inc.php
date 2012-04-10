@@ -62,16 +62,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		// special treatment for litmus compliance test
 		// reply on its identifier header
 		// not needed for the test itself but eases debugging
-		if (function_exists('apache_request_headers'))
-		{
-			foreach (apache_request_headers() as $key => $value)
-			{
-				if (stristr($key, 'litmus'))
-				{
-					error_log("Litmus test $value");
-					header('X-Litmus-reply: '.$value);
-				}
-			}
+		if (isset($this->_SERVER['HTTP_X_LITMUS'])) {
+			error_log("Litmus test ".$this->_SERVER['HTTP_X_LITMUS']);
+			header("X-Litmus-reply: ".$this->_SERVER['HTTP_X_LITMUS']);
 		}
 		// let the base class do all the work
 		HTTP_WebDAV_Server::ServeRequest();
@@ -135,7 +128,28 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
         $source = $this->base .$options["path"];
         if (!file_exists($source)) return "404 Not found";
 
+        if (is_dir($source)) { // resource is a collection
+            switch ($options["depth"]) {
+            case "infinity": // valid
+                break;
+            case "0": // valid for COPY only
+                if ($del) { // MOVE?
+                    return "400 Bad request";
+                }
+                break;
+            case "1": // invalid for both COPY and MOVE
+            default:
+                return "400 Bad request";
+            }
+        }
+
         $dest         = $this->base . $options["dest"];
+        $destdir      = dirname($dest);
+
+        if (!file_exists($destdir) || !is_dir($destdir)) {
+            return "409 Conflict";
+        }
+
         $new          = !file_exists($dest);
         $existing_col = false;
 
@@ -165,11 +179,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             }
         }
 
-        if (is_dir($source) && ($options["depth"] != "infinity")) {
-            // RFC 2518 Section 9.2, last paragraph
-            return "400 Bad request";
-        }
-
         if ($del) {
             if (!rename($source, $dest)) {
                 return "500 Internal server error";
@@ -189,9 +198,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             mysql_query($query);
 */
         } else {
-            if (is_dir($source)) {
-                $files = System::find($source);
-                $files = array_reverse($files);
+            if (is_dir($source) && $options['depth'] == 'infinity') {
+            	$files = egw_vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!
             } else {
                 $files = array($source);
             }
@@ -243,6 +251,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	*/
 	function fileinfo($path)
 	{
+		// internally we require some url-encoding, as vfs_stream_wrapper uses URL's internally
+		$path = str_replace(array('#','?'),array('%23','%3F'),$path);
+
 		//error_log(__METHOD__."($path)");
 		// map URI path to filesystem path
 		$fspath = $this->base . $path;
@@ -251,14 +262,23 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$info = array();
 		// TODO remove slash append code when base class is able to do it itself
 		$info['path']  = is_dir($fspath) ? $this->_slashify($path) : $path;
+
+		// remove all urlencoding we need internally in EGw, HTTP_WebDAV_Server will add it's own!
+		// rawurldecode does NOT touch +
+		$info['path'] = rawurldecode($info['path']);
+
 		$info['props'] = array();
 
 		// no special beautified displayname here ...
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($path)));
+		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($info['path'])));
 
 		// creation and modification time
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
 		$info['props'][] = HTTP_WebDAV_Server::mkprop	('getlastmodified', filemtime($fspath));
+
+        // Microsoft extensions: last access time and 'hidden' status
+        $info["props"][] = HTTP_WebDAV_Server::mkprop("lastaccessed",    fileatime($fspath));
+        $info["props"][] = HTTP_WebDAV_Server::mkprop("ishidden",        egw_vfs::is_hidden($fspath));
 
 		// type and size (caller already made sure that path exists)
 		if (is_dir($fspath)) {
@@ -292,7 +312,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 */
 		// ToDo: etag from inode and modification time
 
-		//error_log(__METHOD__."($path) info=".print_r($info,true));
+		//error_log(__METHOD__."($path) info=".array2string($info));
 		return $info;
 	}
 
@@ -394,6 +414,28 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		return egw_vfs::mime_content_type($path);
 	}
+
+    /**
+     * Check if path is readable by current user
+     *
+     * @param string $fspath
+     * @return boolean
+     */
+    function _is_readable($fspath)
+    {
+    	return egw_vfs::is_readable($fspath);
+    }
+
+    /**
+     * Check if path is writable by current user
+     *
+     * @param string $fspath
+     * @return boolean
+     */
+    function _is_writable($fspath)
+    {
+    	return egw_vfs::is_writable($fspath);
+    }
 
 	/**
 	 * PROPPATCH method handler
@@ -527,7 +569,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		return egw_vfs::checkLock($path);
 	}
-	
+
 	/**
 	 * GET method handler for directories
 	 *
@@ -543,4 +585,45 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 		parent::GetDir($fspath, $options);
     }
+
+	private $force_download = false;
+
+	/**
+	 * Constructor
+	 *
+	 * Reimplement to add a Content-Disposition header, if ?download is appended to the REQUEST_URI
+	 */
+	function __construct()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = strpos($_SERVER['REQUEST_URI'],'?download')))
+		{
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
+		}
+		parent::HTTP_WebDAV_Server();
+	}
+
+	/**
+	 * GET method handler
+	 *
+	 * Reimplement to add a Content-Disposition header, if ?download is appended to the REQUEST_URI
+	 *
+	 * @param  array  parameter passing array
+	 * @return bool   true on success
+	 */
+	function GET(&$options)
+	{
+		if (($ok = parent::GET($options)) && $this->force_download)
+		{
+			if(html::$user_agent == 'msie') // && self::$ua_version == '5.5')
+			{
+				$attachment = '';
+			}
+			else
+			{
+				$attachment = ' attachment;';
+			}
+			header('Content-disposition:'.$attachment.' filename="'.egw_vfs::basename($options['path']).'"');
+		}
+		return $ok;
+	}
 }

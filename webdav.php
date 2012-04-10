@@ -32,26 +32,11 @@ function check_access(&$account)
 	return egw_digest_auth::autocreate_session_callback($account);
 }
 
-// if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
-$parts = explode('/',isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : $_SERVER['ORIG_PATH_INFO']);
-//error_log("webdav: explode".print_r($parts,true));
-if(count($parts) == 1)
-{
-	error_log(__METHOD__. "Malformed Url: missing slash:\n".$_SERVER['SERVER_NAME']."\n PATH_INFO:".$_SERVER['PATH_INFO'].
-		"\n REQUEST_URI".$_SERVER['REQUEST_URI']."\n ORIG_SCRIPT_NAME:".$_SERVER['ORIG_SCRIPT_NAME'].
-		"\n REMOTE_ADDR:".$_SERVER['REMOTE_ADDR']."\n PATH_INFO:".$_SERVER['PATH_INFO']."\n HTTP_USER_AGENT:".$_SERVER['HTTP_USER_AGENT']) ;
-	header("HTTP/1.1 501  Not implemented");
-	header("X-WebDAV-Status: 501  Not implemented", true);
-	exit;
-}
-
-$app = count($parts) > 3 && $parts[1] == 'apps' ? $parts[2] : 'filemanager';
-
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'disable_Template_class' => True,
 		'noheader'  => True,
-		'currentapp' => $app,
+		'currentapp' => preg_match('|/webdav.php/apps/([A-Za-z0-9_-]+)/|', $_SERVER['REQUEST_URI'], $matches) ? $matches[1] : 'filemanager',
 		'autocreate_session_callback' => 'check_access',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 		'auth_realm' => 'EGroupware WebDAV server',	// cant use vfs_webdav_server::REALM as autoloading and include path not yet setup!
@@ -94,4 +79,4 @@ if (strstr($user_agent, 'microsoft-webdav') !== false ||
 	$webdav_server->cnrnd = true;
 }
 $webdav_server->ServeRequest();
-//error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
+//error_log(sprintf('WebDAV %s request: status "%s", took %5.3f s'.($headertime?' (header include took %5.3f s)':''),$_SERVER['REQUEST_METHOD'].' '.$_SERVER['PATH_INFO'],$webdav_server->_http_status,microtime(true)-$starttime,$headertime-$starttime));
