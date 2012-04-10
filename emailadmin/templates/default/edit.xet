@@ -177,7 +177,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="emailadmin.edit.IMAP" template="" lang="" group="0" version="1.9.001">
+	<template id="emailadmin.edit.IMAP" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="400" overflow="auto">
 			<columns>
 				<column/>
@@ -261,7 +261,7 @@
 								</row>
 								<row>
 									<description value="do not validate certificate"/>
-									<checkbox id="ea_imap_tsl_auth" options="yes,no"/>
+									<checkbox id="ea_imap_tsl_auth" options="no,yes"/>
 								</row>
 							</rows>
 						</grid>
