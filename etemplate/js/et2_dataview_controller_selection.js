@@ -278,6 +278,9 @@ var et2_dataview_selectionManager = Class.extend({
 
 		// Create an action object for the tr and connect it to a dummy AOI
 		_entry.ao = this._actionObjectManager.addObject(_uid, dummyAOI);
+
+		// Force context (actual widget) in here, it's the last place it's available
+		_entry.ao._context = this._context;
 		_entry.ao.updateActionLinks(_links);
 		_entry.ao._index = _idx;
 

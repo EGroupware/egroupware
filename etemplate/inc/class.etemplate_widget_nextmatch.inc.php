@@ -685,7 +685,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$value = self::get_array($content, $form_name);
 
 		// On client, rows does not get its own namespace, but all apps are expecting it
-		$value[$form_name]['rows'] = $value;
+		$value['rows'] = $value;
 
 		// Save current column settings as default (admins only)
 		if($value['as_default'])
@@ -703,7 +703,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$GLOBALS['egw']->preferences->save_repository(false,'default');
 			}
 		}
-		$validated = $value;
+		$validated[$form_name] = $value;
 	}
 
 	/**

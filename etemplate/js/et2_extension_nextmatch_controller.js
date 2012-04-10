@@ -128,6 +128,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			// Get the selected ids descriptor object
 			var ids = self._selectionMgr.getSelected();
 
+			// Pass a reference to the actual widget
+			if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
+			_action.data.nextmatch = self._widget;
+
 			// Call the nm_action function with the ids
 			nm_action(_action, _senders, _target, ids);
 		});

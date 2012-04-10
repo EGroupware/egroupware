@@ -65,7 +65,7 @@ var et2_INextmatchSortable = new Interface({
 /**
  * Class which implements the "nextmatch" XET-Tag
  */ 
-var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
+var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 
 	attributes: {
 		"template": {
@@ -845,10 +845,15 @@ var et2_nextmatch = et2_DOMWidget.extend(et2_IResizeable, {
 
 	getPath: function() {
 		var path = this._super.apply(this,arguments);
-		if(this.id) path.push(this.id);
+		if(this.id && path[path.length -1] == this.id) path.pop();
 		return path;
-	}
+	},
 
+
+	// Input widget
+	getValue: function() { return null;},
+	resetDirty: function() {},
+	isDirty: function() { return false;}
 });
 
 et2_register_widget(et2_nextmatch, ["nextmatch"]);

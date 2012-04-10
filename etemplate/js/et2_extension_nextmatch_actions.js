@@ -130,19 +130,32 @@ function nm_action(_action, _senders, _target, _ids)
 				for (var i in checkboxes)
 					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
 
-			document.getElementById(mgr.etemplate_var_prefix+'[nm][nm_action]').value = _action.id;
-			document.getElementById(mgr.etemplate_var_prefix+'[nm][selected]').value = ids;
-			if (typeof _action.data.button != 'undefined')
+			var nextmatch = _action.data.nextmatch;
+			if(!nextmatch && _senders.length)
 			{
-				submitit(mgr.etemplate_form.context, mgr.etemplate_var_prefix+'[nm][rows]['+_action.data.button+']['+ids+']');
+				// Pull it from deep within, where it was stuffed in et2_dataview_controller_selection._attachActionObject()
+				nextmatch = _senders[0]._context._widget;
+			}
+			if(nextmatch)
+			{
+				// Fake a getValue() function
+				nextmatch.getValue = function() {
+					var value = {
+						"selected": idsArr,
+						"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
+					};
+					value[nextmatch.options.settings.action_var]= _action.id;
+					return value;
+				}
+				nextmatch.getInstanceManager().submit();
+
+				// Clear action in case there's another one
+				delete nextmatch.getValue;
 			}
 			else
 			{
-				mgr.etemplate_form.submit();
+				egw().debug("error", "Missing nextmatch widget, could not submit", _action);
 			}
-			// Clear action in case there's another one
-			document.getElementById(mgr.etemplate_var_prefix+'[nm][nm_action]').value = null;
-			
 			break;
 	}
 }
@@ -227,8 +240,7 @@ var nm_popup_action, nm_popup_ids = null;
  */
 function nm_open_popup(_action, _ids)
 {
-	var popup = document.getElementById(_action.getManager().etemplate_var_prefix + '[' + _action.id + '_popup]');
-
+	var popup = jQuery("#"+_action.id+"_popup").get(0) || jQuery("[id*='" + _action.id + "_popup']").get(0);
 	if (popup) {
 		nm_popup_action = _action;
 		nm_popup_ids = _ids;
@@ -241,10 +253,20 @@ function nm_open_popup(_action, _ids)
  */
 function nm_submit_popup(button)
 {
-	button.form.submit_button.value = button.name;	// set name of button (sub-action)
+	if(button.form)
+	{
+		button.form.submit_button.value = button.name;	// set name of button (sub-action)
+	}
 
+	// Mangle senders to get IDs where nm_action() wants them
+	// No idea why this is needed
+	var ids = {ids:[]};
+	for(var i in nm_popup_ids)
+	{
+		ids.ids.push(nm_popup_ids[i].id);
+	}
 	// call regular nm_action to transmit action and senders correct
-	nm_action(nm_popup_action, null, null, nm_popup_ids);
+	nm_action(nm_popup_action,nm_popup_ids, null, ids);
 }
 
 /**
@@ -253,7 +275,7 @@ function nm_submit_popup(button)
 function nm_hide_popup(element, div_id) 
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
-	var popup = document.getElementById(prefix+'['+div_id+']');
+	var popup = jQuery("#"+_action.id+"_popup").get(0) || jQuery("[id*='" + _action.id + "_popup']").get(0);
 
 	// Hide popup
 	if(popup) {
