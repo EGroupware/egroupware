@@ -1121,7 +1121,7 @@ abstract class bo_merge
 
 		// Custom field placeholders look like {{#name}}
 		// Placeholders that need expanded will look like {{#name/placeholder}}
-		preg_match_all('/[${]{2}(([\w]+\/)*)#([\w]+)\/(.*)[$}]{2}/', $content, $matches);
+		preg_match_all('/[${]{2}(([\w]+\/)*)#([\w]+)\/(.*?)[$}]{2}/', $content, $matches);
 		list($placeholders, $prefixes, $pre, $cf, $sub) = $matches;
 
 		foreach($cf as $index => $field)
