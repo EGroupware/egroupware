@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="emailadmin.edit.global" template="" lang="" group="0" version="1.7.003">
+	<template id="emailadmin.edit.global" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -52,7 +52,7 @@
 								<row>
 									<description value="can be used by user"/>
 									<menulist>
-										<menupopup type="select-account" id="ea_user" options="any user,accounts"/>
+										<menupopup type="select-account" id="ea_user" onchange="disableGroupSelector();" options="any user,accounts"/>
 									</menulist>
 								</row>
 							</rows>

@@ -253,10 +253,10 @@ class emailadmin_ui extends emailadmin_bo
 
 	/**
 	 * Get a list of supported SMTP Auth Config options
-	 * 
+	 *
 	 * @return array value => label pairs
 	 */
-	static public function getSMTPAuthConfig() 
+	static public function getSMTPAuthConfig()
 	{
 		return array(
 			'no' => 'No',
@@ -422,6 +422,7 @@ class emailadmin_ui extends emailadmin_bo
 			);
 		*/
 		//_debug_array($this->data);
+		$GLOBALS['egw']->js->set_onload('javascript:disableGroupSelector();');
 		return $etpl->exec(parent::APP.'.emailadmin_ui.edit',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
