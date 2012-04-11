@@ -109,16 +109,40 @@ class infolog_ical extends infolog_bo
 	}
 
 	/**
+	 * Exports multiple InfoLogs
+	 *
+	 * @param array $tasks array of info_ids or task arrays
+	 * @param string $_version='2.0'
+	 * @param string $_method=null only set for iTip messages
+	 * @param string $charset='UTF-8'
+	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
+	 */
+	function exportVCalendar(array $tasks, $_version='2.0', $_method=null, $charset='UTF-8')
+	{
+		$vcal = new Horde_iCalendar;
+
+		foreach($tasks as $task)
+		{
+			if (!$this->exportVTODO($task, $_version, $_method, $charset, $vcal))
+			{
+				return false;
+			}
+		}
+		return $vcal->exportVCalendar();
+	}
+
+	/**
 	 * Exports one InfoLog tast to an iCalendar VTODO
 	 *
 	 * @param int|array $task infolog_id or infolog-tasks data
 	 * @param string $_version='2.0' could be '1.0' too
 	 * @param string $_method='PUBLISH'
 	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param Horde_iCalendar $vcal=null optional iCalendar object to add vtodo to
 	 *
 	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8')
+	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8',Horde_iCalendar $vcal=null)
 	{
 		if (is_array($task))
 		{
@@ -166,11 +190,11 @@ class infolog_ical extends infolog_bo
 				array2string($taskData)."\n",3,$this->logfile);
 		}
 
-		$vcal = new Horde_iCalendar;
+		if (!isset($vcal)) $vcal = new Horde_iCalendar;
 		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
-			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
-		$vcal->setAttribute('VERSION',$_version);
-		if ($_method) $vcal->setAttribute('METHOD',$_method);
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']),array(),false);
+		$vcal->setAttribute('VERSION',$_version,array(),false);
+		if ($_method) $vcal->setAttribute('METHOD',$_method,array(),false);
 
 		$tzid = $this->tzid;
 		if ($tzid && $tzid != 'UTC')

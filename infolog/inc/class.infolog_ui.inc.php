@@ -1224,20 +1224,10 @@ class infolog_ui
 			case 'ical':
 				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
-				$horde = new Horde_iCalendar();
-				foreach($checked as $_selection) {
-					$result = $boical->exportVTODO($_selection,'2.0','PUBLISH',false);
-
-					// infolog_ical doesn't allow a nice call to get just the VTODO
-					if($result)
-					{
-						$horde->parsevCalendar($result, 'VCALENDAR', 'utf-8', false);
-					}
-				}
 				ExecMethod2('phpgwapi.browser.content_header','todo.ics','text/calendar');
-				echo $horde->exportvCalendar();
+				echo $boical->exportvCalendar($checked);
 				common::egw_exit();
-				
+
 		}
 
 		// Actions that need to loop

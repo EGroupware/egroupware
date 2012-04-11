@@ -24,8 +24,6 @@ class infolog_export_ical extends infolog_export_csv {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 		$this->bo = new infolog_bo();
-		$boical = new infolog_ical();
-		$horde = new Horde_iCalendar();
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
 		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('infolog');
@@ -48,17 +46,8 @@ class infolog_export_ical extends infolog_export_csv {
 				break;
 		}
 
-		$horde->clear();
-		foreach($selection as $_selection) {
-			$result = $boical->exportVTODO($_selection,'2.0','PUBLISH',false);
-
-			// infolog_ical doesn't allow a nice call to get just the VTODO
-			if($result)
-			{
-				$horde->parsevCalendar($result, 'VCALENDAR', 'utf-8', false);
-			}
-		}
-		fwrite($_stream, $horde->exportvCalendar());
+		$boical = new infolog_ical();
+		fwrite($_stream, $boical->exportvCalendar($selection));
 	}
 
 	/**
