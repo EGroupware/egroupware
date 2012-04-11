@@ -287,14 +287,15 @@ class html
 	 * - &nbsp; &lt; &gt; for convenience -> should not happen anymore, as we do not doubleencode anymore (20101020)
 	 *
 	 * @param string $str string to escape
+	 * @param boolean $double_encoding=false do we want double encoding or not, default no
 	 * @return string
 	 */
-	static function htmlspecialchars($str)
+	static function htmlspecialchars($str, $double_encoding=false)
 	{
 		//if (!is_scalar($str) && !is_null($str)) error_log(__METHOD__.'('.array2string($str).') '.function_backtrace());
 		// as EGroupware supports only utf-8 we should not need to worry about wrong charsets
 		//if (is_array($str)) error_log(__METHOD__.__LINE__.' string expected -> array given:'.array2string($str).'->'.function_backtrace());
-		return htmlspecialchars($str,ENT_COMPAT,self::$charset,false);
+		return htmlspecialchars($str,ENT_COMPAT,self::$charset,$double_encoding);
 		// we need '&#' unchanged, so we translate it back -> this is provided by 4th param = false -> do not doubleencode
 		//$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
 
@@ -540,11 +541,12 @@ class html
 	 * @param string $name name attr. of the tag
 	 * @param string $value default
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
+	 * @param boolean $double_encoding=false do we want double encoding or not, default no
 	 * @param string html
 	 */
-	static function textarea($name,$value='',$options='' )
+	static function textarea($name,$value='',$options='',$double_encoding=false)
 	{
-		return "<textarea name=\"$name\" $options>".self::htmlspecialchars($value)."</textarea>\n";
+		return "<textarea name=\"$name\" $options>".self::htmlspecialchars($value,$double_encoding)."</textarea>\n";
 	}
 
 	/**
@@ -617,7 +619,10 @@ class html
 		$pxheight = (strpos('px', $_height) === false) ?
 			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
 
-		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"').'
+		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
+		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
+		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
+'
 <script type="text/javascript">
 	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/";
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
