@@ -204,13 +204,13 @@ class admin_categories
 		$sel_options['owner'] = array();
 
 		// User's category - add current value to be able to preserve owner
-		if(!$content['id'] && !$content['owner'])
+		if(!$content['id'])
 		{
 			if($this->appname != 'admin')
 			{
 				$content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			}
-			else
+			elseif (!$content['owner'])
 			{
 				$content['owner'] = 0;
 			}

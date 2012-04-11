@@ -64,7 +64,7 @@
 				<row class="th" height="25">
 					<description value="Parent category" for="parent"/>
 					<menulist>
-						<menupopup type="select-cat" id="parent" options="None,$cont[all_cats],,$cont[appname],,-1"/>
+						<menupopup type="select-cat" id="parent" options="None,$cont[all_cats],,$cont[appname]"/>
 					</menulist>
 				</row>
 				<row class="row">
