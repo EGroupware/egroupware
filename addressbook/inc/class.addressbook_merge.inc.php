@@ -48,6 +48,11 @@ class addressbook_merge extends bo_merge
 		{
 			return false;
 		}
+		if($content && strpos($content, '$$#') !== 0)
+		{
+			$this->cf_link_to_expand($this->contacts->read($id), $content, $replacements,'addressbook');
+		}
+
 		// Links
 		$replacements += array(
 			'$$links$$'		=> $this->get_links('addressbook', $id, '!'.egw_link::VFS_APPNAME),
