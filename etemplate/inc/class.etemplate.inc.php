@@ -1348,6 +1348,7 @@ class etemplate extends boetemplate
 
 					self::$request->set_to_process($form_name,$cell['type'],array(
 						'needed'    => $cell['needed'],
+						'mode'      => $mode,	// need mode to not run purify for $mode=='ascii'
 					));
 				}
 				else
@@ -2223,8 +2224,12 @@ class etemplate extends boetemplate
 					}
 					break;
 				case 'htmlarea':
-					self::set_array($content,$form_name,html::purify($value));
-					break;
+					if ($attr['mode'] !== 'ascii')
+					{
+						self::set_array($content,$form_name,html::purify($value));
+						break;
+					}
+					// fall-throught for mode 'ascii', which is identical to textarea
 				case 'int':
 				case 'float':
 				case 'passwd':
