@@ -379,12 +379,13 @@ var et2_link_entry = et2_inputWidget.extend({
 		self.options.value.app = this.app_select.val();
 
 		// Search input
-		this.search = $j(document.createElement("input")).attr("type", "search")
+		this.search = $j(document.createElement("input")) 
+			// .attr("type", "search") // Fake it for all browsers below
 			.focus(function(){if(!self.options.application) {
 				// Adjust width, leave room for app select & link button
 				self.search.css("width", "50%");self.app_select.show();
 			}})
-			.css("width", opt_count == 1 ? "100%" : "60%")
+			.css("width", opt_count == 1 ? "100%" : "50%")
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
@@ -413,6 +414,30 @@ var et2_link_entry = et2_inputWidget.extend({
 				e.stopPropagation();
 			}
 		});
+
+		// Clear / last button
+		var clear = $j(document.createElement("span"))
+			.addClass("ui-icon ui-icon-close ui-state-default")
+			.click(function(e){
+				// No way to tell if the results is open, so if they click the button while open, it clears
+				if(self.last_search && self.last_search != self.search.val())
+				{
+					// Repeat last search (should be cached)
+					self.search.val(self.last_search);
+					self.last_search = "";
+					self.search.autocomplete("search");
+				}
+				else
+				{
+					// Clear
+					self.search.autocomplete("close");
+					self.search.val("");
+				}
+				self.search.focus();
+			})
+			.hover(function() {$j(this).addClass("ui-state-hover");}, function() {$j(this).removeClass("ui-state-hover");})
+			.appendTo(this.div);
+
 		this.setDOMNode(this.div[0]);
 	},
 
@@ -541,6 +566,9 @@ var et2_link_entry = et2_inputWidget.extend({
 	 * Ask server for entries matching selected app/type and filtered by search string
 	 */
 	query: function(request, response) {
+		// Remember last search
+		this.last_search = this.search.val();
+
 		if(request.term in this.cache) {
 			return response(this.cache[request.term]);
 		}
@@ -575,6 +603,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		{
 			event.data.options.value.id = selected.item.value;
 		}
+
 		event.data.search.val(selected.item.label);
 
 	},

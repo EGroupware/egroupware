@@ -313,6 +313,20 @@ span.et2_date span {
  * Link wiget(s)
  */
 
+/* Link entry - x button*/
+div.et2_link_entry {
+}
+.et2_link_entry input.ui-autocomplete-input {
+}
+.et2_link_entry .ui-icon-close {
+	background-color: inherit;
+	border: none;
+	position: relative;
+	top: -20px;
+	right: -91%;
+	cursor: pointer;
+}
+
 /* Link to */
 .et2_link_to {
 	width: 350px;
