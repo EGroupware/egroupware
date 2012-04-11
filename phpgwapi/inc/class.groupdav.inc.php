@@ -27,12 +27,14 @@ require_once('HTTP/WebDAV/Server.php');
  * - /<username>/             users home-set with
  * - /<username>/addressbook/ addressbook of user or group <username> given the user has rights to view it
  * - /<username>/addressbook-<other-username>/ shared addressbooks from other user or group
+ * - /<username>/addressbook-accounts/ all accounts current user has rights to see
  * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
  * - /<username>/calendar-<other-username>/ shared calendar from other user or group
  * - /<username>/inbox/       scheduling inbox of user <username>
  * - /<username>/outbox/      scheduling outbox of user <username>
  * - /<username>/infolog/     InfoLog's of user <username> given the user has rights to view it
  * - /addressbook/ all addressbooks current user has rights to, announced as directory-gateway now
+ * - /addressbook-accounts/ all accounts current user has rights to see
  * - /calendar/    calendar of current user
  * - /infolog/     infologs of current user
  *
