@@ -118,7 +118,7 @@ class egw_ckeditor_config
 					break;
 				case 'office2003':
 					$skin = "office2003";
-					break;				
+					break;
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
@@ -149,8 +149,6 @@ class egw_ckeditor_config
 		$config['resize_enabled'] = false;
 		$config['height'] = (int)$height;
 
-		$config['entities'] = true;
-		$config['entities_latin'] = true;
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
 
@@ -191,7 +189,7 @@ class egw_ckeditor_config
 				$config['scayt_autoStartup'] = true;
 				$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
 			}
-			
+
 		}
 		else
 		{
@@ -290,7 +288,7 @@ class egw_ckeditor_config
 	 * values are 'simple', 'extended' and 'advanced'. All other values will default to 'simple'
 	 * @param integer $height contains the height of the ckeditor in pixels
 	 * @param boolean $expanded_toolbar specifies whether the ckeditor should start with an expanded toolbar or not
-	 * @param string $start_path specifies 
+	 * @param string $start_path specifies
 	 */
 	public static function get_ckeditor_config($mode = 'simple', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
