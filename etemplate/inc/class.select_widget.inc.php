@@ -403,7 +403,7 @@ class select_widget
 				$format = '%d';
 				if (!empty($type3) && $type3[0] == '0')			// leading zero
 				{
-					$format = '%0'.strlen($type3).'d';
+					$format = '%0'.(intval($type3) < 10 ? strlen($type3): strlen($type3) - 1).'d';
 				}
 				$type3 = !$type3 ? 1 : intval($type3);			// decrement
 				if (($type <= $type2) != ($type3 > 0))
