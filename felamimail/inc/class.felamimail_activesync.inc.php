@@ -101,11 +101,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID']))
 		{
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' Pref for ProfileID:'.array2string($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID']));
-			if ($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID'] == 'G') 
+			if ($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID'] == 'G')
 			{
 				self::$profileID = 'G'; // this should trigger the fetch of the first negative profile (or if no negative profile is available the firstb there is)
 			}
-			else 
+			else
 			{
 				self::$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID'];
 			}
@@ -149,11 +149,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$selectedID = $this->mail->getIdentitiesWithAccounts($identities);
 			if (self::$profileID=='G')
 			{
-				$activeIdentity =& $this->mail->mailPreferences->getIdentity(0);
+				if (is_object($this->mail->mailPreferences)) $activeIdentity =& $this->mail->mailPreferences->getIdentity(0);
 			}
 			else
 			{
-				$activeIdentity =& $this->mail->mailPreferences->getIdentity(self::$profileID, true);
+				if (is_object($this->mail->mailPreferences)) $activeIdentity =& $this->mail->mailPreferences->getIdentity(self::$profileID, true);
 			}
 			// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
 			if ($activeIdentity->id || self::$profileID == 'G') {
@@ -1432,7 +1432,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		//						[value] => Array(
 		//							[POOMMAIL:DateReceived] => 1319034600))))))
 		//	[rebuildresults] => 1
-		//	[deeptraversal] => 
+		//	[deeptraversal] =>
 		//	[range] => 0-999)
 		if (isset($searchquery['rebuildresults'])) {
 			$rebuildresults = $searchquery['rebuildresults'];
