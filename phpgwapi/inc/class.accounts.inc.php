@@ -550,6 +550,40 @@ class accounts
 	}
 
 	/**
+	 * Checks if a given account is visible to current user
+	 *
+	 * Not all existing accounts are visible because off account_selection preference: 'none' or 'groupmembers'
+	 *
+	 * @param int|string $account_id nummeric account_id or account_lid
+	 * @return boolean true = account is visible, false = account not visible, null = account does not exist
+	 */
+	function visible($account_id)
+	{
+		if (!is_numeric($account_id))	// account_lid given
+		{
+			$account_lid = $account_id;
+			if (!($account_id = $this->name2id($account_lid))) return null;
+		}
+		else
+		{
+			if (!($account_lid = $this->id2name($account_id))) return null;
+		}
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			// do NOT allow other user, if account-selection is none
+			($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+				$account_lid != $GLOBALS['egw_info']['user']['account_lid'] ||
+			// only allow group-members for account-selection is groupmembers
+			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+				!array_intersect($this->memberships($account_id,true),
+					$this->memberships($GLOBALS['egw_info']['user']['account_id'],true))))
+		{
+			//error_log(__METHOD__."($account_id='$account_lid') returning FALSE");
+			return false;	// user is not allowed to see given account
+		}
+		return true;	// user allowed to see given account
+	}
+
+	/**
 	 * Get all memberships of an account $account_id / groups the account is a member off
 	 *
 	 * @param int/string $account_id numeric account-id or alphanum. account-lid
