@@ -479,11 +479,6 @@ class db_backup
 					{
 						$GLOBALS['egw_setup']->translation->setup_translation_sql();
 					}
-					$translation =& $GLOBALS['egw_setup']->translation->sql;
-				}
-				else
-				{
-					$translation =& $GLOBALS['egw']->translation;
 				}
 			}
 			if ($table)	// do we already reached the data part
@@ -506,9 +501,9 @@ class db_backup
 					{
 						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
 						{
-							$translation->convert($data,$charset);
+							$data = translation::convert($data,$charset);
 						}
-						$this->db->insert($table,$data,False,__LINE__,__FILE__,'all-apps',true);
+						$this->db->insert($table,$data,False,__LINE__,__FILE__,true,true);
 					}
 					else
 					{

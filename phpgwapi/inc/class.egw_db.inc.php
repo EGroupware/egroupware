@@ -1631,21 +1631,45 @@ class egw_db
 	*
 	* @author RalfBecker<at>outdoor-training.de
 	*
-	* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app,
-	*	true to search the already loaded table-definitions for $table
-	* @param bool/string $table if set return only defintions of that table, else return all defintions
+	* @param bool|string $app name of the app or default False to use the app set by db::set_app or the current app,
+	*	true to search the already loaded table-definitions for $table and then search all existing apps for it
+	* @param bool|string $table if set return only defintions of that table, else return all defintions
 	* @return mixed array with table-defintions or False if file not found
 	*/
 	function get_table_definitions($app=False,$table=False)
 	{
-		static $all_app_data;
-		if ($app === true && $table && isset($all_app_data))
+		static $all_app_data = array();
+		if ($app === true && $table)
 		{
 			foreach($all_app_data as $app => &$app_data)
 			{
 				if (isset($app_data[$table]))
 				{
 					return $app_data[$table];
+				}
+			}
+			// $table not found in loaded apps, check not yet loaded ones
+			foreach(scandir(EGW_INCLUDE_ROOT) as $app)
+			{
+				if ($app[0] == '.' || !is_dir(EGW_INCLUDE_ROOT.'/'.$app) || isset($all_app_data[$app]))
+				{
+					continue;
+				}
+				$tables_current = EGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
+				if (!@file_exists($tables_current))
+				{
+					$all_app_data[$app] = False;
+				}
+				else
+				{
+					include($tables_current);
+					$all_app_data[$app] =& $phpgw_baseline;
+					unset($phpgw_baseline);
+
+					if (isset($all_app_data[$app][$table]))
+					{
+						return $all_app_data[$app][$table];
+					}
 				}
 			}
 			$app = false;
