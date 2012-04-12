@@ -1556,7 +1556,9 @@ class groupdav extends HTTP_WebDAV_Server
 			$content .= $c;
 			if ($extra) $content .= $extra;
 			if ($this->to_log) $content .= "\n### ".implode("\n### ", $this->to_log)."\n";
-			$content .= sprintf('*** %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
+			$content .= $this->_http_status[0] == '4' && substr($this->_http_status,0,3) != '412' ||
+				$this->_http_status[0] == '5' ? '###' : '***';	// mark failed requests with ###, instead of ***
+			$content .= sprintf(' %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
 
 			if ($msg_file && ($f = fopen($msg_file,'a')))
 			{

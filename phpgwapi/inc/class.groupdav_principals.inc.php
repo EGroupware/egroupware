@@ -614,15 +614,9 @@ class groupdav_principals extends groupdav_handler
 		{
 			if (!($id = $this->accounts->name2id($name,'account_lid','u')) ||
 				!($account = $this->accounts->read($id)) ||
-				!isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
-				// do NOT allow other user, if account-selection is none
-				($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
-					$name != $GLOBALS['egw_info']['user']['account_lid'] ||
-				// only allow group-members for account-selection is groupmembers
-				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
-					!array_intersect($this->accounts->memberships($account['account_id'],true),
-						$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true))))
+				!$this->accounts->visible($name))
 			{
+				$this->groupdav->log(__METHOD__."('$name', ...) account '$name' NOT found OR not visible to you (check account-selection preference)!");
 				return '404 Not Found';
 			}
 			while (substr($rest,-1) == '/') $rest = substr($rest,0,-1);
@@ -1220,7 +1214,10 @@ class groupdav_principals extends groupdav_handler
 		$set = array();
 		foreach($accounts as $account_id => $account_lid)
 		{
-			$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
+			if ($this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
+			{
+				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
+			}
 		}
 		if ($add_proxys)
 		{
@@ -1300,7 +1297,8 @@ class groupdav_principals extends groupdav_handler
 		foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
 		{
 			if ($account_id != $account && ($rights & EGW_ACL_READ) &&
-				($account_lid = $this->accounts->id2name($account_id)))
+				($account_lid = $this->accounts->id2name($account_id)) &&
+				$this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
 			{
 				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
 					($account_id < 0 ? 'groups/' : 'users/').
