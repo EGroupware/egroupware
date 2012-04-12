@@ -43,11 +43,8 @@ function phpgwapi_upgrade1_8_003()
  */
 function phpgwapi_upgrade1_8_004()
 {
-	// run the two not included updates
-	phpgwapi_upgrade1_9_010();
-	phpgwapi_upgrade1_9_011();
-
-	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.013';
+	// run the not included update 1.9.010
+	return phpgwapi_upgrade1_9_010();
 }
 
 /**
