@@ -65,6 +65,13 @@ class module_resources_reservation extends sitemgr_module
 					'' => lang('None'),
 				)+registration_bo::get_allowed_addressbooks(registration_bo::CONFIRMED)
 			),
+			'include_group' => array(
+				'type' => 'select',
+				'label' => lang('Add group to event participants'),
+				'options' => array(
+					'' => lang('None'),
+				) + $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'])
+			)
 		);
 	}
 
@@ -79,7 +86,7 @@ class module_resources_reservation extends sitemgr_module
 		// Add resources from selected category
 		$bo = new resources_bo();
 		$bo->get_rows($query, $list, $readonlys);
-		foreach($list as $resource) 
+		foreach($list as $resource)
 		{
 			$this->arguments['resource']['options'][$resource['res_id']] = $resource['name'];
 		}

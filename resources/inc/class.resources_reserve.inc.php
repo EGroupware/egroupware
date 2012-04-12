@@ -45,8 +45,10 @@ class resources_reserve {
 				$content = array(
 					'resource' => key($data['participant_types']['r']),
 					'date' => $data['start'],
-					'time' => $data['start'] - mktime(0,0,0,date('m',$data['start']),date('d',$data['start']),date('Y',$data['start']))
+					'time' => $data['start'] - mktime(0,0,0,date('m',$data['start']),date('d',$data['start']),date('Y',$data['start'])),
+					'quantity' => 0
 				);
+				calendar_so::split_status($data['participant_types']['r'][$content['resource']], $content['quantity'],$role);
 				$data['msg']= '<div class="confirm">'.lang('Registration confirmed %1', egw_time::to($data['start'])) .'</div>';
 			} else {
 				$data['msg']= '<div class="confirm">'.lang('Unable to process confirmation.').'</div>';
@@ -71,6 +73,7 @@ class resources_reserve {
 		$preserve['contact_form'] = $arguments['contact_form'] ? $arguments['contact_form'] : $content['contact_form'];
 		$preserve['link'] = $arguments['link'] ? $arguments['link'] : $content['link'];
 		$preserve['email_message'] = $arguments['email_message'] ? $arguments['email_message'] : $content['email_message'];
+		$preserve['include_group'] = $arguments['include_group'] ? $arguments['include_group'] : $content['include_group'];
 
 		// Check for valid time
 		if($data['date'] && $content['book'])
@@ -81,7 +84,7 @@ class resources_reserve {
 			{
 				$preferences = new preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
 				$preferences = $preferences->read_repository();
-				$duration = $preferences['calendar']['defaultlength'];
+				$duration = $preferences['calendar']['defaultlength'] * 60;
 			}
 			else
 			{
@@ -133,6 +136,10 @@ class resources_reserve {
 						$contact => calendar_so::combine_status('U', $data['quantity'], 'REQ-PARTICIPANT')
 					)
 				);
+				if($preserve['include_group'])
+				{
+					$event['participants'][$preserve['include_group']] = calendar_so::combine_status('U', 1, 'REQ-PARTICIPANT');
+				}
 				$cal_bo = new calendar_boupdate();
 				$result = $cal_bo->update($event);
 
