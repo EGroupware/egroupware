@@ -33,7 +33,13 @@
 						<description value="Date"/>
 						<hbox options="0,0">
 							<date id="date" onchange="var request = new egw_json_request('resources.resources_reserve.ajax_update_planner',[document.getElementById('exec[res_id]').value, Math.round(window.calendar.date.getTime()/1000)]);request.sendRequest(); return false;"/>
-							<date-timeonly id="time"/>
+							<menulist>
+								<menupopup type="select-hour" id="time[hour]"/>
+							</menulist>
+							<description value=":"/>
+							<menulist>
+								<menupopup type="select-number" id="time[minute]" options=",0,59,$cont[duration]"/>
+							</menulist>
 						</hbox>
 					</row>
 					<row disabled="!@contact_form">

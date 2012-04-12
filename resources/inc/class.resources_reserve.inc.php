@@ -75,8 +75,18 @@ class resources_reserve {
 		// Check for valid time
 		if($data['date'] && $content['book'])
 		{
-			$start_time = $data['date'] + $data['time'];
-			$duration = ($GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60);
+			$start_time = $data['date'] + (is_array($data['time']) ? $data['time']['hour']*3600 + $data['time']['minute']*60 : $data['time']);
+			// Use sitemgr's default appointment length
+			if($GLOBALS['egw_info']['user']['account_lid'] != $GLOBALS['sitemgr_info']['anonymous_user'])
+			{
+				$preferences = new preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
+				$preferences = $preferences->read_repository();
+				$duration = $preferences['calendar']['defaultlength'];
+			}
+			else
+			{
+				$duration = ($GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60);
+			}
 			$end_time = $start_time + $duration;
 
 			$config = config::read('registration');
@@ -196,7 +206,22 @@ class resources_reserve {
 		}
 
 		if(!$data['date']) $data['date'] = strtotime('tomorrow');
-		if(!$data['time']) $data['time'] = $GLOBALS['egw_info']['user']['preferences']['calendar']['workdaystarts'] * 60 * 60;
+		if(!$data['time']) $data['time']['hour'] = $GLOBALS['egw_info']['user']['preferences']['calendar']['workdaystarts'];
+
+		// Use sitemgr's default appointment length
+		if($GLOBALS['egw_info']['user']['account_lid'] != $GLOBALS['sitemgr_info']['anonymous_user'])
+		{
+			$preferences = new preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
+			$preferences = $preferences->read_repository();
+			$data['duration'] = $preferences['calendar']['defaultlength'];
+		}
+		else
+		{
+			$data['duration'] = $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'];
+		}
+		// Leading 0
+		$data['duration'] = '0'.$data['duration'];
+
 		if(!$GLOBALS['egw_info']['user']['apps']['resources'] || !$this->bo->get_calendar_info($data['res_id']) || // Needed for booking
 			!$GLOBALS['egw_info']['user']['apps']['calendar'] // Needed for updating schedule
 		)
