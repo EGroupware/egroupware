@@ -226,25 +226,31 @@ class schema_proc
 					if (isset($mFields['options'][$this->sType]))
 					{
 						$options = $mFields['options'][$this->sType];	// db-specific options, eg. index-type
-
 						if (!$options) continue;	// no index for our db-type
 					}
 					unset($mFields['options']);
 				}
 			}
-			else
+			foreach((array)$mFields as $k => $col)
 			{
 				// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
 				// most DB's cant do them and give errors
-				if (in_array($aTableDef['fd'][$mFields]['type'],array('text','longtext')))
+				if (in_array($aTableDef['fd'][$col]['type'],array('text','longtext')))
 				{
-					if ($this->sType == 'mysql')
+					if (is_array($mFields))	// index over multiple columns including a text column
 					{
-						$options = 'FULLTEXT';
+						$mFields[$k] .= '(32)';	// 32=limit of egw_addressbook_extra.extra_value to fix old backups
 					}
-					else
+					elseif (!$options)	// index over a single text column and no options given
 					{
-						continue;	// ignore that index
+						if ($this->sType == 'mysql')
+						{
+							$options = 'FULLTEXT';
+						}
+						else
+						{
+							continue 2;	// ignore that index, 2=not just column but whole index!
+						}
 					}
 				}
 			}
