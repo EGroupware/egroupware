@@ -103,7 +103,9 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 	 */
 	function delete(array $keys)
 	{
-		return $this->memcache->delete(self::key($keys));
+		// ,0 required to fix a bug in memcache extension < 3.1.1 with memcache > 1.4.3, eg. Debian 6
+		// see https://bugs.php.net/bug.php?id=58943
+		return $this->memcache->delete(self::key($keys), 0);
 	}
 
 	/**
