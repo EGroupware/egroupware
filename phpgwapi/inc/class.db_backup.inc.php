@@ -587,6 +587,9 @@ class db_backup
 		{
 			return lang('Restore failed');
 		}
+		// search-and-register-hooks
+		$GLOBALS['egw']->hooks->register_all_hooks();
+
 		return '';
 	}
 

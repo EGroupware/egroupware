@@ -308,17 +308,15 @@ class hooks
 	 */
 	function register_all_hooks()
 	{
-		$SEP = filesystem_separator();
+		// deleting hooks, to get ride of no longer existing apps
+		$this->db->delete($this->table,'1=1',__LINE__,__FILE__);
 
-		// deleting hooks of all not longer registered apps
-		if (($all_apps = array_keys($GLOBALS['egw_info']['apps'])))
+		// now register all apps using just filesystem data
+		foreach(scandir(EGW_SERVER_ROOT) as $appname)
 		{
-			$this->db->delete($this->table,"hook_appname NOT IN ('".implode("','",$all_apps)."')",__LINE__,__FILE__);
-		}
-		// now register the rest again
-		foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
-		{
-			$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
+			if ($appname[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$appname)) continue;
+
+			$f = EGW_SERVER_ROOT . '/' . $appname . '/setup/setup.inc.php';
 			$setup_info = array($appname => array());
 			if(@file_exists($f)) include($f);
 			// some apps have setup_info for more then themselfs (eg. phpgwapi for groupdav)
