@@ -42,7 +42,7 @@ class uiuserdata
 
 	function display_app_header()
 	{
-		$GLOBALS['egw']->js->validate_file('jscode','editUserdata','emailadmin');
+		$GLOBALS['egw']->js->validate_file('.','app','emailadmin');
 		$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 
 		$GLOBALS['egw']->common->egw_header();
@@ -98,8 +98,8 @@ class uiuserdata
 			$this->t->set_var('selectbox_mailAlternateAddress', html::select(
 				'mailAlternateAddress',
 				'',
-				$addresses, 
-				true, 
+				$addresses,
+				true,
 				"style='width: 100%;' id='mailAlternateAddress'",
 				5)
 			);
@@ -111,8 +111,8 @@ class uiuserdata
 			$this->t->set_var('selectbox_mailRoutingAddress', html::select(
 				'mailForwardingAddress',
 				'',
-				$addresses, 
-				true, 
+				$addresses,
+				true,
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
@@ -144,8 +144,8 @@ class uiuserdata
 			$this->t->set_var('selectbox_mailAlternateAddress', html::select(
 				'mailAlternateAddress',
 				'',
-				array(), 
-				true, 
+				array(),
+				true,
 				"style='width: 100%;' id='mailAlternateAddress'",
 				5)
 			);
@@ -153,8 +153,8 @@ class uiuserdata
 			$this->t->set_var('selectbox_mailRoutingAddress', html::select(
 				'mailForwardingAddress',
 				'',
-				array(), 
-				true, 
+				array(),
+				true,
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
@@ -187,7 +187,7 @@ class uiuserdata
 			'quotaLimit'			=> $_POST["quotaLimit"],
 			'qmailDotMode'			=> $_POST["qmailDotMode"],
 			'deliveryProgramPath'		=> $_POST["deliveryProgramPath"],
-			'accountStatus'			=> $accountStatus, 
+			'accountStatus'			=> $accountStatus,
 			'deliveryMode'			=> $deliveryMode
 		);
 
