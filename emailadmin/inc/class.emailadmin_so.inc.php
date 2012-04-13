@@ -175,7 +175,9 @@
 				$globalDefaults = $this->getProfile($data['ea_profile_id'], $this->db_cols);
 				$anyValues++;
 			} else {
-				error_log("emailadmin::emailadmin_so->getUserProfile, no Default configured");
+				error_log(__METHOD__.__LINE__.", no Default configured");
+				error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+					($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 				$globalDefaults = array();
 			}
 			// retrieve application settings if set
