@@ -218,7 +218,7 @@ class emailadmin_bo extends so_sql
 			'protocol'	=> 'imap',
 			'classname'	=> 'dbmaildbmailuser'
 		),
-	); 
+	);
 
 	var $imapClass;				// holds the imap/pop3 class
 	var $smtpClass;				// holds the smtp class
@@ -233,10 +233,10 @@ class emailadmin_bo extends so_sql
 			$GLOBALS['emailadmin_bo'] = $this;
 		}
 		$this->soemailadmin = new emailadmin_so();
-		//translate the standard entry description			
+		//translate the standard entry description
 		self::$SMTPServerType['defaultsmtp']['description'] = lang('standard SMTP-Server');
-		self::$IMAPServerType['defaultimap']['description'] = lang('standard IMAP Server');			
-		if ($_restoreSesssion) // &&  !(is_array(self::$sessionData) && (count(self::$sessionData)>0))  ) 
+		self::$IMAPServerType['defaultimap']['description'] = lang('standard IMAP Server');
+		if ($_restoreSesssion) // &&  !(is_array(self::$sessionData) && (count(self::$sessionData)>0))  )
 		{
 			$this->restoreSessionData();
 		}
@@ -246,7 +246,7 @@ class emailadmin_bo extends so_sql
 			self::$sessionData = array();
 			self::saveSessionData();
 		}
-		#_debug_array(self::$sessionData);	
+		#_debug_array(self::$sessionData);
 		if(!($_profileID === false))
 		{
 			$this->profileID	= $_profileID;
@@ -284,8 +284,8 @@ class emailadmin_bo extends so_sql
 		foreach ($profileid as $tk => $pid)
 		{
 			self::$sessionData['profile'][$pid] = array();
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $pid, 'delete', time());
 		}
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $profileid, 'delete', time());
 		self::saveSessionData();
 		return $deleted;
 	}
@@ -429,8 +429,8 @@ class emailadmin_bo extends so_sql
 		if (!(is_array(self::$sessionData) && (count(self::$sessionData)>0))) $this->restoreSessionData();
 		if (is_array(self::$sessionData) && (count(self::$sessionData)>0) && self::$sessionData['profile'][$_profileID]) {
 			//error_log("sessionData Restored for Profile $_profileID <br>");
-			return self::$sessionData['profile'][$_profileID]; 
-		} 
+			return self::$sessionData['profile'][$_profileID];
+		}
 		$profileData = $this->soemailadmin->getProfileList($_profileID);
 		$found = false;
 		if (is_array($profileData) && count($profileData))
@@ -520,9 +520,9 @@ class emailadmin_bo extends so_sql
 
 	/**
 	 * Get a list of supported SMTP servers
-	 * 
+	 *
 	 * Calls hook "smtp_server_types" to allow applications to supply own server-types
-	 * 
+	 *
 	 * @return array classname => label pairs
 	 */
 	static public function getSMTPServerTypes()
@@ -541,13 +541,13 @@ class emailadmin_bo extends so_sql
 
 	/**
 	 * Get a list of supported IMAP servers
-	 * 
+	 *
 	 * Calls hook "imap_server_types" to allow applications to supply own server-types
-	 * 
+	 *
 	 * @param boolean $extended=true
 	 * @return array classname => label pairs
 	 */
-	static public function getIMAPServerTypes($extended=true) 
+	static public function getIMAPServerTypes($extended=true)
 	{
 		$retData = array();
 		foreach(self::$IMAPServerType as $key => $value)
@@ -620,7 +620,7 @@ class emailadmin_bo extends so_sql
 
 	/**
 	 * Get EMailAdmin profile for a user
-	 * 
+	 *
 	 * @param string $_appName=''
 	 * @param int|array $_groups=''
 	 * @return ea_preferences
@@ -628,10 +628,10 @@ class emailadmin_bo extends so_sql
 	function getUserProfile($_appName='', $_groups='')
 	{
 		if (!(is_array(self::$sessionData) && (count(self::$sessionData)>0))) $this->restoreSessionData();
-		if (is_array(self::$sessionData) && count(self::$sessionData)>0 && self::$sessionData['ea_preferences']) 
+		if (is_array(self::$sessionData) && count(self::$sessionData)>0 && self::$sessionData['ea_preferences'])
 		{
 			//error_log("sessionData Restored for UserProfile<br>");
-			return self::$sessionData['ea_preferences']; 
+			return self::$sessionData['ea_preferences'];
 		}
 		$appName	= ($_appName != '' ? $_appName : $GLOBALS['egw_info']['flags']['currentapp']);
 		if(!is_array($_groups)) {
@@ -743,7 +743,7 @@ class emailadmin_bo extends so_sql
 				$identity->default	= ($emailAddresses['type'] == 'default');
 				$identity->organization	= $data['organisationName'];
 				$identity->id = ($i==0?$data['profileID']*-1:$i*-1);
-				// first identity found will be associated with the profileID, 
+				// first identity found will be associated with the profileID,
 				// others will be set to a negative value, to indicate that they belong to the account
 				$eaPreferences->setIdentity($identity,($i==0?$data['profileID']*-1:$i*-1));
 				$i++;
@@ -769,14 +769,14 @@ class emailadmin_bo extends so_sql
 	{
 
 		if($userProfile = $this->getUserProfile('felamimail')) {
-			$icServerKeys = array_keys((array)$userProfile->ic_server); 
+			$icServerKeys = array_keys((array)$userProfile->ic_server);
 			$profileID = array_shift($icServerKeys);
 			$icServer = $userProfile->getIncomingServer($profileID);
 			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 				$icUserData = $icServer->getUserData($username);
 			}
 
-			$ogServerKeys = array_keys((array)$userProfile->og_server); 
+			$ogServerKeys = array_keys((array)$userProfile->og_server);
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
 			if(($ogServer instanceof defaultsmtp)) {
@@ -924,9 +924,9 @@ class emailadmin_bo extends so_sql
 
 	function saveUserData($_accountID, $_formData) {
 
-		if($userProfile = $this->getUserProfile('felamimail')) 
+		if($userProfile = $this->getUserProfile('felamimail'))
 		{
-			$ogServerKeys = array_keys((array)$userProfile->og_server); 
+			$ogServerKeys = array_keys((array)$userProfile->og_server);
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
 			if(($ogServer instanceof defaultsmtp)) {
@@ -939,7 +939,7 @@ class emailadmin_bo extends so_sql
 				);
 			}
 
-			$icServerKeys = array_keys((array)$userProfile->ic_server); 
+			$icServerKeys = array_keys((array)$userProfile->ic_server);
 			$profileID = array_shift($icServerKeys);
 			$icServer = $userProfile->getIncomingServer($profileID);
 			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
