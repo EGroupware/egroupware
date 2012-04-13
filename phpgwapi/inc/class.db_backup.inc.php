@@ -458,8 +458,6 @@ class db_backup
 					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
 					$this->schema_proc->CreateTable($table_name,$schema);
 				}
-				// make the schemas availible for the db-class
-				$GLOBALS['egw_info']['apps']['all-apps']['table_defs'] = &$this->schemas;
 				continue;
 			}
 			if (substr($line,0,7) == 'table: ')
@@ -503,7 +501,7 @@ class db_backup
 						{
 							$data = translation::convert($data,$charset);
 						}
-						$this->db->insert($table,$data,False,__LINE__,__FILE__,true,true);
+						$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
 					}
 					else
 					{
