@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: Caching provider storing data in memcached via PHP's memcache extension
+ * EGroupware API: Caching provider storing data in memcached via PHP's memcache extension
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -22,7 +22,7 @@
  *
  * You can set more then one server and specify a port, if it's not the default one 11211.
  */
-class egw_cache_memcache implements egw_cache_provider
+class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_provider
 {
 	/**
 	 * Instance of Memcache

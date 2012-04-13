@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: Caching data
+ * EGroupware API: Caching data
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009/10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -527,10 +527,11 @@ class egw_cache
 	}
 }
 
-// setting apc as default provide, if apc_fetch function exists
+// setting apc as default provide, if apc_fetch function exists AND not cli or apc enabled for cli
 if (is_null(egw_cache::$default_provider))
 {
-	egw_cache::$default_provider = function_exists('apc_fetch') ? 'egw_cache_apc' : 'egw_cache_files';
+	egw_cache::$default_provider = function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')) ?
+		'egw_cache_apc' : 'egw_cache_files';
 }
 
 /**
@@ -576,3 +577,92 @@ interface egw_cache_provider
 	 */
 	function delete(array $keys);
 }
+
+abstract class egw_cache_provider_check implements egw_cache_provider
+{
+	/**
+	 * Run several checks on a caching provider
+	 *
+	 * @param boolean $verbose=false true: echo failed checks
+	 * @return int number of failed checks
+	 */
+	function check($verbose=false)
+	{
+		$failed = 0;
+		foreach(array(
+			egw_cache::TREE => 'tree',
+			egw_cache::INSTANCE => 'instance',
+		) as $level => $label)
+		{
+			foreach(array('string',123,true,false,null,array(),array(1,2,3)) as $data)
+			{
+				$location = md5(microtime(true).$label.serialize($data));
+				$get_before_set = $this->get(array($level,__CLASS__,$location));
+				if (!is_null($get_before_set))
+				{
+					if ($verbose) echo "$label: get_before_set=".array2string($get_before_set)." != NULL\n";
+					++$failed;
+				}
+				if (($set = $this->set(array($level,__CLASS__,$location), $data, 10)) !== true)
+				{
+					if ($verbose) echo "$label: set returned ".array2string($set)." !== TRUE\n";
+					++$failed;
+				}
+				$get_after_set = $this->get(array($level,__CLASS__,$location));
+				if ($get_after_set !== $data)
+				{
+					if ($verbose) echo "$label: get_after_set=".array2string($get_after_set)." !== ".array2string($data)."\n";
+					++$failed;
+				}
+				if (($delete = $this->delete(array($level,__CLASS__,$location))) !== true)
+				{
+					if ($verbose) echo "$label: delete returned ".array2string($delete)." !== TRUE\n";
+					++$failed;
+				}
+				$get_after_delete = $this->get(array($level,__CLASS__,$location));
+				if (!is_null($get_after_delete))
+				{
+					if ($verbose) echo "$label: get_after_delete=".array2string($get_after_delete)." != NULL\n";
+					++$failed;
+				}
+			}
+		}
+
+		return $failed;
+	}
+}
+
+// some testcode, if this file is called via it's URL
+// can be run on command-line: sudo php -d apc.enable_cli=1 -f phpgwapi/inc/class.egw_cache.inc.php
+/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+{
+	if (!isset($_SERVER['HTTP_HOST']))
+	{
+		chdir(dirname(__FILE__));	// to enable our relative pathes to work
+	}
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noapi' => true,
+		),
+	);
+	include_once '../../header.inc.php';
+
+	if (isset($_SERVER['HTTP_HOST'])) echo "<pre>\n";
+
+	foreach(array(
+		'egw_cache_memcache' => array('localhost'),
+		'egw_cache_apc' => array(),
+		'egw_cache_files' => array('/tmp'),
+	) as $class => $param)
+	{
+		echo "Checking $class:\n";
+		$start = microtime(true);
+		$provider = new $class($param);
+		$n = 100;
+		for($i=1; $i <= $n; ++$i)
+		{
+			$failed = $provider->check($i == 1);
+		}
+		printf("$failed checks failed, $n iterations took %5.3f sec\n\n", microtime(true)-$start);
+	}
+}*/
