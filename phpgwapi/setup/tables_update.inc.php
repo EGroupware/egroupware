@@ -331,5 +331,10 @@ function phpgwapi_upgrade1_9_010()
 	// French language: Français
 	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => 'Français'),array('lang_id' => 'fr'),__LINE__,__FILE__);
 
+	// check if categories are already updated to global == cat_owner=0
+	// has to run as API update, before apps (tracker) creates new global cats with cat_owner=0 stopping the update
+	categories::invalidate_cache();
+	categories::init_cache();	// updates the cats
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.011';
 }
