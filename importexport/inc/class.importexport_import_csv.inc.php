@@ -71,7 +71,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	private $csv_fieldsep;
 	
 	/**
-	 * 
+	 *
 	 * @var string charset of csv file
 	 */
 	private $csv_charset;
@@ -225,7 +225,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	/**
 	 * does fieldmapping according to $this->mapping
 	 *
-	 * @return 
+	 * @return
 	 */
 	protected function do_fieldmapping( ) {
 		$record = $this->record;
@@ -316,13 +316,13 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name]))
+				if (isset($record[$name]) && !is_numeric($record[$name]) && strlen(trim($record[$name])) > 0)
 				{
 					// Need to handle format first
 					if($format == 1)
 					{
 						$formatted = egw_time::createFromFormat(
-							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat, 
+							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat,
 							$record[$name],
 							egw_time::$user_timezone
 						);
@@ -342,7 +342,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								try {
 									$formatted = new egw_time($record[$name]);
 								} catch (Exception $e) {
-									$warnings[] = $name.': ' . $e->getMessage() . "\n" . 
+									$warnings[] = $name.': ' . $e->getMessage() . "\n" .
 										'Format: '.'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat;
 									continue;
 								}
@@ -358,19 +358,24 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 						{
 							$record[$name] = $formatted->getTimestamp();
 							// Timestamp is apparently in server time, but apps will do the same conversion
-							$record[$name] = egw_time::server2user($record[$name],'ts'); 
+							$record[$name] = egw_time::server2user($record[$name],'ts');
 						}
 					}
 					
-					if(is_array(self::$cf_parse_cache[$appname][0]['date-time']) && 
+					if(is_array(self::$cf_parse_cache[$appname][0]['date-time']) &&
 							in_array($name, self::$cf_parse_cache[$appname][0]['date-time'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
 						$record[$name] = date('Y-m-d H:i:s', $record[$name]);
 					}
 				}
+				if(strlen(trim($record[$name])) == 0)
+				{
+					$record[$name] = null;
+				}
 			}
 			foreach((array)$fields['date'] as $name) {
-				if ($record[$name] && !is_numeric($record[$name])) {
+				if (isset($record[$name]) && !is_numeric($record[$name]) && strlen(trim($record[$name])) > 0)
+				{
 					// Need to handle format first
 					if($format == 1)
 					{
@@ -380,12 +385,16 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 							$record[$name] = $formatted->getTimestamp();
 						}
 					}
-					$record[$name] = egw_time::server2user($record[$name],'ts'); 
-					if(is_array(self::$cf_parse_cache[$appname][0]['date']) && 
+					$record[$name] = egw_time::server2user($record[$name],'ts');
+					if(is_array(self::$cf_parse_cache[$appname][0]['date']) &&
 							in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
 						$record[$name] = date('Y-m-d', $record[$name]);
 					}
+				}
+				if(strlen(trim($record[$name])) == 0)
+				{
+					$record[$name] = null;
 				}
 			}
 
