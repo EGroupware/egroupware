@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: Caching provider storing data to files
+ * EGroupware API: Caching provider storing data to files
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -17,7 +17,7 @@
  * The provider creates subdirs under a given path
  * for each values in $key
  */
-class egw_cache_files implements egw_cache_provider
+class egw_cache_files extends egw_cache_provider_check implements egw_cache_provider
 {
 	/**
 	 * Extension of file used to store expiration > 0

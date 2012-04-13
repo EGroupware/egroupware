@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: Caching provider storing data in PHP's APC
+ * EGroupware API: Caching provider storing data in PHP's APC
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -20,7 +20,7 @@
  * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('egw_cache_apc');
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
  */
-class egw_cache_apc implements egw_cache_provider
+class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provider
 {
 	/**
 	 * Constructor, eg. opens the connection to the backend
@@ -33,6 +33,10 @@ class egw_cache_apc implements egw_cache_provider
 		if (!function_exists('apc_fetch'))	// apc >= 3.0
 		{
 			throw new Exception (__METHOD__.'('.array2string($params).") No function apc_fetch()!");
+		}
+		if (PHP_SAPI == 'cli' && !ini_get('apc.enable_cli'))
+		{
+			throw new Exception (__METHOD__.'('.array2string($params).") APC NOT enabled for cli, check apc.enable_cli!");
 		}
 	}
 
