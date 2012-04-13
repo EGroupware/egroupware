@@ -1,13 +1,13 @@
 <?php
 /**
- * eGroupWare API: Caching provider storing data to files
+ * EGroupware API: Caching provider storing data to files
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -17,7 +17,7 @@
  * The provider creates subdirs under a given path
  * for each values in $key
  */
-class egw_cache_files implements egw_cache_provider
+class egw_cache_files extends egw_cache_provider_check implements egw_cache_provider
 {
 	/**
 	 * Extension of file used to store expiration > 0
@@ -45,21 +45,7 @@ class egw_cache_files implements egw_cache_provider
 		}
 		else
 		{
-			if(!isset($GLOBALS['egw_info']['server']['temp_dir']))
-			{
-				if (isset($GLOBALS['egw_setup']) && isset($GLOBALS['egw_setup']->db))
-				{
-					$GLOBALS['egw_info']['server']['temp_dir'] = $GLOBALS['egw_setup']->db->select(config::TABLE,'config_value',array(
-						'config_app'	=> 'phpgwapi',
-						'config_name'	=> 'temp_dir',
-					),__LINE__,__FILE__)->fetchColumn();
-				}
-				if (!$GLOBALS['egw_info']['server']['temp_dir'])
-				{
-					throw new Exception (__METHOD__."() server/temp_dir is NOT set!");
-				}
-			}
-			$this->base_path = $GLOBALS['egw_info']['server']['temp_dir'].'/egw_cache';
+			$this->base_path = egw_cache::get_system_config('temp_dir').'/egw_cache';
 		}
 		if (!isset($this->base_path) || !file_exists($this->base_path) && !mkdir($this->base_path,0700,true))
 		{
@@ -135,7 +121,7 @@ class egw_cache_files implements egw_cache_provider
 	 * @param boolean $mkdir=false should we create the directory
 	 * @return string
 	 */
-	private function filename(array $keys,$mkdir=false)
+	function filename(array $keys,$mkdir=false)
 	{
 		$fname = $this->base_path.'/'.str_replace(array(':','*'),'-',implode('/',$keys));
 
