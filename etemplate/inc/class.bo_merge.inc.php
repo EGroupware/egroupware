@@ -956,7 +956,7 @@ abstract class bo_merge
 			{
 				$names = array();
 				foreach((array)$this->date_fields as $fieldname) {
-					$names[] = preg_quote($fieldname,'/');
+					$names[] = $fieldname;
 				}
 				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype.$mso_application_progid);
 			}
@@ -1046,13 +1046,23 @@ abstract class bo_merge
 		))) return;
 
 		// Properly format values for spreadsheet
-		foreach($names as $idx => $field)
+		foreach($names as $idx => &$field)
 		{
 			$key = '$$'.$field.'$$';
+			$field = preg_quote($field, '/');
 			if($values[$key])
 			{
-				$date = new egw_time($values[$key]);
+				try {
+					$date = egw_time::createFromFormat(
+						'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat,
+						$values[$key],
+						egw_time::$user_timezone
+					);
 
+				} catch (Exception $e) {
+					// Couldn't get a date out of it... skip it
+					trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
+				}	
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
 				{
 					$interval = $date->diff(new egw_time('1900-01-00 0:00'));
@@ -1070,6 +1080,7 @@ abstract class bo_merge
 				unset($names[$idx]);
 			}
 		}
+
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
