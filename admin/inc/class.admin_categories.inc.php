@@ -113,7 +113,6 @@ class admin_categories
 				else
 				{
 					$appname = categories::GLOBAL_APPNAME;
-					$content['all_cats'] = 'all_no_acl';
 				}
 			}
 			elseif ($content['appname'] != $appname || !self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
@@ -247,6 +246,8 @@ class admin_categories
 		if($this->appname == 'admin')
 		{
 			$content['access'] = 'public';
+			// Allow admins access to all categories as parent
+			$content['all_cats'] = 'all_no_acl';
 			$readonlys['owner'] = false;
 		} else {
 			$readonlys['owner'] = true;
