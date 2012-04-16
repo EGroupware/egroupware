@@ -41,6 +41,7 @@ var et2_date = et2_inputWidget.extend({
 		this.date.setHours(0);
 		this.date.setMinutes(0);
 		this.date.setSeconds(0);
+		this.date
 		this.input = null;
 
 		this.createInputWidget();
@@ -68,8 +69,30 @@ var et2_date = et2_inputWidget.extend({
 		}
 		// Update internal value when changed
 		var self = this;
-		this.input_date.datepicker("option","onSelect", function(text) {
-			self.set_value(text);
+		this.input_date.datepicker("option","onSelect", function(text,inst) {
+			var d = new Date();
+			var date_inst = null;
+			if(inst.inst && inst.inst.selectedYear)
+			{
+				date_inst = inst.inst;
+			}
+			else if (inst.selectedYear)
+			{
+				date_inst = inst;
+			}
+			// Date could be in different places, if it's a datetime or just date
+			if(date_inst)
+			{
+				d.setYear(date_inst.selectedYear);
+				d.setMonth(date_inst.selectedMonth);
+				d.setDate(date_inst.selectedDay);
+			}
+			if(inst && inst.hour)
+			{
+				d.setHours(inst.hour);
+				d.setMinutes(inst.minute);
+			}
+			self.set_value(d);
 		});
 
 		// Framewok skips nulls, but null needs to be processed here
@@ -169,9 +192,8 @@ var et2_date = et2_inputWidget.extend({
 		}
 		else
 		{
-			// Handle timezone offset - times are already in user time
-			var localOffset = this.date.getTimezoneOffset() * 60000;
-			return Math.round((this.date.valueOf()-localOffset) / 1000);
+			// Convert to timestamp
+			return Math.round(this.date.valueOf() / 1000);
 		}
 	}
 });
