@@ -118,7 +118,7 @@ class calendar_merge extends bo_merge
 				$prefix = 'calendar/%d';
 			}
 		}
-		elseif ($id[0]['id'])
+		elseif (is_array($id) && $id[0]['id'])
 		{
 			// Passed an array of events, to be handled like a date range
 			$events = $id;
