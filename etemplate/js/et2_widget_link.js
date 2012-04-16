@@ -841,7 +841,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 	set_value: function(_value) {
 		// Get data
 		if(!_value || _value == null) return;
-		if(!_value.to_app && this.options.application) _value.to_app = this.options.application;
+		if(!_value.to_app && typeof _value == "object" && this.options.application) 
+		{
+			_value.to_app = this.options.application;
+		}
 
 		if(typeof _value == 'object' && _value.to_app && _value.to_id)
 		{
@@ -849,7 +852,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this._get_links();
 			return;
 		}
-		if(_value.length > 0) {
+		if(typeof _value == 'object' && _value.length > 0) {
 			// Have full info
 			// Don't store new value, just update display
 
@@ -863,6 +866,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 					this._add_link(_value.id ? _value : {id:_value[i], app: _value.to_app});
 				}
 			}
+		}
+		else if(this.options.application)
+		{
+			this._add_link({id:_value, app: this.options.application});
 		}
 	},
 
