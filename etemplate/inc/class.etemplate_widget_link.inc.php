@@ -91,7 +91,6 @@ class etemplate_widget_link extends etemplate_widget
 	 */
 	public static function ajax_link_search($app, $type, $pattern, $options=array()) {
 		$options['type'] = $type ? $type : $options['type'];
-error_log("$app, $pattern, $options");
 		$links = egw_link::query($app, $pattern, $options);
 
 		$response = egw_json_response::get();
@@ -189,5 +188,31 @@ error_log("$app, $pattern, $options");
 	public function ajax_delete($value) {
 		$response = egw_json_response::get();
 		$response->data(egw_link::unlink($value));
+	}
+
+	/**
+	 * Validate input
+	 *
+	 * Following attributes get checked:
+	 * - needed: value must NOT be empty
+	 * - min, max: int and float widget only
+	 * - maxlength: maximum length of string (longer strings get truncated to allowed size)
+	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
+	 * - int and float get casted to their type
+	 *
+	 * @param string $cname current namespace
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $content, &$validated=array())
+	{
+		if (!$this->is_readonly($cname))
+		{
+			$form_name = self::form_name($cname, $this->id);
+
+			$value = $value_in = self::get_array($content, $form_name);
+			$valid =& self::get_array($validated, $form_name, true);
+			$valid = $value;
+		}
 	}
 }

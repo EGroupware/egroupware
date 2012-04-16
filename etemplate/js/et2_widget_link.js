@@ -528,7 +528,7 @@ var et2_link_entry = et2_inputWidget.extend({
 				this.search.addClass("loading");
 			}
 		}
-		else
+		if(_value.title)
 		{
 			this.search.val(_value.title+"");
 		}
