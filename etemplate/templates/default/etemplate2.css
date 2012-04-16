@@ -213,6 +213,17 @@ button.et2_button_text:focus {
 	height: 1.8em;
 }
 
+/* Read-only multi-select */
+ul.et2_selectbox {
+	margin: 0px;
+	padding: 0px;
+}
+.et2_selectbox li {
+	text-decoration: none;
+	list-style-image: none;
+	list-style-type: none;
+}
+
 /**
  * Date / Time widgets
  */

@@ -497,6 +497,11 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 		this.setDOMNode(this.span[0]);
 	},
 
+	// Handle read-only multiselects in the same way
+	createMultiSelect: function() {
+		this.createInputWidget();
+	},
+
 	loadFromXML: function(_node) {
 		// Read the option-tags
 		var options = et2_directChildrenByTagName(_node, "options");

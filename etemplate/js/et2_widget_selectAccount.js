@@ -24,7 +24,7 @@
  * It extends et2_link to avoid needing the whole user list on the client.
  * Instead, it just asks for the names of the ones needed, as needed.
  */
-var et2_selectAccount_ro = et2_link.extend([et2_IDetachedDOM], {
+var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
 
 	init: function(_parent, options) {
 		/**
@@ -42,7 +42,14 @@ var et2_selectAccount_ro = et2_link.extend([et2_IDetachedDOM], {
 		this.options.application = 'home-accounts';
 
 		// Don't make it look like a link though
-		this.link.removeClass("et2_link");
+		this.list.removeClass("et2_link_string").addClass("et2_selectbox");
+	},
+
+	set_value: function(_value) {
+		this._super.apply(this, arguments);
+
+		// Don't make it look like a link though
+		jQuery('li',this.list).removeClass("et2_link et2_link_string");
 	}
 });
 et2_register_widget(et2_selectAccount_ro, ["select-account_ro"]);
