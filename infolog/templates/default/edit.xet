@@ -164,7 +164,7 @@
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
-				<column width="260"/>
+				<column width="315"/>
 				<column width="90"/>
 				<column/>
 			</columns>
