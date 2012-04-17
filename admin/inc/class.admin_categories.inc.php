@@ -101,7 +101,10 @@ class admin_categories
 				$content = array('data' => array());
 				if(isset($_GET['parent']) && $_GET['parent'] > 0)
 				{
+					// Sub-category - set some defaults from parent
 					$content['parent'] = (int)$_GET['parent'];
+					$parent_cat = categories::read($content['parent']);
+					$content['owner'] = $parent_cat['owner'];
 				}
 				if (isset($_GET['appname']) && isset($GLOBALS['egw_info']['apps'][$_GET['appname']]))
 				{
@@ -206,7 +209,7 @@ class admin_categories
 			{
 				$content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			}
-			else
+			elseif (!$content['owner'])
 			{
 				$content['owner'] = 0;
 			}
@@ -243,6 +246,8 @@ class admin_categories
 		if($this->appname == 'admin')
 		{
 			$content['access'] = 'public';
+			// Allow admins access to all categories as parent
+			$content['all_cats'] = 'all_no_acl';
 			$readonlys['owner'] = false;
 		} else {
 			$readonlys['owner'] = true;
@@ -436,8 +441,13 @@ class admin_categories
 			}
 			$content['nm']['appname'] = $appname = $_GET['appname'] ? $_GET['appname'] : $appname;
 			$content['nm']['actions'] = $this->get_actions($appname);
-			// switch filter off for application global cats too, not only for super-global ones
-			$content['nm']['no_filter'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'admin';
+			// switch filter off for super-global categories
+			if($appname == 'phpgw')
+			{
+				$content['nm']['no_filter'] = true;
+				// Make sure filter is set properly, could be different if user was looking at something else
+				$content['nm']['filter'] = categories::GLOBAL_ACCOUNT;
+			}
 
 			$content['nm']['global_cats'] = true;
 			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))

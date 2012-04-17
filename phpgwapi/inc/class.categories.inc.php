@@ -505,7 +505,7 @@ class categories
 		}
 
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && array_intersect(explode(',',$category['owner']),$this->global_owners) &&
+		if ($needed == EGW_ACL_READ && (array_intersect(explode(',',$category['owner']),$this->global_owners) || $no_acl_check) &&
 			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name))
 		{
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";

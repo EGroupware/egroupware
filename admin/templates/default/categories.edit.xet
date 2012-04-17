@@ -62,17 +62,17 @@
 					<description/>
 				</row>
 				<row class="th" height="25">
-					<description value="Parent category" options=",,,parent"/>
+					<description value="Parent category" for="parent"/>
 					<menulist>
-						<menupopup type="select-cat" id="parent" options="None,,,$cont[appname],,-1"/>
+						<menupopup type="select-cat" id="parent" options="None,$cont[all_cats],,$cont[appname]"/>
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Name" options=",,,name"/>
+					<description value="Name" for="name"/>
 					<textbox id="name" needed="1" size="50" maxlength="150"/>
 				</row>
 				<row class="row" valign="top">
-					<description value="Description" options=",,,description"/>
+					<description value="Description" for="description"/>
 					<textbox multiline="true" id="description" rows="5" cols="50"/>
 				</row>
 				<row class="nmr" disabled="@no_private">
@@ -80,11 +80,11 @@
 					<checkbox id="access" options="private,public"/>
 				</row>
 				<row class="row">
-					<description value="Color" options=",,,cat_data[color]"/>
+					<description value="Color" for="cat_data[color]"/>
 					<colorpicker id="data[color]"/>
 				</row>
 				<row class="row">
-					<description value="Icon" options=",,,data[icon]"/>
+					<description value="Icon" for="data[icon]"/>
 					<hbox options="0,0">
 						<menulist>
 							<menupopup id="data[icon]" onchange="change_icon(this);" options="None"/>
@@ -99,7 +99,7 @@
 					</menulist>
 				</row>
 				<row class="row">
-					<description value="Category owner" options=",,,owner"/>
+					<description value="Category owner" for="owner"/>
 					<listbox statustext="Limit global category to members of a certain group" id="owner" needed="1" rows="3"/>
 				</row>
 				<row class="row" disabled="!@last_mod">
