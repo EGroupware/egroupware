@@ -1464,7 +1464,7 @@ $j(document).ready(function() {
 				$this->bofelamimail->openConnection($_icServer);
 				$this->bofelamimail->reopen($_folderName);
 				$flags = $this->bofelamimail->getFlags($headerData['uid']);
-				if ($this->bofelamimail->getNotifyFlags($headerData['uid']) === null)
+				if ($this->bofelamimail->getNotifyFlags($headerData['uid'],($flags?$flags:null)) === null)
 				{
 					$headers    = $this->bofelamimail->getMessageHeader($headerData['uid']);
 					if ( isset($headers['DISPOSITION-NOTIFICATION-TO']) ) {
@@ -1749,7 +1749,7 @@ $j(document).ready(function() {
 				),
 			);
 			// display only the correct icon: revert on deleted messages, delete on all others
-			if ($_headerData['deleted']) 
+			if ($_headerData['deleted'])
 			{
 				unset($navbarImages['delete']);
 			} else {

@@ -48,7 +48,7 @@ class ajaxfelamimail
 			if($this->_debug) error_log("ajaxfelamimail::ajaxfelamimail");
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 					$this->imapServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
-
+			//error_log("ajaxfelamimail::ajaxfelamimail ActiveProfile:".$this->imapServerID );
 			$this->charset		=  translation::charset();
 			$this->bofelamimail	= felamimail_bo::getInstance(true,$this->imapServerID);
 			$this->imapServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
@@ -60,9 +60,9 @@ class ajaxfelamimail
 			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
 			if (!is_array($this->sessionDataAjax)) $this->sessionDataAjax = array();
 			if(!isset($this->sessionDataAjax['folderName'])) {
-				$this->sessionDataAjax['folderName'] = 'INBOX';
+				$this->sessionDataAjax['folderName'] = $this->sessionData['mailbox']?$this->sessionData['mailbox']:'INBOX';
 			}
-
+			//error_log("ajaxfelamimail::ajaxfelamimail ActiveProfile:".$this->imapServerID.' activeFolder:'.$this->sessionDataAjax['folderName'].'./.'.$this->sessionData['mailbox'].' ConnectionStatus:'.array2string($this->_connectionStatus));
 		}
 
 		function addACL($_accountName, $_aclData, $_recursive=false)
@@ -331,7 +331,7 @@ class ajaxfelamimail
 			$lastDrafted = false;
 			if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
 			$messageUid = $bocompose->saveAsDraft($formData,$folder); // folder may change
-			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']); 
+			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']);
 			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
 			if ($_autoSave)
 			{
@@ -355,7 +355,7 @@ class ajaxfelamimail
 				$folder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
 				$this->bofelamimail->reopen($folder);
 				if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
-				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']); 
+				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']);
 				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
 				if($this->_debug) error_log(__METHOD__.__LINE__.' removed last drafted:'.$lastDrafted['uid'].' in '.$lastDrafted['folder']);
 			}
@@ -583,7 +583,7 @@ class ajaxfelamimail
 
 		function sendNotify ($_uid, $_ret)
 		{
-			if($this->_debug) error_log(__METHOD__." with $_uid,$_ret");
+			if($this->_debug) error_log(__METHOD__." with $_uid,$_ret for Folder:".$this->sessionDataAjax['folderName'].'./.'.$this->sessionData['mailbox']);
 			$response = new xajaxResponse();
 			if ($_ret==='true' || $_ret===1 || $_ret == "1,") {
 				if ( $this->bofelamimail->sendMDN($_uid) )
@@ -733,7 +733,7 @@ class ajaxfelamimail
 			$response->addScript("egw_topWindow().tree.selectItem('".$_folderName. "',false);");
 
 			if($this->_debug) error_log('generateMessageList done');
-			if ($this->sessionData['previewMessage']>0) 
+			if ($this->sessionData['previewMessage']>0)
 			{
 				$response->addScript('fm_previewMessageID = "";');
 				$response->addScript('mail_focusGridElement('.$this->sessionData['previewMessage'].');');
