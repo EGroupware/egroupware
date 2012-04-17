@@ -47,6 +47,13 @@ class etemplate_new extends etemplate_widget_template
 	public $sitemgr=false;
 
 	/**
+	 * Tell egw framework it's ok to call this
+	 */
+	public $public_functions = array(
+		'ajax_post_process' => true
+	);
+
+	/**
 	 * constructor of etemplate class, reads an eTemplate if $name is given
 	 *
 	 * @param string $name of etemplate or array with name and other keys
@@ -209,7 +216,35 @@ class etemplate_new extends etemplate_widget_template
 			self::$response->generic('et2_validation_error', self::$validation_errors);
 			exit;
 		}
-		error_log(__METHOD__."(,".array2string($content).') validated='.array2string($validated));
+		error_log(__METHOD__."(,".array2string($content).')');
+		error_log(' validated='.array2string($validated));
+
+		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+	}
+
+	/**
+	 * Process via POST submitted content
+	 */
+	static public function ajax_process_post()
+	{
+		self::$request = etemplate_request::read($_POST['etemplate_exec_id']);
+		if (get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
+		$content = json_decode($_POST['value'],true);
+
+		if (!($template = self::instance(self::$request->template['name'], self::$request->template['template_set'],
+			self::$request->template['version'], self::$request->template['load_via'])))
+		{
+			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
+		}
+		$validated = array();
+		$template->run('validate', array('', $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
+		if (self::validation_errors(self::$request->ignore_validation))
+		{
+			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));
+			exit;
+		}
+		error_log(__METHOD__."(,".array2string($content).')');
+		error_log(' validated='.array2string($validated));
 
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}
