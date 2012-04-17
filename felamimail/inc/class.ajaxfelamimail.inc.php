@@ -437,7 +437,7 @@ class ajaxfelamimail
 		*
 		* @return xajax response
 		*/
-		function deleteMessages($_messageList)
+		function deleteMessages($_messageList,$_refreshMessageList=true)
 		{
 			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_messageList,true));
 			$messageCount = 0;
@@ -457,7 +457,45 @@ class ajaxfelamimail
 				$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
 				return $response->getXML();
 			}
+			if ($_refreshMessageList === false)
+			{
+				$response = new xajaxResponse();
+				return $response->getXML();
+			}
 
+			return $this->generateMessageList($this->sessionData['mailbox'],($_messageList=='all'?0:(-1*$messageCount)));
+		}
+
+		/*
+		* undelete messages
+		*
+		* @param array _messageList list of UID's
+		*
+		* @return xajax response
+		*/
+		function undeleteMessages($_messageList, $_refreshMessageList = true)
+		{
+			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_messageList,true));
+			$messageCount = 0;
+			if(is_array($_messageList) && count($_messageList['msg']) > 0) $messageCount = count($_messageList['msg']);
+			try
+			{
+				$this->bofelamimail->flagMessages('undelete',$message,$mailfolder);
+			}
+			catch (egw_exception $e)
+			{
+				$error = str_replace('"',"'",$e->getMessage());
+				$response = new xajaxResponse();
+				$response->addScript('resetMessageSelect();');
+				$response->addScript('tellUser("'.$error.'");');
+				$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+				return $response->getXML();
+			}
+			if ($_refreshMessageList === false)
+			{
+				$response = new xajaxResponse();
+				return $response->getXML();
+			}
 
 			return $this->generateMessageList($this->sessionData['mailbox'],($_messageList=='all'?0:(-1*$messageCount)));
 		}

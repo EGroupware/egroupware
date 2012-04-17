@@ -1713,15 +1713,6 @@ $j(document).ready(function() {
 			}
 			$forwardURL = $GLOBALS['egw']->link('/index.php',$linkData);
 
-			//delete url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uifelamimail.'.($_headerData['deleted']?'un':'').'deleteMessage',
-				'icServer'	=> $_icServer,
-				'folder'	=> base64_encode($_folderName),
-				'message'	=> $_headerData['uid'],
-			);
-			$deleteURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
 			$navbarImages = array(
 				'new'	=> array(
 					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "egw_openWindowCentered('$asnewURL','composeasnew_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$asnewURL'"),
@@ -1740,11 +1731,11 @@ $j(document).ready(function() {
 					'tooltip'	=> lang('forward'),
 				),
 				'revert'	=> array(
-					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "mail":"mailview")."_undeleteMessages({msg:[".$_headerData['uid']."]});",
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
 				'delete'	=> array(// json_encode(array('msg'=>array($_headerData['uid']))) may be used for {msg:[".$_headerData['uid']."]}
-					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "mail_deleteMessages({msg:[".$_headerData['uid']."]});": "window.location.href = '$deleteURL'"),
+					'action'	=> 'do_onunload = false;'.($_forceNewWindow ? "mail":"mailview")."_deleteMessages({msg:[".$_headerData['uid']."]});",
 					'tooltip'	=> ($_headerData['deleted']?lang('undelete'):lang('delete')),
 				),
 			);

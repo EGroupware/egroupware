@@ -1,3 +1,18 @@
+/**
+ * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+ * 
+ * Default implementation here only reloads window with it's current url with an added msg=_msg attached
+ * 
+ * @param string _msg message (already translated) to show, eg. 'Entry deleted'
+ * @param string _app application name
+ * @param string|int _id=null id of entry to refresh
+ * @param string _type=null either 'edit', 'delete', 'add' or null
+ */
+function app_refresh(_msg, _app, _id, _type)
+{
+	alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
+}
+
 function egw_email_fetchDataProc(_elems, _columns, _callback, _context)
 {
 	var request = new egw_json_request("felamimail.uiwidgets.ajax_fetch_data",
@@ -372,6 +387,27 @@ function mail_deleteMessages(_messageList) {
 		mail_cleanup();
 		document.getElementById('divMessageList').innerHTML = '';
 		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.deleteMessages",_messageList);
+	} else {
+		mailGrid.dataRoot.actionObject.setAllSelected(false);
+	}
+}
+
+function mail_undeleteMessages(_messageList) {
+	var Check = true;
+	var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
+
+	mail_resetMessageSelect();
+
+	if (cbAllMessages == true) Check = confirm(egw_appWindow('felamimail').lang_confirm_all_messages);
+	if (cbAllMessages == true && Check == true)
+	{
+		_messageList = 'all';
+	}
+	if (Check == true) {
+		egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_deleting_messages + '</span>');
+		mail_cleanup();
+		document.getElementById('divMessageList').innerHTML = '';
+		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.undeleteMessages",_messageList);
 	} else {
 		mailGrid.dataRoot.actionObject.setAllSelected(false);
 	}

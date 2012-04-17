@@ -115,3 +115,45 @@ function fm_resizeBodyDIV() {
 		bodyDIV.style.height = egw_getWindowInnerHeight() - bodyDIV.offsetTop - 2 + 'px';
 	}
 }
+
+function mailview_deleteMessages(_messageList) {
+	var divMessageList = opener.document.getElementById('divMessageList');
+	xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.deleteMessages",_messageList,false);
+	if (typeof divMessageList != 'undefined')
+	{
+		//divMessageList.innerHTML = '';
+		for(var i=0;i<_messageList['msg'].length;i++) {
+			_id = _messageList['msg'][i];
+			var dataElem = opener.mailGrid.dataRoot.getElementById(_id);
+			if (dataElem)
+			{
+				//dataElem.clearData();
+				dataElem.addClass('deleted');
+				//dataElem.parentActionObject.remove();
+			}
+		}
+		opener.refresh();
+	}
+	this.close();
+	//egw_appWindow('felamimail').
+}
+
+function mailview_undeleteMessages(_messageList) {
+	var divMessageList = opener.document.getElementById('divMessageList');
+	//if (typeof divMessageList != 'undefined') divMessageList.innerHTML = '';
+	if (typeof divMessageList != 'undefined')
+	{
+		//divMessageList.innerHTML = '';
+		for(var i=0;i<_messageList['msg'].length;i++) {
+			_id = _messageList['msg'][i];
+			var dataElem = opener.mailGrid.dataRoot.getElementById(_id);
+			if (dataElem)
+			{
+				//dataElem.clearData();
+				dataElem.removeClass('deleted');
+			}
+		}
+	}
+	xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.undeleteMessages",_messageList,false);
+	//egw_appWindow('felamimail').
+}
