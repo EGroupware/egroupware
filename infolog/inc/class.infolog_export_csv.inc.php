@@ -30,6 +30,12 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		$query = array();
 		$cf_links = array();
 
+		if(!$this->selects)
+		{
+			$this->selects['info_type'] = $bo->enums['type'];
+			$this->selects['info_priority'] = $bo->enums['priority'];
+		}
+
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
@@ -123,8 +129,15 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			}
 			// Some conversion
 			if($options['convert']) {
-				importexport_export_csv::convert($record, infolog_egw_record::$types, 'infolog');
+				$this->selects['info_status'] = $bo->status[$record->info_type];
+				importexport_export_csv::convert($record, infolog_egw_record::$types, 'infolog', $this->selects);
 				$this->convert($record);
+
+				// Force 0 times to ''
+				foreach(array('info_planned_time', 'info_used_time', 'info_replanned_time') as $field)
+				{
+					if($record->$field == 0) $record->$field = '';
+				}
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($record->get_record_array() as $key => $value) {
