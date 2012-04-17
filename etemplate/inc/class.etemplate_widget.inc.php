@@ -766,9 +766,11 @@ class etemplate_widget_box extends etemplate_widget
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
+		$old_cname = $params[0];
 		if ($this->id) $cname = self::form_name($cname, $this->id);
 
 		parent::run($method_name, $params, $respect_disabled);
+		$params[0] = $old_cname;
 	}
 }
 // register class for layout widgets, which can have an own namespace
