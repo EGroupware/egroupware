@@ -333,7 +333,7 @@
 				$this->t->set_var('charset',$GLOBALS['egw']->translation->charset());
 			}
 			// only notify when requested, notify flag (MDNSent/MDNnotSent) not set, and message not already seen (some servers do not support the MDNSent/MDNnotSent flag)
-			if ( $sent_not != "" && $this->bofelamimail->getNotifyFlags($this->uid) === null && strpos( array2string($flags),'Seen')===false) {
+			if ( $sent_not != "" && $this->bofelamimail->getNotifyFlags($this->uid,($flags?$flags:null)) === null && strpos( array2string($flags),'Seen')===false) {
 				$this->t->set_var('sentNotify','sendNotify("'.$this->uid.'");');
 				$this->t->set_var('lang_sendnotify',lang('The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?'));
 			} else {

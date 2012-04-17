@@ -94,7 +94,7 @@
 
 		function bofelamimail($_displayCharset='iso-8859-1',$_restoreSession=true)
 		{
-			if ($_restoreSession) 
+			if ($_restoreSession)
 			{
 				//error_log(__METHOD__." Session restore ".function_backtrace());
 				$this->restoreSessionData();
@@ -130,7 +130,7 @@
 			}
 
 			// set some defaults
-			if(empty($this->sessionData)) 
+			if(empty($this->sessionData))
 			{
 				// this should be under user preferences
 				// sessionData empty
@@ -138,7 +138,7 @@
 				$this->sessionData['activeFilter']	= "-1";
 				// default mailbox INBOX
 				$this->sessionData['mailbox']		= (($lv_mailbox && self::folderExists($lv_mailbox,true)) ? $lv_mailbox : "INBOX");
-				$this->sessionData['previewMessage'] = ($firstMessage >0 ? $firstMessage : 0); 
+				$this->sessionData['previewMessage'] = ($firstMessage >0 ? $firstMessage : 0);
 				// default start message
 				$this->sessionData['startMessage']	= 1;
 				// default mailbox for preferences pages
@@ -444,7 +444,7 @@
 
 		/**
 		 * decode header (or envelope information
-		 * if array given, note that only values will be converted 
+		 * if array given, note that only values will be converted
 		 * @param $_string mixed input to be converted, if array call decode_header recursively on each value
 		 * @returns mixed - based on the input type
 		 */
@@ -507,7 +507,7 @@
 				elseif (exec("which tnef")) // use tnef if exsting, as it gives better results..
 				{
 					exec( "cd $dir && tnef --save-body --overwrite -C $dir -f ./winmail.dat" );
-				} 
+				}
 				elseif (exec("which ytnef"))
 				{
 					exec( "cd $dir && ytnef -f . winmail.dat" );
@@ -576,7 +576,7 @@
 			$msglist = '';
 			$oldMailbox = '';
 			if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
-			if(!is_array($_messageUID) || count($_messageUID) === 0) 
+			if(!is_array($_messageUID) || count($_messageUID) === 0)
 			{
 				if ($_messageUID=='all')
 				{
@@ -585,7 +585,7 @@
 				else
 				{
 					if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
-					return false;					
+					return false;
 				}
 			}
 
@@ -695,8 +695,9 @@
 			return $flags;
 		}
 
-		function getNotifyFlags ($_messageUID) {
-			$flags =  $this->icServer->getFlags($_messageUID, true);
+		function getNotifyFlags ($_messageUID, $flags=null)
+		{
+			if ($flags===null) $flags =  $this->icServer->getFlags($_messageUID, true);
 			if (PEAR::isError($flags)) {
 				return null;
 				}
@@ -839,9 +840,9 @@
 			//$_html = str_replace("\t",' ',$_html);
 			//error_log($_html);
 			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
-			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	
-			self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs	
-			self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs	
+			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
+			self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+			self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 			//error_log($_html);
 			// force the use of kses, as it is still have the edge over purifier with some stuff
 			$usepurify = false;
@@ -850,7 +851,7 @@
 				// we may need a customized config, as we may allow external images, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs']
 
 				$config = html::purifyCreateDefaultConfig();
-				
+
 				$config->set('Core.Encoding', (self::$displayCharset?self::$displayCharset:'UTF-8'));
 				// maybe the two following lines are useful for caching???
 				$config->set('HTML.DefinitionID', 'felamimail');
@@ -895,7 +896,7 @@
 	            // clean out comments , should not be needed as purify should do the job.
 				$search = array(
 					'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-					'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA 
+					'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
 	            );
 	            //$_html = preg_replace($search,"",$_html);
 	            // remove non printable chars
@@ -1097,7 +1098,7 @@
 				// no scripts allowed
 				// clean out comments
 				$search = array(
-					'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA 
+					'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
 					'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
 				);
 				//error_log(__METHOD__.$_html);
@@ -1108,7 +1109,7 @@
 				$_html = preg_replace('/([\000-\012])/','',$_html);
 				//error_log($_html);
 			}
-			// using purify above should have tidied the tags already sufficiently 
+			// using purify above should have tidied the tags already sufficiently
 			if ($usepurify == false && $cleanTags==true)
 			{
 				if (extension_loaded('tidy'))
@@ -1304,7 +1305,7 @@
 			);
 			// try guessing the mimetype, if we get the application/octet-stream
 			if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
- 
+
 			return $attachmentData;
 		}
 
@@ -1438,12 +1439,12 @@
 				$inboxData->counter = self::getMailBoxCounters('INBOX');
 			}
 			// force unsubscribed by preference showAllFoldersInFolderPane
-			if ($_subscribedOnly == true && 
-				isset($this->mailPreferences->preferences['showAllFoldersInFolderPane']) && 
+			if ($_subscribedOnly == true &&
+				isset($this->mailPreferences->preferences['showAllFoldersInFolderPane']) &&
 				$this->mailPreferences->preferences['showAllFoldersInFolderPane']==1)
 			{
 				$_subscribedOnly = false;
-			} 
+			}
 			#$inboxData->attributes = 64;
 			$inboxFolderObject = array('INBOX' => $inboxData);
 			#_debug_array($folders);
@@ -1833,7 +1834,7 @@
 		{
 			if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 			$bodyPart = array();
-			if (self::$debug) _debug_array($_structure); 
+			if (self::$debug) _debug_array($_structure);
 			if (!is_array($_structure)) $_structure = array($_structure);
 			foreach($_structure as $part) {
 				if (self::$debug) echo $part->type."/".$part->subType."<br>";
@@ -1929,7 +1930,7 @@
 		function getHierarchyDelimiter()
 		{
 			$HierarchyDelimiter = '/';
-			if(($this->icServer instanceof defaultimap)) 
+			if(($this->icServer instanceof defaultimap))
 			{
 				$HierarchyDelimiter = $this->icServer->getHierarchyDelimiter();
 				if (PEAR::isError($HierarchyDelimiter)) $HierarchyDelimiter = '/';
@@ -1978,7 +1979,7 @@
 						// if there is an PEAR Error, we assume that the server is not capable of sorting
 						if (PEAR::isError($sortResult)) {
 							$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
-							if (PEAR::isError($sortResult)) 
+							if (PEAR::isError($sortResult))
 							{
 								$sortResult = $this->icServer->search($filter, false);
 								if (PEAR::isError($sortResult))
@@ -2295,7 +2296,7 @@
 			if (self::$debug) _debug_array($structure);
 			$attachments = array();
 			// this kind of messages contain only the attachment and no body
-			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE') 
+			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE')
 			{
 				$newAttachment = array();
 				$newAttachment['name']		= self::getFileNameFromStructure($structure);
@@ -2305,7 +2306,7 @@
 				$newAttachment['encoding']      = $structure->encoding;
 				// try guessing the mimetype, if we get the application/octet-stream
 				if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
- 
+
 				if(isset($structure->cid)) {
 					$newAttachment['cid']	= $structure->cid;
 				}
@@ -2325,7 +2326,7 @@
 			// this kind of message can have no attachments
 			if(($structure->type == 'TEXT' && !($structure->disposition == 'INLINE' && $structure->dparameters['FILENAME'])) ||
 			   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
-			   !is_array($structure->subParts)) 
+			   !is_array($structure->subParts))
 			{
 				if (count($attachments) == 0) return array();
 			}
@@ -2364,7 +2365,7 @@
 					$newAttachment['encoding']	= $subPart->encoding;
 					// try guessing the mimetype, if we get the application/octet-stream
 					if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
- 
+
 					if(isset($subPart->cid)) {
 						$newAttachment['cid']	= $subPart->cid;
 					}
@@ -2502,11 +2503,11 @@
 		 * @param _bodyParts - Body Array
 		 * @returns array - a normalized Bodyarray
 		 */
-		static function normalizeBodyParts($_bodyParts) 
+		static function normalizeBodyParts($_bodyParts)
 		{
 			if (is_array($_bodyParts))
 			{
-				foreach($_bodyParts as $singleBodyPart) 
+				foreach($_bodyParts as $singleBodyPart)
 				{
 					if (!isset($singleBodyPart['body'])) {
 						$buff = self::normalizeBodyParts($singleBodyPart);
@@ -2698,12 +2699,12 @@
 			// mark messages as deleted
 			if ($deleteAfterMove === true)
 			{
-				if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) 
+				if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true)))
 				{
 					return false;
 				}
 
-				if($deleteOptions != "mark_as_deleted") 
+				if($deleteOptions != "mark_as_deleted")
 				{
 					// delete the messages finaly
 					$this->icServer->expunge();
@@ -2714,7 +2715,7 @@
 
 		function openConnection($_icServerID=0, $_adminConnection=false)
 		{
-			if (!is_object($this->mailPreferences)) 
+			if (!is_object($this->mailPreferences))
 			{
 				error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
 				$this->errorMessage .= lang('No valid data to create MailProfile!!');
@@ -2913,7 +2914,7 @@
 						$cnt = strlen($v);
 						// only break long words within the wordboundaries,
 						// but it may destroy links, so we check for href and dont it if we find one
-						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false) 
+						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false)
 						{
 							$v=wordwrap($v, $allowedLength, $cut, true);
 						}
@@ -3014,7 +3015,7 @@
 			} else return false;
 			$singleAddress = imap_rfc822_parse_adrlist($toAddr,'');
 			if (self::$debug) error_log(__METHOD__.__LINE__.' To Address:'.$singleAddress[0]->mailbox."@".$singleAddress[0]->host.", ".$singleAddress[0]->personal);
-			$send->AddAddress($singleAddress[0]->mailbox."@".$singleAddress[0]->host, $singleAddress[0]->personal);	
+			$send->AddAddress($singleAddress[0]->mailbox."@".$singleAddress[0]->host, $singleAddress[0]->personal);
 			$send->AddCustomHeader('References: '.$headers['MESSAGE-ID']);
 			$send->Subject = $send->encode_subject( lang('Read')." : ".$headers['SUBJECT'] );
 
@@ -3119,11 +3120,11 @@
 		}
 
 		/**
-		 * htmlspecialchars 
+		 * htmlspecialchars
 		 * helperfunction to cope with wrong encoding in strings
 		 * @param string $_string  input to be converted
 		 * @param mixed $charset false or string -> Target charset, if false bofelamimail displayCharset will be used
-		 * @return string 
+		 * @return string
 		 */
 		static function htmlspecialchars($_string, $_charset=false)
 		{
@@ -3140,7 +3141,7 @@
 		 * helperfunction to cope with wrong encoding in strings
 		 * @param string $_string  input to be converted
 		 * @param mixed $charset false or string -> Target charset, if false bofelamimail displayCharset will be used
-		 * @return string 
+		 * @return string
 		 */
 		static function htmlentities($_string, $_charset=false)
 		{
@@ -3158,10 +3159,10 @@
 		 * @param string - to be evaluated
 		 * @returns mixed string/boolean (encoding or false
 		 */
-		static function detect_encoding($string) { 
+		static function detect_encoding($string) {
 			static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
 			if (function_exists('iconv'))
-			{ 
+			{
 				foreach ($list as $item) {
 				$sample = iconv($item, $item, $string);
 				if (md5($sample) == md5($string))
@@ -3190,11 +3191,11 @@
 			{
 				$dtarr = explode(' ',$date);
 				$test = null;
-				while ($test===null && count($dtarr)>=1) 
+				while ($test===null && count($dtarr)>=1)
 				{
 					array_pop($dtarr);
 					$test= ($convert2usertime ? egw_time::server2user(implode(' ',$dtarr),$format): egw_time::to(implode(' ',$dtarr),$format));
-					if ($test) $date2return = $test; 
+					if ($test) $date2return = $test;
 				}
 				if ($test===null) $date2return = egw_time::to('now',$format);
 			}
@@ -3214,18 +3215,18 @@
 		{
 			//error_log(__METHOD__.__FILE__.array2string($_formData).' Id:'.$IDtoAddToFileName.' ReqMimeType:'.$reqMimeType);
 			$importfailed = $tmpFileName = false;
-			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) || 
+			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) ||
 				realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir']) ||
 				parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs'))
 			{
 				// ensure existance of eGW temp dir
-				// note: this is different from apache temp dir, 
+				// note: this is different from apache temp dir,
 				// and different from any other temp file location set in php.ini
 				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
 				}
-				
+
 				// if we were NOT able to create this temp directory, then make an ERROR report
 				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
 				{
@@ -3235,10 +3236,10 @@
 						.'Please check your configuration'.'<br>'
 						.'<br>';
 				}
-				
+
 				// sometimes PHP is very clue-less about MIME types, and gives NO file_type
 				// rfc default for unknown MIME type is:
-				if ($reqMimeType == 'message/rfc822') 
+				if ($reqMimeType == 'message/rfc822')
 				{
 					$mime_type_default = 'message/rfc';
 				}
@@ -3253,7 +3254,7 @@
 				$suffix = '';
 				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
 				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
-				if (!empty($suffix) && !empty($sfxMimeType) && 
+				if (!empty($suffix) && !empty($sfxMimeType) &&
 					(strlen(trim($_formData['type']))==0 || (strtolower(trim($_formData['type'])) != $sfxMimeType)))
 				{
 					error_log(__METHOD__.__LINE__.' Data:'.array2string($_formData));
@@ -3288,7 +3289,7 @@
 					SEP.
 					$GLOBALS['egw_info']['user']['account_id'].
 					trim($IDtoAddToFileName).basename($_formData['file']).'_'.$randomString;
-				
+
 				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
 				{
 					$tmpFileName = $_formData['file'];	// no need to store it somewhere
@@ -3317,7 +3318,7 @@
 					egw_vfs::load_wrapper('vfs');
 				}
 				return $tmpFileName;
-			}			
+			}
 		}
 
 		/**
@@ -3444,7 +3445,7 @@
 			if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
 			if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
 			//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
-			if (!empty($headdata)) 
+			if (!empty($headdata))
 			{
 				if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------\n".$headdata;
 				if (empty($headline)) $headdata = "--------------------------------------------------------\n".$headdata;
