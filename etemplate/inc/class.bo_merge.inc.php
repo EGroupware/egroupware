@@ -501,7 +501,7 @@ abstract class bo_merge
 					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
 					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
 				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content); 
+				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
 
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
@@ -531,9 +531,9 @@ abstract class bo_merge
 				);
 				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content, -1, $count);
 
-				/* 
-				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags), 
-				it takes multiple runs to get rid of both spans.  So, loop.  
+				/*
+				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags),
+				it takes multiple runs to get rid of both spans.  So, loop.
 				OO.o files have not yet been shown to have this problem.
 				*/
 				$count = $i = 0;
@@ -920,7 +920,7 @@ abstract class bo_merge
 			{
 				$names = array();
 				foreach((array)$this->date_fields as $fieldname) {
-					$names[] = preg_quote($fieldname,'/');
+					$names[] = $fieldname;
 				}
 				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype.$mso_application_progid);
 			}
@@ -1010,19 +1010,29 @@ abstract class bo_merge
 		))) return;
 
 		// Properly format values for spreadsheet
-		foreach($names as $idx => $field)
+		foreach($names as $idx => &$field)
 		{
 			$key = '$$'.$field.'$$';
+			$field = preg_quote($field, '/');
 			if($values[$key])
 			{
-				$date = new egw_time($values[$key]);
+				try {
+					$date = egw_time::createFromFormat(
+						'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat,
+						$values[$key],
+						egw_time::$user_timezone
+					);
 			
+				} catch (Exception $e) {
+					// Couldn't get a date out of it... skip it
+					trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
+				}	
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
 				{
 					$interval = $date->diff(new egw_time('1900-01-00 0:00'));
 					$values[$key] = $interval->format('%a')+1;// 1900-02-29 did not exist
 					// 1440 minutes in a day - fractional part
-					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440; 
+					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440;
 				}
 				else
 				{
@@ -1034,6 +1044,7 @@ abstract class bo_merge
 				unset($names[$idx]);
 			}
 		}
+
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
