@@ -863,7 +863,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			{
 				if(!this.options.only_app || this.options.only_app && _value[i].app == this.options.only_app)
 				{
-					this._add_link(_value.id ? _value : {id:_value[i], app: _value.to_app});
+					this._add_link(_value[i].id ? _value[i] : {id:_value[i], app: _value.to_app});
 				}
 			}
 		}
