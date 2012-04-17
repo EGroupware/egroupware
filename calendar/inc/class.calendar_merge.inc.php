@@ -104,13 +104,13 @@ class calendar_merge extends bo_merge
 	protected function get_replacements($id,&$content=null)
 	{
 		$prefix = '';
-
 		// List events ?
 		if(is_array($id) && !$id['id'] && !$id[0]['id'])
 		{
 			$events = $this->bo->search($this->query + $id + array(
 				'offset' => 0,
 				'order' => 'cal_start',
+				'cfs' => strpos($content, '#') !== false ? array_keys(config::get_customfields('calendar')) : null
 			));
 			if(strpos($content,'$$calendar/') !== false || strpos($content, '$$table/day') !== false)
 			{
@@ -118,7 +118,7 @@ class calendar_merge extends bo_merge
 				$prefix = 'calendar/%d';
 			}
 		}
-		elseif ($id[0]['id'])
+		elseif (is_array($id) && $id[0]['id'])
 		{
 			// Passed an array of events, to be handled like a date range
 			$events = $id;
@@ -146,7 +146,7 @@ class calendar_merge extends bo_merge
 		$n = 0;
 		foreach($events as $event)
 		{
-			$values = $this->calendar_replacements($event,sprintf($prefix,++$n));
+			$values = $this->calendar_replacements($event,sprintf($prefix,++$n), $content);
 			if(is_array($id) && $id['start'])
 			{
 				foreach(self::$range_tags as $key => $format)
@@ -168,7 +168,7 @@ class calendar_merge extends bo_merge
 	 * @param boolean $last_event_too=false also include information about the last event
 	 * @return array
 	 */
-	public function calendar_replacements($id,$prefix = '')
+	public function calendar_replacements($id,$prefix = '', &$content = '')
 	{
 		$replacements = array();
 		if(!is_array($id) || !$id['start']) {
@@ -202,6 +202,11 @@ class calendar_merge extends bo_merge
 		}
 		$duration = ($event['end'] - $event['start'])/60;
 		$replacements['$$'.($prefix?$prefix.'/':'').'calendar_duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
+
+		if($content && strpos($content, '$$#') !== 0)
+		{
+			$this->cf_link_to_expand($event, $content, $replacements);
+		}
 
 		$custom = config::get_customfields('calendar');
 		foreach($custom as $name => $field)
@@ -270,7 +275,7 @@ class calendar_merge extends bo_merge
 		$days = array();
 		$replacements = array();
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
-		foreach($events as $day => $list) 
+		foreach($events as $day => $list)
 		{
 			foreach($list as $key => $event)
 			{
@@ -369,7 +374,7 @@ class calendar_merge extends bo_merge
 		$replacements = array();
 		$days = array();
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
-		foreach($events as $day => $list) 
+		foreach($events as $day => $list)
 		{
 			foreach($list as $key => $event)
 			{

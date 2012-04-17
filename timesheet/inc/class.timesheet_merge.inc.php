@@ -60,7 +60,7 @@ class timesheet_merge extends bo_merge
 	 */
 	protected function get_replacements($id,&$content=null)
 	{
-		if (!($replacements = $this->timesheet_replacements($id)))
+		if (!($replacements = $this->timesheet_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -87,7 +87,7 @@ class timesheet_merge extends bo_merge
 	 * @param string $prefix='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function timesheet_replacements($id,$prefix='') 
+	public function timesheet_replacements($id,$prefix='', &$content = null)
 	{
 		$record = new timesheet_egw_record($id);
 		$info = array();
@@ -110,6 +110,11 @@ class timesheet_merge extends bo_merge
 		{
 			$selects['ts_'.$name] = $value;
 		}
+		if($content && strpos($content, '#') !== 0)
+                {
+                        $this->cf_link_to_expand($record->get_record_array(), $content, $info);
+                }
+
 		importexport_export_csv::convert($record, $types, 'timesheet', $selects);
 
 		$array = $record->get_record_array();
@@ -118,6 +123,7 @@ class timesheet_merge extends bo_merge
 		{
 			$array[$key] = self::number_format($array[$key],2,$this->mimetype);
 		}
+
 		// Set any missing custom fields, or the marker will stay
 		foreach($this->bo->customfields as $name => $field)
 		{
