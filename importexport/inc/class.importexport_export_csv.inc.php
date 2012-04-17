@@ -218,7 +218,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @param selects Lookup values for select boxes
 	 * @param links Appnames for links to fetch the title
 	 * @param methods Method will be called with the record's value
-	 * 
+	 *
 	 * @return Array of fields to be added to list of fields needing conversion
 	 */
 	public static function convert_parse_custom_fields($appname, &$selects = array(), &$links = array(), &$methods = array()) {
@@ -302,6 +302,10 @@ class importexport_export_csv implements importexport_iface_export_record
 					$record->$name = lang($selects[$name][$record->$name]);
 				}
 			}
+			else
+			{
+				$record->$name = '';
+			}
 		}
 		foreach((array)$fields['links'] as $name) {
 			if($record->$name) {
@@ -313,6 +317,10 @@ class importexport_export_csv implements importexport_iface_export_record
 				if($links[$name]) {
 					$record->$name = egw_link::title($links[$name], $record->$name);
 				}
+			}
+			else
+			{
+				$record->$name = '';
 			}
 		}
 		foreach((array)$fields['select-account'] as $name) {
@@ -328,6 +336,10 @@ class importexport_export_csv implements importexport_iface_export_record
 					$record->$name = common::grab_owner_name($record->$name);
 				}
 			}
+			else
+			{
+				$record->$name = '';
+			}
 		}
 		foreach((array)$fields['select-bool'] as $name) {
 			if($record->$name != null) {
@@ -339,11 +351,13 @@ class importexport_export_csv implements importexport_iface_export_record
 			if ($record->$name && !is_numeric($record->$name)) $record->$name = strtotime($record->$name); // Custom fields stored as string
 			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
 				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H:i:s' : 'h:i:s a'),$record->$name); // User date format
+			if (!$record->$name) $record->$name = '';
 		}
 		foreach((array)$fields['date'] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d',$record->$name); // Standard date format
 			if ($record->$name && !is_numeric($record->$name)) $record->$name = strtotime($record->$name); // Custom fields stored as string
 			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
+			if (!$record->$name) $record->$name = '';
 		}
 
 		// Some custom methods for conversion
@@ -360,13 +374,17 @@ class importexport_export_csv implements importexport_iface_export_record
 				}
 				$record->$name = implode(', ',$cats);
 			}
+			else
+			{
+				$record->$name = '';
+			}
 		}
 	}
 
 	/**
 	 * destructor
 	 *
-	 * @return 
+	 * @return
 	 */
 	public function __destruct() {
 		
@@ -388,7 +406,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			if($writeDelimiter) $string .= $delimiter;
 			$string .= $enclosure . str_replace(array("\r\n", '"'), array("\n",'""'), $dataElement) . $enclosure;
 			$writeDelimiter = true;
-		} 
+		}
 		$string .= "\n";
 		
 		// do charset translation
