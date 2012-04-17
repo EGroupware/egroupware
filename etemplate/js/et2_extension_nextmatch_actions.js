@@ -114,7 +114,7 @@ function nm_action(_action, _senders, _target, _ids)
 			// open div styled as popup contained in current form and named action.id+'_popup'
 			if (nm_popup_action == null)
 			{
-				nm_open_popup(_action, _ids);
+				nm_open_popup(_action, _ids.ids);
 				break;
 			}
 			// fall through, if popup is open --> submit form
@@ -145,12 +145,24 @@ function nm_action(_action, _senders, _target, _ids)
 						"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
 					};
 					value[nextmatch.options.settings.action_var]= _action.id;
+					if(_target && _target.id) value[_target.id] = true;
 					return value;
 				}
-				nextmatch.getInstanceManager().submit();
 
-				// Clear action in case there's another one
-				delete nextmatch.getValue;
+				if(_action.data.nm_action == 'popup')
+				{
+					nextmatch.getInstanceManager().submit();
+
+					// Clear action in case there's another one
+					delete nextmatch.getValue;
+
+					// TODO: force nextmatch to re-load affected rows
+				}
+				else
+				{
+					// Full POST
+					nextmatch.getInstanceManager().postSubmit();
+				}
 			}
 			else
 			{
@@ -245,6 +257,27 @@ function nm_open_popup(_action, _ids)
 		nm_popup_action = _action;
 		nm_popup_ids = _ids;
 		popup.style.display = 'block';
+/*
+Not working yet - DOM manipulation causes et2 problems
+		var dialog = jQuery('.action_popup-content',popup);
+		var d_buttons = [];
+		jQuery('button',popup).each(function(index) {
+			var but = jQuery(this);
+			d_buttons.push({
+				text: but.text(),
+				click: this.onclick ? this.onclick : function(e) {
+					dialog.dialog("close");
+					// Need to destroy the dialog, etemplate widget needs divs back where they were
+					dialog.dialog("destroy");
+					nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id")).onclick.apply(nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id")), e.currentTarget);}
+			});
+		});
+		dialog.dialog({
+			title: jQuery('.promptheader',popup).text(),
+			modal: true,
+			buttons: d_buttons
+		});
+*/
 	}
 }
 
@@ -257,16 +290,20 @@ function nm_submit_popup(button)
 	{
 		button.form.submit_button.value = button.name;	// set name of button (sub-action)
 	}
+	else if (nm_popup_action.data.nextmatch)
+	{
+		nm_popup_action.data.nextmatch.getRoot().getWidgetById(button.id).clicked = true;
+	}
 
 	// Mangle senders to get IDs where nm_action() wants them
 	// No idea why this is needed
 	var ids = {ids:[]};
 	for(var i in nm_popup_ids)
 	{
-		ids.ids.push(nm_popup_ids[i].id);
+		ids.ids.push(nm_popup_ids[i]);
 	}
 	// call regular nm_action to transmit action and senders correct
-	nm_action(nm_popup_action,nm_popup_ids, null, ids);
+	nm_action(nm_popup_action,nm_popup_ids, button, ids);
 }
 
 /**

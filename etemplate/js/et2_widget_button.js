@@ -122,12 +122,15 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	},
 
 	onclick: function(_node) {
+		this.clicked = true;
+
 		// Execute the JS code connected to the event handler
 		if (this.options.onclick)
 		{
 			// Exectute the legacy JS code
 			if (!(et2_compileLegacyJS(this.options.onclick, this, _node))())
 			{
+				this.clicked = false;
 				return false;
 			}
 		}
@@ -135,10 +138,9 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		// Submit the form
 		if (this._type != "buttononly")
 		{
-			this.clicked = true;
 			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
-			this.clicked = false;
 		}
+		this.clicked = false;
 	},
 
 	set_label: function(_value) {

@@ -294,6 +294,44 @@ etemplate2.prototype.submit = function(button)
 }
 
 /**
+ * Does a full form post submit.
+ * Only use this one if you need it, use the ajax submit() instead
+ */
+etemplate2.prototype.postSubmit = function()
+{
+	// Get the form values
+	var values = this.getValues(this.widgetContainer);
+
+	// Trigger the submit event
+	var canSubmit = true;
+	this.widgetContainer.iterateOver(function(_widget) {
+		if (_widget.submit(values) === false)
+		{
+			canSubmit = false;
+		}
+	}, this, et2_ISubmitListener);
+
+	if (canSubmit)
+	{
+		var form = document.createElement("form");
+		form.method = "POST";
+		form.action = egw().webserverUrl +"/json.php?menuaction=etemplate::ajax_process_post";
+
+		var etemplate_id = document.createElement("input");
+		etemplate_id.name = 'etemplate_exec_id';
+		etemplate_id.value = this.etemplate_exec_id;
+		form.appendChild(etemplate_id);
+
+		var input = document.createElement("input");
+		input.name = 'value';
+		input.value = egw().jsonEncode(values);
+		form.appendChild(input);
+
+		form.submit();
+	}
+}
+
+/**
  * Fetches all input element values and returns them in an associative
  * array. Widgets which introduce namespacing can use the internal _target
  * parameter to add another layer.

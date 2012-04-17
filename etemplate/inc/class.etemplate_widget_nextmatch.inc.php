@@ -172,6 +172,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
+		if($value['num_rows'] == 0) $value['num_rows'] = 20;
 		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
 		if (($parent_id = $value['parent_id']))
 		{
@@ -686,6 +687,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		// On client, rows does not get its own namespace, but all apps are expecting it
 		$value['rows'] = $value;
+
+		// Legacy support - action popups were not properly namespaced
+		$preserve = self::get_array(self::$request->preserv, $form_name);
+		if($value[$preserve['action_var']] && $content[$value[$preserve['action_var']].'_popup'])
+		{
+			$validated += $content[$value[$preserve['action_var']].'_popup'];
+		}
 
 		// Save current column settings as default (admins only)
 		if($value['as_default'])
