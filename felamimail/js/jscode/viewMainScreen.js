@@ -8,9 +8,23 @@
  * @param string|int _id=null id of entry to refresh
  * @param string _type=null either 'edit', 'delete', 'add' or null
  */
+var doStatus;
 function app_refresh(_msg, _app, _id, _type)
 {
+	var bufferExists = false;
+	window.clearInterval(doStatus); // whatever message was up to be activated
 	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+egw_appWindow('felamimail').lang_updating_view+'/'))<0 ) {
+		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		bufferExists = true;
+	}
+	egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' +_msg+ '</span>');
+	if (_app=='felamimail')
+	{
+		//we may want to trigger some actions, like modifying the grid, disable preview and stuff
+		// TODO:
+	}
+	if (bufferExists) doStatus = window.setInterval("egw_appWindow('felamimail').setStatusMessage(MessageBuffer,true);", 5000);
 }
 
 function egw_email_fetchDataProc(_elems, _columns, _callback, _context)
@@ -81,8 +95,11 @@ function mail_parentRefreshListRowStyle(oldID, newID)
 		}
 	}
 }
-function setStatusMessage(_message) {
-	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
+
+function setStatusMessage(_message,_setPlain) {
+	if (typeof _setPlain == 'undefined') _setPlain==false;
+	if (_setPlain == false)	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
+	else document.getElementById('messageCounter').innerHTML = _message;
 }
 
 function sendNotifyMS (uid) {
