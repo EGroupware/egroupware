@@ -154,7 +154,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                 return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
             }
         }
-
+        $this->cmdCapability();
         if($selectMailbox){
             //Select INBOX
             if ( PEAR::isError( $ret=$this->cmdSelect( $this->getCurrentMailbox() ) ) ) {
@@ -233,7 +233,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         }
         if (!empty($flagsString))
         {
-            foreach (array('$label1','$label2','$label3','$label4','$label5','\*') as $i =>$kw) 
+            foreach (array('$label1','$label2','$label3','$label4','$label5','\*') as $i =>$kw)
             {
                 if (stripos($flagsString,$kw) !== false)
                 {
