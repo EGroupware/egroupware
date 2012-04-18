@@ -457,6 +457,13 @@
 				$targets = array($data['target']);
 			}
 
+
+			if($type == 'export')
+			{
+				// Set to export all
+				$definition->plugin_options = array_merge($definition->plugin_options, array('selection' => 'all'));
+			}
+
 			foreach($targets as $target)
 			{
 				// Update lock timeout
@@ -512,7 +519,11 @@
 						$data['result'][$target][] = lang($action) . ": $count";
 					}
 				} else {
-					$data['result'][$target] = $result;
+					if($result instanceof importexport_iface_export_record)
+					{
+						$data['record_count'] += $result->get_num_of_records();
+						$data['result'][$target][] = lang('%1 records processed', $result->get_num_of_records());
+					}
 				}
 			}
 
