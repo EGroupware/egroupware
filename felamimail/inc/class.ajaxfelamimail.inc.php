@@ -1016,52 +1016,71 @@ class ajaxfelamimail
 		function refreshMessagePreview($_messageID,$_folderType)
 		{
 			if ($this->_debug) error_log(__METHOD__.__LINE__.' MessageId:'.$_messageID.', FolderType:'.$_folderType);
-			$this->bofelamimail->restoreSessionData();
-			$headerData = $this->bofelamimail->getHeaders(
-				$this->sessionData['mailbox'],
-				0,
-				0,
-				'',
-				'',
-				'',
-				$_messageID
-			);
-			$headerData = $headerData['header'][0];
-			//error_log(__METHOD__.__LINE__.print_r($headerData,true));
-			foreach ($headerData as $key => $val)
+			if (!empty($_messageID))
 			{
-				if (is_array($val))
+				$this->bofelamimail->restoreSessionData();
+				$headerData = $this->bofelamimail->getHeaders(
+					$this->sessionData['mailbox'],
+					0,
+					0,
+					'',
+					'',
+					'',
+					$_messageID
+				);
+				$headerData = $headerData['header'][0];
+				//error_log(__METHOD__.__LINE__.print_r($headerData,true));
+				foreach ($headerData as $key => $val)
 				{
-					foreach($val as $ik => $ival)
+					if (is_array($val))
 					{
-						//error_log(__METHOD__.__LINE__.print_r($ival,true));
-						if (is_array($ival))
+						foreach($val as $ik => $ival)
 						{
-							foreach($ival as $jk => $jval)
+							//error_log(__METHOD__.__LINE__.print_r($ival,true));
+							if (is_array($ival))
 							{
-								$headerData[$key][$ik][$jk] = felamimail_bo::htmlentities($jval);
+								foreach($ival as $jk => $jval)
+								{
+									$headerData[$key][$ik][$jk] = felamimail_bo::htmlentities($jval);
+								}
+							}
+							else
+							{
+								$headerData[$key][$ik] = felamimail_bo::htmlentities($ival);
 							}
 						}
-						else
-						{
-							$headerData[$key][$ik] = felamimail_bo::htmlentities($ival);
-						}
+					}
+					else
+					{
+						$headerData[$key] = felamimail_bo::htmlentities($val);
 					}
 				}
-				else
-				{
-					$headerData[$key] = felamimail_bo::htmlentities($val);
-				}
+				$headerData['subject'] = $this->bofelamimail->decode_subject($headerData['subject'],false);
+				$this->sessionData['previewMessage'] = $headerData['uid'];
+				$this->saveSessionData();
 			}
-			$headerData['subject'] = $this->bofelamimail->decode_subject($headerData['subject'],false);
-			$this->sessionData['previewMessage'] = $headerData['uid'];
-			$this->saveSessionData();
 			//error_log(__METHOD__.__LINE__.print_r($headerData,true));
+			$previewFrameHeight = $GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight'];
+			$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"table-layout:fixed;width:100%;\">
+						<TR class=\"th\" style=\"width:100%;\">
+							<TD nowrap valign=\"top\">
+								".'<b><br> '.
+								"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder: ").$_folderName)."</font></center><br>
+								</b>"."
+							</TD>
+						</TR>
+						<TR>
+							<TD nowrap id=\"tdmessageIFRAME\" valign=\"top\" height=\"".$previewFrameHeight."\">
+								&nbsp;
+							</TD>
+						</TR>
+					   </TABLE>";
+
 			$response = new xajaxResponse();
 			$response->addScript("document.getElementById('messageCounter').innerHTML =MessageBuffer;");
 			//$response->addScript("document.getElementById('messageCounter').innerHTML ='';");
-			$response->addScript("fm_previewMessageID=".$headerData['uid'].";");
-			$response->addAssign('spanMessagePreview', 'innerHTML', $this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox'],$this->imapServerID));
+			$response->addScript("fm_previewMessageID=".(empty($_messageID)?'':$headerData['uid']).";");
+			$response->addAssign('spanMessagePreview', 'innerHTML', (empty($_messageID)?$IFRAMEBody:$this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox'],$this->imapServerID)));
 			$response->addScript('if (typeof handleResize != "undefined") handleResize();');
 
 			// Also refresh the folder status

@@ -15,16 +15,22 @@ function app_refresh(_msg, _app, _id, _type)
 	window.clearInterval(doStatus); // whatever message was up to be activated
 	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+egw_appWindow('felamimail').lang_updating_view+'/'))<0 ) {
-		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		myMessageBuffer = document.getElementById('messageCounter').innerHTML;
 		bufferExists = true;
 	}
 	egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' +_msg+ '</span>');
 	if (_app=='felamimail')
 	{
 		//we may want to trigger some actions, like modifying the grid, disable preview and stuff
-		// TODO:
+		// refreshMessagePreview now also refreshes the folder state, a deleted message should not stay with preview
+		if (!isNaN(egw_appWindow('felamimail').felamimail_iframe_height)) {
+			if (_type=='delete' && _id==fm_previewMessageID) egw_appWindow('felamimail').xajax_doXMLHTTP(
+				"felamimail.ajaxfelamimail.refreshMessagePreview",''
+				, egw_appWindow('felamimail').fm_previewMessageFolderType);
+		}
+		// TODO: more actions
 	}
-	if (bufferExists) doStatus = window.setInterval("egw_appWindow('felamimail').setStatusMessage(MessageBuffer,true);", 5000);
+	if (bufferExists) doStatus = window.setInterval("egw_appWindow('felamimail').setStatusMessage(myMessageBuffer,true);", 10000);
 }
 
 function egw_email_fetchDataProc(_elems, _columns, _callback, _context)
@@ -97,7 +103,7 @@ function mail_parentRefreshListRowStyle(oldID, newID)
 }
 
 function setStatusMessage(_message,_setPlain) {
-	if (typeof _setPlain == 'undefined') _setPlain==false;
+	if (typeof _setPlain == 'undefined') _setPlain=false;
 	if (_setPlain == false)	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
 	else document.getElementById('messageCounter').innerHTML = _message;
 }
@@ -401,9 +407,26 @@ function mail_deleteMessages(_messageList) {
 	}
 	if (Check == true) {
 		egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_deleting_messages + '</span>');
-		mail_cleanup();
-		document.getElementById('divMessageList').innerHTML = '';
-		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.deleteMessages",_messageList);
+		//mail_cleanup();
+		//document.getElementById('divMessageList').innerHTML = '';
+		//divMessageList.innerHTML = '';
+		for(var i=0;i<_messageList['msg'].length;i++) {
+			_id = _messageList['msg'][i];
+			var dataElem = egw_appWindow('felamimail').mailGrid.dataRoot.getElementById(_id);
+			if (dataElem)
+			{
+				//dataElem.clearData();
+				dataElem.addClass('deleted');
+				// if this is for multiple ids, we may implement that for app_refresh too
+				if (!isNaN(egw_appWindow('felamimail').felamimail_iframe_height)) {
+					if (_id==fm_previewMessageID) egw_appWindow('felamimail').xajax_doXMLHTTP(
+						"felamimail.ajaxfelamimail.refreshMessagePreview",''
+						, egw_appWindow('felamimail').fm_previewMessageFolderType);
+				}
+			}
+		}
+		egw_appWindow('felamimail').xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.deleteMessages",_messageList,false);
+		egw_appWindow('felamimail').refresh();
 	} else {
 		mailGrid.dataRoot.actionObject.setAllSelected(false);
 	}
@@ -422,9 +445,19 @@ function mail_undeleteMessages(_messageList) {
 	}
 	if (Check == true) {
 		egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_deleting_messages + '</span>');
-		mail_cleanup();
-		document.getElementById('divMessageList').innerHTML = '';
-		egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.undeleteMessages",_messageList);
+		//mail_cleanup();
+		//document.getElementById('divMessageList').innerHTML = '';
+		for(var i=0;i<_messageList['msg'].length;i++) {
+			_id = _messageList['msg'][i];
+			var dataElem = egw_appWindow('felamimail').mailGrid.dataRoot.getElementById(_id);
+			if (dataElem)
+			{
+				//dataElem.clearData();
+				dataElem.removeClass('deleted');
+			}
+		}
+		egw_appWindow('felamimail').xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.undeleteMessages",_messageList);
+		egw_appWindow('felamimail').refresh();
 	} else {
 		mailGrid.dataRoot.actionObject.setAllSelected(false);
 	}
@@ -1055,7 +1088,7 @@ function fm_readMessage(_url, _windowName, _node) {
 					// refreshMessagePreview now also refreshes the folder state
 					egw_appWindow('felamimail').xajax_doXMLHTTP(
 						"felamimail.ajaxfelamimail.refreshMessagePreview",
-						windowArray[1], windowArray[2]);
+						windowArray[1], fm_previewMessageFolderType);
 
 					// Mark the message as read
 					fm_msg_removeClass(windowArray[1], 'unseen');

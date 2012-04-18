@@ -130,6 +130,7 @@ function mailview_deleteMessages(_messageList) {
 				//dataElem.clearData();
 				dataElem.addClass('deleted');
 				//dataElem.parentActionObject.remove();
+				opener.app_refresh(opener.lang_deleting_messages,'felamimail',_id,'delete');
 			}
 		}
 		opener.refresh();
@@ -154,6 +155,6 @@ function mailview_undeleteMessages(_messageList) {
 			}
 		}
 	}
-	xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.undeleteMessages",_messageList,false);
+	xajax_doXMLHTTP("felamimail.ajaxfelamimail.undeleteMessages",_messageList,false);
 	//egw_appWindow('felamimail').
 }
