@@ -1145,7 +1145,10 @@ abstract class bo_merge
 				{
 					$classname = "{$field_app}_merge";
 					$class = new $classname();
-					$app_replacements[$field_app] = $class->get_replacements($values['#'.$field], $placeholders[$index]);
+					// If we send the real content, it can result in infinite loop of lookups
+					// This means you can't do {{#other_app/#other_app_cf/n_fn}}
+					$content = '';
+					$app_replacements[$field_app] = $class->get_replacements($values['#'.$field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field_app]['$$'.$sub[$index].'$$'];
 			}
