@@ -10,7 +10,7 @@
  */
 function app_refresh(_msg, _app, _id, _type)
 {
-	alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
+	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 }
 
 function egw_email_fetchDataProc(_elems, _columns, _callback, _context)
