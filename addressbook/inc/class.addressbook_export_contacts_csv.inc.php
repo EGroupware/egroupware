@@ -214,6 +214,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$export_object->export_record($contact);
 			unset($contact);
 		}
+		return $export_object;
 	}
 
 	/**

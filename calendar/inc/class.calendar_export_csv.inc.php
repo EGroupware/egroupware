@@ -142,6 +142,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			}
 		}
 		unset($record);
+		return $export_object;
 	}
 
 	/**
