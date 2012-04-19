@@ -1976,7 +1976,7 @@ class felamimail_bo
 						}
 						$foldersNameSpace[$type]['all'] = $allMailboxes;
 						if (is_array($foldersNameSpace[$type]['all'])) sort($foldersNameSpace[$type]['all']);
-				    }
+					}
 				  }
 				}
 				// check for autocreated folders
@@ -2218,7 +2218,7 @@ class felamimail_bo
 					foreach ($buff as $mbxname) {
 						$mbxname = preg_replace('~'.($delimiter == '.' ? "\\".$delimiter:$delimiter).'+~s',$delimiter,$mbxname);
 						#echo "About to recur in level $reclevel:".$mbxname."<br>";
-						if ( $mbxname != $mbx[0]['MAILBOX'] && $mbxname != $prefix) $allMailboxes = array_merge($allMailboxes, self::getMailBoxesRecursive($mbxname, $delimiter, $prefix, $reclevel));
+						if ( $mbxname != $mbx[0]['MAILBOX'] && $mbxname != $prefix  && $mbxname != $mbx[0]['MAILBOX'].$delimiter) $allMailboxes = array_merge($allMailboxes, self::getMailBoxesRecursive($mbxname, $delimiter, $prefix, $reclevel));
 					}
 					if (!(in_array('\NoSelect',$mbx[0]["ATTRIBUTES"]) || in_array('\Noselect',$mbx[0]["ATTRIBUTES"]))) $allMailboxes[] = $mbx[0]['MAILBOX'];
 					return $allMailboxes;
