@@ -1,3 +1,25 @@
+egroupware-epl (11.1.20120419-1) hardy; urgency=low
+
+  * InfoLog: show time of duedate in notifications if set (!= 0:00)
+  * InfoLog: remember filter to restore it after viewing subs or an other action-view
+  * resources: fix broken import when importing with human readable names (not database values)
+  * CardDAV: fixed not working deleting of existing fields and cell phone numbers for Apple clients
+  * eMail: supporting deprecated text/directory mimetype (if filename extension is of type text/vcard) for opening in addressbook edit dialog.
+  * CalDAV/CardDAV: add API version to pseudo session-id used to invalidate all sessions from the previous version (which eg. give database errors, because using old schema)
+  * most apps: fixed rich-text editor to allow to enter < and > eg. html markup in regular input mode (not source)
+  * tracker: feature to allow for a default solution for new tickets
+  * Backup/Addressbook: adding limited index-length to backed up schema and fix restore of old backups without (default to 32 on multicolumn indexes including text columns)
+  * CalDAV/CardDAV: log failed requests with ### like exceptions to ease diagnose problems, log if clients requests accounts not visible because of account-selection preference, skip proxys if not visible
+  * eSync: fixed PHP Fatal error:  Call to undefined method egw_minimal::invalidate_session_cache() when updating from 1.8
+  * Add ical export to edit \'Actions\' selectbox, and list context menu'
+  * email: improvement regarding notification handling; using htmLawed now instead of purify as fallback when there is no tidy;
+  * mail: improve refresh of messageList on message deletion
+  * Expand link_to custom fields and make available all placeholders from the app.
+  * CalDAV: fixed PHP Fatal Error when iCal contains invalid participant url like Lighttnings "invalid:noemail"
+  * VFS/Filemanager: notify only after successful removal of files, fixes my.stylite.de ##3100 - Subscribtion notification - even if deleting is not allowed
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 19 Apr 2012 15:22:54 +0200
+
 egroupware-epl (11.1.20120404-1) hardy; urgency=low
 
   * restart running Apache after each update, to force APC to update changed sources and/or Apache configuration
