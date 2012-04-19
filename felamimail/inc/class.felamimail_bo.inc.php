@@ -1990,6 +1990,14 @@ class felamimail_bo
 							$folderPrefix = $personalPrefix;
 						}
 					}
+					else
+					{
+						if(substr($personalPrefix, -1) != $personalDelimiter) {
+							$folderPrefixAsInbox = 'INBOX' . $personalDelimiter;
+						} else {
+							$folderPrefixAsInbox = 'INBOX';
+						}
+					}
 					if (!$_alwaysGetDefaultFolders && $this->mailPreferences->preferences['notavailableautofolders'] && !empty($this->mailPreferences->preferences['notavailableautofolders']))
 					{
 						$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences->preferences['notavailableautofolders']));
@@ -2031,15 +2039,31 @@ class felamimail_bo
 									if ($GLOBALS['egw_info']['user']['apps']['activesync']) $createfolder = true;
 									break;
 							}
+							// check for the foldername as constructed with prefix (or not)
 							if ($createfolder && self::folderExists($folderName))
 							{
 								$createfolder = false;
-								if ($_alwaysGetDefaultFolders)
-								{
-									if (!in_array($folderName,$foldersNameSpace['personal']['all'])) $foldersNameSpace['personal']['all'][] = $folderName;
-									if (!in_array($folderName,$foldersNameSpace['personal']['subscribed'])) $foldersNameSpace['personal']['subscribed'][] = $folderName;
-								}
 							}
+							// check for the folder as it comes (no prefix)
+							if ($createfolder && $personalFolderName != $folderName && self::folderExists($personalFolderName))
+							{
+								$createfolder = false;
+								$folderName = $personalFolderName;
+							}
+							// check for the folder as it comes with INBOX prefixed
+							$folderWithInboxPrefixed = $folderPrefixAsInbox.$personalFolderName;
+							if ($createfolder && $folderWithInboxPrefixed != $folderName && self::folderExists($folderWithInboxPrefixed))
+							{
+								$createfolder = false;
+								$folderName = $folderWithInboxPrefixed;
+							}
+							// now proceed with the folderName that may be altered in the progress of testing for existence
+							if ($createfolder === false && $_alwaysGetDefaultFolders)
+							{
+								if (!in_array($folderName,$foldersNameSpace['personal']['all'])) $foldersNameSpace['personal']['all'][] = $folderName;
+								if (!in_array($folderName,$foldersNameSpace['personal']['subscribed'])) $foldersNameSpace['personal']['subscribed'][] = $folderName;
+							}
+
 							if($createfolder === true && $this->createFolder('', $folderName, true)) {
 								$foldersNameSpace['personal']['all'][] = $folderName;
 								$foldersNameSpace['personal']['subscribed'][] = $folderName;
