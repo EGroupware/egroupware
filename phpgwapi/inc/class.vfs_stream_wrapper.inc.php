@@ -450,17 +450,22 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		// call "vfs_unlink" hook, before unlink
-		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		$stat = self::url_stat($path, STREAM_URL_STAT_LINK);
+
+		self::symlinkCache_remove($path);
+		$ok = unlink($url);
+
+		// call "vfs_unlink" hook only after successful unlink, with data from (not longer possible) stat call
+		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_unlink',
 				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
 				'url'  => $url,
+				'stat' => $stat,
 			),'',true);
 		}
-		self::symlinkCache_remove($path);
-		return unlink($url);
+		return $ok;
 	}
 
 	/**
@@ -564,17 +569,22 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		// call "vfs_rmdir" hook, before removing
-		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		$stat = self::url_stat($path, STREAM_URL_STAT_LINK);
+
+		self::symlinkCache_remove($path);
+		$ok = rmdir($url);
+
+		// call "vfs_rmdir" hook, only after successful rmdir
+		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_rmdir',
 				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
 				'url' => $url,
+				'stat' => $stat,
 			),'',true);
 		}
-		self::symlinkCache_remove($path);
-		return rmdir($url);
+		return $ok;
 	}
 
 	/**
