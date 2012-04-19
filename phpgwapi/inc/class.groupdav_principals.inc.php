@@ -891,7 +891,10 @@ class groupdav_principals extends groupdav_handler
 				break;
 
 			default:
-				$this->groupdav->log(__METHOD__."('$url') unsupported principal URL '$url'!");
+				if (isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],'groupdav'))
+				{
+					$GLOBALS['groupdav']->log(__METHOD__."('$url') unsupported principal URL '$url'!");
+				}
 				return false;
 		}
 		return $uid && in_array($type, $only_type) ? $uid : false;
