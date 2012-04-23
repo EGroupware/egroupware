@@ -1505,10 +1505,13 @@ class infolog_ui
 			if ($button)
 			{
 				// Copy or schedule Infolog
-				if (in_array($button,array('copy','schedule')))
+				if (in_array($button,array('copy','schedule','ical')))
 				{
 					$action = $button;
-					if (!$info_id) $button = 'apply';	// need to store infolog first
+					if (!$info_id || $this->bo->check_access($info_id,EGW_ACL_EDIT))
+					{
+						$button = 'apply';	// need to store infolog first
+					}
 				}
 				if ($button == 'print')
 				{
