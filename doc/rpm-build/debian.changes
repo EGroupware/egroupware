@@ -1,3 +1,15 @@
+egroupware (1.8.004.20120423) hardy; urgency=low
+
+  * Backup/Addressbook: adding limited index-length to backed up schema and fix restore of old backups without (default to 32 on multicolumn indexes including text columns)
+  * CalDAV/CardDAV: log failed requests with ### like exceptions to ease diagnose problems, log if clients requests accounts not visible because of account-selection preference, skip proxys if not visible
+  * Setup/Restore: fixed since r38812/1.8.004.20120410 not working restore of backups
+  * email: reuse already fetched flags when checking for MDNsent /MDNnotSend flags;
+  * ProjectManager: fix Bug #3130: PHP Fatal error: Cannot unset string offsets in projectmanager_so line 239
+  * CalDAV: fixed PHP Fatal Error when iCal contains invalid participant url like Lighttnings "invalid:noemail"
+  * Wiki: fixed Fatal error: Unsupported operand types in class.wiki_ui.inc.php on line 188, if no languages are installed
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 23 Apr 2012 10:00:47 +0200
+
 egroupware (1.8.004.20120410) hardy; urgency=low
 
   * WebDAV/Filemanager: fixed not working home-directores
