@@ -609,7 +609,7 @@ class emailadmin_bo extends so_sql
 			}
 			//reset cache, to trigger reload
 			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
+			if (isset($folders2return[$_profileID])) unset($folders2return[$_profileID]);
 
 			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
 			if (isset($nameSpace[$_profileID]))
