@@ -1052,17 +1052,23 @@ abstract class bo_merge
 			$field = preg_quote($field, '/');
 			if($values[$key])
 			{
-				try {
-					$date = egw_time::createFromFormat(
-						'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat,
-						$values[$key],
-						egw_time::$user_timezone
-					);
-
-				} catch (Exception $e) {
-					// Couldn't get a date out of it... skip it
-					trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
-				}	
+				if(!is_numeric($values[$key]))
+				{
+					try {
+						$date = egw_time::createFromFormat(
+							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat.':s',
+							$values[$key],
+							egw_time::$user_timezone
+						);
+					} catch (Exception $e) {
+						// Couldn't get a date out of it... skip it
+						trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
+					}	
+				}
+				else
+				{
+					$date = new egw_time($values[$key]);
+				}
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
 				{
 					$interval = $date->diff(new egw_time('1900-01-00 0:00'));
