@@ -25,6 +25,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
+		translation::add_app('infolog');
 		$bo = new infolog_bo();
 		$selection = array();
 		$query = array();
@@ -111,6 +112,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				if(!is_array($selection[$id])) break;
 				$selection[$id]['pm_id'] = current($links);
 				$selection[$id]['project'] = egw_link::title('projectmanager', $selection[$id]['pm_id']);
+				$this->selects['info_pricelist'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',$selection[$id]['pm_id']);
 			}
 		}
 
