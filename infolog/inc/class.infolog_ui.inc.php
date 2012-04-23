@@ -633,7 +633,6 @@ class infolog_ui
 				if(in_array($multi_action, array('link', 'responsible')))
 				{
 					$values['nm']['multi_action'] .= '_' . key($values[$multi_action . '_action']);
-
 					if(is_array($values[$multi_action]))
 					{
 						$values[$multi_action] = implode(',',$values[$multi_action]);
@@ -1155,7 +1154,7 @@ class infolog_ui
 		{
 			case 'link':
 				list($add_remove, $link) = explode('_', $settings, 2);
-				list($app, $link_id) = explode(':', $link);
+				list($app, $link_id) = explode(strpos($link,':') !== false ? ':' : ',', $link);
 				if(!$link_id)
 				{
 					$action_msg = 'linked';
@@ -1747,7 +1746,7 @@ class infolog_ui
 				case 'ical':
 					$boical = new infolog_ical();
 					$result = $boical->exportVTODO($content,'2.0','PUBLISH',false);
-					ExecMethod2('phpgwapi.browser.content_header','todo.ical','text/calendar');
+					ExecMethod2('phpgwapi.browser.content_header','todo.ics','text/calendar');
 					echo $result;
 					common::egw_exit();
 				case 'sp':
