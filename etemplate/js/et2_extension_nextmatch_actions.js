@@ -149,7 +149,7 @@ function nm_action(_action, _senders, _target, _ids)
 					return value;
 				}
 
-				if(_action.data.nm_action == 'popup')
+				if(_action.data.nm_action == 'open_popup')
 				{
 					nextmatch.getInstanceManager().submit();
 

@@ -313,21 +313,19 @@ etemplate2.prototype.postSubmit = function()
 
 	if (canSubmit)
 	{
-		var form = document.createElement("form");
-		form.method = "POST";
-		form.action = egw().webserverUrl +"/json.php?menuaction=etemplate::ajax_process_post";
+		var form = jQuery("<form id='form' action='"+egw().webserverUrl + "/json.php?menuaction=etemplate::ajax_process_post' method='POST'>");
 
-		var etemplate_id = document.createElement("input");
-		etemplate_id.name = 'etemplate_exec_id';
-		etemplate_id.value = this.etemplate_exec_id;
-		form.appendChild(etemplate_id);
+		var etemplate_id = jQuery(document.createElement("input"))
+			.attr("name",'etemplate_exec_id')
+			.val(this.etemplate_exec_id)
+			.appendTo(form);
 
 		var input = document.createElement("input");
 		input.name = 'value';
 		input.value = egw().jsonEncode(values);
-		form.appendChild(input);
+		form.append(input);
 
-		form.submit();
+		form.appendTo(jQuery('body')).submit();
 	}
 }
 
