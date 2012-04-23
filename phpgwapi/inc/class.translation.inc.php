@@ -372,7 +372,7 @@ class translation
 
 			if (!self::$langs)
 			{
-				return false;
+				return self::$langs;
 			}
 			foreach(self::$langs as $lang => $name)
 			{
@@ -1259,7 +1259,7 @@ class translation
 			//$_html = strip_tags($_html, '<a>');
 		}
 		// reducing double \r\n to single ones
-		//$_html = str_replace("\r\n\r\n", "\r\n", $_html); // ToDo: this needsv to be more sophosticated 
+		//$_html = str_replace("\r\n\r\n", "\r\n", $_html); // ToDo: this needsv to be more sophosticated
 		// reducing spaces
 		$_html = preg_replace('~ +~s',' ',$_html);
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
