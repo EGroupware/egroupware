@@ -607,6 +607,10 @@ class emailadmin_bo extends so_sql
 				unset($structure[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
 			}
+			//reset cache, to trigger reload
+			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
+			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
+
 			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
 			if (isset($nameSpace[$_profileID]))
 			{

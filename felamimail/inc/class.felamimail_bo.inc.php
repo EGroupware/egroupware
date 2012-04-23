@@ -1812,7 +1812,7 @@ class felamimail_bo
 		*
 		* returns an array of IMAP folder objects. Put INBOX folder in first
 		* position. Preserves the folder seperator for later use. The returned
-		* array is indexed using the foldername.
+		* array is indexed using the foldername. Use cachedObjects when retrieving subscribedFolders
 		*
 		* @param _subscribedOnly boolean get subscribed or all folders
 		* @param _getCounters    boolean get get messages counters
@@ -1823,6 +1823,17 @@ class felamimail_bo
 		*/
 		function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false)
 		{
+			if (self::$debug) error_log(__METHOD__.__LINE__.' '."subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders");
+			static $folders2return;
+			if ($_subscribedOnly && $_getCounters===false)
+			{
+				if (is_null($folders2return)) $folders2return =& egw_cache::getSession('felamimail','folderObjects');
+				if (isset($folders2return[$this->icServer->ImapServerId]))
+				{
+					//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
+					return $folders2return[$this->icServer->ImapServerId];
+				}
+			}
 			$isUWIMAP = false;
 
 			$delimiter = $this->getHierarchyDelimiter();
@@ -2075,6 +2086,7 @@ class felamimail_bo
 				}
 			}
 			#echo "<br>FolderNameSpace To Process:";_debug_array($foldersNameSpace);
+			$autoFolderObjects = array();
 			foreach( array('personal', 'others', 'shared') as $type) {
 				if(isset($foldersNameSpace[$type])) {
 					if($_subscribedOnly) {
@@ -2102,18 +2114,6 @@ class felamimail_bo
 						}
 
 						if($_getCounters == true) {
-							/*
-							$folderStatus = $this->_getStatus($folderName);
-							#echo "<br> FolderStatus:";_debug_array($folderStatus);
-							if(is_array($folderStatus)) {
-								$status =  new stdClass;
-								$status->messages	= $folderStatus['MESSAGES'];
-								$status->unseen		= $folderStatus['UNSEEN'];
-								$status->recent 	= $folderStatus['RECENT'];
-
-								$folderObject->counter = $status;
-							}
-							*/
 							$folderObject->counter = $this->bofelamimail->getMailBoxCounters($folderName);
 						}
 
@@ -2135,8 +2135,8 @@ class felamimail_bo
 							$folderObject->displayName = $this->encodeFolderName($folderObject->folderName);
 							$folderObject->shortDisplayName = $this->encodeFolderName($shortName);
 						}
-						$folderName = $folderName;
-						if (in_array($shortName,self::$autoFolders)) {
+						//$folderName = $folderName;
+						if (in_array($shortName,self::$autoFolders)&&self::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
 							$autoFolderObjects[$folderName] = $folderObject;
 						} else {
 							$folders[$folderName] = $folderObject;
@@ -2144,13 +2144,24 @@ class felamimail_bo
 					}
 				}
 			}
-			if (is_array($autoFolderObjects)) {
+			if (is_array($autoFolderObjects) && !empty($autoFolderObjects)) {
 				uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
 			}
 			if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
 			//$folders2return = array_merge($autoFolderObjects,$folders);
 			//_debug_array($folders2return); #exit;
-			return array_merge($inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
+			$folders2return[$this->icServer->ImapServerId] = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders);
+			return $folders2return[$this->icServer->ImapServerId];
+		}
+
+		static function searchValueInFolderObjects($needle, $haystack)
+		{
+			$rv = false;
+			foreach ($haystack as $k => $v)
+			{
+				foreach($v as $sk => $sv) if (trim($sv)==trim($needle)) return $k;
+			}
+			return $rv;
 		}
 
 		function sortByDisplayName($a,$b)
@@ -2162,8 +2173,8 @@ class felamimail_bo
 		function sortByAutoFolderPos($a,$b)
 		{
 			// 0, 1 und -1
-			$pos1 = array_search($a->shortFolderName,self::$autoFolders);
-			$pos2 = array_search($b->shortFolderName,self::$autoFolders);
+			$pos1 = array_search(trim($a->shortFolderName),self::$autoFolders);
+			$pos2 = array_search(trim($b->shortFolderName),self::$autoFolders);
 			if ($pos1 == $pos2) return 0;
 			return ($pos1 < $pos2) ? -1 : 1;
 		}
