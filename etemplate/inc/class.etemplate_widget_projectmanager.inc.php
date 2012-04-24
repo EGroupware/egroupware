@@ -54,7 +54,7 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 				$extension,
 				$template
 			);
-			self::$request->sel_options[$form_name] += $cell['sel_options'];
+			self::$request->sel_options[$form_name] += (array)$cell['sel_options'];
 
 			// if no_lang was modified, forward modification to the client
 			if ($cell['no_lang'] != $this->attr['no_lang'])

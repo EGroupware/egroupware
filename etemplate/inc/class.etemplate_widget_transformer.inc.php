@@ -131,7 +131,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 				case 'sel_options':
 					self::$request->sel_options[$form_name] = $val;
 					break;
-				case 'type':	// not an attribute in etempalte2
+				case 'type':	// not an attribute in etemplate2
 				default:
 					self::setElementAttribute($form_name, $attr, $val);
 					break;
