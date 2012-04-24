@@ -67,6 +67,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 			$export_object->export_record($record);
 			unset($record);
 		}
+		return $export_object;
 	}
 
 	/**

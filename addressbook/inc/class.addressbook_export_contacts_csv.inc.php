@@ -50,11 +50,12 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
-		if ($options['selection'] == 'use_all') {
+		if ($options['selection'] == 'use_all' || $options['selection'] == 'all') {
 			// uicontacts selection with checkbox 'use_all'
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
+			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
 			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
@@ -214,6 +215,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$export_object->export_record($contact);
 			unset($contact);
 		}
+		return $export_object;
 	}
 
 	/**

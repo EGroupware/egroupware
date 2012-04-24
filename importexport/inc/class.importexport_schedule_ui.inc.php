@@ -344,9 +344,9 @@
 		*/
 		private static function is__writable($path) {
 			if ($path{strlen($path)-1}=='/') // recursively return a temporary file path
-				return is__writable($path.uniqid(mt_rand()).'.tmp');
+				return self::is__writable($path.uniqid(mt_rand()).'.tmp');
 			else if (is_dir($path))
-				return is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
+				return self::is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
 			// check tmp file for read/write capabilities
 			$rm = file_exists($path);
 			$f = fopen($path, 'a');
@@ -423,30 +423,45 @@
 
 			if(is_dir($data['target']))
 			{
-				$targets = array();
-				foreach(scandir($data['target']) as $target)
+				if($data['type'] == 'import')
 				{
-					if ($target == '.' || $target == '..') continue;
-					$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
-
-					// Check modification time, make sure it's not currently being written
-					// Skip files modified in the last 10 seconds
-					$mod_time = filemtime($target);
-					if($mod_time >= time() - 10)
+					$targets = array();
+					foreach(scandir($data['target']) as $target)
 					{
-						$data['result'][$target] = lang('Skipped');
-						continue;
+						if ($target == '.' || $target == '..') continue;
+						$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
+
+						// Check modification time, make sure it's not currently being written
+						// Skip files modified in the last 10 seconds
+						$mod_time = filemtime($target);
+						if($mod_time >= time() - 10)
+						{
+							$data['result'][$target] = lang('Skipped');
+							continue;
+						}
+						$targets[$mod_time.$target] = $target;
 					}
-					$targets[$mod_time.$target] = $target;
+					if($targets)
+					{
+						ksort($targets);
+					}
 				}
-				if($targets)
+				else
 				{
-					ksort($targets);
+					// Create a unique file for export
+					$targets = array($data['target'].uniqid($definition->name).'.'.$po->get_filesuffix());
 				}
 			}
 			else
 			{
 				$targets = array($data['target']);
+			}
+
+
+			if($type == 'export')
+			{
+				// Set to export all
+				$definition->plugin_options = array_merge($definition->plugin_options, array('selection' => 'all'));
 			}
 
 			foreach($targets as $target)
@@ -504,7 +519,11 @@
 						$data['result'][$target][] = lang($action) . ": $count";
 					}
 				} else {
-					$data['result'][$target] = $result;
+					if($result instanceof importexport_iface_export_record)
+					{
+						$data['record_count'] += $result->get_num_of_records();
+						$data['result'][$target][] = lang('%1 records processed', $result->get_num_of_records());
+					}
 				}
 			}
 
