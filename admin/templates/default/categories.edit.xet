@@ -89,7 +89,7 @@
 						<menulist>
 							<menupopup id="data[icon]" onchange="change_icon(this);" options="None"/>
 						</menulist>
-						<image src="icon_url" class="leftPad5"/>
+						<image src="icon_url" id="icon_url" class="leftPad5"/>
 					</hbox>
 				</row>
 				<row class="row" disabled="@appname=phpgw">

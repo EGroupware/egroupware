@@ -33,8 +33,8 @@ function check_owner(element_id) {
 
 	// Single selection? 
 	if(checkboxes.length == 0) {
-		var new_group = $j(document.getElementById(element_id));
-		if(new_group.attr('value') != 0 && cat_original_owner.length > 0) {
+		var new_group = $j('input#'+element_id);
+		if(new_group.length > 0 && new_group.attr('value') != 0 && cat_original_owner.length > 0) {
 			diff.push(cat_original_owner[0]);
 			var selector = 'option[value="'+cat_original_owner[0]+'"]';
 			labels.push("\n"+$j(selector, new_group).text());
@@ -68,7 +68,7 @@ function change_icon(_icon)
 		img.src = img.src.replace(/\/[^\/]*$/,'\/'+_icon.value);
 		img.style.display = 'block';
 	}
-	else
+	else if (img)
 	{
 		img.style.display = 'none';
 	}
