@@ -409,6 +409,17 @@
 					$this->t->set_var('value_address',lang('not allowed'));
 				}
 			}
+			if ((!empty($preferences->preferences['prefpreventforwarding']) &&
+				$preferences->preferences['prefpreventforwarding'] == 1 ))
+			{
+				$this->t->set_var('action_address_disabled','disabled');
+				$this->t->set_var('address_value_disabled','disabled');
+			}
+			else
+			{
+				$this->t->set_var('action_address_disabled','');
+				$this->t->set_var('address_value_disabled','');
+			}
 			$this->t->set_var('value_ruleID',$_ruleID);
 
 			// translate most of the parts

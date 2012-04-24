@@ -89,10 +89,10 @@ function SubmitForm(a)
 			</tr>
 			<tr CLASS="sieveRowActive">
 				<td>
-					<input TYPE="radio" NAME="action" VALUE="address" id="action_address" {checked_action_address}> <label for="action_address">{lang_forward_to_address}:</label>
+					<input TYPE="radio" NAME="action" VALUE="address" id="action_address" {checked_action_address} {action_address_disabled}> <label for="action_address">{lang_forward_to_address}:</label>
 				</td>
 				<td>
-					<input class="input_text" TYPE="text" NAME="address" style="width:250px;" onchange="document.getElementById('action_address').checked = true;" SIZE="40" value="{value_address}">
+					<input class="input_text" TYPE="text" NAME="address" style="width:250px;" onchange="document.getElementById('action_address').checked = true;" SIZE="40" value="{value_address}" {address_value_disabled}>
 				</td>
 			</tr>
 			<tr CLASS="sieveRowActive">
