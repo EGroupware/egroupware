@@ -114,6 +114,7 @@ class calendar_boupdate extends calendar_bo
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
+		if (!is_array($messages)) $messages = $messages ? (array)$messages : array();
 
 		if ($this->debug > 1 || $this->debug == 'update')
 		{
@@ -127,6 +128,7 @@ class calendar_boupdate extends calendar_bo
 			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||
 			isset($event['title']) && !$event['title']))
 		{
+			$messages[] = lang('Required information (start, end, title, ...) missing!');
 			return false;
 		}
 
@@ -150,6 +152,7 @@ class calendar_boupdate extends calendar_bo
 			$new_event && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
+			$messages[] = lang('Access to calendar of %1 denied!',common::grab_owner_name($event['owner']));
 			return false;
 		}
 		if ($new_event)

@@ -1723,14 +1723,22 @@ function replace_eTemplate_onsubmit()
 					$status = strtoupper($button[0]);	// A, R or T
 					if (!$event['id'])
 					{
+						// if organizer is a EGroupware user, but we have no rights to organizers calendar
+						if (isset($event['owner']) && !$this->bo->check_perms(EGW_ACL_ADD,0,$event['owner']))
+						{
+							// --> make organize a participant with role chair and current user the owner
+							$event['participant_types']['u'] = $event['participants'][$event['owner']] =
+								calendar_so::combine_status('A', 1, 'CHAIR');
+							$event['owner'] = $this->user;
+						}
 						// store event without notifications!
 						if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, false, true, $msg, true)))
 						{
-							$msg = lang('Event saved');
+							$msg[] = lang('Event saved');
 						}
 						else
 						{
-							$msg = lang('Error: saving the event !!!');
+							$msg[] = lang('Error saving the event!');
 							break;
 						}
 					}
@@ -1742,7 +1750,7 @@ function replace_eTemplate_onsubmit()
 					break;
 			}
 		}
-		$event['msg'] = $msg;
+		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];
 
 		$tpl = new etemplate('calendar.meeting');
