@@ -2374,7 +2374,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'X-MICROSOFT-CDO-ALLDAYEVENT':
-					$event['whole_day'] = true;
+					$event['whole_day'] = (isset($attributes['value'])?strtoupper($attributes['value'])=='TRUE':true);
 					break;
 				case 'AALARM':
 				case 'DALARM':
