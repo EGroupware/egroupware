@@ -291,7 +291,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
 
-		$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
+		$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
 		$emailadmin->setDefaultProfile($config);
 
 		if ($this->verbose)
