@@ -155,13 +155,17 @@ class etemplate_widget_menupopup extends etemplate_widget
 	public static function selOptions($name)
 	{
 		$options = array();
+
+		// Check for exact match on name
 		if (isset(self::$request->sel_options[$name]) && is_array(self::$request->sel_options[$name]))
 		{
 			$options += self::$request->sel_options[$name];
 		}
-		else
+
+		// Check for base of name in root of sel_options
+		if(!$options)
 		{
-			$name_parts = explode('[',str_replace(']','',$name));
+			$name_parts = explode('[',str_replace(array('&#x5B;','&#x5D;',']'),array('['),$name));
 			if (count($name_parts))
 			{
 				$org_name = $name_parts[count($name_parts)-1];
@@ -175,6 +179,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 			}
 		}
+
+		// Check for options-$name in content
 		if (isset(self::$request->content['options-'.$name]))
 		{
 			$options += self::$request->content['options-'.$name];
