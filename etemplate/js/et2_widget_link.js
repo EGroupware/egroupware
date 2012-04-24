@@ -150,12 +150,15 @@ var et2_link_to = et2_inputWidget.extend({
 			multiple: true,
 			id: this.id + '_file',
 			onFinish: function(event, file_count) {
+				event.data = self;
 				self.filesUploaded(event);
+
+				// Auto-link uploaded files
+				if(self.options.value.to_id) self.createLink(event);
 			}
 		};
 
 		this.file_upload = et2_createWidget("file", file_attrs,this);
-
 		return true;
 	},
 
@@ -167,18 +170,6 @@ var et2_link_to = et2_inputWidget.extend({
 		var self = this;
 
 		this.link_button.show();
-
-		// Add some comment fields
-		this.file_upload.progress.children().each(function() {
-			var comment = jQuery(document.createElement("input"))
-				.appendTo(this).hide();
-			self.link_entry.set_blur(self.egw().lang("Comment..."),comment);
-
-			var comment_icon = jQuery(document.createElement("span"))
-				.appendTo(this)
-				.addClass("ui-icon ui-icon-comment")
-				.click(function() {comment_icon.hide(); comment.toggle();})
-		});
 	},
 
 	/**

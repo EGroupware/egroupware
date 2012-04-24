@@ -210,7 +210,33 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			$form_name = self::form_name($cname, $this->id);
 
-			$value = $value_in = self::get_array($content, $form_name);
+			$value = $value_in =& self::get_array($content, $form_name);
+
+			// Look for files
+			$files = self::get_array($content, self::form_name($cname, $this->id . '_file'));
+			if(is_array($files) && !(is_array($value) && $value['to_id']))
+			{
+				$value = array();
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$path = $GLOBALS['egw_info']['server']['temp_dir'] . '/';
+				}
+				else
+				{
+					$path = '';
+				}
+				foreach($files as $name => $attrs)
+				{
+					$value['to_id'][] = array(
+						'app'	=> egw_link::VFS_APPNAME,
+						'id'	=> array(
+							'name'	=> $attrs['name'],
+							'type'	=> $attrs['type'],
+							'tmp_name'	=> $path.$name
+						)
+					);
+				}
+			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
 		}

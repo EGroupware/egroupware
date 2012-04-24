@@ -342,6 +342,10 @@ console.warn(event,name,error);
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
 		}
+		if(this.options.onFinishOne && typeof this.options.onFinishOne == 'function')
+		{
+			return this.options.onFinishOne(event,response,name,number,total);
+		}
 		return true;
 	},
 
