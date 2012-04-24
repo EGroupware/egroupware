@@ -197,7 +197,7 @@ abstract class bo_merge
 			switch($name)
 			{
 				case 'created': case 'modified':
-					$value = $this->format_datetime($value);
+					if($value) $value = egw_time::to($value);
 					break;
 				case 'bday':
 					if ($value)
@@ -375,6 +375,7 @@ abstract class bo_merge
 	 */
 	protected function format_datetime($time,$format=null)
 	{
+		trigger_error(__METHOD__ . ' is deprecated, use egw_time::to($time, $format)', E_USER_DEPRECATED);
 		if (is_null($format)) $format = $this->datetime_format;
 
 		return egw_time::to($time,$format);
@@ -1045,6 +1046,13 @@ abstract class bo_merge
 			//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'//Excel WTF
 		))) return;
 
+		// Some different formats dates could be in, depending what they've been through
+		$formats = array(
+			'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat.':s',
+			'!'.egw_time::$user_dateformat . '* ' .egw_time::$user_timeformat,
+			'!'.egw_time::$user_dateformat . '*',
+		);
+
 		// Properly format values for spreadsheet
 		foreach($names as $idx => &$field)
 		{
@@ -1054,16 +1062,27 @@ abstract class bo_merge
 			{
 				if(!is_numeric($values[$key]))
 				{
-					try {
-						$date = egw_time::createFromFormat(
-							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat.':s',
-							$values[$key],
-							egw_time::$user_timezone
-						);
-					} catch (Exception $e) {
+					// Try the different formats, stop when one works
+					foreach($formats as $f)
+					{
+						try {
+							$date = egw_time::createFromFormat(
+								$f,
+								$values[$key],
+								egw_time::$user_timezone
+							);
+							if($date) break;
+						} catch (Exception $e) {
+
+						}
+					}
+					if(!$date)
+					{
 						// Couldn't get a date out of it... skip it
 						trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
-					}	
+						unset($names[$idx]);
+						continue;
+					}
 				}
 				else
 				{
