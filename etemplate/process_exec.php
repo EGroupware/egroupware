@@ -21,4 +21,4 @@ $GLOBALS['egw_info'] = array(
 );
 include('../header.inc.php');
 
-ExecMethod('etemplate.etemplate_old.process_exec');
+ExecMethod('etemplate.etemplate.process_exec');

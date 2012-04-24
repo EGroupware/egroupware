@@ -313,7 +313,8 @@ etemplate2.prototype.postSubmit = function()
 
 	if (canSubmit)
 	{
-		var form = jQuery("<form id='form' action='"+egw().webserverUrl + "/json.php?menuaction=etemplate::ajax_process_post' method='POST'>");
+		var form = jQuery("<form id='form' action='"+egw().webserverUrl + 
+			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "' method='POST'>");
 
 		var etemplate_id = jQuery(document.createElement("input"))
 			.attr("name",'etemplate_exec_id')
@@ -324,7 +325,6 @@ etemplate2.prototype.postSubmit = function()
 		input.name = 'value';
 		input.value = egw().jsonEncode(values);
 		form.append(input);
-
 		form.appendTo(jQuery('body')).submit();
 	}
 }

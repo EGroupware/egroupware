@@ -35,9 +35,9 @@ if (!isset($GLOBALS['egw_info']))
  *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
-class etemplate extends etemplate_old {};
-class etemplate_new extends etemplate_widget_template
-//class etemplate extends etemplate_widget_template
+//class etemplate extends etemplate_old {};
+//class etemplate_new extends etemplate_widget_template
+class etemplate extends etemplate_widget_template
 {
 	/**
 	 * Are we running as sitemgr module or not
@@ -50,7 +50,7 @@ class etemplate_new extends etemplate_widget_template
 	 * Tell egw framework it's ok to call this
 	 */
 	public $public_functions = array(
-		'ajax_post_process' => true
+		'process_exec' => true
 	);
 
 	/**
@@ -225,8 +225,12 @@ class etemplate_new extends etemplate_widget_template
 	/**
 	 * Process via POST submitted content
 	 */
-	static public function ajax_process_post()
+	static public function process_exec()
 	{
+		$etemplate_exec_id = $_POST['etemplate_exec_id'];
+		$content = json_decode($_POST['value'],true);
+		error_log(__METHOD__."(".array2string($content).")");
+
 		self::$request = etemplate_request::read($_POST['etemplate_exec_id']);
 		if (get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
 		$content = json_decode($_POST['value'],true);

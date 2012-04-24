@@ -145,7 +145,7 @@ function nm_action(_action, _senders, _target, _ids)
 						"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
 					};
 					value[nextmatch.options.settings.action_var]= _action.id;
-					if(_target && _target.id) value[_target.id] = true;
+					//if(_target && _target.id) value[_target.id] = true;
 					return value;
 				}
 
@@ -255,7 +255,20 @@ function nm_open_popup(_action, _ids)
 	var popup = jQuery("#"+_action.id+"_popup").get(0) || jQuery("[id*='" + _action.id + "_popup']").get(0);
 	if (popup) {
 		nm_popup_action = _action;
-		nm_popup_ids = _ids;
+		if(_ids.length && typeof _ids[0] == 'object')
+		{
+			egw().debug("warn", 'Not proper format for IDs');
+			_action.data.nextmatch = _ids[0]._context._widget;
+			nm_popup_ids = [];
+			for(var i = 0; i < _ids.length; i++)
+			{
+				nm_popup_ids.push(_ids[i].id);
+			}
+		}
+		else
+		{
+			nm_popup_ids = _ids;
+		}
 		popup.style.display = 'block';
 /*
 Not working yet - DOM manipulation causes et2 problems
@@ -304,6 +317,8 @@ function nm_submit_popup(button)
 	}
 	// call regular nm_action to transmit action and senders correct
 	nm_action(nm_popup_action,nm_popup_ids, button, ids);
+
+	nm_hide_popup(button, null);
 }
 
 /**
@@ -312,7 +327,7 @@ function nm_submit_popup(button)
 function nm_hide_popup(element, div_id) 
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
-	var popup = jQuery("#"+_action.id+"_popup").get(0) || jQuery("[id*='" + _action.id + "_popup']").get(0);
+	var popup = jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
 
 	// Hide popup
 	if(popup) {
