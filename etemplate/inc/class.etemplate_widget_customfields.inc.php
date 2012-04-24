@@ -71,7 +71,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		)
 	);
 
-	public function __construct($xml) 
+	public function __construct($xml)
 	{
 		parent::__construct($xml);
 	}
@@ -106,7 +106,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
 		if ($app && $app != 'stylite' && $app != $GLOBALS['egw_info']['flags']['currentapp'] && (
-			$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields'] || 
+			$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields'] ||
 			etemplate::$hooked
 		))
 		{
@@ -236,7 +236,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					}
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 					
-					$valid = implode(',',$value);
+					$valid = is_array($value) ? implode(',',$value) : $value;
 					error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 				}
 			}
