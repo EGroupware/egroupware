@@ -1679,7 +1679,8 @@ function replace_eTemplate_onsubmit()
 				foreach($event['participants'] as $uid => $status)
 				{
 					calendar_so::split_user($uid, $user_type, $user_id);
-					$event['participant_types'][$user_type][$user_id] = $status;
+					$event['participants'][$uid] = $event['participant_types'][$user_type][$user_id] =
+						$status && $status !== 'X' ? $status : 'U';	// X --> no status given --> U = unknown
 				}
 			}
 			//error_log(__METHOD__."(...) parsed as ".array2string($event));
