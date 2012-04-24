@@ -20,14 +20,20 @@ class etemplate_widget_file extends etemplate_widget
 
 	public function __construct($xml='') {
 		if($xml) parent::__construct($xml);
+
+		// Legacy multiple - id ends in []
+		if(substr($this->id,-2) == '[]')
+		{
+			$this->attrs['multiple'] = true;
+		}
 	}
 
 	/**
          * Ajax callback to receive an incoming file
          *
          * The incoming file is moved from its temporary location (otherwise server will delete it) and
-         * the file information is stored into the widget's value.  When the form is submitted, the information for all 
-         * files uploaded is available in the returned $content array.  Because files are uploaded asynchronously, 
+         * the file information is stored into the widget's value.  When the form is submitted, the information for all
+         * files uploaded is available in the returned $content array.  Because files are uploaded asynchronously,
          * submission should be quick.
          *
          * @note Currently, no attempt is made to clean up files automatically.
@@ -49,28 +55,37 @@ class etemplate_widget_file extends etemplate_widget
                 }
 
 		$file_data = array();
-		foreach ($_FILES as $field => &$file) {
-			if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0) {
-				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
-				{
-					$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
-				}
-				else
-				{
-					$new_file = $value['file']['tmp_name'].'+';
-				}
-				if(move_uploaded_file($file['tmp_name'], $new_file)) {
-					$file['tmp_name'] = $new_file;
 
-					// Data to send back to client
-					$temp_name = basename($file['tmp_name']);
-					$file_data[$temp_name] = array(
-						'name' => $file['name'],
-						'type' => $file['type']
-					);
+		// There should only be one file, as they're sent one at a time
+		foreach ($_FILES as $field => &$files)
+		{
+			$widget = $template->getElementById($widget_id ? $widget_id : $field);
+			if($widget && $widget->attrs['mime']) {
+				$mime = $widget->attrs['mime'];
+			}
+
+			// Check for legacy [] in id to indicate multiple - it changes format
+			if(is_array($files['name'])) {
+				$file_list = array();
+				foreach($files as $f_field => $values)
+				{
+					foreach($values as $key => $f_value) {
+						$file_list[$key][$f_field] = $f_value;
+					}
+				}
+				foreach($file_list as $file)
+				{
+					self::process_uploaded_file($field, $file, $mime, $file_data);
 				}
 			}
+			else
+			{
+				// Just one file
+				self::process_uploaded_file($field, $files, $mime, $file_data);
+			}
 		}
+
+		// Set up response
 		$response->data($file_data);
 
 		// Check for a callback, call it if there is one
@@ -83,6 +98,45 @@ class etemplate_widget_file extends etemplate_widget
 				{
 					ExecMethod($callback, $_FILES[$field]);
 				}
+			}
+		}
+	}
+
+	/**
+	 * Process one uploaded file.  There should only be one per request...
+	 */
+	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
+	{
+		if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0 && is_uploaded_file($file['tmp_name'])) {
+			// Mime check
+			if($mime)
+			{
+				$type = $file['type'];
+				$is_preg = $mime[0] == '/';
+				if (!$is_preg && strcasecmp($mime[0],$type) ||
+					$is_preg && !preg_match($mime,$type))
+				{
+					$file_data[$file['name']] = lang('File is of wrong type (%1 != %2)!',$type,$mime);
+					continue;
+				}
+			}
+			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+			{
+				$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
+			}
+			else
+			{
+				$new_file = $file['tmp_name'].'+';
+			}
+			if(move_uploaded_file($file['tmp_name'], $new_file)) {
+				$file['tmp_name'] = $new_file;
+
+				// Data to send back to client
+				$temp_name = basename($file['tmp_name']);
+				$file_data[$temp_name] = array(
+					'name' => basename($file['name']),
+					'type' => $file['type']
+				);
 			}
 		}
 	}
@@ -102,6 +156,10 @@ class etemplate_widget_file extends etemplate_widget
 		$valid =& self::get_array($validated, $form_name, true);
 
 		if(!is_array($value)) $value = array();
+
+		// Incoming values indexed by temp name
+		if($value[0]) $value = $value[0];
+
 		foreach($value as $tmp => $file)
 		{
 			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
