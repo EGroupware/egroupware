@@ -836,6 +836,13 @@ class infolog_ui
 			'info_priority' => $this->bo->enums['priority'],
 		);
 
+		// remove group-types user has not any rights to as filter
+		// does not take implicit rights as delegated into account, so they will not be available as filters
+		foreach($this->bo->group_owners as $type => $group)
+		{
+			if (!isset($this->bo->grants[$group])) unset($sel_options['info_type'][$type]);
+		}
+
 		egw_framework::validate_file('.','index','infolog');
 
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
