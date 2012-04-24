@@ -14,6 +14,7 @@ accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
 accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
+access to calendar of %1 denied!	calendar	de	Zugriff auf den Kalender von %1 verweigert!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
 actions	calendar	de	Befehle
 actions...	calendar	de	Aktionen...
@@ -375,6 +376,7 @@ requested	calendar	de	Erforderlich
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholdende Termine ausgelassen!
 requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
+required information (start, end, title, ...) missing!	calendar	de	Zwingend erforderliche Information (Start, Ende, Titel, ...) fehlen!
 reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen
 resources	calendar	de	Ressourcen

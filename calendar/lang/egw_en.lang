@@ -14,6 +14,7 @@ accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !
+access to calendar of %1 denied!	calendar	en	Access to calendar of %1 denied!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
 actions...	calendar	en	Actions...
@@ -375,6 +376,7 @@ requested	calendar	en	Requested
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 requested meeting is in the past!	calendar	en	Requested meeting is in the past!
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
+required information (start, end, title, ...) missing!	calendar	en	Required information (start, end, title, ...) missing!
 reset	calendar	en	Reset
 reset participant stati on event shifts	calendar	en	Reset participant status on event shifts
 resources	calendar	en	Resources
