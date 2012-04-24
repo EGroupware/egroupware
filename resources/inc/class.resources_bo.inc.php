@@ -660,6 +660,7 @@ class resources_bo
 				// fall through
 			case 'gen_src':
 			default :
+				$src = $resource['picture_src'];
 				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
 				$picture .= strpos($src,'.') !== false ? $src : 'generic.png';
 		}
