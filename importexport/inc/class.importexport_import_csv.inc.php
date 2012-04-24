@@ -368,7 +368,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 						$record[$name] = date('Y-m-d H:i:s', $record[$name]);
 					}
 				}
-				if(strlen(trim($record[$name])) == 0)
+				if(array_key_exists($name, $record) && strlen(trim($record[$name])) == 0)
 				{
 					$record[$name] = null;
 				}
@@ -392,7 +392,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 						$record[$name] = date('Y-m-d', $record[$name]);
 					}
 				}
-				if(strlen(trim($record[$name])) == 0)
+				if(array_key_exists($name, $record) && strlen(trim($record[$name])) == 0)
 				{
 					$record[$name] = null;
 				}
