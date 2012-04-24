@@ -407,7 +407,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		});
 
 		// Clear / last button
-		var clear = $j(document.createElement("span"))
+		this.clear = $j(document.createElement("span"))
 			.addClass("ui-icon ui-icon-close ui-state-default")
 			.click(function(e){
 				// No way to tell if the results is open, so if they click the button while open, it clears
@@ -477,6 +477,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		if(!_value || _value.length == 0)
 		{
 			this.search.text("");
+			this.clear.hide();
 			this.value = {};
 			return;
 		}
@@ -499,6 +500,7 @@ var et2_link_entry = et2_inputWidget.extend({
 				};
 			}
 		}
+		this.clear.show();
 		if(!_value.app) _value.app = this.options.application;
 		if(typeof _value != 'object' || !(_value.app && _value.id))
 		{
@@ -514,8 +516,9 @@ var et2_link_entry = et2_inputWidget.extend({
 			{
 				// Title will be fetched from server and then set
 				var title = this.egw().link_title(_value.app, _value.id, function(title) {
-					this.removeClass("loading").val(title+"");
-				}, this.search);
+					this.search.removeClass("loading").val(title+"");
+					this.clear.show();
+				}, this);
 				this.search.addClass("loading");
 			}
 		}
@@ -570,6 +573,7 @@ var et2_link_entry = et2_inputWidget.extend({
 			if(!this.options.query(request, response)) return false;
 		}
 		this.search.addClass("loading");
+		this.clear.show();
 		var request = new egw_json_request("etemplate_widget_link::ajax_link_search::etemplate", 
 			[this.app_select.val(), '', request.term],
 			this
@@ -595,6 +599,7 @@ var et2_link_entry = et2_inputWidget.extend({
 			event.data.options.value.id = selected.item.value;
 		}
 
+		this.clear.show();
 		event.data.search.val(selected.item.label);
 
 	},
