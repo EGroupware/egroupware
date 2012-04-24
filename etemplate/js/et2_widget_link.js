@@ -366,6 +366,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		if(opt_count == 1) 
 		{
 			this.app_select.hide();
+			this.div.addClass("no_app");
 		}
 		self.options.value.app = this.app_select.val();
 
@@ -374,9 +375,8 @@ var et2_link_entry = et2_inputWidget.extend({
 			// .attr("type", "search") // Fake it for all browsers below
 			.focus(function(){if(!self.options.application) {
 				// Adjust width, leave room for app select & link button
-				self.search.css("width", "50%");self.app_select.show();
+				self.div.removeClass("no_app");self.app_select.show();
 			}})
-			.css("width", opt_count == 1 ? "100%" : "50%")
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
@@ -527,7 +527,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		
 		jQuery("option[value='"+_value.app+"']",this.app_select).attr("selected",true);
 		this.app_select.hide();
-		this.search.css("width", "100%");
+		this.div.addClass("no_app");
 	},
 
 	set_blur: function(_value, input) {

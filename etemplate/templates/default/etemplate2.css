@@ -326,15 +326,29 @@ span.et2_date span {
 
 /* Link entry - x button*/
 div.et2_link_entry {
+	white-space: nowrap;
 }
-.et2_link_entry input.ui-autocomplete-input {
+div.et2_link_entry:after {
+	display: inline-block;
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	margin: -20px;
+}
+/* Special layout for inside nm grid */
+.et2_nextmatch .et2_link_entry:after {
+	margin: 0px;
+}
+.et2_link_entry.no_app input.ui-autocomplete-input {
+	width: 100%;
 }
 .et2_link_entry .ui-icon-close {
+	display: inline-block;
 	background-color: inherit;
 	border: none;
 	position: relative;
-	top: -20px;
-	right: -91%;
+	top: 3px;
+	left: -18px;
 	cursor: pointer;
 }
 
