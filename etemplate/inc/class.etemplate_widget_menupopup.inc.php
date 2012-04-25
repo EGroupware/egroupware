@@ -616,3 +616,5 @@ class etemplate_widget_menupopup extends etemplate_widget
 		return $info;
 	}
 }
+
+etemplate_widget::registerWidget('etemplate_widget_menupopup', array('selectbox','listbox'));
