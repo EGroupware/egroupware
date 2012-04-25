@@ -38,6 +38,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		open: function(id_data, app, type, extra, target)
 		{
 			var id;
+			if(typeof target === 'undefined')
+			{
+				target = '_blank';
+			}
 			if (!app)
 			{
 				if (typeof id_data != 'object')
