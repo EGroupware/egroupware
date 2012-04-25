@@ -81,7 +81,7 @@ class infolog_merge extends bo_merge
 	 * @param string $prefix='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function infolog_replacements($id,$prefix='', &$content = '') 
+	public function infolog_replacements($id,$prefix='', &$content = '')
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
@@ -92,7 +92,7 @@ class infolog_merge extends bo_merge
 		foreach($_selects as $name => $value)
 		{
 			$selects['info_'.$name] = $value;
-			$types['select'][] = 'info_'.$name;
+			if(!in_array('info_'.$name, $types['select'])) $types['select'][] = 'info_'.$name;
 		}
 
 		if($content && strpos($content, '$$#') !== 0)
@@ -133,14 +133,14 @@ class infolog_merge extends bo_merge
 			$array["links/$app"] = $this->get_links('infolog',$id,$app, array($array['info_link']['id']));
 		}
 
-		// Check for linked project ID	 
-		$links = egw_link::get_links('infolog', $id, 'projectmanager');	 
+		// Check for linked project ID
+		$links = egw_link::get_links('infolog', $id, 'projectmanager');
 		foreach($links as $link_id => $app_id) {
-			$array['pm_id'] = $app_id;	 
-			$array['project'] = egw_link::title('projectmanager', $app_id);	 
-			break;	 
-		}	 
- 
+			$array['pm_id'] = $app_id;
+			$array['project'] = egw_link::title('projectmanager', $app_id);
+			break;
+		}
+
 		// Add markers
 		foreach($array as $key => &$value)
 		{
