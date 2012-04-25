@@ -589,12 +589,18 @@
 					$newVacation['forwards']    = get_var('vacation_forwards',array('POST'));
 				}
 				if (!in_array($newVacation['status'],array('on','off','by_date'))) $newVacation['status'] = 'off';
-				if ($this->timed_vacation)
+				if ($this->timed_vacation||isset($_POST['start_date']) || isset($_POST['end_date']))
 				{
-					$date = $jscal->input2date($_POST['start_date']);
-					if ($date['raw']) $newVacation['start_date'] = $date['raw']-12*3600;
-					$date = $jscal->input2date($_POST['end_date']);
-					if ($date['raw']) $newVacation['end_date'] = $date['raw']-12*3600;
+					if (isset($_POST['start_date']))
+					{
+						$date = $jscal->input2date($_POST['start_date']);
+						if ($date['raw']) $newVacation['start_date'] = $date['raw']-12*3600;
+					}
+					if (isset($_POST['end_date']))
+					{
+						$date = $jscal->input2date($_POST['end_date']);
+						if ($date['raw']) $newVacation['end_date'] = $date['raw']-12*3600;
+					}
 				}
 				if(isset($_POST['save']) || isset($_POST['apply']))
 				{
