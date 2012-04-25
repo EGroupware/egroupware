@@ -2057,6 +2057,7 @@ class infolog_ui
 
 		if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];
 
+		if(!is_array($content['link_to'])) $content['link_to'] = array();
 		$content['link_to']['to_app'] = 'infolog';
 		$content['link_to']['to_id'] = 0;
 		// Get links to be copied, if not excluded
