@@ -541,6 +541,13 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 	},
 
 	/**
+	 * Override parent to return null - no value, not node value
+	 */
+	getValue: function() {
+		return null;
+	},
+
+	/**
 	 * Functions for et2_IDetachedDOM
 	 */
 	 /**
