@@ -451,26 +451,20 @@ class emailadmin_bo extends so_sql
 				list($found,$data) = each($profileData);
 				$this->profileID = $_profileID = $data['profileID'];
 			} elseif ($GLOBALS['egw_info']['server']['smtp_server']) { // create a default profile, from the data in the api config
-				$this->profileID = $_profileID = $this->soemailadmin->addProfile(array(
+				$this->profileID = $_profileID = $this->setDefaultProfile(array(
 					'description' => $GLOBALS['egw_info']['server']['smtp_server'],
 					'defaultDomain' => $GLOBALS['egw_info']['server']['mail_suffix'],
 					'organisationName' => '',
-					'userDefinedAccounts' => '',
-					'userDefinedIdentities' => '',
-				),array(
-					'smtpServer' => $GLOBALS['egw_info']['server']['smtp_server'],
-					'smtpPort' => $GLOBALS['egw_info']['server']['smtp_port'],
-					'smtpAuth' => '',
-					'smtpType' => 'defaultsmtp',
-				),array(
-					'imapServer' => $GLOBALS['egw_info']['server']['mail_server'] ?
-						$GLOBALS['egw_info']['server']['mail_server'] : $GLOBALS['egw_info']['server']['smtp_server'],
-					'imapPort' => '143',
-					'imapType' => 'defaultimap',	// imap
-					'imapLoginType' => $GLOBALS['egw_info']['server']['mail_login_type'] ?
+					'smtp_server' => $GLOBALS['egw_info']['server']['smtp_server'],
+					'smtp_port' => $GLOBALS['egw_info']['server']['smtp_port'],
+					'smtpAuth' => $GLOBALS['egw_info']['server']['smtpAuth'],
+					'smtp_auth_user' => $GLOBALS['egw_info']['server']['smtp_auth_user'],
+					'smtp_auth_passwd' => $GLOBALS['egw_info']['server']['smtp_auth_passwd'],
+					'mail_server' => $GLOBALS['egw_info']['server']['mail_server'], // ? DO NOT USE THE SMTP Server, as no IMAP Server may be intentional
+					//	$GLOBALS['egw_info']['server']['mail_server'] : $GLOBALS['egw_info']['server']['smtp_server'],
+					'mail_server_type' => $GLOBALS['egw_info']['server']['mail_server_type'],
+					'mail_login_type' => $GLOBALS['egw_info']['server']['mail_login_type'] ?
 						$GLOBALS['egw_info']['server']['mail_login_type'] : 'standard',
-					'imapTLSEncryption' => '0',
-					'imapTLSAuthentication' => '',
 				));
 				$profileData[$found = 0] = array(
 					'smtpType' => 'defaultsmtp',
@@ -910,10 +904,11 @@ class emailadmin_bo extends so_sql
 		$profile = array_merge($profile,array_diff_assoc($settings,$to_parse));
 		//error_log(__METHOD__.__LINE__.' Profile to Save:'.array2string($profile));
 		//error_log(__METHOD__.__LINE__.' Profile to Parse:'.array2string($to_parse));
-		$this->soemailadmin->updateProfile($profile);
+		$profileID = $this->soemailadmin->updateProfile($profile);
 		self::$sessionData['profile'] = array();
 		$this->saveSessionData();
 		//echo "<p>EMailAdmin profile update: ".print_r($profile,true)."</p>\n"; exit;
+		return $profileID;
 	}
 
 	function saveSessionData()

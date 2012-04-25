@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="emailadmin.edit.global" template="" lang="" group="0" version="1.9.001">
+	<template id="emailadmin.edit.global" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -43,7 +43,7 @@
 										<menupopup id="ea_appname" options="any application"/>
 									</menulist>
 								</row>
-								<row>
+								<row disabled="@ea_user">
 									<description value="can be used by group"/>
 									<menulist>
 										<menupopup type="select-account" id="ea_group" options="any group,groups"/>
