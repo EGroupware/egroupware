@@ -33,7 +33,7 @@ function goToMessage(url) {
 	//alert(getUrlPart(window.location.href,'uid'));
 	var oldUid = getUrlPart(window.location.href,'uid');
 	var newUid = getUrlPart(url,'uid');
-	window.opener.mail_parentRefreshListRowStyle(oldUid, newUid);
+	window.opener.mail_parentRefreshListRowStyle(oldUid, newUid, true);
 	window.location.href = url;
 	//opener.refresh();
 }

@@ -80,9 +80,10 @@ function mail_disabledByClass(_action, _senders, _target)
 	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
 }
 
-function mail_parentRefreshListRowStyle(oldID, newID)
+function mail_parentRefreshListRowStyle(oldID, newID, setNewAsSeen)
 {
 	// the old implementation is not working anymore, so we use the gridObject for this
+	if (typeof setNewAsSeen == 'undefined') setNewAsSeen = false;
 	var allElements = mailGrid.dataRoot.actionObject.flatList();
 	for (var i=0; i<allElements.length; i++) 
 	{
@@ -97,6 +98,7 @@ function mail_parentRefreshListRowStyle(oldID, newID)
 			{
 				allElements[i].setSelected(false);
 				allElements[i].setFocused(true);
+				if (setNewAsSeen) fm_msg_removeClass(newID, 'unseen');
 			}
 		}
 	}
