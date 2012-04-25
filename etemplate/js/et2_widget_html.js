@@ -18,7 +18,7 @@
 	et2_core_baseWidget;
 */
 
-var et2_html = et2_baseWidget.extend({
+var et2_html = et2_valueWidget.extend({
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -32,7 +32,7 @@ var et2_html = et2_baseWidget.extend({
 
 	loadContent: function(_data) {
 		// Create an object containg the given value and an empty js string
-		var html = {html: value, js: ''};
+		var html = {html: _data ? _data : '', js: ''};
 
 		// Seperate the javascript from the given html. The js code will be
 		// written to the previously created empty js string
@@ -41,6 +41,11 @@ var et2_html = et2_baseWidget.extend({
 		// Append the html to the parent element
 		this.htmlNode.append(html.html);
 		this.htmlNode.append(html.js);
+	},
+
+	set_value: function(_value) {
+		this.htmlNode.empty();
+		this.loadContent(_value);
 	}
 
 });
