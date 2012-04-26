@@ -265,9 +265,11 @@ class Net_IMAP extends Net_IMAPProtocol {
     function getRawHeaders($msg_id, $part_id = '', $uidFetch = false)
     {
         if($part_id != '') {
-          $command = "BODY[$part_id.HEADER]";
+          $command = "BODY.PEEK[$part_id.HEADER]";
+          $resp_command = 'BODY[' . $part_id . '.HEADER]';
         } else {
-          $command = "BODY[HEADER]";
+          $command = "BODY.PEEK[HEADER]";
+          $resp_command = 'BODY[HEADER]';
         }
         if($uidFetch == true) {
           $ret=$this->cmdUidFetch($msg_id, $command);
@@ -280,7 +282,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(strtoupper( $ret["RESPONSE"]["CODE"]) != "OK" ){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"][$command]["CONTENT"];
+        $ret=$ret["PARSED"][0]["EXT"][$resp_command]["CONTENT"];
         return $ret;
     }
 
@@ -472,17 +474,19 @@ class Net_IMAP extends Net_IMAPProtocol {
      *
      * @param   $msg_id Message number
      * @param   boolean $uidFetch  msg_id contains UID's instead of Message Sequence Number if set to true
+     * @param   boolean $preserveSeen  leaves the Seen Flag untouched if set to true (default is false)
      *
      * @return  mixed   Either message body or false on error
      *
      * @access  public
      */
-    function getBody($msg_id, $uidFetch = false)
+    function getBody($msg_id, $uidFetch = false, $preserveSeen = false)
     {
+        $peek = ($preserveSeen) ? ".PEEK" : "";
         if($uidFetch) {
-          $ret=$this->cmdUidFetch($msg_id,"BODY[TEXT]");
+          $ret=$this->cmdUidFetch($msg_id,"BODY".$peek."[TEXT]");
         } else {
-          $ret=$this->cmdFetch($msg_id,"BODY[TEXT]");
+          $ret=$this->cmdFetch($msg_id,"BODY".$peek."[TEXT]");
         }
         if (PEAR::isError($ret)) {
             return $ret;
@@ -502,17 +506,19 @@ class Net_IMAP extends Net_IMAPProtocol {
      * @param   $msg_id Message number
      * @param   string  $partId Message number
      * @param   boolean $uidFetch  msg_id contains UID's instead of Message Sequence Number if set to true
+     * @param   boolean $preserveSeen  leaves the Seen Flag untouched if set to true (default is false)
      *
      * @return  mixed   Either message body or false on error
      *
      * @access  public
      */
-    function getBodyPart($msg_id, $partId, $uidFetch = false)
+    function getBodyPart($msg_id, $partId, $uidFetch = false, $preserveSeen = false)
     {
+        $peek = ($preserveSeen) ? ".PEEK" :  "" ;
         if($uidFetch) {
-          $ret=$this->cmdUidFetch($msg_id,"BODY[$partId]");
+          $ret=$this->cmdUidFetch($msg_id,"BODY".$peek."[$partId]");
         } else {
-          $ret=$this->cmdFetch($msg_id,"BODY[$partId]");
+          $ret=$this->cmdFetch($msg_id,"BODY".$peek."[$partId]");
         }
         if (PEAR::isError($ret)) {
             return $ret;
