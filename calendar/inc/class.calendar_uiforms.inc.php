@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-10 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-12 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -445,6 +445,7 @@ class calendar_uiforms extends calendar_ui
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
 			unset($event['id']);
 			unset($event['uid']);
+			unset($event['caldav_name']);
 			unset($event['alarm']);
 			unset($event['reference']);
 			unset($event['recurrence']);
