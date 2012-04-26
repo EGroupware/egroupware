@@ -210,7 +210,8 @@ function submit_statistic(form,submit_url,confirm_msg)
 
 		$data['php'] = PHP_VERSION.': '.PHP_SAPI;
 		$data['os'] = PHP_OS;
-		if (file_exists($file = '/etc/SuSE-release') || file_exists($file = '/etc/redhat-release') || file_exists($file = '/etc/debian_version'))
+		// @ required to get ride of warning, if files are outside of open_basedir
+		if (@file_exists($file = '/etc/SuSE-release') || @file_exists($file = '/etc/redhat-release') || @file_exists($file = '/etc/debian_version'))
 		{
 			$data['os'] .= ': '.str_replace(array("\n","\r"),'',implode(',',file($file)));
 		}
