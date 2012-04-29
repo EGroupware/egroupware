@@ -56,12 +56,10 @@ The example acl_addressbook.conf allow:
 
 Please note: 
 -----------
-- The group ACL requires that the used groups have the groupOfNames objectclass with
-  member attributes containing the dn's of all members! The memberUid attribute of
-  posixGroup is NOT enough. If you use a distribution other then SuSE, you can NOT
-  use both objectclasses together, as both are structural objects. You have to use
-  the alternative rfc2307bis.schema instead of the stock nis.schema to do so.
-  The README in phpgwapi/doc/ldap describs how to change your ldap accordingly!
+- There are two way to archive the group ACL, pick one of them
+a) groups use just posixGroup with memberUid containing uid of members
+b) groups use groupOfNames with member containing dn of members
+(Using deprecated rfc2307bis schema, you can have both, thought you still need to choose how to implement group ACL)
 - You need to copy our example acl_addressbook.conf into your openldap conf dir.
 - You need to change all dc=domain,dc=com with the base DN your LDAP uses!!!
 - If you want to use the old mozillaOrgPerson schema, you need to change it here too!
@@ -114,12 +112,13 @@ access to dn.regex="cn=([^,]+),ou=personal,ou=contacts,o=([^,]+),dc=domain,dc=co
 	by dn.regex="uid=$1,ou=accounts,o=$2,dc=domain,dc=com" write
 	by users none
 
-# Access to groups addressbooks
+# YOU NEED TO REMOVE EITHER NEXT 3 ACL ENTRIES
+# Access to group addressbooks: with just posixGroup (case a) above)
 
 # allow read of addressbook by members and egwadmin account
 access to dn.regex="^cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
 	attrs=entry
-	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" read
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" read
 	by dn.regex="cn=egwadmin,o=$2,dc=domain,dc=com" write
 	by users none
 
@@ -127,11 +126,34 @@ access to dn.regex="^cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com
 # needs write access to the entries ENTRY attribute ...
 access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
 	attrs=children
-	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" write
 	by users none
 
 # ... and the entries CHILDREN
 access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
 	attrs=entry,@inetOrgPerson,@mozillaAbPersonAlpha,@evolutionPerson
-	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" write
 	by users none
+
+# OR THE FOLLOWING 3 ACL ENTRIES, YOU CAN NOT HAVE BOTH!
+# Access to group addressbooks: with groupOfNames (case b) above)
+#
+# allow read of addressbook by members and egwadmin account
+#access to dn.regex="^cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=entry
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" read
+#	by dn.regex="cn=egwadmin,o=$2,dc=domain,dc=com" write
+#	by users none
+#
+# allow members to create entries in there group addressbooks; no-one else can access it
+# needs write access to the entries ENTRY attribute ...
+#access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=children
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+#	by users none
+#
+# ... and the entries CHILDREN
+#access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=entry,@inetOrgPerson,@mozillaAbPersonAlpha,@evolutionPerson
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+#	by users none
