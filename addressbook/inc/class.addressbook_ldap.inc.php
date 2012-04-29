@@ -502,7 +502,7 @@ class addressbook_ldap
 
 			if (!@ldap_modify($this->ds, $dn, $ldapContact))
 			{
-				//echo "<p>ldap_modify($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
+				//echo "<p>ldap_modify($this->ds,'$dn',".print_r($ldapContact,true).') failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .")</p>\n";
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
 				error_log(print_r($ldapContact,true));
 				return $this->_error(__LINE__);
@@ -511,12 +511,13 @@ class addressbook_ldap
 		else
 		{
 			$dn = 'uid='. ldap::quote($ldapContact['uid']) .','. $baseDN;
+			unset($ldapContact['entryuuid']);	// trying to write it, gives an error
 
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
 			{
-				//echo "<p>ldap_add($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
+				//echo "<p>ldap_add($this->ds,'$dn',".array2string($ldapContact).") failed errorcode: ".ldap_errno($this->ds) .' ('. ldap_error($this->ds) .")</p>\n";
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				error_log(print_r($ldapContact,true));
+				error_log(array2string($ldapContact));
 				return $this->_error(__LINE__);
 			}
 		}
@@ -964,7 +965,7 @@ class addressbook_ldap
 				if(!@ldap_add($adminDS, $dn, $data))
 				{
 					//echo "<p>ldap_add($adminDS,'$dn',".print_r($data,true).")</p>\n";
-					$err = $this->_error(__LINE__,$adminDS);
+					$err = lang("Can't create dn %1",$dn).': '.$this->_error(__LINE__,$adminDS);
 					$adminLDAP->ldapDisconnect();
 					return $err;
 				}
