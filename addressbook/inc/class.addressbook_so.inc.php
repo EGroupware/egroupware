@@ -530,7 +530,7 @@ class addressbook_so
 						// which need to be the account_lid for accounts!
 						$data['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 					}
-					ExecMethod('addressbook.addressbook_ldap.save',$data);
+					$error_nr = ExecMethod('addressbook.addressbook_ldap.save',$data);
 				}
 			}
 		}
@@ -582,7 +582,7 @@ class addressbook_so
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
 		//echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
-		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')");
+		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
 		// Handle 'None' country option
 		if(is_array($filter) && $filter['adr_one_countrycode'] == '-custom-')
