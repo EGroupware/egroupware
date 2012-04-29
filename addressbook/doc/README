@@ -1,0 +1,159 @@
+eGroupWare Addressbook 1.3+ LDAP support
+========================================
+
+The new Addressbook requires only the inetOrgPerson schema.
+
+If you want to use extra attributes availible in the SQL addressbook
+like eg. the home-address you need to use some other supported schema:
+- evolutionOrgPerson	used by evolution
+- mozillaAbPersonAlpha	used by thunderbird & sunbird 1.5+
+- mozillaOrgPerson		older mozilla schema (depricated, but mostly compatible to mozillaAbPersonAlpha)
+
+Please note: 
+You can or should install the evolutionPerson schema together with ONE
+of the mozilla schemas. You can NOT install both mozilla schema!
+
+If the addressbook detects a schema, it fills the extra fields of that schema.
+
+LDAP layout used for the eGroupWare addressbook
+-----------------------------------------------
+
+dc=domain,dc=com    base DN of your LDAP server
+|
++-o=default         base DN for the addressbook of eGroupWare domain / DB instance "default"
+| |                 (specified in Admin >> Addressbook >> Site config)
+| |
+| +-ou=accounts     base DN for accounts (specified in Setup >> Configuration)
+| | +-uid=ralf      entry for user ralf
+| | +-uid=lars      entry for user lars
+| | +-uid=...       other users
+| |
+| +-ou=groups       base DN for groups (specified in Setup >> Configuration)
+| | +-cn=Default    entry for the group Default
+| | +-cn=...        other groups
+| |
+| +ou=contacts
+|   |
+|   +-ou=shared     shared addressbooks of the groups
+|   | +-cn=default  addressbook of group Default
+|   | +-cn=...
+|   |
+|   +-ou=personal   personal addressbooks of the users
+|     +-cn=ralf     addressbook of user ralf
+|     +-cn=lars     addressbook of user lars
+|     +-cn=...
+|
++-o=other           other eGroupWare domain / DB instance
+  +-...
+
+The contact base DN must include the accounts and groups base DN, otherwise they will not be 
+searched AND the ACL given below does NOT work!
+ 
+The example acl_addressbook.conf allow:
+--------------------------------------
+- only the user to read, edit or delete in his personal addressbook
+- group-members to read, edit or delete in their group addressbook(s)
+
+Please note: 
+-----------
+- There are two way to archive the group ACL, pick one of them
+a) groups use just posixGroup with memberUid containing uid of members
+b) groups use groupOfNames with member containing dn of members
+(Using deprecated rfc2307bis schema, you can have both, thought you still need to choose how to implement group ACL)
+- You need to copy our example acl_addressbook.conf into your openldap conf dir.
+- You need to change all dc=domain,dc=com with the base DN your LDAP uses!!!
+- If you want to use the old mozillaOrgPerson schema, you need to change it here too!
+- You need to include "your" acl_addressbook.conf BEFORE the last acl entry (access to *) 
+  in your slapd.conf and restart the LDAP server. 
+  
+This is how the default ACL's in /etc/openldap/slapd.conf of my (SuSE 10.1) looks and 
+where I included it:
+
+access to dn.base=""
+        by * read
+
+access to dn.base="cn=Subschema"
+        by * read
+
+access to attrs=userPassword,userPKCS12
+        by self write
+        by * auth
+
+access to attrs=shadowLastChange
+        by self write
+        by * read
+
+include /etc/openldap/acl_addressbook.conf
+
+access to *
+        by * read
+
+---- acl_addressbook.conf --------------------------------------------------------
+
+# Access to users personal addressbooks
+
+# allow read of addressbook by owner and egwadmin account
+access to dn.regex="^cn=([^,]+),ou=personal,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=entry
+	by dn.regex="uid=$1,ou=accounts,o=$2,dc=domain,dc=com" read
+	by dn.regex="cn=egwadmin,o=$2,dc=domain,dc=com" write
+	by users none
+
+# allow user to create entries in own addressbook; no-one else can access it
+# needs write access to the entries ENTRY attribute ...
+access to dn.regex="cn=([^,]+),ou=personal,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=children
+	by dn.regex="uid=$1,ou=accounts,o=$2,dc=domain,dc=com" write
+	by users none
+
+# ... and the entries CHILDREN
+access to dn.regex="cn=([^,]+),ou=personal,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=entry,@inetOrgPerson,@mozillaAbPersonAlpha,@evolutionPerson
+	by dn.regex="uid=$1,ou=accounts,o=$2,dc=domain,dc=com" write
+	by users none
+
+# YOU NEED TO REMOVE EITHER NEXT 3 ACL ENTRIES
+# Access to group addressbooks: with just posixGroup (case a) above)
+
+# allow read of addressbook by members and egwadmin account
+access to dn.regex="^cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=entry
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" read
+	by dn.regex="cn=egwadmin,o=$2,dc=domain,dc=com" write
+	by users none
+
+# allow members to create entries in there group addressbooks; no-one else can access it
+# needs write access to the entries ENTRY attribute ...
+access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=children
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" write
+	by users none
+
+# ... and the entries CHILDREN
+access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+	attrs=entry,@inetOrgPerson,@mozillaAbPersonAlpha,@evolutionPerson
+	by set.expand="user/uid & [cn=$1,ou=groups,o=$2,dc=domain,dc=com]/memberUid" write
+	by users none
+
+# OR THE FOLLOWING 3 ACL ENTRIES, YOU CAN NOT HAVE BOTH!
+# Access to group addressbooks: with groupOfNames (case b) above)
+#
+# allow read of addressbook by members and egwadmin account
+#access to dn.regex="^cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=entry
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" read
+#	by dn.regex="cn=egwadmin,o=$2,dc=domain,dc=com" write
+#	by users none
+#
+# allow members to create entries in there group addressbooks; no-one else can access it
+# needs write access to the entries ENTRY attribute ...
+#access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=children
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+#	by users none
+#
+# ... and the entries CHILDREN
+#access to dn.regex="cn=([^,]+),ou=shared,ou=contacts,o=([^,]+),dc=domain,dc=com$"
+#	attrs=entry,@inetOrgPerson,@mozillaAbPersonAlpha,@evolutionPerson
+#	by group.expand="cn=$1,ou=groups,o=$2,dc=domain,dc=com" write
+#	by users none
