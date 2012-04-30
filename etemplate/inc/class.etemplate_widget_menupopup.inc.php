@@ -121,7 +121,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 		if ($this->attrs['type'])
 		{
 			// += to keep further options set by app code
-			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
+			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'],
+				// typeOptions thinks # of rows is the first thing in options
+				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
 
 			// if no_lang was modified, forward modification to the client
@@ -293,14 +295,14 @@ class etemplate_widget_menupopup extends etemplate_widget
 						}
 						$s .= $global_marker;
 					}
-					$options[$cat['id']] = empty($cat['description']) ? $s : array(
+					$options[$cat['id']] = array(
 						'label' => $s,
-						'title' => $cat['description'],
+						'title' => empty($cat['description']) ? $s : $cat['description'],
 					);
 					// For multi-select, send data too
 					if($rows > 1)
 					{
-						$options[$cat['id']]['data'] = $cat['data'];
+						$options[$cat['id']] += $cat['data'];
 					}
 				}
 				// preserv unavailible cats (eg. private user-cats)
@@ -590,7 +592,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$acc['account_'.$name] = $data[$id][$name];
 			}
 		}
-		$info = $show_type ? '('.$acc['account_type'].') ' : '';
 
 		if ($acc['account_type'] == 'g')
 		{
@@ -612,6 +613,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$info = $GLOBALS['egw']->common->display_fullname($acc['account_lid'],
 					$acc['account_firstname'],$acc['account_lastname']);
 				break;
+		}
+		if($show_type) {
+			$info = array(
+				'label'	=> $info,
+				'icon' => $acc['account_type'] == 'g' ? 'addressbook/group' : 'users'
+			);
 		}
 		return $info;
 	}

@@ -220,18 +220,18 @@ var et2_selectbox = et2_inputWidget.extend({
 		}
 
 		// Some special stuff for categories
-		if(option_data)
+		if(option_data )
 		{
-			if(option_data.data.icon)
+			if(option_data.icon)
 			{
-				var img = this.egw().image(option_data.data.icon);
+				var img = this.egw().image(option_data.icon);
 				jQuery(document.createElement("img"))
 					.attr("src", img)
 					.appendTo(label);
 			}
-			if(option_data.data.color)
+			if(option_data.color)
 			{
-				label.css("background-color",option_data.data.color);
+				label.css("background-color",option_data.color);
 			}
 		}
 		label.append(jQuery("<span>"+_label+"</span>"))
@@ -519,7 +519,10 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 
 	// Handle read-only multiselects in the same way
 	createMultiSelect: function() {
-		this.createInputWidget();
+		this.span = $j(document.createElement("ul"))
+			.addClass("et2_selectbox readonly");
+
+		this.setDOMNode(this.span[0]);
 	},
 
 	loadFromXML: function(_node) {
@@ -543,7 +546,25 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 	},
 
 	set_value: function(_value) {
+		if(typeof _value == "string" && _value.match(/[,0-9]+$/) !== null && this.options.multiple)
+		{
+			_value = _value.split(',');
+		}
 		this.value = _value;
+		if(typeof _value == "object")
+                {
+			this.span.empty();
+                        for(var i = 0; i < _value.length; i++)
+                        {
+				var option = this.optionValues[_value[i]];
+				if(typeof option === "object")
+				{
+					option = option.label;
+				}
+				this.span.append("<li>"+option+"</li>");
+                        }
+			return;
+                }
 		var option = this.optionValues[_value];
 		if (typeof option === 'object')
 		{
