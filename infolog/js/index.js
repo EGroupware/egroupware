@@ -29,3 +29,12 @@ function confirm_delete(_action, _senders)
 	}
 	nm_open_popup(_action, _senders);
 }
+
+/**
+ * Show or hide details by changing the CSS class
+ */
+function show_details(show)
+{
+	// Show / hide descriptions
+        egw.css(".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
+}

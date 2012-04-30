@@ -378,6 +378,10 @@ class infolog_ui
 		{
 			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 		}
+		
+		// Check to see if we need to remove description
+		$et = new ReflectionClass('etemplate');
+		$remove = !($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -388,7 +392,7 @@ class infolog_ui
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 
 				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
-					$query['filter2'] == 'no_describtion')
+					$query['filter2'] == 'no_describtion' && $remove)
 				{
 					unset($info['info_des']);
 				}
@@ -776,6 +780,16 @@ class infolog_ui
 			'all'            => 'details',
 		);
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
+		$values['nm']['filter2_onchange'] = "
+if(typeof widget != 'undefined') {
+	// Show / hide descriptions
+	show_details(jQuery(this).val() == 'all');
+}
+else
+{
+	this.form.submit();
+}
+";
 		// disable columns for main entry as set in the pref for details or no details
 		if ($action == 'sp')
 		{
@@ -803,6 +817,10 @@ class infolog_ui
 			foreach (array_keys($values['nm']['col_filter']) as $colfk) if (is_int($colfk)) unset($values['nm']['col_filter']);
 			$values['nm']['header_left'] = 'infolog.index.dates';
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
+		}
+		if ($values['nm']['filter2'] == 'no_describtion')
+		{
+			$GLOBALS['egw']->js->set_onload("show_details(false);");
 		}
 		$values['nm']['bottom_too'] = True;
 		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ?
