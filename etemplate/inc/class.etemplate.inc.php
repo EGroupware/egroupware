@@ -163,6 +163,13 @@ class etemplate_new extends etemplate_widget_template
 			$theme = 'smoothness';
 			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.16.custom.css");
 
+			// check if application of template has a app.js file --> load it
+			list($app) = explode('.',$this->name);
+			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+			{
+				egw_framework::validate_file('.','app',$app,false);
+			}
+
 			common::egw_header();
 			if ($output_mode != 2)
 			{
@@ -240,6 +247,9 @@ class etemplate_new extends etemplate_widget_template
 		{
 			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
 		}
+
+		translation::add_app($GLOBALS['egw_info']['flags']['currentapp']);
+
 		$validated = array();
 		$template->run('validate', array('', $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
 		if (self::validation_errors(self::$request->ignore_validation))
