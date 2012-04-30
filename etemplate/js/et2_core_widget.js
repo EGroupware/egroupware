@@ -713,7 +713,10 @@ var et2_widget = Class.extend({
 			if (this.implements(et2_IDOMNode))
 			{
 				var node = this.getDOMNode();
-				wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
+				if(node && node.ownerDocument)
+				{
+					wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
+				}
 			}
 
 			// If we're the root object, return the phpgwapi API instance
