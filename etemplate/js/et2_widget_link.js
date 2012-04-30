@@ -823,7 +823,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.list = $j(document.createElement("ul"))
 			.addClass("et2_link_string");
 
-		if(this.options['class']) this.node.addClass(this.options['class']);
+		if(this.options['class']) this.list.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
 	},
 
