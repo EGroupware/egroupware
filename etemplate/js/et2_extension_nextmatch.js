@@ -1546,6 +1546,8 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
 			case "link-entry":
 				_attrs.type = 'nextmatch-entryheader';
 				break;
+			default:
+				_attrs.type = _attrs.widget_type;
 		}
 		this.real_node = et2_createWidget(_attrs.type, _attrs, this._parent);
 	},
