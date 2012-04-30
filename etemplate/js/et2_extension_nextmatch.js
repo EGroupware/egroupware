@@ -1093,6 +1093,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		// Set onChange
 		var input = select.input;
 		
+		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+		select.attributes.value.ignore = true;
+		select.attributes.select_options.ignore = true;
+
 		if (this.nextmatch.options.settings[name+"_onchange"])
 		{
 			// Make sure to get the new value for filtering
@@ -1439,6 +1443,13 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 			}
 			event.data.nextmatch.applyFilters();
 		});
+
+	},
+
+	set_select_options: function(_options) {
+		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+		this.attributes.select_options.ignore = true;
+		this._super.apply(this, arguments);
 	},
 
 	/**
@@ -1452,6 +1463,9 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
 		{
 			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+
+			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+			this.attributes.value.ignore = true;
 		}
 	}
 
@@ -1499,6 +1513,10 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
 		{
 			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+
+			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+			this.attributes.value.ignore = true;
+			this.attributes.select_options.ignore = true;
 		}
 		var self = this;
 		// Fire on lost focus, clear filter if user emptied box

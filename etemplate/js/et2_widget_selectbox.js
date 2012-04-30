@@ -374,6 +374,11 @@ var et2_selectbox = et2_inputWidget.extend({
 		{
 			if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
 			{
+				if(this.options.select_options[_value])
+				{
+					// Options not set yet? Do that now, which will try again.
+					return this.set_select_options(this.options.select_options);
+				}
 				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
 			}
 		}
@@ -415,6 +420,21 @@ var et2_selectbox = et2_inputWidget.extend({
 	 * added after the "option"-widgets were added to selectbox.
 	 */
 	set_select_options: function(_options) {
+		// Empty current options
+		if(this.input)
+		{
+			this.input.empty();
+		}
+		else if (this.multiOptions)
+		{
+			this.multiOptions.empty();
+		}
+		// Re-add empty, it's usually not there
+		if(this.options.empty_label && typeof _options[''] == 'undefined')
+		{
+			_options[''] = this.options.empty_label;
+		}
+
 		// Add the select_options
 		for (var key in _options)
 		{
