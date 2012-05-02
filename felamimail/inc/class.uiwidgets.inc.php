@@ -1466,7 +1466,8 @@ $j(document).ready(function() {
 				$flags = $this->bofelamimail->getFlags($headerData['uid']);
 				if ($this->bofelamimail->getNotifyFlags($headerData['uid'],($flags?$flags:null)) === null)
 				{
-					$headers    = $this->bofelamimail->getMessageHeader($headerData['uid']);
+					$headers = $this->bofelamimail->getMessageHeader($headerData['uid']);
+					$sent_not = '';
 					if ( isset($headers['DISPOSITION-NOTIFICATION-TO']) ) {
 						$sent_not = $this->bofelamimail->decode_header(trim($headers['DISPOSITION-NOTIFICATION-TO']));
 					} else if ( isset($headers['RETURN-RECEIPT-TO']) ) {
