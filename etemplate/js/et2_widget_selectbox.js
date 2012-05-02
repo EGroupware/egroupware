@@ -337,12 +337,12 @@ var et2_selectbox = et2_inputWidget.extend({
 		var options = et2_directChildrenByTagName(_node, "options");
 		for (var i = 0; i < options.length; i++)
 		{
-			this._appendOptionElement(
-				et2_readAttrWithDefault(options[i], "value", options[i].textContent),
-				options[i].textContent,
-				et2_readAttrWithDefault(options[i], "title", "")
-			);
+			this.options.select_options[et2_readAttrWithDefault(options[i], "value", options[i].textContent)] = {
+				"label": options[i].textContent,
+				"title": et2_readAttrWithDefault(options[i], "title", "")
+			};
 		}
+		this.set_select_options(this.options.select_options);
 	},
 
 	set_value: function(_value) {
@@ -430,7 +430,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			this.multiOptions.empty();
 		}
 		// Re-add empty, it's usually not there
-		if(this.options.empty_label && typeof _options[''] == 'undefined')
+		if(this.options.empty_label)
 		{
 			_options[''] = this.options.empty_label;
 		}
