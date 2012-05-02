@@ -408,7 +408,7 @@ var et2_link_entry = et2_inputWidget.extend({
 
 		// Clear / last button
 		this.clear = $j(document.createElement("span"))
-			.addClass("ui-icon ui-icon-close ui-state-default")
+			.addClass("ui-icon ui-icon-close")
 			.click(function(e){
 				// No way to tell if the results is open, so if they click the button while open, it clears
 				if(self.last_search && self.last_search != self.search.val())
@@ -426,7 +426,6 @@ var et2_link_entry = et2_inputWidget.extend({
 				}
 				self.search.focus();
 			})
-			.hover(function() {$j(this).addClass("ui-state-hover");}, function() {$j(this).removeClass("ui-state-hover");})
 			.appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
