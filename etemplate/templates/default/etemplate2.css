@@ -121,7 +121,7 @@ a.et2_url.url {
 
 	text-shadow: 1px 1px #E0E0E0;
 }
-.et2_button_text {
+.et2_button_text, input[type=button] {
 	background-color: #E0E0E0;
 	background-image: url(images/gradient01.png);
 	background-position: center;
@@ -138,19 +138,29 @@ a.et2_url.url {
 	background: transparent;
 	padding: 2px;
 }
-button.et2_button_text:hover {
+button.et2_button_text:hover, input[type=button]:hover {
 	color: #050505;
 	border: 1px solid gray;
 	background-color: #D0D0EE;
 }
-button.et2_button_text:active {
+button.et2_button_text:active, input[type=button]:active {
 	background-image: url(images/gradient02.png);
 	background-color: #D0D0E0;
 }
-button.et2_button_text:focus {
+button.et2_button_text:focus, input[type=button]:focus {
 	border: 1px solid #2c3d6f;
 	color: #202d52;
 	outline: none;
+}
+
+/**
+ * Color picker widget
+ */
+.et2_color {
+	padding: .5ex;
+	height: 2ex;
+	width: 2ex;
+	border: 1px solid silver;
 }
 
 /**
