@@ -145,8 +145,8 @@ class PHPMailer {
 
   /**
    * Sets the text-only body of the message.  This automatically sets the
-   * email to multipart/alternative. This is used to send calendar meeting requests as 
-   * Outlook does. It adds an 3rd alternative part to multipart/alternative 
+   * email to multipart/alternative. This is used to send calendar meeting requests as
+   * Outlook does. It adds an 3rd alternative part to multipart/alternative
    * @var string
    */
   public $AltExtended       = '';
@@ -624,6 +624,9 @@ class PHPMailer {
 
       if (empty($this->Body)) {
         throw new phpmailerException($this->Lang('empty_message'), self::STOP_CRITICAL);
+      }
+      if ($this->IsError()) {
+        throw new phpmailerException($this->ErrorInfo, self::STOP_CRITICAL);
       }
 
       // digitally sign with DKIM if enabled
@@ -1544,6 +1547,7 @@ class PHPMailer {
       } else {
         $mime[] = $this->EncodeFile($path, $encoding);
         if($this->IsError()) {
+          $this->SetError(__METHOD__.'->'.'cowardly refuse to attach empty or missing file:'.($name?$name:$filename) );
           return '';
         }
         $mime[] = $this->LE.$this->LE;
@@ -1564,32 +1568,44 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function &EncodeFile($path, $encoding = 'base64') 
+  private function &EncodeFile($path, $encoding = 'base64')
   {
-	if (function_exists('get_magic_quotes')) 
+	if (function_exists('get_magic_quotes'))
 	{
-		function get_magic_quotes() 
+		function get_magic_quotes()
 		{
 			return false;
 		}
 	}
-	if (PHP_VERSION < 6) 
+	if (PHP_VERSION < 6)
 	{
 		if (function_exists('get_magic_quotes_runtime') && ($magic_quotes = get_magic_quotes_runtime())) set_magic_quotes_runtime(0);
 	}
 	try {
 		if ((@$file_buffer  = file_get_contents($path))===false)
 		{
-			throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
+			//throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
+			$this->SetError($this->Lang('file_open') . $path);
+			return "";
+		}
+		if (strlen(trim($file_buffer))==0) // do the complaining one level up, where we may have the name of the file
+		{
+			$this->SetError($this->Lang('file_open') . $path. ':'.'is empty');
+			return "";
 		}
 		$file_buffer  = $this->EncodeString($file_buffer, $encoding);
-		if (PHP_VERSION < 6) 
+		if (strlen(trim($file_buffer))==0) // do the complaining one level up, where we may have the name of the file
+		{
+			$this->SetError($this->Lang('file_open') . $path. ':'."is empty after encoding to $encoding");
+			return "";
+		}
+		if (PHP_VERSION < 6)
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
-		}		
+		}
 		return $file_buffer;
 	} catch (Exception $e) {
-		if (PHP_VERSION < 6) 
+		if (PHP_VERSION < 6)
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
 		}
@@ -2080,7 +2096,7 @@ class PHPMailer {
         $msg .= '<p>' . $this->Lang('smtp_error') . $lasterror['smtp_msg'] . "</p>\n";
       }
     }
-    $this->ErrorInfo .= (empty($this->ErrorInfo)?'':'<br>').$msg;
+    if (empty($this->ErrorInfo) || strpos($this->ErrorInfo,$msg)===false) $this->ErrorInfo .= (empty($this->ErrorInfo)?'':'<br>').$msg;
   }
 
   /**
