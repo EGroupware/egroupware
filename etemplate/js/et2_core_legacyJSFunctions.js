@@ -81,7 +81,7 @@
 
 		if (_val.indexOf('this.form.submit()') != -1)
 		{
-			_val = _val.replace('this.form.submit()','widget.getInstanceManager().submit()');
+			_val = _val.replace('this.form.submit()','widget.getInstanceManager().postSubmit()');
 		}
 		return _val;
 	}
