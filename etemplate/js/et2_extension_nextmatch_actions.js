@@ -269,28 +269,44 @@ function nm_open_popup(_action, _ids)
 		{
 			nm_popup_ids = _ids;
 		}
-		popup.style.display = 'block';
-/*
-Not working yet - DOM manipulation causes et2 problems
+
 		var dialog = jQuery('.action_popup-content',popup);
-		var d_buttons = [];
-		jQuery('button',popup).each(function(index) {
-			var but = jQuery(this);
-			d_buttons.push({
-				text: but.text(),
-				click: this.onclick ? this.onclick : function(e) {
-					dialog.dialog("close");
+		if(dialog)
+		{
+			var dialog_parent = dialog.parent();
+			var d_buttons = [];
+			var action = _action;
+			jQuery('button',popup).each(function(index) {
+				var but = jQuery(this);
+				var button = nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id"));
+				d_buttons.push({
+					text: but.text(),
+					click: button.onclick ? function(e) {
+						dialog.dialog("close");
+						nm_popup_action = action;
+						button.onclick.apply(button, e.currentTarget);
+					} : function(e) {
+						dialog.dialog("close");
+					}
+				});
+			});
+			dialog.dialog({
+				title: jQuery('.promptheader',popup).text(),
+				modal: true,
+				buttons: d_buttons,
+				close: function(event, ui) {
 					// Need to destroy the dialog, etemplate widget needs divs back where they were
 					dialog.dialog("destroy");
-					nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id")).onclick.apply(nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id")), e.currentTarget);}
+
+					// Put it back where it came from, or et2 will error when clear() is called
+					dialog.appendTo(dialog_parent);
+				}
 			});
-		});
-		dialog.dialog({
-			title: jQuery('.promptheader',popup).text(),
-			modal: true,
-			buttons: d_buttons
-		});
-*/
+		}
+
+		// Reset global variables
+		nm_popup_action = null;
+		nm_popup_senders = null;
 	}
 }
 
