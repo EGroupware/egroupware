@@ -1552,6 +1552,8 @@ abstract class bo_merge
 				),true);
 			}
 		}
+		
+		$dircount = array();
 		foreach($files as $key => $file)
 		{
 			// use only the mime-types we support
@@ -1562,10 +1564,68 @@ abstract class bo_merge
 			{
 				unset($files[$key]);
 			}
+			else
+			{
+				$dirname = egw_vfs::dirname($file['path']);
+				if(!isset($dircount[$dirname]))
+				{
+					$dircount[$dirname] = 1;
+				}
+				else
+				{
+					$dircount[$dirname] ++;
+				}
+			}
 		}
 		foreach($files as $file)
 		{
-			if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
+			if (count($dircount) > 1)
+			{
+				$name_arr = explode('/', $file['name']);
+				$current_level = &$documents;
+				for($count = 0; $count < count($name_arr); $count++)
+				{
+					if($count == 0)
+					{
+						$current_level = &$documents;
+					}
+					else
+					{
+						$current_level = &$current_level[$prefix.$name_arr[($count-1)]]['children'];
+					}
+					switch($count)
+					{
+						case (count($name_arr)-1):
+							$current_level[$prefix.$file['name']] = array(
+								'icon'		=> egw_vfs::mime_icon($file['mime']),
+								'caption'	=> egw_vfs::decodePath($name_arr[$count]),
+								'group'		=> 2,
+							);
+							if ($file['mime'] == 'message/rfc822')
+							{
+								// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
+								//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
+								// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
+								if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $current_level[$prefix.$file['name']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+							}
+							break;
+						
+						default:
+							if(!is_array($current_level[$prefix.$name_arr[$count]]))
+							{
+								// create parent folder
+								$current_level[$prefix.$name_arr[$count]] = array(
+									'icon'		=> 'phpgwapi/foldertree_folder',
+									'caption'	=> egw_vfs::decodePath($name_arr[$count]),
+									'group'		=> 2,
+									'children'	=> array(),
+								);
+							}
+							break;
+					}
+				}
+			}
+			else if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
 			{
 				if (!isset($documents[$file['mime']]))
 				{
@@ -1601,6 +1661,7 @@ abstract class bo_merge
 				}
 			}
 		}
+		
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,
