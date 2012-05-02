@@ -554,15 +554,18 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 		if(typeof _value == "object")
                 {
 			this.span.empty();
-                        for(var i = 0; i < _value.length; i++)
-                        {
-				var option = this.optionValues[_value[i]];
-				if(typeof option === "object")
+			if(_value)
+			{
+				for(var i = 0; i < _value.length; i++)
 				{
-					option = option.label;
+					var option = this.optionValues[_value[i]];
+					if(typeof option === "object")
+					{
+						option = option.label;
+					}
+					this.span.append("<li>"+option+"</li>");
 				}
-				this.span.append("<li>"+option+"</li>");
-                        }
+			}
 			return;
                 }
 		var option = this.optionValues[_value];
