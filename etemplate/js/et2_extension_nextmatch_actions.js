@@ -327,7 +327,7 @@ function nm_submit_popup(button)
 function nm_hide_popup(element, div_id) 
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
-	var popup = jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
+	var popup = div_id ? document.getElementById(div_id) : jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
 
 	// Hide popup
 	if(popup) {
