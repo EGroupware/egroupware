@@ -98,7 +98,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 					break;
 				}
 			}
-			if (is_array($value)) $value = implode(',',$value);
 			if ($ok && $value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
