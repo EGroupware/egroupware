@@ -824,7 +824,7 @@ class felamimail_bo
 			return true;
 		}
 
-		function deleteMessages($_messageUID, $_folder=NULL)
+		function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 		{
 			//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder);
 			$msglist = '';
@@ -842,8 +842,8 @@ class felamimail_bo
 					return false;
 				}
 			}
-
-			$deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
+			$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
+			if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
 			$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
 			$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
 			$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
@@ -989,14 +989,14 @@ class felamimail_bo
 		function getNotifyFlags ($_messageUID, $flags=null)
 		{
 			if($flags===null) $flags =  $this->icServer->getFlags($_messageUID, true);
-			if (self::$debug) error_log(__METHOD__.$_messageUID.array2string($flags));
+			if (self::$debug) error_log(__METHOD__.$_messageUID.' Flags:'.array2string($flags));
 			if (PEAR::isError($flags)) {
 				return null;
 				}
-			if ( in_array('MDNSent',$flags[0]) )
+			if ( stripos( array2string($flags),'MDNSent')!==false)
 				return true;
 
-			if ( in_array('MDNnotSent',$flags[0]) )
+			if ( stripos( array2string($flags),'MDNnotSent')!==false)
 				return false;
 
 			return null;

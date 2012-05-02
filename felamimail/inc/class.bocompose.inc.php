@@ -32,7 +32,7 @@
 		function bocompose($_composeID = '', $_charSet = 'iso-8859-1')
 		{
 			$profileID = 0;
-			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'])) 
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 					$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			$this->displayCharset	= strtolower($_charSet);
 			$this->bosignatures	= new felamimail_bosignatures();
@@ -41,7 +41,7 @@
 			$this->bopreferences =& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences; // $this->bopreferences->getPreferences();
 			// we should get away from this $this->preferences->preferences should hold the same info
-			$this->preferencesArray =& $this->preferences->preferences; //$GLOBALS['egw_info']['user']['preferences']['felamimail']; 
+			$this->preferencesArray =& $this->preferences->preferences; //$GLOBALS['egw_info']['user']['preferences']['felamimail'];
 			//force the default for the forwarding -> asmail
 			if (is_array($this->preferencesArray)) {
 				if (!array_key_exists('message_forwarding',$this->preferencesArray)
@@ -84,11 +84,11 @@
 				$alert_msg = $e->getMessage();
 			}
 
-			if ($eliminateDoubleAttachments == true) 
+			if ($eliminateDoubleAttachments == true)
 				foreach ((array)$this->sessionData['attachments'] as $k =>$attach)
 					if ($attach['name'] && $attach['name'] == $_formData['name'] &&
 						strtolower($_formData['type'])== strtolower($attach['type']) &&
-						stripos($_formData['file'],'vfs://') !== false) return; 
+						stripos($_formData['file'],'vfs://') !== false) return;
 
 			if ($attachfailed === false)
 			{
@@ -1040,9 +1040,9 @@
 			if(isset($this->preferences->preferences['sentFolder']) &&
 				$this->preferences->preferences['sentFolder'] != 'none' &&
 				$this->preferences->preferences['sendOptions'] != 'send_only' &&
-				$messageIsDraft == false) 
+				$messageIsDraft == false)
 			{
-				if ($this->bofelamimail->folderExists($this->preferences->preferences['sentFolder'], true)) 
+				if ($this->bofelamimail->folderExists($this->preferences->preferences['sentFolder'], true))
 				{
 					$folder[] = $this->preferences->preferences['sentFolder'];
 				}
@@ -1064,7 +1064,7 @@
 				}
 			}
 			$folder = array_unique($folder);
-			if (($this->preferences->preferences['sendOptions'] != 'send_only' && $this->preferences->preferences['sentFolder'] != 'none') && !(count($folder) > 0) && 
+			if (($this->preferences->preferences['sendOptions'] != 'send_only' && $this->preferences->preferences['sentFolder'] != 'none') && !(count($folder) > 0) &&
 				!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
 			{
 				$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');
@@ -1129,7 +1129,7 @@
 				$sentMailBody = $mail->getMessageBody();
 			}
 			// copying mail to folder
-			if (count($folder) > 0) 
+			if (count($folder) > 0)
 			{
 				foreach($folder as $folderName) {
 					if (is_array($folderName)) $folderName = array_shift($folderName); // should not happen at all
@@ -1171,7 +1171,7 @@
 				if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
 				//error_log(__METHOD__.__LINE__.array2string($lastDrafted));
 			}
-			if ($lastDrafted && is_array($lastDrafted) && $bofelamimail->isDraftFolder($lastDrafted['folder'])) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			if ($lastDrafted && is_array($lastDrafted) && $bofelamimail->isDraftFolder($lastDrafted['folder'])) $bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder'],"remove_immediately");
 			unset($this->sessionData['lastDrafted']);
 
 			//error_log("handling draft messages, flagging and such");

@@ -335,7 +335,7 @@ class ajaxfelamimail
 			if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
 			$messageUid = $bocompose->saveAsDraft($formData,$folder); // folder may change
 			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']);
-			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder']);
+			if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $this->bofelamimail->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder'],"remove_immediately");
 			if ($_autoSave)
 			{
 				$bocompose->sessionData['lastDrafted'] = array('uid'=>$messageUid,'folder'=>$folder);
