@@ -92,11 +92,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * Sending a first chunk of rows
 	 *
 	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand)
 	{
 		$attrs = $this->attrs;
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
 		$value['start'] = 0;
@@ -731,8 +732,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Need this check or the headers will get involved too
 		if($this->type == 'nextmatch')
 		{
-			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 			parent::run($method_name, $params, $respect_disabled);
+			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 
 			if ($this->attrs['template'])
 			{
