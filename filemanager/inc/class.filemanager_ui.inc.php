@@ -152,6 +152,11 @@ class filemanager_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:do_clipboard',
 			),
+			'documents' => filemanager_merge::document_action(
+				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
+				++$group, 'Insert in document', 'document_',
+				$GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document']
+			),
 			'delete' => array(
 				'caption' => lang('Delete'),
 				'group' => ++$group,
@@ -617,6 +622,10 @@ function force_download(_action, _senders)
 			return lang('You need to select some files first!');
 		}
 		$errs = $dirs = $files = 0;
+
+		// Dialogs / options
+		list($action, $settings) = explode('_', $action, 2);
+
 		switch($action)
 		{
 			case 'mail':
@@ -726,6 +735,12 @@ function force_download(_action, _senders)
 					$ret = lang('%1 errors linking (%2)!',$errs,$ret);
 				}
 				return $ret." egw_vfs::symlink('$to','$path')";
+			case 'document':
+				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
+				$document_merge = new filemanager_merge();
+				$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
+				$failed = count($selected);
+				return false;
 		}
 		return "Unknown action '$action'!";
 	}
@@ -1229,8 +1244,12 @@ function force_download(_action, _senders)
 				'align' => 'right',
 			));
 		}
+echo 'HERE';
+_debug_array($path);
+_debug_array($content);
 		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
+_debug_array($extra_tabs);
 			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
