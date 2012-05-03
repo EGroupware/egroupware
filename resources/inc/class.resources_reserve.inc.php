@@ -245,6 +245,19 @@ class resources_reserve {
 			);
 		}
 
+		// Restrict times to working hours
+		for($i = $GLOBALS['egw_info']['user']['preferences']['calendar']['workdaystarts']; $i < $GLOBALS['egw_info']['user']['preferences']['calendar']['workdayends']; $i++)
+		{
+			if($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
+			{
+				$sel_options['hour'][$i] = ($i < '12' ? $i .' am' : ($i-12).' pm');
+			}
+			else
+			{
+				$sel_options['hour'][$i] = ($i < '10' ? '0'.$i : $i);
+			}
+		}
+
 		return $this->tmpl->exec('resources.resources_reserve.book',$data,$sel_options,$readonlys,$preserve);
 	}
 
