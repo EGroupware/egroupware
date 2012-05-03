@@ -1964,7 +1964,8 @@ class addressbook_ui extends addressbook_bo
 		}
 		else
 		{
-			if(!$_GET['contact_id'] || !is_array($content = $this->read($_GET['contact_id'])))
+			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
+			if(!$contact_id || !is_array($content = $this->read($contact_id)))
 			{
 				egw::redirect_link('/index.php',array(
 					'menuaction' => 'addressbook.addressbook_ui.index',
