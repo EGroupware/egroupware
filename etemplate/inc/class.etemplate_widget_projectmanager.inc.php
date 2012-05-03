@@ -72,10 +72,11 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 	 * @todo
 	 * @param string $cname current namespace
 	 * @param array $content
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array &$validated=array() validated content
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 	}
 }

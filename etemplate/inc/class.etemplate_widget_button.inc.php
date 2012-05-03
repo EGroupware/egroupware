@@ -17,20 +17,23 @@
 class etemplate_widget_button extends etemplate_widget
 {
 	/**
-	 * Validate input
+	 * Validate buttons
 	 *
-	 * Readonly buttons can NOT be pressed
+	 * Readonly buttons can NOT be pressed!
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
+		//error_log(__METHOD__."('$cname', ".array2string($expand).", ...) $this: get_array(\$content, '$form_name')=".array2string(self::get_array($content, $form_name)));
 
-		if (self::get_array($content, $form_name) && !$this->is_readonly($cname))
+		// need to check === true, as get_array() ignores a "[]" postfix and returns array() eg. for a not existing $row_cont[id] in "delete[$row_cont[id]]"
+		if (!$this->is_readonly($cname, $form_name) && self::get_array($content, $form_name) === true)
 		{
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = 'pressed';	// that's what it was in old etemplate

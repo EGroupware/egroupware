@@ -122,17 +122,14 @@ class etemplate_widget_template extends etemplate_widget
 	 *
 	 * Reimplemented because templates can have an own namespace specified in attrs[content], NOT id!
 	 *
-	 * @param array $content
-	 * @param array &$validated=array() validated content
-	 * @param string $cname='' current namespace
+	 * @param string $method_name
+	 * @param array $params=array('') parameter(s) first parameter has to be cname, second $expand!
 	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
-	 * @todo handle template references containing content in id, eg. id="edit.$cont[something]"
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
-		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content']);
-
+		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
 		parent::run($method_name, $params, $respect_disabled);
 	}
 }

@@ -17,8 +17,13 @@
  */
 class etemplate_widget_file extends etemplate_widget
 {
-
-	public function __construct($xml='') {
+	/**
+	 * Constructor
+	 *
+	 * @param string $xml
+	 */
+	public function __construct($xml='')
+	{
 		if($xml) parent::__construct($xml);
 
 		// Legacy multiple - id ends in []
@@ -29,15 +34,15 @@ class etemplate_widget_file extends etemplate_widget
 	}
 
 	/**
-         * Ajax callback to receive an incoming file
-         *
-         * The incoming file is moved from its temporary location (otherwise server will delete it) and
-         * the file information is stored into the widget's value.  When the form is submitted, the information for all
-         * files uploaded is available in the returned $content array.  Because files are uploaded asynchronously,
-         * submission should be quick.
-         *
-         * @note Currently, no attempt is made to clean up files automatically.
-         */
+	 * Ajax callback to receive an incoming file
+	 *
+	 * The incoming file is moved from its temporary location (otherwise server will delete it) and
+	 * the file information is stored into the widget's value.  When the form is submitted, the information for all
+	 * files uploaded is available in the returned $content array.  Because files are uploaded asynchronously,
+	 * submission should be quick.
+	 *
+	 * @note Currently, no attempt is made to clean up files automatically.
+	 */
 	public static function ajax_upload() {
 		$response = egw_json_response::get();
 		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
@@ -48,11 +53,11 @@ class etemplate_widget_file extends etemplate_widget
 		}
 
 		if (!($template = etemplate_widget_template::instance(self::$request->template['name'], self::$request->template['template_set'],
-                        self::$request->template['version'], self::$request->template['load_via'])))
-                {
+			self::$request->template['version'], self::$request->template['load_via'])))
+		{
 			// Can't use callback
 			error_log("Could not get template for file upload, callback skipped");
-                }
+		}
 
 		$file_data = array();
 
@@ -146,42 +151,47 @@ class etemplate_widget_file extends etemplate_widget
 	 * Merge any already uploaded files into the content array
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
-		$value = $value_in = self::get_array($content, $form_name);
-		$valid =& self::get_array($validated, $form_name, true);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
-		if(!is_array($value)) $value = array();
-
-		// Incoming values indexed by temp name
-		if($value[0]) $value = $value[0];
-
-		foreach($value as $tmp => $file)
+		if (!$this->is_readonly($cname, $form_name))
 		{
-			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
-			{
-				$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
-			}
-			else
-			{
-				$path = $tmp.'+';
-			}
-			$stat = stat($path);
-			$valid[] = array(
-				'name'	=> $file['name'],
-				'type'	=> $file['type'],
-				'tmp_name'	=> $path,
-				'error'	=> UPLOAD_ERR_OK, // Always OK if we get this far
-				'size'	=> $stat['size'],
-				'ip'	=> $_SERVER['REMOTE_ADDR'], // Assume it's the same as for when it was uploaded...
-			);
-		}
+			$value = $value_in = self::get_array($content, $form_name);
+			$valid =& self::get_array($validated, $form_name, true);
 
-		if($valid && !$this->attrs['multiple']) $valid = $valid[0];
+			if(!is_array($value)) $value = array();
+
+			// Incoming values indexed by temp name
+			if($value[0]) $value = $value[0];
+
+			foreach($value as $tmp => $file)
+			{
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
+				}
+				else
+				{
+					$path = $tmp.'+';
+				}
+				$stat = stat($path);
+				$valid[] = array(
+					'name'	=> $file['name'],
+					'type'	=> $file['type'],
+					'tmp_name'	=> $path,
+					'error'	=> UPLOAD_ERR_OK, // Always OK if we get this far
+					'size'	=> $stat['size'],
+					'ip'	=> $_SERVER['REMOTE_ADDR'], // Assume it's the same as for when it was uploaded...
+				);
+			}
+
+			if($valid && !$this->attrs['multiple']) $valid = $valid[0];
+		}
 	}
 }
 etemplate_widget::registerWidget('etemplate_widget_file', array('file'));

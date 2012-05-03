@@ -50,7 +50,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 * @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
 	 */
 	protected static $prefix = '#';
-	
+
 	// Make settings available globally
 	const GLOBAL_VALS = '~custom_fields~';
 
@@ -210,24 +210,26 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		if (!$this->is_readonly($cname))
+		if ($this->id)
 		{
-			if($this->id)
-			{
-				$form_name = self::form_name($cname, $this->id);
-			}
-			else
-			{
-				$form_name = self::GLOBAL_ID;
-			}
+			$form_name = self::form_name($cname, $this->id, $expand);
+		}
+		else
+		{
+			$form_name = self::GLOBAL_ID;
+		}
 
+		if (!$this->is_readonly($cname, $form_name))
+		{
 			$value_in = self::get_array($content, $form_name);
-			if(is_array($value_in)) {
+			if(is_array($value_in))
+			{
 				foreach($value_in as $field => $value)
 				{
 					if ((string)$value === '' && $this->attrs['needed'])
@@ -235,7 +237,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-					
+
 					$valid = is_array($value) ? implode(',',$value) : $value;
 					error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 				}

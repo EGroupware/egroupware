@@ -46,15 +46,16 @@ class etemplate_widget_tree extends etemplate_widget
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
 		$ok = true;
-		if (!$this->is_readonly($cname))
+		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 
@@ -101,7 +102,7 @@ class etemplate_widget_tree extends etemplate_widget
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
 			}
 		}
-		
+
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		foreach(self::$request->sel_options[$form_name] as &$label)
 		{
@@ -161,7 +162,7 @@ class etemplate_widget_tree extends etemplate_widget
 	 * @param string $widget_type
 	 * @param string $legacy_options options string of widget
 	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
-	 * @param boolean $readonly=false 
+	 * @param boolean $readonly=false
 	 * @param mixed $value=null value for readonly
 	 * @return array with value => label pairs
 	 */

@@ -35,20 +35,21 @@ class etemplate_widget_checkbox extends etemplate_widget
 	 * Same is true for the radio buttons of a radio-group sharing the same name.
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
 		if (($multiple = substr($form_name, -2) == '[]') && $this->type == 'checkbox')
 		{
 			$form_name = substr($form_name, 0, -2);
 		}
 
-		if (!$this->is_readonly($cname))
+		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);

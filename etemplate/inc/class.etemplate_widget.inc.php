@@ -155,7 +155,11 @@ class etemplate_widget
 		{
 			if ($reader->name != 'id' && $template->attr[$reader->name] != $reader->value)
 			{
-				if (!$cloned) $template = clone($this);
+				if (!$cloned)
+				{
+					$template = clone($this);
+					$cloned = true;	// only clone it once, otherwise we loose attributes!
+				}
 				$template->attrs[$reader->name] = $reader->value;
 
 				// split legacy options
@@ -326,16 +330,23 @@ class etemplate_widget
 	 * Default implementation only calls method on itself and run on all children
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be the cname!
+	 * @param array $params=array('') parameter(s) first parameter has to be the cname, second $expand!
 	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
+		// maintain $expand array name-expansion
+		$cname = $params[0];
+		$expand =& $params[1];
+		if ($expand['cname'] !== $cname)
+		{
+			$expand['cont'] =& self::get_array(self::$request->content, $cname);
+			$expand['cname'] = $cname;
+		}
 		if ($respect_disabled && ($disabled = $this->attrs['disabled']))
 		{
 			// check if disabled contains @ or !
-			$cname = $params[0];
-			$disabled = self::check_disabled($disabled, $cname ? self::get_array(self::$request->content, $cname) : self::$request->content);
+			$disabled = self::check_disabled($disabled, $expand);
 			if ($disabled)
 			{
 				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
@@ -360,12 +371,10 @@ class etemplate_widget
 	 * if no =check is given all set non-empty and non-zero strings are true (standard php behavior)
 	 *
 	 * @param string $disabled expression to check, eg. "!@var" for !$content['var']
-	 * @param array $content the content-array in the context of the grid
-	 * @param int $row=null to be able to use $row or $row_content in value of checks
-	 * @param int $c=null to be able to use $row or $row_content in value of checks
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @return boolean true if the row/col is disabled or false if not
 	 */
-	protected static function check_disabled($disabled,$content,$row=null,$c=null)
+	protected static function check_disabled($disabled, array $expland)
 	{
 		if ($not = $disabled[0] == '!')
 		{
@@ -374,8 +383,8 @@ class etemplate_widget
 		list($val,$check_val) = $vals = explode('=',$disabled);
 
 		// use expand_name to be able to use @ or $
-		$val = self::expand_name($val,$c,$row,'','',$content);
-		$check_val = self::expand_name($check_val,$c,$row,'','',$content);
+		$val = self::expand_name($val,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		$check_val = self::expand_name($check_val,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
 		if ($not) $result = !$result;
 
@@ -428,10 +437,12 @@ class etemplate_widget
 				$cont = array();
 			}
 			if (!is_numeric($c)) $c = boetemplate::chrs2num($c);
-			$col = boetemplate::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-			$col_ = boetemplate::num2chrs($c_-1);
+			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+			$col_ = self::num2chrs($c_-1);
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
+
+			/* RB: dont think any of this is needed in eTemplate2, as this escaping probably needs to be done on clientside anyway
 
 			// check if name is enclosed in single quotes as argument eg. to an event handler or
 			// variable name is contained in quotes and curly brackets, eg. "'{$cont[nm][path]}'" or
@@ -471,7 +482,7 @@ class etemplate_widget
 					$value = str_replace('&',urlencode('&'),$value);
 					$name = str_replace($matches[3],$value,$name);
 				}
-			}
+			}*/
 			eval('$name = "'.str_replace('"','\\"',$name).'";');
 		}
 		if ($is_index_in_content)
@@ -485,8 +496,28 @@ class etemplate_widget
 				$name = self::get_array($cont,substr($name,1));
 			}
 		}
-		$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
+		// RB: not sure why this business with entity encoding for square brakets, it messes up validation
+		//$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
 		return $name;
+	}
+
+	/**
+	 * generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
+	 *
+	 * @param int $num numerical index to generate name from 1 => 'A'
+	 * @return string the name
+	 */
+	static function num2chrs($num)
+	{
+		$min = ord('A');
+		$max = ord('Z') - $min + 1;
+		if ($num >= $max)
+		{
+			$chrs = chr(($num / $max) + $min - 1);
+		}
+		$chrs .= chr(($num % $max) + $min);
+
+		return $chrs;
 	}
 
 	/**
@@ -543,10 +574,15 @@ class etemplate_widget
 	 *
 	 * @param string $cname basename
 	 * @param string $name name
+	 * @param array $expand=null values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @return string complete form-name
 	 */
-	static function form_name($cname,$name)
+	static function form_name($cname,$name,array $expand=null)
 	{
+		if ($expand && !empty($name))
+		{
+			$name = self::expand_name($name, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		}
 		if (count($name_parts = explode('[', $name, 2)) > 1)
 		{
 			$name_parts = array_merge(array($name_parts[0]), explode('][', substr($name_parts[1],0,-1)));
@@ -558,7 +594,9 @@ class etemplate_widget
 		$form_name = array_shift($name_parts);
 		if (count($name_parts))
 		{
-			$form_name .= '&#x5B;'.implode('&#x5D;&#x5B;',$name_parts).'&#x5D;';
+			// RB: not sure why this business with entity encoding for square brakets, it messes up validation
+			//$form_name .= '&#x5B;'.implode('&#x5D;&#x5B;',$name_parts).'&#x5D;';
+			$form_name .= '['.implode('][',$name_parts).']';
 		}
 		return $form_name;
 	}
@@ -615,12 +653,19 @@ class etemplate_widget
 	 * - $readonlys[__ALL__] set and $readonlys[$form_name] !== false
 	 * - $readonlys[$form_name] evaluates to true
 	 *
+	 * @param string $cname=''
+	 * @param string $form_name=null form_name, to not calculate him again
 	 * @return boolean
 	 */
-	public function is_readonly($cname='')
+	public function is_readonly($cname='', $form_name=null)
 	{
-		$form_name = self::form_name($cname, $this->id);
-
+		if (!isset($form_name))
+		{
+			$expand = array(
+				'cont' => self::get_array(self::$request->content, $cname),
+			);
+			$form_name = self::form_name($cname, $this->id, $expand);
+		}
 		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
 			isset(self::$request->readonlys['__ALL__']) && self::$request->readonlys[$form_name] !== false;
 
@@ -767,7 +812,7 @@ class etemplate_widget_box extends etemplate_widget
 	{
 		$cname =& $params[0];
 		$old_cname = $params[0];
-		if ($this->id) $cname = self::form_name($cname, $this->id);
+		if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 
 		parent::run($method_name, $params, $respect_disabled);
 		$params[0] = $old_cname;

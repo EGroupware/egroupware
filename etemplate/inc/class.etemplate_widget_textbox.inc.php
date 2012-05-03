@@ -53,12 +53,16 @@ class etemplate_widget_textbox extends etemplate_widget
 	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
+	 * @param array $expand=array values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		if (!$this->is_readonly($cname))
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+		if (!$this->is_readonly($cname, $form_name))
 		{
 			if (!isset($this->attrs['preg']))
 			{
@@ -75,7 +79,6 @@ class etemplate_widget_textbox extends etemplate_widget
 						break;
 				}
 			}
-			$form_name = self::form_name($cname, $this->id);
 
 			$value = $value_in = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);

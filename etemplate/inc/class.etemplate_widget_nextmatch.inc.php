@@ -677,12 +677,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array($content, $form_name);
 
 		// On client, rows does not get its own namespace, but all apps are expecting it
@@ -720,7 +721,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * Reimplemented to add namespace, and make sure row template gets included
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be cname!
+	 * @param array $params=array('') parameter(s) first parameter has to be cname, second $expand!
 	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
@@ -728,10 +729,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$old_param0 = $params[0];
 		$cname =& $params[0];
 		// Need this check or the headers will get involved too
-		if($this->type == 'nextmatch') {
+		if($this->type == 'nextmatch')
+		{
+			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 			parent::run($method_name, $params, $respect_disabled);
-			if ($this->id) $cname = self::form_name($cname, $this->id);
-			if($this->attrs['template'])
+
+			if ($this->attrs['template'])
 			{
 				$row_template = etemplate_widget_template::instance($this->attrs['template']);
 				$row_template->run($method_name, $params, $respect_disabled);

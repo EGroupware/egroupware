@@ -47,16 +47,17 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		if (!$this->is_readonly($cname) && $this->type != 'date-since')	// date-since is always readonly
-		{
-			$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
+		if (!$this->is_readonly($cname, $form_name) && $this->type != 'date-since')	// date-since is always readonly
+		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 

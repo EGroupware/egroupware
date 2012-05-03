@@ -30,13 +30,13 @@ class etemplate_widget_vfs extends etemplate_widget_file
 			self::store_file($field, $file);
 		}
 	}
-		
+
 	/**
          * Ajax callback to receive an incoming file
          *
          * The incoming file is automatically placed into the appropriate VFS location.
-	 * If the entry is not yet created, the file information is stored into the widget's value.  
-	 * When the form is submitted, the information for all files uploaded is available in the returned 
+	 * If the entry is not yet created, the file information is stored into the widget's value.
+	 * When the form is submitted, the information for all files uploaded is available in the returned
 	 * $content array and the application should deal with the file.
          */
 	public static function store_file($path, $file) {
@@ -91,12 +91,13 @@ error_log(lang('Error copying uploaded file to vfs!'));
 	 * Merge any already uploaded files into the content array
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = $value_in = self::get_array($content, $form_name);
 		$valid =& self::get_array($validated, $form_name, true);
 

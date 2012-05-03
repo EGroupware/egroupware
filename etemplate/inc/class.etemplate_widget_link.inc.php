@@ -179,7 +179,7 @@ class etemplate_widget_link extends etemplate_widget
 				$link['help'] = lang('Remove this link (not the entry itself)');
 			}
 		}
-		
+
 		$response = egw_json_response::get();
 		// Strip keys, unneeded and cause index problems on the client side
 		$response->data(array_values($links));
@@ -201,15 +201,16 @@ class etemplate_widget_link extends etemplate_widget
 	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
 	 * @param array &$validated=array() validated content
 	 */
-	public function validate($cname, array $content, &$validated=array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		if (!$this->is_readonly($cname))
-		{
-			$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
+		if (!$this->is_readonly($cname, $form_name))
+		{
 			$value = $value_in =& self::get_array($content, $form_name);
 
 			// Look for files
