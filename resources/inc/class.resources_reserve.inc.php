@@ -250,7 +250,7 @@ class resources_reserve {
 		{
 			if($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
 			{
-				$sel_options['hour'][$i] = ($i < '12' ? $i .' am' : ($i-12).' pm');
+				$sel_options['hour'][$i] = ($i < '12' ? $i .' am' : ($i > 12 ? $i -12 : $i).' pm');
 			}
 			else
 			{
