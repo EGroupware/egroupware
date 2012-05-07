@@ -737,7 +737,7 @@ function force_download(_action, _senders)
 				return $ret." egw_vfs::symlink('$to','$path')";
 			case 'document':
 				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
-				$document_merge = new filemanager_merge();
+				$document_merge = new filemanager_merge(egw_vfs::decodePath($dir));
 				$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
 				$failed = count($selected);
 				return false;
@@ -1244,12 +1244,8 @@ function force_download(_action, _senders)
 				'align' => 'right',
 			));
 		}
-echo 'HERE';
-_debug_array($path);
-_debug_array($content);
 		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
-_debug_array($extra_tabs);
 			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{

@@ -37,12 +37,21 @@ class filemanager_merge extends bo_merge
 	protected $bo = null;
 
 	/**
+	 * Current directory - affects how files are named
+	 */
+	protected $dir = '';
+
+	/**
 	 * Constructor
 	 *
 	 */
-	function __construct()
+	function __construct($_dir = '')
 	{
 		parent::__construct();
+		if($_dir)
+		{
+			$this->dir = $_dir;
+		}
 	}
 
 	/**
@@ -79,6 +88,7 @@ class filemanager_merge extends bo_merge
 		$file['name'] = egw_vfs::basename($id);
 		$file['dir'] = egw_vfs::decodePath(egw_vfs::dirname($id));
 		$file['path'] = $id;
+		$file['rel_path'] = str_replace($this->dir.'/', '', $id);
 		$file['hsize'] = egw_vfs::hsize($file['size']);
 		$file['mime'] = egw_vfs::mime_content_type($id);
 		$file['gid'] *= -1;  // our widgets use negative gid's
@@ -92,17 +102,28 @@ class filemanager_merge extends bo_merge
 		}
 		$extra = egw_vfs::getExtraInfo($id);
 
-		// Convert to human friendly values
+		// Custom fields
 		if($content && strpos($content, '#') !== 0)
                 {
+			// Expand link-to custom fields
                         $this->cf_link_to_expand($file, $content, $info);
-                }
+		
+			foreach(config::get_customfields('filemanager') as $name => $field)
+			{
+				// Set any missing custom fields, or the marker will stay
+				if(!$file['#'.$name])
+				{
+					$file['#'.$name] = '';
+					continue;
+				}
 
-		// Set any missing custom fields, or the marker will stay
-		foreach(config::get_customfields('filemanager') as $name => $field)
-		{
-			if(!$file['#'.$name]) $file['#'.$name] = '';
-		}
+				// Format date cfs per user preferences
+				if($field['type'] == 'date' || $field['type'] == 'date-time')
+				{
+					$file['#'.$name] = egw_time::to($file['#'.$name]);
+				}
+			}
+                }
 
 		// Links
 		/* Not applicable to filemanager
@@ -114,6 +135,15 @@ class filemanager_merge extends bo_merge
 			$file["links/{$app}"] = $this->get_links('filemanager',$id, $app);
 		}
 		*/
+		$link = egw_link::mime_open($file['url'], $file['mime']);
+		// Prepend site
+		if ($link{0} == '/')
+		{
+			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+		}
+		$file['link'] = html::a_href(html::htmlspecialchars($file['name']), $link);
+		$file['url'] = $link;
 
 		// Add markers
 		foreach($file as $key => &$value)
@@ -140,8 +170,10 @@ class filemanager_merge extends bo_merge
 		$n = 0;
 		$fields = array(
 			'name' => 'name',
-			'path' => 'path',
+			'path' => 'Absolute path',
+			'rel_path' => 'Path relative to current directory',
 			'url' => 'url',
+			'link' => 'Clickable link to file',
 			'comment' => 'comment',
 			'mtime' => 'modified',
 			'ctime' => 'created',
