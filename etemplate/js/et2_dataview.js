@@ -374,6 +374,7 @@ var et2_dataview = Class.extend({
 
 			var column = $j(document.createElement("th"))
 				.addClass(col.tdClass)
+				.attr("align", "left")
 				.append(cont)
 				.appendTo(this.headTr);
 
