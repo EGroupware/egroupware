@@ -1,3 +1,13 @@
+egroupware (1.8.004.20120507) hardy; urgency=low
+
+  * resources: fix for missing/not loaded pictures for resources in default/images/resource_icons/
+  * calendar: use possible attribute values regarding X-MICROSOFT-CDO-ALLDAYEVENT
+  * CalDAV/Calendar: copied events need to get new name-part in CalDAV URL, otherwise sync fails
+  * Addressbook/LDAP: documented how to get ACL for group-addressbooks working without deprecated rfc2307bis schema
+  * Addressbook/LDAP|SQL->LDAP: fixed error during creation of new contacts, SQL->LDAP now also displays LDAP errors
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 07 May 2012 09:29:33 +0200
+
 egroupware (1.8.004.20120423) hardy; urgency=low
 
   * Backup/Addressbook: adding limited index-length to backed up schema and fix restore of old backups without (default to 32 on multicolumn indexes including text columns)
