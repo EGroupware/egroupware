@@ -162,6 +162,9 @@ etemplate2.prototype._createArrayManagers = function(_data)
  */
 etemplate2.prototype.load = function(_name, _url, _data)
 {
+
+	egw().debug("info", "Loaded data", _data);
+
 	// Appname should be first part of the template name
 	var split = _name.split('.');
 	var appname = split[0];

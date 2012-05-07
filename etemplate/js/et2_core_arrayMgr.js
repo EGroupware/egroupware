@@ -40,14 +40,14 @@ var et2_arrayMgr = Class.extend({
 		}
 
 		// Expand sub-arrays that have been shmushed together, so further perspectives work
-		// Shmushed keys look like: ${row}&#x5B;info_cat&#x5D;
+		// Shmushed keys look like: ${row}[info_cat]
 		// Expanded: ${row}: Object{info_cat: ..value}
 		if (this.splitIds)
 		{
 			// For each index, we need a key: {..} sub array
 			for(var key in _data) {
 				// Split up indexes
-				var indexes = key.split('&#x5B;');
+				var indexes = key.replace('&#x5B;','[').split('[');
 
 				// Put data in the proper place
 				if(indexes.length > 1)
@@ -55,7 +55,7 @@ var et2_arrayMgr = Class.extend({
 					var value = _data[key];
 					var target = _data;
 					for(var i = 0; i < indexes.length; i++) {
-						indexes[i] = indexes[i].replace('&#x5D;','');
+						indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
 						if(typeof target[indexes[i]] == "undefined") {
 							target[indexes[i]] = i == indexes.length-1 ? value : {};
 						}
