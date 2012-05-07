@@ -659,15 +659,23 @@ abstract class bo_merge
 		}
 		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
 		{
-			//for odt files we have to split the content and add a style for page break to  the style area
-			list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
-			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
-			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
-			// need to add page-break style to the style list
-			list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
-			$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
-			$contentstart .= '<office:body>';
-			$contentend = '</office:body></office:document-content>';
+			if(strpos($content, '$$pagerepeat') === false)
+			{
+				//for odt files we have to split the content and add a style for page break to  the style area
+				list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+				$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
+				$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+				// need to add page-break style to the style list
+				list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
+				$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
+				$contentstart .= '<office:body>';
+				$contentend = '</office:body></office:document-content>';
+			}
+			else
+			{
+				// Template specifies where to repeat
+				list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get different parts of document, seperated by pagerepeat
+			}
 		}
 		if ($mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' && count($ids) > 1)
 		{
@@ -1380,7 +1388,6 @@ abstract class bo_merge
 			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
-
 		// Apply HTML formatting to target document, if possible
 		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
 		if (class_exists(XSLTProcessor) && class_exists(DOMDocument) && $this->parse_html_styles)
