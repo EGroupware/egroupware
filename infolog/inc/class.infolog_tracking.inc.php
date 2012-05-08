@@ -194,6 +194,7 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_details($data)
 	{
+		//error_log(__METHOD__.__LINE__.' Data:'.array2string($data));
 		$header_done = false;
 		$responsible = array();
 		if ($data['info_responsible'])
@@ -224,6 +225,16 @@ class infolog_tracking extends bo_tracking
 			'info_subject'   => $data['info_subject'],
 		) as $name => $value)
 		{
+			//error_log(__METHOD__.__LINE__.' Key:'.$name.' val:'.array2string($value));
+			if ($name=='info_from' && empty($value) && !empty($data['info_contact']) && is_array($data['link_to']['to_id']))
+			{
+				$lkeys = array_keys($data['link_to']['to_id']);
+				if (in_array($data['info_contact'],$lkeys))
+				{
+					list($app,$id) = explode(':',$data['info_contact']);
+					if (!empty($app)&&!empty($id)) $value = egw_link::title($app,$id);
+				}
+			}
 			$details[$name] = array(
 				'label' => lang($this->field2label[$name]),
 				'value' => $value,
@@ -276,6 +287,7 @@ class infolog_tracking extends bo_tracking
 	 */
 	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
 	{
+		//error_log(__METHOD__.__LINE__.' notify?'.($skip_notification?'no':'yes').function_backtrace());
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
 		$changes = true;
@@ -291,6 +303,7 @@ class infolog_tracking extends bo_tracking
 			$changed_fields = $this->changed_fields($data, $old);
 			$changes = count($changed_fields); // we need that since TRUE evaluates to 1
 		}
+		//error_log(__METHOD__.__LINE__.array2string($changed_fields));
 		if(is_array($changed_fields) && $changes == 1 && in_array('info_datemodified', $changed_fields))
 		{
 			return count($changes);
