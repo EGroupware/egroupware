@@ -93,7 +93,8 @@
 		// Check whether _code is simply "1" -- if yes replace it accordingly
 		if (_code === '1')
 		{
-			_code = 'return true;';
+			_code = 'widget.getInstanceManager().postSubmit(); return true;';
+			egw().debug("warn", "Widget uses 1 as JS.  Full submit used instead, but this should be changed", _widget, _context);
 		}
 
 		// Check whether some pseudo-variables still reside inside of the code,
