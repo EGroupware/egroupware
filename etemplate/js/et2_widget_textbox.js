@@ -36,7 +36,7 @@ var et2_textbox = et2_inputWidget.extend({
 			"default": et2_no_init,
 			"description": "Field width"
 		},
-		"maxLength": {
+		"maxlength": {
 			"name": "Maximum length",
 			"type": "integer",
 			"default": et2_no_init,
@@ -63,7 +63,7 @@ var et2_textbox = et2_inputWidget.extend({
 		}
 	},
 
-	legacyOptions: ["size", "maxLength"],
+	legacyOptions: ["size", "maxlength"],
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -127,7 +127,7 @@ var et2_textbox = et2_inputWidget.extend({
 	 * Set maximum characters allowed
 	 * @param _size Max characters allowed
 	 */
-	set_maxLength: function(_size) {
+	set_maxlength: function(_size) {
 		if (typeof _size != 'undefined' && _size != this.input.attr("maxlength"))
 		{
 			this.maxLength = _size;
