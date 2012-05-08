@@ -387,7 +387,7 @@ class asyncservice
 	 */
 	function check_run($run_by='')
 	{
-		flush();
+		if ($run_by === 'fallback') flush();
 
 		if (!$this->last_check_run(True,False,$run_by))
 		{
@@ -473,7 +473,11 @@ class asyncservice
 	 */
 	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
 	{
-		if (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
+		if ($id === '%')
+		{
+			$where = "async_id != '##last-check-run##'";
+		}
+		elseif (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
 		{
 			$id = $this->db->quote($id);
 			$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
