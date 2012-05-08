@@ -363,7 +363,6 @@ var et2_selectbox = et2_inputWidget.extend({
 			return this.set_multi_value(_value);
 		}
 		jQuery("option",this.input).attr("selected", false);
-		this.value = _value;
 		if(typeof _value == "array")
 		{
 			for(var i = 0; i < _value.length; i++)
@@ -390,6 +389,7 @@ var et2_selectbox = et2_inputWidget.extend({
 				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
 			}
 		}
+		this.value = _value;
 	},
 
 	set_multi_value: function(_value) {

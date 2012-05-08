@@ -1454,6 +1454,9 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 			{
 				delete (event.data.nextmatch.activeFilters["col_filter"][event.data.id]);
 			}
+			// Set value so it's there for response (otherwise it gets cleared if options are updated)
+			event.data.set_value(event.data.input.val());
+
 			event.data.nextmatch.applyFilters();
 		});
 
