@@ -160,7 +160,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.002">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -211,7 +211,7 @@
 					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all"/>
 				</row>
 				<row valign="top" height="250">
-					<tabbox id="description|links|delegation|project|customfields|history" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab id="description" label="Description" statustext="longer textual description"/>
 							<tab id="links" label="Links" statustext="Links of this entry"/>
