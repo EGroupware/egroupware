@@ -136,7 +136,19 @@ class filemanager_merge extends bo_merge
 		}
 		*/
 		$link = egw_link::mime_open($file['url'], $file['mime']);
-		// Prepend site
+		if(is_array($link))
+		{
+			// Directories have their internal protocol in path here
+			if($link['path'] && strpos($link['path'], '://') !== false) $link['path'] = $file['path'];
+			$link = egw_session::link('/index.php', $link);
+		}
+		else
+		{
+			// Regular files
+			$link = egw_session::link($link);
+		}
+
+		// Prepend site, if missing
 		if ($link{0} == '/')
 		{
 			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
