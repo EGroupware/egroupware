@@ -482,7 +482,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			}
 		}
 		// Sometimes value gets set before options
-		if(this.value) this.set_value(this.value);
+		if(this.value || this.options.empty_label) this.set_value(this.value);
 	},
 
 	getValue: function() {
