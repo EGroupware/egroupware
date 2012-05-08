@@ -378,7 +378,7 @@ class infolog_ui
 		{
 			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 		}
-		
+
 		// Check to see if we need to remove description
 		$et = new ReflectionClass('etemplate');
 		$remove = !($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
@@ -403,6 +403,22 @@ class infolog_ui
 			{
 				$main = $this->get_info($main, $readonlys);
 				$main['class'] .= 'th ';
+				// if only certain custom-fields are to be displayed, we need to unset the not displayed ones manually
+				// as read() always read them all, while search() only reads the selected ones
+				if ($query['custom_fields'])
+				{
+					foreach($columselection as $col)
+					{
+						if ($col[0] == '#')
+						{
+							foreach($main as $n => $v)
+							{
+								if ($n[0] == '#' && !in_array($n, $columselection)) unset($main[$n]);
+							}
+							break;
+						}
+					}
+				}
 				array_splice($rows, $id, 0, array($main));
 				unset($parents[$parent_index]);
 			}
