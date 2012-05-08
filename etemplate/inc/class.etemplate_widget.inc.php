@@ -487,11 +487,11 @@ class etemplate_widget
 		}
 		if ($is_index_in_content)
 		{
-			if ($name[1] == '@')
+			if ($name[1] == '@' && is_array(self::$request->content))
 			{
 				$name = self::get_array(self::$request->content,substr($name,2));
 			}
-			else
+			elseif(is_array($cont))
 			{
 				$name = self::get_array($cont,substr($name,1));
 			}
