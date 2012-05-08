@@ -348,7 +348,10 @@ class customfields
 			// search free type character
 			for($i=97;$i<=122;$i++)
 			{
-				if(!$this->content_types[chr($i)])
+				if (!$this->content_types[chr($i)] &&
+					// skip letter of deleted type for addressbook content-types, as it gives SQL error
+					// content-type are lowercase, addressbook_so::DELETED_TYPE === 'D', but DB is case-insensitive
+					($this->appname !== 'addressbook' || chr($i) !== strtolower(addressbook_so::DELETED_TYPE)))
 				{
 					$new_type = chr($i);
 					break;
