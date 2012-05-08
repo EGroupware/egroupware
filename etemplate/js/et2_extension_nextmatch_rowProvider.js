@@ -432,7 +432,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 
 			// Get fancy with categories
 			var cats = [];
-			if(_data["class"].indexOf("cat") !== false)
+			if(_data["class"].indexOf("cat") !== -1)
 			{
 				cats = classes.match(/(cat_)?([0-9]+)/);
 				var invalid = typeof cats[1] == 'undefined';
@@ -442,7 +442,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 				field = _data["class"].match(/\[(.*?cat.*?)\]/);
 
 				// Get category info
-				if(!this.categories)
+				if(!this.categories && field)
 				{
 					if(field.length > 1)
 					{
@@ -458,15 +458,18 @@ var et2_nextmatch_rowProvider = Class.extend({
 					var cat_class = 'cat_'+cats[i];
 
 					// Check for existing class
-					
+					// TODO
 
 					// Create class
-					if(this.categories[cats[i]] && this.categories[cats[i]].color)
+					if(this.categories)
 					{
-						var cat = this.categories[cats[i]];
-						egw().css('.'+cat_class, "background-color: " + cat.color + ";");
+						if(this.categories[cats[i]] && this.categories[cats[i]].color)
+						{
+							var cat = this.categories[cats[i]];
+							egw().css('.'+cat_class, "background-color: " + cat.color + ";");
+						}
 					}
-					classes = classes.replace(cats[i], cat_class);
+					if(invalid) classes = classes.replace(cats[i], cat_class);
 				}
 				classes += " row_category";
 			}
