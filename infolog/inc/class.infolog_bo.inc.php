@@ -1377,6 +1377,8 @@ class infolog_bo
 			{
 				if ($status && substr($status,-1) != '%')
 				{
+					list($type,$status) = explode('-', $status);
+					$status = $this->status[$type][$status];
 					$icons[$id] = 'infolog/'.$status;
 				}
 			}

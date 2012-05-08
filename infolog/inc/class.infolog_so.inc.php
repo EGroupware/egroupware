@@ -425,7 +425,8 @@ class infolog_so
 					$status = 'will-call';
 					break;
 				default:
-					$status = $info['info_status'] == 'ongoing' ? $info['info_percent'].'%' : $info['info_status'];
+					$status = $info['info_status'] == 'ongoing' ? $info['info_percent'].'%' :
+						$info['info_type'].'-'.$info['info_status'];
 			}
 			$stati[$info['info_id']] = $status;
 		}
