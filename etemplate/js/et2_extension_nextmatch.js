@@ -431,7 +431,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 					}
 				}
 				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
-				if(colMgr.columns[i].fixedWidth) colSize[colName] = colMgr.columns[i].fixedWidth;
+				colSize[colName] = colMgr.getColumnWidth(i);
 			} else if (colMgr.columns[i].fixedWidth) {
 				this.egw().debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
