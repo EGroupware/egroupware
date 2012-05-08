@@ -299,11 +299,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 						'label' => $s,
 						'title' => empty($cat['description']) ? $s : $cat['description'],
 					);
-					// For multi-select, send data too
-					if($rows > 1)
-					{
-						$options[$cat['id']] += $cat['data'];
-					}
+					// Send data too
+					$options[$cat['id']] += $cat['data'];
 				}
 				// preserv unavailible cats (eg. private user-cats)
 				/* TODO

@@ -428,7 +428,49 @@ var et2_nextmatch_rowProvider = Class.extend({
 		// TODO: Implement other fields than "class"
 		if (_data["class"])
 		{
-			_tr.setAttribute("class", _mgrs["content"].expandName(_data["class"]));
+			var classes = _mgrs["content"].expandName(_data["class"]);
+
+			// Get fancy with categories
+			var cats = [];
+			if(_data["class"].indexOf("cat") !== false)
+			{
+				cats = classes.match(/(cat_)?([0-9]+)/);
+				var invalid = typeof cats[1] == 'undefined';
+				if(invalid) egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
+				cats = [cats[2]];
+
+				field = _data["class"].match(/\[(.*?cat.*?)\]/);
+
+				// Get category info
+				if(!this.categories)
+				{
+					if(field.length > 1)
+					{
+						var categories = _mgrs["sel_options"].getEntry(field[1]);
+						if(!categories) categories = _mgrs["sel_options"].getEntry('${row}'+field[0]);
+					}
+					// Cache
+					if(categories) this.categories = categories;
+				}
+				for(var i = 0; i < cats.length; i++)
+				{
+					// Need cat_, classes can't start with a number
+					var cat_class = 'cat_'+cats[i];
+
+					// Check for existing class
+					
+
+					// Create class
+					if(this.categories[cats[i]] && this.categories[cats[i]].color)
+					{
+						var cat = this.categories[cats[i]];
+						egw().css('.'+cat_class, "background-color: " + cat.color + ";");
+					}
+					classes = classes.replace(cats[i], cat_class);
+				}
+				classes += " row_category";
+			}
+			_tr.setAttribute("class", classes);
 		}
 	}
 
