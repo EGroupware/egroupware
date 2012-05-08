@@ -1531,7 +1531,6 @@ else
 	 */
 	function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 	{
-		$tabs = 'description|links|delegation|project|customfields|history';
 		if (($submit = is_array($content)))
 		{
 			//echo "infolog_ui::edit: content="; _debug_array($content);
@@ -1594,7 +1593,7 @@ else
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
-					$active_tab = $content[$tabs];
+					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
 						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
@@ -1614,7 +1613,7 @@ else
 						$content['msg'] = lang('InfoLog entry saved');
 						$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'$operation');";
 					}
-					$content[$tabs] = $active_tab;
+					$content['tabs'] = $active_tab;
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
 					{
 						//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
@@ -1951,13 +1950,13 @@ else
 		}
 		else
 		{
-			$readonlys[$tabs]['customfields'] = true;
+			$readonlys['tabs']['customfields'] = true;
 		}
 		if (!isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
 		{
-			$readonlys[$tabs]['project'] = true;	// disable the project tab
+			$readonlys['tabs']['project'] = true;	// disable the project tab
 		}
-		$readonlys[$tabs]['delegation'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+		$readonlys['tabs']['delegation'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		$content['duration_format'] = $this->duration_format;
@@ -2004,7 +2003,7 @@ else
 		}
 		else
 		{
-			$readonlys[$tabs]['history'] = true;
+			$readonlys['tabs']['history'] = true;
 		}
 		$sel_options = array(
 			'info_type'     => $types,
