@@ -257,13 +257,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		if(typeof _widget._genColumnCaption == "function") return _widget._genColumnCaption();
 
 		_widget.iterateOver(function(_widget) {
+			var label = (_widget.options.label ? _widget.options.label : _widget.options.empty_label);
 			if (!result)
 			{
-				result = _widget.options.label;
+				result = label;
 			}
 			else
 			{
-				result += ", " + _widget.options.label;
+				result += ", " + label;
 			}
 		}, this, et2_INextmatchHeader);
 
@@ -385,7 +386,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 
 				var colName = this._getColumnName(_row[i].widget);
 				if(!colName) continue;
-
+				
 				if(size[colName]) _colData[i].width = size[colName];
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
