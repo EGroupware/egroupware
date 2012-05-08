@@ -393,6 +393,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 					if(columnDisplay[j] == colName)
 					{
 						_colData[i].disabled = negated;
+
 						continue RowLoop;
 					}
 				}
@@ -485,6 +486,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				"widget": _row[x].widget
 			};
 
+
 			columnData[x] = {
 				"id": "col_" + x,
 				"caption": this._genColumnCaption(_row[x].widget),
@@ -492,6 +494,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
 				"width": _colData[x].width
 			};
+
+			// No action columns in et2
+			var colName = this._getColumnName(_row[x].widget);
+			if(colName == 'actions' || colName == 'legacy_actions' || colName == 'legacy_actions_check_all') 
+			{
+				this.columns.splice(x,x);
+				columnData.splice(x,x);
+				_colData.splice(x,x);
+				continue;
+			}
 
 			// Append the widget to this container
 			this.addChild(_row[x].widget);
