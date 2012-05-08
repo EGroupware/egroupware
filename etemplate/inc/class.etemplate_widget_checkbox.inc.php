@@ -61,19 +61,25 @@ class etemplate_widget_checkbox extends etemplate_widget
 			// defaults for set and unset values
 			if (!$this->attrs['set_val'] && !$this->attrs['unset_val'])
 			{
-				$this->attrs['set_val'] = 1;
-				$this->attrs['unset_val'] = 0;
+				$set_val = 1;
+				$unset_val = 0;
 			}
-			if (in_array((string)$this->attrs['set_value'], (array)$value))
+			else
+			{
+				// Expand any content stuff
+				$set_val = self::expand_name($this->attrs['set_val'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				$unset_val = self::expand_name($this->attrs['unset_val'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+			}
+			if (in_array((string)$set_val, (array)$value))
 			{
 				if ($multiple)
 				{
 					if (!isset($valid)) $valid = array();
-					$valid[] = $this->attrs['set_val'];
+					$valid[] = $set_val;
 				}
 				else
 				{
-					$valid = $this->attrs['set_val'];
+					$valid = $set_val;
 				}
 			}
 			elseif ($this->type == 'radio')
@@ -88,10 +94,10 @@ class etemplate_widget_checkbox extends etemplate_widget
 				}
 				else
 				{
-					$valid = $this->attrs['unset_val'];
+					$valid = $unset_val;
 				}
 			}
-			error_log(__METHOD__.'() '.$form_name.($multiple?'[]':'').': '.array2string($value).' --> '.array2string($valid));
+			//error_log(__METHOD__.'() '.$form_name.($multiple?'[]':'').': '.array2string($value).' --> '.array2string($valid));
 		}
 	}
 }

@@ -42,6 +42,8 @@ var et2_radiobox = et2_inputWidget.extend({
 			"description": "What should be displayed when readonly and not selected"
 		}
 	},
+	
+	legacyOptions: ["set_value", "ro_true", "ro_false"],
 
 	init: function() {
 		this._super.apply(this, arguments);
