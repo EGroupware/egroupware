@@ -800,6 +800,25 @@ class infolog_ui
 if(typeof widget != 'undefined') {
 	// Show / hide descriptions
 	show_details(jQuery(this).val() == 'all');
+
+	// Change preference location - widget is nextmatch
+	widget.options.settings.columnselection_pref = 'infolog.index.rows'+(jQuery(this).val()=='all'?'-details':'');
+
+	// Load new preferences
+	var colData = []
+	for(var i = 0; i < widget.columns.length; i++) colData[i] = {disabled: true, width: '0'};
+	widget._applyUserPreferences(widget.columns, colData);
+	for(var i = 0; i < colData.length; i++)
+	{
+		// Wants a string
+		widget.dataview.getColumnMgr().columns[i].set_width(colData[i].width + 'px');
+		widget.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
+	}
+
+	widget.dataview.getColumnMgr().updated = true;
+	
+	// Update page
+	widget.dataview.updateColumns();
 }
 else
 {
@@ -1585,6 +1604,10 @@ else
 						list($app,$id) = is_array($content['info_contact']) ? $content['info_contact'] : explode(':',$content['info_contact'], 2);
 						if($app && $id)
 						{
+							if(!is_array($content['link_to']))
+							{
+								$content['link_to'] = array();
+							}
 							$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
 						}
 						if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
