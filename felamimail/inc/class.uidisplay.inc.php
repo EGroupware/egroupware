@@ -1107,7 +1107,7 @@ blockquote[type=cite] {
 	function $funcname(_tar)
 	{
 		if (typeof _tar != \"undefined\" && _tar && typeof _tar.contentWindow != \"undefined\" &&
-		    typeof _tar.contentWindow.egw_instant_load != \"undefined\")
+		    _tar.contentWindow != null && typeof _tar.contentWindow.egw_instant_load != \"undefined\")
 		{
 			_tar.setAttribute(\"scrolling\", \"no\"); // Workaround for FF 3.5
 			_tar.contentWindow.egw_instant_load(email_content_$hash);
