@@ -1106,7 +1106,7 @@ blockquote[type=cite] {
 	var email_content_$hash = ".json_encode($frameHtml).";
 	function $funcname(_tar)
 	{
-		if (_tar && typeof _tar.contentWindow != \"undefined\" &&
+		if (typeof _tar != \"undefined\" && _tar && typeof _tar.contentWindow != \"undefined\" &&
 		    typeof _tar.contentWindow.egw_instant_load != \"undefined\")
 		{
 			_tar.setAttribute(\"scrolling\", \"no\"); // Workaround for FF 3.5
