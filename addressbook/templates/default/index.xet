@@ -118,7 +118,9 @@
 					<image src="${row}[photo]" class="iphoto"/>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
-						<description id="${row}[adr_one_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_one_countrycode]" no_lang="1" readonly="true"/>
+						</menulist>
 						<hbox options="0,0" orient="0">
 							<description no_lang="1" id="${row}[adr_one_locality]"/>
 							<description class="leftPad5" no_lang="1" id="${row}[adr_one_region]"/>
@@ -128,7 +130,9 @@
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
 					</vbox>
 					<vbox options="0,0">
-						<description id="${row}[adr_two_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_two_countrycode]" no_lang="1" readonly="true"/>
+						</menulist>
 						<hbox options="0,0">
 							<description no_lang="1" id="${row}[adr_two_locality]"/>
 							<description no_lang="1" id="${row}[adr_two_region]" class="leftPad5"/>
