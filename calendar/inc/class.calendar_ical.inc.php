@@ -653,7 +653,8 @@ class calendar_ical extends calendar_boupdate
 								}
 								if ($version != '1.0')
 								{
-									$parameters['EXDATE']['VALUE'] = 'DATE-TIME';
+									// VALUE=DATE-TIME is default and optional
+									// adding it causes iCal on iOS 5.1.1 / OSX 10.7.4 to fail to recognice exceptions
 									if (!empty($tzid)) $parameters['EXDATE']['TZID'] = $tzid;
 								}
 							}
