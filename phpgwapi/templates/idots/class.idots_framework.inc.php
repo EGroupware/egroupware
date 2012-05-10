@@ -64,7 +64,8 @@ class idots_framework extends egw_framework
 	{
 		parent::__construct($template);		// call the constructor of the extended class
 
-		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+		// js stuff is not needed by login page and gives errors
+		$GLOBALS['egw_info']['flags']['js_link_registry'] = $GLOBALS['egw_info']['flags']['currentapp'] !== 'login';
 
 		$this->tplsav2 = new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
