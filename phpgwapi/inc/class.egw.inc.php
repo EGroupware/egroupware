@@ -622,6 +622,8 @@ class egw_minimal
 		switch($name)
 		{
 			case 'framework':
+				// default to idots, if no template_set set, to eg. not stall installations if settings use egw::link
+				if (empty($GLOBALS['egw_info']['server']['template_set'])) $GLOBALS['egw_info']['server']['template_set'] = 'idots';
 				// setup the new eGW framework (template sets)
 				$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
 				if (!class_exists($class))	// first try to autoload the class
