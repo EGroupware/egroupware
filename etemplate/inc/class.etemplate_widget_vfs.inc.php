@@ -18,6 +18,9 @@
 class etemplate_widget_vfs extends etemplate_widget_file
 {
 
+	// Legacy option for vfs-upload
+	protected $legacy_options = "mime";
+
 	public function __construct($xml='') {
 		if($xml) parent::__construct($xml);
 	}
@@ -41,22 +44,12 @@ class etemplate_widget_vfs extends etemplate_widget_file
          */
 	public static function store_file($path, $file) {
 error_log(array2string($file));
+		$name = $path;
+
 		// Find real path
 		if($path[0] != '/')
 		{
-			list($app,$id,$relpath) = explode(':',$path,3);
-			if (empty($id) || $id == 'undefined')
-			{
-				static $tmppath = array();      // static var, so all vfs-uploads get created in the same temporary dir
-				if (!isset($tmppath[$app])) $tmppath[$app] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.'.$app.'_'.md5(time().session_id());
-				$path = $tmppath[$app];
-				unset($cell['onchange']);       // no onchange, if we have to use a temporary dir
-			}
-			else
-			{
-				$path = egw_link::vfs_path($app,$id,'',true);
-			}
-			if (!empty($relpath)) $path .= '/'.$relpath;
+			$path = self::get_vfs_path($path, $file['name']);
 		}
 		$filename = $file['name'];
 		if (substr($path,-1) != '/')
@@ -74,16 +67,19 @@ error_log(array2string($file));
 		}
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
-			etemplate_old::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
+			self::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
 error_log(lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
 			return false;
 		}
 		if (!copy($file['tmp_name'],egw_vfs::PREFIX.$path))
 		{
-			etemplate_old::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
+			self::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
 error_log(lang('Error copying uploaded file to vfs!'));
 			return false;
 		}
+
+		// Try to remove temp file
+		unlink($file['tmp_name']);
 	}
 
 	/**
@@ -101,29 +97,41 @@ error_log(lang('Error copying uploaded file to vfs!'));
 		$value = $value_in = self::get_array($content, $form_name);
 		$valid =& self::get_array($validated, $form_name, true);
 
-		if(!is_array($value)) $value = array();
-		foreach($value as $tmp => $file)
+		switch($this->type)
 		{
-			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
-			{
-				$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
-			}
-			else
-			{
-				$path = $tmp.'+';
-			}
-			$stat = stat($path);
-			$valid[] = array(
-				'name'	=> $file['name'],
-				'type'	=> $file['type'],
-				'tmp_name'	=> $path,
-				'error'	=> UPLOAD_ERR_OK, // Always OK if we get this far
-				'size'	=> $stat['size'],
-				'ip'	=> $_SERVER['REMOTE_ADDR'], // Assume it's the same as for when it was uploaded...
-			);
+			case 'vfs-upload':
+				if(!is_array($value)) $value = array();
+				// Check & skip files that made it asyncronously
+				list($app,$id,$relpath) = explode(':',$this->id,3);
+		//...
+				foreach($value as $tmp => $file)
+				{
+					if(egw_vfs::file_exists(self::get_vfs_path($id) . $relpath)) {}
+				}
+				parent::validate($cname, $content, $validated);
+				break;
 		}
+		$valid = $value;
+	}
 
-		if($valid && !$this->attrs['multiple']) $valid = $valid[0];
+	/**
+	 * Change an ID like app:id:relative/path to an actual VFS location
+	 */
+	public static function get_vfs_path($path) {
+		list($app,$id,$relpath) = explode(':',$path,3);
+		if (empty($id) || $id == 'undefined')
+		{
+			static $tmppath = array();      // static var, so all vfs-uploads get created in the same temporary dir
+			if (!isset($tmppath[$app])) $tmppath[$app] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.'.$app.'_'.md5(time().session_id());
+			$path = $tmppath[$app];
+			unset($cell['onchange']);       // no onchange, if we have to use a temporary dir
+		}
+		else
+		{
+			$path = egw_link::vfs_path($app,$id,'',true);
+		}
+		if (!empty($relpath)) $path .= '/'.$relpath;
+		return $path;
 	}
 }
 etemplate_widget::registerWidget('etemplate_widget_vfs', array('vfs-upload'));
