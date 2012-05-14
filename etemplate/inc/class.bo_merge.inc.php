@@ -875,7 +875,7 @@ abstract class bo_merge
 					case 'application/vnd.oasis.opendocument.spreadsheet':
 						$replace_tags = array(
 							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>',
+							'<table>','<tr>','<td>','<a>',
 						);
 						break;
 					case 'application/xmlWord.Document':	// Word 2003*/
