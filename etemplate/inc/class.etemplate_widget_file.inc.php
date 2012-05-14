@@ -31,6 +31,7 @@ class etemplate_widget_file extends etemplate_widget
 		{
 			$this->attrs['multiple'] = true;
 		}
+		$this->attrs['max_file_size'] = egw_vfs::int_size(ini_get('upload_max_filesize'));
 	}
 
 	/**
