@@ -111,7 +111,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 		$unmodified = $attrs;
 
 		// run the transformation
-		foreach(static::$transformation as $filter => $data)
+		foreach(self::$transformation as $filter => $data)
 		{
 			$this->action($filter, $data, $attrs);
 		}
