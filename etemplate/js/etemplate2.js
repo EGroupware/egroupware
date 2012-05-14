@@ -326,6 +326,7 @@ etemplate2.prototype.postSubmit = function()
 			.appendTo(form);
 
 		var input = document.createElement("input");
+		input.type = "hidden";
 		input.name = 'value';
 		input.value = egw().jsonEncode(values);
 		form.append(input);
@@ -426,6 +427,7 @@ etemplate2.prototype.getValues = function(_root)
 
 	}, this, et2_IInput);
 
+	egw().debug("info", "Value", result);
 	return result;
 }
 
