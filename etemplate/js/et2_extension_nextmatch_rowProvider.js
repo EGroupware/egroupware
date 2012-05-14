@@ -432,11 +432,12 @@ var et2_nextmatch_rowProvider = Class.extend({
 
 			// Get fancy with categories
 			var cats = [];
-			if(_data["class"].indexOf("cat") !== -1)
+			// Assume any numeric class is a category
+			if(_data["class"].indexOf("cat") !== -1 || classes.match(/[0-9]+/))
 			{
 				cats = classes.match(/(cat_)?([0-9]+)/);
 				var invalid = typeof cats[1] == 'undefined';
-				if(invalid) egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
+				if(invalid) this._rootWidget.egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
 				cats = [cats[2]];
 
 				field = _data["class"].match(/\[(.*?cat.*?)\]/);
@@ -466,7 +467,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 						if(this.categories[cats[i]] && this.categories[cats[i]].color)
 						{
 							var cat = this.categories[cats[i]];
-							egw().css('.'+cat_class, "background-color: " + cat.color + ";");
+							this._rootWidget.egw().css('.'+cat_class, "background-color: " + cat.color + ";");
 						}
 					}
 					if(invalid) classes = classes.replace(cats[i], cat_class);
