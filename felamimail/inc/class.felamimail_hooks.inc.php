@@ -499,7 +499,7 @@ class felamimail_hooks
 				'values' => $htmlOptions,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'only_if_no_text',
+				'forced' => 'always_display',
 			),
 			'allowExternalIMGs' => array(
 				'type'   => 'check',
