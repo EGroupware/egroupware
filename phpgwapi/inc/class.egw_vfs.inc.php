@@ -1144,6 +1144,44 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Size in bytes, from human readable
+	 *
+	 * From PHP ini_get docs, Ivo Mandalski 15-Nov-2011 08:27
+	 */
+	static function int_size($val)
+	{
+		if(empty($val))return 0;
+
+		$val = trim($val);
+
+		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $val, $matches);
+
+		$last = '';
+		if(isset($matches[2])){
+			$last = $matches[2];
+		}
+
+		if(isset($matches[1])){
+			$val = (int) $matches[1];
+		}
+
+		switch (strtolower($last))
+		{
+			case 'g':
+			case 'gb':
+			$val *= 1024;
+			case 'm':
+			case 'mb':
+			$val *= 1024;
+			case 'k':
+			case 'kb':
+			$val *= 1024;
+		}
+
+		return (int) $val;
+	}
+
+	/**
 	 * like basename($path), but also working if the 1. char of the basename is non-ascii
 	 *
 	 * @param string $path

@@ -1892,7 +1892,7 @@ class egw_db
 					$this->column_data_implode(',',$data,True,true,$table_def['fd']).' WHERE '.$where;
 			}
 			$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
-			if ($this->Debug) echo "<p>db::query('$sql',$line,$file) = '$ret'</p>\n";
+			if ($this->Debug) echo "<p>db::query('$sql',$line,$file)</p>\n";
 		}
 		// if we have any blobs to update, we do so now
 		if (($ret || !count($data)) && count($blobs2update))

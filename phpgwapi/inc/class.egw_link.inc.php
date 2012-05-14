@@ -120,6 +120,7 @@ class egw_link extends solink
 	 */
 	static $app_register = array(
 		'home-accounts' => array(	// user need run-rights for home
+			'app' => 'home',
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',
 			'query' => 'accounts::link_query',
