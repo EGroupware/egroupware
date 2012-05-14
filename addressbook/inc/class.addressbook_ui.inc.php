@@ -1285,7 +1285,7 @@ class addressbook_ui extends addressbook_bo
 					$order = "$query[order] IS NULL,$query[order] $sort,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				case 'contact_id':
-					$order = "$query[order] $sort";
+					$order = "egw_addressbook.$query[order] $sort";
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
