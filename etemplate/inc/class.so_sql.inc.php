@@ -931,7 +931,12 @@ class so_sql
 		}
 		if ($only_keys === true)
 		{
-			$colums = implode(',',array_keys($this->db_key_cols));
+			$colums = array_keys($this->db_key_cols);
+			foreach($colums as &$column)
+			{
+				$column = $this->table_name . '.' . $column;
+			}
+			$colums = implode(',',$colums);
 			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (is_array($only_keys))
