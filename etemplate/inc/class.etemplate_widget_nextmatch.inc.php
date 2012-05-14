@@ -160,7 +160,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
 		$value = array_merge($value, $filters);
-		error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
+		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
 		$result = array();
 
@@ -337,7 +337,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if ($total > 200) @set_time_limit(0);
 
 		// remove empty rows required by old etemplate to compensate for header rows
-		$first = null;
+		$first = $total ? null : 0;
 		foreach($raw_rows as $n => $row)
 		{
 			// skip empty rows inserted for each header-line in old etemplate
