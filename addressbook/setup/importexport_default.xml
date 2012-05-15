@@ -240,12 +240,25 @@
               <entry type="string" name="stop">1</entry>
             </entry>
           </entry>
+          <entry type="array" name="1">
+            <entry type="string" name="string">id</entry>
+            <entry type="string" name="type">exists</entry>
+            <entry type="array" name="true">
+              <entry type="string" name="action">update</entry>
+              <entry type="string" name="stop">1</entry>
+            </entry>
+            <entry type="array" name="false">
+              <entry type="string" name="action">insert</entry>
+              <entry type="string" name="stop">1</entry>
+            </entry>
+          </entry>
         </entry>
         <entry type="string" name="owner_from_csv">1</entry>
-        <entry type="string" name="contact_owner">-1</entry>
+        <entry type="string" name="contact_owner">personal</entry>
         <entry type="string" name="change_owner">0</entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2012-05-15 16:46:54</entry>
     </entry>
   </entry>
 </entry>
