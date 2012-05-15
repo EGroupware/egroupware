@@ -1,3 +1,17 @@
+egroupware (1.8.004.20120515) hardy; urgency=low
+
+  * Addressbook: skip letter of deleted type, when creating new contact types, as it gives SQL error
+  * ProjectManager/InfoLog: fixed custom type icon in PM to use status label, as in InfoLog
+  * CalDAV: fixed not working exceptions of recuring events in iCal on iOS or OS X (skipping optional and default VALUE=DATE-TIME attribute in iCal EXDATE component)
+  * TranslationTool: bigger fields to add a new phrase
+  * Calendar: taking direct booking permission into account when copying events including resources (my.stylite bug #2839)
+  * AsyncServices/Calendar: when multiple alarms / async jobs run at same time, they send mail with from address of first alarm/job
+  * Calendar: notification always use language of current user, not of user to notify
+  * InfoLog: if searching do not suppress sub-entries (user preference "List no subs/childs" set)
+  * Addressbook: fixed not working changing of organisation members
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 15 May 2012 19:03:48 +0200
+
 egroupware (1.8.004.20120507) hardy; urgency=low
 
   * resources: fix for missing/not loaded pictures for resources in default/images/resource_icons/
