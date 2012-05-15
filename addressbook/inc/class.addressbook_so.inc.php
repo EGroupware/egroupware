@@ -576,6 +576,7 @@ class addressbook_so
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 *  $filter['cols_to_search'] limit search columns to given columns, otherwise $this->columns_to_search is used
 	 * @param string $join='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
@@ -592,6 +593,12 @@ class addressbook_so
 		}
 		// Hide deleted items unless type is specifically deleted
 		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
+
+		if (isset($filter['cols_to_search']))
+		{
+			$cols_to_search = $filter['cols_to_search'];
+			unset($filter['cols_to_search']);
+		}
 
 		// if no tid set or tid==='' do NOT return deleted entries ($tid === null returns all entries incl. deleted)
 		if(!array_key_exists('tid', $filter) || $filter['tid'] === '')
@@ -619,7 +626,11 @@ class addressbook_so
 			$search = $criteria;
 			$criteria = array();
 
-			if ($backend === $this->somain)
+			if (isset($cols_to_search))
+			{
+				$cols = $cols_to_search;
+			}
+			elseif ($backend === $this->somain)
 			{
 				$cols = $this->columns_to_search;
 			}
@@ -651,7 +662,8 @@ class addressbook_so
 			{
 				foreach($cols as $col)
 				{
-					$criteria[$col] = $search;
+					// remove from LDAP backend not understood use-AND-syntax
+					$criteria[$col] = str_replace(' +',' ',$search);
 				}
 			}
 		}

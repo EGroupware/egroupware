@@ -31,11 +31,9 @@
 					$_searchString = trim(implode(' AND ',$seStAr));
 					//error_log(__METHOD__.__LINE__.$_searchString);
 					if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
-					$contacts = $GLOBALS['egw']->contacts->search(array(
-						0 => "(n_fn  like '%".trim(implode("%' AND n_fn like '%",$seStAr))."%')",
-						1 => "(contact_email  like '%".trim(implode("%' AND contact_email like '%",$seStAr))."%')",
-						2 => "(contact_email_home  like '%".trim(implode("%' AND contact_email_home like '%",$seStAr))."%')",
-					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),($showAccounts?array():array('account_id' => null)));
+					$filter = ($showAccounts?array():array('account_id' => null));
+					$filter['cols_to_search']=array('n_fn','email','email_home');
+					$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
 					// additionally search the accounts, if the contact storage is not the account storage
 					if ($showAccounts &&
 						$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
