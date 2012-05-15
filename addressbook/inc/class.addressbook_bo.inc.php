@@ -199,7 +199,7 @@ class addressbook_bo extends addressbook_so
 			'n_fn'                 => lang('full name'),
 			'n_fileas'             => lang('own sorting'),
 			'bday'                 => lang('birthday'),
-			'org_name'             => lang('Company'),
+			'org_name'             => lang('Organisation'),
 			'org_unit'             => lang('Department'),
 			'title'                => lang('Title'),
 			'role'                 => lang('Role'),
