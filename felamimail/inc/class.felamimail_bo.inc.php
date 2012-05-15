@@ -1398,6 +1398,7 @@ class felamimail_bo
 						"width"   => array("maxlen" => 5),
 						"style"   => array('minlen' =>  5, 'maxlen' => 100),
 						"align"   => array('maxlen' =>  10),
+						'bgcolor' => array('maxlen' => 10),
 						"valign"   => array('maxlen' =>  10),
 						"nowrap"  => array('valueless' => 'y')
 					)
