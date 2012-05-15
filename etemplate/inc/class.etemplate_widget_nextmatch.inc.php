@@ -742,6 +742,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 		}
 		$params[0] = $old_param0;
+
+		// Prevent troublesome keys from breaking the nextmatch
+		// TODO: Figure out where these come from
+		foreach(array('$row','${row}', '$', '0','1','2') as $key)
+		{
+			if(is_array(self::$request->content[$cname])) unset(self::$request->content[$cname][$key]);
+			if(is_array(self::$request->preserve[$cname])) unset(self::$request->preserve[$cname][$key]);
+		}
 	}
 }
 

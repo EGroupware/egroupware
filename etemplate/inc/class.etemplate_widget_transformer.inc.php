@@ -104,7 +104,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 			error_log(__METHOD__."() $this has no id!");
 			return;
 		}
-		$attrs['value'] = $value =& self::get_array(self::$request->content, $form_name);
+		$attrs['value'] = $value =& self::get_array(self::$request->content, $form_name, false, true);
 		$attrs['type'] = $this->type;
 		$attrs['id'] = $this->id;
 
