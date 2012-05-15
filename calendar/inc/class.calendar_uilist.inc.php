@@ -761,13 +761,13 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 			),
 		);
-		$status = $this->bo->verbose_status;
+		$status = array_map('lang',$this->bo->verbose_status);
 		unset($status['G']);
 		$actions['status'] = array(
 			'caption' => 'Change your status',
 			'icon' => 'check',
 			'prefix' => 'status-',
-			'children' => $status,
+			'children' => lang($status),
 			'group' => ++$group,
 		);
 		++$group;	// integration with other apps: infolog, calendar, filemanager

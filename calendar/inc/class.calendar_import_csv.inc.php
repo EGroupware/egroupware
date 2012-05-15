@@ -97,9 +97,9 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -154,7 +154,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 		$this->errors = array();
 
 		// Used for participants
-		$status_map = array_flip($this->bo->verbose_status);
+		$status_map = array_flip(array_map('lang',$this->bo->verbose_status));
 		$role_map = array_flip($this->bo->roles);
 
 		$lookups = array(
@@ -173,7 +173,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			// Automatic conversions
-			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups, 
+			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups,
 				$_definition->plugin_options['convert']
 			);
 
@@ -181,8 +181,8 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 			if($_definition->plugin_options['owner_from_csv']) {
 				if(!is_numeric($record['owner'])) {
 					$this->errors[$import_csv->get_current_position()] = lang(
-						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.', 
-						$record['owner'], 
+						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
+						$record['owner'],
 						$_definition->plugin_options['owner']
 					);
 					$record['owner'] = $_definition->plugin_options['owner'];
@@ -312,7 +312,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 				}
 			default:
 				throw new egw_exception('Unsupported action');
-			
+
 		}
 	}
 

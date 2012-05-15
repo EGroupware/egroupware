@@ -291,7 +291,7 @@ class calendar_merge extends bo_merge
 					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
 					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23,59,59,0,0,0));
 				}
-				
+
 				$days[date('Ymd',$_date)][$dow][] = $replacements;
 			}
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false) {
@@ -357,7 +357,7 @@ class calendar_merge extends bo_merge
 			if(date('Ymd',$date) != date('Ymd', $event['start'])) return array();
 			return $n == 0 ? $this->calendar_replacements($event) : array();
 		}
-		
+
 		// Use start for cache, in case of multiple months
 		$_date = $id['start'] ? $id['start'] : $date;
 		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
@@ -456,11 +456,11 @@ class calendar_merge extends bo_merge
 		}
 		$info = array(
 			'name'		=> $this->bo->participant_name($participant),
-			'status'	=> $this->bo->verbose_status[$status],
+			'status'	=> lang($this->bo->verbose_status[$status]),
 			'quantity'	=> $quantity,
 			'role'		=> $role
 		);
-		
+
 		switch ($participant[0])
 		{
 			case 'c':
@@ -558,7 +558,7 @@ class calendar_merge extends bo_merge
 		echo '<tr><td>{{quantity}}</td><td>'.lang('quantity').'</td></tr>';
 		echo '<tr><td>{{status}}</td><td>'.lang('status').'</td></tr>';
 		echo '<tr><td colspan="4">{{endtable}}</td></tr>';
-		
+
 		echo '<tr style="vertical-align:top"><td colspan="2"><table >';
 		echo '<tr><td><h3>'.lang('Day of week tables').":</h3></td></tr>";
 		$days = array();
