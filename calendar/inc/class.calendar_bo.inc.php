@@ -1180,10 +1180,10 @@ class calendar_bo
 			$access = $user == $owner || $grant & $needed
 				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grant & EGW_ACL_PRIVATE);
 		}
-		// do NOT allow users to purge deleted events, if we dont have 'user_purge' enabled
+		// do NOT allow users to purge deleted events, if we dont have 'userpurge' enabled
 		if ($access && $needed == EGW_ACL_DELETE && $event['deleted'] &&
 			!$GLOBALS['egw_info']['user']['apps']['admin'] && $user != $this->user &&
-			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'user_purge')
+			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'userpurge')
 		{
 			$access = false;
 		}
