@@ -915,23 +915,30 @@ class infolog_ui
 		// if filtered by type, show only the stati of the filtered type
 		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
 		{
-			$statis = $this->bo->status[$query['col_filter']['info_type']];
+			$statis = $icons = $this->bo->status[$query['col_filter']['info_type']];
 		}
 		else	// show all stati
 		{
-			$statis = array();
+			$statis = $icons = array();
 			foreach($this->bo->status as $type => $stati)
 			{
 				if ($type == 'defaults') continue;
-				$statis += $stati;
+				foreach($stati as $val => $label)
+				{
+					$statis[$val][$label] = lang($label);
+					if (!isset($icons[$val])) $icons[$val] = $label;
+				}
 			}
-			$statis = array_unique($statis);
+			foreach($statis as $val => &$labels)
+			{
+				$labels = implode(', ', $labels);
+			}
 		}
 		foreach($statis as $type => &$data)
 		{
 			$data = array(
 				'caption' => $data,
-				'icon' => $type,
+				'icon' => $icons[$type],
 			);
 		}
 
@@ -1318,7 +1325,7 @@ class infolog_ui
 						$this->bo->status['defaults'][$entry['info_type']];
 					// fall-through
 				case 'status':
-					if(in_array($settings, $this->bo->status[$entry['info_type']]))
+					if(isset($this->bo->status[$entry['info_type']][$settings]))
 					{
 						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
 						if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
