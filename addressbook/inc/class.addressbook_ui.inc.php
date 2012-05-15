@@ -1795,7 +1795,6 @@ class addressbook_ui extends addressbook_bo
 		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_one_countrycode]"));');
 		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_two_countrycode]"));');
 
-		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
@@ -1826,6 +1825,7 @@ class addressbook_ui extends addressbook_bo
 			$this->account_repository == 'ldap' && $content['account_id'];
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
+		$readonlys['change_org'] = empty($content['org_name']) || $view;
 
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
@@ -2204,9 +2204,9 @@ class addressbook_ui extends addressbook_bo
 		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
-		$content['disable_change_org'] = true;
 
 		$this->tmpl->read('addressbook.search');
+		$this->tmpl->set_cell_attribute('change_org','disabled',true);
 		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(
 			'do_email' => $do_email,
 		),2);
