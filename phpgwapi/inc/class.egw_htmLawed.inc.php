@@ -80,8 +80,10 @@ class egw_htmLawed
 		*/
 
 		$this->Configuration = array('comment'=>0,
-			'balance'=>1,
+			'balance'=>0,
+			//'keep_bad'=>3,
 			'tidy'=>1,
+			//'direct_list_nest'=>1,
 			'elements' => "* -script",
 			'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
 			'hook_tag' =>"hl_my_tag_transform",
