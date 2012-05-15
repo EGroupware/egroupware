@@ -595,6 +595,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$user = $temp_user['account_id'];
 		}
+		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		if ($GLOBALS['egw']->preferences->account_id != $user)
 		{
 			$GLOBALS['egw']->preferences->__construct($user);
@@ -690,7 +691,6 @@ class calendar_boupdate extends calendar_bo
 		$enddate = new egw_time($event['end']);
 		$modified = new egw_time($event['modified']);
 		if ($old_event != False) $olddate = new egw_time($old_event['start']);
-		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		foreach($to_notify as $userid => $statusid)
 		{
 			unset($res_info);
