@@ -1216,7 +1216,14 @@ class addressbook_bo extends addressbook_so
 		{
 			if (isset($fields[$name]))
 			{
-				$criteria[$name] = $fields[$name];
+				if (empty($fields[$name]))
+				{
+					$criteria[] = "($name IS NULL OR $name='')";
+				}
+				else
+				{
+					$criteria[$name] = $fields[$name];
+				}
 			}
 		}
 		return parent::search($criteria,false,'n_family,n_given','','',false,'OR',false,array('org_name'=>$org_name));
@@ -1232,6 +1239,15 @@ class addressbook_bo extends addressbook_so
 	 */
 	function changed_fields($from,$to,$only_org_fields=true)
 	{
+		// we only care about countryname, if contrycode is empty
+		foreach(array(
+			'adr_one_countryname' => 'adr_one_countrycode',
+			'adr_two_countryname' => 'adr_one_countrycode',
+		) as $name => $code)
+		{
+			if (!empty($from[$code])) $from[$name] = '';
+			if (!empty($to[$code])) $to[$name] = '';
+		}
 		$changed = array();
 		foreach($only_org_fields ? $this->org_fields : array_keys($this->contact_fields) as $name)
 		{
