@@ -401,6 +401,11 @@ class asyncservice
 				//
 				if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
 				{
+					// unset all objects in $GLOBALS, which are created and used by ExecMethod, as they can contain user-data
+					foreach($GLOBALS as $name => $value)
+					{
+						if ($name !== 'egw' && is_object($value)) unset($GLOBALS[$name]);
+					}
 					$domain = $GLOBALS['egw_info']['user']['domain'];
 					$lang   = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 					unset($GLOBALS['egw_info']['user']);
