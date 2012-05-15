@@ -259,7 +259,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.001">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
@@ -276,11 +276,6 @@
 					<image src="edit"/>
 					<description value="Notes"/>
 					<textbox multiline="true" id="note" rows="6" cols="50"/>
-				</row>
-				<row class="row_on" disabled="@disable_change_org">
-					<image src="check"/>
-					<description/>
-					<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
 				</row>
 				<row>
 					<image src="home"/>
@@ -491,7 +486,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.002">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -633,6 +628,7 @@
 						<button accesskey="s" label="Save" id="button[save]"/>
 						<button label="Apply" id="button[apply]"/>
 						<button label="Cancel" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;"/>
+						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
 					</hbox>
 					<button align="right" label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" tabindex="25"/>
 				</row>

@@ -94,7 +94,7 @@ function org_fileds_to_update($config)
 	foreach($bocontacts->contact_fields as $field => $label)
 	{
 		// some fields never making sense for an organisation
-		if (!in_array($field,array('id','tid','owner','created','creator','modified','modifier','private','n_prefix','n_given','n_middle','n_family','n_suffix','n_fn')))
+		if (!in_array($field,array('id','tid','owner','created','creator','modified','modifier','private','n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','account_id')))
 		{
 			$fields[$field] = $label;
 		}
@@ -107,7 +107,7 @@ function org_fileds_to_update($config)
 			$fields['#'.$name] = $data['label'];
 		}
 	}
-	
+
 	// Remove country codes as an option, it will be added by BO constructor
 	unset($fields['adr_one_countrycode']);
 	unset($fields['adr_two_countrycode']);

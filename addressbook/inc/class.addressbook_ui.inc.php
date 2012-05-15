@@ -2003,7 +2003,6 @@ class addressbook_ui extends addressbook_bo
 		}
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
-		$content['disable_change_org'] = true;
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
@@ -2036,6 +2035,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['owner'] .= 'p';
 		}
+		$this->tmpl->set_cell_attribute('change_org','disabled',true);
 
 		// Prevent double countries - invalid code blanks it, disabling doesn't work
 		$content['adr_one_countrycode'] = '-';
