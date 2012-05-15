@@ -592,6 +592,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$user = $temp_user['account_id'];
 		}
+		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		if ($GLOBALS['egw']->preferences->account_id != $user)
 		{
 			$GLOBALS['egw']->preferences->__construct($user);
@@ -603,55 +604,55 @@ class calendar_boupdate extends calendar_bo
 		switch($msg_type)
 		{
 			case MSG_DELETED:
-				$action = lang('Canceled');
+				$action = 'Canceled';
 				$msg = 'Canceled';
 				$msgtype = '"calendar";';
 				$method = 'CANCEL';
 				break;
 			case MSG_MODIFIED:
-				$action = lang('Modified');
+				$action = 'Modified';
 				$msg = 'Modified';
 				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
 				$method = 'REQUEST';
 				break;
 			case MSG_DISINVITE:
-				$action = lang('Disinvited');
+				$action = 'Disinvited';
 				$msg = 'Disinvited';
 				$msgtype = '"calendar";';
 				$method = 'CANCEL';
 				break;
 			case MSG_ADDED:
-				$action = lang('Added');
+				$action = 'Added';
 				$msg = 'Added';
 				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
 				$method = 'REQUEST';
 				break;
 			case MSG_REJECTED:
-				$action = lang('Rejected');
+				$action = 'Rejected';
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
 				break;
 			case MSG_TENTATIVE:
-				$action = lang('Tentative');
+				$action = 'Tentative';
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
 				break;
 			case MSG_ACCEPTED:
-				$action = lang('Accepted');
+				$action = 'Accepted';
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
 				break;
 			case MSG_DELEGATED:
-				$action = lang('Delegated');
+				$action = 'Delegated';
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
 				break;
 			case MSG_ALARM:
-				$action = lang('Alarm');
+				$action = 'Alarm';
 				$msg = 'Alarm';
 				$msgtype = '"calendar";';
 				$method = 'PUBLISH';	// duno if thats right
@@ -729,7 +730,7 @@ class calendar_boupdate extends calendar_bo
 				if (is_numeric($userid))
 				{
 					$preferences = new preferences($userid);
-					$part_prefs = $preferences->read_repository();
+					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
 
 					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 					$details['to-fullname'] = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
@@ -739,7 +740,7 @@ class calendar_boupdate extends calendar_bo
 					if (is_null($owner_prefs))
 					{
 						$preferences = new preferences($old_event['owner']);
-						$owner_prefs = $preferences->read_repository();
+						$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
 					}
 					$part_prefs = $owner_prefs;
 					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
@@ -749,6 +750,12 @@ class calendar_boupdate extends calendar_bo
 				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
 				{
 					continue;
+				}
+				if ($lang !== $part_prefs['common']['lang'])
+				{
+					translation::init();
+					$details = $this->_get_event_details($event,$action,$event_arr,$disinvited);
+					$lang = $part_prefs['common']['lang'];
 				}
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
@@ -851,6 +858,10 @@ class calendar_boupdate extends calendar_bo
 			$GLOBALS['egw']->preferences->__construct($temp_user['account_id']);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			//echo "<p>".__METHOD__."() restored enviroment of #$temp_user[account_id] $temp_user[account_fullname]: tz={$GLOBALS['egw_info']['user']['preferences']['common']['tz']}</p>\n";
+		}
+		if ($lang !== $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+		{
+			translation::init();
 		}
 		return true;
 	}
@@ -1372,7 +1383,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		$details = array(			// event-details for the notify-msg
 			'id'          => $event['id'],
-			'action'      => $action,
+			'action'      => lang($action),
 		);
 		$event_arr = $this->event2array($event);
 		foreach($event_arr as $key => $val)
