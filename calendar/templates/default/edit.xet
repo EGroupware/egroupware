@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.002">
+		<hbox options="0,0">
+			<grid width="100%" height="210">
+				<columns>
+					<column width="95"/>
+					<column/>
+				</columns>
+				<rows>
+					<row class="row">
+						<description width="95" options=",,,start" value="Start"/>
+						<hbox options="0,0">
+							<date-time needed="1" id="start"/>
+							<checkbox label="whole day" id="whole_day" options=",, ,disable" statustext="Event will occupy the whole day" align="center"/>
+						</hbox>
+					</row>
+					<row class="row">
+						<description width="0" options=",,,duration" value="Duration"/>
+						<hbox options="0,0">
+							<menulist>
+								<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting"/>
+							</menulist>
+							<date-time id="end" class="end_hide"/>
+						</hbox>
+					</row>
+					<row>
+						<description/>
+						<buttononly label="Freetime search" onclick="ajax_submit(this.form,'calendar.calendar_uiforms.ajax_freetimesearch'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
+					</row>
+					<row class="row">
+						<description options=",,,location" value="Location" width="0"/>
+						<textbox maxlength="255" id="location" class="inputFullWidth"/>
+					</row>
+					<row class="row_off">
+						<description options=",,,priority" value="Priority" width="0"/>
+						<menulist>
+							<menupopup type="select-priority" id="priority"/>
+						</menulist>
+					</row>
+					<row class="row">
+						<description value="Options" width="0"/>
+						<checkbox id="non_blocking" options=",, ,disable" statustext="A non blocking event will not conflict with other events" label="non blocking"/>
+					</row>
+					<row class="row">
+						<description/>
+						<checkbox id="public" options="0,1" label="Private"/>
+					</row>
+				</rows>
+			</grid>
+			<vbox class="row_on" align="right" options="0,0">
+				<description options=",,,category" value="Categories" class="row_on"/>
+				<listbox type="select-cat" id="category" rows="9"/>
+			</vbox>
+		</hbox>
+	</template>
+	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="210">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" valign="top">
+					<description options=",,,description" value="Description"/>
+					<textbox multiline="true" rows="12" cols="70" id="description"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%" height="210" overflow="auto" id="participants">
+			<columns>
+				<column width="95"/>
+				<column/>
+				<column/>
+				<column width="70"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" disabled="@no_add">
+					<description value="New"/>
+					<vbox options="0,0">
+						<menulist>
+							<menupopup type="select-account" options="User or group,calendar+,,10" id="account" statustext="User or group"/>
+						</menulist>
+						<link-entry id="resource" options="@cal_resources"/>
+					</vbox>
+					<int options="1,,3" id="quantity" align="center"/>
+					<menulist class="selectRole">
+						<menupopup id="role"/>
+					</menulist>
+					<button label="Add" id="add" align="center"/>
+					<description/>
+				</row>
+				<row class="th">
+					<description value="Type"/>
+					<description value="Participants"/>
+					<description value="Quantity" align="center"/>
+					<description value="Role"/>
+					<description value="Status"/>
+					<description value="Actions"/>
+				</row>
+				<row valign="top">
+					<description id="${row}[app]"/>
+					<description rows="1" cols="2" id="${row}[title]" no_lang="1"/>
+					<int id="${row}[quantity]" options="1,,3" readonly="true" align="center"/>
+					<description id="${row}[role_label]"/>
+					<menulist>
+						<menupopup id="${row}[status]" onchange="1"/>
+					</menulist>
+					<button rows="1" cols="2" id="delete[$row_cont[delete_id]]" align="center" label="Delete" onchange="1" image="delete"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.selectRole select { width: 100%; }
+		</styles>
+	</template>
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%" height="210">
+			<columns>
+				<column width="95"/>
+				<column/>
+				<column/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row class="row" disabled="!@reference">
+					<description value="Exception"/>
+					<date-time class="gray" readonly="true" id="recurrence"/>
+					<description class="gray" id="reference"/>
+					<description class="gray" id="uid"/>
+				</row>
+				<row class="th" height="12">
+					<description span="all" class="gray" value="Repeating Event Information"/>
+					<description value="be back soon ;-)"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="row" height="12">
+					<description options=",,,recur_type" value="Repeat type"/>
+					<menulist>
+						<menupopup id="recur_type" onchange="check_recur_type('recur_type', 2);"/>
+					</menulist>
+					<description options=",,,recur_interval" value="Interval"/>
+					<menulist>
+						<menupopup type="select-number" id="recur_interval" statustext="repeating interval, eg. 2 to repeat every second week" options="None,2,31"/>
+					</menulist>
+				</row>
+				<row class="row" height="12">
+					<description options=",,,recur_enddate" value="End date"/>
+					<date id="recur_enddate" statustext="repeat the event until which date (empty means unlimited)"/>
+					<description options=",,,tzid" value="Timezone"/>
+					<menulist>
+						<menupopup type="select-timezone" id="tzid" statustext="Timezone in which recurrences have identical time"/>
+					</menulist>
+				</row>
+				<row class="row" valign="top">
+					<description options=",,,recur_data" value="Repeat days"/>
+					<listbox type="select-dow" rows="6" options="1" id="recur_data" statustext="Days of the week for a weekly repeated event"/>
+					<vbox options="0,0">
+						<description value="Exceptions"/>
+						<button id="button[exception]" label="@exception_label" statustext="Create an exception for the given date" no_lang="1"/>
+					</vbox>
+					<grid id="recur_exception">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<date-time id="$row" readonly="true"/>
+								<button label="Delete" image="delete" id="delete_exception[$row_cont]" statustext="Delete this exception" onclick="return confirm('Delete this exception');"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
+		<grid width="100%" height="210" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<customfields/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="210" overflow="auto">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th" disabled="@view">
+					<description span="all" value="Create new links"/>
+				</row>
+				<row class="row" disabled="@view">
+					<link-to span="all" id="link_to"/>
+				</row>
+				<row class="th">
+					<description span="all" value="Existing links"/>
+				</row>
+				<row class="row_off" valign="top">
+					<link-list span="all" id="link_to"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.alarms" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="210" overflow="auto">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" height="20" disabled="@no_add_alarm">
+					<description value="before the event"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-number" options=",0,7" id="new_alarm[days]" statustext="days"/>
+						</menulist>
+						<description options=",,,new_alarm[days]" value="days"/>
+						<menulist>
+							<menupopup type="select-number" id="new_alarm[hours]" options=",0,23" statustext="hours"/>
+						</menulist>
+						<description options=",,,new_alarm[hours]" value="hours"/>
+						<menulist>
+							<menupopup type="select-number" id="new_alarm[mins]" options=",0,55,5" statustext="Minutes"/>
+						</menulist>
+						<description options=",,,new_alarm[mins]" value="Minutes"/>
+						<menulist>
+							<menupopup id="new_alarm[owner]" no_lang="1" label="for" statustext="Select who should get the alarm"/>
+						</menulist>
+						<button id="button[add_alarm]" label="Add alarm"/>
+					</hbox>
+				</row>
+				<row valign="top" disabled="!@alarm">
+					<description value="Alarms"/>
+					<grid id="alarm">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Time"/>
+								<description value="before the event"/>
+								<description value="All participants"/>
+								<description value="Owner"/>
+								<description value="Action"/>
+							</row>
+							<row class="row">
+								<date-time id="${row}[time]" readonly="true"/>
+								<description id="${row}[offset]" no_lang="1"/>
+								<checkbox align="center" id="${row}[all]" readonly="true"/>
+								<menulist>
+									<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+								</menulist>
+								<button image="delete" label="Delete" align="center" id="delete_alarm[$row_cont[id]]" statustext="Delete this alarm" onclick="return confirm('Delete this alarm');"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column width="300"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<html span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th" height="28">
+					<description value="Title"/>
+					<hbox span="all" needed="1">
+						<textbox size="70" maxlength="255" id="title" needed="1"/>
+						<description id="id" options="b" value="#%s"/>
+					</hbox>
+				</row>
+				<row>
+					<tabbox span="all" id="general|description|participants|recurrence|custom|links|alarms">
+						<tabs>
+							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
+							<tab label="Description" statustext="Full description"/>
+							<tab label="Participants" statustext="Participants, Resources, ..."/>
+							<tab label="Recurrence" statustext="Repeating Event Information"/>
+							<tab label="Custom" statustext="Custom fields"/>
+							<tab label="Links" statustext="Links, Attachments"/>
+							<tab label="Alarms" statustext="Alarm management"/>
+						</tabs>
+						<tabpanels>
+							<template id="calendar.edit.general"/>
+							<template id="calendar.edit.description"/>
+							<template id="calendar.edit.participants"/>
+							<template id="calendar.edit.recurrence"/>
+							<template id="calendar.edit.custom"/>
+							<template id="calendar.edit.links"/>
+							<template id="calendar.edit.alarms"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row disabled="!@owner">
+					<description value="Owner"/>
+					<menulist>
+						<menupopup type="select-account" id="owner" readonly="true"/>
+					</menulist>
+					<date-time label="Updated" id="modified" readonly="true" no_lang="1" align="right" class="noBreak"/>
+					<menulist class="noBreak">
+						<menupopup type="select-account" label="by" id="modifier" readonly="true" align="right"/>
+					</menulist>
+				</row>
+				<row>
+					<hbox span="3">
+						<button label="Save" id="button[save]" statustext="saves the changes made"/>
+						<button id="button[apply]" label="Apply" statustext="apply the changes"/>
+						<button id="button[cancel]" label="Cancel" statustext="Close the window" onclick="window.close();"/>
+						<menulist>
+							<menupopup id="action" statustext="Execute a further action for this entry" options="Actions..." onchange="this.form.submit(); this.value='';"/>
+						</menulist>
+					</hbox>
+					<button label="Delete" id="button[delete]" statustext="Delete this event" onclick="return confirm('Delete this event');" align="right"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.end_hide { display: block; white-space: nowrap; margin-left: 10px; }
+.noBreak { white-space: nowrap; }
+		</styles>
+	</template>
+</overlay>

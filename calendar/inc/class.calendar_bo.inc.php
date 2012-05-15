@@ -218,10 +218,6 @@ class calendar_bo
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('calendar');
 
-		foreach($this->verbose_status as $status => $text)
-		{
-			$this->verbose_status[$status] = lang($text);
-		}
 		if (!is_array($this->resources = $GLOBALS['egw']->session->appsession('resources','calendar')))
 		{
 			$this->resources = array();
@@ -1502,34 +1498,35 @@ class calendar_bo
 
 			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation
 
+			$lang_status = lang($this->verbose_status[$status]);
 			if (!$long_status)
 			{
 				switch($status[0])
 				{
 					case 'A':	// accepted
-						$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
+						$status = html::image('calendar','agt_action_success',$lang_status);
 						break;
 					case 'R':	// rejected
-						$status = html::image('calendar','agt_action_fail',$this->verbose_status[$status]);
+						$status = html::image('calendar','agt_action_fail',$lang_status);
 						break;
 					case 'T':	// tentative
-						$status = html::image('calendar','tentative',$this->verbose_status[$status]);
+						$status = html::image('calendar','tentative',$lang_status);
 						break;
 					case 'U':	// no response = unknown
-						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
+						$status = html::image('calendar','cnr-pending',$lang_status);
 						break;
 					case 'D':	// delegated
-						$status = html::image('calendar','forward',$this->verbose_status[$status]);
+						$status = html::image('calendar','forward',$lang_status);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used
-						$status = '('.$this->verbose_status[$status].')';
+						$status = '('.$lang_status.')';
 						break;
 				}
 			}
 			else
 			{
-				$status = '('.$this->verbose_status[$status].')';
+				$status = '('.$lang_status.')';
 			}
 			$names[$id] = $this->participant_name($id).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
 
