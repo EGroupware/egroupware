@@ -903,6 +903,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			return False;	// no rights
 		}
+		// need to load calendar translations and set currentapp, so calendar can reload a different lang
+		translation::add_app('calendar');
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
+
 		$ret = $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
 
 		// create a new alarm for recuring events for the next event, if one exists
