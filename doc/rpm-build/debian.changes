@@ -1,3 +1,42 @@
+egroupware-epl (11.1.20120515-1) hardy; urgency=low
+
+  * EMail: caching of folderObjects for session under certain conditions, to speed up EMail module access
+  * Resources: fix for missing/not loaded pictures for resources in default/images/resource_icons/
+  * InfoLog: remove group-types user has not any rights to as filter in list
+  * Calendar: use possible attribute values regarding X-MICROSOFT-CDO-ALLDAYEVENT
+  * EMail: if forwarding via SIEVE is not allowed - disable the according fields
+  * Calendar/EMail: when accepting EMail invitation from organizer who is an EGroupware user but created invitation outside: if no access to organizers calendar, make organizer a participant with role CHAIR
+  * EMailAdmin/Setup: fixed wrong created default profile, user profiles and signatures were ot allowed, due to changed default parameter -1 --> false
+  * Addressbook/LDAP: documented how to get ACL for group-addressbooks working without deprecated rfc2307bis schema
+  * Addressbook/LDAP|SQL->LDAP: fixed error during creation of new contacts, SQL->LDAP now also displays LDAP errors
+  * API/eMail: catching failure to attach files, or fail on attaching empty files, or failure to encode files
+  * Knowledgebase: port maintain_articles to etemplate based view. confirmation of publish/delete actions on maintaining articles
+  * Addressbook: skip letter of deleted type, when creating new contact types, as it gives SQL error
+  * phpbrain/knowledgebase: switch maintain questions to etemplate; enable the (re)use of existing (unpublished) answers while working with questions
+  * InfoLog: fixed subs view to display only selected custom-fields of parent
+  * InfoLog: explicitly name tabs in infolog.edit, to get disabeling of tabs working, even if template added custom ones
+  * InfoLog/Notification: fix for ->primary link not shown in notification on first save<- (Helpdesk#3290)
+  * ProjectManager/InfoLog: fixed custom type icon in PM to use status label, as in InfoLog
+  * Filemanager: added merge print
+  * CalDAV: fixed not working exceptions of recuring events in iCal on iOS or OS X (skipping optional and default VALUE=DATE-TIME attribute in iCal EXDATE component)
+  * TranslationTool: bigger fields to add a new phrase
+  * EMail: default for new installations always display html mail
+  * EMail: fixed not working search in Addressbook, if LDAP backend was used (my.stylite.de bug #3337)
+  * Calendar: fixed not savable config "Prevent deleting of entries" as "Yes, users can purge their deleted items"
+  * Calendar: taking direct booking permission into account when copying events including resources (my.stylite bug #2839)
+  * AsyncServices/Calendar: when multiple alarms / async jobs run at same time, they send mail with from address of first alarm/job
+  * Calendar: notification always use language of current user, not of user to notify
+  * InfoLog: if searching do not suppress sub-entries (user preference "List no subs/childs" set)
+  * Addressbook: fixed not working changing of organisation members, also place this feature more prominent beside buttons
+  * InfoLog: change status in context menu shows now labels and icons from all types and fixed my.stylite.de bug #3359: not being able to set custom status
+  * Calendar/InfoLog: fixed display of timed InfoLog entries in Calendar, if they contain an enddate incl. a time
+  * InfoLog: fixed wrong placeholders for due-date in merge-print document Report-infolog-projects.ods
+  * Filemanager: allow directory names including brackets for sub-directories of app-entry-dirs of stylite.links stream-wrapper by always adding two dashes eg. "(I--123)" instead of previous "(I123)"
+  * Filemanager: fixed not working unsubscribe in pathes containing single quotes (my.stylite.de bug #3160)
+  * renamed "Stylite" app to "EPL-Features", to clearify why it should be switched on for all users
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 15 May 2012 18:58:28 +0200
+
 egroupware-epl (11.1.20120419-1) hardy; urgency=low
 
   * InfoLog: show time of duedate in notifications if set (!= 0:00)
