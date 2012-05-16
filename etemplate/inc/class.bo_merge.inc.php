@@ -1463,7 +1463,8 @@ abstract class bo_merge
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name'])))) continue;
+					$parts = explode('.',$file['name']);
+					if (!self::is_implemented($file['mime'],'.'.array_pop($parts))) continue;
 					if ($mime_filter && $negativ_filter === in_array($file['mime'], (array)$mime_filter)) continue;
 					$list[$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
 				}
@@ -1525,7 +1526,8 @@ abstract class bo_merge
 		foreach($files as $key => $file)
 		{
 			// use only the mime-types we support
-			if (!self::is_implemented($file['mime'],'.'.array_pop($parts=explode('.',$file['name']))) ||
+			$parts = explode('.',$file['name']);
+			if (!self::is_implemented($file['mime'],'.'.array_pop($parts)) ||
 				!egw_vfs::check_access($file['path'], egw_vfs::READABLE, $file) ||	// remove files not readable by user
 				$file['path'] === $default_doc)	// default doc already added
 			{

@@ -630,7 +630,7 @@ class idots_framework extends egw_framework
 	* @param array $apps
 	* @return string
 	*/
-	function topmenu(array &$vars,array &$apps)
+	function topmenu(array $vars,array $apps)
 	{
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();

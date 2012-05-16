@@ -738,7 +738,7 @@ class addressbook_sql extends so_sql_cf
 	 * @param string|array $extra_where=null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
 	 * @return int 0 on success and errno != 0 else
 	 */
-	function save($keys=null)
+	function save($keys = NULL, $extra_where = NULL)
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];

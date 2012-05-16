@@ -84,7 +84,7 @@ class filemanager_ui
 	 *
 	 * @return string
 	 */
-	public function get_view()
+	public static function get_view()
 	{
 		$view =& egw_cache::getSession('filemanager', 'view');
 		if (isset($_GET['view']))

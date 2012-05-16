@@ -1,7 +1,7 @@
 <?php
 /**
  * eGW jerryr template
- * 
+ *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> rewrite in 12/2006
  * @author Pim Snel <pim@lingewoud.nl> author of the idots template set
@@ -30,7 +30,7 @@ class jerryr_framework extends idots_framework
 		$this->idots_framework($template);
 	}
 
-	function topmenu(array &$vars,array &$apps)
+	function topmenu(array $vars,array $apps)
 	{
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();

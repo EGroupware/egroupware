@@ -420,7 +420,7 @@ class soetemplate
 		{
 			$lang = $name['lang'];
 		}
-		if ($lang == 'default' || $name['lang'] == 'default')
+		if ($lang == 'default')
 		{
 			$where[] = '(et_lang='.$this->db->quote($pref_lang)." OR et_lang='')";
 		}

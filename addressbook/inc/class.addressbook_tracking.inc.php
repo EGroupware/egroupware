@@ -174,9 +174,10 @@ class addressbook_tracking extends bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
-	function get_message($data,$old)
+	protected function get_message($data,$old,$receiver=null)
 	{
 		if (!$data['modified'] || !$old)
 		{
@@ -194,9 +195,11 @@ class addressbook_tracking extends bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
-	function get_subject($data,$old)
+	protected function get_subject($data,$old,$deleted=null,$receiver=null)
 	{
 		if ($data['is_contactform'])
 		{
@@ -208,11 +211,11 @@ class addressbook_tracking extends bo_tracking
 	/**
 	 * Get the details of an entry
 	 *
-	 * @param array $data
-	 *
+	 * @param array|object $data
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return array of details as array with values for keys 'label','value','type'
 	 */
-	function get_details($data)
+	function get_details($data,$receiver=null)
 	{
 		foreach($this->contacts->contact_fields as $name => $label)
 		{
