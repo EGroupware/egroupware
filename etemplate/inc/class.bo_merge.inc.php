@@ -804,6 +804,7 @@ abstract class bo_merge
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 				case 'application/xml':
+				case 'text/html':
 					return $contentstart.implode('',$contentrep).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
