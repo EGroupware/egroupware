@@ -767,7 +767,7 @@ class calendar_uilist extends calendar_ui
 			'caption' => 'Change your status',
 			'icon' => 'check',
 			'prefix' => 'status-',
-			'children' => lang($status),
+			'children' => $status,
 			'group' => ++$group,
 		);
 		++$group;	// integration with other apps: infolog, calendar, filemanager
