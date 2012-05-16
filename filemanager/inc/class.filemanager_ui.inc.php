@@ -740,6 +740,7 @@ function force_download(_action, _senders)
 						if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
 						$document_merge = new filemanager_merge(egw_vfs::decodePath($dir));
 						$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
+						if($msg) return $msg;
 						$failed = count($selected);
 						return false;
 				}
