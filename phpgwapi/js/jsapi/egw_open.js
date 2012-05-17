@@ -46,7 +46,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				if (typeof id_data != 'object')
 				{
-					var app_id = id.split(':',2);
+					var app_id = id_data.split(':',2);
 					app = app_id[0];
 					id = app_id[1];
 				}
@@ -58,6 +58,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			}
 			else if (app != 'file')
 			{
+				id = id_data;
 				id_data = { 'id': id, 'app': app, 'extra': extra };
 			}
 			var url;
