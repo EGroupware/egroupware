@@ -215,7 +215,7 @@ class Net_Sieve
     */
     function _handleConnectAndLogin()
     {
-        if (PEAR::isError($res = $this->connect($this->_data['host'] , $this->_data['port'], $this->_useTLS ))) {
+        if (PEAR::isError($res = $this->connect($this->_data['host'] , $this->_data['port'], null, $this->_useTLS ))) {
             return $res;
         }
         if($this->_bypassAuth === false) {
