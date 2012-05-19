@@ -1570,20 +1570,21 @@ class egw_session
 	 * @param string $sort='DESC' ASC or DESC
 	 * @param string $order='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
 	 * @param boolean $all_no_sort=False skip sorting and limiting to maxmatchs if set to true
+	 * @param array $filter=array() extra filter for sessions
 	 * @return array with sessions (values for keys as in $sort)
 	 */
-	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort=False)
+	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort=False,array $filter=array())
 	{
 		$sessions = array();
-		if (!preg_match('/^[a-z0-9_ ,]+$/i',$order_by=$order.' '.$sort))
+		if (!preg_match('/^[a-z0-9_ ,]+$/i',$order_by=$order.' '.$sort) || $order_by == ' ')
 		{
 			$order_by = 'session_dla DESC';
 		}
-		foreach($GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, '*', array(
-				'lo' => null,
-				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
-				'(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')',
-			), __LINE__, __FILE__, $all_no_sort ? false : $start, 'ORDER BY '.$order_by) as $row)
+		$filter['lo'] = null;
+		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
+		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
+		foreach($GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, '*', $filter, __LINE__, __FILE__,
+			$all_no_sort ? false : $start, 'ORDER BY '.$order_by) as $row)
 		{
 			$sessions[$row['sessionid']] = $row;
 		}
@@ -1593,15 +1594,15 @@ class egw_session
 	/**
 	 * Query number of sessions (not more then once every N secs)
 	 *
+	 * @param array $filter=array() extra filter for sessions
 	 * @return int number of active sessions
 	 */
-	public static function session_count()
+	public static function session_count(array $filter=array())
 	{
-		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', array(
-				'lo' => null,
-				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
-				'(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')',
-			), __LINE__, __FILE__)->fetchColumn();
+		$filter['lo'] = null;
+		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
+		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
+		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', $filter, __LINE__, __FILE__)->fetchColumn();
 	}
 
 	/**
