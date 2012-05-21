@@ -790,7 +790,7 @@ class HTTP_WebDAV_Server
 
 	                    // check if property exists in result
 	                    foreach ($file["props"] as &$prop) {
-	                        if (   $reqprop["name"]  == $prop["name"]
+	                        if (is_array($prop) && $reqprop["name"] == $prop["name"]
 	                               && @$reqprop["xmlns"] == $prop["ns"]) {
 	                            $found = true;
 	                            break;
