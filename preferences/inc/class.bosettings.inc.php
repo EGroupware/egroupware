@@ -215,7 +215,7 @@
 					}
 					$prefs[$var] = get_magic_quotes_gpc() ? stripslashes($value) : $value;
 
-					if($notifies[$var])	// need to translate the key-words back
+					if(is_array($notifies) && isset($notifies[$var]))	// need to translate the key-words back
 					{
 						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
 					}

@@ -396,7 +396,7 @@ class egw_link extends solink
 			{
 				foreach($targets as $link)
 				{
-					$app_ids[$link['app']][] = $link['id'];
+					if (is_array($link)) $app_ids[$link['app']][] = $link['id'];
 				}
 			}
 			foreach($app_ids as $app => $a_ids)
