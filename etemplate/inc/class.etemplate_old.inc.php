@@ -734,7 +734,7 @@ class etemplate_old extends boetemplate
 			}
 			$data = categories::id2name($cat,'data');
 
-			if (($color = $data['color']))
+			if (is_array($data) && ($color = $data['color']))
 			{
 				//echo "<p>cats2color('$cats')=$color</p>\n";
 				return $cat2color[$cats] = $cat2color[$cat] = $color;
