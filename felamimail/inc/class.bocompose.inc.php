@@ -852,43 +852,49 @@
 
 			// add the attachments
 			$bofelamimail->openConnection();
-			foreach((array)$this->sessionData['attachments'] as $attachment) {
-				if(!empty($attachment['uid']) && !empty($attachment['folder'])) {
-					$bofelamimail->reopen($attachment['folder']);
-					switch($attachment['type']) {
-						case 'MESSAGE/RFC822':
-							$rawHeader='';
-							if (isset($attachment['partID'])) {
-								$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
+			if (is_array($this->sessionData) && isset($this->sessionData['attachments']))
+			{
+				foreach((array)$this->sessionData['attachments'] as $attachment) {
+					if(is_array($attachment))
+					{
+						if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
+							$bofelamimail->reopen($attachment['folder']);
+							switch($attachment['type']) {
+								case 'MESSAGE/RFC822':
+									$rawHeader='';
+									if (isset($attachment['partID'])) {
+										$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
+									}
+									$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
+									$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
+									break;
+								default:
+									$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
+
+									$_mailObject->AddStringAttachment($attachmentData['attachment'], $_mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['type']);
+									break;
+
 							}
-							$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
-							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
-							break;
-						default:
-							$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
-
-							$_mailObject->AddStringAttachment($attachmentData['attachment'], $_mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['type']);
-							break;
-
-					}
-				} else {
-					if (parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
-					{
-						egw_vfs::load_wrapper('vfs');
-					}
-					if ( stripos($attachment['type'],"text/calendar; method=")!==false )
-					{
-						$_mailObject->AltExtended = file_get_contents($attachment['file']);
-						$_mailObject->AltExtendedContentType = $attachment['type'];
-					}
-					else
-					{
-						$_mailObject->AddAttachment (
-							$attachment['file'],
-							$_mailObject->EncodeHeader($attachment['name']),
-							'base64',
-							$attachment['type']
-						);
+						} else {
+							if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
+							{
+								egw_vfs::load_wrapper('vfs');
+							}
+							if (isset($attachment['type']) && stripos($attachment['type'],"text/calendar; method=")!==false )
+							{
+								$_mailObject->AltExtended = file_get_contents($attachment['file']);
+								$_mailObject->AltExtendedContentType = $attachment['type'];
+							}
+							else
+							{
+								$_mailObject->AddAttachment (
+									$attachment['file'],
+									$_mailObject->EncodeHeader($attachment['name']),
+									'base64',
+									$attachment['type']
+								);
+							}
+						}
 					}
 				}
 			}
@@ -899,17 +905,21 @@
 		{
 			$bofelamimail	= $this->bofelamimail;
 			$mail		= new egw_mailer();
-			$identity	= $this->preferences->getIdentity((int)$this->sessionData['identity']);
-			$flags = '\\Seen \\Draft';
-			$BCCmail = '';
 
-			$this->createMessage($mail, $_formData, $identity);
 			// preserve the bcc and if possible the save to folder information
 			$this->sessionData['folder']    = $_formData['folder'];
 			$this->sessionData['bcc']   = $_formData['bcc'];
 			$this->sessionData['signatureID'] = $_formData['signatureID'];
 			$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 			$this->sessionData['identity']  = $_formData['identity'];
+
+			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity']);
+
+			$flags = '\\Seen \\Draft';
+			$BCCmail = '';
+
+			$this->createMessage($mail, $_formData, $identity);
+
 			foreach((array)$this->sessionData['bcc'] as $address) {
 				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {

@@ -273,7 +273,7 @@ class ajaxfelamimail
 			// autosave should always save to Draft. Manual Save may Save to templates Folder
 			if ($_autoSave)
 			{
-				if ($this->bofelamimail->isTemplateFolder($bocompose->sessionData['messageFolder']))
+				if (is_array($bocompose->sessionData) && isset($bocompose->sessionData['messageFolder']) && $this->bofelamimail->isTemplateFolder($bocompose->sessionData['messageFolder']))
 				{
 					$messageFolder = $bocompose->sessionData['messageFolder'];
 					$bocompose->sessionData['messageFolder'] = $folder;
