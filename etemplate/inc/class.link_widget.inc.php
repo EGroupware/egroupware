@@ -116,7 +116,7 @@ class link_widget
 	{
 		$extension_data['type'] = $type = $cell['type'];
 		$extension_data['needed'] = $cell['needed'];
-		$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
+		$help = $cell['help'] ? (is_array($value) && !empty($value['help']) ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
 		if ((in_array($type,array('link-to','link-add','link-entry')) && !$value) && ($cell['readonly'] || $readonlys))
 		{
