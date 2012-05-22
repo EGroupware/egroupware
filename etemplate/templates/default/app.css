@@ -24,6 +24,9 @@
 .inputFullWidth input {
 	width: 100%;
 }
+.selectboxFullWidth select { 
+	width: 100%; 
+}
 
 /*
  * mark input as required

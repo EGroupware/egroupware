@@ -1643,6 +1643,42 @@ class infolog_bo
 	}
 
 	/**
+	 * Get status of a single or all types
+	 *
+	 * As status value can have different translations depending on type, we list all translations
+	 *
+	 * @param string $type=null
+	 * @param array &$icons=null on return name of icons
+	 * @return array value => (commaseparated) translations
+	 */
+	function get_status($type=null, array &$icons=null)
+	{
+		// if filtered by type, show only the stati of the filtered type
+		if ($type && isset($this->status[$type]))
+		{
+			$statis = $icons = $this->status[$type];
+		}
+		else	// show all stati
+		{
+			$statis = $icons = array();
+			foreach($this->status as $t => $stati)
+			{
+				if ($t === 'defaults') continue;
+				foreach($stati as $val => $label)
+				{
+					$statis[$val][$label] = lang($label);
+					if (!isset($icons[$val])) $icons[$val] = $label;
+				}
+			}
+			foreach($statis as $val => &$labels)
+			{
+				$labels = implode(', ', $labels);
+			}
+		}
+		return $statis;
+	}
+
+	/**
 	 * Activates an InfoLog entry (setting it's status from template or inactive depending on the completed percentage)
 	 *
 	 * @param array $info

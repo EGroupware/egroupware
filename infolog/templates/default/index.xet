@@ -32,7 +32,7 @@
 				<row class="th">
 					<vbox options="0,0">
 						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
-						<nextmatch-filterheader align="center" id="info_status" options="Status"/>
+						<nextmatch-filterheader align="center" id="info_status" options="Status" class="selectboxFullWidth"/>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</vbox>
 					<grid width="100%" spacing="0" padding="0">
@@ -93,7 +93,7 @@
 							<description align="right" id="{$row}[info_number]" no_lang="1" class="infoId"/>
 						</hbox>
 						<box class="infoDes">
-							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
+							<description id="${row}[info_des]" no_lang="1" options=",,1"/>
 						</box>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
@@ -161,7 +161,7 @@
 						</hbox>
 						<hbox options="0,0" class="image16" orient="0">
 							<button label="Insert in document" id="document[$row_cont[info_id]]" image="etemplate/merge"/>
-							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
+							<image label="Filemanager" src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
 						</hbox>
 					</vbox>
 				</row>
