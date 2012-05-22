@@ -322,6 +322,7 @@ etemplate2.prototype.postSubmit = function()
 
 		var etemplate_id = jQuery(document.createElement("input"))
 			.attr("name",'etemplate_exec_id')
+			.attr("type",'hidden')
 			.val(this.etemplate_exec_id)
 			.appendTo(form);
 
