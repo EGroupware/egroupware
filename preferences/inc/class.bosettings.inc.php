@@ -209,19 +209,54 @@
 			{
 				if(isset($value) && $value != '' && $value != '**NULL**')
 				{
-					if(is_array($value) && !isset($value['pw']))
+					if (get_magic_quotes_gpc())
 					{
-						$value = implode(',',$value);	// multiselect
+						$value = is_array($value) ? array_map('stripslashes',$value) : stripslashes($value);
 					}
-					elseif(is_array($value))
+					if (is_array($value))
 					{
-						$value = $value['pw'];
-						if(empty($value))
+						if (isset($value['pw']))
 						{
-							continue;	// dont write empty password-fields
+							$value = $value['pw'];
+							if(empty($value))
+							{
+								continue;	// dont write empty password-fields
+							}
+						}
+						elseif(isset($value[$type='vfs_file']) || isset($value[$type='vfs_dir']) || isset($value[$type='vfs_dirs']))
+						{
+							$value = $value[$type];
+							if ($value === '')
+							{
+								// empty is always allowed
+							}
+							elseif ($type == 'vfs_file')
+							{
+								if ($value[0] != '/' || !egw_vfs::stat($value))
+								{
+									$error = lang('%1 is no existing vfs file!',htmlspecialchars($value));
+								}
+							}
+							else
+							{
+								// split multiple comma or whitespace separated directories
+								// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+								foreach($type == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
+								{
+									if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
+									if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
+									{
+										$error .= ($error ? ' ' : '').lang('%1 is no existing vfs directory!',$dir);
+									}
+								}
+							}
+						}
+						else
+						{
+							$value = implode(',',$value);	// multiselect
 						}
 					}
-					$prefs[$var] = get_magic_quotes_gpc() ? stripslashes($value) : $value;
+					$prefs[$var] = $value;
 
 					if(is_array($notifies) && isset($notifies[$var]))	// need to translate the key-words back
 					{
@@ -243,14 +278,14 @@
 			// if you return something else than False, it is treated as an error-msg and
 			// displayed to the user (the prefs are not saved)
 			//
-			if($error = $GLOBALS['egw']->hooks->single(array(
+			if(($error .= $GLOBALS['egw']->hooks->single(array(
 				'location' => 'verify_settings',
 				'prefs'    => $repository[$appname],
 				'prefix'   => $prefix,
 				'type'     => $type
 				),
 				$appname
-			))
+			)))
 			{
 				return $error;
 			}

@@ -1,5 +1,7 @@
 %1 - preferences	preferences	de	%1 - Einstellungen
 %1 hours	preferences	de	%1 Stunden
+%1 is no existing vfs directory!	preferences	de	Das VFS Verzeichnis %1 existiert nicht!
+%1 is no existing vfs file!	preferences	de	Die VFS Datei %1 existiert nicht!
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
 a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von eGroupWare und enthält die Icons (Symbole) der Anwendungen.

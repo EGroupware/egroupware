@@ -258,6 +258,17 @@ class uisettings
 						$valarray['run_lang']
 					);
 					break;
+				case 'vfs_file':
+				case 'vfs_dir':
+				case 'vfs_dirs':
+					$this->create_vfs_box(
+						$valarray['type'],
+						$valarray['label'],
+						$valarray['name'],
+						$valarray['help'],
+						$valarray['run_lang']
+					);
+					break;
 				case 'select':
 				case 'multiselect':
 					$this->create_select_box(
@@ -409,6 +420,18 @@ class uisettings
 			$help,'',$size,$max_size,'password',$run_lang);
 	}
 
+	function create_vfs_box($type,$label_name,$preference_name,$help='',$default='',$size='',$run_lang=True)
+	{
+		$_appname = $this->check_app();
+		if($this->is_forced_value($_appname,$preference_name))
+		{
+			return True;
+		}
+		//echo "<p>create_input_box('$label_name', '$preference_name][$type', '$help', '$default', '', '', '', $run_lang, '$def_text')</p>\n";
+		$this->create_input_box($label_name,$preference_name.']['.$type,
+			$help,$default,$size,'','',$run_lang,$def_text);
+	}
+
 	function create_color_box($label,$name,$default='',$help='',$run_lang=True)
 	{
 		if($GLOBALS['type'] == 'user')
@@ -437,14 +460,16 @@ class uisettings
 			$options .= " max='$maxsize'";
 		}
 
-		if(isset($this->bo->prefs[$name]) || $GLOBALS['type'] != 'user')
+		// remove appended type (eg. "][vfs_file") bevor looking up current value
+		$_name = preg_replace('/\]\[.*$/','',$name);
+		if(substr($name, -4) != '][pw' && isset($this->bo->prefs[$_name]) || $GLOBALS['type'] != 'user')
 		{
-			$default = $this->bo->prefs[$name];
+			$default = $this->bo->prefs[$_name];
 		}
 
 		if($GLOBALS['type'] == 'user' && empty($def_text))
 		{
-			$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
+			$def_text = $GLOBALS['egw']->preferences->default[$_appname][$_name];
 
 			if(isset($this->notifies[$name]))	// translate the substitution names
 			{
