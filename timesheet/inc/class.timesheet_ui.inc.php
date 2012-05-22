@@ -180,7 +180,7 @@ class timesheet_ui extends timesheet_bo
 						{
 							$etpl->set_validation_error('ts_title',lang('Field must not be empty !!!'));
 						}
-						else
+						elseif($button != 'save_new')
 						{
 							// remove title-blur for same behavior after apply, as for opening the saved entry again
 							unset($this->data['ts_title_blur']);
