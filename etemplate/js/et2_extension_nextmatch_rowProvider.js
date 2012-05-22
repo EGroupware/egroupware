@@ -440,16 +440,13 @@ var et2_nextmatch_rowProvider = Class.extend({
 				if(invalid) this._rootWidget.egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
 				cats = [cats[2]];
 
-				field = _data["class"].match(/\[(.*?cat.*?)\]/);
-
 				// Get category info
-				if(!this.categories && field)
+				if(!this.categories)
 				{
-					if(field.length > 1)
-					{
-						var categories = _mgrs["sel_options"].getEntry(field[1]);
-						if(!categories) categories = _mgrs["sel_options"].getEntry('${row}'+field[0]);
-					}
+					var categories = _mgrs["sel_options"].getEntry('cat_id');
+					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry('cat_id');
+					if(!categories) categories = _mgrs["sel_options"].getEntry('${row}'+'[cat_id]');
+					
 					// Cache
 					if(categories) this.categories = categories;
 				}
