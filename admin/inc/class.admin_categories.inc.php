@@ -511,7 +511,7 @@ class admin_categories
 			'public'  => 'No',
 			'private' => 'Yes',
 		);
-
+		
 		$sel_options['owner'][0] = lang('All users');
 		$accs = $GLOBALS['egw']->accounts->get_list('groups');
 		foreach($accs as $acc)
@@ -534,6 +534,13 @@ class admin_categories
 		}
 
 		$tmpl = new etemplate('admin.categories.index');
+
+		if($tmpl instanceof etemplate_widget_template)
+		{
+			// Send categories for row colors
+			$sel_options['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', '1,,'.$appname);
+		}
+
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(
 			'nm' => $content['nm'],
 		));
