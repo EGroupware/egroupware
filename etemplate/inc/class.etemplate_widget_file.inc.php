@@ -29,9 +29,9 @@ class etemplate_widget_file extends etemplate_widget
 		// Legacy multiple - id ends in []
 		if(substr($this->id,-2) == '[]')
 		{
-			$this->attrs['multiple'] = true;
+			$this->setElementAttribute($this->id, 'multiple', true);
 		}
-		$this->attrs['max_file_size'] = egw_vfs::int_size(ini_get('upload_max_filesize'));
+		$this->setElementAttribute($this->id, 'max_file_size', egw_vfs::int_size(ini_get('upload_max_filesize')));
 	}
 
 	/**
