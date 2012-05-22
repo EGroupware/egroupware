@@ -1,5 +1,5 @@
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
-%1 file	common	it	% file
+%1 file	common	it	%1 file
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	it	%1Scegli un'altra directory%2<br />o rendi %3 scrivibile dal webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
