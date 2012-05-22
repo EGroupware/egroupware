@@ -31,7 +31,7 @@
 				<row class="th">
 					<vbox options="0,0">
 						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
-						<nextmatch-filterheader align="center" id="info_status" options="Status"/>
+						<nextmatch-filterheader align="center" id="info_status" options="Status" class="selectboxFullWidth"/>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</vbox>
 					<grid width="100%" spacing="0" padding="0">

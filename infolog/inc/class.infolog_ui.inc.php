@@ -451,18 +451,8 @@ class infolog_ui
 		//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
 		// if filtered by type, show only the stati of the filtered type
-		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
-		{
-			$rows['sel_options']['info_status'] = $this->bo->status[$query['col_filter']['info_type']];
-		}
-		else	// show all stati
-		{
-			$rows['sel_options']['info_status'] = array();
-			foreach($this->bo->status as $typ => $stati)
-			{
-				if ($typ != 'defaults' && !empty($stati)) $rows['sel_options']['info_status'] += $stati;
-			}
-		}
+		$rows['sel_options']['info_status'] = $this->bo->get_status($query['col_filter']['info_type']);
+
 		if ($this->bo->history)
 		{
 			$rows['sel_options']['info_status']['deleted'] = 'deleted';
@@ -960,28 +950,7 @@ else
 			);
 		}
 
-		// if filtered by type, show only the stati of the filtered type
-		if ($query['col_filter']['info_type'] && isset($this->bo->status[$query['col_filter']['info_type']]))
-		{
-			$statis = $icons = $this->bo->status[$query['col_filter']['info_type']];
-		}
-		else	// show all stati
-		{
-			$statis = $icons = array();
-			foreach($this->bo->status as $type => $stati)
-			{
-				if ($type == 'defaults') continue;
-				foreach($stati as $val => $label)
-				{
-					$statis[$val][$label] = lang($label);
-					if (!isset($icons[$val])) $icons[$val] = $label;
-				}
-			}
-			foreach($statis as $val => &$labels)
-			{
-				$labels = implode(', ', $labels);
-			}
-		}
+		$statis = $this->bo->get_status($query['col_filter']['info_type'], $icons);
 		foreach($statis as $type => &$data)
 		{
 			$data = array(
