@@ -477,8 +477,11 @@ class egw_vfs extends vfs_stream_wrapper
 		$result = array();
 		foreach($base as $path)
 		{
-			if (!$url) $path = egw_vfs::PREFIX . $path;
-
+			if (!$url)
+			{
+				if ($path[0] != '/' || !egw_vfs::stat($path)) continue;
+				$path = egw_vfs::PREFIX . $path;
+			}
 			if (!isset($options['remove']))
 			{
 				$options['remove'] = count($base) == 1 ? count(explode('/',$path))-3+(int)(substr($path,-1)!='/') : 0;

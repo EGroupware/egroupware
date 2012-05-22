@@ -251,7 +251,7 @@ class addressbook_hooks
 			$link = egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
 
 			$settings['default_document'] = array(
-				'type'   => 'input',
+				'type'   => 'vfs_file',
 				'size'   => 60,
 				'label'  => 'Default document to insert contacts',
 				'name'   => 'default_document',
@@ -263,7 +263,7 @@ class addressbook_hooks
 				'admin'  => False,
 			);
 			$settings['document_dir'] = array(
-				'type'   => 'input',
+				'type'   => 'vfs_dirs',
 				'size'   => 60,
 				'label'  => 'Directory with documents to insert contacts',
 				'name'   => 'document_dir',
