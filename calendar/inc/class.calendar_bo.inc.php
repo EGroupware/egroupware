@@ -1791,7 +1791,8 @@ class calendar_bo
 		$result = array();
 		$query = array(
 			'query'	=>	$pattern,
-			'offset'	=>	$options['start'],
+			'offset' =>	$options['start'],
+			'order' => 'cal_start DESC',
 		);
 		if($options['num_rows']) {
 			$query['num_rows'] = $options['num_rows'];
