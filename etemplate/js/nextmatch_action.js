@@ -189,7 +189,7 @@ function nm_action(_action, _senders)
 			console.log(params);
 			var egw_open_id = _senders[0].id;
 			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
-			egw_open(egw_open_id,params[1],params[0],params[3],target);
+			egw(params[1],window).open(egw_open_id,params[1],params[0],params[3],target);
 			break;
 			
 		case 'open_popup':
