@@ -774,6 +774,7 @@ abstract class bo_merge
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 				case 'application/xml':
+				case 'text/html':
 					return $contentstart.implode('',$contentrep).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
@@ -839,7 +840,7 @@ abstract class bo_merge
 					case 'application/vnd.oasis.opendocument.spreadsheet':
 						$replace_tags = array(
 							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>',
+							'<table>','<tr>','<td>','<a>',
 						);
 						break;
 					case 'application/xmlWord.Document':	// Word 2003*/
