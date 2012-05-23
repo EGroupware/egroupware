@@ -103,7 +103,8 @@ var et2_dataview_selectionManager = Class.extend({
 		}
 
 		// Update the entry
-		entry.ao._index = entry.idx = _idx;
+		if(entry.ao) entry.ao._index;
+		entry.idx = _idx;
 		entry.tr = _tr;
 
 		// Update the visible state of the _tr
