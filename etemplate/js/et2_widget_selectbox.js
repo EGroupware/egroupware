@@ -515,6 +515,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 
 		this.supportedWidgetClasses = [];
 		this.optionValues = {};
+		if(this.options.select_options) this.set_select_options(this.options.select_options);
 	},
 
 	createInputWidget: function() {
@@ -577,7 +578,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 			return;
                 }
 		var option = this.optionValues[_value];
-		if (typeof option === 'object')
+		if (typeof option === 'object' && option != null)
 		{
 			this.span.text(option.label);
 			this.set_statustext(option.title);
