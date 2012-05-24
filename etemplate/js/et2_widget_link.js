@@ -701,8 +701,17 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 	set_value: function(_value) {
 		if(typeof _value != 'object' && _value && !this.options.application)
 		{
-			console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
-			return;
+			if(_value.indexOf(':') >= 0)
+			{
+				var app = _value.split(':',1);
+				var id = _value.substr(app[0].length+1);
+				_value = {'app': app[0], 'id': id};
+			}
+			else
+			{
+				console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
+				return;
+			}
 		}
 		// Application set, just passed ID
 		else if (typeof _value != "object")
