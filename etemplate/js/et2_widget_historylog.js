@@ -24,7 +24,10 @@
 /**
  * eTemplate history log widget displays a list of changes to the current record.
  * The widget is encapsulated, and only needs the record's ID, and a map of 
- * fields:widgets for display
+ * fields:widgets for display.
+ *
+ * It defers its initialization until the tab that it's on is selected, to avoid
+ * wasting time if the user never looks at it.
  */
 
 var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
@@ -48,14 +51,13 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			appname: this.options.value.app,
 			get_rows: 'historylog::get_rows'
 		};
-
 	},
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
+
 		// Find the tab widget, if there is one
 		var tabs = this;
-var count = 0;
 		do {
 			tabs = tabs._parent;
 		} while (tabs != this.getRoot() && tabs._type != 'tabbox');
@@ -86,6 +88,9 @@ var count = 0;
 		}
 	},
 
+	/**
+	 * Finish initialization which was skipped until tab was selected
+	 */
 	finishInit: function() {
 
 		// Create the dynheight component which dynamically scales the inner
@@ -164,6 +169,13 @@ var count = 0;
 			}
 		}
 
+		// Add in handling for links
+		if(typeof this.options.value['status-widgets']['~link~'] == 'undefined')
+		{
+			this.columns[2].widget.optionValues['~link~'] = this.egw().lang('link');
+			this.options.value['status-widgets']['~link~'] = 'link';
+		}
+
 		// Per-field widgets - new value & old value
 		this.fields = {};
 		for(var key in this.options.value['status-widgets'])
@@ -181,7 +193,6 @@ var count = 0;
 				nodes: jQuery(widget.getDetachedNodes())
 			};
 		}
-
 		// Widget for text diffs
 		var diff = et2_createWidget('diff', {}, this);
 		this.diff = {
@@ -255,6 +266,7 @@ var count = 0;
 			}
 			else if (self._needsDiffWidget(_data['status'], _data[self.columns[i].id]))
 			{
+				// Large text value - span both columns, and show a nice diff
 				var jthis = jQuery(this);
 				if(i == 3)
 				{
@@ -285,6 +297,7 @@ var count = 0;
 			}
 			else
 			{
+				// No widget fallback - display actual value
 				nodes = '<span>'+_data[self.columns[i].id] + '</span>';
 			}
 			if(widget) widget.setDetachedAttributes(nodes, {value:_data[self.columns[i].id]});
