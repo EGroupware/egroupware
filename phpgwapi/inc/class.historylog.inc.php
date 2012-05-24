@@ -122,6 +122,25 @@ class historylog
 	}
 
 	/**
+	 * Static function to add a history record
+	 */
+	public static function static_add($appname, $id, $user, $field_code, $new_value, $old_value = '')
+	{
+		if ($new_value != $old_value)
+		{
+			$GLOBALS['egw']->db->insert(self::TABLE,array(
+				'history_record_id' => $id,
+				'history_appname'   => $appname,
+				'history_owner'     => (int)$user,
+				'history_status'    => $field_code,
+				'history_new_value' => $new_value,
+				'history_old_value' => $old_value,
+				'history_timestamp' => time(),
+			),false,__LINE__,__FILE__);
+		}
+	}
+
+	/**
 	 * Search history-log
 	 *
 	 * @param array/int $filter array with filters, or int record_id
@@ -163,7 +182,7 @@ class historylog
 
 	/**
 	 * Get a slice of history records
-	 * 
+	 *
 	 * Similar to search(), except this one can take a start and a number of records
 	 */
 	public static function get_rows(&$query, &$rows) {
@@ -188,9 +207,9 @@ class historylog
 			self::TABLE,
 			$mysql_calc_rows.'*',
 			$filter,
-			__LINE__, __FILE__, 
+			__LINE__, __FILE__,
 			$query['start'],
-			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'), 
+			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'),
 			'phpgwapi',
 			$query['num_rows']
 		) as $row) {

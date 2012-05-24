@@ -590,6 +590,11 @@ class egw_link extends solink
 			}
 			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
 
+
+			// Log in history
+			historylog::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
+			historylog::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
+
 			// only notify on real links, not the one cached for writing or fileattachments
 			self::notify_unlink($deleted);
 
