@@ -27,10 +27,12 @@
 	et2_widget_checkbox;
 	et2_widget_radiobox;
 	et2_widget_date;
+	et2_widget_diff;
 	et2_widget_styles;
 	et2_widget_html;
 	et2_widget_tabs;
 	et2_widget_tree;
+	et2_widget_historylog;
 	et2_widget_hrule;
 	et2_widget_image;
 	et2_widget_file;

@@ -262,6 +262,17 @@ span.et2_date span {
 	font-size: 9pt;
 }
 
+/** 
+ * Diff widget
+ */
+.diff thead,.author {
+	display: none;
+}
+.diff .ui-icon {
+	margin-top: -16px;
+	float: right;
+}
+
 /** Display a loading icon **/
 .loading {
 	background-position: center;
