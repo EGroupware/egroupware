@@ -123,6 +123,16 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}
 		}
+		foreach($value as $name => $_value)
+		{
+			if(strpos($name, 'options-') !== false)
+			{
+				$select = substr($name, 8);
+				self::$request->sel_options[$select] = $_value;
+				unset($value[$name]);
+			}
+		}
+		
 		// todo: no need to store rows in request, it's enought to send them to client
 
 		//error_log(__METHOD__."() $this: total=$value[total]");
