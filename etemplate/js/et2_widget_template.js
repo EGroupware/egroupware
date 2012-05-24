@@ -48,7 +48,11 @@ var et2_template = et2_DOMWidget.extend({
 			"name": "Language",
 			"type": "string",
 			"description": "Language the template is written in"
-		}
+		},
+		"content": {
+			"name": "Content index",
+			"default": et2_no_init
+		},
 	},
 
 	createNamespace: true,
@@ -56,7 +60,12 @@ var et2_template = et2_DOMWidget.extend({
 	/**
 	 * Initializes this template widget as a simple container.
 	 */
-	init: function() {
+	init: function(_parent, _attrs) {
+		// Set this early, so it's available for creating namespace
+		if(_attrs.content)
+		{
+			this.content = _attrs.content;
+		}
 		this._super.apply(this, arguments);
 
 		this.div = document.createElement("div");
@@ -99,6 +108,22 @@ var et2_template = et2_DOMWidget.extend({
 			{
 				this.egw().debug("warn", "Unable to find XML for ", this.id);
 			}
+		}
+	},
+
+	/**
+	 * Override parent to support content attribute
+	 */
+	checkCreateNamespace: function() {
+		if(this.content)
+		{
+			var old_id = this.id;
+			this.id = this.content;
+			this._super.apply(this, arguments);
+		}
+		else
+		{
+			this._super.apply(this, arguments);
 		}
 	},
 
