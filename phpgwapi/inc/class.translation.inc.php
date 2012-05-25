@@ -1036,7 +1036,7 @@ class translation
 			// some characterreplacements, as they fail to translate
 			$sar = array(
 				'@(\x84|\x93|\x94)@',
-				'@(\x96|\x97)@',
+				'@(\x96|\x97|\x1a)@',
 				'@(\x91|\x92)@',
 				'@(\x85)@',
 				'@(\x86)@',
@@ -1138,29 +1138,38 @@ class translation
 	static function replaceTagsCompletley(&$_body,$tag,$endtag='',$addbracesforendtag=true)
 	{
 		if ($tag) $tag = strtolower($tag);
+		$singleton = false;
+		if ($endtag=='/>') $singleton =true;
 		if ($endtag == '' || empty($endtag) || !isset($endtag))
 		{
 			$endtag = $tag;
 		} else {
 			$endtag = strtolower($endtag);
-				//error_log(__METHOD__.' Using EndTag:'.$endtag);
+			//error_log(__METHOD__.' Using EndTag:'.$endtag);
 		}
 		// strip tags out of the message completely with their content
 		$taglen=strlen($tag);
 		$endtaglen=strlen($endtag);
 		if ($_body) {
-			if ($addbracesforendtag === true )
+			if ($singleton)
 			{
-				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'[\s]*>~simU','',$_body);
-				// remove left over tags, unfinished ones, and so on
-				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+				$_body = preg_replace('~<'.$tag.'[^>].*? '.$endtag.'~simU','',$_body);
 			}
-			if ($addbracesforendtag === false )
+			else
 			{
-				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~simU','',$_body);
-				// remove left over tags, unfinished ones, and so on
-				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
-				$_body = preg_replace('~'.$endtag.'~','',$_body);
+				if ($addbracesforendtag === true )
+				{
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'[\s]*>~simU','',$_body);
+					// remove left over tags, unfinished ones, and so on
+					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+				}
+				if ($addbracesforendtag === false )
+				{
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~simU','',$_body);
+					// remove left over tags, unfinished ones, and so on
+					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+					$_body = preg_replace('~'.$endtag.'~','',$_body);
+				}
 			}
 		}
 	}

@@ -184,101 +184,6 @@ class html
 	}
 
 	/**
-	 * activates URLs in a text, URLs get replaced by html-links using htmlpurify
-	 *
-	 * @param string $content text containing URLs
-	 * @return string html with activated links
-	 */
-	static function activateLinks($content)
-	{
-		if (!$content || strlen($content) < 20) return $content;	// performance
-
-		// spamsaver emailaddress
-		$result = preg_replace('/'.$NotAnchor.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
-			'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
-			$content);
-
-		$config = self::purifyCreateDefaultConfig();
-		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
-		// maybe the two following lines are useful for caching???
-		$config->set('HTML.DefinitionID', 'activatelinks');
-		$config->set('HTML.DefinitionRev', 1);
-		// doctype and tidylevel
-			$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-		$config->set('HTML.TidyLevel', 'light');
-		// EnableID is needed for anchor tags
-		$config->set('Attr.EnableID',true);
-		// enable target attributes
-		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
-		// actual allowed tags and attributes
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true, 'data'=>true));
-		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[align|style],hr[class|style],'.
-					'font[size|color],'.
-					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,h4,h5,h6,'.
-					'span[class|style],'.
-					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-					'tbody,thead,tfoot,colgroup,'.
-					'col[width|span],'.
-					'blockquote[class|cite|dir],'.
-					'tr[class|style|align|bgcolor|align|valign],'.
-					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'a[href|target|name|title],'.
-					'img[src|alt|title|align|style|width|height]');
-		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
-		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-		$config->set('AutoFormat.Linkify',true);
-		return self::purify($result,$config);
-	}
-
-	/**
-	 * deactivates URLs in a text, URLs get replaced by html-links using htmlpurify
-	 *
-	 * @param string $content text containing URLs
-	 * @return string html with activated links
-	 */
-	static function deactivateLinks($_html)
-	{
-		$config = self::purifyCreateDefaultConfig();
-		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
-		// maybe the two following lines are useful for caching???
-		$config->set('HTML.DefinitionID', 'deactivatelinks');
-		$config->set('HTML.DefinitionRev', 1);
-		// doctype and tidylevel
-		$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-		$config->set('HTML.TidyLevel', 'light');
-		// EnableID is needed for anchor tags
-		$config->set('Attr.EnableID',true);
-		// enable target attributes
-		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
-		// actual allowed tags and attributes
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true, 'data'=>true));
-		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[align|style],hr[class|style],'.
-					'font[size|color],'.
-					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,h4,h5,h6,'.
-					'span[class|style],'.
-					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-					'tbody,thead,tfoot,colgroup,'.
-					'col[width|span],'.
-					'blockquote[class|cite|dir],'.
-					'tr[class|style|align|bgcolor|align|valign],'.
-					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'a[href|target|name|title],'.
-					'img[src|alt|title|align|style|width|height]');
-		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
-		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-
-		$config->set('AutoFormat.DisplayLinkURI',true);
-		$_html = self::purify($_html,$config);
-		return $_html;
-	}
-
-	/**
 	 * escapes chars with special meaning in html as entities
 	 *
 	 * Allows to use and char in the html-output and prevents XSS attacks.
@@ -1396,128 +1301,20 @@ class html
 	}
 
 	/**
-	 * creates the HTMLPurifier default config
-	 *
-	 * @return HTMLPurifier_Config object
-	 */
-	static function purifyCreateDefaultConfig()
-	{
-		// add htmlpurifiers library to include_path
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.path.php');
-		// include most of the required files, for best performance with bytecode caches
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
-		// installs an autoloader for other files
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
-		// testcase to test the processing of purify
-		//$html = "<h1 onclick=\"alert('hallo');\"> h1 </h1>".$html;
-		return HTMLPurifier_Config::createDefault();
-	}
-
-	/**
-	 * creates a HTMLPurifier default config for the needs of HTMLTidy
-	 *
-	 * @return HTMLPurifier_Config object
-	 */
-	static function purifyCreateHTMLTidyConfig()
-	{
-		$config = html::purifyCreateDefaultConfig();
-		// maybe the two following lines are useful for caching???
-		$config->set('HTML.DefinitionID', 'egroupwareHTMLTidyConfig');
-		$config->set('HTML.DefinitionRev', 1);
-		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));		// doctype and tidylevel
-		$config->set('Core.RemoveInvalidImg', false);
-		$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-		$config->set('HTML.TidyLevel', 'light');
-		$config->set('Attr.EnableID',true);
-		// enable target attributes
-		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
-		// actual allowed tags and attributes
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
-		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[align|style],hr[class|style],'.
-					'font[size|color],'.
-					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,h4,h5,h6,'.
-					'span[class|style],'.
-					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-					'tbody,thead,tfoot,colgroup,'.
-					'col[width|span],'.
-					'blockquote[class|cite|dir],'.
-					'tr[class|style|align|bgcolor|align|valign],'.
-					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'a[href|target|name|title],'.
-					'img[src|alt|title|align|style|width|height]');
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true, 'data'=>true));
-		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-		return $config;
-	}
-
-	/**
 	 * Runs HTMLPurifier over supplied html to remove malicious code
 	 *
 	 * @param string $html
 	 * @param HTMLPurifier_Config $config=null
 	 */
-	static function purify($html,$config=null)
+	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
-		static $purifier;
-
+		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
 		if (empty($html)) return $html;	// no need to process further
-
-		if (is_null($purifier) || !is_null($config))
-		{
-			// add htmlpurifiers library to include_path
-			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.path.php');
-			// include most of the required files, for best performance with bytecode caches
-			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
-			// installs an autoloader for other files
-			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
-			// testcase to test the processing of purify
-			//$html = "<h1 onclick=\"alert('hallo');\"> h1 </h1>".$html;
-			if (is_null($config))
-			{
-				$config = HTMLPurifier_Config::createDefault();
-				$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
-				// maybe the two following lines are useful for caching???
-				$config->set('HTML.DefinitionID', 'egroupware');
-				$config->set('HTML.DefinitionRev', 1);
-				// doctype and tidylevel
- 				$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-				$config->set('HTML.TidyLevel', 'light');
-				// EnableID is needed for anchor tags
-				$config->set('Attr.EnableID',true);
-				// enable target attributes
-				$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
-				// actual allowed tags and attributes
-				$config->set('HTML.Allowed', 'br,p[class|align|style],b,i,u,s,em,pre,tt,strong,strike,sub,sup,center,div[class|align|style],hr[class|style],'.
-							'ul[class|type],ol[class|type|start],li,'.
-							'h1,h2,h3,h4,h5,h6,'.
-							'span[class|style],'.
-							'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-							'tbody,thead,tfoot,colgroup,'.
-							'col[class|width|span],'.
-							'blockquote[class|cite|dir],'.
-							'tr[class|style|align|bgcolor|align|valign],'.
-							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'a[class|href|target|name|title],'.
-							'img[class|src|alt|title|align|style|width|height]');
-				$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-			}
-			$purifier = new HTMLPurifier($config);
-			// the latter may enable you to modify the config later on, but by now
-			// the effort for e.g.  enabling anchor tags is already included above
-			//$def =& $purifier->config->getHTMLDefinition(true);
-			//$def->addAttribute('a', 'name', 'Text');
-
-
-		}
-
-		$result = $purifier->purify( $html );
-
-		//error_log(__METHOD__.$purifier->version);
-    	return $result;
+		$htmLawed = new egw_htmLawed();
+		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
+		if (empty($config)) $config = $defaultConfig;
+		//error_log(__METHOD__.__LINE__.array2string($config));
+		return $htmLawed->egw_htmLawed($html,$config,$spec);
 	}
 
 	/**
