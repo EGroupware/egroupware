@@ -223,14 +223,14 @@
 								continue;	// dont write empty password-fields
 							}
 						}
-						elseif(isset($value[$type='vfs_file']) || isset($value[$type='vfs_dir']) || isset($value[$type='vfs_dirs']))
+						elseif(isset($value[$vfs_type='vfs_file']) || isset($value[$vfs_type='vfs_dir']) || isset($value[$vfs_type='vfs_dirs']))
 						{
-							$value = $value[$type];
+							$value = $value[$vfs_type];
 							if ($value === '')
 							{
 								// empty is always allowed
 							}
-							elseif ($type == 'vfs_file')
+							elseif ($vfs_type == 'vfs_file')
 							{
 								if ($value[0] != '/' || !egw_vfs::stat($value))
 								{
@@ -241,7 +241,7 @@
 							{
 								// split multiple comma or whitespace separated directories
 								// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-								foreach($type == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
+								foreach($vfs_type == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
 								{
 									if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
 									if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
