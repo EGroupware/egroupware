@@ -362,9 +362,10 @@ class accounts
 				break;
 		}
 		$accounts = array();
+		$type = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+                                !isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'groupmembers+memberships' : 'both';
 		foreach(self::getInstance()->search(array(
-			'type' => $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
-				!isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'groupmembers+memberships' : 'both',
+			'type' => $options['filter']['group'] ? $options['filter']['group'] : $type,
 			'query' => $pattern,
 			'query_type' => 'all',
 			'order' => $order,
