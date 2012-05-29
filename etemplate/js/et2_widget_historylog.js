@@ -144,13 +144,13 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		{
 			this.fields[key].widget.destroy();
 		}
-		this.diff.widget.destroy();
+		if(this.diff) this.diff.widget.destroy();
 		
 		// Free the grid components
-		this.dataview.free();
-		this.rowProvider.free();
-		this.controller.free();
-		this.dynheight.free();
+		if(this.dataview) this.dataview.free();
+		if(this.rowProvider) this.rowProvider.free();
+		if(this.controller) this.controller.free();
+		if(this.dynheight) this.dynheight.free();
 
 		this._super.apply(this, arguments);
 	},

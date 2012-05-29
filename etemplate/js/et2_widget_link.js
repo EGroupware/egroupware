@@ -695,7 +695,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.setDOMNode(this.link[0]);
 	},
 	destroy: function() {
-		this.link.unbind();
+		if(this.link) this.link.unbind();
 		this.link = null;
 	},
 
