@@ -252,7 +252,7 @@ var nm_popup_action, nm_popup_ids = null;
  */
 function nm_open_popup(_action, _ids)
 {
-	var popup = jQuery("#"+_action.id+"_popup").get(0) || jQuery("[id*='" + _action.id + "_popup']").get(0);
+	var popup = jQuery("#"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
 	if (popup) {
 		nm_popup_action = _action;
 		if(_ids.length && typeof _ids[0] == 'object')
@@ -271,7 +271,22 @@ function nm_open_popup(_action, _ids)
 		}
 
 		var dialog = jQuery('.action_popup-content',popup);
-		if(dialog)
+		if(dialog.length == 0)
+		{
+			// Couldn't get the dialog, use the div less the first (header) & last (buttons) nodes
+			dialog = jQuery(document.createElement('div'))
+				.addClass('action_popup-content');
+			if(popup.children().length == 1)
+			{
+				dialog.append(popup.children().children().slice(1,popup.children().children().length-1));
+			}
+			else
+			{
+				dialog.append(popup.children().slice(1,popup.children().length-1));
+			}
+			dialog.appendTo(popup);
+		}
+		if(dialog.length == 1)
 		{
 			var dialog_parent = dialog.parent();
 			var d_buttons = [];
