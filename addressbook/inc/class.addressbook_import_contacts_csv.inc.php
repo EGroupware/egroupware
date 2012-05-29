@@ -148,7 +148,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 		$contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
 		// Import into importer's personal addressbook
-		if($contact_owner == 'personal') 
+		if($contact_owner == 'personal')
 		{
 			$contact_owner = $this->user;
 		}
@@ -190,12 +190,13 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// Also handle categories in their own field
 			$more_categories = array();
 			foreach($_definition->plugin_options['field_mapping'] as $number => $field_name) {
-				if(substr($field_name,0,3) != 'cat' || !$record[$field_name] || $field_name == 'cat_id') continue;
+				if(!array_key_exists($field_name, $record) ||
+					substr($field_name,0,3) != 'cat' || !$record[$field_name] || $field_name == 'cat_id') continue;
 				list($cat, $cat_id) = explode('-', $field_name);
 				if(is_numeric($record[$field_name]) && $record[$field_name] != 1) {
 					// Column has a single category ID
 					$more_categories[] = $record[$field_name];
-				} elseif($record[$field_name] == '1' || 
+				} elseif($record[$field_name] == '1' ||
 					(!is_numeric($record[$field_name]) && strtolower($record[$field_name]) == strtolower(lang('Yes')))) {
 					// Each category got its own column.  '1' is the database value, lang('yes') is the human value
 					$more_categories[] = $cat_id;
@@ -229,7 +230,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 								if ($condition['string']=='account_id') $searchcondition['owner']=0;
 								$contacts = $this->bocontacts->search(
 									//array( $condition['string'] => $record[$condition['string']],),
-									'', 
+									'',
 									$_definition->plugin_options['update_cats'] == 'add' ? false : true,
 									'', '', '', false, 'AND', false,
 									$searchcondition
@@ -258,7 +259,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 							die('condition / action not supported!!!');
 							break;
 					}
-					if ($action['last']) break;
+					if ($action['stop']) break;
 				}
 			} else {
 				// unconditional insert
