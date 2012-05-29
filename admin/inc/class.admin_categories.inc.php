@@ -538,7 +538,7 @@ class admin_categories
 		if($tmpl instanceof etemplate_widget_template)
 		{
 			// Send categories for row colors
-			$sel_options['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', '1,,'.$appname);
+			$sel_options['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', ',,,'.$appname.',0');
 		}
 
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(
