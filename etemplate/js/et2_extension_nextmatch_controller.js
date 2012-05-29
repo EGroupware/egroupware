@@ -117,6 +117,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Generate a uid for the action and object manager
 		var uid = this.egw.uid();
 
+		if(_actions == null) _actions = [];
+
 		// Initialize the action manager and add some actions to it
 		var gam = egw_getActionManager(this.egw.appName);
 		this._actionManager = gam.addAction("actionManager", uid);
