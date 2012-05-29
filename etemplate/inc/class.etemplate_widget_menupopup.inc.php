@@ -120,6 +120,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		if ($this->attrs['type'])
 		{
+			// Check selection preference, we may be able to skip reading some data
+			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
+			if(!$GLOBALS['egw_info']['apps']['admin'] && $select_pref == 'none')
+			{
+				$this->attrs['readonly'] = true;
+			}
+				
 			// += to keep further options set by app code
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'],
 				// typeOptions thinks # of rows is the first thing in options
@@ -300,7 +307,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 						'title' => empty($cat['description']) ? $s : $cat['description'],
 					);
 					// Send data too
-					$options[$cat['id']] += $cat['data'];
+					if(is_array($cat['data']))
+					{
+						$options[$cat['id']] += $cat['data'];
+					}
 				}
 				// preserv unavailible cats (eg. private user-cats)
 				/* TODO
@@ -316,8 +326,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 				//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
+
+				// Get preference for selection display
+				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
+
 				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
-				if ($readonly)
+				if ($readonly || $select_pref == 'popup')
 				{
 					$no_lang = True;
 					if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
@@ -328,42 +342,21 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 					break;
 				}
-				if($type == 'owngroups')
+				if($type == 'owngroups' || $select_pref == 'groupmembers')
 				{
 					$type = 'groups';
 					$owngroups = true;
 					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
 				}
-				/* account-selection for hughe number of accounts
-				if ($this->ui == 'html' && $type != 'groups')	// use eGW's new account-selection (html only)
+				elseif (in_array($type, array('accounts', 'both')) && $select_pref == 'primary_group')
 				{
-					$not = array_slice(explode(',',$cell['size']),4);
-					$help = (int)$no_lang < 2 ? lang($cell['help']) : $cell['help'];
-					$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
-					$onBlur  = "self.status=''; return true;";
-					if ($cell['noprint'])
-					{
-						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
-						{
-							if ($id) $onlyPrint[] = self::accountInfo($id,$acc,$type2,$type=='both');
-						}
-						$onlyPrint = $onlyPrint ? implode('<br />',$onlyPrint) : lang((int)$rows < 0 ? 'all' : $rows);
-						$noPrint_class = ' class="noPrint"';
-					}
-					if (($rows > 0 || $type3) && substr($name,-2) != '[]') $name .= '[]';
-					$value = $GLOBALS['egw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
-						$value,$type,$rows > 0 ? $rows : ($type3 ? -$type3 : 0),$not,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"'.$noPrint_class,
-						$cell['onchange'] == '1' ? 'this.form.submit();' : $cell['onchange'],
-						!empty($rows) && 0+$rows <= 0 ? lang($rows < 0 ? 'all' : $rows) : False);
-					if ($cell['noprint'])
-					{
-						$value = '<span class="onlyPrint">'.$onlyPrint.'</span>'.$value;
-					}
-					$cell['type'] = 'html';
-					$cell['size'] = '';	// is interpreted as link otherwise
-					etemplate::$request->set_to_process($name,'select');
-					break;
-				}*/
+					$owngroups = true;
+					$mygroups[] = $GLOBALS['egw_info']['user']['primary_group'];
+				}
+
+				// Popup is the only preference option that doesn't need more select options
+				if($select_pref == 'popup') break;
+
 				$no_lang = True;
 				$accs = $GLOBALS['egw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
 				foreach($accs as $acc)
