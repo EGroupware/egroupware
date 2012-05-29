@@ -436,9 +436,16 @@ var et2_nextmatch_rowProvider = Class.extend({
 			if(_data["class"].indexOf("cat") !== -1 || classes.match(/[0-9]+/))
 			{
 				cats = classes.match(/(cat_)?([0-9]+)/);
-				var invalid = typeof cats[1] == 'undefined';
-				if(invalid) this._rootWidget.egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
-				cats = [cats[2]];
+				if(cats == null) 
+				{
+					cats = '';
+				}
+				else
+				{
+					var invalid = typeof cats[1] == 'undefined';
+					if(invalid) this._rootWidget.egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
+					cats = [cats[2]];
+				}
 
 				// Get category info
 				if(!this.categories)
