@@ -218,7 +218,10 @@ class importexport_export_ui {
 			$content['selection'] = $prefs['selection'] ? $prefs['selection'] : $selection;
 		}
 		unset ($plugin_object);
-		(array)$apps = importexport_helper_functions::get_apps('export');
+		$apps = importexport_helper_functions::get_apps('export');
+		//error_log(__METHOD__.__LINE__.array2string($apps));
+		if (empty($apps)) throw new Exception('Error: no application profiles available for export');
+		if (!is_array($apps) && $apps) $apps = (array)$apps;
 		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 		$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
 		if(!$_application && !$selected_plugin) {
