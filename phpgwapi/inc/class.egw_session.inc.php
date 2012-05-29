@@ -203,11 +203,6 @@ class egw_session
 			{
 				$GLOBALS['egw_info']['server']['install_id']  = md5(common::randomstring(15));
 			}
-			if (!isset($GLOBALS['egw_info']['server']['sessions_timeout']))
-			{
-				$GLOBALS['egw_info']['server']['sessions_timeout'] = 14400;
-				$save_rep = true;
-			}
 			if (!isset($GLOBALS['egw_info']['server']['max_history']))
 			{
 				$GLOBALS['egw_info']['server']['max_history'] = 20;
@@ -223,13 +218,17 @@ class egw_session
 				$config->value('num_unsuccessful_id',$GLOBALS['egw_info']['server']['num_unsuccessful_id']);
 				$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
 				$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
-				$config->value('sessions_timeout',$GLOBALS['egw_info']['server']['sessions_timeout']);
 				$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
 				$config->save_repository();
 			}
 		}
 		self::set_cookiedomain();
-      	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+
+		// set session_timeout from global php.ini and default to 14400=4h, if not set
+		if (!($GLOBALS['egw_info']['server']['sessions_timeout'] = ini_get('session.gc_maxlifetime')))
+      	{
+      		ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']=14400);
+      	}
 	}
 
 	/**

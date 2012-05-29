@@ -17,16 +17,6 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Timeout_for_sessions_in_seconds_(default_14400_=_4_hours)}:</td>
-    <td><input size="8" name="newsettings[sessions_timeout]" value="{value_sessions_timeout}"></td>
-   </tr>
-
-   <tr class="row_on">
-    <td>{lang_Timeout_for_application_session_data_in_seconds_(default_86400_=_1_day)}:</td>
-    <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
-   </tr>
-
-   <tr class="row_on">
     <td>{lang_Would_you_like_to_show_each_application's_upgrade_status_?}:</td><td>
      <select name="newsettings[checkappversions]">
       <option value="">{lang_No}</option>
@@ -36,7 +26,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Would_you_like_to_automaticaly_load_new_langfiles_(at_login-time)_?}:</td>
     <td>
      <select name="newsettings[disable_autoload_langfiles]">
@@ -46,7 +36,7 @@
     </td>
    </tr>
 
-    <tr class="row_on">
+    <tr class="row_off">
     <td>{lang_Should_the_login_page_include_a_language_selectbox_(useful_for_demo-sites)_?}:</td>
     <td>
      <select name="newsettings[login_show_language_selection]">
@@ -56,7 +46,7 @@
     </td>
    </tr>
 
-    <tr class="row_off">
+    <tr class="row_on">
     <td>{lang_How_should_EMail_addresses_for_new_users_be_constructed?}:</td>
     <td>
      <select name="newsettings[email_address_format]">
@@ -75,7 +65,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_the_VFS-Path_where_additional_images,_icons_or_logos_can be_placed_(and_found_by_EGroupwares_applications)._The_path_MUST_start_with_/,and_be_readable_by_all_users}:</td>
     <td><input name="newsettings[vfs_image_dir]" value="{value_vfs_image_dir}"></td>
    </tr>
