@@ -562,19 +562,20 @@ var et2_link_entry = et2_inputWidget.extend({
 		// Remember last search
 		this.last_search = this.search.val();
 
-		if(request.term in this.cache) {
-			return response(this.cache[request.term]);
-		}
-
 		// Allow hook / tie in
 		if(this.options.query && typeof this.options.query == 'function')
 		{
 			if(!this.options.query(request, response)) return false;
 		}
+
+		if(request.term in this.cache) {
+			return response(this.cache[request.term]);
+		}
+
 		this.search.addClass("loading");
 		this.clear.show();
 		var request = new egw_json_request("etemplate_widget_link::ajax_link_search::etemplate", 
-			[this.app_select.val(), '', request.term],
+			[this.app_select.val(), '', request.term, request.options],
 			this
 		);
 		this.response = response;
@@ -844,7 +845,11 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	set_value: function(_value) {
 		// Get data
-		if(!_value || _value == null) return;
+		if(!_value || _value == null) 
+		{
+			this.list.empty();
+			return;
+		}
 		if(!_value.to_app && typeof _value == "object" && this.options.application) 
 		{
 			_value.to_app = this.options.application;
@@ -856,11 +861,11 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this._get_links();
 			return;
 		}
+		this.list.empty();
 		if(typeof _value == 'object' && _value.length > 0) {
 			// Have full info
 			// Don't store new value, just update display
 
-			this.list.empty();
 
 			// Make new links
 			for(var i = 0; i < _value.length; i++)
