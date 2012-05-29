@@ -850,6 +850,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this.list.empty();
 			return;
 		}
+		if(typeof _value == "string" && _value.indexOf(',') > 0)
+		{
+			_value = _value.split(',');
+		}
 		if(!_value.to_app && typeof _value == "object" && this.options.application) 
 		{
 			_value.to_app = this.options.application;
