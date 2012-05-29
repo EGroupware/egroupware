@@ -636,6 +636,7 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'rowNoEdit',
 			);
 		}
+		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
 
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 		return $actions;
