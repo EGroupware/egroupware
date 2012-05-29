@@ -480,6 +480,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		// Go over the header row and create the column entries
 		this.columns = new Array(_row.length);
 		var columnData = new Array(_row.length);
+
+		// No action columns in et2
+		var remove_action_index = null;
+
 		for (var x = 0; x < _row.length; x++)
 		{
 			this.columns[x] = {
@@ -490,23 +494,29 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			columnData[x] = {
 				"id": "col_" + x,
 				"caption": this._genColumnCaption(_row[x].widget),
-				"visibility": _colData[x].disabled ?
+				"visibility": (!_colData[x] || _colData[x].disabled) ?
 					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
-				"width": _colData[x].width
+				"width": _colData[x] ? _colData[x].width : 0
 			};
 
 			// No action columns in et2
 			var colName = this._getColumnName(_row[x].widget);
 			if(colName == 'actions' || colName == 'legacy_actions' || colName == 'legacy_actions_check_all') 
 			{
-				this.columns.splice(x,x);
-				columnData.splice(x,x);
-				_colData.splice(x,x);
+				remove_action_index = x;
 				continue;
 			}
 
 			// Append the widget to this container
 			this.addChild(_row[x].widget);
+		}
+
+		// Remove action column
+		if(remove_action_index != null)
+		{
+			this.columns.splice(x,x);
+			columnData.splice(x,x);
+			_colData.splice(x,x);
 		}
 
 		// Create the column manager and update the grid container
