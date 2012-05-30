@@ -38,6 +38,9 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		{'id': 'new_value', caption: 'New Value'},
 		{'id': 'old_value', caption: 'Old Value'}
 	],
+
+	TIMESTAMP: 0, OWNER: 1, FIELD: 2, NEW_VALUE: 3, OLD_VALUE: 4,
+	
 	init: function() {
 		this._super.apply(this, arguments);
 		this.div = $j(document.createElement("div"))
@@ -178,6 +181,40 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 
 		// Per-field widgets - new value & old value
 		this.fields = {};
+
+		// Custom fields - try to use an existing one
+		var cf_widget = null
+		var labels = {};
+		this.getRoot().iterateOver(function(widget) { cf_widget = widget;}, this, et2_customfields_list);
+		if(cf_widget == null)
+		{
+			cf_widget = et2_createWidget('customfields', {}, this);
+		}
+		for(var key in cf_widget.widgets)
+		{
+			// Add label
+			labels[cf_widget.prefix + key] = cf_widget.options.customfields[key].label;
+
+			// If it doesn't support detached nodes, just treat it as text
+			if(cf_widget.widgets[key].getDetachedNodes)
+			{
+				var nodes = cf_widget.widgets[key].getDetachedNodes();
+				for(var i = 0; i < nodes.length; i++)
+				{
+					if(nodes[i] == null) nodes.splice(i,1);
+				}
+				
+				this.fields[cf_widget.prefix + key] = {
+					attrs: cf_widget.widgets[key].options,
+					widget: cf_widget.widgets[key],
+					nodes: jQuery(nodes)
+				};
+			}
+		}
+		// Add all cf labels
+		this.columns[this.FIELD].widget.set_select_options(labels);
+
+		// From app
 		for(var key in this.options.value['status-widgets'])
 		{
 			var field = this.options.value['status-widgets'][key];

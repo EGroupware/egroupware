@@ -34,10 +34,11 @@ class etemplate_widget_historylog extends etemplate_widget
 			if(!is_array($type))
 			{
 				list($basetype) = explode('-',$type);
-				$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$basetype.' type="'.$type.'"/>', $key);
+				$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$type.' type="'.$type.'"/>', $key);
 				$widget->id = $key;
 				$widget->attrs['type'] = $type;
 				$widget->type = $type;
+
 				if(method_exists($widget, 'beforeSendToClient'))
 				{
 					$widget->beforeSendToClient($cname);

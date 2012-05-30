@@ -614,4 +614,4 @@ class etemplate_widget_menupopup extends etemplate_widget
 	}
 }
 
-etemplate_widget::registerWidget('etemplate_widget_menupopup', array('selectbox','listbox'));
+etemplate_widget::registerWidget('etemplate_widget_menupopup', array('selectbox','listbox','select'));
