@@ -471,7 +471,7 @@ while(strlen($a)){
    }
   break; case 2: // Val
    if(preg_match('`^"[^"]*"`', $a, $m) or preg_match("`^'[^']*'`", $a, $m) or preg_match("`^\s*[^\s\"']+`", $a, $m)){
-    $m = $m[0]; $w = 1; $mode = 0; $a = ltrim(substr_replace($a, '', 0, strlen($m)));
+    $m = $m[0]; $w = 1; $mode = 0; $a = ltrim(substr_replace($a, '', 0, hl_bytes($m)));
     $aA[$nm] = trim(($m[0] == '"' or $m[0] == '\'') ? substr($m, 1, -1) : $m);
    }
   break;
@@ -682,6 +682,20 @@ if(($l = strpos(" $w", 'r') ? (strpos(" $w", 'n') ? "\r\n" : "\r") : 0)){
 }
 return str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array('<', '>', "\n", "\r", "\t", ' '), $t);
 // eof
+}
+
+/**
+ * Return the number of bytes of a string, independent of mbstring.func_overload
+ * AND the availability of mbstring
+ *
+ * @param string $str
+ * @return int
+ */
+function hl_bytes($str)
+{
+static $func_overload;
+if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
+return $func_overload & 2 ? mb_strlen($str,'8bit') : strlen($str);
 }
 
 function hl_version(){

@@ -99,6 +99,7 @@ class egw_htmLawed
 	 */
 	function egw_htmLawed($html2check, $Config=null, $Spec=array())
 	{
+		//error_log(__METHOD__.__LINE__.' Input:'.$html2check);
 		if (is_array($Config) && is_array($this->Configuration)) $Config = array_merge($this->Configuration, $Config);
 		if (empty($Config)) $Config = $this->Configuration;
 		if (empty($Spec)) $Spec = $this->Spec;
@@ -116,7 +117,7 @@ class egw_htmLawed
  */
 function hl_my_tag_transform($element, $attribute_array)
 {
-	//if ($element=='a') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
+	//if ($element=='img') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
 	if($element == 'img')
 	{
