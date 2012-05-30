@@ -1054,6 +1054,12 @@ blockquote[type=cite] {
 				font-size: 11px;
 			}
 		</style>'.$additionalStyle.'
+		<script type="text/javascript">
+			function GoToAnchor(aname)
+			{
+				window.location.hash=aname;
+			}
+		</script>
 	</head>
 	<body>
 ';
@@ -1560,8 +1566,7 @@ blockquote[type=cite] {
 					{
 						$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => 'felamimail.uicompose.compose'));
 						$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
-							"'href=\"#\"'.' onclick=\"egw_openWindowCentered(\'$link&send_to='.base64_encode('$2').'\', \'compose\', 700, egw_getWindowOuterHeight());\"'", $newBody);
-//							"'href=\"$link&send_to='.base64_encode('$2').'\"'", $newBody);
+							"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
 						//print "<pre>".htmlentities($newBody)."</pre><hr>";
 					}
 					// replace emails within the text with clickable links.

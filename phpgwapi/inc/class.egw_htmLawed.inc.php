@@ -80,10 +80,8 @@ class egw_htmLawed
 		*/
 
 		$this->Configuration = array('comment'=>0,
-			'balance'=>0,
-			//'keep_bad'=>3,
+			'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 			'tidy'=>1,
-			//'direct_list_nest'=>1,
 			'elements' => "* -script",
 			'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
 			'hook_tag' =>"hl_my_tag_transform",
@@ -101,6 +99,7 @@ class egw_htmLawed
 	 */
 	function egw_htmLawed($html2check, $Config=null, $Spec=array())
 	{
+		//error_log(__METHOD__.__LINE__.' Input:'.$html2check);
 		if (is_array($Config) && is_array($this->Configuration)) $Config = array_merge($this->Configuration, $Config);
 		if (empty($Config)) $Config = $this->Configuration;
 		if (empty($Spec)) $Spec = $this->Spec;
@@ -113,16 +112,25 @@ class egw_htmLawed
  * hl_my_tag_transform
  *
  * function to provide individual checks for element attribute pairs
- * implemented so far: img checking for alt attribute == image; set this to empty
+ * implemented so far:	img checking for alt attribute == image; set this to empty
+ * 						a checking for title, replacing @
  */
 function hl_my_tag_transform($element, $attribute_array)
 {
-	//error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
+	//if ($element=='img') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
-	if($element == 'img' && isset($attribute_array['alt']))
+	if($element == 'img')
 	{
 		// Re-build 'alt'
-		$attribute_array['alt'] = ($attribute_array['alt']=='image'?'':$attribute_array['alt']);
+		if (isset($attribute_array['alt'])) $attribute_array['alt'] = ($attribute_array['alt']=='image'?'':$attribute_array['alt']);
+		if (isset($attribute_array['alt'])&&strpos($attribute_array['alt'],'@')!==false) $attribute_array['alt']=str_replace('@','(at)',$attribute_array['alt']);
+	}
+	if($element == 'a')
+	{
+		if (isset($attribute_array['title']))
+		{
+			if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
+		}
 	}
 	/*
 	// Elements other than 'span' or 'span' without a 'style' attribute are returned unchanged
@@ -153,6 +161,70 @@ function hl_my_tag_transform($element, $attribute_array)
 		$attribute_array['style'] = implode('; ', $style);
 	}
 	*/
+
+	// Build the attributes string
+	$attributes = '';
+	foreach($attribute_array as $k=>$v){
+		$attributes .= " {$k}=\"{$v}\"";
+	}
+
+	// Return the opening tag with attributes
+	static $empty_elements = array('area'=>1, 'br'=>1, 'col'=>1, 'embed'=>1, 'hr'=>1, 'img'=>1, 'input'=>1, 'isindex'=>1, 'param'=>1);
+	return "<{$element}{$attributes}". (isset($empty_elements[$element]) ? ' /' : ''). '>';
+}
+
+/**
+ * hl_email_tag_transform
+ *
+ * function to provide individual checks for element attribute pairs
+ * implemented so far:	img -checking for alt attribute == image; set this to empty
+ *							-control for/on external Images and src-length
+ * 						a -checking for title and href, replacing @ accordingly
+ *						  -navigate to local anchors without reloading the page
+ */
+function hl_email_tag_transform($element, $attribute_array)
+{
+	//if ($element=='a') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
+	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
+	if($element == 'img')
+	{
+		// Re-build 'alt'
+		if (isset($attribute_array['alt'])) $attribute_array['alt'] = ($attribute_array['alt']=='image'?'':$attribute_array['alt']);
+		if (isset($attribute_array['alt'])&&strpos($attribute_array['alt'],'@')!==false) $attribute_array['alt']=str_replace('@','(at)',$attribute_array['alt']);
+		// $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
+		if (isset($attribute_array['src']))
+		{
+			if (!(strlen($attribute_array['src'])>4 && strlen($attribute_array['src']<400)))
+			{
+					$attribute_array['alt']= $attribute_array['alt'].' [blocked (reason: url length):'.$attribute_array['src'].']';
+					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
+					$attribute_array['src']=common::image('phpgwapi','dialog_error');
+			}
+			if (!$GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'])
+			{
+				if (!preg_match('/^cid:.*/',$attribute_array['src']))
+				{
+					$attribute_array['alt']= $attribute_array['alt'].' [blocked external image:'.$attribute_array['src'].']';
+					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
+					$attribute_array['src']=common::image('phpgwapi','dialog_error');
+				}
+			}
+		}
+	}
+	if($element == 'a')
+	{
+		if (isset($attribute_array['title']))
+		{
+			if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
+		}
+		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
+		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
+		if (strpos($attribute_array['href'],'#')===0)
+		{
+			$attribute_array['href'] = "javascript:GoToAnchor('".trim(substr($attribute_array['href'],1))."');";
+		}
+
+	}
 
 	// Build the attributes string
 	$attributes = '';
