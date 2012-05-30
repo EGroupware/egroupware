@@ -63,9 +63,9 @@ class timesheet_ui extends timesheet_bo
 			{
 				if (!$this->read((int)$_GET['ts_id']))
 				{
-					$GLOBALS['egw']->common->egw_header();
+					common::egw_header();
 					echo "<script>alert('".lang('Permission denied!!!')."'); window.close();</script>\n";
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 				}
 				if (!$view && !$this->check_acl(EGW_ACL_EDIT))
 				{
@@ -143,6 +143,14 @@ class timesheet_ui extends timesheet_bo
 			{
 				unset($this->data[$key]);
 			}
+			// user switched project to none --> remove project and blur
+			if ($this->data['ts_project_blur'] && !$this->data['pm_id'] && $this->data['old_pm_id'])
+			{
+				unset($this->data['ts_project_blur']);
+				unset($content['ts_project_blur']);
+				unset($this->data['ts_project']);
+				unset($content['ts_project']);
+			}
 			switch($button)
 			{
 				case 'edit':
@@ -164,8 +172,8 @@ class timesheet_ui extends timesheet_bo
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Starttime has to be before endtime !!!'));
 					}
-					//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
-					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
+					// only store project-blur, if a project is selected
+					if (!$this->data['ts_project'] && $this->data['pm_id']) $this->data['ts_project'] = $this->data['ts_project_blur'];
 					// set ts_title to ts_project if short viewtype (title is not editable)
 					if($this->ts_viewtype == 'short')
 					{
@@ -190,6 +198,19 @@ class timesheet_ui extends timesheet_bo
 						}
 					}
 					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
+
+					// check if we are linked to a project, but that is NOT set as project
+					if (!$this->data['pm_id'] && is_array($content['link_to']['to_id']))
+					{
+						foreach($content['link_to']['to_id'] as $data)
+						{
+							if ($data['app'] == 'projectmanager')
+							{
+								$this->data['pm_id'] = $data['id'];
+								break;
+							}
+						}
+					}
 
 					if ($this->save() != 0)
 					{
@@ -263,7 +284,7 @@ class timesheet_ui extends timesheet_bo
 				case 'cancel':
 					$js .= 'window.close();';
 					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 					break;
 			}
 		}
@@ -572,7 +593,7 @@ class timesheet_ui extends timesheet_bo
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet');
 		if ($query['col_filter']['ts_owner'])
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$GLOBALS['egw']->common->grab_owner_name($query['col_filter']['ts_owner']);
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.common::grab_owner_name($query['col_filter']['ts_owner']);
 			#if ($GLOBALS['egw']->accounts->get_type($query['col_filter']['ts_owner']) == 'g') $GLOBALS['egw_info']['flags']['app_header'] .= ' '. lang("and its members");
 			#_debug_array($GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
 			if ($query['col_filter']['ts_owner']<0) $query['col_filter']['ts_owner'] = array_merge(array($query['col_filter']['ts_owner']),$GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
@@ -612,10 +633,10 @@ class timesheet_ui extends timesheet_bo
 			else
 			{
 				$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . $GLOBALS['egw']->common->show_date($query['startdate']+12*60*60,$df,false);
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . common::show_date($query['startdate']+12*60*60,$df,false);
 				if ($start != $end)
 				{
-					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.$GLOBALS['egw']->common->show_date($query['enddate']+12*60*60,$df,false);
+					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.common::show_date($query['enddate']+12*60*60,$df,false);
 				}
 			}
 			if ($query['filter'] == 'custom')	// show the custom dates
@@ -677,7 +698,7 @@ class timesheet_ui extends timesheet_bo
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
+						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.common::show_date($row['ts_start'],
 						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
 
 						// For some reason day sum checkbox on the etemplate is checked[1] instead of checked[0]
