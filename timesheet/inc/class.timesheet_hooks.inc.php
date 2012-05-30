@@ -57,6 +57,7 @@ class timesheet_hooks
 			'add_popup'  => '600x425',
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
+			'notify'     => TIMESHEET_APP.'.timesheet_bo.notify',
 		);
 	}
 

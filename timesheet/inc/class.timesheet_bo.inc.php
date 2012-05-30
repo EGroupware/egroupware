@@ -804,4 +804,47 @@ class timesheet_bo extends so_sql_cf
 		}
 		return array();
 	}
+
+	/**
+	 * receives notifications from the link-class: new, deleted links to timesheets, or updated content of linked entries
+	 *
+	 * Function makes sure timesheets linked or unlinked to projects via projectmanager behave like ones
+	 * linked via timesheets project-selector, thought timesheet only stores project-title, not the id!
+	 *
+	 * @param array $data array with keys type, id, target_app, target_id, link_id, data
+	 */
+	function notify($data)
+	{
+		//error_log(__METHOD__.'('.array2string($data).')');
+		$backup =& $this->data;	// backup internal data in case class got re-used by ExecMethod
+		unset($this->data);
+
+		if ($data['target_app'] == 'projectmanager' && $this->read($data['id']))
+		{
+			switch($data['type'])
+			{
+				case 'link':
+				case 'update':
+					if (empty($this->data['ts_project']))	// timesheet has not yet project set --> set just linked one
+					{
+						$pm_id = $data['target_id'];
+					}
+					break;
+
+				case 'unlink':	// if current project got unlinked --> unset it
+					if ($this->data['ts_project'] == projectmanager_bo::link_title($data['target_id']))
+					{
+						$pm_id = 0;
+					}
+					break;
+			}
+			if (isset($pm_id))
+			{
+				$ts_project = $pm_id ? egw_link::title('projectmanager', $pm_id) : null;
+				$this->update(array('ts_project' => $ts_project));
+				//error_log(__METHOD__."() setting pm_id=$pm_id --> ts_project=".array2string($ts_project));
+			}
+		}
+		if ($backup) $this->data = $backup;
+	}
 }
