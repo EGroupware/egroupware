@@ -1,3 +1,21 @@
+egroupware-epl (11.1.20120530-1) hardy; urgency=low
+
+  * KnowledgeBase: improve behavior on answering questions, if there is an unpublished answer to a question
+  * Timesheet: button [Save & New] keeps title (blur) set if called via timesheet submenu/icon of app (my.stylite.de bug #2669)
+  * Tracker: split configuration and access control list into 2 tabs for better clarity
+  * Preferences all apps: add validation for vfs files and directories to give user immediate feedback about wrong or non vfs pathes
+  * Calendar: order search for events to link with by startdate descending
+  * InfoLog: status filter in index shows now cumulated list of all status translations, if no type is selected (as context menu does too)
+  * Tracker/ProjectManager: resources of tickets were shown as #Array in projectmanager (egroupware.org bug #3147)
+  * SyncML: Fix country name issue during SyncML slowsync (community bug #3146)
+  * Tracker: add config option to exclude applinks on new tracker-bound-timesheets for selected apps
+  * Addressbook/importexport: if there are no export csv definitions for a given user, do not show the csv export option in context menu
+  * Admin: remove session timeout from EGroupware config and read it via ini_get("session.gc_maxlifetime") as config fails for many reasons, if different from php.ini setting
+  * Timesheet: if linked via ProjectManager, behave identical as if project was set in own GUI, fixed setting project to none to also unset project-title and blur
+  * EPL Features: configurable check for Nagios to check if a given user is logged in or idle for a given time, see http://domain.com/egroupware/stylite/nagios.php
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 30 May 2012 10:30:12 +0200
+
 egroupware-epl (11.1.20120515-1) hardy; urgency=low
 
   * EMail: caching of folderObjects for session under certain conditions, to speed up EMail module access
