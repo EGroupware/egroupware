@@ -1,0 +1,13 @@
+Index: phpfreechat/phpfreechat/src/containers/mysql.class.php
+===================================================================
+--- phpfreechat/phpfreechat/src/containers/mysql.class.php	(Revision 1276)
++++ phpfreechat/phpfreechat/src/containers/mysql.class.php	(Arbeitskopie)
+@@ -131,7 +131,7 @@
+     $query = str_replace('%fieldtype_leaf%',      $c->container_cfg_mysql_fieldtype_leaf,$query);
+     $query = str_replace('%fieldtype_leafvalue%', $c->container_cfg_mysql_fieldtype_leafvalue,$query);
+     $query = str_replace('%fieldtype_timestamp%', $c->container_cfg_mysql_fieldtype_timestamp,$query);    
+-    $result = mysql_query($query, $db);
++    $result = true; // mysql_query($query, $db); // as table should be created via setup
+     if ($result === FALSE)
+     {
+       $errors[] = _pfc("Mysql container: create table error '%s'",mysql_error($db));
