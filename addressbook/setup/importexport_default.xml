@@ -242,10 +242,11 @@
           </entry>
         </entry>
         <entry type="string" name="owner_from_csv">1</entry>
-        <entry type="string" name="contact_owner">-1</entry>
+        <entry type="string" name="contact_owner">personal</entry>
         <entry type="string" name="change_owner">0</entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2012-05-29 16:00:00</entry>
     </entry>
   </entry>
 </entry>
