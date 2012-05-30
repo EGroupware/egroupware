@@ -1,3 +1,13 @@
+egroupware (1.8.004.20120530) hardy; urgency=low
+
+  * Tracker: fixed not working search using ticket number
+  * Calendar: order search for events to link with by startdate descending
+  * Tracker/ProjectManager: resources of tickets were shown as #Array in projectmanager (egroupware.org bug #3147)
+  * SyncML: Fix country name issue during SyncML slowsync (community bug #3146)
+  * Timesheet: if linked via ProjectManager, behave identical as if project was set in own GUI, fixed setting project to none to also unset project-title and blur
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 30 May 2012 18:23:37 +0200
+
 egroupware (1.8.004.20120515) hardy; urgency=low
 
   * Addressbook: skip letter of deleted type, when creating new contact types, as it gives SQL error
