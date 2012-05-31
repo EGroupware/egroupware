@@ -2348,7 +2348,11 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']);
 				//error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
 			}
-
+			if (self::$debug)
+			{
+				error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']);
+				error_log(__METHOD__.__LINE__.' CachedFolderStatus:'.array2string($this->sessionData['folderStatus'][$this->profileID][$_folderName]));
+			}
 			if($try2useCache && (is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
 				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] &&
@@ -2359,7 +2363,7 @@ class felamimail_bo
 				//$this->sessionData['folderStatus'][0][$_folderName]['reverse'] === $_reverse &&
 				!empty($this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult']))
 			) {
-				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun').function_backtrace());
+				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun').' Filter:'.array2string($_filter).function_backtrace());
 				$sortResult = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'];
 
 			} else {
@@ -3500,6 +3504,17 @@ class felamimail_bo
 			$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
 
 			$this->sessionData = $GLOBALS['egw']->session->appsession('session_data','felamimail');
+			$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		}
+
+		function saveSessionData()
+		{
+			if (isset($this->sessionData['folderStatus']) && is_array($this->sessionData['folderStatus']))
+			{
+				egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['folderStatus'], $expiration=60*60*1);
+				unset($this->sessionData['folderStatus']);
+			}
+			$GLOBALS['egw']->session->appsession('session_data','felamimail',$this->sessionData);
 		}
 
 		function saveFilter($_formData)
@@ -3517,11 +3532,6 @@ class felamimail_bo
 
 			$this->sessionData['filter'] = $data;
 			$this->saveSessionData();
-		}
-
-		function saveSessionData()
-		{
-			$GLOBALS['egw']->session->appsession('session_data','felamimail',$this->sessionData);
 		}
 
 		function setEMailProfile($_profileID)

@@ -57,6 +57,7 @@ class uiwidgets
 
 			$this->_connectionStatus = $this->bofelamimail->openConnection($this->profileID);
 			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
+			$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$previewFrameHeight = -1;
 			if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight'] &&
 				stripos($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight'],',') !== false)
