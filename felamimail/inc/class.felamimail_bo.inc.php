@@ -4243,7 +4243,8 @@ class felamimail_bo
 					$singleBodyPart['body'],
 					strtolower($singleBodyPart['charSet'])
 				);
-				$ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
+				$ct = 0;
+				if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
 				if ($ct>0)
 				{
 					//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
@@ -4267,7 +4268,7 @@ class felamimail_bo
 			// CSS Security
 			// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 			$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
-			felamimail_bo::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+			if (stripos($css,'script')!==false) felamimail_bo::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 			// we need this, as styledefinitions are enclosed with curly brackets; and template stuuff tries to replace everything between curly brackets that is having no horizontal whitespace
 			$css = str_replace(':',': ',$css);
 			//error_log(__METHOD__.__LINE__.$css);
