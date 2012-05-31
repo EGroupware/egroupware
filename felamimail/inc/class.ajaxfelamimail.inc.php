@@ -102,9 +102,6 @@ class ajaxfelamimail
 				$newSubFolder = $this->_encodeDisplayFolderName($newSubFolder);
 				$response->addScript("tree.insertNewItem('$parentFolder','$folderName','$newSubFolder',onNodeSelect,'folderClosed.gif',0,0,'CHILD,CHECKED');");
 			}
-			//reset cache, to trigger reload
-			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
 			//reset Form
 			$response->addAssign("newSubFolder", "value", '');
 
@@ -429,9 +426,6 @@ class ajaxfelamimail
 				$folderName = $this->_encodeFolderName($folderName);
 				$response->addScript("tree.deleteItem('$folderName',1);");
 			}
-			//reset cache, to trigger reload
-			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
 
 			return $response->getXML();
 		}
@@ -1321,9 +1315,6 @@ class ajaxfelamimail
 					$response->addScript("window.tree.insertNewItem('$_parentFolder','$newFolderName','$folderName',onNodeSelect,'MailFolderPlain.png',0,0,'CHILD,CHECKED,SELECT,CALL');");
 				}
 			}
-			//reset cache, to trigger reload
-			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
 
 			return $response->getXML();
 		}
@@ -1598,9 +1589,6 @@ class ajaxfelamimail
 			$status = (bool)$_status;
 
 			$this->bofelamimail->subscribe($folderName, $status);
-			//reset cache, to trigger reload
-			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId])) unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
 
 			$response = new xajaxResponse();
 			return $response->getXML();

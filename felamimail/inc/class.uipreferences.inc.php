@@ -448,6 +448,14 @@
 			if(!(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0)) {
 				die('you are not allowed to be here');
 			}
+			//reset folderObject cache, to trigger reload
+			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($folders2return[$this->bofelamimail->icServer->ImapServerId]))
+			{
+				unset($folders2return[$this->bofelamimail->icServer->ImapServerId]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
+			}
+
 			// rename a mailbox
 			if(isset($_POST['newMailboxName']))
 			{

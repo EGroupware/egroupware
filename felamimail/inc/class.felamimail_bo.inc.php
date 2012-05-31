@@ -1627,7 +1627,7 @@ class felamimail_bo
 			static $folders2return;
 			if ($_subscribedOnly && $_getCounters===false)
 			{
-				if (is_null($folders2return)) $folders2return =& egw_cache::getSession('felamimail','folderObjects');
+				if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 				if (isset($folders2return[$this->icServer->ImapServerId]))
 				{
 					//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
@@ -1951,6 +1951,7 @@ class felamimail_bo
 			//$folders2return = array_merge($autoFolderObjects,$folders);
 			//_debug_array($folders2return); #exit;
 			$folders2return[$this->icServer->ImapServerId] = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders);
+			if ($_subscribedOnly && $_getCounters===false) egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return,$expiration=60*60*1);
 			return $folders2return[$this->icServer->ImapServerId];
 		}
 
@@ -2332,7 +2333,7 @@ class felamimail_bo
 			//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
 			$try2useCache = true;
 			static $eMailListContainsDeletedMessages;
-			if (is_null($eMailListContainsDeletedMessages)) $eMailListContainsDeletedMessages =& egw_cache::getSession('felamimail','email_eMailListContainsDeletedMessages');
+			if (is_null($eMailListContainsDeletedMessages)) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			// this indicates, that there is no Filter set, and the returned set/subset should not contain DELETED Messages, nor filtered for UNDELETED
 			if ($setSession==true && ((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
 			{
@@ -2341,6 +2342,7 @@ class felamimail_bo
 				$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
 				//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
 				$eMailListContainsDeletedMessages[$this->profileID][$_folderName] = count($deletedMessages);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 				//$endtime = microtime(true);
 				//$r = ($endtime-$starttime);
 				//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']);
@@ -2357,7 +2359,7 @@ class felamimail_bo
 				//$this->sessionData['folderStatus'][0][$_folderName]['reverse'] === $_reverse &&
 				!empty($this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult']))
 			) {
-				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
+				if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun').function_backtrace());
 				$sortResult = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['sortResult'];
 
 			} else {

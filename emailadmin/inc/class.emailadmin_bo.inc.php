@@ -601,9 +601,19 @@ class emailadmin_bo extends so_sql
 				unset($structure[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
 			}
-			//reset cache, to trigger reload
-			$folders2return =& egw_cache::getSession('felamimail','folderObjects');
-			if (isset($folders2return[$_profileID])) unset($folders2return[$_profileID]);
+			//reset folderObject cache, to trigger reload
+			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($folders2return[$_profileID]))
+			{
+				unset($folders2return[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
+			}
+			$eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($eMailListContainsDeletedMessages[$_profileID]))
+			{
+				unset($eMailListContainsDeletedMessages[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
+			}
 
 			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
 			if (isset($nameSpace[$_profileID]))
