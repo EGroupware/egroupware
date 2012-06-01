@@ -345,7 +345,7 @@ class addressbook_sql extends so_sql_cf
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
 			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 		}
-		if ($join || $criteria && is_string($criteria))	// search also adds a join for custom fields!
+		if ($join || ($criteria && is_string($criteria)) || ($criteria && is_array($criteria) && $order_by))	// search also adds a join for custom fields!
 		{
 			switch(gettype($only_keys))
 			{
