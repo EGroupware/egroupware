@@ -117,6 +117,7 @@ class historylog
 				'history_new_value' => $new_value,
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
+				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
 			),false,__LINE__,__FILE__);
 		}
 	}
@@ -136,6 +137,7 @@ class historylog
 				'history_new_value' => $new_value,
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
+				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
 			),false,__LINE__,__FILE__);
 		}
 	}

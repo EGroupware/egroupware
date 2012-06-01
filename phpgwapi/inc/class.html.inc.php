@@ -110,16 +110,17 @@ class html
 	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	*  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
 	*  For a complete list and description see http://www.walterzorn.com/tooltip/tooltip_e.htm
-	* @return string to be included in any tag, like '<p'.html::tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
+	* @param boolean $return_as_attributes true to return array(onmouseover, onmouseout) attributes
+	* @return string|array to be included in any tag, like '<p'.html::tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
 	*/
-	static function tooltip($text,$do_lang=False,$options=False)
+	static function tooltip($text,$do_lang=False,$options=False, $return_as_attributes=false)
 	{
 		// tell egw_framework to include wz_tooltip.js
 		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 
 		if ($do_lang) $text = lang($text);
 
-		$ttip = ' onmouseover="Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';
+		$ttip = 'Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';
 
 		$sticky = false;
 		if (is_array($options))
@@ -141,11 +142,12 @@ class html
 				$ttip .= ','.$option.','.$value;
 			}
 		}
-		$ttip .= ')"';
+		$ttip .= ')';
 
-		$ttip .= ' onmouseout="UnTip()"';
+		$untip = 'UnTip()';
 
-		return $ttip;
+		return $return_as_attributes ? array($ttip, $untip) :
+			' onmouseover="'.self::htmlspecialchars($ttip).'" onmouseout="'.$untip.'"';
 	}
 
 	/**

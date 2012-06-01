@@ -1236,9 +1236,8 @@ class etemplate_old extends boetemplate
 				{
 					$class = array(
 						'class'       => $class,
-						'onmouseover' => "self.status='".addslashes(html::htmlspecialchars($help))."'; return true;",
-						'onmouseout'  => "self.status=''; return true;",
 					);
+					list($class['onmouseover'],$class['onmouseout']) = html::tooltip($help, False, False,  true);
 				}
 				break;
 			case 'html':	//  size: [link],[link_target],[link_popup_size],[link_title],[activate_links]

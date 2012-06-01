@@ -92,7 +92,8 @@ $phpgw_baseline = array(
 			'session_dla' => array('type' => 'int','precision' => '8','comment' => 'TS of last user action'),
 			'session_action' => array('type' => 'varchar','precision' => '64','comment' => 'menuaction or path of last user action'),
 			'session_php' => array('type' => 'varchar','precision' => '64','nullable' => False,'comment' => 'php session-id or error-message'),
-			'notification_heartbeat' => array('type' => 'int','precision' => '8','comment' => 'TS of last notification request')
+			'notification_heartbeat' => array('type' => 'int','precision' => '8','comment' => 'TS of last notification request'),
+			'user_agent' => array('type' => 'varchar','precision' => '255','comment' => 'User-agent of browser/device')
 		),
 		'pk' => array('sessionid'),
 		'fk' => array(),
@@ -223,7 +224,8 @@ $phpgw_baseline = array(
 			'history_status' => array('type' => 'varchar','precision' => '64','nullable' => False),
 			'history_new_value' => array('type' => 'text','nullable' => False),
 			'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
-			'history_old_value' => array('type' => 'text','nullable' => False)
+			'history_old_value' => array('type' => 'text','nullable' => False),
+			'sessionid' => array('type' => 'int','precision' => '4','comment' => 'primary key to egw_access_log')
 		),
 		'pk' => array('history_id'),
 		'fk' => array(),

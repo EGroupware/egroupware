@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -13,11 +13,12 @@
 				<column disabled="@no_total"/>
 				<column/>
 				<column/>
+				<column/>
 				<column width="1%"/>
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-accountfilter options="LoginID" id="account_id"/>
+					<nextmatch-accountfilter id="account_id" options="LoginID"/>
 					<nextmatch-header label="Login-Status" id="sessionstatus"/>
 					<nextmatch-header label="Loginid" id="loginid"/>
 					<nextmatch-header label="IP" id="ip"/>
@@ -26,14 +27,15 @@
 					<nextmatch-header label="Total" id="total"/>
 					<nextmatch-sortheader label="Idle" id="session_dla"/>
 					<nextmatch-header label="Last action" id="session_action"/>
+					<nextmatch-header label="User-Agent" id="user_agent"/>
 					<hbox>
-						<description value="Actions" align="center"/>
-						<buttononly options="check" label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;"/>
+						<description align="center" value="Actions"/>
+						<buttononly label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="check"/>
 					</hbox>
 				</row>
 				<row class="row">
 					<menulist>
-						<menupopup type="select-account" id="${row}[account_id]" readonly="true" label="$row_cont[alt_loginid]"/>
+						<menupopup type="select-account" label="$row_cont[alt_loginid]" id="${row}[account_id]" readonly="true"/>
 					</menulist>
 					<description id="${row}[sessionstatus]"/>
 					<description id="${row}[loginid]"/>
@@ -43,10 +45,11 @@
 					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
 					<date-since id="${row}[session_dla]" readonly="true"/>
 					<description id="${row}[session_action]"/>
-					<hbox options="0,0" align="center">
-						<button image="delete" label="Delete" id="delete[$row_cont[sessionid]]" statustext="Delete this log entry" onclick="return confirm('Delete this log entry');"/>
-						<button image="close" label="Kill" id="kill[$row_cont[sessionid]]" onclick="return confirm('Are you sure you want to kill this session ?');"/>
-						<checkbox options="$row_cont[sessionid]" id="selected[]" align="right"/>
+					<description statustext="$row_cont[user_agent]" id="{$row}[user_agent]" class="userAgent"/>
+					<hbox align="center" options="0,0">
+						<button statustext="Delete this log entry" label="Delete" id="delete[$row_cont[sessionid]]" onclick="return confirm('Delete this log entry');" image="delete"/>
+						<button label="Kill" id="kill[$row_cont[sessionid]]" onclick="return confirm('Are you sure you want to kill this session ?');" image="close"/>
+						<checkbox align="right" id="selected[]" options="$row_cont[sessionid]"/>
 					</hbox>
 				</row>
 			</rows>
@@ -60,27 +63,35 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" id="msg"/>
+					<description align="center" id="msg" span="all" class="redItalic"/>
 					<description/>
 				</row>
 				<row>
-					<nextmatch span="all" id="nm" options="admin.accesslog.rows"/>
+					<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
 				</row>
 				<row>
 					<hbox options="0,0">
-						<description readonly="true" value="Percent of users that logged out"/>
-						<textbox type="float" precision="1" label=": %s %" readonly="true" id="percent"/>
+						<description value="Percent of users that logged out" readonly="true"/>
+						<textbox type="float" label=": %s %" id="percent" precision="1" readonly="true"/>
 					</hbox>
 					<hbox align="right">
-						<button label="Delete" onclick="return confirm('Delete the selected entries');" id="delete" image="delete" statustext="Delete selected entries"/>
-						<button image="close" label="Kill" id="kill" onclick="return confirm('Are you sure you want to kill this session ?');"/>
-						<buttononly options="arrow_ltr" label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;"/>
+						<button statustext="Delete selected entries" label="Delete" id="delete" onclick="return confirm('Delete the selected entries');" image="delete"/>
+						<button label="Kill" id="kill" onclick="return confirm('Are you sure you want to kill this session ?');" image="close"/>
+						<buttononly label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="arrow_ltr"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 		<styles>
 			.selectAllArrow { padding-right: 12px; }
+td.userAgent { max-width: 200px; }
+td.userAgent span {
+  display: block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 		</styles>
 	</template>
 </overlay>

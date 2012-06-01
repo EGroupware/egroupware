@@ -664,6 +664,7 @@ class egw_session
 				'ip'        => $user_ip,
 				'li'        => $now,
 				'account_id'=> $account_id,
+				'user_agent'=> $_SERVER['HTTP_USER_AGENT'],
 			),false,__LINE__,__FILE__);
 
 			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');

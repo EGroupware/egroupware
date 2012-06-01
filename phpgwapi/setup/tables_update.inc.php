@@ -403,3 +403,27 @@ function phpgwapi_upgrade1_9_013()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.014';
 }
 
+
+function phpgwapi_upgrade1_9_014()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_access_log','user_agent',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'comment' => 'User-agent of browser/device'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.015';
+}
+
+
+function phpgwapi_upgrade1_9_015()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_history_log','sessionid',array(
+		'type' => 'int',
+		'precision' => '4',
+		'comment' => 'primary key to egw_access_log'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.016';
+}
+
