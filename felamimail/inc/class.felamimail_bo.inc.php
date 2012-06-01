@@ -577,7 +577,7 @@ class felamimail_bo
 			}
 			$rv = $this->icServer->createMailbox($newFolderName);
 			if ( PEAR::isError($rv ) ) {
-				error_log(__METHOD__.__LINE__.' create Folder '.$newFolderName.'->'.$rv->message);
+				error_log(__METHOD__.__LINE__.' create Folder '.$newFolderName.'->'.$rv->message.' Namespace:'.array2string($this->icServer->getNameSpaces()));
 				return false;
 			}
 			$srv = $this->icServer->subscribeMailbox($newFolderName);
@@ -2921,6 +2921,7 @@ class felamimail_bo
 
 			//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
 			if(isset($structure->parameters['NAME'])) {
+				if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
 				return rawurldecode(self::decode_header($structure->parameters['NAME']));
 			} elseif(isset($structure->dparameters['FILENAME'])) {
 				return rawurldecode(self::decode_header($structure->dparameters['FILENAME']));
