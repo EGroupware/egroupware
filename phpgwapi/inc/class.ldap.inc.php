@@ -1,6 +1,6 @@
 <?php
 /**
- * API - LDAP connection handling
+ * EGroupware API - LDAP connection handling
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <l.kneschke@metaways.de>
@@ -19,26 +19,42 @@
  * - SSL: "ldaps://host[:port]/"
  * - TLS: "tls://host[:port]/"
  * Both require certificats installed on the webserver, otherwise the connection will fail!
+ *
+ * If multiple (space-separated) ldap hosts or urls are given, try them in order and
+ * move first successful one to first place in session, to try not working ones
+ * only once per session.
  */
 class ldap
 {
 	/**
-	* @var resource $ds holds the LDAP link identifier
+	* Holds the LDAP link identifier
+	*
+	* @var resource $ds
 	*/
 	var $ds;
 
 	/**
 	* Holds the detected information about the connected ldap server
 	*
-	* @var ldapserverinfo
+	* @var ldapserverinfo $ldapserverinfo
 	*/
 	var $ldapServerInfo;
 
 	/**
-	 * the constructor for this class
+	 * Throw Exceptions in ldapConnect instead of echoing error and returning false
+	 *
+	 * @var boolean $exception_on_error
 	 */
-	function __construct()
+	var $exception_on_error=false;
+
+	/**
+	 * Constructor
+	 *
+	 * @param boolean $exception_on_error=false true: throw Exceptions in ldapConnect instead of echoing error and returning false
+	 */
+	function __construct($exception_on_error=false)
 	{
+		$this->exception_on_error = $exception_on_error;
 		$this->restoreSessionData();
 	}
 
@@ -70,14 +86,15 @@ class ldap
 	/**
 	 * Connect to ldap server and return a handle
 	 *
-	 * If multiple (space-separated) ldap servers are given, try them in order and
+	 * If multiple (space-separated) ldap hosts or urls are given, try them in order and
 	 * move first successful one to first place in session, to try not working ones
 	 * only once per session.
 	 *
-	 * @param $host ldap host
-	 * @param $dn ldap dn
-	 * @param $passwd ldap pw
+	 * @param $host='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
+	 * @param $dn='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn'] (only if $host default is used!)
+	 * @param $passwd='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw'] (only if $host default is used!)
 	 * @return resource|boolean resource from ldap_connect() or false on error
+	 * @throws egw_exception_assertion_failed 'LDAP support unavailable!' (no ldap extension)
 	 */
 	function ldapConnect($host='', $dn='', $passwd='')
 	{
@@ -89,30 +106,18 @@ class ldap
 				$GLOBALS['egw']->log->message('F-Abort, LDAP support unavailable');
 				$GLOBALS['egw']->log->commit();
 			}
+			if ($this->exception_on_error) throw new egw_exception_assertion_failed('LDAP support unavailable!');
 
 			printf('<b>Error: LDAP support unavailable</b><br>',$host);
 			return False;
 		}
-		if(!$host)
+		if (empty($host))
 		{
 			$host = $GLOBALS['egw_info']['server']['ldap_host'];
-		}
-
-		if(!$dn)
-		{
 			$dn = $GLOBALS['egw_info']['server']['ldap_root_dn'];
-		}
-
-		if(!$passwd)
-		{
 			$passwd = $GLOBALS['egw_info']['server']['ldap_root_pw'];
 		}
 
-		if (($use_tls = substr($host,0,6) == 'tls://'))
-		{
-			$port = parse_url($host,PHP_URL_PORT);
-			$host = parse_url($host,PHP_URL_HOST);
-		}
 		// if multiple hosts given, try them all, but only once per session!
 		if (isset($_SESSION) && isset($_SESSION['ldapConnect']) && isset($_SESSION['ldapConnect'][$host]))
 		{
@@ -136,6 +141,8 @@ class ldap
 				' '.function_backtrace());
 		}
 		// give visible error, only if we cant connect to any ldap server
+		if ($this->exception_on_error) throw new egw_exception_no_permission("Can't connect/bind to LDAP server '$host' and dn='$dn'!");
+
 		echo "<p><b>Error: Can't connect/bind to LDAP server '$host' and dn='$dn'!</b><br />".function_backtrace()."</p>\n";
 
 		return false;
@@ -144,13 +151,18 @@ class ldap
 	/**
 	 * connect to the ldap server and return a handle
 	 *
-	 * @param $host ldap host
-	 * @param $dn ldap dn
-	 * @param $passwd ldap pw
+	 * @param string $host ldap host
+	 * @param string $dn ldap dn
+	 * @param string $passwd ldap pw
 	 * @return resource|boolean resource from ldap_connect() or false on error
 	 */
 	private function _connect($host, $dn, $passwd)
 	{
+		if (($use_tls = substr($host,0,6) == 'tls://'))
+		{
+			$port = parse_url($host,PHP_URL_PORT);
+			$host = parse_url($host,PHP_URL_HOST);
+		}
 		// connect to ldap server (never fails, as connection happens in bind!)
 		if(!$this->ds = ldap_connect($host, $port))
 		{
