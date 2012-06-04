@@ -1197,7 +1197,10 @@ class translation
 		#print "<pre>"; print htmlspecialchars($_html);
 		#print "</pre>";
 		#print "<hr>";
-		self::replaceTagsCompletley($_html,'style');
+		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
+		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
+		if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+		if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		$Rules = array ('@<script[^>]*?>.*?</script>@siU', // Strip out javascript
 			'@&(quot|#34);@i',                // Replace HTML entities
 			'@&(amp|#38);@i',                 //   Ampersand &
