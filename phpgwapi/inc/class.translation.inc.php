@@ -547,11 +547,17 @@ class translation
 				case 'gb18030':
 					$from = 'EUC-CN';
 					break;
+				case 'windows-1252':
+					if (function_exists('iconv'))
+					{
+						$prefer_iconv = true;
+						break;
+					}
+					// fall throught to remap to iso-8859-1
 				case 'us-ascii':
 				case 'macroman':
 				case 'iso8859-1':
 				case 'windows-1258':
-				case 'windows-1252':
 					$from = 'iso-8859-1';
 					break;
 				case 'windows-1250':
@@ -562,6 +568,7 @@ class translation
 					break;
 				case 'windows-874':
 				case 'tis-620':
+				case 'windows-1256':
 					$prefer_iconv = true;
 					break;
 			}
