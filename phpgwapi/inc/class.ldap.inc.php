@@ -1,6 +1,6 @@
 <?php
 /**
- * API - LDAP connection handling
+ * EGroupware API - LDAP connection handling
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke <l.kneschke@metaways.de>
@@ -14,48 +14,58 @@
 
 /**
  * LDAP connection handling
- * 
+ *
  * Please note for SSL or TLS connections hostname has to be:
- * - SSL: "ldaps://host"
- * - TLS: "tls://host"
+ * - SSL: "ldaps://host[:port]/"
+ * - TLS: "tls://host[:port]/"
  * Both require certificats installed on the webserver, otherwise the connection will fail!
+ *
+ * If multiple (space-separated) ldap hosts or urls are given, try them in order and
+ * move first successful one to first place in session, to try not working ones
+ * only once per session.
  */
 class ldap
 {
 	/**
-	* @var resource $ds holds the LDAP link identifier
+	* Holds the LDAP link identifier
+	*
+	* @var resource $ds
 	*/
 	var $ds;
 
 	/**
-	* @var array $ldapServerInfo holds the detected information about the different ldap servers
+	* Holds the detected information about the connected ldap server
+	*
+	* @var ldapserverinfo $ldapserverinfo
 	*/
 	var $ldapServerInfo;
 
 	/**
-	 * the constructor for this class
+	 * Throw Exceptions in ldapConnect instead of echoing error and returning false
+	 *
+	 * @var boolean $exception_on_error
 	 */
-	function __construct()
+	var $exception_on_error=false;
+
+	/**
+	 * Constructor
+	 *
+	 * @param boolean $exception_on_error=false true: throw Exceptions in ldapConnect instead of echoing error and returning false
+	 */
+	function __construct($exception_on_error=false)
 	{
+		$this->exception_on_error = $exception_on_error;
 		$this->restoreSessionData();
 	}
 
 	/**
-	 * escapes a string for use in searchfilters meant for ldap_search.
+	 * Returns information about connected ldap server
 	 *
-	 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
-	 * It's actually a PHP-Bug, that we have to escape space.
-	 * For all other Characters, refer to RFC2254.
-	 * @param $string either a string to be escaped, or an array of values to be escaped
-	 * @return ldapserverinfo|boolean
+	 * @return ldapserverinfo|null
 	 */
-	function getLDAPServerInfo($_host)
+	function getLDAPServerInfo()
 	{
-		if($this->ldapServerInfo[$_host] instanceof ldapserverinfo)
-		{
-			return $this->ldapServerInfo[$_host];
-		}
-		return false;
+		return $this->ldapServerInfo;
 	}
 
 	/**
@@ -74,12 +84,17 @@ class ldap
 	}
 
 	/**
-	 * connect to the ldap server and return a handle
+	 * Connect to ldap server and return a handle
 	 *
-	 * @param $host ldap host
-	 * @param $dn ldap dn
-	 * @param $passwd ldap pw
+	 * If multiple (space-separated) ldap hosts or urls are given, try them in order and
+	 * move first successful one to first place in session, to try not working ones
+	 * only once per session.
+	 *
+	 * @param $host='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
+	 * @param $dn='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn'] (only if $host default is used!)
+	 * @param $passwd='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw'] (only if $host default is used!)
 	 * @return resource|boolean resource from ldap_connect() or false on error
+	 * @throws egw_exception_assertion_failed 'LDAP support unavailable!' (no ldap extension)
 	 */
 	function ldapConnect($host='', $dn='', $passwd='')
 	{
@@ -91,31 +106,65 @@ class ldap
 				$GLOBALS['egw']->log->message('F-Abort, LDAP support unavailable');
 				$GLOBALS['egw']->log->commit();
 			}
+			if ($this->exception_on_error) throw new egw_exception_assertion_failed('LDAP support unavailable!');
 
 			printf('<b>Error: LDAP support unavailable</b><br>',$host);
 			return False;
 		}
-		if(!$host)
+		if (empty($host))
 		{
 			$host = $GLOBALS['egw_info']['server']['ldap_host'];
-		}
-
-		if(!$dn)
-		{
 			$dn = $GLOBALS['egw_info']['server']['ldap_root_dn'];
-		}
-
-		if(!$passwd)
-		{
 			$passwd = $GLOBALS['egw_info']['server']['ldap_root_pw'];
 		}
 
+		// if multiple hosts given, try them all, but only once per session!
+		if (isset($_SESSION) && isset($_SESSION['ldapConnect']) && isset($_SESSION['ldapConnect'][$host]))
+		{
+			$host = $_SESSION['ldapConnect'][$host];
+		}
+		foreach($hosts=preg_split('/[ ,;]+/', $host) as $h)
+		{
+			if ($this->_connect($h, $dn, $passwd))
+			{
+				if ($h !== $host)
+				{
+					if (isset($_SESSION))	// store working host as first choice in session
+					{
+						$_SESSION['ldapConnect'][$host] = implode(' ',array_unique(array_merge(array($h),$hosts)));
+					}
+				}
+				return $this->ds;
+			}
+			error_log(__METHOD__."('$h', '$dn', \$passwd) Can't connect/bind to ldap server!".
+				($this->ds ? ' '.ldap_error($this->ds).' ('.ldap_errno($this->ds).')' : '').
+				' '.function_backtrace());
+		}
+		// give visible error, only if we cant connect to any ldap server
+		if ($this->exception_on_error) throw new egw_exception_no_permission("Can't connect/bind to LDAP server '$host' and dn='$dn'!");
+
+		echo "<p><b>Error: Can't connect/bind to LDAP server '$host' and dn='$dn'!</b><br />".function_backtrace()."</p>\n";
+
+		return false;
+	}
+
+	/**
+	 * connect to the ldap server and return a handle
+	 *
+	 * @param string $host ldap host
+	 * @param string $dn ldap dn
+	 * @param string $passwd ldap pw
+	 * @return resource|boolean resource from ldap_connect() or false on error
+	 */
+	private function _connect($host, $dn, $passwd)
+	{
 		if (($use_tls = substr($host,0,6) == 'tls://'))
 		{
+			$port = parse_url($host,PHP_URL_PORT);
 			$host = parse_url($host,PHP_URL_HOST);
 		}
-		// connects to ldap server
-		if(!$this->ds = ldap_connect($host))
+		// connect to ldap server (never fails, as connection happens in bind!)
+		if(!$this->ds = ldap_connect($host, $port))
 		{
 			/* log does not exist in setup(, yet) */
 			if(isset($GLOBALS['egw']->log))
@@ -123,9 +172,6 @@ class ldap
 				$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server');
 				$GLOBALS['egw']->log->commit();
 			}
-
-			printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
-			echo function_backtrace(1);
 			return False;
 		}
 
@@ -139,7 +185,9 @@ class ldap
 		}
 		if ($use_tls) ldap_start_tls($this->ds);
 
-		if(!isset($this->ldapServerInfo[$host]))
+		if (!isset($this->ldapServerInfo) ||
+			!is_a($this->ldapServerInfo,'ldapserverinfo') ||
+			$this->ldapServerInfo->host != $host)
 		{
 			//error_log("no ldap server info found");
 			$ldapbind = @ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
@@ -151,9 +199,9 @@ class ldap
 			{
 				if($info = ldap_get_entries($this->ds, $sr))
 				{
-					$ldapServerInfo = new ldapserverinfo();
+					$this->ldapServerInfo = new ldapserverinfo($host);
 
-					$ldapServerInfo->setVersion($supportedLDAPVersion);
+					$this->ldapServerInfo->setVersion($supportedLDAPVersion);
 
 					// check for naming contexts
 					if($info[0]['namingcontexts'])
@@ -162,7 +210,7 @@ class ldap
 						{
 							$namingcontexts[] = $info[0]['namingcontexts'][$i];
 						}
-						$ldapServerInfo->setNamingContexts($namingcontexts);
+						$this->ldapServerInfo->setNamingContexts($namingcontexts);
 					}
 
 					// check for ldap server type
@@ -177,14 +225,14 @@ class ldap
 								$ldapServerType = UNKNOWN_LDAPSERVER;
 								break;
 						}
-						$ldapServerInfo->setServerType($ldapServerType);
+						$this->ldapServerInfo->setServerType($ldapServerType);
 					}
 
 					// check for subschema entry dn
 					if($info[0]['subschemasubentry'])
 					{
 						$subschemasubentry = $info[0]['subschemasubentry'][0];
-						$ldapServerInfo->setSubSchemaEntry($subschemasubentry);
+						$this->ldapServerInfo->setSubSchemaEntry($subschemasubentry);
 					}
 
 					// create list of supported objetclasses
@@ -210,23 +258,18 @@ class ldap
 											}
 										}
 									}
-									$ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
+									$this->ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
 								}
 							}
 						}
 					}
-					$this->ldapServerInfo[$host] = $ldapServerInfo;
 				}
 			}
 			else
 			{
-				$this->ldapServerInfo[$host] = false;
+				unset($this->ldapServerInfo);
 			}
 			$this->saveSessionData();
-		}
-		else
-		{
-			$ldapServerInfo = $this->ldapServerInfo[$host];
 		}
 
 		if(!@ldap_bind($this->ds, $dn, $passwd))
@@ -237,7 +280,6 @@ class ldap
 				$GLOBALS['egw']->log->commit();
 			}
 
-			printf("<b>Error: Can't bind to LDAP server: %s!</b> %s<br />",$dn,function_backtrace(1));
 			return False;
 		}
 
@@ -252,6 +294,8 @@ class ldap
 		if(is_resource($this->ds))
 		{
 			ldap_unbind($this->ds);
+			unset($this->ds);
+			unset($this->ldapServerInfo);
 		}
 	}
 
