@@ -312,6 +312,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	public function SendMail($rfc822, $smartdata=array(), $protocolversion = false)
 	{
 		//$this->debugLevel=3;
+		$ClientSideMeetingRequest = false;
 		if ($protocolversion < 14.0)
     		debugLog("IMAP-SendMail: " . (isset($rfc822) ? $rfc822 : ""). "task: ".(isset($smartdata['task']) ? $smartdata['task'] : "")." itemid: ".(isset($smartdata['itemid']) ? $smartdata['itemid'] : "")." folder: ".(isset($smartdata['folderid']) ? $smartdata['folderid'] : ""));
 		if ($this->debugLevel>0) debugLog("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
@@ -468,6 +469,12 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
         if ($use_orgbody) {
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = true");
             $repl_body = $body = $mailObject->Body;
+			// if it is a ClientSideMeetingRequest, we report it as send at all times
+			if ($mailObject->AltExtendedContentType && stripos($mailObject->AltExtendedContentType,'text/calendar') !== false )
+			{
+				if ($this->debugLevel>0) debugLog("IMAP-Sendmail: we have a Client Side Meeting Request");
+				$ClientSideMeetingRequest = true;
+			}
         }
         else {
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = false");
@@ -814,8 +821,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		}
 		else
 		{
-			debugLog(__METHOD__." returning 120 (MailSubmissionFailed)");
-			return 120;   //MAIL Submission failed, see MS-ASCMD
+			debugLog(__METHOD__." returning ".($ClientSideMeetingRequest ? true : 120)." (MailSubmissionFailed)".($ClientSideMeetingRequest ?" is ClientSideMeetingRequest (we ignore the failure)":""));
+			return ($ClientSideMeetingRequest ? true : 120);   //MAIL Submission failed, see MS-ASCMD
 		}
 
 	}
@@ -848,7 +855,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', '', true);
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
 				$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
-				$body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
+				if (stripos($body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
 				// remove all other html
 				$body = strip_tags($body);
 				if(strlen($body) > $truncsize) {
@@ -1366,18 +1373,46 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 
 	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL)
 	{
-		if ($this->debugLevel>1) $starttime = microtime (true);
+		if ($this->debugLevel>1) $gstarttime = microtime (true);
 		//debugLog(__METHOD__.__LINE__);
-		$this->_connect($this->account);
-		$messagelist = array();
-		// if not connected, any further action must fail
-		if (!$this->mail->icServer->_connected) return $messagelist;
-		if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
-		$rv = $this->splitID($folderid,$account,$_folderName,$id);
-		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id));
-		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=9999999, $_sort=0, $_reverse=false, $_filter, $_id);
+		$rv_messages = array();
+		// if the message is still available within the class, we use it instead of fetching it again
+		if (is_array($_id) && count($_id)==1 && is_array($this->messages) && isset($this->messages[$_id[0]]) && is_array($this->messages[$_id[0]]))
+		{
+			//error_log(__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
+			$rv_messages = array('header'=>array($this->messages[$_id[0]]));
+		}
+		if (empty($rv_messages))
+		{
+			if ($this->debugLevel>1) $starttime = microtime (true);
+			$this->_connect($this->account);
+			if ($this->debugLevel>1)
+			{
+				$endtime = microtime(true) - $starttime;
+				error_log(__METHOD__. " connect took : ".$endtime.' for account:'.$this->account);
+			}
+			$messagelist = array();
+			// if not connected, any further action must fail
+			if (!$this->mail->icServer->_connected) return $messagelist;
+			if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+			if ($this->debugLevel>1) $starttime = microtime (true);
+			$rv = $this->splitID($folderid,$account,$_folderName,$id);
+			if ($this->debugLevel>1)
+			{
+				$endtime = microtime(true) - $starttime;
+				error_log(__METHOD__. " splitID took : ".$endtime.' for FolderID:'.$folderid);
+			}
+			if ($this->debugLevel>1) debugLog(__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
+			if ($this->debugLevel>1) $starttime = microtime (true);
+			$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=9999999, $_sort=0, $_reverse=false, $_filter, $_id);
+			if ($this->debugLevel>1)
+			{
+				$endtime = microtime(true) - $starttime;
+				error_log(__METHOD__. " getHeaders call took : ".$endtime.' for FolderID:'.$_folderName);
+			}
+		}
 		if ($_id == NULL && $this->debugLevel>1)  error_log(__METHOD__." found :". count($rv_messages['header']));
-		//debugLog(__METHOD__.__LINE__.array2string($rv_messages));
+		//debugLog(__METHOD__.__LINE__.' Result:'.array2string($rv_messages));
 		foreach ((array)$rv_messages['header'] as $k => $vars)
 		{
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' ID to process:'.$vars['uid'].' Subject:'.$vars['subject']);
@@ -1398,10 +1433,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$messagelist[$vars['uid']] = $mess;
 			unset($mess);
 		}
+
 		if ($this->debugLevel>1)
 		{
-			$endtime = microtime(true) - $starttime;
-			error_log(__METHOD__. " time used : ".$endtime);
+			$endtime = microtime(true) - $gstarttime;
+			error_log(__METHOD__. " total time used : ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 		}
 		return $messagelist;
 	}
