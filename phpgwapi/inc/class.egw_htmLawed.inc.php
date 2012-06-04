@@ -79,7 +79,7 @@ class egw_htmLawed
 		);
 		*/
 
-		$this->Configuration = array('comment'=>0,
+		$this->Configuration = array('comment'=>1, //remove comments
 			'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 			'tidy'=>1,
 			'elements' => "* -script",
@@ -125,12 +125,9 @@ function hl_my_tag_transform($element, $attribute_array)
 		if (isset($attribute_array['alt'])) $attribute_array['alt'] = ($attribute_array['alt']=='image'?'':$attribute_array['alt']);
 		if (isset($attribute_array['alt'])&&strpos($attribute_array['alt'],'@')!==false) $attribute_array['alt']=str_replace('@','(at)',$attribute_array['alt']);
 	}
-	if($element == 'a')
+	if (isset($attribute_array['title']))
 	{
-		if (isset($attribute_array['title']))
-		{
-			if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
-		}
+		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
 	}
 	/*
 	// Elements other than 'span' or 'span' without a 'style' attribute are returned unchanged
@@ -211,12 +208,12 @@ function hl_email_tag_transform($element, $attribute_array)
 			}
 		}
 	}
+	if (isset($attribute_array['title']))
+	{
+		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
+	}
 	if($element == 'a')
 	{
-		if (isset($attribute_array['title']))
-		{
-			if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
-		}
 		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
 		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
 		if (strpos($attribute_array['href'],'#')===0)
