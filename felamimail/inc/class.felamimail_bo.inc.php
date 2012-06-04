@@ -4381,6 +4381,16 @@ class felamimail_bo
 						{
 							$newBody = $cleaned;
 						}
+						if (!$preserveHTML)
+						{
+							// filter only the 'body', as we only want that part, if we throw away the html
+							preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
+							if ($matches[2])
+							{
+								$hasOther = true;
+								$newBody = $matches[2];
+							}
+						}
 					}
 					else
 					{
