@@ -64,6 +64,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.input = null;
+		this.value = [];
  
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
@@ -354,13 +355,18 @@ var et2_selectbox = et2_inputWidget.extend({
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == "string" && _value.match(/[,0-9]+$/) !== null)
+		if(typeof _value == "string" && this.options.multiple && _value.match(/[,0-9]+$/) !== null)
 		{
 			_value = _value.split(',');
 		}
 		if(this.input == null)
 		{
 			return this.set_multi_value(_value);
+		}
+		if(typeof _value != 'string' && jQuery(this.value).not(_value).length == 0 && jQuery(_value).not(this.value).length == 0)
+		{
+			// Unchanged
+			return;
 		}
 		jQuery("option",this.input).attr("selected", false);
 		if(typeof _value == "array")
@@ -389,6 +395,7 @@ var et2_selectbox = et2_inputWidget.extend({
 				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
 			}
 		}
+
 		this.value = _value;
 	},
 
