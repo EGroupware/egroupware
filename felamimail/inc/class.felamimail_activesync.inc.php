@@ -1367,7 +1367,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		static $cutdate;
 		if (!empty($cutoffdate) && $cutoffdate >0 && (empty($cutdate) || $cutoffdate != $cutdate))  $cutdate = $cutoffdate;
 		debugLog (__METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate);
-
+		if (empty($cutdate))
+		{
+			$cutdate = egw_time::to('now','ts')-(3600*24*28);
+			debugLog(__METHOD__.' Client set no truncationdate. Using 4 weeks.'.date("d-M-Y", $cutdate));
+		}
 		return $this->fetchMessages($folderid, $cutdate);
 	}
 
@@ -1379,7 +1383,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		// if the message is still available within the class, we use it instead of fetching it again
 		if (is_array($_id) && count($_id)==1 && is_array($this->messages) && isset($this->messages[$_id[0]]) && is_array($this->messages[$_id[0]]))
 		{
-			//error_log(__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
+			//debugLog(__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
 			$rv_messages = array('header'=>array($this->messages[$_id[0]]));
 		}
 		if (empty($rv_messages))
@@ -1389,7 +1393,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__. " connect took : ".$endtime.' for account:'.$this->account);
+				debugLog(__METHOD__. " connect took : ".$endtime.' for account:'.$this->account);
 			}
 			$messagelist = array();
 			// if not connected, any further action must fail
@@ -1400,7 +1404,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__. " splitID took : ".$endtime.' for FolderID:'.$folderid);
+				debugLog(__METHOD__. " splitID took : ".$endtime.' for FolderID:'.$folderid);
 			}
 			if ($this->debugLevel>1) debugLog(__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 			if ($this->debugLevel>1) $starttime = microtime (true);
@@ -1408,10 +1412,10 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__. " getHeaders call took : ".$endtime.' for FolderID:'.$_folderName);
+				debugLog(__METHOD__. " getHeaders call took : ".$endtime.' for FolderID:'.$_folderName);
 			}
 		}
-		if ($_id == NULL && $this->debugLevel>1)  error_log(__METHOD__." found :". count($rv_messages['header']));
+		if ($_id == NULL && $this->debugLevel>1)  debugLog(__METHOD__." found :". count($rv_messages['header']));
 		//debugLog(__METHOD__.__LINE__.' Result:'.array2string($rv_messages));
 		foreach ((array)$rv_messages['header'] as $k => $vars)
 		{
@@ -1437,7 +1441,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		if ($this->debugLevel>1)
 		{
 			$endtime = microtime(true) - $gstarttime;
-			error_log(__METHOD__. " total time used : ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
+			debugLog(__METHOD__. " total time used : ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 		}
 		return $messagelist;
 	}
@@ -1851,7 +1855,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	 */
 	private function splitID($str,&$account,&$folder,&$id=null)
 	{
-		$this->backend->splitID($str, $account, $folder, $id=null);
+		$this->backend->splitID($str, $account, $folder, $id);
 
 		// convert numeric folder-id back to folder name
 		$folder = $this->hash2folder($account,$f=$folder);
