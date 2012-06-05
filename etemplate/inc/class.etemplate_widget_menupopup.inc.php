@@ -14,7 +14,6 @@
 /**
  * eTemplate select widget
  *
- * @todo new account selection method
  */
 class etemplate_widget_menupopup extends etemplate_widget
 {
@@ -122,16 +121,17 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
-			if(!$GLOBALS['egw_info']['apps']['admin'] && $select_pref == 'none')
+			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['apps']['admin'] && $select_pref == 'none')
 			{
 				$this->attrs['readonly'] = true;
 			}
-				
+
 			// += to keep further options set by app code
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'],
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
@@ -325,7 +325,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
-				//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
 
 				// Get preference for selection display
 				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
