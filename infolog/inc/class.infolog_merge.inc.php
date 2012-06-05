@@ -92,7 +92,7 @@ class infolog_merge extends bo_merge
 		foreach($_selects as $name => $value)
 		{
 			$selects['info_'.$name] = $value;
-			$types['select'][] = 'info_'.$name;
+			if(!in_array('info_'.$name, $types['select'])) $types['select'][] = 'info_'.$name;
 		}
 
 		if($content && strpos($content, '$$#') !== 0)
