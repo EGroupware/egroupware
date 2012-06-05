@@ -699,6 +699,11 @@ class infolog_ical extends infolog_bo
 					}
 					if ($this->log) error_log(__METHOD__."() setting STATUS='$status' and PERCENT-COMPLETE=$percent_completed from COMPLETED and X-INFOLOG-STATUS='$x_infolog_status'\n",3,$this->logfile);
 				}
+				// new task without status --> set a default status of NEEDS-ACTION, as otherwise task is marked closed
+				elseif($_taskID <= 0 && !is_scalar($x_infolog_status) && !is_scalar($completed))
+				{
+					$component->setAttribute('STATUS', 'NEEDS-ACTION');
+				}
 				else
 				{
 					if ($this->log) error_log(__METHOD__."() no STATUS, X-INFOLOG-STATUS='$x_infolog_status', COMPLETED".(is_scalar($completed)?'='.$completed:' not set')." --> leaving status and percent unchanged",3,$this->logfile);
