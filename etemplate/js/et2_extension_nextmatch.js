@@ -514,9 +514,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		// Remove action column
 		if(remove_action_index != null)
 		{
-			this.columns.splice(x,x);
-			columnData.splice(x,x);
-			_colData.splice(x,x);
+			this.columns.splice(remove_action_index,remove_action_index);
+			columnData.splice(remove_action_index,remove_action_index);
+			_colData.splice(remove_action_index,remove_action_index);
 		}
 
 		// Create the column manager and update the grid container
@@ -1454,6 +1454,11 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 		this._super.apply(this, arguments);
 
 		this.input.change(this, function(event) {
+			if(typeof event.data.nextmatch == 'undefined')
+			{
+				// Not fully set up yet
+				return;
+			}
 			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
 				event.data.nextmatch.activeFilters.col_filter = {};
 			if(event.data.input.val())
@@ -1497,8 +1502,67 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 
 });
 
-et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader',
-	'nextmatch-accountfilter']);
+et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
+
+var et2_nextmatch_accountfilterheader = et2_selectAccount.extend(et2_INextmatchHeader, {
+
+	/**
+	 * Override to add change handler
+	 */
+	createInputWidget: function() {
+		// Make sure there's an option for all
+		if(!this.options.empty_label && !this.options.select_options[""])
+		{
+			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
+		}
+		this._super.apply(this, arguments);
+
+		this.input.change(this, function(event) {
+			if(typeof event.data.nextmatch == 'undefined')
+			{
+				// Not fully set up yet
+				return;
+			}
+			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
+				event.data.nextmatch.activeFilters.col_filter = {};
+			if(event.data.input.val())
+			{
+				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+			}
+			else
+			{
+				delete (event.data.nextmatch.activeFilters["col_filter"][event.data.id]);
+			}
+
+			event.data.nextmatch.applyFilters();
+		});
+
+	},
+
+	set_select_options: function(_options) {
+		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+		this.attributes.select_options.ignore = true;
+		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Set nextmatch is the function which has to be implemented for the
+	 * et2_INextmatchHeader interface.
+	 */
+	setNextmatch: function(_nextmatch) {
+		this.nextmatch = _nextmatch;
+
+		// Set current filter value from nextmatch settings
+		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
+		{
+			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+
+			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
+			this.attributes.value.ignore = true;
+		}
+	}
+});
+et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 
 var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 
