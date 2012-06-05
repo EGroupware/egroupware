@@ -35,9 +35,9 @@ if (!isset($GLOBALS['egw_info']))
  *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
-//class etemplate extends etemplate_old {};
-//class etemplate_new extends etemplate_widget_template
-class etemplate extends etemplate_widget_template
+class etemplate extends etemplate_old {};
+class etemplate_new extends etemplate_widget_template
+//class etemplate extends etemplate_widget_template
 {
 	/**
 	 * Are we running as sitemgr module or not
@@ -214,6 +214,12 @@ class etemplate extends etemplate_widget_template
 		{
 			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
 		}
+
+		// Set current app for validation
+		list($app) = explode('.',self::$request->method);
+		if(!$app) list($app) = explode('::',self::$request->method);
+		if($app) $GLOBALS['egw_info']['flags']['currentapp'] = $app;
+
 		$validated = array();
 		$expand = array(
 			'cont' => &self::$request->content,

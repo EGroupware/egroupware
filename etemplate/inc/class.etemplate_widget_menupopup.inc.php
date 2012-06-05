@@ -275,7 +275,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$no_lang = True;
 				break;
 
-			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
+			case 'select-cat':	// !$type == globals cats too, $type3: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
+error_log("---CATS: $type, 2: $type2, 3: $type3, 4: $type4, 5: $type5, 6: $type6");
 				if ((!$type3 || $type3 === $GLOBALS['egw']->categories->app_name) &&
 					(!$type5 || $type5 ==  $GLOBALS['egw']->categories->account_id))
 				{
@@ -285,6 +286,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				{
 					$categories = new categories($type5,$type3);
 				}
+error_log("--- CAT APPNAME: {$categories->app_name}");
 				// Allow text for global
                                 $type = ($type && strlen($type) > 1 ? $type : !$type);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
