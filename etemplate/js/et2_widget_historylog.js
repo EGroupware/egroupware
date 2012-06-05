@@ -307,7 +307,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 				var jthis = jQuery(this);
 				if(i == 3)
 				{
-					// DIff widget
+					// Diff widget
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
 
@@ -319,7 +319,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 					// Skip column 4
 					jthis.parents("td").attr("colspan", 2)
 						.css("border-right", "none");
-					jthis.css("width", "100%");
+					jthis.css("width", (self.dataview.columnMgr.columnWidths[i] + self.dataview.columnMgr.columnWidths[i+1]-8)+'px');
 
 					if(widget) widget.setDetachedAttributes(nodes, {
 						value:_data[self.columns[i].id],
