@@ -588,12 +588,21 @@ class egw_link extends solink
 				self::delete_attached($app,$id);	// deleting all attachments
 				self::delete_cache($app,$id);
 			}
-			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
-
 
 			// Log in history
+			if(!$app || !$app2)
+			{
+				// Need to load it first
+				$link = self::get_link($link_id);
+				$app = $link['link_app1'];
+				$id = $link['link_id1'];
+				$app2 = $link['link_app2'];
+				$id2 = $link['link_id2'];
+			}
 			historylog::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
 			historylog::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
+
+			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
 
 			// only notify on real links, not the one cached for writing or fileattachments
 			self::notify_unlink($deleted);
