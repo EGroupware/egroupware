@@ -71,8 +71,8 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM], {
 							.append(diff);
 						dialog_div.dialog({
 							title: self.options.label,
-							width: 400,
-							height: 300,
+							width: 'auto',
+							autoResize: true,
 							modal: true,
 							buttons: [{text: self.egw().lang('ok'), click: function() {jQuery(this).dialog("close");}}],
 							close: function(event, ui) {
