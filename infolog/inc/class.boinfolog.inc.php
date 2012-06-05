@@ -163,13 +163,13 @@ class boinfolog extends infolog_bo
 	*
 	* checks and asures ACL
 	*
-	* @param array &$values values to write, if contains values for check_defaults and touch_modified,
+	* @param array $values values to write, if contains values for check_defaults and touch_modified,
 	*	they have precedens over the parameters. The
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values,$check_defaults=True,$touch_modified=True)
+	function write($values,$check_defaults=True,$touch_modified=True)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
 		// allow to (un)set check_defaults and touch_modified via values, eg. via xmlrpc
