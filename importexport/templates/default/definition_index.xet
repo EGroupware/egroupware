@@ -74,7 +74,7 @@
 								<description value="Change owner" class="promptheader"/>
 								<description value="Select owner"/>
 								<menulist class="action_popup-content">
-									<menupopup type="select-account" id="owner" options="None,users"/>
+									<menupopup type="select-account" id="owner" options="None,accounts"/>
 								</menulist>
 								<hbox>
 									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
