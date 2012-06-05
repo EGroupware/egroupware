@@ -63,6 +63,9 @@ var et2_selectAccount = et2_selectbox.extend({
 
 		this._super.apply(this, arguments);
 
+		// Allow search 'inside' this widget
+		this.supportedWidgetClasses = [et2_link_entry];
+
 		// Holder for search jQuery nodes
 		this.search = null;
 
@@ -167,6 +170,9 @@ var et2_selectAccount = et2_selectbox.extend({
 
 			// Free it up, it will be re-created, if ever needed again
 			jQuery(this).dialog("destroy");
+
+			// Fire change event
+			widget.input.trigger("change");
 		};
 
 		var container = jQuery(document.createElement("div")).append(table);
@@ -232,9 +238,11 @@ var et2_selectAccount = et2_selectbox.extend({
 						self.dialog.dialog("close");
 						self.dialog.dialog("destroy");
 					}
+					// Fire change event
+					self.input.trigger("change");
 				}
 			}, this);
-		// select widget doesn't allow children, so add it
+		// add it where we want it
 		search.append(search_widget.getDOMNode());
 
 		if(!this.options.multiple) return search;
