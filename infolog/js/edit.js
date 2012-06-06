@@ -8,7 +8,7 @@ function add_email_from_ab(ab_id,info_cc)
 	
 	if (!ab || !ab.value)
 	{
-		set_style_by_class('tr','hiddenRow','display','block');
+		jQuery("tr.hiddenRow").css("display", "block");
 	}
 	else
 	{
@@ -21,7 +21,7 @@ function add_email_from_ab(ab_id,info_cc)
 			cc.value += (cc.value?', ':'')+ab.options[i].text.replace(/^.* <(.*)>$/,'$1');
 			ab.value = '';
 			ab.onchange();
-			set_style_by_class('tr','hiddenRow','display','none');
+			jQuery("tr.hiddenRow").css("display", "none");
 		}
 	}
 	return false;
