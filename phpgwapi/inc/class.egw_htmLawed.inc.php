@@ -115,8 +115,13 @@ class egw_htmLawed
  * implemented so far:	img checking for alt attribute == image; set this to empty
  * 						a checking for title, replacing @
  */
-function hl_my_tag_transform($element, $attribute_array)
+function hl_my_tag_transform($element, $attribute_array=0)
 {
+	// If second argument is not received, it means a closing tag is being handled
+	if(ctype_digit($attribute_array)){
+		return "</$element>";
+	}
+
 	//if ($element=='img') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
 	if($element == 'img')
@@ -179,8 +184,13 @@ function hl_my_tag_transform($element, $attribute_array)
  * 						a -checking for title and href, replacing @ accordingly
  *						  -navigate to local anchors without reloading the page
  */
-function hl_email_tag_transform($element, $attribute_array)
+function hl_email_tag_transform($element, $attribute_array=0)
 {
+	// If second argument is not received, it means a closing tag is being handled
+	if(ctype_digit($attribute_array)){
+		return "</$element>";
+	}
+
 	//if ($element=='a') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
 	if($element == 'img')
