@@ -1271,6 +1271,8 @@ class etemplate_old extends boetemplate
 			case 'hidden':
 			case 'passwd':
 			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
+				$autocompletion_off='';
+				if ($type == 'passwd') $autocompletion_off='autocomplete="off"';
 				$cell_opts = $c = self::csv_split($cell_options);	// allows to enclose preg in quote to allow comma
 				// fix preg, in case it contains a comma (html5type is only letters and always last option!)
 				if (count($cell_opts) > 3 && ($cell_opts2 = explode(',',$cell_options)) && $cell_opts2[2][0] != '"')
@@ -1292,7 +1294,7 @@ class etemplate_old extends boetemplate
 				{
 					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
 					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : $cell_opts[3]),
-						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($cell['needed']?' required="required"':''));
+						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($cell['needed']?' required="required"':'').($autocompletion_off?' '.$autocompletion_off:''));
 
 					if (!$readonly)
 					{
