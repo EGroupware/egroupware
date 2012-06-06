@@ -110,8 +110,8 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 
 <div id="body">
 <br />
-<div class="comment">htmLawed_README.txt, 5 April 2012<br />
-htmLawed 1.1.10, 5 April 2012<br />
+<div class="comment">htmLawed_README.txt, 5 June 2012<br />
+htmLawed 1.1.11, 5 June 2012<br />
 Copyright Santosh Patnaik<br />
 Dual licensed with LGPL 3 and GPL 2 or later<br />
 A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed</a>&#160;</div>
@@ -1523,14 +1523,30 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; It is possible to utilize a custom hook function to alter the tag content htmLawed has finalized (i.e., after it has checked/corrected for required attributes, transformed attributes, lower-cased attribute names, etc.).<br />
 <br />
-&#160; When <span class="term">$config</span>&#160;parameter <span class="term">hook_tag</span>&#160;is set to the name of a function, htmLawed (function <span class="term">hl_tag()</span>) will pass on the element name, and the <em>finalized</em>&#160;attribute name-value pairs as array elements to the function. The function is expected to return the full opening tag string like <span class="term">&lt;element_name attribute_1_name="attribute_1_value"...&gt;</span>&#160;(for empty elements like <span class="term">img</span>&#160;and <span class="term">input</span>, the element-closing slash <span class="term">/</span>&#160;should also be included).<br />
+&#160; When <span class="term">$config</span>&#160;parameter <span class="term">hook_tag</span>&#160;is set to the name of a function, htmLawed (function <span class="term">hl_tag()</span>) will pass on the element name, and, in the case of an opening tag, the <em>finalized</em>&#160;attribute name-value pairs as array elements to the function. The function, after completing a task such as filtering or tag transformation, will typically return an empty string, the full opening tag string like <span class="term">&lt;element_name attribute_1_name="attribute_1_value"...&gt;</span>&#160;(for empty elements like <span class="term">img</span>&#160;and <span class="term">input</span>, the element-closing slash <span class="term">/</span>&#160;should also be included), etc.<br />
+<br />
+&#160; Any <span class="term">hook_tag</span>&#160;function, since htmLawed version 1.1.11, also receives names of elements in closing tags, such as <span class="term">a</span>&#160;in the closing <span class="term">&lt;/a&gt;</span>&#160;tag of the element <span class="term">&lt;a href="http&#58;//cnn.com"&gt;CNN&lt;/a&gt;</span>. Unlike for opening tags, no other value (i.e., the attribute name-value array) is passed to the function since a closing tag contains only element names. Typically, the function will return an empty string or a full closing tag (like <span class="term">&lt;/a&gt;</span>).<br />
 <br />
 &#160; This is a <strong>powerful functionality</strong>&#160;that can be exploited for various objectives: consolidate-and-convert inline <span class="term">style</span>&#160;attributes to <span class="term">class</span>, convert <span class="term">embed</span>&#160;elements to <span class="term">object</span>, permit only one <span class="term">caption</span>&#160;element in a <span class="term">table</span>&#160;element, disallow embedding of certain types of media, <strong>inject HTML</strong>, use <a href="http://csstidy.sourceforge.net">CSSTidy</a>&#160;to sanitize <span class="term">style</span>&#160;attribute values, etc.<br />
 <br />
 &#160; As an example, the custom hook code below can be used to force a series of specifically ordered <span class="term">id</span>&#160;attributes on all elements, and a specific <span class="term">param</span>&#160;element inside all <span class="term">object</span>&#160;elements:<br />
 <br />
 
-<code class="code">&#160; &#160; function my_tag_function($element, $attribute_array){</code>
+<code class="code">&#160; &#160; function my_tag_function($element, $attribute_array=0){</code>
+<br />
+<br />
+
+<code class="code">&#160; &#160; &#160; // If second argument is not received, it means a closing tag is being handled</code>
+<br />
+
+<code class="code">&#160; &#160; &#160; if(ctype_digit($attribute_array)){</code>
+<br />
+
+<code class="code">&#160; &#160; &#160; &#160; return "&lt;/$element&gt;";</code>
+<br />
+
+<code class="code">&#160; &#160; &#160; }</code>
+<br />
 <br />
 
 <code class="code">&#160; &#160; &#160; static $id = 0;</code>
@@ -1715,6 +1731,8 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; <em>Version number - Release date. Notes</em><br />
 <br />
+&#160; 1.1.11 - 5 June 2012. Fix for possible problem with handling of multi-byte characters in attribute values in an mbstring.func_overload enviroment. <span class="term">$config["hook_tag"]</span>, if specified, now receives names of elements in closing tags.<br />
+<br />
 &#160; 1.1.10 - 22 October 2011. Fix for a bug in the <span class="term">tidy</span>&#160;functionality that caused the entire input to be replaced with a single space; new parameter, <span class="term">$config["direct_list_nest"]</span>&#160;to allow direct descendance of a list in a list. (5 April 2012. Dual licensing from LGPLv3 to LGPLv3 and GPLv2+.)<br />
 <br />
 &#160; 1.1.9.5 - 6 July 2011. Minor correction of a rule for nesting of <span class="term">li</span>&#160;within <span class="term">dir</span><br />
@@ -1777,6 +1795,10 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; Upgrading is as simple as replacing the previous version of <span class="term">htmLawed.php</span>&#160;(assuming it was not modified for customized features). As htmLawed output is almost always used in static documents, upgrading should not affect old, finalized content.<br />
 <br />
+&#160; <strong>Important</strong>&#160; The following upgrades may affect the functionality of a specific htmLawed as indicated by their corresponding notes:<br />
+<br />
+&#160; (1) From version 1.1-1.1.10 to 1.1.11, if a <span class="term">hook_tag</span>&#160;function is in use: In version 1.1.11, elements in closing tags (and not just the opening tags) are also passed to the function. There are no attribute names/values to pass, so a <span class="term">hook_tag</span>&#160;function receives only the element name. The <span class="term">hook_tag</span>&#160;function therefore may have to be edited. See <a href="#s3.4.9">section 3.4.9</a>.<br />
+<br />
 &#160; Old versions of htmLawed may be available online. E.g., for version 1.0, check <a href="http://www.bioinformatics.org/phplabware/downloads/htmLawed1.zip">http://www.bioinformatics.org/phplabware/downloads/htmLawed1.zip</a>, for 1.1.1, htmLawed111.zip, and for 1.1.10, htmLawed1110.zip.<br />
 
 </div>
@@ -1828,7 +1850,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s4.10" id="s4.10"></a><span class="item-no">4.10</span>&#160; Acknowledgements
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Ulf Harnhammer, Gareth Heyes, Lukasz Pilorz, Shelley Powers, Edward Yang, and many anonymous users.<br />
+&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Edward Yang, and many anonymous users.<br />
 <br />
 &#160; Thank you!<br />
 
@@ -2097,7 +2119,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 </div>
 </div>
 <br />
-<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 05 Apr, 2012 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
+<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 06 Jun, 2012 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
 </div><!-- ended div body -->
 </div><!-- ended div top -->
 </body>

@@ -1,6 +1,6 @@
 /*
-htmLawed_README.txt, 5 April 2012
-htmLawed 1.1.10, 5 April 2012
+htmLawed_README.txt, 5 June 2012
+htmLawed 1.1.11, 5 June 2012
 Copyright Santosh Patnaik
 Dual licensed with LGPL 3 and GPL 2 or later
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -1183,13 +1183,21 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 
   It is possible to utilize a custom hook function to alter the tag content htmLawed has finalized (i.e., after it has checked/corrected for required attributes, transformed attributes, lower-cased attribute names, etc.).
 
-  When '$config' parameter 'hook_tag' is set to the name of a function, htmLawed (function 'hl_tag()') will pass on the element name, and the `finalized` attribute name-value pairs as array elements to the function. The function is expected to return the full opening tag string like '<element_name attribute_1_name="attribute_1_value"...>' (for empty elements like 'img' and 'input', the element-closing slash '/' should also be included).
+  When '$config' parameter 'hook_tag' is set to the name of a function, htmLawed (function 'hl_tag()') will pass on the element name, and, in the case of an opening tag, the `finalized` attribute name-value pairs as array elements to the function. The function, after completing a task such as filtering or tag transformation, will typically return an empty string, the full opening tag string like '<element_name attribute_1_name="attribute_1_value"...>' (for empty elements like 'img' and 'input', the element-closing slash '/' should also be included), etc.
+  
+  Any 'hook_tag' function, since htmLawed version 1.1.11, also receives names of elements in closing tags, such as 'a' in the closing '</a>' tag of the element '<a href="http://cnn.com">CNN</a>'. Unlike for opening tags, no other value (i.e., the attribute name-value array) is passed to the function since a closing tag contains only element names. Typically, the function will return an empty string or a full closing tag (like '</a>'). 
 
   This is a *powerful functionality* that can be exploited for various objectives: consolidate-and-convert inline 'style' attributes to 'class', convert 'embed' elements to 'object', permit only one 'caption' element in a 'table' element, disallow embedding of certain types of media, *inject HTML*, use CSSTidy:- http://csstidy.sourceforge.net to sanitize 'style' attribute values, etc.
 
   As an example, the custom hook code below can be used to force a series of specifically ordered 'id' attributes on all elements, and a specific 'param' element inside all 'object' elements:
 
-    function my_tag_function($element, $attribute_array){
+    function my_tag_function($element, $attribute_array=0){
+    
+      // If second argument is not received, it means a closing tag is being handled
+      if(ctype_digit($attribute_array)){
+        return "</$element>";
+      }
+      
       static $id = 0;
       // Remove any duplicate element
       if($element == 'param' && isset($attribute_array['allowscriptaccess'])){
@@ -1313,6 +1321,8 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 
   `Version number - Release date. Notes`
   
+  1.1.11 - 5 June 2012. Fix for possible problem with handling of multi-byte characters in attribute values in an mbstring.func_overload enviroment. '$config["hook_tag"]', if specified, now receives names of elements in closing tags.
+  
   1.1.10 - 22 October 2011. Fix for a bug in the 'tidy' functionality that caused the entire input to be replaced with a single space; new parameter, '$config["direct_list_nest"]' to allow direct descendance of a list in a list. (5 April 2012. Dual licensing from LGPLv3 to LGPLv3 and GPLv2+.)
   
   1.1.9.5 - 6 July 2011. Minor correction of a rule for nesting of 'li' within 'dir'
@@ -1373,6 +1383,10 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 
   Upgrading is as simple as replacing the previous version of 'htmLawed.php' (assuming it was not modified for customized features). As htmLawed output is almost always used in static documents, upgrading should not affect old, finalized content.
 
+  *Important*  The following upgrades may affect the functionality of a specific htmLawed as indicated by their corresponding notes:
+
+  (1) From version 1.1-1.1.10 to 1.1.11, if a 'hook_tag' function is in use: In version 1.1.11, elements in closing tags (and not just the opening tags) are also passed to the function. There are no attribute names/values to pass, so a 'hook_tag' function receives only the element name. The 'hook_tag' function therefore may have to be edited. See section:- #3.4.9.
+
   Old versions of htmLawed may be available online. E.g., for version 1.0, check http://www.bioinformatics.org/phplabware/downloads/htmLawed1.zip, for 1.1.1, htmLawed111.zip, and for 1.1.10, htmLawed1110.zip.
 
 
@@ -1419,7 +1433,7 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 -- 4.10  Acknowledgements ------------------------------------------o
 
 
-  Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Ulf Harnhammer, Gareth Heyes, Lukasz Pilorz, Shelley Powers, Edward Yang, and many anonymous users.
+  Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Edward Yang, and many anonymous users.
 
   Thank you!
 
