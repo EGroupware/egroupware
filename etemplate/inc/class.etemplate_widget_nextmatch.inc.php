@@ -767,3 +767,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 // Registration needs to go here, otherwise customfields won't be loaded until some other cf shows up
 etemplate_widget::registerWidget('etemplate_widget_customfields', array('nextmatch-customfields'));
+
+
+/**
+ * Extend selectbox and change type so proper users / groups get loaded, according to preferences
+ */
+class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopup
+{
+	public function set_attrs($xml)
+        {
+                parent::set_attrs($xml);
+		$this->attrs['type'] = 'select-account';
+	}
+}
+
