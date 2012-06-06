@@ -120,9 +120,9 @@ function check_password(id)
 <!-- BEGIN form_passwordinfo -->
     <tr class="row_on">
      <td>{lang_password}</td>
-     <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
+     <td><input type="password" name="account_passwd" value="{account_passwd}" autocomplete="off"></td>
      <td>{lang_reenter_password}</td>
-     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
+     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}" autocomplete="off"></td>
     </tr>
 <!-- END form_passwordinfo -->
 
