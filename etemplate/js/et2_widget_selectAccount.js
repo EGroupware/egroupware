@@ -485,20 +485,28 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
 		this.list.removeClass("et2_link_string").addClass("et2_selectbox");
 	},
 
+	transformAttributes: function(_attrs) {
+		et2_selectbox.prototype.transformAttributes.apply(this, arguments);
+	},
+
 	set_value: function(_value) {
 		this._super.apply(this, arguments);
 
 		// Don't make it look like a link though
 		jQuery('li',this.list).removeClass("et2_link et2_link_string");
 
-		// Empty label from selectbox
-		if(this.options.empty_label)
+		if(this.options.select_options && this.options.select_options[_value] || this.options.empty_label)
 		{
 			if(!_value)
 			{
+				// Empty label from selectbox
 				this.list.append("<li>"+this.options.empty_label+"</li>");
 			}
-			else
+			else if (this.options.select_options[_value])
+			{
+				this.list.append("<li>"+this.options.select_options[_value]+"</li>");
+			}
+			else if (typeof _value == 'object')
 			{
 				// An array with 0 / empty in it?
 				for(var i = 0; i < _value.length; i++)
@@ -507,6 +515,10 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
 					{
 						this.list.append("<li>"+this.options.empty_label+"</li>");
 						return;
+					}
+					else if (this.options.select_options[_value])
+					{
+						this.list.append("<li>"+this.options.select_options[_value]+"</li>");
 					}
 				}
 			}
