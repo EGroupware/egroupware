@@ -113,7 +113,7 @@ div.inactivetab{ display:none; }
 			{lang_username}
 		</td>
 		<td  style="text-align:left;">
-			<input type="text" style="width: 99%;" name="ic[username]" value="{ic[username]}" maxlength="128">
+			<input type="text" style="width: 99%;" name="ic[username]" value="{ic[username]}" maxlength="128" autocomplete="off">
 		</td>
 	</tr>
 	<tr>
@@ -121,7 +121,7 @@ div.inactivetab{ display:none; }
 			 {lang_password}
 		</td>
 		<td  style="text-align:left;">
-			<input type="password" style="width: 99%;" name="ic[password]" value="{ic[password]}" maxlength="128">
+			<input type="password" style="width: 99%;" name="ic[password]" value="{ic[password]}" maxlength="128" autocomplete="off">
 		</td>
 	</tr>
 	<tr>
@@ -242,7 +242,7 @@ div.inactivetab{ display:none; }
 			{lang_username}
 		</td>
 		<td style="text-align:left;">
-			<input type="text" style="width: 99%;" id="og[username]" name="og[username]" value="{og[username]}" maxlength="128">
+			<input type="text" style="width: 99%;" id="og[username]" name="og[username]" value="{og[username]}" maxlength="128" autocomplete="off">
 		</td>
 	</tr>
 	<tr>
@@ -250,7 +250,7 @@ div.inactivetab{ display:none; }
 			 {lang_password}
 		</td>
 		<td style="text-align:left;">
-			<input type="password" style="width: 99%;" id="og[password]" name="og[password]" value="{og[password]}" maxlength="128">
+			<input type="password" style="width: 99%;" id="og[password]" name="og[password]" value="{og[password]}" maxlength="128" autocomplete="off">
 		</td>
 	</tr>
 </table>
