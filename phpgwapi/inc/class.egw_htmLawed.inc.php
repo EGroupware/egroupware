@@ -118,7 +118,7 @@ class egw_htmLawed
 function hl_my_tag_transform($element, $attribute_array=0)
 {
 	// If second argument is not received, it means a closing tag is being handled
-	if(ctype_digit($attribute_array)){
+	if(is_numeric($attribute_array)){
 		return "</$element>";
 	}
 
@@ -187,7 +187,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
 function hl_email_tag_transform($element, $attribute_array=0)
 {
 	// If second argument is not received, it means a closing tag is being handled
-	if(ctype_digit($attribute_array)){
+	if(is_numeric($attribute_array)){
 		return "</$element>";
 	}
 
