@@ -100,6 +100,7 @@ authentication / accounts	admin	it	Autenticazione / Account
 auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
 available placeholders	admin	it	Variabili disponibili
 back to the list	admin	it	torna alla lista
+backup directory %1 mounted as %2	admin	it	Cartella di backup %1 montata come %2
 bi-dir passthrough	admin	it	passthrough bidirezionale
 bi-directional	admin	it	bidirezionale
 bottom	admin	it	in fondo
@@ -276,6 +277,7 @@ explanation of ldapman	admin	it	Questo modulo è stato testato fino ad oggi per 
 exports groups into a csv file.	admin	it	Esporta gruppi in un file CSV
 exports users into a csv file.	admin	it	Esporta account in un file CSV
 failed to change password for account "%1"!	admin	it	Modifica della password fallita per l'account "%1"!
+failed to mount backup directory!	admin	it	Non è stato possibile montare la cartella di backup!
 fallback (after each pageview)	admin	it	fallback (dopo ogni cambio pagina)
 false	admin	it	Falso
 field '%1' already exists !!!	admin	it	Il campo '%1' esiste già !!!
@@ -392,6 +394,7 @@ mode	admin	it	Modalità
 modified	admin	it	Modificato
 month	admin	it	Mese
 more secure	admin	it	Molto sicuro
+mount backup directory to %1	admin	it	Monta la cartella di backup su %1
 must change password upon next login	admin	it	Deve cambiare password al prossimo accesso
 name must not be empty !!!	admin	it	Il nome non può essere vuoto !!!
 name of the egroupware instance, eg. default	admin	it	Nome della istanza EGroupware

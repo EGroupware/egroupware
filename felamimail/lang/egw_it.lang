@@ -3,6 +3,8 @@
 (only cc/bcc)	felamimail	it	(solo Cc/Ccn)
 (separate multiple addresses by comma)	felamimail	it	Usa la virgola per separare indirizzi multipli
 (unknown sender)	felamimail	it	(mittente sconosciuto)
+1) keep drafted message (press ok)	felamimail	it	Mantieni il messaggio in Bozze (premere OK)
+2) discard the message completely (press cancel)	felamimail	it	Scartare il messaggio (premere Canella)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	it	3PanelView: Se vuoi vedere una anteprima di un messaggio email con click singolo sull'oggetto, imposta l'altezza dell'elenco dei messaggi e l'area di anteprima p.es. 300. Puoi specificare anche l'altezza minima della lista dei messaggi, aggiungendola dopo l'altezza dal pannello di anteprima specificata, separando con la virgola: (p.es. 300, 190)
 aborted	felamimail	it	Fallito
 activate	felamimail	it	Attiva
@@ -194,7 +196,7 @@ every	felamimail	it	ogni
 every %1 days	felamimail	it	ogni %1 giorni
 expunge	felamimail	it	Svuota
 extended	felamimail	it	Esteso
-felamimail	common	it	FelaMiMail
+felamimail	common	it	eMail
 file into	felamimail	it	file in
 file rejected, no %2. is:%1	felamimail	it	File rifiutato, no %2. E': %1
 filemanager	felamimail	it	File Manager
@@ -252,6 +254,7 @@ if shown, which folders should appear on main screen	felamimail	it	Se mostrato, 
 if subject contains	felamimail	it	se oggetto contiene
 if to contains	felamimail	it	se a contiene
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	it	Se usati SSL o TLS devi avere prima caricato l'estensione openssl in PHP
+if you leave this page without saving to draft, the message will be discarded completely	felamimail	it	Se lasci questa pagina senza salvare in Bozze, il messaggio verrà definitivamente scartato.
 illegal folder name.  please select a different name.	felamimail	it	Nome cartella non permesso. Prego scegli un altro nome.
 imap	felamimail	it	IMAP
 imap server	felamimail	it	Server IMAP
@@ -299,7 +302,8 @@ location of buttons when composing	felamimail	it	Location of buttons when compos
 mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	it	Comportamento griglia messaggi: quanti messaggi dovrebbero esservi caricati? Se selezionassi tutti allora non ci sarà la paginazione nell'elenco
 mail server login type	admin	it	Mail server login type
 mail settings	felamimail	it	Imposazioni Mail
-mainmessage	felamimail	it	messaggio principale
+mail source	felamimail	it	Sorgente messaggio
+mainmessage	felamimail	it	Messaggio principale
 manage email accounts and identities	common	it	Gestisci account e identità
 manage emailaccounts	common	it	Gestisci account di posta
 manage emailfilter / vacation	preferences	it	Gestione Filtro Email / Assenze
@@ -385,6 +389,7 @@ participants	felamimail	it	Partecipanti
 personal	felamimail	it	personale
 personal information	felamimail	it	Informazioni Personali
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	it	Richiedi all'amministratore la correzione delle impostazioni in emaladmin
+please choose:	felamimail	it	Per favore sceglere:
 please configure access to an existing individual imap account.	felamimail	it	Configura l'accesso ad un account IMAP esistente
 please select a address	felamimail	it	Prego seleziona un indirizzo
 please select the number of days to wait between responses	felamimail	it	Prego seleziona il numero di giorni da aspettare tra le risposte
@@ -435,6 +440,7 @@ save as tracker	felamimail	it	Salva come Tracker
 save changes	felamimail	it	Salva le modifiche
 save message to disk	felamimail	it	Salva il messaggio sul disco
 save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
+save to filemanager	felamimail	it	Salva nel filemanager
 save:	felamimail	it	Salva:
 saving of message %1 failed. destination folder %2 does not exist.	felamimail	it	Salvataggio del messaggio %1 non riuscito. La cartella %2 non esiste.
 saving of message %1 succeeded. check folder %2.	felamimail	it	Salvataggio del messaggio %1 riuscito. Controlla la cartella %2
@@ -453,7 +459,7 @@ send	felamimail	it	Invia
 send a reject message	felamimail	it	invia messaggio di rifiuto
 send message and move to send folder (if configured)	felamimail	it	Invia messaggio e spostalo nella cartella della posta inviata
 sender	felamimail	it	Mittente
-sent	felamimail	it	Inviato
+sent	felamimail	it	Inviata
 sent folder	felamimail	it	Cartella Posta Inviata
 server supports mailfilter(sieve)	felamimail	it	Il server supporta il filtro SIEVE
 set as default	felamimail	it	Imposta come predefinito
