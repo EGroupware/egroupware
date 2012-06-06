@@ -151,12 +151,16 @@ function nm_action(_action, _senders, _target, _ids)
 
 				if(_action.data.nm_action == 'open_popup')
 				{
+					// Force nextmatch to re-load affected rows
+					for(var i = 0; i < idsArr.length; i++)
+					{
+						nextmatch.egw().dataStoreUID(nextmatch.egw().appName +'::'+idsArr[i],false);
+					}
+
 					nextmatch.getInstanceManager().submit();
 
 					// Clear action in case there's another one
 					delete nextmatch.getValue;
-
-					// TODO: force nextmatch to re-load affected rows
 				}
 				else
 				{

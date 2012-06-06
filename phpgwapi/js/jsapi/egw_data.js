@@ -373,7 +373,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			for (var key in localStorage)
 			{
 				var parts = key.split("::");
-				if (parts[0] === _prefix)
+				if (parts[0] === _prefix && localStorage[key].data)
 				{
 					result.push(parts[1]);
 				}
