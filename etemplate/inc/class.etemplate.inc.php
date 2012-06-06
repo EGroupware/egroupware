@@ -1214,6 +1214,8 @@ class etemplate extends boetemplate
 				// fall-through
 			case 'passwd' :
 			case 'text':		// size: [length][,maxLength[,preg]]
+				$autocompletion_off='';
+				if ($type == 'passwd') $autocompletion_off='autocomplete="off"';
 				$cell_opts = explode(',',$cell_options,3);
 				if ($readonly && (int)$cell_opts[0] >= 0)
 				{
@@ -1223,7 +1225,7 @@ class etemplate extends boetemplate
 				{
 					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
 					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : '',
-						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH'));
+						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($autocompletion_off?' '.$autocompletion_off:''));
 
 					if (!$readonly)
 					{
