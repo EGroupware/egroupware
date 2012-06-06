@@ -503,6 +503,15 @@ class etemplate_new extends etemplate_widget_template
 
 		return $etemplate_old->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 	}
+
+	/**
+	 * Avoid fatal error from addressbook
+	 */
+	public static function cats2color($cats)
+	{
+		trigger_error('Calling etemplate_old', E_USER_NOTICE);
+		return etemplate_old::cats2color($cats);
+	}
 }
 
 

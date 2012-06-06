@@ -393,6 +393,41 @@ var et2_link_entry = et2_inputWidget.extend({
 			minLength: self.minimum_characters,
 			disabled: self.options.disabled
 		});
+		
+		// Custom display (colors)
+		this.search.data("autocomplete")._renderItem = function(ul, item) {
+			var li = jQuery(document.createElement('li'))
+				.data("item.autocomplete", item);
+			var extra = {};
+
+			// Extra stuff
+			if(typeof item.label == 'object') {
+				extra = item.label;
+				item.label = extra.label ? extra.label : extra;
+				if(extra['style.backgroundColor'] || extra.color)
+				{
+					li.css('backgroundColor', extra.color ? extra.color : extra['style.backgroundColor']);
+				}
+				// Careful with this, some browsers may have trouble loading all at once, which can slow display
+				if(extra.icon)
+				{
+					var img = self.egw().image(extra.icon);
+					if(img)
+					{
+						jQuery(document.createElement("img"))
+							.attr("src", img)
+							.css("float", "right")
+							.appendTo(li);
+					}
+				}
+			}
+
+			// Normal stuff
+			li.append(jQuery( "<a></a>" ).text( item.label ))
+				.appendTo(ul);
+
+			return li;
+		};
 
 		// Bind to enter key to start search early
 		this.search.keydown(function(e) {
