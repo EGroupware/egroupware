@@ -118,8 +118,13 @@ var et2_selectbox = et2_inputWidget.extend({
 
 			// Try first according to ID
 			content_options = this.getArrayMgr("sel_options").getEntry(this.id);
+			// ID can get set to an array with 0 => ' ' - not useful
+			if(content_options && content_options.length == 1 && typeof content_options[0] != 'undefined' && content_options[0].trim() == '')
+			{
+				content_options = null;
+			}
 
-			// Select options tend to be defined once, at the top level, so try that first
+			// Select options tend to be defined once, at the top level, so try that
 			if(!content_options || content_options.length == 0)
 			{
 				content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
