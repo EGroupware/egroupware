@@ -490,13 +490,22 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
 	},
 
 	set_value: function(_value) {
+		// Explode csv
+		if(typeof _value == 'string' && _value.indexOf(',') > 0) 
+		{
+			_value = _value.split(',');
+		}
+
 		// Don't bother to lookup if it's not an array, or a number
 		if(typeof _value == 'object' || !isNaN(_value))
 		{
 			this._super.apply(this, arguments);
+			// Don't make it look like a link though
+			jQuery('li',this.list).removeClass("et2_link et2_link_string");
+			return;
 		}
 
-		// Don't make it look like a link though
+		// Don't make it look like a link
 		jQuery('li',this.list).removeClass("et2_link et2_link_string");
 
 		if(this.options.select_options && this.options.select_options[_value] || this.options.empty_label)
