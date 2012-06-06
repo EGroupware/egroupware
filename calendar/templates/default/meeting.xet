@@ -1,15 +1,26 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.001">
+	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
 		<description id="msg" class="redItalic leftPad5"/>
-		<hbox>
-			<description value="This mail contains a meeting request" class="meetingRequestMessage"/>
-			<button label="Accept" id="button[accept]" class="leftPad5"/>
-			<button label="Tentative" id="button[tentativ]" class="leftPad5"/>
-			<button label="Reject" id="button[reject]" class="leftPad5"/>
-			<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
-		</hbox>
+		<grid border="0">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@ics_method=request">
+					<description value="This mail contains a meeting request" class="meetingRequestMessage"/>
+					<button label="Accept" id="button[accept]" class="leftPad5"/>
+					<button label="Tentative" id="button[tentativ]" class="leftPad5"/>
+					<button label="Reject" id="button[reject]" class="leftPad5"/>
+					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+				</row>
+			</rows>
+		</grid>
 		<description/>
 		<grid width="100%" class="meetingRequest">
 			<columns>
@@ -18,7 +29,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Meeting request" span="all"/>
+					<description id="ics_method_label" span="all"/>
 				</row>
 				<row class="row">
 					<description value="Title"/>
