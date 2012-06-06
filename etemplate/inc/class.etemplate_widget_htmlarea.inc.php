@@ -16,6 +16,29 @@
  */
 class etemplate_widget_htmlarea extends etemplate_widget
 {
+
+	protected $legacy_options = 'mode,height,width,expand_toolbar,base_href';
+
+	public $attrs = array(
+		'height' => '400px',
+	);
+
+	/**
+	 * Fill config options
+	 *
+	 * @param string $cname
+	 */
+	public function beforeSendToClient($cname)
+	{
+		$form_name = self::form_name($cname, $this->id);
+		
+		
+		$config = egw_ckeditor_config::get_ckeditor_config_array($this->attrs['mode'], $this->attrs['height'],
+			$this->attrs['expand_toolbar'],$this->attrs['base_href']
+		);
+		self::$request->modifications[$form_name]['config'] = $config;
+	}
+
 	/**
 	 * Validate input
 	 *

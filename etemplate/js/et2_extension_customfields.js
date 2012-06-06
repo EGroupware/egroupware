@@ -216,7 +216,16 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			var data = this.getArrayMgr("modifications").getEntry(this.id);
 			// Check for global settings
 			var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
-			if(global_data) data = jQuery.extend({}, data, global_data);
+			if(global_data)
+			{
+				for(var key in data)
+				{
+					if(global_data[key])
+					{
+						data[key] = jQuery.extend(true, {}, data[key], global_data[key]);
+					}
+				}
+			}
 			for(var key in data)
 			{
 				if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
@@ -303,7 +312,19 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 		attrs.select_options = field.values;
 		return true;
 	},
-
+	_setup_htmlarea: function(field_name, field, attrs) {
+		attrs.config = field.config ? field.config : {};
+		attrs.config.toolbarStartupExpanded = false;
+		if(field.len) 
+		{
+			var options = field.len.split(',');
+			if(options.length) attrs.config.width = options[0];
+			if(options.length > 1) attrs.config.mode = options[1];
+			if(options.length > 2) attrs.config.toolbarStartupExpanded = options[2];
+		}
+		attrs.config.height = ((field.rows ? field.rows : 5) *16) +'px';
+		return true;
+	},
 	_setup_radio: function(field_name, field, attrs) {
 		// No label on the widget itself
 		delete(attrs.label);

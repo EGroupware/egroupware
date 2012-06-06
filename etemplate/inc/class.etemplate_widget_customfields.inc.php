@@ -98,6 +98,17 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			unset(self::$request->modifications[$form_name]['app']);
 		}
 
+		if($this->getElementAttribute($form_name, 'customfields'))
+		{
+			$customfields =& $this->getElementAttribute($form_name, 'customfields');
+		}
+		elseif($app)
+		{
+			// Checking creates it even if it wasn't there
+			unset(self::$request->modifications[$form_name]['customfields']);
+			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+		}
+
 		if(!$app)
 		{
 			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
@@ -124,10 +135,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
                         $field_filter = explode(',', $this->attrs['field_names']);
                 }
 		$fields = $customfields;
+		
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed
-			if ((string)$this->attrs['use-private'] !== '' && (boolean)$field['private'] != (boolean)$this->attrs['use-private'])
+			if ((string)self::expand_name($this->attrs['use-private'],0,0) !== '' &&
+				(boolean)$field['private'] != (boolean)$this->attrs['use-private'])
 			{
 				unset($fields[$key]);
 			}
@@ -190,11 +203,21 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		parent::beforeSendToClient($cname);
 
 		// Re-format date custom fields from Y-m-d
+		$field_settings =& self::get_array(self::$request->modifications, "{$this->id}[customfields]",true);
+		$field_settings = array();
 		foreach($fields as $fname => $field)
 		{
 			if($field['type'] == 'date' && self::$request->content[self::$prefix.$fname])
 			{
 				self::$request->content[self::$prefix.$fname] = strtotime(self::$request->content[self::$prefix.$fname]);
+			}
+
+			// Run beforeSendToClient for each field
+			$widget = self::factory($field['type'], '<?xml version="1.0"?><'.$field['type'].' type="'.$field['type'].'"/>', self::$prefix.$fname);
+			if(method_exists($widget, 'beforeSendToClient'))
+			{
+				$widget->id = "customfields[{$fname}]";
+				$widget->beforeSendToClient($this->id, $fname);
 			}
 		}
 	}
