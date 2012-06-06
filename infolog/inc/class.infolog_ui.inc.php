@@ -653,12 +653,22 @@ class infolog_ui
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
 				if(in_array($multi_action, array('link', 'responsible')))
 				{
-					$values['nm']['multi_action'] .= '_' . key($values[$multi_action . '_action']);
-					if(is_array($values[$multi_action]))
+					// eTemplate ignores the _popup namespace, but et2 doesn't
+					if($values[$multi_action.'_popup'])
 					{
-						$values[$multi_action] = implode(',',$values[$multi_action]);
+						$popup =& $values[$multi_action.'_popup'];
 					}
-					$values['nm']['multi_action'] .= '_' . $values[$multi_action];
+					else
+					{
+						$popup =& $values;
+					}
+
+					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action']);
+					if(is_array($popup[$multi_action]))
+					{
+						$popup[$multi_action] = implode(',',$popup[$multi_action]);
+					}
+					$values['nm']['multi_action'] .= '_' . $popup[$multi_action];
 				}
 				if ($this->action($values['nm']['multi_action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
