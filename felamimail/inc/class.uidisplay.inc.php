@@ -1079,7 +1079,8 @@ blockquote[type=cite] {
 			$attachments    = $this->bofelamimail->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
 			foreach ((array)$attachments as $key => $attach)
 			{
-				if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
+				if (strtolower($attach['mimeType']) == 'text/calendar' &&
+					(strtolower($attach['method']) == 'request' || strtolower($attach['method']) == 'reply') &&
 					isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
 					($attachment = $this->bofelamimail->getAttachment($uid, $attach['partID'])))
 				{
