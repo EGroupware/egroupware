@@ -349,7 +349,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 	 * How to tell if the row needs a diff widget or not
 	 */
 	_needsDiffWidget: function(columnName, value) {
-		return columnName == 'note' || columnName == 'description' || value && value.length > 100
+		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)))
 	},
 });
 et2_register_widget(et2_historylog, ['historylog']);
