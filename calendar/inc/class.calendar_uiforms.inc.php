@@ -1646,6 +1646,7 @@ function replace_eTemplate_onsubmit()
 				$session_data = egw_cache::getSession('calendar', 'ical');
 				$ical_string = $session_data['attachment'];
 				$ical_charset = $session_data['charset'];
+				$ical_method = $session_data['method'];
 				unset($session_data);
 			}
 			$ical = new calendar_ical();
@@ -1755,7 +1756,8 @@ function replace_eTemplate_onsubmit()
 		}
 		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];
-
+		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
+		$event['ics_method_label'] = (strtolower($ical_method)=='request'?lang('Meeting request'):lang('Meeting status information'));
 		$tpl = new etemplate('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, $sel_options, $readonlys, $event, 2);
 	}

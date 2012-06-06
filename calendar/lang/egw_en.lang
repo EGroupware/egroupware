@@ -281,6 +281,7 @@ make freebusy information available to not loged in persons?	calendar	en	Make Fr
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
+meeting status information	calendar	en	Meeting status information
 merge document...	calendar	en	Merge document...
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified

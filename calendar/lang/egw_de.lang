@@ -281,6 +281,7 @@ make freebusy information available to not loged in persons?	calendar	de	Die Bel
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
 meeting request	calendar	de	Termineinladung
+meeting status information	calendar	de	Terminstatus
 merge document...	calendar	de	Dokument einfügen...
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
