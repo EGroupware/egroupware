@@ -374,7 +374,7 @@ class etemplate_widget
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @return boolean true if the row/col is disabled or false if not
 	 */
-	protected static function check_disabled($disabled, array $expland)
+	protected static function check_disabled($disabled, array $expand)
 	{
 		if ($not = $disabled[0] == '!')
 		{
