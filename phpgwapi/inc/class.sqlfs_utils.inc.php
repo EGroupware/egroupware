@@ -109,6 +109,13 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		$msgs = array_merge($msgs, self::fsck_fix_unconnected($check_only));
 		$msgs = array_merge($msgs, self::fsck_fix_no_content($check_only));
 
+		foreach ($GLOBALS['egw']->hooks->process(array(
+			'location' => 'fsck',
+			'check_only' => $check_only)
+		) as $app => $app_msgs)
+		{
+			$msgs = array_merge($msgs, $app_msgs);
+		}
 		return $msgs;
 	}
 
