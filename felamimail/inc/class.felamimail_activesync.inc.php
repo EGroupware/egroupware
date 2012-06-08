@@ -1366,7 +1366,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	{
 		static $cutdate;
 		if (!empty($cutoffdate) && $cutoffdate >0 && (empty($cutdate) || $cutoffdate != $cutdate))  $cutdate = $cutoffdate;
-		debugLog (__METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate);
+		debugLog (__METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate.'/'.date("d-M-Y", $cutdate));
 		if (empty($cutdate))
 		{
 			$cutdate = egw_time::to('now','ts')-(3600*24*28);
@@ -1408,7 +1408,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			}
 			if ($this->debugLevel>1) debugLog(__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 			if ($this->debugLevel>1) $starttime = microtime (true);
-			$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=9999999, $_sort=0, $_reverse=false, $_filter, $_id);
+			$_numberOfMessages = (empty($cutoffdate)?250:99999);
+			$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages, $_sort=0, $_reverse=false, $_filter, $_id);
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
@@ -1554,10 +1555,10 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 
 		$fmailFolder = $this->folders[$folder];
 		if (!isset($fmailFolder)) return false;
-
-		$parent = explode($fmailFolder->delimiter,$folder);
+		$delimiter = (isset($fmailFolder->delimiter)?$fmailFolder->delimiter:$this->mail->getHierarchyDelimiter());
+		$parent = explode($delimiter,$folder);
 		array_pop($parent);
-		$parent = implode($fmailFolder->delimiter,$parent);
+		$parent = implode($delimiter,$parent);
 
 		$id = $parent ? $this->createID($account, $parent) : '0';
 		if ($this->debugLevel>1) debugLog(__METHOD__."('$folder') --> parent=$parent --> $id");

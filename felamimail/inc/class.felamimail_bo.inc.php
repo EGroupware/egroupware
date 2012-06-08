@@ -2300,13 +2300,18 @@ class felamimail_bo
 		{
 			static $HierarchyDelimiter;
 			if (is_null($HierarchyDelimiter)) $HierarchyDelimiter =& egw_cache::getSession('felamimail','HierarchyDelimiter');
-			if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])) return $HierarchyDelimiter[$this->icServer->ImapServerId];
+			if (isset($HierarchyDelimiter[$this->icServer->ImapServerId]))
+			{
+				$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
+				return $HierarchyDelimiter[$this->icServer->ImapServerId];
+			}
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 			if(($this->icServer instanceof defaultimap))
 			{
 				$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getHierarchyDelimiter();
 				if (PEAR::isError($HierarchyDelimiter[$this->icServer->ImapServerId])) $HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 			}
+			$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
 			return $HierarchyDelimiter[$this->icServer->ImapServerId];
 		}
 
@@ -3477,6 +3482,7 @@ class felamimail_bo
 			}
 			if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 			//error_log(print_r($this->icServer->_connected,true));
+			$hD = $this->getHierarchyDelimiter();
 			return $tretval;
 		}
 
