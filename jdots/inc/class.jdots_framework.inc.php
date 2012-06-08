@@ -166,7 +166,9 @@ class jdots_framework extends egw_framework
 		if ($link_app && (is_string($link_app) || ($link_app = self::app_from_url($link))))
 		{
 			// Link gets handled in JS, so quotes need slashes as well as url-encoded
-			$link = str_replace('%27', '\%27', $link);
+			// encoded ampersands in get parameters (%26) need to be encoded twise,
+			// so they are still encoded when assigned to window.location
+			$link = str_replace(array('%27','%26'), array('\%27','%2526'), $link);
 
 			$link = "javascript:window.egw_link_handler?egw_link_handler('$link','$link_app'):parent.egw_link_handler('$link','$link_app');";
 		}
