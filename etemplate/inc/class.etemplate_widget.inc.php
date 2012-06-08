@@ -305,7 +305,7 @@ class etemplate_widget
 	}
 
 	/**
-	 * Iterate over children to find the one with the given id and optional type
+	 * Iterate over children to find the one with the given type
 	 *
 	 * @param string $type
 	 * @return etemplate_widget or NULL
