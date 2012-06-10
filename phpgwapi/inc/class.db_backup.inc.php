@@ -341,10 +341,11 @@ class db_backup
 	 * @param boolean $convert_to_system_charset=true convert the restored data to the selected system-charset
 	 * @param string $filename='' gives the file name which is used in case of a zip archive.
 	 * @param boolean $protect_system_config=true should above system_config values be protected (NOT overwritten)
+	 * @param int $insert_n_rows=10 how many rows to insert in one sql statement
 	 *
 	 * @returns An empty string or an error message in case of failure.
 	 */
-	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true)
+	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true, $insert_n_rows=10)
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
@@ -462,6 +463,11 @@ class db_backup
 			}
 			if (substr($line,0,7) == 'table: ')
 			{
+				if ($rows)	// flush pending rows of last table
+				{
+					$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+				}
+				$rows = array();
 				$table = substr($line,7);
 
 				$cols = self::csv_split($line=fgets($f)); ++$n;
@@ -501,7 +507,19 @@ class db_backup
 						{
 							$data = translation::convert($data,$charset);
 						}
-						$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+						if ($insert_n_rows > 1)
+						{
+							$rows[] = $data;
+							if (count($rows) == $insert_n_rows)
+							{
+								$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+								$rows = array();
+							}
+						}
+						else
+						{
+							$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+						}
 					}
 					else
 					{
@@ -510,6 +528,10 @@ class db_backup
 					}
 				}
 			}
+		}
+		if ($rows)	// flush pending rows
+		{
+			$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
 		}
 		// updated the sequences, if the DB uses them
 		foreach($this->schemas as $table => $schema)

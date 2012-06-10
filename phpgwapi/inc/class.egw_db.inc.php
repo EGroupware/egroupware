@@ -1787,7 +1787,25 @@ class egw_db
 			$table = self::$tablealiases[$table];
 		}
 		$inputarr = false;
-		if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
+		if (isset($data[0]) && is_array($data[0]))	// multiple data rows
+		{
+			if ($where) throw new egw_exception_wrong_parameter('Can NOT use $where together with multiple data rows in $data!');
+
+			$sql = "$cmd INTO $table ";
+			foreach($data as $k => $d)
+			{
+				if (!$k)
+				{
+					$sql .= $this->column_data_implode(',',$d,'VALUES',true,$table_def['fd']);
+				}
+				else
+				{
+					$sql .= ",\n(".$this->column_data_implode(',',$d,false,true,$table_def['fd']).')';
+				}
+			}
+			$sql .= $sql_append;
+		}
+		elseif ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
 		{
 			$this->Link_ID->Param(false);	// reset param-counter
 			$cols = array_keys($data);

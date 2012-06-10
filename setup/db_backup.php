@@ -186,8 +186,9 @@ if ($_POST['restore'])
 	if (is_resource($f = $db_backup->fopen_backup($file,true)))
 	{
 		echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
+		$start = time();
 		$db_backup->restore($f, true, $file);	// allways convert to current system charset on restore
-		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file));
+		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file).' ('.(time()-$start).' s)');
 		if ($run_in_egw)
 		{
 			// updating the backup
