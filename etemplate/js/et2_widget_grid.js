@@ -112,7 +112,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		return {
 			"height": "auto",
 			"class": "",
-			"valign": "",
+			"valign": "top",
 			"span": "1",
 			"disabled": false
 		};
