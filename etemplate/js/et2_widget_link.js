@@ -351,6 +351,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
 				self.cache = {}; // Clear cache when app changes
+				if(typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
 			})
 			.css("width","39%");
@@ -517,6 +518,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		}
 		if(typeof _value == 'string')
 		{
+			if(_value.indexOf(",") > 0) _value = _value.replace(",",":");
 			if(_value.indexOf(":") >= 0)
 			{
 				var split = et2_csvSplit(_value, 2,":");
@@ -631,6 +633,10 @@ var et2_link_entry = et2_inputWidget.extend({
 		}
 		else
 		{
+			if(typeof event.data.options.value != 'object')
+			{
+				event.data.options.value = {};
+			}
 			event.data.options.value.id = selected.item.value;
 		}
 
