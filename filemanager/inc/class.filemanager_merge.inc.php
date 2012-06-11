@@ -87,6 +87,9 @@ class filemanager_merge extends bo_merge
 
 		$file['name'] = egw_vfs::basename($id);
 		$file['dir'] = egw_vfs::decodePath(egw_vfs::dirname($id));
+		$dirlist = explode('/',$file['dir']);
+		$file['folder'] = array_pop($dirlist);
+		$file['folder_file'] = $file['folder'] . '/'.$file['name'];
 		$file['path'] = $id;
 		$file['rel_path'] = str_replace($this->dir.'/', '', $id);
 		$file['hsize'] = egw_vfs::hsize($file['size']);
@@ -184,6 +187,8 @@ class filemanager_merge extends bo_merge
 			'name' => 'name',
 			'path' => 'Absolute path',
 			'rel_path' => 'Path relative to current directory',
+			'folder' => 'Containing folder',
+			'folder_file' => 'Containing folder and file name',
 			'url' => 'url',
 			'link' => 'Clickable link to file',
 			'comment' => 'comment',
