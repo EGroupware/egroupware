@@ -480,6 +480,11 @@ var et2_nextmatch_rowProvider = Class.extend({
 			}
 			_tr.setAttribute("class", classes);
 		}
+		if(_data['valign'])
+		{
+			var align = _mgrs["content"].expandName(_data["valign"]);
+			_tr.setAttribute("valign", align);
+		}
 	}
 
 });
