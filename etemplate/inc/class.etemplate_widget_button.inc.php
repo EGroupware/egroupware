@@ -32,20 +32,29 @@ class etemplate_widget_button extends etemplate_widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		//error_log(__METHOD__."('$cname', ".array2string($expand).", ...) $this: get_array(\$content, '$form_name')=".array2string(self::get_array($content, $form_name)));
 
-		// need to check === true, as get_array() ignores a "[]" postfix and returns array() eg. for a not existing $row_cont[id] in "delete[$row_cont[id]]"
-		if (!$this->is_readonly($cname, $form_name) && self::get_array($content, $form_name) === true)
+		if (!$this->is_readonly($cname, $form_name))
 		{
-			$valid =& self::get_array($validated, $form_name, true);
-			$valid = 'pressed';	// that's what it was in old etemplate
+			$value = self::get_array($content, $form_name);
 
-			// recored pressed button globally, was in the template object before, not sure self::$request is the right place ...
-			if ($this->type == 'cancel' || $form_name == 'cancel' || substr($form_name,-10) == '[cancel]')
+			if(
+				// Handle case of not existing $row_cont[id], eg: create[]
+				is_array($value) && count($value) == 1 ||
+				// check === true, as get_array() ignores a "[]" postfix and returns array() eg. for a not existing $row_cont[id] in "delete[$row_cont[id]]"
+				$value == true
+			)
 			{
-				self::$request->canceled = true;
-			}
-			else
-			{
-				self::$request->button_pressed = true;
+				$valid =& self::get_array($validated, $form_name, true);
+				$valid = is_array($value) ? $value : 'pressed';
+
+				// recored pressed button globally, was in the template object before, not sure self::$request is the right place ...
+				if ($this->type == 'cancel' || $form_name == 'cancel' || substr($form_name,-10) == '[cancel]')
+				{
+					self::$request->canceled = true;
+				}
+				else
+				{
+					self::$request->button_pressed = true;
+				}
 			}
 		}
 	}
