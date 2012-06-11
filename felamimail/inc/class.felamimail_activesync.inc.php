@@ -497,6 +497,9 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			(!isset($smartdata['replacemime']) ||
 			(isset($smartdata['replacemime']) && $smartdata['replacemime'] == false)))
 		{
+			//remember Content type of org messageFolder
+			$orgMessageContentType = $mailObject->ContentType;
+			// now get on, and fetch the original mail
 			$uid = $smartdata['itemid'];
 			if ($this->debugLevel>0) debugLog("IMAP Smartreply is called with FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
 			$this->splitID($smartdata['folderid'], $account, $folder);
@@ -519,7 +522,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			} else {
 				// plain text Message
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
-				$mailObject->IsHTML(false);
+				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
+				if ($orgMessageContentType!='text/html') $mailObject->IsHTML(false);
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
@@ -528,7 +532,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			}
 
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Body -> '.$bodyBUFF);
-			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body);
+			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body); // this is (should be) the same as $orgMessageContentType == 'text/plain' && $mailObject->ContentType == 'text/html'
 			// receive only body
 			$body .= $bodyBUFF;
 			$mailObject->Encoding = 'base64';
