@@ -9,6 +9,20 @@
  * @version $Id$
  */
 
+/**
+ * Handle HTML5 validation on tabs
+ */
+jQuery().ready(function() {
+	jQuery('.tab_body :input').bind('invalid', function(e) {
+		// Activate the appropriate tab
+		var tab = jQuery(this).parentsUntil('.tab_body').last();
+		var alltabs = [tab.attr("id")];
+		tab.siblings('div').each(function() {
+			alltabs.push(this.id);
+		});
+		activate_tab(tab.attr("id"), alltabs.join('|'));
+	});
+});
 function submitit(form,name)
 {
 	//alert(name+' pressed');
