@@ -53,7 +53,7 @@
 					<description value="Label"/>
 					<description value="Type"/>
 					<description value="Values for selectbox"/>
-					<description value="Length&lt;br&gt;Rows"/>
+					<html label="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
 					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
@@ -71,9 +71,9 @@
 					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
 					<vbox options="0,0">
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
-						<int blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" options="0,10,2"/>
+						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
 					</vbox>
-					<int statustext="determines the order the fields are displayed" id="${row}[order]" options="1,,3"/>
+					<textbox type="integer" statustext="determines the order the fields are displayed" id="${row}[order]" min="1" size="3"/>
 					<hbox>
 						<button statustext="deletes this field" label="Delete" id="delete[$row_cont[name]]"/>
 						<button statustext="creates a new field" label="Create" id="create$row_cont[name]"/>
@@ -107,19 +107,19 @@
 					<description value="Custom status for typ" id="typ" span="all"/>
 				</row>
 				<row>
-					<template content="status" id="status" span="all"/>
+					<template id="status" content="status" span="all"/>
 				</row>
 				<row class="header">
 					<description value="Custom fields" span="all"/>
 				</row>
 				<row>
-					<template content="fields" id="fields" span="all"/>
+					<template id="fields" content="fields" span="all"/>
 				</row>
 				<row>
 					<hbox options="0,0" span="all">
 						<description value="Group owner for" id="type2" class="header"/>
-						<menulist>
-							<menupopup type="select-account" class="lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
+						<menulist class="lpadding5">
+							<menupopup type="select-account" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
 						</menulist>
 					</hbox>
 				</row>
