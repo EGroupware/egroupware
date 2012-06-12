@@ -2860,7 +2860,7 @@ class felamimail_bo
 				$newAttachment = array();
 				$newAttachment['name']      = 'event.ics';
 				$newAttachment['size']      = $structure->bytes;
-				$newAttachment['mimeType']  = $structure->type .'/'. $structure->subType.';'.$structure->parameters['METHOD'];
+				$newAttachment['mimeType']  = $structure->type .'/'. $structure->subType;//.';'.$structure->parameters['METHOD'];
 				$newAttachment['partID']    = $structure->partID;
 				$newAttachment['encoding']  = $structure->encoding;
 				$newAttachment['method']    = $structure->parameters['METHOD'];
