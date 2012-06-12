@@ -646,13 +646,13 @@ class egw_session
 	/**
     * Write or update (for logout) the access_log
 	*
-	* @param string|int $sessionid PHP sessionid or 0 for unsuccessful logins
-	* @param string $login account_lid (evtl. with domain) or '' for settion the logout-time
-	* @param string $user_ip ip to log
-	* @param int $account_id numerical account_id
+	* @param string|int $sessionid nummeric or PHP session id or 0 for unsuccessful logins
+	* @param string $login='' account_lid (evtl. with domain) or '' for setting the logout-time
+	* @param string $user_ip='' ip to log
+	* @param int $account_id=0 numerical account_id
 	* @return int $sessionid primary key of egw_access_log for login, null otherwise
 	*/
-	private function log_access($sessionid,$login='',$user_ip='',$account_id='')
+	private function log_access($sessionid,$login='',$user_ip='',$account_id=0)
 	{
 		$now = time();
 
@@ -665,12 +665,18 @@ class egw_session
 				'li'        => $now,
 				'account_id'=> $account_id,
 				'user_agent'=> $_SERVER['HTTP_USER_AGENT'],
+				'session_dla'    => $now,
+				'session_action' => $this->update_dla(false),	// dont update egw_access_log
 			),false,__LINE__,__FILE__);
 
 			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');
 		}
 		else
 		{
+			if (!is_numeric($sessionid) && $sessionid == $this->sessionid && $this->sessionid_access_log)
+			{
+				$sessionid = $this->sessionid_access_log;
+			}
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'lo' => $now
 			),is_numeric($sessionid) ? array(
@@ -678,12 +684,14 @@ class egw_session
 			) : array(
 				'session_php' => $sessionid,
 			),__LINE__,__FILE__);
-		}
-		if ($GLOBALS['egw_info']['server']['max_access_log_age'])
-		{
-			$max_age = $now - $GLOBALS['egw_info']['server']['max_access_log_age'] * 24 * 60 * 60;
 
-			$GLOBALS['egw']->db->delete(self::ACCESS_LOG_TABLE,"li < $max_age",__LINE__,__FILE__);
+			// run maintenance only on logout, to not delay login
+			if ($GLOBALS['egw_info']['server']['max_access_log_age'])
+			{
+				$max_age = $now - $GLOBALS['egw_info']['server']['max_access_log_age'] * 24 * 60 * 60;
+
+				$GLOBALS['egw']->db->delete(self::ACCESS_LOG_TABLE,"li < $max_age",__LINE__,__FILE__);
+			}
 		}
 		//error_log(__METHOD__."('$sessionid', '$login', '$user_ip', $account_id) returning ".array2string($ret));
 		return $ret;
@@ -701,24 +709,43 @@ class egw_session
 		$blocked = false;
 		$block_time = time() - $GLOBALS['egw_info']['server']['block_time'] * 60;
 
-		if (($false_ip = $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE,'COUNT(*)',array(
-			'account_id = 0',
-			'ip'         => $ip,
-			"li > $block_time",
-		),__LINE__,__FILE__)->fetchColumn()) > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'])
+		$false_id = $false_ip = 0;
+		foreach($GLOBALS['egw']->db->union(array(
+			array(
+				'table' => self::ACCESS_LOG_TABLE,
+				'cols'  => "'false_ip' AS name,COUNT(*) AS num",
+				'where' => array(
+					'account_id' => 0,
+					'ip' => $ip,
+					"li > $block_time",
+				),
+			),
+			array(
+				'table' => self::ACCESS_LOG_TABLE,
+				'cols'  => "'false_id' AS name,COUNT(*) AS num",
+				'where' => array(
+					'account_id' => 0,
+					'loginid' => $login,
+					"li > $block_time",
+				),
+			),
+			array(
+				'table' => self::ACCESS_LOG_TABLE,
+				'cols'  => "'false_id' AS name,COUNT(*) AS num",
+				'where' => array(
+					'account_id' => 0,
+					'loginid LIKE '.$GLOBALS['egw']->db->quote($login.'@%'),
+					"li > $block_time",
+				)
+			),
+		), __LINE__, __FILE__) as $row)
 		{
-			//echo "<p>login_blocked: ip='$ip' ".$this->db->f(0)." trys (".$GLOBALS['egw_info']['server']['num_unsuccessful_ip']." max.) since ".date('Y/m/d H:i',$block_time)."</p>\n";
-			$blocked = true;
+			${$row['name']} += $row['num'];
 		}
-		if (($false_id = $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE,'COUNT(*)',array(
-			'account_id = 0',
-			'(loginid = '.$GLOBALS['egw']->db->quote($login).' OR loginid LIKE '.$GLOBALS['egw']->db->quote($login.'@%').')',
-			"li > $block_time",
-		),__LINE__,__FILE__)->fetchColumn()) > $GLOBALS['egw_info']['server']['num_unsuccessful_id'])
-		{
-			//echo "<p>login_blocked: login='$login' ".$this->db->f(0)." trys (".$GLOBALS['egw_info']['server']['num_unsuccessful_id']." max.) since ".date('Y/m/d H:i',$block_time)."</p>\n";
-			$blocked = true;
-		}
+		$blocked = $false_ip > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'] ||
+			$false_id > $GLOBALS['egw_info']['server']['num_unsuccessful_id'];
+		//error_log(__METHOD__."('$login', '$ip') false_ip=$false_ip, false_id=$false_id --> blocked=".array2string($blocked));
+
 		if ($blocked && $GLOBALS['egw_info']['server']['admin_mails'] &&
 			$GLOBALS['egw_info']['server']['login_blocked_mail_time'] < time()-5*60)	// max. one mail every 5mins
 		{
@@ -1004,7 +1031,7 @@ class egw_session
 	/**
 	 * Terminate a session
 	 *
-	 * @param string $sessionid the id of the session to be terminated
+	 * @param int|string $sessionid nummeric or php session id of session to be terminated
 	 * @param string $kp3
 	 * @return boolean true on success, false on error
 	 */
@@ -1366,8 +1393,11 @@ class egw_session
 
 	/**
 	 * Update session_action and session_dla (session last used time)
+	 *
+	 * @param boolean $update_access_log=true false: dont update egw_access_log table
+	 * @return string action as written to egw_access_log.session_action
 	 */
-	private function update_dla()
+	private function update_dla($update_access_log=true)
 	{
 		// This way XML-RPC users aren't always listed as xmlrpc.php
 		if ($this->xmlrpc_method_called)
@@ -1384,14 +1414,18 @@ class egw_session
 			// remove EGroupware path, if not installed in webroot
 			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
 			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
-			if ($egw_path)
+			if ($action == '/Microsoft-Server-ActiveSync')
+			{
+				$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+			}
+			elseif ($egw_path)
 			{
 				list(,$action) = explode($egw_path,$action,2);
 			}
 		}
 
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
-		if ($this->sessionid_access_log)
+		if ($this->sessionid_access_log && $update_access_log)
 		{
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
@@ -1405,6 +1439,8 @@ class egw_session
 		$_SESSION[self::EGW_SESSION_VAR]['session_dla'] = time();
 		$_SESSION[self::EGW_SESSION_VAR]['session_action'] = $action;
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() _SESSION['.self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+
+		return $action;
 	}
 
 	/**
