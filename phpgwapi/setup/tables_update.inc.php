@@ -430,12 +430,16 @@ function phpgwapi_upgrade1_9_015()
 
 /**
  * Some index to speed up access/update of huge access-logs
+ *
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_session_php` ( `session_php` )
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_account_id_ip_li` ( `account_id` , `ip` , `li` )
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_account_id_loginid_li` ( `account_id` , `loginid` , `li` )
  */
 function phpgwapi_upgrade1_9_016()
 {
 	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log','session_php');
-	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('acount_id','ip','li'));
-	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('acount_id','loginid','li'));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('account_id','ip','li'));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('account_id','loginid','li'));
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.017';
 }
