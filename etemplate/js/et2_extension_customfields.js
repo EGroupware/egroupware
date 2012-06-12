@@ -20,7 +20,7 @@
 	et2_core_inputWidget;
 */
 
-var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
+var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput], {
 
 	attributes: {
 		'customfields': {
@@ -147,7 +147,8 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 			var field = this.options.customfields[field_name];
 
-			var id = this.id + "["+this.prefix + field_name+"]";
+			var id = this.prefix+field_name;
+
 			// Need curlies around ID for nm row expansion
 			if(this.id == '$row')
 			{
@@ -230,6 +231,10 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			{
 				if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
 			}
+			for(var key in global_data)
+			{
+				if(typeof global_data[key] === 'object' && ! _attrs[key]) _attrs[key] = global_data[key];
+			}
 		}
 
 		if (this.id)
@@ -277,6 +282,12 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
 
+			// Check if ID was missing
+			if(value == null && this.id == 'custom_fields' && this.getArrayMgr("content").getEntry(this.prefix + field_name))
+			{
+				value = this.getArrayMgr("content").getEntry(this.prefix + field_name);
+			}
+
 			switch(this.options.customfields[field_name].type)
 			{
 				case 'date':
@@ -290,6 +301,49 @@ var et2_customfields_list = et2_baseWidget.extend([et2_IDetachedDOM], {
 					break;
 			}
 			this.widgets[field_name].set_value(value);
+		}
+	},
+
+
+	/**
+	 * et2_IInput so the custom field can be it's own widget.  
+	 */
+	getValue: function() {
+		// Not using an ID means we have to grab all the widget values, and put them where server knows to look
+		if(this.id != 'custom_fields')
+		{
+			return null;
+		}
+		var value = {};
+		for(var field_name in this.options.customfields)
+		{
+			if(this.widgets[field_name].getValue)
+			{
+				value[this.prefix + field_name] = this.widgets[field_name].getValue();
+			}
+		}
+		return value;
+	},
+
+	isDirty: function() {
+		var dirty = true;
+		for(var field_name in this.options.customfields)
+		{
+			if(this.widgets[field_name].isDirty)
+			{
+				dirty = dirty && this.widgets[field_name].isDirty();
+			}
+		}
+		return dirty;
+	},
+
+	resetDirty: function() {
+		for(var field_name in this.options.customfields)
+		{
+			if(this.widgets[field_name].resetDirty)
+			{
+				this.widgets[field_name].resetDirty();
+			}
 		}
 	},
 
