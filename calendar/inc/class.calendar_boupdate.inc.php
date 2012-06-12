@@ -860,7 +860,11 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
-						// fall through
+						// format iCal uses now like Exchange event-title as subject and description as body
+						$subject = $event['title'];
+						$body = $event['description'];
+						break;
+
 					case 'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
