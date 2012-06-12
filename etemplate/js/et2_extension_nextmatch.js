@@ -1351,6 +1351,26 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 	},
 
 	/**
+	 * Override parent so we can update the nextmatch row too
+	 */
+	set_visible: function(_fields) {
+		this._super.apply(this, arguments);
+
+		// Find data row, and do it too
+		var self = this;
+		if(this.nextmatch)
+		{
+			this.nextmatch.iterateOver(
+				function(widget) {
+					if(widget == self) return;
+					widget.set_visible(_fields); 
+					console.log(widget.id);
+				}, this, et2_customfields_list
+			);
+		}
+	},
+
+	/**
 	 * Provide own column caption (column selection)
 	 *
 	 * If only one custom field, just use that, otherwise use "custom fields"
