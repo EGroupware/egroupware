@@ -575,11 +575,12 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
-			$account_id = $GLOBALS['egw']->account->name2id($user_or_email, 'account_email');
+			$account_id = $GLOBALS['egw']->accounts->name2id($user_or_email, 'account_email');
 		}
 		if ($account_id)
 		{
-			$prefs = new preferences($account_id);
+			$pref_obj = new preferences($account_id);
+			$prefs = $pref_obj->read_repository();
 		}
 		else
 		{
