@@ -37,7 +37,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 */
 		set_lang_arr: function(_app, _messages)
 		{
-			lang_arr[_app] = _messages;
+			if(!jQuery.isArray(_messages))
+			{
+				lang_arr[_app] = _messages;
+			}
 		},
 		
 		/**
