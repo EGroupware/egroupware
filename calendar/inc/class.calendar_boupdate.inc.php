@@ -509,7 +509,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param string $role we treat CHAIR like event owners
 	 * @return boolean true = update requested, false otherwise
 	 */
-	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role)
+	public static function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -533,8 +533,8 @@ class calendar_boupdate extends calendar_bo
 			case 'time_change_4h':
 			case 'time_change':
 			default:
-				$diff = max(abs($this->date2ts($old_event['start'])-$this->date2ts($new_event['start'])),
-					abs($this->date2ts($old_event['end'])-$this->date2ts($new_event['end'])));
+				$diff = max(abs(self::date2ts($old_event['start'])-self::date2ts($new_event['start'])),
+					abs(self::date2ts($old_event['end'])-self::date2ts($new_event['end'])));
 				$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
 				if ($msg_type == MSG_MODIFIED && $diff > $check)
 				{
@@ -556,6 +556,55 @@ class calendar_boupdate extends calendar_bo
 		}
 		//error_log(__METHOD__."(userid=$userid,,msg_type=$msg_type,...) msg_is_response=$msg_is_response, want_update=$want_update");
 		return $want_update > 0;
+	}
+
+	/**
+	 * Check calendar prefs, if a given user (integer account_id) or email (user or externals) should get notified
+	 *
+	 * @param int|string $user_or_email
+	 * @param string $ical_method='REQUEST'
+	 * @param string $role='REQ-PARTICIPANT'
+	 * @return boolean true if user requested to be notified, false if not
+	 */
+	static public function email_update_requested($user_or_email, $ical_method='REQUEST', $role='REQ-PARTICIPANT')
+	{
+		// check if email is from a user
+		if (is_numeric($user_or_email))
+		{
+			$account_id = $user_or_email;
+		}
+		else
+		{
+			$account_id = $GLOBALS['egw']->account->name2id($user_or_email, 'account_email');
+		}
+		if ($account_id)
+		{
+			$prefs = new preferences($account_id);
+		}
+		else
+		{
+			$prefs = array(
+				'calendar' => array(
+					'receive_updates' => $GLOBALS['egw_info']['user']['preferences']['calendar']['notify_externals'],
+				)
+			);
+		}
+		switch($ical_method)
+		{
+			default:
+			case 'REQUEST':
+				$msg_type = MSG_ADDED;
+				break;
+			case 'REPLY':
+				$msg_type = MSG_ACCEPTED;
+				break;
+			case 'CANCEL':
+				$msg_type = MSG_DELETED;
+				break;
+		}
+		$ret = self::update_requested($acount_id, $prefs, $msg_type, array(), array(), $role);
+		//error_log(__METHOD__."('$user_or_email', '$ical_method', '$role') account_id=$account_id --> updated_requested returned ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -750,7 +799,7 @@ class calendar_boupdate extends calendar_bo
 					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
 					$details['to-fullname'] = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
-				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
+				if (!self::update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
 				{
 					continue;
 				}
