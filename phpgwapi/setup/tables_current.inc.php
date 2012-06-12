@@ -97,7 +97,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('sessionid'),
 		'fk' => array(),
-		'ix' => array('li','lo','session_dla','notification_heartbeat'),
+		'ix' => array('li','lo','session_dla','session_php','notification_heartbeat',array('account_id','ip','li'),array('account_id','loginid','li')),
 		'uc' => array()
 	),
 	'egw_hooks' => array(
