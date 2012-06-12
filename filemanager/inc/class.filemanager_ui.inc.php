@@ -527,6 +527,8 @@ function force_download(_action, _senders)
 	window.location = a_href+"?download";
 }
 </script>'."\n";
+
+		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
