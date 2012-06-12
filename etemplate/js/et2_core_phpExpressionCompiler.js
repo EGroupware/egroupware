@@ -329,7 +329,7 @@
 					"]";
 			}
 
-			return result;
+			return '(typeof _'+_variable.variable+' != "undefined" && typeof '+result + '!="undefined" ? ' + result + ':"")';
 		}
 
 		_throwCompilerErr("Variable $" + _variable.variable + " is not defined.");
