@@ -1690,7 +1690,9 @@ function replace_eTemplate_onsubmit()
 			$event['recure'] = $this->bo->recure2string($event);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
-			if (!isset($event['participants'][$user]))
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+			$user_and_memberships[] = $user;
+			if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
 			{
 				$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
 				if ($event['id'])
