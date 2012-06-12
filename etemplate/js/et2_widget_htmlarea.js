@@ -76,18 +76,28 @@ var et2_htmlarea = et2_inputWidget.extend({
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		this.htmlNode.ckeditor(function() {},this.ck_props);
+		var self = this;
+		this.htmlNode.ckeditor(function() {
+			// If value is set, pass it in here.
+			this.setData(self.value);
+			delete self.value;
+		},this.ck_props);
 	},
 
 	destroy: function() {
 		this.htmlNode.ckeditorGet().destroy(true);
 	},
 	set_value: function(_value) {
-		this.htmlNode.val(_value);
+		try {
+			this.htmlNode.ckeditorGet().setData(_value);
+		} catch (e) {
+			// CK editor not ready - callback will do it
+			this.value = _value;
+		}
 	},
 
 	getValue: function() {
-		return this.htmlNode.val();
+		return this.htmlNode.ckeditorGet().getData();
 	}
 });
 
