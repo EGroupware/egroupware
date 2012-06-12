@@ -199,6 +199,20 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
+		$settings['felamimail-allowSendingInvitations'] = array(
+			'type'   => 'select',
+			'label'  => 'allow sending of calendar invitations using this profile?',
+			'name'   => 'felamimail-allowSendingInvitations',
+			'help'   => 'control the sending of calendar invitations while using this profile',
+			'values' => array(
+							'sendifnocalnotif'=>'only send if there is no notification in calendar',
+							'send'=>'yes, always send',
+							'nosend'=>'no, do not send',
+			),
+			'xmlrpc' => True,
+			'default' => 'sendifnocalnotif',
+			'admin'  => False,
+		);
 		return $settings;
 	}
 
@@ -313,6 +327,18 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	{
 		//$this->debugLevel=3;
 		$ClientSideMeetingRequest = false;
+		$allowSendingInvitations = 'sendifnocalnotif';
+		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']) &&
+			$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']=='nosend')
+		{
+			$allowSendingInvitations = false;
+		}
+		elseif (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']) &&
+			$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']!='nosend')
+		{
+			$allowSendingInvitations = $GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations'];
+		}
+
 		if ($protocolversion < 14.0)
     		debugLog("IMAP-SendMail: " . (isset($rfc822) ? $rfc822 : ""). "task: ".(isset($smartdata['task']) ? $smartdata['task'] : "")." itemid: ".(isset($smartdata['itemid']) ? $smartdata['itemid'] : "")." folder: ".(isset($smartdata['folderid']) ? $smartdata['folderid'] : ""));
 		if ($this->debugLevel>0) debugLog("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
@@ -364,27 +390,30 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$mailObject->FromName = $addressObject->personal;
 		}
 		*/
+		// prepare addressee list; moved the adding of addresses to the mailobject down
 		// to
 		$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($message->headers["to"]):$message->headers["to"]),'');
 		foreach((array)$address_array as $addressObject) {
 			if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail To: ".array2string($addressObject) );
-			$mailObject->AddAddress($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			//$mailObject->AddAddress($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
 		$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($message->headers["cc"]):$message->headers["cc"]),'');
 		foreach((array)$address_array as $addressObject) {
 			if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail CC: ".array2string($addressObject) );
-			$mailObject->AddCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			//$mailObject->AddCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
 		$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($message->headers["bcc"]):$message->headers["bcc"]),'');
 		foreach((array)$address_array as $addressObject) {
 			if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail BCC: ".array2string($addressObject) );
-			$mailObject->AddBCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
-			$bccMailAddr = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
+			//$mailObject->AddBCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			$bccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		/*
 		//	AddReplyTo
@@ -473,6 +502,9 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			if ($mailObject->AltExtendedContentType && stripos($mailObject->AltExtendedContentType,'text/calendar') !== false )
 			{
 				if ($this->debugLevel>0) debugLog("IMAP-Sendmail: we have a Client Side Meeting Request");
+				// try figuring out the METHOD -> [AltExtendedContentType] => text/calendar; name=meeting.ics; method=REQUEST
+				$tA = explode(' ',$mailObject->AltExtendedContentType);
+				foreach ((array)$tA as $k => $p) if (stripos($p,"method=")!==false) $cSMRMethod= trim(str_replace('METHOD=','',strtoupper($p)));
 				$ClientSideMeetingRequest = true;
 			}
         }
@@ -480,13 +512,47 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = false");
 			$body = $mailObject->Body;
 		}
-   	    if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' MailAttachments:'.array2string($mailObject->GetAttachments()));
+		// now handle the addressee list
+		$toCount = 0;
+		//error_log(__METHOD__.__LINE__.array2string($toMailAddr));
+		foreach((array)$toMailAddr as $address) {
+			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
+			foreach((array)$address_array as $addressObject) {
+				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress,(isset($cSMRMethod)?$cSMRMethod:'REQUEST'))) continue;
+				$mailObject->AddAddress($emailAddress, $addressObject->personal);
+				$toCount++;
+			}
+		}
+		$ccCount = 0;
+		foreach((array)$ccMailAddr as $address) {
+			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
+			foreach((array)$address_array as $addressObject) {
+				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
+				$mailObject->AddCC($emailAddress, $addressObject->personal);
+				$ccCount++;
+			}
+		}
+		$bccCount = 0;
+		foreach((array)$bccMailAddr as $address) {
+			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
+			foreach((array)$address_array as $addressObject) {
+				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
+				$mailObject->AddBCC($emailAddress, $addressObject->personal);
+				$bccCount++;
+			}
+		}
+		if ($toCount+$ccCount+$bccCount == 0) return 0; // noone to send mail to
+		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
+		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' MailAttachments:'.array2string($mailObject->GetAttachments()));
 		// as we use our mailer (phpmailer) it is detecting / setting the mimetype by itself while creating the mail
-    	if (isset($smartdata['replacemime']) && $smartdata['replacemime'] == true &&
-    	    isset($message->ctype_primary)) {
-            //if ($headers) $headers .= "\n";
-    	    //$headers .= "Content-Type: ". $message->ctype_primary . "/" . $message->ctype_secondary .
-    		//	(isset($message->ctype_parameters['boundary']) ? ";\n\tboundary=".$message->ctype_parameters['boundary'] : "");
+		if (isset($smartdata['replacemime']) && $smartdata['replacemime'] == true &&
+			isset($message->ctype_primary)) {
+			//if ($headers) $headers .= "\n";
+			//$headers .= "Content-Type: ". $message->ctype_primary . "/" . $message->ctype_secondary .
+			//	(isset($message->ctype_parameters['boundary']) ? ";\n\tboundary=".$message->ctype_parameters['boundary'] : "");
 		}
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body:'.$body);
 		$body = str_replace("\r",($mailObject->ContentType=='text/html'?'<br>':""),$body); // what is this for?
