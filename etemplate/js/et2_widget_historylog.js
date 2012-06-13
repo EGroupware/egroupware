@@ -48,12 +48,6 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 
 		this.innerDiv = $j(document.createElement("div"))
 			.appendTo(this.div);
-
-		this._filters = {
-			record_id: this.options.value.id,
-			appname: this.options.value.app,
-			get_rows: 'historylog::get_rows'
-		};
 	},
 
 	doLoadingFinished: function() {
@@ -95,6 +89,12 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 	 * Finish initialization which was skipped until tab was selected
 	 */
 	finishInit: function() {
+
+		this._filters = {
+			record_id: this.options.value.id,
+			appname: this.options.value.app,
+			get_rows: 'historylog::get_rows'
+		};
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
