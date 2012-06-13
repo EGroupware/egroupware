@@ -841,7 +841,7 @@ class calendar_boupdate extends calendar_bo
 				}
 
 				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
-
+				$popup = '';
 				switch($part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
@@ -860,13 +860,14 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
+						$popup = $body;
+						$popupsubject = $subject;
 						// format iCal uses now like Exchange event-title as subject and description as body
 						$subject = $event['title'];
 						$body = $event['description'];
-						break;
 
 					case 'extended':
-						$body .= "\n\n".lang('Event Details follow').":\n";
+						$popup .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
 							if(!empty($details[$key]))
@@ -877,10 +878,15 @@ class calendar_boupdate extends calendar_bo
 									case 'link':
 										break;
 									default:
-										$body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+										$popup .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
 										break;
 							 	}
 							}
+						}
+						if ($part_prefs['calendar']['update_format']=='extended')
+						{
+							$body = $body.$popup;
+							unset($popup);
 						}
 						break;
 				}
@@ -891,8 +897,10 @@ class calendar_boupdate extends calendar_bo
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
 						$notification->set_message($body);
+						if (isset($popup)&&!empty($popup)) $notification->set_popupmessage($popup);
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
+						if (isset($popupsubject)&&!empty($popupsubject)) $notification->set_popupsubject($popupsubject);
 						$notification->set_links(array($details['link_arr']));
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
