@@ -137,7 +137,7 @@ var et2_textbox = et2_inputWidget.extend({
 
 	set_blur: function(_value) {
 		if(_value) {
-			this.input.attr("placeholder", _value + "!");	// HTML5
+			this.input.attr("placeholder", _value + "");	// HTML5
 			if(!this.input[0].placeholder) {
 				// Not HTML5
 				if(this.input.val() == "") this.input.val(this.options.blur);
