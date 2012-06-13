@@ -114,6 +114,7 @@ class egw_htmLawed
  * function to provide individual checks for element attribute pairs
  * implemented so far:	img checking for alt attribute == image; set this to empty
  * 						a checking for title, replacing @
+ * 						blockquote checking for cite, replacing @
  */
 function hl_my_tag_transform($element, $attribute_array=0)
 {
@@ -133,6 +134,13 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	if (isset($attribute_array['title']))
 	{
 		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
+	}
+	if ($element == 'blockquote')
+	{
+		if (isset($attribute_array['cite']))
+		{
+			if (strpos($attribute_array['cite'],'@')!==false) $attribute_array['cite']=str_replace('@','(at)',$attribute_array['cite']);
+		}
 	}
 	/*
 	// Elements other than 'span' or 'span' without a 'style' attribute are returned unchanged
@@ -183,6 +191,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
  *							-control for/on external Images and src-length
  * 						a -checking for title and href, replacing @ accordingly
  *						  -navigate to local anchors without reloading the page
+ * 						blockquote -checking for cite, replacing @
  */
 function hl_email_tag_transform($element, $attribute_array=0)
 {
@@ -221,6 +230,13 @@ function hl_email_tag_transform($element, $attribute_array=0)
 	if (isset($attribute_array['title']))
 	{
 		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
+	}
+	if ($element == 'blockquote')
+	{
+		if (isset($attribute_array['cite']))
+		{
+			if (strpos($attribute_array['cite'],'@')!==false) $attribute_array['cite']=str_replace('@','(at)',$attribute_array['cite']);
+		}
 	}
 	if($element == 'a')
 	{
