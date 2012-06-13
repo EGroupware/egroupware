@@ -37,6 +37,14 @@ if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.
 {
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }
+// check if date.timezone is set, report it and set something if not, as it gives tons of errors in install log
+if (!ini_get('date.timezone'))
+{
+	if (!($tz = date_default_timezone_get())) $tz = 'UTC';
+	echo "No default timezone (php.ini date.timezone) set, we temporary set '$tz'. You should fix that permanent!\n";
+	ini_set('date.timezone',$tz);
+}
+
 // setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
 include('inc/functions.inc.php');
 $GLOBALS['egw_info']['flags']['no_exception_handler'] = 'cli';	// inc/functions.inc.php does NOT set it
