@@ -142,7 +142,7 @@
 				<row class="th" height="20">
 					<description value="Custom fields"/>
 				</row>
-				<row height="100%">
+				<row valign="top" height="100%">
 					<customfields options="@info_type"/>
 				</row>
 			</rows>
