@@ -550,7 +550,13 @@ return array();	// temporary disabling meeting requests from calendar
 		$event = $this->message2event($message, $account, $event);
 
 		// store event, ignore conflicts and skip notifications, as AS clients do their own notifications
-		if (!($id = $this->calendar->update($event,$ignore_conflicts=true,$touch_modified=true,$ignore_acl=false,$updateTS=true,$messages=null, $skip_notification=true)))
+		$skip_notification = false;
+		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']) &&
+			$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']=='send')
+		{
+			$skip_notification = true; // to avoid double notification from client AND Server
+		}
+		if (!($id = $this->calendar->update($event,$ignore_conflicts=true,$touch_modified=true,$ignore_acl=false,$updateTS=true,$messages=null, $skip_notification)))
 		{
 			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
 			return false;
