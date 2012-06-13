@@ -315,7 +315,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			return null;
 		}
 		var value = {};
-		for(var field_name in this.options.customfields)
+		for(var field_name in this.widgets)
 		{
 			if(this.widgets[field_name].getValue)
 			{
@@ -327,7 +327,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	isDirty: function() {
 		var dirty = true;
-		for(var field_name in this.options.customfields)
+		for(var field_name in this.widgets)
 		{
 			if(this.widgets[field_name].isDirty)
 			{
@@ -338,7 +338,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 	},
 
 	resetDirty: function() {
-		for(var field_name in this.options.customfields)
+		for(var field_name in this.widgets)
 		{
 			if(this.widgets[field_name].resetDirty)
 			{
