@@ -1364,7 +1364,6 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 				function(widget) {
 					if(widget == self) return;
 					widget.set_visible(_fields); 
-					console.log(widget.id);
 				}, this, et2_customfields_list
 			);
 		}
@@ -1495,12 +1494,6 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 			event.data.nextmatch.applyFilters();
 		});
 
-	},
-
-	set_select_options: function(_options) {
-		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
-		this.attributes.select_options.ignore = true;
-		this._super.apply(this, arguments);
 	},
 
 	/**
