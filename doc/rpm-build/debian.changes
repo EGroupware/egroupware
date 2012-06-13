@@ -1,3 +1,13 @@
+egroupware (1.8.004.20120613) hardy; urgency=low
+
+  * Addressbook: fix for postgres error on advanced search in addressbook (Helpdesk 3421)
+  * LDAP: allow to specify multiple (space-separated) ldap URLs (eg. "ldap1 tls://ldap2")
+  * API: support windows-1256 via iconv and prefer iconv for windows-1252 too
+  * InfoLog/CalDAV: set status of new tasks to NEEDS-ACTION (not started), if client does not specify a status or completion (was set to DONE before)
+  * Api: use autocomplete=off on all etemplate password fields (not all browsers support that), to avoid filling in wrong passwords while administering
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Jun 2012 09:39:40 +0200
+
 egroupware (1.8.004.20120530) hardy; urgency=low
 
   * Tracker: fixed not working search using ticket number
