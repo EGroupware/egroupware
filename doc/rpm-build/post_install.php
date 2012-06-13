@@ -76,14 +76,6 @@ if (($lang = isset($_ENV['LANG']) ? $_ENV['LANG'] : $_SERVER['LANG']))
 }
 $config['source_dir'] = dirname(dirname(dirname(__FILE__)));
 
-// check if date.timezone is set, report it and set something if not, as it gives tons of errors in install log
-if (!ini_get('date.timezone'))
-{
-	if (!($tz = date_default_timezone_get())) $tz = 'UTC';
-	echo "No default timezone (php.ini date.timezone) set, we temporary set '$tz'. You should fix that permanent!\n";
-	ini_set('date.timezone',$tz);
-}
-
 /**
  * Set distribution spezific defaults
  *
