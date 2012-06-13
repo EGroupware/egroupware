@@ -121,6 +121,12 @@ final class notifications {
 	private $subject = '';
 
 	/**
+	 * holds notification subject for popup
+	 * @var string
+	 */
+	private $popupsubject = '';
+
+	/**
 	 * holds notification message in plaintext
 	 * @var string
 	 */
@@ -131,6 +137,12 @@ final class notifications {
 	 * @var string
 	 */
 	private $message_html = '';
+
+	/**
+	 * holds notification message for popup
+	 * @var string
+	 */
+	private $message_popup = '';
 
 	/**
 	 * array with objects of links
@@ -240,6 +252,16 @@ final class notifications {
 	}
 
 	/**
+	 * sets notification subject for popup
+	 *
+	 * @param string $_subject
+	 */
+	public function set_popupsubject($_subject) {
+		$this->popupsubject = $_subject;
+		return true;
+	}
+
+	/**
 	 * sets notification message
 	 * @abstract $_message accepts plaintext or html
 	 * NOTE: There is no XSS prevention in notifications framework!
@@ -255,6 +277,21 @@ final class notifications {
 		} else {
 			$this->message_html = $_message;
 		}
+		return true;
+	}
+
+	/**
+	 * sets specific popup notification message
+	 * @abstract $_message accepts plaintext or html
+	 * NOTE: There is no XSS prevention in notifications framework!
+	 * You have to filter userinputs yourselve (e.g. htmlspechialchars() )
+	 *
+	 * @param string $_message
+	 */
+	public function set_popupmessage($_message) {
+		//popup requires html
+		if(strlen($_message) == strlen(strip_tags($_message))) $_message=nl2br($_message);
+		$this->message_popup = $_message;
 		return true;
 	}
 
@@ -354,7 +391,7 @@ final class notifications {
 		if (!is_array($this->receivers) || count($this->receivers) == 0) {
 			throw new Exception('Error: cannot send notifications. No receivers supplied');
 		}
-		if(!$messages = $this->create_messages($this->message_plain, $this->message_html)) {
+		if(!$messages = $this->create_messages($this->message_plain, $this->message_html, $this->message_popup)) {
 			throw new Exception('Error: cannot send notifications. No valid messages supplied');
 		}
 
@@ -428,8 +465,9 @@ final class notifications {
 							unset ( $obj );
 					 		throw new Exception($notification_backend. ' is no implementation of notifications_iface');
 						}
-
-						$obj->send($this->prepend_message($messages, $prepend_message), $this->subject, $this->links, $this->attachments);
+						$lsubject = $this->subject;
+						if ($backend=='popup' && isset($this->popupsubject) && !empty($this->popupsubject)) $lsubject = $this->popupsubject;
+						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $this->links, $this->attachments);
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
@@ -459,14 +497,15 @@ final class notifications {
 	}
 
 	/**
-	 * creates an array with the message as plaintext and html
+	 * creates an array with the message as plaintext and html, and optional a html popup message
 	 *
 	 * @param string $_message_plain
 	 * @param string $_message_html
-	 * @return plain and html message in one array, $messages['plain'] and $messages['html']
+	 * @param string $_message_popup
+	 * @return plain and html message in one array, $messages['plain'] and $messages['html'] and, if exists $messages['popup']
 	 */
-	private function create_messages($_message_plain = '', $_message_html = '') {
-		if(empty($_message_plain) && empty($_message_html)) { return false; } // no message set
+	private function create_messages($_message_plain = '', $_message_html = '', $_message_popup = '') {
+		if(empty($_message_plain) && empty($_message_html) && empty($_message_popup)) { return false; } // no message set
 		$messages = array();
 
 		// create the messages
@@ -481,7 +520,7 @@ final class notifications {
 		} else {
 			$messages['html'] = nl2br($_message_plain);
 		}
-
+		if (!empty($_message_popup)) $messages['popup']=$_message_popup;
 		return $messages;
 	}
 

@@ -102,7 +102,7 @@ class notifications_popup implements notifications_iface {
 
 		$message = 	$this->render_infos($_subject)
 					.html::hr()
-					.$_messages['html']
+					.(isset($_messages['popup'])&&!empty($_messages['popup'])?$_messages['popup']:$_messages['html'])
 					.$this->render_links($_links);
 
 		$this->save( $message );
