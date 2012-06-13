@@ -172,7 +172,7 @@ var et2_selectAccount = et2_selectbox.extend({
 			jQuery(this).dialog("destroy");
 
 			// Fire change event
-			widget.input.trigger("change");
+			if(widget.input) widget.input.trigger("change");
 		};
 
 		var container = jQuery(document.createElement("div")).append(table);
