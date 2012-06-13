@@ -452,7 +452,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		// Re-add empty, it's usually not there
 		if(this.options.empty_label)
 		{
-			_options[''] = this.options.empty_label;
+			this._appendOptionElement('', this.options.no_lang ? this.options.empty_label : this.egw().lang(this.options.empty_label));
 		}
 
 		// Add the select_options
