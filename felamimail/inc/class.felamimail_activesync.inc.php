@@ -1809,7 +1809,19 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$_messageUID = (array)$id;
 
 		$this->_connect($this->account);
-		$rv = $this->mail->deleteMessages($_messageUID, $folder);
+		try
+		{
+			$rv = $this->mail->deleteMessages($_messageUID, $folder);
+		}
+		catch (egw_exception $e)
+		{
+			$error = $e->getMessage();
+			debugLog(__METHOD__.__LINE__." $_messageUID, $folder ->".$error);
+			// if the server thinks the message does not exist report deletion as success
+			if (stripos($error,'[NONEXISTENT]')!==false) return true;
+			return false;
+		}
+
 		// this may be a bit rude, it may be sufficient that GetMessageList does not list messages flagged as deleted
 		if ($this->mail->mailPreferences->preferences['deleteOptions'] == 'mark_as_deleted')
 		{
