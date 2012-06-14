@@ -1,3 +1,30 @@
+egroupware-epl (11.1.20120614-1) hardy; urgency=low
+
+  * Addressbook: fix for postgres error on advanced search in addressbook (Helpdesk 3421)
+  * LDAP: allow to specify multiple (space-separated) ldap URLs (eg. "ldap1 tls://ldap2")
+  * eMail: fix for Helpdesk Issue:3430 (Unstructured display of text when converting email to infolog)
+  * eMail/eSync: try to improve speed, by using already fetched headers when applicable
+  * API: support windows-1256 via iconv and prefer iconv for windows-1252 too
+  * eMail/eSync: forcing a cutoffdate of 28 days, when there is no limitation set
+  * InfoLog/CalDAV: set status of new tasks to NEEDS-ACTION (not started), if client does not specify a status or completion (was set to DONE before)
+  * API: upgrade htmLawed from 1.1.10 to 1.1.11
+  * Api: use autocomplete=off on all etemplate password fields (not all browsers support that), to avoid filling in wrong passwords while administering
+  * Setup/Admin: restoring 10 rows per sql statement to speed up restore
+  * eMail/eSync: handle problem in content-type handling when android4 devices sent replies as html
+  * eSync/API: update access-log action for eSync, run maintenance only on logout and other changes to speed up access/update to huge access-logs, thought indexes on session_php, (account_id,ip,li), (account_id,loginid,li) will help alot
+  * eMail: fix problem with display of ms-outlook 14 calendar requests (text/calendar only)
+  * Filemanager: fixed clipboard icons had no tooltip (javascript error), fixes my.stylite.de bug #3466
+  * eMail/eSync: pref to control client-side behavior for calendar notifications; default is to notify only if there is no server-side notification, to avoid double notification with calendar requests (server-side AND client-side)
+  * Calendar/eMail: allow to accept, reject, tentative group invitations (gave error "You are not invited..." previously)
+  * eMail/eSync: handle exception on message deletion
+  * Preferences: show verification errors on entering preferences too, not only when attempting to save
+  * eSync/eMail: show error in eSync preferences, if non-functioning eMail profile is selected or no Trash or Sent folder
+  * EPL Features/Calendar: fixed favorites containing & in their name could not be deleted
+  * Versioning: fixed deleted attachments no longer shown after deleting last one (run Admin >> register hooks and Filemanager >> Admin >> check virtual filesystem)
+  * InfoLog: use type or category, when creating new entries in subs-view and stay in subs-view when storing an entry in a popup
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 14 Jun 2012 14:19:56 +0200
+
 egroupware-epl (11.1.20120530-1) hardy; urgency=low
 
   * KnowledgeBase: improve behavior on answering questions, if there is an unpublished answer to a question
