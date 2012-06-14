@@ -216,6 +216,46 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		return $settings;
 	}
 
+	/**
+	 * Verify preferences
+	 *
+	 * @param array|string $hook_data
+	 * @return array with error-messages from all plugins
+	 */
+	function verify_settings($hook_data)
+	{
+		$errors = array();
+
+		// check if an eSync eMail profile is set (might not be set as default or forced!)
+		if (isset($hook_data['prefs']['felamimail-ActiveSyncProfileID']) || $hook_data['type'] == 'user')
+		{
+			// eSync and eMail translations are not (yet) loaded
+			translation::add_app('activesync');
+			translation::add_app('felamimail');
+
+			// inject preference to verify and call constructor
+			$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-ActiveSyncProfileID'] =
+				$hook_data['prefs']['felamimail-ActiveSyncProfileID'];
+			$this->__construct($this->backend);
+
+			try {
+				$this->_connect();
+				$this->_disconnect();
+
+				if (!$this->_wasteID) $errors[] = lang('No valid %1 folder configured!', '<b>'.lang('trash').'</b>');
+				if (!$this->_sentID) $errors[] = lang('No valid %1 folder configured!', '<b>'.lang('send').'</b>');
+			}
+			catch(Exception $e) {
+				$errors[] = lang('Can not open IMAP connection').': '.$this->mail->getErrorMessage();
+			}
+			if ($errors)
+			{
+				$errors[] = '<b>'.lang('eSync will FAIL without a working eMail configuration!').'</b>';
+			}
+		}
+		//error_log(__METHOD__.'('.array2string($hook_data).') returning '.array2string($errors));
+		return $errors;
+	}
 
 	/**
 	 * Open IMAP connection
