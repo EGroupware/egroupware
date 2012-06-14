@@ -852,8 +852,9 @@ class boetemplate extends soetemplate
 	 * stores the etemplate in the cache in egw_info
 	 *
 	 * @param boetemplate $tpl=null required parameter for static use!
+	 * @param boolean $only_update_older=false true only update cache, if it contains an older template
 	 */
-	public /*static*/ function store_in_cache(boetemplate $tpl=null)
+	public /*static*/ function store_in_cache(boetemplate $tpl=null, $only_update_older=false)
 	{
 		if (is_null($tpl)) $tpl = $this;
 
@@ -861,9 +862,9 @@ class boetemplate extends soetemplate
 		$old = egw_cache::getInstance('etemplate',$cname);
 
 		// only cache newest versions (currently cached one is older or same version)
-		if (is_null($old) || version_compare($old['version'],$tpl->version,'<='))
+		if (is_null($old) && !$only_update_older || !is_null($old) && version_compare($old['version'],$tpl->version,'<='))
 		{
-			//echo "<p>".__METHOD__."('$tpl->name','$tpl->template','$tpl->lang','$tpl->version') modified=$tpl->modified, time()=".time()."</p>\n";
+			//error_log(__METHOD__."('$tpl->name','$tpl->template','$tpl->lang','$tpl->version') cached=".array2string($old).", modified=$tpl->modified, time()=".time());
 			egw_cache::setInstance('etemplate',$cname,$tpl->as_array(1));
 		}
 	}
@@ -997,6 +998,8 @@ class boetemplate extends soetemplate
 	 *
 	 * reimplementation of soetemplate::read to use and/or update the cache
 	 *
+	 * We only update cache, if no version is given, as only that (= highest version) should be cached.
+	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
 	 * @param string $template template-set, '' loads the prefered template of the user, 'default' loads the  default one '' in the db
 	 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
@@ -1037,7 +1040,7 @@ class boetemplate extends soetemplate
 				}
 				return False;
 			}
-			$this->store_in_cache();
+			if (!$version) $this->store_in_cache();	// only store default version (none given)
 		}
 		return True;
 	}
@@ -1046,6 +1049,9 @@ class boetemplate extends soetemplate
 	 * saves eTemplate-object to db and update the cache
 	 *
 	 * reimplementation of soetemplate::save to update the cache
+	 *
+	 * We only update cache, if it contains an older (smaller version) template,
+	 * as allways updating might cache a version, with a smaller then the highest, version number.
 	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
 	 * @param string $template template-set or '' for the default one
@@ -1058,7 +1064,7 @@ class boetemplate extends soetemplate
 	{
 		if ($result = parent::save($name,$template,$lang,$group,$version))
 		{
-			$this->store_in_cache();
+			$this->store_in_cache(null, true);	// true = only update older (smaller version) copies
 		}
 		return $result;
 	}
