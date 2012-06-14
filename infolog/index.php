@@ -29,5 +29,4 @@ if ($setup_info['infolog']['version'] != $GLOBALS['egw_info']['apps']['infolog']
 }
 unset($setup_info);
 
-// only reset action-view, if no (refresh) message given, eg. stay in sub-view if infolog stored
 ExecMethod('infolog.infolog_ui.index','reset_action_view');
