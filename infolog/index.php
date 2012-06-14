@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -29,4 +29,5 @@ if ($setup_info['infolog']['version'] != $GLOBALS['egw_info']['apps']['infolog']
 }
 unset($setup_info);
 
+// only reset action-view, if no (refresh) message given, eg. stay in sub-view if infolog stored
 ExecMethod('infolog.infolog_ui.index','reset_action_view');

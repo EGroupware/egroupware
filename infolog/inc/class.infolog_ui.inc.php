@@ -726,9 +726,9 @@ class infolog_ui
 			if (!$values['nm']['session_for'] && $this->called_by) $values['nm']['session_for'] = $this->called_by;
 
 			$values['msg'] = $_GET['msg'];
-			$values['action'] = $action;
-			$values['action_id'] = $action_id;
-			$values['action_title'] = $action_title;
+			$action_id = $values['action_id'] = $action ? $action_id : $nm['action_id'];
+			$action_title = $values['action_title'] = $action ? $action_title : $nm['action_title'];
+			$action = $values['action'] = $action ? $action : $nm['action'];
 		}
 		if($_GET['search']) $values['nm']['search'] = $_GET['search'];
 
@@ -1816,6 +1816,11 @@ else
 				case 'copy':
 					$info_id = 0;
 					$this->create_copy($content, $action == 'sp');
+					if ($action == 'sp')	// for sub-entries use type or category, like for new entries
+					{
+						if ($type) $content['info_type'] = $type;
+						if (is_numeric($_REQUEST['cat_id'])) $content['info_cat'] = (int) $_REQUEST['cat_id'];
+					}
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
 
