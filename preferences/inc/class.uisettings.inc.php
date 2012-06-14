@@ -170,8 +170,6 @@ class uisettings
 				$error = $this->bo->process_array($GLOBALS['egw']->preferences->forced, $forced,$this->bo->session_data['notifies'],$GLOBALS['type']);
 			}
 
-			if (is_array($error)) $error = false;	// process_array returns the prefs-array on success
-
 			if($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
 			{
 				$this->show_help = $user['show_help'];	// use it, if admin changes his help-prefs
@@ -191,7 +189,6 @@ class uisettings
 			$GLOBALS['egw']->redirect_link($pref_link,$link_params);
 		}
 
-		$this->t->set_var('messages',$error);
 		$this->t->set_var('action_url',$GLOBALS['egw']->link($pref_link,$link_params));
 		$this->t->set_var('th_bg',  $GLOBALS['egw_info']['theme']['th_bg']);
 		$this->t->set_var('th_text',$GLOBALS['egw_info']['theme']['th_text']);
@@ -206,6 +203,18 @@ class uisettings
 		{
 			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$_GET['appname']);
 		}
+
+		// display verifcation errors also on entering preferences, not only after saving
+		if (!isset($_POST['save']) || !isset($_POST['apply']))
+		{
+			if (!$this->is_admin() || !in_array($GLOBALS['type'], array('user', 'default', 'forced')))
+			{
+				$GLOBALS['type'] = 'user';
+			}
+			$ignore = array();
+			$error = $this->bo->process_array($ignore, $this->bo->prefs, array(), $GLOBALS['type'], true);
+		}
+		$this->t->set_var('messages',$error);
 
 		foreach($this->bo->settings as $key => $valarray)
 		{

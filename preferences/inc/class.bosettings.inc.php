@@ -169,7 +169,7 @@
 			}
 			if($this->debug)
 			{
-				echo 'Preferences array:' . "\n";
+				echo 'Preferences array: ' . $app . "\n";
 				_debug_array($this->prefs);
 			}
 			/* Ensure that a struct will be returned via xml-rpc (this might change) */
@@ -187,7 +187,18 @@
 		{
 		}
 
-		function process_array(&$repository,$array,$notifies,$type,$prefix='')
+		/**
+		 * Verify and save preferences
+		 *
+		 * @param array &$repository
+		 * @param array $array
+		 * @param array $notifies
+		 * @param string $type
+		 * @param boolean $only_verify=false
+		 * @param string $prefix='' deprecated
+		 * @return string with verification error or null on success
+		 */
+		function process_array(&$repository, $array, $notifies, $type, $only_verify=false, $prefix='')
 		{
 			//_debug_array($repository);
 			$appname = $this->check_app();
@@ -207,7 +218,7 @@
 			//_debug_array($array);exit;
 			while(is_array($array) && list($var,$value) = each($array))
 			{
-				if(isset($value) && $value != '' && $value != '**NULL**')
+				if(isset($value) && $value !== '' && $value !== '**NULL**')
 				{
 					if (get_magic_quotes_gpc())
 					{
@@ -263,16 +274,16 @@
 						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
 					}
 					// need to call preferences::add, to also set affective prefs!
-					$GLOBALS['egw']->preferences->add($appname, $var, $prefs[$var], $type);
+					if (!$only_verify) $GLOBALS['egw']->preferences->add($appname, $var, $prefs[$var], $type);
 				}
 				else
 				{
 					unset($prefs[$var]);
 					// need to call preferences::delete, to also set affective prefs!
-					$GLOBALS['egw']->preferences->delete($appname, $var, $type);
+					if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
 				}
 			}
-			//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$_appname]); echo "</pre>\n";
+			//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$appname]); echo "</pre>\n";
 
 			// the following hook can be used to verify the prefs
 			// if you return something else than False, it is treated as an error-msg and
@@ -290,15 +301,15 @@
 				return $error;
 			}
 
-			$GLOBALS['egw']->preferences->save_repository(True,$type);
+			if (!$only_verify) $GLOBALS['egw']->preferences->save_repository(True,$type);
 
 			// certain common prefs (language, template, ...) require the session to be re-created
-			if ($appname == 'common')
+			if ($appname == 'common' && !$only_verify)
 			{
 				egw::invalidate_session_cache();
 			}
 
-			return $this->prefs;
+			return null;
 		}
 
 		function check_app()
