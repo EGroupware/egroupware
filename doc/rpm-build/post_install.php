@@ -92,8 +92,9 @@ function set_distro_defaults($distro=null)
 	switch (($config['distro'] = $distro))
 	{
 		case 'suse':
-			$config['php'] = '/usr/bin/php5';
-			$config['pear'] = '/usr/bin/pear5';
+			// openSUSE 12.1+ no longer uses php5
+			if (file_exists('/usr/bin/php5')) $config['php'] = '/usr/bin/php5';
+			if (file_exists('/usr/bin/pear5')) $config['pear'] = '/usr/bin/pear5';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/sbin/service apache2';
