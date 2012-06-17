@@ -306,8 +306,6 @@ class addressbook_bo extends addressbook_so
 		}
 		$this->categories = new categories($this->user,'addressbook');
 
-		$this->tracking = new addressbook_tracking($this);
-
 		$config = config::read('phpgwapi');
 		$this->delete_history = $config['history'];
 	}
@@ -765,6 +763,7 @@ class addressbook_bo extends addressbook_so
 				if ($ok && $old['tid'] != addressbook_so::DELETED_TYPE)
 				{
 					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+					if (!isset($this->tracking)) $this->tracking = new addressbook_tracking($this);
 					$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
 				}
 			}
@@ -926,8 +925,10 @@ class addressbook_bo extends addressbook_so
 			}
 
 			// Record change history for sql - doesn't work for LDAP accounts
-			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql') {
+			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql')
+			{
 				$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
+				if (!isset($this->tracking)) $this->tracking = new addressbook_tracking($this);
 				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
 			}
 		}
