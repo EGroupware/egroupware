@@ -17,10 +17,6 @@
 class db_backup
 {
 	/**
-	 * replaces backslashes, used in cvs_split
-	 */
-	const BACKSLASH_TOKEN = '##!!**bAcKsLaSh**!!##';
-	/**
 	 * Configuration table.
 	 */
 	const TABLE = 'egw_config';
@@ -456,8 +452,16 @@ class db_backup
 				$this->schemas = unserialize(trim(substr($line,8)));
 				foreach($this->schemas as $table_name => $schema)
 				{
+					// if column is longtext in current schema, convert text to longtext, in case user already updated column
+					foreach($schema['fd'] as $col => &$def)
+					{
+						if ($def['type'] == 'text' && $this->db->get_column_attribute($col, $table, true, 'type') == 'longtext')
+						{
+							$def['type'] = 'longtext';
+						}
+					}
 					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
-					$this->schema_proc->CreateTable($table_name,$schema);
+					$this->schema_proc->CreateTable($table_name, $schema);
 				}
 				continue;
 			}
@@ -471,6 +475,11 @@ class db_backup
 				$table = substr($line,7);
 
 				$cols = self::csv_split($line=fgets($f)); ++$n;
+				$blobs = array();
+				foreach($this->schemas[$table]['fd'] as $col => $data)
+				{
+					if ($data['type'] == 'blob') $blobs[] = $col;
+				}
 
 				if (feof($f)) break;
 				continue;
@@ -488,8 +497,10 @@ class db_backup
 			if ($table)	// do we already reached the data part
 			{
 				$import = true;
-				$data = self::csv_split($line,$cols);
-				if ($table == 'egw_async' && in_array('##last-check-run##',$data)) {
+				$data = self::csv_split($line, $cols, $blobs);
+
+				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
+				{
 					//echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
 					//echo 'data=<pre>'.print_r($data,true)."</pre>\n";
 					$import = false;
@@ -635,14 +646,65 @@ class db_backup
 	}
 
 	/**
+	 * temp. replaces backslashes
+	 */
+	const BACKSLASH_TOKEN = '##!!**bAcKsLaSh**!!##';
+	/**
+	 * temp. replaces NULL
+	 */
+	const NULL_TOKEN = '##!!**NuLl**!!##';
+
+	/**
 	 * Split one line of a csv file into an array and does all unescaping
 	 *
 	 * @param string $line line to split
 	 * @param array $keys=null keys to use or null to use numeric ones
+	 * @param array $blobs=array() blob columns
 	 * @return array
 	 */
-	public static function csv_split($line,$keys=null)
+	public static function csv_split($line, $keys=null, $blobs=array())
 	{
+		if (function_exists('str_getcsv'))	// php5.3+
+		{
+			// we need to take care of literal "NULL" values, replacing them we a special token as str_getcsv removes enclosures around strings
+			// str_getcsv uses '""' for '"' instead of '\\"' and does not unescape '\\n', '\\r' or '\\\\' (two backslashes)
+			$fields = str_getcsv(strtr($line, array(
+				'"NULL"' => self::NULL_TOKEN,
+				'\\\\'   => self::BACKSLASH_TOKEN,
+				'\\"'    => '""',
+				'\\n'    => "\n",
+				'\\r'    => "\r")), ',', '"', '\0');
+			// replace NULL-token again with 'NULL', 'NULL' with null and BACKSLASH-token with a backslash
+			foreach($fields as &$field)
+			{
+				switch($field)
+				{
+					case self::NULL_TOKEN:
+						$field = 'NULL';
+						break;
+					case 'NULL':
+						$field = null;
+						break;
+					default:
+						$field = str_replace(self::BACKSLASH_TOKEN, '\\', $field);
+						break;
+				}
+			}
+			if ($keys)	// if string keys are to be used --> combine keys and values
+			{
+				$fields = array_combine($keys, $fields);
+				// base64-decode blob columns, if they are base64 encoded
+				foreach($blobs as $key)
+				{
+					if (!is_null($fields[$key]) && ($tmp = base64_decode($fields[$key], true)) !== false)
+					{
+						$fields[$key] = $tmp;
+					}
+				}
+			}
+			return $fields;
+		}
+		// pre 5.3 implementation
 		$fields = explode(',',trim($line));
 
 		$str_pending = False;
@@ -958,9 +1020,12 @@ class db_backup
 		return $def;
 	}
 }
+
 /*
-$line = '"de","ranking","use \\"yes\\", or \\"no, prefession\\"","benützen Sie \\"yes\\" oder \\"no, Beruf\\""';
+$line = '"de","NULL","ranking",NULL,NULL,"one backslash: \\\\ here","\\\\","use \\"yes\\", or \\"no, prefession\\"","benützen Sie \\"yes\\" oder \\"no, Beruf\\"",NULL';
 
 echo "<p>line='$line'</p>\n";
-echo "<pre>".print_r(db_backup::csv_split($line),true)."</pre>\n";
+$fields = db_backup::csv_split($line);
+echo "<pre>".print_r($fields,true)."</pre>\n";
+//echo count($fields)." fields\n";
 */
