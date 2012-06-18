@@ -138,6 +138,35 @@ class filemanager_merge extends bo_merge
 			$file["links/{$app}"] = $this->get_links('filemanager',$id, $app);
 		}
 		*/
+
+		// If in apps folder, try for app-specific placeholders
+		if($dirlist[1] == 'apps' && count($dirlist) > 1)
+		{
+			// Get rid of any virtual folders (eg: All$)
+			$resolved = egw_vfs::resolve_url_symlinks($file['path']);
+			if($resolved)
+			{
+				list($app, $id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+				if($app && $GLOBALS['egw_info']['user']['apps'][$app])
+				{
+					$app_merge = null;
+					try
+					{
+						$classname = $app .'_merge';
+						if(class_exists($classname))
+						{
+							$app_merge = new $classname();
+							if($app_merge && method_exists($app_merge, 'get_replacements'))
+							{
+								$app_placeholders = $app_merge->get_replacements($id, $content);
+							}
+						}
+					}
+					// Silently discard & continue
+					catch(Exception $e) {}
+				}
+			}
+		}
 		$link = egw_link::mime_open($file['url'], $file['mime']);
 		if(is_array($link))
 		{
@@ -165,6 +194,10 @@ class filemanager_merge extends bo_merge
 		{
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
+		}
+		if($app_placeholders)
+		{
+			$info = array_merge($app_placeholders, $info);
 		}
 		return $info;
 	}
@@ -211,6 +244,9 @@ class filemanager_merge extends bo_merge
 		{
 			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
+
+		echo '<tr><td colspan="4"><h3>'.lang('Application fields').":</h3></td></tr>";
+		echo '<tr><td colspan="4">'.lang('For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders.').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
