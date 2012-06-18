@@ -26,7 +26,7 @@
  * - 'groupmembers'  => Non admins can only select groupmembers  (Server side - normal selectbox)
  * - 'selectbox'     => Selectbox with all accounts and groups (Server side - normal selectbox)
  * - 'primary_group' => Selectbox with primary group and search
- * - 'popup'         => Empty selectbox with search
+ * - 'popup'         => No selectbox, just search.  No popup, the search replaces the selectbox
  *
  * Only primary_group and popup need anything different from a normal selectbox
  */
@@ -84,9 +84,10 @@ var et2_selectAccount = et2_selectbox.extend({
 
 		this._super.apply(this, arguments);
 
-		// Add search button
 		var type = this.egw().preference('account_selection', 'common');
-		if(type == 'primary_group' || type == 'popup')
+
+		// Add search button
+		if(type == 'primary_group')
 		{
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
@@ -95,25 +96,100 @@ var et2_selectAccount = et2_selectbox.extend({
 
 			this.getSurroundings().insertDOMNode(button[0]);
 		}
+		else if (type == 'popup')
+		{
+			this._create_search();
+			// Use empty label as blur
+			if(this.options.empty_label) this.search_widget.set_blur(this.options.empty_label);
+
+			// Rework to go around / through the selectbox
+			if(this.input)
+			{
+				this.getValue = function() {return this.value;};
+				this.set_value = function(_value) {
+					this.value = _value;
+					this.search_widget.set_value(_value);
+				}
+				this.search_widget.search.change(this, function(event) {
+					var value = event.data.search_widget.getValue();
+					event.data.value = typeof value == 'object' ? value.id : value;
+					event.data.input.trigger("change");
+				});
+			}
+			this.setDOMNode(this.search_widget.getDOMNode());
+		}
 	},
 
 	/**
 	 * Multiple selection - override to add search button
 	 */
 	createMultiSelect: function() {
+
 		this._super.apply(this, arguments);
 
-		// Add search button
-		var button = jQuery(document.createElement("li"))
-			.addClass("et2_clickable")
-			.click(this, this._open_multi_search)
-			.append('<span class="ui-icon ui-icon-search"/>')
-			.append("<span>"+this.egw().lang('search')+"</span>");
 		var type = this.egw().preference('account_selection', 'common');
+		if(type == 'primary_group')
+		{
 
-		// Put it first so check/uncheck don't move around
-		this.multiOptions.prev().show().find('ul')
-			.prepend(button);
+			// Add search button
+			var button = jQuery(document.createElement("li"))
+				.addClass("et2_clickable")
+				.click(this, this._open_multi_search)
+				.append('<span class="ui-icon ui-icon-search"/>')
+				.append("<span>"+this.egw().lang('search')+"</span>");
+			var type = this.egw().preference('account_selection', 'common');
+
+			// Put it first so check/uncheck don't move around
+			this.multiOptions.prev().show().find('ul')
+				.prepend(button);
+		}
+		else if (type == 'popup')
+		{
+			/**
+			 * Popup takes the dialog and embeds it in place of the selectbox
+			 */
+			var dialog = this._open_multi_search();
+			dialog.dialog("close");
+			this.setDOMNode(this.dialog[0]);
+
+			var select_col = jQuery('#selection_col',dialog).children();
+			var selected = jQuery('#selected', select_col);
+
+			// Re-do to get it to work around/through the select box
+			this.set_value = function(_value) {
+				selected.empty();
+				if(typeof _value == 'string')
+				{
+					_value = _value.split(',');
+				}
+				if(typeof _value == 'object')
+				{
+					for(var key in _value)
+					{
+						this._add_selected(selected, _value[key]);
+					}
+				}
+			};
+			var widget = this;
+			this.getValue = function() {
+				// Update widget with selected
+				var ids = [];
+				var data = {};
+				jQuery('#selected li',select_col).each(function() {
+					// Remove sel_ prefix and add to list
+					ids.push(this.id.substr(4));
+
+					// Make sure option is there
+					if(jQuery('input[id$="_opt_'+this.id.substr(4)+'"]',widget.multiOptions).length == 0)
+					{
+						widget._appendMultiOption(this.id.substr(4),jQuery('label',this).text());
+					}
+				});
+
+				this.set_multi_value(ids);
+				return ids;
+			};
+		}
 	},
 
 	/**
@@ -128,6 +204,8 @@ var et2_selectAccount = et2_selectbox.extend({
 		var ok_click = function() {
 			jQuery(this).dialog("close");
 			widget.set_value([]);
+			// Fire change event
+			if(widget.input) widget.input.trigger("change");
 			// Free it up, it will be re-created, if ever needed again
 			jQuery(this).dialog("destroy");
 		};
@@ -138,7 +216,7 @@ var et2_selectAccount = et2_selectbox.extend({
 	 * Create & display a way to search & select multiple accounts / groups
 	 */
 	_open_multi_search: function(e) {
-		var widget = e.data;
+		var widget = e && e.data ? e.data : this;
 		var table = widget.search = jQuery('<table><tbody><tr valign="top"><td id="search_col"/><td id="selection_col"/></tr></tbody></table>');
 		table.css("width", "100%").css("height", "100%");
 		var search_col = jQuery('#search_col',table);
@@ -201,6 +279,7 @@ var et2_selectAccount = et2_selectbox.extend({
 				}}
 			]
 		});
+		return widgets;
 	},
 
 	/**
@@ -239,7 +318,8 @@ var et2_selectAccount = et2_selectbox.extend({
 						self.dialog.dialog("destroy");
 					}
 					// Fire change event
-					self.input.trigger("change");
+					if(self.input) self.input.trigger("change");
+					return true;
 				}
 			}, this);
 		// add it where we want it
