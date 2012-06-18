@@ -332,10 +332,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 
 				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
+				if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
 				if ($readonly || $select_pref == 'popup')
 				{
 					$no_lang = True;
-					if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
 					foreach(is_array($value) ? $value : array($value) as $id)
 					{
 						$options[$id] = !$id && !is_numeric($rows) ? lang($rows) :
@@ -373,6 +373,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 					{
 						$options[$acc['account_id']] = self::accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 					}
+				}
+
+				// Make sure all values are present, even if not normally sent (according to preferences)
+				$remaining = array_diff_key($value, $options);
+				foreach($remaining as $id)
+				{
+					$options[$id] = !$id && !is_numeric($rows) ? lang($rows) : self::accountInfo($id,null,$type2,$type=='both');
 				}
 				break;
 
