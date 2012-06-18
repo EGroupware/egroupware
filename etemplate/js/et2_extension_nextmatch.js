@@ -1538,9 +1538,9 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend(et2_INextmatchH
 			}
 			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
 				event.data.nextmatch.activeFilters.col_filter = {};
-			if(event.data.input.val())
+			if(event.data.getValue())
 			{
-				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.getValue();
 			}
 			else
 			{
