@@ -452,6 +452,7 @@ function etemplate2_handle_validation_error(_type, _response)
 {
 	// Display validation errors
 	//$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
+	egw().debug("warn","Validation errors", _response.data);
 }
 
 // Calls etemplate2_handle_response in the context of the object which
