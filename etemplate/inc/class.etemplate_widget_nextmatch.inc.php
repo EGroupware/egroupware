@@ -171,6 +171,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	{
 		self::$request = etemplate_request::read($exec_id);
 		$value = self::get_array(self::$request->content, $form_name, true);
+		if(!is_array($value))
+		{
+			$value = ($value) ? array($value) : array();
+		}
 		$value = array_merge($value, $filters);
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
@@ -189,7 +193,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
 		if (($parent_id = $value['parent_id']))
 		{
-			$value['col_filter']['parent_id'] = $queriedRange['parent_id'];
+			$value['col_filter'][$parent_id] = $queriedRange['parent_id'];
 		}
 		$rows = $result['data'] = $result['order'] = array();
 		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
@@ -325,6 +329,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}
 		}
+		if (!is_array($raw_rows)) $raw_rows = array();
 		if (!is_array($readonlys)) $readonlys = array();
 		if(is_callable($method))	// php5.2.3+ static call (value is always a var param!)
 		{

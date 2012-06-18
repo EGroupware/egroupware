@@ -621,7 +621,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				_controller,
 				this.egw(),
 				this.getInstanceManager().etemplate_exec_id,
-				"nm",
+				this,
 				rowId,
 				grid,
 				this.rowProvider,
