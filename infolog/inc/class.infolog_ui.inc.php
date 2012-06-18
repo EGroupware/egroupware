@@ -387,7 +387,7 @@ class infolog_ui
 
 		// Check to see if we need to remove description
 		$et = new ReflectionClass('etemplate');
-		$remove = !($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
+		$is_et2 = ($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -398,7 +398,7 @@ class infolog_ui
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 
 				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
-					$query['filter2'] == 'no_describtion' && $remove)
+					$query['filter2'] == 'no_describtion' && !$is_et2)
 				{
 					unset($info['info_des']);
 				}
@@ -427,6 +427,8 @@ class infolog_ui
 				}
 				array_splice($rows, $id, 0, array($main));
 				unset($parents[$parent_index]);
+				// et2 nextmatch listens to total, and only displays that many rows
+				if($is_et2) $query['total']++;
 			}
 			$rows[] = $info;
 		}
@@ -1271,7 +1273,8 @@ else
 			case 'view':
 				// remember filter to restore it, if infolog icon get's clicked next time
 				if ($query['filter']) egw_cache::setSession('infolog', 'filter_reset_from', $query['filter']);
-				return $this->index(array(),'sp',$checked,0);
+				$this->index(array(),'sp',$checked,0);
+				common::egw_exit();
 			case 'ical':
 				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
