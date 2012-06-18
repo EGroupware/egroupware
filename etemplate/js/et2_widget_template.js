@@ -99,7 +99,7 @@ var et2_template = et2_DOMWidget.extend({
 			}
 			if(xml !== null && typeof xml !== "undefined")
 			{
-				this.egw().debug("info", "Loading template from XML: ", this.id);
+				this.egw().debug("log", "Loading template from XML: ", this.id);
 				this.loadFromXML(xml);
 				// Don't call this here - premature
 				//this.loadingFinished();
