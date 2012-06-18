@@ -458,7 +458,8 @@ var et2_link_entry = et2_inputWidget.extend({
 				{
 					// Clear
 					self.search.autocomplete("close");
-					self.search.val("");
+					self.set_value("");
+					self.search.trigger("change");
 				}
 				self.search.focus();
 			})
@@ -505,17 +506,10 @@ var et2_link_entry = et2_inputWidget.extend({
 	},
 
 	getValue: function() {
-		return this.options.value;
+		return this.options.application ? this.value.id : this.value;
 	},
 
 	set_value: function(_value) {
-		if(!_value || _value.length == 0)
-		{
-			this.search.text("");
-			this.clear.hide();
-			this.value = {};
-			return;
-		}
 		if(typeof _value == 'string')
 		{
 			if(_value.indexOf(",") > 0) _value = _value.replace(",",":");
@@ -535,6 +529,13 @@ var et2_link_entry = et2_inputWidget.extend({
 					id: _value
 				};
 			}
+		}
+		if(!_value || _value.length == 0)
+		{
+			this.search.val("");
+			this.clear.hide();
+			this.value = _value;
+			return;
 		}
 		this.clear.show();
 		if(!_value.app) _value.app = this.options.application;
@@ -643,6 +644,8 @@ var et2_link_entry = et2_inputWidget.extend({
 		this.clear.show();
 		event.data.search.val(selected.item.label);
 
+		// Fire change event
+		this.search.change();
 	},
 
 	/**
