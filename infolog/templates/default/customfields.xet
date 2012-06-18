@@ -71,7 +71,7 @@
 					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
 					<vbox options="0,0">
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
-						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
+						<textbox type="integer" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
 					</vbox>
 					<textbox type="integer" statustext="determines the order the fields are displayed" id="${row}[order]" min="1" size="3"/>
 					<hbox>
