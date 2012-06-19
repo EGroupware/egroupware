@@ -293,6 +293,10 @@ et2_register_widget(et2_link_apps, ["link-apps"]);
 var et2_link_entry = et2_inputWidget.extend({
 
 	attributes: {
+		"value": {
+			"type": "any",
+			"default": {}
+		},
 		"application": {
 			"name": "Application",
 			"type": "string",
@@ -466,7 +470,8 @@ var et2_link_entry = et2_inputWidget.extend({
 				}
 				self.search.focus();
 			})
-			.appendTo(this.div);
+			.appendTo(this.div)
+			.hide();
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -509,7 +514,7 @@ var et2_link_entry = et2_inputWidget.extend({
 	},
 
 	getValue: function() {
-		return this.options.application ? this.value.id : this.value;
+		return this.options.application ? this.options.value.id : this.options.value;
 	},
 
 	set_value: function(_value) {
@@ -533,16 +538,20 @@ var et2_link_entry = et2_inputWidget.extend({
 				};
 			}
 		}
-		if(!_value || _value.length == 0)
+		if(!_value || _value.length == 0 || _value == null || jQuery.isEmptyObject(_value))
 		{
 			this.search.val("");
 			this.clear.hide();
-			this.value = _value;
+			this.options.value = _value = {'id':null};
+		}
+		if(!_value.app) _value.app = this.options.application;
+		if(_value.id) {
+			this.clear.show();
+		} else {
+			this.clear.hide();
 			return;
 		}
-		this.clear.show();
-		if(!_value.app) _value.app = this.options.application;
-		if(typeof _value != 'object' || !(_value.app && _value.id))
+		if(typeof _value != 'object' || (!_value.app && !_value.id))
 		{
 			console.warn("Bad value for link widget.  Need an object with keys 'app', 'id', and optionally 'title'", _value);
 			return;
@@ -566,7 +575,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		{
 			this.search.val(_value.title+"");
 		}
-		this.value = _value;
+		this.options.value = _value;
 		
 		jQuery("option[value='"+_value.app+"']",this.app_select).attr("selected",true);
 		this.app_select.hide();
@@ -631,18 +640,11 @@ var et2_link_entry = et2_inputWidget.extend({
 		{
 			if(!this.options.select(event, selected)) return false;
 		}
-		if(event.data.options.application && typeof event.data.options.value !== "object") {
-			// Application given in options, just use ID as the value
-			event.data.options.value = selected.item.value;
-		}
-		else
+		if(typeof event.data.options.value != 'object' || event.data.options.value == null)
 		{
-			if(typeof event.data.options.value != 'object')
-			{
-				event.data.options.value = {};
-			}
-			event.data.options.value.id = selected.item.value;
+			event.data.options.value = {};
 		}
+		event.data.options.value.id = selected.item.value;
 
 		this.clear.show();
 		event.data.search.val(selected.item.label);
@@ -948,14 +950,16 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 		var self = this;
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
-			.addClass("et2_link")
+			.addClass("et2_link loading")
 			.click( function(){self.egw().open(_link_data, "", "edit");});
 
 		if(_link_data.title) link.text(_link_data.title);
 
 		// Now that link is created, get title from server & update
 		if(!_link_data.title) {
-			this.egw().link_title(_link_data.app, _link_data.id, function(title) {this.text(title);}, link);
+			this.egw().link_title(_link_data.app, _link_data.id, function(title) {
+				this.removeClass("loading").text(title);
+			}, link);
 		}
 	},
 
