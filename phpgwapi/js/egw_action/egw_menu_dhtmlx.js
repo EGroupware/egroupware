@@ -16,6 +16,8 @@
 	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js;
 */
 
+// Need CSS, or it doesn't really work
+if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css");
 function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object
