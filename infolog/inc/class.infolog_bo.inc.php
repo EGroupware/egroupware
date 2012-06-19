@@ -1365,27 +1365,40 @@ class infolog_bo
 	}
 
 	/**
-	 * Returm InfoLog (custom) status icons for projectmanager
+	 * Returm InfoLog (custom) information for projectmanager: status icon, type icon, css class
 	 *
 	 * @param array $args array with id's in $args['infolog']
-	 * @return array with id => icon pairs
+	 * @return array with id => array with values for keys 'status', 'icon', 'class'
 	 */
 	function pm_icons($args)
 	{
 		if (isset($args['infolog']) && count($args['infolog']))
 		{
-			$icons = $this->so->get_status($args['infolog']);
-			foreach ((array) $icons as $id => $status)
+			$query = array(
+				'col_filter' => array('info_id' => $args['infolog']),
+				'subs' => true,
+				'cols' => 'info_id,info_type,info_status,info_percent,info_id_parent',
+			);
+			$ids = $infos = array();
+			foreach($this->search($query) as $row)
 			{
-				if ($status && substr($status,-1) != '%')
+				$infos[$row['info_id']] = array(
+					'status' => $row['info_type'] != 'phone' && $row['info_status'] == 'ongoing' ?
+						$row['info_percent'].'%' : 'infolog/'.$this->status[$row['info_type']][$row['info_status']],
+					'class'  => $row['info_id_parent'] ? 'rowHasParent' : null,
+				);
+				if (common::image('infolog', $icon=$row['info_type'].'_element') ||
+					common::image('infolog', $icon=$row['info_type']))
 				{
-					list($type,$status) = explode('-', $status);
-					$status = $this->status[$type][$status];
-					$icons[$id] = 'infolog/'.$status;
+					$infos[$row['info_id']]['icon'] = 'infolog/'.$icon;
 				}
 			}
+			foreach($this->anzSubs(array_keys($infos)) as $info_id => $subs)
+			{
+				if ($subs) $infos[$info_id]['class'] .= ' rowHasSubs';
+			}
 		}
-		return $icons;
+		return $infos;
 	}
 
 	var $categories;
