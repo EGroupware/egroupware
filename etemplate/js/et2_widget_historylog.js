@@ -182,14 +182,10 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		// Per-field widgets - new value & old value
 		this.fields = {};
 
-		// Custom fields - try to use an existing one
-		var cf_widget = null
+		// Custom fields - Need to create one that's all read-only for proper display
 		var labels = {};
-		this.getRoot().iterateOver(function(widget) { cf_widget = widget;}, this, et2_customfields_list);
-		if(cf_widget == null)
-		{
-			cf_widget = et2_createWidget('customfields', {}, this);
-		}
+		var cf_widget = et2_createWidget('customfields', {'readonly':true}, this);
+		cf_widget.loadFields();
 		for(var key in cf_widget.widgets)
 		{
 			// Add label
