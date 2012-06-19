@@ -60,7 +60,6 @@ var et2_checkbox = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.input = null;
-		this.id = "";
 
 		this.createInputWidget();
 
@@ -80,7 +79,8 @@ var et2_checkbox = et2_inputWidget.extend({
 	set_value: function(_value) {
 		if(_value != this.value) {
 			if(_value == this.options.selected_value || 
-					_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"]) {
+					_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"] &&
+					_value != this.options.unselected_value) {
 				this.input.attr("checked", "checked");
 			} else {
 				this.input.removeAttr("checked");
