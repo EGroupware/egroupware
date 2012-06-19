@@ -407,33 +407,6 @@ class infolog_so
 	}
 
 	/**
-	 * Read the status of the given infolog-ids
-	 *
-	 * @param array $ids array with id's
-	 * @return array with id => status pairs
-	 */
-	function get_status($ids)
-	{
-		foreach($this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__) as $info)
-		{
-			switch ($info['info_type'].'-'.$info['info_status'])
-			{
-				case 'phone-not-started':
-					$status = 'call';
-					break;
-				case 'phone-ongoing':
-					$status = 'will-call';
-					break;
-				default:
-					$status = $info['info_status'] == 'ongoing' ? $info['info_percent'].'%' :
-						$info['info_type'].'-'.$info['info_status'];
-			}
-			$stati[$info['info_id']] = $status;
-		}
-		return $stati;
-	}
-
-	/**
 	 * delete InfoLog entry $info_id AND the links to it
 	 *
 	 * @param int $info_id id of log-entry
@@ -481,12 +454,10 @@ class infolog_so
 	 */
 	function get_children($info_id)
 	{
-		$this->db->select($this->info_table,'info_id,info_owner',array(
-			'info_id_parent'	=> $info_id,
-		),__LINE__,__FILE__);
-
 		$children = array();
-		while (($row = $this->db->row(true)))
+		foreach($this->db->select($this->info_table, 'info_id,info_owner', array(
+			'info_id_parent'	=> $info_id,
+		),__LINE__,__FILE__) as $row)
 		{
 			$children[$row['info_id']] = $row['info_owner'];
 		}
@@ -880,7 +851,7 @@ class infolog_so
 			$info_customfield = '';
 			if ($sortbycf != '')
 			{
-				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 where sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
+				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 WHERE sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
 			}
 			//echo "SELECT $distinct main.* $info_customfield $sql_query $ordermethod"."<br>";
 			do
