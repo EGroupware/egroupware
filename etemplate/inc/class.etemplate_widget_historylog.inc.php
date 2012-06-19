@@ -29,27 +29,30 @@ class etemplate_widget_historylog extends etemplate_widget
         {
 		$form_name = self::form_name($cname, $this->id);
 
-		foreach(self::$request->content[$form_name]['status-widgets'] as $key => $type)
+		if(is_array(self::$request->content[$form_name]['status-widgets']))
 		{
-			if(!is_array($type))
+			foreach(self::$request->content[$form_name]['status-widgets'] as $key => $type)
 			{
-				list($basetype) = explode('-',$type);
-				$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$type.' type="'.$type.'"/>', $key);
-				$widget->id = $key;
-				$widget->attrs['type'] = $type;
-				$widget->type = $type;
-
-				if(method_exists($widget, 'beforeSendToClient'))
+				if(!is_array($type))
 				{
-					$widget->beforeSendToClient($cname);
+					list($basetype) = explode('-',$type);
+					$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$type.' type="'.$type.'"/>', $key);
+					$widget->id = $key;
+					$widget->attrs['type'] = $type;
+					$widget->type = $type;
+
+					if(method_exists($widget, 'beforeSendToClient'))
+					{
+						$widget->beforeSendToClient($cname);
+					}
 				}
+				else
+				{
+					if (!is_array(self::$request->sel_options[$key])) self::$request->sel_options[$key] = array();
+					self::$request->sel_options[$key] += $type;
+				}
+				
 			}
-			else
-			{
-				if (!is_array(self::$request->sel_options[$key])) self::$request->sel_options[$key] = array();
-				self::$request->sel_options[$key] += $type;
-			}
-			
 		}
 	}
 }

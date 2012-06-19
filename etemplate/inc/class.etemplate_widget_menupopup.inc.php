@@ -376,10 +376,16 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 
 				// Make sure all values are present, even if not normally sent (according to preferences)
-				$remaining = array_diff_key($value, $options);
-				foreach($remaining as $id)
+				if(is_array($value))
 				{
-					$options[$id] = !$id && !is_numeric($rows) ? lang($rows) : self::accountInfo($id,null,$type2,$type=='both');
+					$remaining = array_diff_key($value, $options);
+				}
+				if(is_array($remaining))
+				{
+					foreach($remaining as $id)
+					{
+						$options[$id] = !$id && !is_numeric($rows) ? lang($rows) : self::accountInfo($id,null,$type2,$type=='both');
+					}
 				}
 				break;
 
