@@ -137,14 +137,7 @@ abstract class setup_cmd extends admin_cmd
 		if (is_object($GLOBALS['egw']->db) && $domain)
 		{
 			$GLOBALS['egw']->db->disconnect();
-			$GLOBALS['egw']->db->connect(
-				$GLOBALS['egw_domain'][$domain]['db_name'],
-				$GLOBALS['egw_domain'][$domain]['db_host'],
-				$GLOBALS['egw_domain'][$domain]['db_port'],
-				$GLOBALS['egw_domain'][$domain]['db_user'],
-				$GLOBALS['egw_domain'][$domain]['db_pass'],
-				$GLOBALS['egw_domain'][$domain]['db_type']
-			);
+			$GLOBALS['egw']->db = new egw_db($GLOBALS['egw_domain'][$domain]);
 		}
 	}
 
@@ -157,14 +150,8 @@ abstract class setup_cmd extends admin_cmd
 		if (is_object($GLOBALS['egw']->db))
 		{
 			$GLOBALS['egw']->db->disconnect();
-			$GLOBALS['egw']->db->connect(
-				$GLOBALS['egw_info']['server']['db_name'],
-				$GLOBALS['egw_info']['server']['db_host'],
-				$GLOBALS['egw_info']['server']['db_port'],
-				$GLOBALS['egw_info']['server']['db_user'],
-				$GLOBALS['egw_info']['server']['db_pass'],
-				$GLOBALS['egw_info']['server']['db_type']
-			);
+			$GLOBALS['egw']->db = new egw_db($GLOBALS['egw_info']['server']);
+
 			if (!is_null(self::$egw_accounts_backup))
 			{
 				$GLOBALS['egw']->accounts = self::$egw_accounts_backup;

@@ -110,17 +110,10 @@ class setup
 		{
 			$GLOBALS['egw_info']['server']['db_persistent'] = False;
 		}
-		$GLOBALS['egw']->db = $this->db = new egw_db();
 
 		try {
-			$this->db->connect(
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_name'],
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_host'],
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_port'],
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_user'],
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_pass'],
-				$GLOBALS['egw_domain'][$this->ConfigDomain]['db_type']
-			);
+			$GLOBALS['egw']->db = $this->db = new egw_db($GLOBALS['egw_domain'][$this->ConfigDomain]);
+			$this->db->connect();
 		}
 		catch (Exception $e) {
 			return;
