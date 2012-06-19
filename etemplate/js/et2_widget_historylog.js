@@ -186,6 +186,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		var labels = {};
 		var cf_widget = et2_createWidget('customfields', {'readonly':true}, this);
 		cf_widget.loadFields();
+		// Override this or it may damage the real values
+		cf_widget.getValue = function() {return null;};
 		for(var key in cf_widget.widgets)
 		{
 			// Add label
