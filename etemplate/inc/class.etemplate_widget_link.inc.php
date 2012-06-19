@@ -186,6 +186,32 @@ class etemplate_widget_link extends etemplate_widget
 		$response->data(array_values($links));
 	}
 
+	/**
+	 * Allow changing of comment after link is created
+	 */
+	public static function ajax_link_comment($link_id, $comment)
+	{
+		$result = false;
+		if((int)$link_id > 0)
+		{
+			solink::update_remark((int)$link_id, $comment);
+			$result = true;
+		}
+		else
+		{
+			$link = egw_link::get_link((int)$link_id);
+			if($link && $link['app'] == egw_link::VFS_APPNAME)
+			{
+				$file = egw_link::list_attached($link['app2'],$link['id2']);
+				$file = $file[(int)$link_id];
+				$path = egw_link::vfs_path($link['app2'],$link['id2'],$file['id']);
+				$result = egw_vfs::proppatch($path, array(array('name' => 'comment', 'val' => $comment)));
+			}
+		}
+		$response = egw_json_response::get();
+		$response->data($result !== false);
+	}
+
 	public function ajax_delete($value) {
 		$response = egw_json_response::get();
 		$response->data(egw_link::unlink($value));

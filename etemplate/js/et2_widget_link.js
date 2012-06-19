@@ -17,6 +17,9 @@
 	jquery.jquery-ui;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+
+	// Include menu system for list context menu
+        egw_action.egw_menu_dhtmlx;
 */
 
 /**
@@ -1009,10 +1012,38 @@ var et2_link_list = et2_link_string.extend({
 			.addClass("et2_link_list");
 		if(this.options['class']) this.node.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
+
+		// Set up context menu
+		var self = this;
+		this.context = new egwMenu();
+		this.context.addItem("comment", this.egw().lang("Comment"), "", function() {
+			var link_id = self.context.data.link_id;
+			var comment = prompt(self.egw().lang("Comment"));
+			if(comment !== null)
+			{
+				var remark = jQuery('#link_'+link_id, self.list).children('.remark');
+				remark.addClass("loading");
+				var request = new egw_json_request("etemplate_widget_link::ajax_link_comment::etemplate", 
+					[link_id, comment],
+					this
+				);
+				request.sendRequest(true, function() {
+					if(remark)
+					{
+						remark.removeClass("loading").text(comment+"");
+					}
+				}, self);
+			}
+		});
+		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
+			var link_id = self.context.data.link_id;
+			self._delete_link(link_id);
+		});
 	},
 
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
+			.attr("id", "link_"+_link_data.link_id)
 			.appendTo(this.list)
 
 		// Icon
@@ -1063,11 +1094,22 @@ var et2_link_list = et2_link_string.extend({
 		var delete_button = $j(document.createElement("td"))
 			.appendTo(row)
 			.addClass("delete icon")
-			.bind( 'click', function(){
-				delete_button.addClass("loading").removeClass("delete");
-				new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [_link_data.link_id])
-					.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
-			});
+			.bind( 'click', function() {self._delete_link(_link_data.link_id);});
+
+		// Context menu
+		row.bind("contextmenu", function(e) {
+			self.context.data = _link_data;
+			self.context.showAt(e.pageX, e.pageY, true);
+			e.preventDefault();
+		});
+	},
+	_delete_link: function(link_id) {
+		var row = jQuery('#link_'+link_id, this.list);
+		var delete_button = jQuery('.delete.icon',row);
+		delete_button.addClass("loading").removeClass("delete");
+		new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [link_id])
+			.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
+		
 	}
 });
 et2_register_widget(et2_link_list, ["link-list"]);
