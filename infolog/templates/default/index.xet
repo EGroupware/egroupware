@@ -13,7 +13,7 @@
 			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="note"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.004">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column width="2%"/>
@@ -71,7 +71,7 @@
 						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner" class="user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner,both" class="user_filter"/>
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
