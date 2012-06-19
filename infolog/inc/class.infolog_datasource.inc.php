@@ -39,7 +39,7 @@ class infolog_datasource extends datasource
 	{
 		parent::__construct('infolog');
 
-		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_REPLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
+		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_REPLANNED_TIME|PM_USED_TIME|PM_RESOURCES|PM_CAT_ID;
 
 		// we use $GLOBALS['infolog_bo'] as an already running instance might be availible there
 		if (!is_object($GLOBALS['infolog_bo']))
@@ -84,6 +84,7 @@ class infolog_datasource extends datasource
 			'pe_planned_budget'   => $data['info_planned_time'] / 60 * $data['info_price'],
 			'pe_used_quantity'    => $data['info_used_time'] / 60,
 			'pe_used_budget'      => $data['info_used_time'] / 60 * $data['info_price'],
+			'cat_id'              => $data['info_cat'],
 		);
 	}
 
@@ -146,7 +147,7 @@ class infolog_datasource extends datasource
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Callback called after copying of all datasource, used to:
 	 * - fix parent id's

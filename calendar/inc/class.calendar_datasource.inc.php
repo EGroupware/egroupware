@@ -24,7 +24,7 @@ class calendar_datasource extends datasource
 	{
 		$this->datasource('calendar');
 
-		$this->valid = PM_PLANNED_START|PM_PLANNED_END|PM_PLANNED_TIME|PM_RESOURCES;
+		$this->valid = PM_PLANNED_START|PM_PLANNED_END|PM_PLANNED_TIME|PM_RESOURCES|PM_CAT_ID;
 	}
 
 	/**
@@ -60,6 +60,15 @@ class calendar_datasource extends datasource
 			'pe_resources'     => array(),
 			'pe_details'       => $data['description'] ? nl2br($data['description']) : '',
 		);
+		// return first global category, as PM only supports one
+		foreach($data['category'] ? explode(',', $data['category']) : array() as $cat_id)
+		{
+			if (categories::is_global($cat_id))
+			{
+				$ds['cat_id'] = $cat_id;
+				break;
+			}
+		}
 		// calculation of the time
 		$ds['pe_planned_time'] = (int) (($ds['pe_planned_end'] - $ds['pe_planned_start'])/60);	// time is in minutes
 
