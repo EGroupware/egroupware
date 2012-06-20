@@ -127,9 +127,9 @@ class importexport_definitions_ui
 					// Action has an additional parameter
 					if(in_array($content['nm']['action'], array('owner', 'allowed')))
 					{
-						if($content['nm']['action'] == 'allowed' && $content['allowed_private'])
+						if($content['nm']['action'] == 'allowed')
 						{
-							$content['allowed'] = null;
+							$content['allowed'] = $content['allowed_private'] ? null : ($content['all_users'] ? 'all' : implode(',',$content['allowed']));
 						}
 						if(is_array($content[$content['nm']['action']]))
 						{
