@@ -57,12 +57,17 @@ class postfixldap extends emailadmin_smtp_ldap
 	/**
 	 * Attribute value to only forward mail
 	 */
-	const FORWARD_ONLY = 'forwardOnly';
+	const FORWARD_ONLY = 'forwardonly';
 
 	/**
 	 * Attribute for mailbox, to which mail gets delivered OR false if not supported
 	 */
 	const MAILBOX_ATTR = 'mailmessagestore';
+
+	/**
+	 * Attribute for quota limit of user in MB
+	 */
+	const QUOTA_ATTR = 'mailquota';
 
 	/**
 	 * Log all LDAP writes / actions to error_log
@@ -86,5 +91,6 @@ class postfixldap extends emailadmin_smtp_ldap
 		'forward_only_attr' => self::FORWARD_ONLY_ATTR,
 		'forward_only' => self::FORWARD_ONLY,
 		'mailbox_attr' => self::MAILBOX_ATTR,
+		'quota_attr' => self::QUOTA_ATTR,
 	);
 }

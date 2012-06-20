@@ -944,7 +944,8 @@ class emailadmin_bo extends so_sql
 					(array)$_formData['mailForwardingAddress'],
 					$_formData['deliveryMode'],
 					$_formData['accountStatus'],
-					$_formData['mailLocalAddress']
+					$_formData['mailLocalAddress'],
+					$_formData['quotaLimit']
 				);
 			}
 

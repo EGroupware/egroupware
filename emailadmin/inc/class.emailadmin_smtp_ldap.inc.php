@@ -69,6 +69,11 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	const MAILBOX_ATTR = false;
 
 	/**
+	 * Attribute for quota limit of user in MB
+	 */
+	const QUOTA_ATTR = false;
+
+	/**
 	 * Log all LDAP writes / actions to error_log
 	 */
 	var $debug = false;
@@ -90,6 +95,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		'forward_only_attr' => self::FORWARD_ONLY_ATTR,
 		'forward_only' => self::FORWARD_ONLY,
 		'mailbox_attr' => self::MAILBOX_ATTR,
+		'quota_attr' => self::QUOTA_ATTR,
 	);
 
 	/**
@@ -271,6 +277,11 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				{
 					unset($userData['mailAlternateAddress'][$k]);
 				}
+
+				if ($this->config['quota_attr'] && isset($allValues[0][$this->config['quota_attr']]))
+				{
+					$userData['quotaLimit'] = $allValues[0][$this->config['quota_attr']][0] / 1048576;
+				}
 			}
 		}
 		if ($this->debug) error_log(__METHOD__."('$_uidnumber') returning ".array2string($userData));
@@ -287,9 +298,10 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 * @param string $_deliveryMode
 	 * @param string $_accountStatus
 	 * @param string $_mailLocalAddress
+	 * @param int $_quota in MB
 	 * @return boolean true on success, false on error writing to ldap
 	 */
-	function setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress)
+	function setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota)
 	{
 		$filter = 'uidnumber='.(int)$_uidnumber;
 
@@ -357,6 +369,10 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				'account_email' => $_mailLocalAddress,
 			));
 		}
+		if ($this->config['quota_attr'])
+		{
+			$newData[$this->config['quota_attr']]	= (int)$_quota >= 0 ? (int)$_quota*1048576 : array();
+		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
 		return ldap_mod_replace($ldap, $accountDN, $newData);
@@ -423,13 +439,13 @@ class emailadmin_smtp_ldap extends defaultsmtp
 			return ldap_modify ($ds, $allValues[0]['dn'], $newData);
 		}
 	}
-	
+
 	/**
 	 * Build mailbox address for given account and mail_addr_type
-	 * 
+	 *
 	 * If $account is an array (with values for keys account_(id|lid|email), it does NOT call accounts class
-	 *  
-	 * @param int|array $account account_id or whole account array with values for keys 
+	 *
+	 * @param int|array $account account_id or whole account array with values for keys
 	 * @param string $domain=null domain, default use $this->defaultDomain
 	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber,
 	 * 	default use $GLOBALS['egw_info']['server']['mail_login_type']
@@ -450,7 +466,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				if (is_array($account)) $account = $account['account_id'];
 				$mbox = 'u'.$account.'@'.$domain;
 				break;
-				
+
 			case 'standard':
 				$mbox = is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account);
 				break;
