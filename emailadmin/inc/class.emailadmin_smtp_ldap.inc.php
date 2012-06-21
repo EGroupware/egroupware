@@ -477,7 +477,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				$mbox .= '@'.$domain;
 				break;
 		}
-		if ($this->debug) error_log(__METHOD__."(".array2string($account).",'$domain','$mail_login_type') = '$mbox'");
+		//error_log(__METHOD__."(".array2string($account).",'$domain','$mail_login_type') = '$mbox'");
 
 		return $mbox;
 	}
