@@ -417,6 +417,7 @@ class calendar_ui
 		$is_private = !$event['public'] && !$this->bo->check_perms(EGW_ACL_READ,$event);
 		$viewable = !$this->bo->printer_friendly && $this->bo->check_perms(EGW_ACL_READ,$event);
 
+		$icons = array();
 		if (!$is_private)
 		{
 			if($event['priority'] == 3)
