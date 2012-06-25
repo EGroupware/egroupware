@@ -127,9 +127,9 @@ class importexport_definitions_ui
 					// Action has an additional parameter
 					if(in_array($content['nm']['action'], array('owner', 'allowed')))
 					{
-						if($content['nm']['action'] == 'allowed' && $content['allowed_private'])
+						if($content['nm']['action'] == 'allowed')
 						{
-							$content['allowed'] = null;
+							$content['allowed'] = $content['allowed_private'] ? null : ($content['all_users'] ? 'all' : implode(',',$content['allowed']));
 						}
 						if(is_array($content[$content['nm']['action']]))
 						{
@@ -171,7 +171,7 @@ class importexport_definitions_ui
 				'import'	=> lang('import'),
 				'export'	=> lang('export'),
 			),
-			'allowed_users' => array(null => lang('Private'))
+			'allowed_users' => array(null => lang('Private'), 'all' => lang('all'))
 		);
 		foreach ($this->plugins as $appname => $options)
 		{
@@ -811,7 +811,7 @@ class importexport_definitions_ui
 				$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ?
 					($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
 					null;
-				$content['allowed_users'] = $content['just_me'] ? '' : implode(',',$content['allowed_users']);
+				$content['allowed_users'] = $content['just_me'] ? '' : ($content['all_users'] ? 'all' : implode(',',$content['allowed_users']));
 				unset($content['just_me']);
 			}
 
@@ -841,6 +841,7 @@ class importexport_definitions_ui
 				$content['allowed_users'] = array();
 				$readonlys['allowed_users'] = true;
 				$readonlys['just_me'] = true;
+				$readonlys['all_users'] = true;
 				$content['just_me'] = true;
 			}
 
@@ -848,6 +849,10 @@ class importexport_definitions_ui
 			if($readonlys['just_me'] || !$this->can_edit($content))
 			{
 				$content['no_just_me'] = true;
+			}
+			if($readonlys['all_users'] || !$this->can_edit($content))
+			{
+				$content['no_all_users'] = true;
 			}
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");

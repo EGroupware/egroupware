@@ -47,7 +47,7 @@ class importexport_definitions_bo {
 			$this_membership = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 			$this_membership[] = $GLOBALS['egw_info']['user']['account_id'];
 			$sql .= ' (';
-			$read = array();
+			$read = array('all');
 			foreach($this_membership as $id)
 			{
 				$read[] = 'allowed_users '.
@@ -65,10 +65,10 @@ class importexport_definitions_bo {
 			// Strip off leading + trailing ,
 			$row['allowed_users'] = substr($row['allowed_users'],1,-1);
 
-			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] = 
+			$readonlys["edit[{$row['definition_id']}]"] = $readonlys["delete[{$row['definition_id']}]"] =
 				($row['owner'] != $GLOBALS['egw_info']['user']['account_id']) &&
 				!$GLOBALS['egw_info']['user']['apps']['admin'];
-			if($readonlys["edit[{$row['definition_id']}]"]) 
+			if($readonlys["edit[{$row['definition_id']}]"])
 			{
 				$row['class'] .= 'rowNoEdit';
 				$ro_count++;
@@ -139,6 +139,7 @@ class importexport_definitions_bo {
 		$this_user_id = $GLOBALS['egw_info']['user']['account_id'];
 		$this_membership = $GLOBALS['egw']->accounts->memberships($this_user_id, true);
 		$this_membership[] = $this_user_id;
+		$this_membership[] = 'all';
 		$alluser = array_intersect($allowed_user,$this_membership);
 		return ($this_user_id == $_definition['owner'] || count($alluser) > 0);
 	}
@@ -220,6 +221,8 @@ class importexport_definitions_bo {
 		{
 			// convert allowed_user
 			$definition_data['allowed_users'] = importexport_helper_functions::account_name2id( $definition_data['allowed_users'] );
+			if($definition_data['all_users'] && !$definition_data['allowed_users']) $definition_data['allowed_users'] = 'all';
+
 			$definition_data['owner'] = importexport_helper_functions::account_name2id( $definition_data['owner'] );
 
 			$definition = new importexport_definition( $definition_data['name'] );
