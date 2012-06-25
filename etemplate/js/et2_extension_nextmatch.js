@@ -530,6 +530,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		var self = this;
 		this.dataview.onUpdateColumns = function() {
 			self._updateUserPreferences();
+
+			// Allow column widgets a chance to resize
+			self.iterateOver(function(widget) {widget.resize();}, self, et2_IResizeable);
 		};
 
 		// Register handler for column selection popup
@@ -1459,7 +1462,7 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
 
-var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
+var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable], {
 
 	/**
 	 * Override to add change handler
@@ -1511,13 +1514,19 @@ var et2_nextmatch_filterheader = et2_selectbox.extend(et2_INextmatchHeader, {
 			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 			this.attributes.value.ignore = true;
 		}
+	},
+
+	// Make sure selectbox is not longer than the column
+	resize: function() {
+		console.log(this);
+		this.input.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
 	}
 
 });
 
 et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 
-var et2_nextmatch_accountfilterheader = et2_selectAccount.extend(et2_INextmatchHeader, {
+var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable], {
 
 	/**
 	 * Override to add change handler
@@ -1573,7 +1582,18 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend(et2_INextmatchH
 			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 			this.attributes.value.ignore = true;
 		}
+	},
+	// Make sure selectbox is not longer than the column
+	resize: function() {
+		var max = jQuery(this.parentNode).innerWidth() - 4;
+		var surroundings = this.getSurroundings()._widgetSurroundings;
+		for(var i = 0; i < surroundings.length; i++)
+		{
+			max -= jQuery(surroundings[i]).outerWidth();
+		}
+		this.input.css("max-width",max + "px");
 	}
+
 });
 et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 
