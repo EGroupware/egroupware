@@ -632,6 +632,10 @@ tr.draggedOver td {
 	display: block;
 	overflow: hidden;
 }
+.egwGridView_outer th div.innerContainer {
+	max-height: 7em;
+	overflow-y: auto;
+}
 
 .egwGridView_grid tr.fullRow {
 	font-style: italic;
