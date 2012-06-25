@@ -333,6 +333,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		this.div = null;
 		this.search = null;
 		this.app_select = null;
+		this._oldValue = {id: null, app: this.options.application};
 
 		if(typeof this.options.value == 'undefined') this.options.value = {};
 		this.cache = {};
@@ -538,6 +539,7 @@ var et2_link_entry = et2_inputWidget.extend({
 				};
 			}
 		}
+		this._oldValue = this.options.value;
 		if(!_value || _value.length == 0 || _value == null || jQuery.isEmptyObject(_value))
 		{
 			this.search.val("");
@@ -545,6 +547,7 @@ var et2_link_entry = et2_inputWidget.extend({
 			this.options.value = _value = {'id':null};
 		}
 		if(!_value.app) _value.app = this.options.application;
+
 		if(_value.id) {
 			this.clear.show();
 		} else {
@@ -1149,6 +1152,13 @@ var et2_link_add = et2_inputWidget.extend({
 			self.egw().open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
 		};
 		this.div.append(this.button.getDOMNode());
+	},
+	/**
+	 * Should be handled client side.
+	 * Return null to avoid overwriting other link values, in case designer used the same ID for multiple widgets
+	 */
+	getValue: function() {
+		return null;
 	}
 });
 et2_register_widget(et2_link_add, ["link-add"]);
