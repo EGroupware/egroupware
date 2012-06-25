@@ -299,7 +299,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			{
 				nodes = self.columns[i].nodes.clone();
 			}
-			else if (self._needsDiffWidget(_data['status'], _data[self.columns[i].id]))
+			else if (self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]) ||
+				self._needsDiffWidget(_data['status'], _data[self.columns[self.NEW_VALUE].id]))
 			{
 				// Large text value - span both columns, and show a nice diff
 				var jthis = jQuery(this);
@@ -317,17 +318,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 					// Skip column 4
 					jthis.parents("td").attr("colspan", 2)
 						.css("border-right", "none");
-					jthis.css("width", (self.dataview.columnMgr.columnWidths[i] + self.dataview.columnMgr.columnWidths[i+1]-8)+'px');
+					jthis.css("width", (self.dataview.columnMgr.columnWidths[i] + self.dataview.columnMgr.columnWidths[i+1]-10)+'px');
 
 					if(widget) widget.setDetachedAttributes(nodes, {
 						value:_data[self.columns[i].id],
 						label: jthis.parents("td").prev().text()
 					});
-				}
-				else if (i == 4)
-				{
+
 					// Skip column 4
-					jthis.parents("td").remove();
+					jthis.parents("td").next().remove();
 				}
 			}
 			else
@@ -347,6 +346,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 	 * How to tell if the row needs a diff widget or not
 	 */
 	_needsDiffWidget: function(columnName, value) {
+		if(typeof value !== "string")
+		{
+			this.egw().debug("warning", "Crazy diff value", value);
+			return false;
+		}
 		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)))
 	},
 });
