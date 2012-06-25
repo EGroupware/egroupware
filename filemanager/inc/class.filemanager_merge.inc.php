@@ -142,11 +142,23 @@ class filemanager_merge extends bo_merge
 		// If in apps folder, try for app-specific placeholders
 		if($dirlist[1] == 'apps' && count($dirlist) > 1)
 		{
-			// Get rid of any virtual folders (eg: All$)
-			$resolved = egw_vfs::resolve_url_symlinks($file['path']);
-			if($resolved)
-			{
+			// Try this first - a normal path /apps/appname/id/file
+			list($app, $id) = explode('/', substr($file['path'], strpos($file['path'], 'apps/')+5));
+
+			// Symlink?
+			if(!$app || !$id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+				// Try resolving just app + ID - /apps/App Name/Record Title/file
+				$resolved = egw_vfs::resolve_url_symlinks(implode('/',array_slice($dirlist,0,4)));
 				list($app, $id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+
+				if(!$app || !$id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+					// Get rid of any virtual folders (eg: All$) and symlinks
+					$resolved = egw_vfs::resolve_url_symlinks($file['path']);
+					list($app, $id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+				}
+			}
+			if($app && $id)
+			{
 				if($app && $GLOBALS['egw_info']['user']['apps'][$app])
 				{
 					$app_merge = null;
