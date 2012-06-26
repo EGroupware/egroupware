@@ -1050,6 +1050,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $url, $flags, $eacl_access=null )
 	{
+		static $max_subquery_depth;
+		if (is_null($max_subquery_depth))
+		{
+			$max_subquery_depth = $GLOBALS['egw_info']['server']['max_subquery_depth'];
+			if (!$max_subquery_depth) $max_subquery_depth = 7;	// setting current default of 7, if nothing set
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags,$eacl_access)");
 
 		$path = parse_url($url,PHP_URL_PATH);
@@ -1084,60 +1090,74 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$eacl_access = self::check_extended_acl($path,egw_vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
 		}
 
-		foreach($parts as $n => $name)
-		{
-			if ($n == 0)
+		try {
+			foreach($parts as $n => $name)
 			{
-				$query = (int) ($path != '/');	// / always has fs_id == 1, no need to query it ($path=='/' needs fs_dir=0!)
-			}
-			elseif ($n < count($parts)-1)
-			{
-				// MySQL 5.0 has a nesting limit for subqueries
-				// --> we replace the so far cumulated subqueries with their result
-				// no idea about the other DBMS, but this does NOT hurt ...
-				// setting the value to 7, after reports on the user list, thought MySQL 5.0.51 with MyISAM engine works up to 10
-				if ($n > 1 && !(($n-1) % 7) && !($query = self::$pdo->query($query)->fetchColumn()))
+				if ($n == 0)
 				{
-					if (self::LOG_LEVEL > 1)
-					{
-						self::_remove_password($url);
-						error_log(__METHOD__."('$url',$flags) file or directory not found!");
-					}
-					// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
-					return self::$stat_cache[$path] = false;
+					$query = (int) ($path != '/');	// / always has fs_id == 1, no need to query it ($path=='/' needs fs_dir=0!)
 				}
-				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_active='.
-					self::_pdo_boolean(true).' AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
+				elseif ($n < count($parts)-1)
+				{
+					// MySQL 5.0 has a nesting limit for subqueries
+					// --> we replace the so far cumulated subqueries with their result
+					// no idea about the other DBMS, but this does NOT hurt ...
+					// --> depth limit of subqueries is now dynamicly decremented in catch
+					if ($n > 1 && !(($n-1) % $max_subquery_depth) && !($query = self::$pdo->query($query)->fetchColumn()))
+					{
+						if (self::LOG_LEVEL > 1)
+						{
+							self::_remove_password($url);
+							error_log(__METHOD__."('$url',$flags) file or directory not found!");
+						}
+						// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
+						return self::$stat_cache[$path] = false;
+					}
+					$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_active='.
+						self::_pdo_boolean(true).' AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
 
-				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
-				if (!egw_vfs::$is_root && !$eacl_access)
-				{
-					if (!egw_vfs::$user)
+					// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
+					if (!egw_vfs::$is_root && !$eacl_access)
 					{
-						self::_remove_password($url);
-						if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) permission denied, no user-id and not root!");
-						return false;
+						if (!egw_vfs::$user)
+						{
+							self::_remove_password($url);
+							if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) permission denied, no user-id and not root!");
+							return false;
+						}
+						$query .= ' AND '.self::_sql_readable();
 					}
-					$query .= ' AND '.self::_sql_readable();
+				}
+				else
+				{
+					$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
 				}
 			}
-			else
+			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$flags,$eacl_access)".' */ '.$query;
+			//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+
+			if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
 			{
-				$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
+				if (self::LOG_LEVEL > 1)
+				{
+					self::_remove_password($url);
+					error_log(__METHOD__."('$url',$flags) file or directory not found!");
+				}
+				// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
+				return self::$stat_cache[$path] = false;
 			}
 		}
-		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$flags,$eacl_access)".' */ '.$query;
-		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
-
-		if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(PDO::FETCH_ASSOC)))
-		{
-			if (self::LOG_LEVEL > 1)
+		catch (PDOException $e) {
+			// decrement subquery limit by 1 and try again, if not already smaller then 3
+			if ($max_subquery_depth < 3)
 			{
-				self::_remove_password($url);
-				error_log(__METHOD__."('$url',$flags) file or directory not found!");
+				throw new egw_exception_db($e->getMessage());
 			}
-			// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
-			return self::$stat_cache[$path] = false;
+			$GLOBALS['egw_info']['server']['max_subquery_depth'] = --$max_subquery_depth;
+			error_log(__METHOD__."() decremented max_subquery_depth to $max_subquery_depth");
+			config::save_value('max_subquery_depth', $max_subquery_depth, 'phpgwapi');
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
+			return self::url_stat($url, $flags, $eacl_access);
 		}
 		self::$stat_cache[$path] = $info;
 
