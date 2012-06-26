@@ -148,7 +148,9 @@ class egw_ckeditor_config
 		//Convert the pixel height to an integer value
 		$config['resize_enabled'] = false;
 		$config['height'] = (int)$height;
-
+		//disable encoding as entities needs to set the config value to false, as the default is true with the current ckeditor version
+		$config['entities'] = false;
+		$config['entities_latin'] = false;
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
 
