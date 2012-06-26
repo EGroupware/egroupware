@@ -1018,6 +1018,11 @@ abstract class bo_merge
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2>$4</table:table-cell>';
 				break;
+			case 'application/vnd.oasis.opendocument.text':		// tables in open office writer
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
+				break;
+			case 'application/vnd.oasis.opendocument.text':		// open office writer
 			case 'application/xmlExcel.Sheet':	// Excel 2003
 				$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
 				$replacement = '<Data ss:Type="Number">$1</Data>';
