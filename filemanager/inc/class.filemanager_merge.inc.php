@@ -143,21 +143,20 @@ class filemanager_merge extends bo_merge
 		if($dirlist[1] == 'apps' && count($dirlist) > 1)
 		{
 			// Try this first - a normal path /apps/appname/id/file
-			list($app, $id) = explode('/', substr($file['path'], strpos($file['path'], 'apps/')+5));
-
+			list($app, $app_id) = explode('/', substr($file['path'], strpos($file['path'], 'apps/')+5));
 			// Symlink?
-			if(!$app || !$id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+			if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
 				// Try resolving just app + ID - /apps/App Name/Record Title/file
-				$resolved = egw_vfs::resolve_url_symlinks(implode('/',array_slice($dirlist,0,4)));
-				list($app, $id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+				$resolved = egw_vfs::resolve_url_symlinks(implode('/',array_slice(explode('/',$file['dir']),0,4)));
+				list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
 
-				if(!$app || !$id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+				if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
 					// Get rid of any virtual folders (eg: All$) and symlinks
 					$resolved = egw_vfs::resolve_url_symlinks($file['path']);
-					list($app, $id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+					list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
 				}
 			}
-			if($app && $id)
+			if($app && $app_id)
 			{
 				if($app && $GLOBALS['egw_info']['user']['apps'][$app])
 				{
@@ -170,7 +169,7 @@ class filemanager_merge extends bo_merge
 							$app_merge = new $classname();
 							if($app_merge && method_exists($app_merge, 'get_replacements'))
 							{
-								$app_placeholders = $app_merge->get_replacements($id, $content);
+								$app_placeholders = $app_merge->get_replacements($app_id, $content);
 							}
 						}
 					}
