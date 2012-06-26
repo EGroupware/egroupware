@@ -26,6 +26,8 @@
  */ 
 var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
+	createNamespace: true,
+
 	attributes: {
 		// Better to use CSS, no need to warn about it
 		"border": {
