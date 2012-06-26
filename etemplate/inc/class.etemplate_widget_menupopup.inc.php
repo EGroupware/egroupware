@@ -192,7 +192,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		}
 
 		// Check for options-$name in content
-		if (isset(self::$request->content['options-'.$name]))
+		if (is_array(self::$request->content['options-'.$name]))
 		{
 			$options += self::$request->content['options-'.$name];
 		}
