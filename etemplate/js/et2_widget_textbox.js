@@ -91,6 +91,9 @@ var et2_textbox = et2_inputWidget.extend({
 		else
 		{
 			this.input = $j(document.createElement("input"));
+			if(this.options.type == "passwd") {
+				this.input.attr("type", "password");
+			}
 		}
 
 		if(this.options.size) {
@@ -153,7 +156,7 @@ var et2_textbox = et2_inputWidget.extend({
 	}
 });
 
-et2_register_widget(et2_textbox, ["textbox"]);
+et2_register_widget(et2_textbox, ["textbox", "passwd"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
