@@ -235,7 +235,12 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 	click: function(_node) {
 		if (this.onclick)
 		{
-			return this.onclick(_node);
+			if(typeof this.onclick == 'function')
+			{
+				return this.onclick(_node);
+			} else {
+				return (et2_compileLegacyJS(this.options.onclick, this, _node))();
+			}
 		}
 
 		return true;
