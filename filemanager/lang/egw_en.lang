@@ -105,6 +105,7 @@ files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. See the specific application for a list of placeholders
 general	filemanager	en	General
 go home	filemanager	en	Go home
 go to	filemanager	en	Go to
