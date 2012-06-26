@@ -424,6 +424,10 @@ div.et2_link_entry:after {
 .et2_link_to .progress li:hover.success span.ui-icon-comment {
 	display: inline;
 }
+.et2_link_to .et2_button_icon {
+	float: left;
+	width: 22px;
+}
 
 .et2_link {
 	cursor: pointer;

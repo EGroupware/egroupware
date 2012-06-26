@@ -128,6 +128,21 @@ var et2_link_to = et2_inputWidget.extend({
 			.appendTo(this.div).hide();
 		et2_link_entry.prototype.set_blur(this.egw().lang("Comment..."),this.comment);
 
+		// Filemanager link popup
+		this.filemanager_button = $j(document.createElement("img"))
+			.attr("src", this.egw().image("filemanager/navbar"))
+			.addClass("et2_button et2_button_icon")
+			.appendTo(this.div)
+			.click(this, function(e) {
+				// Open the filemanager select in a popup
+				var values = e.data.options.value;
+				e.data.egw().open_link(
+					'/index.php?menuaction=filemanager.filemanager_select.select&mode=open-multiple&method=etemplate_widget_link::link_existing&label=link&id=' + values.to_app + ":" + values.to_id,
+					false,
+					'640x580'
+				);
+			});
+
 		// Need a div for file upload widget
 		this.file_div = $j(document.createElement("div")).appendTo(this.div);
 
