@@ -137,12 +137,12 @@ class infolog_groupdav extends groupdav_handler
 	 * Handle propfind in the infolog folder
 	 *
 	 * @param string $path
-	 * @param array $options
+	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function propfind($path,$options,&$files,$user,$id='')
+	function propfind($path,&$options,&$files,$user,$id='')
 	{
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = $this->get_infolog_filter($path, $user);

@@ -126,12 +126,12 @@ abstract class groupdav_handler
 	 * Handle propfind request for an application folder
 	 *
 	 * @param string $path
-	 * @param array $options
+	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	abstract function propfind($path,$options,&$files,$user);
+	abstract function propfind($path,&$options,&$files,$user);
 
 	/**
 	 * Propfind callback, if interator is used
