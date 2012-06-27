@@ -205,17 +205,52 @@ class historylog
 		{
 			$total = $GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',$filter,__LINE__,__FILE__,false,'','phpgwapi',0)->fetchColumn();
 		}
-		foreach($GLOBALS['egw']->db->select(
-			self::TABLE,
-			$mysql_calc_rows.'*',
-			$filter,
+		$_query = array(array(
+			'table' => self::TABLE,
+			'cols' => array('history_id', 'history_record_id','history_appname','history_owner','history_status','history_new_value', 'history_timestamp','history_old_value'),
+			'where' => $filter,
+		));
+
+		// Add in files, if possible
+		if($GLOBALS['egw_info']['user']['apps']['filemanager'] &&
+			$file = sqlfs_stream_wrapper::url_stat("/apps/{$query['appname']}/{$query['record_id']}",STREAM_URL_STAT_LINK))
+		{
+			$_query[] = array(
+				'table' => sqlfs_stream_wrapper::TABLE,
+				'cols' =>array('fs_id', 'fs_dir', '"filemanager"','fs_modifier','"~file~"','fs_name','fs_modified', '""'),
+				'where' => array('fs_dir' => $file['ino'])
+			);
+		}
+		$new_file_id = array();
+		foreach($GLOBALS['egw']->db->union(
+			$_query,
 			__LINE__, __FILE__,
+			' ORDER BY ' . ($query['order'] ? $query['order'] : 'history_timestamp') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'),
 			$query['start'],
-			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'),
-			'phpgwapi',
 			$query['num_rows']
 		) as $row) {
 			$row['user_ts'] = $GLOBALS['egw']->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+
+			// Get information needed for proper display
+			if($row['history_appname'] == 'filemanager')
+			{
+				$new_version = $new_file_id[$row['history_new_value']];
+				$new_file_id[$row['history_new_value']] = count($rows);
+				$path = sqlfs_stream_wrapper::id2path($row['history_id']);
+
+				// Apparently we don't have to do anything with it, just ask...
+				// without this, previous versions are not handled properly
+				egw_vfs::getExtraInfo($path);
+
+				$row['history_new_value'] = array(
+					'path' => $path,
+					'name' => basename($path)
+				);
+				if($new_version !== null)
+				{
+					$rows[$new_version]['old_value'] = $row['history_new_value'];
+				}
+			}
 			$rows[] = egw_db::strip_array_keys($row,'history_');
 		}
 		if ($mysql_calc_rows)

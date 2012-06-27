@@ -175,8 +175,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		// Add in handling for links
 		if(typeof this.options.value['status-widgets']['~link~'] == 'undefined')
 		{
-			this.columns[2].widget.optionValues['~link~'] = this.egw().lang('link');
+			this.columns[this.FIELD].widget.optionValues['~link~'] = this.egw().lang('link');
 			this.options.value['status-widgets']['~link~'] = 'link';
+		}
+
+		// Add in handling for files
+		if(typeof this.options.value['status-widgets']['~file~'] == 'undefined')
+		{
+			this.columns[this.FIELD].widget.optionValues['~file~'] = this.egw().lang('File');
+			this.options.value['status-widgets']['~file~'] = 'vfs';
 		}
 
 		// Per-field widgets - new value & old value
