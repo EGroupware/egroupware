@@ -105,6 +105,8 @@ class ajaxfelamimail
 			}
 			//reset Form
 			$response->addAssign("newSubFolder", "value", '');
+			//reset folderObject cache, to trigger reload
+			felamimail_bo::resetFolderObjectCache($this->imapServerID);
 
 			return $response->getXML();
 		}
@@ -250,6 +252,8 @@ class ajaxfelamimail
 					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
 				}
 			}
+			//reset folderObject cache, to trigger reload
+			felamimail_bo::resetFolderObjectCache($this->imapServerID);
 			return $response->getXML();
 		}
 
@@ -427,6 +431,8 @@ class ajaxfelamimail
 				$folderName = $this->_encodeFolderName($folderName);
 				$response->addScript("tree.deleteItem('$folderName',1);");
 			}
+			//reset folderObject cache, to trigger reload
+			felamimail_bo::resetFolderObjectCache($this->imapServerID);
 
 			return $response->getXML();
 		}
@@ -1316,6 +1322,8 @@ class ajaxfelamimail
 					$response->addScript("window.tree.insertNewItem('$_parentFolder','$newFolderName','$folderName',onNodeSelect,'MailFolderPlain.png',0,0,'CHILD,CHECKED,SELECT,CALL');");
 				}
 			}
+			//reset folderObject cache, to trigger reload
+			felamimail_bo::resetFolderObjectCache($this->imapServerID);
 
 			return $response->getXML();
 		}
@@ -1561,6 +1569,8 @@ class ajaxfelamimail
 			$_folderName = $this->sessionDataAjax['folderName'];
 			$result = $this->bofelamimail->setACL($_folderName, $_user, $_acl, $_recursive);
 			if ($result && $folderACL = $this->bofelamimail->getIMAPACL($_folderName)) {
+				//reset folderObject cache, to trigger reload
+				felamimail_bo::resetFolderObjectCache($this->imapServerID);
 				return $this->updateACLView();
 			}
 
@@ -1595,6 +1605,8 @@ class ajaxfelamimail
 			$status = (bool)$_status;
 
 			$this->bofelamimail->subscribe($folderName, $status);
+			//reset folderObject cache, to trigger reload
+			felamimail_bo::resetFolderObjectCache($this->imapServerID);
 
 			$response = new xajaxResponse();
 			return $response->getXML();

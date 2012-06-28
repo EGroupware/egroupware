@@ -1551,6 +1551,7 @@ class felamimail_bo
 
 		// does the folder exist???
 		$folderInfo = $this->icServer->getMailboxes('', $_folderName, true);
+
 		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
 			if (self::$debug) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 			return false;
@@ -1608,6 +1609,24 @@ class felamimail_bo
 		return $retValue;
 	}
 
+	static function resetFolderObjectCache($_ImapServerId=null)
+	{
+		error_log(__METHOD__.__LINE__.' called for Profile:'.$_ImapServerId.'->'.function_backtrace());
+		if (is_null($_ImapServerId))
+		{
+			$folders2return = array();
+		}
+		else
+		{
+			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($folders2return[$_ImapServerId]))
+			{
+				unset($folders2return[$_ImapServerId]);
+			}
+		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
+	}
+
 	/**
 	* get IMAP folder objects
 	*
@@ -1648,16 +1667,6 @@ class felamimail_bo
 		$inboxData->shortDisplayName	= lang('INBOX');
 		$inboxData->subscribed = true;
 		if($_getCounters == true) {
-			/*
-			$folderStatus = $this->_getStatus('INBOX');
-
-			$status =  new stdClass;
-			$status->messages	= $folderStatus['MESSAGES'];
-			$status->unseen		= $folderStatus['UNSEEN'];
-			$status->recent		= $folderStatus['RECENT'];
-
-			$inboxData->counter	= $status;
-			*/
 			$inboxData->counter = self::getMailBoxCounters('INBOX');
 		}
 		// force unsubscribed by preference showAllFoldersInFolderPane
@@ -2300,7 +2309,7 @@ class felamimail_bo
 	{
 		static $HierarchyDelimiter;
 		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter =& egw_cache::getSession('felamimail','HierarchyDelimiter');
-		if (isset($HierarchyDelimiter[$this->icServer->ImapServerId]))
+		if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])&&!empty($HierarchyDelimiter[$this->icServer->ImapServerId]))
 		{
 			$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
 			return $HierarchyDelimiter[$this->icServer->ImapServerId];
@@ -2313,6 +2322,44 @@ class felamimail_bo
 		}
 		$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
 		return $HierarchyDelimiter[$this->icServer->ImapServerId];
+	}
+
+
+	function getSpecialUseFolders()
+	{
+		static $specialUseFolders;
+		if (is_null($specialUseFolders)) $specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+		if (isset($specialUseFolders[$this->icServer->ImapServerId]))
+		{
+			return $specialUseFolders[$this->icServer->ImapServerId];
+		}
+		if(($this->icServer instanceof defaultimap))
+		{
+			if(($this->hasCapability('SPECIAL-USE')))
+			{
+				$ret = $this->icServer->getSpecialUseFolders();
+				if (PEAR::isError($ret))
+				{
+					$specialUseFolders[$this->icServer->ImapServerId]=array();
+				}
+				else
+				{
+					foreach ($ret as $k => $f)
+					{
+						if (isset($f['ATTRIBUTES']) && !empty($f['ATTRIBUTES']) &&
+							!in_array('\\NonExistent',$f['ATTRIBUTES']))
+						{
+							foreach (self::$autoFolders as $i => $n) // array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
+							{
+								if (in_array('\\'.$n,$f['ATTRIBUTES'])) $specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
+							}
+						}
+					}
+				}
+				egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$specialUseFolders, $expiration=60*60*24*5);
+			}
+		}
+		return $specialUseFolders[$this->icServer->ImapServerId];
 	}
 
 	/**
@@ -3483,6 +3530,9 @@ class felamimail_bo
 		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 		//error_log(print_r($this->icServer->_connected,true));
 		$hD = $this->getHierarchyDelimiter();
+		$sUF = $this->getSpecialUseFolders();
+		//error_log(__METHOD__.__LINE__.array2string($sUF));
+
 		return $tretval;
 	}
 
