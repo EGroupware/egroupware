@@ -28,7 +28,7 @@ require_once 'Net/Socket.php';
  */
 class Net_IMAPProtocol {
 
-    
+
     /**
      * The auth methods this class support
      * @var array
@@ -72,7 +72,7 @@ class Net_IMAPProtocol {
 
 
     /**
-     * The options for SSL/TLS connection 
+     * The options for SSL/TLS connection
      * (see documentation for stream_context_create)
      * @var array
      */
@@ -266,7 +266,7 @@ class Net_IMAPProtocol {
      * Sets printed output of errors on or of
      *
      * @param   boolean true or false
-     * 
+     *
      * @return  nothing
      * @access  public
      * @since   1.1
@@ -408,7 +408,7 @@ class Net_IMAPProtocol {
     }
 
     /**
-     * set the options for a SSL/TLS connection 
+     * set the options for a SSL/TLS connection
      * (see documentation for stream_context_create)
      *
      * @param  array  $options the options for the SSL/TLS connection
@@ -525,7 +525,7 @@ class Net_IMAPProtocol {
                 if ( !PEAR::isError($result)) break;
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method));
                 return $this->cmdAuthenticate($uid , $pwd);
- 
+
             default :
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
                 break;
@@ -793,7 +793,7 @@ class Net_IMAPProtocol {
                       return $method;
                   }
                }
-            } 
+            }
 
             return new PEAR_Error("$method NOT supported authentication method!. This IMAP server " .
                 "supports these methods: $serverMethods, but I support $myMethods");
@@ -1133,7 +1133,7 @@ class Net_IMAPProtocol {
      * Send the  STATUS Mailbox Command
      *
      * @param string $mailbox the mailbox name
-     * @param mixed  $request the request status 
+     * @param mixed  $request the request status
      *                        it could be an array or space separated string of
      *                        MESSAGES | RECENT | UIDNEXT
      *                        UIDVALIDITY | UNSEEN
@@ -1159,7 +1159,7 @@ class Net_IMAPProtocol {
                 $this->_prot_error("request '$status_data' is invalid! see RFC 3501!!!!" , __LINE__ , __FILE__);
             }
         }
-        
+
         // back to space separated string
         $request = implode(' ', $request);
 
@@ -1197,6 +1197,27 @@ class Net_IMAPProtocol {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $mailbox_base=$this->_createQuotedString($mailbox_base);
         return $this->_genericCommand('LIST', "$mailbox_base $mailbox_name" );
+    }
+
+
+
+
+
+
+    /**
+     * Send the  LIST  Command for SPECIAL-USE folders
+     *
+     * @return mixed Returns a PEAR_Error with an error message on any
+     *               kind of failure, or true on success.
+     * @access public
+     * @since  1.0
+     */
+    function cmdListSpecialUse($mailbox_base, $mailbox)
+    {
+        $mailbox_name=$this->_createQuotedString($mailbox);
+        $mailbox_base=$this->_createQuotedString($mailbox_base);
+		//error_log(__METHOD__.__LINE__."(SPECIAL-USE) $mailbox_base $mailbox_name");
+        return $this->_genericCommand('LIST', "(SPECIAL-USE) $mailbox_base $mailbox_name" );
     }
 
 
@@ -1358,7 +1379,7 @@ class Net_IMAPProtocol {
      */
     function cmdSort($sort_cmd)
     {
-        /* 
+        /*
         if ($_charset != '' )
             $_charset = "[$_charset] ";
         $param = sprintf("%s%s",$charset,$search_cmd);
@@ -1785,7 +1806,7 @@ class Net_IMAPProtocol {
             return new PEAR_Error("This IMAP server does not support ACL's! ");
         }
         $mailbox_name=$this->_createQuotedString($mailbox_name);
-        
+
         return $this->_genericCommand('DELETEACL', sprintf("%s \"%s\"",$mailbox_name,$user) );
     }
 
@@ -2093,7 +2114,7 @@ class Net_IMAPProtocol {
 
 
 
-    function _createQuotedString($mailbox) 
+    function _createQuotedString($mailbox)
     {
       $search = array('\\', '"');
       $replace = array('\\\\', '\\"');
@@ -2443,14 +2464,14 @@ class Net_IMAPProtocol {
 		#error_log(__METHOD__. $len . "#".$str."\n");
 		$startingpos = $pos;
 		if ($str[$pos] !== '"') return false;	// start condition failed
-		$pos++;	
+		$pos++;
 		$delimCount=0;
 		while($str[$pos] !== '"' && $pos < $len) {
 			// this is a fix to stop before the delimiter, in broken string messages containing an odd number of double quotes
 			// the idea is to check for a stopDelimited followed by eiter a new startDelimiter or an other stopDelimiter
 			// that allows to have something like '"Name (Nick)" <email>' containing one delimiter
 			// if you have something like "Name ((something))" we must count the delimiters (and hope that they are not unbalanced too)
-			// and check if we have a negative amount of delimiters or no delimiters to meet the stop condition, before we run into a closing double quote 
+			// and check if we have a negative amount of delimiters or no delimiters to meet the stop condition, before we run into a closing double quote
 			if ($str[$pos] === $startDelim) $delimCount++;
 			if ($str[$pos] === $stopDelim) $delimCount--;
 			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
@@ -2919,7 +2940,7 @@ class Net_IMAPProtocol {
 		$expused = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
 		$expmax = $this->_parseOneStringResponse( $str,__LINE__ , __FILE__ );
 		return array(); //throw away this information as this info seems quite useless
-		break; 
+		break;
         case "FETCH" :
                 $this->_parseSpace( $str  ,__LINE__  ,__FILE__ );
                 // Get the parsed pathenthesis
@@ -2938,7 +2959,7 @@ class Net_IMAPProtocol {
                 $this->_parseSpace( $str , __LINE__ , __FILE__ );
                 $this->_getNextToken($str , $shared, false);
                 $struct_arr['NAMESPACES']['shared'] = $this->_arrayfy_content($shared);
-                
+
                 return array($token=>$struct_arr);
             break;
         case "CAPABILITY" :
@@ -3086,7 +3107,7 @@ class Net_IMAPProtocol {
                 //$str = " INBOX\r\nA0006 OK Completed\r\n";
                 $this->_parseSpace($str, __LINE__, __FILE__);
                 $this->_getNextToken($str, $mailbox);
-                
+
                 $arr = array();
                 while (substr($str, 0, 2) != "\r\n") {
                     $this->_parseSpace($str, __LINE__, __FILE__);
@@ -3223,7 +3244,7 @@ class Net_IMAPProtocol {
 
                     // I get the command
                     $this->_getNextToken($str, $command);
- 
+
                     if (($ext_arr = $this->_retrParsedResponse($str, $command, $msg_nro)) == false) {
                         //  if this bogus response cis a FLAGS () or EXPUNGE response
                         // the ignore it
@@ -3305,7 +3326,7 @@ class Net_IMAPProtocol {
         $this->_putCMD( $cmdid , $command , $params );
         $args=$this->_getRawResponse( $cmdid );
         //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand:".$command.' '.$params);
-        //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand: ->result:".print_r($args,TRUE));
+        //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand: ->result:".print_r($args,TRUE).function_backtrace());
         return $this->_genericImapResponseParser( $args , $cmdid );
     }
 
@@ -3320,7 +3341,7 @@ class Net_IMAPProtocol {
         if(function_exists('mb_convert_encoding')) {
           return mb_convert_encoding($str, "UTF7-IMAP", "ISO-8859-1");
         }
-        
+
         $encoded_utf7 = '';
         $base64_part  = '';
         if(is_array($str)){
@@ -3454,8 +3475,8 @@ class Net_IMAPProtocol {
         }
         return true;
     }
-    
-    function _getLineLength($string) 
+
+    function _getLineLength($string)
     {
         if (extension_loaded('mbstring')) {
             return mb_strlen($string,'latin1');
@@ -3464,7 +3485,7 @@ class Net_IMAPProtocol {
         }
     }
 
-    function _getSubstr($string, $start, $length = false) 
+    function _getSubstr($string, $start, $length = false)
     {
         if (extension_loaded('mbstring')) {
             if($length !== false) {

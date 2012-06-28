@@ -231,30 +231,48 @@ class Net_IMAP extends Net_IMAPProtocol {
             if ($commResp["EXT"]["FLAGS"]) foreach($commResp["EXT"]["FLAGS"] as $f =>$v) if (stripos($flagsString,$v)===false) $flagsString .= ($flagsString?',':'').$v;
             if ($commResp["EXT"]["PERMANENTFLAGS"]) foreach($commResp["EXT"]["PERMANENTFLAGS"] as $pf =>$pv) if (stripos($flagsString,$pv)===false) $flagsString .= ($flagsString?',':'').$pv;
         }
+        //error_log(__METHOD__.__LINE__.' FlagsSupported:'.$flagsString);
         if (!empty($flagsString))
         {
             foreach (array('$label1','$label2','$label3','$label4','$label5','\*') as $i =>$kw)
             {
                 if (stripos($flagsString,$kw) !== false)
                 {
+                    if ($kw=='\*') $supportsArbitraryKeyWords = true;
                     $supportsKeyWords = true;
                     break;
                 }
             }
+            if (stripos($flagsString,'mdnsent') !== false)
+            {
+                $supportsMDNSent = true;
+                if (stripos($flagsString,'mdnnotsent') !== false) $supportsMDNnotSent = true;
+            }
         }
-        if ($supportsKeyWords)
+        if ($supportsKeyWords||$supportsArbitraryKeyWords||$supportsMDNSent||$supportsMDNnotSent)
         {
             // check if capabilities is set, if not set it.
             if( $this->_serverSupportedCapabilities == null ){
                 $this->cmdCapability();
             }
-            if($this->_serverSupportedCapabilities != null ){
-                if( !in_array( 'SUPPORTS_KEYWORDS' , $this->_serverSupportedCapabilities ) ){
-                    //error_log(__METHOD__.__LINE__.' Mailbox:'.$mailbox.'->'.array2string($flagsString));
-                    $this->_serverSupportedCapabilities[] = 'SUPPORTS_KEYWORDS';
-                    //error_log(__METHOD__.__LINE__.array2string($this->_serverSupportedCapabilities));
+            if ($this->_serverSupportedCapabilities != null )
+            {
+                if($supportsKeyWords){
+                    if( !in_array( 'SUPPORTS_KEYWORDS' , $this->_serverSupportedCapabilities ) ){
+                        $this->_serverSupportedCapabilities[] = 'SUPPORTS_KEYWORDS';
+                    }
                 }
+                if($supportsArbitraryKeyWords||$supportsMDNSent||$supportsMDNnotSent){
+                    if(($supportsArbitraryKeyWords) && !in_array( 'SUPPORTS_ARBITRARYKEYWORDS' , $this->_serverSupportedCapabilities ) ) $this->_serverSupportedCapabilities[] = 'SUPPORTS_ARBITRARYKEYWORDS';
+                    if(($supportsArbitraryKeyWords||$supportsMDNSent) && !in_array( 'SUPPORTS_MDNSENT' , $this->_serverSupportedCapabilities ) ){
+                        $this->_serverSupportedCapabilities[] = 'SUPPORTS_MDNSENT';
+                    }
+                    if(($supportsArbitraryKeyWords||$supportsMDNnotSent) && !in_array( 'SUPPORTS_MDNNOTSENT' , $this->_serverSupportedCapabilities ) ){
+                        $this->_serverSupportedCapabilities[] = 'SUPPORTS_MDNNOTSENT';
+                    }
+    	        }
             }
+            //error_log(__METHOD__.__LINE__.array2string($this->_serverSupportedCapabilities));
         }
         return true;
     }
@@ -1458,6 +1476,46 @@ class Net_IMAP extends Net_IMAPProtocol {
             return $ret["PARSED"][0]["EXT"]["LIST"]["HIERACHY_DELIMITER"];
         }
         return new PEAR_Error( 'the IMAP Server does not support HIERACHY_DELIMITER!' );
+    }
+
+
+
+    /**
+     * Gets the SPECIAL-USE Folders
+     *
+     * $param   string  the mailbox to get the SPECIAL-USE Folders from
+     *
+     * @return  string  the hierarchy delimiter
+     *
+     * @access  public
+     * @since   1.0
+     */
+    function getSpecialUseFolders( $mailbox = '' )
+    {
+		$returnAttributes=true;
+        if( PEAR::isError( $ret = $this->cmdListSpecialUse( $mailbox , '*' )  ) ){
+            return $ret;
+        }
+		//error_log(__METHOD__.__LINE__.array2string($ret));
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
+            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+        }
+        $ret_aux=array();
+        if( isset($ret["PARSED"]) ){
+            foreach( $ret["PARSED"] as $mbox ){
+                //If the folder has the \NoSelect atribute we don't put in the list
+                // it solves a bug in wu-imap that crash the IMAP server if we select that mailbox
+                if( isset($mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
+                    if( $returnAttributes){
+                        $ret_aux[]=array(   'MAILBOX' => $mbox["EXT"]["LIST"]["MAILBOX_NAME"],
+                                            'ATTRIBUTES' => $mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"] ,
+                                            //'HIERACHY_DELIMITER' => $mbox["EXT"]["LIST"]["HIERACHY_DELIMITER"]
+										) ;
+                    }
+                }
+            }
+        }
+        return $ret_aux;
     }
 
 
