@@ -1611,7 +1611,7 @@ class felamimail_bo
 
 	static function resetFolderObjectCache($_ImapServerId=null)
 	{
-		error_log(__METHOD__.__LINE__.' called for Profile:'.$_ImapServerId.'->'.function_backtrace());
+		//error_log(__METHOD__.__LINE__.' called for Profile:'.$_ImapServerId.'->'.function_backtrace());
 		if (is_null($_ImapServerId))
 		{
 			$folders2return = array();
