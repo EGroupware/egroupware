@@ -1183,7 +1183,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			// using octal numbers with mysql leads to funny results (select 384 & 0400 --> 384 not 256=0400)
 			// 256 = 0400, 32 = 040
 			$sql_read_acl = '((fs_mode & 4)=4 OR (fs_mode & 256)=256 AND fs_uid='.(int)egw_vfs::$user.
-				' OR (fs_mode & 32)=32 AND fs_gid IN('.implode(',',$memberships).'))';
+				($memberships ? ' OR (fs_mode & 32)=32 AND fs_gid IN('.implode(',',$memberships).')' : '').')';
+			//error_log(__METHOD__."() egw_vfs::\$user=".array2string(egw_vfs::$user).' --> memberships='.array2string($memberships).' --> '.$sql_read_acl.($memberships?'':': '.function_backtrace()));
 		}
 		return $sql_read_acl;
 	}
