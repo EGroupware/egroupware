@@ -1135,7 +1135,7 @@ class ajaxfelamimail
 
 		function refreshFolderList($activeFolderList ='')
 		{
-			if ($this->_debug) error_log("ajaxfelamimail::refreshFolderList with folders:".$activeFolderList);
+			if ($this->_debug) error_log(__METHOD__.__LINE__." with folders:".$activeFolderList);
 			if ($activeFolderList != '') $activeFolders = explode('#,#',$activeFolderList);
 			$GLOBALS['egw']->session->commit_session();
 
