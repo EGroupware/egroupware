@@ -869,7 +869,17 @@ class accounts
 			// at login-time only the hooks from the following apps will be called
 			'order' => array('felamimail','fudforum'),
 		),False,True);  // called for every app now, not only enabled ones
-
+		// set the appropriate value for the can change password flag (assume users can, if the admin requires users to change their password)
+		$data['changepassword'] = (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'];
+		if(!$data['changepassword'])
+		{
+			$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$data['account_id'],1);
+		}
+		else
+		{
+			$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$data['account_id']);
+		}
+		unset($data['changepassword']);
 		// set memberships if given
 		if ($memberships)
 		{
