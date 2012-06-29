@@ -934,10 +934,10 @@ abstract class egw_framework
 		{
 			$this->_add_topmenu_item($apps['preferences']);
 		}
-		// allways display pasword in topmenu
+		// allways display password in topmenu, if user has rights to change it
 		if((($pw_app = $GLOBALS['egw_info']['user']['apps']['preferences']) ||
 			($pw_app = $GLOBALS['egw_info']['user']['apps']['password'])) &&
-			!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
+			!$GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences'))
 		{
 			$this->_add_topmenu_item(array(
 				'name'  => $pw_app['name'] == 'password' ? 'about' : $pw_app['name'],
