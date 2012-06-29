@@ -1,15 +1,21 @@
 <?php
 /**
- * eGroupWare API: Database abstraction library
+ * EGroupware API: Database abstraction library
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+if(empty($GLOBALS['egw_info']['server']['db_type']))
+{
+	$GLOBALS['egw_info']['server']['db_type'] = 'mysql';
+}
+include_once(EGW_API_INC.'/adodb/adodb.inc.php');
 
 /**
  * Database abstraction library
@@ -45,13 +51,6 @@
  *			echo "Connection to DB failed (".$e->getMessage().")!\n";
  *		}
  */
-
-if(empty($GLOBALS['egw_info']['server']['db_type']))
-{
-	$GLOBALS['egw_info']['server']['db_type'] = 'mysql';
-}
-include_once(EGW_API_INC.'/adodb/adodb.inc.php');
-
 class egw_db
 {
 	/**
@@ -104,11 +103,6 @@ class egw_db
 	var $Password = '';
 
 	/**
-	* @var int $Auto_Free automatically free results - 0 no, 1 yes
-	*/
-	var $Auto_Free     = 0;
-
-	/**
 	* @var int $Debug enable debuging - 0 no, 1 yes
 	*/
 	var $Debug         = 0;
@@ -146,9 +140,6 @@ class egw_db
 	 */
 	var $query_log;
 
-	//i am not documenting private vars - skwashd :)
-    var $xmlrpc = False;
-	var $soap   = False;
 	/**
 	 * ADOdb connection
 	 *
