@@ -745,6 +745,11 @@ class db_backup
 	}
 
 	/**
+	 * Number of rows to select per chunk, to not run into memory limit on huge tables
+	 */
+	const ROW_CHUNK = 100;
+
+	/**
 	 * Backup all data in the form of a (compressed) csv file
 	 *
 	 * @param f resource file opened with fopen for writing
@@ -789,37 +794,27 @@ class db_backup
 
 		$this->schema_backup($f);	// add the schema in a human readable form too
 
-		/* not needed, already done by schema_backup
-		foreach($this->adodb->MetaTables('TABLES') as $table)
-		{
-			if ($this->db->Type == 'sapdb' || $this->db->Type == 'maxdb')
-			{
-				$table = strtolower($table);
-			}
-			if (!($this->schemas[$table] = $this->schema_proc->GetTableDefinition($table)))
-			{
-				unset($this->schemas[$table]);
-			}
-		}
-		*/
 		fwrite($f,"\nschema: ".serialize($this->schemas)."\n");
 
 		foreach($this->schemas as $table => $schema)
 		{
 			if (in_array($table,$this->exclude_tables)) continue;	// dont backup
 
-			$first_row = true;
-			$this->db->select($table,'*',false,__LINE__,__FILE__);
-			while($row = $this->db->row(true))
-			{
-				if ($first_row)
+			$total = 0;
+			do {
+				$num_rows = 0;
+				// querying only chunks for 100 rows, to not run into memory limit on huge tables
+				foreach($this->db->select($table, '*', false, __LINE__, __FILE__, $total, '', false, self::ROW_CHUNK) as $row)
 				{
-					fwrite($f,"\ntable: $table\n".implode(',',array_keys($row))."\n");
-					$first_row = false;
+					if ($total === 0) fwrite($f,"\ntable: $table\n".implode(',',array_keys($row))."\n");
+
+					array_walk($row,array('db_backup','escape_data'),$schema['fd']);
+					fwrite($f,implode(',',$row)."\n");
+					++$total;
+					++$num_rows;
 				}
-				array_walk($row,array('db_backup','escape_data'),$schema['fd']);
-				fwrite($f,implode(',',$row)."\n");
 			}
+			while(!($total % self::ROW_CHUNK) && $num_rows);
 		}
 		if(!$zippresent)  // save without files
 		{
