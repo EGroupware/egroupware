@@ -401,7 +401,7 @@ etemplate2.prototype.getValues = function(_root)
 		// Handle arrays, eg radio[]
 		if(id === "")
 		{
-			id = typeof target == "undefined" ? 0 : _target.length;
+			id = typeof _target == "undefined" ? 0 : Object.keys(_target).length;
 		}
 
 		// Check whether the entry is really undefined
