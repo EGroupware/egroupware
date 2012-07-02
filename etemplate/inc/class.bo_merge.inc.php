@@ -870,6 +870,18 @@ abstract class bo_merge
 		{
 			$replacements = translation::convert($replacements,translation::charset(),$charset);
 		}
+
+		// Date only placeholders for timestamps
+		if(is_array($this->date_fields))
+		{
+			foreach($this->date_fields as $field)
+			{
+				if($value = $replacements['$$'.$field.'$$'])
+				{
+					$replacements['$$'.$field.'/date$$'] = egw_time::to($value,true);
+				}
+			}
+		}
 		if ($is_xml)	// zip'ed xml document (eg. OO)
 		{
 			// Numeric fields
