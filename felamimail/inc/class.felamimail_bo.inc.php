@@ -1136,7 +1136,7 @@ class felamimail_bo
 		{
 			if ($_ignoreCache===false)
 			{
-				error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 			}
 		}
