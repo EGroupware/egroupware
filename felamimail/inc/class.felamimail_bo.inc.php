@@ -1127,18 +1127,22 @@ class felamimail_bo
 		return $folderStatus[$this->icServer->ImapServerId][$folderName];
 	}
 
-	function _getStructure($_uid, $byUid=true)
+	function _getStructure($_uid, $byUid=true, $_ignoreCache=false)
 	{
 		static $structure;
 		$_folder = $this->sessionData['mailbox'];
 		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 		if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
 		{
-			//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid);
-			return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+			if ($_ignoreCache===false)
+			{
+				error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+			}
 		}
 		$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
 	}
 
@@ -2218,6 +2222,7 @@ class felamimail_bo
 
 	function getTextPart($_uid, $_structure, $_htmlMode = '', $_preserveSeen = false)
 	{
+		//error_log(__METHOD__.__LINE__.'->'.$_uid.array2string($_structure).' '.function_backtrace());
 		$bodyPart = array();
 		if (self::$debug) _debug_array(array($_structure,function_backtrace()));
 		$partID = $_structure->partID;
@@ -3069,7 +3074,7 @@ class felamimail_bo
 		if(is_object($_structure)) {
 			$structure = $_structure;
 		} else {
-			$structure = $this->_getStructure($_uid, true);
+			$structure = $this->_getStructure($_uid, true, true);
 			if($_partID != '') {
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
