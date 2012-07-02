@@ -230,6 +230,9 @@ class etemplate_widget_link extends etemplate_widget
 			$link = egw_vfs::concat($app_path,egw_vfs::basename($target));
 			egw_vfs::symlink($target,$link);
 		}
+
+		// Return js to refresh opener and close popup
+		return 'window.close();';
 	}
 
 	public function ajax_delete($value) {

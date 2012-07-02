@@ -129,6 +129,7 @@ var et2_link_to = et2_inputWidget.extend({
 		et2_link_entry.prototype.set_blur(this.egw().lang("Comment..."),this.comment);
 
 		// Filemanager link popup
+		var self = this;
 		this.filemanager_button = $j(document.createElement("img"))
 			.attr("src", this.egw().image("filemanager/navbar"))
 			.addClass("et2_button et2_button_icon")
@@ -136,11 +137,30 @@ var et2_link_to = et2_inputWidget.extend({
 			.click(this, function(e) {
 				// Open the filemanager select in a popup
 				var values = e.data.options.value;
-				e.data.egw().open_link(
+				var popup = e.data.egw().open_link(
 					'/index.php?menuaction=filemanager.filemanager_select.select&mode=open-multiple&method=etemplate_widget_link::link_existing&label=link&id=' + values.to_app + ":" + values.to_id,
-					false,
+					'link_existing',
 					'640x580'
 				);
+				if(popup)
+				{
+					// Update on close doesn't always (ever, in chrome) work, so poll
+					var poll = self.egw().window.setInterval(
+						function() {
+							if(popup.closed) {
+								self.getRoot().iterateOver(
+									function(widget) {
+										if(widget.id == self.id) {
+											widget._get_links();
+										}
+									},
+									self, et2_link_list
+								)
+								self.egw().window.clearInterval(poll);
+							}
+						},1000);
+					
+				}
 			});
 
 		// Need a div for file upload widget

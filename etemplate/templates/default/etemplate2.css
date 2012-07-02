@@ -540,6 +540,7 @@ ul.et2_link_string {
  */
 ul.et2_vfs {
 	padding-left: 0px;
+	margin: 1px;
 }
 .et2_vfs li.vfsFilename {
 	display: inline;
