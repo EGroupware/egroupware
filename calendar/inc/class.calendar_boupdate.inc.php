@@ -530,12 +530,15 @@ class calendar_boupdate extends calendar_bo
 			case 'time_change_4h':
 			case 'time_change':
 			default:
-				$diff = max(abs($this->date2ts($old_event['start'])-$this->date2ts($new_event['start'])),
-					abs($this->date2ts($old_event['end'])-$this->date2ts($new_event['end'])));
-				$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
-				if ($msg_type == MSG_MODIFIED && $diff > $check)
+				if (is_array($new_event) && is_array($old_event))
 				{
-					++$want_update;
+					$diff = max(abs(self::date2ts($old_event['start'])-self::date2ts($new_event['start'])),
+						abs(self::date2ts($old_event['end'])-self::date2ts($new_event['end'])));
+					$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
+					if ($msg_type == MSG_MODIFIED && $diff > $check)
+					{
+						++$want_update;
+					}
 				}
 			case 'add_cancel':
 				if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
