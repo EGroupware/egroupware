@@ -45,6 +45,10 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.setDOMNode(this.span[0]);
 	},
 
+	getValue: function() {
+		return this.value;
+	},
+
 	set_value: function(_value) {
 		if (typeof _value !== 'object')
 		{
@@ -52,6 +56,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this.span.empty().text(_value);
 			return;
 		}
+		this.value = _value;
 		var path = _value.path ? _value.path : '/';
 		// calculate path as parent of name, which can contain slashes
 		// eg. _value.path=/home/ralf/sub/file, _value.name=sub/file --> path=/home/ralf
@@ -91,6 +96,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 						break;
 				}
 			}
+			var self = this;
 			var data = {path: path, type: i < path_parts.length-1 ? this.DIR_MIME_TYPE : _value.mime };
 			var part = $j(document.createElement("li"))
 				.addClass("vfsFilename")
@@ -98,7 +104,13 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 				//.attr('title', egw.decodePath(path))
 				.addClass("et2_clickable et2_link")
 				.click({data:data, egw: this.egw()}, function(e) {	                         
-					e.data.egw.open(e.data.data, "file");
+					if(!self.onclick) {
+						e.data.egw.open(e.data.data, "file");
+					}
+					else if (self.click())
+					{
+						e.data.egw.open(e.data.data, "file");
+					}
 				})
 				.appendTo(this.span);
 		}
@@ -170,6 +182,8 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 
+	legacyOptions:["size"],
+
 	init: function() {
 		this._super.apply(this, arguments);
 		this.image = jQuery(document.createElement("img"));
@@ -177,6 +191,11 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.setDOMNode(this.image[0]);
 	},
 	set_value: function(_value) {
+		if (typeof _value !== 'object')
+		{
+			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
+			// Keep going, will be 'unknown type'
+		}
 		var src = this.egw().mime_icon(_value['mime'], _value['path']);
 		if(src)
 		{
