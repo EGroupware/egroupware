@@ -179,7 +179,7 @@ class importexport_export_ui {
 		if($definition && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
-		
+
 		if ($_selection && ($content['old_definition'] == $content['definition'] || $content['selection_passed'])) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
@@ -494,8 +494,9 @@ class importexport_export_ui {
 		// Get charset
 		$charset = egw_cache::getSession('importexport', $tmpfname);
 
-		header('Content-type: ' . ($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''));
-		header('Content-Disposition: attachment; filename="'.$nicefname.'.'.$_GET['_suffix'].'"');
+		html::content_header($nicefname.'.'.$_GET['_suffic'],
+			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
+			filesize($tmpfname));
 		fpassthru($file);
 
 		unlink($tmpfname);
