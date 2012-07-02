@@ -783,6 +783,7 @@ class uifelamimail
 
 		function viewMainScreen()
 		{
+			if (!$GLOBALS['egw']->hooks->hook_exists('session_creation','felamimail')) $GLOBALS['egw']->hooks->register_single_app_hook('felamimail','session_creation');
 			$connectionReset = false;
 			// get passed messages
 			if (!empty($_GET["msg"])) $message[] = html::purify($_GET["msg"]);

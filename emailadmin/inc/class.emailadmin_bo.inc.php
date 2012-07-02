@@ -582,19 +582,7 @@ class emailadmin_bo extends so_sql
 	{
 		if (!is_array($_profileID) && is_numeric($_profileID))
 		{
-			//error_log(__METHOD__.__LINE__.' for Profile:'.$_profileID);
-			$buff = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']));
-			if (isset($buff[$_profileID]))
-			{
-				unset($buff[$_profileID]);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$buff,$expiration=60*15);
-			}
-			$isConError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']));
-			if (isset($isConError[$_profileID]))
-			{
-				unset($isConError[$_profileID]);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isConError,$expiration=60*15);
-			}
+			felamimail_bo::resetConnectionErrorCache($_profileID);
 			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if (isset($structure[$_profileID]))
 			{

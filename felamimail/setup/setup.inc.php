@@ -35,6 +35,7 @@ $setup_info['felamimail']['hooks']['editaccount']	= 'felamimail_hooks::accountHo
 $setup_info['felamimail']['hooks']['verify_settings'] = 'felamimail_bo::forcePrefReload';
 $setup_info['felamimail']['hooks']['edit_user']		= 'felamimail_hooks::adminMenu';
 $setup_info['felamimail']['hooks']['search_link'] = 'felamimail_hooks::search_link';
+$setup_info['felamimail']['hooks']['session_creation'] = 'felamimail_bo::resetConnectionErrorCache';
 
 /* Dependencies for this app to work */
 $setup_info['felamimail']['depends'][] = array(

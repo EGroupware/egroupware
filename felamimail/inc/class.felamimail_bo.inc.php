@@ -1609,6 +1609,39 @@ class felamimail_bo
 		return $retValue;
 	}
 
+	static function resetConnectionErrorCache($_ImapServerId=null)
+	{
+		//error_log(__METHOD__.__LINE__.' for Profile:'.array2string($_ImapServerId) .' for user:'.trim($GLOBALS['egw_info']['user']['account_id']));
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		if (is_array($_ImapServerId))
+		{
+			// called via hook
+			$account_id = $_ImapServerId['account_id'];
+			unset($_ImapServerId);
+			$_ImapServerId = null;
+		}
+		if (is_null($_ImapServerId))
+		{
+			$buff = array();
+			$isConError = array();
+		}
+		else
+		{
+			$buff = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($account_id));
+			if (isset($buff[$_ImapServerId]))
+			{
+				unset($buff[$_ImapServerId]);
+			}
+			$isConError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id));
+			if (isset($isConError[$_ImapServerId]))
+			{
+				unset($isConError[$_ImapServerId]);
+			}
+		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($account_id),$buff,$expiration=60*15);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id),$isConError,$expiration=60*15);
+	}
+
 	static function resetFolderObjectCache($_ImapServerId=null)
 	{
 		//error_log(__METHOD__.__LINE__.' called for Profile:'.$_ImapServerId.'->'.function_backtrace());
