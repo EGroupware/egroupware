@@ -80,22 +80,6 @@ abstract class bo_merge
 	 * Parse HTML styles into target document style, if possible
 	 */
 	protected $parse_html_styles = true;
-	
-	/**
-	 * Apps which currently support merge
-	 *
-	 * @var array $merge_apps (array appname => human-readable name)
-	 *
-	 */
-	public static $merge_apps = array(
-		'addressbook'		=> 'Addressbook',
-		'calendar'			=> 'Calendar',
-		'filemanager'		=> 'Filemanager',
-		'infolog'			=> 'Infolog',
-		'projectmanager'	=> 'Projectmanager',
-		'timesheet'			=> 'Timesheet',
-		'tracker'			=> 'Tracker',
-	);
 
 	/**
 	 * Constructor
