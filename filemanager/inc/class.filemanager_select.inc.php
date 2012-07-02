@@ -239,14 +239,16 @@ class filemanager_select
 
 				$name = egw_vfs::basename($path);
 				$is_dir = egw_vfs::is_dir($path);
-				if ($content['mime'] && !$is_dir && egw_vfs::mime_content_type($path) != $content['mime'])
+				$mime = egw_vfs::mime_content_type($path);
+				if ($content['mime'] && !$is_dir && $mime != $content['mime'])
 				{
 					continue;	// does not match mime-filter --> ignore
 				}
 				$content['dir'][$n] = array(
 					'name' => $name,
 					'path' => $path,
-					'onclick' => $is_dir ? "return select_goto('".addslashes($path)."');" :
+					'mime' => $mime,
+					'onclick' => $is_dir ? "return select_goto('".addslashes($path)."',widget);" :
 						($content['mode'] != 'open-multiple' ? "return select_show('".addslashes($name)."');" :
 						"return select_toggle('".addslashes($name)."');"),
 				);
@@ -260,11 +262,28 @@ class filemanager_select
 		}
 
 		$content['js'] = '<script type="text/javascript">
-function select_goto(to)
+function select_goto(to,widget)
 {
 	path = document.getElementById("exec[path]");
-	path.value = to;
-	path.form.submit();
+	if(path)
+	{
+		path.value = to;
+		path.form.submit();
+	}
+	else if (widget)
+	{
+		var path = null;
+		// Cannot do this, there are multiple widgets named path
+		// widget.getRoot().getWidgetById("path");
+		widget.getRoot().iterateOver(function(widget) {
+			if(widget.id == "path") path = widget;
+		},null, et2_textbox);
+		if(path)
+		{
+			path.set_value(to);
+			path.getInstanceManager().postSubmit();
+		}
+	}
 	return false;
 }
 function select_show(file)
@@ -282,7 +301,7 @@ function select_toggle(file)
 </script>
 ';
 		// scroll to end of path
-		$GLOBALS['egw']->js->set_onload("document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]').scrollIntoView();");
+		$GLOBALS['egw']->js->set_onload("var p = document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]'); if (p) scrollIntoView();");
 
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);

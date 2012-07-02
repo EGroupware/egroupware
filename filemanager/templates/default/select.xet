@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.select" template="" lang="" group="0" version="1.7.004">
-		<description id="msg" class="error" align="center"/>
+	<template id="filemanager.select" template="" lang="" group="0" version="1.9.001">
+		<description align="center" id="msg" class="error"/>
 		<grid width="600">
 			<columns>
 				<column width="32"/>
@@ -16,10 +16,10 @@
 						</columns>
 						<rows>
 							<row disabled="!@0">
-								<button image="favorites" label="Favorites" align="center" id="favorites"/>
+								<button align="center" label="Favorites" id="favorites" image="favorites"/>
 							</row>
 							<row height="40">
-								<button image="$row_cont/navbar" label="$row_cont" align="center" id="${row}"/>
+								<button align="center" label="$row_cont" id="${row}" image="$row_cont/navbar"/>
 							</row>
 						</rows>
 					</grid>
@@ -31,8 +31,8 @@
 							<row>
 								<hbox>
 									<html id="js"/>
-									<button id="button[up]" image="goup" label="Up"/>
-									<button id="button[home]" image="gohome" label="Go to your home directory"/>
+									<button label="Up" id="button[up]" image="goup"/>
+									<button label="Go to your home directory" id="button[home]" image="gohome"/>
 									<box class="selectPathContainer">
 										<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
 									</box>
@@ -40,7 +40,7 @@
 								</hbox>
 							</row>
 							<row class="selectFiles">
-								<grid width="100%" height="400" overflow="auto" id="dir">
+								<grid width="100%" overflow="auto" id="dir">
 									<columns>
 										<column width="20"/>
 										<column/>
@@ -48,9 +48,9 @@
 									</columns>
 									<rows>
 										<row class="row">
-											<vfs-mime id="${row}[path]" class="selectIcon" align="center" options="16"/>
+											<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
 											<vfs id="$row" onclick="$row_cont[onclick]"/>
-											<checkbox options="&quot;$row_cont[name]&quot;" id="selected[]" align="right"/>
+											<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
 										</row>
 									</rows>
 								</grid>
@@ -60,7 +60,7 @@
 							</row>
 							<row disabled="!@options-mime">
 								<menulist class="selectMime">
-									<menupopup options="All files" id="mime" onchange="1"/>
+									<menupopup id="mime" onchange="1" options="All files"/>
 								</menulist>
 							</row>
 							<row disabled="@no_upload">
@@ -73,7 +73,7 @@
 							<row>
 								<hbox align="right">
 									<button label="@label" id="button[ok]"/>
-									<buttononly id="button[cancel]" label="Cancel" onclick="window.close();"/>
+									<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
 								</hbox>
 							</row>
 						</rows>

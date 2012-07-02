@@ -20,5 +20,6 @@
 .selectName input { width: 100%; }
 .selectMime select { width: 100%; }
 /*.selectIcon img { height: 16px; }*/
-.displayNone input { display: none; }
+.displayNone input, input.displayNone { display: none; }
 .selectFiles td div { border-style: groove; }
+.selectFiles div { max-height: 400px; overflow:auto;}
