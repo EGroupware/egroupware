@@ -494,7 +494,7 @@ class importexport_export_ui {
 		// Get charset
 		$charset = egw_cache::getSession('importexport', $tmpfname);
 
-		html::content_header($nicefname.'.'.$_GET['_suffic'],
+		html::content_header($nicefname.'.'.$_GET['_suffix'],
 			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
 			filesize($tmpfname));
 		fpassthru($file);
