@@ -15,7 +15,7 @@
 /**
  * a class containing / implementing the xajax actions triggered by javascript
  */
-class ajaxfelamimail 
+class ajaxfelamimail
 {
 		// which profile to use(currently only 0 is supported)
 		var $imapServerID=0;
@@ -165,6 +165,23 @@ class ajaxfelamimail
 			$GLOBALS['egw']->session->commit_session();
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
+		}
+
+		/**
+		 * initiateACLTable
+		 * creates the ACL table
+		 *
+		 * @param	string	$_folder folder to initiate the acl table for
+		 *
+		 * @return	string	html output for ACL table
+		 */
+		function initiateACLTable($_folder)
+		{
+			$response = new xajaxResponse();
+			if ($folderACL = $this->bofelamimail->getIMAPACL($_folder)) {
+				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+			}
+			return $response->getXML();
 		}
 
 		/**
@@ -499,7 +516,7 @@ class ajaxfelamimail
 
 			if($quota = $this->bofelamimail->getQuotaRoot()) {
 				if (isset($quota['usage']) && $quota['limit'] != 'NOT SET')
-				{ 
+				{
 					$quotaDisplay = $this->uiwidgets->quotaDisplay($quota['usage'], $quota['limit']);
 					$response->addAssign('quotaDisplay', 'innerHTML', $quotaDisplay);
 				}
@@ -684,12 +701,12 @@ class ajaxfelamimail
 			if(is_array($_selectedMessages) && count($_selectedMessages['msg']) > 0) $messageCount = count($_selectedMessages['msg']);
 			$folderName = $this->_decodeEntityFolderName($_folderName);
 			if ($_selectedMessages == 'all' || !empty( $_selectedMessages['msg']) && !empty($folderName)) {
-				if ($this->sessionData['mailbox'] != $folderName) 
+				if ($this->sessionData['mailbox'] != $folderName)
 				{
 					$deleteAfterMove = false;
 					$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']),$deleteAfterMove);
-				} 
-				else 
+				}
+				else
 				{
 					  if($this->_debug) error_log("ajaxfelamimail::copyMessages-> same folder than current selected");
 				}

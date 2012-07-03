@@ -20,7 +20,7 @@
 		<table width="100%" border="0" cellspacing="0" cellpading="0" bgcolor="white">
 			<tr>
 				<th id="tab1" class="activetab" onclick="javascript:tab.display(1);" style="width:50%;"><a href="#" tabindex="0" accesskey="1" onfocus="tab.display(1);" onclick="tab.display(1); return(false);" style="font-size:10px;">{lang_Overview}</a></th>
-				<th id="tab2" class="activetab" onclick="javascript:tab.display(2);" style="width:50%;"><a href="#" tabindex="0" accesskey="2" onfocus="tab.display(2);" onclick="tab.display(2); return(false);" style="font-size:10px;">{lang_ACL}</a></th>
+				<th id="tab2" class="activetab" onclick="javascript:tab.display(2);xajax_doXMLHTTP('felamimail.ajaxfelamimail.initiateACLTable',tree.getSelectedItemId());" style="width:50%;"><a href="#" tabindex="0" accesskey="2" onfocus="tab.display(2);" onclick="tab.display(2); return(false);" style="font-size:10px;">{lang_ACL}</a></th>
 			</tr>
 		</table>
 			{settings_view}
