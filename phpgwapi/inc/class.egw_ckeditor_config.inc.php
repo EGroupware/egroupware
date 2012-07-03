@@ -151,8 +151,6 @@ class egw_ckeditor_config
 		//disable encoding as entities needs to set the config value to false, as the default is true with the current ckeditor version
 		$config['entities'] = false;
 		$config['entities_latin'] = false;
-		$config['entities'] = true;
-		$config['entities_latin'] = true;
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
 
