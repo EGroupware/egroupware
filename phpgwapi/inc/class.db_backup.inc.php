@@ -598,6 +598,9 @@ class db_backup
 		{
 			return lang('Restore failed');
 		}
+		// invalidate categories cache, it's instance wide
+		categories::invalidate_cache();
+
 		return '';
 	}
 
