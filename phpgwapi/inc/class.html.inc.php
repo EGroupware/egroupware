@@ -1333,7 +1333,8 @@ class html
 		}
 		if($fn)
 		{
-			if(self::$user_agent == 'msie') // && self::$ua_version == '5.5')
+			// limit IE hack (no attachment in Content-disposition header) to IE < 9
+			if(self::$user_agent == 'msie' && self::$ua_version < 9)
 			{
 				$attachment = '';
 			}
