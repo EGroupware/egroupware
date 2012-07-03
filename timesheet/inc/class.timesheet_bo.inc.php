@@ -218,6 +218,27 @@ class timesheet_bo extends so_sql_cf
 	}
 
 	/**
+	 * Return evtl. existing sub-statuses of given status
+	 *
+	 * @param int $status
+	 * @return array|int with sub-statuses incl. $status or just $status
+	 */
+	function get_sub_status($status)
+	{
+		if (!isset($this->status_labels_config)) $this->load_statuses();
+		$stati = array($status);
+		foreach($this->status_labels_config as $stat)
+		{
+			if ($stat['parent'] && in_array($stat['parent'], $stati))
+			{
+				$stati[] = $stat['id'];
+			}
+		}
+		//error_log(__METHOD__."($status) returning ".array2string(count($stati) == 1 ? $status : $stati));
+		return count($stati) == 1 ? $status : $stati;
+	}
+
+	/**
 	 * Make nice labels with leading spaces depending on depth
 	 *
 	 * @param statuses List of statuses to process, with sub-statuses in a 'substatus' array
@@ -458,6 +479,10 @@ class timesheet_bo extends so_sql_cf
 					unset($filter['ts_owner'][$key]);
 				}
 			}
+		}
+		if (isset($filter['ts_status']) && $filter['ts_status'])
+		{
+			$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
 		}
 		if (!count($filter['ts_owner']))
 		{
