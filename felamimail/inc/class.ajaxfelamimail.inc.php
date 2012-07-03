@@ -593,8 +593,13 @@ class ajaxfelamimail
 					$response->addScript("document.getElementById('aMoveSelectFolder').style.visibility = 'hidden';");
 				}
 				$response->addAssign("folderName", "innerHTML", htmlspecialchars($folderStatus['displayName'], ENT_QUOTES, $this->charset));
+				//error_log(__METHOD__.__LINE__.' Folder:'.$folderName.' ACL:'.array2string($this->bofelamimail->getIMAPACL($folderName)));
 				if($folderACL = $this->bofelamimail->getIMAPACL($folderName)) {
 					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+				}
+				else
+				{
+					$response->addAssign("aclTable", "innerHTML", '');
 				}
 
 				return $response->getXML();
@@ -609,7 +614,15 @@ class ajaxfelamimail
 				$response->addScript("document.getElementById('mailboxRenameButton').disabled = true;");
 				$response->addScript("document.getElementById('divDeleteButton').style.visibility = 'hidden';");
 				$response->addScript("document.getElementById('divRenameButton').style.visibility = 'hidden';");
-				$response->addAssign("aclTable", "innerHTML", '');
+				// we should not need this, but dovecot does not report the correct folderstatus for all folders that he is listing
+				//error_log(__METHOD__.__LINE__.' Folder:'.$folderName.' ACL:'.array2string($this->bofelamimail->getIMAPACL($folderName)));
+				if($folderName != '--topfolder--' && $folderName != 'user' && ($folderACL = $this->bofelamimail->getIMAPACL($folderName))) {
+					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+				}
+				else
+				{
+					$response->addAssign("aclTable", "innerHTML", '');
+				}
 				return $response->getXML();
 			}
 		}
