@@ -1,3 +1,31 @@
+egroupware-epl (11.1.20120703-1) hardy; urgency=low
+
+  * eMail: restructure sidebar, group sieve stuff as own section (if enabled AND available to the user)
+  * Backup: fix sometimes not working restore (seems like an internal error in preg_match, causing Apache to run at 100% CPU never finishing) for php 5.3+
+  * ProjectManager/InfoLog: visualisation if InfoLog has a parent or sub-entries (up-arrow or right-arrow like in InfoLog)
+  * ProjectManager: fixed in element overwritten values got lost if datasource got updated
+  * ProjectManager: allow datasources (eg. InfoLog) to set element category, update existing categories in elements to overwritten categories
+  * EMailAdmin: always storing quota for qmailuser schema
+  * ImportExport: Add "All users" permission option for easier maintenance
+  * Filemanager/API: automatically decrement and store subquery depth limit, to work around different limits in different MySQL versions and configurations causing SQL error
+  * API: HTML Editor-> disable encoding of html entities in output (this needs to set the ckeditor config value to false, since the default is true with the current ckeditor version)
+  * Filemanager: for files inside /apps/appname/id, the application's merge print placeholders are also available
+  * Admin: global categories showed private categories of other users
+  * EMail: suppress empty user leaf on shared folders while in manage folders
+  * Password: fixed not working check, if user has right to change password, causing password link in topmenu to be displayed when not in preferences app
+  * EMail: if marking a message for deletion, set the message as read too; if not trusting SEEN/UNSEEN info, always look/filter for unseen and return the counter (not only when unseen counter is set to 0)
+  * ProjectManager: open project in popup when clicking on edit button in element list view (top row)
+  * API: for new (autocreated) accounts, set ->can change password<- flag only if admin requires his users to change their passwords regularily (admin->site configuration->set recurrent forced password change)
+  * Admin/DB-Backup: querying only chunks for 100 rows, to not run into memory limit on huge tables
+  * ImportExport: fixed not working export in IE8 (seems to choke on Content-Disposition: attachment header)
+  * Tracker: use mailhandling settings to decide if we add addresses to CC or not; Settings for ALL are used (wether they are active or not), as we do not have a tracker queue at the point of data preparation for edit on new tickets
+  * Timesheet: filtering by a status did not contain timesheets of sub-status
+  * EMail: manage acl table; show acl table for selected folder for first folder selected when clicking on ACL tab as first action
+  * EPL-Filemanager: ignore notifications to not longer exiting accounts, they count (now fixed) create a sql error
+  * InfoLog/Calendar/EPL features: fixed display of tasks without time as wholeday events, should now be working with DBs other then MySQL too
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 03 Jul 2012 14:47:29 +0200
+
 egroupware-epl (11.1.20120614-1) hardy; urgency=low
 
   * Addressbook: fix for postgres error on advanced search in addressbook (Helpdesk 3421)
