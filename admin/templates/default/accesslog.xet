@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.002">
+	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -20,14 +20,14 @@
 				<row class="th">
 					<nextmatch-accountfilter id="account_id" options="LoginID"/>
 					<nextmatch-header label="Login-Status" id="sessionstatus"/>
-					<nextmatch-header label="Loginid" id="loginid"/>
-					<nextmatch-header label="IP" id="ip"/>
+					<nextmatch-sortheader label="Loginid" id="loginid"/>
+					<nextmatch-sortheader label="IP" id="ip"/>
 					<nextmatch-sortheader label="Login" id="li"/>
 					<nextmatch-sortheader label="Logout" id="lo"/>
 					<nextmatch-header label="Total" id="total"/>
 					<nextmatch-sortheader label="Idle" id="session_dla"/>
-					<nextmatch-header label="Last action" id="session_action"/>
-					<nextmatch-header label="User-Agent" id="user_agent"/>
+					<nextmatch-sortheader label="Last action" id="session_action"/>
+					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
 					<hbox>
 						<description align="center" value="Actions"/>
 						<buttononly label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="check"/>
