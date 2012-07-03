@@ -623,6 +623,9 @@ class db_backup
 		// search-and-register-hooks
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
+		// invalidate categories cache, it's instance wide
+		categories::invalidate_cache();
+
 		return '';
 	}
 
