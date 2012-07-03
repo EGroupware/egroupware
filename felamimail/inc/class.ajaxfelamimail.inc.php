@@ -195,6 +195,23 @@ class ajaxfelamimail
 		}
 
 		/**
+		 * initiateACLTable
+		 * creates the ACL table
+		 *
+		 * @param	string	$_folder folder to initiate the acl table for
+		 *
+		 * @return	string	html output for ACL table
+		 */
+		function initiateACLTable($_folder)
+		{
+			$response = new xajaxResponse();
+			if ($folderACL = $this->bofelamimail->getIMAPACL($_folder)) {
+				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+			}
+			return $response->getXML();
+		}
+
+		/**
 		 * createACLTable
 		 * creates the ACL table
 		 *
