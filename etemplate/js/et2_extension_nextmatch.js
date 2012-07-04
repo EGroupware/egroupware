@@ -1518,7 +1518,6 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 
 	// Make sure selectbox is not longer than the column
 	resize: function() {
-		console.log(this);
 		this.input.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
 	}
 
