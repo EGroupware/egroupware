@@ -1178,7 +1178,7 @@ var et2_link_add = et2_inputWidget.extend({
 	},
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		this.app_select = et2_createWidget("link-apps", this.options ,this);
+		this.app_select = et2_createWidget("link-apps", jQuery.extend({},this.options,{'id': this.options.id + 'app'}) ,this);
 		this.div.append(this.app_select.getDOMNode());
 		this.button = et2_createWidget("button", {label: this.egw().lang("add")}, this);
 		this.button.set_label(this.egw().lang("add"));

@@ -404,18 +404,27 @@ etemplate2.prototype.getValues = function(_root)
 			id = typeof _target == "undefined" ? 0 : Object.keys(_target).length;
 		}
 
+		var value = _widget.getValue();
+
 		// Check whether the entry is really undefined
-		if (typeof _target[id] != "undefined")
+		if (typeof _target[id] != "undefined" && (typeof _target[id] != 'object' || typeof value != 'object'))
 		{
 			egw.debug("error", _widget, "Overwriting value of '" + _widget.id + 
 				"', id exists twice!");
 		}
 
 		// Store the value of the widget and reset its dirty flag
-		var value = _widget.getValue();
 		if (value !== null)
 		{
-			_target[id] = value;
+			// Merge, if possible (link widget)
+			if(typeof _target[id] == 'object' && typeof value == 'object')
+			{
+				_target[id] = jQuery.extend([],_target[id],value);
+			}
+			else
+			{
+				_target[id] = value;
+			}
 		}
 		else if (jQuery.isEmptyObject(_target))
 		{

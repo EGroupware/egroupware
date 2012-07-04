@@ -195,6 +195,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$value['col_filter'][$parent_id] = $queriedRange['parent_id'];
 		}
+
+		// If specific data requested, just do that
+		if (($row_id = $value['row_id']) && $queryiedRange['refresh'])
+		{
+			$value['col_filter'][$row_id] = $queriedRange['refresh'];
+		}
 		$rows = $result['data'] = $result['order'] = array();
 		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
 		$result['lastModification'] = egw_time::to('now', 'ts')-1;
