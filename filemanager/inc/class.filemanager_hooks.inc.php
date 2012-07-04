@@ -313,6 +313,7 @@ class filemanager_hooks
 					'mime_target' => '_self',
 				),
 			),
+			'merge' => true,
 		);
 	}
 }

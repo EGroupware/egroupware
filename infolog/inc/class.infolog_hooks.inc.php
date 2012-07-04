@@ -69,6 +69,7 @@ class infolog_hooks
 			),
 			'edit_id'    => 'info_id',
 			'edit_popup'  => '750x580',
+			'merge' => true,
 		);
 	}
 

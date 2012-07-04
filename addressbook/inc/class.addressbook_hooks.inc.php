@@ -384,7 +384,8 @@ class addressbook_hooks
 				'addressbook-email' => array(
 					'query' => 'addressbook.addressbook_bo.link_query_email',
 				),
-			)
+			),
+			'merge' => true,
 		);
 	}
 

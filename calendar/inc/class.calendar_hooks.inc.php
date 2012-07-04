@@ -48,6 +48,7 @@ class calendar_hooks
 					'mime_popup' => '750x400',
 				),
 			),
+			'merge' => true,
 		);
 	}
 
