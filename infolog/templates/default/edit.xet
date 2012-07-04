@@ -160,7 +160,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.003">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.100">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -203,7 +203,7 @@
 					</menulist>
 					<hbox span="all">
 						<description value="Parent"/>
-						<link-entry align="right" id="info_id_parent" options="infolog" class="noWrap searchParent"/>
+						<link-entry align="right" id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap searchParent"/>
 					</hbox>
 				</row>
 				<row class="row">
