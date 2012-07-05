@@ -91,8 +91,8 @@ class ldap
 	 * only once per session.
 	 *
 	 * @param $host='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
-	 * @param $dn='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn'] (only if $host default is used!)
-	 * @param $passwd='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw'] (only if $host default is used!)
+	 * @param $dn='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
+	 * @param $passwd='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
 	 * @return resource|boolean resource from ldap_connect() or false on error
 	 * @throws egw_exception_assertion_failed 'LDAP support unavailable!' (no ldap extension)
 	 */
@@ -114,6 +114,9 @@ class ldap
 		if (empty($host))
 		{
 			$host = $GLOBALS['egw_info']['server']['ldap_host'];
+		}
+		if (empty($dn))
+		{
 			$dn = $GLOBALS['egw_info']['server']['ldap_root_dn'];
 			$passwd = $GLOBALS['egw_info']['server']['ldap_root_pw'];
 		}
