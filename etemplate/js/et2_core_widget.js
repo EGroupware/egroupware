@@ -345,7 +345,7 @@ var et2_widget = Class.extend({
 		}
 		else
 		{
-			this.egw().debug("error", this, "Widget is not supported by this widget class", _node);
+			this.egw().debug("error", "Widget " + _node._type +" is not supported by this widget class", this);
 //			throw("Widget is not supported by this widget class!");
 		}
 	},
