@@ -137,12 +137,16 @@ var et2_selectbox = et2_inputWidget.extend({
 			}
 
 			// Maybe in a row, and options got stuck in ${row} instead of top level
-			if((!content_options || content_options.length == 0) && (
-				// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
-				this.getArrayMgr("sel_options").perspectiveData.row || this.getArrayMgr("sel_options").data["${row}"]))
+			var row_stuck = ['${row}','{$row}'];
+			for(var i = 0; i < row_stuck.length; i++)
 			{
-				var row_id = this.id.replace(/[0-9]+/,'${row}');
-				content_options = this.getArrayMgr("sel_options").getEntry(row_id);
+				if((!content_options || content_options.length == 0) && (
+					// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
+					this.getArrayMgr("sel_options").perspectiveData.row || this.getArrayMgr("sel_options").data[row_stuck[i]]))
+				{
+					var row_id = this.id.replace(/[0-9]+/,row_stuck[i]);
+					content_options = this.getArrayMgr("sel_options").getEntry(row_id);
+				}
 			}
 			if(_attrs["select_options"] && content_options)
 			{
