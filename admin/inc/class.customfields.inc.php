@@ -87,10 +87,15 @@ class customfields
 				//error_log( array2string($this->content_types));
 			}
 		}
-		else
+		elseif (!($this->tmpl instanceof etemplate_widget))
 		{
 			$this->tmpl->children[0]['data'][2]['A']['disabled'] = true;
 			$this->tmpl->children[0]['data'][3]['A']['disabled'] = true;
+		}
+		elseif(method_exists($this->tmpl, 'disableElement'))
+		{
+			// et2
+			$this->tmpl->disableElement('admin.customfields.type', true);
 		}
 		if (is_array($content))
 		{
