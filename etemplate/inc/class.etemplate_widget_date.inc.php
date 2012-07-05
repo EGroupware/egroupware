@@ -70,12 +70,16 @@ class etemplate_widget_date extends etemplate_widget_transformer
 				$valid = (int)$value;
 			}
 			// string with formatting letters like for php's date() method
-			elseif (($obj = DateTime::createFromFormat($this->attrs['dataformat'], $value)))
+			elseif (($valid = date($this->attrs['dataformat'], $value)))
 			{
-				$valid = $obj->format($this->attrs['dataformat']);
+				// Nothing to do here
 			}
 			// Null is acceptable also
-			elseif ($value !== null)
+			elseif ($value === null)
+			{
+				$valid = $value;
+			}
+			else
 			{
 				// this is not really a user error, but one of the clientside engine
 				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
