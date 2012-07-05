@@ -229,7 +229,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('history_id'),
 		'fk' => array(),
-		'ix' => array(array('history_appname','history_record_id','history_status','history_timestamp')),
+		'ix' => array(array('history_appname','history_record_id','history_id')),
 		'uc' => array()
 	),
 	'egw_async' => array(

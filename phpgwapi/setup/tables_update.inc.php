@@ -444,3 +444,18 @@ function phpgwapi_upgrade1_9_016()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.017';
 }
 
+
+/**
+ * Some index to speed up access/update of huge history-logs
+ *
+ * ALTER TABLE `egw_history_log` ADD INDEX `egw_history_log_appname_record_id_id` (`history_appname`, `history_record_id`, `history_id`)
+ * DROP INDEX `egw_history_log_appname_record_id_status_timestamp` ON `egw_history_log`
+ */
+function phpgwapi_upgrade1_9_017()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_history_log', array('history_appname','history_record_id','history_id'));
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_history_log', array('history_appname','history_record_id','history_status','history_timestamp'));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.018';
+}
+
