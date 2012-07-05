@@ -293,6 +293,9 @@ var et2_selectbox = et2_inputWidget.extend({
 		var header = jQuery(document.createElement("div"))
 			.addClass("ui-widget-header ui-helper-clearfix")
 			.appendTo(node);
+		var controls = jQuery(document.createElement("ul"))
+			.addClass('ui-helper-reset')
+			.appendTo(header);
 
 		if(this.options.empty_label)
 		{
@@ -327,9 +330,6 @@ var et2_selectbox = et2_inputWidget.extend({
 					}
 				}
 			}
-			var controls = jQuery(document.createElement("ul"))
-				.addClass('ui-helper-reset')
-				.appendTo(header);
 			for(var key in header_controls)
 			{
 				jQuery(document.createElement("li"))
