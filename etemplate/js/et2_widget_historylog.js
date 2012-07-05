@@ -227,7 +227,9 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			if(typeof field == 'object') attrs['select-options'] = field;
 
 			var widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+			if(widget.instanceOf(et2_selectbox)) widget.options.multiple = true;
 			widget.transformAttributes(attrs);
+
 
 			this.fields[key] = {
 				attrs: attrs,
