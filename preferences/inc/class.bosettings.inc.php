@@ -240,6 +240,15 @@
 							if ($value === '')
 							{
 								// empty is always allowed
+
+								// If forced, empty == not set
+								if($type == 'forced')
+								{
+									unset($prefs[$var]);
+									// need to call preferences::delete, to also set affective prefs!
+									if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
+									continue;
+								}
 							}
 							elseif ($vfs_type == 'vfs_file')
 							{
