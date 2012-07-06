@@ -190,8 +190,15 @@ function createScript()
 <!-- END filterrow -->
 
 <!-- BEGIN vacation -->
-
-<form ACTION="{vacation_action_url}" METHOD="post" NAME="editVacation">
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+function submitIt()
+{
+	selectAllOptions();
+	//document.editVacation.submit();
+	return true;
+}
+</script>
+<form ACTION="{vacation_action_url}" METHOD="post" NAME="editVacation" onsubmit="return submitIt()">
 <p style="color: red; font-style: italic; text-align: center;">{validation_errors}</p>
 <table WIDTH="100%" CELLPADDING="2" CELLSPACING="1" style="border: 1px solid silver;">
 	<tr CLASS="th">

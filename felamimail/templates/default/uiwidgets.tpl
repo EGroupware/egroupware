@@ -46,24 +46,29 @@
 	{
 		idSelectedValues = document.getElementById("htmlclass_selected_values");
 		idPredefinedValues = document.getElementById("htmlclass_predefined_values");
-		
-		if(idSelectedValues.selectedIndex != -1)
+		while(idSelectedValues.selectedIndex != -1)
 		{
+			// if we want to allow removing only one by one, we need this and section idselectioncontrol
+			// AND need to disable the selectAllOptions at the end of the function
+			//for(i=0;i<idSelectedValues.length;++i)
+			//{
+			//	if (idSelectedValues[i].selected) break;
+			//}
 			NewOption = new Option(idSelectedValues.options[idSelectedValues.selectedIndex].text,
 						idSelectedValues.options[idSelectedValues.selectedIndex].value,false,true);
 			idPredefinedValues.options[idPredefinedValues.length] = NewOption;
 			
 			idSelectedValues.options[idSelectedValues.selectedIndex] = null;
+			// section idselectioncontrol
+			//if (i>idSelectedValues.length-1) i=idSelectedValues.length-1;
+			//if (idSelectedValues.length!=0)idSelectedValues.options[i].selected = true;
 			
-			for(i=0;i<idSelectedValues.length;++i)
-			{
-				idSelectedValues.options[i].selected = true;
-			}
-			
-			sortSelect(idPredefinedValues);
 		}
+		sortSelect(idPredefinedValues);
+		selectAllOptions();
+
 	}
-	
+
 	function selectAllOptions()
 	{
 		idSelectedValues = document.getElementById("htmlclass_selected_values");
@@ -110,8 +115,8 @@
 	<tr>
 		<td width="50%" align="right" rowspan="2" valign="top">
 			<select name="{multiSelectBox_valueName}[]" id="htmlclass_selected_values" size=8 
-				style="width : 250px;" multiple="multiple" ondblclick="removeValue()"
-				onblur="selectAllOptions()">
+				style="width : 250px;" multiple="multiple" ondblclick="removeValue()">
+				<!--  onblur="selectAllOptions()" on blur was removed here and substituded with the call of selectAllOptions on submit -->
 				{multiSelectBox_selected_options}
 			</select>
 		</td>
