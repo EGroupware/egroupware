@@ -125,7 +125,9 @@
 			if ($appname == 'preferences') $appname = 'common';
 			foreach ($this->settings as $name => $data)
 			{
-				if ((string)$GLOBALS['egw']->preferences->default[$appname][$name] === '' &&
+				// only set not yet set default prefs, so user is able to unset it again with ""
+				// (only works with type vfs_*, other types delete empty values!)
+				if (!isset($GLOBALS['egw']->preferences->default[$appname][$name]) &&
 					((string)$data['default'] !== '' || (string)$data['forced'] !== ''))
 				{
 					$default = (string)$data['forced'] !== '' ? $data['forced'] : $data['default'];
@@ -169,7 +171,7 @@
 			}
 			if($this->debug)
 			{
-				echo 'Preferences array: ' . $app . "\n";
+				echo 'Preferences array: ' . $app . "/$type\n";
 				_debug_array($this->prefs);
 			}
 			/* Ensure that a struct will be returned via xml-rpc (this might change) */

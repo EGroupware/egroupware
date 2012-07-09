@@ -205,7 +205,7 @@ class uisettings
 		}
 
 		// display verifcation errors also on entering preferences, not only after saving
-		if (!isset($_POST['save']) || !isset($_POST['apply']))
+		if (!isset($_POST['save']) && !isset($_POST['apply']))
 		{
 			if (!$this->is_admin() || !in_array($GLOBALS['type'], array('user', 'default', 'forced')))
 			{
@@ -275,6 +275,8 @@ class uisettings
 						$valarray['label'],
 						$valarray['name'],
 						$valarray['help'],
+						$valarray['default'],
+						$valarray['size'],
 						$valarray['run_lang']
 					);
 					break;
@@ -436,7 +438,7 @@ class uisettings
 		{
 			return True;
 		}
-		//echo "<p>create_input_box('$label_name', '$preference_name][$type', '$help', '$default', '', '', '', $run_lang, '$def_text')</p>\n";
+		//echo "<p>create_input_box('$label_name', '$preference_name][$type', '$help', '$default', '$size', '', '', $run_lang, '$def_text')</p>\n";
 		$this->create_input_box($label_name,$preference_name.']['.$type,
 			$help,$default,$size,'','',$run_lang,$def_text);
 	}
