@@ -1078,6 +1078,24 @@ var et2_link_list = et2_link_string.extend({
 				}, self);
 			}
 		});
+		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function(menu_item) {
+			var link_data = self.context.data;
+			if(link_data.app == 'file')
+			{
+				var url = self.egw().mime_open(link_data);
+				if(typeof url == 'string' && url.indexOf('webdav.php'))
+				{
+					// URL is url to file in webdav, so get rid of that part
+					url = url.replace('/webdav.php', '');
+				}
+				else if (typeof url == 'object' && url.path)
+				{
+					url = url.path;
+				}
+				self.egw().open(url, "filemanager", "edit");
+			}
+		});
+		this.context.addItem("-", "-");
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
 			var link_id = self.context.data.link_id;
 			self._delete_link(link_id);
@@ -1141,6 +1159,9 @@ var et2_link_list = et2_link_string.extend({
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
+			// File info only available for files
+			self.context.getItem("file_info").set_enabled(_link_data.app == 'file');
+
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
 			e.preventDefault();
