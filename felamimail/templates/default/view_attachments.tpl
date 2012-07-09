@@ -6,7 +6,7 @@ self.focus();
 <div style="border: 0px solid green; margin:0px; padding:0px; left:0px; background-color:#ffffff; min-height:20px;width:100%;font-weight:bold;text-align:left;line-height:20px;">
     <span id="subjectDATA" style="padding-left:2px; font-size: 110%;">{subject_data}</span>
 </div>
-<div id="popupattachmentDIV" style="border: 0px solid green; margin:0px; padding:0px; left:0px;>
+<div id="popupattachmentDIV" style="border: 0px solid green; margin:0px; padding:0px; left:0px;">
 <table border="0" width="100%" cellspacing="0">
 {attachment_rows}
 </table>
