@@ -23,6 +23,14 @@
  */ 
 var et2_tabbox = et2_DOMWidget.extend({
 
+	attributes: {
+		'tabs': {
+			'name': 'Tabs',
+			'default': et2_no_init,
+			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}"
+		}
+	},
+
 	/**
 	 * Currently selected tab
 	 */
@@ -143,12 +151,42 @@ var et2_tabbox = et2_DOMWidget.extend({
 			// Read and create the widgets defined in the "tabpanels"
 			this._readTabPanels(tabData, tabpanels);
 
+			// Add any extra tabs
+			if(this.options.tabs)
+			{
+				for(var i = 0; i < this.options.tabs.length; i++)
+				{
+					var tab = this.options.tabs[i];
+					tabData.push({
+						"label": this.egw().lang(tab.label),
+						"widget": et2_createWidget('template',{id:tab.template},this),
+						"contentDiv": null,
+						"flagDiv": null,
+						"hidden": false
+					});
+				}
+			}
+
 			// Create the tab DOM-Nodes
 			this.createTabs(tabData)
 		}
 		else
 		{
 			throw("Error while parsing tabbox, none or multiple tabs or tabpanels tags!");
+		}
+	},
+
+	/**
+	 * Check for custom tabs
+	 */
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		// Add in settings that are objects
+		var data = this.getArrayMgr("modifications").getEntry(this.id);
+		for(var key in data)
+		{
+			if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
 		}
 	},
 
