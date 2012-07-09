@@ -772,6 +772,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 			type: "any"
 		}
 	},
+	legacyOptions: ["application"],
 	init: function() {
 		this._super.apply(this, arguments);
 
