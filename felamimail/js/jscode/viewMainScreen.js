@@ -1142,7 +1142,7 @@ function fm_handleAttachmentClick(_double, _url, _windowName, _node)
 }
 
 function fm_readAttachments(_url, _windowName, _node) {
-	egw_openWindowCentered(_url, _windowName, 750, 220);
+	egw_openWindowCentered(_url, _windowName, 750, 260);
 	egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 	mailGrid.dataRoot.actionObject.setAllSelected(false);
 }
