@@ -158,6 +158,9 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		this._super.apply(this, arguments);
 	},
 
+	/**
+	 * Create all needed widgets for new / old values
+	 */
 	createWidgets: function() {
 
 		// Constant widgets - first 3 columns
@@ -209,6 +212,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 					if(nodes[i] == null) nodes.splice(i,1);
 				}
 				
+				// Save to use for each row
 				this.fields[cf_widget.prefix + key] = {
 					attrs: cf_widget.widgets[key].options,
 					widget: cf_widget.widgets[key],
@@ -229,7 +233,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			{
 				attrs['select-options'] = field;
 			}
-			// Check for options after the type
+			// Check for options after the type, ex: link-entry:infolog
 			else if (field.indexOf(':') > 0)
 			{
 				var options = field.split(':');
@@ -237,6 +241,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			}
 			
 			var widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+
+			// Parse / set legacy options
 			if(options)
 			{
 				var mgr = this.getArrayMgr("content");
@@ -244,6 +250,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 				{
 					// Not set
 					if(options[i] == "") continue;
+
 					var attr = widget.attributes[widget.legacyOptions[i]];
 					var attrValue = options[i];
 
@@ -272,6 +279,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			if(widget.instanceOf(et2_selectbox)) widget.options.multiple = true;
 			widget.transformAttributes(attrs);
 
+			// Save to use for each row
 			this.fields[key] = {
 				attrs: attrs,
 				widget: widget,
@@ -354,7 +362,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			{
 				// Large text value - span both columns, and show a nice diff
 				var jthis = jQuery(this);
-				if(i == 3)
+				if(i == self.NEW_VALUE)
 				{
 					// Diff widget
 					widget = self.diff.widget;
