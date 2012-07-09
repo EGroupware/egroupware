@@ -224,12 +224,53 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		{
 			var field = this.options.value['status-widgets'][key];
 			var attrs = {'readonly': true, 'id': key};
-			if(typeof field == 'object') attrs['select-options'] = field;
-
+			var options = null;
+			if(typeof field == 'object')
+			{
+				attrs['select-options'] = field;
+			}
+			// Check for options after the type
+			else if (field.indexOf(':') > 0)
+			{
+				var options = field.split(':');
+				field = options.shift();
+			}
+			
 			var widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+			if(options)
+			{
+				var mgr = this.getArrayMgr("content");
+				for(var i = 0; i < options.length && i < widget.legacyOptions.length; i++)
+				{
+					// Not set
+					if(options[i] == "") continue;
+					var attr = widget.attributes[widget.legacyOptions[i]];
+					var attrValue = options[i];
+
+					// If the attribute is marked as boolean, parse the
+					// expression as bool expression.
+					if (attr.type == "boolean")
+					{
+						attrValue = mgr.parseBoolExpression(attrValue);
+					}
+					else
+					{
+						attrValue = mgr.expandName(attrValue);
+					}
+					attrs[widget.legacyOptions[i]] = attrValue;
+					if(typeof widget['set_'+widget.legacyOptions[i]] == 'function')
+					{
+						widget['set_'+widget.legacyOptions[i]].call(widget, attrValue);
+					}
+					else
+					{
+						widget.options[widget.legacyOptions[i]] = attrValue;
+					}
+				}
+			}
+
 			if(widget.instanceOf(et2_selectbox)) widget.options.multiple = true;
 			widget.transformAttributes(attrs);
-
 
 			this.fields[key] = {
 				attrs: attrs,
