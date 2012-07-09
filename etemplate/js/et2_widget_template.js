@@ -75,7 +75,7 @@ var et2_template = et2_DOMWidget.extend({
 			// Set the api instance to the first part of the name of the
 			// template, if it's in app.function.template format
 			var splitted = this.id.split('.');
-			if(splitted.length == 3)
+			if(splitted.length >= 3)
 			{
 				this.setApiInstance(egw(splitted[0], this._parent.egw().window));
 			}
@@ -95,6 +95,29 @@ var et2_template = et2_DOMWidget.extend({
 						xml = templates[key];
 						break;
 					}
+				}
+				if(!xml)
+				{
+					// Ask server
+					splitted = this.id.split('.');
+					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" + splitted.join('.') + ".xet";
+
+					et2_loadXMLFromURL(path, function(_xmldoc) {
+						var templates = {};
+						// Scan for templates and store them
+						for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+							var template = _xmldoc.childNodes[i];
+							if(template.nodeName.toLowerCase() != "template") continue;
+							templates[template.getAttribute("id")] = template;
+						}
+
+						// Read the XML structure of the requested template
+						this.loadFromXML(templates[this.id]);
+
+						// Inform the widget tree that it has been successfully loaded.
+						this.loadingFinished();
+					}, this);
+					return;
 				}
 			}
 			if(xml !== null && typeof xml !== "undefined")
