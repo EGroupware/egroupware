@@ -442,6 +442,17 @@ DIV.divButton {
 }
 
 #attachmentDIV {
+	position:fixed; 
+	background-color:#efefdf; 
+	bottom:0px; 
+	min-height:80px;
+	max-height:239px; 
+	width:100%; 
+	border-top: 1px solid silver; 
+	overflow:auto;
+}
+
+#popupattachmentDIV {
 	position:top; 
 	background-color:#efefdf; 
 	bottom:0px; 
