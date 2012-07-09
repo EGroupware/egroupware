@@ -1249,12 +1249,29 @@ function force_download(_action, _senders)
 		}
 		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
-			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
+			if(method_exists($tpl,'get_widget_by_name'))
+			{
+				$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
+			} else {
+				// et2
+				$tabs =& $tpl->getElementAttribute('tabs','tabs');
+			}
+
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
-				$tabs['name'] .= '|'.$extra_tab['name'];
-				$tabs['label'] .= '|'.$extra_tab['label'];
-				$tabs['help'] .= '|'.$extra_tab['help'];
+				if(method_exists($tpl,'get_widget_by_name'))
+				{
+					$tabs['name'] .= '|'.$extra_tab['name'];
+					$tabs['label'] .= '|'.$extra_tab['label'];
+					$tabs['help'] .= '|'.$extra_tab['help'];
+				}
+				else
+				{
+					$tabs[] = array(
+						'label' =>	$extra_tab['label'],
+						'template' =>	$extra_tab['name']
+					);
+				}
 				if ($extra_tab['data'] && is_array($extra_tab['data']))
 				{
 					$content = array_merge($content, $extra_tab['data']);

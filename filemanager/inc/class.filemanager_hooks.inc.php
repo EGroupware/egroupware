@@ -306,6 +306,11 @@ class filemanager_hooks
 	static function search_link()
 	{
 		return array(
+			'edit' => array(
+				'menuaction' => 'filemanager.filemanager_ui.file',
+			),
+			'edit_id' => 'path',
+			'edit_popup' => '495x425',
 			'mime' => array(
 				egw_vfs::DIR_MIME_TYPE => array(
 					'menuaction' => 'filemanager.filemanager_ui.index',
