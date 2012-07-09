@@ -1996,6 +1996,7 @@ else
 				'status-widgets' => array(
 					'Ty' => $types,
 					//'Li',	// info_link_id
+					'parent' => 'link-entry:infolog',
 					'Ca' => 'select-cat',
 					'Pr' => $this->bo->enums['priority'],
 					'Ow' => 'select-account',
