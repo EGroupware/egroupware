@@ -64,6 +64,9 @@ class etemplate_new extends etemplate_widget_template
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 
 		if ($name) $this->read($name,$template='default',$lang='default',$group=0,$version='',$load_via);
+
+		// generate new etemplate request object
+		self::$request = etemplate_request::read();
 	}
 
 	/**
@@ -116,8 +119,6 @@ class etemplate_new extends etemplate_widget_template
 
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
-		// generate new etemplate request object
-		self::$request = etemplate_request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->readonlys = $readonlys;
 		self::$request->content = $content;
