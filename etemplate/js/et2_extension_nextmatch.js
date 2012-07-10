@@ -1097,13 +1097,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 	 * Sets value, options, labels, and change handlers
 	 */
 	_build_select: function(name, type, value, lang) {
-		// Create widget
-		var select = et2_createWidget(type, {
+		var widget_options = {
 			"id": name,
-			"label": this.nextmatch.options.settings[name+"_label"]
-		},this);
+			"label": this.nextmatch.options.settings[name+"_label"],
+		};
 
-		// Set options
+		// Set select options
 		// Check in content for options-<name>
 		var mgr = this.nextmatch.getArrayMgr("content");
 		var options = mgr.getEntry("options-" + name);
@@ -1111,6 +1110,35 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getEntry(name);
 		// Check parent sel_options, because those are usually global and don't get passed down
 		if(!options) options = this.nextmatch.getArrayMgr("sel_options").parentMgr.getEntry(name);
+		// Sometimes legacy stuff puts it in here
+		if(!options) options = mgr.getEntry('rows[sel_options]['+name+']');
+
+		// Maybe in a row, and options got stuck in ${row} instead of top level
+		var row_stuck = ['${row}','{$row}'];
+		for(var i = 0; !options && i < row_stuck.length; i++)
+		{
+			var row_id = '';
+			if((!options || options.length == 0) && (
+				// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
+				this.nextmatch.getArrayMgr("sel_options").perspectiveData.row || this.nextmatch.getArrayMgr("sel_options").data[row_stuck[i]]))
+			{
+				var row_id = name.replace(/[0-9]+/,row_stuck[i]);
+				options = this.nextmatch.getArrayMgr("sel_options").getEntry(row_id);
+				if(!options)
+				{
+					row_id = row_stuck[i] + "["+name+"]";
+					options = this.nextmatch.getArrayMgr("sel_options").getEntry(row_id);
+				}
+			}
+			if(options)
+			{
+				this.egw().debug('warn', 'Nextmatch filter options in a weird place - "%s".  Should be in sel_options[%s].',row_id,name);
+			}
+		}
+
+		// Create widget
+		var select = et2_createWidget(type, widget_options, this);
+
 		if(options) select.set_select_options(options);
 
 		// Set value
@@ -1147,7 +1175,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		else	// default request changed rows with new filters, previous this.form.submit()
 		{
 			input.change(this.nextmatch, function(event) {
-				event.data.activeFilters[name] = input.val();
+				event.data.activeFilters[name] = select.getValue();
 				event.data.applyFilters();
 			});
 		}	
