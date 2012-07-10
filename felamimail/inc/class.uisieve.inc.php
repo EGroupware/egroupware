@@ -369,7 +369,7 @@
 					$this->t->set_var('keep_checked','checked');
 				if($_ruleData['regexp'])
 					$this->t->set_var('regexp_checked','checked');
-				if(intval($_ruleData['anyof'])==1) 
+				if(intval($_ruleData['anyof'])==1)
 					$_ruleData['anyof'] = 4; // set the anyof to 4 if set at all, as the template var anyof_selected is anyof_selected0 or anyof_selected4
 				$this->t->set_var('anyof_selected'.intval($_ruleData['anyof']),'selected');
 				$this->t->set_var('value_from',htmlspecialchars($_ruleData['from'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
@@ -532,20 +532,20 @@
 				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
 				$jscal = new jscalendar();
 			}
-			if($this->bosieve->getScript($this->scriptName)) 
+			if($this->bosieve->getScript($this->scriptName))
 			{
-				if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) ) 
+				if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
 				{
 					$rules		= array();
 					$vacation	= array();
-				} 
-				else 
+				}
+				else
 				{
 					$rules		= $this->bosieve->getRules($this->scriptName);
 					$vacation	= $this->bosieve->getVacation($this->scriptName);
 				}
-			} 
-			else 
+			}
+			else
 			{
 				// something went wrong
 			}
@@ -560,32 +560,32 @@
 				}
 				$this->t->set_var('set_as_default','<input type="submit" name="set_as_default" value="'.htmlspecialchars(lang('Set as default')).'" />');
 			}
-			if(isset($_POST["vacationStatus"])) 
+			if(isset($_POST["vacationStatus"]))
 			{
 				$newVacation['text']		= get_var('vacation_text',array('POST'));
 				$newVacation['text']		= $this->botranslation->convert($newVacation['text'],$this->displayCharset,'UTF-8');
 				$newVacation['days']		= get_var('days',array('POST'));
 				$newVacation['addresses']	= get_var('vacationAddresses',array('POST'));
 				$newVacation['status']		= get_var('vacationStatus',array('POST'));
-				if (empty($preferences->preferences['prefpreventforwarding']) || 
+				if (empty($preferences->preferences['prefpreventforwarding']) ||
 					$preferences->preferences['prefpreventforwarding'] == 0 ) # ||
 					#($ogServer instanceof defaultsmtp) || $ogServer->editForwardingAddress)
 				{
 					$newVacation['forwards']    = get_var('vacation_forwards',array('POST'));
 				}
 				if (!in_array($newVacation['status'],array('on','off','by_date'))) $newVacation['status'] = 'off';
-				if ($this->timed_vacation) 
+				if ($this->timed_vacation)
 				{
 					$date = $jscal->input2date($_POST['start_date']);
 					if ($date['raw']) $newVacation['start_date'] = $date['raw']-12*3600;
 					$date = $jscal->input2date($_POST['end_date']);
 					if ($date['raw']) $newVacation['end_date'] = $date['raw']-12*3600;
 				}
-				if(isset($_POST['save']) || isset($_POST['apply'])) 
+				if(isset($_POST['save']) || isset($_POST['apply']))
 				{
-					if($this->checkRule($newVacation)) 
+					if($this->checkRule($newVacation))
 					{
-						if (!$this->bosieve->setVacation($this->scriptName, $newVacation)) 
+						if (!$this->bosieve->setVacation($this->scriptName, $newVacation))
 						{
 							print "vacation update failed<br>";
 							#print $script->errstr."<br>";
@@ -598,7 +598,7 @@
 				}
 				$vacation = $newVacation;
 
-				if(isset($_POST['save']) || isset($_POST['cancel'])) 
+				if(isset($_POST['save']) || isset($_POST['cancel']))
 				{
 					$GLOBALS['egw']->redirect_link('/felamimail/index.php');
 				}
@@ -617,11 +617,11 @@
 			$this->translate();
 
 			// vacation status
-			if($vacation['status'] == 'on') 
+			if($vacation['status'] == 'on')
 			{
 				$this->t->set_var('checked_active', 'checked');
-			} 
-			elseif($vacation['status'] == 'off') 
+			}
+			elseif($vacation['status'] == 'off')
 			{
 				$this->t->set_var('checked_disabled', 'checked');
 			}
@@ -645,7 +645,7 @@
 			if (empty($preferences->preferences['prefpreventforwarding']) || $preferences->preferences['prefpreventforwarding'] == 0 )
 			{
 				$this->t->set_var('vacation_forwards','<input class="input_text" name="vacation_forwards" size="80" value="'.htmlspecialchars($vacation['forwards']).'" />');
-			} 
+			}
 			else
 			{
 				$this->t->set_var('vacation_forwards',lang('not allowed'));
@@ -668,6 +668,7 @@
 				}
 				$predefinedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
 			}
+
 			asort($predefinedAddresses);
 
 			$this->t->set_var('multiSelectBox',$uiwidgets->multiSelectBox(
@@ -787,7 +788,7 @@
 			$preferences = ExecMethod('felamimail.bopreferences.getPreferences');
 			if(!(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0))
 				die('You should not be here!');
-	
+
 			$uiwidgets	=& CreateObject('felamimail.uiwidgets', EGW_APP_TPL);
 			$boemailadmin	= new emailadmin_bo();
 
