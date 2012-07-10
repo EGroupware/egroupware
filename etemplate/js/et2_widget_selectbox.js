@@ -65,6 +65,12 @@ var et2_selectbox = et2_inputWidget.extend({
 
 		this.input = null;
 		this.value = '';
+
+		// Grab value if already available
+		if(typeof this.options.value != 'undefined')
+		{
+			this.value = this.options.value;
+		}
  
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
@@ -351,6 +357,17 @@ var et2_selectbox = et2_inputWidget.extend({
 	},
 
 	loadFromXML: function(_node) {
+		// Handle special case where legacy option for empty label is used (conflicts with rows), and rows is set as an attribute
+		var legacy;
+		if(legacy = _node.getAttribute("options"))
+		{
+			var legacy = legacy.split(",");
+			if(legacy.length && isNaN(legacy[0]))
+			{
+				this.options.empty_label = legacy[0];
+			}
+		}
+
 		// Read the option-tags
 		var options = et2_directChildrenByTagName(_node, "options");
 		for (var i = 0; i < options.length; i++)
@@ -506,12 +523,13 @@ var et2_selectbox = et2_inputWidget.extend({
 		{
 			var value = [];
 			jQuery("input:checked",this.multiOptions).each(function(){value.push(this.value);});
-			return value;
+			this.value = value;
 		}
 		else
 		{
-			return this._super.apply(this, arguments);
+			this.value = this._super.apply(this, arguments);
 		}
+		return this.value;
 	}
 });
 
