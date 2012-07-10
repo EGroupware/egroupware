@@ -217,7 +217,7 @@ class historylog
 		{
 			$_query[] = array(
 				'table' => sqlfs_stream_wrapper::TABLE,
-				'cols' =>array('fs_id', 'fs_dir', '"filemanager"','fs_modifier','"~file~"','fs_name','fs_modified', '""'),
+				'cols' =>array('fs_id', 'fs_dir', '"filemanager"','COALESCE(fs_modifier,fs_creator)','"~file~"','fs_name','fs_modified', '""'),
 				'where' => array('fs_dir' => $file['ino'])
 			);
 		}
