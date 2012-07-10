@@ -160,13 +160,25 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 			this.options.href = _values["href"];
 		}
 
-		if (typeof _values["value"] != "undefined" || updateLink)
+		if (typeof _values["value"] != "undefined" || (updateLink && (_values["value"] || this.options.value)))
 		{
 			et2_insertLinkText(this._parseText(
-					_values["value"] ? _values["value"] : this.options.value),
-					_nodes[0],
-					this.options.extra_link_target
+				_values["value"] ? _values["value"] : this.options.value),
+				_nodes[0],
+				this.options.extra_link_target
 			);
+			if(this.options.extra_link_popup)
+			{
+				var href = this.options.href;
+				var title = this.options.extra_link_title;
+				var popup = this.options.extra_link_popup;
+				jQuery('a',_nodes[0])
+					.click(function(e) {
+						egw.open_link(href, title,popup);
+						e.preventDefault();
+						return false;
+					});
+			}
 		}
 
 		if (typeof _values["class"] != "undefined")
