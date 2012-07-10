@@ -1248,7 +1248,7 @@ class egw_db
 				return "UNIX_TIMESTAMP($expr)";
 
 			case 'pgsql':
-				return "DATE_PART('epoch',$expr)";
+				return "EXTRACT(EPOCH FROM CAST($expr AS TIMESTAMP))";
 
 			case 'mssql':
 				return "DATEDIFF(second,'1970-01-01',($expr))";
@@ -1270,7 +1270,7 @@ class egw_db
 				return "FROM_UNIXTIME($expr)";
 
 			case 'pgsql':
-				return "(timestamp with time zone 'epoch' + ($expr) * interval '1 sec')";
+				return "(TIMESTAMP WITH TIME ZONE 'epoch' + ($expr) * INTERVAL '1 sec')";
 
 			case 'mssql':	// we use date(,0) as we store server-time
 				return "DATEADD(second,($expr),'".date('Y-m-d H:i:s',0)."')";
