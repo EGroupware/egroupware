@@ -495,6 +495,11 @@ class etemplate_widget
 			{
 				$name = self::get_array($cont,substr($name,1));
 			}
+			else
+			{
+				// Content not set expands to ''
+				$name = '';
+			}
 		}
 		// RB: not sure why this business with entity encoding for square brakets, it messes up validation
 		//$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
