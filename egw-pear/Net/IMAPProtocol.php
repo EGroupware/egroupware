@@ -353,6 +353,7 @@ class Net_IMAPProtocol {
      */
     function _putCMD($commandId , $command, $args = '')
     {
+        //error_log(__METHOD__.__LINE__.'->'.$commandId . " " . $command . " " . $args);//.'->'.function_backtrace());
         if ( !empty( $args ) ) {
             return $this->_send( $commandId . " " . $command . " " . $args . "\r\n" );
         }
@@ -898,10 +899,15 @@ class Net_IMAPProtocol {
      */
     function cmdSelect($mailbox)
     {
+        static $mailboxSelected;
+        static $ret;
+        if (!empty($mailboxSelected) && $mailboxSelected==$mailbox) return $ret;
+
         $mailbox_name=$this->_createQuotedString($mailbox);
         if( !PEAR::isError( $ret= $this->_genericCommand('SELECT', $mailbox_name) ) ){
             $this->currentMailbox  = $mailbox;
         }
+        $mailboxSelected=$mailbox;
         return $ret;
     }
 
@@ -1084,6 +1090,8 @@ class Net_IMAPProtocol {
      */
     function cmdCapability()
     {
+        static $ret;
+        if(!empty($ret) && is_array($this->_serverSupportedCapabilities) && !empty($this->_serverSupportedCapabilities)) return $ret;
         $ret = $this->_genericCommand( 'CAPABILITY' );
 
         if(!PEAR::isError($ret) && isset( $ret["PARSED"] ) ){
