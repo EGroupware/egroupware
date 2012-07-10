@@ -729,30 +729,41 @@
 
 			switch($_flag) {
 				case "flagged":
-					$this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
 					break;
 				case "read":
-					$this->icServer->setFlags($_messageUID, '\\Seen', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'add', true);
 					break;
 				case "forwarded":
-					$this->icServer->setFlags($_messageUID, '$Forwarded', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'add', true);
 				case "answered":
-					$this->icServer->setFlags($_messageUID, '\\Answered', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'add', true);
 					break;
 				case "unflagged":
-					$this->icServer->setFlags($_messageUID, '\\Flagged', 'remove', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'remove', true);
 					break;
 				case "unread":
-					$this->icServer->setFlags($_messageUID, '\\Seen', 'remove', true);
-					$this->icServer->setFlags($_messageUID, '\\Answered', 'remove', true);
-					$this->icServer->setFlags($_messageUID, '$Forwarded', 'remove', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'remove', true);
+					$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'remove', true);
+					$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'remove', true);
 					break;
 				case "mdnsent":
-					$this->icServer->setFlags($_messageUID, 'MDNSent', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, 'MDNSent', 'add', true);
 					break;
 				case "mdnnotsent":
-					$this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
+					$ret = $this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
 					break;
+			}
+			if (PEAR::isError($ret))
+			{
+				if (stripos($ret->message,'Too long argument'))
+				{
+					$c = count($_messageUID);
+					$h =ceil($c/2);
+					error_log(__METHOD__.__LINE__.$ret->message." $c messages given for flagging. Trying with chunks of $h");
+					$this->flagMessages($_flag, array_slice($_messageUID,0,$h));
+					$this->flagMessages($_flag, array_slice($_messageUID,$h));
+				}
 			}
 
 			$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
@@ -1164,7 +1175,7 @@
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
 			$filename = self::getFileNameFromStructure($structure);
-			$attachment = $this->icServer->getBodyPart($_uid, $_partID, true);
+			$attachment = $this->icServer->getBodyPart($_uid, $_partID, true, true);
 
 			if (PEAR::isError($attachment))
 			{
@@ -1764,7 +1775,7 @@
 			return $charSet;
 		}
 
-		function getMultipartAlternative($_uid, $_structure, $_htmlMode)
+		function getMultipartAlternative($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
 		{
 			// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
 
@@ -1783,7 +1794,7 @@
 					$partHTML = $mimePart;
 				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'ALTERNATIVE' && is_array($mimePart->subParts)) {
 					//cascading multipartAlternative structure, assuming only the first one is to be used
-					return $this->getMultipartAlternative($_uid,$mimePart->subParts,$_htmlMode);
+					return $this->getMultipartAlternative($_uid,$mimePart->subParts,$_htmlMode, $_preserveSeen);
 				}
 			}
 
@@ -1791,23 +1802,23 @@
 				case 'always_display':
 					if(is_object($partHTML)) {
 						if($partHTML->subType == 'RELATED') {
-							return $this->getMultipartRelated($_uid, $partHTML, 'always_display');
+							return $this->getMultipartRelated($_uid, $partHTML, 'always_display', $_preserveSeen);
 						} else {
-							return $this->getTextPart($_uid, $partHTML, 'always_display');
+							return $this->getTextPart($_uid, $partHTML, 'always_display',$_preserveSeen);
 						}
 					} elseif(is_object($partText)) {
-						return $this->getTextPart($_uid, $partText);
+						return $this->getTextPart($_uid, $partTexti, $_htmlMode, $_preserveSeen);
 					}
 
 					break;
 				case 'only_if_no_text':
 					if(is_object($partText)) {
-						return $this->getTextPart($_uid, $partText);
+						return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
 					} elseif(is_object($partHTML)) {
 						if($partHTML->type) {
-							return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode);
+							return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
 						} else {
-							return $this->getTextPart($_uid, $partHTML, 'always_display');
+							return $this->getTextPart($_uid, $partHTML, 'always_display', $_preserveSeen);
 						}
 					}
 
@@ -1815,7 +1826,7 @@
 
 				default:
 					if(is_object($partText)) {
-						return $this->getTextPart($_uid, $partText);
+						return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
 					} else {
 						$bodyPart = array(
 							'body'		=> lang("no plain text part found"),
@@ -1830,7 +1841,7 @@
 			return $bodyPart;
 		}
 
-		function getMultipartMixed($_uid, $_structure, $_htmlMode)
+		function getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
 		{
 			if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 			$bodyPart = array();
@@ -1842,16 +1853,16 @@
 					case 'MULTIPART':
 						switch($part->subType) {
 							case 'ALTERNATIVE':
-								$bodyPart[] = $this->getMultipartAlternative($_uid, $part->subParts, $_htmlMode);
+								$bodyPart[] = $this->getMultipartAlternative($_uid, $part->subParts, $_htmlMode, $_preserveSeen);
 								break;
 
 							case 'MIXED':
 							case 'SIGNED':
-								$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part->subParts, $_htmlMode));
+								$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
 								break;
 
 							case 'RELATED':
-								$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part->subParts, $_htmlMode));
+								$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
 								break;
 						}
 						break;
@@ -1861,7 +1872,7 @@
 							case 'PLAIN':
 							case 'HTML':
 								if($part->disposition != 'ATTACHMENT') {
-									$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode);
+									$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
 								}
 								break;
 						}
@@ -1869,7 +1880,7 @@
 
 					case 'MESSAGE':
 						if($part->subType == 'delivery-status') {
-							$bodyPart[] = $this->getTextPart($_uid, $part);
+							$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
 						}
 						break;
 
@@ -1886,17 +1897,17 @@
 			return $bodyPart;
 		}
 
-		function getMultipartRelated($_uid, $_structure, $_htmlMode)
+		function getMultipartRelated($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
 		{
-			return $this->getMultipartMixed($_uid, $_structure, $_htmlMode);
+			return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen);
 		}
 
-		function getTextPart($_uid, $_structure, $_htmlMode = '')
+		function getTextPart($_uid, $_structure, $_htmlMode = '', $_preserveSeen = false)
 		{
 			$bodyPart = array();
 			#_debug_array($_structure);
 			$partID = $_structure->partID;
-			$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true);
+			$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true, $_preserveSeen);
 			if (PEAR::isError($mimePartBody))
 			{
 				error_log(__METHOD__.__LINE__.' failed:'.$mimePartBody->message);
@@ -2405,7 +2416,7 @@
 			}
 		}
 
-		function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '')
+		function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '', $_preserveSeen = false)
 		{
 			if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 			if($_htmlOptions != '') {
@@ -2433,18 +2444,18 @@
 				case 'MULTIPART':
 					switch($structure->subType) {
 						case 'ALTERNATIVE':
-							$bodyParts = array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions));
+							$bodyParts = array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen));
 
 							break;
 
 						case 'MIXED':
 						case 'REPORT':
 						case 'SIGNED':
-							$bodyParts = $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions);
+							$bodyParts = $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
 							break;
 
 						case 'RELATED':
-							$bodyParts = $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions);
+							$bodyParts = $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
 							break;
 					}
 					return self::normalizeBodyParts($bodyParts);
@@ -2471,7 +2482,7 @@
 							case 'HTML':
 							case 'PLAIN':
 							default:
-								$bodyPart = array($this->getTextPart($_uid, $structure, $this->htmlOptions));
+								$bodyPart = array($this->getTextPart($_uid, $structure, $this->htmlOptions, $_preserveSeen));
 						}
 					} else {
 						// what if the structure->disposition is attachment ,...
