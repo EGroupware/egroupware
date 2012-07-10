@@ -3,6 +3,7 @@
 (only cc/bcc)	felamimail	en	Only Cc/Bcc
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
 (unknown sender)	felamimail	en	Unknown sender
+(with checkbox enforced)	felamimail	en	(with checkbox enforced)
 1) keep drafted message (press OK)	felamimail	en	1) keep drafted message (press OK)
 2) discard the message completely (press Cancel)	felamimail	en	2) discard the message completely (press Cancel)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single click onto the subject, set the height for the message list and the preview area e.g. 300. You may specify the minimum height of the message list too, by adding it after the specified IFrame Preview height, separated by comma (e.g.: 300,190)

@@ -233,6 +233,8 @@ class felamimail_hooks
 		$rowOrderStyle = array(
 			'felamimail'	=> lang('FeLaMiMail'),
 			'outlook'	=> 'Outlook',
+			'felamimail_wCB'	=> lang('FeLaMiMail').' '.lang('(with checkbox enforced)'),
+			'outlook_wCB'	=> 'Outlook'.' '.lang('(with checkbox enforced)'),
 		);
 
 		// otherwise we get warnings during setup

@@ -3,6 +3,7 @@
 (only cc/bcc)	felamimail	de	(kein Kopie/Blindkopie)
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
 (unknown sender)	felamimail	de	(unbekannter Absender)
+(with checkbox enforced)	felamimail	de	(mit Auswahlbox für alle Ordner)
 1) keep drafted message (press OK)	felamimail	de	1) Nachrichtenentwurf behalten (wählen Sie OK)
 2) discard the message completely (press Cancel)	felamimail	de	2) verwerfen der kompletten Nachricht (wählen Sie Abbrechen)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	de	Vorschauansicht: Wenn Sie eine Vorschauansicht von eMails wünschen, müssen Sie hier die Höhe des Vorschaubereichs und der Nachrichtenliste festlegen. (300 hat sich als zufriedenstellender Wert erwiesen). Sie können ebenfalls die Mindesthöhe der eMail Liste festlegen, indem Sie die gewünschte Mindesthöhe, durch Komma getrennt, an den Wert für die Höhe des Vorschaubereiches anhängen (Bsp.: 300,190). Die Vorschau wird durch einen einfachen Klick auf den Betreff der anzuzeigenden Nachricht aktiviert.

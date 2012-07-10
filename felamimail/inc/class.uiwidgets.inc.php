@@ -865,7 +865,9 @@ $j(document).ready(function() {
 			if (empty($_folderName)) error_log(__METHOD__.__LINE__.' Empty FolderName:'.$_folderName.' ->'.$f_md5.' backtrace:'.function_backtrace());
 			$obj = new egw_grid_columns('felamimail', 'mainview'.$f_md5); //app- and grid-name
 			//error_log(__METHOD__.__LINE__.'SelectMode:'.$GLOBALS['egw_info']['user']['preferences']['common']['select_mode']);
-			switch($GLOBALS['egw_info']['user']['preferences']['felamimail']['rowOrderStyle']) {
+			$rowOrderStyle = $GLOBALS['egw_info']['user']['preferences']['felamimail']['rowOrderStyle'];
+			switch($rowOrderStyle) {
+				case 'outlook_wCB':
 				case 'outlook':
 					$default_data = array(
 						array(
@@ -873,7 +875,7 @@ $j(document).ready(function() {
 							"caption" => lang('Selection'),
 							"type" => EGW_COL_TYPE_CHECKBOX,
 							//"width" => "20px",
-							"visibility" => EGW_COL_VISIBILITY_INVISIBLE,
+							"visibility" => ($rowOrderStyle=='outlook_wCB'?EGW_COL_VISIBILITY_ALWAYS_NOSELECT:EGW_COL_VISIBILITY_INVISIBLE),
 						),
 						array(
 							"id" => "status",
@@ -923,7 +925,7 @@ $j(document).ready(function() {
 							"caption" => lang('Selection'),
 							"type" => EGW_COL_TYPE_CHECKBOX,
 							//"width" => "20px",
-							"visibility" => EGW_COL_VISIBILITY_INVISIBLE,
+							"visibility" => (stripos($rowOrderStyle,'_wCB')!==false?EGW_COL_VISIBILITY_ALWAYS_NOSELECT:EGW_COL_VISIBILITY_INVISIBLE),
 						),
 						array(
 							"id" => "status",
@@ -1385,8 +1387,6 @@ $j(document).ready(function() {
 				$this->t->set_var('msg_icon_sm',$msg_icon_sm);
 
 				$this->t->set_var('phpgw_images',EGW_IMAGES);
-
-
 			}
 
 			if ($this->use_preview)
