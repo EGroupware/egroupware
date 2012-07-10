@@ -1049,64 +1049,75 @@ class felamimail_bo
 
 		switch($_flag) {
 			case "undelete":
-				$this->icServer->setFlags($_messageUID, '\\Deleted', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Deleted', 'remove', true);
 				break;
 			case "flagged":
-				$this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
 				break;
 			case "read":
-				$this->icServer->setFlags($_messageUID, '\\Seen', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'add', true);
 				break;
 			case "forwarded":
-				$this->icServer->setFlags($_messageUID, '$Forwarded', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'add', true);
 			case "answered":
-				$this->icServer->setFlags($_messageUID, '\\Answered', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'add', true);
 				break;
 			case "unflagged":
-				$this->icServer->setFlags($_messageUID, '\\Flagged', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'remove', true);
 				break;
 			case "unread":
-				$this->icServer->setFlags($_messageUID, '\\Seen', 'remove', true);
-				$this->icServer->setFlags($_messageUID, '\\Answered', 'remove', true);
-				$this->icServer->setFlags($_messageUID, '$Forwarded', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'remove', true);
 				break;
 			case "mdnsent":
-				$this->icServer->setFlags($_messageUID, 'MDNSent', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, 'MDNSent', 'add', true);
 				break;
 			case "mdnnotsent":
-				$this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
 				break;
 			case "label1":
-				$this->icServer->setFlags($_messageUID, '$label1', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label1', 'add', true);
 				break;
 			case "unlabel1":
 				$this->icServer->setFlags($_messageUID, '$label1', 'remove', true);
 				break;
 			case "label2":
-				$this->icServer->setFlags($_messageUID, '$label2', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label2', 'add', true);
 				break;
 			case "unlabel2":
-				$this->icServer->setFlags($_messageUID, '$label2', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label2', 'remove', true);
 				break;
 			case "label3":
-				$this->icServer->setFlags($_messageUID, '$label3', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label3', 'add', true);
 				break;
 			case "unlabel3":
-				$this->icServer->setFlags($_messageUID, '$label3', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label3', 'remove', true);
 				break;
 			case "label4":
-				$this->icServer->setFlags($_messageUID, '$label4', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label4', 'add', true);
 				break;
 			case "unlabel4":
-				$this->icServer->setFlags($_messageUID, '$label4', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label4', 'remove', true);
 				break;
 			case "label5":
-				$this->icServer->setFlags($_messageUID, '$label5', 'add', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label5', 'add', true);
 				break;
 			case "unlabel5":
-				$this->icServer->setFlags($_messageUID, '$label5', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$label5', 'remove', true);
 				break;
 
+		}
+		if (PEAR::isError($ret))
+		{
+			if (stripos($ret->message,'Too long argument'))
+			{
+				$c = count($_messageUID);
+				$h =ceil($c/2);
+				error_log(__METHOD__.__LINE__.$ret->message." $c messages given for flagging. Trying with chunks of $h");
+				$this->flagMessages($_flag, array_slice($_messageUID,0,$h),($_folder?$_folder:$this->sessionData['mailbox']));
+				$this->flagMessages($_flag, array_slice($_messageUID,$h),($_folder?$_folder:$this->sessionData['mailbox']));
+			}
 		}
 
 		$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
