@@ -67,6 +67,7 @@ class etemplate_new extends etemplate_widget_template
 
 		// generate new etemplate request object
 		self::$request = etemplate_request::read();
+		self::$request->content = array();
 	}
 
 	/**
