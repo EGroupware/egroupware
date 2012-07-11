@@ -81,9 +81,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				}
 				var types = this.options.customfields[field_name].type2.split(",");
 				this.options.fields[field_name] = false;
-				for(var i = 0; i < types; i++)
+				for(var i = 0; i < types.length; i++)
 				{
-					if(jQuery.inArray(types[i],split) > 0)
+					if(jQuery.inArray(types[i],this.options.type_filter) > -1)
 					{
 						this.options.fields[field_name] = true;
 						continue;
