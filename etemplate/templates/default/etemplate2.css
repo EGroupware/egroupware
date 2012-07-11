@@ -15,6 +15,14 @@
 }
 
 /**
+ * Basic rules
+ */
+input,button,select {
+	margin: 1px;
+	padding: 0px;
+}
+
+/**
  * VBox widget
  */
 div.et2_vbox>* {
@@ -257,7 +265,7 @@ span.et2_date {
 	min-width: 130px;
 }
 span.et2_date input.et2_date {
-	min-width: 16.5ex;
+	min-width: 15ex;
 	background-repeat: no-repeat;
 	background-position: top right;
 	background-size: contain;
@@ -373,11 +381,24 @@ div.et2_link_entry:after {
 	margin: -20px;
 }
 /* Special layout for inside nm grid */
+.et2_nextmatch div.et2_link_entry {
+	padding-right: 4px;
+}
 .et2_nextmatch .et2_link_entry:after {
-	margin: 0px;
+	margin: -12px;
+}
+div.et2_link_entry select {
+	width: 39%;
+}
+div.et2_link_entry input.ui-autocomplete-input {
+	width: 61%;
+	padding-bottom: 1px;
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
 	width: 100%;
+}
+.et2_link_entry.no_app select {
+	display: none;
 }
 .et2_link_entry .ui-icon-close {
 	display: inline-block;

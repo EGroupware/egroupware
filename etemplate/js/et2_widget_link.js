@@ -396,8 +396,7 @@ var et2_link_entry = et2_inputWidget.extend({
 				self.cache = {}; // Clear cache when app changes
 				if(typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
-			})
-			.css("width","39%");
+			});
 		var opt_count = 0;
 		for(var key in this.options.select_options) {
 			opt_count++;
