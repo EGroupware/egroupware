@@ -13,7 +13,7 @@
 .private { font-style:italic; }
 .planned { font-style:italic; }
 table.fullWidth { width: 100%; }
-.infoId:before { content:"#" }
+td.infoId:before { content:"#" }
 .fixedHeight { line-height: 12px; }
 .noWrap { white-space: nowrap; }
 .user_filter select { width: 100px; }

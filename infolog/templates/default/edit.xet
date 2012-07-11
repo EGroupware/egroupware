@@ -160,11 +160,13 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.100">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
-				<column width="315"/>
+				<column width="100"/>
+				<column/>
+				<column width="60"/>
 				<column width="90"/>
 				<column/>
 			</columns>
@@ -174,37 +176,38 @@
 					<description/>
 					<description/>
 					<description/>
+					<description/>
+					<description/>
 				</row>
-				<row class="th" height="28">
+				<row height="28">
 					<description value="Type" for="info_type"/>
-					<hbox options="0,0" span="all">
+					<hbox options="0,0">
 						<menulist>
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
-						<textbox type="integer" id="info_number" readonly="true" class="infoId"/>
 					</hbox>
+					<textbox type="integer" id="info_number" readonly="true" span="2" class="infoId"/>
 				</row>
-				<row class="row">
+				<row class="row" valign="top">
 					<description value="Contact" for="info_from"/>
-					<vbox options="0,0">
+					<vbox options="0,0" span="2">
 						<hbox options="0,0">
 							<link-entry id="info_contact" class="noWrap"/>
-							<checkbox statustext="Check to specify custom contact" id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';"/>
 						</hbox>
 						<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="36" maxlength="255" class="$cont[hide_from_css]"/>
 					</vbox>
+					<checkbox statustext="Check to specify custom contact" id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';"/>
 					<description value="Phone/Email" for="info_addr"/>
 					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="inputFullWidth"/>
 				</row>
 				<row class="row">
 					<description value="Category" for="info_cat"/>
-					<menulist>
+					<menulist span="2">
 						<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
 					</menulist>
-					<hbox span="all">
-						<description value="Parent"/>
-						<link-entry align="right" id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap searchParent"/>
-					</hbox>
+					<description/>
+					<description value="Parent" font_style="1"/>
+					<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap searchParent"/>
 				</row>
 				<row class="row">
 					<description value="Subject" for="info_subject"/>
@@ -233,9 +236,11 @@
 				<row class="th" disabled="1">
 					<description value="Dates, Status, Access" span="all"/>
 				</row>
-				<row class="row_on">
+				<row>
 					<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" options=",2"/>
+					<description/>
+					<description/>
 					<description value="Enddate" for="info_enddate"/>
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
 				</row>
@@ -244,6 +249,8 @@
 					<menulist>
 						<menupopup statustext="@status_help" id="info_status" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
+					<description/>
+					<description/>
 					<description value="Completed" for="info_percent"/>
 					<menulist>
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
@@ -252,6 +259,8 @@
 				<row class="row">
 					<description value="Date completed" for="info_datecompleted"/>
 					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+					<description/>
+					<description/>
 					<description value="Private" for="info_access"/>
 					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 				</row>
@@ -263,6 +272,8 @@
 						</menulist>
 						<date-time id="info_created" readonly="true"/>
 					</vbox>
+					<description/>
+					<description/>
 					<description value="Last modified"/>
 					<vbox options="0" orient="0">
 						<menulist>
@@ -272,7 +283,7 @@
 					</vbox>
 				</row>
 				<row>
-					<hbox span="2">
+					<hbox span="3">
 						<button statustext="Saves this entry" label="Save" id="button[save]"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();"/>
@@ -281,6 +292,7 @@
 						</menulist>
 						<html id="js"/>
 					</hbox>
+					<description/>
 					<hbox span="2">
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
@@ -296,6 +308,13 @@
 .link_select select { width: 250px; }
 .description textarea { width: 98%; }
 td.searchParent input[type=search] { width: 90%; }
+
+/* Some nice alignment */
+select.et2_selectbox, #info_contact &gt; select { width: 107px; }
+#info_contact &gt; input {width: 144px;}
+#info_from {width: 253px;}
+#info_cat {width: 255px;}
+#info_subject {width: 100%;}
 		</styles>
 	</template>
 </overlay>
