@@ -169,6 +169,15 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	attributes: {
 		"multiline": {
 			"ignore": true
+		},
+		"rows": {
+			"ignore": true
+		},
+		"size": {
+			"ignore": true
+		},
+		"required": {
+			"ignore": true
 		}
 	},
 
