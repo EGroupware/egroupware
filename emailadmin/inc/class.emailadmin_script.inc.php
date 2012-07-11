@@ -3,7 +3,7 @@
  * EGroupware EMailAdmin: Support for Sieve scripts
  *
  * See the inclosed smartsieve-NOTICE file for conditions of use and distribution.
- * 
+ *
  * @link http://www.egroupware.org
  * @package emailadmin
  * @author Stephen Grier <stephengrier@users.sourceforge.net>
@@ -63,7 +63,7 @@ class emailadmin_script {
 		$anyofbit = 4;
 		$keepbit = 8;
 		$regexbit = 128;
- 
+
 		if (!isset($this->name)){
 			$this->errstr = 'retrieveRules: no script name specified';
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": no script name specified");
@@ -82,9 +82,9 @@ class emailadmin_script {
 	#LK		$this->so = true;
 	#LK		return true;
 	#LK	}
- 
+
 		#print "<br><br><br><br>get Script ". $this->name ."<bR>";
- 
+
 		if(PEAR::isError($script = $connection->getScript($this->name))) {
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error retrieving script: ".$script->getMessage());
 			return $script;
@@ -109,7 +109,7 @@ class emailadmin_script {
 		#}
 	#LK	$this->size = $bits[1];
 
-		/* next line should be the recognised encoded head. if not, the script 
+		/* next line should be the recognised encoded head. if not, the script
 		 * is of an unrecognised format, and we should not overwrite it. */
 		$line = array_shift($lines);
 		if (!preg_match("/^# ?Mail(.*)rules for/", $line)){
@@ -152,14 +152,14 @@ class emailadmin_script {
 							!$rule['field'] && !$rule['size'] && $rule['action']) {
 							$rule['unconditional'] = 1;
 						}
-						
+
 						array_push($rules,$rule);
-						
+
 						if ($rule['priority'] > $this->pcount) {
 							$this->pcount = $rule['priority'];
 						}
 					}
-					
+
 					if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
 						preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
 						$vacation['days'] = $bits[1];
@@ -168,10 +168,10 @@ class emailadmin_script {
 						$vaddresses = array();
 						$vaddresses = preg_split("/,/",$vaddresslist);
 						$vacation['text'] = $bits[3];
-						
+
 						// <crnl>s will be encoded as \\n. undo this.
 						$vacation['text'] = preg_replace("/\\\\n/","\r\n",$vacation['text']);
-						
+
 						if (strpos($bits[4],'-')!== false)
 						{
 							$vacation['status'] = 'by_date';
@@ -191,7 +191,7 @@ class emailadmin_script {
 						$emailNotification['externalEmail'] = $bits[2];
 						$emailNotification['displaySubject'] = $bits[3];
 					}
-					
+
 					if (preg_match("/^ *#mode&&(.*)/i",$line,$bits)){
 						if ($bits[1] == 'basic')
 							$this->mode = 'basic';
@@ -204,33 +204,33 @@ class emailadmin_script {
 			}
 			$line = array_shift($lines);
 		}
- 
+
 		$this->script = $script;
 		$this->rules = $rules;
 		$this->vacation = $vacation;
 		$this->emailNotification = $emailNotification; // Added email notifications
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": Script succesful retrieved: ".print_r($vacation,true));
- 
+
 		return true;
 	}
- 
- 
+
+
 	// update and save sieve script
-	function updateScript ($connection) 
+	function updateScript ($connection)
 	{
 		#global $_SESSION,$default,$sieve;
 		global $default,$sieve;
-		
+
 		$activerules = 0;
 		$regexused = 0;
 		$rejectused = 0;
-		
+
 		$username	= $GLOBALS['egw_info']['user']['account_lid'];
 		$version	= $GLOBALS['egw_info']['apps']['felamimail']['version'];
-		
+
 		//include "$default->lib_dir/version.php";
- 
-		if (!is_object($connection)) 
+
+		if (!is_object($connection))
 		{
 			$this->errstr = "updateScript: no sieve session open";
 			return false;
@@ -242,30 +242,29 @@ class emailadmin_script {
 #LK			$this->errstr = 'updateScript: encoding not recognised: not safe to overwrite ' . $this->name;
 #LK			return false;
 #LK		}
- 
+
 		// lets generate the main body of the script from our rules
- 
+
 		$newscriptbody = "";
 		$continue = 1;
 
 		foreach ($this->rules as $rule) {
 			$newruletext = "";
- 
+
 			// don't print this rule if disabled.
 			if ($rule['status'] != 'ENABLED') {
 			} else {
- 
 				$activerules = 1;
- 
+
 				// conditions
- 
+
 				$anyall = "allof";
 				if ($rule['anyof']) $anyall = "anyof";
 				if ($rule['regexp']) {
 						$regexused = 1;
 				}
 				$started = 0;
- 
+
 				if (!$rule['unconditional']) {
 						if (!$continue) $newruletext .= "els";
 						$newruletext .= "if " . $anyall . " (";
@@ -327,11 +326,11 @@ class emailadmin_script {
 								$newruletext .= "size " . $xthan . $rule['size'] . "K";
 								$started = 1;
 						}
- 
+
 				}
- 
+
 				// actions
- 
+
 				if (!$rule['unconditional']) $newruletext .= ") {\n\t";
 
 				if (preg_match("/folder/i",$rule['action'])) {
@@ -349,24 +348,24 @@ class emailadmin_script {
 				}
 				if ($rule['keep']) $newruletext .= "\n\tkeep;";
 				if (!$rule['unconditional']) $newruletext .= "\n}";
- 
+
 				$continue = 0;
 				if ($rule['continue']) $continue = 1;
 				if ($rule['unconditional']) $continue = 1;
- 
+
 				$newscriptbody .= $newruletext . "\n\n";
- 
+
 			} // end 'if ! ENABLED'
 		}
 
 		// vacation rule
- 
+
 		if ($this->vacation) {
 			$vacation = $this->vacation;
 			if (!$vacation['days']) $vacation['days'] = ($default->vacation_days ? $default->vacation_days:'');
 			if (!$vacation['text']) $vacation['text'] = ($default->vacation_text ? $default->vacation_text:'');
 			if (!$vacation['status']) $vacation['status'] = 'on';
-			
+
 			// filter out invalid addresses.
 			$ok_vaddrs = array();
 			foreach($vacation['addresses'] as $addr){
@@ -374,12 +373,12 @@ class emailadmin_script {
 				array_push($ok_vaddrs,$addr);
 			}
 			$vacation['addresses'] = $ok_vaddrs;
-			
+
 			if (!$vacation['addresses'][0]){
 				$defaultaddr = $sieve->user . '@' . $sieve->maildomain;
 				array_push($vacation['addresses'],$defaultaddr);
 			}
-			if ($vacation['status'] == 'on' || $vacation['status'] == 'by_date' && 
+			if ($vacation['status'] == 'on' || $vacation['status'] == 'by_date' &&
 				$vacation['start_date'] <= time() && time() < $vacation['end_date']+24*3600)	// +24*3600 to include the end_date day
 			{
 				if (trim($vacation['forwards'])) {
@@ -422,26 +421,27 @@ class emailadmin_script {
 
 			// format notification body
 			$egw_site_title = $GLOBALS['egw_info']['server']['site_title'];
-			$notification_body = lang("You have received a new message on the")." {$egw_site_title}"."\n";
-			$notification_body .= "\n";
-			$notification_body .= 'From: $from$'."\n";
+			$notification_body = lang("You have received a new message on the")." {$egw_site_title}".",";
+			$notification_body .= " ";
+			$notification_body .= 'From: ${from}';
 			if ($this->emailNotification['displaySubject']) {
-				$notification_body .= 'Subject: $subject$'."\n";
+				$notification_body .= ', Subject: ${subject}';
 			}
 			//$notification_body .= 'Size: $size$'."\n";
-
-			$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'";'."\n";
+			$newscriptbody .= 'if header :matches "subject" "*" {'."\n\t".'set "subject" "${1}";'."\n".'}'."\n\n";
+			$newscriptbody .= 'if header :matches "from" "*" {'."\n\t".'set "from" "${1}";'."\n".'}'."\n\n";
+			$newscriptbody .= 'notify :message "'.$notification_body.'"'."\n\t".'"mailto:'.$notification_email.'";'."\n";
 			//$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'?subject='.$notification_subject.'";'."\n";
 			$newscriptbody .= 'keep;'."\n\n";
 		}
- 
+
 		// generate the script head
- 
+
 		$newscripthead = "";
 		$newscripthead .= "#Mail filter rules for " . $username . "\n";
 		$newscripthead .= '#Generated by ' . $username . ' using FeLaMiMail ' . $version . ' ' . date($default->script_date_format);
 		$newscripthead .= "\n";
- 
+
 		if ($activerules) {
 			$newscripthead .= "require [\"fileinto\"";
 			if ($regexused) $newscripthead .= ",\"regex\"";
@@ -449,18 +449,17 @@ class emailadmin_script {
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= ",\"vacation\"";
 			}
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"notify"'; // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"enotify","variables"'; // Added email notifications
 			$newscripthead .= "];\n\n";
 		} else {
 			// no active rules, but might still have an active vacation rule
 			if ($this->vacation && $vacation_active)
 				$newscripthead .= "require [\"vacation\"];\n\n";
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"notify\"];\n\n"; // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"enotify\",\"variables\"];\n\n"; // Added email notifications
 		}
 	
- 
 		// generate the encoded script foot
- 
+
 		$newscriptfoot = "";
 		$pcount = 1;
 		$newscriptfoot .= "##PSEUDO script start\n";
@@ -473,8 +472,8 @@ class emailadmin_script {
 				/* reset priority value. note: we only do this
 				* for compatibility with Websieve. */
 				$rule['priority'] = $pcount;
-				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" . 
-				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" . 
+				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" .
+				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" .
 				addslashes($rule['action_arg']) . "&&" . $rule['flg'] . "&&" . addslashes($rule['field']) . "&&" . addslashes($rule['field_val']) . "&&" . $rule['size'] . "\n";
 				$pcount = $pcount+2;
 			}
@@ -489,9 +488,9 @@ class emailadmin_script {
 						$newscriptfoot .= "\"" . $address . "\"";
 						$first = 0;
 				}
-				
+
 				$vacation['text'] = preg_replace("/\r\n/","\\n",$vacation['text']);
-				$newscriptfoot .= "&&" . $vacation['text'] . "&&" . 
+				$newscriptfoot .= "&&" . $vacation['text'] . "&&" .
 					($vacation['status']=='by_date' ? $vacation['start_date'].'-'.$vacation['end_date'] : $vacation['status']);
 				if ($vacation['forwards']) $newscriptfoot .= '&&' . $vacation['forwards'];
 				$newscriptfoot .= "\n";
@@ -502,15 +501,16 @@ class emailadmin_script {
 		}
 
 		$newscriptfoot .= "#mode&&basic\n";
- 
+
 		$newscript = $newscripthead . $newscriptbody . $newscriptfoot;
 		$this->script = $newscript;
 		//error_log(__METHOD__.__LINE__.array2string($newscript));
 		//print "<pre>$newscript</pre>"; exit;
 		$scriptfile = $this->name;
 		//print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
-		if (!$connection->installScript($this->name, $newscript, true)) {
-			$this->errstr = 'updateScript: putscript failed: ' . $connection->errstr;
+		$ret = $connection->installScript($this->name, $newscript, true);
+		if (!$ret || PEAR::isError($ret)) {
+			$this->errstr = 'updateScript: putscript failed: ' . (PEAR::isError($ret)?$ret->message:$connection->errstr);
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
