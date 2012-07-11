@@ -230,6 +230,15 @@ function submitIt()
 	</tr>
 	<tr CLASS="sieveRowActive">
 		<td>
+			{lang_check_mail_sent_to}:
+		</td>
+		<td nowrap="nowrap">
+			<input type="radio" name="check_mail_sent_to" {check_mail_sent_to_active} value="on" id="check_mail_sent_to_active"> <label for="check_mail_sent_to_active">{lang_active}</label>
+			<input type="radio" name="check_mail_sent_to" {check_mail_sent_to_disabled} value="off" id="check_mail_sent_to_disabled"> <label for="check_mail_sent_to_disabled">{lang_disabled}</label>
+		</td>
+	</tr>
+	<tr CLASS="sieveRowActive">
+		<td>
 			{lang_every}:
 		</td>
 		<td>

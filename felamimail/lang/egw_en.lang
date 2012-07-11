@@ -562,6 +562,7 @@ vacation notice is active	felamimail	en	Vacation notice is active
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation start-date must be before the end-date!	felamimail	en	Vacation start date must be BEFORE the end date!
 validate certificate	felamimail	en	Validate certificate
+validate mail sent to	felamimail	en	Validate selected addresses on submit
 view full header	felamimail	en	View full header
 view header lines	felamimail	en	View header lines
 view message	felamimail	en	View message

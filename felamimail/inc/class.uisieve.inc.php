@@ -228,7 +228,7 @@
 			return @htmlspecialchars($vacation_str, ENT_QUOTES, $GLOBALS['egw']->translation->charset());
 		}
 
-		function checkRule($_vacation)
+		function checkRule($_vacation,$_checkAddresses=true)
 		{
 			$this->errorStack = array();
 
@@ -247,7 +247,7 @@
 				$regexp="/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
 				foreach ($_vacation['addresses'] as $addr)
 				{
-					if (!preg_match($regexp,$addr))
+					if (!preg_match($regexp,$addr) && $_checkAddresses)
 					{
 						$this->errorStack['addresses'] = lang('One address is not valid'.'!');
 					}
@@ -274,7 +274,7 @@
 			{
 				foreach(preg_split('/, ?/',$_vacation['forwards']) as $addr)
 				{
-					if (!preg_match($regexp,$addr))
+					if (!preg_match($regexp,$addr) && $_checkAddresses)
 					{
 						$this->errorStack['forwards'] = lang('One address is not valid'.'!');
 					}
@@ -575,6 +575,7 @@
 				}
 				$this->t->set_var('set_as_default','<input type="submit" name="set_as_default" value="'.htmlspecialchars(lang('Set as default')).'" />');
 			}
+			$checkAddresses=(get_var('check_mail_sent_to',array('POST'))=='off'?false:true);
 			if(isset($_POST["vacationStatus"]))
 			{
 				$newVacation['text']		= get_var('vacation_text',array('POST'));
@@ -604,7 +605,7 @@
 				}
 				if(isset($_POST['save']) || isset($_POST['apply']))
 				{
-					if($this->checkRule($newVacation))
+					if($this->checkRule($newVacation,$checkAddresses))
 					{
 						if (!$this->bosieve->setVacation($this->scriptName, $newVacation))
 						{
@@ -651,6 +652,14 @@
 			elseif($vacation['status'] == 'off')
 			{
 				$this->t->set_var('checked_disabled', 'checked');
+			}
+			if($checkAddresses)
+			{
+				$this->t->set_var('check_mail_sent_to_active', 'checked');
+			}
+			else
+			{
+				$this->t->set_var('check_mail_sent_to_disabled', 'checked');
 			}
 
 			// vacation text
@@ -1052,6 +1061,7 @@
 			$this->t->set_var("lang_edit_vacation_settings",lang('edit vacation settings'));
 			$this->t->set_var("lang_every",lang('every'));
 			$this->t->set_var('lang_respond_to_mail_sent_to',lang('respond to mail sent to'));
+			$this->t->set_var('lang_check_mail_sent_to',lang('validate mail sent to'));
 			$this->t->set_var('lang_filter_rules',lang('filter rules'));
 			$this->t->set_var('lang_vacation_notice',lang('vacation notice'));
 			$this->t->set_var("lang_with_message",lang('with message'));

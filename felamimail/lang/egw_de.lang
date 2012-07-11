@@ -561,6 +561,7 @@ vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	de	Die Urlaubsnachricht ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab)
 vacation start-date must be before the end-date!	felamimail	de	Startdatum der Urlaubsbenachrichtigung muss VOR dem Endedatum liegen!
 validate certificate	felamimail	de	Zertifikat überprüfen
+validate mail sent to	felamimail	de	Überprüfe die ausgewählten Adressen beim Abschicken des Formulars
 view full header	felamimail	de	alle Kopfzeilen anzeigen
 view header lines	felamimail	de	Kopfzeilen anzeigen
 view message	felamimail	de	zeige Nachricht
