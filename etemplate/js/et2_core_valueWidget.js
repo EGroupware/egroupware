@@ -25,6 +25,13 @@
 var et2_valueWidget = et2_baseWidget.extend({
 
 	attributes: {
+		"label": {
+			"name": "Label",
+			"default": "",
+			"type": "string",
+			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+			"translate": true
+		},
 		"value": {
 			"name": "Value",
 			"description": "The value of the widget",
