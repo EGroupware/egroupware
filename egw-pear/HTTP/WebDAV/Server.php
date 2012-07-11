@@ -188,7 +188,12 @@ class HTTP_WebDAV_Server
         // WebDAV has no concept of a query string and clients (including cadaver)
         // seem to pass '?' unencoded, so we need to extract the path info out
         // of the request URI ourselves
-        $path_info = substr($this->_SERVER["REQUEST_URI"], strlen($this->_SERVER["SCRIPT_NAME"]));
+        // if request URI contains a full url, remove schema and domain
+        if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$this->_SERVER["REQUEST_URI"], $matches))
+        {
+        	$path_info = $matches[1];
+        }
+        $path_info = substr($path_info, strlen($this->_SERVER["SCRIPT_NAME"]));
 
         // just in case the path came in empty ...
         if (empty($path_info)) {
