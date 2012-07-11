@@ -193,11 +193,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
 		if (($parent_id = $value['parent_id']))
 		{
-			$value['col_filter'][$parent_id] = $queriedRange['parent_id'];
+			// Infolog at least wants 'parent_id' instead of $parent_id
+			$value['col_filter']['parent_id'] = $queriedRange['parent_id'];
 		}
 
 		// If specific data requested, just do that
-		if (($row_id = $value['row_id']) && $queryiedRange['refresh'])
+		if (($row_id = $value['row_id']) && $queriedRange['refresh'])
 		{
 			$value['col_filter'][$row_id] = $queriedRange['refresh'];
 		}
