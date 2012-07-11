@@ -247,6 +247,12 @@ class etemplate_new extends etemplate_widget_template
 	{
 		$etemplate_exec_id = $_POST['etemplate_exec_id'];
 		$content = json_decode($_POST['value'],true);
+		if($content == null && $_POST['exec'])
+		{
+			// Old etemplate submit
+			error_log("Old etemplate submitted");
+			return ExecMethod('etemplate.etemplate_old.process_exec');
+		}
 		error_log(__METHOD__."(".array2string($content).")");
 
 		self::$request = etemplate_request::read($_POST['etemplate_exec_id']);
