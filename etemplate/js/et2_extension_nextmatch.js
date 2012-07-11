@@ -1136,6 +1136,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			}
 		}
 
+		// Legacy: Add in 'All' option for cat_id, if not provided. 
+		if(name == 'cat_id' && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
+		{
+			widget_options.empty_label = this.egw().lang('All');
+			this.egw().debug('warn', 'Nextmatch category filter had no "All" option.  Added, but you should fix that.');
+		}
+
 		// Create widget
 		var select = et2_createWidget(type, widget_options, this);
 
@@ -1165,7 +1172,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			// Real submits cause all sorts of problems
 			if(onchange.match(/this\.form\.submit/))
 			{
-				this.egw().debug("warn","%s tries to submit form",name);
+				this.egw().debug("warn","%s tries to submit form, which is not allowed.  Filter changes automatically refresh data with no reload.",name);
 				onchange = onchange.replace(/this\.form\.submit\([^)]*\);?/,'return true;');
 			}
 
