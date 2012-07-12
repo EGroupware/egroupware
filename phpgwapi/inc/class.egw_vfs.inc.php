@@ -300,9 +300,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string $path=null path to mount the filesystem in the vfs, eg. /
 	 * @param boolean $check_url=null check if url is an existing directory, before mounting it
 	 * 	default null only checks if url does not contain a $ as used in $user or $pass
+	 * @param boolean $persitent_mount=true create a persitent mount, or only a temprary for current request
 	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null,$check_url=null)
+	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true)
 	{
 		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
 
@@ -341,12 +342,15 @@ class egw_vfs extends vfs_stream_wrapper
 
 		uksort(self::$fstab,create_function('$a,$b','return strlen($a)-strlen($b);'));
 
-		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-		// invalidate session cache
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		if ($persitent_mount)
 		{
-			$GLOBALS['egw']->invalidate_session_cache();
+			config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
+			// invalidate session cache
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();
+			}
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
 		return true;

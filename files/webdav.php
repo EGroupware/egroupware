@@ -3,7 +3,9 @@
  * FileManger - WebDAV access for ownCloud clients
  *
  * ownCloud clients sync by default local ownCloud dir to /clientsync on server.
- * EGroupware now automaticially mount /home/$user on /clientsync, so ownCloud clients syncs with users home-dir.
+ *
+ * EGroupware now temporary mounts vfs://default/home/$user on /clientsync,
+ * so ownCloud clients syncs with users home-dir, unless admin mounts an other directory.
  *
  * @link http://owncloud.org/sync-clients/
  * @link http://www.egroupware.org
@@ -68,15 +70,16 @@ catch (egw_exception_no_permission_app $e)
 }
 //$headertime = microtime(true);
 
-// automatically mount ownCloud default /clientsync as /home/$user, so ownCloud dir contains users home-dir
+// temporary mount ownCloud default /clientsync as /home/$user, if not explicitly mounted
+// so ownCloud dir contains users home-dir by default
 if (strpos($_SERVER['REQUEST_URI'],'/webdav.php/clientsync') !== false &&
 	($fstab=egw_vfs::mount()) && !isset($fstab['/clientsync']))
 {
 	$is_root_backup = egw_vfs::$is_root;
 	egw_vfs::$is_root = true;
-	$ok = egw_vfs::mount($url='vfs://default/home/$user',$clientsync='/clientsync');
+	$ok = egw_vfs::mount($url='vfs://default/home/$user', $clientsync='/clientsync', null, false);
 	egw_vfs::$is_root = $is_root_backup;
-	error_log("mounting ownCloud default '$clientsync' as '$url' ".($ok ? 'successful' : 'failed!'));
+	//error_log("mounting ownCloud default '$clientsync' as '$url' ".($ok ? 'successful' : 'failed!'));
 }
 
 // webdav is stateless: we dont need to keep the session open, it only blocks other calls to same basic-auth session
