@@ -414,24 +414,49 @@ class emailadmin_script {
 			// update with any changes.
 			$this->vacation = $vacation;
 		}
-
+		$enotify = $variables = false;
+		if (in_array('enotify',$connection->_capability['extensions'])) $enotify = true;
+		if (in_array('variables',$connection->_capability['extensions'])) $variables = true;
 		if ($this->emailNotification && $this->emailNotification['status'] == 'on') {
 			// format notification email header components
 			$notification_email = $this->emailNotification['externalEmail'];
 
 			// format notification body
 			$egw_site_title = $GLOBALS['egw_info']['server']['site_title'];
-			$notification_body = lang("You have received a new message on the")." {$egw_site_title}".",";
-			$notification_body .= " ";
-			$notification_body .= 'From: ${from}';
-			if ($this->emailNotification['displaySubject']) {
-				$notification_body .= ', Subject: ${subject}';
+			if ($enotify==true)
+			{
+				$notification_body = lang("You have received a new message on the")." {$egw_site_title}";
+				if ($variables)
+				{
+					$notification_body .= ", ";
+					$notification_body .= 'From: ${from}';
+					if ($this->emailNotification['displaySubject']) {
+						$notification_body .= ', Subject: ${subject}';
+					}
+					//$notification_body .= 'Size: $size$'."\n";
+					$newscriptbody .= 'if header :matches "subject" "*" {'."\n\t".'set "subject" "${1}";'."\n".'}'."\n\n";
+					$newscriptbody .= 'if header :matches "from" "*" {'."\n\t".'set "from" "${1}";'."\n".'}'."\n\n";
+				}
+				else
+				{
+					$notification_body ="[SIEVE] ".$notification_body;
+				}
+				$newscriptbody .= 'notify :message "'.$notification_body.'"'."\n\t".'"mailto:'.$notification_email.'";'."\n";
+				//$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'?subject='.$notification_subject.'";'."\n";
 			}
-			//$notification_body .= 'Size: $size$'."\n";
-			$newscriptbody .= 'if header :matches "subject" "*" {'."\n\t".'set "subject" "${1}";'."\n".'}'."\n\n";
-			$newscriptbody .= 'if header :matches "from" "*" {'."\n\t".'set "from" "${1}";'."\n".'}'."\n\n";
-			$newscriptbody .= 'notify :message "'.$notification_body.'"'."\n\t".'"mailto:'.$notification_email.'";'."\n";
-			//$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'?subject='.$notification_subject.'";'."\n";
+			else
+			{
+				$notification_body = lang("You have received a new message on the")." {$egw_site_title}"."\n";
+				$notification_body .= "\n";
+				$notification_body .= 'From: $from$'."\n";
+				if ($this->emailNotification['displaySubject']) {
+					$notification_body .= 'Subject: $subject$'."\n";
+				}
+				//$notification_body .= 'Size: $size$'."\n";
+
+				$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'";'."\n";
+				//$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'?subject='.$notification_subject.'";'."\n";
+			}
 			$newscriptbody .= 'keep;'."\n\n";
 		}
 
@@ -449,13 +474,13 @@ class emailadmin_script {
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= ",\"vacation\"";
 			}
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"enotify","variables"'; // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($enotify?'e':'').'notify"'.($variables?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
 		} else {
 			// no active rules, but might still have an active vacation rule
 			if ($this->vacation && $vacation_active)
 				$newscripthead .= "require [\"vacation\"];\n\n";
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"enotify\",\"variables\"];\n\n"; // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"e".($enotify?'e':'')."notify\"".($variables?',"variables"':'')."];\n\n"; // Added email notifications
 		}
 	
 		// generate the encoded script foot
