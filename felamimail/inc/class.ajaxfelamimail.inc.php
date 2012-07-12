@@ -1441,10 +1441,32 @@ class ajaxfelamimail
 			//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
 			$sigText = felamimail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			//error_log(__METHOD__.'new+:'.$sigText.'#');
-			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText):$oldSigText));
+			$htmlConfig = felamimail_bo::$htmLawed_config;
+			$htmlConfig['comment'] = 2;
+			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,$htmlConfig,array(),true):$oldSigText));
 			//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
-			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content):$_content));
-			$found = strpos($_content,trim($oldSigText));
+			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,$htmlConfig,array(),true):$_content));
+			if ($_currentMode == 'html')
+			{
+				$found = strpos($_content,"<!-- HTMLSIGBEGIN -->");
+				$endSig = strpos($_content,"<!-- HTMLSIGEND -->");
+				if ($found !== false && $endSig !== false)
+				{
+					$lengthSig = $endSig-($found+strlen('<!-- HTMLSIGBEGIN -->'));
+					$_content = substr_replace($_content,$sigText,$found+strlen('<!-- HTMLSIGBEGIN -->'),$lengthSig);
+					//error_log(__METHOD__.__LINE__.'->'.$_content);
+					$found = false; // this way we skip further replacement efforts
+				}
+				else
+				{
+					// try the old way
+					$found = strpos($_content,trim($oldSigText));
+				}
+			}
+			else
+			{
+				$found = strpos($_content,trim($oldSigText));
+			}
 			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
 				//error_log(__METHOD__.'Old Content:'.$_content.'#');

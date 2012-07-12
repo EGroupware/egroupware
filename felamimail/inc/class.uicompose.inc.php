@@ -576,13 +576,14 @@
 			{
 				$insertSigOnTop = true;
 				if($sessionData['mimeType'] == 'html') {
-					$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
+					$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:1px dotted silver; width:90%;">');
 					$inbetween = '&nbsp;<br>';
 				} else {
 					$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 					$inbetween = "\r\n";
 				}
 				$sigText = felamimail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				if ($sessionData['mimeType'] == 'html') $sigText = "<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->";
 				$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
 			}
 			// prepare body
@@ -862,7 +863,7 @@
 				false,
 				true
 			);
-			print '<div id="divFolderTree" style="overflow:auto; width:320px; height:450px; margin-bottom: 0px;padding-left: 0px; padding-top:0px; z-index:100; border : 1px solid Silver;"></div>';
+			print '<div id="divFolderTree" style="overflow:auto; width:320px; height:450px; margin-bottom:0px; padding-left:0px; padding-top:0px; z-index:100; border:1px solid Silver;"></div>';
 			print $folderTree;
 		}
 

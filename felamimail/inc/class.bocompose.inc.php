@@ -821,7 +821,7 @@
 						$_mailObject->Body = $bostationery->render($this->sessionData['stationeryID'],$_formData['body'],$signature);
 					} else {
 						$_mailObject->Body = $_formData['body'] .
-							($disableRuler ?'<br>':'<hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">').
+							($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
 							$signature;
 					}
 					$_mailObject->AltBody = $this->convertHTMLToText($_formData['body']).
@@ -840,6 +840,10 @@
 				}
 				// convert URL Images to inline images - if possible
 				if ($_convertLinks) felamimail_bo::processURL2InlineImages($_mailObject, $_mailObject->Body);
+				if (strpos($_mailObject->Body,"<!-- HTMLSIGBEGIN -->")!==false)
+				{
+					$_mailObject->Body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$_mailObject->Body);
+				}
 			} else {
 				$_mailObject->IsHTML(false);
 				$_mailObject->Body = $this->convertHTMLToText($_formData['body'],false);
