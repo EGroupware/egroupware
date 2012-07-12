@@ -69,7 +69,7 @@ class emailadmin_script {
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": no script name specified");
 			return false;
 		}
-		
+
 		if (!is_object($connection)) {
 			$this->errstr = "retrieveRules: no sieve session open";
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": no sieve session open");
@@ -89,7 +89,7 @@ class emailadmin_script {
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error retrieving script: ".$script->getMessage());
 			return $script;
 		}
-		
+
 		#print "<br>AAA: Script is ". htmlentities($script) ."<br>";
 		$lines = array();
 		$lines = preg_split("/\n/",$script); //,PREG_SPLIT_NO_EMPTY);
@@ -480,9 +480,9 @@ class emailadmin_script {
 			// no active rules, but might still have an active vacation rule
 			if ($this->vacation && $vacation_active)
 				$newscripthead .= "require [\"vacation\"];\n\n";
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"e".($enotify?'e':'')."notify\"".($variables?',"variables"':'')."];\n\n"; // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= "require [\"".($enotify?'e':'')."notify\"".($variables?',"variables"':'')."];\n\n"; // Added email notifications
 		}
-	
+
 		// generate the encoded script foot
 
 		$newscriptfoot = "";
