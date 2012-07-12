@@ -653,16 +653,22 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 		'egw_cache_memcache' => array('localhost'),
 		'egw_cache_apc' => array(),
 		'egw_cache_files' => array('/tmp'),
+		'egw_cache_xcache' => array(),
 	) as $class => $param)
 	{
 		echo "Checking $class:\n";
-		$start = microtime(true);
-		$provider = new $class($param);
-		$n = 100;
-		for($i=1; $i <= $n; ++$i)
-		{
-			$failed = $provider->check($i == 1);
+		try {
+			$start = microtime(true);
+			$provider = new $class($param);
+			$n = 100;
+			for($i=1; $i <= $n; ++$i)
+			{
+				$failed = $provider->check($i == 1);
+			}
+			printf("$failed checks failed, $n iterations took %5.3f sec\n\n", microtime(true)-$start);
 		}
-		printf("$failed checks failed, $n iterations took %5.3f sec\n\n", microtime(true)-$start);
+		catch (Exception $e) {
+			printf($e->getMessage()."\n\n");
+		}
 	}
 }*/
