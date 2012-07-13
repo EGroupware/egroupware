@@ -2686,6 +2686,11 @@ class felamimail_bo
 		// fetch the data for the selected messages
 		if (self::$debug) $starttime = microtime(true);
 		$headersNew = $this->icServer->getSummary($queryString, $rByUid);
+		if (PEAR::isError($headersNew) && empty($queryString))
+		{
+			$headersNew = array();
+			$sortResult = array();
+		}
 		if ($headersNew == null && empty($_thisUIDOnly)) // -> if we request uids, do not try to look for messages with ids
 		{
 			if (self::$debug) error_log(__METHOD__.__LINE__."Uid->$queryString, ByUID? $rByUid");

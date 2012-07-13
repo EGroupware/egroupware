@@ -720,7 +720,8 @@ $j(document).ready(function() {
 					(array)$this->sessionData['messageFilter'],
 					$rByUid=true
 				);
-				if($reverse === true) $sR = array_reverse((array)$sR);
+				// if $sR is false, something failed fundamentally
+				if($reverse === true) $sR = ($sR===false?array():array_reverse((array)$sR));
 				$sortResult = array();
 				if (is_array($sR) && count($sR)>0)
 				{
@@ -744,7 +745,7 @@ $j(document).ready(function() {
 					}
 					else
 					{
-						$sortResult['header'][] = array('uid'=>$v);
+						if (!empty($v)) $sortResult['header'][] = array('uid'=>$v);
 					}
 				}
 			}
@@ -792,8 +793,8 @@ $j(document).ready(function() {
 							$rByUid=true
 						);
 						$rowsFetched['messages'] = count($sR);
-
-						if($reverse === true) $sR = array_reverse((array)$sR);
+						// if $sR is false, something failed fundamentally
+						if($reverse === true) $sR = ($sR===false?array():array_reverse((array)$sR));
 						$sR = array_slice((array)$sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
 						$sRToFetch = array_slice($sR,0,50); // we fetch only the headers of a subset of the fetched uids
 						//error_log(__METHOD__.__LINE__.' Rows fetched (UID only):'.count($sR).' Data:'.array2string($sR));
@@ -839,7 +840,7 @@ $j(document).ready(function() {
 							}
 							else
 							{
-								$sortResult['header'][] = array('uid'=>$v);
+								if (!empty($v)) $sortResult['header'][] = array('uid'=>$v);
 							}
 						}
 					}

@@ -465,6 +465,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         }
 		#error_log(print_r($ret['PARSED'][0],true));
         #$ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY[1.MIME])");
+        if ((PEAR::isError($ret) || (strtoupper($ret["RESPONSE"]["CODE"]) == "BAD" && stripos($ret["RESPONSE"]["STR_CODE"], "NO MAILBOX SELECTED")!==false) && $message_set=="1:*")) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         if (PEAR::isError($ret) || strtoupper($ret["RESPONSE"]["CODE"]) != "OK") {
 			error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:array2string($ret))." Trying to retrieve single messages.");
 			unset($ret);
@@ -474,7 +475,7 @@ class Net_IMAP extends Net_IMAPProtocol {
 				if (PEAR::isError($retloop)|| strtoupper($retloop["RESPONSE"]["CODE"]) != "OK") {
 					# log the error, and create a dummy-message as placeholder, this may hold the possibility to read the message anyway
 					//error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message with id:".$msgid);
-					error_log(__METHOD__.__LINE__."error after Fetch for message with id:".$msgid.' Error:'.$ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+					error_log(__METHOD__.__LINE__."error after Fetch for message with id:".$msgid.' Error:'.$retloop["RESPONSE"]["CODE"] . ", " . $retloop["RESPONSE"]["STR_CODE"]);
 					$ret['PARSED'][]=array('COMMAND'=>"FETCH",'EXT'=>array('UID'=>$msgid,'ENVELOPE'=>array('SUBJECT'=>"[FELAMIMAIL:ERROR]can not parse this message(header).",)));
 				} else {
 					#error_log(print_r($retloop['PARSED'][0],true));
