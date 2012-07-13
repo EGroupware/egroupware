@@ -354,8 +354,18 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$path2n = array();
 		foreach($files['files'] as $n => $info)
 		{
+			// do NOT report /clientsync/.favorites/, as it fails
+			if (strpos($info['path'],'/clientsync/.favorites/') === 0)
+			{
+				unset($files['files'][$n]);
+				continue;
+			}
 			$path = $info['path'];
 			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $path = substr($info['path'],0,-1);
+
+			// need to encode path again, as $info['path'] is NOT encoded, but egw_vfs::(stat|propfind) require it
+			// otherwise pathes containing url special chars like ? or # will not stat
+			$path = egw_vfs::encodePath($path);
 			$path2n[$path] = $n;
 
 			// adding some properties used instead of regular DAV times
@@ -614,7 +624,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		if (($ok = parent::GET($options)) && $this->force_download)
 		{
-			if(html::$user_agent == 'msie') // && self::$ua_version == '5.5')
+			if(html::$user_agent == 'msie' && self::$ua_version < 9.0)
 			{
 				$attachment = '';
 			}
