@@ -184,9 +184,15 @@ class groupdav_principals extends groupdav_handler
 	}*/
 
 	/**
-	 * Handle expand-property report
+	 * Handle expand-property reports (all from http://calendarserver.org/ns/ namespace) seen from newer iCal on OS X
+	 * - expanded-group-member-set
+	 * - expanded-group-membership
+	 * - calendar-proxy-read-for
+	 * - calendar-proxy-write-for
 	 *
-	 * REPORT /egw/groupdav.php/principals/groups/Landesjugendleitung/ HTTP/1.1
+	 * Example requests:
+	 *
+	 * REPORT /egw/groupdav.php/principals/groups/groupname/ HTTP/1.1
 	 *
 	 * <?xml version="1.0" encoding="UTF-8"?>
 	 * <A:expand-property xmlns:A="DAV:">
@@ -201,6 +207,22 @@ class groupdav_principals extends groupdav_handler
 	 *   </A:property>
 	 * </A:expand-property>
 	 *
+	 * REPORT /egw/groupdav.php/principals/users/username/ HTTP/1.1
+	 *
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 * <A:expand-property xmlns:A="DAV:">
+	 *   <A:property name="calendar-proxy-read-for" namespace="http://calendarserver.org/ns/">
+	 *     <A:property name="displayname" namespace="DAV:"/>
+	 *     <A:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="email-address-set" namespace="http://calendarserver.org/ns/"/>
+	 *   </A:property>
+	 *   <A:property name="calendar-proxy-write-for" namespace="http://calendarserver.org/ns/">
+	 *     <A:property name="displayname" namespace="DAV:"/>
+	 *     <A:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="email-address-set" namespace="http://calendarserver.org/ns/"/>
+	 *   </A:property>
+	 * </A:expand-property>
+	 *
 	 * @param string $path
 	 * @param array &$options
 	 * @param array &$files
@@ -210,20 +232,32 @@ class groupdav_principals extends groupdav_handler
 	function expand_property_report($path,&$options,&$files,$user)
 	{
 		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
+		switch($prop_name = $options['other'][0]['attrs']['name'])
+		{
+			case 'calendar-proxy-read-for':
+			case 'calendar-proxy-write-for':
+				$prop_path = $path . substr($prop_name, 0, -4).'/';
+				$prop_name = 'group-member-set';
+				$prop_ns = groupdav::DAV;
+				break;
 
-		$prop_name = $options['other'][0]['attrs']['name'];
-		// remove 'expanded-' prefix
-		if (strpos($prop_name, 'expanded-') === 0) $prop_name = substr($prop_name, 9);
-
+			case 'expanded-group-member-set':
+			case 'expanded-group-membership':
+				$prop_path = $path;
+				// remove 'expanded-' prefix
+				$prop_name = substr($prop_name, 9);
+				$prop_ns = groupdav::DAV;
+				break;
+		}
 		// run regular propfind for first property with depth=0
 		$options['depth'] = '0';
 		$options['root']['name'] = 'propfind';
-		$options['props'] = array(
+		$options['props'] = array(array(
 			'name' => $prop_name,
-			'xmlns' => groupdav::DAV,
-		);
+			'xmlns' => $prop_ns,
+		));
 		$this->groupdav->options = $options;	// also modify global variable
-		if (empty($prop_name) || $this->propfind($path, $options, $files, $user) !== true)
+		if (empty($prop_name) || $this->propfind($prop_path, $options, $files, $user) !== true)
 		{
 			$this->groupdav->log('### NO expand-property report for '.$prop_name);
 			$files = array('files' => array());
@@ -234,46 +268,55 @@ class groupdav_principals extends groupdav_handler
 		{
 			if ($expand_prop['name'] === $prop_name) break;
 		}
-		$files = array('files' => array());
+		// setting original name and namespace
+		$options['props'] = array(array(
+			'xmlns' => $options['other'][0]['attrs']['namespace'],
+			'name'  => $options['other'][0]['attrs']['name'],
+		));
+
 		if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) || $expand_prop['val'][0]['name'] !== 'href')
 		{
 			$this->groupdav->log('### NO expand-property report for '.$prop_name);
+			$files = array('files' => array());
 			return true;
 		}
+
 		// requested properties of each href are in depth=2 properties
 		// set them as regular propfind properties to $options['props']
-		$options['props'] = 'all';
+		$options2 = array('props' => 'all');
 		foreach($options['other'] as $prop)
 		{
 			if ($prop['name'] == 'property' && $prop['depth'] == 2)
 			{
-				if (!is_array($options['props']))	// is "all" initially
+				if (!is_array($options2['props']))	// is "all" initially
 				{
-					$options['props'] = array();
+					$options2['props'] = array();
 				}
-				$options['props'][] = array(
+				$options2['props'][] = array(
 					'name' => $prop['attrs']['name'],
 					'xmlns' => $prop['attrs']['namespace'],
 				);
 			}
 		}
-		$this->groupdav->options = $options;	// also modify global variable
+		$this->groupdav->options = $options2;	// also modify global variable
 
 		// run regular profind to get requested properties for each href
-		$expanded = array();
-		foreach($expand_prop['val'] as $prop)
+		foreach($expand_prop['val'] as &$prop)
 		{
-			if ($prop['name'] == 'href')
+			list(,$prop_path) = explode($this->groupdav->base_uri, $prop['val']);
+			if ($this->propfind($prop_path, $options2, $prop, $user) !== true || !isset($prop['files'][0]))
 			{
-				list(,$path) = explode($this->groupdav->base_uri, $prop['val']);
-				if ($this->propfind($path, $options, $files, $user) !== true || !isset($files['files'][0]))
-				{
-					throw new egw_exception_assertion_failed('no propfind for '.$path);
-				}
-				$expanded[] = $files['files'][0];
+				throw new egw_exception_assertion_failed('no propfind for '.$path);
 			}
+			$prop = $prop['files'][0];
 		}
-		$files['files'] = $expanded;
+		$expand_prop['props'] = $options2['props'];
+
+		// setting original name and namespace
+		$expand_prop['ns'] = $options['other'][0]['attrs']['namespace'];
+		$expand_prop['name'] = $options['other'][0]['attrs']['name'];
+		$files['files'][0]['props'] = array($expand_prop);
+		$files['files'][0]['path'] = $path;
 
 		return true;
 	}
