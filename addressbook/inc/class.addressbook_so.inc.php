@@ -617,7 +617,7 @@ class addressbook_so
 			unset($filter['tid']);	// return all entries incl. deleted
 		}
 
-		$backend =& $this->get_backend(null,$filter['owner']);
+		$backend = $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
 		if ($criteria && !is_array($criteria))
 		{
