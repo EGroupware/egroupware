@@ -1426,8 +1426,7 @@ function calendar_upgrade1_0_1_007()
 
 function calendar_upgrade1_0_1_008()
 {
-	$config =& CreateObject('phpgwapi.config','calendar');
-	$config_data = $config->read_repository();
+	$config_data = config::read('calendar');
 	if (isset($config_data['fields']))	// old custom fields
 	{
 		$customfields = array();
@@ -1446,10 +1445,9 @@ function calendar_upgrade1_0_1_008()
 		}
 		if (count($customfields))
 		{
-			$config->save_value('customfields',$customfields);
+			config::save_value('customfields', $customfields, 'calendar');
 		}
-		$config->delete_value('fields');
-		$config->save_repository();		// delete_value does not save
+		config::save_value('fields', null, 'calendar');
 	}
 	$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.1.009';
 	return $GLOBALS['setup_info']['calendar']['currentver'];

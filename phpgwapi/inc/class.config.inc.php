@@ -2,8 +2,6 @@
 /**
  * eGW's application configuration in a centralized location
  *
- * This allows eGroupWare to use php or database sessions
- *
  * @link www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org> original class Copyright (C) 2000, 2001 Joseph Engo
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
@@ -87,13 +85,13 @@ class config
 			self::$db->lock(array(config::TABLE));
 			foreach($this->config_data as $name => $value)
 			{
-				$this->save_value($name,$value,null,false);
+				self::save_value($name, $value, $this->appname, false);
 			}
 			foreach(self::$configs[$this->appname] as $name => $value)
 			{
 				if (!isset($this->config_data[$name]))	// has been deleted
 				{
-					$this->save_value($name,null,null,false);
+					self::save_value($name, null, $this->appname, false);
 					//self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 				}
 			}
@@ -112,17 +110,21 @@ class config
 	/**
 	 * updates or insert a single config-value direct into the database
 	 *
-	 * Can be used static, if $app given!
+	 * Can (under recent PHP version) only be used static!
+	 * Use $this->value() or $this->delete_value() together with $this->save_repository() for non-static usage.
 	 *
 	 * @param string $name name of the config-value
 	 * @param mixed $value content, empty or null values are not saved, but deleted
-	 * @param string $app=null app-name, defaults to $this->appname set via the constructor
+	 * @param string $app app-name (depreacted to use default of $this->appname set via the constructor!)
+	 * @param boolean $update_cache=true update instance cache and for phpgwapi invalidate session-cache
+	 * @throws egw_exception_wrong_parameter if no $app parameter given for static call
+	 * @return boolean|int true if no change, else number of affected rows
 	 */
-	/* static */ function save_value($name,$value,$app=null,$update_cache=true)
+	static function save_value($name, $value, $app, $update_cache=true)
 	{
 		if (!$app && (!isset($this) || !is_a($this,__CLASS__)))
 		{
-			throw new egw_exception_assertion_failed('$app parameter required for static call of config::save_value($name,$value,$app)!');
+			throw new egw_exception_wrong_parameter('$app parameter required for static call of config::save_value($name,$value,$app)!');
 		}
 		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
 		if (!$app || isset($this) && is_a($this,__CLASS__) && $app == $this->appname)
@@ -143,17 +145,23 @@ class config
 		if (!isset($value) || $value === '')
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
-			$ok = self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+			self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		else
 		{
 			self::$configs[$app][$name] = $value;
 			if(is_array($value)) $value = serialize($value);
-			$ok = self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+			self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
-		if ($update_cache) egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
-
-		return $ok;
+		if ($update_cache)
+		{
+			if ($app == 'phpgwapi' && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
+			}
+			egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
+		}
+		return self::$db->affected_rows();
 	}
 
 	/**
