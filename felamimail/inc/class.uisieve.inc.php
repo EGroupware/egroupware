@@ -570,8 +570,7 @@
 				// store text as default
 				if (isset($_POST['set_as_default']))
 				{
-					$config = new config('felamimail');
-					$config->save_value('default_vacation_text',$_POST['vacation_text'],'felamimail');
+					config::save_value('default_vacation_text', $_POST['vacation_text'], 'felamimail');
 				}
 				$this->t->set_var('set_as_default','<input type="submit" name="set_as_default" value="'.htmlspecialchars(lang('Set as default')).'" />');
 			}
