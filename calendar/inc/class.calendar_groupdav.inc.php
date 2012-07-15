@@ -127,13 +127,13 @@ class calendar_groupdav extends groupdav_handler
 	 * Handle propfind in the calendar folder
 	 *
 	 * @param string $path
-	 * @param array $options
+	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
 	 * @param string $id=''
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function propfind($path,$options,&$files,$user,$id='')
+	function propfind($path,&$options,&$files,$user,$id='')
 	{
 		if ($this->debug)
 		{
