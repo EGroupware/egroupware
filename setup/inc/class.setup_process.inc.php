@@ -258,6 +258,17 @@ class setup_process
 			unset($current_config['aspell_path']);
 		}
 
+		// always enable history logging for calendar, addressbook and infolog
+		$current_config['history'] = 'history';	// addressbook: only admin
+		$current_config['calendar_delete_history'] = 'history';	// only admins
+		// infolog does NOT use config_app='phpgwapi', but 'infolog'
+		$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+			'config_value' => 'history_admin_delete',	// only admins
+		),array(
+			'config_app' => 'infolog',
+			'config_name' => 'history',
+		),__FILE__,__LINE__);
+
 		// RalfBecker: php.net recommend this for security reasons, it should be our default too
 		$current_config['usecookies'] = 'True';
 

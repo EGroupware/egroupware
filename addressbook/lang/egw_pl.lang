@@ -454,3 +454,4 @@ you need to select a distribution list	addressbook	pl	Musisz wybrać listę dyst
 you need to select some contacts first	addressbook	pl	Musisz najpierw wybrać kontakty
 zip code	common	pl	Kod pocztowy
 zip_note	addressbook	pl	<p><b>Uwaga:</b>Plik może być typu zip i zawierać zbiór plików typu .csv, .vcf lub .ldif. Mimo to proszę nie mieszać plików różnego typu w jednym archiwum.
+deleted	addressbook	pl	skasowany

@@ -1,0 +1,393 @@
+%1 added	addressbook	bg	%1 добавен
+%1 contact(s) %2	addressbook	bg	%1 контакт(а) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	bg	%1 контакт(а) %2, %3 неуспешно поради недостатъчни права !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	bg	%1 полета в %2 друг(и) член(а) на организацията променени
+%1 records imported	addressbook	bg	Импортирани са %1 записа
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	bg	%1 записа прочетени (все още не импортирани, може да се %2върнете%3 и да размаркирате Тест Импорт)
+%1 starts with '%2'	addressbook	bg	%1 започва с '%2'
+%s please calculate the result	addressbook	bg	%s моля, изчислете резултата
+(e.g. 1969)	addressbook	bg	(например 1969г.)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	bg	<b>Не е намерен тип за конвертиране <none>.</b> Моля, изберете тип за конвертиране от списъка
+@-eval() is only availible to admins!!!	addressbook	bg	@-eval() е достъпно само за Администраторите!!!
+account repository	admin	bg	Хранилище за акаунти
+accounts	addressbook	bg	Акаунти
+actions	addressbook	bg	Действия
+add %1	addressbook	bg	Добавяне на %1
+add a contact to this organisation	addressbook	bg	Добавяне на контакт към тази организация
+add a new contact	addressbook	bg	Добавяне на контакт
+add a new infolog	addressbook	bg	Добавяне в Дневника
+add a new list	addressbook	bg	Добавяне на нов списък
+add a single entry by passing the fields.	addressbook	bg	Добавяне на единичен запис чрез предаване на полетата.
+add business email of whole distribution list?	addressbook	bg	Добавяне на служебен e-mail за целия пощенски списък?
+add custom field	addressbook	bg	Добавяне на поле по избор
+add emails of whole distribution list?	addressbook	bg	Добаване на e-mail адресите на целия пощенски списък?
+add or delete categories	addressbook	bg	Добавяне или изтриване на категории
+add to distribution list:	addressbook	bg	Добавяне към пощенски списък:
+added	addressbook	bg	добавен
+added by synchronisation	addressbook	bg	добавен чрез синхронизация
+added to distribution list	addressbook	bg	добавен към пощенски списък
+additional information about using ldap as contact repository	admin	bg	Допълнителна информация относно използване на LDAP като хранилище за контакти
+address book	common	bg	Адресен указател
+address book - vcard in	addressbook	bg	Адресен указател - VCard в
+address book - view	addressbook	bg	Адресен указател - преглед
+address line 2	addressbook	bg	Адрес ред 2
+address type	addressbook	bg	Тип на адреса
+addressbook	common	bg	Адресен указател
+addressbook csv export	addressbook	bg	Адресен указател експорт в CSV
+addressbook menu	addressbook	bg	Адресен указател - меню
+addressbook preferences	addressbook	bg	Настройки на адресния указател
+addressbook the contact should be saved to	addressbook	bg	Адресен указател, в който да бъде записан контакта
+addressbook the contact should be shown	addressbook	bg	Адресен указател, в който да бъде показан контакта
+addressbook-fieldname	addressbook	bg	Адресен указател - име на полето
+addvcard	addressbook	bg	Добавяне на VCard
+advanced search	addressbook	bg	Разширено търсене
+all contacts	addressbook	bg	Всички контакти
+allow users to maintain their own account-data	admin	bg	Позволява на потребителите да въвеждат данни за собствените си акаунти
+alt. csv import	addressbook	bg	Алтернативен импорт на CSV
+always	addressbook	bg	винаги
+apply changes to all members, whose fields have the same previous content	addressbook	bg	Да се приложи промяната към всички членове, чиито полета имат еднакво съдържание
+apply the action on the whole query, not only the shown contacts!!!	addressbook	bg	Действието ще се извърши за всички резултати, НЕ САМО показаните контакти!!!
+are you shure you want to delete this contact?	addressbook	bg	Сигурни ли сте, че искате да изтриете този контакт?
+are you sure you want to delete this field?	addressbook	bg	Сигурни ли сте, че искате да изтриете това поле?
+assistent	addressbook	bg	Асистент
+assistent phone	addressbook	bg	телефон на асистента
+at the moment the following document-types are supported:	addressbook	bg	Към момента се поддържат следните типове документи:
+birthday	common	bg	Рожден ден
+birthdays	common	bg	Рождени дни
+blank	addressbook	bg	Празно
+business	common	bg	Служебен
+business address	addressbook	bg	Служебен адрес
+business city	addressbook	bg	Служебен - град
+business country	addressbook	bg	Служебен - държава
+business email	addressbook	bg	Служебен E-Mail
+business fax	addressbook	bg	Служебен факс
+business phone	addressbook	bg	Служебен телефон
+business state	addressbook	bg	Служебен - Област / Щат
+business street	addressbook	bg	Служебен - улица
+business zip code	addressbook	bg	Служебен - пощенски код
+calendar fields:	addressbook	bg	Полета на календара:
+calendar uri	addressbook	bg	URI на календара:
+can be changed via setup >> configuration	admin	bg	Може да се промени чрез Настройки >> Конфигуриране
+car phone	addressbook	bg	Телефон в автомобил
+categorie	addressbook	bg	категория
+categorie added	addressbook	bg	категория добавена
+categorie delete	addressbook	bg	изтриване на категория
+categories, notes, ...	addressbook	bg	Категории, Бележки, ...
+category tree	admin	bg	Дърво на категориите
+cell phone	addressbook	bg	Мобилен телефон
+change all organisation members	addressbook	bg	запис за всички членове на организацията
+charset for the csv export	addressbook	bg	Символен набор за експорта в CSV
+charset of file	addressbook	bg	Символен набор на файла
+check all	addressbook	bg	Маркира всички
+choose an icon for this contact type	admin	bg	Избор на икона за този тип контакт
+choose owner of imported data	addressbook	bg	Избор на собственик на импортираните данни
+choose seperator and charset	addressbook	bg	Избор на разделител и символен набор
+chosse an etemplate for this contact type	admin	bg	Избор на eTemplate за този тип контакт
+city	common	bg	Град
+company	common	bg	Организация
+company name	addressbook	bg	Име на организацията
+configuration	common	bg	Конфигуриране
+contact	common	bg	Контакт
+contact application	admin	bg	Приложение за контакта
+contact copied	addressbook	bg	Контактът е копиран
+contact deleted	addressbook	bg	Контактът е изтрит
+contact fields to show	addressbook	bg	Полета на контакта, които да се показват
+contact fields:	addressbook	bg	Полета на контакта:
+contact id	addressbook	bg	ID на контакта:
+contact modified by %1 at %2	addressbook	bg	Контактът е променен от %1 в %2
+contact not found!	addressbook	bg	Контактът не е намерен!
+contact repository	admin	bg	Хранилище за контакти
+contact saved	addressbook	bg	Контактът е записан
+contact settings	admin	bg	Настойки на контактите
+contactform	addressbook	bg	Форма за контакти
+contacts and account contact-data to ldap	admin	bg	контактите и данните за акаунтите към LDAP
+contacts and account contact-data to sql	admin	bg	контактите и данните за акаунтите към SQL
+contacts to ldap	admin	bg	контакти към LDAP
+contacts to ldap, account contact-data to sql	admin	bg	контактите към LDAP, данните за акаунтите към SQL
+contains	addressbook	bg	съдържа
+copied by %1, from record #%2.	addressbook	bg	Копиран от %1, от запис #%2.
+copy a contact and edit the copy	addressbook	bg	Копиране на контакт и редактиране на копието
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	bg	Копирайте измеменията в клипборда, %1презаредете записа%2 и ги обединете.
+country	common	bg	Държава
+create new links	addressbook	bg	Създаване на нови връзки
+created	addressbook	bg	Създаден
+csv-fieldname	addressbook	bg	Име на поле в CSV
+csv-filename	addressbook	bg	Име на CSV файл
+custom	addressbook	bg	по избор
+custom etemplate for the contactform	addressbook	bg	eTemplate по избор за формата за контакти
+custom fields	addressbook	bg	Полета по избор
+debug output in browser	addressbook	bg	Да се покаже подробна информация (Debug)
+default	addressbook	bg	по подразбиране
+default address format	addressbook	bg	Формат на адреса по подразбиране
+default addressbook for adding contacts	addressbook	bg	Адресен указател по подразбиране за добавяне на контакт
+default document to insert contacts	addressbook	bg	Документ по подразбиране за вмъкване на контакти
+default filter	addressbook	bg	Филтър по подразбиране
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	bg	Определя кой E-Mail адрес (служебен или личен) да се използва като предпочитан в пощенските списъци.
+delete a single entry by passing the id.	addressbook	bg	Изтриване на единичен запис чрез предаване на ID.
+delete selected distribution list!	addressbook	bg	Изтриване на избрания пощенски списък!
+delete this contact	addressbook	bg	Изтриване на този контакт
+delete this organisation including all its contacts	addressbook	bg	Изтриване на тази организация, включително ВСИЧКИ нейни контакти
+deleted	addressbook	bg	изтрит
+deletes the photo	addressbook	bg	Изтриване на снимка
+department	common	bg	Отдел
+departments	addressbook	bg	отдели
+directory with documents to insert contacts	addressbook	bg	Директория с докумнти за вмъкване на контактите
+display contact	addressbook	bg	Показване на контакт
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	bg	Напомняне за рождените дни на началната страница (при влизане в eGroupWare или чрез натискане на бутон Home)
+distribution list deleted	addressbook	bg	Пощенският списък е изтрит
+distribution lists	addressbook	bg	Пощенски списъци
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	bg	Желаете ли личен (private) адресен указател, който не е досъпен за потребителите, на които позволите достъп до собствения си (personal) адресен указател?
+do your really want to delete this contact?	addressbook	bg	Наистина ли желаете да изтриете този контакт?
+document '%1' does not exist or is not readable for you!	addressbook	bg	Документът '%1' не съществува или нямате право на достъп до него!
+doesn't matter	addressbook	bg	без значение
+domestic	addressbook	bg	Домашен
+don't hide empty columns	addressbook	bg	Да не се скриват празните колони
+download	addressbook	bg	Изтегляне
+download export file (uncheck to debug output in browser)	addressbook	bg	Изтегляне на експорт-файла (махнете отметката за показване в прозореца)
+download this contact as vcard file	addressbook	bg	Изтегляне на този контакт като vCard файл
+duration	addressbook	bg	Продължителност
+edit custom field	addressbook	bg	Редакция на поле по избор
+edit custom fields	admin	bg	Редакция на полета по избор
+edit extra account-data in the addressbook	admin	bg	Редакция на допълнителната информация за акаунта в адресния указател
+edit phonenumbers -	addressbook	bg	Редакция на телефонните номера -
+either the configured email addesses are wrong or the mail configuration.	addressbook	bg	Конфигурираните E-Mail адреси или настройката за E-Mail са сгрешени.
+email & internet	addressbook	bg	E-Mail и Интернет
+email addresses (comma separated) to send the contact data	addressbook	bg	E-Mail адреси (разделени със запетая) за изпращане на данните за контакта
+empty for all	addressbook	bg	празен за всички
+enable an extra private addressbook	addressbook	bg	Позволява допълнителен личен адр. указател
+end	addressbook	bg	Край
+enter the path to the exported file here	addressbook	bg	Въведете пътя към експортирания файл
+error deleting the contact !!!	addressbook	bg	Грешка при изтриване на контакта !!!
+error saving the contact !!!	addressbook	bg	Грешка при запис на контакта !!!
+error: the entry has been updated since you opened it for editing!	addressbook	bg	Грешка: записът е бил актуализиран, след като сте го отворили за редакция!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	bg	Пример $$IF n_prefix~Г-н~Здравейте, Г-н~Здравейте, Г-жо.$$ - търси в полето "n_prefix", ако открие "Г-н", записва Здравейте, Г-н. , иначе - здравейте, Г-жо.
+existing links	addressbook	bg	Съществуващи връзки
+export	addressbook	bg	експорт
+export as csv	addressbook	bg	Експорт в CSV
+export as vcard	addressbook	bg	Експорт във VCard
+export contacts	addressbook	bg	Експорт на контактите
+export file name	addressbook	bg	Име на файла за експорт
+export from addressbook	addressbook	bg	Експорт от Адресния указател
+export selection	addressbook	bg	Експорт на избраните
+exported	addressbook	bg	експортиран(и)
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Експортира контактите от адресния Ви указател в CSV-файл (стойности, разделени със запетая). Чрез таб-а за опции може да изберете друг разделител.
+extra	addressbook	bg	Допълнително
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	bg	Неуспешна промяна на %1 член(а) на организацията поради недостатъчни права !!!
+fax	addressbook	bg	Факс
+fax number	common	bg	Номер на факс
+field %1 has been added !	addressbook	bg	Полето %1 беше добавено!
+field %1 has been updated !	addressbook	bg	Полето %1 беше обновено!
+field name	addressbook	bg	Име на поле
+fields for the csv export	addressbook	bg	Полета за експорт в CSV
+fields the user is allowed to edit himself	admin	bg	Полета, които потребителят може да редактира
+fields to show in address list	addressbook	bg	Полета, видими в списъка с адреси
+fieldseparator	addressbook	bg	Разделител на полета
+for read only ldap	admin	bg	за LDAP, достъпен само за четене
+full name	addressbook	bg	Име
+general	addressbook	bg	Общи
+general fields:	addressbook	bg	Общи полета:
+global categories	addressbook	bg	Глобални категории
+grant addressbook access	common	bg	Разрешаване на достъп до адр. указател
+group %1	addressbook	bg	Група %1
+hide accounts from addressbook	addressbook	bg	Скриване на акаунтите от адр. указател
+hides accounts completly from the adressbook.	addressbook	bg	Скрива напълно акаунтите от адр. указател
+home address	addressbook	bg	Личен адрес
+home address, birthday, ...	addressbook	bg	Личен адрес, Рожден ден, ...
+home city	addressbook	bg	Личен - град
+home country	addressbook	bg	Личен - държава
+home email	addressbook	bg	Личен E-Mail
+home email if given, else work email	addressbook	bg	Личен E-Mail, ако е посочен; иначе - служебен E-Mail
+home phone	addressbook	bg	Домашен телефон
+home state	addressbook	bg	Личен - Област / Щат
+home street	addressbook	bg	Личен - улица
+home zip code	addressbook	bg	Личен - Пощенски код
+how many contacts should non-admins be able to export (empty = no limit)	admin	bg	Колко контакта е позволено на не-администраторите да експортират (не посочено = без ограничение)
+icon	addressbook	bg	Икона
+if accounts are already in ldap	admin	bg	ако акаунитие вече са в LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	bg	Ако укажете директория (пълния VFS път), Адресният указател ще показва диалог за действие за всеки документ. Това позволява да изтеглите указания документ с вмъкнати данни за контакта.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	bg	Ако укажете документ (пълния VFS път), Адресният указател ще показва допълнителна иконка за всеки адрес. Тя позволява да изтеглите указания документ с вмъкнати данни за контакта.
+import	addressbook	bg	Импорт
+import contacts	addressbook	bg	Импорт на контакти
+import csv-file into addressbook	addressbook	bg	Импорт на CSV-файл в адресния указател
+import file	addressbook	bg	Импорт на файл
+import from	addressbook	bg	Импорт от
+import from ldif, csv, or vcard	addressbook	bg	Импорт от LDIF, CSV или VCard
+import from outlook	addressbook	bg	Импорт от Outlook
+import multiple vcard	addressbook	bg	Импорт на множество VCard
+import next set	addressbook	bg	Импорт на следващ комплект
+import_instructions	addressbook	bg	В Netscape, отворете адресния указател (Addressbook) и изберете <b>Export</b> от меню <b>File</b>. Експортираният файл ще бъде в LDIF формат.<p>В Outlook, изберете папка Контакти (Contacts), изберете <b>Import and Export...</b> от меню <b>File</b> и експортирайте контактите в CSV файл. <p>На Palm Desktop 4.0 или по-нов, отворете адресния указател и изберете <b>Export</b> от меню <b>File</b>. Експортирания файл ще бъде във формат VCard.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Импортира контакти в Адресния указател от CSV файл (стойности, разделени със запетая). От таб Опции може да изберете друг разделител.
+in %1 days (%2) is %3's birthday.	addressbook	bg	Рожденият ден на %3 е след %1 дни (%2).
+income	addressbook	bg	Доход
+insert in document	addressbook	bg	Вмъкване в документа
+insufficent rights to delete this list!	addressbook	bg	Недостатъчни права за изтриване на списъка!
+international	addressbook	bg	Международен
+label	addressbook	bg	Етикет
+last date	addressbook	bg	Крайна дата
+last modified	addressbook	bg	Последно модифициран
+last modified by	addressbook	bg	Последно модифициран от
+ldap context for contacts	admin	bg	LDAP контекст за контактите
+ldap host for contacts	admin	bg	LDAP сървър за контактите
+ldap settings for contacts	admin	bg	LDAP настройки за контактите
+ldif	addressbook	bg	LDIF
+line 2	addressbook	bg	Ред 2
+links	addressbook	bg	Връзки
+list all categories	addressbook	bg	Показване на всички категории
+list all customfields	addressbook	bg	Показване на всички полета по избор
+list already exists!	addressbook	bg	Списъкът вече съществува!
+list created	addressbook	bg	Списъкът е създаден
+list creation failed, no rights!	addressbook	bg	Грешка при създаване на списъка: нямате права!
+load sample file	addressbook	bg	Зареждане на примерен файл
+load vcard	addressbook	bg	Зареждане на VCard
+location	addressbook	bg	Местоположение
+locations	addressbook	bg	местоположения
+manage mapping	addressbook	bg	Управление на съответствията
+mark records as private	addressbook	bg	Маркира записите като лични
+merged	addressbook	bg	обединени
+message after submitting the form	addressbook	bg	Съобщение след предаване на формата
+message phone	addressbook	bg	Телефон за съобщения
+middle name	addressbook	bg	Презиме
+migration finished	addressbook	bg	Миграцията приключи
+migration to ldap	admin	bg	Миграция към LDAP
+mobile	addressbook	bg	Мобилен
+mobile phone	addressbook	bg	Мобилен телефон
+modem phone	addressbook	bg	Модем
+more ...	addressbook	bg	Още ...
+move to addressbook:	addressbook	bg	Преместен(и) в адр. указател:
+moved	addressbook	bg	преместен(и)
+multiple vcard	addressbook	bg	Множество VCard
+name for the distribution list	addressbook	bg	Име на пощенския списък
+name of current user, all other contact fields are valid too	addressbook	bg	Име на текущия потребител, останалите полета на контакта също са валидни
+name, address	addressbook	bg	Име, Адрес
+new contact submitted by %1 at %2	addressbook	bg	Новият контакт е изпратен от %1 в %2
+new window opened to edit infolog for your selection	addressbook	bg	Отворен е нов прoзoрец за редакция в Дневника на избраните елементи
+next date	addressbook	bg	Следваща дата
+no categories selected	addressbook	bg	не са избрани категории
+no vcard	addressbook	bg	Липсва VCard
+number	addressbook	bg	Номер
+number of records to read (%1)	addressbook	bg	Брой записи за четене (%1)
+options for type	admin	bg	Опции за тип
+organisation	addressbook	bg	организация
+organisations	addressbook	bg	Организации
+organisations by departments	addressbook	bg	Организации по отдели
+organisations by location	addressbook	bg	Организации по местоположение
+other number	addressbook	bg	Друг номер
+other phone	addressbook	bg	Друг телефон
+own sorting	addressbook	bg	собствена подредба
+pager	common	bg	Пейджър
+parcel	addressbook	bg	Колет
+participants	addressbook	bg	Участници
+permission denied !!!	addressbook	bg	Достъпът отказан !!!
+phone number	common	bg	Телефонен номер
+phone numbers	common	bg	Телефонни номера
+photo	addressbook	bg	Снимка
+please enter a name for that field !	addressbook	bg	Моля въведете име за това поле!
+please select only one category	addressbook	bg	Моля, изберете само една категория
+please update the templatename in your customfields section!	addressbook	bg	Моля, обновете името на шаблона в секцията за полете по избор!
+postal	common	bg	Пощенски
+pref	addressbook	bg	предп.
+preferred email address to use in distribution lists	addressbook	bg	Предпочитан e-mail адрес за пощенски списъци
+preferred phone	addressbook	bg	предпочитан телефон
+preferred type of email address to add for distribution lists	addressbook	bg	предпочитан E-Mail адрес за добавяне в пощенски списък
+prefix	addressbook	bg	Префикс
+public key	addressbook	bg	Публичен ключ
+publish into groups:	addressbook	bg	Публикуване в групи:
+read a list / search for entries.	addressbook	bg	Четене на списък / търсене на записи.
+read a list of entries.	addressbook	bg	Четене на списък със записи.
+read a single entry by passing the id and fieldlist.	addressbook	bg	Четене на единичен запис чрез подаване на id и списък с полета
+read only	addressbook	bg	само за четене
+record access	addressbook	bg	Достъп до записа
+record owner	addressbook	bg	Собственик на записа
+remove selected contacts from distribution list	addressbook	bg	Премахване на избраните контакти от пощенския списък
+removed from distribution list	addressbook	bg	премахнат(и) от пощенския списък
+repetition	addressbook	bg	Повторение
+required fields *	addressbook	bg	Задължителни полета *
+role	addressbook	bg	Роля
+room	addressbook	bg	Стая
+search for '%1'	addressbook	bg	Търсене на '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	bg	Изберете снимка във формат "портрет". Тя ще бъде преоразмерена на 60 пиксела ширина.
+select a view	addressbook	bg	Избор на изглед
+select addressbook type	addressbook	bg	Избор на тип адресен указател
+select all	addressbook	bg	Избиране на всичко
+select an action or addressbook to move to	addressbook	bg	Избор на действие или адресен указател, в който да се преместят
+select migration type	admin	bg	Избор на тип миграция
+select multiple contacts for a further action	addressbook	bg	Избор на множество контакти
+select phone number as prefered way of contact	addressbook	bg	изберете телефонния номер за предпочитан
+select the type of conversion	addressbook	bg	Избор на тип на конвертирането
+select the type of conversion:	addressbook	bg	Изберете тип на конвертирането:
+select where you want to store / retrieve contacts	admin	bg	Къде желаете да се пазят / извличат контактите
+selected contacts	addressbook	bg	избраните контакти
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	bg	Да се показват ли колоните за снимка и личен (домашен) адрес, независимо дали са празни или не.
+show	addressbook	bg	Покажи
+show birthday reminders on main screen	addressbook	bg	Напомняне за рождени дни на главния екран
+show infolog entries for this organisation	addressbook	bg	Показване на записите в Дневника за тази организация
+show the contacts of this organisation	addressbook	bg	Показване на контактите на тази организация
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	bg	Размер на "изскачащия" прозорец (ШxВ, напр. 400x300), ако ще се използва такъв
+start	admin	bg	Старт
+startrecord	addressbook	bg	Начален запис
+state	common	bg	Област / Щат
+street	common	bg	Улица
+subject for email	addressbook	bg	Тема на писмото
+successfully imported %1 records into your addressbook.	addressbook	bg	Успешно са импортирани %1 запис(а) в адресния Ви указател.
+suffix	addressbook	bg	Суфикс
+tel home	addressbook	bg	домашен телефон
+telephony integration	admin	bg	Интеграция с телефония
+test import (show importable records <u>only</u> in browser)	addressbook	bg	Тестов импорт (показва импортируемите записи <u>само</u> в браузъра
+thank you for contacting us.	addressbook	bg	Благодарим Ви, че се свързахте с нас.
+that field name has been used already !	addressbook	bg	Това име на поле вече е използвано!
+the anonymous user has probably no add rights for this addressbook.	addressbook	bg	Анонимният потребител вероятно няма право да добавя в този адресен указател.
+there was an error saving your data :-(	addressbook	bg	Грешка при запис на данните Ви :-(
+this module displays a contactform, that stores direct into the addressbook.	addressbook	bg	Този модул показва форма за контакти, която записва директно в адресния указател.
+this module displays block from a adddressbook group.	addressbook	bg	Този модул показва Блок от група на Адресния указател.
+this person's first name was not in the address book.	addressbook	bg	Това малко име не беше открито в адресника.
+this person's last name was not in the address book.	addressbook	bg	Тази фамилия не беше открита в адресника.
+timezone	addressbook	bg	Часова зона
+to many might exceed your execution-time-limit	addressbook	bg	твърде много може да надвиши ограничението за време на изпълнение
+today is %1's birthday!	common	bg	Днес е рожденият ден на %1!
+tomorrow is %1's birthday.	common	bg	Утре е рожденият ден на %1!
+translation	addressbook	bg	Превод
+type	addressbook	bg	Тип
+update a single entry by passing the fields.	addressbook	bg	Актуализация на единичен запис чрез предаване на полетата.
+updated	addressbook	bg	Актуализиран
+upload or delete the photo	addressbook	bg	Запис или изтриване на снимка
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	bg	URL за връзка към телефонните номера (използвайте %1 = номер, който да се набере, %u = име на какунт, %t = телефон на акаунт)
+use an extra category tab?	addressbook	bg	Използване на допълнителен таб за категории?
+use an extra tab for private custom fields?	admin	bg	Допълнителен таб за лични полета по избор?
+use country list	addressbook	bg	Използване на списък с държави
+use setup for a full account-migration	admin	bg	използвайте Setup за пълна миграция на акаунтите
+vcard	common	bg	VCard
+vcards require a first name entry.	addressbook	bg	За VCard се изисква въвеждане на първо име.
+vcards require a last name entry.	addressbook	bg	За VCard се изисква въвеждане на фамилно име.
+verification	addressbook	bg	Проверка
+view linked infolog entries	addressbook	bg	Покзване на свързаните записи от Дневника
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	bg	ВНИМАНИЕ! LDAP е валиден избор само ако НЕ използвате контактите за съхранение и на потребителските акаунти!
+warning: all contacts found will be deleted!	addressbook	bg	ВНИМАНИЕ! Всички намерени контакти ще бъдат изтрити!
+warning: template "%1" not found, using default template instead.	addressbook	bg	ВНИМАНИЕ: Не е намерен шаблон "%1". Използва се шаблона по подразбиране.
+weekday	addressbook	bg	Ден от седмицата
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	bg	Как да се изобразяват връзките към Адресния указател в другите приложения? Празните стойности ще бъдат игнорирани. Ако промените тази настройка следва да излезете и влезете в системата отново.
+where to add the email address	addressbook	bg	къде да се добави E-Mail адрес
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	bg	Какъв формат за адреса да се използва за държавите, за които не е зададен формат по подразбиране? Ако за дадена държава форматът е известен, той се използва, независимо от тази настройка.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	bg	Кой адресен указател да се използва при добавяне на контакт АКО нямате право да добавяте в текущия?
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	bg	Кои полета да бъдат експортирани? Всички означава всички полета на адресния указател, вкл. и тези по избор. Служебния или личния адрес означават име, организация и съответно избрания адрес.
+whole query	addressbook	bg	всички резултати
+work email if given, else home email	addressbook	bg	Служебен e-mail, ако е посочен, иначе - личен e-mail
+work phone	addressbook	bg	Служебен телефон
+write (update or add) a single entry by passing the fields.	addressbook	bg	Запис (актуализация или добавяне) на единичен запис чрез предаване на полетата.
+wrong - try again ...	addressbook	bg	Грешка - опитайте отново
+yes, for the next three days	addressbook	bg	Да, за следващите три дни
+yes, for the next two weeks	addressbook	bg	Да, за следващите две седмици
+yes, for the next week	addressbook	bg	Да, за следващата седмица
+yes, for today and tomorrow	addressbook	bg	Да, за днес и утре
+you are not permitted to delete contact %1	addressbook	bg	Нямате право да изтриете контакта: %1
+you are not permittet to delete this contact	addressbook	bg	Нямате право да изтриете този контакт
+you are not permittet to edit this contact	addressbook	bg	Нямате право да редактирате този контакт
+you are not permittet to view this contact	addressbook	bg	Нямате право да разглеждате този контакт
+you can respond by visiting:	addressbook	bg	За преглед посетете:
+you must select a vcard. (*.vcf)	addressbook	bg	Трябва да изберете vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	bg	Трябва да изберете поне една колона за показване
+you need to select a distribution list	addressbook	bg	Трябва да изберете пощенски списък
+you need to select some contacts first	addressbook	bg	Трябва да изберете контакти
+zip code	common	bg	Пощенски код
+zip_note	addressbook	bg	<p><b>Забележка:</b> Файлът може да бъде zip, съдържащ .csv, .vcf, или .ldif файлове. Не смесвайте тези типове при един импорт!
+deleted	addressbook	bg	изтрит

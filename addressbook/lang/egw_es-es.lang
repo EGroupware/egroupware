@@ -1,0 +1,438 @@
+%1 added	addressbook	es-es	%1 añadidos
+%1 contact(s) %2	addressbook	es-es	%1 contactos %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	es-es	%1 contactos %2, %3 fallaron debido a privilegios insuficientes.
+%1 contacts updated (%2 errors).	addressbook	es-es	Se han actualizado %1 contactos (%2 errores).
+%1 fields in %2 other organisation member(s) changed	addressbook	es-es	%1 campos en %2 miembros de otra organización cambiados
+%1 not implemented for %2!	addressbook	es-es	%1 no está implementado para %2!
+%1 records imported	addressbook	es-es	Se han importado %1 registros
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	es-es	Se han leído %1 registros (no importados todavía, puede volver %2atrás%3 y desmarcar la prueba de importación)
+%1 starts with '%2'	addressbook	es-es	%1 empieza por '%2'
+%s please calculate the result	addressbook	es-es	%s por favor, calcule el resultado
+(e.g. 1969)	addressbook	es-es	(p. ej. 1969)
+(empty = use global limit, no = no export at all)	admin	es-es	(vacío = usar limite global; no = no exportar nada)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	es-es	<b>No se encontró el tipo de conversión <none>.</b> Por favor, seleccione un tipo de conversión de la lista
+@-eval() is only availible to admins!!!	addressbook	es-es	¡@-eval está disponible sólo para los administradores!
+account repository	admin	es-es	Repositorio de cuentas
+accounts	addressbook	es-es	Cuentas
+actions	addressbook	es-es	Acciones
+add %1	addressbook	es-es	Añadir %1
+add a contact to this organisation	addressbook	es-es	Añadir un contacto a esta organización
+add a new contact	addressbook	es-es	Añadir un contacto nuevo
+add a new infolog	addressbook	es-es	Añadir un nuevo registro de Infolog
+add a new list	addressbook	es-es	Añadir una lista nueva
+add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
+add business email of whole distribution list?	addressbook	es-es	¿Añadir el correo electrónico de la empresa de toda la lista de distribución?
+add custom field	addressbook	es-es	Añadir campo personalizado
+add emails of whole distribution list?	addressbook	es-es	¿Añadir los correos de toda la lista de distribución?
+add or delete categories	addressbook	es-es	Añadir o borrar Categorías
+add to distribution list:	addressbook	es-es	Añadir a la lista de distribución:
+added	addressbook	es-es	añadido
+added by synchronisation	addressbook	es-es	Añadido por sincronización
+added to distribution list	addressbook	es-es	Añadido a la lista de distribución
+additional information about using ldap as contact repository	admin	es-es	Información adicional acerca del uso de LDAP como repositorio de contactos
+address book	common	es-es	Libreta de direcciones
+address book - vcard in	addressbook	es-es	Libreta de direcciones - entrada de tarjeta de visita
+address book - view	addressbook	es-es	Libreta de direcciones - ver
+address line 2	addressbook	es-es	Línea 2 de la dirección
+address type	addressbook	es-es	Tipo de dirección
+addressbook	common	es-es	Libreta de direcciones
+addressbook csv export	addressbook	es-es	Exportar a CSV la libreta de direcciones
+addressbook field	addressbook	es-es	Campo de la libreta de direcciones
+addressbook menu	addressbook	es-es	Menú de la libreta de direcciones
+addressbook preferences	addressbook	es-es	Preferencias de la libreta de direcciones
+addressbook the contact should be saved to	addressbook	es-es	Libreta de direcciones en la que guardar el contacto
+addressbook the contact should be shown	addressbook	es-es	Libreta de direcciones en la que mostrar el contacto
+addressbook-fieldname	addressbook	es-es	Campo - Libreta de direcciones
+addvcard	addressbook	es-es	Añadir tarjeta de visita
+advanced search	addressbook	es-es	Búsqueda avanzada
+all contacts	addressbook	es-es	Todos los contactos
+allow users to maintain their own account-data	admin	es-es	Permitir a los usuarios mantener los datos de su cuenta
+alt. csv import	addressbook	es-es	Importar CSV (avanzado)
+always	addressbook	es-es	siempre
+apply changes to all members, whose fields have the same previous content	addressbook	es-es	Aplicar cambios a todos los miembros, cuyos campos tienen el mismo contenido anterior
+apply the action on the whole query, not only the shown contacts!!!	addressbook	es-es	¡Aplicar la acción en toda la consulta, NO sólo a los contactos mostrados!
+are you shure you want to delete this contact?	addressbook	es-es	¿Está seguro de que desea borrar este contacto?
+are you sure you want to delete this field?	addressbook	es-es	¿Está seguro de que desea borrar este campo?
+assistent	addressbook	es-es	Asistente
+assistent phone	addressbook	es-es	teléfono del asistente
+at the moment the following document-types are supported:	addressbook	es-es	De momento, los siguientes tipos de documentos están soportados:
+birthday	common	es-es	Fecha de nacimiento
+birthdays	common	es-es	Cumpleaños
+blank	addressbook	es-es	Vacío
+business	common	es-es	Empresa
+business address	addressbook	es-es	Domicilio del trabajo
+business city	addressbook	es-es	Ciudad del trabajo
+business country	addressbook	es-es	País del trabajo
+business email	addressbook	es-es	Correo electrónico del trabajo
+business fax	addressbook	es-es	Fax del trabajo
+business phone	addressbook	es-es	Teléfono del trabajo
+business state	addressbook	es-es	Provincia del trabajo
+business street	addressbook	es-es	Dirección del trabajo
+business zip code	addressbook	es-es	Código postal del trabajo
+calendar fields:	addressbook	es-es	Campos del calendario:
+calendar uri	addressbook	es-es	URI del calendario
+can be changed via setup >> configuration	admin	es-es	Puede modificarse desde Instalación -> Configuración
+car phone	addressbook	es-es	Teléfono del coche
+categorie	addressbook	es-es	categoría
+categorie added	addressbook	es-es	categoría añadida
+categorie delete	addressbook	es-es	categoría borrada
+categories, notes, ...	addressbook	es-es	Categorías, Notas, ...
+category tree	admin	es-es	Arbol de categorías
+cell phone	addressbook	es-es	Teléfono móvil
+change all organisation members	addressbook	es-es	cambiar todos los miembros de la organización
+charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
+charset of file	addressbook	es-es	Juego de caracteres del fichero
+check all	addressbook	es-es	Marcar todo
+choose an icon for this contact type	admin	es-es	Elija un icono para este tipo de contacto
+choose owner of imported data	addressbook	es-es	Elija el propietario de los datos importados
+choose seperator and charset	addressbook	es-es	Elija el separador y el juego de caracteres
+chosse an etemplate for this contact type	admin	es-es	Elija una plantilla para este tipo de contacto
+city	common	es-es	Ciudad
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	es-es	Limpiar los campos de la libreta de direcciones (aplicar si la sincronización crea duplicados)
+company	common	es-es	Empresa
+company name	addressbook	es-es	Nombre de la empresa
+configuration	common	es-es	Configuración
+contact	common	es-es	Contacto
+contact application	admin	es-es	Aplicación del contacto
+contact copied	addressbook	es-es	Se ha copiado el contacto
+contact deleted	addressbook	es-es	Se ha borrado el contacto
+contact fields to show	addressbook	es-es	Campos del contacto a mostrar
+contact fields:	addressbook	es-es	Campos del contacto:
+contact id	addressbook	es-es	ID del contacto
+contact maintenance	admin	es-es	Mantenimiento del contacto
+contact modified by %1 at %2	addressbook	es-es	Contacto modificado por %1 el %2
+contact not found!	addressbook	es-es	¡No se encontró el contacto!
+contact repository	admin	es-es	Repositorio de contactos
+contact saved	addressbook	es-es	Se ha guardado la entrada
+contact settings	admin	es-es	Configuración de los contactos
+contactform	addressbook	es-es	Formulario de contacto
+contacts and account contact-data to ldap	admin	es-es	Contactos y datos del contacto y la cuenta en LDAP
+contacts and account contact-data to sql	admin	es-es	contactos y datos del contacto de la cuenta a SQL
+contacts to ldap	admin	es-es	Contactos en LDAP
+contacts to ldap, account contact-data to sql	admin	es-es	Contactos en LDAP, datos del contacto y la cuenta en SQL
+contains	addressbook	es-es	contiene
+copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
+copy a contact and edit the copy	addressbook	es-es	Copiar un contacto y editar la copia
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	es-es	Copiar sus cambios en el portapapeles, %1recargar la entrada%2 y mezclarlos.
+country	common	es-es	País
+create new links	addressbook	es-es	Crear enlaces nuevos
+created	addressbook	es-es	Creado
+credit	addressbook	es-es	Crédito
+csv field	addressbook	es-es	Campo CSV
+csv-fieldname	addressbook	es-es	Nombre de campo CSV
+csv-filename	addressbook	es-es	Archivo CSV
+custom	addressbook	es-es	Personalizado
+custom etemplate for the contactform	addressbook	es-es	Plantilla personalizada para el formulario del contacto
+custom fields	addressbook	es-es	Campos personalizados
+debug output in browser	addressbook	es-es	Depurar salida en el navegador
+default	addressbook	es-es	predeterminado
+default address format	addressbook	es-es	Formato predeterminado de las drecciones
+default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
+default document to insert contacts	addressbook	es-es	Documento predeterminado para insertar contactos
+default file as format	addressbook	es-es	Fichero predeterminado como formato
+default filter	addressbook	es-es	Filtro predeterminado
+default format for fileas, eg. for new entries.	addressbook	es-es	Formato predeterminado para ficheros, p. ej. nuevas entradas.
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	es-es	Define qué dirección de correo electrónico (trabajo o particular) usar como la preferida para las listas de distribución en el correo.
+delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
+delete selected distribution list!	addressbook	es-es	Borrar la lista de distribución seleccionada
+delete this contact	addressbook	es-es	Borrar este contacto
+delete this organisation including all its contacts	addressbook	es-es	Borrar esta organización, incluyendo TODOS sus contactos
+deleted	addressbook	es-es	borrado
+deletes the photo	addressbook	es-es	Borra la foto
+department	common	es-es	Departamento
+departments	addressbook	es-es	departamentos
+directory with documents to insert contacts	addressbook	es-es	Directorio con documentos para insertar contactos
+display contact	addressbook	es-es	Mostrar contacto
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio).
+distribution list deleted	addressbook	es-es	Lista de distribución borrada
+distribution lists	addressbook	es-es	Listas de distribución
+distribution lists, ...	addressbook	es-es	Listas de distribución, ...
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	es-es	¿Desea una libreta de direcciones privada, que no pueden ver otros usuarios (a menos que conceda acceso a su libreta de direcciones personal)?
+do your really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
+document '%1' does not exist or is not readable for you!	addressbook	es-es	El documento '%1' no existe o usted no tiene permiso para leerlo
+doesn't matter	addressbook	es-es	no importa
+domestic	addressbook	es-es	Doméstico
+don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
+download	addressbook	es-es	Descargar
+download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
+download this contact as vcard file	addressbook	es-es	descargar este contacto como fichero vCard
+duration	addressbook	es-es	Duración
+edit custom field	addressbook	es-es	Editar campo personalizado
+edit custom fields	admin	es-es	Editar campos personalizados
+edit extra account-data in the addressbook	admin	es-es	Editar datos adicionales de la cuenta en la libreta de direcciones
+edit phonenumbers -	addressbook	es-es	Editar números de teléfono -
+either the configured email addesses are wrong or the mail configuration.	addressbook	es-es	Las direcciones de correo electrónico configuradas o la configuración del correo es incorrecta
+email & internet	addressbook	es-es	Correo electrónico e Internet
+email addresses (comma separated) to send the contact data	addressbook	es-es	Direcciones de correo electrónico (separadas por comas) para enviar los datos del contacto
+empty	admin	es-es	Vacío
+empty for all	addressbook	es-es	vacío para todo
+enable an extra private addressbook	addressbook	es-es	Activar una libreta de direcciones privada extra
+enclosure	addressbook	es-es	Envoltura
+end	addressbook	es-es	Fin
+enter the path to the exported file here	addressbook	es-es	Introduzca aquí la ruta a los ficheros exportados
+error deleting the contact !!!	addressbook	es-es	¡Error al borrar el contacto!
+error saving the contact !!!	addressbook	es-es	¡Error al guardar el contacto!
+error: the entry has been updated since you opened it for editing!	addressbook	es-es	Error: la entrada se ha actualizado desde que la abrió para editar
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	es-es	Ejemplo $$IF prefijo_n~Sr~Hola Sr.~Hola Srta.$$ - busca el campo "prefijo_n", para "Sr". Si lo encuentra, escribe "Hola Sr.", si no, escribe "Hola Srta."
+existing links	addressbook	es-es	Enlaces existentes
+export	addressbook	es-es	exportar
+export as csv	addressbook	es-es	Exportar como CSV
+export as vcard	addressbook	es-es	Exportar como tarjeta de visita
+export contacts	addressbook	es-es	Exportar contactos
+export file name	addressbook	es-es	Nombre del fichero a exportar
+export from addressbook	addressbook	es-es	Exportar de la libreta de direcciones
+export selection	addressbook	es-es	Exportar la selección
+exported	addressbook	es-es	exportada
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Exporta los contactos de su libreta de direcciones en un fichero CSV. CSV significa 'Comma Separated Values' (valores separados por comas). Sin embargo, en la pestaña de opciones se pueden elegir otros separadores.
+extra	addressbook	es-es	Extra
+extra private	addressbook	es-es	Extra privado
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	es-es	Fallo al cambiar %1 miembros de la organización ¡No tiene privilegios suficientes!
+fax	addressbook	es-es	Fax
+fax number	common	es-es	Número de fax
+field %1 has been added !	addressbook	es-es	¡El campo %1 ha sido añadido!
+field %1 has been updated !	addressbook	es-es	¡El campo %1 ha sido actualizado!
+field name	addressbook	es-es	Nombre del campo
+fields for the csv export	addressbook	es-es	Campos para exportar a CSV
+fields the user is allowed to edit himself	admin	es-es	Campos que el propio usuario puede editar
+fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
+fieldseparator	addressbook	es-es	Separador de campos
+fieldseperator	addressbook	es-es	Separador de campos
+for more then one contact in a document use the tag pagerepeat!	addressbook	es-es	para más de un contacto en un documento use la etiqueta pagerepeat
+for read only ldap	admin	es-es	para LDAP de sólo lectura
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
+freebusy uri	addressbook	es-es	URI para disponibilidad
+full name	addressbook	es-es	Nombre completo
+general	addressbook	es-es	General
+general fields:	addressbook	es-es	Campos generales:
+geo	addressbook	es-es	GEO
+global categories	addressbook	es-es	Categorías globales
+grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
+group %1	addressbook	es-es	Grupo %1
+h	addressbook	es-es	h
+hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
+hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
+home address	addressbook	es-es	Domicilio particular
+home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños, ...
+home city	addressbook	es-es	Ciudad de residencia
+home country	addressbook	es-es	País de residencia
+home email	addressbook	es-es	Correo electrónico personal
+home email if given, else work email	addressbook	es-es	Correo personal si se indica. Si no, correo del trabajo
+home phone	addressbook	es-es	Teléfono particular
+home state	addressbook	es-es	Provincia de residencia
+home street	addressbook	es-es	Domicilio personal
+home zip code	addressbook	es-es	Código postal
+how many contacts should non-admins be able to export	admin	es-es	Cuántos contactos deben poder exportar usuarios que no son administradores
+icon	addressbook	es-es	Icono
+if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	es-es	Si especifica un directorio (ruta completa vfs) aquí, la libreta de direcciones muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos del contacto insertados.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	es-es	Si especifica un documento (ruta completa vfs) aquí, la libreta de direcciones muestra un icono de documento extra para cada dirección. Ese icono permite descargar el documento especificado con los datos del contacto insertados.
+ignore first line	addressbook	es-es	Ignorar la primera línea
+import	addressbook	es-es	Importar
+import contacts	addressbook	es-es	Importar contactos
+import csv-file into addressbook	addressbook	es-es	Importar archivo CSV en la Libreta de direcciones
+import file	addressbook	es-es	Importar fichero
+import from	addressbook	es-es	Importar desde
+import from ldif, csv, or vcard	addressbook	es-es	Importar desde LDIF, CSV o VCard
+import from outlook	addressbook	es-es	Importar desde Outlook
+import multiple vcard	addressbook	es-es	Importar múltiples VCards
+import next set	addressbook	es-es	Importar el registro siguiente
+import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Importa los contactos en la libreta de direcciones desde un fichero CSV. CSV significa 'Valores separados por comas'. Sin embargo, en la pestaña de opciones, también se pueden elegir otros separadores.
+in %1 days (%2) is %3's birthday.	addressbook	es-es	En %1 días (%2) es el cumpleaños de %3.
+income	addressbook	es-es	Ingresos
+infolog	addressbook	es-es	Registro de tareas
+insert in document	addressbook	es-es	Insertar en el documento
+insufficent rights to delete this list!	addressbook	es-es	No tiene privilegios suficientes para borrar esta lista
+international	addressbook	es-es	Internacional
+internet	addressbook	es-es	Internet
+label	addressbook	es-es	Etiqueta
+last date	addressbook	es-es	Última fecha
+last modified	addressbook	es-es	última modificación
+last modified by	addressbook	es-es	última modificación por
+ldap context for contacts	admin	es-es	Contexto LDAP para contactos
+ldap host for contacts	admin	es-es	Servidor LDAP para contactos
+ldap settings for contacts	admin	es-es	Configuración LDAP para contactos
+ldif	addressbook	es-es	LDIF
+line 2	addressbook	es-es	Línea 2
+link title for contacts show	addressbook	es-es	Título del enlace para mostrar contactos
+links	addressbook	es-es	Enlaces
+list all categories	addressbook	es-es	Lista de todas las categorías
+list all customfields	addressbook	es-es	Lista de todos los campos personalizados
+list already exists!	addressbook	es-es	¡La lista ya existe!
+list created	addressbook	es-es	Se ha creado la lista
+list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
+load sample file	addressbook	es-es	Cargar el fichero de ejemplo
+load vcard	addressbook	es-es	Cargar VCard
+location	addressbook	es-es	Ubicación
+locations	addressbook	es-es	ubicaciones
+manage mapping	addressbook	es-es	Administrar los mapeos
+mark records as private	addressbook	es-es	Marcar registros como privados
+merge into first or account, deletes all other!	addressbook	es-es	¡Mezclar en el primero o cuenta, borra todos los demás!
+merged	addressbook	es-es	Mezclado
+message after submitting the form	addressbook	es-es	Mensaje de después de enviar el formulario
+message phone	addressbook	es-es	Teléfono de mensajes
+middle name	addressbook	es-es	Segundo nombre
+migration finished	addressbook	es-es	Migración finalizada
+migration to ldap	admin	es-es	Migración a LDAP
+mobile	addressbook	es-es	Móvil
+mobile phone	addressbook	es-es	Teléfono móvil
+modem phone	addressbook	es-es	Teléfono módem
+more ...	addressbook	es-es	Más...
+move to addressbook:	addressbook	es-es	Mover a la libreta de direcciones:
+moved	addressbook	es-es	movido
+multiple vcard	addressbook	es-es	VCard múltiple
+name for the distribution list	addressbook	es-es	Nombre para la lista de distribución
+name of current user, all other contact fields are valid too	addressbook	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
+name, address	addressbook	es-es	Nombre, Dirección
+new contact submitted by %1 at %2	addressbook	es-es	Nuevo contacto enviado por %1 en %2
+new window opened to edit infolog for your selection	addressbook	es-es	Se ha abierto una ventana nueva para editar la nota para su selección
+next date	addressbook	es-es	Fecha siguiente
+no categories selected	addressbook	es-es	no se seleccionaron categorías
+no fallback	addressbook	es-es	Sin respaldo
+no vcard	addressbook	es-es	Sin VCard
+number	addressbook	es-es	Número
+number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
+options for type	admin	es-es	Opciones para el tipo
+organisation	addressbook	es-es	organización
+organisations	addressbook	es-es	Organizaciones
+organisations by departments	addressbook	es-es	Organizaciones por departamentos
+organisations by location	addressbook	es-es	Organizaciones por ubicación
+other number	addressbook	es-es	Otro número
+other phone	addressbook	es-es	Otro teléfono
+own sorting	addressbook	es-es	orden propio
+pager	common	es-es	Buscapersonas
+parcel	addressbook	es-es	Paquete
+participants	addressbook	es-es	Participantes
+permission denied !!!	addressbook	es-es	¡Permiso denegado!
+phone number	common	es-es	Número de teléfono
+phone numbers	common	es-es	Números de teléfono
+photo	addressbook	es-es	Fotografía
+please enter a name for that field !	addressbook	es-es	Por favor, introduzca un nombre para ese campo
+please select only one category	addressbook	es-es	Por favor, seleccione sólo una categoría
+please update the templatename in your customfields section!	addressbook	es-es	¡Por favor, actualice el nombre de la plantilla en la sección de campos personalizados!
+postal	common	es-es	Postal
+pref	addressbook	es-es	pref
+preferred email address to use in distribution lists	addressbook	es-es	Dirección de correo electrónica preferida para usar en las listas de distribución
+preferred phone	addressbook	es-es	teléfono preferido
+preferred type of email address to add for distribution lists	addressbook	es-es	Tipo preferido de dirección de correo electrónico para añadir a las listas de distribución
+prefix	addressbook	es-es	Prefijo
+private custom fields	addressbook	es-es	Campos personalizados privados
+public key	addressbook	es-es	Clave pública
+publish into groups:	addressbook	es-es	Publicar en los grupos:
+read a list / search for entries.	addressbook	es-es	Leer una lista / buscar entradas
+read a list of entries.	addressbook	es-es	Leer una lista de entradas
+read a single entry by passing the id and fieldlist.	addressbook	es-es	Leer una sola entrada pasando el identificador y la lista de campos
+read only	addressbook	es-es	sólo lectura
+record access	addressbook	es-es	Acceso al registro
+record owner	addressbook	es-es	Propietario del registro
+region	addressbook	es-es	Región
+remove selected contacts from distribution list	addressbook	es-es	Eliminar los contactos seleccionados de la lista de distribución
+removed from distribution list	addressbook	es-es	eliminados de la lista de distribución
+repetition	addressbook	es-es	Repetición
+replacements for inserting contacts into documents	addressbook	es-es	Sustituciones para insertar contactos en los documetos
+required fields *	addressbook	es-es	Campos requeridos *
+role	addressbook	es-es	Rol
+room	addressbook	es-es	Habitación
+search for '%1'	addressbook	es-es	Buscar '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	es-es	Seleccione una foto jpeg en formato vertical. Se redimensionará a un ancho de 60 pixels.
+select a view	addressbook	es-es	Seleccionar una vista
+select addressbook type	addressbook	es-es	Seleccionar el tipo de libreta de direcciones
+select all	addressbook	es-es	Seleccionar todo
+select an action or addressbook to move to	addressbook	es-es	Seleccionar una acción o libreta de direcciones a la que mover
+select an action or addressbook to move to...	addressbook	es-es	Seleccionar una acción o libreta de direcciones a la que mover...
+select migration type	admin	es-es	Seleccionar el tipo de migración
+select multiple contacts for a further action	addressbook	es-es	Seleccionar múltiples contactos para una acción posterior
+select phone number as prefered way of contact	addressbook	es-es	Seleccionar el número de teléfono como forma preferida de contacto
+select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
+select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión:
+select where you want to store / retrieve contacts	admin	es-es	Seleccione dónde desea almacenar o recuperar contactos
+selected contacts	addressbook	es-es	Contactos seleccionados
+seperator	addressbook	es-es	Separador
+set full name and file as field in contacts of all users (either all or only empty values)	admin	es-es	Establecer el nombre completo y el fichero como campo de contactos de todos los usuarios (todos o sólo valores vacíos)
+set only full name	addressbook	es-es	Establecer sólo el nombre completo
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	es-es	¿Mostrar las columnas de foto y domicilio particular, incluso si están vacías?
+show	addressbook	es-es	Mostrar
+show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
+show infolog entries for this organisation	addressbook	es-es	Mostrar las entradas del Registro de notas y tareas para esta organización
+show the contacts of this organisation	addressbook	es-es	Mostrar los contactos de esta organización
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	es-es	Tamaño de la ventana (ancho x alto, p.ej. 400x300, si se usa una ventana emergente)
+stadt	addressbook	es-es	Estado
+start	admin	es-es	Empezar
+startrecord	addressbook	es-es	Registro inicial
+state	common	es-es	Provincia
+street	common	es-es	Calle
+subject for email	addressbook	es-es	Asunto para el correo electrónico
+successfully imported %1 records into your addressbook.	addressbook	es-es	Se han importado correctamnte %1 registros en la libreta de direcciones.
+suffix	addressbook	es-es	Sufijo
+tag to mark positions for address labels	addressbook	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
+tel home	addressbook	es-es	teléfono particular
+telephony integration	admin	es-es	Integración con telefonía
+test import (show importable records <u>only</u> in browser)	addressbook	es-es	Test de Importación (mostrar los registros que se pueden importar <b>sólo</b> en el navegador)
+thank you for contacting us.	addressbook	es-es	Gracias por ponerse en contacto con nosotros.
+that field name has been used already !	addressbook	es-es	El nombre del campo ya ha sido usado
+the anonymous user has probably no add rights for this addressbook.	addressbook	es-es	El usuario anónimo probablemente no tiene derechos de añadir para esta libreta de direcciones.
+the anonymous user needs add rights for it!	addressbook	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
+the anonymous user needs read it!	addressbook	es-es	¡El usuario anónimo necesita leerlo!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	es-es	El documento puede tener un contenedor como $$n_fn$$, para ser sustituido con los datos del contacto (%1lista completa de nombres del contenedor%2).
+there was an error saving your data :-(	addressbook	es-es	Ocurrió un error al guardar los datos
+this module displays a contactform, that stores direct into the addressbook.	addressbook	es-es	Este módulo muestra un formulario de contacto que se guarda directamente en la libreta de direcciones.
+this module displays block from a adddressbook group.	addressbook	es-es	Este módulo muestra el bloque de un grupo de libreta de direcciones
+this person's first name was not in the address book.	addressbook	es-es	El primer nombre de esta persona no estaba en la libreta de direcciones.
+this person's last name was not in the address book.	addressbook	es-es	El apellido de esta persona no estaba en la libreta de direcciones.
+timezone	addressbook	es-es	Zona horaria
+to many might exceed your execution-time-limit	addressbook	es-es	a cuánto puede exceder el tiempo límite de ejecución
+today is %1's birthday!	common	es-es	¡Hoy es el cumpleaños de %1!
+tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
+translation	addressbook	es-es	Traducción
+two of: %1	addressbook	es-es	dos de: %1
+type	addressbook	es-es	Tipo
+unique id (uid)	addressbook	es-es	ID único (UID)
+unique id<br />(to update existing records)	addressbook	es-es	ID único<br />(para actualizar los registros existentes)
+update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
+update fields by edited organisations?	admin	es-es	¿Actualizar los campos por organizaciones editadas?
+updated	addressbook	es-es	Actualizado
+upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	es-es	URL a la que enlazar los números de teléfono (use %1 = número para llamar, %u = nombre de la cuenta, %t = teléfono de la cuenta)
+use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para categorías?
+use an extra tab for private custom fields?	admin	es-es	¿Usar una pestaña extra para campos personalizados privados?
+use country list	addressbook	es-es	Utilizar lista de países
+use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
+used for links and for the own sorting of the list	addressbook	es-es	utilizado para los enlaces y para el orden propio de la lista
+vcard	common	es-es	Tarjeta de visita
+vcards require a first name entry.	addressbook	es-es	Las tarjetas de visita requieren el primer nombre.
+vcards require a last name entry.	addressbook	es-es	Las tarjetas de visita requieren el apellido.
+verification	addressbook	es-es	Verificación
+view linked infolog entries	addressbook	es-es	Ver las entradas del Registro que estén vinculadas
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
+warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
+warning: template "%1" not found, using default template instead.	addressbook	es-es	AVISO: No se encontró la plantilla "%1". Se usa la plantilla predeterminada en su lugar.
+weekday	addressbook	es-es	Día semanal
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
+where to add the email address	addressbook	es-es	dónde añadir la dirección de correo electrónico
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	es-es	Qué formato de dirección debe usar la libreta de direcciones para países de los que no conoce el formato de las direcciones. Si se conoce el formato de las direcciones, se usa independientemente de lo indicado en esta opción
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.
+whole query	addressbook	es-es	la consulta completa
+work email if given, else home email	addressbook	es-es	Correo del trabajo si se indica. Si no, correo particular
+work phone	addressbook	es-es	Teléfono del trabajo
+write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (actualizar o añadir) una única entrada pasando los campos.
+wrong - try again ...	addressbook	es-es	Incorrecto. Vuelva a intentarlo...
+yes, for the next three days	addressbook	es-es	Sí, para los tres próximos días
+yes, for the next two weeks	addressbook	es-es	Sí, para las dos semanas siguientes
+yes, for the next week	addressbook	es-es	Sí, para la semana siguiente
+yes, for today and tomorrow	addressbook	es-es	Sí, para hoy y mañana
+you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1
+you are not permittet to delete this contact	addressbook	es-es	No tiene permiso para borrar este contacto
+you are not permittet to edit this contact	addressbook	es-es	No tiene permiso para editar este contacto
+you are not permittet to view this contact	addressbook	es-es	No tiene permiso para ver este contacto
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	es-es	¡Sólo puede usar LDAP como repositorio de contactos si las cuentas también están almacenadas en LDAP!
+you can respond by visiting:	addressbook	es-es	Para verlo, visite:
+you must select a vcard. (*.vcf)	addressbook	es-es	Debe seleccionar una tarjeta (*.vcf)
+you must select at least 1 column to display	addressbook	es-es	Debe seleccionar al menos una columna para mostrar
+you need to select a distribution list	addressbook	es-es	Necesita seleccionar una lista de distribución
+you need to select some contacts first	addressbook	es-es	Necesita seleccionar antes algunos contactos
+zip code	common	es-es	Código postal
+zip_note	addressbook	es-es	<p><b>Nota:</b> El fichero puede ser un fichero zip conteniendo ficheros .csv, .vcf o .ldif. Sin embargo, no mezcle los tipos cada vez que importe.
+deleted	addressbook	es-es	borrado

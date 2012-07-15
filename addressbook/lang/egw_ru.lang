@@ -1,0 +1,408 @@
+%1 added	addressbook	ru	%1 добавлен
+%1 contact(s) %2	addressbook	ru	%1 контакт(а,ов) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ru	%1 контакт(а,ов) %2, %3 неудачно из-за недостаточных прав !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	ru	%1 полей в %2 других представителей организации/й изменено
+%1 records imported	addressbook	ru	импортировано %1 записей
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ru	прочитано %1 записей (пока не импортировано, вы можете вернуться %2назад%3 и снять отметку с Тестовый Импорт)
+%1 starts with '%2'	addressbook	ru	%1 начинается с %2
+%s please calculate the result	addressbook	ru	%s пожалуйста посчитйте результат
+(e.g. 1969)	addressbook	ru	(напр. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ru	<b>Невозможно найти тип преобразования <none>.</b> Пожалуйста, выберите тип преобразования из списка
+@-eval() is only availible to admins!!!	addressbook	ru	@-eval() доступно только администраторам!!!
+account repository	admin	ru	Хранилище учетных записей
+accounts	addressbook	ru	Учетные записи
+actions	addressbook	ru	Действия
+add %1	addressbook	ru	Добавлен %1
+add a contact to this organisation	addressbook	ru	Добавить контакт для этой организации
+add a new contact	addressbook	ru	Добавить новый контакт
+add a new infolog	addressbook	ru	Добавить новый элемент ИнфоЖурнала
+add a new list	addressbook	ru	Добавить новый список
+add a single entry by passing the fields.	addressbook	ru	Добавить одну запись передачей полей
+add business email of whole distribution list?	addressbook	ru	Добавить рабочий адрес всего списка рассылки?
+add custom field	addressbook	ru	Добавить Пользовательское Поле
+add emails of whole distribution list?	addressbook	ru	Добавить адреса всего списка рассылк?
+add or delete categories	addressbook	ru	Добавить или удалить Категории
+add to distribution list:	addressbook	ru	Добавить к списку рассылки:
+added	addressbook	ru	добавлено
+added by synchronisation	addressbook	ru	добавлено при синхронизации
+added to distribution list	addressbook	ru	добавлено в список рассылки
+additional information about using ldap as contact repository	admin	ru	Дополнительная информация об использовании LDAP в качестве хранилища контактов
+address book	common	ru	Адресная Книга
+address book - vcard in	addressbook	ru	Адресная Книга - VCard в
+address book - view	addressbook	ru	Адресная Книга - вид
+address line 2	addressbook	ru	Строка адреса 2
+address type	addressbook	ru	Тип Адреса
+addressbook	common	ru	Адресная книга
+addressbook csv export	addressbook	ru	Экспорт адресной книги из CSV
+addressbook menu	addressbook	ru	Меню адресной книги
+addressbook preferences	addressbook	ru	Настройки адресной книги
+addressbook the contact should be saved to	addressbook	ru	Адресная книга, в которую должен быть сохранен контакт
+addressbook the contact should be shown	addressbook	ru	Адресная книга, в которой контакт будет показан
+addressbook-fieldname	addressbook	ru	Адресная книга - имя поля
+addvcard	addressbook	ru	Добавить VCard
+advanced search	addressbook	ru	Расширенный поиск
+all contacts	addressbook	ru	Все контакты
+allow users to maintain their own account-data	admin	ru	Разрешить пользователям управлять их собственными данными учетной записи
+alt. csv import	addressbook	ru	Альтернативный Импорт CSV
+always	addressbook	ru	всегда
+apply changes to all members, whose fields have the same previous content	addressbook	ru	Применить изменения ко всем членам, чьи поля имеют такое же предыдущее значение
+apply the action on the whole query, not only the shown contacts!!!	addressbook	ru	Применить действие ко всему запросу, НЕ только к показанным контактам
+are you shure you want to delete this contact?	addressbook	ru	Вы уверены, что хотите удалить этот контакт?
+are you sure you want to delete this field?	addressbook	ru	Вы уверены, что хотите удалить это поле?
+assistent	addressbook	ru	Помощник
+assistent phone	addressbook	ru	телефон помощника
+at the moment the following document-types are supported:	addressbook	ru	В настоящий момент поддерживаются следующие типы документов:
+birthday	common	ru	Дата рождения
+birthdays	common	ru	Даты рождения
+blank	addressbook	ru	Пусто
+business	common	ru	Рабочий
+business address	addressbook	ru	Рабочий адрес
+business city	addressbook	ru	Рабочий - Город
+business country	addressbook	ru	Рабочий - Страна
+business email	addressbook	ru	Рабочий адрес email
+business fax	addressbook	ru	Рабочий Факс
+business phone	addressbook	ru	Рабочий Телефон
+business state	addressbook	ru	Рабочий - Штат
+business street	addressbook	ru	Рабочий - Улица
+business zip code	addressbook	ru	Рабочий - Почтовый индекс
+calendar fields:	addressbook	ru	Поля Календаря:
+calendar uri	addressbook	ru	URI календаря
+can be changed via setup >> configuration	admin	ru	Может быть изменено ч-з Установка >> Конфигурация
+car phone	addressbook	ru	Телефон в автомобиле
+categorie	addressbook	ru	категория
+categorie added	addressbook	ru	категория добавлена
+categorie delete	addressbook	ru	удаление категории
+categories, notes, ...	addressbook	ru	Категории, Примечания, ...
+category tree	admin	ru	Дерево категории
+cell phone	addressbook	ru	Сотовый телефон
+change all organisation members	addressbook	ru	изменить всех членов организации
+charset for the csv export	addressbook	ru	Кодовая таблица для экспорта в CSV
+charset of file	addressbook	ru	Кодировка файла
+check all	addressbook	ru	Отметить все
+choose an icon for this contact type	admin	ru	Выбирите пиктограмму для этого типа контактов
+choose owner of imported data	addressbook	ru	Выберите владельца импортированных данных
+choose seperator and charset	addressbook	ru	Выберите разделитель и кодировку
+chosse an etemplate for this contact type	admin	ru	Выбирите e-Шаблон для этого типа контакта
+city	common	ru	Город
+company	common	ru	Компания
+company name	addressbook	ru	Название Компании
+configuration	common	ru	Конфигурирование
+contact	common	ru	Контакт
+contact application	admin	ru	Приложение Контакта
+contact copied	addressbook	ru	Контакт скопирован
+contact deleted	addressbook	ru	Контакт удален
+contact fields to show	addressbook	ru	Поля контакта для просмотра
+contact fields:	addressbook	ru	Поля контакта:
+contact id	addressbook	ru	ID контакта
+contact modified by %1 at %2	addressbook	ru	Контакт изменил %1 в %2
+contact not found!	addressbook	ru	Контакт не найден!
+contact repository	admin	ru	Хранилище контакта
+contact saved	addressbook	ru	Контакт сохранен
+contact settings	admin	ru	Установки Контакта
+contactform	addressbook	ru	Форма контакта
+contacts and account contact-data to ldap	admin	ru	контакты и данные контакта для учетной записи в LDAP
+contacts and account contact-data to sql	admin	ru	контакты и контактные данные учетной записи в SQL
+contacts to ldap	admin	ru	контакты в LDAP
+contacts to ldap, account contact-data to sql	admin	ru	контакты в LDAP, данные контакта для учетной записи в SQL
+contains	addressbook	ru	содержит
+copied by %1, from record #%2.	addressbook	ru	Скопировано %1, из записи #%2
+copy a contact and edit the copy	addressbook	ru	Копировать контакт и редактировать копию
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	ru	Скопируйте Ваши изменения в буфер обмена, %1перезагрузите запись%2 а объедините их.
+country	common	ru	Страна
+create new links	addressbook	ru	Создайте новые ссылки
+created	addressbook	ru	Создано
+credit	addressbook	ru	Кредит
+csv-fieldname	addressbook	ru	Имя поля CSV
+csv-filename	addressbook	ru	Имя файла CSV
+custom	addressbook	ru	Пользовательский
+custom etemplate for the contactform	addressbook	ru	Пользовательский е-Шаблон для формы контактов
+custom fields	addressbook	ru	Пользовательские Поля
+debug output in browser	addressbook	ru	Отладочный вывод в браузере
+default	addressbook	ru	По умолчанию
+default address format	addressbook	ru	Формат адреса по умолчанию
+default addressbook for adding contacts	addressbook	ru	Адресная книга по умолчанию для добавления контактов
+default document to insert contacts	addressbook	ru	Документ по умолчанию для записи контактов
+default filter	addressbook	ru	Фильтр по умолчанию
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	ru	Определяет адрес (рабочий или домашний) следует использовать как предпочитаемый для рассылок почты
+delete a single entry by passing the id.	addressbook	ru	Удалить одну запись по этому идентификатору
+delete selected distribution list!	addressbook	ru	Удалить выбранный список рассылки!
+delete this contact	addressbook	ru	Удалить контакт
+delete this organisation including all its contacts	addressbook	ru	Удалить эту организацию включая ВСЕ её контакты
+deleted	addressbook	ru	удалено
+deletes the photo	addressbook	ru	Удалить фотографию
+department	common	ru	Отдел
+departments	addressbook	ru	отделы
+directory with documents to insert contacts	addressbook	ru	Папка с документами для внесения в контакты
+display contact	addressbook	ru	Показать Контакт
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	ru	Показывать напоминание для дней рождений на начальной странице (страница, которая появляется когда Вы заходите в eGroupWare или нажимаете на пиктограмму домашней страницы)
+distribution list deleted	addressbook	ru	Список рассылки удален
+distribution lists	addressbook	ru	Список рассылки
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	ru	Нужна ли Вам личная адресная книга, которую не смогут видеть пользователи, которым Вы предоставили доступ к вашей персональной адресной книге?
+do your really want to delete this contact?	addressbook	ru	Вы действительно хотите удалить этот контакт?
+document '%1' does not exist or is not readable for you!	addressbook	ru	Документ %1 не может быть прочитан либо не существует
+doesn't matter	addressbook	ru	не имеет значения
+domestic	addressbook	ru	Домашний
+don't hide empty columns	addressbook	ru	Не скрывать пустые колонки
+download	addressbook	ru	Загрузить
+download export file (uncheck to debug output in browser)	addressbook	ru	Загрузить файл экспорта (снимите отметку, чтобы вывести отладку в браузер)
+download this contact as vcard file	addressbook	ru	Загрузить этот контакт как файл vCard
+duration	addressbook	ru	Длительность
+edit custom field	addressbook	ru	Редактировать Пользовательское Поле
+edit custom fields	admin	ru	Редактировать Пользовательские Поля
+edit extra account-data in the addressbook	admin	ru	Редактировать дополнительные данные учетной записи в адресной книге
+edit phonenumbers -	addressbook	ru	Редкатировать номера телефонов -
+either the configured email addesses are wrong or the mail configuration.	addressbook	ru	Либо адрес электронной почты, либо настройки почты неверны.
+email & internet	addressbook	ru	Электронная почта и Интернет
+email addresses (comma separated) to send the contact data	addressbook	ru	Адреса эл. почты (разделенные запятыми) для отправки данных контакта
+empty for all	addressbook	ru	пусто для всех
+enable an extra private addressbook	addressbook	ru	Разрешить дополнительную личную адресную книгу
+end	addressbook	ru	Конец
+enter the path to the exported file here	addressbook	ru	Введите путь к файлу экспорта
+error deleting the contact !!!	addressbook	ru	Ошибка при удалении контакта !!!
+error saving the contact !!!	addressbook	ru	Ошибка при записи контакта !!!
+error: the entry has been updated since you opened it for editing!	addressbook	ru	Ошибка: запись была изменена после того, как вы открыли ее для редактирования!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	ru	Пример $$IF n_prefix~г-н~Здравствуйте г-н~Здравствуйте г-жа$$ - поиск в поле "n_prefix" текста "г-н". Если найдено , написать Здравствуйте г-н, иначе Здравствуйте г-жа.
+existing links	addressbook	ru	Существующие ссылки
+export	addressbook	ru	экспорт
+export as csv	addressbook	ru	Экспортировать как CSV
+export as vcard	addressbook	ru	Экспортировать как VCard
+export contacts	addressbook	ru	Экспорт Контактов
+export file name	addressbook	ru	Имя файла экспорта
+export from addressbook	addressbook	ru	Экспортировать из Адресной книги
+export selection	addressbook	ru	Экспортировать выбранное
+exported	addressbook	ru	экспортировано
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Экспортировать контакты из вашей Адресной книги в файл CSV. CSV обозначает 'Comma Seperated Values' ('Значения, Разделенные Запятой'). Однако в Закладке параметров Вы можете так же выбрать другие разделители.
+extra	addressbook	ru	Дополнительно
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ru	неудача при изменении %1 члена/ов организации (недостаточно прав) !!!
+fax	addressbook	ru	Факс
+fax number	common	ru	Номер Факса
+field %1 has been added !	addressbook	ru	Добавлено поле %1 !
+field %1 has been updated !	addressbook	ru	Обновлено поле %1 !
+field name	addressbook	ru	Имя Поля
+fields for the csv export	addressbook	ru	Поля для экспорта в CSV
+fields the user is allowed to edit himself	admin	ru	Поля, которые пользователь может редактировать самостоятельно
+fields to show in address list	addressbook	ru	Какие поля показывать в списке адресов
+fieldseparator	addressbook	ru	Разделитель полей
+for more then one contact in a document use the tag pagerepeat!	addressbook	ru	для более чем одного контакта в документе используйте метку повтора страницы (tag pagerepeat)!
+for read only ldap	admin	ru	для чтения только LDAP'ом
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
+freebusy uri	addressbook	ru	URI Занятости
+full name	addressbook	ru	Полное Имя
+general	addressbook	ru	Общее
+general fields:	addressbook	ru	Основные поля:
+geo	addressbook	ru	ГЕО
+global categories	addressbook	ru	Общие Категории
+grant addressbook access	common	ru	Предоставить доступ к Адресной книге
+group %1	addressbook	ru	Группа %1
+h	addressbook	ru	ч
+hide accounts from addressbook	addressbook	ru	Скрыть учетные записи из адресной книги
+hides accounts completly from the adressbook.	addressbook	ru	Скрывает учетные записи полностью из адресной книги.
+home address	addressbook	ru	Домашний адрес
+home address, birthday, ...	addressbook	ru	Домашний адрес, День рождения, ...
+home city	addressbook	ru	Домашний - Город
+home country	addressbook	ru	Домашний - Страна
+home email	addressbook	ru	Домашний - Адрес email
+home email if given, else work email	addressbook	ru	Домашний адрес если есть, иначе рабочй адрес эл.. почты
+home phone	addressbook	ru	Домашний телефон
+home state	addressbook	ru	Домашний - Штат
+home street	addressbook	ru	Домашний - Улица
+home zip code	addressbook	ru	Домашний почтовый индекс
+how many contacts should non-admins be able to export (empty = no limit)	admin	ru	Сколько контактов разрешается экспортировать не администраторам (псто - без ограничений)
+icon	addressbook	ru	Пиктограмма
+if accounts are already in ldap	admin	ru	если учетная запись уже в LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	ru	Если вы указываете каталог (полный путь vfs) здесь, адресная книга показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными контакта.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	ru	Если вы указываете каталог (полный путь vfs) здесь, адресная книга дополнительную пиктограмму документа для каждого контакта. Эта пиктограмма позволяет загрузить указанный документ со вставленными данными контакта.
+import	addressbook	ru	Импорт
+import contacts	addressbook	ru	Импорт контактов
+import csv-file into addressbook	addressbook	ru	Импорт файл CSV в Адресную книгу
+import file	addressbook	ru	Импорт файла
+import from	addressbook	ru	Импорт из
+import from ldif, csv, or vcard	addressbook	ru	Импорт из LDIF, CSV, или VCard
+import from outlook	addressbook	ru	Импорт из Outlook
+import multiple vcard	addressbook	ru	Импорт многих VCard
+import next set	addressbook	ru	Импортировать следующий набор
+import_instructions	addressbook	ru	В Netscape откройте Адресную книгу и выберите <b>Экспорт</b> из меню <b>Файл</b>. Экспортируемый файл будет в формета LDIF.<p>Или, в Outlook, выберите папку Контакты, выберите <b>Импорт и экспорт...</b> из меню <b>Файл</b> и экспортируйте ваши контакты в текст, разделенный запятыми (CSV). <p>Или, в Palm Desktop 4.0 или выше, зайдите в Адресную книгу и выберите <b>Экспорт</b> из меню <b>Файл</b>. Экспортируемый файл будет в формате VCard.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Импортирует контакты в вашу Адресную книгу из файла CSV. CSV означает "Значения разделенные запятыми", однако в закладке настроек можно выбрать другой разделитель.
+in %1 days (%2) is %3's birthday.	addressbook	ru	Ч-з %1 день/дней (51) будет день рождения %3
+income	addressbook	ru	Входящие
+insert in document	addressbook	ru	Вставить в документ
+insufficent rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!
+international	addressbook	ru	Международный
+label	addressbook	ru	Метка
+last date	addressbook	ru	Последняя дата
+last modified	addressbook	ru	последние изменение
+last modified by	addressbook	ru	последний раз изменено
+ldap context for contacts	admin	ru	Контекст LDAP для контактов
+ldap host for contacts	admin	ru	Хост LDAP для контактов
+ldap settings for contacts	admin	ru	установки LDAP для контактов
+ldif	addressbook	ru	LDIF
+line 2	addressbook	ru	Строка 2
+link title for contacts show	addressbook	ru	Заглавие связи для показываемого контакта
+links	addressbook	ru	Ссылки
+list all categories	addressbook	ru	Список всех категорий
+list all customfields	addressbook	ru	Список всех пользовательских полей
+list already exists!	addressbook	ru	Список уже существует!
+list created	addressbook	ru	Список создан
+list creation failed, no rights!	addressbook	ru	Неудача при создании списка, нет прав!
+load sample file	addressbook	ru	Загрузка файла Примера
+load vcard	addressbook	ru	Загрузить VCard
+location	addressbook	ru	Расположени
+locations	addressbook	ru	местонахождения
+manage mapping	addressbook	ru	Управление отобажением
+mark records as private	addressbook	ru	Пометить записи как личные
+merge into first or account, deletes all other!	addressbook	ru	Слить с первым или учетной записью, удалить все остальные!
+merged	addressbook	ru	слито
+message after submitting the form	addressbook	ru	Сообщение после отправки формы
+message phone	addressbook	ru	Телефон для сообщений
+middle name	addressbook	ru	Отчество
+migration finished	addressbook	ru	Миграция завершена
+migration to ldap	admin	ru	Миграция в LDAP
+mobile	addressbook	ru	Мобильный
+mobile phone	addressbook	ru	Мобильный телефон
+modem phone	addressbook	ru	Модемный номер телефона
+more ...	addressbook	ru	Далее...
+move to addressbook:	addressbook	ru	Перенести в адресную книгу:
+moved	addressbook	ru	перенесено
+multiple vcard	addressbook	ru	Несколько VCard
+name for the distribution list	addressbook	ru	Имя для списка рассылки
+name of current user, all other contact fields are valid too	addressbook	ru	Имя текущего пользователя, все остальные поля контакта также действительны.
+name, address	addressbook	ru	Имя, Адрес
+new contact submitted by %1 at %2	addressbook	ru	Новый контакт отправлен %1 в %2
+new window opened to edit infolog for your selection	addressbook	ru	Новое окно открыто для редактирования записи ИнфоЖурнала по вашему выбору
+next date	addressbook	ru	Следующая дата
+no categories selected	addressbook	ru	не выбрано категорий
+no vcard	addressbook	ru	Нет VCard
+number	addressbook	ru	Номер
+number of records to read (%1)	addressbook	ru	Количество записей для чтения (%1)
+options for type	admin	ru	Опции для типа
+organisation	addressbook	ru	организация
+organisations	addressbook	ru	Организация
+organisations by departments	addressbook	ru	Организации по отделам
+organisations by location	addressbook	ru	Организации по местоположению
+other number	addressbook	ru	Другой Номер
+other phone	addressbook	ru	Другой Телефон
+own sorting	addressbook	ru	своя сортировка
+pager	common	ru	Пейджер
+parcel	addressbook	ru	Посылка (пачка?)
+participants	addressbook	ru	Подписчики
+permission denied !!!	addressbook	ru	Доступ запрещен !!!
+phone number	common	ru	Номер Телефон
+phone numbers	common	ru	Номера Телефонов
+photo	addressbook	ru	Фото
+please enter a name for that field !	addressbook	ru	Пожалуйста, введите имя этого поля !
+please select only one category	addressbook	ru	Пожалуйста, выберите только одну категорию
+please update the templatename in your customfields section!	addressbook	ru	Пожалуйста измените название шаблона в вашей секции пользовательских полей!
+postal	common	ru	Почтовый
+pref	addressbook	ru	предпочт.
+preferred email address to use in distribution lists	addressbook	ru	Предпочитаемый адрес эл. почты для использования в списках рассылки
+preferred phone	addressbook	ru	предпочтительный телефон
+preferred type of email address to add for distribution lists	addressbook	ru	Предпочитаемый тип адреса эл. почты для добавления в списки рассылки
+prefix	addressbook	ru	Префикс
+public key	addressbook	ru	Публичный Ключ
+publish into groups:	addressbook	ru	Опубликовать в группах:
+read a list / search for entries.	addressbook	ru	Получить список / поиск сообщений.
+read a list of entries.	addressbook	ru	Прочитать список записей.
+read a single entry by passing the id and fieldlist.	addressbook	ru	Прочитать одну запись согласно этому идентификатору и списку полей
+read only	addressbook	ru	только для чтения
+record access	addressbook	ru	Доступ к Записи
+record owner	addressbook	ru	Владелец записи
+remove selected contacts from distribution list	addressbook	ru	Удалить выбранные контакты из списка рассылки
+removed from distribution list	addressbook	ru	удалено из списка рассылки
+repetition	addressbook	ru	Повторение
+replacements for inserting contacts into documents	addressbook	ru	Подстановки для контактов вставляемых в документы.
+required fields *	addressbook	ru	Требуемые поля *
+role	addressbook	ru	Должность
+room	addressbook	ru	Комната
+search for '%1'	addressbook	ru	Искать '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ru	Выбрать фотографию jpeg в формате портрета. Она будет масштабирована до 60 пикселей в ширину.
+select a view	addressbook	ru	Выбрать вид
+select addressbook type	addressbook	ru	Выбрать тип адресной книги
+select all	addressbook	ru	Выбрать все
+select an action or addressbook to move to	addressbook	ru	Выбрать действие или адресную книгу, куда надо переместить
+select migration type	admin	ru	Выбрать тип миграции
+select multiple contacts for a further action	addressbook	ru	Выбрать несколько контактов для дальнейшего действия
+select phone number as prefered way of contact	addressbook	ru	выбрать телефон, как метод контакта
+select the type of conversion	addressbook	ru	Выбрать тип преобразования
+select the type of conversion:	addressbook	ru	Выбрать тип преобразования:
+select where you want to store / retrieve contacts	admin	ru	Выберите, где вы хотите записывать/извлекать контакы
+selected contacts	addressbook	ru	выбранные контакты
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	ru	Должны ли колонки с фото и домашним адресом всегда быть показаны, даже если они пусты.
+show	addressbook	ru	Показать
+show birthday reminders on main screen	addressbook	ru	Показывать напоминания о дне рождения на главном экране
+show infolog entries for this organisation	addressbook	ru	Показать записи ИнфоЖурнала для этой организации.
+show the contacts of this organisation	addressbook	ru	Показать контакты этой организации
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	ru	Размер всплывающей (ШxВ, напр. 400x300, если высплывающая должна использоваться)
+start	admin	ru	Начало
+startrecord	addressbook	ru	Начальная запись
+state	common	ru	Штат
+street	common	ru	Улица
+subject for email	addressbook	ru	Тема письма
+successfully imported %1 records into your addressbook.	addressbook	ru	%1 запись/ей успешно импортирована в вашу адресную книгу
+suffix	addressbook	ru	Суффикс
+tel home	addressbook	ru	тел. домашний
+telephony integration	admin	ru	Интеграция с телефонией
+test import (show importable records <u>only</u> in browser)	addressbook	ru	Тестовый импорт (показывает импортируемые контакы <u>только</u> в браузере)
+thank you for contacting us.	addressbook	ru	Спасибо за обращение к нам.
+that field name has been used already !	addressbook	ru	Это имя поля уже используется !
+the anonymous user has probably no add rights for this addressbook.	addressbook	ru	Анонимныый пользователь обычно не имеет прав на добавление записей в эту адресную книгу.
+the anonymous user needs add rights for it!	addressbook	ru	Анонимному пользователю нужны права на добавление для этого!
+the anonymous user needs read it!	addressbook	ru	Анонимному пользователю нужно читать это!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	ru	Документ может содержать заполнители типа $$n_fn$$, которые заменяются данными контакта (%1полный список названий заполнителей%2)
+there was an error saving your data :-(	addressbook	ru	Произошла ошибка при сохранении ваших данных :-(
+this module displays a contactform, that stores direct into the addressbook.	addressbook	ru	Этот модуль показывает форму контакта, которая сохраняется сразу в адресную книгу.
+this module displays block from a adddressbook group.	addressbook	ru	Этот модуль показывает блок из Группы Адресной книги.
+this person's first name was not in the address book.	addressbook	ru	Имени этого человека не было в адресной книге
+this person's last name was not in the address book.	addressbook	ru	Фамилии этого человека не было в адресной книге
+timezone	addressbook	ru	Временная зона
+to many might exceed your execution-time-limit	addressbook	ru	слишко много может превысить ваше ограничение времени выполнения
+today is %1's birthday!	common	ru	Сегодня день рождения %1 !
+tomorrow is %1's birthday.	common	ru	Сегодня день рождения %1.
+translation	addressbook	ru	Перевод
+type	addressbook	ru	Тип
+update a single entry by passing the fields.	addressbook	ru	Обновить одну запись передачей этого поля.
+update fields by edited organisations?	admin	ru	Заменить Поля о отредактированной организацией?
+updated	addressbook	ru	Обновлено
+upload or delete the photo	addressbook	ru	Выгрузить или удалить фото
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ru	Ссылка для связи номера телефона с (используйте %1 = номер для звонка,%u = наименование учетной записи, %t = телефон учетной записи)
+use an extra category tab?	addressbook	ru	Использовать дополнительную вкладку категории
+use an extra tab for private custom fields?	admin	ru	Использовать дополнительную закладку для частных пользовательских полей?
+use country list	addressbook	ru	Используйте Список Стран
+use setup for a full account-migration	admin	ru	использовать установку для полной миграции учетных записей
+used for links and for the own sorting of the list	addressbook	ru	используется для связей и для собственной сортироки списка
+vcard	common	ru	VCard
+vcards require a first name entry.	addressbook	ru	VCard требует наличия имени
+vcards require a last name entry.	addressbook	ru	VCard требует наличия фамилии
+verification	addressbook	ru	Проверка
+view linked infolog entries	addressbook	ru	Смотреть связанные записи ИнфоЖурнала
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ru	ПРЕДУПРЕЖДЕНИЕ!! LDAP доступен только в случае, если вы НЕ использования контакты для хранения учетных записей!
+warning: all contacts found will be deleted!	addressbook	ru	ПРЕДУПРЕЖДЕНИЕ: Все найденные контакты будут удалены!
+warning: template "%1" not found, using default template instead.	addressbook	ru	ВНИМАНИЕ: Шаблон "%1" не найден, взамен используется шаблон по умолчанию.
+weekday	addressbook	ru	Рабочий день
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ru	Как должна показыватся связь с адресной книгой в других приложениях. Пустое значение будет пропущено. Вы должны войти в систему заново, если измените эту установку!
+where to add the email address	addressbook	ru	куда добавлять адреса эл. почты
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	ru	Какой формат адреса должна использовать адресная книга для стран с неизвестным форматом адреса. Если формат адреса страны известен, он используется вне зависимости от установки этого параметра.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ru	Какая адресная книга дожна быть выбрана при добавлении контакта И когда у Вас нет прав на текущую адресную книгу.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ru	Какая кодовая таблица должна применяться для экспорта в CSV. Системная по умолчанию - это таблица для данной устаноки eGroupWare
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	ru	Какие поля должны быть экспортированы. Все означает каждое поле, записанное в адресной книге, вкл. пользовательские поля. Рабочий и домашний адрес содержит только имя, компанию и выбранные адреса.
+whole query	addressbook	ru	весь запрос
+work email if given, else home email	addressbook	ru	Рабочий адрес если есть, иначе домашний адрес эл. почты
+work phone	addressbook	ru	Рабочий Телефон
+write (update or add) a single entry by passing the fields.	addressbook	ru	Записать (обновить или добавить) одну запись передачей поля.
+wrong - try again ...	addressbook	ru	Неверно- попробуйте снова ...
+yes, for the next three days	addressbook	ru	Да, для следующих трех дней
+yes, for the next two weeks	addressbook	ru	Да, для следующих двух недель
+yes, for the next week	addressbook	ru	Да, для следующей недели
+yes, for today and tomorrow	addressbook	ru	Да, на сегодня и завтра
+you are not permitted to delete contact %1	addressbook	ru	Вам не разрешено удалять контакт %1
+you are not permittet to delete this contact	addressbook	ru	Вам не разрешено удалять этот контакт
+you are not permittet to edit this contact	addressbook	ru	Вам не разрешено редактировать этот контакт
+you are not permittet to view this contact	addressbook	ru	Вам не разрешено проматривать этот контакт
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	ru	Вы можете использовать LDAP как хранилище контактов только если учетные записи тоже хранятся в LDAP!
+you can respond by visiting:	addressbook	ru	Для просмотра перейдте:
+you must select a vcard. (*.vcf)	addressbook	ru	Вы должны выбрать vCard (*.vcf)
+you must select at least 1 column to display	addressbook	ru	Вы должны выбрать хотя бы одну колонку для показа
+you need to select a distribution list	addressbook	ru	Вы должны выбрать список рассылки
+you need to select some contacts first	addressbook	ru	Вы должны сначала выбрать несколько контактов
+zip code	common	ru	Почтовый индекс
+zip_note	addressbook	ru	<p><b>Примечание:</b> Файл может быть zip-архивом файлов .csv, .vcf, или .ldif. Однако не смешивайте разные типы при импорте.
+deleted	addressbook	ru	удалено

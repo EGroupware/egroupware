@@ -1,0 +1,415 @@
+%1 added	addressbook	sl	%1 dodan
+%1 contact(s) %2	addressbook	sl	%1 je kontaktiral %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sl	%1 je kontaktiral %2, pri %3 se je pojavila napaka zaradi premajhnih pravic!
+%1 fields in %2 other organisation member(s) changed	addressbook	sl	%1 polje %2 članu v drugi organizaciji se je spremenilo
+%1 records imported	addressbook	sl	%1 zapisov uvoženih
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sl	1% zapisov prebranih (niso še uvoženi, lahko greste %2nazaj%3 in odznačite preizkus uvoza)
+%1 starts with '%2'	addressbook	sl	%1 se začne z '%2'
+%s please calculate the result	addressbook	sl	%s izračunaj rezultat
+(e.g. 1969)	addressbook	sl	(npr. 1969)
+(empty = use global limit, no = no export at all)	admin	sl	(prazno = uporabi globalno omejitev, ne = izvoz ni dovoljen)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda <noben> lahko je zaklenjen.</b> Izberite tip prevoda s seznama.
+@-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo oskrbnikom!
+account repository	admin	sl	Repozitorij z računi
+accounts	addressbook	sl	Računi
+actions	addressbook	sl	Dejanja
+add %1	addressbook	sl	Dodaj %1
+add a contact to this organisation	addressbook	sl	Dodaj kontakt v to organizacijo
+add a new contact	addressbook	sl	Dodaj nov kontakt
+add a new infolog	addressbook	sl	Dodaj novo opravilo
+add a new list	addressbook	sl	Dodaj nov seznam
+add a single entry by passing the fields.	addressbook	sl	Dodaj  zapis z vnosom polj.
+add business email of whole distribution list?	addressbook	sl	Dodam službeni e-naslov celotnega distribucijskega seznama?
+add custom field	addressbook	sl	Dodaj polje
+add emails of whole distribution list?	addressbook	sl	Dodam naslove celega distribucijskega seznama?
+add or delete categories	addressbook	sl	Dodaj ali izbriši kategorije
+add to distribution list:	addressbook	sl	Dodaj v distribucijski seznam:
+added	addressbook	sl	Dodano
+added by synchronisation	addressbook	sl	Dodano s sinhronizacijo
+added to distribution list	addressbook	sl	Dodano v distribucijski seznam
+additional information about using ldap as contact repository	admin	sl	Dodatne informacije o uporabi LDAP kot repozitorija za kontakte
+address book	common	sl	Adresar
+address book - vcard in	addressbook	sl	Adresar - VCard
+address book - view	addressbook	sl	Adresar - pogled
+address line 2	addressbook	sl	Naslov - 2. vrstica
+address type	addressbook	sl	Tip naslova
+addressbook	common	sl	Adresar
+addressbook csv export	addressbook	sl	Izvoz adresarja v CSV
+addressbook menu	addressbook	sl	Meni adresarja
+addressbook preferences	addressbook	sl	Lastnosti adresarja
+addressbook the contact should be saved to	addressbook	sl	Adresar, v katerega naj se shrani kontakt
+addressbook the contact should be shown	addressbook	sl	Adresar, katerega kontakt naj bo prikazan
+addressbook-fieldname	addressbook	sl	Adresar-Ime polja
+addvcard	addressbook	sl	Dodaj VCard
+advanced search	addressbook	sl	Napredno iskanje
+all contacts	addressbook	sl	Vsi kontakti
+allow users to maintain their own account-data	admin	sl	Dovoli uporabnikom, da sami vzdržuejo svoje podatke o računu
+alt. csv import	addressbook	sl	Uvoz CSV datoteke
+always	addressbook	sl	Vedno
+apply changes to all members, whose fields have the same previous content	addressbook	sl	Uveljavi spremembe vsem članom, katerih polja imajo enako prejšnjo vrednost
+apply the action on the whole query, not only the shown contacts!!!	addressbook	sl	Uveljavi dejanje na celem povpraševanju, NE samo na prikazanih kontaktih!
+are you shure you want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
+are you sure you want to delete this field?	addressbook	sl	Ste prepričani, da želite izbrisati to polje?
+assistent	addressbook	sl	Pomočnik
+assistent phone	addressbook	sl	Telefon pomočnika
+at the moment the following document-types are supported:	addressbook	sl	Trenutno so podprte sledeče vrste dokumentov:
+birthday	common	sl	Rojstni dan
+birthdays	common	sl	Rojstni dnevi
+blank	addressbook	sl	Prazen
+business	common	sl	Služba
+business address	addressbook	sl	Službeni naslov
+business city	addressbook	sl	Kraj
+business country	addressbook	sl	Dežela
+business email	addressbook	sl	E-pošta
+business fax	addressbook	sl	Faks
+business phone	addressbook	sl	Telefon
+business state	addressbook	sl	Država
+business street	addressbook	sl	Naslov
+business zip code	addressbook	sl	Poštna št.
+calendar fields:	addressbook	sl	Polja koledarja:
+calendar uri	addressbook	sl	URI koledarja
+can be changed via setup >> configuration	admin	sl	Lahko spremenite preko Nastavitve >> Konfiguracija
+car phone	addressbook	sl	Telefon v avtu
+categorie	addressbook	sl	Kategorija
+categorie added	addressbook	sl	Kategorija dodana
+categorie delete	addressbook	sl	Kategorija izbrisana
+categories, notes, ...	addressbook	sl	Kategorije, opombe ...
+category tree	admin	sl	Drevo kategorij
+cell phone	addressbook	sl	GSM
+change all organisation members	addressbook	sl	Spremeni vse člane organizacije
+charset for the csv export	addressbook	sl	Nabor znakov za izvoz CSV
+charset of file	addressbook	sl	Kodna tabela datoteke
+check all	addressbook	sl	Preveri vse
+choose an icon for this contact type	admin	sl	Izberite ikono za to vrsto stika
+choose owner of imported data	addressbook	sl	Izberite lastnika uvoženih podatkov
+choose seperator and charset	addressbook	sl	Izberite ločilo polj in nabor znakov
+chosse an etemplate for this contact type	admin	sl	Izberite eTemplate za to vrsto stika
+city	common	sl	Mesto
+company	common	sl	Podjetje
+company name	addressbook	sl	Ime podjetja
+configuration	common	sl	Nastavitve
+contact	common	sl	Stik
+contact application	admin	sl	Aaplikacija za stike
+contact copied	addressbook	sl	Stik kopiran
+contact deleted	addressbook	sl	Stik izbrisan
+contact fields to show	addressbook	sl	Polja stika za prikaz
+contact fields:	addressbook	sl	Polja stika:
+contact id	addressbook	sl	ID stika
+contact modified by %1 at %2	addressbook	sl	Stik spremenil %1 dne %2
+contact not found!	addressbook	sl	Stik ni bil najden!
+contact repository	admin	sl	Repozitorij za stike
+contact saved	addressbook	sl	Stik shranjen
+contact settings	admin	sl	Nastavitve stikov
+contactform	addressbook	sl	Obrazec za stike
+contacts and account contact-data to ldap	admin	sl	Stiki in kontaktni podatki računa v LDAP
+contacts and account contact-data to sql	admin	sl	Stiki in kontaktni podatki računa v SQL
+contacts to ldap	admin	sl	Stiki v LDAP
+contacts to ldap, account contact-data to sql	admin	sl	Stik v LDAP, kontaktni podatki računa v LDAP
+contains	addressbook	sl	Vsebuje
+copied by %1, from record #%2.	addressbook	sl	Kopirano iz zapisa %2 v zapis %1.
+copy a contact and edit the copy	addressbook	sl	Kopiraj stik in uredi kopijo
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	sl	Kopira spremembe v odložišče, %1 ponovno naloži vnos %2 in ju spoji.
+country	common	sl	Država
+create new links	addressbook	sl	Ustvari nove povezave
+created	addressbook	sl	Ustvarjeno
+credit	addressbook	sl	Zasluge
+csv-fieldname	addressbook	sl	CSV-Ime polja
+csv-filename	addressbook	sl	CSV-Ime datoteke
+custom	addressbook	sl	Lasten
+custom etemplate for the contactform	addressbook	sl	eTemplate po meri za obrazec za stike
+custom fields	addressbook	sl	Lastna polja
+debug output in browser	addressbook	sl	Preglej izpis v brskalniku
+default	addressbook	sl	Privzeto
+default address format	addressbook	sl	Privzeta oblika naslovov
+default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
+default document to insert contacts	addressbook	sl	Privzeti dokument za vstavljanje stikov
+default file as format	addressbook	sl	Privzeta datoteka kot oblika
+default filter	addressbook	sl	Privzeti filter
+default format for fileas, eg. for new entries.	addressbook	sl	Privzeta oblika za datoteke, npr za nove vnose.
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	sl	Določa, kateri e-naslov (domači ali službeni) naj se uporabi kot privzeti za distribucijski seznam.
+delete a single entry by passing the id.	addressbook	sl	Izbriši zapis s podano šifro
+delete selected distribution list!	addressbook	sl	Izbriši izbrane distribucijske sezname!
+delete this contact	addressbook	sl	Izbriši ta stik
+delete this organisation including all its contacts	addressbook	sl	Izbriši to organizacijo, vključno z VSEMI kontakti
+deleted	addressbook	sl	Zbrisano
+deletes the photo	addressbook	sl	Zbriše sliko
+department	common	sl	Oddelek
+departments	addressbook	sl	Oddelki
+directory with documents to insert contacts	addressbook	sl	Mapa z dokumenti za vstavljanje stikov
+display contact	addressbook	sl	Prikaži stik
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sl	Prikaži opomnik za rojstne dneve na začetni strani (stran, ki se prikaže, ko vstopite v eGroupWare ali ko kliknete ikono Domov)
+distribution list deleted	addressbook	sl	Distribucijske seznam izbrisan
+distribution lists	addressbook	sl	Distribucijski seznami
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sl	Ali želite zasebni adresar, ki ni viden uporabnikom, ki jim ne dovolite dostopa?
+do your really want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
+document '%1' does not exist or is not readable for you!	addressbook	sl	Dokument '%1' ne obstaja ali pa nimate pravice branja!
+doesn't matter	addressbook	sl	Ni pomembno
+domestic	addressbook	sl	Domači
+don't hide empty columns	addressbook	sl	Ne skrij praznih stolpcev
+download	addressbook	sl	Prenos
+download export file (uncheck to debug output in browser)	addressbook	sl	Prenos izvožene datoteke (Odznači za izpis v brskalniku)
+download this contact as vcard file	addressbook	sl	Prenesite ta stik kot datoteko vCard
+duration	addressbook	sl	Trajanje
+edit custom field	addressbook	sl	Uredi lastno polje
+edit custom fields	admin	sl	Uredi lastna polja
+edit extra account-data in the addressbook	admin	sl	Uredi dodatne podatke računa v adresarju
+edit phonenumbers -	addressbook	sl	Uredi telefonske številke -
+either the configured email addesses are wrong or the mail configuration.	addressbook	sl	Napačen e-naslov ali konfiguracija.
+email & internet	addressbook	sl	E-pošta in Splet
+email addresses (comma separated) to send the contact data	addressbook	sl	E-naslovi (ločeni z vejico), na katere pošljem podatke stika
+empty for all	addressbook	sl	Izprazni za vse
+enable an extra private addressbook	addressbook	sl	Omogoči dodatni osebni adresar
+end	addressbook	sl	Konec
+enter the path to the exported file here	addressbook	sl	Vnesite pot do izhodne datoteke
+error deleting the contact !!!	addressbook	sl	Napaka pri brisanju stika!
+error saving the contact !!!	addressbook	sl	Napaka pri shranjevanju stika!
+error: the entry has been updated since you opened it for editing!	addressbook	sl	Napaka: vnos je bil spremenjen medtem, ko ste imeli odprtega za urejanje!
+example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	sl	Primer $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - išče polje "n_prefix", za "Mr", če najde, izpiše Hello Mr., drugače izpiše Hello Ms.
+existing links	addressbook	sl	Obstoječe povezave
+export	addressbook	sl	Izvozi
+export as csv	addressbook	sl	Izvozi v CSV
+export as vcard	addressbook	sl	Izvozi kot VCard
+export contacts	addressbook	sl	Izvozi stike
+export file name	addressbook	sl	Ime izvožene datoteke
+export from addressbook	addressbook	sl	Izvoz iz adresarja
+export selection	addressbook	sl	Izvozi izbor
+exported	addressbook	sl	Izvoženo
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Izvozi stike iz vašega adresarja v datoteko CSV. CSV pomeni 'Comma Seperated Values' (vrednosti, ločene z vejico). Na zavihku možnosti pa lahko za ločilo polj izberete drugi znak.
+extra	addressbook	sl	Dodatno
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
+fax	addressbook	sl	Faks
+fax number	common	sl	Faks
+field %1 has been added !	addressbook	sl	Polje %1 je bilo dodano!
+field %1 has been updated !	addressbook	sl	Polje %1 je bilo popravljeno!
+field name	addressbook	sl	Ime polja
+fields for the csv export	addressbook	sl	Polja za izvoz CSV
+fields the user is allowed to edit himself	admin	sl	Polja, ki jih lahko uporabnik ureja sam
+fields to show in address list	addressbook	sl	Polja, ki naj se prikažejo v seznamu
+fieldseparator	addressbook	sl	Ločilo polj
+for more then one contact in a document use the tag pagerepeat!	addressbook	sl	Za več kot en kontakt v dokumentu uporabite značko pagerepeat!
+for read only ldap	admin	sl	Za LDAP samo za branje
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
+freebusy uri	addressbook	sl	Freebusy URI
+full name	addressbook	sl	Polno ime
+general	addressbook	sl	Splošno
+general fields:	addressbook	sl	Splošna polja:
+geo	addressbook	sl	GEO
+global categories	addressbook	sl	Globalne kategorije
+grant addressbook access	common	sl	Dostop do glavnega imenika
+group %1	addressbook	sl	Skupina %1
+h	addressbook	sl	h
+hide accounts from addressbook	addressbook	sl	Skrij uporabniške račune iz adresarja
+hides accounts completly from the adressbook.	addressbook	sl	Skrij uporabniške račune iz adresarja
+home address	addressbook	sl	Domači naslov
+home address, birthday, ...	addressbook	sl	Domači naslov, rojstni dan ...
+home city	addressbook	sl	Mesto
+home country	addressbook	sl	Dežela
+home email	addressbook	sl	E-pošta
+home email if given, else work email	addressbook	sl	Domač e-naslov, če je podan. Drugače službeni.
+home phone	addressbook	sl	Telefon
+home state	addressbook	sl	Država
+home street	addressbook	sl	Naslov
+home zip code	addressbook	sl	Poštna št.
+how many contacts should non-admins be able to export	admin	sl	Koliko stikov lahko izvozijo uporabniki, ki niso oskrbniki.
+icon	addressbook	sl	Ikona
+if accounts are already in ldap	admin	sl	Če je račun že v LDAP
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	sl	Če določite mapo (polna pot vfs), bo adresar prikazal dejanje za vsak dokument. To dejanje omogoča prenos določenih dokumentov z vstavljenimi podatki stika.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	sl	Če določite dokument (polna pot vfs), bo adresar prikazal dodatno ikono dokumenta za vsak stik. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki stika.
+import	addressbook	sl	Uvozi
+import contacts	addressbook	sl	Uvozi  stike
+import csv-file into addressbook	addressbook	sl	Uvozi CSV-polja v imenik
+import file	addressbook	sl	Uvozi datoteko
+import from	addressbook	sl	Uvozi iz
+import from ldif, csv, or vcard	addressbook	sl	Uvoz iz LDIF, CSV ali VCard
+import from outlook	addressbook	sl	Uvoz iz Outlook-a
+import multiple vcard	addressbook	sl	Uvoz večih VCard
+import next set	addressbook	sl	Uvozi naslednji niz
+import_instructions	addressbook	sl	V Netscapu odprite adresar in izberite <b>Export</b> v meniju <b>File</b>. Izvožena datoteka bo v obliki LDIF.<p>V Outlooku izberite mapo Stiki (Contacts), izberite <b>Uvoz/izvoz (Import/Export)</b> v meniju <b>Datoteka (File)</b>. Izvožena datoteka bo v obliki CSV.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Uvozi stike v vaš adresar iz datoteke CSV. CSV pomeni 'vrednosti, ločene z vejico'. Vendar na zavihku Možnosti lahko izberete drugo ločilo polj.
+in %1 days (%2) is %3's birthday.	addressbook	sl	V %1 dneh (%2) je rojstni dan %3.
+income	addressbook	sl	Priliv
+insert in document	addressbook	sl	Vstavi v dokument
+insufficent rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
+international	addressbook	sl	Mednarodni
+label	addressbook	sl	Značilnosti
+last date	addressbook	sl	Zadnji datum
+last modified	addressbook	sl	Nazadnje spremenjeno
+last modified by	addressbook	sl	Nazadnje spremenil
+ldap context for contacts	admin	sl	Kontekst LDAP za stike
+ldap host for contacts	admin	sl	Strežnik LDAP za stike
+ldap settings for contacts	admin	sl	Nastavitve LDAP za stike
+ldif	addressbook	sl	LDIF
+line 2	addressbook	sl	Vrstica 2
+link title for contacts show	addressbook	sl	Prikaži naslov stika kot povezavo
+links	addressbook	sl	Povezave
+list all categories	addressbook	sl	Izpis vseh kategorij
+list all customfields	addressbook	sl	Izpis vseh lastnih polj
+list already exists!	addressbook	sl	Seznam že obstaja!
+list created	addressbook	sl	Seznam ustvarjen
+list creation failed, no rights!	addressbook	sl	Napak pri ustvarjanju seznama - nimate pravic!
+load sample file	addressbook	sl	Naloži datoteko s primeri
+load vcard	addressbook	sl	Naloži VCard
+location	addressbook	sl	Lokacija
+locations	addressbook	sl	Lokacije
+manage mapping	addressbook	sl	Upravljaj mapiranje
+mark records as private	addressbook	sl	Označi zapise kot zasebne
+merge into first or account, deletes all other!	addressbook	sl	Spoji v prvi stik, izbriši ostale!
+merged	addressbook	sl	Spojeno
+message after submitting the form	addressbook	sl	Sporočilo po oddaji obrazca
+message phone	addressbook	sl	Telefon za sporočila
+middle name	addressbook	sl	Srednje ime
+migration finished	addressbook	sl	Migracija končana
+migration to ldap	admin	sl	Migracija na LDAP
+mobile	addressbook	sl	Mobilni
+mobile phone	addressbook	sl	GSM
+modem phone	addressbook	sl	Modem
+more ...	addressbook	sl	Več ...
+move to addressbook:	addressbook	sl	Premakni v adresar:
+moved	addressbook	sl	Premaknjeno
+multiple vcard	addressbook	sl	Več VCard zapisov
+name for the distribution list	addressbook	sl	Ime za distribucijski seznam
+name of current user, all other contact fields are valid too	addressbook	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
+name, address	addressbook	sl	Ime, naslov
+new contact submitted by %1 at %2	addressbook	sl	Nov stik je dodal/-a %1 dne %2
+new window opened to edit infolog for your selection	addressbook	sl	Odpre novo okno za urejanje Infodnevnika
+next date	addressbook	sl	Naslednji datum
+no categories selected	addressbook	sl	Nobena kategorija ni izbrana
+no vcard	addressbook	sl	Ni VCard zapisov
+number	addressbook	sl	Število
+number of records to read (%1)	addressbook	sl	Število zapisov za branje (%1)
+options for type	admin	sl	Možnosti za vrsto
+organisation	addressbook	sl	Organizacija
+organisations	addressbook	sl	Organizacije
+organisations by departments	addressbook	sl	Organizacije po oddelkih
+organisations by location	addressbook	sl	Organizacije po lokacijah
+other number	addressbook	sl	Številka
+other phone	addressbook	sl	Telefon
+own sorting	addressbook	sl	Lastno razvrščanje
+pager	common	sl	Pozivnik
+parcel	addressbook	sl	Dostava
+participants	addressbook	sl	Udeleženci
+permission denied !!!	addressbook	sl	Dostop zavrnjen!
+phone number	common	sl	Telefonska številka
+phone numbers	common	sl	Telefonske številke
+photo	addressbook	sl	Slika
+please enter a name for that field !	addressbook	sl	Prosim, vpišite ime za to polje!
+please select only one category	addressbook	sl	Izberite samo eno kategorijo
+please update the templatename in your customfields section!	addressbook	sl	Posodobite ime predloge v lastnem izboru polj!
+postal	common	sl	Poštni
+pref	addressbook	sl	Privzeto
+preferred email address to use in distribution lists	addressbook	sl	Privzeti e-naslov za uporabo v distribucijskem seznamu.
+preferred phone	addressbook	sl	Privzeti telefon
+preferred type of email address to add for distribution lists	addressbook	sl	Privzeta vrsta e-naslova za dodajanje v distribucijske sezname.
+prefix	addressbook	sl	Predpona
+public key	addressbook	sl	Javni ključ
+publish into groups:	addressbook	sl	Objavi v skupinah:
+read a list / search for entries.	addressbook	sl	Preberi seznam / iskanje vnosov
+read a list of entries.	addressbook	sl	Preberi seznam vnosov.
+read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi zapis s podano šifro in seznamom polj.
+read only	addressbook	sl	Samo za branje
+record access	addressbook	sl	Dostop do zapisa
+record owner	addressbook	sl	Lastnik zapisa
+remove selected contacts from distribution list	addressbook	sl	Odstrani izbrane kontakte iz distribucijskega seznama
+removed from distribution list	addressbook	sl	Odstranjeno iz distribucijskega seznama
+repetition	addressbook	sl	Ponovitev
+replacements for inserting contacts into documents	addressbook	sl	Zamenjave za vstavljanje stikov v dokumente
+required fields *	addressbook	sl	Zahtevana polja *
+role	addressbook	sl	Vloga
+room	addressbook	sl	Soba
+search for '%1'	addressbook	sl	Išči '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sl	Izberite pokončno sliko JPEG. Njena velikost bo spremenjena na širino 60 pikslov.
+select a view	addressbook	sl	Izberite pogled
+select addressbook type	addressbook	sl	Izberite vrsto adresarja
+select all	addressbook	sl	Izberi vse
+select an action or addressbook to move to	addressbook	sl	Izberite dejanje ali adresar, v katerega naj premaknem
+select migration type	admin	sl	Izberite vrsto migracije
+select multiple contacts for a further action	addressbook	sl	Izberite več stikov za nadaljnja dejanja
+select phone number as prefered way of contact	addressbook	sl	Izberite telefonsko številko kot privzeto pot komunikacije za kontakt
+select the type of conversion	addressbook	sl	Izberite tip pretvorbe
+select the type of conversion:	addressbook	sl	Izberite tip pretvorbe:
+select where you want to store / retrieve contacts	admin	sl	Izberite kje želite shranjevati / sprejemati stike
+selected contacts	addressbook	sl	Izbrani stiki
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	sl	Naj bosta stolpca za sliko in domači naslov prikazana vedno, četudi sta prazna?
+show	addressbook	sl	Prikaži
+show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
+show infolog entries for this organisation	addressbook	sl	Prikaži vnose InfoDnevnika za to organizacijo
+show the contacts of this organisation	addressbook	sl	Prikaži kontakte za to organizacijo
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	sl	Velikost pojavnega okna (ŠxV, npr. 400x300, če naj se uporabljajo pojavna okna)
+start	admin	sl	Začetek
+startrecord	addressbook	sl	Začetni zapis
+state	common	sl	Država
+street	common	sl	Ulica
+subject for email	addressbook	sl	Zadeva sporočila
+successfully imported %1 records into your addressbook.	addressbook	sl	Uspešno prenesenih %1 zapisov v vaš adresar.
+suffix	addressbook	sl	Pripona
+tel home	addressbook	sl	Domači telefon
+telephony integration	admin	sl	Integracija telefonije
+test import (show importable records <u>only</u> in browser)	addressbook	sl	Preizkus uvoza (Pokaže uvožene zapise<u>samo</u> v brskalniku).
+thank you for contacting us.	addressbook	sl	Hvala za vaše sporočilo.
+that field name has been used already !	addressbook	sl	To ime polja je že v uporabi!
+the anonymous user has probably no add rights for this addressbook.	addressbook	sl	Anonimni uporabnik verjetno nima pravic dodajanja v ta adresar.
+the anonymous user needs add rights for it!	addressbook	sl	Anonimni uporabnik potrebuje pravico dodajanja!
+the anonymous user needs read it!	addressbook	sl	Anonimni uporabnik mora imeti pravico branja.
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	sl	Dokument lahko vsebuje držalo mesta kot na primer $$n_fn$$, ki se zamenja s podatki stika (%1cel seznam imen držal mesta%2).
+there was an error saving your data :-(	addressbook	sl	Napaka pri shranjevanju podatkov.
+this module displays a contactform, that stores direct into the addressbook.	addressbook	sl	Ta modul prikaže obrazec stika, ki se shrani neposredno v adresar.
+this module displays block from a adddressbook group.	addressbook	sl	Modul prikaže blok iz grupe adresarja.
+this person's first name was not in the address book.	addressbook	sl	Imena te osebe ni v adresarju.
+this person's last name was not in the address book.	addressbook	sl	Priimka te osebe ni v adresarju.
+timezone	addressbook	sl	Časovni pas
+to many might exceed your execution-time-limit	addressbook	sl	Preveč lahko preseže čas izvajanja
+today is %1's birthday!	common	sl	Danes ima rojstni dan %1.
+tomorrow is %1's birthday.	common	sl	Jutri ima rojstni dan %1.
+translation	addressbook	sl	Prevod
+type	addressbook	sl	Vrsta
+update a single entry by passing the fields.	addressbook	sl	Popravi en zapis z vnosom polj.
+update fields by edited organisations?	admin	sl	Posodobim polja urejanih organizacij?
+updated	addressbook	sl	Podosodobljeno
+upload or delete the photo	addressbook	sl	Naloži ali izbriši fotografijo
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	sl	URL, na katerega se povežejo številke telefonov (%1 = številka za klicanje, %u = ime računa, %t = telefonska številka računa)
+use an extra category tab?	addressbook	sl	Uporaba dodatnega zavihka kategorija?
+use an extra tab for private custom fields?	admin	sl	Uporaba dodatni zavihek za osebna polja po meri?
+use country list	addressbook	sl	Uporabi seznam držav
+use setup for a full account-migration	admin	sl	Uporabi namestitev za popolno migracijo računov
+used for links and for the own sorting of the list	addressbook	sl	Uporabno za povezave in za lastno razvrščanje seznama
+vcard	common	sl	VCard
+vcards require a first name entry.	addressbook	sl	VCards zahteva vpis imena.
+vcards require a last name entry.	addressbook	sl	VCards zahteva vpis priimka.
+verification	addressbook	sl	Potrditev
+view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
+warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
+warning: template "%1" not found, using default template instead.	addressbook	sl	Opozorilo: predloga "%1" ni bila najdena. Ušorabljena bo privzeta predloga.
+weekday	addressbook	sl	Delovnik
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
+where to add the email address	addressbook	sl	Kje naj se doda e-naslov?
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sl	Katero obliko naslova naj Adresar uporabi za države, za katere ne pozna oblike. Če je oblika naslova znana, ta nastavitev nima vpliva.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sl	Kateri adresar naj se izbere pri dodajanju stika IN nimate pravic dodajanja v trenutni adresar.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sl	Katera polja naj se izvozijo. "Vse" pomeni, da se bodo izvozila vsa polja, shranjena v adresarju, tudi lastna. Službeni ali domači naslov vsebujejo samo ime, podjetje in izbrani naslov.
+whole query	addressbook	sl	Celotno povpraševanje
+work email if given, else home email	addressbook	sl	Službeni naslov, če je podan, drugače domači.
+work phone	addressbook	sl	Telefon
+write (update or add) a single entry by passing the fields.	addressbook	sl	Zapiši (posodobi ali dodaj) zapis s podanimi polji.
+wrong - try again ...	addressbook	sl	Napačno - poskusite znova.
+yes, for the next three days	addressbook	sl	Da, za naslednje tri dni
+yes, for the next two weeks	addressbook	sl	Da, za naslednja dva tedna
+yes, for the next week	addressbook	sl	Da, za naslednji teden
+yes, for today and tomorrow	addressbook	sl	Da, za jutri in pojutrišnjem
+you are not permitted to delete contact %1	addressbook	sl	Nimate dovoljenja brisati stik %1
+you are not permittet to delete this contact	addressbook	sl	Nimate dovoljenja brisati tega stika
+you are not permittet to edit this contact	addressbook	sl	Nimate dovoljenja spremeniti tega stika
+you are not permittet to view this contact	addressbook	sl	Nimate dovoljenja pogledati tega stika
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	sl	LDAP lahko uporabite za shranjevanje stikov samo, če LDAP uporabite tudi za shranjevanje računov!
+you can respond by visiting:	addressbook	sl	Za ogled pojdite na:
+you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate VCard. (*.vcf)
+you must select at least 1 column to display	addressbook	sl	Izbrati morate najmanj 1 stolpec za prikaz
+you need to select a distribution list	addressbook	sl	Izbrati morate distribucijski seznam
+you need to select some contacts first	addressbook	sl	Najprej morate izbrati nekaj stikov
+zip code	common	sl	Poštna številka
+zip_note	addressbook	sl	<p><b>Opozorilo:</b> Datoteka je lahko arhiv .csv, .vcf, or .ldif datotek. Ne mešajte datotečnih tipov ob uvozu.
+deleted	addressbook	sl	Zbrisano
+history logging	admin	sl	Beleženje zgodovine
+prevent deleting of contacts	admin	sl	Prepreči brisanje stikov
+yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
+yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke

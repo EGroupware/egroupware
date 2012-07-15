@@ -435,3 +435,4 @@ you need to select a distribution list	addressbook	cs	Musíte vybrat distribučn
 you need to select some contacts first	addressbook	cs	Nejprve musíte vybrat nějaké kontakty
 zip code	common	cs	PSČ
 zip_note	addressbook	cs	<p><b>Poznámka:</b>Soubor může být zip archiv .csv, .vcf nebo .ldif souborů. Nesmíte však kombinovat různé typy souborů během jednoho importu.
+deleted	addressbook	cs	smazáno
