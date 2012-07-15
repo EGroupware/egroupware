@@ -1,0 +1,315 @@
+%1 %2 in %3	calendar	uk	
+%1 matches found	calendar	uk	%1 відповідностей знайдено
+%1 records imported	calendar	uk	%1 записів імпортовано
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	uk	%1 записів прочитано (ще не імпортовано, Ви повинні повернутися та зняти відмітку Тестувати Імпорт)
+(for weekly)	calendar	uk	(для Щотижня)
+(i/v)cal	calendar	uk	(i/v)Cal
+1 match found	calendar	uk	одна відповідність знайдена
+a	calendar	uk	
+accept	calendar	uk	Прийняти
+accepted	calendar	uk	Прийнято
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено...
+add a single entry by passing the fields.	calendar	uk	Додати один запис шляхом заповнення полей.
+add alarm	calendar	uk	Добавити попередження
+add contact	calendar	uk	Добавити Контакт
+added	calendar	uk	Добавлено
+address book	calendar	uk	Адресна Книга
+alarm	calendar	uk	Попередження
+alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
+alarm management	calendar	uk	Керування попередженнями
+alarm-management	calendar	uk	Керування попередженнями
+alarms	calendar	uk	Попередження
+all day	calendar	uk	На повний день
+are you sure you want to delete this country ?	calendar	uk	Ви впевнені, що хочете видалити цю країну?
+are you sure you want to delete this holiday ?	calendar	uk	Ви впевнені, що хочете видалити це свято?
+are you sure\nyou want to\ndelete these alarms?	calendar	uk	Ви впевнені,\nщо хочете видалити\nці попередження?
+are you sure\nyou want to\ndelete this entry ?	calendar	uk	Ви впевнені,\nщо хочете видалити\nцей запис?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	uk	Ви впевнені,\nщо хочете видалити\nцей запис?\n\nЗапис буде видалено\nдля всіх користувачів.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	uk	Ви впевнені,\nщо хочете видалити\nцей одиночний запис?\n\nЗапис буде видалено\nдля всіх користувачів.
+before the event	calendar	uk	перед подією
+brief description	calendar	uk	Короткий опис
+business	calendar	uk	
+calendar	common	uk	Календар
+calendar - [iv]cal importer	calendar	uk	Календар - Імпорт [iv]Cal
+calendar - add	calendar	uk	Календар - Добавити
+calendar - edit	calendar	uk	Календар - Редагувати
+calendar event	calendar	uk	Календарна подія
+calendar holiday management	admin	uk	Календар - Керування святами
+calendar preferences	calendar	uk	Параметри Календарю
+calendar settings	admin	uk	Установки Календарю
+calendar-fieldname	calendar	uk	Календар - Ім'я поля
+canceled	calendar	uk	Відмінено
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	uk	Передати всі події $params['new_owner'] від $params['old_owner'].
+change status	calendar	uk	Змінити статус
+charset of file	calendar	uk	Кодування файлу
+click %1here%2 to return to the calendar.	calendar	uk	Клацніть %1тут%2 для повернення до Календарю.
+configuration	calendar	uk	Конфігурація
+countries	calendar	uk	Країни
+country	calendar	uk	Країна
+created by	calendar	uk	Створено
+csv-fieldname	calendar	uk	
+csv-filename	calendar	uk	
+custom fields	calendar	uk	Власні поля
+custom fields and sorting	common	uk	Власні поля та сортування
+daily	calendar	uk	Поденно
+daily matrix view	calendar	uk	Вигляд матриці дня
+days	calendar	uk	Дні
+days repeated	calendar	uk	Дні повтору
+dayview	calendar	uk	Вигляд Дня
+default appointment length (in minutes)	calendar	uk	Типова тривалість зустрічі (в хвилинах)
+default calendar filter	calendar	uk	Типовий фільтр календарю
+default calendar view	calendar	uk	Типовий вигляд календарю
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	uk	Типова тривалість нових подій (в хвилинах).
+defines the size in minutes of the lines in the day view.	calendar	uk	Визначте розмір рядку в хвилинах для вигляду дня.
+delete a single entry by passing the id.	calendar	uk	Видалити один запис по id.
+delete an entire users calendar.	calendar	uk	Видалити весь календар користувача.
+delete selected contacts	calendar	uk	Видалити вибрані контакти
+delete series	calendar	uk	Видалити серію подій
+delete single	calendar	uk	Видалити одну подію
+deleted	calendar	uk	Видалено
+description	calendar	uk	Опис
+disable	calendar	uk	Відключити
+disabled	calendar	uk	відключено
+display interval in day view	calendar	uk	Інтервал показу в перегляді дня
+display mini calendars when printing	calendar	uk	Виводити міні календар для друку
+display status of events	calendar	uk	Показувати статус подій
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	uk	Показувати Ваш Календар на основній сторінці (яку Ви побачите при вході в eGroupWare або при переході на Домашню сторінку)?
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	uk	Чи хочете Ви отримувати повідомлення щодо нових або змінених призначень? Ви будете їх отримувати щодо змін, які зробили самі.<br>Ви можете обмежити отрумавання повідомлень тілько щодо деяких змін. Кожний елемент включає всі повідомлення, що вказані вище. Всі зміни включають зміни назви, опису, учасників, але не відповіді учасників. Якщо власник події захоче отримувати повідомлення, він завжди буде отримувати і відповіді учасників (Відмова, Прийнято, тощо);
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	uk	Чи хочете Ви отримувати по email регулярні конспективні нагадування про Ваші призначення?<br>Вони будуть надсилатись на Вашу стандартну email-адресу кожного ранку, або по понеділках відносно подій тиждня.<br>І тільки у випадках нявності подій у віповідний день або тиждень.
+do you wish to autoload calendar holidays files dynamically?	admin	uk	Чи бажаєте Ви загружати файли святкових днів динамічно?
+download	calendar	uk	Зкачати
+duration	calendar	uk	Тривалість
+edit series	calendar	uk	Редагувати серію
+edit single	calendar	uk	Редагувати одну подію
+email notification	calendar	uk	Відіслати повідомлення по Email
+email notification for %1	calendar	uk	Відіслати повідомлення по Email для %1
+empty for all	calendar	uk	Порожньо для всіх
+enable	calendar	uk	Включити
+enabled	calendar	uk	включено
+end date/time	calendar	uk	Число/Час закінчення
+enddate	calendar	uk	Число закінчення
+ends	calendar	uk	закінчується
+enter output filename: ( .vcs appended )	calendar	uk	Введіть ім'я файлу: ( .vcs appended )
+event details follow	calendar	uk	Подробиці події
+exceptions	calendar	uk	Виключення
+export	calendar	uk	Експортувати
+export a list of entries in ical format.	calendar	uk	Експортувати перелік подій у форматі iCal
+extended	calendar	uk	Розширений
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	uk	Розширені зміни завжди включають всі подробиці події. iCal формат може бути імпортовано іншими програмами ведення Календарю.
+external participants	calendar	uk	Зовнішні учасники
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	uk	Не вдалося віправити повідомлення для '%1' #%2 Тема='%3', Відправник='%4' !!!
+fieldseparator	calendar	uk	
+firstname of person to notify	calendar	uk	Ім'я людини для повідомлення
+format of event updates	calendar	uk	Формат змін події
+fr	calendar	uk	Пт
+free/busy	calendar	uk	Вільний/Зайнятий
+frequency	calendar	uk	Частота
+fri	calendar	uk	Пт
+full description	calendar	uk	Повний опис
+fullname of person to notify	calendar	uk	Повне ім'я людини для повідомлення
+generate printer-friendly version	calendar	uk	Згенерувати для друку
+global public and group public	calendar	uk	Публічне взагалі та для групи
+global public only	calendar	uk	Публічне взагалі
+go!	calendar	uk	Вперед!
+grant calendar access	common	uk	Надати доступ до Календарю
+group planner	calendar	uk	Групове планування
+group public only	calendar	uk	Публічне для групи
+here is your requested alarm.	calendar	uk	Це нагадування, яке Ви просили.
+high priority	calendar	uk	Високий пріоритет
+holiday	calendar	uk	Свято
+holiday management	calendar	uk	Керування святами
+holiday-management	calendar	uk	Керування святами
+holidays	calendar	uk	Свята
+hours	calendar	uk	години
+i participate	calendar	uk	Я прийму участь
+ical / rfc2445	calendar	uk	iCal / rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	uk	Якщо відмічені свята припадають на вихідні, то наступний понеділок теж вихідний.
+ignore conflict	calendar	uk	Ігнорувати конфлікт
+import	calendar	uk	Імпортувати
+import csv-file	common	uk	Імпортувати CSV-файл
+interval	calendar	uk	Інтервал
+intervals in day view	calendar	uk	Інтервали в Денному вигляді
+intervals per day in planner view	calendar	uk	Кількість інтервалів в дні у вигляді Планування
+invalid entry id.	calendar	uk	Невірний id запису.
+last	calendar	uk	Останній
+lastname of person to notify	calendar	uk	Прізвище людини для повідомлення
+length shown<br>(emtpy for full length)	calendar	uk	Видима довжина<br>(Залиште порожнім для повного показу)
+length<br>(<= 255)	calendar	uk	Довжина<br>(<= 255)
+load [iv]cal	calendar	uk	Загрузити [iv]Cal
+location	calendar	uk	Місце
+location to autoload from	admin	uk	Місце, з якого автоматично загрузити.
+matrixview	calendar	uk	Вид матриці
+minutes	calendar	uk	хвилини
+mo	calendar	uk	Пн
+modified	calendar	uk	Змінено
+modify list of external participants	calendar	uk	Змінити перелік учасників
+mon	calendar	uk	Пн
+month	calendar	uk	Місяць
+monthly	calendar	uk	Помісячно
+monthly (by date)	calendar	uk	Помісячно (по числу)
+monthly (by day)	calendar	uk	Помісячно (поденно)
+monthview	calendar	uk	Вигляд місяця
+new entry	calendar	uk	Новий запис
+new name must not exist and not be empty!!!	calendar	uk	Нове ім'я повинно не існувати та не бути порожнім!!!
+no matches found	calendar	uk	Відповідностей не знайдено
+no response	calendar	uk	Немає відповіді
+notification messages for added events	calendar	uk	Повідомлення для доданих подій
+notification messages for canceled events	calendar	uk	Повідомлення для відмінених подій
+notification messages for modified events	calendar	uk	Повідомлення для змінених подій
+notification messages for your alarms	calendar	uk	Повідомлення для Ваших нагадувань
+notification messages for your responses	calendar	uk	Повідомлення для Ваших відповідей
+number of intervals per day in planner view	calendar	uk	Кількість інтервалів в дні у вигляді Планування
+number of months	calendar	uk	Кількість місяців
+number of records to read (%1)	calendar	uk	Скільки записів прочитати (%1)
+observance rule	calendar	uk	Дотримання правил
+occurence	calendar	uk	Поширення
+old startdate	calendar	uk	Стара дата початку
+olddate	calendar	uk	Стара дата
+on %1 %2 %3 your meeting request for %4	calendar	uk	
+on all changes	calendar	uk	при всіх змінах
+on all modification, but responses	calendar	uk	при всіх змінах крім відповіді
+on any time change too	calendar	uk	також при будь яких змінах часу
+on invitation / cancelation only	calendar	uk	тільки при запрошенні/відміні
+on participant responses too	calendar	uk	також при відповідях учасників
+on time change of more than 4 hours too	calendar	uk	також при зміні часу більше чим на 4 години
+open todo's:	calendar	uk	Відкриті записи Завдань:
+order	calendar	uk	Послідовність
+overlap holiday	calendar	uk	свята включно
+participant	calendar	uk	Учасник
+participants	calendar	uk	Учасники
+participates	calendar	uk	Приймає участь
+people holiday	calendar	uk	народні свята
+permission denied	calendar	uk	Заборонено
+planner	calendar	uk	Планування
+planner by category	calendar	uk	Планування по категоріям
+planner by user	calendar	uk	Планування по користувачам
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	uk	Будь ласка підтвердіть, прийміть, відхиліть або перевірте зміни у відповідному записі Вашого календарю
+preselected group for entering the planner	calendar	uk	Задана група для входу в Планування
+print calendars in black & white	calendar	uk	Друкувати чорно-білі календарі
+print the mini calendars	calendar	uk	Друкувати міні календарі
+printer friendly	calendar	uk	Для друку
+privat	calendar	uk	Особисте
+private and global public	calendar	uk	Особисте та загально публічне
+private and group public	calendar	uk	Особисте та публічне для групи
+private only	calendar	uk	Тільки особисте
+re-edit event	calendar	uk	Повторне редагування Події
+read a list of entries.	calendar	uk	Прочитати перелік записів
+read a single entry by passing the id and fieldlist.	calendar	uk	Прочитати один запис шляхом вказування id та переліку полів.
+read this list of methods.	calendar	uk	Прочитати перелік методів.
+receive email updates	calendar	uk	Отримувати зміни по email
+receive extra information in event mails	calendar	uk	Отримувати додаткову інформацію в листах про події
+receive summary of appointments	calendar	uk	Отримувати резюме зустрічей
+recurring event	calendar	uk	Періодична подія
+refresh	calendar	uk	Поновити
+reinstate	calendar	uk	Відновити
+rejected	calendar	uk	Відхилено
+repeat day	calendar	uk	День повтору
+repeat end date	calendar	uk	Число закінчення повторів
+repeat type	calendar	uk	Тип повтору
+repeating event information	calendar	uk	Інформація періодичної події
+repetition	calendar	uk	Повторення
+repetitiondetails (or empty)	calendar	uk	Деталі повторення (або порожнє)
+reset	calendar	uk	Переввести
+rule	calendar	uk	Правило
+sa	calendar	uk	Сб
+sat	calendar	uk	Сб
+scheduling conflict	calendar	uk	Конфлікт розкладу
+search results	calendar	uk	Результати Пошуку
+selected contacts (%1)	calendar	uk	Вибрані контакти (%1)
+send updates via email	common	uk	Відсилати зміни по EMail
+send/receive updates via email	calendar	uk	Відсилати/отримувати зміни по EMail
+set a year only for one-time / non-regular holidays.	calendar	uk	Вкажіть рік тільки для одноразових чи нерегулярних свят.
+set new events to private	calendar	uk	Встановлювати нові події як особисті.
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	uk	Чи повинні запрошення, відхилені Вами, продовжувати показуватись в Вашому Календарі?<br>Тільки в цьому випадку Ви зможете з ними погодитись пізніше (наприклад, після вирішення конфлікту розкладу).
+should new events created as private by default ?	calendar	uk	Чи повинні нові події створюватись як особисті?
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	uk	Чи повинні міні календарі друкуватись/показуватись у виглядах для друку?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	uk	Вигляд для друку повинен бути чорно-білим чи кольоровим (як у звичайному вигляді)?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	uk	Показувати відмітки учасників події (прийнято, відхилено,...) в дужках після кожного імені учасника?
+show day view on main screen	calendar	uk	показувати Вигляд Дня на основному екрані
+show default view on main screen	calendar	uk	Показувати вигляд по замовченню на основному екрані
+show high priority events on main screen	calendar	uk	Показувати події високого пріоритету на основному екрані
+show invitations you rejected	calendar	uk	Показувати відхилені запрошення
+show list of upcoming events	calendar	uk	Показувати перелік найближчих подій
+single event	calendar	uk	Одиночна подія
+sorry, the owner has just deleted this event	calendar	uk	Вибачте, власник тільки-що видалив цю подію
+sorry, this event does not exist	calendar	uk	Вибачте, такої події не існує
+sorry, this event does not have exceptions defined	calendar	uk	Вибачте, ця подія не має визначених виключень
+sort by	calendar	uk	Сортувати по
+specifies the the number of intervals shown in the planner view.	calendar	uk	Вкажіть кількість видимих інтервалів у вигляді планування
+start date/time	calendar	uk	Число/Час початку
+start- and enddates	calendar	uk	Дати початку та закінчення
+startdate	calendar	uk	Число початку
+startrecord	calendar	uk	Початковий запис
+su	calendar	uk	Нд
+submit to repository	calendar	uk	Передати в Репозитарій
+sun	calendar	uk	Нд
+tentative	calendar	uk	Попередньо
+test import (show importable records <u>only</u> in browser)	calendar	uk	Тестувати Імпорт (показувати записи <u>тільки</u> в бровзері)
+text	calendar	uk	Текст
+th	calendar	uk	Чт
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	uk	Зі запропонованим часом конфліктує: <ul>%1</ul>
+the user %1 is not participating in this event!	calendar	uk	%1 не зможе прийняти участь у події
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	uk	Сталась помилка в процессі з'єднання з Вашим сервером новин.<br>Будь ласка, зв'яжіться з адміністратором для перевірки імені сервера, користувача чи паролю.
+this day is shown as first day in the week or month view.	calendar	uk	Цей день показується як перший у вигляді тиждня або місяця.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	uk	Це визначає кінець Вигляду дня. Події після цього часу показуються нижче вигляду дня.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	uk	Це визначає початок Вигляду дня. Події до цього часу показуються вище вигляду дня.<br>Цей час також використовується як час початку по замовченню у нових подіях.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	uk	Ця група вибрана наперед при вході в Планування. Ви можете змінити її в Плануванні будь коли.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	uk	Переважно це спричинено невірно настроєним SMTP сервером. Повідомте адміністратора.
+this message is sent for canceled or deleted events.	calendar	uk	Це повідомлення відсилається для відмінених чи видалених подій.
+this message is sent for modified or moved events.	calendar	uk	Це повідомлення відсилається для змінених чи зміщених подій.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	uk	Це повідомлення відсилається кожному учаснику подій, власником яких є Ви, якщо учасники встановили нагадування щодо нових подій. <br> Ви можете скористатись деякими змінним, котрі заміщаються інформацією події. Перший рядок є темою листа.
+this message is sent when you accept, tentative accept or reject an event.	calendar	uk	Це повідомлення відсилається у випадках, коли ви прийняли, попередньо прийняли або відхилили запрошення.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	uk	Це повідомлення відсилається, якщо Ви встановили Нагадування щодо певної події. Включає всю інформацію, яка Вам потрібна.
+this month	calendar	uk	Поточний місяць
+this week	calendar	uk	Поточний тиждень
+this year	calendar	uk	Поточний рік
+thu	calendar	uk	Чт
+title	calendar	uk	Назва
+title of the event	calendar	uk	Назва події
+title-row	calendar	uk	Рядок назв
+to many might exceed your execution-time-limit	calendar	uk	Надто багато може перевершити Ваш ліміт часу
+to-firstname	calendar	uk	--To-Firstname--
+to-fullname	calendar	uk	
+to-lastname	calendar	uk	
+today	calendar	uk	Сьогодні
+translation	calendar	uk	Переклад
+tu	calendar	uk	Вт
+tue	calendar	uk	Вт
+update a single entry by passing the fields.	calendar	uk	
+updated	calendar	uk	Змінено
+use end date	calendar	uk	Використати дату закінчення
+view this entry	calendar	uk	Переглянути цей запис
+we	calendar	uk	Ср
+wed	calendar	uk	Ср
+week	calendar	uk	Тиждень
+weekday starts on	calendar	uk	Тиждень починається в
+weekly	calendar	uk	Потижнево
+weekview	calendar	uk	Вигляд тиждня
+when creating new events default set to private	calendar	uk	Створення нової події як особистої по замовченню
+which events do you want to see when you enter the calendar.	calendar	uk	Які події Ви хочете бачити при вході в Календар.
+which of calendar view do you want to see, when you start calendar ?	calendar	uk	Яких вигляд ви хочете бачити при вході в Календар?
+work day ends on	calendar	uk	Робочий день закінчується
+work day starts on	calendar	uk	Робочий день починається
+workdayends	calendar	uk	
+yearly	calendar	uk	Річний
+yearview	calendar	uk	Вигляд року
+you can either set a year or a occurence, not both !!!	calendar	uk	Ви можете встановити або Рік або Поширення, не обидва!!!
+you can only set a year or a occurence !!!	calendar	uk	Ви можете встановити або Рік або Поширення!!!
+you do not have permission to add alarms to this event !!!	calendar	uk	Ви не маєте права додати нагадування до цієї події!!!
+you do not have permission to delete this alarm !!!	calendar	uk	Ви не маєте права видалити цю подію!!!
+you do not have permission to enable/disable this alarm !!!	calendar	uk	Ви не маєте права включати/виключати це нагадування!!!
+you do not have permission to read this record!	calendar	uk	Ви не маєте права на перегляд цьго запису!
+you have %1 high priority events on your calendar today.	common	uk	Ви сьогодні маєте %1 подій високого пріоритету.
+you have 1 high priority event on your calendar today.	common	uk	Ви сьогодні маєте одну подію високого пріоритету.
+you have a meeting scheduled for %1	calendar	uk	Ви маєте зустріч, призначену на %1
+you have not entered a title	calendar	uk	Ви не ввели назву
+you have not entered a valid date	calendar	uk	Ви не ввели вірної дати
+you have not entered a valid time of day	calendar	uk	Ви не ввели вірного часу
+you have not entered participants	calendar	uk	Ви не ввели учасників
+you must enter one or more search keywords	calendar	uk	Необхідно ввести одне або більше ключових слів
+you must select a [iv]cal. (*.[iv]cs)	calendar	uk	Необхідно вибрати [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	uk	Необхідно встановити День або Поширення !!!
+your meeting scheduled for %1 has been canceled	calendar	uk	Зустріч, призначена на %1 була відмінена
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	uk	Зустріч, призначена на %1 була перенесена на %2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	uk	Запропонований час <B> %1 - %2 </B> конфліктує з наступними існуючими записами:
+deleted	calendar	uk	Видалено

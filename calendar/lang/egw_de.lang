@@ -439,3 +439,8 @@ you need to set either a day or a occurence !!!	calendar	de	Sie müssen entweder
 you requested more than available for the selected resource:	calendar	de	Sie versuchen mehr zu buchen, als zur Verfügung steht.
 your meeting scheduled for %1 has been canceled	calendar	de	Ihr Termin am %1 wurde abgesagt.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	de	Ihr Termin am %1 wurde auf %2 verschoben.
+deleted	calendar	de	Gelöscht
+history logging	admin	de	Protokollierung der Historie
+prevent deleting of entries	admin	de	Das Löschen von Einträgen verhindern
+yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
+yes, users can purge their deleted items	admin	de	Ja, Benutzer können gelöschte Einträge selbst bereinigen

@@ -419,3 +419,7 @@ you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un d
 you requested more than available for the selected resource:	calendar	es-es	Ha solicitado más de lo que tiene disponible al recurso seleccionado
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
+deleted	calendar	es-es	Borrado
+history logging	admin	es-es	Registro de historial
+prevent deleting of entries	admin	es-es	Prevenir el borrado de entradas
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados

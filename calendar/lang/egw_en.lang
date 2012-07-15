@@ -419,3 +419,8 @@ you need to set either a day or a occurence !!!	calendar	en	You need to set eith
 you requested more than available for the selected resource:	calendar	en	You requested more than available for the selected resource:
 your meeting scheduled for %1 has been canceled	calendar	en	Your meeting scheduled for %1 has been canceled
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	en	Your meeting that had been scheduled for %1 has been rescheduled to %2
+deleted	calendar	en	Deleted.
+history logging	admin	en	History logging
+prevent deleting of entries	admin	en	Prevent deleting of entries
+yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
+yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
