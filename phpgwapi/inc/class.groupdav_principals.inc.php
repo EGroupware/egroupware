@@ -232,91 +232,98 @@ class groupdav_principals extends groupdav_handler
 	function expand_property_report($path,&$options,&$files,$user)
 	{
 		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
-		switch($prop_name = $options['other'][0]['attrs']['name'])
+		$requested_props = $options['other'];
+		while(($requested_prop = array_shift($requested_props)))
 		{
-			case 'calendar-proxy-read-for':
-			case 'calendar-proxy-write-for':
-				$prop_path = $path . substr($prop_name, 0, -4).'/';
-				$prop_name = 'group-member-set';
-				$prop_ns = groupdav::DAV;
-				break;
+			if ($requested_prop['name'] != 'property' || $requested_prop['depth'] != 1) continue;
 
-			case 'expanded-group-member-set':
-			case 'expanded-group-membership':
-				$prop_path = $path;
-				// remove 'expanded-' prefix
-				$prop_name = substr($prop_name, 9);
-				$prop_ns = groupdav::DAV;
-				break;
-		}
-		// run regular propfind for first property with depth=0
-		$options['depth'] = '0';
-		$options['root']['name'] = 'propfind';
-		$options['props'] = array(array(
-			'name' => $prop_name,
-			'xmlns' => $prop_ns,
-		));
-		$this->groupdav->options = $options;	// also modify global variable
-		if (empty($prop_name) || $this->propfind($prop_path, $options, $files, $user) !== true)
-		{
-			$this->groupdav->log('### NO expand-property report for '.$prop_name);
-			$files = array('files' => array());
-			return true;
-		}
-		// find prop to expand
-		foreach($files['files'][0]['props'] as $name => $expand_prop)
-		{
-			if ($expand_prop['name'] === $prop_name) break;
-		}
-		// setting original name and namespace
-		$options['props'] = array(array(
-			'xmlns' => $options['other'][0]['attrs']['namespace'],
-			'name'  => $options['other'][0]['attrs']['name'],
-		));
-
-		if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) || $expand_prop['val'][0]['name'] !== 'href')
-		{
-			$this->groupdav->log('### NO expand-property report for '.$prop_name);
-			$files = array('files' => array());
-			return true;
-		}
-
-		// requested properties of each href are in depth=2 properties
-		// set them as regular propfind properties to $options['props']
-		$options2 = array('props' => 'all');
-		foreach($options['other'] as $prop)
-		{
-			if ($prop['name'] == 'property' && $prop['depth'] == 2)
+			$prop_ns = $requested_prop['attrs']['namespace'];
+			$prop_name = $requested_prop['attrs']['name'];
+			$prop_path = $path;
+			// calendarserver has some special property-names for expansion
+			switch($prop_name)
 			{
-				if (!is_array($options2['props']))	// is "all" initially
+				case 'calendar-proxy-read-for':
+				case 'calendar-proxy-write-for':
+					$prop_path = $path . substr($prop_name, 0, -4).'/';
+					$prop_name = 'group-member-set';
+					$prop_ns = groupdav::DAV;
+					break;
+
+				case 'expanded-group-member-set':
+				case 'expanded-group-membership':
+					// remove 'expanded-' prefix
+					$prop_name = substr($prop_name, 9);
+					$prop_ns = groupdav::DAV;
+					break;
+			}
+			// run regular propfind for requested property
+			$options['depth'] = '0';
+			$options['root']['name'] = 'propfind';
+			$options['props'] = array(array(
+				'name' => $prop_name,
+				'xmlns' => $prop_ns,
+			));
+			$prop_files = array();
+			$this->groupdav->options = $options;	// also modify global variable
+			if (empty($prop_name) || $this->propfind($prop_path, $options, $prop_files, $user) !== true)
+			{
+				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				continue;
+			}
+			// find prop to expand
+			foreach($prop_files['files'][0]['props'] as $name => $expand_prop)
+			{
+				if ($expand_prop['name'] === $prop_name) break;
+			}
+			if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) || $expand_prop['val'][0]['name'] !== 'href')
+			{
+				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				continue;
+			}
+
+			// requested properties of each href are in depth=2 properties
+			// set them as regular propfind properties to $options['props']
+			$options2 = array('props' => 'all');
+			while(($prop = array_shift($requested_props)) && $prop['depth'] >= 2)
+			{
+				if ($prop['name'] == 'property' && $prop['depth'] == 2)
 				{
-					$options2['props'] = array();
+					if (!is_array($options2['props']))	// is "all" initially
+					{
+						$options2['props'] = array();
+					}
+					$options2['props'][] = array(
+						'name' => $prop['attrs']['name'],
+						'xmlns' => $prop['attrs']['namespace'],
+					);
 				}
-				$options2['props'][] = array(
-					'name' => $prop['attrs']['name'],
-					'xmlns' => $prop['attrs']['namespace'],
-				);
 			}
-		}
-		$this->groupdav->options = $options2;	// also modify global variable
+			// put back evtl. read top-level property
+			if ($prop && $prop['depth'] == 1) array_unshift($requested_props, $prop);
+			$this->groupdav->options = $options2;	// also modify global variable
 
-		// run regular profind to get requested properties for each href
-		foreach($expand_prop['val'] as &$prop)
-		{
-			list(,$prop_path) = explode($this->groupdav->base_uri, $prop['val']);
-			if ($this->propfind($prop_path, $options2, $prop, $user) !== true || !isset($prop['files'][0]))
+			// run regular profind to get requested 2.-level properties for each href
+			foreach($expand_prop['val'] as &$prop_val)
 			{
-				throw new egw_exception_assertion_failed('no propfind for '.$path);
+				list(,$expand_path) = explode($this->groupdav->base_uri, $prop_val['val']);
+				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
+				{
+					throw new egw_exception_assertion_failed('no propfind for '.$expand_path);
+				}
+				$prop_val = $prop_val['files'][0];
 			}
-			$prop = $prop['files'][0];
+			// setting top-level name and namespace
+			$expand_prop['ns'] = $requested_prop['attrs']['namespace'];
+			$expand_prop['name'] = $requested_prop['attrs']['name'];
+			// setting 2.-level props, so HTTP_WebDAV_Server can filter unwanted ones out or mark missing ones
+			$expand_prop['props'] = $options2['props'];
+			// add top-level path and property
+			$files['files'][0]['path'] = $path;
+			$files['files'][0]['props'][] = $expand_prop;
 		}
-		$expand_prop['props'] = $options2['props'];
-
-		// setting original name and namespace
-		$expand_prop['ns'] = $options['other'][0]['attrs']['namespace'];
-		$expand_prop['name'] = $options['other'][0]['attrs']['name'];
-		$files['files'][0]['props'] = array($expand_prop);
-		$files['files'][0]['path'] = $path;
+		// we can use 'all' here, as we return only requested properties
+		$options['props'] = 'all';
 
 		return true;
 	}
