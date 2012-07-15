@@ -276,9 +276,10 @@ class groupdav_principals extends groupdav_handler
 			{
 				if ($expand_prop['name'] === $prop_name) break;
 			}
-			if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) || $expand_prop['val'][0]['name'] !== 'href')
+			if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) ||
+				$expand_prop['val'] && $expand_prop['val'][0]['name'] !== 'href')
 			{
-				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name'].' ('.$prop_name.')');
 				continue;
 			}
 
