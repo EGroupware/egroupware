@@ -773,14 +773,11 @@ class calendar_ui
 			list($label,$title) = $label;
 			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
 		}
-
-		// Add in deleted for admins
-		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'])
+		// add deleted filter, if history logging is activated
+		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
 			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
-
 		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
