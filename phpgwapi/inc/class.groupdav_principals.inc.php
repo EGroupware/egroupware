@@ -62,9 +62,9 @@ class groupdav_principals extends groupdav_handler
 		'principal-search-property-set' => array(
 			'method' => 'principal_search_property_set_report',
 		),
-		/*'expand-property' => array(
-			// an other report calendarserver announces
-		),*/
+		'expand-property' => array(
+			'method' => 'expand_property_report',
+		),
 		/* seems only be used 'til OS X 10.6, no longer in 10.7
 		'addressbook-findshared' => array(
 			'ns' => groupdav::ADDRESSBOOKSERVER,
@@ -100,12 +100,12 @@ class groupdav_principals extends groupdav_handler
 	 * Handle propfind request for an application folder
 	 *
 	 * @param string $path
-	 * @param array $options
+	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function propfind($path,$options,&$files,$user)
+	function propfind($path,&$options,&$files,$user)
 	{
 		if (($report = isset($_GET['report']) ? $_GET['report'] : $options['root']['name']) && $report != 'propfind')
 		{
@@ -182,6 +182,151 @@ class groupdav_principals extends groupdav_handler
 		}
 		return true;
 	}*/
+
+	/**
+	 * Handle expand-property reports (all from http://calendarserver.org/ns/ namespace) seen from newer iCal on OS X
+	 * - expanded-group-member-set
+	 * - expanded-group-membership
+	 * - calendar-proxy-read-for
+	 * - calendar-proxy-write-for
+	 *
+	 * Example requests:
+	 *
+	 * REPORT /egw/groupdav.php/principals/groups/groupname/ HTTP/1.1
+	 *
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 * <A:expand-property xmlns:A="DAV:">
+	 *   <A:property name="expanded-group-member-set" namespace="http://calendarserver.org/ns/">
+	 *     <A:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="last-name" namespace="http://calendarserver.org/ns/"/>
+	 *     <A:property name="calendar-user-type" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="principal-URL" namespace="DAV:"/>
+	 *     <A:property name="displayname" namespace="DAV:"/>
+	 *     <A:property name="record-type" namespace="http://calendarserver.org/ns/"/>
+	 *     <A:property name="first-name" namespace="http://calendarserver.org/ns/"/>
+	 *   </A:property>
+	 * </A:expand-property>
+	 *
+	 * REPORT /egw/groupdav.php/principals/users/username/ HTTP/1.1
+	 *
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 * <A:expand-property xmlns:A="DAV:">
+	 *   <A:property name="calendar-proxy-read-for" namespace="http://calendarserver.org/ns/">
+	 *     <A:property name="displayname" namespace="DAV:"/>
+	 *     <A:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="email-address-set" namespace="http://calendarserver.org/ns/"/>
+	 *   </A:property>
+	 *   <A:property name="calendar-proxy-write-for" namespace="http://calendarserver.org/ns/">
+	 *     <A:property name="displayname" namespace="DAV:"/>
+	 *     <A:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *     <A:property name="email-address-set" namespace="http://calendarserver.org/ns/"/>
+	 *   </A:property>
+	 * </A:expand-property>
+	 *
+	 * @param string $path
+	 * @param array &$options
+	 * @param array &$files
+	 * @param int $user account_id
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function expand_property_report($path,&$options,&$files,$user)
+	{
+		//error_log(__METHOD__."('$path', ".array2string($options).",, $user)");
+		$requested_props = $options['other'];
+		while(($requested_prop = array_shift($requested_props)))
+		{
+			if ($requested_prop['name'] != 'property' || $requested_prop['depth'] != 1) continue;
+
+			$prop_ns = $requested_prop['attrs']['namespace'];
+			$prop_name = $requested_prop['attrs']['name'];
+			$prop_path = $path;
+			// calendarserver has some special property-names for expansion
+			switch($prop_name)
+			{
+				case 'calendar-proxy-read-for':
+				case 'calendar-proxy-write-for':
+					$prop_path = $path . substr($prop_name, 0, -4).'/';
+					$prop_name = 'group-member-set';
+					$prop_ns = groupdav::DAV;
+					break;
+
+				case 'expanded-group-member-set':
+				case 'expanded-group-membership':
+					// remove 'expanded-' prefix
+					$prop_name = substr($prop_name, 9);
+					$prop_ns = groupdav::DAV;
+					break;
+			}
+			// run regular propfind for requested property
+			$options['depth'] = '0';
+			$options['root']['name'] = 'propfind';
+			$options['props'] = array(array(
+				'name' => $prop_name,
+				'xmlns' => $prop_ns,
+			));
+			$prop_files = array();
+			$this->groupdav->options = $options;	// also modify global variable
+			if (empty($prop_name) || $this->propfind($prop_path, $options, $prop_files, $user) !== true)
+			{
+				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				continue;
+			}
+			// find prop to expand
+			foreach($prop_files['files'][0]['props'] as $name => $expand_prop)
+			{
+				if ($expand_prop['name'] === $prop_name) break;
+			}
+			if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) || $expand_prop['val'][0]['name'] !== 'href')
+			{
+				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				continue;
+			}
+
+			// requested properties of each href are in depth=2 properties
+			// set them as regular propfind properties to $options['props']
+			$options2 = array('props' => 'all');
+			while(($prop = array_shift($requested_props)) && $prop['depth'] >= 2)
+			{
+				if ($prop['name'] == 'property' && $prop['depth'] == 2)
+				{
+					if (!is_array($options2['props']))	// is "all" initially
+					{
+						$options2['props'] = array();
+					}
+					$options2['props'][] = array(
+						'name' => $prop['attrs']['name'],
+						'xmlns' => $prop['attrs']['namespace'],
+					);
+				}
+			}
+			// put back evtl. read top-level property
+			if ($prop && $prop['depth'] == 1) array_unshift($requested_props, $prop);
+			$this->groupdav->options = $options2;	// also modify global variable
+
+			// run regular profind to get requested 2.-level properties for each href
+			foreach($expand_prop['val'] as &$prop_val)
+			{
+				list(,$expand_path) = explode($this->groupdav->base_uri, $prop_val['val']);
+				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
+				{
+					throw new egw_exception_assertion_failed('no propfind for '.$expand_path);
+				}
+				$prop_val = $prop_val['files'][0];
+			}
+			// setting top-level name and namespace
+			$expand_prop['ns'] = $requested_prop['attrs']['namespace'];
+			$expand_prop['name'] = $requested_prop['attrs']['name'];
+			// setting 2.-level props, so HTTP_WebDAV_Server can filter unwanted ones out or mark missing ones
+			$expand_prop['props'] = $options2['props'];
+			// add top-level path and property
+			$files['files'][0]['path'] = $path;
+			$files['files'][0]['props'][] = $expand_prop;
+		}
+		// we can use 'all' here, as we return only requested properties
+		$options['props'] = 'all';
+
+		return true;
+	}
 
 	/**
 	 * Handle principal-property-search report

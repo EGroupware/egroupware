@@ -716,20 +716,36 @@ class HTTP_WebDAV_Server
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         echo $this->crrnd ? "<multistatus xmlns=\"DAV:\">\n" : "<D:multistatus xmlns:D=\"DAV:\">\n";
 
-        // using an ArrayIterator to prevent foreach from copying the array,
-        // as we cant loop by reference, when an iterator is given in $files['files']
-        if (is_array($files['files']))
+        $this->multistatus_responses($files['files'], $options['props']);
+
+        echo '</'.($this->crrnd?'':'D:')."multistatus>\n";
+    }
+
+    /**
+     * Render (echo) XML for given multistatus responses
+     *
+     * @param array|Iterator $files
+     * @param array|string $props
+     */
+    function multistatus_responses(&$files, $props, $initial_ns_hash=null, $initial_ns_defs=null)
+    {
+    	if (!isset($initial_ns_hash)) $initial_ns_hash = array('DAV:' => 'D');
+    	if (!isset($initial_ns_defs)) $initial_ns_defs = 'xmlns:ns0="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"';
+
+    	// using an ArrayIterator to prevent foreach from copying the array,
+        // as we cant loop by reference, when an iterator is given in $files
+        if (is_array($files))
         {
-        	$files['files'] = new ArrayIterator($files['files']);
+        	$files = new ArrayIterator($files);
         }
         // now we loop over all returned file entries
-        foreach ($files['files'] as $file) {
+        foreach ($files as $file) {
 
 	        // collect namespaces here
-	        $ns_hash = array('DAV:' => 'D');
+	        $ns_hash = $initial_ns_hash;
 
 	        // Microsoft Clients need this special namespace for date and time values
-	        $ns_defs = 'xmlns:ns0="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"';
+	        $ns_defs = $initial_ns_defs;
 
             // nothing to do if no properties were returend for a file
 			if (isset($file["props"]) && is_array($file["props"])) {
@@ -742,7 +758,7 @@ class HTTP_WebDAV_Server
 
 	            	// this can happen if we have allprop and prop in one propfind:
 	            	// <allprop /><prop><blah /></prop>, eg. blah is not automatic returned by allprop
-	                switch(is_array($options['props']) ? $options['props'][0] : $options['props']) {
+	                switch(is_array($props) ? $props[0] : $props) {
 	                case "all":
 	                    // nothing to remove
 	                    break;
@@ -757,7 +773,7 @@ class HTTP_WebDAV_Server
 	                    $found = false;
 
 	                    // search property name in requested properties
-	                    foreach ((array)$options["props"] as $reqprop) {
+	                    foreach ((array)$props as $reqprop) {
 	                        if (   $reqprop["name"]  == $prop["name"]
 	                               && @$reqprop["xmlns"] == $prop["ns"]) {
 	                            $found = true;
@@ -787,8 +803,8 @@ class HTTP_WebDAV_Server
 
 	            // we also need to add empty entries for properties that were requested
 	            // but for which no values where returned by the user handler
-	            if (is_array($options['props'])) {
-	                foreach ($options["props"] as $reqprop) {
+	            if (is_array($props)) {
+	                foreach ($props as $reqprop) {
 	                    if (!is_array($reqprop) || $reqprop['name']=="") continue; // skip empty entries, or 'all' if <allprop /> used together with <prop>
 
 	                    $found = false;
@@ -876,6 +892,17 @@ class HTTP_WebDAV_Server
                         } else {
                             echo "     <$prop[name] xmlns=\"\"/>";
                         }
+                    }
+                    // multiple level of responses required for expand-property reports
+                    elseif(isset($prop['props']) && is_array($prop['val']))
+                    {
+                        if ($prop['ns'] && !isset($ns_hash[$prop['ns']])) {
+                            $ns_name = "ns".(count($ns_hash) + 1);
+                            $ns_hash[$prop['ns']] = $ns_name;
+                        }
+                    	echo '     <'.$ns_hash[$prop['ns']].":$prop[name]>\n";
+                        $this->multistatus_responses($prop['val'], $prop['props'], $ns_hash, '');
+                    	echo '     </'.$ns_hash[$prop['ns']].":$prop[name]>\n";
                     } else if ($prop["ns"] == "DAV:") {
                         // some WebDAV properties need special treatment
                         switch ($prop["name"]) {
@@ -1049,8 +1076,6 @@ class HTTP_WebDAV_Server
 
             echo ' </'.($this->crrnd?'':'D:')."response>\n";
         }
-
-        echo '</'.($this->crrnd?'':'D:')."multistatus>\n";
     }
 
 
