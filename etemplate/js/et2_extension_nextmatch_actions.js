@@ -144,6 +144,7 @@ function nm_action(_action, _senders, _target, _ids)
 						"selected": idsArr,
 						"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
 					};
+					jQuery.extend(value, this.activeFilters);
 					value[nextmatch.options.settings.action_var]= _action.id;
 					//if(_target && _target.id) value[_target.id] = true;
 					return value;
