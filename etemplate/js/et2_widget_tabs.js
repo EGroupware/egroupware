@@ -140,6 +140,14 @@ var et2_tabbox = et2_DOMWidget.extend({
 
 		if (tabsElems.length == 1 && tabpanelsElems.length == 1)
 		{
+
+			// Check for a parent height, we'll apply it to tab panels
+			var height = et2_readAttrWithDefault(_node.parentNode, "height",null);
+			if(height)
+			{
+				this.tabContainer.css("height", height);
+			}
+
 			var tabs = tabsElems[0];
 			var tabpanels = tabpanelsElems[0];
 

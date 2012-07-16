@@ -542,6 +542,7 @@ ul.et2_link_string {
 	border-style: solid;
 	border-color: silver;
 	padding: 5px;
+	overflow-y: auto;
 }
 
 .et2_tabflag.active {
