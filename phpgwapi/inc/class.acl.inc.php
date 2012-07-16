@@ -139,7 +139,7 @@ class acl
 		}
 		else
 		{
-			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
+			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id, true);
 			if (is_array($no_groups)) $acl_acc_list = array_diff($acl_acc_list,$no_groups);
 			array_unshift($acl_acc_list,$this->account_id);
 		}
@@ -483,10 +483,8 @@ class acl
 		$accounts = array($account_id);
 		if ($use_memberships)
 		{
-			foreach((array)$GLOBALS['egw']->accounts->membership($account_id) as $group)
-			{
-				$accounts[] = $group['account_id'];
-			}
+			$accounts = $GLOBALS['egw']->accounts->memberships($account_id, true);
+			$accounts[] = $account_id;
 		}
 		$rights = array();
 		foreach($this->db->select(acl::TABLE,'acl_location,acl_rights',array(
@@ -642,7 +640,7 @@ class acl
 			$account_id = get_account_id($accountid,$this->account_id);
 			$cache_accountid[$accountid] = $account_id;
 		}
-		$memberships = $GLOBALS['egw']->accounts->memberships($account_id,true);
+		$memberships = $GLOBALS['egw']->accounts->memberships($account_id, true);
 		$memberships[] = $account_id;
 
 		$apps = false;
@@ -682,11 +680,9 @@ class acl
 		$grants =& $cache[$app][$user];
 		if (!isset($grants))
 		{
-			$memberships = array($user);
-			foreach((array)$GLOBALS['egw']->accounts->membership($user) as $group)
-			{
-				$memberships[] = $group['account_id'];
-			}
+			$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+			$memberships[] = $user;
+
 			$grants = $accounts = Array();
 			foreach($this->db->select(acl::TABLE,array('acl_account','acl_rights','acl_location'),array(
 				'acl_appname'  => $app,
@@ -708,14 +704,12 @@ class acl
 					(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
 				{
 					// return the grant for each member of the group
-					foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
+					foreach((array)$GLOBALS['egw']->accounts->members($grantor, true) as $grantor)
 					{
-						if (!$member) continue;	// can happen if group has no members
+						if (!$grantor) continue;	// can happen if group has no members
 
 						// Don't allow to override private with group ACL's!
 						$rights &= ~EGW_ACL_PRIVATE;
-
-						$grantor = $member['account_id'];
 
 						if(!isset($grants[$grantor]))
 						{
