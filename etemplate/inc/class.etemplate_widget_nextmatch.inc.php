@@ -98,12 +98,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	{
 		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id, $expand);
-		$value =& self::get_array(self::$request->content, $form_name, true);
+		$value = self::get_array(self::$request->content, $form_name, true);
 
 		$value['start'] = 0;
 		$value['num_rows'] = self::INITIAL_ROWS;
 		$value['rows'] = array();
-		$value['total'] = self::call_get_rows($value, $value['rows'], self::$request->readonlys);
+
+		$send_value = $value;
+		$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
+		$value =& self::get_array(self::$request->content, $form_name, true);
+		$value = $send_value;
+		$value['total'] = $total;
 
 		// Send categories
 		if(!$value['no_cat'] && !$value['cat_is_select'])
@@ -133,6 +138,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				// some apps don't send them on re-load, pulling them from the session
 				//unset($value[$name]);
 			}
+		}
+		if($value['rows']['sel_options'])
+		{
+			self::$request->sel_options = array_merge(self::$request->sel_options,$value['rows']['sel_options']);
+			unset($value['rows']['sel_options']);
 		}
 		
 		// todo: no need to store rows in request, it's enought to send them to client
@@ -370,7 +380,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if (is_null($first)) $first = $n;
 				$rows[$n-$first+$value['start']] = $row;
 			}
-			elseif(!is_null($first))	// rows with string-keys, after numeric rows
+			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
 			{
 				$rows[$n] = $row;
 			}
