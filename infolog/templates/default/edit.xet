@@ -4,15 +4,10 @@
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" height="245" border="0">
 			<columns>
-				<column width="100"/>
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
-					<description value="Description" for="info_des" span="all"/>
-				</row>
-				<row class="row" valign="top">
-					<description/>
+				<row valign="top">
 					<textbox multiline="true" statustext="enter a textual description of the log-entry" id="info_des" no_lang="1" rows="13" class="description"/>
 				</row>
 			</rows>
@@ -86,7 +81,7 @@
 				</row>
 				<row class="row" valign="top">
 					<description value="Responsible" for="info_responsible"/>
-					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="9" options="both"/>
+					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" options="both"/>
 				</row>
 				<row class="row" disabled="1">
 					<description value="Confirm" for="info_confirm"/>
@@ -306,7 +301,7 @@
   display: none;
 }
 .link_select select { width: 250px; }
-.description textarea { width: 98%; }
+.description textarea { margin: 0px; width: 99%; height: 100%;}
 td.searchParent input[type=search] { width: 90%; }
 
 /* Some nice alignment */
