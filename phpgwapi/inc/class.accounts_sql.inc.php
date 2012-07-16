@@ -273,14 +273,18 @@ class accounts_sql
 	 */
 	function members($account_id)
 	{
-		if (!($uids = $GLOBALS['egw']->acl->get_ids_for_location($account_id, 1, 'phpgw_group')))
-		{
-			return array();
-		}
+		if (!is_numeric($account_id)) $account_id = $this-name2id($account_id);
+
 		$members = array();
-		foreach ($uids as $uid)
+		foreach($this->db->select($this->table, 'account_id,account_lid',
+			$this->db->expression(acl::TABLE, array(
+				'acl_appname'  => 'phpgw_group',
+				'acl_location' => $account_id,
+			)), __LINE__, __FILE__, false,
+			'JOIN '.acl::TABLE.' ON account_id=acl_owner'
+		) as $row)
 		{
-			$members[$uid] = $this->id2name($uid);
+			$members[$row['account_id']] = $row['account_lid'];
 		}
 		//echo "accounts::members($accountid)"; _debug_array($members);
 		return $members;
