@@ -328,7 +328,7 @@ class infolog_ui
 			}
 			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 			// If status is not valid for selected type, clear status filter
-			if($query['col_filter']['info_status'] &&
+			if($query['col_filter']['info_status'] && $query['col_filter']['info_status'] != 'deleted' &&
 				!in_array($query['col_filter']['info_status'], $this->bo->status[$query['col_filter']['info_type']]))
 			{
 				$query['col_filter']['info_status'] = '';
