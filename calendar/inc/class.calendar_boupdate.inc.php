@@ -548,13 +548,15 @@ class calendar_boupdate extends calendar_bo
 				}
 				break;
 			case 'no':
-				if ($msg_is_response && $role == 'CHAIR')	// always notify chairs!
+				// always notify externals chairs
+				// EGroupware owner only get notified about responses, if pref is NOT "no"
+				if (!is_numeric($userid) && $msg_is_response && $role == 'CHAIR')
 				{
 					++$want_update;
 				}
 				break;
 		}
-		//error_log(__METHOD__."(userid=$userid,,msg_type=$msg_type,...) msg_is_response=$msg_is_response, want_update=$want_update");
+		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
 	}
 
@@ -580,7 +582,7 @@ class calendar_boupdate extends calendar_bo
 		$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
 		if ($owner && !isset($to_notify[$owner]) && $msg_type != MSG_ALARM)
 		{
-			$to_notify[$owner] = 'owner';	// always include the event-owner
+			$to_notify[$owner] = 'OCHAIR';	// always include the event-owner
 		}
 		$version = $GLOBALS['egw_info']['apps']['calendar']['version'];
 
@@ -834,6 +836,7 @@ class calendar_boupdate extends calendar_bo
 				if($GLOBALS['egw_info']['apps']['notifications']['enabled'])
 				{
 					try {
+						//error_log(__METHOD__."() notifying $userid from $senderid: $subject");
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
 						$notification->set_message($body);
