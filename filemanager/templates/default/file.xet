@@ -9,15 +9,15 @@
 			</columns>
 			<rows>
 				<row height="60">
-					<image src="icon" class="mimeHuge" align="center"/>
+					<image align="center" src="icon" class="mimeHuge"/>
 					<vfs-name id="name" needed="1" class="fileName"/>
 				</row>
 				<row>
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@is_link">
-					<description value="Link" options=",,,symlink"/>
-					<textbox class="fileName" id="symlink" readonly="true"/>
+					<description for="symlink" value="Link"/>
+					<textbox id="symlink" readonly="true" class="fileName"/>
 				</row>
 				<row>
 					<description value="Type"/>
@@ -40,7 +40,7 @@
 					<date-time id="mtime" readonly="true"/>
 				</row>
 				<row>
-					<description options=",,,comment" value="Comment"/>
+					<description for="comment" value="Comment"/>
 					<textbox multiline="true" id="comment" class="comment"/>
 				</row>
 			</rows>
@@ -103,13 +103,13 @@
 								<row>
 									<description value="User"/>
 									<menulist>
-										<menupopup type="select-account" options="root,accounts" id="uid" label="@ro_uid_root"/>
+										<menupopup type="select-account" label="@ro_uid_root" id="uid" options="root,accounts"/>
 									</menulist>
 								</row>
 								<row>
 									<description value="Group"/>
 									<menulist>
-										<menupopup type="select-account" options="root,groups" id="gid" label="@ro_gid_root"/>
+										<menupopup type="select-account" label="@ro_gid_root" id="gid" options="root,groups"/>
 									</menulist>
 								</row>
 							</rows>
@@ -122,7 +122,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.7.001">
+	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
 		<grid width="450" height="300" spacing="10">
 			<columns>
 				<column/>
@@ -130,10 +130,10 @@
 				<column/>
 			</columns>
 			<rows>
-				<row valign="top">
+				<row valign="top" height="200">
 					<groupbox span="all">
 						<caption label="Extended access control list"/>
-						<grid width="100%" height="200" overflow="auto" id="eacl">
+						<grid width="100%" overflow="auto">
 							<columns>
 								<column width="80"/>
 								<column width="80"/>
@@ -155,18 +155,18 @@
 										<menupopup id="${row}[rights]" readonly="true"/>
 									</menulist>
 									<description id="${row}[path]"/>
-									<button image="delete" label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="return confirm('Delete this extended ACL');"/>
+									<button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="return confirm('Delete this extended ACL');" image="delete"/>
 								</row>
 							</rows>
 						</grid>
 					</groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
-					<menulist class="eaclAccount">
-						<menupopup type="select-account" options="select one,both" id="eacl[owner]" label="Owner"/>
+					<menulist>
+						<menupopup type="select-account" class="eaclAccount" label="Owner" id="eacl[owner]" options="select one,both"/>
 					</menulist>
-					<menulist class="eaclRights">
-						<menupopup id="eacl[rights]" label="Rights" statustext="You can only grant additional rights, you can NOT take rights away!"/>
+					<menulist>
+						<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
 					</menulist>
 					<button label="Add" id="button[eacl]"/>
 				</row>
@@ -183,7 +183,7 @@
 					<image src="link" class="previewImage"/>
 				</row>
 				<row valign="top" height="280" disabled="!@text_content">
-					<textbox multiline="true" id="text_content" class="previewText" readonly="true"/>
+					<textbox multiline="true" id="text_content" readonly="true" class="previewText"/>
 				</row>
 				<row disabled="@mime=/^(image|text)/">
 					<description value="No preview available"/>
@@ -210,16 +210,16 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg"/>
+					<description id="msg" span="all" class="redItalic"/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="filemanager.file.general|filemanager.file.perms|filemanager.file.eacl|filemanager.file.preview|filemanager.file.custom" span="all">
 						<tabs>
-							<tab label="General" statustext=""/>
-							<tab label="Permissions" statustext=""/>
-							<tab label="Extended ACL" statustext=""/>
-							<tab label="Preview" statustext=""/>
-							<tab label="Custom fields" statustext=""/>
+							<tab id="filemanager.file.general" label="General"/>
+							<tab id="filemanager.file.perms" label="Permissions"/>
+							<tab id="filemanager.file.eacl" label="Extended ACL"/>
+							<tab id="filemanager.file.preview" label="Preview"/>
+							<tab id="filemanager.file.custom" label="Custom fields"/>
 						</tabs>
 						<tabpanels>
 							<template id="filemanager.file.general"/>
@@ -234,10 +234,10 @@
 					<hbox>
 						<hbox>
 							<button label="Save" id="button[save]"/>
-							<button id="button[apply]" label="Apply"/>
+							<button label="Apply" id="button[apply]"/>
 							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						</hbox>
-						<buttononly label="Superuser" align="right" statustext="Enter setup user and password to get root rights" onclick="$j('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" id="sudo"/>
+						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="set_style_by_class('fieldset','superuser','display','inline'); document.getElementById(form::name('sudo[user]')).focus();"/>
 					</hbox>
 				</row>
 				<row>
@@ -250,11 +250,11 @@
 							</columns>
 							<rows>
 								<row>
-									<description value="User" options=",,,sudo[user]"/>
+									<description for="sudo[user]" value="User"/>
 									<textbox id="sudo[user]"/>
 								</row>
 								<row>
-									<description value="Password" options=",,,sudo[passwd]"/>
+									<description for="sudo[passwd]" value="Password"/>
 									<passwd id="sudo[passwd]"/>
 								</row>
 								<row>
@@ -269,11 +269,11 @@
 		</grid>
 		<styles>
 			.eaclAccount select,.eaclRights select { width: 160px; }
-.superuser { 
-  position: absolute; 
-  top: 130px; 
-  left: 120px; 
-  width: 200px; 
+.superuser {
+  position: absolute;
+  top: 130px;
+  left: 120px;
+  width: 200px;
   background-color: white;
   z-index: 1;
   display: none;
