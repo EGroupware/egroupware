@@ -1686,9 +1686,12 @@ class addressbook_ui extends addressbook_bo
 			{
 				$state = egw_session::appsession('index','addressbook');
 				// check if we create the new contact in an existing org
-				if ($_GET['org'])
+				if (($org = $_GET['org']))
 				{
-					$content = $this->read_org($_GET['org']);
+					// arguments containing a comma get quoted by etemplate/js/nextmatch_action.js
+					// leading to error in egw_db::column_data_implode, if not unquoted
+					if ($org[0] == '"') $org = substr($org, 1, -1);
+					$content = $this->read_org($org);
 				}
 				elseif ($state['org_view'] && !isset($this->org_views[$state['org_view']]))
 				{
