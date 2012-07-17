@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-12 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -868,7 +868,7 @@ class calendar_boupdate extends calendar_bo
 						// format iCal uses now like Exchange event-title as subject and description as body
 						$subject = $event['title'];
 						$body = $event['description'];
-
+						// fall through
 					case 'extended':
 						$popup .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
@@ -904,7 +904,11 @@ class calendar_boupdate extends calendar_bo
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
 						if (isset($popupsubject)&&!empty($popupsubject)) $notification->set_popupsubject($popupsubject);
-						$notification->set_links(array($details['link_arr']));
+						// as we want ical body to be just describtion, we can NOT set links, as they get appended to body
+						if ($part_prefs['calendar']['update_format'] != 'ical')
+						{
+							$notification->set_links(array($details['link_arr']));
+						}
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
 					}
