@@ -1,3 +1,28 @@
+egroupware-epl (11.1.20120717-1) hardy; urgency=low
+
+  * EMail: improve the handling of addresses in edit of vacationnotice (SIEVE)
+  * EMail: better height control of attachment popup
+  * Mergeprint in all apps: fixed missing validation message for non-existing pathes and allow to unset default of "/templates/appname"
+  * EMail: usability option to enable checkbox for all folders
+  * PostgreSQL: fixed SQL error using egw_db::unix_timestamp(): No function matches the given name and argument types
+  * rpm/deb packages: removed "php_value session.gc_maxlifetime 14400" from Apache config, so value from global php.ini is used
+  * EMail: while flagging messages, fix problem with dovecot ->too long argument<-
+  * Tracker/Timesheet: support private custom-fields, existing fields stay public
+  * Tracker: fixed not stored custom fields of type date or date-time, if no other change was made
+  * EMail: sieve, option to disable the validation of used addresses; that way you may use mail-server internal names for vacation notices
+  * EMail/SIEVE: switching from notify to enotify; enotify and variables now required
+  * EMail/SIEVE: decide via capabilities of extensions if enotify and variables are available before trying to apply specific syntax; if enotify is not available fall back to (try with) notify syntax
+  * Filemanager: support for ownCloud WebDAV clients which keep a local directory in sync with server (by default users home-dir with local ownCloud dir, thought other dirs can be configured as well)
+  * EMail: improve the switching of signatures in HTML mode
+  * SiteMgr: new accordion module: clickable headers show otherwise hidden content
+  * CalDAV: expand-property reports queried by iCal from OS X 10.7.4
+  * Addressbook: fixed error when adding a new organisation member for organisation(department)s containing a comma
+  * Calendar: fixed EGroupware owner got notified about status changes, even if email-notification preference was "never", now only external chairs get always notified
+  * Addressbook: fixed not working resize or conversation of non-jpeg images in newer php versions
+  * Filemanager: print and report templates
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 17 Jul 2012 16:36:08 +0200
+
 egroupware-epl (11.1.20120703-1) hardy; urgency=low
 
   * eMail: restructure sidebar, group sieve stuff as own section (if enabled AND available to the user)
