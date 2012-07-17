@@ -215,7 +215,7 @@ $admins = $GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,Fals
 egw_vfs::$is_root = true;
 $prefs = new preferences();
 $prefs->read_repository(false);
-foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', 'projectmanager') as $app)
+foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', 'projectmanager', 'filemanager') as $app)
 {
 	if ($app && !file_exists(EGW_SERVER_ROOT.'/'.$app)) continue;
 
