@@ -485,6 +485,12 @@ class accounts
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
+		// Don't bother searching for empty or non-scalar account_lid
+		if(empty($name) || !is_scalar($name))
+		{
+			return False;
+		}
+
 		self::setup_cache();
 		$name_list = &self::$cache['name_list'];
 
@@ -493,11 +499,6 @@ class accounts
 			return $name_list[$which][$name];
 		}
 
-		// Don't bother searching for empty account_lid
-		if(empty($name))
-		{
-			return False;
-		}
 		return $name_list[$which][$name] = $this->backend->name2id($name,$which,$account_type);
 	}
 
