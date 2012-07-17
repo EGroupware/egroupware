@@ -193,6 +193,7 @@ class groupdav_principals extends groupdav_handler
 	 * Example requests:
 	 *
 	 * REPORT /egw/groupdav.php/principals/groups/groupname/ HTTP/1.1
+	 * User-Agent: CalendarStore/5.0.3 (1204.1); iCal/5.0.3 (1605.3); Mac OS X/10.7.4 (11E53)
 	 *
 	 * <?xml version="1.0" encoding="UTF-8"?>
 	 * <A:expand-property xmlns:A="DAV:">
@@ -208,6 +209,7 @@ class groupdav_principals extends groupdav_handler
 	 * </A:expand-property>
 	 *
 	 * REPORT /egw/groupdav.php/principals/users/username/ HTTP/1.1
+	 * User-Agent: CalendarStore/5.0.3 (1204.1); iCal/5.0.3 (1605.3); Mac OS X/10.7.4 (11E53)
 	 *
 	 * <?xml version="1.0" encoding="UTF-8"?>
 	 * <A:expand-property xmlns:A="DAV:">
@@ -222,6 +224,23 @@ class groupdav_principals extends groupdav_handler
 	 *     <A:property name="email-address-set" namespace="http://calendarserver.org/ns/"/>
 	 *   </A:property>
 	 * </A:expand-property>
+	 *
+	 * REPORT /egroupware/groupdav.php/principals/users/username/ HTTP/1.1
+	 * User-Agent: DAVKit/4.0.3 (732.2); CalendarStore/4.0.4 (997.7); iCal/4.0.4 (1395.7); Mac OS X/10.6.8 (10K549)
+	 *
+	 * <?xml version="1.0" encoding="utf-8" ?>
+	 * <x0:expand-property xmlns:x0="DAV:">
+	 *  <x0:property name="calendar-proxy-write-for" namespace="http://calendarserver.org/ns/">
+	 *   <x0:property name="displayname"/>
+	 *   <x0:property name="principal-URL"/>
+	 *   <x0:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *  </x0:property>
+	 *  <x0:property name="calendar-proxy-read-for" namespace="http://calendarserver.org/ns/">
+	 *   <x0:property name="displayname"/>
+	 *   <x0:property name="principal-URL"/>
+	 *   <x0:property name="calendar-user-address-set" namespace="urn:ietf:params:xml:ns:caldav"/>
+	 *  </x0:property>
+	 * </x0:expand-property>
 	 *
 	 * @param string $path
 	 * @param array &$options
@@ -296,7 +315,7 @@ class groupdav_principals extends groupdav_handler
 					}
 					$options2['props'][] = array(
 						'name' => $prop['attrs']['name'],
-						'xmlns' => $prop['attrs']['namespace'],
+						'xmlns' => isset($prop['attrs']['namespace']) ? $prop['attrs']['namespace'] : $prop['xmlns'],
 					);
 				}
 			}
