@@ -968,7 +968,7 @@ class addressbook_bo extends addressbook_so
 			imagecopyresized($resized,$image,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
 
 			ob_start();
-			imagejpeg($resized,'',90);
+			imagejpeg($resized,null,90);
 			$photo = ob_get_contents();
 			ob_end_clean();
 
