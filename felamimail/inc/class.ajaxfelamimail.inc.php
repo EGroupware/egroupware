@@ -1448,13 +1448,13 @@ class ajaxfelamimail
 			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,$htmlConfig,array(),true):$_content));
 			if ($_currentMode == 'html')
 			{
-				$found = strpos($_content,"<!-- HTMLSIGBEGIN -->");
-				$endSig = strpos($_content,"<!-- HTMLSIGEND -->");
-				if ($found !== false && $endSig !== false)
+				$_content = str_replace("\n",'\n',$_content);	// dont know why, but \n screws up preg_replace
+				$_content = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
+					$rep='<!-- HTMLSIGBEGIN -->'.$sigText.'<!-- HTMLSIGEND -->', $in=$_content, -1, $replaced);
+				$_content = str_replace('\n',"\n",$_content);
+				//error_log(__METHOD__."() preg_replace('$reg', '$rep', '$in', -1)='$_content', replaced=$replaced");
+				if ($replaced)
 				{
-					$lengthSig = $endSig-($found+strlen('<!-- HTMLSIGBEGIN -->'));
-					$_content = substr_replace($_content,$sigText,$found+strlen('<!-- HTMLSIGBEGIN -->'),$lengthSig);
-					//error_log(__METHOD__.__LINE__.'->'.$_content);
 					$found = false; // this way we skip further replacement efforts
 				}
 				else
