@@ -1,3 +1,20 @@
+egroupware (1.8.004.20120718) hardy; urgency=low
+
+  * Backup: fix sometimes not working restore (seems like an internal error in preg_match, causing Apache to run at 100% CPU never finishing) for php 5.3+
+  * Filemanager/API: automatically decrement and store subquery depth limit, to work around different limits in different MySQL versions and configurations causing SQL error
+  * Admin/DB-Backup: querying only chunks for 100 rows, to not run into memory limit on huge tables
+  * EMail: manage acl table; show acl table for selected folder for first folder selected when clicking on ACL tab as first action; remove trailing whitespaced
+  * EMail: improve the handling of addresses in edit of vacationnotice (SIEVE)
+  * PostgreSQL: fixed SQL error using egw_db::unix_timestamp(): No function matches the given name and argument types
+  * Calendar: backported config switch for history logging / delete prevention required for CalDAV to detect deleted events
+  * Addressbook: backported config switch for history logging / delete prevention required for CardDAV to detect deleted contacts, also switch history logging on for new installs
+  * CalDAV: expand-property reports queried by iCal from OS X 10.7.4
+  * Calendar: fixed EGroupware owner got notified about status changes, even if email-notification preference was "never", now only external chairs get always notified
+  * Addressbook: fixed not working resize or conversation of non-jpeg images in newer php versions
+  * Admin/Setup: fixing high memory usage in registering all hooks
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Jul 2012 19:53:42 +0200
+
 egroupware (1.8.004.20120613) hardy; urgency=low
 
   * Addressbook: fix for postgres error on advanced search in addressbook (Helpdesk 3421)
