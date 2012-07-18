@@ -271,6 +271,7 @@ class hooks
 			$setup_info = array($appname => array());
 			if(@file_exists($f)) include($f);
 			// some apps have setup_info for more then themselfs (eg. phpgwapi for groupdav)
+			$hdata = array();
 			foreach($setup_info as $appname => $data)
 			{
 				if ($data['hooks']) $this->register_hooks($appname,$data['hooks']);
