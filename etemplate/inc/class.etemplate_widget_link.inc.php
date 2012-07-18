@@ -28,9 +28,6 @@ class etemplate_widget_link extends etemplate_widget
 	{
 		if($xml) {
 			parent::__construct($xml);
-
-			// TODO: probably a better way to do this
-			egw_framework::includeCSS('/phpgwapi/js/jquery/jquery-ui/smoothness/jquery-ui-1.8.16.custom.css');
 		}
 		$this->setElementAttribute($this->id.'_file', 'max_file_size', egw_vfs::int_size(ini_get('upload_max_filesize')));
 	}
