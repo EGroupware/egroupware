@@ -162,8 +162,8 @@ class etemplate_new extends etemplate_widget_template
 			egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
 
 			// Include the jQuery-UI CSS - many more complex widgets use it
-			$theme = 'smoothness';
-			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.16.custom.css");
+			$theme = 'redmond';
+			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.21.custom.css");
 
 			// check if application of template has a app.js file --> load it
 			list($app) = explode('.',$this->name);
