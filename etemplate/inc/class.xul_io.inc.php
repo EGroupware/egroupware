@@ -659,6 +659,8 @@ class xul_io
 					{
 						$attr['size'] = '0'.($attr['orient'] || $attr['size'] ? ','.$attr['orient'].
 							($attr['size'] ? ','.$attr['size'] : '') : '');
+						$attr['span'] .= $attr['class'] ? ','.$attr['class'] : '';
+						unset($attr['class']);
 						soetemplate::add_child($parent,$attr);
 						$parents[count($parents)] = &$parent;	// $parents[] does not always the same - strange
 						$parent = &$attr;
