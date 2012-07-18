@@ -1443,6 +1443,10 @@ class calendar_ical extends calendar_boupdate
 								// if no edit rights, allow participants to set alarms directly (like status)
 								if ($event_info['stored_event'] && !$event_info['acl_edit'])
 								{
+									if ($alarm['time'] < time() && !calendar_so::shift_alarm($event, $alarm))
+									{
+										continue;	//pgoerzen: don't add an alarm in the past
+									}
 									$this->save_alarm($event_info['stored_event']['id'], $alarm);
 								}
 

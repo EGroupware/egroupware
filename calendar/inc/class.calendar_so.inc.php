@@ -1263,22 +1263,9 @@ ORDER BY cal_user_type, cal_usre_id
 					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
 				}
 
-				if ($alarm['time'] < time())
+				if ($alarm['time'] < time() && !self::shift_alarm($event, $alarm))
 				{
-					//pgoerzen: don't add an alarm in the past
-					if ($event['recur_type'] == MCAL_RECUR_NONE) continue;
-					$start = (int)time() + $alarm['offset'];
-					$event['start'] = $event['cal_start'];
-					$event['end'] = $event['cal_end'];
-					$event['tzid'] = $event['cal_tzid'];
-					$rrule = calendar_rrule::event2rrule($event, false);
-					foreach ($rrule as $time)
-					{
-						if ($start < ($ts = egw_time::to($time,'server'))) break;
-						$ts = 0;
-					}
-					if (!$ts) continue;
-					$alarm['time'] = $ts - $alarm['offset'];
+					continue;	// pgoerzen: don't add alarm in the past
 				}
 				$this->save_alarm($cal_id,$alarm);
 			}
@@ -1288,6 +1275,33 @@ ORDER BY cal_user_type, cal_usre_id
 			$etag = $this->db->select($this->cal_table,'cal_etag',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 		}
 		return $cal_id;
+	}
+
+	/**
+	 * Shift alarm on recurring events to next future recurrence
+	 *
+	 * @param array $event event with optional 'cal_' prefix in keys
+	 * @param array &$alarm
+	 * @return boolean true if alarm could be shifted, false if not
+	 */
+	public static function shift_alarm(array $event, array &$alarm)
+	{
+		if ($event['recur_type'] == MCAL_RECUR_NONE)
+		{
+			return false;
+		}
+		$start = (int)time() + $alarm['offset'];
+		egw_db::strip_array_keys($event, 'cal_');
+		$rrule = calendar_rrule::event2rrule($event, false);
+		foreach ($rrule as $time)
+		{
+			if ($start < ($ts = egw_time::to($time,'server')))
+			{
+				$alarm['time'] = $ts - $alarm['offset'];
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
