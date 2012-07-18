@@ -131,7 +131,11 @@ class editor
 		}
 		if (!is_writeable($dir))
 		{
-			return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
+			// if dir is not writable, download file
+			html::content_header($name.'.xet','application/xml',bytes($xml));
+			echo $xml;
+			common::egw_exit();
+			//return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
 		}
 		if ($create_it)
 		{
