@@ -1291,7 +1291,7 @@ ORDER BY cal_user_type, cal_usre_id
 			return false;
 		}
 		$start = (int)time() + $alarm['offset'];
-		egw_db::strip_array_keys($event, 'cal_');
+		$event = egw_db::strip_array_keys($event, 'cal_');
 		$rrule = calendar_rrule::event2rrule($event, false);
 		foreach ($rrule as $time)
 		{
