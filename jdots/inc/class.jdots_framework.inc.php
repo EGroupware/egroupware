@@ -540,6 +540,9 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 
 		$header = $this->header();	// in case it's not yet called (call it now AFTER get_sidebox())
 
+		// for apps not in navbar, update admin menu with their sidebox data
+		if ($GLOBALS['egw_info']['apps'][$app]['status'] != 1) $app = 'admin';
+
 		if ($md5_session[$app] === $md5)
 		{
 			//error_log(__METHOD__."() md5_session[$app]==='$md5' --> nothing to do");
