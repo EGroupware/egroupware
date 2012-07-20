@@ -462,7 +462,12 @@ class infolog_groupdav extends groupdav_handler
 			$taskId = 0;
 			$retval = '201 Created';
 		}
-		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id)))
+		if ($GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-cat-action'] &&
+			$GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-cat-action'] !== 'none')
+		{
+			$callback_data = array(array($this, 'cat_action'), $oldTask);
+		}
+		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id, $callback_data)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
@@ -482,6 +487,71 @@ class infolog_groupdav extends groupdav_handler
 			$this->put_response_headers($infoId, $options['path'], $retval, self::$path_attr == 'caldav_name');
 		}
 		return $retval;
+	}
+
+	/**
+	 * Callback for infolog_ical::importVTODO to implement infolog-cat-action
+	 *
+	 * @param array $task
+	 * @param array $oldTask=null
+	 * @return array modified task data
+	 */
+	public function cat_action(array $task, $oldTask=null)
+	{
+		$action = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-cat-action'];
+
+		//error_log(__METHOD__.'('.array2string($task).', '.array2string($oldTask).") action=$action");
+		if ($task['info_cat'] && ($new_cat = categories::id2name($task['info_cat'])) &&
+			strpos($new_cat, '@') !== false)
+		{
+			$new_user = $GLOBALS['egw']->accounts->name2id($new_cat, 'account_email');
+		}
+		$old_responsible = $task['info_responsible'];
+		// no action taken, if cat is not email of user
+		if ($new_user)
+		{
+			// make sure category is global, as otherwise it will not be transmitted to other users
+			if (!categories::is_global($task['info_cat']))
+			{
+				$cat_obj = new categories(categories::GLOBAL_ACCOUNT, 'infolog');
+				$cat = categories::read($task['info_cat']);
+				$cat['owner'] = categories::GLOBAL_ACCOUNT;
+				$cat['access'] = 'public';
+				$cat_obj->edit($cat);
+			}
+			// if replace, remove user of old category from responsible
+			if ($action == 'replace' && $oldTask && $oldTask['info_cat'] &&
+				($old_cat = categories::id2name($oldTask['info_cat'])) && strpos($old_cat, '@') !== false &&
+				($old_user = $GLOBALS['egw']->accounts->name2id($old_cat, 'account_email')) &&
+				($key = array_search($old_user, (array)$task['info_responsible'])) !== false)
+			{
+				unset($task['info_responsible'][$key]);
+			}
+			switch($action)
+			{
+				case 'set':
+					$task['info_responsible'] = array();
+					// fall through
+				case 'set-user':
+					foreach($task['info_responsible'] as $key => $account_id)
+					{
+						if ($GLOBALS['egw']->accounts->get_type($account_id) == 'u')
+						{
+							unset($task['info_responsible'][$key]);
+						}
+					}
+					// fall-through
+				case 'add':
+				case 'replace':
+					if (!in_array($new_user, (array)$task['info_responsible']))
+					{
+						$task['info_responsible'][] = $new_user;
+					}
+					break;
+			}
+		}
+		error_log(__METHOD__."() action=$action, new_cat=$new_cat --> new_user=$new_user, old_cat=$old_cat --> old_user=$old_user: responsible: ".array2string($old_responsible).' --> '.array2string($task['info_responsible']));
+		return $task;
 	}
 
 	/**
@@ -644,6 +714,22 @@ class infolog_groupdav extends groupdav_handler
 			'help'   => 'Which InfoLog types should be synced with the device, default only tasks.',
 			'values' => $types,
 			'default' => 'task',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		$settings['infolog-cat-action'] = array(
+			'type'   => 'select',
+			'label'  => 'Action when category is an EMail address',
+			'name'   => 'infolog-cat-action',
+			'help'   => 'Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.',
+			'values' => array(
+				'none' => lang('none'),
+				'add' => lang('add user to responsibles'),
+				'replace' => lang('add user to responsibles, removing evtl. previous category user'),
+				'set' => lang('set user as only responsible, removing all existing responsibles'),
+				'set-user' => lang('set user as only responsible user, but keeping groups'),
+			),
+			'default' => 'none',
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
