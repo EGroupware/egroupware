@@ -2,14 +2,14 @@
 
 /**
   V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
-  Released under both BSD license and Lesser GPL library license. 
-  Whenever there is any discrepancy between the two licenses, 
+  Released under both BSD license and Lesser GPL library license.
+  Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
-	
+
   Set tabs to 4 for best viewing.
- 
+
  	DOCUMENTATION:
-	
+
 		See adodb/tests/test-datadict.php for docs and examples.
 */
 
@@ -42,13 +42,13 @@ if (!function_exists('ctype_alnum')) {
 /**
 	Parse arguments, treat "text" (text) and 'text' as quotation marks.
 	To escape, use "" or '' or ))
-	
+
 	Will read in "abc def" sans quotes, as: abc def
 	Same with 'abc def'.
 	However if `abc def`, then will read in as `abc def`
-	
+
 	@param endstmtchar    Character that indicates end of statement
-	@param tokenchars     Include the following characters in tokens apart from A-Z and 0-9 
+	@param tokenchars     Include the following characters in tokens apart from A-Z and 0-9
 	@returns 2 dimensional array containing parsed tokens.
 */
 function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
@@ -61,7 +61,7 @@ function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
 	$tokens[$stmtno] = array();
 	$max = strlen($args);
 	$quoted = false;
-	
+
 	while ($pos < $max) {
 		$ch = substr($args,$pos,1);
 		switch($ch) {
@@ -76,17 +76,17 @@ function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
 				}
 				break;
 			}
-			
+
 			$tokarr[] = $ch;
 			break;
-		
+
 		case '`':
 			if ($intoken) $tokarr[] = $ch;
 		case '(':
-		case ')':	
+		case ')':
 		case '"':
 		case "'":
-			
+
 			if ($intoken) {
 				if (empty($endquote)) {
 					$tokens[$stmtno][] = implode('',$tokarr);
@@ -108,9 +108,9 @@ function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
 					}
 				} else
 					$tokarr[] = $ch;
-					
+
 			}else {
-			
+
 				if ($ch == '(') $endquote = ')';
 				else $endquote = $ch;
 				$quoted = true;
@@ -119,27 +119,27 @@ function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
 				if ($ch == '`') $tokarr[] = '`';
 			}
 			break;
-			
+
 		default:
-			
+
 			if (!$intoken) {
 				if ($ch == $endstmtchar) {
 					$stmtno += 1;
 					$tokens[$stmtno] = array();
 					break;
 				}
-			
+
 				$intoken = true;
 				$quoted = false;
 				$endquote = false;
 				$tokarr = array();
-	
+
 			}
-			
+
 			if ($quoted) $tokarr[] = $ch;
 			else if (ctype_alnum($ch) || strpos($tokenchars,$ch) !== false) $tokarr[] = $ch;
 			else {
-				if ($ch == $endstmtchar) {			
+				if ($ch == $endstmtchar) {
 					$tokens[$stmtno][] = implode('',$tokarr);
 					$stmtno += 1;
 					$tokens[$stmtno] = array();
@@ -155,7 +155,7 @@ function Lens_ParseArgs($args,$endstmtchar=',',$tokenchars='_.-')
 		$pos += 1;
 	}
 	if ($intoken) $tokens[$stmtno][] = implode('',$tokarr);
-	
+
 	return $tokens;
 }
 
@@ -164,7 +164,7 @@ class ADODB_DataDict {
 	var $connection;
 	var $debug = false;
 	var $dropTable = 'DROP TABLE %s';
-	var $renameTable = 'RENAME TABLE %s TO %s'; 
+	var $renameTable = 'RENAME TABLE %s TO %s';
 	var $dropIndex = 'DROP INDEX %s';
 	var $addCol = ' ADD';
 	var $alterCol = ' ALTER COLUMN';
@@ -179,66 +179,66 @@ class ADODB_DataDict {
 	var $invalidResizeTypes4 = array('CLOB','BLOB','TEXT','DATE','TIME'); // for changetablesql
 	var $blobSize = 100; 	/// any varchar/char field this size or greater is treated as a blob
 							/// in other words, we use a text area for editting.
-	
+
 	function GetCommentSQL($table,$col)
 	{
 		return false;
 	}
-	
+
 	function SetCommentSQL($table,$col,$cmt)
 	{
 		return false;
 	}
-	
+
 	function MetaTables()
 	{
 		if (!$this->connection->IsConnected()) return array();
 		return $this->connection->MetaTables();
 	}
-	
+
 	function MetaColumns($tab, $upper=true, $schema=false)
 	{
 		if (!$this->connection->IsConnected()) return array();
 		return $this->connection->MetaColumns($this->TableName($tab), $upper, $schema);
 	}
-	
+
 	function MetaPrimaryKeys($tab,$owner=false,$intkey=false)
 	{
 		if (!$this->connection->IsConnected()) return array();
 		return $this->connection->MetaPrimaryKeys($this->TableName($tab), $owner, $intkey);
 	}
-	
+
 	function MetaIndexes($table, $primary = false, $owner = false)
 	{
 		if (!$this->connection->IsConnected()) return array();
 		return $this->connection->MetaIndexes($this->TableName($table), $primary, $owner);
 	}
-	
+
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
 		return ADORecordSet::MetaType($t,$len,$fieldobj);
 	}
-	
+
 	function NameQuote($name = NULL,$allowBrackets=false)
 	{
 		if (!is_string($name)) {
 			return FALSE;
 		}
-		
+
 		$name = trim($name);
-		
+
 		if ( !is_object($this->connection) ) {
 			return $name;
 		}
-		
+
 		$quote = $this->connection->nameQuote;
-		
+
 		// if name is of the form `name`, quote it
 		if ( preg_match('/^`(.+)`$/', $name, $matches) ) {
 			return $quote . $matches[1] . $quote;
 		}
-		
-		// if brackets are allowed, quote only the rest, 
+
+		// if brackets are allowed, quote only the rest,
 		// to allow to limit indexes on colums, eg "column(32)"
 		if ($allowBrackets && preg_match('/^(.*) *(\(\d+\))$/',$name,$matches)) {
 			return $quote . $matches[1] . $quote . ' '. $matches[2];
@@ -247,17 +247,17 @@ class ADODB_DataDict {
 
 		// not used stock ADOdb code, which only quotes names with special chars,
 		// which does not help with column names using reserved words, eg. "timestamp" in phpfreechat
-		
+
 		// if name contains special characters, quote it
 		$regex = ($allowBrackets) ? $this->nameRegexBrackets : $this->nameRegex;
-		
+
 		if ( !preg_match('/^[' . $regex . ']+$/', $name) ) {
 			return $quote . $name . $quote;
 		}
-		
+
 		return $name;
 	}
-	
+
 	function TableName($name)
 	{
 		if ( $this->schema ) {
@@ -265,7 +265,7 @@ class ADODB_DataDict {
 		}
 		return $this->NameQuote($name);
 	}
-	
+
 	// Executes the sql array returned by GetTableSQL and GetIndexSQL
 	function ExecuteSQLArray($sql, $continueOnError = true)
 	{
@@ -273,7 +273,7 @@ class ADODB_DataDict {
 		$conn = &$this->connection;
 		$saved = $conn->debug;
 		foreach($sql as $line) {
-			
+
 			if ($this->debug) $conn->debug = true;
 			$ok = $conn->Execute($line);
 			$conn->debug = $saved;
@@ -285,43 +285,43 @@ class ADODB_DataDict {
 		}
 		return $rez;
 	}
-	
+
 	/*
 	 	Returns the actual type given a character code.
-		
+
 		C:  varchar
 		X:  CLOB (character large object) or largest varchar size if CLOB is not supported
 		C2: Multibyte varchar
 		X2: Multibyte CLOB
-		
+
 		B:  BLOB (binary large object)
-		
+
 		D:  Date
-		T:  Date-time 
+		T:  Date-time
 		L:  Integer field suitable for storing booleans (0 or 1)
 		I:  Integer
 		F:  Floating point number
 		N:  Numeric or decimal number
 	*/
-	
+
 	function ActualType($meta)
 	{
 		return $meta;
 	}
-	
+
 	function CreateDatabase($dbname,$options=false)
 	{
 		$options = $this->_Options($options);
 		$sql = array();
-		
+
 		$s = 'CREATE DATABASE ' . $this->NameQuote($dbname);
 		if (isset($options[$this->upperName]))
 			$s .= ' '.$options[$this->upperName];
-		
+
 		$sql[] = $s;
 		return $sql;
 	}
-	
+
 	/*
 	 Generates the SQL to create index. Returns an array of sql strings.
 	*/
@@ -330,25 +330,25 @@ class ADODB_DataDict {
 		if (!is_array($flds)) {
 			$flds = explode(',',$flds);
 		}
-		
+
 		foreach($flds as $key => $fld) {
 			# some indexes can use partial fields, eg. index first 32 chars of "name" with NAME(32)
 			$flds[$key] = $this->NameQuote($fld,$allowBrackets=true);
 		}
-		
+
 		return $this->_IndexSQL($this->NameQuote($idxname), $this->TableName($tabname), $flds, $this->_Options($idxoptions));
 	}
-	
+
 	function DropIndexSQL ($idxname, $tabname = NULL)
 	{
 		return array(sprintf($this->dropIndex, $this->NameQuote($idxname), $this->TableName($tabname)));
 	}
-	
+
 	function SetSchema($schema)
 	{
 		$this->schema = $schema;
 	}
-	
+
 	function AddColumnSQL($tabname, $flds)
 	{
 		$tabname = $this->TableName ($tabname);
@@ -360,7 +360,7 @@ class ADODB_DataDict {
 		}
 		return $sql;
 	}
-	
+
 	/**
 	 * Change the definition of one column
 	 *
@@ -383,7 +383,7 @@ class ADODB_DataDict {
 		}
 		return $sql;
 	}
-	
+
 	/**
 	 * Rename one column
 	 *
@@ -404,7 +404,7 @@ class ADODB_DataDict {
 		}
 		return array(sprintf($this->renameColumn,$tabname,$this->NameQuote($oldcolumn),$this->NameQuote($newcolumn),$column_def));
 	}
-		
+
 	/**
 	 * Drop one column
 	 *
@@ -427,36 +427,36 @@ class ADODB_DataDict {
 		}
 		return $sql;
 	}
-	
+
 	function DropTableSQL($tabname)
 	{
 		return array (sprintf($this->dropTable, $this->TableName($tabname)));
 	}
-	
+
 	function RenameTableSQL($tabname,$newname)
 	{
 		return array (sprintf($this->renameTable, $this->TableName($tabname),$this->TableName($newname)));
-	}	
-	
+	}
+
 	/*
 	 Generate the SQL to create table. Returns an array of sql strings.
 	*/
 	function CreateTableSQL($tabname, $flds, $tableoptions=false)
 	{
 		if (!$tableoptions) $tableoptions = array();
-		
+
 		list($lines,$pkey) = $this->_GenFields($flds, true);
-		
+
 		$taboptions = $this->_Options($tableoptions);
 		$tabname = $this->TableName ($tabname);
 		$sql = $this->_TableSQL($tabname,$lines,$pkey,$taboptions);
-		
+
 		$tsql = $this->_Triggers($tabname,$taboptions);
 		foreach($tsql as $s) $sql[] = $s;
-		
+
 		return $sql;
 	}
-	
+
 	function _GenFields($flds,$widespacing=false)
 	{
 		if (is_string($flds)) {
@@ -470,7 +470,7 @@ class ADODB_DataDict {
 				foreach($f0 as $token) {
 					switch (strtoupper($token)) {
 					case 'CONSTRAINT':
-					case 'DEFAULT': 
+					case 'DEFAULT':
 						$hasparam = $token;
 						break;
 					default:
@@ -481,7 +481,7 @@ class ADODB_DataDict {
 					}
 				}
 				$flds[] = $f1;
-				
+
 			}
 		}
 		$this->autoIncrement = false;
@@ -489,7 +489,7 @@ class ADODB_DataDict {
 		$pkey = array();
 		foreach($flds as $fld) {
 			$fld = _array_change_key_case($fld);
-		
+
 			$fname = false;
 			$fdefault = false;
 			$fautoinc = false;
@@ -503,20 +503,20 @@ class ADODB_DataDict {
 			$fconstraint = false;
 			$fnotnull = false;
 			$funsigned = false;
-			
+
 			//-----------------
 			// Parse attributes
 			foreach($fld as $attr => $v) {
 				if ($attr == 2 && is_numeric($v)) $attr = 'SIZE';
 				else if (is_numeric($attr) && $attr > 1 && !is_numeric($v)) $attr = strtoupper($v);
-				
+
 				switch($attr) {
 				case '0':
 				case 'NAME': 	$fname = $v; break;
 				case '1':
 				case 'TYPE': 	$ty = $v; $ftype = $this->ActualType(strtoupper($v)); break;
-				
-				case 'SIZE': 	
+
+				case 'SIZE':
 								$dotat = strpos($v,'.'); if ($dotat === false) $dotat = strpos($v,',');
 								if ($dotat === false) $fsize = $v;
 								else {
@@ -538,33 +538,33 @@ class ADODB_DataDict {
 				case 'CONSTRAINT': $fconstraint = $v; break;
 				} //switch
 			} // foreach $fld
-			
+
 			//--------------------
 			// VALIDATE FIELD INFO
 			if (!strlen($fname)) {
 				if ($this->debug) ADOConnection::outp("Undefined NAME");
 				return false;
 			}
-			
+
 			$fid = strtoupper(preg_replace('/^`(.+)`$/', '$1', $fname));
 			$fname = $this->NameQuote($fname);
-			
+
 			if (!strlen($ftype)) {
 				if ($this->debug) ADOConnection::outp("Undefined TYPE for field '$fname'");
 				return false;
 			} else {
 				$ftype = strtoupper($ftype);
 			}
-			
+
 			$ftype = $this->_GetSize($ftype, $ty, $fsize, $fprec);
-			
+
 			if ($ty == 'X' || $ty == 'X2' || $ty == 'B') $fnotnull = false; // some blob types do not accept nulls
-			
+
 			if ($fprimary) $pkey[] = $fname;
-			
+
 			// some databases do not allow blobs to have defaults
 			if ($ty == 'X') $fdefault = false;
-			
+
 			//--------------------
 			// CONSTRUCT FIELD SQL
 			if ($fdefts) {
@@ -580,20 +580,20 @@ class ADODB_DataDict {
 					$fdefault = $this->connection->sysDate;
 				}
 			} else if ($fdefault !== false && !$fnoquote)
-				if ($ty == 'C' or $ty == 'X' or 
+				if ($ty == 'C' or $ty == 'X' or
 					( substr($fdefault,0,1) != "'" && !is_numeric($fdefault)))
-					if (strlen($fdefault) != 1 && substr($fdefault,0,1) == ' ' && substr($fdefault,strlen($fdefault)-1) == ' ') 
+					if (strlen($fdefault) != 1 && substr($fdefault,0,1) == ' ' && substr($fdefault,strlen($fdefault)-1) == ' ')
 						$fdefault = trim($fdefault);
 					else if (strtolower($fdefault) != 'null')
 						$fdefault = $this->connection->qstr($fdefault);
 			$suffix = $this->_CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned);
-			
+
 			if ($widespacing) $fname = str_pad($fname,24);
 			$lines[$fid] = $fname.' '.$ftype.$suffix;
-			
+
 			if ($fautoinc) $this->autoIncrement = true;
 		} // foreach $flds
-		
+
 		return array($lines,$pkey);
 	}
 	/*
@@ -610,56 +610,56 @@ class ADODB_DataDict {
 		}
 		return $ftype;
 	}
-	
-	
+
+
 	// return string must begin with space
-	function _CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint)
-	{	
+	function _CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
+	{
 		$suffix = '';
 		if (strlen($fdefault)) $suffix .= " DEFAULT $fdefault";
 		if ($fnotnull) $suffix .= ' NOT NULL';
 		if ($fconstraint) $suffix .= ' '.$fconstraint;
 		return $suffix;
 	}
-	
+
 	function _IndexSQL($idxname, $tabname, $flds, $idxoptions)
 	{
 		$sql = array();
-		
+
 		if ( isset($idxoptions['REPLACE']) || isset($idxoptions['DROP']) ) {
 			$sql[] = sprintf ($this->dropIndex, $idxname);
 			if ( isset($idxoptions['DROP']) )
 				return $sql;
 		}
-		
+
 		if ( empty ($flds) ) {
 			return $sql;
 		}
-		
+
 		$unique = isset($idxoptions['UNIQUE']) ? ' UNIQUE' : '';
-	
+
 		$s = 'CREATE' . $unique . ' INDEX ' . $idxname . ' ON ' . $tabname . ' ';
-		
+
 		if ( isset($idxoptions[$this->upperName]) )
 			$s .= $idxoptions[$this->upperName];
-		
+
 		if ( is_array($flds) )
 			$flds = implode(', ',$flds);
 		$s .= '(' . $flds . ')';
 		$sql[] = $s;
-		
+
 		return $sql;
 	}
-	
+
 	function _DropAutoIncrement($tabname)
 	{
 		return false;
 	}
-	
+
 	function _TableSQL($tabname,$lines,$pkey,$tableoptions)
 	{
 		$sql = array();
-		
+
 		if (isset($tableoptions['REPLACE']) || isset ($tableoptions['DROP'])) {
 			$sql[] = sprintf($this->dropTable,$tabname);
 			if ($this->autoIncrement) {
@@ -676,19 +676,19 @@ class ADODB_DataDict {
 			$s .= ",\n                 PRIMARY KEY (";
 			$s .= implode(", ",$pkey).")";
 		}
-		if (isset($tableoptions['CONSTRAINTS'])) 
+		if (isset($tableoptions['CONSTRAINTS']))
 			$s .= "\n".$tableoptions['CONSTRAINTS'];
-		
-		if (isset($tableoptions[$this->upperName.'_CONSTRAINTS'])) 
+
+		if (isset($tableoptions[$this->upperName.'_CONSTRAINTS']))
 			$s .= "\n".$tableoptions[$this->upperName.'_CONSTRAINTS'];
-		
+
 		$s .= "\n)";
 		if (isset($tableoptions[$this->upperName])) $s .= $tableoptions[$this->upperName];
 		$sql[] = $s;
-		
+
 		return $sql;
 	}
-	
+
 	/*
 		GENERATE TRIGGERS IF NEEDED
 		used when table has auto-incrementing field that is emulated using triggers
@@ -697,7 +697,7 @@ class ADODB_DataDict {
 	{
 		return array();
 	}
-	
+
 	/*
 		Sanitize options, so that array elements with no keys are promoted to keys
 	*/
@@ -711,34 +711,34 @@ class ADODB_DataDict {
 		}
 		return $newopts;
 	}
-	
+
 	/*
 	"Florian Buzin [ easywe ]" <florian.buzin#easywe.de>
-	
+
 	This function changes/adds new fields to your table. You don't
 	have to know if the col is new or not. It will check on its own.
 	*/
 	function ChangeTableSQL($tablename, $flds, $tableoptions = false)
 	{
 	global $ADODB_FETCH_MODE;
-	
+
 		$save = $ADODB_FETCH_MODE;
 		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 		if ($this->connection->fetchMode !== false) $savem = $this->connection->SetFetchMode(false);
-		
+
 		// check table exists
 		$save_handler = $this->connection->raiseErrorFn;
 		$this->connection->raiseErrorFn = '';
 		$cols = $this->MetaColumns($tablename);
 		$this->connection->raiseErrorFn = $save_handler;
-		
+
 		if (isset($savem)) $this->connection->SetFetchMode($savem);
 		$ADODB_FETCH_MODE = $save;
-		
-		if ( empty($cols)) { 
+
+		if ( empty($cols)) {
 			return $this->CreateTableSQL($tablename, $flds, $tableoptions);
 		}
-		
+
 		if (is_array($flds)) {
 		// Cycle through the update fields, comparing
 		// existing fields to fields to update.
@@ -757,11 +757,11 @@ class ADODB_DataDict {
 					}
 				} else {
 					$holdflds[$k] = $v;
-				}		
+				}
 			}
 			$flds = $holdflds;
 		}
-	
+
 
 		// already exists, alter table instead
 		list($lines,$pkey) = $this->_GenFields($flds);
@@ -770,18 +770,18 @@ class ADODB_DataDict {
 
 		foreach ( $lines as $id => $v ) {
 			if ( isset($cols[$id]) && is_object($cols[$id]) ) {
-			
+
 				$flds = Lens_ParseArgs($v,',');
-				
+
 				//  We are trying to change the size of the field, if not allowed, simply ignore the request.
-				if ($flds && in_array(strtoupper(substr($flds[0][1],0,4)),$this->invalidResizeTypes4)) continue;	 
-	 		
+				if ($flds && in_array(strtoupper(substr($flds[0][1],0,4)),$this->invalidResizeTypes4)) continue;
+
 				$sql[] = $alter . $this->alterCol . ' ' . $v;
 			} else {
 				$sql[] = $alter . $this->addCol . ' ' . $v;
 			}
 		}
-		
+
 		return $sql;
 	}
 } // class
