@@ -513,9 +513,12 @@ class infolog_ical extends infolog_bo
 	 * @param string $charset=null The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
      * @param string $caldav_name=null CalDAV URL name-part for new entries
+     * @param array $callback_data=null array with callback and further parameters, first param is task to save
+     * 	signature array callback($task, $param1, ...)
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null, $caldav_name=null)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null, $caldav_name=null,
+		array $callback_data=null)
 	{
 
 		if ($this->tzid)
@@ -578,6 +581,12 @@ class infolog_ical extends infolog_bo
 			}
 			// merge in again all infolog fields not supported by iCal or not allowed to change
 			$taskData = array_merge($taskData, $old);
+		}
+		if ($callback_data)
+		{
+			$callback = array_shift($callback_data);
+			array_unshift($callback_data, $taskData);
+			$taskData = call_user_func_array($callback, $callback_data);
 		}
 		return $this->write($taskData, true, true, false, false, false, 'ical');
 	}

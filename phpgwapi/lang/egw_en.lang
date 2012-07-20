@@ -33,6 +33,7 @@ account is expired	common	en	Account is expired.
 accounts	common	en	Accounts
 acl	common	en	ACL
 action	common	en	Action
+action when category is an email address	groupdav	en	Action when category is an EMail address
 actions	common	en	Actions
 active	common	en	Active
 add	common	en	Add
@@ -40,6 +41,8 @@ add %1 category for	common	en	Add %1 category for
 add category	common	en	Add category
 add shortcut	common	en	Add shortcut
 add sub	common	en	Add sub
+add user to responsibles	groupdav	en	add user to responsibles
+add user to responsibles, removing evtl. previous category user	groupdav	en	add user to responsibles, removing evtl. previous category user
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
@@ -52,6 +55,7 @@ all addressbooks	groupdav	en	All addressbooks
 all fields	common	en	All fields
 all in one	groupdav	en	All in one
 all languages	common	en	All languages
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style sheet:
 american samoa	common	en	AMERICAN SAMOA
@@ -647,6 +651,8 @@ server answered. processing response...	common	en	Server answered. Processing re
 server contacted. waiting for response...	common	en	Server contacted. Waiting for response...
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
+set user as only responsible user, but keeping groups	groupdav	en	set user as only responsible user, but keeping groups
+set user as only responsible, removing all existing responsibles	groupdav	en	set user as only responsible, removing all existing responsibles
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES

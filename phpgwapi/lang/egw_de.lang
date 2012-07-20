@@ -33,6 +33,7 @@ account is expired	common	de	Benutzerkennung ist abgelaufen
 accounts	common	de	Benutzerkonten
 acl	common	de	ACL
 action	common	de	Aktion
+action when category is an email address	groupdav	de	Aktion wenn Kategorie eine EMail Adresse ist
 actions	common	de	Befehle
 active	common	de	Aktiv
 add	common	de	Hinzufügen
@@ -40,6 +41,8 @@ add %1 category for	common	de	%1 Kategorie hinzufügen für
 add category	common	de	Kategorie hinzufügen
 add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
+add user to responsibles	groupdav	de	füge Benutzer zu Verantwortlichen hinzu
+add user to responsibles, removing evtl. previous category user	groupdav	de	füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
 addressbook	common	de	Adressbuch
 addressbooks to sync in addition to personal addressbook	groupdav	de	Adressbücher die zusätzlich zum persönlichen synchronisiert werden sollen
 admin	common	de	Admin
@@ -52,6 +55,7 @@ all addressbooks	groupdav	de	Alle Adressbücher
 all fields	common	de	alle Felder
 all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	de	Erlaubt verantwortliche Benutzer durch setzen einer EMail Adresse als Kategorie zu ändern, von Geräten die keine verantwortlichen Benutzer unterstützen.
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
@@ -646,6 +650,8 @@ server answered. processing response...	common	de	Server antwortet. Bearbeite An
 server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
+set user as only responsible user, but keeping groups	groupdav	de	setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
+set user as only responsible, removing all existing responsibles	groupdav	de	setze Benutzer als alleinigen Verantwortlichen, entferne alle bestehenden Verantwortlichen
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
