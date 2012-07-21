@@ -28,6 +28,17 @@ class etemplate_widget_itempicker extends etemplate_widget
 	{
 		parent::__construct($xml);
 	}
+	
+	/**
+	 * Find items that match the given parameters
+	 */
+	public static function ajax_item_search($app, $type, $pattern, $options=array()) {
+		$options['type'] = $type ? $type : $options['type'];
+		$items = egw_link::query($app, $pattern, $options);
+
+		$response = egw_json_response::get();
+		$response->data($items);
+	}
 }
 
 etemplate_widget::registerWidget('etemplate_widget_itempicker', array('itempicker'));

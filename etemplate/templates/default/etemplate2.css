@@ -802,7 +802,7 @@ div.et2_progress > div {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 260px;
+	height: 256px;
 }
 .et2_itempicker_left {
 	display: block;
@@ -826,6 +826,13 @@ div.et2_progress > div {
 	background-color: #f9f9f9;
 }
 
+.et2_itempicker_right_container {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
 .et2_itempicker_app_select {
 	list-style-type: none;
 	padding: 0;
@@ -843,4 +850,39 @@ div.et2_progress > div {
 	background-color: #f9f9f9;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
+}
+
+.et2_itempicker_search {
+	margin: 1em;
+	margin-bottom: 0;
+	width: 67%;
+	padding: 0.2em;
+}
+
+.et2_itempicker_itemlist {
+	display: block;
+	border: 1px solid #b6b6b6;
+	margin: 1em;
+	margin-bottom: 0;
+	padding: 0;
+	height: 67%;
+	background-color: #ffffff;
+	overflow: auto;
+}
+
+.et2_itempicker_itemlist ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.et2_itempicker_itemlist li {
+	display: block;
+	margin: 0;
+	padding: 4px;
+	color: #284d8a;
+}
+
+.et2_itempicker_itemlist li.row_on {
+	background-color: #f2f9fe;
 }
