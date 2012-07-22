@@ -38,7 +38,7 @@ class addressbook_vcal extends addressbook_bo
 	 *
 	 * @var array
 	 */
-	var $supportedFields = array( // all entries e.g. for groupdav
+	var $databaseFields = array( // all entries e.g. for groupdav
 			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
 									'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
@@ -75,6 +75,8 @@ class addressbook_vcal extends addressbook_bo
 			'REV'				=> array('modified'),
 			//set for Apple: 'X-ABSHOWAS' => array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
+		
+	var $supportedFields;
 
 	/**
 	 * VCard version
@@ -122,6 +124,7 @@ class addressbook_vcal extends addressbook_bo
 			break;
 		}
 		$this->clientProperties = $_clientProperties;
+		$this->supportedFields = $this->databaseFields;
 	}
 	/**
 	* import a vard into addressbook
@@ -517,11 +520,15 @@ class addressbook_vcal extends addressbook_bo
 
 	function setSupportedFields($_productManufacturer='file', $_productName='', $_supportedFields = null)
 	{
-
 		$this->productManufacturer = strtolower($_productManufacturer);
 		$this->productName = strtolower($_productName);
 
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
+	}
+	
+	function setDatabaseFields($_databaseFields)
+	{
+		if (is_array($_databaseFields)) $this->databaseFields = $_databaseFields;
 	}
 
 	/**
@@ -913,9 +920,9 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach ($finalRowNames as $key => $vcardKey)
 		{
-			if (isset($this->supportedFields[$key]))
+			if (isset($this->databaseFields[$key]))
 			{
-				$fieldNames = $this->supportedFields[$key];
+				$fieldNames = $this->databaseFields[$key];
 				foreach ($fieldNames as $fieldKey => $fieldName)
 				{
 					if (!empty($fieldName))
