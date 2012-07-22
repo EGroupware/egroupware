@@ -727,6 +727,7 @@ class addressbook_groupdav extends groupdav_handler
 		if ($this->agent == 'cfnetwork' || $this->agent == 'dataaccess')
 		{
 			$supportedFields = $handler->supportedFields;
+			$databaseFields = $handler->databaseFields;
 			// use just CELL and IPHONE, CELL;WORK and CELL;HOME are NOT understood
 			//'TEL;CELL;WORK'		=> array('tel_cell'),
 			//'TEL;CELL;HOME'		=> array('tel_cell_private'),
@@ -734,19 +735,23 @@ class addressbook_groupdav extends groupdav_handler
 			unset($supportedFields['TEL;CELL;WORK']);
 			$supportedFields['TEL;IPHONE'] = array('tel_cell_private');
 			unset($supportedFields['TEL;CELL;HOME']);
-			$supportedFields['X-ABSHOWAS'] = array('fileas_type');	// Horde vCard class uses uppercase prop-names!
+			$databaseFields['X-ABSHOWAS'] = $supportedFields['X-ABSHOWAS'] = array('fileas_type');	// Horde vCard class uses uppercase prop-names!
 			// Apple Addressbook pre Lion (OS X 10.7) messes up CLASS and CATEGORIES (Lion cant set them but leaves them alone)
 			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520)
 			{
 				unset($supportedFields['CLASS']);
+				unset($databaseFields['CLASS']);
 				unset($supportedFields['CATEGORIES']);
+				unset($databaseFields['CATEGORIES']);
 				// gd cant parse or resize images stored from snow leopard addressbook: gd-jpeg:
 				// - JPEG library reports unrecoverable error
 				// - Passed data is not in 'JPEG' format
 				// - Couldn't create GD Image Stream out of Data
 				// FF (10), Safari (5.1.3) and Chrome (17) cant display it either --> ignore images
 				unset($supportedFields['PHOTO']);
+				unset($databaseFields['PHOTO']);
 			}
+			$handler->setDatabaseFields($databaseFields);
 		}
 		$handler->setSupportedFields('GroupDAV',$this->agent, isset($supportedFields) ?
 			$supportedFields : $handler->supportedFields);
