@@ -234,15 +234,45 @@ var et2_itempicker = et2_inputWidget.extend({
 	updateItemList: function(data) {
 		var list = $j(document.createElement("ul"));
 		var item_count = 0;
+		var _self = this;
 		for(var id in data) {
 			var item = $j(document.createElement("li"));
-			item.attr("id", id);
 			if(item_count%2 == 0) {
 				item.addClass("row_on");
 			} else {
 				item.addClass("row_off");
 			}
-			item.html(data[id]);
+			item.attr("id", id)
+				.html(data[id])
+				.click(function(e) {
+					if(e.ctrlKey || e.metaKey) {
+						// add to selection
+						$j(this).addClass("selected");
+					} else if(e.shiftKey) {
+						// select range
+						var start = $j(this).siblings(".selected").first();
+						if(start == 0) {
+							// no start item - cannot select range - select single item
+							$j(this).addClass("selected");
+							return true;
+						}
+						var end = $j(this);
+						// swap start and end if start appears after end in dom hierarchy
+						if(start.index() > end.index()) {
+							var startOld = start;
+							start = end;
+							end = startOld;
+						}
+						// select start to end
+						start.addClass("selected");
+						start.nextUntil(end).addClass("selected");
+						end.addClass("selected");
+					} else {
+						// select single item
+						$j(this).siblings(".selected").removeClass("selected");
+						$j(this).addClass("selected");
+					}
+				});
 			list.append(item);
 			item_count++;
 		}

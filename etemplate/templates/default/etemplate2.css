@@ -881,8 +881,19 @@ div.et2_progress > div {
 	margin: 0;
 	padding: 4px;
 	color: #284d8a;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .et2_itempicker_itemlist li.row_on {
 	background-color: #f2f9fe;
+}
+
+.et2_itempicker_itemlist li.selected {
+	color: #ffffff;
+	background-color: #3875d7;
 }
