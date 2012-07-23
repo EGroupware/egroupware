@@ -173,6 +173,13 @@ class etemplate_widget
 				}
 			}
 		}
+
+		// Add in anything in the modification array
+		if(is_array(self::$request->modifications[$this->id]))
+		{
+			$this->attrs = array_merge($this->attrs,self::$request->modifications[$this->id]);
+		}
+		
 		return $template;
 	}
 
@@ -343,10 +350,8 @@ class etemplate_widget
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
 		}
-		if ($respect_disabled && ($disabled = $this->attrs['disabled']))
+		if ($respect_disabled && ($disabled = $this->attrs['disabled'] || $disabled = self::check_disabled($disabled, $expand)))
 		{
-			// check if disabled contains @ or !
-			$disabled = self::check_disabled($disabled, $expand);
 			if ($disabled)
 			{
 				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
