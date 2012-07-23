@@ -297,8 +297,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 			readRowNode = function _readRowNode(node, nodeName) {
 				if (x >= w)
 				{
-					this.egw().debug("warn", "Skipped grid cell in row, '" +
-						nodeName + "'");
+					if(nodeName != "description")
+					{
+						// Only notify it skipping other than description,
+						// description used to pad
+						this.egw().debug("warn", "Skipped grid cell in row, '" +
+							nodeName + "'");
+					}
 					return;
 				}
 

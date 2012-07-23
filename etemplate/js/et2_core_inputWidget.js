@@ -49,6 +49,12 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 			"type": "string",
 			"default": et2_no_init,
 			"description": "Used internally to store the validation error that came from the server."
+		},
+		"tabindex": {
+			"name": "Tab index",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Specifies the tab order of a widget when the 'tab' button is used for navigating."
 		}
 	},
 
@@ -233,6 +239,13 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 				$j(node).addClass("invalid");
 			}
 		}
+	},
+
+	/**
+	 * Set tab index
+	 */
+	set_tabindex: function(index) {
+		jQuery(this.getInputNode()).attr("tabindex", index);
 	},
 
 	getInputNode: function() {

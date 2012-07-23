@@ -28,6 +28,9 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], {
 			name: "Label",
 			translate: true,
 			type: "string",
+		},
+		"needed": {
+			"ignore": true
 		}
 	},
 	init: function() {

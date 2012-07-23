@@ -45,6 +45,18 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			"type": "string",
 			"description": "JS code which gets executed when the button is clicked"
 		},
+		"accesskey": {
+			"name": "Access Key",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "Alt + <key> activates widget"
+		},
+		"tabindex": {
+			"name": "Tab index",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Specifies the tab order of a widget when the 'tab' button is used for navigating."
+		},
 		// No such thing as a required button
 		"needed": {
 			"ignore": true,
@@ -76,6 +88,9 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 	},
 
+	set_accesskey: function(key) {
+		jQuery(this.node).attr("accesskey", key);
+	},
 	set_ro_image: function(_image) {
 		if(this.options.readonly)
 		{
@@ -161,6 +176,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		}
 	},
 
+	/**
+	 * Set tab index
+	 */
+	set_tabindex: function(index) {
+		jQuery(this.btn).attr("tabindex", index);
+	},
 
 	/**
 	 * Implementation of the et2_IInput interface

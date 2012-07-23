@@ -137,6 +137,10 @@ function et2_checkType(_val, _type, _attr, _cname)
 			return _val;
 		}
 
+		// Handle some less common possibilities
+		// Maybe a split on an empty string
+		if(typeof _val == "object" && jQuery.isEmptyObject(_val)) return "";
+
 		return _err();
 	}
 

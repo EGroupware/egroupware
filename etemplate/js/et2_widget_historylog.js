@@ -31,6 +31,12 @@
  */
 
 var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
+	attributes: {
+		"value": {
+			"type": "any"
+		}
+	},
+
 	columns: [
 		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time'},
 		{'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account'},

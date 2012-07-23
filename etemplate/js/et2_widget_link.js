@@ -57,6 +57,10 @@ var et2_link_to = et2_inputWidget.extend({
 			"type": "string",
 			"default": "Link",	
 			"description": "Label for the link button"
+		},
+		"value": {
+			// Could be string or int if application is provided, or an Object
+			"type": "any"
 		}
 	},
 

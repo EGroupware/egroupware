@@ -34,12 +34,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		},
 		'value': {
 			'name': 'Custom fields',
-			'description': 'Auto filled'
+			'description': 'Auto filled',
+			'type': "any"
 		},
 		'type_filter': {
 			'name': 'Field filter',
 			"default": "",
-			"type": "string",
+			"type": "any", // String or array
 			"description": "Filter displayed custom fields by their 'type2' attribute"
 		}
 	},
