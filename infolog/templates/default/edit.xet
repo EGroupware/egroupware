@@ -306,7 +306,7 @@ td.searchParent input[type=search] { width: 90%; }
 
 /* Some nice alignment */
 select.et2_selectbox, #info_contact &gt; select { width: 117px; }
-#info_contact &gt; input {width: 144px;}
+#info_contact &gt; input {width: 134px;}
 #info_from {width: 253px;}
 #info_cat {width: 255px;}
 #info_subject {width: 100%;}
