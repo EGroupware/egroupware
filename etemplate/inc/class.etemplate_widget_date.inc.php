@@ -48,12 +48,12 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	 */
 	public function beforeSendToClient($cname)
 	{
-		if (!empty($this->attrs['dataformat']))	// Non-integer timestamp
+		$form_name = self::form_name($cname, $this->id);
+		$value =& self::get_array(self::$request->content, $form_name, true);
+		if ($value && !empty($this->attrs['dataformat']))	// Non-integer timestamp
 		{
-			$form_name = self::form_name($cname, $this->id);
-			$value =& self::get_array(self::$request->content, $form_name, true);
 			$date = DateTime::createFromFormat($this->attrs['dataformat'], $value);
-			$value = $date->getTimestamp();
+			if($date) $value = $date->getTimestamp();
 		}
 	}
 
