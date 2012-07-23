@@ -65,9 +65,12 @@ class etemplate_new extends etemplate_widget_template
 
 		if ($name) $this->read($name,$template='default',$lang='default',$group=0,$version='',$load_via);
 
-		// generate new etemplate request object
-		self::$request = etemplate_request::read();
-		self::$request->content = array();
+		// generate new etemplate request object, if not already existing
+		if(!self::$request)
+		{
+			self::$request = etemplate_request::read();
+			self::$request->content = array();
+		}
 	}
 
 	/**
