@@ -161,6 +161,17 @@ var et2_hbox = et2_baseWidget.extend({
 
 		// Normally simply return the hbox-div
 		return this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Tables added to the root node need to be inline instead of blocks
+	 */
+	addChild: function(child) {
+		this._super.apply(this, arguments);
+		if(child.instanceOf && child.instanceOf(et2_grid) || child._type == 'et2_grid')
+		{
+			jQuery(child.getDOMNode(child)).css("display", "inline-table");
+		}
 	}
 });
 
