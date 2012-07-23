@@ -44,6 +44,20 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	protected $legacy_options = 'dataformat,mode';
 
 	/**
+	 * Change value to be an integer - client side only deals in timestamps
+	 */
+	public function beforeSendToClient($cname)
+	{
+		if (!empty($this->attrs['dataformat']))	// Non-integer timestamp
+		{
+			$form_name = self::form_name($cname, $this->id);
+			$value =& self::get_array(self::$request->content, $form_name, true);
+			$date = DateTime::createFromFormat($this->attrs['dataformat'], $value);
+			$value = $date->getTimestamp();
+		}
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
