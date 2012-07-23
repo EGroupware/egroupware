@@ -816,7 +816,8 @@ var et2_widget = Class.extend({
 			}
 
 			// Check whether the manager has a namespace for the id of this object
-			if (typeof mgr.getEntry(this.id) === 'object')
+			var entry = mgr.getEntry(this.id);
+			if (typeof entry === 'object' && entry !== null)
 			{
 				// The content manager has an own node for this object, so
 				// create an own perspective.
