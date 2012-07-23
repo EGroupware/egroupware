@@ -102,21 +102,24 @@ var et2_template = et2_DOMWidget.extend({
 					splitted = this.id.split('.');
 					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" + splitted.join('.') + ".xet";
 
-					et2_loadXMLFromURL(path, function(_xmldoc) {
-						var templates = {};
-						// Scan for templates and store them
-						for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-							var template = _xmldoc.childNodes[i];
-							if(template.nodeName.toLowerCase() != "template") continue;
-							templates[template.getAttribute("id")] = template;
-						}
+					if(splitted.length)
+					{
+						et2_loadXMLFromURL(path, function(_xmldoc) {
+							var templates = {};
+							// Scan for templates and store them
+							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+								var template = _xmldoc.childNodes[i];
+								if(template.nodeName.toLowerCase() != "template") continue;
+								templates[template.getAttribute("id")] = template;
+							}
 
-						// Read the XML structure of the requested template
-						this.loadFromXML(templates[this.id]);
+							// Read the XML structure of the requested template
+							this.loadFromXML(templates[this.id]);
 
-						// Inform the widget tree that it has been successfully loaded.
-						this.loadingFinished();
-					}, this);
+							// Inform the widget tree that it has been successfully loaded.
+							this.loadingFinished();
+						}, this);
+					}
 					return;
 				}
 			}
