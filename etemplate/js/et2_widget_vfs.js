@@ -239,6 +239,11 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
  * Human readable file sizes
  */
 var et2_vfsSize = et2_description.extend({
+	attributes: {
+		"value": {
+			"type": "integer",
+		}
+	},
 	init: function() {
 		this._super.apply(this, arguments);
 		this.span.addClass("et2_vfs");
