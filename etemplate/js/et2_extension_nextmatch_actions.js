@@ -262,7 +262,7 @@ function nm_open_popup(_action, _ids)
 		nm_popup_action = _action;
 		if(_ids.length && typeof _ids[0] == 'object')
 		{
-			egw().debug("warn", 'Not proper format for IDs');
+			egw().debug("warn", 'Not proper format for IDs, should be array',_ids);
 			_action.data.nextmatch = _ids[0]._context._widget;
 			nm_popup_ids = [];
 			for(var i = 0; i < _ids.length; i++)
