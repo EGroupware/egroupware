@@ -19,13 +19,6 @@
 */
 
 /**
- * Interface for widgets which have the align attribute
- */
-var et2_IAligned = new Interface({
-	get_align: function() {}
-});
-
-/**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
  * function is provided, which attatches the given node to the DOM if possible.

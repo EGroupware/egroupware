@@ -24,7 +24,7 @@
  * This also includes repeating the last row in the grid and filling
  * it with content data
  */ 
-var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
+var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 
 	createNamespace: true,
 
@@ -32,6 +32,12 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 		// Better to use CSS, no need to warn about it
 		"border": {
 			"ignore": true
+		},
+		"align": {
+			"name": "Align",
+			"type": "string",
+			"default": "left",
+			"description": "Position of this element in the parent hbox"
 		},
 		"spacing": {
 			"ignore": true
@@ -622,6 +628,14 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM], {
 
 		return this._super(this, vis);
 	},
+
+	set_align: function(_value) {
+                this.align = _value;
+        },
+
+        get_align: function(_value) {
+                return this.align;
+        },
 
 	/**
          * Code for implementing et2_IDetachedDOM

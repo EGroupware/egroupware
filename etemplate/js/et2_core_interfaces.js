@@ -71,6 +71,13 @@ var et2_IResizeable = new Interface({
 });
 
 /**
+ * Interface for widgets which have the align attribute
+ */
+var et2_IAligned = new Interface({
+	get_align: function() {}
+});
+
+/**
  * Interface for widgets which want to e.g. perform clientside validation before
  * the form is submitted.
  */
