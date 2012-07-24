@@ -135,12 +135,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
                         $field_filter = explode(',', $this->attrs['field_names']);
                 }
 		$fields = $customfields;
-		
+	
+		$use_private = self::expand_name($this->attrs['use-private'],0,0);
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed
-			if ((string)self::expand_name($this->attrs['use-private'],0,0) !== '' &&
-				(boolean)$field['private'] != (boolean)$this->attrs['use-private'])
+			if ((string)$this->attrs['use-private'] !== '' && (boolean)$field['private'] != (boolean)$use_private)
 			{
 				unset($fields[$key]);
 			}
@@ -199,6 +199,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		{
 			// This widget has different settings from global
 			$this->setElementAttribute($form_name, 'customfields', $fields);
+			$this->setElementAttribute($form_name, 'fields', array_fill_keys(array_keys($fields), true));
 		}
 		parent::beforeSendToClient($cname);
 

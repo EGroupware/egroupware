@@ -29,8 +29,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		},
 		'fields': {
 			'name': 'Custom fields',
-			'description': 'Auto filled',
-			"default": {}
+			'description': 'Auto filled'
 		},
 		'value': {
 			'name': 'Custom fields',
@@ -45,13 +44,15 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 	},
 
-	legacyOptions: ["type_filter"],
+	legacyOptions: ["type_filter"], // Field restriction & private done server-side
 
 	prefix: '#',
 
+	DEFAULT_ID: "custom_fields",
+
 	init: function() {
 		// Some apps (infolog edit) don't give ID, so assign one to get settings
-		if(!arguments[1].id) arguments[1].id = "custom_fields";
+		if(!arguments[1].id) arguments[1].id = this.DEFAULT_ID;
 
 		this._super.apply(this, arguments);
 
@@ -64,6 +65,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		this.rows = {};
 		this.widgets = {};
 		this.detachedNodes = [];
+		if(!this.options.fields) this.options.fields = {};
 
 		if(this.options.type_filter && typeof this.options.type_filter == "string")
 		{
@@ -71,9 +73,12 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 		if(this.options.type_filter)
 		{
-			this.options.fields = {};
+			var already_filtered = !jQuery.isEmptyObject(this.options.fields);
 			for(var field_name in this.options.customfields)
 			{
+				// Already excluded?
+				if(already_filtered && !this.options.fields[field_name]) continue;
+
 				if(!this.options.customfields[field_name].type2)
 				{
 					// No restrictions
@@ -155,6 +160,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			{
 				id = "{" + this.id + "}" + "["+this.prefix + field_name+"]";
 			}
+			else if (this.id != this.DEFAULT_ID)
+			{
+				// Prefix this ID to avoid potential ID collisions
+				id = this.id + "["+id+"]";
+			}
 
 			// Avoid creating field twice
 			if(!this.rows[id])
@@ -222,7 +232,8 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			{
 				for(var key in data)
 				{
-					if(global_data[key])
+					// Don't overwrite fields with global values
+					if(global_data[key] && key !== 'fields')
 					{
 						data[key] = jQuery.extend(true, {}, data[key], global_data[key]);
 					}
@@ -284,7 +295,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
 
 			// Check if ID was missing
-			if(value == null && this.id == 'custom_fields' && this.getArrayMgr("content").getEntry(this.prefix + field_name))
+			if(value == null && this.id == this.DEFAULT_ID && this.getArrayMgr("content").getEntry(this.prefix + field_name))
 			{
 				value = this.getArrayMgr("content").getEntry(this.prefix + field_name);
 			}
@@ -311,7 +322,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 	 */
 	getValue: function() {
 		// Not using an ID means we have to grab all the widget values, and put them where server knows to look
-		if(this.id != 'custom_fields')
+		if(this.id != this.DEFAULT_ID)
 		{
 			return null;
 		}
