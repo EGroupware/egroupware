@@ -2799,11 +2799,8 @@ class calendar_ical extends calendar_boupdate
 							{
 								$cn = substr($cn,1,-1);
 							}
-							$searcharray['n_fn'] = $cn;
-						}
-						elseif ($cn)
-						{
-							$searcharray['n_fn'] = $cn;
+							// not searching for $cn, as match can be not unique or without an email address
+							// --> notification will fail, better store just as email
 						}
 
 						if ($this->log)
