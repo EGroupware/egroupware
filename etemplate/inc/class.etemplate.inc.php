@@ -525,6 +525,22 @@ class etemplate_new extends etemplate_widget_template
 	}
 }
 
+// Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
+$files = scandir(EGW_INCLUDE_ROOT . '/etemplate/inc');
+foreach($files as $filename)
+{
+	if(strpos($filename, 'class.etemplate_widget') === 0)
+	{
+		try
+		{
+			include_once($filename);
+		}
+		catch(Exception $e)
+		{
+			error_log($e->getMessage());
+		}
+	}
+}
 
 if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate')
 {
