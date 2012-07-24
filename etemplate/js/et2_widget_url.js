@@ -198,7 +198,7 @@ et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
  * et2_url_ro is the readonly implementation of the url, email & phone.
  * It renders things as links, when possible
  */
-var et2_url_ro = et2_valueWidget.extend({
+var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -254,8 +254,35 @@ var et2_url_ro = et2_valueWidget.extend({
 				}
 				break;
 		}
-	}
+	},
 
+	/**
+	 * Code for implementing et2_IDetachedDOM
+	 */
+
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value", "class");
+	},
+
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values)
+	{
+		// Update the properties
+		this.span = jQuery(_nodes[0]);
+		if (typeof _values["value"] != "undefined")
+		{
+			this.set_value(_values["value"]);
+		}
+		if (typeof _values["class"] != "undefined")
+                {
+                        _nodes[0].setAttribute("class", _values["class"]);
+                }
+	}
 });
 
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
