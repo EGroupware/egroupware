@@ -812,6 +812,7 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
+						$subject = $event['title'];
 						// fall through
 					case 'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
@@ -819,10 +820,12 @@ class calendar_boupdate extends calendar_bo
 						{
 							if(!empty($details[$key]))
 							{
-								switch($key){
+								switch($key)
+								{
 							 		case 'access':
 									case 'priority':
 									case 'link':
+									case 'description':
 										break;
 									default:
 										$body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
@@ -830,6 +833,8 @@ class calendar_boupdate extends calendar_bo
 							 	}
 							}
 						}
+						// description need to be separated from body by fancy separator
+						$body .= "\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description'];
 						break;
 				}
 				// send via notification_app
@@ -842,7 +847,11 @@ class calendar_boupdate extends calendar_bo
 						$notification->set_message($body);
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
-						$notification->set_links(array($details['link_arr']));
+						// as we want ical body to be just describtion, we can NOT set links, as they get appended to body
+						if ($part_prefs['calendar']['update_format'] != 'ical')
+						{
+							$notification->set_links(array($details['link_arr']));
+						}
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
 					}
