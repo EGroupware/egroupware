@@ -387,7 +387,7 @@
 			// get message headers for specified message
 			$headers	= $bofelamimail->getMessageEnvelope($_uid, $_partID);
 
-			#_debug_array($headers); exit;
+			//_debug_array($headers); exit;
 			// check for Re: in subject header
 			$this->sessionData['subject'] 	= "[FWD] " . $bofelamimail->decode_header($headers['SUBJECT']);
 			$this->sessionData['sourceFolder']=$_folder;
@@ -401,7 +401,7 @@
 					$size				= lang('unknown');
 
 				$this->addMessageAttachment($_uid, $_partID, $_folder,
-					$bofelamimail->decode_header($headers['SUBJECT']),
+					$bofelamimail->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))),
 					'MESSAGE/RFC822', $size);
 			}
 			else
@@ -894,7 +894,7 @@
 								$_mailObject->AddAttachment (
 									$attachment['file'],
 									$_mailObject->EncodeHeader($attachment['name']),
-									'base64',
+									(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
 									$attachment['type']
 								);
 							}
