@@ -30,6 +30,30 @@ class jerryr_framework extends idots_framework
 		$this->idots_framework($template);
 	}
 
+	/**
+	 * Check if current user agent is supported
+	 *
+	 * Currently we do NOT support:
+	 * - iPhone, iPad, Android, SymbianOS due to iframe scrolling problems of Webkit
+	 *
+	 * @return boolean
+	 */
+	public static function is_supported_user_agent()
+	{
+		if (html::$ua_mobile)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	* Display the string with html of the topmenu if its enabled
+	*
+	* @param array $vars
+	* @param array $apps
+	* @return string
+	*/
 	function topmenu(array $vars,array $apps)
 	{
 		$this->tplsav2->menuitems = array();
