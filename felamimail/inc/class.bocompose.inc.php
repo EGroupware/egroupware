@@ -378,7 +378,7 @@
 					$size				= lang('unknown');
 
 				$this->addMessageAttachment($_uid, $_partID, $_folder,
-					$bofelamimail->decode_header($headers['SUBJECT']),
+					$bofelamimail->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))),
 					'MESSAGE/RFC822', $size);
 			}
 			else
@@ -418,7 +418,7 @@
 		 * 		all: for a reply to all
 		 * 		forward: inlineforwarding of a message with its attachments
 		 * @param $_icServer number (0 as it is the active Profile)
-		 * @param $_folder string 
+		 * @param $_folder string
 		 * @param $_uid number
 		 * @param $_partID number
 		 */
@@ -563,7 +563,7 @@
 			foreach ($headers['CC'] as $mailheader) {
 				$ccAddressA[] =  ($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL'];
 			}
-			if (count($ccAddressA)>0) 
+			if (count($ccAddressA)>0)
 			{
 				$ccAddress = bofelamimail::htmlspecialchars($bofelamimail->decode_header(implode(', ', $ccAddressA)));
 				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
@@ -827,7 +827,7 @@
 					$_mailObject->AddAttachment (
 						$attachment['file'],
 						$_mailObject->EncodeHeader($attachment['name']),
-						'base64',
+						(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
 						$attachment['type']
 					);
 				}
