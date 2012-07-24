@@ -84,6 +84,10 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 		{
 			this.egw().open_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
 		}
+		else
+		{
+			this._super.apply(this,arguments);
+		}
 	},
 
 	transformAttributes: function(_attrs) {
@@ -97,6 +101,10 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 				var src = manager.getEntry(_attrs["src"]);
 				if (src)
 				{
+					if(typeof src == "object")
+					{
+						src = egw().link('/index.php', src);
+					}
 					_attrs["src"] = src;
 				}
 			}
