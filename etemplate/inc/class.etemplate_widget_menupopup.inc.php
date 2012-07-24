@@ -93,7 +93,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			{
 				// Special for select-account - selOptions doesn't always load all accounts
 				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !isset($allowed[$val]) ||
-					$this->attrs['type'] != 'select-account' && !($this->attrs['multiple'] && !$val) && !isset($allowed[$val]))
+					$this->attrs['type'] != 'select-account' && !array_key_exists($val,$allowed))
 				{
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					$value = '';
