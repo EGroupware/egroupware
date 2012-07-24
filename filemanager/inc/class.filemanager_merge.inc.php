@@ -123,7 +123,7 @@ class filemanager_merge extends bo_merge
 				// Format date cfs per user preferences
 				if($field['type'] == 'date' || $field['type'] == 'date-time')
 				{
-					$file['#'.$name] = egw_time::to($file['#'.$name]);
+					$file['#'.$name] = egw_time::to($file['#'.$name], $field['type'] == 'date' ? true : '');
 				}
 			}
                 }
