@@ -345,7 +345,7 @@ abstract class bo_tracking
 		if (is_null($changed_fields))
 		{
 			$changed_fields = self::changed_fields($data,$old);
-			error_log(__METHOD__.__LINE__.' Changedfields:'.array2string($changed_fields));
+			//error_log(__METHOD__.__LINE__.' Changedfields:'.array2string($changed_fields));
 		}
 		if (!$changed_fields) return 0;
 
