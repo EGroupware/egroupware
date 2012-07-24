@@ -865,22 +865,20 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
-						$popup = $body;
-						$popupsubject = $subject;
-						// format iCal uses now like Exchange event-title as subject and description as body
 						$subject = $event['title'];
-						$body = $event['description'];
 						// fall through
 					case 'extended':
-						$popup .= "\n\n".lang('Event Details follow').":\n";
+						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
 							if(!empty($details[$key]))
 							{
-								switch($key){
+								switch($key)
+								{
 							 		case 'access':
 									case 'priority':
 									case 'link':
+									case 'description':
 										break;
 									default:
 										$popup .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
@@ -888,11 +886,8 @@ class calendar_boupdate extends calendar_bo
 							 	}
 							}
 						}
-						if ($part_prefs['calendar']['update_format']=='extended')
-						{
-							$body = $body.$popup;
-							unset($popup);
-						}
+						// description need to be separated from body by fancy separator
+						$body .= "\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description'];
 						break;
 				}
 				// send via notification_app
@@ -903,10 +898,8 @@ class calendar_boupdate extends calendar_bo
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
 						$notification->set_message($body);
-						if (isset($popup)&&!empty($popup)) $notification->set_popupmessage($popup);
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
-						if (isset($popupsubject)&&!empty($popupsubject)) $notification->set_popupsubject($popupsubject);
 						// as we want ical body to be just describtion, we can NOT set links, as they get appended to body
 						if ($part_prefs['calendar']['update_format'] != 'ical')
 						{

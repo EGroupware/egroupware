@@ -635,8 +635,12 @@ return array();	// temporary disabling meeting requests from calendar
 			if (isset($message->$attr)) $event[$key] = $message->$attr;
 		}
 
-		$event['description'] = $this->backend->messagenote2note($message->body, $message->rtf, $message->airsyncbasebody);
-
+		// only change description, if one given, as iOS5 skips description in ChangeMessage after MeetingResponse
+		// --> we ignore empty / not set description, so description get no longer lost, but you cant empty it via eSync
+		if (($description = $this->backend->messagenote2note($message->body, $message->rtf, $message->airsyncbasebody)))
+		{
+			$event['description'] = $description;
+		}
 		$event['public'] = (int)($message->sensitivity < 1);	// 0=normal, 1=personal, 2=private, 3=confidential
 
 		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
