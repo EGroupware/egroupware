@@ -79,13 +79,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				// Already excluded?
 				if(already_filtered && !this.options.fields[field_name]) continue;
 
-				if(!this.options.customfields[field_name].type2)
+				if(!this.options.customfields[field_name].type2 || this.options.customfields[field_name].type2.length == 0)
 				{
 					// No restrictions
 					this.options.fields[field_name] = true;
 					continue;
 				}
-				var types = this.options.customfields[field_name].type2.split(",");
+				var types = typeof this.options.customfields[field_name].type2 == 'string' ? this.options.customfields[field_name].type2.split(",") : this.options.customfields[field_name].type2;
 				this.options.fields[field_name] = false;
 				for(var i = 0; i < types.length; i++)
 				{
