@@ -859,12 +859,12 @@ class felamimail_bo
 		}
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
 		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
 		$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
 		$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
-		$f2c = ($_folder?$_folder:$this->sessionData['mailbox']);
-		if(($f2c == $trashFolder && $deleteOptions == "move_to_trash") ||
-		   ($f2c == $draftFolder)) {
+		if(($_folder == $trashFolder && $deleteOptions == "move_to_trash") ||
+		   ($_folder == $draftFolder)) {
 			$deleteOptions = "remove_immediately";
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {
@@ -903,15 +903,16 @@ class felamimail_bo
 				foreach((array)$_messageUID as $key =>$uid)
 				{
 					//flag messages, that are flagged for deletion as seen too
-					$this->flagMessages('read', $uid, $oldMailbox);
+					$this->flagMessages('read', $uid, $_folder);
 					$flags = $this->getFlags($uid);
+					//error_log(__METHOD__.__LINE__.array2string($flags));
 					if (strpos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
 					unset($flags);
 				}
 				$retValue = PEAR::isError($this->icServer->deleteMessages($_messageUID, true));
 				foreach((array)$undelete as $key =>$uid)
 				{
-					$this->flagMessages('undelete', $uid, $oldMailbox);
+					$this->flagMessages('undelete', $uid, $_folder);
 				}
 				if ( PEAR::isError($retValue)) {
 					if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s): ".implode(',',$_messageUID));
@@ -998,6 +999,7 @@ class felamimail_bo
 	function getFlags ($_messageUID) {
 		$flags =  $this->icServer->getFlags($_messageUID, true);
 		if (PEAR::isError($flags)) {
+			error_log(__METHOD__.__LINE__.'Failed to retrieve Flags for Messages with UID(s)'.array2string($_messageUID).' Server returned:'.$flags->message);
 			return null;
 		}
 		return $flags;
@@ -2842,6 +2844,7 @@ class felamimail_bo
 
 	function getNextMessage($_foldername, $_id)
 	{
+		if (empty($this->sessionData['folderStatus'])) $this->restoreSessionData();
 		#_debug_array($this->sessionData['folderStatus'][$this->profileID][$_foldername]['sortResult']);
 		#_debug_array($this->sessionData['folderStatus'][$this->profileID]);
 		#print "ID: $_id<br>";
