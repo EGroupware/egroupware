@@ -97,7 +97,10 @@ div.et2_hbox>div {
 .et2_label {
 	color: #101050;
 }
-
+input.et2_url {
+	margin-right: 6px;
+	padding-right: 8px;
+}
 a.et2_url {
 	background-position: center;
 	background-repeat: no-repeat;
@@ -106,6 +109,7 @@ a.et2_url {
 	margin: -4px;
 	padding: 2px;
 	padding-left: 16px;
+	margin-left: -10px;
 }
 
 a.et2_url.email {
