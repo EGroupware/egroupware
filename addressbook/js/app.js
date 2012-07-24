@@ -154,7 +154,7 @@ function show_custom_country(selectbox)
 	}
 	else if (custom_field)
 	{
-		if(selectbox.value == "" || selectbox.value == null)
+		if((selectbox.value == "" || selectbox.value == null) && custom_field.value != "")
 		{
 			selectbox.value = "-custom-";
 			custom_field.style.display = "inline";

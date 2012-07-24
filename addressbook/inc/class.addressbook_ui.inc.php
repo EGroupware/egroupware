@@ -1796,8 +1796,8 @@ class addressbook_ui extends addressbook_bo
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
-		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_one_countrycode]"));');
-		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_two_countrycode]"));');
+		$GLOBALS['egw']->js->set_onload('show_custom_country($j(\'select[id*="adr_one_countrycode"]\').get(0));');
+		$GLOBALS['egw']->js->set_onload('show_custom_country($j(\'select[id*="adr_two_countrycode"]\').get(0));');
 
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
