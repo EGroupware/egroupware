@@ -862,9 +862,9 @@ class felamimail_bo
 		$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
 		$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
 		$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
-
-		if(($this->sessionData['mailbox'] == $trashFolder && $deleteOptions == "move_to_trash") ||
-		   ($this->sessionData['mailbox'] == $draftFolder)) {
+		$f2c = ($_folder?$_folder:$this->sessionData['mailbox']);
+		if(($f2c == $trashFolder && $deleteOptions == "move_to_trash") ||
+		   ($f2c == $draftFolder)) {
 			$deleteOptions = "remove_immediately";
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {

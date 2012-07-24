@@ -1849,6 +1849,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$_messageUID = (array)$id;
 
 		$this->_connect($this->account);
+		$this->mail->reopen($folder);
 		try
 		{
 			$rv = $this->mail->deleteMessages($_messageUID, $folder);
