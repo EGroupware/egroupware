@@ -51,7 +51,7 @@ function cal_fix_app_id(_action, _senders)
 function cal_open(_action, _senders)
 {
 	var id = _senders[0].id;
-	var matches = id.match(/^([0-9]+):([0-9]+)$/);
+	var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 	var backup = _action.data;
 	if (matches)
 	{
@@ -79,7 +79,7 @@ function cal_open(_action, _senders)
 		}
 	}
 	console.log(_action);
-	nm_action(_action, _senders);
+	nm_action(_action, _senders, null, {ids: []});
 	
 	_action.data = backup;	// restore url, width, height, nm_action
 }
