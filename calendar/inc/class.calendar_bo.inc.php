@@ -618,6 +618,7 @@ class calendar_bo
 	 */
 	function clear_private_infos(&$event,$allowed_participants = array())
 	{
+		if ($event == false) return;
 		if (!is_array($event['participants'])) error_log(__METHOD__.'('.array2string($event).', '.array2string($allowed_participants).') NO PARTICIPANTS '.function_backtrace());
 
 		$event = array(
