@@ -34,15 +34,20 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 	attributes: {
 		"value": {
 			"type": "any"
+		},
+		"status_id":{
+			"type": "string",
+			"default": "status"
 		}
 	},
 
+	legacyOptions: ["status_id"],
 	columns: [
 		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time'},
 		{'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account'},
 		{'id': 'status', caption: 'Changed', 'width': '120px', widget_type: 'select'},
-		{'id': 'new_value', caption: 'New Value'},
-		{'id': 'old_value', caption: 'Old Value'}
+		{'id': 'new_value', caption: 'New Value', 'width': 'auto'},
+		{'id': 'old_value', caption: 'Old Value', 'width': 'auto'}
 	],
 
 	TIMESTAMP: 0, OWNER: 1, FIELD: 2, NEW_VALUE: 3, OLD_VALUE: 4,
@@ -54,6 +59,10 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 
 		this.innerDiv = $j(document.createElement("div"))
 			.appendTo(this.div);
+	},
+
+	set_status_id: function(_new_id) {
+		this.options.status_id = _new_id;
 	},
 
 	doLoadingFinished: function() {
@@ -110,7 +119,12 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
-		this.dataview.setColumns(jQuery.extend(true, [],this.columns));
+		var dataview_columns = [];
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			dataview_columns[i] = {"id": this.columns[i].id, "caption": this.columns[i].caption, "width":this.columns[i].width};
+		}
+		this.dataview.setColumns(dataview_columns);
 
 		// Create widgets for columns that stay the same, and set up varying widgets
 		this.createWidgets();
@@ -174,7 +188,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		{
 			if(this.columns[i].widget_type)
 			{
-				var attrs = {'readonly': true, 'id': this.columns[i].id};
+				// Status ID is allowed to be remapped to something else.  Only affects the widget ID though
+				var attrs = {'readonly': true, 'id': (i == this.FIELD ? this.options.status_id : this.columns[i].id)};
 				this.columns[i].widget = et2_createWidget(this.columns[i].widget_type, attrs, this);
 				this.columns[i].widget.transformAttributes(attrs);
 				this.columns[i].nodes = $j(this.columns[i].widget.getDetachedNodes());
@@ -198,8 +213,9 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 		// Per-field widgets - new value & old value
 		this.fields = {};
 
+		var labels = this.columns[this.FIELD].widget.optionValues;
+
 		// Custom fields - Need to create one that's all read-only for proper display
-		var labels = {};
 		var cf_widget = et2_createWidget('customfields', {'readonly':true}, this);
 		cf_widget.loadFields();
 		// Override this or it may damage the real values
