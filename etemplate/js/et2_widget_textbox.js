@@ -229,5 +229,5 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	}
 });
 
-et2_register_widget(et2_textbox_ro, ["textbox_ro", "int_ro", "integer_ro", "float_ro"]);
+et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 

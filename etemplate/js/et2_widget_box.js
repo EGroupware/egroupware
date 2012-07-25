@@ -22,6 +22,12 @@
  */ 
 var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
 
+	attributes: {
+		// Not needed
+		"rows": {"ignore": true},
+		"cols": {"ignore": true}
+	},
+
 	createNamespace: true,
 
 	init: function() {

@@ -124,6 +124,14 @@ function et2_checkType(_val, _type, _attr, _cname)
 			{
 				return _val === "true";
 			}
+			if(lcv === "0" || lcv === "1")
+			{
+				return _val === "1";
+			}
+		}
+		else if (typeof _val == "number")
+		{
+			return _val != 0;
 		}
 
 		return _err();

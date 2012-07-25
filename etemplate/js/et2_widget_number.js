@@ -83,3 +83,15 @@ var et2_number = et2_textbox.extend({
 
 et2_register_widget(et2_number, ["int", "integer", "float"]);
 
+/**
+ * Extend read-only to tell it to ignore special attributes, which
+ * would cause warnings otherwise
+ */
+var et2_number_ro = et2_textbox_ro.extend({
+	attributes: {
+		"min": {"ignore": true},
+		"max": {"ignore": true},
+		"precision": {"ignore": true}
+	}
+});
+et2_register_widget(et2_number_ro, ["int_ro", "integer_ro", "float_ro"]);
