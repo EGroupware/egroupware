@@ -253,7 +253,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			var options = null;
 			if(typeof field == 'object')
 			{
-				attrs['select-options'] = field;
+				attrs['select_options'] = field;
 			}
 			// Check for options after the type, ex: link-entry:infolog
 			else if (field.indexOf(':') > 0)
