@@ -435,6 +435,11 @@ var et2_nextmatch_rowProvider = Class.extend({
 			// Assume any numeric class is a category
 			if(_data["class"].indexOf("cat") !== -1 || classes.match(/[0-9]+/))
 			{
+				// Accept either cat, cat_id or category as ID, and look there for category settings
+				var category_location = _data["class"].match(/(cat(_id|egory)?)/);
+				if(category_location) category_location = category_location[0];
+
+				// Get actual category
 				cats = classes.match(/(cat_)?([0-9]+)/);
 				if(cats == null) 
 				{
@@ -450,9 +455,11 @@ var et2_nextmatch_rowProvider = Class.extend({
 				// Get category info
 				if(!this.categories)
 				{
+					// Nextmatch category filter should put them here
 					var categories = _mgrs["sel_options"].getEntry('cat_id');
-					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry('cat_id');
-					if(!categories) categories = _mgrs["sel_options"].getEntry('${row}'+'[cat_id]');
+					// If not using category (tracker, calendar list) look for sel_options in the rows
+					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry(category_location);
+					if(!categories) categories = _mgrs["sel_options"].getEntry("${row}["+category_location + "]");
 					
 					// Cache
 					if(categories) this.categories = categories;
