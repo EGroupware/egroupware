@@ -117,7 +117,7 @@ class importexport_definitions_ui
 
 		foreach ($bodefinitions->get_definitions() as $identifier) {
 			$definition = new importexport_definition($identifier);
-			$definitions[] = $definition->get_record_array();
+			if($definition->type == 'import') $definitions[] = $definition->get_record_array();
 			unset($definition);
 		}
 		$content = $definitions;
@@ -158,7 +158,6 @@ class importexport_definitions_ui
 			if($content['plugin'] && $content['application'])
 			{
 				$wizard_name = $content['application'] . '_wizard_' . str_replace($content['application'] . '_', '', $content['plugin']);
- 
 				// we need to deal with the wizard object if exists
 				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php'))
 				{
@@ -175,7 +174,7 @@ class importexport_definitions_ui
 				$this->plugin = is_object($GLOBALS['egw']->$wizard_plugin) ? $GLOBALS['egw']->$wizard_plugin : new $wizard_plugin;
 
 				// Global object needs to be the same, or references to plugin don't work
-				if(!is_object($GLOBALS['egw']->importexport_definitions_ui) || $GLOBALS['egw']->importexport_definitions_ui !== $this) 
+				if(!is_object($GLOBALS['egw']->importexport_definitions_ui) || $GLOBALS['egw']->importexport_definitions_ui !== $this)
 					$GLOBALS['egw']->importexport_definitions_ui =& $this;
 			}
 			// deal with buttons even if we are not on ajax
@@ -247,10 +246,10 @@ class importexport_definitions_ui
 				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
 			}
 			$this->response->addAssign('contentbox', 'innerHTML', $html);
-			if (($onload = $GLOBALS['egw']->js->set_onload(''))) 
-			{ 	 
-				$this->response->addScript($onload); 	 
-			}			
+			if (($onload = $GLOBALS['egw']->js->set_onload('')))
+			{
+				$this->response->addScript($onload);
+			}
 			$this->response->addAssign('picturebox', 'style.display', 'none');
 			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');");
 
@@ -356,7 +355,7 @@ class importexport_definitions_ui
 					if($this->plugin instanceof importexport_iface_import_plugin || $this->plugin instanceof importexport_wizard_basic_import_csv) {
 						$content['type'] = 'import';
 					} elseif($this->plugin instanceof importexport_iface_export_plugin) {
-						$content['type'] = 'export';
+						//$content['type'] = 'export';
 					} else {
 						throw new egw_exception('Invalid plugin');
 					}
@@ -378,6 +377,7 @@ class importexport_definitions_ui
 		{
 			$content['msg'] = $this->steps['wizard_step20'];
 			foreach ($this->plugins[$content['application']] as $type => $plugins) {
+				if($type != 'import') continue;
 				foreach($plugins as $plugin => $name) {
 					$sel_options['plugin'][$plugin] = $name;
 				}

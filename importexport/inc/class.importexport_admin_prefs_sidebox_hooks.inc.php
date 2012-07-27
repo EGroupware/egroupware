@@ -31,6 +31,7 @@ class importexport_admin_prefs_sidebox_hooks
 						"','_blank',850,440,'yes')",
 					'icon' => 'import'
 				),
+				/*
 				array(
 					'text' => 'Export',
 					'link' => "javascript:egw_openWindowCentered2('".
@@ -38,6 +39,7 @@ class importexport_admin_prefs_sidebox_hooks
 						"','_blank',850,440,'yes')",
 					'icon' => 'export'
 				),
+				*/
 			);
 			if ($location == 'preferences')
 			{
