@@ -384,11 +384,11 @@ class emailadmin_script {
 				if (trim($vacation['forwards'])) {
 					$if = array();
 					foreach($vacation['addresses'] as $addr) {
-						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.$addr.'"';
+						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.trim($addr).'"';
 					}
 					$newscriptbody .= 'if anyof ('.implode(', ',$if).") {\n";
 					foreach(preg_split('/, ?/',$vacation['forwards']) as $addr) {
-						$newscriptbody .= "\tredirect \"".$addr."\";\n";
+						$newscriptbody .= "\tredirect \"".trim($addr)."\";\n";
 					}
 					$newscriptbody .= "\tkeep;\n}\n";
 				}
@@ -397,7 +397,7 @@ class emailadmin_script {
 				$first = 1;
 				foreach ($vacation['addresses'] as $vaddress) {
 						if (!$first) $newscriptbody .= ", ";
-						$newscriptbody .= "\"" . $vaddress . "\"";
+						$newscriptbody .= "\"" . trim($vaddress) . "\"";
 						$first = 0;
 				}
 				$message = $vacation['text'];
@@ -510,7 +510,7 @@ class emailadmin_script {
 				$first = 1;
 				foreach ($vacation['addresses'] as $address) {
 						if (!$first) $newscriptfoot .= ", ";
-						$newscriptfoot .= "\"" . $address . "\"";
+						$newscriptfoot .= "\"" . trim($address) . "\"";
 						$first = 0;
 				}
 

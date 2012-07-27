@@ -589,6 +589,12 @@ class emailadmin_bo extends so_sql
 				unset($structure[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
 			}
+			$rawHeadersCache = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($rawHeadersCache[$_profileID]))
+			{
+				unset($rawHeadersCache[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeadersCache, $expiration=60*60*1);
+			}
 			//reset folderObject cache, to trigger reload
 			felamimail_bo::resetFolderObjectCache($_profileID);
 			//reset counter of deleted messages per folder
