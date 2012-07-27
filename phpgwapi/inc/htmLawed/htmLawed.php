@@ -412,7 +412,9 @@ $t = $t[0];
 if($t == '< '){return '&lt; ';}
 if($t == '>'){return '&gt;';}
 if(!preg_match('`^<(/?)([a-zA-Z][a-zA-Z1-6]*)([^>]*?)\s?>$`m', $t, $m)){
- return str_replace(array('<', '>'), array('&lt;', '&gt;'), $t);
+ //error_log(__METHOD__.__LINE__.' Keep Bad:'.$C['keep_bad'].'->'.array2string($t));
+ //return str_replace(array('<', '>'), array('&lt;', '&gt;'), $t);
+ return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
 }elseif(!isset($C['elements'][($e = strtolower($m[2]))])){
  return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
 }
