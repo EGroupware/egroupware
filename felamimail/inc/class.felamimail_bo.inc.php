@@ -1819,6 +1819,7 @@ class felamimail_bo
 						if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
 						{
 							$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
+							if( PEAR::isError($allMailboxesExtAll) ) continue;
 							foreach ($allMailboxesExtAll as $kaMEA => $aMEA) if (!in_array($aMEA,$allMailboxesExt)) $allMailboxesExt[] = $aMEA;
 						}
 					}
@@ -1834,7 +1835,7 @@ class felamimail_bo
 							isset($allMailBoxesExtSorted[$mbx['MAILBOX'].$foldersNameSpace[$type]['delimiter']])||
 							(substr($mbx['MAILBOX'],-1)==$foldersNameSpace[$type]['delimiter'] && isset($allMailBoxesExtSorted[substr($mbx['MAILBOX'],0,-1)]))
 						) continue;
-					
+
 						//echo '#'.$mbx['MAILBOX'].':'.array2string($mbx)."#<br>";
 						$allMailBoxesExtSorted[$mbx['MAILBOX']] = $mbx;
 					}
