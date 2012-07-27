@@ -1810,6 +1810,11 @@ class felamimail_bo
 					// fetch and sort all folders
 					//echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
 					$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
+					if( PEAR::isError($allMailboxesExt) )
+					{
+						error_log(__METHOD__.__LINE__.' Failed to retrieve all Boxes:'.$allMailboxesExt->message);
+						$allMailboxesExt = array();
+					}
 					if (empty($allMailboxesExt) && $type == 'shared')
 					{
 						$allMailboxesExt = $this->icServer->getMailboxes('',0,true);
