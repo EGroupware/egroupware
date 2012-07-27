@@ -1243,7 +1243,7 @@ class felamimail_bo
 		$_html = str_replace('&amp;amp;','&amp;',$_html);
 		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
-		if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
 		if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		//error_log($_html);
 		// force the use of kses, as it is still have the edge over purifier with some stuff
@@ -3259,6 +3259,14 @@ class felamimail_bo
 
 	function getMessageRawBody($_uid, $_partID = '')
 	{
+		//TODO: caching einbauen static!
+		static $rawBody;
+		$_folder = $this->icServer->getCurrentMailbox();
+		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		{
+			error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
+			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+		}
 		if($_partID != '') {
 			$body = $this->icServer->getBody($_uid, true);
 		} else {
@@ -3269,18 +3277,31 @@ class felamimail_bo
 			error_log(__METHOD__.__LINE__.' failed:'.$body->message);
 			return false;
 		}
-
+		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)] = $body;
 		return $body;
 	}
 
 	function getMessageRawHeader($_uid, $_partID = '')
 	{
+		static $rawHeaders;
+		$_folder = $this->icServer->getCurrentMailbox();
+		//error_log(__METHOD__.__LINE__." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
+
+		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		if (isset($rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		{
+			//error_log(__METHOD__.__LINE__." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
+			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+		}
+
 		$retValue = $this->icServer->getRawHeaders($_uid, $_partID, true);
 		if (PEAR::isError($retValue))
 		{
 			error_log(__METHOD__.__LINE__.array2string($retValue->message));
 			$retValue = "Could not retrieve RawHeaders in ".__METHOD__.__LINE__." PEAR::Error:".array2string($retValue->message);
 		}
+		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]=$retValue;
+		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
 		return $retValue;
 	}
 
@@ -3452,7 +3473,14 @@ class felamimail_bo
 		// reduce traffic within the Instance per User; Expire every 5 Minutes
 		//error_log(__METHOD__.__LINE__.' Called with Folder:'.$_folder.function_backtrace());
 		if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
-		if (!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) && $forceCheck===false) return $folderInfo[$this->profileID][$_folder];
+		if (!empty($folderInfo) && isset($folderInfo[$this->profileID]) && isset($folderInfo[$this->profileID][$_folder]) && $forceCheck===false)
+		{
+			return $folderInfo[$this->profileID][$_folder];
+		}
+		else
+		{
+			error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID);
+		}
 
 		// does the folder exist???
 		//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".($forceCheck?' forceCheck activated':'dont check on server'));
@@ -4426,8 +4454,8 @@ class felamimail_bo
 	    // clean out comments and stuff
 		$search = array(
 			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
-			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
 		);
 		$style = preg_replace($search,"",$style);
 

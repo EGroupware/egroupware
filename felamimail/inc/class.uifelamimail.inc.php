@@ -62,6 +62,15 @@ class uifelamimail
 			}
 			if (is_null(self::$icServerID)) self::$icServerID =& egw_cache::getSession('felamimail','activeProfileID');
 
+			if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
+			unset($_GET["resetConnection"]);
+			//_debug_array(self::$icServerID);
+			if ($connectionReset)
+			{
+				error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+				emailadmin_bo::unsetCachedObjects(self::$icServerID);
+			}
+
 			$this->displayCharset	= translation::charset();
 
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
