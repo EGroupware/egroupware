@@ -15,8 +15,8 @@
  *
  * the class can be used in following ways:
  * 1) by calling the constructor with an app and table-name or
- * 2) by setting the following documented class-vars in a class derifed from this one
- * Of cause can you derife the class and call the constructor with params.
+ * 2) by setting the following documented class-vars in a class derived from this one
+ * Of cause you can derive from the class and call the constructor with params.
  *
  * @package etemplate
  * @subpackage api
@@ -149,6 +149,15 @@ class so_sql
 	var $columns_to_search;
 
 	/**
+	 * Table has boolean fields, which need automatic conversation, got set automatic by call to setup_table
+	 *
+	 * Set it to false, if you dont want automatic conversation
+	 *
+	 * @var boolean
+	 */
+	protected $has_bools = false;
+
+	/**
 	 * Should search return an iterator (true) or an array (false = default)
 	 *
 	 * @var boolean
@@ -252,7 +261,7 @@ class so_sql
 		$this->table_def = $this->db->get_table_definitions($app,$table);
 		if (!$this->table_def || !is_array($this->table_def['fd']))
 		{
-			echo "<p>so_sql::setup_table('$app','$table'): No table definitions found !!!<br>\n".function_backtrace()."</p>\n";
+			throw new egw_exception_wrong_parameter(__METHOD__."('$app','$table'): No table definition for '$table' found !!!");
 		}
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
@@ -278,6 +287,8 @@ class so_sql
 			{
 				$this->autoinc_id = $col;
 			}
+			if ($def['type'] == 'bool') $this->has_bools = true;
+
 			foreach($this->table_def['uc'] as $k => $uni_index)
 			{
 				if (is_array($uni_index) && in_array($name,$uni_index))
@@ -383,6 +394,25 @@ class so_sql
 					{
 						$data[$name] = egw_time::server2user($data[$name],$this->timestamp_type);
 					}
+				}
+			}
+		}
+		// automatic convert booleans (eg. PostgreSQL stores 't' or 'f', which both evaluate to true!)
+		if ($this->has_bools !== false)
+		{
+			if (!isset($this->table_def))
+			{
+				$this->table_def = $this->db->get_table_definitions($this->app, $this->table);
+				if (!$this->table_def || !is_array($this->table_def['fd']))
+				{
+					throw new egw_exception_wrong_parameter(__METHOD__."(): No table definition for '$this->table' found !!!");
+				}
+			}
+			foreach($this->table_def['fd'] as $col => $def)
+			{
+				if ($def['type'] == 'bool' && isset($data[$col]))
+				{
+					$data[$col] = $this->db->from_bool($data[$col]);
 				}
 			}
 		}
