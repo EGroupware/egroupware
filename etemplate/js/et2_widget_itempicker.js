@@ -72,9 +72,17 @@ var et2_itempicker = et2_inputWidget.extend({
 		this.right_container = null;
 		this.app_select = null;
 		this.search = null;
+		this.button_action = null;
 		this.itemlist = null;
 
 		this.createInputWidget();
+	},
+	
+	clearSearchResults: function() {
+		this.search.val("");
+		this.itemlist.html("");
+		this.search.focus();
+		this.clear.hide();
 	},
 
 	createInputWidget: function() {
@@ -107,7 +115,8 @@ var et2_itempicker = et2_inputWidget.extend({
 			img.attr("src", img_icon);
 			var item = $j(document.createElement("li"))
 			item.attr("id", key)
-				.click(function() { 
+				.click(function() {
+					_self.clearSearchResults();
 					$j(".et2_itempicker_app_select li").removeClass("selected");
 					$j(this).addClass("selected");
 					_self.current_app = $j(this).attr("id");
@@ -131,13 +140,20 @@ var et2_itempicker = et2_inputWidget.extend({
 		
 		// Clear button for search
 		this.clear
-			.addClass("ui-icon ui-icon-close")
+			.addClass("et2_itempicker_clear ui-icon ui-icon-close")
 			.click(function(e){
-				_self.search.val("");
-				_self.itemlist.html("");
-				_self.search.focus();
+				_self.clearSearchResults();
 			})
 			.hide();
+			
+		// Action button
+		this.button_action = et2_createWidget("button");
+		$j(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
+		this.button_action.set_label(this.egw().lang("Action"));
+		this.button_action.click = function() {
+			// ToDo: execute defined action
+			console.log("Button action clicked!");
+		};
 		
 		// Itemlist
 		this.itemlist.attr("id", "itempicker_itemlist");
@@ -147,6 +163,7 @@ var et2_itempicker = et2_inputWidget.extend({
 		this.left.append(this.app_select);
 		this.right_container.append(this.search);
 		this.right_container.append(this.clear);
+		this.right_container.append(this.button_action.getDOMNode());
 		this.right_container.append(this.itemlist);
 		this.right.append(this.right_container);
 		this.div.append(this.right); // right before left to have a natural 
@@ -182,7 +199,7 @@ var et2_itempicker = et2_inputWidget.extend({
 		//}
 
 		this.itemlist.addClass("loading");
-		this.clear.show();
+		this.clear.css("display", "inline-block");
 		var request = new egw_json_request("etemplate_widget_link::ajax_link_search::etemplate", 
 			[this.current_app, '', request.term, request.options],
 			this
