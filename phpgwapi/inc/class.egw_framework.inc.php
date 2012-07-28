@@ -448,7 +448,7 @@ abstract class egw_framework
 	 * @param string $app
 	 * @return string
 	 */
-	public function index($app)
+	public static function index($app)
 	{
 		$data =& $GLOBALS['egw_info']['user']['apps'][$app];
 		if (!isset($data))
