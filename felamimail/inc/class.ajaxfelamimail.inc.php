@@ -965,6 +965,7 @@ class ajaxfelamimail
 				if($newFolderName = $this->bofelamimail->renameFolder($oldFolderName, $parentFolder, $folderName)) {
 					//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
 					$rv = $this->bofelamimail->subscribe($newFolderName, true);
+					$rv = $this->bofelamimail->subscribe($oldFolderName, false);
 					$newFolderName = $this->_encodeFolderName($newFolderName);
 					$folderName = $this->_encodeDisplayFolderName($folderName);
 					if ($parentFolder == '') {
