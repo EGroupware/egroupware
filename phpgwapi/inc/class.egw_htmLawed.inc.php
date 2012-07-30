@@ -192,9 +192,20 @@ function hl_my_tag_transform($element, $attribute_array=0)
  * 						a -checking for title and href, replacing @ accordingly
  *						  -navigate to local anchors without reloading the page
  * 						blockquote -checking for cite, replacing @
+ * 						throwing away excess div elements, that carry no style or class or id info
  */
 function hl_email_tag_transform($element, $attribute_array=0)
 {
+	static $lastelement;
+	if ($element=='div' && $element==$lastelement && ($attribute_array==0 || empty($attribute_array))) return '';
+	if (is_array($attribute_array) && !empty($attribute_array) && $element=='div')
+	{
+		$lastelement = 'div_with_attr';
+	}
+	else
+	{
+		$lastelement = $element;
+	}
 	// If second argument is not received, it means a closing tag is being handled
 	if(is_numeric($attribute_array)){
 		return "</$element>";
