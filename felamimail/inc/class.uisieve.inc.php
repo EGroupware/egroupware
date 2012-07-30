@@ -614,6 +614,7 @@
 						else
 						{
 							//error_log(__METHOD__.__LINE__.array2string($newVacation));
+							if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
 							$this->bosieve->setAsyncJob($newVacation);
 						}
 					}
