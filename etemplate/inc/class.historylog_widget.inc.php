@@ -199,7 +199,14 @@ class historylog_widget
 
 			if(!is_array($cf_data['values']) || !$cf_data['values'])
 			{
-				self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
+				if (isset($GLOBALS['egw_info']['apps'][$cf_data['type']]))
+				{
+					self::$status_widgets['#'.$cf_name] = 'link-entry:'.$cf_data['type'];
+				}
+				else
+				{
+					self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
+				}
 			}
 			elseif($cf_data['values']['@'])
 			{
