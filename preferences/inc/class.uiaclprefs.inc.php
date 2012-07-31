@@ -345,7 +345,7 @@ class uiaclprefs
 		//echo "<p>display_row(,$label,$id,$name,$no_privat_grants,".print_r($memberships,true).")</p>\n";
 		$this->template->set_var('row_class',$tr_class);
 		$this->template->set_var('user',$name);
-		$rights = $this->acl->get_rights($id,$GLOBALS['egw_info']['flags']['currentapp']);
+		$rights = $this->acl->get_specific_rights($id, $GLOBALS['egw_info']['flags']['currentapp'], $memberships);
 
 		foreach(array(
 			EGW_ACL_READ		=> 'read',
