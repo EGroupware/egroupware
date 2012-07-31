@@ -190,7 +190,7 @@ class historylog_widget
 		// Add in links
 		self::$status_widgets['~link~'] = 'link-entry';
 		$tmpl->sel_options[$status]['~link~'] = lang('link');
-		
+
 		// adding custom fields automatically to status-widgets, no need for each app to do that
 		foreach(config::get_customfields($app,true) as $cf_name => $cf_data)
 		{
@@ -203,7 +203,14 @@ class historylog_widget
 
 			if(!is_array($cf_data['values']) || !$cf_data['values'])
 			{
-				self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
+				if (isset($GLOBALS['egw_info']['apps'][$cf_data['type']]))
+				{
+					self::$status_widgets['#'.$cf_name] = 'link-entry:'.$cf_data['type'];
+				}
+				else
+				{
+					self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
+				}
 			}
 			elseif($cf_data['values']['@'])
 			{
