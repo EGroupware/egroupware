@@ -1,8 +1,8 @@
 /*
-htmLawed_TESTCASE.txt, 22 October 2011
-htmLawed 1.1.11, 5 June 2012
+htmLawed_TESTCASE.txt, 22 July 2012
+htmLawed 1.1.13, 22 July 2012
 Copyright Santosh Patnaik
-Dual licensed with LGPL 3 and GPL 2 or later
+Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
 */
 
@@ -27,6 +27,7 @@ character encoding to Unicode/UTF-8
 <strong>Duplicated:</strong> <a id="id5" id="id6">a</a><br />
 <strong>Deprecated:</strong> <a id="id7" target="self" name="n">a</a>, <hr noshade="noshade" /><br />
 <strong>Casing:</strong> <a HREF=""></a><br />
+<strong>Custom:</strong> <img alt="image" my:data="portrait" /><br />
 <strong>Admin-restricted?:</strong> <a href="x" onclick="alert();"></a>
 
 <h6>Attribute values</h6>
@@ -266,6 +267,12 @@ I am <span itemprop="name">X</span> but people call me <span itemprop="nickname"
 Find me at <a href="http://www.xy.com" itemprop="url">www.xy.com</a>
 </div>
 
+<h6>Microsoft Word</h6>
+
+<strong>Proprietary tag</strong>: <p class=3DMsoNormal><o:p>&nbsp;</o:p></p><br />
+<strong>XML declaration</strong>: <?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><br />
+<strong>XML-invalid character code-point (may not replicate)</strong>: <p class=3DMsoNormal>“Where is he?” asked both Mary – the one so lovely – and Jane.</p>
+
 <h6>Non-English text-1</h6>
 
 Inscrieţi-vă acum la a Zecea Conferinţă Internaţională<br />
@@ -394,3 +401,14 @@ script:eval(document.all.mycode.expr)')">hi</a><br />
 3 < 4 <br />
 3 > 4 <br />
   > 3 <br />
+<._.> hi! <br />
+<<< ALERT >>> <br />
+if(13<age AND 21>age){say 'teen'} <br />
+age >51 and a smoking history of >51 pack-years <b>was</b> <br />
+age > 51 and a smoking history of >51 pack-years <b>was</b> <br />
+age <51 and a smoking history of <51 pack-years <b>was</b> <br />
+age < 51 and a smoking history of < 51 pack-years <b>was</b> <br />
+<b>age >51 and a smoking history of >51 pack-years</b> <br />
+<b>age > 51 and a smoking history of >51 pack-years</b> <br />
+<b>age <51 and a smoking history of <51 pack-years</b> <br />
+<b>age < 51 and a smoking history of < 51 pack-years</b> <br />
