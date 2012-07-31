@@ -518,6 +518,7 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['carddav_name'] = $oldContact['carddav_name'];
 			$contact['tid'] = $oldContact['tid'];
 			$contact['creator'] = $oldContact['creator'];
+			$contact['created'] = $oldContact['created'];
 			$contact['account_id'] = $oldContact['account_id'];
 		}
 		else
@@ -736,13 +737,20 @@ class addressbook_groupdav extends groupdav_handler
 			$supportedFields['TEL;IPHONE'] = $databaseFields['TEL;IPHONE'] = array('tel_cell_private');
 			unset($supportedFields['TEL;CELL;HOME']); unset($databaseFields['TEL;CELL;HOME']);
 			$databaseFields['X-ABSHOWAS'] = $supportedFields['X-ABSHOWAS'] = array('fileas_type');	// Horde vCard class uses uppercase prop-names!
+
 			// Apple Addressbook pre Lion (OS X 10.7) messes up CLASS and CATEGORIES (Lion cant set them but leaves them alone)
-			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520)
+			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520 ||
+				// iOS 5.1.1 does not display CLASS or CATEGORY, but wrongly escapes multiple, comma-separated categories
+				// and appends CLASS: PUBLIC to an empty NOTE: field --> leaving them out for iOS
+				$this->agent == 'dataaccess')
 			{
 				unset($supportedFields['CLASS']);
 				unset($databaseFields['CLASS']);
 				unset($supportedFields['CATEGORIES']);
 				unset($databaseFields['CATEGORIES']);
+			}
+			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520)
+			{
 				// gd cant parse or resize images stored from snow leopard addressbook: gd-jpeg:
 				// - JPEG library reports unrecoverable error
 				// - Passed data is not in 'JPEG' format

@@ -80,6 +80,7 @@ class addressbook_tracking extends bo_tracking
 			unset($this->field2history['modifier']);
 			unset($this->field2history['etag']);
 			unset($this->field2history['creator']);
+			unset($this->field2history['created']);
 			unset($this->field2history['tz']);
 
 			// we currently can only track text
