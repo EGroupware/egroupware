@@ -1189,7 +1189,7 @@ abstract class bo_merge
 
 		foreach($cf as $index => $field)
 		{
-			if($cfs[$field])
+			if($cfs[$field] && in_array($cfs[$field]['type'],$GLOBALS['egw_info']['apps']) )
 			{
 				// Get replacements for that application
 				$field_app = $cfs[$field]['type'];
