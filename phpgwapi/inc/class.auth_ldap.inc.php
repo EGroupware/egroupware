@@ -172,7 +172,7 @@ class auth_ldap implements auth_backend
 		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
 
-		$ds = common::ldapConnect();
+		$ds = $ds_admin = common::ldapConnect();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
 
@@ -183,9 +183,17 @@ class auth_ldap implements auth_backend
 
 		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
-			$ds = common::ldapConnect('',$dn,$old_passwd);
+			$user_ds = new ldap(true);	// true throw exceptions in case of error
+			try {
+				$ds = $user_ds->ldapConnect('',$dn,$old_passwd);
+			}
+			catch (egw_exception_no_permission $e) {
+				return false;	// wrong old user password
+			}
 		}
-		if (!@ldap_modify($ds, $dn, $entry))
+		// try changing password bind as user or as admin, to cater for all sorts of ldap configuration
+		// where either only user is allowed to change his password, or only admin user is allowed to
+		if (!@ldap_modify($ds, $dn, $entry) && (!$old_passwd || !@ldap_modify($ds_admin, $dn, $entry)))
 		{
 			return false;
 		}
