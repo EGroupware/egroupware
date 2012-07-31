@@ -197,7 +197,15 @@ function hl_my_tag_transform($element, $attribute_array=0)
 function hl_email_tag_transform($element, $attribute_array=0)
 {
 	static $lastelement;
-	if ($element=='div' && $element==$lastelement && ($attribute_array==0 || empty($attribute_array))) return '';
+	static $throwawaycounter;
+	if (is_null($throwawaycounter)) $throwawaycounter = 0;
+	//if ($throwawaycounter>250) error_log(__METHOD__.__LINE__.' '.$throwawaycounter);
+	if ($element=='div' && $element==$lastelement && ($attribute_array==0 || empty($attribute_array)))
+	{
+		if (is_array($attribute_array)) $throwawaycounter++;
+		if ($attribute_array==0 && $throwawaycounter>0) $throwawaycounter--;
+		if ($throwawaycounter>0) return '';
+	}
 	if (is_array($attribute_array) && !empty($attribute_array) && $element=='div')
 	{
 		$lastelement = 'div_with_attr';
