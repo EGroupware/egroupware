@@ -32,6 +32,13 @@ class filemanager_merge extends bo_merge
 	);
 
 	/**
+	 * Fields that are dates or timestamps
+	 */
+	public $date_fields = array(
+		'mtime', 'ctime'
+	);
+
+	/**
 	 * Business object to pull records from
 	 */
 	protected $bo = null;
@@ -123,7 +130,8 @@ class filemanager_merge extends bo_merge
 				// Format date cfs per user preferences
 				if($field['type'] == 'date' || $field['type'] == 'date-time')
 				{
-					$file['#'.$name] = egw_time::to($file['#'.$name]);
+					$this->date_fields[] = '#'.$name;
+					$file['#'.$name] = egw_time::to($file['#'.$name], $field['type'] == 'date' ? true : '');
 				}
 			}
                 }

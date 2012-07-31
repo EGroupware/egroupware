@@ -1041,6 +1041,7 @@ abstract class bo_merge
 			'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat.':s',
 			'!'.egw_time::$user_dateformat . '* ' .egw_time::$user_timeformat,
 			'!'.egw_time::$user_dateformat . '*',
+			'!'.egw_time::$user_dateformat,
 		);
 
 		// Properly format values for spreadsheet
