@@ -730,10 +730,10 @@ class addressbook_groupdav extends groupdav_handler
 			// use just CELL and IPHONE, CELL;WORK and CELL;HOME are NOT understood
 			//'TEL;CELL;WORK'		=> array('tel_cell'),
 			//'TEL;CELL;HOME'		=> array('tel_cell_private'),
-			$supportedFields['TEL;CELL'] = array('tel_cell');
-			unset($supportedFields['TEL;CELL;WORK']);
-			$supportedFields['TEL;IPHONE'] = array('tel_cell_private');
-			unset($supportedFields['TEL;CELL;HOME']);
+			$supportedFields['TEL;CELL'] = $databaseFields['TEL;CELL'] = array('tel_cell');
+			unset($supportedFields['TEL;CELL;WORK']); unset($databaseFields['TEL;CELL;WORK']);
+			$supportedFields['TEL;IPHONE'] = $databaseFields['TEL;IPHONE'] = array('tel_cell_private');
+			unset($supportedFields['TEL;CELL;HOME']); unset($databaseFields['TEL;CELL;HOME']);
 			$databaseFields['X-ABSHOWAS'] = $supportedFields['X-ABSHOWAS'] = array('fileas_type');	// Horde vCard class uses uppercase prop-names!
 			// Apple Addressbook pre Lion (OS X 10.7) messes up CLASS and CATEGORIES (Lion cant set them but leaves them alone)
 			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520)
