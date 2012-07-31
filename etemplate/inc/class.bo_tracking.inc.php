@@ -318,6 +318,7 @@ abstract class bo_tracking
 		// unlink removed application entries
 		foreach(array_diff($old_ids,$current_ids) as $name => $id)
 		{
+			if (!isset($data[$name])) continue;	// ignore not set link cf's, eg. from sync clients
 			if (!($app = $this->cf_link_fields[$name]))
 			{
 				list($app,$id) = explode(':',$id);
