@@ -44,7 +44,7 @@ class felamimail_bo
 	 * @array
 	 */
 	static $htmLawed_config = array('comment'=>1, //remove comments
-				//'keep_bad'=>2,
+				'keep_bad'=>6,
 				'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 				'tidy'=>1,
 				'elements' => "* -script",
@@ -1701,7 +1701,7 @@ class felamimail_bo
 		if ($_subscribedOnly && $_getCounters===false)
 		{
 			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			if (isset($folders2return[$this->icServer->ImapServerId]))
+			if (isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
 				return $folders2return[$this->icServer->ImapServerId];
@@ -3473,18 +3473,20 @@ class felamimail_bo
 		// reduce traffic within the Instance per User; Expire every 5 Minutes
 		//error_log(__METHOD__.__LINE__.' Called with Folder:'.$_folder.function_backtrace());
 		if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+		//error_log(__METHOD__.__LINE__.'Cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.($forceCheck?'(forcedCheck)':'').':'.array2string($folderInfo));
 		if (!empty($folderInfo) && isset($folderInfo[$this->profileID]) && isset($folderInfo[$this->profileID][$_folder]) && $forceCheck===false)
 		{
+			//error_log(__METHOD__.__LINE__.' Using cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID);
 			return $folderInfo[$this->profileID][$_folder];
 		}
 		else
 		{
-			error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID);
+			if ($forceCheck === false) error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.' FolderExistsInfoCache:'.array2string($folderInfo[$this->profileID]));
 		}
 
 		// does the folder exist???
 		//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".($forceCheck?' forceCheck activated':'dont check on server'));
-		if ((!($this->icServer->_connected == 1)) && $forceCheck || empty($folderInfo) || !isset($folderInfo[$this->profileID][$_folder])) {
+		if ((!($this->icServer->_connected == 1)) && $forceCheck || empty($folderInfo) || !isset($folderInfo[$this->profileID]) || !isset($folderInfo[$this->profileID][$_folder])) {
 			//error_log(__METHOD__."->NotConnected and forceCheck with profile:".$this->profileID);
 			//return false;
 			//try to connect
