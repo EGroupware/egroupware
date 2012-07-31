@@ -704,8 +704,8 @@ class egw_link extends solink
 		}
 		else
 		{
-			// Fall back to original method
-			$result = ExecMethod2($method,$pattern,$options);
+			// if there is no object or no method, give a more explaining error message
+			throw new egw_exception_assertion_failed("Object has no method '$reg[query]'!");
 		}
 
 		if (!isset($options['total']))
