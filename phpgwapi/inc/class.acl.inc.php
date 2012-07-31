@@ -313,10 +313,10 @@ class acl
 	 *
 	 * @param string $location app location
 	 * @param string $appname='' optional defaults to currentapp
-	 * @param int $account_id=0 optional defaults to $this->account_id
+	 * @param array $memberships=array() additional account_id, eg. memberships to match beside $this->account_id, default none
 	 * @return int $rights
 	 */
-	function get_specific_rights($location, $appname = '')
+	function get_specific_rights($location, $appname = '', $memberships=array())
 	{
 		if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
@@ -330,7 +330,7 @@ class acl
 		{
 			if ($value['appname'] == $appname &&
 				($value['location'] == $location ||	$value['location'] == 'everywhere') &&
-				$value['account'] == $this->account_id)
+				($value['account'] == $this->account_id || $memberships && in_array($value['account'], $memberships)))
 			{
 				if ($value['rights'] == 0)
 				{
