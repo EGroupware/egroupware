@@ -664,11 +664,11 @@ for($i=-1, $j=count($t); ++$i<$j;){
  $y = !$x ? ltrim($e, '/') : ($x > 0 ? substr($e, 0, strcspn($e, ' ')) : 0);
  $e = "<$e>";
  if(isset($d[$y])){
-  if(!$x){echo "\n", str_repeat($s, --$n), "$e\n", str_repeat($s, $n);}
-  else{echo "\n", str_repeat($s, $n), "$e\n", str_repeat($s, ($x != 1 ? ++$n : $n));}
+  if(!$x){echo "\n", str_repeat($s, (--$n>=0?$n:0)), "$e\n", str_repeat($s, ($n>=0?$n:0));}
+  else{echo "\n", str_repeat($s, ($n>=0?$n:0)), "$e\n", str_repeat($s, ($x != 1 ? (++$n>=0?$n:0) : ($n>=0?$n:0)));}
   echo ltrim($r); continue;
  }
- $f = "\n". str_repeat($s, $n);
+ $f = "\n". str_repeat($s, ($n>=0?$n:0));
  if(isset($c[$y])){
   if(!$x){echo $e, $f, ltrim($r);}
   else{echo $f, $e, $r;}
