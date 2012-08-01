@@ -3462,9 +3462,10 @@ class felamimail_bo
 		}
 	}
 
-	function folderExists($_folder, $forceCheck=false)
+	function folderExists($_folder, $_forceCheck=false)
 	{
 		static $folderInfo;
+		$forceCheck = $_forceCheck;
 		if (empty($_folder))
 		{
 			error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
@@ -3481,7 +3482,11 @@ class felamimail_bo
 		}
 		else
 		{
-			if ($forceCheck === false) error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.' FolderExistsInfoCache:'.array2string($folderInfo[$this->profileID]));
+			if ($forceCheck === false)
+			{
+				//error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.' FolderExistsInfoCache:'.array2string($folderInfo[$this->profileID]));
+				$forceCheck = true; // try to force the check, in case there is no connection, we may need that
+			}
 		}
 
 		// does the folder exist???
