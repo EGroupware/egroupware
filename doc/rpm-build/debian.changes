@@ -1,3 +1,24 @@
+egroupware-epl (11.1.20120801-1) hardy; urgency=low
+
+  * eSyncPro: new app to manage and provision eSync devices: (security) policies, remote wipe, logging (need to be explicitly installed!)
+  * Admin/Setup: fixing high memory usage in registering all hooks
+  * InfoLog/CalDAV: preference allowing to modify responsible user from devices not supporting them by setting EMail address as category
+  * SyncML: fix Funambol vCard issues (community bug #1999)
+  * eMail: handle attaching eml files; handle no subject when forwarding as attachment
+  * eMail: fix for failed deletion of messages in Trash-Folder
+  * eMail: fix problem with ->mark message as deleted<-; flag was not applied
+  * Calendar/CalDAV/eSync: not searching addressbook for CN, as match can be not unique or without an email address, causing notification to fail --> store as email address
+  * Calendar/eSync/CalDAV: meeting requests contain again nice body followed by a separator and describtion, ignore empty description in eSync ChangeMessage
+  * Chat: if no translation for user language available fall back to english, for slovenian language use croation language for now
+  * LDAP authentication: if changing password fails bind as user, try changing is with given admin-dn, to cater for all sorts of ldap configurations
+  * Addressbook/CardDAV: fixed lost cell-phone numbers, caused by SyncML update
+  * CardDAV: disable category and class (public/private) for iOS, because they are not displayed and get messed up
+  * Admin/Preferences: fixed not removable ACL rights for apps using NO group-acl, eg. Addressbook or InfoLog
+  * ProjectManager: optional categories column for project list
+  * ProjectManager: fixed merge-print of eroles with identical names will not display, because fallback to project-independent erole was not working
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 01 Aug 2012 11:43:47 +0200
+
 egroupware-epl (11.1.20120717-1) hardy; urgency=low
 
   * EMail: improve the handling of addresses in edit of vacationnotice (SIEVE)
