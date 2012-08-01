@@ -183,8 +183,8 @@ for($i=-1, $ci=count($t); ++$i<$ci;){
   $p = array_pop($q);
   $q[] = $p;
   if(isset($cS[$p])){$ok = $cS[$p];}
-  elseif(isset($cI[$p])){$ok = $eI; $cI['del'] = 1; $cI['ins'] = 1;}
-  elseif(isset($cF[$p])){$ok = $eF; unset($cI['del'], $cI['ins']);}
+  elseif(isset($cI[$p])&&$p!='span'){$ok = $eI; $cI['del'] = 1; $cI['ins'] = 1;}
+  elseif(isset($cF[$p])||$p=='span'){$ok = $eF; unset($cI['del'], $cI['ins']);}
   elseif(isset($cB[$p])){$ok = $eB; unset($cI['del'], $cI['ins']);}
   if(isset($cO[$p])){$ok = $ok + $cO[$p];}
   if(isset($cN[$p])){$ok = array_diff_assoc($ok, $cN[$p]);}
