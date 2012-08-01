@@ -549,6 +549,7 @@ class translation
 					$from = 'EUC-CN';
 					break;
 				case 'windows-1252':
+				case 'mswin1252':
 					if (function_exists('iconv'))
 					{
 						$prefer_iconv = true;
