@@ -110,10 +110,10 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 
 <div id="body">
 <br />
-<div class="comment">htmLawed_README.txt, 5 June 2012<br />
-htmLawed 1.1.11, 5 June 2012<br />
+<div class="comment">htmLawed_README.txt, 22 July 2012<br />
+htmLawed 1.1.13, 22 July 2012<br />
 Copyright Santosh Patnaik<br />
-Dual licensed with LGPL 3 and GPL 2 or later<br />
+Dual licensed with LGPL 3 and GPL 2+<br />
 A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed</a>&#160;</div>
 <br />
 
@@ -170,6 +170,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 &#160; * &#160;ensure <strong>unique</strong>&#160;<span class="term">id</span>&#160;attribute values &#160;^~`<br />
 &#160; * &#160;<strong>double-quote</strong>&#160;attribute values &#160;^<br />
 &#160; * &#160;lower-case <strong>standard attribute values</strong>&#160;like <span class="term">password</span>&#160; ^`<br />
+&#160; * &#160;permit custom, non-standard attributes as well as custom rules for standard attributes &#160;~`<br />
 <br />
 &#160; * &#160;<strong>attribute-specific URL protocol/scheme restriction</strong>&#160; *~`<br />
 &#160; * &#160;disable <strong>dynamic expressions</strong>&#160;in <span class="term">style</span>&#160;values &#160;*~`<br />
@@ -222,7 +223,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s1.4" id="s1.4"></a><span class="item-no">1.4</span>&#160; License &amp; copyright
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; htmLawed is free and open-source software dual licensed under LGPL license version <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">3</a>&#160;and GPL license version <a href="http://www.gnu.org/licenses/gpl-2.0.txt">2</a>&#160;or later, and copyrighted by Santosh Patnaik, MD, PhD.<br />
+&#160; htmLawed is free and open-source software dual licensed under LGPL license version <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">3</a>, and GPL license version <a href="http://www.gnu.org/licenses/gpl-2.0.txt">2</a>&#160;(or later), and copyrighted by Santosh Patnaik, MD, PhD.<br />
 
 </div>
 <div class="sub-section"><h3>
@@ -258,7 +259,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; To easily <strong>test</strong>&#160;htmLawed using a form-based interface, use the provided <a href="htmLawedTest.php">demo</a>&#160;(<span class="term">htmLawed.php</span>&#160;and <span class="term">htmLawedTest.php</span>&#160;should be in the same directory on the web-server).<br />
 <br />
-&#160; <strong>Note</strong>: For code for usage of the htmLawed class (for htmLawed in OOP), please refer to the <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">htmLawed</a>&#160;website; the filtering itself can be configured, etc., as described here.<br />
+&#160; <strong>Note</strong>: For code for usage of the htmLawed class (for htmLawed in OOP), please refer to this <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/oop.htm">page</a>&#160;on the htmLawed website; the filtering itself can be configured, etc., as described here.<br />
 
 <div class="sub-section"><h3>
 <a name="s2.1" id="s2.1"></a><span class="item-no">2.1</span>&#160; Simple
@@ -558,6 +559,14 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 &#160; <strong>Special characters</strong>: The characters <span class="term">;</span>, <span class="term">,</span>, <span class="term">/</span>, <span class="term">(</span>, <span class="term">)</span>, <span class="term">|</span>, <span class="term">~</span>&#160;and space have special meanings in the rules. Words in the rules that use such characters, or the characters themselves, should be <em>escaped</em>&#160;by enclosing in pairs of double-quotes (<span class="term">"</span>). A back-tick (<span class="term">&#96;</span>) can be used to escape a literal <span class="term">"</span>. An example rule illustrating this is <span class="term">input=value(maxlen=30/match="/^\w/"/default="your &#96;"ID&#96;"")</span>.<br />
 <br />
 &#160; <strong>Note</strong>: To deny an attribute for all elements for which it is legal, <span class="term">$config["deny_attribute"]</span>&#160;(see <a href="#s3.4">section 3.4</a>) can be used instead of <span class="term">$spec</span>. Also, attributes can be allowed element-specifically through <span class="term">$spec</span>&#160;while being denied globally through <span class="term">$config["deny_attribute"]</span>. The <span class="term">hook_tag</span>&#160;parameter (<a href="#s3.4.9">section 3.4.9</a>) can also be used to implement the <span class="term">$spec</span>&#160;functionality.<br />
+<br />
+&#160; <span class="term">$spec</span>&#160;can also be used to permit custom, non-standard attributes as well as custom rules for standard attributes. Thus, the following value of <span class="term">$spec</span>&#160;will permit the custom uses of the standard <span class="term">rel</span>&#160;attribute in <span class="term">input</span>&#160;(not permitted as per standards) and of a non-standard attribute, <span class="term">vFlag</span>, in <span class="term">img</span>.<br />
+<br />
+
+<code class="code">&#160; &#160; $spec = &#39;img=vFlag; input=rel&#39;</code>
+<br />
+<br />
+&#160; The attribute names can contain alphabets, colons (:) and hyphens (-) but must start with an alphabet.<br />
 
 </div>
 <div class="sub-section"><h3>
@@ -1158,7 +1167,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; An option like <span class="term">1</span>&#160;is useful, e.g., when a writer previews his submission, whereas one like <span class="term">3</span>&#160;is useful before content is finalized and made available to all.<br />
 <br />
-&#160; <strong>Note:</strong>&#160;In the example above, unlike <span class="term">&lt;&#42;&gt;</span>, <span class="term">&lt;xml&gt;</span>&#160;gets considered as a tag (even though there is no HTML element named <span class="term">xml</span>). In general, text matching the regular expression pattern <span class="term">&lt;(/?)([a-zA-Z][a-zA-Z1-6]&#42;)([^&gt;]&#42;?)\s?&gt;</span>&#160;is considered a tag (phrase enclosed by the angled brackets <span class="term">&lt;</span>&#160;and <span class="term">&gt;</span>, and starting [with an optional slash preceding] with an alphanumeric word that starts with an alphabet...).<br />
+&#160; <strong>Note:</strong>&#160;In the example above, unlike <span class="term">&lt;&#42;&gt;</span>, <span class="term">&lt;xml&gt;</span>&#160;gets considered as a tag (even though there is no HTML element named <span class="term">xml</span>). Thus, the <span class="term">keep_bad</span>&#160;parameter's value affects <span class="term">&lt;xml&gt;</span>&#160;but not <span class="term">&lt;&#42;&gt;</span>. In general, text matching the regular expression pattern <span class="term">&lt;(/?)([a-zA-Z][a-zA-Z1-6]&#42;)([^&gt;]&#42;?)\s?&gt;</span>&#160;is considered a tag (phrase enclosed by the angled brackets <span class="term">&lt;</span>&#160;and <span class="term">&gt;</span>, and starting [with an optional slash preceding] with an alphanumeric word that starts with an alphabet...), and is subjected to the <span class="term">keep_bad</span>&#160;value.<br />
 <br />
 &#160; Nesting/content rules for each of the 86 elements in htmLawed's default set (see <a href="#s3.3">section 3.3</a>) are defined in function <span class="term">hl_bal()</span>. This means that if a non-standard element besides <span class="term">embed</span>&#160;is being permitted through <span class="term">$config["elements"]</span>, the element's tag content will end up getting removed if <span class="term">$config["balance"]</span>&#160;is set to <span class="term">1</span>.<br />
 <br />
@@ -1206,7 +1215,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s3.4" id="s3.4"></a><span class="item-no">3.4</span>&#160; Attributes
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the <span class="term">embed</span>&#160;element (the non-standard <span class="term">embed</span>&#160;element is supported in htmLawed because of its widespread use), and the the <span class="term">xml&#58;space</span>&#160;attribute (valid only in XHTML 1.1). A list of such 111 attributes and the elements they are allowed in is in <a href="#s5.2">section 5.2</a>.<br />
+&#160; htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the <span class="term">embed</span>&#160;element (the non-standard <span class="term">embed</span>&#160;element is supported in htmLawed because of its widespread use), and the the <span class="term">xml&#58;space</span>&#160;attribute (valid only in XHTML 1.1). A list of such 111 attributes and the elements they are allowed in is in <a href="#s5.2">section 5.2</a>. Using the <span class="term">$spec</span>&#160;argument, htmLawed can be forced to permit custom, non-standard attributes as well as custom rules for standard attributes (<a href="#s2.3">section 2.3</a>).<br />
 <br />
 &#160; When <span class="term">$config["deny_attribute"]</span>&#160;is not set, or set to <span class="term">0</span>, or empty (<span class="term">""</span>), all the 111 attributes are permitted. Otherwise, <span class="term">$config["deny_attribute"]</span>&#160;can be set as a list of comma-separated names of the denied attributes. <span class="term">on&#42;</span>&#160;can be used to refer to the group of potentially dangerous, script-accepting attributes: <span class="term">onblur</span>, <span class="term">onchange</span>, <span class="term">onclick</span>, <span class="term">ondblclick</span>, <span class="term">onfocus</span>, <span class="term">onkeydown</span>, <span class="term">onkeypress</span>, <span class="term">onkeyup</span>, <span class="term">onmousedown</span>, <span class="term">onmousemove</span>, <span class="term">onmouseout</span>, <span class="term">onmouseover</span>, <span class="term">onmouseup</span>, <span class="term">onreset</span>, <span class="term">onselect</span>&#160;and <span class="term">onsubmit</span>.<br />
 <br />
@@ -1539,7 +1548,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <code class="code">&#160; &#160; &#160; // If second argument is not received, it means a closing tag is being handled</code>
 <br />
 
-<code class="code">&#160; &#160; &#160; if(ctype_digit($attribute_array)){</code>
+<code class="code">&#160; &#160; &#160; if(is_numeric($attribute_array)){</code>
 <br />
 
 <code class="code">&#160; &#160; &#160; &#160; return "&lt;/$element&gt;";</code>
@@ -1731,6 +1740,10 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; <em>Version number - Release date. Notes</em><br />
 <br />
+&#160; 1.1.13 - 22 July 2012. Added feature allowing use of custom, non-standard attributes or custom rules for standard attributes<br />
+<br />
+&#160; 1.1.12 - 5 July 2012. Fix for a bug in identifying an unquoted value of the <span class="term">face</span>&#160;attribute<br />
+<br />
 &#160; 1.1.11 - 5 June 2012. Fix for possible problem with handling of multi-byte characters in attribute values in an mbstring.func_overload enviroment. <span class="term">$config["hook_tag"]</span>, if specified, now receives names of elements in closing tags.<br />
 <br />
 &#160; 1.1.10 - 22 October 2011. Fix for a bug in the <span class="term">tidy</span>&#160;functionality that caused the entire input to be replaced with a single space; new parameter, <span class="term">$config["direct_list_nest"]</span>&#160;to allow direct descendance of a list in a list. (5 April 2012. Dual licensing from LGPLv3 to LGPLv3 and GPLv2+.)<br />
@@ -1795,9 +1808,9 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; Upgrading is as simple as replacing the previous version of <span class="term">htmLawed.php</span>&#160;(assuming it was not modified for customized features). As htmLawed output is almost always used in static documents, upgrading should not affect old, finalized content.<br />
 <br />
-&#160; <strong>Important</strong>&#160; The following upgrades may affect the functionality of a specific htmLawed as indicated by their corresponding notes:<br />
+&#160; <strong>Important</strong>&#160; The following upgrades may affect the functionality of a specific htmLawed installation:<br />
 <br />
-&#160; (1) From version 1.1-1.1.10 to 1.1.11, if a <span class="term">hook_tag</span>&#160;function is in use: In version 1.1.11, elements in closing tags (and not just the opening tags) are also passed to the function. There are no attribute names/values to pass, so a <span class="term">hook_tag</span>&#160;function receives only the element name. The <span class="term">hook_tag</span>&#160;function therefore may have to be edited. See <a href="#s3.4.9">section 3.4.9</a>.<br />
+&#160; (1) From version 1.1-1.1.10 to 1.1.11 (or later), if a <span class="term">hook_tag</span>&#160;function is in use: In version 1.1.11, elements in closing tags (and not just the opening tags) are also passed to the function. There are no attribute names/values to pass, so a <span class="term">hook_tag</span>&#160;function receives only the element name. The <span class="term">hook_tag</span>&#160;function therefore may have to be edited. See <a href="#s3.4.9">section 3.4.9</a>.<br />
 <br />
 &#160; Old versions of htmLawed may be available online. E.g., for version 1.0, check <a href="http://www.bioinformatics.org/phplabware/downloads/htmLawed1.zip">http://www.bioinformatics.org/phplabware/downloads/htmLawed1.zip</a>, for 1.1.1, htmLawed111.zip, and for 1.1.10, htmLawed1110.zip.<br />
 
@@ -2119,7 +2132,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 </div>
 </div>
 <br />
-<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 06 Jun, 2012 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
+<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 22 Jul, 2012 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
 </div><!-- ended div body -->
 </div><!-- ended div top -->
 </body>
