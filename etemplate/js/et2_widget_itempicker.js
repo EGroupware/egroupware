@@ -27,10 +27,6 @@
 var et2_itempicker = et2_inputWidget.extend({
 
 	attributes: {
-		"value": {
-			"type": "any",
-			"default": {}
-		},
 		"application": {
 			"name": "Application",
 			"type": "string",
@@ -48,12 +44,6 @@ var et2_itempicker = et2_inputWidget.extend({
 			"type": "any",
 			"default": false,
 			"description": "Callback before query to server.  Must return true, or false to abort query."
-		},
-		"select": {
-			"name": "Select callback",
-			"type": "any",
-			"default": false,
-			"description": "Callback when user selects an option.  Must return true, or false to abort normal action."
 		},
 	},
 
