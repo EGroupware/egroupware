@@ -31,10 +31,10 @@ class defaultimap extends Net_IMAP
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
 	const CAPABILITIES = 'default|sieve';
-	
+
 	/**
 	 * ImapServerId
-	 * 
+	 *
 	 * @var int
 	 */
 	var $ImapServerId;
@@ -45,35 +45,35 @@ class defaultimap extends Net_IMAP
 	 * @var string
 	 */
 	var $adminPassword;
-	
+
 	/**
 	 * the username to be used for admin connections
 	 *
 	 * @var string
 	 */
 	var $adminUsername;
-	
+
 	/**
 	 * enable encryption
 	 *
 	 * @var bool
 	 */
 	var $encryption;
-	
+
 	/**
 	 * the hostname/ip address of the imap server
 	 *
 	 * @var string
 	 */
 	var $host;
-	
+
 	/**
 	 * the password for the user
 	 *
 	 * @var string
 	 */
 	var $password;
-	
+
 	/**
 	 * the port of the imap server
 	 *
@@ -101,7 +101,7 @@ class defaultimap extends Net_IMAP
 	 * @var bool
 	 */
 	var $validatecert;
-	
+
 	/**
 	 * the mailbox delimiter
 	 *
@@ -122,7 +122,7 @@ class defaultimap extends Net_IMAP
 	 * @var unknown_type
 	 */
 	var $mbAvailable;
-	
+
 	/**
 	 * Mailboxes which get automatic created for new accounts (INBOX == '')
 	 *
@@ -130,8 +130,8 @@ class defaultimap extends Net_IMAP
 	 */
 	var $imapLoginType;
 	var $defaultDomain;
-	
-	
+
+
 	/**
 	 * disable internal conversion from/to ut7
 	 * get's used by Net_IMAP
@@ -144,24 +144,24 @@ class defaultimap extends Net_IMAP
 	 * a debug switch
 	 */
 	var $debug = false;
-	
+
 	/**
 	 * Sieve available
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $enableSieve = false;
-	
+
 	/**
 	 * Hostname / IP of sieve host
-	 * 
+	 *
 	 * @var string
 	 */
 	var $sieveHost;
-	
+
 	/**
 	 * Port of Sieve service
-	 * 
+	 *
 	 * @var int
 	 */
 	var $sievePort = 2000;
@@ -171,14 +171,14 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @return void
 	 */
-	function __construct() 
+	function __construct()
 	{
 		if (function_exists('mb_convert_encoding')) {
 			$this->mbAvailable = TRUE;
 		}
 
 		$this->restoreSessionData();
-		
+
 		// construtor for Net_IMAP stuff
 		$this->Net_IMAPProtocol();
 	}
@@ -190,7 +190,7 @@ class defaultimap extends Net_IMAP
 	{
 		#$this->openConnection($this->isAdminConnection);   // we need to re-connect
 	}
-	
+
 	/**
 	 * adds a account on the imap server
 	 *
@@ -223,7 +223,7 @@ class defaultimap extends Net_IMAP
 	{
 		return true;
 	}
-	
+
 	function disconnect()
 	{
 		//error_log(__METHOD__.function_backtrace());
@@ -231,7 +231,7 @@ class defaultimap extends Net_IMAP
 		if( PEAR::isError($retval)) error_log(__METHOD__.$retval->message);
 		$this->_connected = false;
 	}
-	
+
 	/**
 	 * converts a foldername from current system charset to UTF7
 	 *
@@ -248,38 +248,38 @@ class defaultimap extends Net_IMAP
 		// we can encode only from ISO 8859-1
 		return imap_utf7_encode($_folderName);
 	}
-	
+
 	/**
 	 * returns the supported capabilities of the imap server
 	 * return false if the imap server does not support capabilities
-	 * 
+	 *
 	 * @return array the supported capabilites
 	 */
-	function getCapabilities() 
+	function getCapabilities()
 	{
 		if(!is_array($this->sessionData['capabilities'][$this->host])) {
 			return false;
 		}
-		
+
 		return $this->sessionData['capabilities'][$this->host];
 	}
-	
+
 	/**
 	 * return the delimiter used by the current imap server
 	 *
 	 * @return string the delimimiter
 	 */
-	function getDelimiter() 
+	function getDelimiter()
 	{
 		return isset($this->sessionData['delimiter'][$this->host]) ? $this->sessionData['delimiter'][$this->host] : $this->mailboxDelimiter;
 	}
-	
+
 	/**
 	 * Create transport string
 	 *
 	 * @return string the transportstring
 	 */
-	function _getTransportString() 
+	function _getTransportString()
 	{
 		if($this->encryption == 2) {
 			$connectionString = "tls://". $this->host;
@@ -289,7 +289,7 @@ class defaultimap extends Net_IMAP
 			// no tls
 			$connectionString = $this->host;
 		}
-	
+
 		return $connectionString;
 	}
 
@@ -298,7 +298,7 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @return string the transportstring
 	 */
-	function _getTransportOptions() 
+	function _getTransportOptions()
 	{
 		if($this->validatecert === false) {
 			if($this->encryption == 2) {
@@ -333,7 +333,7 @@ class defaultimap extends Net_IMAP
 				);
 			}
 		}
-	
+
 		return null;
 	}
 
@@ -360,7 +360,7 @@ class defaultimap extends Net_IMAP
 					}
 				}
 				break;
-				
+
 			case 'uidNumber':
 				$_username = 'u'.$GLOBALS['egw']->accounts->name2id($_username);
 				break;
@@ -371,24 +371,24 @@ class defaultimap extends Net_IMAP
 	/**
 	 * Create mailbox string from given mailbox-name and user-name
 	 *
-	 * @param string $_folderName='' 
+	 * @param string $_folderName=''
 	 * @return string utf-7 encoded (done in getMailboxName)
 	 */
-	function getUserMailboxString($_username, $_folderName='') 
+	function getUserMailboxString($_username, $_folderName='')
 	{
 		$nameSpaces = $this->getNameSpaces();
 
 		if(!isset($nameSpaces['others'])) {
 			return false;
 		}
-		
+
 		$_username = $this->getMailBoxUserName($_username);
 		if($this->loginType == 'vmailmgr' || $this->loginType == 'email' || $this->loginType == 'uidNumber') {
 			$_username .= '@'. $this->domainName;
 		}
 
 		$mailboxString = $nameSpaces['others'][0]['name'] . $_username . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
-		
+
 		return $mailboxString;
 	}
 	/**
@@ -396,7 +396,7 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @return array array containing information about namespace
 	 */
-	function getNameSpaces() 
+	function getNameSpaces()
 	{
 		if(!$this->_connected) {
 			return false;
@@ -420,12 +420,12 @@ class defaultimap extends Net_IMAP
 				if(is_array($lNameSpace['others'])) {
 					$result['others']	= $lNameSpace['others'];
 				}
-		
+
 				if(is_array($lNameSpace['shared'])) {
 					$result['shared']	= $lNameSpace['shared'];
 				}
 			}
-		} 
+		}
 		if (!$this->hasCapability('NAMESPACE') || $retrieveDefault) {
 			$delimiter = $this->getHierarchyDelimiter();
 			if( PEAR::isError($delimiter)) $delimiter = '/';
@@ -440,7 +440,7 @@ class defaultimap extends Net_IMAP
 		$nameSpace[$this->ImapServerId] = $result;
 		return $result;
 	}
-	
+
 	/**
 	 * returns the quota for given foldername
 	 * gets quota for the current user only
@@ -448,22 +448,22 @@ class defaultimap extends Net_IMAP
 	 * @param string $_folderName
 	 * @return string the current quota for this folder
 	 */
-#	function getQuota($_folderName) 
+#	function getQuota($_folderName)
 #	{
 #		if(!is_resource($this->mbox)) {
 #			$this->openConnection();
 #		}
-#		
+#
 #		if(function_exists('imap_get_quotaroot') && $this->supportsCapability('QUOTA')) {
 #			$quota = @imap_get_quotaroot($this->mbox, $this->encodeFolderName($_folderName));
 #			if(is_array($quota) && isset($quota['STORAGE'])) {
 #				return $quota['STORAGE'];
 #			}
-#		} 
+#		}
 #
 #		return false;
 #	}
-	
+
 	/**
 	 * return the quota for another user
 	 * used by admin connections only
@@ -471,11 +471,11 @@ class defaultimap extends Net_IMAP
 	 * @param string $_username
 	 * @return string the quota for specified user
 	 */
-	function getQuotaByUser($_username) 
+	function getQuotaByUser($_username)
 	{
 		$mailboxName = $this->getUserMailboxString($_username);
 		//error_log(__METHOD__.$mailboxName);
-		$storageQuota = $this->getStorageQuota($mailboxName); 
+		$storageQuota = $this->getStorageQuota($mailboxName);
 		//error_log(__METHOD__.$_username);
 		//error_log(__METHOD__.$mailboxName);
 		if ( PEAR::isError($storageQuota)) error_log(__METHOD__.$storageQuota->message);
@@ -485,20 +485,20 @@ class defaultimap extends Net_IMAP
 
 		return false;
 	}
-	
+
 	/**
 	 * returns information about a user
-	 * 
+	 *
 	 * Only a stub, as admin connection requires, which is only supported for Cyrus
 	 *
 	 * @param string $_username
 	 * @return array userdata
 	 */
-	function getUserData($_username) 
+	function getUserData($_username)
 	{
 		return array();
 	}
-	
+
 	/**
 	 * opens a connection to a imap server
 	 *
@@ -511,8 +511,14 @@ class defaultimap extends Net_IMAP
 		static $supportedAuthMethods;
 		//error_log(__METHOD__.function_backtrace());
 		//error_log(__METHOD__.__LINE__.($_adminConnection?' Adminconnection':' ').array2string($this));
+		$timeout = felamimail_bo::getTimeOut();
+		// either there is a $_timeout given with the openConnection call, or not, if there is a timeout
+		// set in prefs greater then the timeout given, use this one
+		// basically this means you may increase timeouts, but cannot decrease it below 20
+		if ($timeout>$_timeout) $_timeout = $timeout;
+
 		unset($this->_connectionErrorObject);
-		
+
 		if($_adminConnection) {
 			$username	= $this->adminUsername;
 			$password	= $this->adminPassword;
@@ -524,7 +530,7 @@ class defaultimap extends Net_IMAP
 			$options	= $_options;
 			$this->isAdminConnection = false;
 		}
-		
+
 		$this->setStreamContextOptions($this->_getTransportOptions());
 		$this->_timeout = $_timeout;
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
@@ -558,26 +564,26 @@ class defaultimap extends Net_IMAP
 		//error_log(__METHOD__.__LINE__.' ImapServerID:'.$this->ImapServerId.' supported:'.array2string($this->supportedAuthMethods));
 		//error_log(__METHOD__.__LINE__.' ImapServerID:'.$this->ImapServerId.' ServerMethods:'.array2string($this->_serverAuthMethods));
 		return true;
-	}		
+	}
 
 	/**
 	 * restore session variable
 	 *
 	 */
-	function restoreSessionData() 
+	function restoreSessionData()
 	{
 		$this->sessionData = $GLOBALS['egw']->session->appsession('imap_session_data');
 	}
-	
+
 	/**
 	 * save session variable
 	 *
 	 */
-	function saveSessionData() 
+	function saveSessionData()
 	{
 		$GLOBALS['egw']->session->appsession('imap_session_data','',$this->sessionData);
 	}
-	
+
 	/**
 	 * set userdata
 	 *
@@ -585,7 +591,7 @@ class defaultimap extends Net_IMAP
 	 * @param int $_quota quota in bytes
 	 * @return bool true on success, false on failure
 	 */
-	function setUserData($_username, $_quota) 
+	function setUserData($_username, $_quota)
 	{
 		return true;
 	}
@@ -596,26 +602,26 @@ class defaultimap extends Net_IMAP
 	 * @param string $_capability the capability to check for
 	 * @return bool true if capability is supported, false if not
 	 */
-	function supportsCapability($_capability) 
+	function supportsCapability($_capability)
 	{
 		return $this->hasCapability($_capability);
 	}
-	
+
 	/**
 	 * Instance of emailadmin_sieve
-	 * 
+	 *
 	 * @var emailadmin_sieve
 	 */
 	private $sieve;
-	
+
 	public $scriptName;
 	public $error;
-	
+
 	//public $error;
 
 	/**
 	 * Proxy former felamimail bosieve methods to internal emailadmin_sieve instance
-	 * 
+	 *
 	 * @param string $name
 	 * @param array $params
 	 */

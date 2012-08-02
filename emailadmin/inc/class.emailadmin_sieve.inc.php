@@ -16,7 +16,7 @@ include_once('Net/Sieve.php');
 /**
  * Support for Sieve scripts
  */
-class emailadmin_sieve extends Net_Sieve 
+class emailadmin_sieve extends Net_Sieve
 {
 	/**
 	* @var object $icServer object containing the information about the imapserver
@@ -32,7 +32,7 @@ class emailadmin_sieve extends Net_Sieve
 	* @var object $error the last PEAR error object
 	*/
 	var $error;
-	
+
 	/**
 	 * Switch on some error_log debug messages
 	 *
@@ -42,17 +42,17 @@ class emailadmin_sieve extends Net_Sieve
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param defaultimap $_icServer
 	 */
 	function __construct(defaultimap $_icServer=null)
 	{
 		parent::Net_Sieve();
-		
+
 		$this->scriptName = !empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName']) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
 
 		$this->displayCharset	= $GLOBALS['egw']->translation->charset();
-		
+
 		if (!is_null($_icServer) && $this->_connect($_icServer) === 'die') {
 			die('Sieve not activated');
 		}
@@ -71,11 +71,11 @@ class emailadmin_sieve extends Net_Sieve
 		static $sieveAuthMethods;
 		$_icServerID = $_icServer->ImapServerId;
 		if (is_null($isConError)) $isConError =& egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
-		if ( isset($isConError[$_icServerID]) ) 
+		if ( isset($isConError[$_icServerID]) )
 		{
 			error_log(__METHOD__.__LINE__.' failed for Reason:'.$isConError[$_icServerID]);
 			//$this->errorMessage = $isConError[$_icServerID];
-			return false;			
+			return false;
 		}
 
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($euser));
@@ -104,6 +104,9 @@ class emailadmin_sieve extends Net_Sieve
 			return 'die';
 		}
 		$this->_timeout = 10; // socket::connect sets the/this timeout on connection
+		$timeout = felamimail_bo::getTimeOut('SIEVE');
+		if ($timeout>$this->_timeout) $this->_timeout = $timeout;
+
 		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, null, $useTLS) ) ){
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in connect($sieveHost,$sievePort): ".$this->error->getMessage());
 			$isConError[$_icServerID] = "SIEVE: error in connect($sieveHost,$sievePort): ".$this->error->getMessage();
@@ -123,7 +126,7 @@ class emailadmin_sieve extends Net_Sieve
 		}
 		return true;
 	}
-	
+
 	function getRules($_scriptName) {
 		return $this->rules;
 	}
@@ -136,7 +139,7 @@ class emailadmin_sieve extends Net_Sieve
 		return $this->emailNotification;
 	}
 
-	function setRules($_scriptName, $_rules) 
+	function setRules($_scriptName, $_rules)
 	{
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		$script = new emailadmin_script($_scriptName);
@@ -145,14 +148,14 @@ class emailadmin_sieve extends Net_Sieve
 		if($script->retrieveRules($this)) {
 			$script->rules = $_rules;
 			$script->updateScript($this);
-			
+
 			return true;
-		} 
+		}
 
 		return false;
 	}
 
-	function setVacation($_scriptName, $_vacation) 
+	function setVacation($_scriptName, $_vacation)
 	{
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__."($_scriptName,".print_r($_vacation,true).')');
@@ -162,7 +165,7 @@ class emailadmin_sieve extends Net_Sieve
 		if($script->retrieveRules($this)) {
 			$script->vacation = $_vacation;
 			$script->updateScript($this);
-			/*	
+			/*
 			// setting up an async job to enable/disable the vacation message
 			$async = new asyncservice();
 			$user = $GLOBALS['egw_info']['user']['account_id'];
@@ -180,10 +183,10 @@ class emailadmin_sieve extends Net_Sieve
 
 		return false;
 	}
-	
+
 	/**
 	 * Set vacation with admin right for an other user, used to async enable/disable vacation
-	 * 
+	 *
 	 * @param string $_euser
 	 * @param string $_scriptName
 	 * @param string $_vaction
@@ -193,7 +196,7 @@ class emailadmin_sieve extends Net_Sieve
 	{
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.' User:'.array2string($_euser).' Scriptname:'.array2string($_scriptName).' VacationMessage:'.array2string($_vacation));
 		if (!$_scriptName) $_scriptName = $this->scriptName;
-		if ($this->_connect($this->icServer,$_euser) === true) {			
+		if ($this->_connect($this->icServer,$_euser) === true) {
 			$this->setVacation($_scriptName,$_vacation);
 			// we need to logout, so further vacation's get processed
 			$error = $this->_cmdLogout();
@@ -202,7 +205,7 @@ class emailadmin_sieve extends Net_Sieve
 		}
 		return false;
 	}
-	
+
 	function setEmailNotification($_scriptName, $_emailNotification) {
 		if (!$_scriptName) $_scriptName = $this->scriptName;
     	if ($_emailNotification['externalEmail'] == '' || !preg_match("/\@/",$_emailNotification['externalEmail'])) {
@@ -221,14 +224,14 @@ class emailadmin_sieve extends Net_Sieve
 	function retrieveRules($_scriptName) {
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		$script = new emailadmin_script($_scriptName);
-		
+
 		if($script->retrieveRules($this)) {
 			$this->rules = $script->rules;
 			$this->vacation = $script->vacation;
-			$this->emailNotification = $script->emailNotification; // Added email notifications	
+			$this->emailNotification = $script->emailNotification; // Added email notifications
 			return true;
-		} 
-		
+		}
+
 		return false;
 	}
 }
