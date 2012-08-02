@@ -654,28 +654,36 @@ $a = array('br'=>1);
 $b = array('button'=>1, 'input'=>1, 'option'=>1);
 $c = array('caption'=>1, 'dd'=>1, 'dt'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'isindex'=>1, 'label'=>1, 'legend'=>1, 'li'=>1, 'object'=>1, 'p'=>1, 'pre'=>1, 'td'=>1, 'textarea'=>1, 'th'=>1);
 $d = array('address'=>1, 'blockquote'=>1, 'center'=>1, 'colgroup'=>1, 'dir'=>1, 'div'=>1, 'dl'=>1, 'fieldset'=>1, 'form'=>1, 'hr'=>1, 'iframe'=>1, 'map'=>1, 'menu'=>1, 'noscript'=>1, 'ol'=>1, 'optgroup'=>1, 'rbc'=>1, 'rtc'=>1, 'ruby'=>1, 'script'=>1, 'select'=>1, 'table'=>1, 'tfoot'=>1, 'thead'=>1, 'tr'=>1, 'ul'=>1);
-ob_start();
-if(isset($d[$p])){echo str_repeat($s, ++$n);}
+$do = 1;
 $t = explode('<', $t);
-echo ltrim(array_shift($t));
-for($i=-1, $j=count($t); ++$i<$j;){
- $r = ''; list($e, $r) = explode('>', $t[$i]);
- $x = $e[0] == '/' ? 0 : (substr($e, -1) == '/' ? 1 : ($e[0] != '!' ? 2 : -1));
- $y = !$x ? ltrim($e, '/') : ($x > 0 ? substr($e, 0, strcspn($e, ' ')) : 0);
- $e = "<$e>";
- if(isset($d[$y])){
-  if(!$x){echo "\n", str_repeat($s, (--$n>=0?$n:0)), "$e\n", str_repeat($s, ($n>=0?$n:0));}
-  else{echo "\n", str_repeat($s, ($n>=0?$n:0)), "$e\n", str_repeat($s, ($x != 1 ? (++$n>=0?$n:0) : ($n>=0?$n:0)));}
-  echo ltrim($r); continue;
+while($do){
+ $n = $no;
+ ob_start();
+ if(isset($d[$p])){echo str_repeat($s, ++$n);}
+ echo ltrim(array_shift($t));
+ for($i=-1, $j=count($t); ++$i<$j;){
+  $r = ''; list($e, $r) = explode('>', $t[$i]);
+  $x = $e[0] == '/' ? 0 : (substr($e, -1) == '/' ? 1 : ($e[0] != '!' ? 2 : -1));
+  $y = !$x ? ltrim($e, '/') : ($x > 0 ? substr($e, 0, strcspn($e, ' ')) : 0);
+  $e = "<$e>";
+  if(isset($d[$y])){
+   if(!$x){
+    if($n){echo "\n", str_repeat($s, --$n), "$e\n", str_repeat($s, $n);}
+    else{++$no; continue 2;}
+   }
+   else{echo "\n", str_repeat($s, $n), "$e\n", str_repeat($s, ($x != 1 ? ++$n : $n));}
+   echo ltrim($r); continue;
+  }
+  $f = "\n". str_repeat($s, $n);
+  if(isset($c[$y])){
+   if(!$x){echo $e, $f, ltrim($r);}
+   else{echo $f, $e, $r;}
+  }elseif(isset($b[$y])){echo $f, $e, $r;
+  }elseif(isset($a[$y])){echo $e, $f, ltrim($r);
+  }elseif(!$y){echo $f, $e, $f, ltrim($r);
+  }else{echo $e, $r;}
  }
- $f = "\n". str_repeat($s, ($n>=0?$n:0));
- if(isset($c[$y])){
-  if(!$x){echo $e, $f, ltrim($r);}
-  else{echo $f, $e, $r;}
- }elseif(isset($b[$y])){echo $f, $e, $r;
- }elseif(isset($a[$y])){echo $e, $f, ltrim($r);
- }elseif(!$y){echo $f, $e, $f, ltrim($r);
- }else{echo $e, $r;}
+ $do = 0;
 }
 $t = preg_replace('`[\n]\s*?[\n]+`', "\n", ob_get_contents());
 ob_end_clean();
