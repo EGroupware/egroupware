@@ -45,7 +45,7 @@ class felamimail_bo
 	 */
 	static $htmLawed_config = array('comment'=>1, //remove comments
 				'keep_bad'=>6,
-				'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
+				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 				'tidy'=>1,
 				'elements' => "* -script",
 				'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
@@ -1257,9 +1257,17 @@ class felamimail_bo
 			if (stripos($_html,'?xml:namespace')!==false) self::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
 			if (stripos($_html,'?xml version')!==false) self::replaceTagsCompletley($_html,'\?xml version','\?>',false);
 			if (strpos($_html,'!CURSOR')!==false) self::replaceTagsCompletley($_html,'!CURSOR');
+			// htmLawed filter only the 'body'
+			//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
+			//if ($matches[2])
+			//{
+			//	$hasOther = true;
+			//	$_html = $matches[2];
+			//}
 			// purify got switched to htmLawed
 			$_html = html::purify($_html,self::$htmLawed_config,array(),true);
-            // clean out comments , should not be needed as purify should do the job.
+			//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
+			// clean out comments , should not be needed as purify should do the job.
 			$search = array(
 				'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
 				'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
@@ -3628,7 +3636,8 @@ class felamimail_bo
 			//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		} else {
 			//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
-			$tretval = $this->icServer->openConnection($_adminConnection);
+			$timeout = felamimail_bo::getTimeOut();
+			$tretval = $this->icServer->openConnection($_adminConnection,$timeout);
 			if ( PEAR::isError($tretval) || $tretval===false)
 			{
 				$isError[$_icServerID] = ($tretval?$tretval->message:$this->icServer->_connectionErrorObject->message);
@@ -3646,6 +3655,20 @@ class felamimail_bo
 		//error_log(__METHOD__.__LINE__.array2string($sUF));
 
 		return $tretval;
+	}
+
+	/**
+	 * getTimeOut
+	 *
+	 * @param string _use decide if the use is for IMAP or SIEVE, by now only the default differs
+	 *
+	 * @return int - timeout (either set or default 20/10)
+	 */
+	static function getTimeOut($_use='IMAP')
+	{
+		$timeout = $GLOBALS['egw_info']['user']['preferences']['felamimail']['connectionTimeout'];
+		if (empty($timeout)) $timeout = ($_use=='SIEVE'?10:20); // this is the default value
+		return $timeout;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 %1 is not writable by you!	felamimail	de	%1 is NICHT beschreibar von Ihnen!
 (no subject)	felamimail	de	(kein Betreff)
 (only cc/bcc)	felamimail	de	(kein Kopie/Blindkopie)
+(select mails by clicking on the line, like a checkbox)	felamimail	de	(auswählen von eMails durch anklicken der Zeile (wie Auswahl über eine Checkbox))
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
 (unknown sender)	felamimail	de	(unbekannter Absender)
 (with checkbox enforced)	felamimail	de	(mit Auswahlbox für alle Ordner)
@@ -513,6 +514,7 @@ then	felamimail	de	dann
 there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
+timeout on connections to your IMAP Server	felamimail	de	Verbindungstimeout für IMAP Verbindungen
 to	felamimail	de	An
 to do	felamimail	de	zu erledigen
 to mail sent to	felamimail	de	Mail an senden an
@@ -552,6 +554,7 @@ use addresses	felamimail	de	Adresse benutzen
 use common preferences max. messages	felamimail	de	Verwende die allgemeine Einstellung für max. Treffer pro Seite
 use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
 use custom settings	felamimail	de	benutze angepaßte Einstellungen
+use default timeout (20 seconds)	felamimail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
 use smtp auth	admin	de	SMTP Auth benutzen
 use source as displayed, if applicable	felamimail	de	Format wie eMailanzeige

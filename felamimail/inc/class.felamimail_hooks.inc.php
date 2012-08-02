@@ -141,6 +141,19 @@ class felamimail_hooks
 			'30' => '30'
 		);
 
+		$connectionTimeout = array(
+			'0' => lang('use default timeout (20 seconds)'),
+			'10' => '10', // timeout used in SIEVE
+			'20' => '20',
+			'30' => '30',
+			'40' => '40',
+			'50' => '50',
+			'60' => '60',
+			'70' => '70',
+			'80' => '80',
+			'90' => '90',
+		);
+
 		$no_yes = array(
 			'0' => lang('no'),
 			'1' => lang('yes')
@@ -229,12 +242,13 @@ class felamimail_hooks
 			'only_if_no_text'	=> lang('display only when no plain text is available'),
 			'always_display'	=> lang('always show html emails'),
 		);
-
+		$toggle = false;
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode'] == 'EGW_SELECTMODE_TOGGLE') $toggle=true;
 		$rowOrderStyle = array(
 			'felamimail'	=> lang('FeLaMiMail'),
 			'outlook'	=> 'Outlook',
-			'felamimail_wCB'	=> lang('FeLaMiMail').' '.lang('(with checkbox enforced)'),
-			'outlook_wCB'	=> 'Outlook'.' '.lang('(with checkbox enforced)'),
+			'felamimail_wCB' => lang('FeLaMiMail').' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
+			'outlook_wCB'	=> 'Outlook'.' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
 		);
 
 		// otherwise we get warnings during setup
@@ -273,6 +287,14 @@ class felamimail_hooks
 
 		/* Settings array for this app */
 		$settingsArray = array(
+			'connectionTimeout' => array(
+				'type'   => 'select',
+				'label'  => 'Timeout on connections to your IMAP Server',
+				'name'   => 'connectionTimeout',
+				'values' => $connectionTimeout,
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 			'refreshTime' => array(
 				'type'   => 'select',
 				'label'  => 'Refresh time in minutes',

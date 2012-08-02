@@ -1,6 +1,7 @@
 %1 is not writable by you!	felamimail	en	%1 is NOT writable by you!
 (no subject)	felamimail	en	No subject
 (only cc/bcc)	felamimail	en	Only Cc/Bcc
+(select mails by clicking on the line, like a checkbox)	felamimail	en	(select mails by clicking on the line, like a checkbox)
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
 (unknown sender)	felamimail	en	Unknown sender
 (with checkbox enforced)	felamimail	en	(with checkbox enforced)
@@ -514,6 +515,7 @@ then	felamimail	en	THAN
 there is no imap server configured.	felamimail	en	There is no IMAP server configured.
 this folder is empty	felamimail	en	THIS FOLDER IS EMPTY
 this php has no imap support compiled in!!	felamimail	en	This PHP has no IMAP support compiled in!
+timeout on connections to your IMAP Server	felamimail	en	Timeout on connections to your IMAP Server
 to	felamimail	en	To
 to do	felamimail	en	to do
 to mail sent to	felamimail	en	To mail sent to
@@ -553,6 +555,7 @@ use addresses	felamimail	en	Use addresses
 use common preferences max. messages	felamimail	en	Use common preferences max. messages
 use custom identities	felamimail	en	Use custom identities
 use custom settings	felamimail	en	Use custom settings
+use default timeout (20 seconds)	felamimail	en	use default timeout (20 seconds)
 use regular expressions	felamimail	en	Use regular expressions
 use smtp auth	admin	en	Use SMTP authentication
 use source as displayed, if applicable	felamimail	en	use source as displayed, if applicable
