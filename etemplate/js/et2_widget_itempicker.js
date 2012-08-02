@@ -35,7 +35,7 @@ var et2_itempicker = et2_inputWidget.extend({
 			"name": "Application",
 			"type": "string",
 			"default": "",
-			"description": "Limit to the listed application or applications (comma seperated)"
+			"description": "Limit to the listed application or applications (comma separated)"
 		},
 		"blur": {
 			"name": "Placeholder",
@@ -137,6 +137,7 @@ var et2_itempicker = et2_inputWidget.extend({
 			request.term = $j(this).val();
 			_self.query(request);
 		});
+		this.set_blur(this.options.blur, this.search);
 		
 		// Clear button for search
 		this.clear
@@ -214,6 +215,28 @@ var et2_itempicker = et2_inputWidget.extend({
 	_results: function(data) {
 		this.itemlist.removeClass("loading");
 		this.updateItemList(data);
+	},
+	
+	set_blur: function(_value, input) {
+		if(typeof input == 'undefined') input = this.search;
+
+		if(_value) {
+			input.attr("placeholder", _value);	// HTML5
+			if(!input[0].placeholder) {
+				// Not HTML5
+				if(input.val() == "") input.val(_value);
+				input.focus(input,function(e) {
+					var placeholder = _value;
+					if(e.data.val() == placeholder) e.data.val("");
+				}).blur(input, function(e) {
+					var placeholder = _value;
+					if(e.data.val() == "") e.data.val(placeholder);
+				});
+				if(input.val() == "") input.val(_value);
+			}
+		} else {
+			this.search.removeAttr("placeholder");
+		}
 	},
 	
 	transformAttributes: function(_attrs) {
