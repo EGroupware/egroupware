@@ -27,6 +27,12 @@
 var et2_itempicker = et2_inputWidget.extend({
 
 	attributes: {
+		"action_label": {
+			"name": "Action label",
+			"type": "string",
+			"default": "Action",
+			"description": "Label for action button"
+		},
 		"application": {
 			"name": "Application",
 			"type": "string",
@@ -140,7 +146,7 @@ var et2_itempicker = et2_inputWidget.extend({
 		// Action button
 		this.button_action = et2_createWidget("button");
 		$j(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
-		this.button_action.set_label(this.egw().lang("Action"));
+		this.button_action.set_label(this.egw().lang(this.options.action_label));
 		this.button_action.click = function() {
 			// ToDo: execute defined action
 			console.log("Button action clicked!");
