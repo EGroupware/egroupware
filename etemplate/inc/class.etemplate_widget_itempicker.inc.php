@@ -24,13 +24,16 @@ class etemplate_widget_itempicker extends etemplate_widget
 	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws egw_exception_wrong_parameter
 	 */
-	public function __construct($xml)
+	public function __construct($xml = '')
 	{
-		parent::__construct($xml);
+		if($xml) {
+			parent::__construct($xml);
+		}
 	}
 	
 	/**
 	 * Find items that match the given parameters
+	 * using the egw_link class
 	 */
 	public static function ajax_item_search($app, $type, $pattern, $options=array()) {
 		$options['type'] = $type ? $type : $options['type'];

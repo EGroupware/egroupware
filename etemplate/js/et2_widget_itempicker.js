@@ -200,7 +200,7 @@ var et2_itempicker = et2_inputWidget.extend({
 
 		this.itemlist.addClass("loading");
 		this.clear.css("display", "inline-block");
-		var request = new egw_json_request("etemplate_widget_link::ajax_link_search::etemplate", 
+		var request = new egw_json_request("etemplate_widget_itempicker::ajax_item_search::etemplate", 
 			[this.current_app, '', request.term, request.options],
 			this
 		);
