@@ -65,6 +65,7 @@ a:hover,a:active
 
 body 
 {
+	background-image:url(../images/bmback.jpg);
 	background-color:#9f9f9f;
 	padding:0px;
 	margin:0px;
