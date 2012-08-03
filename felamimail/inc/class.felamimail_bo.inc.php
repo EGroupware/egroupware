@@ -1239,8 +1239,9 @@ class felamimail_bo
 		//$_html = str_replace("\r\n",' ',$_html);
 		//$_html = str_replace("\t",' ',$_html);
 		//error_log($_html);
-		//repair doubleencoded ampersands
-		$_html = str_replace('&amp;amp;','&amp;',$_html);
+		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
+		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$_html);
+		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
 		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
 		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
@@ -1265,6 +1266,8 @@ class felamimail_bo
 			//	$_html = $matches[2];
 			//}
 			// purify got switched to htmLawed
+			// some testcode to test purifying / htmlawed
+			//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
 			$_html = html::purify($_html,self::$htmLawed_config,array(),true);
 			//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
 			// clean out comments , should not be needed as purify should do the job.
