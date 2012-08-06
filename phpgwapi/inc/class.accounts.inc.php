@@ -20,8 +20,13 @@
  * API - accounts
  *
  * This class uses a backend class (at them moment SQL or LDAP) and implements some
- * caching on to top of the backend functions. The cache is static and therefore shared
- * between all instances of accounts class.
+ * caching on to top of the backend functions:
+ *
+ * a) instance-wide account-data cache queried by account_id including also members(hips)
+ *    implemented by self::cache_read($account_id) and self::cache_invalidate($account_ids)
+ *
+ * b) session based cache for search, split_accounts and name2id
+ *    implemented by self::setup_cache() and self::cache_invalidate()
  *
  * The backend only implements the read, save, delete, name2id and the {set_}members{hips} methods.
  * The account class implements all other (eg. name2id, id2name) functions on top of these.
@@ -400,21 +405,14 @@ class accounts
 		}
 		if (!$id) return false;
 
-		self::setup_cache();
-		$account_data = &self::$cache['account_data'];
+		$data = self::cache_read($id);
 
-		if (!isset($account_data[$id]))
+		if ($set_depricated_names && $data)
 		{
-			$account_data[$id] = $this->backend->read($id);
-		}
-		if (!$account_data[$id] || !$set_depricated_names)
-		{
-			return $account_data[$id];
-		}
-		$data = $account_data[$id];
-		foreach($this->depricated_names as $name)
-		{
-			$data[$name] =& $data['account_'.$name];
+			foreach($this->depricated_names as $name)
+			{
+				$data[$name] =& $data['account_'.$name];
+			}
 		}
 		return $data;
 	}
@@ -496,9 +494,8 @@ class accounts
 			if ($data['account_primary_group'] && (!($memberships = $this->memberships($id,true)) ||
 				!in_array($data['account_primary_group'],$memberships)))
 			{
-				self::cache_invalidate($data['account_id']);
 				$memberships[] = $data['account_primary_group'];
-				$this->set_memberships($memberships,$id);
+				$this->set_memberships($memberships, $id);	// invalidates cache for account_id and primary group
 			}
 		}
 		self::cache_invalidate($data['account_id']);
@@ -520,11 +517,22 @@ class accounts
 		}
 		if (!$id) return false;
 
-		self::cache_invalidate($id);
+		if ($this->get_type($id) == 'u')
+		{
+			$invalidate = $this->memberships($id, true);
+		}
+		else
+		{
+			$invalidate = $this->members($id, true);
+		}
+		$invalidate[] = $id;
+
 		$this->backend->delete($id);
 
 		// delete all acl_entries belonging to that user or group
 		$GLOBALS['egw']->acl->delete_account($id);
+
+		self::cache_invalidate($invalidate);
 
 		return true;
 	}
@@ -584,9 +592,9 @@ class accounts
 	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string/false converted value or false on error ($account_id not found)
 	 */
-	function id2name($account_id,$which='account_lid')
+	static function id2name($account_id, $which='account_lid')
 	{
-		if (!($data = $this->read($account_id))) return false;
+		if (!($data = self::cache_read($account_id))) return false;
 
 		//echo "<p>accounts::id2name($account_id,$which)='{$data[$which]}'";
 		return $data[$which];
@@ -664,21 +672,17 @@ class accounts
 	 * @param boolean $just_id=false return just account_id's or account_id => account_lid pairs
 	 * @return array with account_id's ($just_id) or account_id => account_lid pairs (!$just_id)
 	 */
-	function memberships($account_id,$just_id=false)
+	function memberships($account_id, $just_id=false)
 	{
-		self::setup_cache();
-		$memberships_list = &self::$cache['memberships_list'];
-
 		if (!is_int($account_id) && !is_numeric($account_id))
 		{
 			$account_id = $this->name2id($account_id,'account_lid','u');
 		}
-		if (!isset($memberships_list[$account_id]))
+		if ($account_id && ($data = self::cache_read($account_id)))
 		{
-			$memberships_list[$account_id] = $this->backend->memberships($account_id);
+			return $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
 		}
-		//echo "accounts::memberships($account_id)"; _debug_array($memberships_list[$account_id]);
-		return $just_id && $memberships_list[$account_id] ? array_keys($memberships_list[$account_id]) : $memberships_list[$account_id];
+		return null;
 	}
 
 	/**
@@ -694,9 +698,16 @@ class accounts
 		{
 			$account_id = $this->name2id($account_id);
 		}
-		$this->backend->set_memberships($groups,$account_id);
+		if (($old_memberships = $this->memberships($account_id, true)) != $groups)
+		{
+			$this->backend->set_memberships($groups, $account_id);
 
-		self::cache_invalidate($account_id);
+			self::cache_invalidate(array_unique(array_merge(
+				array($account_id),
+				array_diff($old_memberships, $groups),
+				array_diff($groups, $old_memberships)
+			)));
+		}
 	}
 
 	/**
@@ -709,19 +720,15 @@ class accounts
 	 */
 	function members($account_id,$just_id=false)
 	{
-		self::setup_cache();
-		$members_list = &self::$cache['members_list'];
-
 		if (!is_int($account_id) && !is_numeric($account_id))
 		{
 			$account_id = $this->name2id($account_id);
 		}
-		if (!isset($members_list[$account_id]))
+		if ($account_id && ($data = self::cache_read($account_id)))
 		{
-			$members_list[$account_id] = $this->backend->members($account_id);
+			return $just_id && $data['members'] ? array_keys($data['members']) : $data['members'];
 		}
-		//echo "accounts::members($account_id)"; _debug_array($members_list[$account_id]);
-		return $just_id && $members_list[$account_id] ? array_keys($members_list[$account_id]) : $members_list[$account_id];
+		return null;
 	}
 
 	/**
@@ -733,9 +740,16 @@ class accounts
 	function set_members($members,$gid)
 	{
 		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
-		$this->backend->set_members($members,$gid);
+		if (($old_members = $this->members($gid, true)) != $members)
+		{
+			$this->backend->set_members($members, $gid);
 
-		self::cache_invalidate(0);
+			self::cache_invalidate(array_unique(array_merge(
+				array($gid),
+				array_diff($old_members, $members),
+				array_diff($members, $old_members)
+			)));
+		}
 	}
 
 	/**
@@ -935,15 +949,28 @@ class accounts
 	}
 
 	/**
-	 * Invalidate the cache (or parts of it) after change in $account_id
+	 * Invalidate cache (or parts of it) after change in $account_ids
 	 *
-	 * Atm simplest approach - delete it all ;-)
+	 * We use now an instance-wide read-cache storing account-data and members(hips).
 	 *
-	 * @param int $account_id for which account_id should the cache be invalid, default 0 = all
+	 * @param int|array $account_ids user- or group-id(s) for which cache should be invalidated, default 0 = only search/name2id cache
 	 */
-	static function cache_invalidate($account_id=0)
+	static function cache_invalidate($account_ids=0)
 	{
-		//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
+		//error_log(__METHOD__.'('.array2string($account_ids).')');
+
+		// instance-wide cache
+		if ($account_ids)
+		{
+			foreach((array)$account_ids as $account_id)
+			{
+				egw_cache::unsetInstance(__CLASS__, 'account-'.$account_id);
+
+				unset(self::$request_cache[$account_id]);
+			}
+		}
+
+		// session-cache
 		if (self::$cache) self::$cache = array();
 		egw_cache::unsetSession('accounts_cache','phpgwapi');
 
@@ -954,20 +981,72 @@ class accounts
 	}
 
 	/**
+	 * Timeout of instance wide cache for reading account-data and members(hips)
+	 */
+	const READ_CACHE_TIMEOUT = 43200;
+
+	/**
+	 * Local per request cache, to minimize calls to instance cache
+	 *
+	 * @var array
+	 */
+	static $request_cache = array();
+
+	/**
+	 * Read account incl. members/memberships from cache (or backend and cache it)
+	 *
+	 * @param int $account_id
+	 * @return array
+	 */
+	static function cache_read($account_id)
+	{
+		if (!is_numeric($account_id)) throw new egw_exception_wrong_parameter('Not an integer!');
+
+		$account =& self::$request_cache[$account_id];
+
+		if (!isset($account))	// not in request cache --> try intance cache
+		{
+			$account = egw_cache::getInstance(__CLASS__, 'account-'.$account_id);
+
+			if (!isset($account))	// not in instance cache --> read from backend
+			{
+				$instance = self::getInstance();
+
+				if (($account = $instance->backend->read($account_id)))
+				{
+					if ($instance->get_type($account_id) == 'u')
+					{
+						$account['memberships'] = $instance->backend->memberships($account_id);
+					}
+					else
+					{
+						$account['members'] = $instance->backend->members($account_id);
+					}
+					egw_cache::setInstance(__CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
+				}
+				//error_log(__METHOD__."($account_id) read from backend ".array2string($account));
+			}
+			//else error_log(__METHOD__."($account_id) read from instance cache ".array2string($account));
+		}
+		return $account;
+	}
+
+	/**
 	 * Internal functions not meant to use outside this class!!!
 	 */
 
 	/**
-	 * Sets up the account-data cache
+	 * Sets up session cache, now only used for search and name2id list
+	 *
+	 * Other account-data is cached on instance-level
 	 *
 	 * The cache is shared between all instances of the account-class and it can be save in the session,
 	 * if use_session_cache is set to True
 	 *
 	 * @internal
 	 */
-	static function setup_cache()
+	private static function setup_cache()
 	{
-		//echo "<p>accounts::setup_cache() use_session_cache={self::$use_session_cache}, is_array(self::\$cache)=".(int)is_array(self::$cache)."</p>\n";
 		if (is_array(self::$cache)) return;	// cache is already setup
 
 		if (self::$use_session_cache && is_object($GLOBALS['egw']->session))
@@ -975,6 +1054,8 @@ class accounts
 			self::$cache =& egw_cache::getSession('accounts_cache','phpgwapi');
 			//echo "<p>restoring cache from session, ".count(call_user_func_array('array_merge',(array)self::$cache))." items</p>\n";
 		}
+		//error_log(__METHOD__."() use_session_cache=".array2string(self::$use_session_cache).", is_array(self::\$cache)=".array2string(is_array(self::$cache)));
+
 		if (!is_array(self::$cache))
 		{
 			//echo "<p>initialising this->cache to array()</p>\n";
