@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: eGW session handling
+ * EGroupware API: session handling
  *
  * This class is based on the old phpgwapi/inc/class.sessions(_php4).inc.php:
  * (c) 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp
@@ -21,9 +21,9 @@
  */
 
 /**
- * eGW session handling
+ * session handling
  *
- * Create, verifies or destroys an eGroupWare session
+ * Create, verifies or destroys an EGroupware session
  *
  * There are separate session-handler classes: egw_session_(files|memcache),
  * which implement custom session handler or certain extra functionality, like eg. listing sessions,
@@ -528,8 +528,8 @@ class egw_session
 		}
 		$this->kp3       = common::randomstring(24);
 
-		$this->read_repositories();
-		if ($GLOBALS['egw']->accounts->is_expired($this->user))
+		$GLOBALS['egw_info']['user'] = $this->read_repositories();
+		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
 			if(is_object($GLOBALS['egw']->log))
 			{
@@ -546,8 +546,6 @@ class egw_session
 
 			return false;
 		}
-
-		$GLOBALS['egw_info']['user']  = $this->user;
 
 		$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 
@@ -926,10 +924,15 @@ class egw_session
 
 		if ($fill_egw_info_and_repositories)
 		{
-			$this->read_repositories();
+			$GLOBALS['egw_info']['user'] = $this->read_repositories();
+		}
+		else
+		{
+			// update prefs, which might be changed by an other session
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
 
-		if ($this->user['expires'] != -1 && $this->user['expires'] < time())
+		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
 			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) accounts is expired");
 			if(is_object($GLOBALS['egw']->log))
@@ -946,8 +949,6 @@ class egw_session
 		}
 		if ($fill_egw_info_and_repositories)
 		{
-			$GLOBALS['egw_info']['user']  = $this->user;
-
 			$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
 			$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
 		}
@@ -993,7 +994,6 @@ class egw_session
 		if ($fill_egw_info_and_repositories)
 		{
 			$GLOBALS['egw']->acl->acl($this->account_id);
-			accounts::getInstance()->setAccountId($this->account_id);
 			$GLOBALS['egw']->preferences->preferences($this->account_id);
 			$GLOBALS['egw']->applications->applications($this->account_id);
 		}
@@ -1206,6 +1206,7 @@ class egw_session
 	 * @param string $location free lable to store the data
 	 * @param string $appname='' default current application (egw_info[flags][currentapp])
 	 * @param mixed $data='##NOTHING##' if given, data to store, if not specified
+	 * @deprecated use egw_cache::setSession($appname, $location, $data) or egw_cache::getSession($appname, $location)
 	 * @return mixed session data or false if no data stored for $appname/$location
 	 */
 	public static function &appsession($location = 'default', $appname = '', $data = '##NOTHING##')
@@ -1462,46 +1463,47 @@ class egw_session
 	/**
 	 * Read the diverse repositories / init classes with data from the just loged in user
 	 *
+	 * @return array used to assign to $GLOBALS['egw_info']['user']
 	 */
 	public function read_repositories()
 	{
 		$GLOBALS['egw']->acl->acl($this->account_id);
-		accounts::getInstance()->setAccountId($this->account_id);
 		$GLOBALS['egw']->preferences->preferences($this->account_id);
 		$GLOBALS['egw']->applications->applications($this->account_id);
 
-		$this->user                = $GLOBALS['egw']->accounts->read_repository();
+		$user = $GLOBALS['egw']->accounts->read($this->account_id);
 		// set homedirectory from auth_ldap or auth_ads, to be able to use it in vfs
-		if (!isset($this->user['homedirectory']))
+		if (!isset($user['homedirectory']))
 		{
 			// authentication happens in login.php, which does NOT yet create egw-object in session
 			// --> need to store homedirectory in session
 			if(isset($GLOBALS['auto_create_acct']['homedirectory']))
 			{
 				egw_cache::setSession(__CLASS__, 'homedirectory',
-					$this->user['homedirectory'] = $GLOBALS['auto_create_acct']['homedirectory']);
+					$user['homedirectory'] = $GLOBALS['auto_create_acct']['homedirectory']);
 			}
 			else
 			{
-				$this->user['homedirectory'] = egw_cache::getSession(__CLASS__, 'homedirectory');
+				$user['homedirectory'] = egw_cache::getSession(__CLASS__, 'homedirectory');
 			}
 		}
-		$this->user['acl']         = $GLOBALS['egw']->acl->read_repository();
-		$this->user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+		$user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		if (is_object($GLOBALS['egw']->datetime))
 		{
 			$GLOBALS['egw']->datetime->datetime();		// to set tz_offset from the now read prefs
 		}
-		$this->user['apps']        = $GLOBALS['egw']->applications->read_repository();
-		$this->user['domain']      = $this->account_domain;
-		$this->user['sessionid']   = $this->sessionid;
-		$this->user['kp3']         = $this->kp3;
-		$this->user['session_ip']  = $this->getuser_ip();
-		$this->user['session_lid'] = $this->account_lid.'@'.$this->account_domain;
-		$this->user['account_id']  = $this->account_id;
-		$this->user['account_lid'] = $this->account_lid;
-		$this->user['userid']      = $this->account_lid;
-		$this->user['passwd']      = @$this->passwd;
+		$user['apps']        = $GLOBALS['egw']->applications->read_repository();
+		$user['domain']      = $this->account_domain;
+		$user['sessionid']   = $this->sessionid;
+		$user['kp3']         = $this->kp3;
+		$user['session_ip']  = $this->getuser_ip();
+		$user['session_lid'] = $this->account_lid.'@'.$this->account_domain;
+		$user['account_id']  = $this->account_id;
+		$user['account_lid'] = $this->account_lid;
+		$user['userid']      = $this->account_lid;
+		$user['passwd']      = $this->passwd;
+
+		return $user;
 	}
 
 	/**

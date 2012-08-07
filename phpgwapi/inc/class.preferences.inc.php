@@ -130,6 +130,64 @@ class preferences
 		self::__construct();
 	}
 
+	/**
+	 * Magic function to avoid storing perferences in session, as they get re-read on each request by egw_session::verify()
+	 *
+	 * @return array with class vars to store
+	 */
+	function __sleep()
+	{
+		$vars = array_keys(get_object_vars($this));
+
+		return array_diff($vars, array('data', 'user', 'group', 'default', 'forced', 'session'));
+	}
+
+	/**
+	 * Lifetime in seconds of cached items 1d
+	 */
+	const CACHE_LIFETIME = 86400;
+
+	/**
+	 * Read preferences of requested id(s)
+	 *
+	 * @param int|array $ids
+	 * @return array id => app => preference data
+	 */
+	function cache_read($ids)
+	{
+		$prefs = $db_read = array();
+
+		foreach((array)$ids as $id)
+		{
+			$prefs[$id] = egw_cache::getInstance(__CLASS__, $id);
+			if (!isset($prefs[$id])) $db_read[] = $id;
+		}
+		if ($db_read)
+		{
+			foreach($this->db->select($this->table,'*',array('preference_owner' => $db_read),__LINE__,__FILE__) as $row)
+			{
+				// The following replacement is required for PostgreSQL to work
+				$app = trim($row['preference_app']);
+				$value = unserialize($row['preference_value']);
+				if($value === false)
+				{
+					// manually retrieve the string lengths of the serialized array if unserialize failed
+					$value = unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $row['preference_value']));
+				}
+				$this->unquote($value);
+
+				$prefs[$row['preference_owner']][$app] = $value;
+			}
+			foreach($db_read as $id)
+			{
+				if (!isset($prefs[$id])) $prefs[$id] = array();
+				egw_cache::setInstance(__CLASS__, $id, $prefs[$id]);
+			}
+		}
+		//error_log(__METHOD__.'('.array2string($ids).') read-from-db='.array2string($db_read));
+		return $prefs;
+	}
+
 	/**************************************************************************\
 	* These are the standard $this->account_id specific functions              *
 	\**************************************************************************/
@@ -201,12 +259,12 @@ class preferences
 		$GLOBALS['egw']->accounts->get_account_name($this->account_id,$lid,$fname,$lname);
 
 		$this->values = array(	// standard notify replacements
-			'fullname'  => $GLOBALS['egw']->common->display_fullname('',$fname,$lname),
+			'fullname'  => common::display_fullname('',$fname,$lname),
 			'firstname' => $fname,
 			'lastname'  => $lname,
 			'domain'    => $GLOBALS['egw_info']['server']['mail_suffix'],
 			'email'     => $this->email_address($this->account_id),
-			'date'      => $GLOBALS['egw']->common->show_date('',$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']),
+			'date'      => common::show_date('',$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']),
 		);
 		// do this first, as it might be already contain some substitues
 		//
@@ -280,47 +338,33 @@ class preferences
 	 */
 	function read_repository($use_session=true)
 	{
-		$this->session = $use_session ? $GLOBALS['egw']->session->appsession('preferences','preferences') : array();
+		$this->session = $use_session ? egw_cache::getSession('preferences','preferences') : array();
 		if (!is_array($this->session))
 		{
 			$this->session = array();
 		}
 		$this->forced = $this->default = $this->user = $this->group = array();
-		$primary_group = $GLOBALS['egw']->accounts->id2name($this->account_id,'account_primary_group');
-		foreach($this->db->select($this->table,'*',array('preference_owner' => array(
+		$primary_group = accounts::id2name($this->account_id, 'account_primary_group');
+		foreach($this->cache_read(array(
 			self::DEFAULT_ID,
 			self::FORCED_ID,
 			$this->account_id,
 			$primary_group+self::DEFAULT_ID,	// need to offset it with DEFAULT_ID = -2!
-		)),__LINE__,__FILE__) as $row)
+		)) as $id => $values)
 		{
-			// The following replacement is required for PostgreSQL to work
-			$app = trim($row['preference_app']);
-			$value = unserialize($row['preference_value']);
-			if($value === false)
-			{
-				// manually retrieve the string lengths of the serialized array if unserialize failed
-				$value = unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $row['preference_value']));
-			}
-			$this->unquote($value);
-			if (!is_array($value))
-			{
-				continue;
-			}
-			switch($row['preference_owner'])
+			switch($id)
 			{
 				case self::FORCED_ID:
-					$this->forced[$app] = $value;
+					$this->forced = $values;
 					break;
 				case self::DEFAULT_ID:
-					//if ($app=='common') error_log(__METHOD__.__LINE__.array2string($value));
-					$this->default[$app] = $value;
+					$this->default = $values;
 					break;
 				case $this->account_id:	// user
-					$this->user[$app] = $value;
+					$this->user = $values;
 					break;
 				default:
-					$this->group[$app] = $value;
+					$this->group = $values;
 					break;
 			}
 		}
@@ -387,10 +431,6 @@ class preferences
 			echo 'group<pre>';    print_r($this->group); echo "</pre>\n";
 			echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n";
 		}
-//error_log(__METHOD__.__LINE__.'->user: remote_application_url:'.array2string($this->user['common']['remote_application_url']));
-//error_log(__METHOD__.__LINE__.'->default: remote_application_url:'.array2string($this->default['common']['remote_application_url']));
-//error_log(__METHOD__.__LINE__.'->forced: remote_application_url:'.array2string($this->forced['common']['remote_application_url']));
-//error_log(__METHOD__.__LINE__.'->effective: remote_application_url:'.array2string($this->data['common']['remote_application_url']));
 		$this->check_set_tz_offset();
 
 		return $this->data;
@@ -421,14 +461,14 @@ class preferences
 	 */
 	function check_set_tz_offset()
 	{
-		$prefs =& $this->data['common'];
+		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 
 		if (!empty($prefs['tz']))
 		{
 			egw_time::setUserPrefs($prefs['tz'],$prefs['dateformat'],$prefs['timeformat']);
 			// set the old preference for compatibilty with old code
-			$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = egw_time::tz_offset_s()/3600;
-			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset={$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']}</p>\n";
+			$prefs['tz_offset'] = egw_time::tz_offset_s()/3600;
+			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset=$prefs[tz_offset]</p>\n";
 
 			// ToDo: get rid of that
 			if (isset($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof egw))
@@ -719,14 +759,15 @@ class preferences
 		}
 		//echo "<p>preferences::save_repository(,$type): account_id=$account_id, prefs="; print_r($prefs); echo "</p>\n";
 
-		if (isset($GLOBALS['egw_setup']) || !$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
+		if (isset($GLOBALS['egw_setup']) || !$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences') &&
+			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs[$account_id] != $prefs))
 		{
 			$this->db->transaction_begin();
 			$this->db->delete($this->table,array('preference_owner' => $account_id),__LINE__,__FILE__);
 
 			foreach($prefs as $app => $value)
 			{
-				if (!is_array($value))
+				if (!is_array($value) || !$value)
 				{
 					continue;
 				}
@@ -741,17 +782,8 @@ class preferences
 			}
 			$this->db->transaction_commit();
 
-			if (!isset($GLOBALS['egw_setup']))
-			{
-				// no need to invalidate session cache, if we write the prefs to the session too
-				$egw = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
-				$egw->preferences = $this;
-				$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($egw);
-			}
-		}
-		if (!isset($GLOBALS['egw_setup']))
-		{
-			$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
+			// update instance-wide cache
+			egw_cache::setInstance(__CLASS__, $account_id, $prefs);
 		}
 		return $this->data;
 	}
@@ -843,7 +875,7 @@ class preferences
 			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['lang']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
-				$this->add('common','lang',$GLOBALS['egw']->common->getPreferredLanguage());
+				$this->add('common','lang',common::getPreferredLanguage());
 				$preferences_update = True;
 			}
 			if ($preferences_update)

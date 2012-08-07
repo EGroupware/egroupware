@@ -414,8 +414,7 @@ class asyncservice
 					{
 						$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($job['account_id']);
 						$GLOBALS['egw']->session->account_domain = $domain;
-						$GLOBALS['egw']->session->read_repositories();
-						$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->user;
+						$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->read_repositories();
 
 						if ($lang != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 						{
