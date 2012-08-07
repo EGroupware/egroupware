@@ -559,12 +559,16 @@ class accounts
 	 *
 	 * @param int $account_id numerica account_id
 	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
-	 * @return string/false converted value or false on error ($account_id not found)
+	 * @return string|boolean converted value or false on error ($account_id not found)
 	 */
 	static function id2name($account_id, $which='account_lid')
 	{
-		if (!($data = self::cache_read($account_id))) return false;
-
+		try {
+			if (!($data = self::cache_read($account_id))) return false;
+		}
+		catch (Exception $e) {
+			return false;
+		}
 		//echo "<p>accounts::id2name($account_id,$which)='{$data[$which]}'";
 		return $data[$which];
 	}
@@ -966,6 +970,7 @@ class accounts
 	 *
 	 * @param int $account_id
 	 * @return array
+	 * @throws egw_exception_wrong_parameter if no integer was passed as $account_id
 	 */
 	static function cache_read($account_id)
 	{
