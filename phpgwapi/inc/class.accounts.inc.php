@@ -453,6 +453,9 @@ class accounts
 		// delete all acl_entries belonging to that user or group
 		$GLOBALS['egw']->acl->delete_account($id);
 
+		// delete all categories belonging to that user or group
+		$GLOBALS['egw']->cats->delete_account($id);
+
 		return true;
 	}
 

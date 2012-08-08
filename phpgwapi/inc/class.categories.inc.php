@@ -23,15 +23,15 @@
  * Categories are read now once from the database into a static cache variable (by the static init_cache method).
  * The egw object fills that cache ones per session, stores it in a private var, from which it restores it for each
  * request of that session.
- * 
+ *
  * $cat['data'] array:
  * ------------------
  * $cat['data'] array is stored serialized in the database to allow applications to simply add all
  * sorts of values there (without the hassel of a DB schema change).
- * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized 
- * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized. 
+ * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized
+ * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized.
  * return*() methods still return $cat['data'] serialized by default, but have a parameter to return
- * it as array(). That default might change in future too, so better check if it's 
+ * it as array(). That default might change in future too, so better check if it's
  * not already an array, before unserialize!
  *
  * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
@@ -88,12 +88,12 @@ class categories
 	 * Appname for global categories
 	 */
 	const GLOBAL_APPNAME = 'phpgw';
-	
+
 	/**
 	 * account_id for global categories
 	 */
 	const GLOBAL_ACCOUNT = -1;
-	
+
 	/**
 	 * constructor for categories class
 	 *
@@ -115,7 +115,7 @@ class categories
 		$this->app_name		= $app_name;
 		$this->db			= $GLOBALS['egw']->db;
 
-		if (is_null(self::$cache))	// sould not be necessary, as cache is load and restored by egw object
+		if (is_null(self::$cache))	// should not be necessary, as cache is load and restored by egw object
 		{
 			self::init_cache();
 		}
@@ -220,13 +220,13 @@ class categories
 			{
 				continue;
 			}
-			
+
 			// check for read permission
 			if(!$this->check_perms(EGW_ACL_READ, $cat))
 			{
 				continue;
 			}
-			
+
 			// check if we have the correct type
 			switch ($type)
 			{
@@ -371,7 +371,7 @@ class categories
 	 * Read a category
 	 *
 	 * We use a shared cache together with id2name
-	 * 
+	 *
 	 * Data array get automatically unserialized, if it was serialized!
 	 *
 	 * @param int $id id of category
@@ -380,11 +380,11 @@ class categories
 	static function read($id)
 	{
 		if (!isset(self::$cache[$id])) return false;
-		
+
 		$cat = self::$cache[$id];
-		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ? 
+		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ?
 			$arr : $cat['data']) : array();
-			
+
 		return $cat;
 	}
 
@@ -427,7 +427,7 @@ class categories
 
 		return $id;
 	}
-	
+
 	/**
 	 * Checks category permissions for a given list of commaseparated category ids
 	 * and truncates it by the ones the user does not have the requested permission on
@@ -439,7 +439,7 @@ class categories
 	function check_list($needed, $cat_list)
  	{
 		if (empty($cat_list)) return $cat_list;
-		
+
 		$cat_arr = explode(',',$cat_list);
 		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
 		{
@@ -452,10 +452,10 @@ class categories
 			}
 			$cat_list = implode(',',$cat_arr);
 		}
-		
+
 		return $cat_list;
 	}
-	
+
 	/**
 	 * Checks if the current user has the necessary ACL rights
 	 *
@@ -478,26 +478,26 @@ class categories
 		{
 			return true;
 		}
-		
+
 		// Read access to global categories
 		if ($needed == EGW_ACL_READ && ($category['appname'] == self::GLOBAL_APPNAME
 				|| $category['appname'] == $this->app_name && $category['owner'] == self::GLOBAL_ACCOUNT))
 		{
 			return true;
 		}
-		
+
 		// Full access to own categories
 		if ($category['appname'] == $this->app_name && $category['owner'] == $this->account_id)
 		{
 			return true;
 		}
-		
+
 		// Load the application grants
 		if ($category['appname'] == $this->app_name && is_null($this->grants))
 		{
 			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
 		}
-		
+
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
 		return ($this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
 					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
@@ -835,6 +835,77 @@ class categories
 	}
 
 	/**
+	 * Delete categories belonging to a given account, when account got deleted
+	 *
+	 * @param int $account_id
+	 * @param int $new_owner=null for users data can be transfered to new owner
+	 * @return int number of deleted or modified categories
+	 */
+	public static function delete_account($account_id, $new_owner=null)
+	{
+		if (is_null(self::$cache)) self::init_cache();
+
+		$deleted = 0;
+		foreach(self::$cache as $cat_id => $data)
+		{
+			if ($data['owner'] && ($owners = explode(',', $data['owner'])) && ($owner_key = array_search($account_id, $owners)) !== false)
+			{
+				// delete category if account_id is single owner and no new owner or owner is a group
+				if (count($owners) == 1 && (!$new_owner || $account_id < 0))
+				{
+					if (!isset($cat))
+					{
+						$cat = new categories($new_owner, $data['appname']);
+					}
+					$cat->delete($cat_id, false, true);
+				}
+				else
+				{
+					unset($owners[$owner_key]);
+					if ($new_owner && $account_id > 0) $owners[] = $new_owner;
+					$data['owner'] = implode(',', $owners);
+					// app_name have to match cat to update!
+					if (!isset($cat) || $cat->app_name != $data['appname'])
+					{
+						$cat = new categories($new_owner, $data['appname']);
+					}
+					$cat->add($data);
+				}
+				++$deleted;
+			}
+		}
+		return $deleted;
+	}
+
+	/**
+	 * Delete categories with not (longer) existing owners
+	 *
+	 * @return int number of deleted categories
+	 */
+	public static function delete_orphans()
+	{
+		if (is_null(self::$cache)) self::init_cache();
+
+		$checked = array();
+		$deleted = 0;
+		foreach(self::$cache as $cat_id => $data)
+		{
+			foreach(explode(',', $data['owner']) as $owner)
+			{
+				if ($owner && !in_array($owner, $checked))
+				{
+					if (!$GLOBALS['egw']->accounts->exists($owner))
+					{
+						$deleted += self::delete_account($owner);
+					}
+					$checked[] = $owner;
+				}
+			}
+		}
+		return $deleted;
+	}
+
+	/**
 	 ******************************** old / deprecated functions ***********************************
 	 */
 
@@ -851,7 +922,7 @@ class categories
 	{
 		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
 	}
-	
+
 	/**
 	 * return into a select box, list or other formats
 	 *
