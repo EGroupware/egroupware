@@ -22,10 +22,12 @@ add a new contact	addressbook	sk	Pridať nový kontakt
 add a new infolog	addressbook	sk	Pridať nový záznam
 add a new list	addressbook	sk	Pridať nový zoznam
 add a single entry by passing the fields.	addressbook	sk	Pridať záznam pomocou zadania polí.
+add appointment	addressbook	sk	Pridať schôdzku
 add business email of whole distribution list?	addressbook	sk	Pridať Zamestnanie - Email celého distribučného zoznamu
 add custom field	addressbook	sk	Pridať používateľskú položku
 add emails of whole distribution list?	addressbook	sk	Pridať Email celého distribučného zoznamu?
 add or delete categories	addressbook	sk	Pridať alebo odstrániť kategórie
+add to distribution list	addressbook	sk	Pridať do distribučného zoznamu
 add to distribution list:	addressbook	sk	Pridať do distribučného zoznamu:
 added	addressbook	sk	pridané
 added by synchronisation	addressbook	sk	Pridané cez synchronizáciu
@@ -49,6 +51,7 @@ addressbook-fieldname	addressbook	sk	Pole adresára
 addvcard	addressbook	sk	Pridať vizitku VCard
 advanced search	addressbook	sk	Pokročilé hľadanie
 all contacts	addressbook	sk	Všetky kontakty
+all in one field	addressbook	sk	Všetko v jednom poli
 allow users to maintain their own account-data	admin	sk	Povoliť používateľom, aby spravovali údaje svojich vlastných používateľských účtov
 alt. csv import	addressbook	sk	Alternatívny import z CSV
 always	addressbook	sk	Vždy
@@ -58,7 +61,6 @@ are you shure you want to delete this contact?	addressbook	sk	Naozaj chcete odst
 are you sure you want to delete this field?	addressbook	sk	Naozaj mám odstrániť toto pole?
 assistent	addressbook	sk	Asistent
 assistent phone	addressbook	sk	Telefón asistenta
-at the moment the following document-types are supported:	addressbook	sk	V tejto chvíli sú podporované tieto typy dokumentu:
 birthday	common	sk	Narodeniny
 birthdays	common	sk	Narodeniny
 blank	addressbook	sk	Prázdne
@@ -80,6 +82,7 @@ categorie	addressbook	sk	kategória
 categorie added	addressbook	sk	kategória bola pridaná
 categorie delete	addressbook	sk	kategória bola odstránená
 categories, notes, ...	addressbook	sk	Kategórie, Poznámky,...
+category path	addressbook	sk	Cesta kategórie
 category tree	admin	sk	Strom kategórie
 cell phone	addressbook	sk	Mobil
 change all organisation members	addressbook	sk	zmeniť všetkých členov organizácie
@@ -88,8 +91,8 @@ charset for the vcard export	addressbook	sk	Znaková sada pre export vCard
 charset of file	addressbook	sk	Znaková sada súboru
 check all	addressbook	sk	Označiť všetko
 choose an icon for this contact type	admin	sk	Zvoľte ikonu pre tento typ kontaktu
+choose export options	addressbook	sk	Zvoľte možnosti exportu
 choose owner of imported data	addressbook	sk	Vyberte vlastníka naimportovaných údajov
-choose seperator and charset	addressbook	sk	Vyberte oddeľovač a znakovú sadu
 chosse an etemplate for this contact type	admin	sk	Zvoľte eŠablónu pre tento typ kontaktu
 city	common	sk	Mesto
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	sk	Vyčistiť polia adresára (uplatní sa ak synchronizácia vyrobí duplikáty)
@@ -120,10 +123,10 @@ copied by %1, from record #%2.	addressbook	sk	Skopíroval %1 od záznamu č.%2
 copy a contact and edit the copy	addressbook	sk	Kopírovať kontakt a upraviť kópiu
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	sk	Kopírovať vaše zmeny do schránky, %1znovunačítať položku%2 a zlúčiť ich.
 country	common	sk	Krajina
+country code	addressbook	sk	Kód krajiny
 create new links	addressbook	sk	Vytvoriť nové odkazy
 created	addressbook	sk	Vytvorené
 credit	addressbook	sk	Kredit
-csv field	addressbook	sk	Pole CSV
 csv-fieldname	addressbook	sk	Pole v CSV
 csv-filename	addressbook	sk	CSV súbor
 custom	addressbook	sk	Vlastné
@@ -137,6 +140,7 @@ default document to insert contacts	addressbook	sk	Predvolený dokument pre vlo�
 default file as format	addressbook	sk	Predvolený formát pre súbor ako
 default filter	addressbook	sk	Predvolený filter
 default format for fileas, eg. for new entries.	addressbook	sk	Predvolený formát pre súbor ako, napríklad pre nové položky
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	sk	Predvoleným správaním je otvoriť e-mailové adresy v emailovej aplikácii EGroupware, ak k nej má používateľ prístup.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	sk	Definuje, ktorá E-mailová adresa (pracovná alebo domáca) sa má používať ako predvolená v distribučnom zozname Emailu.
 delete a single entry by passing the id.	addressbook	sk	Odstráni záznam podľa zadaného id.
 delete selected distribution list!	addressbook	sk	Odstráň vybraný distribučný zoznam!
@@ -154,7 +158,6 @@ distribution lists	addressbook	sk	Distribučné zoznamy
 distribution lists, ...	addressbook	sk	Distribučné zoznamy, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sk	Chcete súkromný adresár, ktorý nemôžu prezerať ostatní používatelia? Prístupové oprávnenia ku svojmu osobnému Adresáru prideľujete vy.
 do your really want to delete this contact?	addressbook	sk	Naozaj chcete odstrániť tento kontakt?
-document '%1' does not exist or is not readable for you!	addressbook	sk	Dokument '%1' neexistuje, alebo nemáte oprávnenia čítať ho!
 doesn't matter	addressbook	sk	Nezáleží
 domestic	addressbook	sk	Domáci
 don't hide empty columns	addressbook	sk	Neskrývať prázdne stĺpce
@@ -162,6 +165,8 @@ download	addressbook	sk	Stiahnutie
 download export file (uncheck to debug output in browser)	addressbook	sk	Uložiť exportovaný súbor (Nechajte prázdne ak chcete zobraziť výsledek v prehliadači)
 download this contact as vcard file	addressbook	sk	Stiahnuť tento kontakt ak súbor vCard
 duration	addressbook	sk	Trvanie
+each category in its own field	addressbook	sk	Každú kategóriu v samostatnom poli
+each option in its own field	addressbook	sk	Každú možnosť v samostatnom poli
 edit custom field	addressbook	sk	Upraviť vlastné pole
 edit custom fields	admin	sk	Upraviť vlastné polia
 edit extra account-data in the addressbook	admin	sk	Upraviť extra údaje účtu v Adresári
@@ -178,20 +183,21 @@ enter the path to the exported file here	addressbook	sk	Zadajte cestu k exportov
 error deleting the contact !!!	addressbook	sk	Chyba pri odstraňovaní kontaktu !!!
 error saving the contact !!!	addressbook	sk	Chyba pri ukladaní kontaktu !!!
 error: the entry has been updated since you opened it for editing!	addressbook	sk	Chyba: táto položka bola aktualizovaná v čase, kým ste ju mali otvorenú pre úpravy!
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
 existing links	addressbook	sk	Existujúce odkazy
 exists	addressbook	sk	existuje
-export	addressbook	sk	Export
 export as csv	addressbook	sk	Exportovať ako CSV
 export as vcard	addressbook	sk	Exportovať ako vizitku VCard
 export contacts	addressbook	sk	Exportovať kontakty
+export definitition to use for nextmatch export	addressbook	sk	Definícia exportu pre použitie v nasledujúcom exporte
 export file name	addressbook	sk	Názov súboru pre export
 export from addressbook	addressbook	sk	Export z Adresára
 export selection	addressbook	sk	Exportovať výber
-exported	addressbook	sk	Exportované
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súbodu CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
+exports contacts from your addressbook into a csv file.	addressbook	sk	Vyexportuje kontakty z adresára do súboru CSV.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
 extra	addressbook	sk	Extra
 extra private	addressbook	sk	Extra súkromné
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sk	nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva !!!
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sk	Nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva !!!
 fax	addressbook	sk	Fax
 fax number	common	sk	Číslo faxu
 field %1 has been added !	addressbook	sk	Pole %1 bolo pridané
@@ -201,15 +207,10 @@ fields for the csv export	addressbook	sk	Polia pre CSV export
 fields the user is allowed to edit himself	admin	sk	Polia, ktoré smie používateľ upravovať
 fields to copy when copying an address?	admin	sk	Ktoré polia kopírovať pri kopírovaní adresy?
 fields to show in address list	addressbook	sk	Viditeľné polia v zozname
-fieldseparator	addressbook	sk	Oddeľovač polí
-fieldseperator	addressbook	sk	Oddeľovač polí
-for more then one contact in a document use the tag pagerepeat!	addressbook	sk	Ak chcete v dokumente viac než jeden kontakt, použite značku opakovania stránky!
 for read only ldap	admin	sk	pre LDAP iba na čítanie
-for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	sk	Ak chcete sériový list, použite túto značku. Zadajte obsah, ktorý chcete opakovať, medzi dve značky.
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	sk	Túto značku použite pre hromadný list. Obsah, ktorý chcete opakovať, zadajte medzi dve značky.
 freebusy uri	addressbook	sk	URI pre zaneprázdnenosť
 full name	addressbook	sk	Celé meno
-general	addressbook	sk	Základné
-general fields:	addressbook	sk	Hlavné polia:
 geo	addressbook	sk	GEO
 global categories	addressbook	sk	Globálne kategórie
 grant addressbook access	common	sk	Deleguj práva pre prístup k Adresáru
@@ -231,10 +232,7 @@ home zip code	addressbook	sk	Domov - PSČ
 how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov smú ne-administrátori exportovať?
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	sk	Ak zadáte adresár (plnú VFS cestu), Adresár zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť určený dokument s vloženými kontaktnými údajmi.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	sk	Ak zadáte dokument (plnú VFS cestu), Adresár zobrazí extra ikonu dokumentu akciu pre každú adresu. Táto ikona umožní stiahnuť určený dokument s vloženými kontaktnými údajmi.
 ignore first line	addressbook	sk	Ignorovať prvý riadok
-import	addressbook	sk	Import
 import contacts	addressbook	sk	Importovať kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
 import file	addressbook	sk	Importuj súbor
@@ -249,7 +247,6 @@ in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narode
 income	addressbook	sk	Príjem
 infolog	addressbook	sk	Záznamník
 insert	addressbook	sk	Vložiť
-insert in document	addressbook	sk	Vložiť do dokumentu
 insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!
 international	addressbook	sk	Mezinárodný
 internet	addressbook	sk	Internet
@@ -269,12 +266,12 @@ list all customfields	addressbook	sk	Zobraziť všetky používateľské položk
 list already exists!	addressbook	sk	Zoznam už existuje!
 list created	addressbook	sk	Zoznam bol vytvorený
 list creation failed, no rights!	addressbook	sk	Nepodarilo sa vytvoriť zoznam, nemáte práva!
-load sample file	addressbook	sk	Načítať Vzorový súbor
 load vcard	addressbook	sk	Nahrať vizitku VCard
 location	addressbook	sk	Umiestnenie
 locations	addressbook	sk	Umiestnenia
-manage mapping	addressbook	sk	Správa mapovania
+main categories in their own field	addressbook	sk	Hlavné kategórie v samostatných poliach
 mark records as private	addressbook	sk	Označiť záznamy ako súkromé
+merge contacts	addressbook	sk	Zlúčiť kontakty
 merge into first or account, deletes all other!	addressbook	sk	Zlúčiť do prvého účtu, odstránia sa všetky ostatné!
 merged	addressbook	sk	Zlúčené
 message after submitting the form	addressbook	sk	Textová správa po odoslaní formuláru
@@ -286,7 +283,7 @@ mobile	addressbook	sk	Mobil
 mobile phone	addressbook	sk	Mobilný telefón
 modem phone	addressbook	sk	Číslo na modem
 more ...	addressbook	sk	Viac ...
-move to addressbook:	addressbook	sk	Presunúť do Adresára:
+move to addressbook	addressbook	sk	Presunúť do adresára
 moved	addressbook	sk	Presunuté
 multiple vcard	addressbook	sk	Viacero vizitiek VCard
 name for the distribution list	addressbook	sk	Názov pre distribučný zoznam
@@ -296,9 +293,11 @@ new contact submitted by %1 at %2	addressbook	sk	Nový kontakt odoslal %1 %2
 new window opened to edit infolog for your selection	addressbook	sk	Otvorilo sa nové okno pre úpravu Záznamníka pre váš výber
 next date	addressbook	sk	Nasledujúci dátum
 no categories selected	addressbook	sk	neboli vybrané kategórie
+no fallback	addressbook	sk	Bez návratu
 no vcard	addressbook	sk	Žiadna vizitka
 number	addressbook	sk	Číslo
 number of records to read (%1)	addressbook	sk	Počet záznamov k načítaniu (%1)
+open email addresses in external mail program	addressbook	sk	Otvoriť e-mailové adresy v externom e-mailovom programe
 options for type	admin	sk	Voľby pre tento typ
 organisation	addressbook	sk	Organizácia
 organisations	addressbook	sk	Organizácie
@@ -333,7 +332,9 @@ read a single entry by passing the id and fieldlist.	addressbook	sk	Načítaj z�
 read only	addressbook	sk	iba na čítanie
 record access	addressbook	sk	Prístup k záznamu
 record owner	addressbook	sk	Vlastník záznamu
+recovered	addressbook	sk	Obnovené
 region	addressbook	sk	Región
+remove from distribution list	addressbook	sk	Odstrániť z distribučného zoznamu
 remove selected contacts from distribution list	addressbook	sk	Odstrániť vybrané kontakty z distribučného zoznamu
 removed from distribution list	addressbook	sk	Odstránené z distribučného zoznamu
 repetition	addressbook	sk	Opakovanie
@@ -365,7 +366,8 @@ show birthday reminders on main screen	addressbook	sk	Pripomínať narodeniny na
 show infolog entries for this organisation	addressbook	sk	Zobraziť položky Záznamníka pre túto organizáciu
 show the contacts of this organisation	addressbook	sk	Zobraziť kontakty v tejto organizácii
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	sk	Veľkosť vyskakovacieho okna (DxV, napr. 400x300, ak sa má používať vyskakovacie okno)
-start	admin	sk	Začiatok
+stadt	addressbook	sk	Mesto
+start	admin	sk	Štart
 startrecord	addressbook	sk	Prvý záznam
 state	common	sk	Štát
 street	common	sk	Ulica
@@ -381,7 +383,6 @@ that field name has been used already !	addressbook	sk	Takýto názov poľa už 
 the anonymous user has probably no add rights for this addressbook.	addressbook	sk	Anonymný používateľ pravdepodobne nemá právo pridávať do tohto adresára.
 the anonymous user needs add rights for it!	addressbook	sk	Anonymný používateľ by na to potreboval pridať práva!
 the anonymous user needs read it!	addressbook	sk	Anonymný používateľ by to potreboval čítať!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	sk	Dokument môže obsahovať premenné ako $$n_fn$$, ktorý bude nahradený kontaktnými údajmi (%1plný zoznam názvov premenných%2).
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	sk	Aby bolo možné vložiť kontaktné údaje v dokumentoch OpenOffice alebo MSOffice, je potrebná prípona zip.
 there was an error saving your data :-(	addressbook	sk	Pri ukladaní Vašich údajov nastala chyba :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	sk	Tento modul zobrazuje formulár kontaktu, ktorý ukladá priamo do adresára.
@@ -389,13 +390,14 @@ this module displays block from a adddressbook group.	addressbook	sk	Tento modul
 this person's first name was not in the address book.	addressbook	sk	Takéto meno sa v adresári nenachádza.
 this person's last name was not in the address book.	addressbook	sk	Takéto priezvisko sa v adresári nenachádza.
 timezone	addressbook	sk	Časové pásmo
-title	addressbook	sk	titul
+title	addressbook	sk	Pracovné zaradenie
 to many might exceed your execution-time-limit	addressbook	sk	Príliš veľa záznamov môže spôsobiť prekročenie povoleného časového limitu
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
-translation	addressbook	sk	Preklad
 two of: %1	addressbook	sk	dva z: %1
 type	addressbook	sk	Typ
+un-delete	addressbook	sk	Obnoviť vymazané
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	sk	Nepodarila sa konverzia "%1" na ID účtu. Používam nastavenie zásuvného modulu (%2) pre vlastníka.
 unique id (uid)	addressbook	sk	Jedinečné ID (UID)
 unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID<br />(pre aktualizáciu existujúcich záznamov)
 update a single entry by passing the fields.	addressbook	sk	Aktualizovať jednotlivý záznam podľa zadaných polí
@@ -435,6 +437,7 @@ yes, for the next two weeks	addressbook	sk	Áno, pre nasledujúce 2 týždne
 yes, for the next week	addressbook	sk	Áno, pre nasledujúci týždeň
 yes, for today and tomorrow	addressbook	sk	Áno, pre dnešok a zajtrajšok
 yes, only admins can purge deleted items	admin	sk	Áno, iba správci môžu vymazať odstránené položky
+yes, users can purge their deleted items	admin	sk	Áno, používatelia môžu vymazať ich odstránené položky
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie k odstráneniu kontaktu %1
 you are not permittet to delete this contact	addressbook	sk	Nemáte oprávnenie odstrániť tento kontakt
 you are not permittet to edit this contact	addressbook	sk	Nemáte oprávnenie upraviť tento kontakt

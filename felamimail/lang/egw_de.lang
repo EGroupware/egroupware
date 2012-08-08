@@ -5,8 +5,8 @@
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
 (unknown sender)	felamimail	de	(unbekannter Absender)
 (with checkbox enforced)	felamimail	de	(mit Auswahlbox für alle Ordner)
-1) keep drafted message (press OK)	felamimail	de	1) Nachrichtenentwurf behalten (wählen Sie OK)
-2) discard the message completely (press Cancel)	felamimail	de	2) verwerfen der kompletten Nachricht (wählen Sie Abbrechen)
+1) keep drafted message (press ok)	felamimail	de	1) Nachrichtenentwurf behalten (wählen Sie OK)
+2) discard the message completely (press cancel)	felamimail	de	2) verwerfen der kompletten Nachricht (wählen Sie Abbrechen)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	de	Vorschauansicht: Wenn Sie eine Vorschauansicht von eMails wünschen, müssen Sie hier die Höhe des Vorschaubereichs und der Nachrichtenliste festlegen. (300 hat sich als zufriedenstellender Wert erwiesen). Sie können ebenfalls die Mindesthöhe der eMail Liste festlegen, indem Sie die gewünschte Mindesthöhe, durch Komma getrennt, an den Wert für die Höhe des Vorschaubereiches anhängen (Bsp.: 300,190). Die Vorschau wird durch einen einfachen Klick auf den Betreff der anzuzeigenden Nachricht aktiviert.
 aborted	felamimail	de	abgebrochen
 activate	felamimail	de	aktivieren
@@ -52,6 +52,7 @@ before headers	felamimail	de	vor den Kopfzeilen
 between headers and message body	felamimail	de	zwischen Kopfzeilen und Editorfenster
 body part	felamimail	de	Hauptteil
 by date	felamimail	de	nach Datum
+can not open imap connection	felamimail	de	keine Verbindung zum IMAP-Server möglich
 can not send message. no recipient defined!	felamimail	de	Kann Nachricht nicht senden. Kein Empfänger angegeben!
 can't connect to inbox!!	felamimail	de	kann nicht mit ihrer INBOX verbinden!!!
 cc	felamimail	de	Kopie
@@ -98,6 +99,7 @@ dark gray	felamimail	de	Dunkelgrau
 dark green	felamimail	de	Dunkelgrün
 dark magenta	felamimail	de	Dunkelrot
 dark yellow	felamimail	de	Braun
+date received	felamimail	de	Empfangsdatum
 date(newest first)	felamimail	de	Datum (neue zuerst)
 date(oldest first)	felamimail	de	Datum (alte zuerst)
 days	felamimail	de	Tage
@@ -192,6 +194,7 @@ error: could not save message as draft	felamimail	de	FEHLER: Die Nachricht konnt
 error: could not save rule	felamimail	de	FEHLER: Die Regel konnte nicht gespeichert werden.
 error: could not send message.	felamimail	de	FEHLER: Die Nachricht konnte nicht versendet werden.
 error: message could not be displayed.	felamimail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
+esync will fail without a working email configuration!	felamimail	de	Die Synchronisation mit eSync benötigt zwingend ein eingerichtetes E-Mail-Konto in dieser EGroupware-Instanz!
 event details follow	felamimail	de	Termindetails folgend
 every	felamimail	de	alle
 every %1 days	felamimail	de	alle %1 Tage
@@ -364,6 +367,7 @@ no stationery	felamimail	de	Kein Briefkopf
 no subject given!	felamimail	de	Kein Betreff angegeben!
 no supported imap authentication method could be found.	felamimail	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
 no text body supplied, check attachments for message text	felamimail	de	Kein E-Mail Text vorhanden, bitte prüfen Sie die Anlagen zu dieser E-Mail, um den Text zu lesen
+no valid %1 folder configured!	felamimail	de	Dieser Ordner %1 ist nicht eingerichtet. Siehe Einstellungen E-Mail-Konto.
 no valid data to create mailprofile!!	felamimail	de	Keine gültigen Daten zur Erzeugung eines Mailprofils!!
 no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-Profil ausgewählt!
 none	felamimail	de	kein
@@ -514,7 +518,7 @@ then	felamimail	de	dann
 there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
-timeout on connections to your IMAP Server	felamimail	de	Verbindungstimeout für IMAP Verbindungen
+timeout on connections to your imap server	felamimail	de	Verbindungstimeout für IMAP Verbindungen
 to	felamimail	de	An
 to do	felamimail	de	zu erledigen
 to mail sent to	felamimail	de	Mail an senden an

@@ -33,21 +33,29 @@ account is expired	common	sk	Platnosť používateľského účtu vypršala
 accounts	common	sk	Účty
 acl	common	sk	ACL práva
 action	common	sk	Akcia
+action when category is an email address	groupdav	sk	Akcia keď kategória je E-mailovou adresou
+actions	common	sk	Akcie
 active	common	sk	Aktívne
 add	common	sk	Pridať
 add %1 category for	common	sk	Pridať %1 kategóriu pre
 add category	common	sk	Pridať kategóriu
 add shortcut	common	sk	Pridať skratku
 add sub	common	sk	Pridať podkategóriu
+add user to responsibles	groupdav	sk	Pridať používateľa medzi zodpovedných
+add user to responsibles, removing evtl. previous category user	groupdav	sk	Pridať používateľa medzi zodpovedných, odstrániť prípadného predchádzajúceho používateľa kategórie
 addressbook	common	sk	Adresár
+addressbooks to sync in addition to personal addressbook	groupdav	sk	Adresár ktorý sa má synchronizovať popri osobnom adresári
 admin	common	sk	Správca
 administration	common	sk	Správa
 afghanistan	common	sk	AFGANISTAN
 albania	common	sk	ALBÁNSKO
 algeria	common	sk	ALŽÍRSKO
 all	common	sk	Všetko
+all addressbooks	groupdav	sk	Všetky adresáre
 all fields	common	sk	všetky polia
+all in one	groupdav	sk	Všetko v jednom
 all languages	common	sk	všetky jazyky
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	sk	Umožňuje zmenu zodpovedných používateľov pre zariadenia bez ich podpory tak, že E-mailovú adresu používateľa nastaví ako kategóriu
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	sk	AMERICKÁ SAMOA
 an admin required that you must change your password upon login.	common	sk	Správca žiada, aby ste si pri prihlásení zmenili heslo.
@@ -61,6 +69,7 @@ antarctica	common	sk	ANTARKTÍDA
 antigua and barbuda	common	sk	ANTIQUA BARBUDA
 application	common	sk	Aplikácia
 apply	common	sk	Použiť
+apply the action on the whole query, not only the shown entries	common	sk	Vykonať akciu na celom výbere, NIE len na zobrazených položkách
 april	common	sk	Apríl
 are you sure you want to delete these entries ?	common	sk	Ste si istí, chcete zmazať tieto záznamy?
 are you sure you want to delete this entry ?	common	sk	Ste si istí, chcete zmazať tento záznam?
@@ -109,11 +118,14 @@ bulgarian	common	sk	bulharsky
 burkina faso	common	sk	BOURKINA FASSO
 burundi	common	sk	BURUNDI
 calendar	common	sk	Kalendár
+calendars to sync in addition to personal calendar	groupdav	sk	Kalendáre ktoré sa majú synchronizovať popri osobnom kalendári
 cambodia	common	sk	KAMBODŽA
 cameroon	common	sk	KAMERUN
 canada	common	sk	KANADA
 cancel	common	sk	Zrušiť
 cannot replace %1 because it is a directory	common	sk	Nemôžem prepísať %1 pretože je to adresár
+cannot set a category as parent, which is part of this categorys subtree!	common	sk	Nemôžem nastaviť ako rodičovskú takú kategóriu, ktorá je súčasťou svojej vlastnej štruktúry!
+cannot set this cat as its own parent!	common	sk	Nemôžem nastaviť túto kategóriu ako svojho vlastného rodiča!
 cant open %1, needs ziparchive	common	sk	Nemôžem otvoriť %1, je potrebný ZipArchív
 cant open '%1' for %2	common	sk	Nemôžem otvoriť '%1' pre %2
 cape verde	common	sk	KAPVERDY
@@ -141,9 +153,11 @@ choose a background style.	common	sk	Vyberte štýl pozadia.
 choose a text color for the icons	common	sk	Vyberte farbu textu pre ikonky
 choose the category	common	sk	Vyberte kategóriu
 choose the parent category	common	sk	Vyberte rodičovskú kategóriu
+chosen parent category no longer exists	common	sk	Vybraná rodičovská kategória už neexistuje
 christmas island	common	sk	VIANOČNÉ OSTROVY
 clear	common	sk	Vyčistiť
 clear form	common	sk	Vyčistiť formulár
+clear window	common	sk	Vyčistiť okno
 click	common	sk	Klik
 click here to resume your egroupware session.	common	sk	Ak chcete obnoviť vašu reláciu EGroupware, kliknite sem.
 click or mouse over to show menus	common	sk	Ak chcete zobraziť ponuku, kliknite alebo ukážte myšou
@@ -152,6 +166,8 @@ click this image on the navbar: %1	common	sk	Kliknite na tento obrázok v naviga
 close	common	sk	Zavrieť
 close sidebox	common	sk	Zavrieť Sidebox
 cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
+collection empty.	common	sk	Výber je prázdny.
+collection listing	common	sk	Výpis výberu
 colombia	common	sk	KOLUMBIA
 common preferences	common	sk	Bežné predvoľby
 comoros	common	sk	KOMORY
@@ -171,7 +187,7 @@ croatia	common	sk	CHORVÁTSKO
 cuba	common	sk	KUBA
 currency	common	sk	Mena
 current	common	sk	Aktuálne
-current users	common	sk	Súčasní používatelia
+current users	common	sk	Prihlásených používateľov
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ČESKÁ REPUBLIKA
 database error	common	sk	Chyba databázy
@@ -185,7 +201,11 @@ default category	common	sk	Štandardná kategória
 default height for the windows	common	sk	Predvolená výška okien
 default width for the windows	common	sk	Predvolená šírka okien
 delete	common	sk	Odstrániť
+delete category	common	sk	Odstrániť kategóriu
+delete file	common	sk	Odstrániť súbor
 delete row	common	sk	Odstrániť Riadok
+delete these entries	common	sk	Odstrániť tieto položky
+delete this entry	common	sk	Odstrániť túto položku
 denmark	common	sk	DÁNSKO
 description	common	sk	Popis
 detail	common	sk	Podrobnosti
@@ -200,8 +220,12 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
 disabled	common	sk	Neaktívny
 display %s first	jscalendar	sk	Zobraziť %s najskôr
+distribution lists as groups	groupdav	sk	Distribučné zoznamy ako skupiny
 djibouti	common	sk	DŽIBUTSKO
+do not notify	common	sk	Neupozorňovať
+do not notify of these changes	common	sk	Neupozorňovať na tieto zmeny
 do you also want to delete all subcategories ?	common	sk	Chcete odstrániť aj všetky podkategórie?
+doctype:	common	sk	TYP DOKUMENTU
 document properties	common	sk	Vlastnosti dokumentu
 document title:	common	sk	Nadpis dokumentu
 domain	common	sk	Doména
@@ -210,6 +234,7 @@ domestic	common	sk	Domáce
 dominica	common	sk	DOMINIKA
 dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
 done	common	sk	Hotovo
+download	common	sk	Stiahnuť
 drag to move	jscalendar	sk	Potiahni pre presun
 e-mail	common	sk	E-Mail
 east timor	common	sk	VÝCHODNÝ TIMOR
@@ -226,7 +251,10 @@ egypt	common	sk	EGYPT
 el salvador	common	sk	SALVADOR
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
+empty file	common	sk	Prázdny súbor
+enable logging	groupdav	sk	Povoliť záznam protokolu
 enabled	common	sk	Aktívny
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	sk	Povolí záznam protokolu prevádzky CalDAV/CardDAV za účelom diagnostiky problémov so zariadeniami.
 end date	common	sk	Dátum ukončenia
 end time	common	sk	Čas ukončenia
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
@@ -294,6 +322,7 @@ group has been deleted	common	sk	Skupina bola odstránená
 group has been updated	common	sk	Skupina bola aktualizovaná
 group name	common	sk	názov skupiny
 group public	common	sk	Verejný pre skupiny
+groupdav	common	sk	Server pre CalDAV, CardCAV a GroupDAV
 groups	common	sk	Skupiny
 groups with permission for %1	common	sk	Skupiny, kde máte prístup ku %1
 groups without permission for %1	common	sk	Skupiny, kde nemáte prístup ku %1
@@ -325,9 +354,12 @@ image directory relative to document root (use / !), example:	common	sk	Adresár
 image url	common	sk	URL adresa obrázka
 india	common	sk	INDIA
 indonesia	common	sk	INDONÉZIA
+infolog types to sync	common	sk	Typy Záznamníka pre synchronizáciu
 insert all %1 addresses of the %2 contacts in %3	common	sk	Vložiť všetkých %1 adries z %2 kontaktov in %3
 insert column after	common	sk	Vložiť Stĺpec za
 insert column before	common	sk	Vložiť Stĺpec Pred
+insert in %1	common	sk	Vložiť v %1
+insert in dokument	common	sk	Vložiť v dokumente
 insert row after	common	sk	Vložiť Riadok Za
 insert row before	common	sk	Vložiť Riadok Pred
 international	common	sk	Mezinárodný
@@ -380,11 +412,13 @@ liberia	common	sk	LIBÉRIA
 libyan arab jamahiriya	common	sk	LÍBIA
 license	common	sk	Licencia
 liechtenstein	common	sk	LICHTENŠTAJNSKO
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta obsahujú ##last-check-run## tabuľky %3 ==> ignorované</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
 list	common	sk	Zoznam
 list members	common	sk	Zoznam členov
 lithuania	common	sk	LITVA
 local	common	sk	Lokálny
+logging / debuging	groupdav	sk	Protokolovanie / ladenie
 login	common	sk	Prihlásiť
 loginid	common	sk	Prihlasovacie ID
 logout	common	sk	Odhlásenie
@@ -472,14 +506,17 @@ notify window	common	sk	Upozorňujúce okno
 notify your administrator to correct this situation	common	sk	Upozornite svojho správcu, aby napravil vzniknutú situáciu
 november	common	sk	November
 october	common	sk	Október
+off	groupdav	sk	Vypnúť
 ok	common	sk	OK
 old value	common	sk	Stará hodnota
 oman	common	sk	OMÁN
 on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napíšte: %1
 on mouse over	common	sk	Pri namierení myši
 only private	common	sk	iba súkromné
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	sk	Podporované iba niektorými plne kompatibilnými klientmi (napr. od Apple). Ak musíte zadať URL, pravdepodobne to nebude podporované!
 only yours	common	sk	iba vaše
 oops! you caught us in the middle of system maintainance.	common	sk	Ajajaj! Zastihli ste nás práve počas údržby systému.
+open	common	sk	Otvoriť
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
 open sidebox	common	sk	Otvor bočnú ponuku
@@ -534,6 +571,7 @@ preferences for the %1 template set	preferences	sk	Predvoľby pre šablónu %1 n
 prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
 prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
 previous page	common	sk	Predchádzajúca stránka
+primary group	common	sk	Základná skupina
 print	common	sk	Tlač
 priority	common	sk	Priorita
 private	common	sk	Súkromné
@@ -555,6 +593,8 @@ remove shortcut	common	sk	Odstrániť skratku
 rename	common	sk	Premenovať
 replace	common	sk	Nahradiť
 replace with	common	sk	Zameniť za
+requests and full responses to files directory	common	sk	Požiadavky a plné odpovede do priečinka súborov
+requests and truncated responses to apache error-log	groupdav	sk	Požiadavky a skrátené odpovede do chybového protokolu Apache
 resource type	common	sk	Typ zdroja
 restore failed	common	sk	Obnova zlyhala
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam účtov v systéme. Upozornenie: môže byť pomerne rozsiahly
@@ -585,6 +625,9 @@ search or select accounts	common	sk	hľadať alebo vyberať medzi účtami
 second	common	sk	sekunda
 section	common	sk	Sekcia
 select	common	sk	Výber
+select "%1", if your client does not support multiple addressbooks.	groupdav	sk	Vyberte "%1" ak váš klient nepodporuje viacero adresárov.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	sk	Vyberte "%1" ak váš klient podporuje skupiny, napr. adresár OS X alebo iOS.
+select action	common	sk	Vyberte akciu
 select all %1 %2 for %3	common	sk	Vyberte všetky %1 %2 pre %3
 select category	common	sk	Vyberte kategóriu
 select date	common	sk	Vyberte dátum
@@ -606,6 +649,8 @@ server answered. processing response...	common	sk	Server odpovedal. Spracúvam o
 server contacted. waiting for response...	common	sk	Pripájam sa na server. Čakám na odpoveď...
 server name	common	sk	Meno servera
 session has been killed	common	sk	Relácia bola ukončená
+set user as only responsible user, but keeping groups	groupdav	sk	Nastaviť používateľa ako jediného zodpovedného, ale zachovať skupiny
+set user as only responsible, removing all existing responsibles	groupdav	sk	Nastaviť používateľa ako jediného zodpovedného, odstrániť všetkých ostatných zodpovedných
 setup	common	sk	Inštalácia
 setup main menu	common	sk	Hlavná inštalačná ponuka
 seychelles	common	sk	SEYCHELLY
@@ -615,6 +660,7 @@ show as topmenu	common	sk	Zobraziť ako Vrchnú ponuku
 show clock?	common	sk	Ukázať hodinky?
 show home and logout button in main application bar?	common	sk	Ukázať tlačítko Domovskej stránky a tlačítko Odhlásenia v hlavnom paneli aplikácií?
 show in sidebox	common	sk	Zobraziť ako bočnú ponuku
+show log of following device	groupdav	sk	Zobraziť protokol nasledujúceho zariadenia
 show logo's on the desktop.	common	sk	Na desktope zobrazovať logá.
 show menu	common	sk	ukázať ponuku
 show page generation time	common	sk	Ukázať čas generovania stránky
@@ -654,6 +700,7 @@ suriname	common	sk	SURINAM
 swaziland	common	sk	SVAZIJSKO
 sweden	common	sk	ŠVÉDSKO
 switzerland	common	sk	ŠVAJČIARSKO
+sync all selected into one	groupdav	sk	Synchronizovať celý výber do jedného
 syrian arab republic	common	sk	SÝRIA
 table %1 is excluded from backup and restore. data will not be restored.	common	sk	Tabuľka %1 je vyňatá zo zálohovania a obnovy. Údaje nebudú obnovené.
 table properties	common	sk	Nastavenia tabuľky
@@ -667,6 +714,7 @@ the api requires an upgrade	common	sk	API potrebuje aktualizáciu
 the following applications require upgrades	common	sk	Nasledujúce aplikácie vyžadujú aktualizáciu
 the mail server returned	common	sk	Poštový server vrátil
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	sk	Systémový používateľ s takýmto menom už existuje. Používatelia nemôžu mať rovnaké meno ako systémoví používatelia.
+they will be sub-folders in users home (%1 attribute).	common	sk	Budú pod-priečinkami v používateľovom domovskom priečinku (%1 atribút).
 this application is current	common	sk	Táto aplikácia je aktuálna
 this application requires an upgrade	common	sk	Táto aplikácia vyžaduje aktualizáciu
 this name has been used already	common	sk	Toto meno sa už používa!
@@ -743,6 +791,8 @@ what style would you like the image to have?	common	sk	Aký štýl má mať obr�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
 which groups	common	sk	Ktoré skupiny
+which infolog types should be synced with the device, default only tasks.	common	sk	Ktoré typy Záznamníka sa majú synchronizovať s týmto zariadením; štandardne iba úlohy.
+whole query	common	sk	Celý výber
 width	common	sk	Šírka
 wk	jscalendar	sk	Týž
 work email	common	sk	pracovný E-mail
@@ -765,10 +815,13 @@ you have successfully logged out	common	sk	Boli ste úspešne odhlásení.
 you need to %1set your timezone preference%2.	common	sk	Je potrebné, aby ste %1nastavili svoju časovú zónu%2.
 you need to add the webserver user '%1' to the group '%2'.	common	sk	Je potrebné, aby ste priradili webserverového používateľa '%1' do skupiny '%2'.
 you need to be an egroupware administrator to access this functionality!	common	sk	Iba správca EGroupware má prístup k tejto funkcionalite!
+you need to select some entries first!	common	sk	Najprv musíte vybrať niektoré položky!
+you need to set enable logging to "%1" to create/update a log.	groupdav	sk	Ak chcete vytvoriť/aktualizovať protokol, musíte povoliť protokolovanie na %1.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu EGroupware: %1, ale nemáte na to oprávnenia.
 your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
 your message has been sent	common	sk	Vaša správa bola odoslaná
 your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	sk	Vaše heslo nespĺňa požiadavky na kvalitu hesla.<br> Musíte splniť %1 kritérium %1. Splnili ste iba %2 kritériá. <br>Vaše heslo nesplnilo nasledovné kritériá:
+your password is about to expire in %1 days, you may change your password now	common	sk	Vaše heslo vyprší do %1 dní, môžete si ho už zmeniť.
 your search returned %1 matchs	common	sk	našiel som %1 záznamov
 your search returned 1 match	common	sk	našiel som 1 záznam
 your session could not be verified.	login	sk	Vašu reláciu sa nepodarilo overiť.

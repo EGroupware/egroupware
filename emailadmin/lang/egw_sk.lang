@@ -62,7 +62,7 @@ imap server closed the connection.	emailadmin	sk	IMAP server ukončil spojenie.
 imap server closed the connection. server responded: %s	emailadmin	sk	IMAP server ukončil spojenie. Odpoveď servera: %s
 imap server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa IMAP servera
 imap server logintyp	emailadmin	sk	typ prihlásenia IMAP servera
-imap server name	emailadmin	sk	názov IMAP servera
+imap server name	emailadmin	sk	Názov IMAP servera
 imap server port	emailadmin	sk	port IMAP servera
 imap/pop3 server name	emailadmin	sk	názov IMAP/POP3 servera
 in mbyte	emailadmin	sk	v Megabajtoch
@@ -144,3 +144,6 @@ users can define their own identities	emailadmin	sk	Používatelia môžu defino
 users can define their own signatures	emailadmin	sk	Používatelia môžu definovať svoje vlastné podpisy
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	sk	Správy v neprítomnosti s počiatočným a koncovým dátumom vyžadujú, aby bol nastavený účet správcu!
 virtual mail manager	emailadmin	sk	Virtuálny MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	sk	Áno, použiť nižšieuvedené prístupové údaje iba pre upozornenia, ináč použiť prístupové údaje aktuálneho používateľa
+yes, use credentials of current user or if given credentials below	emailadmin	sk	Áno, použiť prístupové údaje aktuálneho používateľa, alebo prístupové údaje uvedené nižšie ak sú vyplnené
+you have received a new message on the	emailadmin	sk	Obdržali ste novú správu ohľadom

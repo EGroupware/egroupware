@@ -100,6 +100,7 @@ authentication / accounts	admin	en	Authentication | Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users.
 available placeholders	admin	en	Available placeholders
 back to the list	admin	en	Back to the list
+backup directory %1 mounted as %2	admin	en	Backup directory %1 mounted as %2
 bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 bottom	admin	en	Bottom
@@ -276,6 +277,7 @@ explanation of ldapman	admin	en	This module has been tested so far for POSTFIX, 
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
 failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
+failed to mount backup directory!	admin	en	Failed to mount Backup directory!
 fallback (after each pageview)	admin	en	Fallback, after each page view.
 false	admin	en	False
 field '%1' already exists !!!	admin	en	Field '%1' already exists!
@@ -392,6 +394,7 @@ mode	admin	en	Mode
 modified	admin	en	Modified
 month	admin	en	Month
 more secure	admin	en	More secure
+mount backup directory to %1	admin	en	Mount backup directory to %1
 must change password upon next login	admin	en	Must change password upon next login
 name must not be empty !!!	admin	en	Name must not be empty!
 name of the egroupware instance, eg. default	admin	en	Name of the EGroupware instance
@@ -641,6 +644,3 @@ you need to select some users first!	admin	en	You need to select some users firs
 you will need to remove the subcategories before you can delete this category	admin	en	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
 your session could not be verified.	admin	en	Your session could not be verified.
-backup directory %1 mounted as %2	admin	en	Backup directory %1 mounted as %2
-failed to mount backup directory!	admin	en	Failed to mount Backup directory!
-mount backup directory to %1	admin	en	Mount backup directory to %1

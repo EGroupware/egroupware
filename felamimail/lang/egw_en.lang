@@ -5,8 +5,8 @@
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
 (unknown sender)	felamimail	en	Unknown sender
 (with checkbox enforced)	felamimail	en	(with checkbox enforced)
-1) keep drafted message (press OK)	felamimail	en	1) keep drafted message (press OK)
-2) discard the message completely (press Cancel)	felamimail	en	2) discard the message completely (press Cancel)
+1) keep drafted message (press ok)	felamimail	en	1) keep drafted message (press OK)
+2) discard the message completely (press cancel)	felamimail	en	2) discard the message completely (press Cancel)
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single click onto the subject, set the height for the message list and the preview area e.g. 300. You may specify the minimum height of the message list too, by adding it after the specified IFrame Preview height, separated by comma (e.g.: 300,190)
 aborted	felamimail	en	Aborted
 activate	felamimail	en	Activate
@@ -52,6 +52,7 @@ before headers	felamimail	en	Before headers
 between headers and message body	felamimail	en	Between headers and message body
 body part	felamimail	en	Body part
 by date	felamimail	en	By date
+can not open imap connection	felamimail	en	Can not open IMAP connection
 can not send message. no recipient defined!	felamimail	en	Can't send a message. No recipient defined!
 can't connect to inbox!!	felamimail	en	Can't connect to INBOX!!
 cc	felamimail	en	CC
@@ -193,6 +194,7 @@ error: could not save message as draft	felamimail	en	Error: Could not save messa
 error: could not save rule	felamimail	en	Error: Could not save rule.
 error: could not send message.	felamimail	en	Error: Could not send message.
 error: message could not be displayed.	felamimail	en	ERROR: Message could not be displayed.
+esync will fail without a working email configuration!	felamimail	en	eSync will FAIL without a working eMail configuration!
 event details follow	felamimail	en	Event details follow
 every	felamimail	en	Every
 every %1 days	felamimail	en	Every %1 days
@@ -365,6 +367,7 @@ no stationery	felamimail	en	No stationery!
 no subject given!	felamimail	en	No subject given!
 no supported imap authentication method could be found.	felamimail	en	No supported IMAP authentication method could be found.
 no text body supplied, check attachments for message text	felamimail	en	No text body supplied, check attachments for message text
+no valid %1 folder configured!	felamimail	en	No valid %1 folder configured!
 no valid data to create mailprofile!!	felamimail	en	No valid data to create email profile!
 no valid emailprofile selected!!	felamimail	en	No valid email profile selected!
 none	felamimail	en	None
@@ -515,7 +518,7 @@ then	felamimail	en	THAN
 there is no imap server configured.	felamimail	en	There is no IMAP server configured.
 this folder is empty	felamimail	en	THIS FOLDER IS EMPTY
 this php has no imap support compiled in!!	felamimail	en	This PHP has no IMAP support compiled in!
-timeout on connections to your IMAP Server	felamimail	en	Timeout on connections to your IMAP Server
+timeout on connections to your imap server	felamimail	en	Timeout on connections to your IMAP Server
 to	felamimail	en	To
 to do	felamimail	en	to do
 to mail sent to	felamimail	en	To mail sent to

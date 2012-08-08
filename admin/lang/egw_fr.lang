@@ -1,26 +1,42 @@
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 droits d'accès de comptes inexistants supprimés.
+%1 class not instanciated	admin	fr	Classe %1 non instanciée
+%1 group %2	admin	fr	%1 groupe %2
+%1 is no command!	admin	fr	%1 n'est pas une commande!
+%1 log entries deleted.	admin	fr	%1 entrées dans le log effacées.
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
+%1 phrases saved.	admin	fr	%1 phrases enregistrées.
+%1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
+%1 sessions killed	admin	fr	%1 sessions éliminées.
+%1 user %2	admin	fr	%1 utilisateur %2
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
 -  type	admin	fr	- type
 accesslog and bruteforce defense	admin	fr	Protection contre les attaques accès aux logs et attaque systématique
+account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié!
+account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe en texte
+account %1 %2	admin	fr	Compte %1 %2
+account '%1' deleted.	admin	fr	Compte '%' supprimé.
 account active	admin	fr	Compte actif
 account has been created	common	fr	Le compte a été créé
 account has been deleted	common	fr	Le compte a été supprimé
 account has been updated	common	fr	Le compte a été mis à jour
+account id	admin	fr	Compte ID
 account list	admin	fr	Liste des comptes
 account permissions	admin	fr	Permissions de compte
 account preferences	admin	fr	Préférences de compte
+account-id's have to be integers!	admin	fr	Les ID de compte doivent être des entiers!
 acl manager	admin	fr	Gestionnaire des droits d'accès
 acl rights	common	fr	Droits d'accès
 action	admin	fr	Action
+actions	admin	fr	Actions
 activate wysiwyg-editor	admin	fr	activer l'éditeur WYSIWYG
 add a category	admin	fr	Ajouter une catégorie
 add a group	admin	fr	Ajouter un groupe
 add a new account.	admin	fr	Ajouter un nouveau compte.
+add a new remote instance	admin	fr	Ajouter une instance distante
 add a subcategory	admin	fr	Ajouter une sous-catégorie
 add a user	admin	fr	Ajouter un utilisateur
 add account	admin	fr	Ajouter un compte
@@ -36,15 +52,18 @@ add sub-category	admin	fr	Ajouter une sous-catégorie
 admin email	admin	fr	Email de l'administrateur
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses EMail (séparées par des virgules) des administrateurs à prévenir à propos du blocage (vide pour aucune notification)
 admin name	admin	fr	Nom de l'administrateur
+admin queue and history	admin	fr	Adminstration des files et historiques
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	options avançées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
 aliases	admin	fr	Alias
+all applications	admin	fr	Toutes les applications
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
+allow remote administration from following install id's (comma separated)	admin	fr	Autoriser l'administration à distance depuis les ID d'installation suivantes, séparé par des virgules.
 alternate email address	admin	fr	Adresse email alternative
 anonymous user	admin	fr	Utilisateur anonyme
 anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions)
@@ -52,11 +71,15 @@ anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
 anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
 appearance	admin	fr	Apparence
 application	admin	fr	Application
+application '%1' not found (maybe not installed or misspelled)!	admin	fr	L'application '%1' n'a pas été trouvée. Peut-être non installée ou mal orthographiée!
 application name	admin	fr	Nom d'application
 application title	admin	fr	Titre d'application
 applications	admin	fr	Applications
 applications list	admin	fr	Liste de applications
+applications run rights updated.	admin	fr	Droits d'execution de l'application mis à jour
 applies the changes	admin	fr	appliquer les changements
+apply the changes	admin	fr	Appliquer les changements
+archive: zip or tar	admin	fr	Archiver: zip ou tar
 are you sure you want to delete the application %1 ?	admin	fr	Etes-vous sûr de vouloir supprimer l'application %1 ?
 are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir supprimer ce compte ?
 are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir supprimer cette application ?
@@ -75,28 +98,55 @@ attribute mailalternateaddress explained	admin	fr	Ceci modifie l'attribut <b><i>
 attribute mailforwardingaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailForwardingAddress-</i></b> (adresse de routage de messagerie) du schéma QMAIL. En cas d'utilisation de cette valeur, elle ne peut être vide.
 authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
-back to the list	admin	fr	retour à la liste
+available placeholders	admin	fr	Mots clés disponibles
+back to the list	admin	fr	Retour à la liste
+backup directory %1 mounted as %2	admin	fr	Répertoire de backup %1 monté comme %2
 bi-dir passthrough	admin	fr	passage bidirectionnel
 bi-directional	admin	fr	bidirectionnel
 bottom	admin	fr	bas
+bulk password reset	admin	fr	Réinitailisation en série des mots de passe
 calculate next run	admin	fr	Calculer la prochaine exécution
+calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
 can change password	admin	fr	Peut modifier son mot de passe
 cancel testjob!	admin	fr	Annuler le Travail de test!
+cancel this scheduled command	admin	fr	Annuler cette commande programmée
 categories list	admin	fr	Liste des catégories
 category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
+category deleted.	admin	fr	Catégorie supprimée.
 category list	admin	fr	Liste de catégories
+category saved.	admin	fr	Catégorie enregistrée
+change account_id	admin	fr	Changer l'ID du compte
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
 change config settings	admin	fr	Modifier les paramètres de configuration
 change main screen message	admin	fr	Changer le message de l'écran principal
+change owner	admin	fr	Changer le propriétaire
+change password for %1	admin	fr	Changer le mot de passe pour %1
+change password hash to	admin	fr	Changer le cryptage du mot de passe pour
+changed password hash for %1 to %2.	admin	fr	Changer le cryptage du mot de passe de %1 pour %2.
+check acl for entries of not (longer) existing accounts	admin	fr	Vérifier les ACL pour les entrées de compte inexistants.
 check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les sessions
 check items to <b>%1</b> to %2 for %3	admin	fr	Vérifier les objets vers <b>%1</b> à %2 pour %3
+children	admin	fr	Enfants
 click to select a color	admin	fr	Cliquez pour sélectionner une couleur
 color	admin	fr	Couleur
+command scheduled to run at %1	admin	fr	Commande programmée pour s'executer à %1
+commercial: all sorts of companies	admin	fr	Commercial: toutes sortes d'entreprises
+config password or md5 hash from the header.inc.php	admin	fr	Mot de passe de configuration ou clé cryptée md5 du header.inc.php.
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	fr	Domaine du cookie. Vide par défaut utilise le nom de domaine complet. Par exemple, dans le Gestionnaire de site ".domaine.com" permet d'utiliser le même cookie pour egw.domaine.com et www.domaine.com.
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fr	Chemin vers le cookie. Permet des sessions d'EGroupware multiple avec des répertoires différents.
+could not remote execute the command	admin	fr	Echec de l'execution à distance de la commande
+country	admin	fr	Pays
 country selection	admin	fr	Sélection du pays
 create group	admin	fr	Créer un groupe
+created	admin	fr	Créé
+created with id #%1	admin	fr	Créé avec l'id #%1
+creates / updates user accounts from csv file	admin	fr	Crée / met à jour les comptes d'utilisateurs depuis un fichier CSV
+creates / updates user groups from csv file	admin	fr	Crée / met à jour les groupes d' utilisateurs depuis un fichier CSV
 creates a new field	admin	fr	Créer un nouveau champ
 crontab only (recomended)	admin	fr	crontab seulement (recommandé)
+current hash	admin	fr	Clé cryptée actuelle
 custom fields	admin	fr	Champs personnalisés
+custom translation	admin	fr	Traduction personnalisée
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
 data	admin	fr	Données
 day	admin	fr	Jour
@@ -107,15 +157,19 @@ default file system space per user	admin	fr	Espace disque par utilisateur (par d
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
 deinstall crontab	admin	fr	Désinstaller le crontab
 delete account	admin	fr	Supprimer le compte
+delete account %1	admin	fr	Supprime le compte %1
 delete all records	admin	fr	Supprimer tous les enregistrements
 delete application	admin	fr	Supprimer l'application
 delete category	admin	fr	Supprimer catégorie
 delete group	admin	fr	Supprimer groupe
 delete peer server	admin	fr	Supprimer serveur Pair
+delete selected entries	admin	fr	Supprime les entrées sélectionnées
 delete the category	admin	fr	Supprimer la catégorie
 delete the group	admin	fr	Supprimer le groupe
+delete the selected entries	admin	fr	Supprime les entrées sélectionnées
 delete this category	admin	fr	Supprimer cette catégorie
 delete this group	admin	fr	Supprimer ce groupe
+delete this log entry	admin	fr	Supprime cet entrée dans le log
 delete this user	admin	fr	Supprimer cet utilisateur
 deletes this field	admin	fr	Supprimer ce champ
 deliver extern	admin	fr	Envoi externe
@@ -133,9 +187,12 @@ deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
 deny access to phpinfo	admin	fr	Refuser l'accès à phpinfo
 deny access to site configuration	admin	fr	Refuser  l'accès à la configuration du site
 deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
+deny all users access to create and manage private categories ?	admin	fr	Refuser à tous les utilisateur l'accès pour créer et gérer des catégories privées
 deny all users access to grant other users access to their entries ?	admin	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
+deny all users access to preferences ?	admin	fr	Refuser à tous les utilisateurs l'accès aux préférences
 description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
 determines the order the fields are displayed	admin	fr	Détermine l'ordre d'afficahge des champs
+disable	admin	fr	Désactiver
 disable "auto completion" of the login form	admin	fr	Désactiver "remplissage auto" dans le formulaire de login
 disable wysiwyg-editor	admin	fr	désactiver l'éditeur WYSIWYG
 disabled (not recomended)	admin	fr	désactivé (pas recommandé)
@@ -144,6 +201,9 @@ do not delete the category and return back to the list	admin	fr	Ne PAS supprimer
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi supprimer toutes les sous-catégories globales ?
 do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
 do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
+document root (default)	admin	fr	Racine des documents (défaut)
+down	admin	fr	Bas
+download csv	admin	fr	Télécharger en CSV
 each value is a line like <id>[=<label>]	admin	fr	Chaque valeur est une ligne comme <id>[=<label>]
 each value is a line like id[=label]	admin	fr	Chaque valeur est une ligne comme id[=<label>]
 edit account	admin	fr	Modifier le compte
@@ -162,10 +222,16 @@ edit this group	admin	fr	Modifier ce groupe
 edit this user	admin	fr	Modifier cet utilisateur
 edit user	admin	fr	Modifier l'utilisateur
 edit user account	admin	fr	Modifier le compte de l'utilisateur
+educational: universities, schools, ...	admin	fr	Education: Universités, Ecoles,...
+egroupware directory	admin	fr	Répertoire d'EGroupware
+egroupware version	admin	fr	Version d'EGroupware
+either install id and config password needed or the remote hash!	admin	fr	Soit ID d'installation et mot de passe de configuration nécessaire soit la clé cryptée distante!
 email account active	admin	fr	compte de messagerie actif
 email address	admin	fr	adresse email
+enable	admin	fr	Activer
 enable debug-messages	admin	fr	Activer les messages de déboguage
 enable the soap service	admin	fr	Activer le service soap
+enable the spellcheck in the ritch text editor ?	admin	fr	Activer la vérification d'orthographe dans l'éditeur de texte riche.
 enable the xmlrpc service	admin	fr	Activer le service xmlrp
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enabled - popup window	admin	fr	Activé - Fenêtre popup
@@ -185,7 +251,9 @@ enter the site username for peer servers	admin	fr	Entrez le nom d'utilisateur du
 enter the title for your site	admin	fr	Entrez le titre pour votre site
 enter the title of your logo	admin	fr	Entrez le titre de votre logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fr	Entrez l'URL ou le fichier pour votre logo (dans phpgwapi/templates/default/images)
+enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	fr	Entrer l'URL ou le nom du fichier de votre favicon
 enter the url where your logo should link to	admin	fr	Entrez l'URL vers laquelle votre logo doit rediriger
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	fr	Entre le chemin VFS où les images, icônes et logos additionnels peuvent être placés et trouvé par les applications d'EGroupware.<p>Le chemin DOIT commencer par / et être lisible par tous les utilisateurs
 enter your default ftp server	admin	fr	Entrez votre serveur FTP par défaut
 enter your default mail domain ( from: user@domain )	admin	fr	Entrez votre domaine de messagerie par défaut (De: utilisateur@domaine)
 enter your http proxy server	admin	fr	Entrez votre serveur proxy HTTP
@@ -193,35 +261,59 @@ enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy
 enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
 enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
 error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
+error changing the password for % !!!	admin	fr	Erreur en changeant le mot de passe par % !
+error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe par % !
+error deleting log entry!	admin	fr	Erreur en supprimant les entrées dans le lot !
+error saving	admin	fr	Erreur lors de l'enregistrement !
+error saving account!	admin	fr	Erreur lors de l'enregistrement du compte !
+error saving the command!	admin	fr	Erreur lors de l'enregistrement de la commande !
+error saving to db:	admin	fr	Erreur lors de l'enregistrement dans la bd:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
 error! no appname found	admin	fr	Erreur : pas de nom d'application trouvé !
 error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
+exists	admin	fr	Existe
 expires	admin	fr	Expire
 explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Courier-IMAP et nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldap du répertoire ADMIN.
+exports groups into a csv file.	admin	fr	Exporter les groupes dans un fichier CSV.
+exports users into a csv file.	admin	fr	Exporter les utilisateurs dans un fichier CSV.
+failed to change password for account "%1"!	admin	fr	Echec du changement de mot de passe pour le compte "%1" !
+failed to mount backup directory!	admin	fr	Echec du montage du répertoire Backup !
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
+false	admin	fr	Faux
 field '%1' already exists !!!	admin	fr	Le Champ '%1'  existe déjà !
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 find and register all application hooks	admin	fr	Trouver et inscrire tous les dépendances
 for the times above	admin	fr	pour le timing ci-dessus
 for the times below (empty values count as '*', all empty = every minute)	admin	fr	pour le timing ci-dessous (valeurs vides comptent comme '*', tout vide = chaque minute)
+force password strength (1-5, default empty: no check against rules for a strong password)?	admin	fr	Définir la force requise du mot de passe. 1 = faible, jusqu'à 5 = très fort. Défaut = vide, pas de vérification de la force du mot de passe
 force selectbox	admin	fr	Forcer la boite de sélection
+force users to change their password regularily?(empty for no,number for after that number of days	admin	fr	Définir la récurrence du changement forcé de mot de passe. Définir le nombre de jours. Vide = Non
 forward also to	admin	fr	Transférer également à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Transférer seulement à
+full name	admin	fr	Nom complet
 global categories	common	fr	Catégories globales
+go directly to admin menu, returning here the next time you click on administration.	admin	fr	Aller directement au men admin, revenir ici la prochaine fois que vous cliquer sur administration.
+governmental: incl. state or municipal authorities or services	admin	fr	Gouvernemental: incluant les autorités et services d'état ou de municipalité
+grant	admin	fr	Accorder
 group ?	admin	fr	Groupe ?
+group csv export	admin	fr	Export de groupe en CSV
+group csv import	admin	fr	Import de groupe en CSV
 group has been added	common	fr	Le groupe a été ajouté
 group has been deleted	common	fr	Le groupe a été effacé
 group has been updated	common	fr	Le groupe a été mis à jour
 group list	admin	fr	Liste des groupes
 group manager	admin	fr	Gestionnaire de groupe
 group name	admin	fr	Nom du groupe
+hash	admin	fr	Clé de cryptage
 hide php information	admin	fr	Cacher les informations sur php
 home directory	admin	fr	Répertoire maison
 host information	admin	fr	Informations sur l'hôte
 hour<br>(0-23)	admin	fr	Heure<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	fr	Taille maximale en pixels des vignettes pour les images liées.
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès, avant d'être effacées (90 par défaut) ?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fr	Combien d'entrées les non-admins peuvent-ils exporter. Vide = pas de limite, no = pas d'export
 how many minutes should an account or ip be blocked (default 30) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
 how should email addresses for new users be constructed?	admin	fr	Comment former les adresses de messagerie des nouveaux utilisateurs ?
 icon	admin	fr	Icône
@@ -232,17 +324,28 @@ in mbyte	admin	fr	en Moctet
 inbound	admin	fr	Entrant
 initial	admin	fr	Initial
 install crontab	admin	fr	Installer le crontab
+install id	admin	fr	ID d'installation
+installation type	admin	fr	Type d'installation
 installed applications	common	fr	Applications installées
+installed applications, percentage of allowed users and total number of entries.	admin	fr	Applications installée, pourcentage d'utilisateurs autorisés et nombre total d'entrées.
 installed crontab	admin	fr	Crontab installée
+instance	admin	fr	Instance
 interface	admin	fr	Interface
+international use	admin	fr	Usage internationnal
+invalid formated date "%1"!	admin	fr	Date formatée invalide "%1" !
+invalid remote id or name "%1"!	admin	fr	ID distante ou nom "%1" invalide !
+invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide utiliser oui ou non
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
 kill	admin	fr	Tuer
 kill session	admin	fr	Tuer la session
 last %1 logins	admin	fr	Dernières %1 connexions
 last %1 logins for %2	admin	fr	Dernières %1 connexions pour %2
+last action	admin	fr	Dernière action
 last login	admin	fr	Dernière connexion
 last login from	admin	fr	Dernière connexion depuis
+last password change	admin	fr	Dernier changement de mot de passe
+last submission:	admin	fr	Dernière soumission:
 last time read	admin	fr	Dernière lecture
 ldap accounts context	admin	fr	Contexte comptes LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fr	Préfixe par défaut des répertoires d'accueil LDAP (p.ex. /home pour /home/utilisateur)
@@ -255,33 +358,49 @@ ldap rootdn	admin	fr	Rootdn LDAP
 leave empty for no quota	admin	fr	Laisser vide pour ne pas avoir de quota
 leave the category untouched and return back to the list	admin	fr	Laisser la catégorie telle quelle et retourner à la liste
 leave the group untouched and return back to the list	admin	fr	Laisser le groupe tel quel et retourner à la liste
+leave unchanged	admin	fr	Laisser inchangé
+leave without saveing the entry	admin	fr	Quitter sans enregistrer l'entrée
 leaves without saveing	admin	fr	Quitter sans enregistrer
 length<br>rows	admin	fr	Longueur<br>lignes
+limit global category to members of a certain group	admin	fr	Limiter la catégorie globale au membre d'un certain groupe
+limit to members of	admin	fr	Limiter aux membres de
 list config settings	admin	fr	Afficher les paramètres de configuration
 list current sessions	admin	fr	Afficher les sessions en cours
 list of current users	admin	fr	liste des utilisateurs en cours
-login history	common	fr	Historique de connexion
+logged out	admin	fr	Déconnecté
+login history	admin	fr	Historique de connexion
 login message	admin	fr	Message d'accueil
 login screen	admin	fr	Ecran de connexion
 login shell	admin	fr	Shell de connexion
 login time	admin	fr	Heure de connexion
+login-status	admin	fr	Statut de connexion
 loginid	admin	fr	Identifiant de l'utilisateur
+logintime	admin	fr	Heure de connexion
+logoutime	admin	fr	Heure de déconnexion
 mail settings	admin	fr	Réglages mail
 main email-address	admin	fr	Adresse email principale
 main screen message	admin	fr	Message de l'écran principal
+manage mapping	admin	fr	Gestion des correspondances
 manager	admin	fr	Gestionnaire
 max length of the input [, length of the inputfield (optional)]	admin	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
 maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
+members	admin	fr	Membres
 message has been updated	admin	fr	le message a été mis à jour
 method	admin	fr	Méthode
 minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.e. 500 ou 100, etc.)
 minute	admin	fr	Minute
 mode	admin	fr	Mode
+modified	admin	fr	Modifié
 month	admin	fr	Mois
+more secure	admin	fr	Plus sécure
+mount backup directory to %1	admin	fr	Monter le répertoire de backup sur %1
+must change password upon next login	admin	fr	Doit changer de mot de passe à la prochaine connexion
 name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
+name of the egroupware instance, eg. default	admin	fr	Nom de l'instance d'EGroupware
 new group name	admin	fr	Nouveau nom de groupe
 new name	admin	fr	Nouveau nom
+new password	admin	fr	Nouveau mot de passe
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
 next run	admin	fr	Prochain démarrage
 no algorithms available	admin	fr	Pas d'algorithme disponible
@@ -293,26 +412,53 @@ no modes available	admin	fr	Pas de modes disponibles
 no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
 no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
 no permission to create groups	admin	fr	Aucune permission pour créer des groupes
+non profit: clubs, associations, ...	admin	fr	Sans profit: Clubs, Associations, ...
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
+notification mail	admin	fr	Email de notification
+notify user by email	admin	fr	Notifier l'utilisateur par email
+notifying account "%1" %2 failed!	admin	fr	Echec de la notification du compte "%1" %2 !
+number applications serially	admin	fr	Numéroter les applications séquentiellement
+number of active users	admin	fr	Nombre d'utilisateurs actifs
 number of row for a multiline inputfield or line of a multi-select-box	admin	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
+number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de sessions / connexion à EGroupware les 30 derniers jours
+number of users	admin	fr	Nombre d'utilisateurs
+number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	fr	Numéroter les applications séquentiellement. Si elles ne sont pas numérotées séquentiellement, le tri des applications pourrait être erroné. Ceci ne change pas l'ordre des applications
+nummeric account id	admin	fr	ID numérique du compte
+official egroupware usage statistic	admin	fr	Statistique officiële d'usage d'EGroupware
+one day	admin	fr	Un jour
+one hour	admin	fr	Une heure
+one month	admin	fr	Un mois
+one week	admin	fr	Une semaine
+only below displayed information is directly submitted to %s.	admin	fr	Seule les informations affichées ci-dessous sont envoyées directement à %s.
+operating system	admin	fr	Système d'exploitation
 order	admin	fr	Ordre
 outbound	admin	fr	sortant
+own install id:	admin	fr	ID d'installation propre:
+owner "%1" removed, please select group-owner	admin	fr	Propriétaire "%1" enlevé, veillez sélectionner un propriétaire de groupe
 passthrough	admin	fr	passage
 password for smtp-authentication	admin	fr	Mot de passe pour l'authentification SMTP
+password updated	admin	fr	Mot de passe mis à jour.
+passwords and/or attributes of %1 accounts changed	admin	fr	Mots de passe et/ou attributs du compte %1 changés
 path information	admin	fr	Information sur le chemin
 peer server list	admin	fr	Liste des serveurs (peer servers)
 peer servers	admin	fr	Serveurs pairs
 percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
 percent this user has logged out	admin	fr	Pourcentage de déconnexion de cet utilisateur
 permission denied	admin	fr	Permission refusée
+permission denied !!!	admin	fr	Permission refusée !
 permissions	admin	fr	Permissions
 permissions this group has	admin	fr	Permissions attribuées à ce groupe
+personal: eg. within a family	admin	fr	Personnel: ex. dans une famille
+php version	admin	fr	Version de PHP.
 phpinfo	admin	fr	Informations PHP
+phrase	admin	fr	Phrase
+phrase deleted	admin	fr	Phrase supprimée
 please enter a name	admin	fr	SVP entrez un nom
 please enter a name for that server !	admin	fr	SVP entrez un nom pour ce serveur !
 please run setup to become current	admin	fr	SVP exécutez setup pour vous mettre à jour
 please select	admin	fr	SVP choisissez
 postfix with ldap	admin	fr	Postfix avec support LDAP
+postpone for	admin	fr	Postposé à
 preferences	admin	fr	Préférences
 primary group	admin	fr	groupe initial
 qmaildotmode	admin	fr	qmaildotmode
@@ -321,24 +467,34 @@ quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Entrez le mot de passe à nouveau
 read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Inscrire les dépendances
+remote administration instances	admin	fr	Instances administrées à distance
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	fr	Administration à distance doit être activé dans l'instance à distance sous Admin > Configuration du site !
+remote instance saved	admin	fr	Instance distante sauvée.
 remove	admin	fr	Supprimer
 remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
 remove all users from this group ?	admin	fr	Retirer tous les utilisateurs de ce groupe ?
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	fr	Enlever l'accès  des groupes peut causer des problèmes pour les données dans cette catégorie. Etes-vous certain? Les utilisateurs dans ces groupes pourraient ne plus avoir accès:
+requested	admin	fr	Requis
 return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administration
 return to view account	admin	fr	Revenir à l'affichage du compte
 route all mails to	admin	fr	Livrer tous les emails à
+rpm or debian package	admin	fr	Paquet RPM ou Debian
 run asynchronous services	admin	fr	Exécuter les Services asynchrones
 save the category	admin	fr	Enregistrer la catégorie
 save the category and return back to the list	admin	fr	Enregistrer la catégorie et retourner à la liste
 saves the changes made and leaves	admin	fr	Enregistrer les modifications et quitter
+saves this entry	admin	fr	Enregistre l'entrée
+scheduled	admin	fr	Programmé
 search accounts	admin	fr	Chercher des comptes
 search categories	admin	fr	Chercher des catégories
 search groups	admin	fr	Chercher des groupes
 search peer servers	admin	fr	Chercher des serveurs Pairs
 security	admin	fr	Sécurité
+select accounts for which the custom field should be visible	admin	fr	Sélectionner les comptes pour lesquels le champ personnalisé devrait être visible.
 select group managers	admin	fr	Sélectionner les gestionnaires de groupe
 select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
 select the parent category. if this is a main category select no category	admin	fr	Choisissez la catégorie parente. Si ceci est une catégorie principale choisissez PAS DE CATEGORIE
+select users	admin	fr	Sélectionner les utilisateurs
 select users for inclusion	admin	fr	Choisissez les utilisateurs à inclure
 select where you want to store/retrieve filesystem information	admin	fr	Choisissez où vous voulez stocker/récupérer les informations sur les systèmes de fichiers
 select where you want to store/retrieve user accounts	admin	fr	Choisissez où vous voulez stocker/récupérer les comptes utilisateurs
@@ -350,10 +506,14 @@ server password	admin	fr	Mot de passe du serveur
 server type(mode)	admin	fr	Type de serveur (mode)
 server url	admin	fr	URL du serveur
 server username	admin	fr	Nom d'utilisateur du serveur
+sessions last 30 days	admin	fr	Sessions des 30 derniers jours
+set a random password	admin	fr	Définir un mot de passe aléatoire
 set preference values.	admin	fr	Régler les valeurs des préférences.
+should exceptions contain a trace (including function arguments)	admin	fr	Les exceptions doivent-elles contenir une trace, y compris les arguments des fonctions.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fr	Est-ce que la page de login doit inclure une zone de sélection linguistique (utile aussi pour les sites de démonstration)
 show 'powered by' logo on	admin	fr	Montrer le logo 'motorisé par' sur
 show access log	admin	fr	Montrer les journaux d'accès
+show an asterisk (*) to mark untranslated strings	admin	fr	Afficher une astérisque (*) pour marquer les chaines non traduites.
 show current action	admin	fr	Montrer les actions en cours
 show error log	admin	fr	Montrer le journal des erreurs
 show phpinfo()	admin	fr	Montrer phpinfo()
@@ -369,10 +529,17 @@ standard	admin	fr	standard
 standard imap server	admin	fr	Serveur IMAP standard
 standard pop3 server	admin	fr	Serveur POP3 standard
 standard smtp-server	admin	fr	Serveur SMTP standard
+start	admin	fr	Début
 start testjob!	admin	fr	Démarrer le Travail de test!
 submit changes	admin	fr	Soumettre les changements
+submit displayed information?	admin	fr	Envoyer les informations affichées
+submit statistic information	admin	fr	Envoyer les informations statistiques
 submit the search string	admin	fr	Soumettre la chaîne de recherche
+submit to egroupware.org	admin	fr	Soumettre à egroupware.org
 subtype	admin	fr	Sous-type
+subversion checkout	admin	fr	Check out subversion
+success	admin	fr	Réussi
+switch it off, if users are randomly thrown out	admin	fr	Décocher si des utilisateurs sont déconnectés par hasard
 template selection	admin	fr	Sélection du style
 text entry	admin	fr	Entrée de texte
 that application name already exists.	admin	fr	Ce nom d'application existe déjà.
@@ -382,7 +549,9 @@ that name has been used already	admin	fr	Ce nom a déjà été utilisé
 that server name has been used already !	admin	fr	Ce nom de serveur a déjà été utilisé !
 the api is current	admin	fr	L'API est à jour
 the api requires an upgrade	admin	fr	L'API nécessite une mise à jour
+the cumulated and anonymised data will be publically available:	admin	fr	Les données accumulées et anonymes seront publiquement disponibles:
 the groups must include the primary group	admin	fr	Les groupes doivent inclure le groupe primaire
+the install id of an instance can be found under admin > site configuration	admin	fr	L'ID d'installation de l'instance peut être trouvée sur Admin > Configuration du site
 the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
 the loginid can not be more then 8 characters	admin	fr	Le loginid ne peut pas être composé de plus de 8 caractères
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
@@ -395,25 +564,45 @@ they must be removed before you can continue	admin	fr	Ceux-ci doivent être reti
 this application is current	admin	fr	Cette application est à jour
 this application requires an upgrade	admin	fr	Cette application nécessite une mise à jour
 this category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente
+this controls exports and merging.	admin	fr	Ceci contrôle les exports et les fusion d'impressions
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)
 times	admin	fr	Heures
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	fr	Pour nous permettre de tracer la croissance de votre installation individuelle, utiliser cette ID soumise, sinon effacer la:
 top	admin	fr	Haut
+total of %1 id's changed.	admin	fr	Total de %1 id changées
 total records	admin	fr	Enregistrements totaux
+translation	admin	fr	Traduction
+true	admin	fr	Vrai
 trust level	admin	fr	Niveau de confiance
 trust relationship	admin	fr	Relation de confiance
+two days	admin	fr	Deux jours
+two hours	admin	fr	Deux heures
+two months	admin	fr	Deux mois
+two weeks	admin	fr	Deux semaines
 type '%1' already exists !!!	admin	fr	Le type '%1'  existe déjà !
 type of customfield	admin	fr	Type de champ personnalisé
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fr	Sous windows vous devez installer les services asynchrones %1manuellement%2  ou utiliser le mode "fallback". "Fallback" veut dire que les travaux ne sont vérifiés qu'après chaque affichage de page !!!
+unknown account: %1 !!!	admin	fr	Compte inconnu: %1 !
+unknown command %1!	admin	fr	Commande inconnue %1 !
+unknown option %1	admin	fr	Option inconnue %1 !
+unwilling to save category with current settings. check for inconsistency:	admin	fr	Impossible d'enregistrer la catégorie avec les paramètres actuels. Vérifier pour les inconsistances:
+up	admin	fr	Haut
+updated	admin	fr	Mis à jour
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	fr	URL de l'installation d'EGroupware, ex. http://domaine.com/egroupware
+usage	admin	fr	Usage
 use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
 use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
 use theme	admin	fr	Utiliser le thème
 user accounts	admin	fr	Comptes utilisateurs
+user csv export	admin	fr	Export des utilisateurs en CSV
+user csv import	admin	fr	Import des utilisateurs en CSV
 user data	common	fr	Données utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	admin	fr	Utilisateur pour l'authentification SMTP (laisser vide si pas requis)
 user groups	admin	fr	Groupes utilisateurs
 userdata	admin	fr	Données utilisateur
 users choice	admin	fr	Choix de l'utilisateur
+value for column %1 is not unique!	admin	fr	La valeur pour la colonne %1 n'est pas unique !
 view access log	admin	fr	Afficher le journal d'accès
 view account	admin	fr	Afficher le compte
 view category	admin	fr	Afficher la catégorie
@@ -421,14 +610,23 @@ view error log	admin	fr	Afficher le journal d'erreurs
 view sessions	admin	fr	Afficher les sessions
 view this user	admin	fr	Afficher cet utilisateur
 view user account	admin	fr	Afficher le compte utilisateur
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	fr	Définir le nombre de jours d'avance pour prévenir les utilisateurs d'un changement de mot de passe forcé. Vide = Pas d'information
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	fr	L'information n'est demandée que pour avoir une vue d'ensemble de l'usage d'EGroupware à travers le monde.
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fr	Nous n'enregistrons aucune données concernant votre identité.
 who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé?
 would you like egroupware to cache the egw info array ?	admin	fr	Voulez-vous qu'eGroupWare mette le tableau d'informations egw en cache ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	fr	Voulez-vous que eGroupWare vérifie les mises à jour<br>quand un administrateur se connecte ?
 would you like egroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que eGroupWare vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	fr	Voulez-vous automatiquement charger les nouveaux fichiers de langues (à la connexion) ?
 would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
+wrong account type: %1 is no %2 !!!	admin	fr	Type de compte incorrect: %1 n'est PAS %2 !
+wrong admin-account or -password !!!	admin	fr	Compte ou mot de passe admin incorrect !
 xml-rpc	admin	fr	XML-RPC
+yes, but no scayt	admin	fr	Oui, mais pas de Correction Automatique au cours de la Frappe (en ligne)
+yes, use webspellchecker	admin	fr	Oui, utiliser le WebSpellChecker en ligne
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	fr	Vous pouvez changer le type de cryptage seulement, si vous définissez un mot de passe aléatoire ou si vous utilisez actuellement des mots de passe texte en clair !
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
+you have no email address for your user set !!!	admin	fr	Vous n'avez pas défini d'adresse email pour votre utilisateur!
 you have to enter a name, to create a new field!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau champ!!!
 you have to enter a name, to create a new type!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau type!!!
 you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
@@ -440,5 +638,9 @@ you must enter an application name.	admin	fr	Vous devez entrer un nom d'applicat
 you must enter an application title.	admin	fr	Vous devez entrer un titre d'application.
 you must select a file type	admin	fr	Vous devez choisir un type de fichier
 you must select at least one group member.	admin	fr	Vous devez sélectionner au moins un membre de groupe.
+you need to enter install id and password!	admin	fr	Vous devez entre l'ID d'installation ET le mot de passe !
+you need to select as least one action!	admin	fr	Vous devez sélectionner au moins un action !
+you need to select some users first!	admin	fr	Vous devez sélectionner quelques utilisateurs d'abord !
 you will need to remove the subcategories before you can delete this category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer cette catégorie !
+your last submission was less then %1 days ago!	admin	fr	Votre dernier envoi était il y a moins de %1 jours !
 your session could not be verified.	admin	fr	Votre session n'a pas pu être vérifiée.

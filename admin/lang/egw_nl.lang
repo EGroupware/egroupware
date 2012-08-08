@@ -18,6 +18,7 @@ account active	admin	nl	Account actief
 account has been created	common	nl	Account is aangemaakt.
 account has been deleted	common	nl	Account is verwijderd.
 account has been updated	common	nl	Account is bijgewerkt.
+account id	admin	nl	Account ID
 account list	admin	nl	Accountlijst
 account permissions	admin	nl	Toegangsrechten account
 account preferences	admin	nl	Voorkeuren account
@@ -25,10 +26,12 @@ account-id's have to be integers!	admin	nl	Account-ids moeten integers zijn!
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
 action	admin	nl	Actie
+actions	admin	nl	Acties
 activate wysiwyg-editor	admin	nl	WYSIWYG-editor inschakelen
 add a category	admin	nl	Een categorie toevoegen
 add a group	admin	nl	Een goep toevoegen
 add a new account.	admin	nl	Een nieuw gebruikersaccount toevoegen
+add a new remote instance	admin	nl	Voeg een nieuwe afstands lokatie toe
 add a subcategory	admin	nl	Een nieuwe subcategorie toevoegen
 add a user	admin	nl	Een nieuwe gebruiker toevoegen
 add account	admin	nl	Account toevoegen
@@ -299,7 +302,7 @@ length<br>rows	admin	nl	Lengte<br />Rijen
 list config settings	admin	nl	Configuratie-instellingen weergeven
 list current sessions	admin	nl	Huidige sessies weergeven
 list of current users	admin	nl	Lijst van huidige gebruikers
-login history	common	nl	Login geschiedenis
+login history	admin	nl	Login geschiedenis
 login message	admin	nl	Loginbericht
 login screen	admin	nl	Loginpagina
 login shell	admin	nl	Loginshell
@@ -336,6 +339,10 @@ no permission to add users	admin	nl	geen toelating om gebruikers toe te voegen
 no permission to create groups	admin	nl	geen toelating om gebruikers toe te voegen
 note: ssl available only if php is compiled with curl support	admin	nl	Let op: SSL is alleen beschikbaar als PHP is gecompileerd met curl ondersteuning.
 number of row for a multiline inputfield or line of a multi-select-box	admin	nl	aantal rijen voor een meer-regelig invoerveld of regel in een meervoudige selectie veld
+one day	admin	nl	1 dag
+one hour	admin	nl	1 uur
+one month	admin	nl	1 maand
+one week	admin	nl	1 week
 order	admin	nl	Volgorde
 outbound	admin	nl	uitgaand
 own install id:	admin	nl	Eigen installatie ID:
@@ -454,6 +461,10 @@ total records	admin	nl	Totaal aantal records
 true	admin	nl	waar
 trust level	admin	nl	Vertrouwensniveau
 trust relationship	admin	nl	Vertrouwensrelatie
+two days	admin	nl	2 dagen
+two hours	admin	nl	2 uren
+two months	admin	nl	2 maanden
+two weeks	admin	nl	2 weken
 type '%1' already exists !!!	admin	nl	type '%1' bestaat al !!!
 type of customfield	admin	nl	Type van een aangepast veld
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows moet u de asynservice %1handmatig%2 installeren of gebruiken van de fallback methode. De fallback methode houdt in dat de taak alleen wordt uitgevoerd na iedere pagina raadpleging !!!

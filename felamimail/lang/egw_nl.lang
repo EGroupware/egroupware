@@ -1,7 +1,12 @@
+%1 is not writable by you!	felamimail	nl	%1 is NIET voor uw schrijfbaar
 (no subject)	felamimail	nl	(geen onderwerp)
 (only cc/bcc)	felamimail	nl	(alleen Cc./Bcc.)
 (separate multiple addresses by comma)	felamimail	nl	(meerdere adressen scheiden door komma's)
 (unknown sender)	felamimail	nl	(onbekende afzender)
+(with checkbox enforced)	felamimail	nl	(met checkbox geforceerd)
+1) keep drafted message (press ok)	felamimail	nl	1) conecpt bericht behouden (klilk op ok)
+2) discard the message completely (press cancel)	felamimail	nl	2)
+aborted	felamimail	nl	afgebroken
 activate	felamimail	nl	Activeren
 activate script	felamimail	nl	script inschakelen
 activating by date requires a start- and end-date!	felamimail	nl	Activering op datum vereist een begin- EN einddatum!
@@ -19,6 +24,7 @@ address book search	felamimail	nl	Zoeken in adresboek
 after message body	felamimail	nl	Na tekstgedeelte
 all address books	felamimail	nl	Alle adresboeken
 all folders	felamimail	nl	Alle mappen
+all messages in folder	felamimail	nl	alle berichten in de folder
 all of	felamimail	nl	alles van
 allow images from external sources in html emails	felamimail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan
 allways a new window	felamimail	nl	altijd in een nieuw venster
@@ -28,9 +34,12 @@ any of	felamimail	nl	iedere van
 any status	felamimail	nl	iedere status
 anyone	felamimail	nl	iedereen
 as a subfolder of	felamimail	nl	als een submap van
+attach	felamimail	nl	Bijsluiten
+attach users vcard at compose to every new mail	felamimail	nl	Sluit gebruikers Vcard bij, elke nieuwe mail
 attachments	felamimail	nl	bijlagen
 authentication required	felamimail	nl	authenticatie vereist
 auto refresh folder list	felamimail	nl	Automatisch mappenlijst verversen
+available personal email-accounts/profiles	felamimail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
 back to folder	felamimail	nl	Terug naar map
 bad login name or password.	felamimail	nl	Ongeldige login of wachtwoord
 bad or malformed request. server responded: %s	felamimail	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
@@ -47,6 +56,7 @@ cc	felamimail	nl	CC
 change folder	felamimail	nl	Wijzig map
 check message against next rule also	felamimail	nl	controleer bericht ook tegen de volgende regel
 checkbox	felamimail	nl	Checkbox
+choose from vfs	felamimail	nl	Kies van VFS
 clear search	felamimail	nl	zoekveld leegmaken
 click here to log back in.	felamimail	nl	Klik hier om opnieuw in te loggen.
 click here to return to %1	felamimail	nl	Klik hier om terug te gaan naar %1
@@ -60,7 +70,12 @@ compress folder	felamimail	nl	Comprimeer map
 condition	felamimail	nl	conditie
 configuration	felamimail	nl	Configuratie
 connection dropped by imap server.	felamimail	nl	Connectie verbroken door IMAP server.
+connection status	felamimail	nl	Status van de verbinding
+contact not found!	felamimail	nl	Contact niet gevonden
 contains	felamimail	nl	bevat
+copy or move messages?	felamimail	nl	Kopieer of verplaats bericht ?
+copy to	felamimail	nl	kopieer naar
+copying messages to	felamimail	nl	Verplaatrs berichten naar
 could not complete request. reason given: %s	felamimail	nl	Kon verzoek niet afmaken. Opgegeven reden: %s
 could not import message:	felamimail	nl	Kon het bericht niet importeren:
 could not open secure connection to the imap server. %s : %s.	felamimail	nl	Kon beveiligde verbinding met de IMAP server niet openen. %s : %s.
@@ -77,6 +92,7 @@ dark gray	felamimail	nl	Donker grijs
 dark green	felamimail	nl	Donker groen
 dark magenta	felamimail	nl	Donker magenta
 dark yellow	felamimail	nl	Donker geel
+date received	felamimail	nl	Datum ontvangen
 date(newest first)	felamimail	nl	Datum (nieuwste eerst)
 date(oldest first)	felamimail	nl	Datum (oudste eerst)
 days	felamimail	nl	dagen
@@ -89,6 +105,7 @@ delete folder	felamimail	nl	Map verwijderen
 delete script	felamimail	nl	script verwijderen
 delete selected	felamimail	nl	Het geselecteerde verwijderen
 delete selected messages	felamimail	nl	Geselecteerde berichten verwijderen
+delete this folder irreversible?	felamimail	nl	Verwijder deze folder definitief ?
 deleted	felamimail	nl	verwijderde
 deleted folder successfully!	felamimail	nl	Map met succes verwijderd!
 deleting messages	felamimail	nl	berichten worden verwijderd
@@ -101,6 +118,7 @@ display of html emails	felamimail	nl	Weergave van HTML-emails
 display only when no plain text is available	felamimail	nl	Alleen weergeven als platte tekst niet beschikbaar is.
 display preferences	felamimail	nl	Weergavevoorkeuren
 displaying html messages is disabled	felamimail	nl	weergeven van html berichten is uitgeschakeld
+displaying plain messages is disabled	felamimail	nl	Weergeven standaard vericht is uitgeschakeld
 do it!	felamimail	nl	Nu uitvoeren!
 do not use sent	felamimail	nl	'Verzonden' niet gebruiken
 do not use trash	felamimail	nl	'Prullenmand' niet gebruiken
@@ -152,14 +170,21 @@ error connecting to imap serv	felamimail	nl	Fout met het verbinden met de IMAP-s
 error connecting to imap server. %s : %s.	felamimail	nl	Fout bij verbinden met de IMAP server. %s : %s
 error connecting to imap server: [%s] %s.	felamimail	nl	Fout bij verbinden met de IMAP server: [%s] %s
 error opening	felamimail	nl	Fout bij het openen
+error saving %1!	felamimail	nl	Fout bij bewaren %1
 error:	felamimail	nl	Fout:
 error: could not save message as draft	felamimail	nl	Fout: Bericht kon niet worden opgeslagen als Concept
+error: could not save rule	felamimail	nl	Fout: Kon regel niet bewaren
+error: could not send message.	felamimail	nl	Fout: Kon bericht niet verzenden
+error: message could not be displayed.	felamimail	nl	Fout: Bericht kan niet worden getoond
+event details follow	felamimail	nl	Details gebeurtenis volgen
 every	felamimail	nl	iedere
 every %1 days	felamimail	nl	iedere %1 dagen
 expunge	felamimail	nl	Definitief verwijderen
 extended	felamimail	nl	uitgebreid
 felamimail	common	nl	FelaMiMail
 file into	felamimail	nl	bestand naar
+file rejected, no %2. is:%1	felamimail	nl	Bestand geweigerd, geen %2.is:%1
+filemanager	felamimail	nl	Bestandsbeheer
 files	felamimail	nl	bestanden
 filter active	felamimail	nl	Filter actief
 filter name	felamimail	nl	Naam filter
@@ -181,6 +206,8 @@ folders created successfully!	felamimail	nl	Mappen met succes aangemaakt!
 follow	felamimail	nl	volgen
 for mail to be send - not functional yet	felamimail	nl	Voor nog te vezenden email - nog niet functioneel
 for received mail	felamimail	nl	Voor ontvangen email
+force html	felamimail	nl	Forceer HTML
+force plain text	felamimail	nl	Forceer platte tekst
 forward	felamimail	nl	Doorsturen
 forward as attachment	felamimail	nl	doorsturen als bijlage
 forward inline	felamimail	nl	doorsturen in het bericht
@@ -189,7 +216,6 @@ forward to	felamimail	nl	doorsturen naar
 forward to address	felamimail	nl	doorsturen naar adres
 forwarding	felamimail	nl	Wordt doorgezonden
 found	felamimail	nl	Gevonden
-fri	felamimail	nl	Vri
 from	felamimail	nl	Van
 from(a->z)	felamimail	nl	Van (A->Z)
 from(z->a)	felamimail	nl	Van (Z->A)
@@ -226,6 +252,8 @@ imaps authentication	felamimail	nl	IMAPS authenticatie
 imaps encryption only	felamimail	nl	Uitsluitend IMAPS encryptie
 import	felamimail	nl	importeren
 import mail	felamimail	nl	Berichten importeren
+import message	felamimail	nl	Importeer bericht
+importance	felamimail	nl	Belangrijk
 in	felamimail	nl	in
 inbox	felamimail	nl	POSTVAK IN
 incoming mail server(imap)	felamimail	nl	inkomene mail server (IMAP)
@@ -233,6 +261,7 @@ index order	felamimail	nl	Index volgorde
 info	felamimail	nl	Informatie
 invalid user name or password	felamimail	nl	Ongeldige gebruikersnaam of -wachtwoord
 javascript	felamimail	nl	JavaScript
+job	felamimail	nl	Taak
 jumping to end	felamimail	nl	springt naar eind
 jumping to start	felamimail	nl	springt naar begin
 junk	felamimail	nl	Junk
@@ -241,6 +270,7 @@ keep local copy of email	felamimail	nl	bewaar een lokale kopie van het bericht
 kilobytes	felamimail	nl	kilobytes
 language	felamimail	nl	Taal
 last name	felamimail	nl	Achternaam
+later	felamimail	nl	later
 left	felamimail	nl	Links
 less	felamimail	nl	minder
 less than	felamimail	nl	minder dan
@@ -250,6 +280,7 @@ loading	felamimail	nl	wordt geladen
 location of buttons when composing	felamimail	nl	Locatie van knoppen bij het schrijven van een nieuw bericht
 mail server login type	admin	nl	Mail server login type
 mail settings	felamimail	nl	Emailinstellingen
+mail source	felamimail	nl	Mail bron
 mainmessage	felamimail	nl	hoofdbericht
 manage email accounts and identities	common	nl	Beheer email accounts en identiteiten
 manage emailaccounts	common	nl	Beheer email accounts
@@ -257,6 +288,7 @@ manage emailfilter / vacation	preferences	nl	Beheer emailfilter / afwezigheid
 manage folders	common	nl	Beheer mappen
 manage sieve	common	nl	Beheer Sieve scripts
 manage signatures	felamimail	nl	Beheer ondertekeningen
+mark as	felamimail	nl	Markeer als
 mark as deleted	felamimail	nl	Markeer als verwijderd
 mark messages as	felamimail	nl	Markeer geselecteerde berichten als
 mark selected as flagged	felamimail	nl	Markeer geselecteerde als 'gemarkeerd'
@@ -270,9 +302,11 @@ max uploadsize	felamimail	nl	maximum upload grootte
 message highlighting	felamimail	nl	Bericht inkleuring
 message list	felamimail	nl	Berichtenlijst
 messages	felamimail	nl	berichten
-mon	felamimail	nl	Maa
 move	felamimail	nl	verplaatsen
+move folder	felamimail	nl	verplaats folder
 move messages	felamimail	nl	berichten verplaatsen
+move messages?	felamimail	nl	Verplaats berichten ?
+move selected to	felamimail	nl	verplaats geselecteeerde
 move to	felamimail	nl	geselecteerde verplaatsen naar
 move to trash	felamimail	nl	Verplaatsen naar prullenmand
 moving messages to	felamimail	nl	berichten verplaatsen naar
@@ -282,14 +316,17 @@ new	common	nl	Nieuw
 new filter	felamimail	nl	Nieuwe filter
 next	felamimail	nl	Volgende
 next message	felamimail	nl	volgende bericht
+no (valid) send folder set in preferences	felamimail	nl	Geen (geldige) Verzonden map in voorkeuren
 no active imap server found!!	felamimail	nl	Geen actieve IMAP server gevonden!!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	nl	Geen adres in AAN/CC/BCC opgegeven en geen map aangegeven waar bericht opgeslagen moet worden.
 no encryption	felamimail	nl	geen versleuteling
 no filter	felamimail	nl	Geen filter
+no folders	felamimail	nl	geen folders
 no folders found	felamimail	nl	Geen mappen gevonden
 no folders were found to subscribe to!	felamimail	nl	Geen mappen gevonden om lid van te worden!
 no folders were found to unsubscribe from!	felamimail	nl	Geen mappen gevonden om lidmaatschap van op te zeggen!
 no highlighting is defined	felamimail	nl	Geen inkleuring ingesteld
+no imap server host configured!!	felamimail	nl	Geen IMAP server host geconfigureerd
 no message returned.	felamimail	nl	Geen bericht teruggekomen.
 no messages found...	felamimail	nl	geen berichten gevonden...
 no messages selected, or lost selection. changing to folder	felamimail	nl	Geen berichten geselecteerd of selectie is verloren gegaan. Schakelt naar folder
@@ -297,11 +334,17 @@ no messages were selected.	felamimail	nl	Geen berichten geselecteerd.
 no plain text part found	felamimail	nl	geen platte tekst onderdeel gevonden
 no previous message	felamimail	nl	geen vorig bericht
 no recipient address given!	felamimail	nl	Geen ontvanger adres opgegeven!
+no send folder set in preferences	felamimail	nl	Geen map Verzonden in voorkeuren
 no signature	felamimail	nl	geen ondertekening
+no stationery	felamimail	nl	geen stationery
 no subject given!	felamimail	nl	Geen onderwerp opgegeven!
 no supported imap authentication method could be found.	felamimail	nl	Geen ondersteunde IMAP authenticatie methode werd gevonden.
+no valid data to create mailprofile!!	felamimail	nl	Geen geldige data om een email profiel te creeeren
 no valid emailprofile selected!!	felamimail	nl	Geen geldig Emailprofiel geselecteerd!
 none	felamimail	nl	geen
+none, create all	felamimail	nl	geen, maak ze allemaal
+not allowed	felamimail	nl	niet toegestaan
+notify when new mails arrive on these folders	felamimail	nl	waarschuw als er nieuwe mail is voor deze folders
 on	felamimail	nl	op
 on behalf of	felamimail	nl	namens
 one address is not valid	felamimail	nl	Een adres is ongeldig
@@ -317,14 +360,18 @@ organization name	admin	nl	Organisatienaam
 original message	felamimail	nl	originele bericht
 outgoing mail server(smtp)	felamimail	nl	uitgaande mail server (SMTP)
 participants	felamimail	nl	Deelnemers
+personal	felamimail	nl	persoonlijk
 personal information	felamimail	nl	Persoonlijke informatie
+please choose:	felamimail	nl	Kies alstublieft:
 please select a address	felamimail	nl	Kies s.v.p. een adres
 please select the number of days to wait between responses	felamimail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
 please supply the message to send with auto-responses	felamimail	nl	Vul s.v.p. het bericht in dat met de automatisch antwoorden meegezonden moet worden
 port	felamimail	nl	poort
 posting	felamimail	nl	plaatsen
+preview disabled for folder:	felamimail	nl	Voorbeeld uitgezet vor deze folder,.
 previous	felamimail	nl	Vorig
 previous message	felamimail	nl	Vorig bericht
+primary emailadmin profile	felamimail	nl	Eerste eMailadmin profiel
 print it	felamimail	nl	Uitprinten
 print this page	felamimail	nl	Deze pagina uitprinten
 printview	felamimail	nl	afdrukweergave
@@ -337,6 +384,7 @@ refresh time in minutes	felamimail	nl	Ververstijd in minuten
 reject with	felamimail	nl	weiger met
 remove	felamimail	nl	Verwijderen
 remove immediately	felamimail	nl	Meteen verwijderen
+remove label	felamimail	nl	verwijder sleutelwoorden
 rename	felamimail	nl	Hernoemen
 rename a folder	felamimail	nl	Een map hernoemen
 rename folder	felamimail	nl	Map hernoemen
@@ -353,12 +401,16 @@ return to options page	felamimail	nl	Terug naar pagina met opties
 right	felamimail	nl	Rechts
 row order style	felamimail	nl	rijvolgorde stijl
 rule	felamimail	nl	Regel
-sat	felamimail	nl	Zat
 save	felamimail	nl	Opslaan
+save all	felamimail	nl	Bewaar alle
 save as draft	felamimail	nl	opslaan als concept
 save as infolog	felamimail	nl	opslaan als infolog
+save as ticket	felamimail	nl	Bewaar als Tracker Ticket
+save as tracker	felamimail	nl	Bewaar als Tracker
 save changes	felamimail	nl	wijzigingen bewaren
 save message to disk	felamimail	nl	bericht opslaan op schijf
+save to filemanager	felamimail	nl	Sla op naar bestandsbeheer
+saving of message %1 succeeded. check folder %2.	felamimail	nl	Opslaan van bericht geslaagd %1.Controleer folder %2
 script name	felamimail	nl	script naam
 script status	felamimail	nl	script status
 search	felamimail	nl	Zoeken
@@ -368,14 +420,19 @@ select all	felamimail	nl	Alles selecteren
 select emailprofile	felamimail	nl	Emailprofiel selecteren
 select folder	felamimail	nl	map selecteren
 select your mail server type	admin	nl	Selecteer uw mail server type
+selected	felamimail	nl	Geselecteerd
 send	felamimail	nl	Verzenden
 send a reject message	felamimail	nl	verstuur een weigeringsbericht
+sender	felamimail	nl	Afzender
 sent	felamimail	nl	Verzonden
 sent folder	felamimail	nl	Verzondenmap
 server supports mailfilter(sieve)	felamimail	nl	server ondersteunt mailfilter (sieve)
 set as default	felamimail	nl	Instellen als standaard
+set label	felamimail	nl	Zet sleutelwoorden
+show all messages	felamimail	nl	Toon alle bercihten
 show header	felamimail	nl	berichtkop weergeven
 show new messages on main screen	felamimail	nl	Nieuwe berichten op hoofdscherm weergeven
+sieve connection status	felamimail	nl	Status Sieve connectie
 sieve script name	felamimail	nl	sieve script naam
 sieve settings	admin	nl	SIEVE instellingen
 signatur	felamimail	nl	Ondertekening
@@ -390,6 +447,7 @@ skipping previous	felamimail	nl	springt achterwaarts
 small view	felamimail	nl	kleine weergave
 smtp settings	admin	nl	SMTP-instellingen
 start new messages with mime type plain/text or html?	felamimail	nl	begin nieuwe berichten met mime type, plain/text of html?
+stationery	felamimail	nl	stationery
 subject	felamimail	nl	Onderwerp
 subject(a->z)	felamimail	nl	Onderwerp (A->Z)
 subject(z->a)	felamimail	nl	Onderwerp (Z->A)
@@ -397,11 +455,13 @@ submit	felamimail	nl	Verzend
 subscribe	felamimail	nl	Lid worden
 subscribed	felamimail	nl	Lid van
 subscribed successfully!	felamimail	nl	Met succes lid geworden!
-sun	felamimail	nl	Zon
+successfully connected	felamimail	nl	Succesvol verbonden
+switching of signatures failed	felamimail	nl	Wisselen van handtekening is mislukt
 system signature	felamimail	nl	systeem ondertekening
 table of contents	felamimail	nl	Inhoudsopgave
 template folder	felamimail	nl	Sjabloon folder
 templates	felamimail	nl	Sjablonen
+test connection	felamimail	nl	Test actieve connectie
 text only	felamimail	nl	Alleen tekst
 text/plain	felamimail	nl	text/plain
 the connection to the imap server failed!!	felamimail	nl	De vebinding met de IMAP-server is mislukt!!
@@ -409,10 +469,11 @@ the imap server does not appear to support the authentication method selected. p
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	nl	De afzender heeft verzocht om een leesbevestiging. Wilt u een leesbevestiging verzenden?
 the mimeparser can not parse this message.	felamimail	nl	De mimeparsers kan dit bericht niet lezen.
 then	felamimail	nl	DAN
+there is no imap server configured.	felamimail	nl	Er is geen Imap server geconfigureerd
 this folder is empty	felamimail	nl	DEZE MAP IS LEEG
 this php has no imap support compiled in!!	felamimail	nl	In deze PHP versie is geen IMAP ondersteuning meegecompileerd!!
-thu	felamimail	nl	Don
 to	felamimail	nl	Aan
+to do	felamimail	nl	te doen
 to mail sent to	felamimail	nl	naar mail gezonden aan
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	nl	Om een TLS verbinding te gebruiken moet u PHP versie 5.1.0 of hoger gebruiken.
 translation preferences	felamimail	nl	Voorkeuren vertaling
@@ -420,7 +481,7 @@ translation server	felamimail	nl	Server vertaling
 trash	felamimail	nl	Prullenbak
 trash fold	felamimail	nl	Prullenbak
 trash folder	felamimail	nl	Prullenbak
-tue	felamimail	nl	Din
+trying to recover from session data	felamimail	nl	probeer  vanaf sessie data te herstellen.
 type	felamimail	nl	type
 unexpected response from server to authenticate command.	felamimail	nl	Onverwacht antwoord van de server op het AUTHENTICATIE verzoek.
 unexpected response from server to digest-md5 response.	felamimail	nl	Onverwacht antwoord van de server op het Digest-MD5 verzoek.
@@ -440,6 +501,7 @@ unsubscribed successfully!	felamimail	nl	Met succes afgmeld
 up	felamimail	nl	boven
 updating message status	felamimail	nl	bericht status wordt bijgewerkt
 updating view	felamimail	nl	weergave wordt bijgewerkt
+urgent	felamimail	nl	belangrijk
 use <a href="%1">emailadmin</a> to create profiles	felamimail	nl	gebruik <a href="%1">EmailAdmin</a> om profielen aan te maken
 use a signature	felamimail	nl	Gebruik een ondertekening
 use a signature?	felamimail	nl	Een ondertekening gebruiken?
@@ -459,7 +521,6 @@ view message	felamimail	nl	Bericht weergeven
 viewing full header	felamimail	nl	volledige berichtkop weergeven
 viewing message	felamimail	nl	bericht weergeven
 viewing messages	felamimail	nl	berichten weergeven
-wed	felamimail	nl	Woe
 when deleting messages	felamimail	nl	Bij het verwijderen van berichten
 with message	felamimail	nl	met bericht
 with message "%1"	felamimail	nl	met bericht "%1"

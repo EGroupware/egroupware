@@ -48,6 +48,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	sk	všetky aplikácie
 all core tables and the admin and preferences applications	setup	sk	všetky základné tabuľky a správcovské a nastavovacie aplikácie
 all exit codes of the command line interface	setup	sk	všetky návratové kódy rozhrania príkazového riadku
+all hooks registered	setup	sk	Všetky háčiky boli zaregistrované
 all languages (incl. not listed ones)	setup	sk	všetky jazyky (vrátane neuvedených)
 all users	setup	sk	Všetci používatelia
 allow authentication via cookie	setup	sk	Povoliť overovanie pomocou cookie
@@ -91,6 +92,7 @@ backup '%1' deleted	setup	sk	záloha '%1' bola odstránená
 backup '%1' renamed to '%2'	setup	sk	záloha '%1' bola premenovaná na '%2'
 backup '%1' restored	setup	sk	záloha '%1' obnovená
 backup and restore	setup	sk	zálohy a obnova
+backup directory %1 mounted as %2	setup	sk	Zálohovací priečinok %1 primontovaný ako %2
 backup failed	setup	sk	Zálohovanie sa nepodarilo
 backup files (needs ziparchive)	setup	sk	Zálohové súbory (potrebný je ZipArchív)
 backup finished	setup	sk	zálohovanie sa skončilo
@@ -112,11 +114,14 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	sk	pretože príznak zapnutia pre túto aplikáciu je nastavený na 0 alebo nie je nastavený vôbec
 bottom	setup	sk	spodok
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	sk	ale <u>dôrazne odporúčame zazálohovať</u> vašu databázu pre prípad, že skript poškodí vaše dáta.<br /><strong>Tieto automatické skripty môžu veľmi ľahko zničiť vaše dáta.</strong>
+by redirecting to https	setup	sk	Presmerovaním na https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	sk	Prepísaním liniek na https (umožňuje napr. SiteMgr beh na http)
 ca certificate	setup	sk	CA certifikát
 can not connect to %1 database %2 on host %3 using user %4!	setup	sk	Nepodarilo sa spojiť s %1 databázou %2 na hostiteľovi %3 pomocou používateľa %4!
 can not connect to ldap server on host %1 using dn %2!	setup	sk	Nepodarilo sa spojiť s LDAP serverom na hostiteľovi %1 pomocou DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	sk	Nepodarilo sa vytvoriť %1 databázu na %3 pre používateľa %4!
 can not create dn %1!	setup	sk	Nepodarilo sa vytvoriť DN %1!
+can only be change via setup!	setup	sk	Dá sa zmeniť iba cez Setup!
 cancel	setup	sk	Zrušiť
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	sk	Nedá sa vytvoriť header.inc.php kvôli obmedzeniam prístupových práv na súbore.<br /> Môžete namiesto toho %1 alebo %2 tento súbor.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	sk	Hostiteľ pre CAS server:<br />príklad: sso-cas.univ-rennes1.fr
@@ -135,6 +140,7 @@ checking extension %1 is loaded or loadable	setup	sk	Kontrola - rozšírenie %1 
 checking file-permissions of %1 for %2 %3: %4	setup	sk	Kontrolujem prístupové práva %1 pre %2 %3: %4
 checking for gd support...	setup	sk	Zisťujem podporu GD...
 checking for jpgraph in %1	setup	sk	Zisťujem podporu JPGraph v %1
+checking for tnef application	setup	sk	Zisťujem aplikáciu tnef
 checking function %1 exists	setup	sk	Kontrolná funkcia %1 existuje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sk	Zisťujem, či php.ini setting session.save_path='%1' je zapisovateľné webserverom
 checking pear%1 is installed	setup	sk	Zisťujem prítomnosť PEAR%1
@@ -247,6 +253,7 @@ email (standard maildomain should be set)	setup	sk	Email (musí byť nastavená 
 emailadmin profile updated:	setup	sk	Profil EMailAdmin aktualizovaný:
 enable for extra debug-messages	setup	sk	zapnúť extra ladiace správy
 enable mcrypt	setup	sk	Zapnúť MCrypt
+enforce ssl (allows to specify just a path above)	setup	sk	Vyžadovať SSL (umožňuje zadať iba vyššieuvedenú cestu)
 enter some random text for app session encryption	setup	sk	Zadajte nejaký náhodný text pre potreby kódovania sedenia aplikácie
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby <br />kódovania sedenia aplikácie (vyžaduje mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br />Príklady: /tmp, C:\TEMP
@@ -271,6 +278,7 @@ error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!!!
 error listing "dn=%1"!	setup	sk	Chyba pri listovaní "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	sk	Chyba pri menení v dn=%1: %2='%3'!
 export has been completed!	setup	sk	Export bol dokončený!
+failed to mount backup directory!	setup	sk	Pripojenie zálohovacieho priečinka zlyhalo!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva !!!
 false	setup	sk	NIE
 file	setup	sk	Súbor
@@ -279,6 +287,7 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
 filesystem (default)	setup	sk	Súborový systém (predvolené)
+find and register all application hooks	setup	sk	Nájsť a zaregistrovať všetky háčiky aplikácií
 force selectbox	setup	sk	Vynúť ponuku pre výber
 give admin access to all installed apps	setup	sk	Dať správcovi prístup ku všetkým nainštalovaným aplikáciám
 gives further options	setup	sk	dáva ďalšie možnosti
@@ -339,11 +348,17 @@ is not writeable by the webserver	setup	sk	nie je zapisovateľný pre webserver
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	sk	Potrebuje to aktualizáciu na verziu %1! Použite --update-header <password>[,<user>] (--usage zobrazí viacero možností).
 languages updated.	setup	sk	Jazyky aktualizované.
 ldap accounts configuration	setup	sk	Konfigurácia LDAP účtov
+ldap accounts context	setup	sk	LDAP kontext účtov
+ldap config	setup	sk	LDAP konfigurácia
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	sk	LDAP prefix pre predvolený domovský priečinok (napr. /home alebo /home/používateľské_meno)
 ldap default shell (e.g. /bin/bash)	setup	sk	LDAP predvolený shell (napr. /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	sk	LDAP dn="%1" s %2 položkami odstránený.
 ldap encryption type	setup	sk	LDAP typ kryptovania
+ldap groups context	setup	sk	LDAP kontext skupín
 ldap host	setup	sk	LDAP hostiteľ
 ldap import	setup	sk	LDAP Import
 ldap root password	setup	sk	LDAP root heslo
+ldap rootdn	setup	sk	LDAP koreňový dn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	sk	Ponechajte prázdne ak chcete zachovať súčasný stav.
 limit access	setup	sk	Obmedziť prístup
@@ -378,6 +393,7 @@ modifications have been completed!	setup	sk	Úpravy dokončené!
 modified	setup	sk	Zmenené
 modify	setup	sk	Upraviť
 month	setup	sk	mesiac
+mount backup directory to %1	setup	sk	Primontovať zálohový priečinok na %1
 multi-language support setup	setup	sk	Nastavenie mnohojazyčnej podpory
 name of database	setup	sk	Meno databázy
 name of db user egroupware uses to connect	setup	sk	Meno db používateľa, pod ktorým sa EGroupware pripája
@@ -392,6 +408,7 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	sk	Nebolo zadané heslo správcu hlavičiek! Použite --edit-header <password>[,<user>] (--usage zobrazí viacero možností).
 no modes available	setup	sk	nie sú dostupné žiadne režimy
 no update necessary, domain %1(%2) is up to date.	setup	sk	Žiadne aktualizácie nie sú nevyhnutné, doména %1(%2) je aktuálna.
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	sk	Nebolo nastavené platné časové pásmo! ("%1" NESTAČÍ, musíte použiť identifikátor časového pásma ako napr. "%2", pozrite %3plný zoznam platných identifikátorov%4)
 no xml support found. disabling	setup	sk	Nenašla sa podpora XML. Vypínam
 not	setup	sk	nie
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sk	Nie všetky algoritmy a režimy mcrypt-u fungujú s EGroupware. Ak narazíte na problém, skúste to vypnúť.
@@ -481,6 +498,7 @@ save	setup	sk	Uložiť
 save this text as contents of your header.inc.php	setup	sk	Uložiť tento text ako obsah vášho header.inc.php
 schedule	setup	sk	Naplánovať
 scheduled backups	setup	sk	Naplánované zálohy
+securest	setup	sk	Najbezpečnejšie
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	sk	Vyberte aplikáciu, zadajte cieľovú verziu, potom to odošlite procesu s tou verziou.<br />Ak nezadáte verziu, iba základné tabuľky sa nainštalujú pre danú aplikáciu.<br /><blink>TÝMTO SA ZAHODIA VŠETKY TABUĽKY APLIKÁCIE!</blink>
 select one...	setup	sk	vyberte jednu...
 select the default applications to which your users will have access	setup	sk	Vyberte predvolenú aplikáciu, ku ktorej budú mať používatelia prístup
@@ -514,6 +532,7 @@ size	setup	sk	veľkosť
 skip the installation tests (not recommended)	setup	sk	Preskočiť inštalačné testy (neodporúča sa)
 smtp server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa SMTP servera
 smtp server port	setup	sk	Port servera SMTP
+smtp-authentication required	setup	sk	Vyžaduje sa SMTP autentifikácia
 some or all of its tables are missing	setup	sk	Chýbajú niektoré alebo všetky jeho tabuľky
 sources deleted/missing	setup	sk	Chýbajúce alebo odstránené zdroje
 sql encryption type	setup	sk	Typ SQL kryptovania pre heslá (predvolené - md5)
@@ -521,6 +540,7 @@ ssl validation:	setup	sk	SSL validácia:
 standard (login-name identical to egroupware user-name)	setup	sk	štandardné (prihlasovacie meno totožné s používateľským menom Egroupware)
 standard mailserver settings (used for mail authentication too)	setup	sk	Nastavenia predvoleného poštového servera (použité aj pre Mailové overovanie)
 standard, as defined above	setup	sk	Štandardne, ako je zadefinované vyššie
+start installing application %1 ...	setup	sk	Spustiť inštaláciu aplikácie %1 ...
 start the postmaster	setup	sk	Spustiť postmastera
 start updating languages %1 ...	setup	sk	Spustiť aktualizáciu jazykov %1 ...
 start updating the database ...	setup	sk	Spustiť aktualizáciu databázy ...
@@ -565,7 +585,9 @@ the session extension is needed to use php sessions (db-sessions work without).	
 the session extension is required!	setup	sk	Požaduje sa rozšírenie pre relácie!
 the table definition was correct, and the tables were installed	setup	sk	Definícia tabuľky bola korektná, tabuľky sa nainštalovali.
 the tables	setup	sk	tabuľky
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	sk	Rozšírenie tidy sa vyžaduje v hromadnej tlači. Slúži na vyčistenie html pred vkladaním do kancelárskych dokumentov.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	Používateľské mená/heslá sú: demo/guest, demo2/guest and demo3/guest.
+the xmlreader extension is required by egroupware in several applications.	setup	sk	Rozšírenie xmlreader sa vyžaduje v niekoľkých aplikáciách EGroupware.
 there was a problem trying to connect to your ldap server. <br />	setup	sk	Problém pri pripájaní sa na LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	sk	Nastav problém pri pripájaní sa na LDAP server. <br />prosím skontrolujte nastavenia LDAP servera
 this has to be outside the webservers document-root!!!	setup	sk	Musí byť MIMO document-root webservera!!!
@@ -655,6 +677,7 @@ you didn't enter a header admin password	setup	sk	Nezadali ste heslo Správcu hl
 you didn't enter a header admin username	setup	sk	Nezadali ste používateľské meno Správcu hlavičiek
 you do not have any languages installed. please install one now <br />	setup	sk	Nemáte nainštalované žiadne jazyky. Prosím, nainštalujte si teraz aspoň jeden <br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	sk	Nemáte nainštalovaný JPGraph verzie %1 alebo vyššej! Je potrebný v aplikácii Projektovník pre zobrazovanie diagramov.
+you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	sk	Nemáte nainštalovaný tnef ani ynef! Je potrebný na dekódovanie príloh winmail.dat v e-mailoch.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	sk	Ešte ste si nevytvorili header.inc.php!<br />Môžete tak urobiť teraz.
 you have successfully logged out	setup	sk	Úspešne ste sa odhlásili
 you must enter a username for the admin	setup	sk	Musíte zadať používateľské meno pre Správcu
