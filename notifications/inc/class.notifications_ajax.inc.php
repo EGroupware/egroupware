@@ -92,7 +92,7 @@ class notifications_ajax {
 		{
 			$this->response = new xajaxResponse();
 		}
-		$this->recipient = (object)$GLOBALS['egw']->accounts->read();
+		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
 		$this->config = (object)config::read(self::_appname);
 
@@ -154,7 +154,7 @@ class notifications_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function check_mailbox() 
+	private function check_mailbox()
 	{
 		//error_log(__METHOD__.__LINE__.array2string($this->preferences[self::_mailappname]['notify_folders']));
 		if(!isset($this->preferences[self::_mailappname]['notify_folders'])||$this->preferences[self::_mailappname]['notify_folders']=='none') {
@@ -273,7 +273,7 @@ class notifications_ajax {
 						$message = substr_replace($message, '', strpos($message, lang('Linked entries:')));
 					}
 					$message = preg_replace('#</?a[^>]*>#is','',$message);
-					
+
 					$message = 'data:text/html;charset=' . translation::charset() .';base64,'.base64_encode($message);
 				}
 				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message'],$message);
