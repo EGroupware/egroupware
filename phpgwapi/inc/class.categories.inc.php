@@ -129,7 +129,7 @@ class categories
 		$this->app_name		= $app_name;
 		$this->db			= $GLOBALS['egw']->db;
 
-		if (is_null(self::$cache))	// sould not be necessary, as cache is load and restored by egw object
+		if (is_null(self::$cache))	// should not be necessary, as cache is load and restored by egw object
 		{
 			self::init_cache();
 		}
@@ -992,6 +992,77 @@ class categories
 		{
 			self::init_cache();
 		}
+	}
+
+	/**
+	 * Delete categories belonging to a given account, when account got deleted
+	 *
+	 * @param int $account_id
+	 * @param int $new_owner=null for users data can be transfered to new owner
+	 * @return int number of deleted or modified categories
+	 */
+	public static function delete_account($account_id, $new_owner=null)
+	{
+		if (is_null(self::$cache)) self::init_cache();
+
+		$deleted = 0;
+		foreach(self::$cache as $cat_id => $data)
+		{
+			if ($data['owner'] && ($owners = explode(',', $data['owner'])) && ($owner_key = array_search($account_id, $owners)) !== false)
+			{
+				// delete category if account_id is single owner and no new owner or owner is a group
+				if (count($owners) == 1 && (!$new_owner || $account_id < 0))
+				{
+					if (!isset($cat))
+					{
+						$cat = new categories($new_owner, $data['appname']);
+					}
+					$cat->delete($cat_id, false, true);
+				}
+				else
+				{
+					unset($owners[$owner_key]);
+					if ($new_owner && $account_id > 0) $owners[] = $new_owner;
+					$data['owner'] = implode(',', $owners);
+					// app_name have to match cat to update!
+					if (!isset($cat) || $cat->app_name != $data['appname'])
+					{
+						$cat = new categories($new_owner, $data['appname']);
+					}
+					$cat->add($data);
+				}
+				++$deleted;
+			}
+		}
+		return $deleted;
+	}
+
+	/**
+	 * Delete categories with not (longer) existing owners
+	 *
+	 * @return int number of deleted categories
+	 */
+	public static function delete_orphans()
+	{
+		if (is_null(self::$cache)) self::init_cache();
+
+		$checked = array();
+		$deleted = 0;
+		foreach(self::$cache as $cat_id => $data)
+		{
+			foreach(explode(',', $data['owner']) as $owner)
+			{
+				if ($owner && !in_array($owner, $checked))
+				{
+					if (!$GLOBALS['egw']->accounts->exists($owner))
+					{
+						$deleted += self::delete_account($owner);
+					}
+					$checked[] = $owner;
+				}
+			}
+		}
+		return $deleted;
 	}
 
 	/**
