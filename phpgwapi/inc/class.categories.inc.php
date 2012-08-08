@@ -123,7 +123,7 @@ class categories
 		else
 		{
 			$this->account_id	= (int) get_account_id($accountid);
-			$this->global_owners = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
+			$this->global_owners = $this->account_id ? $GLOBALS['egw']->accounts->memberships($this->account_id, true) : array();
 			$this->global_owners[] = self::GLOBAL_ACCOUNT;
 		}
 		$this->app_name		= $app_name;
