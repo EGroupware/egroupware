@@ -52,9 +52,9 @@ class acl
 	 * Some functions are specific to this account, and others are generic.
 	 *
 	 * @example acl->acl(5); // 5 is the user id
-	 * @param int $account_id int-the user id
+	 * @param int $account_id=null user id or default null to use current user from $GLOBALS['egw_info']['user']['account_id']
 	 */
-	function acl($account_id = '')
+	function __construct($account_id = null)
 	{
 		if (is_object($GLOBALS['egw_setup']->db))
 		{
@@ -68,6 +68,17 @@ class acl
 		{
 			$this->account_id = get_account_id((int)$account_id,@$GLOBALS['egw_info']['user']['account_id']);
 		}
+	}
+
+	/**
+	 * PHP4 constructor
+	 *
+	 * @deprecated use __construct
+	 * @param int $account_id=null
+	 */
+	function acl($account_id = null)
+	{
+		$this->__construct($account_id);
 	}
 
 	function DONTlist_methods($_type='xmlrpc')
@@ -131,9 +142,9 @@ class acl
 		// Here is yet another work around(tm) (jengo)
 		if (!$this->account_id)
 		{
-			$this->acl();
+			$this->__construct();
 		}
-		if ($no_groups === true || !$this->account_id)
+		if ($no_groups === true || !(int)$this->account_id)
 		{
 			$acl_acc_list = $this->account_id;
 		}
@@ -481,7 +492,7 @@ class acl
 		if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		$accounts = array($account_id);
-		if ($use_memberships)
+		if ($use_memberships && (int)$account_id > 0)
 		{
 			$accounts = $GLOBALS['egw']->accounts->memberships($account_id, true);
 			$accounts[] = $account_id;
@@ -640,7 +651,7 @@ class acl
 			$account_id = get_account_id($accountid,$this->account_id);
 			$cache_accountid[$accountid] = $account_id;
 		}
-		$memberships = $GLOBALS['egw']->accounts->memberships($account_id, true);
+		if ((int)$account_id > 0) $memberships = $GLOBALS['egw']->accounts->memberships($account_id, true);
 		$memberships[] = $account_id;
 
 		$apps = false;
@@ -680,7 +691,7 @@ class acl
 		$grants =& $cache[$app][$user];
 		if (!isset($grants))
 		{
-			$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+			if ((int)$user > 0) $memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 			$memberships[] = $user;
 
 			$grants = $accounts = Array();
