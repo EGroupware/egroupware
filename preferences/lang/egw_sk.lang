@@ -1,5 +1,7 @@
 %1 - preferences	preferences	sk	%1 - Predvoľby
 %1 hours	preferences	sk	%1 hodín
+%1 is no existing vfs directory!	preferences	sk	%1 je neexistujúci adresár vfs!
+%1 is no existing vfs file!	preferences	sk	%1 je neexistujúci súbor vfs!
 12 hour	preferences	sk	12 hodinový
 24 hour	preferences	sk	24 hodinový
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	Šablóna definuje vzhľad EGroupware a obsahuje ikony pre jednotlivé aplikácie.
@@ -12,6 +14,7 @@ change your password	preferences	sk	Zmeniť vaše heslo
 change your profile	preferences	sk	Zmeniť váš profil
 change your settings	preferences	sk	Zmeniť vaše nastavenia
 charset for the csv export	addressbook	sk	Znaková sada pre export CSV
+charset for the csv export/import	preferences	sk	Znaková sada
 click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
@@ -35,6 +38,7 @@ enter your old password	preferences	sk	Zadajte staré heslo
 failed to change password.  please contact your administrator.	preferences	sk	Nepodarilo sa zmeniť heslo. Prosím kontaktujte správcu systému.
 forced preferences	preferences	sk	Vynútené nastavenia
 help off	preferences	sk	Skryť Pomocníka
+holding ctrl/cmd key and click on the line	preferences	sk	držaním klávesy Ctrl/Cmd a kliknutím na riadok
 hours	preferences	sk	hodín
 how do you like to display accounts	preferences	sk	Ako sa majú zobrazovať používateľské účty
 how do you like to select accounts	preferences	sk	Ako sa majú vyberať používateľské účty
@@ -44,14 +48,17 @@ how should egroupware display dates for you.	preferences	sk	Ako má EGroupware z
 icon	preferences	sk	Ikona
 icons and text	preferences	sk	Ikony s textom
 icons only	preferences	sk	Len ikony
+if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	sk	Ak je už riadok vybratý, ďalšie riadky vyberiete tak, že podržíte klávesy Ctrl/Cmd a kliknite na ne; takto nedôjde k odznačeniu už označeného riadku. Alebo na ne len kliknete ako pre začiarkávacie políčko. Ak nie je označený žiadny riadok, a vy na nejaký kliknete, tak ho označíte. Ak podržíte klávesu Shift, tak označíte všetko, čo leží medzi aktuálne vybratým riadkom a ďalším na ktorý kliknete.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	sk	Obrázky, na ktoré sa v zázname odkazuje, sa dajú zobrazovať ako náhľady. Ak chcete zrýchliť zobrazovanie, tak to vypnite.
 in which country are you. this is used to set certain defaults for you.	preferences	sk	V akej krajine sa nachádzate. Informácia sa použije na nastavenie niektorých predvolieb.
 interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablóny
+just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím na riadok, ako začiarkávacie políčko
 language	preferences	sk	Jazyk
 max matches per page	preferences	sk	Maximum záznamov na stránku
 max number of icons in navbar	preferences	sk	Maximálny počet ikoniek v navigačnom paneli
 no default	preferences	sk	Bez predvolených nastavení
 no user-selection at all	common	sk	Žiadny výber používateľov
+note: this feature does *not* change your email password. this will	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. Spôsobí
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. To sa dá urobiť len ručne.
 number format	preferences	sk	Formát čísla
 office 2003 theme	preferences	sk	Téma Office 2003
@@ -66,6 +73,7 @@ re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
 rich text editor enter mode	preferences	sk	Režim ukončenia riadku v textovom editore
 rich text editor theme	preferences	sk	Téma textového editora
+select additional lines in lists by	preferences	sk	Vybrať ďalšie riadky zoznamu pomocou
 select different theme	preferences	sk	Vybrať inú farebnú tému
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	sk	Vyberte, ako má textový editor generovať značku enter (zalomenie riadku).
 select one	preferences	sk	Vyberte si jeden
