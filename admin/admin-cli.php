@@ -89,6 +89,31 @@ switch($action)
 		return list_exit_codes();
 
 	default:
+		// we allow to call admin_cmd classes directly, if they define the constant SETUP_CLI_CALLABLE
+		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
+			is_subclass_of($class,'admin_cmd') && @constant($class.'::SETUP_CLI_CALLABLE'))
+		{
+			$args = array();
+			$args['domain'] = array_shift($arg0s);	// domain must be first argument, to ensure right domain get's selected in header-include
+			foreach($arg0s as $arg)
+			{
+				list($name,$value) = explode('=',$arg,2);
+				if(property_exists('admin_cmd',$name))		// dont allow to overwrite admin_cmd properties
+				{
+					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
+				}
+				if (substr($name,-1) == ']')	// allow 1-dim. arrays
+				{
+					list($name,$sub) = explode('[',substr($name,0,-1),2);
+					$args[$name][$sub] = $value;
+				}
+				else
+				{
+					$args[$name] = $value;
+				}
+			}
+			return run_command(new $class($args));
+		}
 		usage($action);
 		break;
 }
