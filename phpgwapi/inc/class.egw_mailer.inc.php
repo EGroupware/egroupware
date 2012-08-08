@@ -92,21 +92,21 @@ class egw_mailer extends PHPMailer
 	 * Initiates a connection to an SMTP server.
 	 * Returns false if the operation failed.
 	 *
-	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls 
+	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls
 	 * are configured for the given profile
 	 *
 	 * @uses SMTP
 	 * @access public
 	 * @return bool
 	 */
-	public function SmtpConnect() 
+	public function SmtpConnect()
 	{
 		$port = $this->Port;
 		$hosts = explode(';',$this->Host);
 		foreach ($hosts as $k => &$host)
 		{
 			$host = trim($host); // make sure there is no whitespace leading or trailling the host string
-			if (in_array($port,array(465,587)) && strpos($host,'://')===false) 
+			if (in_array($port,array(465,587)) && strpos($host,'://')===false)
 			{
 				//$host = ($port==587?'tls://':'ssl://').trim($host);
 				$this->SMTPSecure = ($port==587?'tls':'ssl');
@@ -130,7 +130,7 @@ class egw_mailer extends PHPMailer
 	 */
 	public function SmtpSend($header, $body)
 	{
-		$GLOBALS['egw']->hooks->process(array(
+		$mail_id = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'send_mail',
 			'subject' => $this->Subject,
 			'from' => $this->Sender ? $this->Sender : $this->From,
@@ -143,8 +143,27 @@ class egw_mailer extends PHPMailer
 
 		$this->addresses = array();	// reset addresses for next mail
 
-		// calling the overwritten method
-		return parent::SmtpSend($header, $body);
+		try {
+			// calling the overwritten method
+			return parent::SmtpSend($header, $body);
+		}
+		catch (phpmailerException $e) {
+			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'send_mail',
+				'subject' => $this->Subject,
+				'from' => $this->Sender ? $this->Sender : $this->From,
+				'to' => $this->addresses['To'],
+				'cc' => $this->addresses['Cc'],
+				'bcc' => $this->addresses['Bcc'],
+				'body_sha1' => sha1($body),
+				'message_id' => preg_match('/^Message-ID: (.*)$/m', $header,$matches) ? $matches[1] : null,
+				'mail_id' => $mail_id,
+				'error' => $e->getMessage(),
+			), array(), true);	// true = call all apps
+			// re-throw exception
+			throw $e;
+		}
 	}
 
 	/**
