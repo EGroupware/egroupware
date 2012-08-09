@@ -13,7 +13,7 @@ activate	felamimail	de	aktivieren
 activate script	felamimail	de	Script aktivieren
 activating by date requires a start- and end-date!	felamimail	de	Aktivieren nach Datum benötigt ein Start- UND Ende-Datum!
 add acl	felamimail	de	ACL zufügen
-add address	felamimail	de	Addresse hinzufügen
+add address	felamimail	de	Adresse hinzufügen
 add rule	felamimail	de	Regel hinzufügen
 add script	felamimail	de	Script hinzufügen
 add to %1	felamimail	de	Zu %1 hinzufügen

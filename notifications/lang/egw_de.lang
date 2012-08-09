@@ -24,7 +24,7 @@ from	notifications	de	von
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	de	Wie hoch soll das EGroupware-Popup die Priorität setzen wenn eine Benachrichtigung an den Benutzer gesendet wird:<br />Niedrig: Es wird nur die Benachrichtigungsglocke im Topmenü angezeigt - das Topmenü muss hierfür eingeschaltet sein!<br />Mittel: Holt das Benachrichtigungsfenster in den Vordergrund<br />Hoch: Holt das Benachrichtigungsfenster in den Vordergrund und aktiviert den Browser zur besseren Erkennung der Benachrichtigung.
 if set, embedded links get rendered special for external clients	notifications	de	Wenn diese Option aktiviert ist, werden "eingebettete Links" besser graphisch aufbereitet.
 linked entries:	common	de	Verknüpfte Einträge:
-mail backend	admin	de	Mail Schnittstelle
+mail backend	admin	de	E-Mail Schnittstelle
 maximum sms messages per notification	admin	de	Maximale Anzahl an SMS Nachrichten pro Benachrichtigung
 message from	notifications	de	Nachricht von
 minutes	notifications	de	Minuten

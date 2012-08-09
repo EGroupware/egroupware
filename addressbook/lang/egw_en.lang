@@ -77,6 +77,7 @@ business zip code	addressbook	en	Business postal code
 calendar fields:	addressbook	en	Calendar fields:
 calendar uri	addressbook	en	Calendar URI
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
+can't create dn %1	addressbook	en	Can't create dn %1
 car phone	addressbook	en	Car phone
 categorie	addressbook	en	Category
 categorie added	addressbook	en	Category added.
@@ -183,16 +184,21 @@ enter the path to the exported file here	addressbook	en	Enter the path to the ex
 error deleting the contact !!!	addressbook	en	Error deleting the contact!
 error saving the contact !!!	addressbook	en	Error saving the contact!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 existing links	addressbook	en	Existing links
 exists	addressbook	en	Exists
 export as csv	addressbook	en	Export as CSV
 export as vcard	addressbook	en	Export as vCard
 export contacts	addressbook	en	Export contacts
+export definition to use for nextmatch export	addressbook	en	Export definition to use for nextmatch export
 export definitition to use for nextmatch export	addressbook	en	Export definition to use for nextmatch export
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from address book
 export selection	addressbook	en	Export selection
+exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 extra	addressbook	en	Extra
@@ -207,10 +213,13 @@ fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
 fields to copy when copying an address?	admin	en	Fields to copy when copying an address
 fields to show in address list	addressbook	en	Fields to show in address list
+fieldseparator	addressbook	en	Fieldseparator
 for read only ldap	admin	en	For read only LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	en	Use this tag for serial letter. Place the content you want to repeat between two tags.
 freebusy uri	addressbook	en	FreeBusy URI
 full name	addressbook	en	Full name
+general	admin	en	General
+general fields:	addressbook	en	General fields:
 geo	addressbook	en	GEO
 global categories	addressbook	en	Global categories
 grant addressbook access	common	en	Grant address book access
@@ -232,7 +241,12 @@ home zip code	addressbook	en	Home ZIP code
 how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	If accounts are already in LDAP
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	addressbook	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	addressbook	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify an export definition, it will be used when you export	addressbook	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export*	addressbook	en	If you specify an export definition, it will be used when you export*
 ignore first line	addressbook	en	Ignore first line
+import	addressbook	en	Import
 import contacts	addressbook	en	Import contacts
 import csv-file into addressbook	addressbook	en	Import CSV file into Address book
 import file	addressbook	en	Import file
@@ -242,6 +256,7 @@ import from outlook	addressbook	en	Import from Outlook
 import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
+importer's personal	addressbook	en	Importer's personal
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
@@ -261,15 +276,20 @@ ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
 link title for contacts show	addressbook	en	Link title for contacts
 links	addressbook	en	Links
+links and attached files	addressbook	en	Links and attached files
+links to specified application.  example: {{links/infolog}}	addressbook	en	Links to specified application.  Example: {{links/infolog}}
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all custom fields
 list already exists!	addressbook	en	List already exists!
 list created	addressbook	en	List created.
 list creation failed, no rights!	addressbook	en	List creation failed, no rights!
+list of files linked to the current record	addressbook	en	List of files linked to the current record
 load vcard	addressbook	en	Load vCard
 location	addressbook	en	Location
 locations	addressbook	en	Locations
+mail vcard	addressbook	en	Mail VCard
 main categories in their own field	addressbook	en	Main categories in their own field
+manage mapping	addressbook	en	Manage mapping
 mark records as private	addressbook	en	Mark records as private
 merge contacts	addressbook	en	Merge contacts
 merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
@@ -297,6 +317,7 @@ no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
+old fixed definition	addressbook	en	Old fixed definition
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
@@ -383,6 +404,8 @@ that field name has been used already !	addressbook	en	The field name has been u
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
+the following document-types are supported:	addressbook	en	The following document-types are supported:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
@@ -391,9 +414,11 @@ this person's first name was not in the address book.	addressbook	en	This person
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
 timezone	addressbook	en	Time zone
 title	addressbook	en	Job title
+titles of any entries linked to the current record, excluding attached files	addressbook	en	Titles of any entries linked to the current record, excluding attached files
 to many might exceed your execution-time-limit	addressbook	en	Too many might exceed your execution time limit.
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
+translation	addressbook	en	Translation
 two of: %1	addressbook	en	Two of: %1
 type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
@@ -405,6 +430,7 @@ update fields by edited organisations?	admin	en	Fields to update of edited organ
 updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
+use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
 use an extra category tab?	addressbook	en	Use an extra tab for categories
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list

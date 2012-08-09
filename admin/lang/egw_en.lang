@@ -1,6 +1,9 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 acl records of not (longer) existing accounts deleted.	admin	en	%1 ACL records of not longer existing accounts deleted.
+%1 categories of not (longer) existing accounts deleted.	admin	en	%1 categories of not (longer) existing accounts deleted.
+%1 category(s) %2	admin	en	%1 category(s) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights !!!
 %1 class not instanciated	admin	en	%1 class not instanciated
 %1 group %2	admin	en	%1 group %2
 %1 is no command!	admin	en	%1 is no command!
@@ -60,6 +63,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login an IP should be blocked. Default = 3
 aliases	admin	en	Aliases
 all applications	admin	en	All applications
+all categories	admin	en	All categories
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
@@ -124,6 +128,7 @@ change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
 changed password hash for %1 to %2.	admin	en	Changed password hash for %1 to %2.
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not existing accounts.
+check categories for not (longer) existing accounts	admin	en	Check categories for not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 children	admin	en	Children
@@ -171,6 +176,7 @@ delete this category	admin	en	Delete this category
 delete this group	admin	en	Delete this group
 delete this log entry	admin	en	Delete this log entry
 delete this user	admin	en	Delete this user
+deleted	admin	en	deleted
 deletes this field	admin	en	Deletes this field
 deliver extern	admin	en	Deliver extern
 deny access to access log	admin	en	Deny access to access log
@@ -300,6 +306,7 @@ grant	admin	en	Grant
 group ?	admin	en	Group?
 group csv export	admin	en	Group CSV export
 group csv import	admin	en	Group CSV import
+group excepted from above export limit (admins are always excepted)	admin	en	Group excepted from above export limit (admins are always excepted)
 group has been added	common	en	Group has been added.
 group has been deleted	common	en	Group has been deleted.
 group has been updated	common	en	Group has been updated.
@@ -332,6 +339,7 @@ installed crontab	admin	en	Installed crontab
 instance	admin	en	Instance
 interface	admin	en	Interface
 international use	admin	en	International use
+invalid argument '%1' !!!	admin	en	Invalid argument '%1' !!!
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote ID or name "%1"!
 invalid value "%1" use yes or no!	admin	en	Invalid value "%1" use yes or no!
@@ -433,6 +441,7 @@ only below displayed information is directly submitted to %s.	admin	en	Only belo
 operating system	admin	en	Operating system
 order	admin	en	Order
 outbound	admin	en	Outbound
+own categories	admin	en	Own categories
 own install id:	admin	en	Own install ID:
 owner "%1" removed, please select group-owner	admin	en	Owner "%1" removed, please select group owner
 passthrough	admin	en	Passthrough
@@ -603,6 +612,7 @@ user groups	admin	en	User groups
 userdata	admin	en	User data
 users choice	admin	en	Users choice
 value for column %1 is not unique!	admin	en	Value for column %1 is not unique!
+vfs directory "%1" not found!	admin	en	VFS directory "%1" NOT found!
 view access log	admin	en	View access log
 view account	admin	en	View account
 view category	admin	en	View category
