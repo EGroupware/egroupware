@@ -85,7 +85,7 @@ class notifications_ajax {
 	 */
 	public function __construct() {
 		$this->response = new xajaxResponse();
-		$this->recipient = (object)$GLOBALS['egw']->accounts->read();
+		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
 		$config = new config(self::_appname);
 		$this->config = (object)$config->read_repository();
@@ -123,7 +123,8 @@ class notifications_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function check_mailbox() {
+	private function check_mailbox()
+	{
 		//error_log(__METHOD__.__LINE__.array2string($this->preferences[self::_mailappname]['notify_folders']));
 		if(!isset($this->preferences[self::_mailappname]['notify_folders'])||$this->preferences[self::_mailappname]['notify_folders']=='none') {
 			return true; //no pref set for notifying - exit
@@ -174,7 +175,7 @@ class notifications_ajax {
 		}
 		// restore the felamimail session data, as they are needed by the app itself
 		$bofelamimail->sessionData = $bufferFMailSession;
-		$bofelamimail->saveSessionData(); 
+		$bofelamimail->saveSessionData();
 		if(count($recent_messages) > 0) {
 			// create notify message
 			$notification_subject = lang("You've got new mail");
