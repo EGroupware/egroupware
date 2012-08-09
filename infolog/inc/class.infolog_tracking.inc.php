@@ -187,15 +187,13 @@ class infolog_tracking extends bo_tracking
 	/**
 	 * Get the details of an entry
 	 *
-	 * @param array $data
-	 * @param string $datetime_format of user to notify, eg. 'Y-m-d H:i'
-	 * @param int $tz_offset_s offset in sec to be add to server-time to get the user-time of the user to notify
+	 * @param array|object $data
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return array of details as array with values for keys 'label','value','type'
 	 */
-	function get_details($data)
+	function get_details($data,$receiver=null)
 	{
 		//error_log(__METHOD__.__LINE__.' Data:'.array2string($data));
-		$header_done = false;
 		$responsible = array();
 		if ($data['info_responsible'])
 		{
@@ -245,30 +243,9 @@ class infolog_tracking extends bo_tracking
 			'value' => $data['info_des'],
 			'type'  => 'multiline',
 		);
-		// should be moved to bo_tracking because auf the different custom field types
-		if ($this->infolog->customfields)
-		{
-			foreach($this->infolog->customfields as $name => $field)
-			{
-				if ($field['type2'] && !in_array($data['info_type'],explode(',',$field['type2']))) continue;	// different type
+		// add custom fields for given type
+		$details += $this->get_customfields($data, $data['info_type']);
 
-				if (!$header_done)
-				{
-					$details['custom'] = array(
-						'value' => lang('Custom fields').':',
-						'type'  => 'reply',
-					);
-					$header_done = true;
-				}
-				//error_log(__METHOD__."() $name: data['#$name']=".array2string($data['#'.$name]).", field[values]=".array2string($field['values']));
-				$details['#'.$name] = array(
-					'label' => $field['label'],
-					'value' => is_array($field['values']) && $field['values'] && isset($data['#'.$name]) &&
-						array_key_exists((string)$data['#'.$name],$field['values']) ? $field['values'][$data['#'.$name]] : $data['#'.$name],
-				);
-				//error_log("--> details['#$name']=".array2string($details['#'.$name]));
-			}
-		}
 		return $details;
 	}
 
