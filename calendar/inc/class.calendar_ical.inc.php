@@ -465,8 +465,8 @@ class calendar_ical extends calendar_boupdate
 								case 'g':
 									$cutype = 'GROUP';
 									$participantURL = 'urn:uuid:'.common::generate_uid('accounts', $uid);
-									$members = $GLOBALS['egw']->accounts->members($uid, true);
-									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
+									if (!isset($event['participants'][$this->user]) &&
+										($members = $GLOBALS['egw']->accounts->members($uid, true)) && in_array($this->user, $members))
 									{
 										$user = $this->resource_info($this->user);
 										$attributes['ATTENDEE'][] = 'MAILTO:' . $user['email'];
@@ -2826,8 +2826,8 @@ class calendar_ical extends calendar_boupdate
 									$status != 'X' && $status != 'U')
 								{
 									// User tries to reply to the group invitiation
-									$members = $GLOBALS['egw']->accounts->members($uid, true);
-									if (in_array($this->user, $members))
+									if (($members = $GLOBALS['egw']->accounts->members($uid, true)) &&
+										in_array($this->user, $members))
 									{
 										//Horde::logMessage("vevent2egw: set status to " . $status,
 										//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
