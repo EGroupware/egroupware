@@ -1588,14 +1588,15 @@ class addressbook_bo extends addressbook_so
 
 		// Get addresses that use the category
 		@set_time_limit( 0 );
-		$ids = array();
 		foreach($cat_ids as $cat_id)
 		{
-			$ids = $this->search(array('cat_id' => $cat_id), false);
-			foreach($ids as &$info)
+			if (($ids = $this->search(array('cat_id' => $cat_id), false)))
 			{
-				$info['cat_id'] = implode(',',array_diff(explode(',',$info['cat_id']), $cat_ids));
-				$this->save($info);
+				foreach($ids as &$info)
+				{
+					$info['cat_id'] = implode(',',array_diff(explode(',',$info['cat_id']), $cat_ids));
+					$this->save($info);
+				}
 			}
 		}
 	}
