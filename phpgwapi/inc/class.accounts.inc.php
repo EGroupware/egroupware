@@ -271,9 +271,9 @@ class accounts
 			elseif(in_array($param['type'],array('groupmembers','groupmembers+memberships')))
 			{
 				$members = array();
-				foreach($this->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $grp)
+				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $grp)
 				{
-					$members = array_unique(array_merge($members,$this->members($grp,true)));
+					$members = array_unique(array_merge($members, (array)$this->members($grp,true)));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = $grp;
 				}
 				$param['type'] = $param['type'] == 'groupmembers+memberships' ? 'both' : 'accounts';
@@ -663,8 +663,8 @@ class accounts
 				$account_lid != $GLOBALS['egw_info']['user']['account_lid'] ||
 			// only allow group-members for account-selection is groupmembers
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
-				!array_intersect($this->memberships($account_id,true),
-					$this->memberships($GLOBALS['egw_info']['user']['account_id'],true))))
+				!array_intersect((array)$this->memberships($account_id,true),
+					(array)$this->memberships($GLOBALS['egw_info']['user']['account_id'],true))))
 		{
 			//error_log(__METHOD__."($account_id='$account_lid') returning FALSE");
 			return false;	// user is not allowed to see given account
@@ -793,7 +793,7 @@ class accounts
 				$accounts['groups'][$id] = $id;
 				if ($use != 'groups')
 				{
-					foreach($this->members($id,true) as $id)
+					foreach((array)$this->members($id,true) as $id)
 					{
 						$accounts['accounts'][$id] = $id;
 					}
