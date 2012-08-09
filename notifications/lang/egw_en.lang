@@ -36,6 +36,7 @@ preferences for notification	notifications	en	Preferences for notification
 received	notifications	en	Received
 sms backend	admin	en	SMS back end
 sms only	notifications	en	SMS only
+this egroupware notification has been sent to you by mail because your	notifications	en	This eGroupWare notification has been sent to you by mail because your
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
 windows-popup and e-mail	notifications	en	Windows popup and email
 windows-popup backend	admin	en	Windows popup back end

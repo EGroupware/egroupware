@@ -1,6 +1,9 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
+%1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
+%1 category(s) %2	admin	de	%1 Kategorie(n) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 %1 class not instanciated	admin	de	%1 Klasse nicht instanziert
 %1 group %2	admin	de	%1 Gruppe %2
 %1 is no command!	admin	de	%1 ist kein Befehl !
@@ -60,10 +63,11 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 3)?
 aliases	admin	de	E-Mail-Alias
 all applications	admin	de	Alle Anwendungen
+all categories	admin	de	Alle Kategorien
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung  identifiziert durch folgende (Komma separierte) Install IDs
+allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Install IDs
 alternate email address	admin	de	Alternative E-Mail-Adresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt)
@@ -91,7 +95,7 @@ are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie 
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden, den richtigen MINE-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream"
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Es wird versucht, den richtigen MIME-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream".
 attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
 attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb eGW verwendet.
 attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
@@ -119,13 +123,16 @@ change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
 change main screen message	admin	de	Nachricht der Startseite ändern
+change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
-change password hash to	admin	de	Passwort Verschlüsselung ändern zu
+change password hash to	admin	de	Passwort Verschlüsselung ändern in
+changed password hash for %1 to %2.	admin	de	Passwort Verschlüsselung für %1 ändern in %2.
 check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Einträge auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
+check categories for not (longer) existing accounts	admin	de	Prüfe Kategorien auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 children	admin	de	Kinder
-click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
+click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
@@ -155,7 +162,7 @@ default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pr
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
-delete account %1	admin	de	Löschen des Benutzerkontos %1
+delete account %1	admin	de	Benutzerkonto %1 löschen
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
@@ -169,6 +176,7 @@ delete this category	admin	de	Kategorie löschen
 delete this group	admin	de	Gruppe löschen
 delete this log entry	admin	de	Diesen Protokolleintrag löschen
 delete this user	admin	de	Benutzer löschen
+deleted	admin	de	gelöscht
 deletes this field	admin	de	löscht dieses Feld
 deliver extern	admin	de	Extern ausliefern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
@@ -194,10 +202,10 @@ disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
-display	admin	de	Anzeigen
+display	admin	de	anzeigen
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
-do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen?
+do you want to delete all global subcategories ?	admin	de	Möchten Sie alle globale Unterkategorien löschen?
 do you want to move all global subcategories one level down ?	admin	de	Wollen Sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 down	admin	de	unten
@@ -259,19 +267,21 @@ enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job !!!
-error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !!!
+error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !
 error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error saving	admin	de	Fehler beim Speichern
 error saving account!	admin	de	Fehler beim Speichern des Benutzerkontos!
 error saving the command!	admin	de	Fehler beim Speichern des Befehls!
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
-error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
+error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
 exists	admin	de	existiert
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
+exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei exportieren.
+exports users into a csv file.	admin	de	Benutzer in eine CSV-Datei exportieren.
 failed to change password for account "%1"!	admin	de	Fehler beim Ändern des Passwortes für Benutzer "%1"!
 failed to mount backup directory!	admin	de	Konnte Datensicherungsverzeichnis nicht mounten!
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
@@ -294,7 +304,9 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder stättische Behörden und Dienstleistungen
 grant	admin	de	Berechtigungen
 group ?	admin	de	Gruppe ?
+group csv export	admin	de	CSV Export von Gruppen
 group csv import	admin	de	CSV Import von Gruppen
+group excepted from above export limit (admins are always excepted)	admin	de	Gruppen die vom oben angegeben Exportlimit ausgenommen sind (Administratoren sind immer ausgenommen)
 group has been added	common	de	Gruppe wurde hinzugefügt
 group has been deleted	common	de	Gruppe wurde gelöscht
 group has been updated	common	de	Gruppe wurde aktualisiert
@@ -306,7 +318,7 @@ hide php information	admin	de	PHP-Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen Nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
@@ -327,6 +339,7 @@ installed crontab	admin	de	Installierte Crontab
 instance	admin	de	Instanz
 interface	admin	de	Schnittstelle
 international use	admin	de	Internationale Benutzung
+invalid argument '%1' !!!	admin	de	Ungültiges Argument "%1"!
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
 invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
 invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein (yes/no)
@@ -339,6 +352,7 @@ last %1 logins for %2	admin	de	Letze %1 Logins für %2
 last action	admin	de	Letzte Aktion
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
+last password change	admin	de	Letzte Passwortänderung
 last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen
 ldap accounts context	admin	de	LDAP-Kontext für Benutzerkonten
@@ -352,12 +366,12 @@ ldap rootdn	admin	de	LDAP rootdn
 leave empty for no quota	admin	de	Leer lassen für keine Quota
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
-leave unchanged	admin	de	Unverändert lassen
+leave unchanged	admin	de	unverändert lassen
 leave without saveing the entry	admin	de	beendet ohne den Eintrag zu speichern
 leaves without saveing	admin	de	beendet ohne zu speichern
 length<br>rows	admin	de	Länge<br>Zeilen
 limit global category to members of a certain group	admin	de	Beschränkt die global Kategorie auf der Mitglieder einer bestimmten Gruppe
-limit to members of	admin	de	Beschränken auf Mitglieder von
+limit to members of	admin	de	beschränken auf Mitglieder von
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
@@ -390,7 +404,7 @@ month	admin	de	Monat
 more secure	admin	de	sicherer
 mount backup directory to %1	admin	de	Datensicherungsverzeichnis unter %1 mounten
 must change password upon next login	admin	de	Muss das Passwort beim nächsten Login ändern
-name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
+name must not be empty !!!	admin	de	Name darf nicht leer sein!
 name of the egroupware instance, eg. default	admin	de	Name der EGroupware Instanz, z.B. default
 new group name	admin	de	Neuer Gruppenname
 new name	admin	de	neuer Name
@@ -399,7 +413,7 @@ new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leer l
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no alternate email address	admin	de	keine Aliase definiert
-no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank !!!
+no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no modes available	admin	de	Kein Modus verfügbar
@@ -409,10 +423,10 @@ no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um 
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
 notification mail	admin	de	Benachrichtigungsmail
-notify user by email	admin	de	Benutzer per Mail benachrichtigen
-notifying account "%1" %2 failed!	admin	de	Benachrichtigen von Benutzer "%1" %2 fehl geschlagen!
+notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
+notifying account "%1" %2 failed!	admin	de	Benachrichtigen von Benutzer "%1" %2 fehlgeschlagen!
 number applications serially	admin	de	Numeriere Anwendungen aufeinander folgend
-number of active users	admin	de	Anzahl aktive User
+number of active users	admin	de	Anzahl aktiver User
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
 number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzungen / EGroupware Logins in den letzten 30 Tagen
 number of users	admin	de	Anzahl Benutzer
@@ -427,7 +441,9 @@ only below displayed information is directly submitted to %s.	admin	de	Nur die u
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
-own install id:	admin	de	Eigene Install-ID
+own categories	admin	de	eigene Kategorien
+own install id:	admin	de	eigene Install-ID
+owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
 password updated	admin	de	Passwort aktualisiert
@@ -463,10 +479,11 @@ register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
 remote administration instances	admin	de	Remote Administrations Instanzen
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
 remote instance saved	admin	de	Remote Instanz gespeichert
-remove	admin	de	Entfernen
-remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
-remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe ?
-requested	admin	de	Angefordert
+remove	admin	de	entfernen
+remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
+remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
+requested	admin	de	angefordert
 return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 route all mails to	admin	de	Alle E-Mails senden an
@@ -475,7 +492,7 @@ run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
 saves the changes made and leaves	admin	de	beendet und speichert die Änderungen
-saves this entry	admin	de	Speichert diesen Eintrag
+saves this entry	admin	de	speichert diesen Eintrag
 scheduled	admin	de	geplant
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
@@ -484,7 +501,7 @@ search peer servers	admin	de	Serververbund durchsuchen
 security	admin	de	Sicherheit
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
 select group managers	admin	de	Gruppenmanager auswählen
-select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
+select permissions this group will have	admin	de	wählen Sie die Zugriffsrechte für diese Gruppe.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select users	admin	de	Benutzer auswählen
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
@@ -512,9 +529,9 @@ show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
 site	admin	de	Site
 soap	admin	de	SOAP
-sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
-sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
-sorry, the follow users are still a member of the group %1	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
+sorry, that group name has already been taken.	admin	de	Dieser Gruppenname wird bereits verwendet.
+sorry, the above users are still a member of the group %1	admin	de	Diese Benutzer sind noch Mitglied der Gruppe %1.
+sorry, the follow users are still a member of the group %1	admin	de	Die folgenden Benutzer sind noch Mitglied der Gruppe %1.
 sort the entries	admin	de	Einträge sortieren
 ssl	admin	de	verschlüsselt (SSL)
 standard	admin	de	Standard
@@ -587,6 +604,7 @@ use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use theme	admin	de	Benutztes Farbschema
 user accounts	admin	de	Benutzerkonten
+user csv export	admin	de	CSV Export von Benutzern
 user csv import	admin	de	CSV Import von Benutzern
 user data	common	de	Benutzerdaten
 user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP Authentifizierung (leer lassen falls keine Authentifizierung nötig)
@@ -594,6 +612,7 @@ user groups	admin	de	Benutzergruppen
 userdata	admin	de	Benutzerkonto
 users choice	admin	de	Benutzerauswahl
 value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!
+vfs directory "%1" not found!	admin	de	VFS Verzeichnis "%1" nicht gefunden!
 view access log	admin	de	Zugangsprotokoll anzeigen
 view account	admin	de	Benutzerkonto anzeigen
 view category	admin	de	Kategorie anzeigen
@@ -601,7 +620,7 @@ view error log	admin	de	Fehlerprotokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
-warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Warne Benutzer, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wieviel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Benutzer warnen, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wieviel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	de	Wir erheben diese Daten zu auschliesslich statistischen Zwecken, um einen Überblick über den weltweiten Einsatz von EGroupware zu gewinnen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	de	Wir speichern keine Herkunftsdaten oder Informationen, die einen Rückschluss auf Ihre Identität ermöglichen würden.
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?

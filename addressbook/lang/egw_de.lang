@@ -5,12 +5,12 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 not implemented for %2!	addressbook	de	%1 nicht implementiert für %2!
 %1 records imported	addressbook	de	%1 Datensätze importiert
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import ausschalten)A
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import ausschalten)
 %1 starts with '%2'	addressbook	de	%1 beginnt mit '%2'
 %s please calculate the result	addressbook	de	%s Bitte berechnen Sie das Ergebnis
 (e.g. 1969)	addressbook	de	(z.B. 1969)
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste aus.
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur für Administratoren verfügbar !!!
 account id	addressbook	de	Benutzerkonten ID
 account repository	admin	de	Speicherort für Benutzerkonten
@@ -140,7 +140,7 @@ default document to insert contacts	addressbook	de	Standarddokument zum Einfüge
 default file as format	addressbook	de	Vorgabe für eigene Sortierung
 default filter	addressbook	de	Standardfilter
 default format for fileas, eg. for new entries.	addressbook	de	Vorgegebenes Format für eigene Sortierung, z.B. für neue Einträge
-default is to open email addresses in egroupware email application, if user has access to it.	addressbook	de	Vorgabe ist EMail Adressen in EGroupware's EMail Anwendung zu öffnen, wenn der Benutzer darauf Zugriff hat.
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	de	Vorgabe ist E-Mail Adressen in EGroupware's E-Mail Anwendung zu öffnen, wenn der Benutzer darauf Zugriff hat.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mailadresse (geschäftlich oder privat) für Verteilerlisten in E-Mail bevorzugt benutzt werden soll.
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
@@ -193,6 +193,7 @@ export definitition to use for nextmatch export	addressbook	de	Export Profil der
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
+exported	addressbook	de	exportiert
 exports contacts from your addressbook into a csv file.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
@@ -297,7 +298,7 @@ no fallback	addressbook	de	Keine Ausweichlösung
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
-open email addresses in external mail program	addressbook	de	Öffne EMail Adressen in externem Mail Programm
+open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail Programm
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen
@@ -371,7 +372,7 @@ start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
-subject for email	addressbook	de	Betreff der Email
+subject for email	addressbook	de	Betreff der E-mail
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
 tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiktetten zu markieren
