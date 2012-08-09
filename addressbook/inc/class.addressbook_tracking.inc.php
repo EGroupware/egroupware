@@ -216,24 +216,9 @@ class addressbook_tracking extends bo_tracking
 					break;
 			}
 		}
-		if ($this->contacts->customfields)
-		{
-			foreach($this->contacts->customfields as $name => $custom)
-			{
-				if (!$header_done)
-				{
-					$details['custom'] = array(
-						'value' => lang('Custom fields').':',
-						'type'  => 'reply',
-					);
-					$header_done = true;
-				}
-				$details['#'.$name] = array(
-					'label' => $custom['label'],
-					'value' => $custom['type'] == 'select' ? $custom['values'][$data['#'.$name]] : $data['#'.$name],
-				);
-			}
-		}
+		// add custom fields for given type
+		$details += $this->get_customfields($data, $data['tid']);
+
 		return $details;
 	}
 }
