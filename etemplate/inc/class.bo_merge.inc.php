@@ -245,42 +245,11 @@ abstract class bo_merge
 			}
 			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
-		// set custom fields
+		// set custom fields, should probably go to a general method all apps can use
 		foreach($this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
-			$value = (string)$contact[$name];
-			switch($field['type'])
-			{
-				case 'select-account':
-					if ($value) $value = common::grab_owner_name($value);
-					break;
-
-				case 'select':
-					if (count($field['values']) == 1 && isset($field['values']['@']))
-					{
-						$field['values'] = customfields_widget::_get_options_from_file($field['values']['@']);
-					}
-					$values = array();
-					foreach($field['rows'] > 1 ? explode(',',$value) : (array) $value as $value)
-					{
-						$values[] = $field['values'][$value];
-					}
-					$value = implode(', ',$values);
-					break;
-
-				case 'date':
-				case 'date-time':
-					if ($value)
-					{
-						$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
-						$date = array_combine(preg_split('/[\\/. :-]/',$format),preg_split('/[\\/. :-]/',$value));
-						$value = common::dateformatorder($date['Y'],$date['m'],$date['d'],true);
-						if (isset($date['H'])) $value .= ' '.common::formattime($date['H'],$date['i']);
-					}
-					break;
-			}
-			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
+			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = customfields_widget::format_customfield($field, (string)$contact[$name]);
 		}
 
 		// Add in extra cat field
@@ -1578,7 +1547,7 @@ abstract class bo_merge
 				),true);
 			}
 		}
-		
+
 		$dircount = array();
 		foreach($files as $key => $file)
 		{
@@ -1635,7 +1604,7 @@ abstract class bo_merge
 								if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $current_level[$prefix.$file['name']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
 							}
 							break;
-						
+
 						default:
 							if(!is_array($current_level[$prefix.$name_arr[$count]]))
 							{
@@ -1687,7 +1656,7 @@ abstract class bo_merge
 				}
 			}
 		}
-		
+
 		return array(
 			'icon' => 'etemplate/merge',
 			'caption' => $caption,

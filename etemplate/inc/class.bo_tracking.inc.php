@@ -1,12 +1,12 @@
 <?php
 /**
- * eGroupWare - abstract base class for tracking (history log, notifications, ...)
+ * EGroupware - abstract base class for tracking (history log, notifications, ...)
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -210,6 +210,8 @@ abstract class bo_tracking
 	/**
 	 * Get the details of an entry
 	 *
+	 * You can/should call $this->get_customfields() to add custom fields.
+	 *
 	 * @param array|object $data
 	 * @param int|string $receiver nummeric account_id or email address
 	 * @return array of details as array with values for keys 'label','value','type'
@@ -217,6 +219,43 @@ abstract class bo_tracking
 	function get_details($data,$receiver=null)
 	{
 		return array();
+	}
+
+	/**
+	 * Get custom fields of an entry of an entry
+	 *
+	 * @param array|object $data
+	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
+	 * @return array of details as array with values for keys 'label','value','type'
+	 */
+	function get_customfields($data, $only_type2=null)
+	{
+		$details = array();
+
+		if (($cfs = config::get_customfields($this->app, $all_private_too=false, $only_type2)))
+		{
+			$header_done = false;
+			foreach($cfs as $name => $field)
+			{
+				if (in_array($field['type'], customfields_widget::$non_printable_fields)) continue;
+
+				if (!$header_done)
+				{
+					$details['custom'] = array(
+						'value' => lang('Custom fields').':',
+						'type'  => 'reply',
+					);
+					$header_done = true;
+				}
+				//error_log(__METHOD__."() $name: data['#$name']=".array2string($data['#'.$name]).", field[values]=".array2string($field['values']));
+				$details['#'.$name] = array(
+					'label' => $field['label'],
+					'value' => customfields_widget::format_customfield($field, $data['#'.$name]),
+				);
+				//error_log("--> details['#$name']=".array2string($details['#'.$name]));
+			}
+		}
+		return $details;
 	}
 
 	/**

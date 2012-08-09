@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare eTemplate Widget for custom fields
+ * EGroupware eTemplate Widget for custom fields
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -514,7 +514,7 @@ class customfields_widget
 	 * @param string $file file name inside the eGW server root, either relative to it or absolute
 	 * @return array in case of an error we return a single option with the message
 	 */
-	function _get_options_from_file($file)
+	public static function _get_options_from_file($file)
 	{
 		if (!($path = realpath($file{0} == '/' ? $file : EGW_SERVER_ROOT.'/'.$file)) ||	// file does not exist
 			substr($path,0,strlen(EGW_SERVER_ROOT)+1) != EGW_SERVER_ROOT.'/' ||	// we are NOT inside the eGW root
@@ -592,5 +592,90 @@ class customfields_widget
 				egw_link::link($own_app,$values[$id_name],$app,$id);
 			}
 		}
+	}
+
+	/**
+	 * Non printable custom fields eg. UI elements
+	 *
+	 * @var array
+	 */
+	public static $non_printable_fields = array('button');
+
+	/**
+	 * Format a single custom field value as string
+	 *
+	 * @param array $field field defintion incl. type
+	 * @param string $value field value
+	 * @return string formatted value
+	 */
+	public static function format_customfield(array $field, $value)
+	{
+		switch($field['type'])
+		{
+			case 'select-account':
+				if ($value)
+				{
+					$values = array();
+					foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+					{
+						$values[] = common::grab_owner_name($value);
+					}
+					$value = implode(', ',$values);
+				}
+				break;
+
+			case 'checkbox':
+				$value = $value ? 'X' : '';
+				break;
+
+			case 'select':
+			case 'radio':
+				if (count($field['values']) == 1 && isset($field['values']['@']))
+				{
+					$field['values'] = customfields_widget::_get_options_from_file($field['values']['@']);
+				}
+				$values = array();
+				foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+				{
+					$values[] = isset($field['values'][$value]) ? $field['values'][$value] : '#'.$value;
+				}
+				$value = implode(', ', $values);
+				break;
+
+			case 'date':
+			case 'date-time':
+				if ($value)
+				{
+					$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
+					$date = array_combine(preg_split('/[\\/. :-]/',$format), preg_split('/[\\/. :-]/',$value));
+					$value = common::dateformatorder($date['Y'], $date['m'], $date['d'],true);
+					if (isset($date['H'])) $value .= ' '.common::formattime($date['H'], $date['i']);
+				}
+				break;
+
+			case 'htmlarea':	// ToDo: EMail probably has a nicer html2text method
+				if ($value) $value = strip_tags(preg_replace('/<(br|p)[^>]*>/i', "\r\n", str_replace(array("\r", "\n"), '', $value)));
+				break;
+
+			case 'ajax_select':	// ToDo: returns unchanged value for now
+				break;
+
+			default:
+				// handling for several link types
+				if ($value && in_array($field['type'], self::get_customfield_link_types()))
+				{
+					if ($field['type'] == 'link-entry' || strpos($value, ':') !== false)
+					{
+						list($app, $value) = explode(':', $value);
+					}
+					else
+					{
+						$app = $field['type'];
+					}
+					if ($value) $value = egw_link::title($app, $value);
+				}
+				break;
+		}
+		return $value;
 	}
 }
