@@ -149,12 +149,12 @@ class uiaccountsel
 				}
 				else
 				{
-					$memberships = $this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+					$memberships = (array)$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 				}
 				$select = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
 				foreach($memberships as $gid)
 				{
-					foreach($this->accounts->members($gid,true) as $member)
+					foreach((array)$this->accounts->members($gid,true) as $member)
 					{
 						if (!in_array($member,$select)) $select[] = $member;
 					}
@@ -163,7 +163,7 @@ class uiaccountsel
 				{
 					if ($account_sel == 'primary_group')
 					{
-						$memberships = $this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+						$memberships = (array)$this->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 					}
 					$select = array_merge($select,$memberships);
 				}
@@ -177,6 +177,7 @@ class uiaccountsel
 						'type' => $use,
 						'app' => $app,
 					));
+					//error_log(__METHOD__."() account_selection='$this->account_selection', accounts->search(array('type'=>'$use', 'app' => '$app')) returns ".array2string($select));
 				}
 				// make sure everything in $selected is also in $select, as in the other account-selection methods
 				if ($selected && ($missing = array_diff_key($selected,$select)))
@@ -264,6 +265,7 @@ class uiaccountsel
 			$select2 += $select;
 			$select =& $select2; unset($select2);
 		}
+		//error_log(__METHOD__."(..., use='$use', ...) account_selection='$this->account_selection', select=".array2string($select));
 
 		if ($nohtml)
 		{

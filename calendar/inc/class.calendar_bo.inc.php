@@ -1144,7 +1144,7 @@ class calendar_bo
 			{
 				foreach($event['participants'] as $uid => $accept)
 				{
-					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+					if ($uid == $user || $uid < 0 && in_array($user, (array)$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite FREEBUSY, READ and PRIVAT grant
 						$grant |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
