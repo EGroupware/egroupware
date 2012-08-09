@@ -241,7 +241,7 @@ class calendar_boupdate extends calendar_bo
 
 				if ($uid < 0)	// group, check it's members too
 				{
-					$users += $GLOBALS['egw']->accounts->members($uid,true);
+					$users += (array)$GLOBALS['egw']->accounts->members($uid,true);
 					$users = array_unique($users);
 				}
 				$users[] = $uid;
