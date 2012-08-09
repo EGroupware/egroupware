@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006/7 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -25,29 +25,13 @@ elseif ($_SERVER['argc'] > 1)
 }
 else
 {
-	$action = '--help';
+	usage();
 }
 
-// this is kind of a hack, as the autocreate_session_callback can not change the type of the loaded account-class
-// so we need to make sure the right one is loaded by setting the domain before the header gets included.
+// allow to specify instance by using a username with appended @domain-name
 $arg0s = explode(',',@array_shift($arguments));
-@list(,$_REQUEST['domain']) = explode('@',$arg0s[0]);
-
-if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
-{
-	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
-}
-
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'admin',
-		'noheader' => true,
-		'autocreate_session_callback' => 'user_pass_from_argv',
-		'no_exception_handler' => 'cli',
-	)
-);
-
-include('../header.inc.php');
+@list($user,$domain) = explode('@',$arg0s[0]);
+load_egw($user,$arg0s[1],$domain);
 
 switch($action)
 {
@@ -205,6 +189,78 @@ function user_pass_from_argv(&$account)
 }
 
 /**
+ * Start the eGW session, exits on wrong credintials
+ *
+ * @param string $user
+ * @param string $passwd
+ * @param string $domain
+ */
+function load_egw($user,$passwd,$domain='default')
+{
+	//echo "load_egw($user,$passwd,$domain)\n";
+	$_REQUEST['domain'] = $domain;
+	$GLOBALS['egw_login_data'] = array(
+		'login'  => $user,
+		'passwd' => $passwd,
+		'passwd_type' => 'text',
+	);
+
+	if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
+	{
+		ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+	}
+
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'admin',
+			'noheader' => true,
+			'autocreate_session_callback' => 'user_pass_from_argv',
+			'no_exception_handler' => 'cli',
+		)
+	);
+
+	if (substr($user,0,5) != 'root_')
+	{
+		include('../header.inc.php');
+	}
+	else
+	{
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+		include('../header.inc.php');
+
+		if ($user == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
+			_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$passwd) ||
+			$user == 'root_'.$GLOBALS['egw_domain'][$_GET['domain']]['config_user'] &&
+			_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$passwd))
+		{
+			echo "\nRoot access granted!\n";
+			egw_vfs::$is_root = true;
+		}
+		else
+		{
+			die("Unknown user or password!\n");
+		}
+	}
+}
+
+/**
+ * Check password against a md5 hash or cleartext password
+ *
+ * @param string $hash_or_cleartext
+ * @param string $pw
+ * @return boolean
+ */
+function _check_pw($hash_or_cleartext,$pw)
+{
+	//echo "_check_pw($hash_or_cleartext,$pw) md5=".md5($pw)."\n";
+	if (preg_match('/^[0-9a-f]{32}$/',$hash_or_cleartext))
+	{
+		return $hash_or_cleartext == md5($pw);
+	}
+	return $hash_or_cleartext == $pw;
+}
+
+/**
  * Give a usage message and exit
  *
  * @param string $action=null
@@ -214,6 +270,8 @@ function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
 	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks]\n\n";
+
+	echo "\tAlternativly you can also use a setup user and password by prefixing it with 'root_', eg. 'root_admin' for setup user 'admin'.\n\n";
 
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]\n";
 	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships! homedirectory+loginshell are supported only for LDAP and must start with a slash!\n";
@@ -232,6 +290,8 @@ function usage($action=null,$ret=0)
 	echo "	Changes one or more account_id's in the database (make a backup before!).\n";
 	echo "--check-acl admin-account[@domain],admin-password\n";
 	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before! --> setup-cli.php).\n";
+	echo "--admin-cmd-check-cats admin-account[@domain],admin-password\n";
+	echo "	Deletes categories of not longer existing accounts.\n";
 	echo "--exit-codes admin-account[@domain],admin-password\n";
 	echo "	List all exit codes of the command line interface\n";
 
