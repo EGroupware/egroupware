@@ -69,6 +69,7 @@ cells	etemplate	de	Zellen
 cellspacing for the table-tag	etemplate	de	Zellenabstand (cellspacing) der Tabelle
 center	etemplate	de	Zentriert
 changed	etemplate	de	Geändert
+check all	etemplate	de	Alle auswählen
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
 check if field has to be filled by user	etemplate	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
 checkbox	etemplate	de	Checkbox
@@ -215,6 +216,8 @@ hours	etemplate	de	Stunden
 how many entries should the list show	etemplate	de	Wieviele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 image	etemplate	de	Grafik
 import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei
@@ -414,6 +417,7 @@ tree	etemplate	de	Baum
 type	etemplate	de	Typ
 type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
+uncheck all	etemplate	de	Alle abwählen
 unique	etemplate	de	Unique
 unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
@@ -449,5 +453,3 @@ you are not allowed to export more than %1 entries!	common	de	Sie sind nicht ber
 you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:
 you need to select a file first!	etemplate	de	Sie müssen zuerst eine Datei auswählen!
 your code is incorrect !!!	etemplate	de	Ihr Code ist nicht richtig!!!
-check all	etemplate	de	Alle auswählen
-uncheck all	etemplate	de	Alle abwählen
