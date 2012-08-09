@@ -150,7 +150,7 @@ class acl
 		}
 		else
 		{
-			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id, true);
+			$acl_acc_list = (array)$GLOBALS['egw']->accounts->memberships($this->account_id, true);
 			if (is_array($no_groups)) $acl_acc_list = array_diff($acl_acc_list,$no_groups);
 			array_unshift($acl_acc_list,$this->account_id);
 		}
