@@ -60,7 +60,7 @@ define('WEEK_s',7*DAY_s);
  * 	- egw_cal_repeats: recur-data: type, optional enddate, etc.
  *  - egw_cal_extra: custom fields (multiple entries per cal_id possible)
  *
- * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
+ * The new UI, BO and SO classes have a strict definition, in which timezone they operate:
  *  UI only operates in user-time, so there have to be no conversation at all !!!
  *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
  *  SO operates only on server-time
@@ -178,9 +178,8 @@ class calendar_so
 			",$this->dates_table LEFT JOIN $this->repeats_table ON $this->dates_table.cal_id=$this->repeats_table.cal_id".
 			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id") as $row)
 		{
-			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 			if (!$row['recur_type']) $row['recur_type'] = MCAL_RECUR_NONE;
-			$row['alarm'] = array();
+			$row['recur_exception'] = $row['alarm'] = array();
 			$events[$row['cal_id']] = egw_db::strip_array_keys($row,'cal_');
 
 			// if a uid was supplied, convert it for the further code to an id
@@ -193,28 +192,21 @@ class calendar_so
 			if (!isset($event['uid']) || strlen($event['uid']) < $minimum_uid_length)
 			{
 				// event (without uid), not strong enough uid => create new uid
-				$event['uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
+				$event['uid'] = common::generate_uid('calendar',$event['id']);
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
 			}
-			if ((int) $recur_date == 0 &&
-				$event['recur_type'] != MCAL_RECUR_NONE &&
-				!empty($event['recur_exception']))
+			if (!(int)$recur_date && $event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				sort($event['recur_exception']);
-				if ($event['recur_exception'][0] < $event['start'])
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
+					'cal_id' => $ids,
+					'recur_exception' => true,
+				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
-					/* Do NOT move start- and end-date, to the earliest exception, as they will NOT be found in CalDAV or ActiveSync, because
-					 * we only recognice recuring events which start before or in the current timerange and end in or after it or have no end-date.
-					 * --> give an error message, as it is a debuging/support nightmare, if this get's silently fixed when reading events.
-					 * No idea how this situation (exceptions before startdate) can be created anyway.
-					 *
-					 * $event['end'] -= $event['start'] - $event['recur_exception'][0];
-					 * $event['start'] = $event['recur_exception'][0];
-					 */
-					error_log(__METHOD__."() recuring event #$event[id]: $event[title] has exceptions before it's startdate ".date('Y-m-d H:i:s',$event['start']));
+					$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
 				}
-			}//*/
+				break;	// as above select read all exceptions (and I dont think too short uid problem still exists)
+			}
 		}
 
 		// check if we have a real recurance, if not set $recur_date=0
@@ -424,7 +416,7 @@ class calendar_so
 
 		$cols = self::get_columns('calendar', $this->cal_table);
 		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
-		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
+		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 
 		$where = array();
 		if (is_array($params['query']))
@@ -639,7 +631,7 @@ class calendar_so
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
 					if (!$params['enum_recuring'])
 					{
 						$selects[$key]['cols'] = str_replace('cal_start','MIN(cal_start) AS cal_start',$selects[$key]['cols']);
@@ -698,8 +690,7 @@ class calendar_so
 			{
 				$row['participants'] = array();
 			}
-			$row['alarm'] = array();
-			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
+			$row['recur_exception'] = $row['alarm'] = array();
 
 			// compile a list of recurrences per cal_id
 			if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
@@ -753,6 +744,20 @@ class calendar_so
 				elseif (isset($events[$id]) && ($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$id]['max_user_modified'])
 				{
 					$events[$id]['max_user_modified'] = $modified;
+				}
+			}
+			// query recurrance exceptions, if needed
+			if (!$params['enum_recuring'])
+			{
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
+					'cal_id' => $ids,
+					'recur_exception' => true,
+				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
+				{
+					foreach((array)$recur_ids[$row['cal_id']] as $i)
+					{
+						$events[$i]['recurce_id'][] = $row['cal_start'];
+					}
 				}
 			}
 			// max_user_modified for recurring events has to include all recurrences, above code only querys $recur_date!
@@ -1070,7 +1075,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// event without uid or not strong enough uid
 		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length)
 		{
-			$update['cal_uid'] = $event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
+			$update['cal_uid'] = $event['cal_uid'] = common::generate_uid('calendar',$cal_id);
 		}
 		// set caldav_name, if not given by caller
 		if (empty($event['caldav_name']) && version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
@@ -1103,11 +1108,13 @@ ORDER BY cal_user_type, cal_usre_id
 			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 			$old_duration = (int) $this->db->select($this->dates_table,'MIN(cal_end)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn() - $old_min;
 			$old_repeats = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
-			$old_exceptions = $old_repeats['recur_exception'] ? explode(',',$old_repeats['recur_exception']) : array();
-			if (!empty($old_exceptions))
+			$old_exceptions = array();
+			foreach($this->db->select($this->dates_table, 'cal_start', array(
+				'cal_id' => $cal_id,
+				'recur_exception' => true
+			), __LINE__, __FILE__, false, 'ORDER BY cal_start', 'calendar') as $row)
 			{
-				sort($old_exceptions);
-				if ($old_min > $old_exceptions[0]) $old_min = $old_exceptions[0];
+				$old_exceptions[] = $row['cal_start'];
 			}
 
 			$event['recur_exception'] = is_array($event['recur_exception']) ? $event['recur_exception'] : array();
@@ -1116,8 +1123,10 @@ ORDER BY cal_user_type, cal_usre_id
 				sort($event['recur_exception']);
 			}
 
-			$where = array('cal_id' => $cal_id,
-							'cal_recur_date' => 0);
+			$where = array(
+				'cal_id' => $cal_id,
+				'cal_recur_date' => 0,
+			);
 			$old_participants = array();
 			foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_status,cal_quantity,cal_role', $where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
@@ -1197,14 +1206,18 @@ ORDER BY cal_user_type, cal_usre_id
 				// truncate recurrences by given exceptions
 				if (count($event['recur_exception']))
 				{
-					// added and existing exceptions: delete the execeptions from the user and dates table, it could be the first time
+					// added and existing exceptions: delete the execeptions from the user table, it could be the first time
 					$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
-					$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
+					// update recur_exception flag based on current exceptions
+					$this->db->update($this->dates_table, 'recur_exception='.$this->db->expression($this->dates_table,array(
+						'cal_start' => $event['recur_exception'],
+					)), array(
+						'cal_id' => $cal_id,
+					), __LINE__, __FILE__, 'calendar');
 				}
 			}
 
 			// write the repeats table
-			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
 			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
 			$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}

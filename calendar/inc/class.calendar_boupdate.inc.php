@@ -1404,6 +1404,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function delete($cal_id,$recur_date=0,$ignore_acl=false,$skip_notification=false)
 	{
+		//error_log(__METHOD__."(cal_id=$cal_id, recur_date=$recur_date, ignore_acl=$ignore_acl, skip_notifications=$skip_notification)");
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
 		{
@@ -1446,7 +1447,10 @@ class calendar_boupdate extends calendar_bo
 		}
 		else	// delete an exception
 		{
-			$event['recur_exception'][] = $recur_date = $this->date2ts($event['start']);
+			// need to read series master, as otherwise existing exceptions will be lost!
+			$recur_date = $this->date2ts($event['start']);
+			$event = $this->read($cal_id);
+			$event['recur_exception'][] = $recur_date;
 			unset($event['start']);
 			unset($event['end']);
 			$this->save($event);	// updates the content-history

@@ -2076,3 +2076,54 @@ function calendar_upgrade1_9_003()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.004';
 }
+
+/**
+ * Store exceptions as flag in egw_cal_dates.recur_exception, instead of egw_cal_repleats.recur_exception
+ *
+ * Keeps information of original start in egw_cal_dates (if first recurrance got deleted) and allows for unlimited number of exceptions.
+ */
+function calendar_upgrade1_9_004()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_dates','recur_exception',array(
+		'type' => 'bool',
+		'default' => '',
+		'null' => false,
+		'comment' => 'date is an exception'
+	));
+
+	// migrate existing exceptions to egw_cal_dates
+	foreach($GLOBALS['egw_setup']->db->select('egw_cal_repeats',
+		'egw_cal_repeats.cal_id AS cal_id,egw_cal_repeats.recur_exception AS recur_exception,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end',
+		'egw_cal_repeats.recur_exception IS NOT NULL', __LINE__, __FILE__, false,
+		'GROUP BY egw_cal_repeats.cal_id,egw_cal_repeats.recur_exception', 'calendar', '',
+		'JOIN egw_cal_dates ON egw_cal_repeats.cal_id=egw_cal_dates.cal_id') as $row)
+	{
+		foreach($row['recur_exception'] ? explode(',', $row['recur_exception']) : array() as $recur_exception)
+		{
+			$GLOBALS['egw_setup']->db->insert('egw_cal_dates', array(
+				'cal_id' => $row['cal_id'],
+				'cal_start' => $recur_exception,
+				'cal_end' => $recur_exception+$row['cal_end']-$row['cal_start'],
+				'recur_exception' => true,
+			), false, __LINE__, __FILE__, 'calendar');
+		}
+	}
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_dates', array('recur_exception', 'cal_id'));
+
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal_repeats', array(
+		'fd' => array(
+			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'recur_type' => array('type' => 'int','precision' => '2','nullable' => False),
+			'recur_enddate' => array('type' => 'int','precision' => '8'),
+			'recur_interval' => array('type' => 'int','precision' => '2','default' => '1'),
+			'recur_data' => array('type' => 'int','precision' => '2','default' => '1'),
+		),
+		'pk' => array('cal_id'),
+		'fk' => array(),
+		'ix' => array(),
+		'uc' => array()
+	), 'recur_exception');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.005';
+}
+

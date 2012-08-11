@@ -62,7 +62,6 @@ $phpgw_baseline = array(
 			'recur_enddate' => array('type' => 'int','precision' => '8'),
 			'recur_interval' => array('type' => 'int','precision' => '2','default' => '1'),
 			'recur_data' => array('type' => 'int','precision' => '2','default' => '1'),
-			'recur_exception' => array('type' => 'text','comment' => 'comma-separated start timestamps of exceptions')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
@@ -100,11 +99,12 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'cal_start' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'starttime in server time'),
-			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'endtime in server time')
+			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'endtime in server time'),
+			'recur_exception' => array('type' => 'bool','nullable' => False,'default' => '','comment' => 'date is an exception')
 		),
 		'pk' => array('cal_id','cal_start'),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array(array('recur_exception','cal_id')),
 		'uc' => array()
 	),
 	'egw_cal_timezones' => array(
