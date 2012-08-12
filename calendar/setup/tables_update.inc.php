@@ -2127,3 +2127,32 @@ function calendar_upgrade1_9_004()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.005';
 }
 
+/**
+ * Try alter description to varchar(16384), to not force temp. tables to disk on MySQL (because of text columns)
+ */
+function calendar_upgrade1_9_005()
+{
+	// only alter description to varchar(16384), if it does NOT contain longer input and it can be stored as varchar
+	$max_description_length = $GLOBALS['egw']->db->query('SELECT MAX(CHAR_LENGTH(cal_description)) FROM egw_cal')->fetchColumn();
+	if (is_numeric($max_description_length) && $max_description_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_description',array(
+			'type' => 'varchar',
+			'precision' => '16384'
+		));
+	}
+	// allow more categories
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_category',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'comment' => 'category id(s)'
+	));
+	// remove silly default of 1
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_title',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'nullable' => False
+	));
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.006';
+}
+
