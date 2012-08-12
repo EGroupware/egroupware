@@ -127,6 +127,14 @@ class schema_proc
 			case 'maxdb':
 				$this->max_varchar_length = 8000;
 				break;
+			case 'mysql':
+				// since MySQL 5.0 65535, but with utf8 and row-size-limit of 64k:
+				// it's effective 65535/3 - size of other columns, so we use 20000 (mysql silently convert to text anyway)
+				if ((float)$this->m_odb->ServerInfo['version'] >= 5.0)
+				{
+					$this->max_varchar_length = 20000;
+				}
+				break;
 		}
 		if (is_object($GLOBALS['egw_setup']))
 		{
@@ -1155,7 +1163,7 @@ class schema_proc
 	function GetTableDefinition($sTableName)
 	{
 		// MetaType returns all varchar >= blobSize as blob, it's by default 100, which is wrong
-		if ($this->dict->blobSize < 255) $this->dict->blobSize = 255;
+		$this->dict->blobSize = $this->max_varchar_length;
 
 		if (!method_exists($this->dict,'MetaColumns') ||
 			!($columns = $this->dict->MetaColumns($sTableName)))
@@ -1265,6 +1273,14 @@ class schema_proc
 							$definition['fd'][$name]['default'] = $matches[1];
 							$column->has_default = False;
 						}
+					}
+					// fix MySQL stores bool columns as smallint
+					if ($this->sType == 'mysql' && $definition['fd'][$name]['precision'] == 1 &&
+						$this->m_odb->get_column_attribute($name, $sTableName, true, 'type') === 'bool')
+					{
+						$definition['fd'][$name]['type'] = 'bool';
+						unset($definition['fd'][$name]['precision']);
+						$column->default_value = (bool)$column->default_value;
 					}
 					break;
 			}
