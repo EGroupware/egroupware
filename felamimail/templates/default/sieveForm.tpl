@@ -331,7 +331,7 @@ function submitIt()
 <form ACTION="{email_notification_action_url}" METHOD="post" NAME="editVacation">
 <table WIDTH="100%" CELLPADDING="2" CELLSPACING="1" style="border: 1px solid silver;">
   <tr CLASS="th">
-    <td colspan="2">email notification settings</td>
+    <td colspan="2">{lang_email_notification_settings}</td>
   </tr>
   <tr CLASS="row_on">
     <td>Status:</td>

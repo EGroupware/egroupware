@@ -169,6 +169,8 @@ edit vacation settings	felamimail	de	Abwesenheitsnotiz bearbeiten
 editor type	felamimail	de	Editortyp
 email address	felamimail	de	E-Mail-Adresse
 email forwarding address	felamimail	de	Zieladresse
+email notification	felamimail	de	eMail Benachrichtigung
+email notification settings	felamimail	de	Einstellungen: eMail Benachrichtigung
 email notification update failed	felamimail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
 email signature	felamimail	de	E-Mail-Signatur
 emailaddress	felamimail	de	E-Mail-Adresse

@@ -4604,6 +4604,8 @@ class felamimail_bo
 						$newBody = $matches[2];
 					}
 					$htmLawed = new egw_htmLawed();
+					// the next line should not be needed
+					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
 					$newBody = $htmLawed->egw_htmLawed($newBody);
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 				}
