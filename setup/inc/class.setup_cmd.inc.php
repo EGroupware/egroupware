@@ -90,7 +90,7 @@ abstract class setup_cmd extends admin_cmd
 	 */
 	function save($set_modifier=true)
 	{
-		if (is_object($GLOBALS['egw']->db))
+		if (isset($GLOBALS['egw']->db) && is_object($GLOBALS['egw']->db) && $GLOBALS['egw']->db->Database)
 		{
 			return parent::save($set_modifier);
 		}
