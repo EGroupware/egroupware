@@ -2134,7 +2134,8 @@ function calendar_upgrade1_9_005()
 {
 	// only alter description to varchar(16384), if it does NOT contain longer input and it can be stored as varchar
 	$max_description_length = $GLOBALS['egw']->db->query('SELECT MAX(CHAR_LENGTH(cal_description)) FROM egw_cal')->fetchColumn();
-	if (is_numeric($max_description_length) && $max_description_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
+	// returns NULL, if there are no rows!
+	if ((int)$max_description_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
 	{
 		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_description',array(
 			'type' => 'varchar',
