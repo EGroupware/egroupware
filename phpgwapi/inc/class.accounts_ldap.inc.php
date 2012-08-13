@@ -285,7 +285,7 @@ class accounts_ldap
 
 						if (!$members) $members = $this->members($data['account_id']);
 						$to_write[$forward] = array();
-						foreach ($members as $member)
+						foreach ($members as $member => $account_lid)
 						{
 							if (($email = $this->id2name($member,'account_email')))
 							{
