@@ -209,39 +209,29 @@ class groupdav extends HTTP_WebDAV_Server
 		set_exception_handler(array(__CLASS__,'exception_handler'));
 
 		// crrnd: client refuses redundand namespace declarations
-		// cnrnd: client needs redundand namespace declarations
 		// setting redundand namespaces as the default for (Cal|Card|Group)DAV, as the majority of the clients either require or can live with it
-		$this->cnrnd = true;
+		$this->crrnd = false;
 
 		// identify clients, which do NOT support path AND full url in <D:href> of PROPFIND request
 		switch(($agent = groupdav_handler::get_agent()))
 		{
-			case 'akonadi':
-				$this->cnrnd = true; // Akonadi seems to require redundant namespaces, see KDE bug #265096 https://bugs.kde.org/show_bug.cgi?id=265096
-				break;
 			case 'kde':	// KAddressbook (at least in 3.5 can NOT subscribe / does NOT find addressbook)
 				$this->client_require_href_as_url = true;
-				$this->cnrnd = false;	// KDE before Akonadi seems NOT to work with cnrnd (redundant namespaces)
 				break;
 			case 'cfnetwork':	// Apple addressbook app
 			case 'dataaccess':	// iPhone addressbook
 				$this->client_require_href_as_url = false;
-				$this->cnrnd = true;
 				break;
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
 			case 'coredav':	// iCal app in OS X 10.7
 			case 'calendarstore':	// Apple iCal 5.0.1 under OS X 10.7.2
 				$this->client_require_href_as_url = false;
-				$this->cnrnd = true;
 				break;
 			case 'cfnetwork_old':
 				$this->crrnd = true; // Older Apple Addressbook.app does not cope with namespace redundancy
 				break;
-			case 'neon':
-				$this->cnrnd = true; // neon clients like cadaver
-				break;
 		}
-		if ($this->debug) error_log(__METHOD__."() HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]' --> '$agent' --> client_requires_href_as_url=$this->client_require_href_as_url, crrnd(client refuses redundand namespace declarations)=$this->crrnd, cnrnd(client needs redundand namespace declarations)=$this->cnrnd");
+		if ($this->debug) error_log(__METHOD__."() HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]' --> '$agent' --> client_requires_href_as_url=$this->client_require_href_as_url, crrnd(client refuses redundand namespace declarations)=$this->crrnd");
 
 		// adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],

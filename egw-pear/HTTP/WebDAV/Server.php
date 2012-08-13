@@ -74,15 +74,39 @@ class HTTP_WebDAV_Server
     var $client_require_href_as_url;
 
      /**
-     * Set if client requires does not allow namespace redundacy.
+     * Set if client requires or does not allow namespace redundacy.
      * The XML Namespace specification does allow both
      * But some clients can NOT deal with one or the other!
      *
+     * $this->crrnd === false:
+     * <D:multistatus xmlns:D="DAV:">
+     *  <D:response xmlns:ns0="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/">
+     *   <D:href>/egroupware/webdav.php/home/ralf/</D:href>
+     *    <D:propstat>
+     *     <D:prop>
+     *      <D:resourcetype><D:collection /></D:resourcetype>
+     *     </D:prop>
+     *    <D:status>HTTP/1.1 200 OK</D:status>
+     *   </D:propstat>
+     *  </D:response>
+     * </D:multistatus>
+     *
+     * $this->crrnd === true:
+     * <multistatus xmlns="DAV:">
+     *  <response xmlns:ns0="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/">
+     *   <href>/egroupware/webdav.php/home/ralf/</href>
+     *    <propstat>
+     *     <prop>
+     *      <resourcetype><collection /></resourcetype>
+     *     </prop>
+     *    <status>HTTP/1.1 200 OK</status>
+     *   </propstat>
+     *  </response>
+     * </multistatus>
+     *
      * @var boolean (client_refuses_redundand_namespace_declarations)
-     * @var boolean (client_needs_redundand_namespace_declarations)
      */
     var $crrnd = false;
-    var $cnrnd = false;
 
     /**
 
@@ -1033,13 +1057,13 @@ class HTTP_WebDAV_Server
 
                 if ($this->crrnd)
                 {
-	                echo "   </prop>\n";
+	                echo "    </prop>\n";
 	                echo "   <status>HTTP/1.1 200 OK</status>\n";
 	                echo "  </propstat>\n";
                 }
                 else
                 {
-	                echo "   </D:prop>\n";
+	                echo "    </D:prop>\n";
 	                echo "   <D:status>HTTP/1.1 200 OK</D:status>\n";
 	                echo "  </D:propstat>\n";
                 }
@@ -2672,9 +2696,9 @@ class HTTP_WebDAV_Server
 	    		$subprop = $prop['val'];
 		    	if (isset($subprop['ns']) || isset($subprop[0]['ns']))
 		    	{
-			    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
+			    	$ret .= '<'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : $ns_hash[$prop['ns']].':').$prop['name'].
 						(empty($prop['val']) ? '/>' : '>'.$this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash).
-						'</'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
+						'</'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
 		    	}
 		    	else // val contains only attributes, no value
 		    	{
@@ -2685,7 +2709,7 @@ class HTTP_WebDAV_Server
 				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
 					}
 
-		             $ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
+		             $ret .= '<'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : $ns_hash[$prop['ns']].':').$prop['name'].
 				    	$vals .'/>';
 		    	}
 	    	}
@@ -2710,12 +2734,13 @@ class HTTP_WebDAV_Server
 					}
 		    	}
 
-		    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
-			    	(empty($prop['val']) ? ' />' : '>'.$val.'</'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
+		    	$ret .= '<'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : $ns_hash[$prop['ns']].':').$prop['name'].
+			    	(empty($prop['val']) ? ' />' : '>'.$val.'</'.
+			    	($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
 	    	}
 		}
 
-    	//error_log(__METHOD__.'('.array2string($props).') = '.array2string($ret));
+    	//error_log(__METHOD__.'('.array2string($props).") crrnd=$this->crrnd returning ".array2string($ret));
     	return $ret;
     }
 
