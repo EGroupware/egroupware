@@ -15,12 +15,12 @@ $phpgw_baseline = array(
 			'cal_id' => array('type' => 'auto','nullable' => False),
 			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
 			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
-			'cal_category' => array('type' => 'varchar','precision' => '30','comment' => 'category id'),
+			'cal_category' => array('type' => 'varchar','precision' => '64','comment' => 'category id(s)'),
 			'cal_modified' => array('type' => 'int','precision' => '8','comment' => 'ts of last modification'),
 			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
 			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
-			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
-			'cal_description' => array('type' => 'text'),
+			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'cal_description' => array('type' => 'varchar','precision' => '16384'),
 			'cal_location' => array('type' => 'varchar','precision' => '255'),
 			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'cal_id of series for exception'),
 			'cal_modifier' => array('type' => 'int','precision' => '4','comment' => 'user who last modified event'),
@@ -61,8 +61,7 @@ $phpgw_baseline = array(
 			'recur_type' => array('type' => 'int','precision' => '2','nullable' => False),
 			'recur_enddate' => array('type' => 'int','precision' => '8'),
 			'recur_interval' => array('type' => 'int','precision' => '2','default' => '1'),
-			'recur_data' => array('type' => 'int','precision' => '2','default' => '1'),
-			'recur_exception' => array('type' => 'text','comment' => 'comma-separated start timestamps of exceptions')
+			'recur_data' => array('type' => 'int','precision' => '2','default' => '1')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
@@ -100,11 +99,12 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'cal_start' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'starttime in server time'),
-			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'endtime in server time')
+			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'endtime in server time'),
+			'recur_exception' => array('type' => 'bool','nullable' => False,'default' => '','comment' => 'date is an exception')
 		),
 		'pk' => array('cal_id','cal_start'),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array(array('recur_exception','cal_id')),
 		'uc' => array()
 	),
 	'egw_cal_timezones' => array(
