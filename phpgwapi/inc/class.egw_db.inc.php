@@ -1463,7 +1463,9 @@ class egw_db
 		{
 			$value = implode($glue,$value);
 		}
-		if (!is_null($length) && strlen($value) > $length)
+		// only truncate string if length given and <= 255
+		// to not unnecessary truncate varchar(>255) as PostgreSQL uses text anyway and MySQL truncates itself silently (unless strict mode!)
+		if (!is_null($length) && $length <= 255 && strlen($value) > $length)
 		{
 			$value = substr($value,0,$length);
 		}
