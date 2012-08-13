@@ -591,12 +591,16 @@ class accounts
 	 *
 	 * Uses the read method to fetch all data.
 	 *
-	 * @param int $account_id numerica account_id
+	 * @param int|string $account_id numeric account_id or account_lid
 	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string|boolean converted value or false on error ($account_id not found)
 	 */
 	static function id2name($account_id, $which='account_lid')
 	{
+		if (!is_numeric($account_id) && !($account_id = self::getInstance()->name2id($account_id)))
+		{
+			return false;
+		}
 		try {
 			if (!($data = self::cache_read($account_id))) return false;
 		}
