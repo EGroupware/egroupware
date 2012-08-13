@@ -334,18 +334,18 @@ function submitIt()
     <td colspan="2">{lang_email_notification_settings}</td>
   </tr>
   <tr CLASS="row_on">
-    <td>Status:</td>
+    <td>{lang_status}:</td>
     <td>
       <input type="radio" name="emailNotificationStatus"{checked_active} value="active"> {lang_active}
       <input type="radio" name="emailNotificationStatus"{checked_disabled} value="disabled"> {lang_disabled}
     </td>
   </tr>
   <tr CLASS="row_off">
-    <td>External email:</td>
+    <td>{lang_external_email}:</td>
     <td nowrap="nowrap"><input type="text" size="35" name="emailNotificationExternalEmail" value="{external_email}" /></td>
   </tr>
   <tr CLASS="row_on">
-    <td>Display mail subject in notification:</td>
+    <td>{lang_display_mail_subject_in_notification}:</td>
     <td>
       <input type="radio" name="emailNotificationDisplaySubject"{checked_yes} value="1"> {lang_yes}
       <input type="radio" name="emailNotificationDisplaySubject"{checked_no} value="0"> {lang_no}

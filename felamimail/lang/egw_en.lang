@@ -120,6 +120,7 @@ disable	felamimail	en	Disable
 disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	en	Disable ruler for separation of mail body and signature when adding signature to composed message .<br>If templates are used, this option is only applied to the text part of the message.
 discard	felamimail	en	Discard
 discard message	felamimail	en	Discard message
+display mail subject in notification	felamimail	en	Display mail subject in notification
 display message in new window	felamimail	en	Display message in new window
 display messages in multiple windows	felamimail	en	Display messages in multiple windows
 display of html emails	felamimail	en	Display HTML emails
@@ -202,6 +203,7 @@ every	felamimail	en	Every
 every %1 days	felamimail	en	Every %1 days
 expunge	felamimail	en	Expunge
 extended	felamimail	en	Extended
+external email address	felamimail	en	External email address
 felamimail	common	en	eMail
 file into	felamimail	en	File into
 file rejected, no %2. is:%1	felamimail	en	File rejected, no %2. Is:%1

@@ -1089,6 +1089,9 @@
 			$this->t->set_var("lang_select_folder",lang('select folder'));
 			$this->t->set_var("lang_vacation_forwards",lang('Forward messages to').'<br />'.lang('(separate multiple addresses by comma)').":");
 			$this->t->set_var("lang_email_notification_settings",lang('email notification settings'));
+			$this->t->set_var("lang_external_email",lang('external email address'));
+			$this->t->set_var("lang_display_mail_subject_in_notification",lang('display mail subject in notification'));
+
 			$this->t->set_var("bg01",$GLOBALS['egw_info']["theme"]["bg01"]);
 			$this->t->set_var("bg02",$GLOBALS['egw_info']["theme"]["bg02"]);
 			$this->t->set_var("bg03",$GLOBALS['egw_info']["theme"]["bg03"]);

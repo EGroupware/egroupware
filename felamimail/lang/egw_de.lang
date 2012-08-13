@@ -120,6 +120,7 @@ disable	felamimail	de	Deaktivieren
 disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	de	Deaktiviere den automatisch hinzugefügten Trenner zwischen E-Mailkörper und Signatur (Achtung: Dies ist nicht RFC konform). <br>Wenn Sie Templates zur Formatierung Ihrer E-Mail benutzen, wird diese Option nur dann Auswirkungen haben, wenn Sie die Signatur am Anfang der E-Mail einfügen lassen.
 discard	felamimail	de	verwerfen
 discard message	felamimail	de	Nachricht verwerfen
+display mail subject in notification	felamimail	de	Anzeigen des Betreffs der eMail in der Benachrichtigung
 display message in new window	felamimail	de	Nachricht in neuem Fenster anzeigen
 display messages in multiple windows	felamimail	de	Nachrichten in mehreren Fenstern anzeigen
 display of html emails	felamimail	de	HTML-E-Mails anzeigen
@@ -202,6 +203,7 @@ every	felamimail	de	alle
 every %1 days	felamimail	de	alle %1 Tage
 expunge	felamimail	de	Endgültig löschen
 extended	felamimail	de	Erweitert
+external email address	felamimail	de	Externe eMail-Adresse
 felamimail	common	de	E-Mail
 file into	felamimail	de	verschiebe nach
 file rejected, no %2. is:%1	felamimail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
