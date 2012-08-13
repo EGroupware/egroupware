@@ -592,7 +592,12 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"]["BODY[$partId]"]["CONTENT"];
+        $found = 0;
+        foreach($ret["PARSED"] as $key => $value)
+        {
+            if (isset($ret["PARSED"][$key]["EXT"]["BODY[$partId]"]["CONTENT"])) {$found = $key; break;}
+        }
+        $ret=$ret["PARSED"][$found]["EXT"]["BODY[$partId]"]["CONTENT"];
         //$ret=$resp["PARSED"][0]["EXT"]["RFC822"]["CONTENT"];
         return $ret;
     }
@@ -1874,6 +1879,7 @@ class Net_IMAP extends Net_IMAPProtocol {
 		if (PEAR::isError($ret)) {
             return $ret;
         }
+
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
