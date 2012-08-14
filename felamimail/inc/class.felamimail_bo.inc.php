@@ -1144,8 +1144,11 @@ class felamimail_bo
 	{
 		static $structure;
 		$_folder = $this->sessionData['mailbox'];
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-		if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
+		if (isset($structure[$this->icServer->ImapServerId]) && !empty($structure[$this->icServer->ImapServerId]) &&
+			isset($structure[$this->icServer->ImapServerId][$_folder]) && !empty($structure[$this->icServer->ImapServerId][$_folder]) &&
+			isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) && !empty($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
 		{
 			if ($_ignoreCache===false)
 			{
