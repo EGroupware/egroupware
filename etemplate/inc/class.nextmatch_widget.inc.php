@@ -601,7 +601,7 @@ class nextmatch_widget
 	 *		},
 	 * ]
 	 *
-	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
+	 * @param array $actions id indexed array of actions / array with values for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name='' name of the template, used as default for app name of images
 	 * @param string $prefix='' prefix for ids
 	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
