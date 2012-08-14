@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-12 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -247,14 +247,17 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$old_params = egw_session::appsession('calendar_list','calendar');
-		if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
+		if (is_array($old_params))
 		{
-			$params['order'] = 'cal_start';
-			$params['sort'] = $params['filter'] == 'after' ? 'ASC' : 'DESC';
-		}
-		if ($old_params['search'] != $params['search'])
-		{
-			$this->adjust_for_search($params['search'],$params);
+			if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
+			{
+				$params['order'] = 'cal_start';
+				$params['sort'] = $params['filter'] == 'after' ? 'ASC' : 'DESC';
+			}
+			if ($old_params['search'] != $params['search'])
+			{
+				$this->adjust_for_search($params['search'],$params);
+			}
 		}
 		if (!$params['csv_export']) egw_session::appsession('calendar_list','calendar',$params);
 

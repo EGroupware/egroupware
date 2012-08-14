@@ -640,7 +640,7 @@ class calendar_boupdate extends calendar_bo
 		$version = $GLOBALS['egw_info']['apps']['calendar']['version'];
 
 		// ignore events in the past (give a tolerance of 10 seconds for the script)
-		if($old_event != False && $this->date2ts($old_event['start']) < ($this->now_su - 10))
+		if($old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10))
 		{
 			return False;
 		}
@@ -745,7 +745,7 @@ class calendar_boupdate extends calendar_bo
 		$startdate = new egw_time($event['start']);
 		$enddate = new egw_time($event['end']);
 		$modified = new egw_time($event['modified']);
-		if ($old_event != False) $olddate = new egw_time($old_event['start']);
+		if ($old_event) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
 		{
 			unset($res_info);
@@ -762,7 +762,7 @@ class calendar_boupdate extends calendar_bo
 					// check if event-owner wants non-EGroupware users notified
 					if (is_null($owner_prefs))
 					{
-						$preferences = new preferences($old_event['owner']);
+						$preferences = new preferences($owner);
 						$owner_prefs = $preferences->read_repository();
 					}
 					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
@@ -797,7 +797,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					if (is_null($owner_prefs))
 					{
-						$preferences = new preferences($old_event['owner']);
+						$preferences = new preferences($owner);
 						$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
 					}
 					$part_prefs = $owner_prefs;
