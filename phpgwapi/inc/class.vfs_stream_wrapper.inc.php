@@ -312,6 +312,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	function stream_close ( )
 	{
 		$ret = fclose($this->opened_stream);
+		// clear PHP's stat cache, it contains wrong size of just closed file,
+		// causing eg. notifications to be ignored, because of previous size 0, when using WebDAV
+		clearstatcache(false);
 
 		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
@@ -863,8 +866,6 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
-
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
@@ -918,6 +919,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$stat['url'] = $url;
 		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components) returning ".array2string($stat));
+
 		return $stat;
 
 		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
