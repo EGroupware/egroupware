@@ -178,7 +178,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 
 		if ($sri)
 		{
-			$realName = trim($GLOBALS['egw_info']['user']['firstname'] . (!empty($GLOBALS['egw_info']['user']['firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['lastname']);
+			$realName = trim($GLOBALS['egw_info']['user']['account_firstname'] . (!empty($GLOBALS['egw_info']['user']['account_firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['account_lastname']);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if(isset($allValues[0]['mail']))

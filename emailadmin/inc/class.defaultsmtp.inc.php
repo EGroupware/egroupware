@@ -20,43 +20,43 @@
 
 		/**
 		 * SmtpServerId
-		 * 
+		 *
 		 * @var int
 		 */
 		var $SmtpServerId;
 
 		var $smtpAuth = false;
-		
-		var $editForwardingAddress = false;		
+
+		var $editForwardingAddress = false;
 
 		var $host;
-		
+
 		var $port;
-		
+
 		var $username;
-		
+
 		var $password;
-		
+
 		var $defaultDomain;
-		
+
 		// the constructor
 		function defaultsmtp($defaultDomain=null)
 		{
 			$this->defaultDomain = $defaultDomain ? $defaultDomain : $GLOBALS['egw_info']['server']['mail_suffix'];
 		}
-		
+
 		// add a account
 		function addAccount($_hookValues)
 		{
 			return true;
 		}
-		
+
 		// delete a account
 		function deleteAccount($_hookValues)
 		{
 			return true;
 		}
-		
+
 		function getAccountEmailAddress($_accountName)
 		{
 			$accountID = $GLOBALS['egw']->accounts->name2id($_accountName);
@@ -64,12 +64,12 @@
 			if(empty($emailAddress))
 				$emailAddress = $_accountName.'@'.$this->defaultDomain;
 
-			$realName = trim($GLOBALS['egw_info']['user']['firstname'] . (!empty($GLOBALS['egw_info']['user']['firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['lastname']);
+			$realName = trim($GLOBALS['egw_info']['user']['account_firstname'] . (!empty($GLOBALS['egw_info']['user']['account_firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['account_lastname']);
 
 			return array(
 				array(
-					'name'		=> $realName, 
-					'address'	=> $emailAddress, 
+					'name'		=> $realName,
+					'address'	=> $emailAddress,
 					'type'		=> 'default'
 				)
 			);
@@ -77,7 +77,7 @@
 
 		function getUserData($_uidnumber) {
 			$userData = array();
-			
+
 			return $userData;
 		}
 
@@ -88,7 +88,7 @@
 		function setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode) {
 			return true;
 		}
-		
+
 		// update a account
 		function updateAccount($_hookValues) {
 			return true;
