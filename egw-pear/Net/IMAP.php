@@ -494,7 +494,12 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"]["BODY[TEXT]"]["CONTENT"];
+        $found = 0;
+        foreach($ret["PARSED"] as $key => $value)
+        {
+            if (isset($ret["PARSED"][$key]["EXT"]["BODY[TEXT]"]["CONTENT"])) {$found = $key; break;}
+        }
+        $ret=$ret["PARSED"][$found]["EXT"]["BODY[TEXT]"]["CONTENT"];
         //$ret=$resp["PARSED"][0]["EXT"]["RFC822"]["CONTENT"];
         return $ret;
     }
@@ -526,7 +531,12 @@ class Net_IMAP extends Net_IMAPProtocol {
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"]["BODY[$partId]"]["CONTENT"];
+        $found = 0;
+        foreach($ret["PARSED"] as $key => $value)
+        {
+            if (isset($ret["PARSED"][$key]["EXT"]["BODY[$partId]"]["CONTENT"])) {$found = $key; break;}
+        }
+        $ret=$ret["PARSED"][$found]["EXT"]["BODY[$partId]"]["CONTENT"];
         //$ret=$resp["PARSED"][0]["EXT"]["RFC822"]["CONTENT"];
         return $ret;
     }
@@ -553,23 +563,29 @@ class Net_IMAP extends Net_IMAPProtocol {
         } else {
           $ret=$this->cmdFetch($msg_id,"BODYSTRUCTURE");
         }
-		#_debug_array($ret);
+        #_debug_array($ret);
         if (PEAR::isError($ret)) {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret2=$ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"][0];
-		// sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
-		if (is_array($ret) && empty($ret2)) {
-			foreach($ret["PARSED"] as $substruct) {
-				if ($substruct["COMMAND"] == "FETCH") {
-					$ret2=$substruct["EXT"]["BODYSTRUCTURE"][0];
-					break;
-				}
-			}
-		}
+        $found = 0;
+        foreach($ret["PARSED"] as $key => $value)
+        {
+            if (isset($ret["PARSED"][$key]["EXT"]["BODYSTRUCTURE"][0])) {$found = $key; break;}
+        }
+        $ret2=$ret["PARSED"][$found]["EXT"]["BODYSTRUCTURE"][0];
+        // sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
+        // should not happen anymore
+        if (is_array($ret) && empty($ret2) && isset($ret["PARSED"])) {
+            foreach($ret["PARSED"] as $substruct) {
+                if ($substruct["COMMAND"] == "FETCH") {
+                    $ret2=$substruct["EXT"]["BODYSTRUCTURE"][0];
+                    break;
+                }
+            }
+        }
         $structure = array();
 
         $mimeParts = array();
@@ -1747,6 +1763,7 @@ class Net_IMAP extends Net_IMAPProtocol {
 		if (PEAR::isError($ret)) {
             return $ret;
         }
+
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
