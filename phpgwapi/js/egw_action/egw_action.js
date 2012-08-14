@@ -327,7 +327,6 @@ egwAction.prototype.updateActions = function(_actions)
 	}
 	else
 	{
-		console.log(this);
 		throw "This action element cannot have children!";
 	}
 }
@@ -379,7 +378,7 @@ egwAction.prototype.execute = function(_senders, _target)
  *	   will be executed.
  *	2. _value may be a boolean, which specifies whether the external onExecute handler
  *	   (passed as "_handler" in the constructor) will be used.
- *	3. _value may be a JS functino which will then be called.
+ *	3. _value may be a JS function which will then be called.
  * In all possible situation, the called function will get the following parameters:
  * 	1. A reference to this action
  * 	2. The senders, an array of all objects (JS)/object ids (PHP) which evoked the event
