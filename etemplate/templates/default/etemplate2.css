@@ -857,10 +857,25 @@ div.et2_progress > div {
 }
 
 .et2_itempicker_search {
+	display: inline-block;
 	margin: 1em;
 	margin-bottom: 0;
+	margin-right: 0;
 	width: 67%;
 	padding: 0.2em;
+}
+
+.et2_itempicker_clear {
+	position: relative;
+	top: 3px;
+	left: -20px;
+}
+
+.et2_itempicker_button_action {
+	position: absolute;
+	margin: 1em;
+	top: 0;
+	right: 0;
 }
 
 .et2_itempicker_itemlist {
