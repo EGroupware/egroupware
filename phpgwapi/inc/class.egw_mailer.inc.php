@@ -28,7 +28,7 @@ class egw_mailer extends PHPMailer
 		parent::__construct(true);	// throw exceptions instead of echoing errors
 
 		// setting EGroupware specific path for PHPMailer lang files
-		list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang'])) list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 		$lang_path = EGW_SERVER_ROOT.'/phpgwapi/lang/';
 		if ($nation && file_exists($lang_path."phpmailer.lang-$nation.php"))	// atm. only for pt-br => br
 		{
@@ -198,4 +198,33 @@ class egw_mailer extends PHPMailer
 
 		return parent::AddBCC($address, $name);
 	}
+
+	/**
+	 * Adds a string or binary attachment (non-filesystem) to the list.
+	 * This method can be used to attach ascii or binary data,
+	 * such as a BLOB record from a database.
+	 * @param string $string String attachment data.
+	 * @param string $filename Name of the attachment. We assume that this is NOT a path
+	 * @param string $encoding File encoding (see $Encoding).
+	 * @param string $type File extension (MIME) type.
+	 * @return void
+	 */
+	public function AddStringAttachment($string, $filename, $encoding = 'base64', $type = 'application/octet-stream')
+	{
+		// Append to $attachment array
+		//already encoded?
+		//TODO: maybe add an parameter to AddStringAttachment to avoid using the basename
+		$x += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $filename, $matches);
+		$this->attachment[] = array(
+			0 => $string,
+			1 => $filename,
+			2 => ($x?basename($filename):$filename),
+			3 => $encoding,
+			4 => $type,
+			5 => true,  // isStringAttachment
+			6 => 'attachment',
+			7 => 0
+		);
+	}
+
 }
