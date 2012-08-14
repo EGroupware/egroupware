@@ -1382,7 +1382,30 @@ class calendar_boupdate extends calendar_bo
 		}
 		else	// delete an exception
 		{
-			$event['recur_exception'][] = $recur_date = $this->date2ts($event['start']);
+			// check if deleted recurrance has alarms (because it's the next recurrance) --> move it to next recurrance
+			if ($event['alarm'])
+			{
+				foreach($event['alarm'] as &$alarm)
+				{
+					if ($alarm['time'] == $recur_date)
+					{
+						if (is_null($next_recurrance))
+						{
+							foreach(calendar_rrule::event2rrule($event, true) as $time)
+							{
+								$time->setUser();	// $time is in timezone of event, convert it to usertime used here
+								if (($next_recurrance = $this->date2ts($time)) > $recur_date) break;
+							}
+						}
+						$alarm['time'] = $this->date2ts($next_recurrance, true);	// user to server-time
+						$this->so->save_alarm($event['id'], $alarm);
+					}
+				}
+			}
+			// need to read series master, as otherwise existing exceptions will be lost!
+			$recur_date = $this->date2ts($event['start']);
+			$event = $this->read($cal_id);
+			$event['recur_exception'][] = $recur_date;
 			unset($event['start']);
 			unset($event['end']);
 			$this->save($event);	// updates the content-history
