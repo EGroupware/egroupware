@@ -15,7 +15,7 @@ require_once(EGW_API_INC.'/class.phpmailer.inc.php');
 /**
  * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
  * or regular error_log for true (can be set either in DB or header.inc.php).
- * 
+ *
  * This class does NOT use anything EGroupware specific, it acts like PHPMail, but logs.
  */
 class egw_mailer extends PHPMailer
@@ -26,9 +26,9 @@ class egw_mailer extends PHPMailer
 	function __construct()
 	{
 		parent::__construct(true);	// throw exceptions instead of echoing errors
-		
+
 		// setting EGroupware specific path for PHPMailer lang files
-		list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang'])) list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 		$lang_path = EGW_SERVER_ROOT.'/phpgwapi/lang/';
 		if ($nation && file_exists($lang_path."phpmailer.lang-$nation.php"))	// atm. only for pt-br => br
 		{
@@ -43,10 +43,10 @@ class egw_mailer extends PHPMailer
 	/**
 	 * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
 	 * or regular error_log for true (can be set either in DB or header.inc.php).
-	 * 
+	 *
 	 * We can NOT supply this method as callback to phpMailer, as phpMailer only accepts
 	 * functions (not methods) and from a function we can NOT access $this->ErrorInfo.
-	 * 
+	 *
 	 * @param boolean $isSent
 	 * @param string $to
 	 * @param string $cc
@@ -89,21 +89,21 @@ class egw_mailer extends PHPMailer
 	 * Initiates a connection to an SMTP server.
 	 * Returns false if the operation failed.
 	 *
-	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls 
+	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls
 	 * are configured for the given profile
 	 *
 	 * @uses SMTP
 	 * @access public
 	 * @return bool
 	 */
-	public function SmtpConnect() 
+	public function SmtpConnect()
 	{
 		$port = $this->Port;
 		$hosts = explode(';',$this->Host);
 		foreach ($hosts as $k => &$host)
 		{
 			$host = trim($host); // make sure there is no whitespace leading or trailling the host string
-			if (in_array($port,array(465,587)) && strpos($host,'://')===false) 
+			if (in_array($port,array(465,587)) && strpos($host,'://')===false)
 			{
 				//$host = ($port==587?'tls://':'ssl://').trim($host);
 				$this->SMTPSecure = ($port==587?'tls':'ssl');
@@ -176,4 +176,33 @@ class egw_mailer extends PHPMailer
 
 		return parent::AddBCC($address, $name);
 	}
+
+	/**
+	 * Adds a string or binary attachment (non-filesystem) to the list.
+	 * This method can be used to attach ascii or binary data,
+	 * such as a BLOB record from a database.
+	 * @param string $string String attachment data.
+	 * @param string $filename Name of the attachment. We assume that this is NOT a path
+	 * @param string $encoding File encoding (see $Encoding).
+	 * @param string $type File extension (MIME) type.
+	 * @return void
+	 */
+	public function AddStringAttachment($string, $filename, $encoding = 'base64', $type = 'application/octet-stream')
+	{
+		// Append to $attachment array
+		//already encoded?
+		//TODO: maybe add an parameter to AddStringAttachment to avoid using the basename
+		$x += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $filename, $matches);
+		$this->attachment[] = array(
+			0 => $string,
+			1 => $filename,
+			2 => ($x?basename($filename):$filename),
+			3 => $encoding,
+			4 => $type,
+			5 => true,  // isStringAttachment
+			6 => 'attachment',
+			7 => 0
+		);
+	}
+
 }

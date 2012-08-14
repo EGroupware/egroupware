@@ -312,7 +312,7 @@ class PHPMailer {
   private   $bcc            = array();
   private   $ReplyTo        = array();
   private   $all_recipients = array();
-  private   $attachment     = array();
+  protected $attachment     = array(); //this way extended classes may use this variable
   private   $CustomHeader   = array();
   private   $message_type   = '';
   private   $boundary       = array();
@@ -1199,7 +1199,7 @@ class PHPMailer {
     $body = '';
 
     if ($this->sign_key_file) {
-      $body .= $this->GetMailMIME();
+      $body .= $this->GetMailMIME()."\n";
     }
 
     $this->SetWordWrap();
@@ -1245,7 +1245,7 @@ class PHPMailer {
         $body .= $this->EncodeString($this->Body, $this->Encoding);
         $body .= $this->LE.$this->LE;
 		// Create the extended body for an attached text/calendar
-        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE; 
+        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE;
         $body .= $this->EncodeString($this->attachment[0][0], $this->attachment[0][3]);
         $body .= $this->LE.$this->LE;
         $body .= $this->EndBoundary($this->boundary[2]);
@@ -1262,8 +1262,8 @@ class PHPMailer {
         $signed = tempnam("", "signed");
         if (@openssl_pkcs7_sign($file, $signed, "file://".$this->sign_cert_file, array("file://".$this->sign_key_file, $this->sign_key_pass), NULL)) {
           @unlink($file);
-          @unlink($signed);
           $body = file_get_contents($signed);
+          @unlink($signed);
         } else {
           @unlink($file);
           @unlink($signed);
@@ -1491,16 +1491,16 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function &EncodeFile($path, $encoding = 'base64') 
+  private function &EncodeFile($path, $encoding = 'base64')
   {
-	if (function_exists('get_magic_quotes')) 
+	if (function_exists('get_magic_quotes'))
 	{
-		function get_magic_quotes() 
+		function get_magic_quotes()
 		{
 			return false;
 		}
 	}
-	if (PHP_VERSION < 6) 
+	if (PHP_VERSION < 6)
 	{
 		if (function_exists('get_magic_quotes_runtime') && ($magic_quotes = get_magic_quotes_runtime())) set_magic_quotes_runtime(0);
 	}
@@ -1510,13 +1510,13 @@ class PHPMailer {
 			throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
 		}
 		$file_buffer  = $this->EncodeString($file_buffer, $encoding);
-		if (PHP_VERSION < 6) 
+		if (PHP_VERSION < 6)
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
-		}		
+		}
 		return $file_buffer;
 	} catch (Exception $e) {
-		if (PHP_VERSION < 6) 
+		if (PHP_VERSION < 6)
 		{
 			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
 		}
