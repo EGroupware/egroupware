@@ -1732,7 +1732,7 @@ class felamimail_bo
 			if (isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
-				//return $folders2return[$this->icServer->ImapServerId];
+				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
